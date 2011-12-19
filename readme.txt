@@ -2,8 +2,8 @@
 Contributors: stephenh1988
 Donate link: http://www.HarrisWebSolutions.co.uk/
 Tags: events, event, event organiser, event calendar, events calendar, event management, widget, venues, maps, gigs, shows,
-Requires at least: 3.1
-Tested up to: 3.1
+Requires at least: 3.3
+Tested up to: 3.3
 Stable tag: 1.0.0
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -53,22 +53,8 @@ Installation is standard and straight forward.
 == Frequently Asked Questions ==
 
 
-= How do I display  =
-
-An answer to that question.
-
-
-
-= What about foo bar? =
-Answer to foo bar dilemma.
-
-
 
 == Screenshots ==
-
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the directory of the stable readme.txt, so in this case, `/tags/4.3/screenshot-1.png` (or jpg, jpeg, gif)
-2. This is the second screen shot
 
 == Changelog ==
 
