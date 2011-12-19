@@ -25,8 +25,8 @@ The plug-in functions as is, including template pages for Events, event archives
 * The **Calendar and Event List shortcodes**, similiar to their respective widgets, for use in themes or in posts and pages.
 * The **Venue map shortcodes** to display a map of a venue
 *  **Custom permissions** allow to specifiy which roles have the ability to create, edit and delete events or manage venues.
-* **Template** pages include in the plug-in for 'quick-start'. These can be over-ridden by including the appropriately named template files in your theme folder (see help page)
-* **Event functions** available which extend the post functions (e.g. the_title(),get_the_author(), the_author()) to ouput or return event data (the start date-time, the venue etc) (see help page). For examples of their use see the documentation or the included template files.
+* **Template** pages include in the plug-in for 'quick-start'. These can be over-ridden by including the appropriately named template files in your theme folder 
+* **Event functions** available which extend the post functions (e.g. the_title(),get_the_author(), the_author()) to ouput or return event data (the start date-time, the venue etc). For examples of their use see the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/) documentation or the included template files.
 * Assign events to categories, and view events by category
 * Venue pages, to view events by venue
 * Export events to .ics file
@@ -39,7 +39,6 @@ The plug-in functions as is, including template pages for Events, event archives
 * Introducing actions and filters to allow developers or plug-ins to modify and interact with Event Organiser
 * Allowing users to exclude or include specific dates in an event's schedule
 * Dashboard widgets (upcoming events / expiring events)
-* If you have any suggestions feel free to use the plug-in's forum
 
 
 == Installation ==
@@ -49,12 +48,6 @@ Installation is standard and straight forward.
 1. Upload `event-organiser` folder (and all it's contents!) to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Check the settings sub-page of the Events menu
-
-== Frequently Asked Questions ==
-
-
-
-== Screenshots ==
 
 == Changelog ==
 
