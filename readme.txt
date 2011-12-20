@@ -10,9 +10,7 @@ Create and maintain events, including complex reoccurring patterns, venue manage
 
 == Description ==
 
-Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts (can support (if required) descriptions, thumbnails, comments etc), while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows your to view your events in the familiar WordPress list or view all occurrences of your events in a calendar page in the amin area.
-
-The plug-in functions as is, including template pages for Events, event archives, venues and event category pages, that should work with most themes . To override the default templates, simply create your own (appropriately named) template files in your theme directory. For a description of the functions that allow you to output event specific information, see the documentation.
+Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows your to view your events in the familiar WordPress list or view all occurrences of your events in a calendar page in the amin area.
 
 Requires WordPress 3.3 and PHP 5.3 (or higher)
 
@@ -60,7 +58,8 @@ You can also add events in the Calendar view in a manner similiar to Google Cale
 
 
 = How do I display events? =
-Events are automatically displayed on the events page: try`www.your-wordpress-site.com/?post_type=event` (If you have permalinks enabled these will have 'prettier' versions). Similarly, `?event-category=` would display events of a specfied category, and `?venue=`, events at specified venue. FInally `?event=` will show the specified event.
+
+Events are automatically displayed on the events page: try `www.your-wordpress-site.com/?post_type=event` (If you have permalinks enabled these will have 'prettier' versions). Similarly, `?event-category=` would display events of a specfied category, and `?venue=`, events at specified venue. FInally `?event=` will show the specified event.
 
 Each of the above have their own associated template. These template files are present in the template sub-directory of the Event-Organiser plug-in folder. To override the default templates, simply create the appropriately named files in your theme directory.
 
@@ -69,10 +68,11 @@ The plug-in also provides event listing and event calendar widgets and shortocde
 Finally, the plug-in provides a function `eo_get_events` which is similiar to WordPress' `get_posts`. The function returns an array of post objects (where the posts are events), and this can be used to display events through editing your theme. The usual WordPress functions for display associated information (author, title etc) are still available to you, and the plug-in provides a similar set of functions to display event related data (dates, venues etc). See the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/).
 
 == Screenshots ==
+
 1. Event admin screen
 2. Venue admin screen
 3. Event details metabox, showing the full reoccurrence options and venue selection
-4. Venue editing screen, with Google Maps.
+4. Venue editing screen, with Google Maps
 5. Calendar View screen
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
@@ -83,10 +83,3 @@ Minor bug fixes and readme update.
 
 = 1.0.0 =
 Initial release
-
-
-== Upgrade Notice ==
-
-
-
-`<?php code(); // goes in backticks ?>`
