@@ -4,7 +4,7 @@ Donate link: http://www.HarrisWebSolutions.co.uk/
 Tags: events, event, event organiser, event calendar, events calendar, event management, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.3
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -77,6 +77,9 @@ Finally, the plug-in provides a function `eo_get_events` which is similiar to Wo
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.0.2 =
+Fixed ics exporter and deactivation/uninstall
 
 = 1.0.1 =
 Minor bug fixes and readme update.

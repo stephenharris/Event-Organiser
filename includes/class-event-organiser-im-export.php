@@ -1,8 +1,7 @@
 <?php
 /**
-*
+* Event importer / exporter
  */
-
 class Event_Organiser_Im_Export  {
 	
 	static private $classobj = NULL;
@@ -29,7 +28,7 @@ class Event_Organiser_Im_Export  {
 			&& current_user_can('manage_options')&& $pagenow=="options-general.php")
 			$this->get_export_file();
 							
-		add_action( 'addquicktag_settings_page', array( $this, 'get_im_export_part' ) );
+		add_action( 'exporter_settings_page', array( $this, 'get_im_export_part' ) );
 	}
 	
 	/**
@@ -153,3 +152,4 @@ END:VCALENDAR
 	}	
 
 } // end class
+$eventorganiser_im_export = Event_Organiser_Im_Export::get_object();

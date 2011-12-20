@@ -78,7 +78,6 @@
 
 
 function eventorganiser_deactivate(){
-	eventorganiser_uninstall();
     }
 
 

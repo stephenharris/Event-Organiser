@@ -137,7 +137,7 @@ For each of the pages, the corresponding template is used. To use your own templ
 	<?php wp_nonce_field('eventorganiser_update_settings'); ?>
 	<p class="submit"><input type="submit" name="eo_setting[action]"  class="button-primary" value="<?php _e('Update Settings', 'eventorganiser'); ?>" /></p>
 	</form> 
-	<?php do_action( 'addquicktag_settings_page' ); ?>
+	<?php do_action( 'exporter_settings_page' ); ?>
 <?php }
 
 /*
