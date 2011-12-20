@@ -4,7 +4,7 @@ Donate link: http://www.HarrisWebSolutions.co.uk/
 Tags: events, event, event organiser, event calendar, events calendar, event management, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.3
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -53,13 +53,13 @@ Installation is standard and straight forward.
 
 == Frequently Asked Questions ==
 
-=How to create an event=
+= How to create an event =
 Events behave very similarly to standard posts. To create a event, select the 'Add New' submenu from 'Events' menu. The chief difference between events and post is the 'Event Details' metabox which sets the date and venue data related to the event.
 
 You can also add events in the Calendar view in a manner similiar to Google Calendar. By selecting one (or multiple) days (in month mode) or times (in week/day mode) you can create an event that spans the selected period. 
 
 
-=How do I display events?=
+= How do I display events? =
 Events are automatically displayed on the events page: try [code]www.your-wordpress-site.com/?post_type=event[/code] (If you have permalinks enabled these will have 'prettier' versions). Similarly, [code]?event-category=[/code] would display events of a specfied category, and [code]?venue=[/code], events at specified venue. FInally [code]?event=[/code] will show the specified event.
 
 Each of the above have their own associated template. These template files are present in the template sub-directory of the Event-Organiser plug-in folder. To override the default templates, simply create the appropriately named files in your theme directory.
@@ -77,6 +77,9 @@ Finally, the plug-in provides a function [code]eo_get_events[/code] which is sim
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.0.2 =
+Readme update.
 
 = 1.0.1 =
 Minor bug fixes and readme update.
