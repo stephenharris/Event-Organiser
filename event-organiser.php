@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: Event Organiser
-Plugin URI: http://www.HarrisWebSolutions.co.uk
+Plugin URI: http://www.HarrisWebSolutions.co.uk/event-organiser
 Description: Creates a custom post type 'events' with features such as reoccurring events, venues, Google Maps, calendar views and events and venue pages
 Author: Stephen Harris
-Version: 1.0
+Version: 1.0.1
 Author URI: http://www.HarrisWebSolutions.co.uk
 */
 
@@ -24,11 +24,8 @@ Author URI: http://www.HarrisWebSolutions.co.uk
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
-/*
-//TODO
-- jquery flicker
-- event-category list
-*/
+
+//The database version
 global $eventorganiser_db_version;
 $eventorganiser_db_version = "1.0";
 
@@ -56,29 +53,28 @@ $eventorganiser_roles = array(
 		 'manage_event_categories' => 'Manage Event Categories',
 );
 			
-/****** INSTALL, ACTIVATION & DEACTIVATION ******/
+/****** Install, activation & deactivation******/
 require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-install.php');
 
 register_activation_hook(__FILE__,'eventorganiser_install'); 
 register_deactivation_hook( __FILE__, 'eventorganiser_deactivate' );
 register_uninstall_hook( __FILE__,'eventorganiser_uninstall');
 
-
-/****** REGISTER EVENT POST TYPE ******/
+/****** Register event post type and event taxonomy******/
 require_once('includes/event-organiser-cpt.php');
 
-/****** REGISTER PAGES AND SCRIPTS ******/
+/****** Register scripts, styles and actions******/
 require_once('includes/event-organiser-register.php');
 
-/****** WHERE THE QUERIES GET DELT WITH ******/
+/****** Deals with the queries******/
 require_once('includes/event-organiser-archives.php');
 
 if(is_admin()):
-	/****** EVENTS CPT PAGE & EDITING PAGE ******/
+	/****** event editing pages******/
 	require_once('event-organiser-edit.php');
 	require_once('event-organiser-manage.php');
 	
-	/***** SETTINGS, VENUE & CALENDAR PAGES ******/
+	/****** settings, venue and calendar pages******/
 	require_once('event-organiser-settings.php');
 	require_once('event-organiser-venues.php');
 	require_once('event-organiser-calendar.php');
@@ -86,21 +82,23 @@ if(is_admin()):
 	require_once("classes/class-eo-list-table.php");
 endif;
 
-/****** AJAX FILES ******/
+/****** Ajax files ******/
 require_once('includes/event-organiser-venue-search.php');
 require_once('includes/event-organiser-events-cal.php');
 
-/****** Include templates ******/
+/****** Templates ******/
 require_once('includes/event-organiser-templates.php');
 
-/****** FUNCTIONS ******/
+/****** Functions ******/
 require_once("includes/event-organiser-event-functions.php");
 require_once("includes/event-organiser-venue-functions.php");
 
-/****** CLASSES ******/
+/****** Event and Venue classes ******/
 require_once("classes/class-eo-event.php");
 require_once("classes/class-eo-venues.php");
 require_once("classes/class-eo-venue.php");
+
+/****** Widgets and Shortcodes ******/
 require_once('classes/class-eo-event-list-widget.php');
 require_once('classes/class-eo-event-list-shortcode.php');
 require_once('classes/class-eo-calendar-widget.php');

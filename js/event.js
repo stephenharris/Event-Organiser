@@ -51,6 +51,8 @@ jQuery(document).ready(function() {
 	if( jQuery("#eventorganiser_detail #from_date, #eventorganiser_detail #to_date" ).length>0){
 	var dates = jQuery("#eventorganiser_detail #from_date, #eventorganiser_detail #to_date" ).datepicker({
 			dateFormat: MyAjax.format,
+			changeMonth: true,
+			changeYear: true,
 			firstDay:  parseInt(MyAjax.startday),
 			buttonImage: 'images/ui-icon-calendar.png',
 			buttonImageOnly: true,
@@ -71,6 +73,8 @@ jQuery(document).ready(function() {
 
 	jQuery( "#recend").datepicker({
 		dateFormat: MyAjax.format,
+		changeMonth: true,
+		changeYear: true,
 		firstDay:  parseInt(MyAjax.startday),
 	});
 
@@ -123,13 +127,20 @@ function eo_produce_summary(){
 		frequency =jQuery("#HWSEvent_freq").val();
 		
 		if(frequency>1){
-			summary = "This event will repeat every "+frequency+" "+reoccurrence+'s';
+			s="s";
+			summary = "This event will repeat every "+frequency+" ";
 		}else{
-			summary = "This event will repeat every "+reoccurrence;
+			s="";
+			summary = "This event will repeat every ";
 		}
 
+
 		switch(jQuery("#HWSEventInput_Req").val()){
+			case 'daily':
+				summary=summary+'day'+s;
+				break;
 			case 'weekly':
+				summary=summary+'week'+s;
 				selected = jQuery("#dayofweekrepeat :checkbox:checked");
 	
 				if(selected.length==0){
@@ -145,6 +156,7 @@ function eo_produce_summary(){
 				break;
 
 			case 'monthly':
+				summary=summary+'month'+s;
 				//Show & enable reoccurrence forms and month meta. Disable & hide week meta 
 				if(jQuery("#dayofmonthrepeat :radio:checked").val()=='date'){
 					summary = summary+" on the "+fromdate.getDate()+eo_date_suffix(fromdate);
@@ -157,6 +169,7 @@ function eo_produce_summary(){
 				break;
 
 			case 'yearly':
+				summary=summary+'year'+s;
 				//Show & enable reoccurrence forms. Disable & hide week & month meta 
 				summary = summary+" on "+jQuery.datepicker.formatDate('MM d', fromdate)+eo_date_suffix(fromdate);
 				break;

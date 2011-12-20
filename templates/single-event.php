@@ -16,6 +16,7 @@
  * @since 1.0.0
  */
 
+//Call the template header
 get_header(); ?>
 
 	<div id="primary">
@@ -26,18 +27,25 @@ get_header(); ?>
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 					<header class="entry-header">
+
+						<!---- Display event title-->
 						<h1 class="entry-title"><?php the_title(); ?></h1>
+
 							<div class="entry-meta">
 								<?php $next = eo_get_next_occurrence('d F Y'); ?>
-								<?php if($next): ?>										
+								<?php if($next): ?>
+									<!---- If the event is occurring again in the future, display the date -->
 									This event is running from <?php eo_schedule_start('d F Y'); ?>  until <?php  eo_schedule_end('d F Y',''); ?>. It is next showing at <?php echo $next;?>
 								<?php else: ?>
+									<!---- Otherwise the event has finished (no more occurrences) -->
 									This event finished on <?php  eo_schedule_end('d F Y',''); ?>.
 								<?php endif;?>
 							</div><!-- .entry-meta -->
+
 					</header><!-- .entry-header -->
 	
 					<div class="entry-content">
+						<!---- The content or the description of the event-->
 						<?php the_content(); ?>
 						<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'twentyeleven' ) . '</span>', 'after' => '</div>' ) ); ?>
 					</div><!-- .entry-content -->
@@ -69,4 +77,6 @@ get_header(); ?>
 
 			</div><!-- #content -->
 		</div><!-- #primary -->
+
+<!-- Call template footer -->
 <?php get_footer(); ?>

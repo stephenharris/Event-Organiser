@@ -104,16 +104,15 @@ class EO_Venues{
 					if(!empty($args)):
 						$argtype = array_fill(0, count($args), '%d');
 						$where = "WHERE {$eventorganiser_venue_table}.venue_id=".implode( " OR {$eventorganiser_venue_table}.venue_id=", $argtype);
-
 						$sql = "DELETE FROM $eventorganiser_venue_table $where";
 						$del = $wpdb->query($wpdb->prepare($sql,$args));
 						if($del==0){
-							$EO_Errors = new WP_Error('eo_error', __("Venue <strong>was not </strong> deleted"));
+							$EO_Errors = new WP_Error('eo_error', __("Venue(s) <strong>were not </strong> deleted"));
 						}else{
 							$EO_Errors = new WP_Error('eo_notice', __("Venue(s) <strong>deleted</strong>"));
 						}
 					else:
-						$EO_Errors = new WP_Error('eo_error', __("Venue <strong>was not </strong> deleted"));
+						$EO_Errors = new WP_Error('eo_error', __("No venues selected to delete"));
 					endif;
 				}
 			break;

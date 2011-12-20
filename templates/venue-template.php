@@ -23,9 +23,10 @@ get_header(); ?>
 		<div id="primary">
 		<div id="content" role="main">
 
-			<?php if ( have_posts() ) : ?><!---- There are events, start 'the Loop'-->
+			<?php if ( have_posts() ) : ?>
+
+				<!---- Page header, display venue title-->
 				<header class="page-header">	
-				<!-- Print the page title -->
 				<h1 class="page-title"><?php
 					printf( __( 'Events at: %s', 'twentyeleven' ), '<span>' .eo_get_venue_name(). '</span>' );
 				?></h1>
@@ -35,16 +36,20 @@ get_header(); ?>
 						$venue_description =eo_get_venue_description();
 
 						if(!empty($venue_description)){?>
+							<!---- If the venue has a description display it-->
 							<div class="venue-archive-meta">
 								<?php echo $venue_description; ?>
 							</div>
 						<?php } ?>
 		
-				<!-- Display the venue map-->
+				<!-- Display the venue map. If you specify a class, ensure that class has height/width dimensions-->
 				<?php echo do_shortcode('[eo_venue_map width="600px"]'); ?>
 			</header><!-- end header -->
 
-						
+				<!---- Navigate between pages-->
+				<?php twentyeleven_content_nav( 'nav-above' ); ?>
+
+				<!-- This is the usual loop, familiar in WordPress templates-->
 				<?php while ( have_posts()) : the_post(); ?>
 					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
@@ -52,7 +57,10 @@ get_header(); ?>
 							<h1 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
 
 							<div class="entry-meta">
+								<!-- Output the date of the occurrence-->
 								<?php eo_the_start('d F Y'); ?> 
+
+								<!-- If the event has a venue saved, display this-->
 								<?php if(eo_get_venue_name()):?>
 									at <a href="<?php eo_venue_link();?>"><?php eo_venue_name();?></a>
 								<?php endif;?>
@@ -64,8 +72,11 @@ get_header(); ?>
 
     				<?php endwhile; ?><!----The Loop ends-->
 
-			<?php else : ?><!---- If there are no events -->
+				<!---- Navigate between pages-->
+				<?php twentyeleven_content_nav( 'nav-below' ); ?>
 
+			<?php else : ?>
+				<!---- If there are no events -->
 				<article id="post-0" class="post no-results not-found">
 
 					<header class="entry-header">
@@ -83,5 +94,6 @@ get_header(); ?>
 			</div><!-- #content -->
 		</div><!-- #primary -->
 
+<!-- Call template sidebar and footer -->
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>

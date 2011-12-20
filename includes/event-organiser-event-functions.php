@@ -406,7 +406,7 @@ function eo_get_schedule_summary($id=''){
 				if($reoccur['meta']=='date'){
 					$return .= $reoccur['start']->format('jS');
 				}else{
-					preg_match('/^(\d{1})([a-zA-Z]{2})/' ,$reoccur['meta'],$matches);
+					preg_match('/^(-?\d{1,2})([a-zA-Z]{2})/' ,$reoccur['meta'],$matches);
 					$n=intval($matches[1])+1;
 					$return .=$nth[$n].' '.$eo_ical2day[$matches[2]];;
 				}

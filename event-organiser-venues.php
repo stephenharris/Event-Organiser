@@ -38,7 +38,10 @@ function eventorganiser_venues_action() {
 	if( isset($_REQUEST['action']) && isset($_REQUEST['venue'])):	
 
 		//In the backend, venue should always be the ID not the slug
-		$_REQUEST['venue'] = (int)$_REQUEST['venue'];
+		if(is_array($_REQUEST['venue']))
+			$_REQUEST['venue'] = array_map('intval', $_REQUEST['venue']);
+		else
+			$_REQUEST['venue'] = (int) $_REQUEST['venue'];
 
 		if(current_user_can('manage_venues')):	
 			if($_REQUEST['action']=='update'){

@@ -49,6 +49,13 @@ Installation is standard and straight forward.
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Check the settings sub-page of the Events menu
 
+
+== FAQ ==
+
+=How to create an event=
+Events behave very similarly to standard posts. To create a event, select the 'Add New' submenu from 'Events' menu. The chief difference between events and post is the 'Event Details' metabox which sets the date and venue data related to the event.
+
+
 == Changelog ==
 
 = 1.0.0 =

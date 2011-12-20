@@ -321,7 +321,7 @@ class EO_Event{
 					$day_num = intval($start_days[0]->format('w'));
 					$date = intval($start_days[0]->format('d'));
 					$n = floor(($date-1)/7);
-					$interval = $occurrence[$n].' '.$day.' of next month';
+					$interval = $occurrence[$n].' '.$day.' of +'.$this->frequency.' month';
 					if($n==4) $n= -2;
 					$this->meta = ($n+1).$this->eo_daysofweek[$day_num]['ical'];
 				}

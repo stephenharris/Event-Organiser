@@ -18,25 +18,23 @@
  * @since 1.0.0
  */
 
+//Call the template header
 get_header(); ?>
 
+		<!-- This template follows the TwentyEleven theme-->
 		<section id="primary">
 			<div id="content" role="main">
-			<?php global $wp_query;?>
-			<?php if( isset( $wp_query->query_vars['venue'] )) {
-					echo "archive page: ".$wp_query->query_vars['venue'];
-				}?>
-
-			
 
 			<?php if ( have_posts() ) : ?>
 
+				<!---- Page header-->
 				<header class="page-header">
 					<h1 class="page-title">
 						Events
 					</h1>
 				</header>
 
+				<!---- Navigate between pages-->
 				<?php twentyeleven_content_nav( 'nav-above' ); ?>
 
 				<?php /* Start the Loop */ ?>
@@ -49,7 +47,10 @@ get_header(); ?>
 							<h1 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
 
 							<div class="entry-meta">
+								<!-- Output the date of the occurrence-->
 								<?php eo_the_start('d F Y'); ?> 
+
+								<!-- If the event has a venue saved, display this-->
 								<?php if(eo_get_venue_name()):?>
 									at <a href="<?php eo_venue_link();?>"><?php eo_venue_name();?></a>
 								<?php endif;?>
@@ -61,18 +62,18 @@ get_header(); ?>
 
     				<?php endwhile; ?><!----The Loop ends-->
 
+				<!---- Navigate between pages-->
 				<?php twentyeleven_content_nav( 'nav-below' ); ?>
 
 			<?php else : ?>
-
+				<!---- If there are no events -->
 				<article id="post-0" class="post no-results not-found">
 					<header class="entry-header">
 						<h1 class="entry-title"><?php _e( 'Nothing Found', 'twentyeleven' ); ?></h1>
 					</header><!-- .entry-header -->
 
 					<div class="entry-content">
-						<p><?php _e( 'Apologies, but no results were found for the requested archive. Perhaps searching will help find a related post.', 'twentyeleven' ); ?></p>
-						<?php get_search_form(); ?>
+						<p><?php _e( 'Apologies, but no results were found for the requested archive', 'twentyeleven' ); ?></p>
 					</div><!-- .entry-content -->
 				</article><!-- #post-0 -->
 
@@ -81,5 +82,6 @@ get_header(); ?>
 			</div><!-- #content -->
 		</section><!-- #primary -->
 
+<!-- Call template sidebar and footer -->
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>
