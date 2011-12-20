@@ -60,13 +60,13 @@ You can also add events in the Calendar view in a manner similiar to Google Cale
 
 
 = How do I display events? =
-Events are automatically displayed on the events page: try [code]www.your-wordpress-site.com/?post_type=event[/code] (If you have permalinks enabled these will have 'prettier' versions). Similarly, [code]?event-category=[/code] would display events of a specfied category, and [code]?venue=[/code], events at specified venue. FInally [code]?event=[/code] will show the specified event.
+Events are automatically displayed on the events page: try`www.your-wordpress-site.com/?post_type=event` (If you have permalinks enabled these will have 'prettier' versions). Similarly, `?event-category=` would display events of a specfied category, and `?venue=`, events at specified venue. FInally `?event=` will show the specified event.
 
 Each of the above have their own associated template. These template files are present in the template sub-directory of the Event-Organiser plug-in folder. To override the default templates, simply create the appropriately named files in your theme directory.
 
 The plug-in also provides event listing and event calendar widgets and shortocdes that can be used to display events.
 
-Finally, the plug-in provides a function [code]eo_get_events[/code] which is similiar to WordPress' [code]get_posts[/code]. The function returns an array of post objects (where the posts are events), and this can be used to display events through editing your theme. The usual WordPress functions for display associated information (author, title etc) are still available to you, and the plug-in provides a similar set of functions to display event related data (dates, venues etc). See the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/).
+Finally, the plug-in provides a function `eo_get_events` which is similiar to WordPress' `get_posts`. The function returns an array of post objects (where the posts are events), and this can be used to display events through editing your theme. The usual WordPress functions for display associated information (author, title etc) are still available to you, and the plug-in provides a similar set of functions to display event related data (dates, venues etc). See the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/).
 
 == Screenshots ==
 1. Event admin screen

@@ -66,7 +66,7 @@ Each of the above have their own associated template. These template files are p
 
 The plug-in also provides event listing and event calendar widgets and shortocdes that can be used to display events.
 
-Finally, the plug-in provides a function [code]eo_get_events[/code] which is similiar to WordPress' [code]get_posts[/code]. The function returns an array of post objects (where the posts are events), and this can be used to display events through editing your theme. The usual WordPress functions for display associated information (author, title etc) are still available to you, and the plug-in provides a similar set of functions to display event related data (dates, venues etc). See the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/).
+Finally, the plug-in provides a function `eo_get_events` which is similiar to WordPress' `get_posts`. The function returns an array of post objects (where the posts are events), and this can be used to display events through editing your theme. The usual WordPress functions for display associated information (author, title etc) are still available to you, and the plug-in provides a similar set of functions to display event related data (dates, venues etc). See the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/).
 
 == Screenshots ==
 1. Event admin screen
@@ -77,6 +77,7 @@ Finally, the plug-in provides a function [code]eo_get_events[/code] which is sim
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
 = 1.0.1 =
 Minor bug fixes and readme update.
 
