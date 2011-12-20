@@ -2,6 +2,11 @@
 /**
 * Event importer / exporter
  */
+if ( ! function_exists( 'add_action' ) ) {
+	echo "Hi there!  I'm just a part of plugin, not much I can do when called directly.";
+	exit;
+}
+
 class Event_Organiser_Im_Export  {
 	
 	static private $classobj = NULL;
@@ -25,8 +30,9 @@ class Event_Organiser_Im_Export  {
 		global $pagenow;
 		
 		if ( isset( $_GET['addquicktag_download'] )&& check_admin_referer( 'eventorganiser_export' )
-			&& current_user_can('manage_options')&& $pagenow=="options-general.php")
+			&& current_user_can('manage_options')&& $pagenow=="options-general.php"){
 			$this->get_export_file();
+		}
 						
 	}
 	
@@ -132,6 +138,4 @@ END:VCALENDAR
 	echo $eventsical;
 	exit();
 	}	
-
 } // end class
-$eventorganiser_im_export = Event_Organiser_Im_Export::get_object();

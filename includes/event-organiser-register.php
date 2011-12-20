@@ -49,7 +49,8 @@ function eventorganiser_register_scripts(){
  *
  * @since 1.0.0
  */
-add_action('admin_init','Event_Organiser_Im_Export::get_object');
+
+add_action('admin_init', array('Event_Organiser_Im_Export', 'get_object'));
 add_action('admin_init','eventorganiser_cal_action');
 
 

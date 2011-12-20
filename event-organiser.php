@@ -4,7 +4,7 @@ Plugin Name: Event Organiser
 Plugin URI: http://www.HarrisWebSolutions.co.uk/event-organiser
 Description: Creates a custom post type 'events' with features such as reoccurring events, venues, Google Maps, calendar views and events and venue pages
 Author: Stephen Harris
-Version: 1.0.1
+Version: 1.0.2
 Author URI: http://www.HarrisWebSolutions.co.uk
 */
 
@@ -78,10 +78,9 @@ if(is_admin()):
 	require_once('event-organiser-settings.php');
 	require_once('event-organiser-venues.php');
 	require_once('event-organiser-calendar.php');
+	require_once("includes/class-event-organiser-im-export.php");
 	require_once("classes/class-eo-list-table.php");
 endif;
-
-	require_once("includes/class-event-organiser-im-export.php");
 
 /****** Ajax files ******/
 require_once('includes/event-organiser-venue-search.php');
