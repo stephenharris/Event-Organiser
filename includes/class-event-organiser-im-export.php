@@ -27,28 +27,10 @@ class Event_Organiser_Im_Export  {
 		if ( isset( $_GET['addquicktag_download'] )&& check_admin_referer( 'eventorganiser_export' )
 			&& current_user_can('manage_options')&& $pagenow=="options-general.php")
 			$this->get_export_file();
-							
-		add_action( 'exporter_settings_page', array( $this, 'get_im_export_part' ) );
+						
 	}
 	
-	/**
-	 * markup for export on settings page
-	 */
-	public function get_im_export_part() {
-		?>
-		<h3 class="title"><?php _e('Export Events', 'eventorganiser'); ?></h3>
-			<p><?php _e( 'The export button below generates an ICS file of your events that can be imported to other calendar applications such as Google Calendar.', 'eventorganiser'); ?></p>
-			<form method="get" action="">
-				<?php wp_nonce_field( 'eventorganiser_export' ); ?>
-				<input type="hidden" name="page" value="event-settings" />
-				<p class="submit">
-					<input type="submit" name="submit" value="<?php _e( 'Download Export File', 'eo' ); ?> &raquo;" />
-					<input type="hidden" name="addquicktag_download" value="true" />
-				</p>
-			</form>
-		<?php
-	}
-	
+
 	/*
 	 * Build export file, ics
 	 * @since   1.0.0

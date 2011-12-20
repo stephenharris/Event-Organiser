@@ -137,7 +137,16 @@ For each of the pages, the corresponding template is used. To use your own templ
 	<?php wp_nonce_field('eventorganiser_update_settings'); ?>
 	<p class="submit"><input type="submit" name="eo_setting[action]"  class="button-primary" value="<?php _e('Update Settings', 'eventorganiser'); ?>" /></p>
 	</form> 
-	<?php do_action( 'exporter_settings_page' ); ?>
+	<h3 class="title"><?php _e('Export Events', 'eventorganiser'); ?></h3>
+			<p><?php _e( 'The export button below generates an ICS file of your events that can be imported to other calendar applications such as Google Calendar.', 'eventorganiser'); ?></p>
+			<form method="get" action="">
+				<?php wp_nonce_field( 'eventorganiser_export' ); ?>
+				<input type="hidden" name="page" value="event-settings" />
+				<p class="submit">
+					<input type="submit" name="submit" value="<?php _e( 'Download Export File', 'eo' ); ?> &raquo;" />
+					<input type="hidden" name="addquicktag_download" value="true" />
+				</p>
+			</form>
 <?php }
 
 /*
