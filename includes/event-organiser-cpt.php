@@ -217,7 +217,8 @@ function eventorganiser_menu_link($items) {
 */
 add_action( 'contextual_help', 'eventorganiser_cpt_help_text', 10, 3 );
 function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) { 
-
+	//The add_help_tab function for screen was introduced in WordPress 3.3
+	if(method_exists($screen, 'add_help_tab')):
 	switch($screen->id):
 		//Add help for event editing / creating page
 		case ('event'):
@@ -340,6 +341,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 
 	//Add a link to Event Organiser documentation on every page
 	$screen->set_help_sidebar( '<p> <strong> For more information</strong> </p><p>See the <a target="_blank" href="http://www.harriswebsolutions.co.uk/event-organiser/documentation/"> documentation</a></p>');
+	endif;
 
 	return $contextual_help;
 }

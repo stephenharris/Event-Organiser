@@ -4,7 +4,7 @@ Donate link: http://www.HarrisWebSolutions.co.uk/
 Tags: events, event, event organiser, event calendar, events calendar, event management, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.3
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -12,7 +12,7 @@ Create and maintain events, including complex reoccurring patterns, venue manage
 
 Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows your to view your events in the familiar WordPress list or view all occurrences of your events in a calendar page in the amin area.
 
-Requires WordPress 3.3 and PHP 5.3 (or higher)
+Requires **WordPress 3.3** and **PHP 5.3** (or higher)
 
 = Features =
 * Adds an **event custom post type** that fits naturally into WordPress and allows for all the functionality of 'posts'.
@@ -25,7 +25,7 @@ Requires WordPress 3.3 and PHP 5.3 (or higher)
 * The **Venue map shortcodes** to display a map of a venue
 *  **Custom permissions** allow to specifiy which roles have the ability to create, edit and delete events or manage venues.
 * **Template** pages include in the plug-in for 'quick-start'. These can be over-ridden by including the appropriately named template files in your theme folder 
-* **Event functions** available which extend the post functions (e.g. the_title(),get_the_author(), the_author()) to ouput or return event data (the start date-time, the venue etc). For examples of their use see the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/) documentation or the included template files.
+* **Event functions** available which extend the post functions (e.g. `the_title()`,`get_the_author()`, `the_author()`) to ouput or return event data (the start date-time, the venue etc). For examples of their use see the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/) documentation or the included template files.
 * Assign events to categories, and view events by category
 * Venue pages, to view events by venue
 * Export events to .ics file
@@ -77,6 +77,9 @@ Finally, the plug-in provides a function `eo_get_events` which is similiar to Wo
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.0.3 =
+Fixed 'blank screen of death' for unsupported versions (WP < 3.3). The plug-in will still not operate correctly for versions before 3.3
 
 = 1.0.2 =
 Fixed ics exporter and deactivation/uninstall

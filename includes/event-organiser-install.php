@@ -1,6 +1,6 @@
 <?php
  function eventorganiser_install(){
-       global $wpdb, $eventorganiser_version, $eventorganiser_venue_table, $eventorganiser_events_table;
+       global $wpdb, $eventorganiser_db_version, $eventorganiser_venue_table, $eventorganiser_events_table;
 	$table_posts = $wpdb->prefix . "posts";
 
 	$charset_collate = '';
@@ -61,8 +61,8 @@
 		'excludefromsearch'=>0,
 		'showpast'=> 0
 	);
-	add_option("eventorganiser_version",$eventorganiser_db_version);
-	add_option('eventorganiser_options',$eventorganiser_options);
+	update_option("eventorganiser_version",$eventorganiser_db_version);
+	update_option('eventorganiser_options',$eventorganiser_options);
 			
 	global $wp_roles,$eventorganiser_roles;	
 	$all_roles = $wp_roles->roles;
