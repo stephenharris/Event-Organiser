@@ -65,7 +65,7 @@ CALSCALE:GREGORIAN
 <?php
   
 	// Query for events
-	$events = eo_get_events(array('numberofposts'=>-1,'showoccurrences'=>false));
+	$events = eo_get_events(array('numberofposts'=>-1,'showrepeats'=>0));
  
 	// Loop through events
 	if ($events):
