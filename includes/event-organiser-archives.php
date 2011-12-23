@@ -71,7 +71,6 @@ function eventorganiser_event_fields( $selec, $query ){
 
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']) {
 		$selec = "{$eventorganiser_events_table}.*,".$selec; 
-		//$selec = " {$eventorganiser_venue_table}.*, ".$selec; 
 	}
 	return $selec;
 }

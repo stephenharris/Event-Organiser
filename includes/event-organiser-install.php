@@ -25,11 +25,7 @@
 		event_allday TINYINT(1) NOT NULL,
 		reoccurrence_start DATE NOT NULL,
 		reoccurrence_end DATE NOT NULL,
-		PRIMARY KEY  (event_id),
-		CONSTRAINT ".$table_posts."
-		FOREIGN KEY (post_id)
-		REFERENCES ".$table_posts."(ID)
-		ON DELETE CASCADE )".$charset_collate;
+		PRIMARY KEY  (event_id))".$charset_collate;
 	
 	//Venue table
 	$sql_venue_table = "CREATE TABLE " . $eventorganiser_venue_table. " (

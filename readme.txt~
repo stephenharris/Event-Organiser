@@ -78,8 +78,11 @@ Finally, the plug-in provides a function `eo_get_events` which is similiar to Wo
 
 == Changelog ==
 
+= 1.0.4 =
+Introduced warning messages for unsupported PHP / WP versions and missing tables. Updated templates to work with more themes. Updated event table install.
+
 = 1.0.3 =
-Fixed 'blank screen of death' for unsupported versions (WP < 3.3). The plug-in will still not operate correctly for versions before 3.3
+Fixed 'blank screen of death' for unsupported versions (WP < 3.3). The plug-in will still not operate correctly for versions before 3.3.
 
 = 1.0.2 =
 Fixed ics exporter and deactivation/uninstall
@@ -89,3 +92,8 @@ Minor bug fixes and readme update.
 
 = 1.0.0 =
 Initial release
+
+== Upgrade Notice ==
+
+= 1.0.4 =
+The templates have been adapted to work as is in for more themes. Error messages now display for unsupported versions.

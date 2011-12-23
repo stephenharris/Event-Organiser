@@ -154,7 +154,43 @@ function add_admin_scripts( $hook ) {
  */
 add_action('admin_notices', 'eo_admin_notices',0);
 function eo_admin_notices(){
-	global $EO_Errors;
+	global $EO_Errors,$eventorganiser_events_table,$eventorganiser_venue_table,$wpdb;
+
+	//Check tables exist
+	$table_errors = array();
+	if($wpdb->get_var("show tables like '$eventorganiser_events_table'") != $eventorganiser_events_table):
+		$table_errors[]=$eventorganiser_events_table;
+	endif;
+	if($wpdb->get_var("show tables like '$eventorganiser_venue_table'") != $eventorganiser_venue_table):
+		$table_errors[]=$eventorganiser_venue_table;
+	endif;
+
+	if(!empty($table_errors)):?>
+		<div class="error"	>
+		<p>There has been an error with Event Organiser. One or more tables are missing:</p>
+		<ul>
+		<?php foreach($table_errors as $table):
+			echo "<li>".$table."</li>";
+		endforeach; ?>
+		</ul>
+		<p>Please try re-installing the plugin.</p>
+		</div>
+	<?php	endif;
+
+	//Check PHP version
+	if (version_compare(PHP_VERSION, '5.3.0') < 0):?>
+		<div class="error"	>
+			<p>Event Organiser requires <strong>PHP 5.3</strong> to function properly. Your version is <?php echo PHP_VERSION; ?>. </p>
+		</div>
+	<?php endif;
+
+	//Check WordPress version
+	if(get_bloginfo('version')<'3.3'):?>
+		<div class="error"	>
+			<p>Event Organiser requires <strong>WordPress 3.3</strong> to function properly. Your version is <?php echo get_bloginfo('version'); ?>. </p>
+		</div>
+	<?php endif; 
+
 	$errors=array();
 	$notices=array();
 	if(isset($EO_Errors)):
