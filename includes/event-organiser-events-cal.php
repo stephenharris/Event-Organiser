@@ -14,20 +14,29 @@
 
  
 	function eo_ajax_admin_cal() {
-		
-		//Get the dates being viewed
-		$end = date('Y-m-d',intval($_GET['end']));
-		$start = date('Y-m-d',intval($_GET['start']));
-	
-		//Retrieve events		
-		$query = new WP_Query( array( 
+		//request
+		$request = array(
+			'start_before'=>$_GET['start'],
+			'end_after'=>$_GET['end']
+		);
+		if(!empty($_GET['venue']))
+			$request['venue']=(int)$_GET['venue'];
+
+		if(!empty($_GET['category']))
+			$request['event-category']=$_GET['category'];
+
+		//Presets
+		$presets = array( 
 			'posts_per_page'=>-1,
 			'post_type'=>'event',
 			'showrepeats'=>true,
-			'perm' => 'readable',
-			'start_before'=>$end,
-			'end_after'=>$start ));
+			'perm' => 'readable');
 
+		//Create query
+		$query_array = array_merge($presets, $request);	
+		$query = new WP_Query($query_array );
+
+		//Retrieve events		
 		$query->get_posts();
 		$eventsarray = array();
 
@@ -129,10 +138,10 @@
  
 	function ajax_widget_cal() {
 
-		/*Retrieve the month we are after. $month must be the 
-		a DateTime object to the first of that month*/
+		/*Retrieve the month we are after. $month must be a 
+		DateTime object of the first of that month*/
 		if(isset($_GET['eo_month'])){
-			$month  = DateTime::createFromFormat('Y-m-d', $_GET['eo_month'].'-01');
+			$month  = new DateTime($_GET['eo_month'].'-01'); 
 		}else{
 			$month = new DateTime();
 			$month->modify('first day of this month');

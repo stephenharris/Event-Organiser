@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
 					delay: 0,
 					minLength: 2,
 					source: function(req, response){  
-						jQuery.getJSON(MyAjax.ajaxurl+"?callback=?&action=myajax-submit", req, function(data) {  
+						jQuery.getJSON(EO_Ajax_Event.ajaxurl+"?callback=?&action=eo-search-venue", req, function(data) {  
 							response( jQuery.map( data, function( item ) {
 								item.label = item.venue_name;			
 								return item;
@@ -50,10 +50,10 @@ jQuery(document).ready(function() {
 	 //Date and time selection
 	if( jQuery("#eventorganiser_detail #from_date, #eventorganiser_detail #to_date" ).length>0){
 	var dates = jQuery("#eventorganiser_detail #from_date, #eventorganiser_detail #to_date" ).datepicker({
-			dateFormat: MyAjax.format,
+			dateFormat: EO_Ajax_Event.format,
 			changeMonth: true,
 			changeYear: true,
-			firstDay:  parseInt(MyAjax.startday),
+			firstDay:  parseInt(EO_Ajax_Event.startday),
 			buttonImage: 'images/ui-icon-calendar.png',
 			buttonImageOnly: true,
 			onSelect: function( selectedDate ) {
@@ -72,10 +72,10 @@ jQuery(document).ready(function() {
 		});
 
 	jQuery( "#recend").datepicker({
-		dateFormat: MyAjax.format,
+		dateFormat: EO_Ajax_Event.format,
 		changeMonth: true,
 		changeYear: true,
-		firstDay:  parseInt(MyAjax.startday),
+		firstDay:  parseInt(EO_Ajax_Event.startday),
 	});
 
 	jQuery('#HWSEvent_time, #HWSEvent_time2').timepicker({
@@ -158,7 +158,7 @@ function eo_produce_summary(){
 			case 'monthly':
 				summary=summary+'month'+s;
 				//Show & enable reoccurrence forms and month meta. Disable & hide week meta 
-				if(jQuery("#dayofmonthrepeat :radio:checked").val()=='date'){
+				if(jQuery("#dayofmonthrepeat :radio:checked").val()=='BYMONTHDAY='){
 					summary = summary+" on the "+fromdate.getDate()+eo_date_suffix(fromdate);
 				}else{
 					day =fromdate.getDay()%7;

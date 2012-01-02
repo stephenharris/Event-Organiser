@@ -1,18 +1,34 @@
 jQuery(document).ready(function() {
-			jQuery("#eo_event_create_cal input[type='submit']").attr('disabled','disabled');
-
 			jQuery('#calendar').fullCalendar({
 				firstDay:  parseInt(EO_Ajax.startday),
 				editable: false,
 				lazyFetching: 'true',
 				theme: true,
-				events: EO_Ajax.ajaxurl+"?action=event-admin-cal",		
+				header: {
+					left: 'title',
+					center: 'dropdown-meta',
+					right: 'prev goto today next'
+				},
+				events:  function(start, end, callback) {
+					jQuery.ajax({
+						url: EO_Ajax.ajaxurl+"?action=event-admin-cal",
+						dataType: 'JSON',
+           				 	data: {
+							start: jQuery.fullCalendar.formatDate(start, 'yyyy-MM-dd'),
+							end:jQuery.fullCalendar.formatDate(end, 'yyyy-MM-dd')
+						},
+			            		success: function(data) {
+		                			callback(data);
+            					}
+					})
+	    			},
+				categories: EO_Ajax.categories,
+				venues: EO_Ajax.venues,
 				selectable:true,
 				selectHelper: true,
 				weekMode: 'variable',
 				aspectRatio: 1.50,
 				eventColor:  '#21759B',
-
 				loading: function(bool) {
 					if (bool) jQuery('#loading').show();
 					else jQuery('#loading').hide();
@@ -25,65 +41,111 @@ jQuery(document).ready(function() {
 			    	},
 
 				select: function( startDate, endDate, allDay, jsEvent, view ){
-				if(EO_Ajax.perm_edit){
-					jsEvent.preventDefault();
-					if(EO_Ajax.format=='mm-dd-yy'){
-						fc_format = 'MM-dd-yyyy';
-					}else{
-						fc_format = 'dd-MM-yyyy';
-					}
+					if(EO_Ajax.perm_edit){
+						jsEvent.preventDefault();
+						fc_format = 'yyyy-MM-dd'
 
-					start_date =jQuery.fullCalendar.formatDate( startDate, fc_format);
-					start_time =jQuery.fullCalendar.formatDate( startDate, 'HH:mm');
-					end_date =jQuery.fullCalendar.formatDate( endDate, fc_format);
-					end_time =jQuery.fullCalendar.formatDate( endDate, 'HH:mm');
+						start_date =jQuery.fullCalendar.formatDate( startDate, fc_format);
+						start_time =jQuery.fullCalendar.formatDate( startDate, 'HH:mm');
+						end_date =jQuery.fullCalendar.formatDate( endDate, fc_format);
+						end_time =jQuery.fullCalendar.formatDate( endDate, 'HH:mm');
 
-					if(allDay){
-						format = 'ddd, dS MMMM';
-						allDay = 1;
-					}else{
-						format = 'ddd, dS MMMM h(:mm)tt';
-						allDay = 0;
-					}
-
-					if(start_date == end_date){
-						the_date = jQuery.fullCalendar.formatDate( startDate, format)
-						if(!allDay){
-							the_date =the_date +' &mdash; '+ jQuery.fullCalendar.formatDate( endDate, 'h(:mm)tt');
+						if(allDay){
+							format = 'ddd, dS MMMM';
+							allDay = 1;
+						}else{
+							format = 'ddd, dS MMMM h(:mm)tt';
+							allDay = 0;
 						}
-					}else{
-						the_date = jQuery.fullCalendar.formatDate( startDate, format)+' &mdash; '+jQuery.fullCalendar.formatDate( endDate, format);;
-					}
-					//Reset forms
-					jQuery("#eo_event_create_cal input[name='eo_event[event_title]']").val('');
-					jQuery("#eo_event_create_cal select[name='eo_event[Venue']] option:first-child").attr("selected",'selected');
-					jQuery("#eo_event_create_cal input.ui-autocomplete-input").val('');
-					jQuery("#eo_event_create_cal textarea[name='eo_event[event_content]']").val('');
-					jQuery("#eo_event_create_cal input[name='eo_event[StartDate]']").val(start_date);
-					jQuery("#eo_event_create_cal input[name='eo_event[StartTime]']").val(start_time);
-					jQuery("#eo_event_create_cal input[name='eo_event[EndDate]']").val(end_date);
-					jQuery("#eo_event_create_cal input[name='eo_event[FinishTime]']").val(end_time);
-					jQuery("#eo_event_create_cal input[name='eo_event[allday]']").val(allDay);
-					jQuery("#eo_event_create_cal td#date").html(the_date);
-						
-					tb_show('Create an event',"#TB_inline?height=290&amp;width=400&amp;inlineId=eo_event_create_cal",null);
 
-					jQuery("form.eo_cal input[type='submit']").removeAttr('disabled');
-					jQuery("form.eo_cal input#reset").click(function(event){
-						tb_remove();
-					});
-				}
+						if(start_date == end_date){
+							the_date = jQuery.fullCalendar.formatDate( startDate, format)
+							if(!allDay){
+								the_date =the_date +' &mdash; '+ jQuery.fullCalendar.formatDate( endDate, 'h(:mm)tt');
+							}
+						}else{
+							the_date = jQuery.fullCalendar.formatDate( startDate, format)+' &mdash; '+jQuery.fullCalendar.formatDate( endDate, format);;
+						}
+
+						//Reset forms
+						jQuery("#eo_event_create_cal input[name='eo_event[event_title]']").val('');
+						jQuery("#eo_event_create_cal select[name='eo_event[Venue']] option:first-child").attr("selected",'selected');
+						jQuery("#eo_event_create_cal input.ui-autocomplete-input").val('');
+						jQuery("#eo_event_create_cal textarea[name='eo_event[event_content]']").val('');
+						jQuery("#eo_event_create_cal input[name='eo_event[StartDate]']").val(start_date);
+						jQuery("#eo_event_create_cal input[name='eo_event[StartTime]']").val(start_time);
+						jQuery("#eo_event_create_cal input[name='eo_event[EndDate]']").val(end_date);
+						jQuery("#eo_event_create_cal input[name='eo_event[FinishTime]']").val(end_time);
+						jQuery("#eo_event_create_cal input[name='eo_event[allday]']").val(allDay);
+						jQuery("#eo_event_create_cal td#date").html(the_date);
+						
+						tb_show('Create an event',"#TB_inline?height=290&amp;width=400&amp;inlineId=eo_event_create_cal",null);
+
+						jQuery("form.eo_cal input[type='submit']").removeAttr('disabled');
+						jQuery("form.eo_cal input#reset").click(function(event){
+							tb_remove();
+						});
+					}
 				}
 			});
 
+		/*
+		 * Add the calendar mode tabs
+		*/
 		jQuery('.view-button').click(function(event){
 			event.preventDefault();
 			jQuery('.view-button').removeClass('active');
 			jQuery('#calendar').fullCalendar( 'changeView', jQuery(this).attr('id') )		
 			jQuery(this).addClass('active');
 		});
+
+		/*
+		 * Add the mini-calendar to for navigating full-calendar
+		*/
+		jQuery('#miniCalendar').datepicker({
+		    dateFormat: 'DD, d MM, yy',
+		    showOn:'button',
+		    buttonText: 'go to date',
+		    onSelect: function(dateText,dp){
+		    jQuery('#calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText)));
+             }
+             });
+		jQuery('button.ui-datepicker-trigger').button();
+
+
+		/*
+		 * Refetch events if filters are changed
+		*/
+		jQuery("#calendar-event-meta").change(function(){
+			//remove all events & sources, and add new query
+			jQuery('#calendar').fullCalendar('removeEvents').fullCalendar('removeEventSources').fullCalendar('addEventSource',
+				 function(start, end, callback) {
+					jQuery.ajax({
+						url: EO_Ajax.ajaxurl+"?action=event-admin-cal",
+						dataType: 'JSON',
+           				 	data: {
+							start: jQuery.fullCalendar.formatDate(start, 'yyyy-MM-dd'),
+							end:jQuery.fullCalendar.formatDate(end, 'yyyy-MM-dd'),
+				            		category: jQuery("#calendar-event-meta #eo-event-cat").val(),
+							venue: jQuery("#calendar-event-meta #eo-event-venue").val()
+						},
+			            		success: function(returned) {
+		                			callback(returned);
+            					}
+					})
+	    			});
+		});
 });
 /**
+************ WARNING ****************
+Below is an EDITED version of FullCalendar
+which generates the drop-down menus.
+
+If you wish to use this jQuery plug-in please
+go to the developer's website.
+***************************************
+*
+	/**
  * @preserve
  * FullCalendar v1.5.2
  * http://arshaw.com/fullcalendar/
@@ -158,7 +220,8 @@ var defaults = {
 		today: 'today',
 		month: 'month',
 		week: 'week',
-		day: 'day'
+		day: 'day',
+		jump: 'jump'
 	},
 	
 	// jquery-ui theming
@@ -280,6 +343,7 @@ function Calendar(element, options, eventSources) {
 	t.unselect = unselect;
 	t.prev = prev;
 	t.next = next;
+	t.jump = jump;
 	t.prevYear = prevYear;
 	t.nextYear = nextYear;
 	t.today = today;
@@ -652,6 +716,9 @@ function Calendar(element, options, eventSources) {
 		renderView(1);
 	}
 	
+	function jump() {
+		renderView(1);
+	}
 	
 	function prevYear() {
 		addYears(date, -1);
@@ -666,6 +733,11 @@ function Calendar(element, options, eventSources) {
 	
 	
 	function today() {
+		date = new Date();
+		renderView();
+	}
+
+	function jump() {
 		date = new Date();
 		renderView();
 	}
@@ -799,6 +871,39 @@ function Header(calendar, options) {
 		element.remove();
 	}
 	
+/*****************************************************************************************/
+	/*
+	* Added on by EO for drop-down meta menu
+	*/
+	function build_cat_dropdown(element){
+		terms = options.categories;
+
+		html="<select id='eo-event-cat'>";
+		html+="<option value=''>All Categories</option>";
+				
+		for (i=0; i<terms.length; i++){
+			html+= "<option value='"+terms[i].slug+"'>"+terms[i].name+"</option>";
+		}
+		html+="</select>";
+		element.append(html);
+	}
+
+	function build_venue_dropdown(element){
+		venues = options.venues;
+
+		html="<select id='eo-event-venue'>";
+		html+="<option value=''>All Venues</option>";
+				
+		for (i=0; i<venues.length; i++){
+			html+= "<option value='"+venues[i].venue_id+"'>"+venues[i].venue_name+"</option>";
+		}
+		html+="</select>";
+		element.append(html);
+	}
+/*****************************************************************************************/
+	/*
+	* Added two 'buttons': 'dropdown-date' and 'dropdown-meta'
+	*/
 	
 	function renderSection(position) {
 		var e = $("<td class='fc-header-" + position + "'/>");
@@ -816,6 +921,13 @@ function Header(calendar, options) {
 							prevButton.addClass(tm + '-corner-right');
 						}
 						prevButton = null;
+					}else if(buttonName == 'goto'){
+						e.append("<span class='fc-header-goto'><input type='hidden' id='miniCalendar'/></span>");
+					}else if(buttonName == 'dropdown-meta'){
+						element = $("<span class='fc-header-dropdown' id='calendar-event-meta'></span>");
+						e.append(element);
+						build_cat_dropdown(element)
+						build_venue_dropdown(element)
 					}else{
 						var buttonClick;
 						if (calendar[buttonName]) {

@@ -48,7 +48,7 @@ function eventorganiser_venues_action() {
 				$EO_Venue->update($_REQUEST['venue'], $_POST['eo_venue']);
 
 			}elseif($_REQUEST['action']=='add'){
-				 $EO_Venue->add($_POST['eo_venue']); 	
+				 $EO_Venue = $EO_Venue->add($_POST['eo_venue']); 
 	
 			}else{
 				$venues = EO_Venues::doaction($_REQUEST['venue'], $_REQUEST['action']);
@@ -150,7 +150,7 @@ function event_organiser_display_venue_form(){
 
 		<div id="titlediv">
 			<div id="titlewrap">
-				<label for="title" id="title-prompt-text" style="visibility:hidden" class="hide-if-no-js">Enter venue name here</label>
+				<!--<label for="title" id="title-prompt-text" style="visibility:hidden" class="hide-if-no-js">Enter venue name here</label>-->
 				<input type="text" placeholder="Venue name" autocomplete="off" id="title" value="<?php echo $EO_Venue->name;?>" tabindex="1" size="30" name="eo_venue[Name]">
 			</div>
 			<div class="inside">
@@ -192,7 +192,7 @@ function event_organiser_display_venue_form(){
 		</div>
 
 		<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="venue_description postarea">
-			<?php the_editor($EO_Venue->display_description('edit'),'eo_venue[content]', 'title', false, 2)?>
+			<?php wp_editor($EO_Venue->display_description('edit'), 'content', array('textarea_name'=>'eo_venue[content]','dfw' => false, 'tabindex' => 1) ); ?>
 		</div>
 
 		<input type="hidden" name="eo_venue[Lat]" id="eo_venue_Lat"  value="<?php echo $EO_Venue->latitude;?>"/>

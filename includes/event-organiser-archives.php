@@ -149,8 +149,10 @@ function eventorganiser_events_where( $where, $query ){
 		* There could be options in the future to change this behaviour.
 		* Currently we show single pages, even if they don't appear in archive listings.
 		* There could be options in the future to change this behaviour too.
+		*
+		* 'Future events' only works if we are showing all reoccurrences, and not wanting just the first occurrence of an event.
 		*/
-		if(isset($query->query_vars['showpastevents'])&& !$query->query_vars['showpastevents'] ){
+		if(!empty($query->query_vars['showrepeats']) && isset($query->query_vars['showpastevents'])&& !$query->query_vars['showpastevents'] ){
 
 			//Retrieve the blog's local time and create the date part
 			$blog_now = new DateTIme(null,EO_Event::get_timezone());
@@ -239,7 +241,7 @@ function sort_custom( $orderby, $query ){
 
 	//If no orderby is set, but we are querying events, return the default order for events;
 	elseif(isset($query->query_vars['post_type']) && $query->query_vars['post_type']=='event'):
-			$orderby = " {$eventorganiser_events_table}.StartDate ASC, {$eventorganiser_events_table}.FinishTime ASC";
+			$orderby = " {$eventorganiser_events_table}.StartDate ASC, {$eventorganiser_events_table}.StartTime ASC";
 
 	endif;
 	 //End if variables set

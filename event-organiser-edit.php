@@ -87,7 +87,7 @@ function eventorganiser_details_metabox(){
 			<td>Reoccurrence: </td>
 			<td> 
 			<select id="HWSEventInput_Req" name="eo_input[schedule]" <?php disabled($event->is_reoccurring());?>>
-					<?php foreach ($event->allowed_reoccurs as $index=>$val): ?>
+					<?php foreach (EO_Event::$allowed_reoccurs as $index=>$val): ?>
 						<option value="<?php echo $index;?>" <?php selected($event->is_schedule($index));?>><?php echo $index;?></option>
 					<?php endforeach;  //End foreach $allowed_reoccurs?>
 			</select>
@@ -105,12 +105,12 @@ function eventorganiser_details_metabox(){
 			on 	
 				<?php for($i = 0; $i <= 6; $i++):
 				$d = ($start_day + $i)%7;?>
-				<input type="checkbox" id="day-<?php echo $index;?>"  <?php checked($event->meta[$d],'1'); ?> class="daysofweek" name="eo_input[days][]" disabled="disabled" value="<?php echo $event->eo_daysofweek[$d]['ical'];?>" /> <?php echo $event->eo_daysofweek[$d]['D'];?>
+				<input type="checkbox" id="day-<?php echo $index;?>"  <?php checked($event->meta[$d],'1'); ?>  value="<?php echo EO_Event::$daysofweek[$d]['ical'];?>" class="daysofweek" name="eo_input[days][]" disabled="disabled" /> <?php echo EO_Event::$daysofweek[$d]['D'];?>
 				<?php endfor;  ?>
 			</p>
 			<p id="dayofmonthrepeat">
-				<input type="radio" disabled="disabled" name="eo_input[schedule_meta]" <?php checked($event->meta,'date'); ?> value="date" /> day of month
-				<input type="radio" disabled="disabled" name="eo_input[schedule_meta]"  <?php checked($event->meta=='date',false); ?> value="day" /> day of week<br />
+				<input type="radio" disabled="disabled" name="eo_input[schedule_meta]" <?php checked($event->occursBy(),'BYMONTHDAY'); ?> value="BYMONTHDAY=" /> day of month
+				<input type="radio" disabled="disabled" name="eo_input[schedule_meta]"  <?php checked($event->occursBy()=='BYMONTHDAY',false); ?> value="BYDAY=" /> day of week<br />
 			</p>
 			<p class="reoccurrence_label">
 			until 
@@ -233,34 +233,8 @@ function eventorganiser_details_save($post_id) {
 		}
 	endif;
 
-	//Populate event data from raw input (performs checks on first data), return if successful or not
-	if(!$event->create($raw_data))
-			return $post_id;
-	
-	if($delete_existing){
-		 eventorganiser_event_delete($post_id);
-	}
-	
-	//Insert occurrances into database
-	foreach($event->occurrences as $counter=> $occurrance):
-		$occurrance_input =array(
-			'post_id'=>$post_id,
-			'StartDate'=>$occurrance->format('Y-m-d'),
-			'StartTime'=>$event->start->format('H:i:s'),
-			'EndDate'=>$occurrance->add($event->duration)->format('Y-m-d'),
-			'FinishTime'=>$event->end->format('H:i:s'),
-			'Venue'=>$event->venue,
-			'event_schedule' => $event->schedule,
-			'event_schedule_meta' => $event->meta,
-			'event_frequency' => $event->frequency,
-			'event_occurrence' => $counter,
-			'event_allday' =>  $event->allday,
-			'reoccurrence_start' => $event->schedule_start->format('Y-m-d'),
-			'reoccurrence_end' => $event->schedule_end->format('Y-m-d'),
-		);
-
-		$ins = $wpdb->insert($eventorganiser_events_table, $occurrance_input);
-	endforeach;
+	//Populate event data from raw input and inserts (after deleting existing occurrences, if necessary)
+	$event->insertEvent($raw_data, $post_id, $delete_existing);
 
 	return $post_id;
 }
@@ -274,18 +248,19 @@ function eventorganiser_details_save($post_id) {
  */
 add_action('admin_notices', 'event_edit_admin_notice',0);
 function event_edit_admin_notice(){
-    //print the message
-    global $post;
-    $notice = get_option('eo_notice');
+	//print the message
+	global $post;
+	$notice = get_option('eo_notice');
 	if (empty($notice)) return '';
 	foreach($notice as $pid => $messages){
-		if (empty($post->ID) || $post->ID == $pid ){
+		if (!empty($post->ID) && $post->ID == $pid ){
 			echo '<div id="message" class="error">';
 			foreach ($messages as $m):
 				echo '<p>'.$m.'</p>';
 			endforeach;
 			echo '</div>';
 			//make sure to remove notice after its displayed so its only displayed when needed.
+			unset($notice[0]);
 			unset($notice[$pid]);
 			update_option('eo_notice',$notice);
         	}

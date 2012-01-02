@@ -7,7 +7,6 @@
 	padding: 0 11px;
 }
 
-
 .eo_cal .eo_alignright{
 	float:right;
 }
@@ -45,11 +44,22 @@ div#calendar-view{
 	margin-bottom: 15px;
 	border-bottom: 1px solid #dfdfdf;
 	padding-right: 100px;
-
+	position: relative;
 }
 div#events-meta{
 	display:none;
 }
+
+#loading{
+	position:absolute;
+	bottom:0;
+}
+
+
+/*Added to fit with full calendar*/
+button.ui-datepicker-trigger.ui-button.ui-widget{vertical-align: top;}
+.ui-button-text{float: left;height: 1.75em;line-height: 1.75em;padding: 0 0.6em;position: relative;white-space: nowrap;}
+.ui-datepicker{z-index: 100 !important}
 
 
 /*
@@ -92,6 +102,7 @@ html .fc,
 
 .fc-header td {
 	white-space: nowrap;
+	vertical-align: middle;
 	}
 
 .fc-header-left {
@@ -121,12 +132,7 @@ html .fc,
 .fc .fc-header-space {
 	padding-left: 10px;
 	}
-	
-.fc-header .fc-button {
-	margin-bottom: 1em;
-	vertical-align: top;
-	}
-	
+		
 /* buttons edges butting together */
 
 .fc-header .fc-button {

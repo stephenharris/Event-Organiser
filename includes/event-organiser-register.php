@@ -38,7 +38,14 @@ function eventorganiser_register_scripts(){
 	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css');
 
 	//Calendar View
-	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL.'js/fullcalendar.js',array('jquery','jquery-ui-core','jquery-ui-draggable','jquery-ui-droppable','jquery-ui-widget','jquery-ui-position'));
+	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL.'js/fullcalendar.js',array(
+		'jquery',
+		'jquery-ui-core',
+		'jquery-ui-draggable',
+		'jquery-ui-droppable',
+		'jquery-ui-widget',
+		'jquery-ui-button',
+		'jquery-ui-position'));
 	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css');
 }
 
@@ -49,9 +56,14 @@ function eventorganiser_register_scripts(){
  *
  * @since 1.0.0
  */
-
+add_action('admin_init','eventorganiser_admin_init',0);
+function eventorganiser_admin_init(){
+	global $EO_Errors;
+	$EO_Errors = new WP_Error();
+}
 add_action('admin_init', array('Event_Organiser_Im_Export', 'get_object'));
 add_action('admin_init','eventorganiser_cal_action');
+
 
 
 /**
@@ -88,6 +100,9 @@ function eventorganiser_venue_page_admin_styles() {
 		wp_enqueue_script('eo_venue');
 	
 	wp_enqueue_style('eventorganiser-style');
+	wp_enqueue_script('post');
+	wp_enqueue_script('media-upload');
+	add_thickbox();
 }
 
 
@@ -100,10 +115,13 @@ function eventorganiser_venue_page_admin_styles() {
  */
 function eventorganiser_calendar_page_admin_styles(){
 	$eo_settings_array= get_option('eventorganiser_options'); 
+	$EO_Venues = new EO_Venues;
+	$EO_Venues->query();
 	 add_thickbox();
+
 	wp_enqueue_script("eo_calendar");
 	wp_enqueue_script("eo_event");
-	wp_localize_script( 'eo_event', 'MyAjax', array( 
+	wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		'startday'=>intval(get_option('start_of_week')),
 		'format'=> $eo_settings_array['dateformat'].'-yy'
@@ -112,7 +130,9 @@ function eventorganiser_calendar_page_admin_styles(){
 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		'startday'=>intval(get_option('start_of_week')),
 		'format'=> $eo_settings_array['dateformat'].'-yy',
-		'perm_edit'=> current_user_can('edit_events')
+		'perm_edit'=> current_user_can('edit_events'),
+		'categories'=>get_terms( 'event-category', array('hide_empty' => 0)),
+		'venues'=>$EO_Venues->results
 		));
 	wp_enqueue_style('eo_calendar-style');
 	wp_enqueue_style('eventorganiser-style');
@@ -133,7 +153,7 @@ function add_admin_scripts( $hook ) {
 			$eo_settings_array= get_option('eventorganiser_options'); 
 
 			wp_enqueue_script('eo_event');
-			wp_localize_script( 'eo_event', 'MyAjax', array( 
+			wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'startday'=>intval(get_option('start_of_week')),
 					'format'=> $eo_settings_array['dateformat'].'-yy'

@@ -6,23 +6,22 @@
  */
 
 function eventorganiser_cal_action(){	
+	global $wpdb, $eventorganiser_events_table;
 
 	//Double check the page
 	if(isset($_REQUEST['page'])&& $_REQUEST['page']=='calendar' && isset($_REQUEST['post_type'])&& $_REQUEST['post_type']=='event'):
 
 		//Check action
 		if(isset($_REQUEST['action'])&&($_REQUEST['action']=='Save Draft'||$_REQUEST['action']=='Publish Event'||$_REQUEST['action']=='Submit for Review')){
+
 			//Check nonce
 			check_admin_referer('eventorganiser_calendar_save');
 
 			//authentication checks
 			if (!current_user_can('edit_events')) 
 				wp_die( __('You do not have sufficient permissions to create events') );
-			
-			global $wpdb, $eventorganiser_events_table;
 
-			//Retrieve input from posted data
-			$input = $_REQUEST['eo_event'];
+			$input = $_REQUEST['eo_event']; //Retrieve input from posted data
 			
 			//Set the status of the new event
 			if($_REQUEST['action']=='Publish Event')
@@ -31,74 +30,41 @@ function eventorganiser_cal_action(){
 				$status='draft';
 			else
 				$status='pending';
-
+			
 			if ($status !='pending' && !current_user_can('publish_events')) 
 				wp_die( __('You do not have sufficient permissions to publish events') );
-		
-			//Insert new event, retrieve id
-			$post_id = wp_insert_post(array(
-				     'post_title' =>$input['event_title'],
-				     'post_status' => $status,
-					'post_content'=>$input['event_content'],
-				     'post_type' => 'event',
-				  ));
-
-			//Did the event insert correctly
-			if ( is_wp_error( $post_id) || $post_id==0) :
-				global $EO_Errors;
-				$EO_Errors = new WP_Error();
-				$EO_Errors->add('eo_error', "Event was <strong>not </strong> created");
-				if(empty($title)){
-					$EO_Errors->add('eo_error', 'No title was entered');
-				}else{
-					$EO_Errors->add('eo_error', $post_id->get_error_message());
-				}	
-   	
-			else:
-				//Insert event date details. 
+	
+			//Set post and event details
 				$input['occurrence']='once';
-				$event = new EO_Event($post_id);
-				$result = $event->create($input);
+				$input['YmdFormated']= true;
+		
+			$post_input = array(
+				'post_title' =>$input['event_title'],
+				'post_status' => $status,
+				'post_content'=>$input['event_content'],
+				'post_type' => 'event',
+			);
 
-				//Get redirect link
+			//Insert event
+			$post_id = EO_Event::insertNewEvent($post_input,$input);
+
+			if($post_id){
+				//If event was successfully inserted, redirect and display appropriate message
 				$redirect = get_edit_post_link($post_id,'');
 
-				//If event data was validated, insert into dtabalse
-				if($result){
-					foreach($event->occurrences as $counter=> $occurrance):
-						$occurrance_input =array(
-							'post_id'=>$post_id,
-							'StartDate'=>$occurrance->format('Y-m-d'),
-							'StartTime'=>$event->start->format('H:i:s'),
-							'EndDate'=>$occurrance->add($event->duration)->format('Y-m-d'),
-							'FinishTime'=>$event->end->format('H:i:s'),
-							'Venue'=>$event->venue,
-							'event_schedule' => $event->schedule,
-							'event_schedule_meta' => $event->meta,
-							'event_frequency' => $event->frequency,
-							'event_occurrence' => $counter,
-							'event_allday' =>  $event->allday,
-							'reoccurrence_start' => $event->schedule_start->format('Y-m-d'),
-							'reoccurrence_end' => $event->schedule_end->format('Y-m-d'),
-						);
-						$ins = $wpdb->insert($eventorganiser_events_table, $occurrance_input);
-					endforeach;
-	
-					//Display appropriate message
-					if($status=='publish')
-						$redirect=add_query_arg('message',6, $redirect);
-					else
-						$redirect=add_query_arg('message',7, $redirect);
-
-				}
+				if($status=='publish')
+					$redirect=add_query_arg('message',6, $redirect);
+				else
+					$redirect=add_query_arg('message',7, $redirect);
 				
 				//Redirect to event admin page & exit
 				wp_redirect($redirect);
 				exit; 
-			endif;
-		}
-	endif;
-}
+			}
+
+		}//check action
+	endif; //Check page
+	}
 
 /**
  * Display content for calendar page
@@ -120,12 +86,13 @@ function eventorganiser_calendar_page() {
 	<h2><?php _e('Events Calendar', 'eventorganiser'); ?></h2>
 
 	<div id="calendar-view">
+		<span id='loading' style='display:none'>loading...</span>
 		<a href="" class="view-button" id="agendaDay">Day </a>
 		<a href="" class="view-button" id="agendaWeek">Week </a>
 		<a href="" class="view-button active" id="month">Month </a>
 	</div>
 
-	<div id='loading' style='display:none'>loading...</div>
+
 
 	<div id='calendar'></div>
 	<span>Current date/time: <?php echo $now->format('Y-m-d G:i:s \G\M\TP');?></span>

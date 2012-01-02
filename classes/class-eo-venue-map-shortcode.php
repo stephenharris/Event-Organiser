@@ -38,12 +38,12 @@ class EO_Venue_Map_Shortcode {
 		}
 		
 		//Get latlng value by slug
-		$latlng = eo_get_venue_latlng($atts['venue']);?>
+		$latlng = eo_get_venue_latlng($atts['venue']);
 
-		<div class="<?php echo $class; ?>" id="eo_venue_map" <?php echo $style;?>></div>
-		<input type="hidden" name="eo_venue[Lat]" id="eo_venue_Lat"  value="<?php echo $latlng['lat']; ?>"/>
-		<input type="hidden" name="eo_venue[Lng]" id="eo_venue_Lng"  value="<?php echo  $latlng['lng']; ?>"/>
-		<?php
+		$return = "<div class='".$class."' id='eo_venue_map' ".$style."</div>";
+		$return .="<input type='hidden' name='eo_venue[Lat]' id='eo_venue_Lat'  value='".$latlng['lat']."'/>";
+		$return .=	"<input type='hidden' name='eo_venue[Lng]' id='eo_venue_Lng'  value='".$latlng['lng']."'/>";
+		return $return;
 	}
 
 	function print_script() {

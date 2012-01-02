@@ -1,18 +1,12 @@
 <?php
 
-	if(isset($_REQUEST['action'])&&$_REQUEST['action']='myajax_submit'):
-		do_action( 'wp_ajax_nopriv_' . $_REQUEST['action'] );
-		// do_action( 'wp_ajax_' . $_POST['action'] );
+	if(isset($_REQUEST['action'])&&$_REQUEST['action']=='eo-search-venue'):
+		do_action( 'wp_ajax_' . $_REQUEST['action'] );
 	endif;
 
-	add_action( 'wp_ajax_nopriv_myajax-submit', 'myajax_submit' );
-	add_action( 'wp_ajax_myajax-submit', 'myajax_submit' );
- 
-	function myajax_submit() {
-	
-		// get the submitted parameters
-		global $wpdb, $eventorganiser_venue_table;
-
+	add_action( 'wp_ajax_eo-search-venue', 'eventorganiser_search_venues' ); 
+	function eventorganiser_search_venues() {
+		// Query the venues with the given term
 		$EO_Venues = new EO_Venues;
 		$EO_Venues->query(array('s'=>$_GET["term"]));
 

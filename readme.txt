@@ -78,6 +78,12 @@ Finally, the plug-in provides a function `eo_get_events` which is similiar to Wo
 
 == Changelog ==
 
+= 1.1 =
+Improved admin calendar navigation, with category/venue filters. You can now import events from an ICAL file. Further details included in the ics export file. The venue content editor is now fully featured. Venue descriptions now understand shortcodes. Fixed minor bugs.
+
+= 1.0.5 =
+Fixed export bug.
+
 = 1.0.4 =
 Introduced warning messages for unsupported PHP / WP versions and missing tables. Updated templates to work with more themes. Updated event table install.
 

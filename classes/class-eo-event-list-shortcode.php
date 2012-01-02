@@ -26,7 +26,7 @@ class EO_Event_LIst_Shortcode {
 		$events = eo_get_events($atts);
 
 		if($events):	
-			echo '<ul class="eo-events eo-events-shortcode">';
+			$return= '<ul class="eo-events eo-events-shortcode">';
 			foreach ($events as $event):
 				//Check if all day, set format accordingly
 				if($event->event_allday){
@@ -34,9 +34,10 @@ class EO_Event_LIst_Shortcode {
 				}else{
 					$format = get_option('date_format').'  '.get_option('time_format');
 				}
-				echo '<li><a title="'.$event->post_title.'" href="'.get_permalink($event->ID).'">'.$event->post_title.'</a> on '.eo_format_date($event->StartDate.' '.$event->StartTime, $format).'</li>';
+				$return .= '<li><a title="'.$event->post_title.'" href="'.get_permalink($event->ID).'">'.$event->post_title.'</a> on '.eo_format_date($event->StartDate.' '.$event->StartTime, $format).'</li>';
 			endforeach;
-			echo '</ul>';
+			$return.='</ul>';
+			return $return;
 		endif;
 	}
 }

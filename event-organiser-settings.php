@@ -4,7 +4,7 @@
 */
 function eventorganiser_options_page() {
 	global $wpdb,$wp_roles,$eventorganiser_roles, $eo_daysofweek, $eo_dateformats;
-	global $eotest;
+
    	$editable_roles = get_editable_roles();
 	$sup_array = array('Organiser (Author)'=>'author','Thumbnail'=>'thumbnail','Excerpts'=>'excerpt','Custom Field'=>'custom-fields','Comments'=>'comments','Revisions'=>'revisions');
 	$url = get_pagenum_link();?>
@@ -137,23 +137,16 @@ For each of the pages, the corresponding template is used. To use your own templ
 	<?php wp_nonce_field('eventorganiser_update_settings'); ?>
 	<p class="submit"><input type="submit" name="eo_setting[action]"  class="button-primary" value="<?php _e('Update Settings', 'eventorganiser'); ?>" /></p>
 	</form> 
-	<h3 class="title"><?php _e('Export Events', 'eventorganiser'); ?></h3>
-			<p><?php _e( 'The export button below generates an ICS file of your events that can be imported to other calendar applications such as Google Calendar.', 'eventorganiser'); ?></p>
-			<form method="get" action="">
-				<?php wp_nonce_field( 'eventorganiser_export' ); ?>
-				<input type="hidden" name="page" value="event-settings" />
-				<p class="submit">
-					<input type="submit" name="submit" value="<?php _e( 'Download Export File', 'eo' ); ?> &raquo;" />
-					<input type="hidden" name="addquicktag_download" value="true" />
-				</p>
-			</form>
+
+	<?php do_action('eventorganiser_im_export'); ?>
+
 <?php }
 
 /*
 ** Settings action
 */
 function eventorganiser_update_settings(){
-
+	global $EO_Errors;
 	if(isset($_POST['eo_setting']) && $_POST["eo_setting"]['action']=='Update Settings'): 	
 
 		//make sure data came from our settings page

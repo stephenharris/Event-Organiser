@@ -355,7 +355,8 @@ function eo_get_reoccurence($format='',$id=''){
  */
 function eo_get_schedule_summary($id=''){
 	global $post;
-	$eo_ical2day = array(
+
+	$ical2day = array(
 		'SU'=>'Sunday',
 		'MO'=>'Monday',
 		'TU'=>'Tuesday',
@@ -365,13 +366,7 @@ function eo_get_schedule_summary($id=''){
 		'SA'=>'Saturday',
 		'SU'=>'Sunday',
 	);
-	$eo_allowed_reoccurs= array(
-		'once'=> 'once',
-		'daily'=>'day',
-		'weekly'=>'week',
-		'monthly'=>'month',
-		'yearly'=>'year',
-	);
+
 	$nth= array(
 		'last','','first','second','third','fourth',
 	);
@@ -387,28 +382,43 @@ function eo_get_schedule_summary($id=''){
 		$return = 'one time only';
 	}elseif(isset($reoccur['frequency']) && isset($reoccur['reoccurrence'])){
 		if($reoccur['frequency']>1){
-			$return =$reoccur['frequency'].' '.$eo_allowed_reoccurs[$reoccur['reoccurrence']].'s';
+			$return =$reoccur['frequency'].' '.EO_Event::$allowed_reoccurs[$reoccur['reoccurrence']].'s';
 		}else{
-			$return = $eo_allowed_reoccurs[$reoccur['reoccurrence']];
+			$return = EO_Event::$allowed_reoccurs[$reoccur['reoccurrence']];
 		}
 
 		switch($reoccur['reoccurrence']):
 			case 'weekly':
 				$weekdays = $reoccur['meta'];
 				foreach($weekdays as $ical_day){
-					$days[] =  $eo_ical2day[$ical_day];
+					$days[] =  $ical2day[$ical_day];
 					}
 				$return .=' on '.implode(', ',$days);
 				break;
 
 			case 'monthly':
 				$return .= ' on the ';
-				if($reoccur['meta']=='date'){
+				$bymonthday =preg_match('/^BYMONTHDAY=(\d{1,2})/' ,$reoccur['meta'],$matches);
+
+				if($bymonthday ){
+					$d = intval($matches[1]);
+					$m =intval($reoccur['start']->format('n'));
+					$y =intval($reoccur['start']->format('Y'));
+					$return .= $reoccur['start']->setDate($y,$m,$d)->format('jS');
+
+				}elseif($reoccur['meta']=='date'){
 					$return .= $reoccur['start']->format('jS');
+
 				}else{
-					preg_match('/^(-?\d{1,2})([a-zA-Z]{2})/' ,$reoccur['meta'],$matches);
-					$n=intval($matches[1])+1;
-					$return .=$nth[$n].' '.$eo_ical2day[$matches[2]];;
+					$byday = preg_match('/^BYDAY=(-?\d{1,2})([a-zA-Z]{2})/' ,$reoccur['meta'],$matches);
+					if($byday):
+						$n=intval($matches[1])+1;
+						$return .=$nth[$n].' '.$ical2day[$matches[2]];
+					else:
+						$bydayOLD = preg_match('/^(-?\d{1,2})([a-zA-Z]{2})/' ,$reoccur['meta'],$matchesOLD);
+						$n=intval($matchesOLD[1])+1;
+						$return .=$nth[$n].' '.$ical2day[$matchesOLD[2]];
+					endif;
 				}
 				break;
 
