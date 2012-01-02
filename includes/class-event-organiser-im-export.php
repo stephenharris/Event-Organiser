@@ -66,24 +66,24 @@ class Event_Organiser_Im_Export  {
 	public function get_im_export_markup() {
 		?>
 			<h3 class="title"><?php _e('Export Events', 'eventorganiser'); ?></h3>
-			<p><?php _e( 'The export button below generates an ICS file of your events that can be imported to other calendar applications such as Google Calendar.', 'eventorganiser'); ?></p>
+			<p><?php _e( 'The export button below generates an ICS file of your events that can be imported in to other calendar applications such as Google Calendar.', 'eventorganiser'); ?></p>
 			<form method="get" action="">
 				<?php wp_nonce_field( 'eventorganiser_export' ); ?>
 				<input type="hidden" name="page" value="event-settings" />
 				<p class="submit">
-					<input type="submit" name="submit" value="<?php _e( 'Download Export File', 'eo' ); ?> &raquo;" />
+					<input type="submit" name="submit" value="<?php _e( 'Download Export File', 'eventorganiser' ); ?> &raquo;" />
 					<input type="hidden" name="eventorganiser_download_events" value="true" />
 				</p>
 			</form>
 
 			<h3 class="title"><?php _e('Import Events', 'eventorganiser'); ?></h3>
 			<div class="inside">
-				<p>Import and ICS file</p>
+				<p>Import an ICS file</p>
 				<form method="post" action="" enctype="multipart/form-data">
 					<?php wp_nonce_field('eventorganiser_import'); ?>
 					<p class="submit">
 						<input type="file" name="ics" />
-						<input type="submit" name="submit" value="<?php _e( 'Upload ICS file', 'eo' ); ?> &raquo;" />
+						<input type="submit" name="submit" value="<?php _e( 'Upload ICS file', 'eventorganiser' ); ?> &raquo;" />
 						<input type="hidden" name="eventorganiser_import_events" value="true" />
 					</p>
 				</form>
@@ -274,7 +274,7 @@ function escape_icalText($text){
 		global $EO_Errors;
 
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'edit_events' ))
-			wp_die( __('Options not update - you don&lsquo;t have the privilidges to do this!','event-organiser') );
+			wp_die( __('Import failed - you do not have sufficient privilidges to import events.','event-organiser') );
 
 		//Returns the file as an array of lines
 		$file_array =$this->parse_file($cal_file);
@@ -414,7 +414,8 @@ function escape_icalText($text){
 		elseif($error_count >0):
 			$EO_Errors->add('eo_error', __("There was an error with ".$error_count." of ".$event_count." events in the ical file"));
 		else:
-			$EO_Errors->add('eo_notice', __($event_count." events were successfully imported"));
+			$events_imp  = ($event_count==1 ? '1 event was' : $event_count.' events were');
+			$EO_Errors->add('eo_notice', __($events_imp." successfully imported"));
 		endif;
 
 		return true;
@@ -659,7 +660,12 @@ function escape_icalText($text){
 					break;
 
 				case 'UNTIL':
-					$date = $this->parse_icalDate($value, new DateTimeZone('UTC'));
+					//Is the scheduled end a date-time or just a date?
+					if(preg_match('/^((\d{8}T\d{6})(Z)?)/', $value))
+						$date = $this->parse_icalDateTime($value, new DateTimeZone('UTC'));
+					else
+						$date = $this->parse_icalDate($value, new DateTimeZone('UTC'));
+
 					$rule_array['schedule_end'] = $date;
 					break;				
 
@@ -681,7 +687,7 @@ function escape_icalText($text){
 				$rule_array['schedule_meta'] ='BYDAY='.$matches[1].$matches[2];
 
 			}elseif(isset($bymonthday)){
-				$rule_array['schedule_meta'] ='BYMONTHDAY='.$byday;
+				$rule_array['schedule_meta'] ='BYMONTHDAY='.$bymonthday;
 
 			}else{
 				throw new Exception('Incomplete scheduling information');

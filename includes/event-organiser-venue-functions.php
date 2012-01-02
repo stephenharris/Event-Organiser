@@ -46,7 +46,7 @@ function eo_get_venue_slug($event_id=''){
 	if(empty($event->Venue))
 		return false;
 
-	$EO_Venue = new EO_Venue($event->Venue);
+	$EO_Venue = new EO_Venue((int)$event->Venue);
 
 	if($EO_Venue->is_found()) 
 		return $EO_Venue->slug;

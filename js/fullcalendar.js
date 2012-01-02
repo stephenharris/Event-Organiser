@@ -26,9 +26,18 @@ jQuery(document).ready(function() {
 				venues: EO_Ajax.venues,
 				selectable:true,
 				selectHelper: true,
+				eventRender: function(event, element) {
+					cat =jQuery("#calendar-event-meta #eo-event-cat").val();
+					venue =  jQuery("#calendar-event-meta #eo-event-venue").val()
+					if(cat != '' && (jQuery.inArray(cat, event.category)<0)){
+						return false
+					}
+					if(venue!= '' && venue!=event.venue){
+						return false;
+					}
+			    	},
 				weekMode: 'variable',
 				aspectRatio: 1.50,
-				eventColor:  '#21759B',
 				loading: function(bool) {
 					if (bool) jQuery('#loading').show();
 					else jQuery('#loading').hide();
@@ -103,37 +112,23 @@ jQuery(document).ready(function() {
 		 * Add the mini-calendar to for navigating full-calendar
 		*/
 		jQuery('#miniCalendar').datepicker({
-		    dateFormat: 'DD, d MM, yy',
-		    showOn:'button',
-		    buttonText: 'go to date',
-		    onSelect: function(dateText,dp){
-		    jQuery('#calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText)));
-             }
-             });
+			dateFormat: 'DD, d MM, yy',
+			firstDay:  parseInt(EO_Ajax.startday),
+			changeMonth: true,
+			changeYear: true,
+			showOn:'button',
+			buttonText: 'go to date',
+			onSelect: function(dateText,dp){
+				jQuery('#calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText)));
+             		}
+		});
 		jQuery('button.ui-datepicker-trigger').button();
-
 
 		/*
 		 * Refetch events if filters are changed
 		*/
 		jQuery("#calendar-event-meta").change(function(){
-			//remove all events & sources, and add new query
-			jQuery('#calendar').fullCalendar('removeEvents').fullCalendar('removeEventSources').fullCalendar('addEventSource',
-				 function(start, end, callback) {
-					jQuery.ajax({
-						url: EO_Ajax.ajaxurl+"?action=event-admin-cal",
-						dataType: 'JSON',
-           				 	data: {
-							start: jQuery.fullCalendar.formatDate(start, 'yyyy-MM-dd'),
-							end:jQuery.fullCalendar.formatDate(end, 'yyyy-MM-dd'),
-				            		category: jQuery("#calendar-event-meta #eo-event-cat").val(),
-							venue: jQuery("#calendar-event-meta #eo-event-venue").val()
-						},
-			            		success: function(returned) {
-		                			callback(returned);
-            					}
-					})
-	    			});
+			jQuery('#calendar').fullCalendar('rerenderEvents');
 		});
 });
 /**

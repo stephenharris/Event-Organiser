@@ -44,7 +44,7 @@
 		global $post;
 		if ( $query->have_posts() ) : 
 			while ( $query->have_posts() ) : $query->the_post(); 
-
+				$event=array();
 				//Get title, append status if applicable
 				$title = get_the_title();
 				if(!empty($post->post_password)){
@@ -73,10 +73,10 @@
 				$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, EO_Event::get_timezone());
 	
 				$event['start']= $event_start->format('Y-m-d\TH:i:s\Z');
-				$event['end']= $event_end->format('Y-m-d\TH:i:s\Z');
-	
+				$event['end']= $event_end->format('Y-m-d\TH:i:s\Z');	
 				//Colour past events
 				 $now = new DateTIme(null,EO_Event::get_timezone());
+
 				if($event_start <= $now){
 					$event['backgroundColor']=  '#74B2CD';	
 				}else{
@@ -89,9 +89,14 @@
 								."<tr><th> End: </th><td> ".$event_end->format($format)."</td></tr>"
 								."<tr><th> Organiser: </th><td>".$organiser."</td></tr>";
 	
+				$event['className']=array('event');
+
 				//Include venue if this is set
-				if($post->Venue)
+				if($post->Venue){
 					$summary .="<tr><th> Where: </th><td>".eo_get_venue_name((int)$post->Venue)."</td></tr>";
+					$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);
+					$event['venue']=$post->Venue;
+				}
 	
 				$summary .= "</table>";
 							
@@ -105,6 +110,14 @@
 					$summary .= "<span class='edit'><a title='Edit this item' href='".$edit_link."'> Edit Event</a></span>";
 					$event['url']= $edit_link;
 				}
+				$terms = get_the_terms( $post->ID, 'event-category' );
+				$event['category']=array();
+				if($terms):
+					foreach ($terms as $term):
+						$event['category'][]= $term->slug;
+						$event['className'][]='category-'.$term->slug;
+					endforeach;
+				endif;
 
 				$event['summary'] = $summary;
 

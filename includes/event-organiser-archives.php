@@ -53,6 +53,12 @@ function eventorganiser_pre_get_posts( $query ) {
 			$eo_settings_array= get_option('eventorganiser_options');
 			$query->set('showpastevents',$eo_settings_array['showpast']);
 		}
+		if(!isset($query->query_vars['showrepeats'])){
+			if(is_admin() || is_single())
+				$query->set('showrepeats',0);
+			else
+				$query->set('showrepeats',1);
+		}
 	}
 
 	 return $query;	
@@ -131,13 +137,13 @@ function eventorganiser_events_where( $where, $query ){
 	if (isset( $query->query_vars['post_type'] ) && $query->query_vars['post_type']=='event'):
 
 		//If in admin or single page - we probably don't want to see duplicates of (recurrent) events - unless specified otherwise.
-		if((is_admin() || is_single())&&(!array_key_exists('showrepeats',$query->query_vars) || !$query->query_vars['showrepeats'])):
+		if((is_admin() || is_single())&&(!$query->query_vars['showrepeats'])):
 
 			//Select the first event.
 			$where .= " AND ({$eventorganiser_events_table}.event_occurrence =0 OR {$eventorganiser_events_table}.event_occurrence IS NULL)";
 
 		//In other instances (archives, shortcode listing if showrepeats option is false display only the next event.
-		elseif(array_key_exists('showrepeats',$query->query_vars) && !$query->query_vars['showrepeats']):
+		elseif(!$query->query_vars['showrepeats']):
 			$where .= " AND ({$eventorganiser_events_table}.event_occurrence =0 OR {$eventorganiser_events_table}.event_occurrence IS NULL)";
 
 		endif;

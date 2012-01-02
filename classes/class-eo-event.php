@@ -240,6 +240,7 @@ class EO_Event{
 			$result = $event->create($event_data);
 
 
+
 		if($result){
 			if($delete){
 				eventorganiser_event_delete($post_id);
@@ -439,8 +440,12 @@ function createFromObjects($input=array()){
 		'venue'=>0,
 		'exceptions'=>array()
 	);
+
 	$input = array_merge($defaults,$input);
 	extract($input);
+	
+	//Reset occurrences:
+	$this->occurrences =array();
 
 	//Check dates are supplied and are valid
 	if(!isset($start) || !($start instanceof DateTime)){
@@ -483,6 +488,7 @@ function createFromObjects($input=array()){
 
 		return false;
 	}
+
 
 	//Ensure event frequency is a positive integer. Else set to 1.
 	$frequency = max(abs(intval($frequency)),1);
@@ -553,12 +559,21 @@ function createFromObjects($input=array()){
 				endwhile;	
 				break;
 
-
+			//To be used for yearly events occuring on Feb 29
 			case 'leap year':
-				while($current<=$this->schedule_end):	
-					if($this->is_leapyear($current))
+				$current_year = clone $current;
+				$current_year->modify('-1 day');
+
+				while($current_year<=$this->schedule_end):	
+					$is_leap_year = intval($current_year->format('L'));
+
+					if($is_leap_year){
+						$current = clone $current_year;
+						$current->modify('+1 day');
 						$this->occurrences[] = clone $current;
-					$current->modify($interval);
+					}
+
+					$current_year->modify($interval);
 				endwhile;
 			break;
 			
@@ -573,8 +588,9 @@ function createFromObjects($input=array()){
 		endswitch;	
 	endforeach;
 
-	//Removes exceptions and any duplicats
+	//Removes exceptions and duplicates
 	$this->occurrences = array_udiff($this->occurrences, $this->exceptions, array($this,'eo_compare_dates'));
+	$this->occurrences  = EO_Event::removeDuplicate($this->occurrences);
 
 	//Make sure datetime is in blog's timezone
 	$blog_tz =$this->get_timezone();
@@ -595,6 +611,23 @@ function createFromObjects($input=array()){
 
 	return true;
 }
+
+
+function removeDuplicate($array=array()){
+
+	if(empty($array))
+		return $array;
+
+        $unique = array();
+	foreach ($array as $key=>$object){
+		if (!in_array($object, $unique))
+			$unique[$key] = $object;
+        }
+
+        return $unique;
+} 
+
+
 
 
 /*
@@ -687,9 +720,9 @@ protected function setupSchedule(){
 				break;
 
 		endswitch;
-
+		
 		//Remove duplicates
-		$start_days = array_unique($start_days);
+		$start_days  = EO_Event::removeDuplicate($start_days);
 		
 		$schedule_data = array('days'=>$start_days,'interval'=>$interval,'workaround'=>$workaround);
 		
