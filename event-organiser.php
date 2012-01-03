@@ -27,7 +27,7 @@ Author URI: http://www.HarrisWebSolutions.co.uk
 
 //The database version
 global $eventorganiser_db_version;
-$eventorganiser_db_version = "1.0";
+$eventorganiser_db_version = "1.1";
 
 global $wpdb;
 
@@ -100,9 +100,6 @@ require_once("classes/class-eo-venue.php");
 
 /****** Widgets and Shortcodes ******/
 require_once('classes/class-eo-event-list-widget.php');
-require_once('classes/class-eo-event-list-shortcode.php');
 require_once('classes/class-eo-calendar-widget.php');
-require_once('classes/class-eo-calendar-shortcode.php');
-require_once('classes/class-eo-venue-map-shortcode.php');
-
+require_once('classes/class-eventorganiser-shortcodes.php');
 ?>

@@ -1,6 +1,6 @@
 === Event Organiser ===
 Contributors: stephenh1988
-Donate link: http://www.HarrisWebSolutions.co.uk/
+Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event organiser, event calendar, events calendar, event management, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.3
@@ -79,7 +79,7 @@ Finally, the plug-in provides a function `eo_get_events` which is similiar to Wo
 == Changelog ==
 
 = 1.1 =
-Improved admin calendar navigation, with category/venue filters. You can now import events from an ICAL file. Further details included in the ics export file. The venue content editor is now fully featured. Venue descriptions now understand shortcodes. Fixed minor bugs.
+Improved admin calendar navigation, with category/venue filters. Public version of the 'admin calendar' now available as a shortcode. You can now import events from an ICAL file. Further details included in the ics export file. The venue content editor is now fully featured. Venue descriptions now understand shortcodes. Fixed minor bugs.
 
 = 1.0.5 =
 Fixed export bug.

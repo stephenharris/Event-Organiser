@@ -1,29 +1,109 @@
 <?php
 
+
+	//Only call action if logged in
+	if(isset($_REQUEST['action'])):
+		switch($_REQUEST['action']):
+			case 'event-admin-cal': //The admin calendar
+				do_action( 'wp_ajax_' . $_REQUEST['action'] );
+				break;
+
+			case 'eventorganiser-fullcal': //The public 'full' calendar
+				do_action( 'wp_ajax_' . $_REQUEST['action'] );
+				do_action( 'wp_ajax_nopriv_' . $_REQUEST['action'] );
+				break;
+
+			case 'eo_widget_cal': //The mini / 'widget-sized' public calendar
+				do_action( 'wp_ajax_nopriv_' . $_REQUEST['action'] );
+				do_action( 'wp_ajax_' . $_REQUEST['action'] );	
+				break;
+			default;
+		endswitch;
+	endif;
+
+
+	/*
+	 * Public full calendar:
+	 * This gets events to be displayed on the front-end full calendar
+	*/
+	add_action( 'wp_ajax_eventorganiser-fullcal', 'eo_public_fullcal' ); 
+	add_action( 'wp_ajax_nopriv_eventorganiser-fullcal', 'eo_public_fullcal' ); 
+	function eo_public_fullcal() {
+		$request = array(
+			'start_before'=>$_GET['start'],
+			'end_after'=>$_GET['end']
+		);
+
+		//Retrieve events		
+		$events = eo_get_events(array('numberposts'=>-1, 'showrepeats'=>true));
+		$eventsarray = array();
+
+		//Loop through events
+		global $post;
+		if ($events) : 
+			foreach  ($events as $post) :
+				$event=array();
+				$event['className']=array('eo-event');
+
+				//Title and url
+				$event['title']=esc_js(get_the_title($post->ID));
+				$event['url']= esc_js(get_permalink( $post->ID));
+
+				//All day or not?
+				$event['allDay'] = ($post->event_allday ? true : false);
+	
+				//Get Event Start and End date, set timezone to the blog's timzone
+				$event_start = new DateTime($post->StartDate.' '.$post->StartTime, EO_Event::get_timezone());
+				$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, EO_Event::get_timezone());
+				$event['start']= $event_start->format('Y-m-d\TH:i:s\Z');
+				$event['end']= $event_end->format('Y-m-d\TH:i:s\Z');	
+
+				//Colour past events
+				$now = new DateTIme(null,EO_Event::get_timezone());
+				$event['backgroundColor']=  '#21759B';	
+				if($event_start <= $now)
+					$event['className'][] = 'eo-past-event';
+				else
+					$event['className'][] = 'eo-future-event';
+				
+				//Include venue if this is set
+				if($post->Venue){
+					$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);
+					$event['venue']=$post->Venue;
+				}
+				
+				//Event categories
+				$terms = get_the_terms( $post->ID, 'event-category' );
+				$event['category']=array();
+				if($terms):
+					foreach ($terms as $term):
+						$event['category'][]= $term->slug;
+						$event['className'][]='category-'.$term->slug;
+					endforeach;
+				endif;
+
+				//Add event to array
+				$eventsarray[]=$event;
+			endforeach;
+		endif;
+
+		//Echo result and exit
+		echo json_encode($eventsarray);
+		exit;
+	}
+
 	/*
 	 * Admin calendar: Calendar View
 	 * This gets events and generates summaries for events to be displayed
 	 *  in the admin 'calendar view'
 	*/
-	
-	//Only call action if logged in
-	if(isset($_REQUEST['action'])&&$_REQUEST['action']=='event-admin-cal'):
-		do_action( 'wp_ajax_' . $_REQUEST['action'] );
-	endif;
-	add_action( 'wp_ajax_event-admin-cal', 'eo_ajax_admin_cal' );
-
- 
+	add_action( 'wp_ajax_event-admin-cal', 'eo_ajax_admin_cal' ); 
 	function eo_ajax_admin_cal() {
 		//request
 		$request = array(
 			'start_before'=>$_GET['start'],
 			'end_after'=>$_GET['end']
 		);
-		if(!empty($_GET['venue']))
-			$request['venue']=(int)$_GET['venue'];
-
-		if(!empty($_GET['category']))
-			$request['event-category']=$_GET['category'];
 
 		//Presets
 		$presets = array( 
@@ -54,7 +134,7 @@
 				}elseif	($post->post_status=='draft'){
 					$title.=' - draft';
 				}
-				$event['title']=$title;
+				$event['title']=esc_js($title);
 
 				//Check if all day, set format accordingly
 				if($post->event_allday){
@@ -138,17 +218,8 @@
 	 * This gets the month being viewed and generates the
 	 * html code to view that month and its events. 
 	*/
-
-	//These calendars are public
-	if(isset($_REQUEST['action'])&&$_REQUEST['action']=='eo_widget_cal'):
-		do_action( 'wp_ajax_nopriv_' . $_REQUEST['action'] );
-		do_action( 'wp_ajax_' . $_REQUEST['action'] );
-	endif;
-
-	add_action( 'wp_ajax_nopriv_eo_widget_cal', 'ajax_widget_cal' );
+ 	add_action( 'wp_ajax_nopriv_eo_widget_cal', 'ajax_widget_cal' );
 	add_action( 'wp_ajax_eo_widget_cal', 'ajax_widget_cal' );
-
- 
 	function ajax_widget_cal() {
 
 		/*Retrieve the month we are after. $month must be a 

@@ -7,13 +7,10 @@
  */
 add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
-	wp_register_script( 'eo_GoogleMap', 'http://maps.googleapis.com/maps/api/js?sensor=true');
-	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery','eo_GoogleMap'));	
-	wp_localize_script( 'eo_front', 'EOAjax', array( 
-		'ajaxurl' => admin_url( 'admin-ajax.php' )
-		));
+	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery'),'1.1',true);
+	wp_localize_script( 'eo_front', 'EOAjaxUrl', admin_url( 'admin-ajax.php' ));
+	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css');
 }   
-
 
  /**
  *Register jQuery scripts and CSS files for admin
@@ -22,18 +19,19 @@ function eventorganiser_register_script() {
  */
 add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts');
 function eventorganiser_register_scripts(){
+	wp_register_script( 'eo_GoogleMap', 'http://maps.googleapis.com/maps/api/js?sensor=true');
 
 	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL.'js/venues.js',array(
 		'jquery',
 		'jquery-ui-autocomplete',
 		'eo_GoogleMap'
-	));	
+	),'1.1',true);	
 	wp_register_script( 'eo_event', EVENT_ORGANISER_URL.'js/event.js',array(
 		'jquery',
 		'jquery-ui-datepicker',
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget'
-	));	
+	),'1.1',true);	
 
 	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css');
 
@@ -45,8 +43,9 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-droppable',
 		'jquery-ui-widget',
 		'jquery-ui-button',
-		'jquery-ui-position'));
-	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css');
+		'jquery-ui-position'),
+		'1.1',true);
+	
 }
 
  /**
@@ -119,8 +118,8 @@ function eventorganiser_calendar_page_admin_styles(){
 	$EO_Venues->query();
 	 add_thickbox();
 
-	wp_enqueue_script("eo_calendar");
-	wp_enqueue_script("eo_event");
+	wp_enqueue_script("eo_calendar",true);
+	wp_enqueue_script("eo_event",true);
 	wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		'startday'=>intval(get_option('start_of_week')),
