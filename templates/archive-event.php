@@ -40,8 +40,8 @@ get_header(); ?>
 				global $wp_query;
 				if ( $wp_query->max_num_pages > 1 ) : ?>
 					<nav id="nav-above">
-						<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'eventorganiser' ) ); ?></div>
-						<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'eventorganiser' ) ); ?></div>
+						<div class="nav-next events-nav-newer"><?php next_posts_link( __( 'Later events <span class="meta-nav">&rarr;</span>' , 'eventorganiser' ) ); ?></div>
+						<div class="nav-previous events-nav-newer"><?php previous_posts_link( __( ' <span class="meta-nav">&larr;</span> Newer events', 'eventorganiser' ) ); ?></div>
 					</nav><!-- #nav-above -->
 				<?php endif; ?>
 
@@ -75,8 +75,8 @@ get_header(); ?>
 				global $wp_query;
 				if ( $wp_query->max_num_pages > 1 ) : ?>
 					<nav id="nav-below">
-						<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'eventorganiser' ) ); ?></div>
-						<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'eventorganiser' ) ); ?></div>
+						<div class="nav-next events-nav-newer"><?php next_posts_link( __( 'Later events <span class="meta-nav">&larr;</span>' , 'eventorganiser' ) ); ?></div>
+						<div class="nav-previous events-nav-newer"><?php previous_posts_link( __( ' <span class="meta-nav">&rarr;</span> Newer events', 'eventorganiser' ) ); ?></div>
 					</nav><!-- #nav-below -->
 				<?php endif; ?>
 

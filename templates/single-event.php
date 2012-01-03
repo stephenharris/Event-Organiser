@@ -32,7 +32,7 @@ get_header(); ?>
 						<h1 class="entry-title"><?php the_title(); ?></h1>
 
 							<div class="entry-meta">
-								<?php $next = eo_get_next_occurrence('d F Y'); ?>
+								<?php $next =   eo_get_next_occurrence('d F Y'); ?>
 								<?php if($next): ?>
 									<!---- If the event is occurring again in the future, display the date -->
 									This event is running from <?php eo_schedule_start('d F Y'); ?>  until <?php  eo_schedule_end('d F Y',''); ?>. It is next showing at <?php echo $next;?>

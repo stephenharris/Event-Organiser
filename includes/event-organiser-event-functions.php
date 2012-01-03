@@ -163,7 +163,6 @@ function eo_the_end($format='d-m-Y',$id=''){
  */
 function eo_get_next_occurrence($format='d-m-Y',$id=''){
 	global $post,$eventorganiser_events_table, $wpdb;
-	date_default_timezone_set('Europe/London');
 
 	if(!isset($id) || $id=='') $id = $post->ID;
 	
@@ -183,14 +182,13 @@ function eo_get_next_occurrence($format='d-m-Y',$id=''){
 		LIMIT 1",$id,$now_date,$now_date,$now_time);
 
 	$nextoccurrence  = $wpdb->get_row($querystr);
-
-	if($nextoccurrence){
+	if($nextoccurrence !==null){
 		$date = esc_html($nextoccurrence->StartDate).' '.esc_html($nextoccurrence->StartTime);
 		if(empty($date)||$date==" ")
-			return eo_format_date($return,$format);
-		return false;
+			return false;
+
+		return eo_format_date($date,$format);
 	}		
-	return false;
 }
 
 /**

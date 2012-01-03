@@ -534,6 +534,9 @@ function createFromObjects($input=array()){
 	$interval =$schedule_data['interval'];
 	$workaround =$schedule_data['workaround'];
 
+	//Wipe the slate clean..
+	$this->occurrences = array();
+
 	if(!$schedule_data)
 		return false;
 
