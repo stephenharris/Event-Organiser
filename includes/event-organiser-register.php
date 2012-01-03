@@ -9,7 +9,7 @@ add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery'),'1.1',true);
 	wp_localize_script( 'eo_front', 'EOAjaxUrl', admin_url( 'admin-ajax.php' ));
-	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css');
+	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),'1.1',);
 }   
 
  /**
