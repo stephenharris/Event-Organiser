@@ -323,7 +323,7 @@ function create($raw_data){
 		'event_schedule'=>'once',
 		'event_frequency'=> 1,
 		'event_occurrence'=> 0,
-		'event_allday'=> 1,
+		'event_allday'=> 0,
 		'Venue'=> 0,
 		'exception_dates'=> array(),
 		'StartDate'=> '',
@@ -428,11 +428,12 @@ function create($raw_data){
  * @return bool true if no errors encountered.
  */
 function createFromObjects($input=array()){
+
 	$errors = get_option('eo_notice');
 	$defaults = array(
 		'start'=>null,
 		'end'=>null,
-		'allday'=>1,
+		'allday'=>0,
 		'schedule'=>'once',
 		'schedule_meta'=>'',
 		'frequency'=>1,
