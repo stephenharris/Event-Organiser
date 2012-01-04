@@ -14,9 +14,9 @@ Event Organiser adds event management that integrates well with your WordPress s
 
 Requires **WordPress 3.3** and **PHP 5.3** (or higher)
 
-=New Features=
+= New Features =
 * Public version of the admin calendar (shortcode).
-*'mini-calendar' navigation for the admin calendar.
+* 'mini-calendar' navigation for the admin calendar.
 * Import events from an ICAL file.
 * 'Fully featured' content editor for the venue admin page: include media content from your library.
 * Venue descriptions can now understand shortcodes.

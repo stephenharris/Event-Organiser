@@ -35,7 +35,7 @@
 		);
 
 		//Retrieve events		
-		$events = eo_get_events(array('numberposts'=>-1, 'showrepeats'=>true));
+		$events = eo_get_events(array('numberposts'=>-1, 'showrepeats'=>true,'showpastevents'=>true));
 		$eventsarray = array();
 
 		//Loop through events
