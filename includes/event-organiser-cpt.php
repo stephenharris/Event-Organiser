@@ -184,17 +184,17 @@ function eventorganiser_create_rewrite_rules() {
 }
 
 
+
 // This adds the Event Organiser icon to the page head
 add_action('admin_head', 'eventorganiser_plugin_header_image');
 function eventorganiser_plugin_header_image() {
         global $post_type;
-	?>
+
+	if ((isset($_GET['post_type']) && $_GET['post_type'] == 'event') || ($post_type == 'event')) : ?>
 	<style>
-	<?php if (($_GET['post_type'] == 'event') || ($post_type == 'event')) : ?>
 	#icon-edit { background:transparent url('<?php echo EVENT_ORGANISER_URL.'/css/images/eoicon-32.png';?>') no-repeat; }		
-	<?php endif; ?>
         </style>
-        <?php
+	<?php endif; 
 }
 
 // Filter wp_nav_menu() to add event link if selected in options

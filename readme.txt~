@@ -84,6 +84,9 @@ Finally, the plug-in provides a function `eo_get_events` which is similiar to Wo
 
 == Changelog ==
 
+= 1.2 =
+The public 'full calendar' now ignores the general settings and always displays past events.
+
 = 1.1 =
 Improved admin calendar navigation, with category/venue filters. Public version of the 'admin calendar' now available as a shortcode. You can now import events from an ICAL file. Further details included in the ics export file. The venue content editor is now fully featured. Venue descriptions now understand shortcodes. Fixed a few bugs.
 
