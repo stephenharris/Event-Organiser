@@ -206,7 +206,7 @@ class EO_Venue{
 					$LatLing= json_decode($geocode);
 				}
 
-				if(!$LatLing){	
+				if(!$LatLing || empty($LatLing->results)){	
 					$EO_Errors->add('eo_error', __("There was a problem with locating the latitude and longitude co-ordinates of the venue."));
 				}else{
 					$V_Lng = esc_html($LatLing->results[0]->geometry->location->lat);
@@ -247,6 +247,7 @@ class EO_Venue{
 					}else{
 						$EO_Errors->add('eo_error', __("Venue <strong>was not </strong> created"));	
 						$_REQUEST['action']='create';
+						return false;
 					}
 		}else{
 			$EO_Errors = new WP_Error('EO_error', __("Venue <strong>was not </strong> added. wp"));		

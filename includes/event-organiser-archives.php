@@ -10,6 +10,8 @@ function eventorganiser_register_query_vars( $qvars ){
 	$qvars[] = 'venue';
 	$qvars[] = 'venue_id';
 	$qvars[] = 'ondate';
+	$qvars[] = 'showrepeats';
+	$qvars[] = 'eo_interval';
 
 	return $qvars;
 }
@@ -91,6 +93,9 @@ add_filter('posts_groupby', 'eventorganiser_event_groupby',10,2);
 function eventorganiser_event_groupby( $groupby, $query ){
 	global $eventorganiser_events_table;
 
+	if(!empty($query->query_vars['group_events_by']) && $query->query_vars['group_events_by'] == 'series')
+		return "{$eventorganiser_events_table}.post_id";
+
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']):
 		if(empty($groupby))
 			return $groupby;
@@ -140,12 +145,19 @@ function eventorganiser_events_where( $where, $query ){
 		if((is_admin() || is_single())&&(!$query->query_vars['showrepeats'])):
 
 			//Select the first event.
-			$where .= " AND ({$eventorganiser_events_table}.event_occurrence =0 OR {$eventorganiser_events_table}.event_occurrence IS NULL)";
+			$query->set('group_events_by','series');
+			//$where .= " AND ({$eventorganiser_events_table}.event_occurrence =0 OR {$eventorganiser_events_table}.event_occurrence IS NULL)";
 
 		//In other instances (archives, shortcode listing if showrepeats option is false display only the next event.
 		elseif(!$query->query_vars['showrepeats']):
 			$where .= " AND ({$eventorganiser_events_table}.event_occurrence =0 OR {$eventorganiser_events_table}.event_occurrence IS NULL)";
 
+		endif;
+
+		//If we only want events (or occurrences of events) that belong to a particular 'event'
+		if(isset($query->query_vars['event_series'])):
+			$series_id =$query->query_vars['event_series'];
+			$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.post_id =%d ",$series_id);
 		endif;
 
 	
@@ -158,19 +170,26 @@ function eventorganiser_events_where( $where, $query ){
 		*
 		* 'Future events' only works if we are showing all reoccurrences, and not wanting just the first occurrence of an event.
 		*/
-		if(!empty($query->query_vars['showrepeats']) && isset($query->query_vars['showpastevents'])&& !$query->query_vars['showpastevents'] ){
-
+		if(isset($query->query_vars['showpastevents'])&& !$query->query_vars['showpastevents'] ){
 			//Retrieve the blog's local time and create the date part
 			$blog_now = new DateTIme(null,EO_Event::get_timezone());
 			$now_date =$blog_now->format('Y-m-d');
 			$now_time =$blog_now->format('H:i:s');
 
+			//If quering for all occurrences, look at start date 
+			if(!empty($query->query_vars['showrepeats'])):
+				$query_date = $eventorganiser_events_table.'.StartDate';
+
+			//If querying for an 'event schedule': event is past if it all of its occurrences have finished
+			else:
+				$query_date = $eventorganiser_events_table.'.reoccurrence_end';
+			endif;
+
 			$where .= $wpdb->prepare(" AND ( 
-				({$eventorganiser_events_table}.StartDate > %s) OR
-				({$eventorganiser_events_table}.StartDate = %s AND {$eventorganiser_events_table}.StartTime >= %s))"
+				({$query_date} > %s) OR
+				({$query_date} = %s AND {$eventorganiser_events_table}.StartTime >= %s))"
 				,$now_date,$now_date,$now_time);
 		}
-
 
 	
 		//If venue is specified, restrict events to that venue 

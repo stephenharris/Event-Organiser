@@ -115,7 +115,19 @@ class EO_List_Table extends WP_List_Table {
         return $actions;
     }
     
-       
+
+     /*
+     * Echos the row, after assigning it an ID based ont eh venue being shown. Assign appropriate class to alternate rows.
+     */       
+	function single_row( $item ) {
+		static $row_class = '';
+		$row_id = 'id="venue-'.$item['venue_id'].'"';
+		$row_class = ( $row_class == '' ? ' class="alternate"' : '' );
+		echo '<tr' .$row_class.' '.$row_id.'>';
+		echo $this->single_row_columns( $item );
+		echo '</tr>';
+	}
+
     /*
      * Prepare venues for display
      * 

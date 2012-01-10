@@ -100,16 +100,13 @@ function eventorganiser_event_sort_columns($column_name, $id) {
 	} // end switch
 }
 
-  
 
-
-
-add_action( 'restrict_manage_posts', 'my_restrict_manage_posts' );
+add_action( 'restrict_manage_posts', 'eventorganiser_restrict_by_category' );
 function my_restrict_manage_posts() {
-
-    // only display these taxonomy filters on desired custom post_type listings
     global $typenow,$wp_query;
-    if ($typenow == 'event') {
+
+	// only display these taxonomy filters on desired custom post_type listings
+	if (!empty($typenow) && $typenow=='event') :
 
             // retrieve the taxonomy object
             $tax_obj = get_taxonomy('event-category');
@@ -121,8 +118,8 @@ function my_restrict_manage_posts() {
 	
 		if(isset( $wp_query->query_vars['event-category'])) $selected = $wp_query->query_vars['event-category'];?>
 
-		<select name='event-category' id='event-category' class='postform'>
-			<option <?php selected($selected,0); ?> value="0"><?php _e('View All Event Categories', 'eventorganiser');?></option>
+		<select name='event-category' id='event-category' class='postform' style="width:150px;">
+			<option <?php selected($selected,0); ?> value="0"><?php _e('View all categories', 'eventorganiser');?></option>
 			<?php foreach ($terms as $term): ?>
 				<option value="<?php echo $term->slug;?>" <?php selected($selected,$term->slug)?>> <?php echo $term->name;?> </option>
 			<?php endforeach; ?>
@@ -137,21 +134,21 @@ function my_restrict_manage_posts() {
  *
  * @since 1.0.0
  */
-add_action('restrict_manage_posts','restrict_events_by_venue');
+add_action('restrict_manage_posts','eventorganiser_restrict_by_venue');
 function restrict_events_by_venue() {
 	global $typenow;
 	global $wp_query,$wpdb, $eventorganiser_venue_table;
 
 	//Only add if CPT is event
-	if ($typenow=='event') :
+	if (!empty($typenow) && $typenow=='event') :
 		$selected=0;
 		if(!empty( $wp_query->query_vars['venue_id'] )) {
 			$selected = $wp_query->query_vars['venue_id'];
 		}
 		$The_Venues = $wpdb->get_results(" SELECT* FROM $eventorganiser_venue_table");?>
 
-		<select id="HWSEventFilterVenue" name="venue_id">
-			<option <?php selected($selected,0); ?> value=""><?php _e('View All Venues', 'eventorganiser');?></option>
+		<select id="HWSEventFilterVenue" name="venue_id" style="width:150px;">
+			<option <?php selected($selected,0); ?> value=""><?php _e('View all venues', 'eventorganiser');?></option>
 			<?php foreach ($The_Venues as $index=>$venue): ?>
 				 <option value="<?php echo intval($venue->venue_id); ?>" <?php selected($venue->venue_id,$selected); ?> >
 					<?php _e($venue->venue_name,'eventorganiser'); ?>

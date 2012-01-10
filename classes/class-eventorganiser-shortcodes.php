@@ -119,7 +119,7 @@ class EventOrganiser_Shortcodes {
 			'fullcal' => self::$fullcal,
 			'map' => self::$map
 		));		
-		wp_print_scripts('eo_front');	
+		wp_enqueue_script( 'eo_front');	
 	}
 }
  

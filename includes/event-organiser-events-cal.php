@@ -30,12 +30,14 @@
 	add_action( 'wp_ajax_nopriv_eventorganiser-fullcal', 'eo_public_fullcal' ); 
 	function eo_public_fullcal() {
 		$request = array(
-			'start_before'=>$_GET['start'],
-			'end_after'=>$_GET['end']
+			'event_start_before'=>$_GET['end'],
+			'event_end_after'=>$_GET['start']
 		);
+		$presets = array('numberposts'=>-1, 'showrepeats'=>true,'showpastevents'=>true);
 
 		//Retrieve events		
-		$events = eo_get_events(array('numberposts'=>-1, 'showrepeats'=>true,'showpastevents'=>true));
+		$query = array_merge($request,$presets);
+		$events = eo_get_events($query);
 		$eventsarray = array();
 
 		//Loop through events
@@ -101,8 +103,8 @@
 	function eo_ajax_admin_cal() {
 		//request
 		$request = array(
-			'start_before'=>$_GET['start'],
-			'end_after'=>$_GET['end']
+			'event_end_after'=>$_GET['start'],
+			'event_start_before'=>$_GET['end']
 		);
 
 		//Presets

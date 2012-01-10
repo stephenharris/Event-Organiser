@@ -42,7 +42,7 @@ add_action('init', 'eventorganiser_cpt_register');
 function eventorganiser_cpt_register() {
 $eventorganiser_option_array = get_option('eventorganiser_options'); 
   	$labels = array(
-		'name' => _x('Event', 'post type general name'),
+		'name' => _x('Events', 'post type general name'),
 		'singular_name' => _x('Event', 'post type singular name'),
 		'add_new' => _x('Add New', 'event'),
 		'add_new_item' => __('Add New Event'),

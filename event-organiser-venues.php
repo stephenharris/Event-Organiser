@@ -49,6 +49,9 @@ function eventorganiser_venues_action() {
 
 			}elseif($_REQUEST['action']=='add'){
 				 $EO_Venue = $EO_Venue->add($_POST['eo_venue']); 
+
+				if(!$EO_Venue)
+					$EO_Venue = new EO_Venue();
 	
 			}else{
 				$venues = EO_Venues::doaction($_REQUEST['venue'], $_REQUEST['action']);
