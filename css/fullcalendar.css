@@ -54,6 +54,10 @@ div#events-meta{
 	position:absolute;
 	bottom:0;
 }
+#loading:before {
+    content: url("images/loading-image.gif");
+    padding-right: 5px;
+}
 
 
 /*Added to fit with full calendar*/

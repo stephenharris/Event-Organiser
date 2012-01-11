@@ -33,6 +33,17 @@ jQuery(document).ready(function() {
             					}
 					})
 	    			},
+				loading: function(bool) {
+					loading = jQuery('#'+jQuery(this).attr('id')+'_loading');
+					if (bool){
+						 loadingTimeOut= window.setTimeout(function(){
+												loading.show();	
+											}, 1000);
+					}else{ 
+						window.clearTimeout(loadingTimeOut);
+						loading.hide();
+					}
+				},
 				selectable:false,
 				weekMode: 'variable',
 				aspectRatio: 1.50,

@@ -102,7 +102,7 @@ function eventorganiser_event_sort_columns($column_name, $id) {
 
 
 add_action( 'restrict_manage_posts', 'eventorganiser_restrict_by_category' );
-function my_restrict_manage_posts() {
+function eventorganiser_restrict_by_category() {
     global $typenow,$wp_query;
 
 	// only display these taxonomy filters on desired custom post_type listings
@@ -125,7 +125,7 @@ function my_restrict_manage_posts() {
 			<?php endforeach; ?>
 		</select>
 		<?php
-    }
+    endif;
 }
 
 
@@ -135,7 +135,7 @@ function my_restrict_manage_posts() {
  * @since 1.0.0
  */
 add_action('restrict_manage_posts','eventorganiser_restrict_by_venue');
-function restrict_events_by_venue() {
+function eventorganiser_restrict_by_venue() {
 	global $typenow;
 	global $wp_query,$wpdb, $eventorganiser_venue_table;
 

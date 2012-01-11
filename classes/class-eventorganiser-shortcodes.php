@@ -41,7 +41,12 @@ class EventOrganiser_Shortcodes {
 		$n = rand(0,100);
 		self::$fullcal =array_merge($atts);
 		self::$add_script = true;
- 		return '<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$n.'"></div>';
+
+		$html='<div id="eo_fullcalendar_'.$n.'_loading" style="background:white;position:absolute;z-index:5" >';
+		$html.='<img src="'.EVENT_ORGANISER_URL.'/css/images/loading-image.gif'.'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />Loading...</div>';
+		$html.='<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$n.'"></div>';
+
+ 		return $html;
 	}
 
 	function handle_venuemap_shortcode($atts) {
