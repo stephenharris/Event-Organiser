@@ -3,8 +3,8 @@ Contributors: stephenh1988
 Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event organiser, event calendar, events calendar, event management, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 3.3
-Stable tag: 1.1
+Tested up to: 3.3.1
+Stable tag: 1.1.1
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -84,8 +84,8 @@ Finally, the plug-in provides a function `eo_get_events` which is similiar to Wo
 
 == Changelog ==
 
-= 1.2 =
-The public 'full calendar' now ignores the general settings and always displays past events.
+= 1.1.1 =
+A minor update, fixing a few bugs and improving the (admin and public) calendars' performance. The bug which meant calendars and the calendar widget couldn't be displayed together is now fixed. For a full list of alterations [see here](http://www.harriswebsolutions.co.uk/event-organiser/uncategorized/2012/bug-fixing-update-due-1-1-1/).
 
 = 1.1 =
 Improved admin calendar navigation, with category/venue filters. Public version of the 'admin calendar' now available as a shortcode. You can now import events from an ICAL file. Further details included in the ics export file. The venue content editor is now fully featured. Venue descriptions now understand shortcodes. Fixed a few bugs.
