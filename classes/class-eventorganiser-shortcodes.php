@@ -63,7 +63,7 @@ class EventOrganiser_Shortcodes {
 		} 
 		
 		//Set the attributes
-		$atts['width'] = ( !empty($atts['width']) ) ? $atts['width']:'300px';
+		$atts['width'] = ( !empty($atts['width']) ) ? $atts['width']:'100%';
 		$atts['height'] = ( !empty($atts['height']) ) ? $atts['height']:'200px';
 
 		 //If class is selected use that style, otherwise use specified height and width
@@ -123,16 +123,13 @@ class EventOrganiser_Shortcodes {
 			'ajaxurl' => admin_url( 'admin-ajax.php'),
 			'fullcal' => self::$fullcal,
 			'map' => self::$map
-		));		
+		));	
+		if(!empty(self::$fullcal))
+			wp_enqueue_style('eo_calendar-style');	
 		wp_enqueue_script( 'eo_front');	
 	}
 }
  
 EventOrganiser_Shortcodes::init();
 
-/*Add styles for the full claendar */
-add_action('wp_enqueue_scripts', 'eventorganiser_add_fullcalendar');
-function eventorganiser_add_fullcalendar(){
-	wp_enqueue_style('eo_calendar-style');
-}
 ?>

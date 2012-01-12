@@ -72,7 +72,6 @@ get_header(); ?>
 
 				<!---- Navigate between pages-->
 				<?php 
-				global $wp_query;
 				if ( $wp_query->max_num_pages > 1 ) : ?>
 					<nav id="nav-below">
 						<div class="nav-next events-nav-newer"><?php next_posts_link( __( 'Later events <span class="meta-nav">&larr;</span>' , 'eventorganiser' ) ); ?></div>
