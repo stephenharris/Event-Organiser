@@ -7,15 +7,12 @@
 
 /**
  * Adds custom columns to Event CPT table
- *
  * @since 1.0.0
  */
 add_filter('manage_edit-event_columns', 'eventorganiser_event_add_columns');
 function eventorganiser_event_add_columns($columns) {
 
-	//Unset unnecessary columns
-	unset($columns['date']);
-	unset($columns['categories']);
+	unset($columns['date']);//Unset unnecessary columns
 
 	//Set 'title' column title
 	$columns['title'] =__('Event','eventorganiser');
@@ -36,21 +33,18 @@ function eventorganiser_event_add_columns($columns) {
 
 /**
  * Registers the custom columns in Event CPT table to be sortable
- *
  * @since 1.0.0
  */
 add_filter( 'manage_edit-event_sortable_columns', 'eventorganiser_event_sortable_columns' );
 function eventorganiser_event_sortable_columns( $columns ) {
 	$columns['datestart'] = 'eventstart';
 	$columns['dateend'] = 'eventend';
- 
 	return $columns;
 }
 
 
 /**
  * What to display in custom columns of Event CPT table
- *
  * @since 1.0.0
  */
 add_action('manage_event_posts_custom_column', 'eventorganiser_event_sort_columns', 10, 2);
@@ -58,10 +52,7 @@ function eventorganiser_event_sort_columns($column_name, $id) {
 	global $post;
 
 	$series_id = (empty($post->event_id) ? $id :'');
-
 	$EO_Venue =new EO_Venue((int)eo_get_venue($series_id));
-	$post_type_object = get_post_type_object( $post->post_type );
-	$can_edit_post = current_user_can( $post_type_object->cap->edit_post, $post->ID );
 
 	$phpFormat = 'M, jS Y';
 	if(!eo_is_allday($series_id))
@@ -81,8 +72,7 @@ function eventorganiser_event_sort_columns($column_name, $id) {
 			break;
 
 		case 'reoccurence':
-			$summary =eo_get_schedule_summary($series_id );
-			echo $summary;
+			eo_display_reoccurence($series_id );
 			break;
 
 		case 'eventcategories':
@@ -100,6 +90,10 @@ function eventorganiser_event_sort_columns($column_name, $id) {
 	} // end switch
 }
 
+/**
+ * Adds a drop-down filter to the Event CPT table by category
+ * @since 1.0.0
+ */
 add_action( 'restrict_manage_posts', 'restrict_events_by_category' );
 function restrict_events_by_category() {
 
@@ -107,11 +101,10 @@ function restrict_events_by_category() {
     global $typenow,$wp_query;
     if ($typenow == 'event') {
 
-            // retrieve array of term objects in event-category taxonomy.
-            $tax_obj = get_taxonomy('event-category');
-            $tax_name = $tax_obj->labels->name;
-            $terms = get_terms('event-category');
-	
+		// retrieve array of term objects in event-category taxonomy.
+		$tax_obj = get_taxonomy('event-category');
+		$tax_name = $tax_obj->labels->name;
+		$terms = get_terms('event-category');
 		$selected=  (isset( $wp_query->query_vars['event-category']) ? $wp_query->query_vars['event-category'] : 0); ?>
 
 		<select style="width:150px;" name='event-category' id='event-category' class='postform'>
@@ -124,10 +117,8 @@ function restrict_events_by_category() {
     }
 }
 
-
 /**
- * Adds a drop-down filter to the Event CPT table
- *
+ * Adds a drop-down filter to the Event CPT table by venue
  * @since 1.0.0
  */
 add_action('restrict_manage_posts','restrict_events_by_venue');
@@ -138,7 +129,6 @@ function restrict_events_by_venue() {
 	//Only add if CPT is event
 	if ($typenow=='event') :		
 		$selected=  (empty( $wp_query->query_vars['venue_id'] ) ? 0 : $wp_query->query_vars['venue_id']);
-		
 		$venues = $wpdb->get_results(" SELECT* FROM $eventorganiser_venue_table"); ?>
 
 		<select style="width:150px;" id="HWSEventFilterVenue" name="venue_id">
@@ -153,8 +143,7 @@ function restrict_events_by_venue() {
 }
 
 /**
- * Adds a drop-down filter to the Event CPT table
- *
+ * Adds a drop-down filter to the Event CPT table by intervals
  * @since 1.2.0
  */
 add_action( 'restrict_manage_posts', 'eventorganiser_display_occurrences' );
@@ -165,7 +154,7 @@ function eventorganiser_display_occurrences() {
 			'all'=>__('View all events','eventorganiser'),
 			'future'=>__('Future events','eventorganiser'),
 			'expired'=>__('Expired events','eventorganiser'),
-			'P1D'=>__('Events on today', 'eventorganiser'),
+			'P1D'=>__('Events within 24 hours', 'eventorganiser'),
 			'P1W'=>__('Events within 1 week','eventorganiser'),
 			'P2W'=> sprintf(__('Events within %d weeks','eventorganiser'), 2),
 			'P1M'=>__('Events within 1 month','eventorganiser'),
@@ -180,7 +169,6 @@ function eventorganiser_display_occurrences() {
 			<?php endforeach; ?>
 		</select>
 <?php
-	endif;
+	endif;//End if CPT is event
 }
-
 ?>

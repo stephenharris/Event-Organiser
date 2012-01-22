@@ -93,8 +93,8 @@ add_filter('posts_groupby', 'eventorganiser_event_groupby',10,2);
 function eventorganiser_event_groupby( $groupby, $query ){
 	global $eventorganiser_events_table;
 
-	if(!empty($query->query_vars['group_events_by']) && $query->query_vars['group_events_by'] == 'series')
-		return "{$eventorganiser_events_table}.post_id";
+	//if(!empty($query->query_vars['group_events_by']) && $query->query_vars['group_events_by'] == 'series')
+		//return "{$eventorganiser_events_table}.post_id";
 
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']):
 		if(empty($groupby))
@@ -145,8 +145,7 @@ function eventorganiser_events_where( $where, $query ){
 		if((is_admin() || is_single())&&(!$query->query_vars['showrepeats'])):
 
 			//Select the first event.
-			$query->set('group_events_by','series');
-			//$where .= " AND ({$eventorganiser_events_table}.event_occurrence =0 OR {$eventorganiser_events_table}.event_occurrence IS NULL)";
+			$where .= " AND ({$eventorganiser_events_table}.event_occurrence =0 OR {$eventorganiser_events_table}.event_occurrence IS NULL)";
 
 		//In other instances (archives, shortcode listing if showrepeats option is false display only the next event.
 		elseif(!$query->query_vars['showrepeats']):
@@ -189,15 +188,17 @@ function eventorganiser_events_where( $where, $query ){
 							OR ({$eventorganiser_events_table}.EndDate=%s AND {$eventorganiser_events_table}.FinishTime >= %s)
 						)",$now_date,$now_date,$now_time );
 					break;
-				case 'P0D':
 				case 'P1D':
 				case 'P1W':
 				case 'P1M':
 				case 'P6M':
 				case 'P1Y':
-					$interval = new DateInterval($query->query_vars['eo_interval']);
-					$cutoff = clone $blog_now;
-					$cutoff->add($interval);
+					if(!isset($cutoff)):
+						$interval = new DateInterval($query->query_vars['eo_interval']);
+						$cutoff = clone $blog_now;
+						$cutoff->add($interval);
+					endif;
+
 					if(empty($query->query_vars['showrepeats'])):
 						$where .= $wpdb->prepare(" 
 							AND {$eventorganiser_events_table}.post_id IN (

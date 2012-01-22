@@ -293,12 +293,13 @@ Cron jobs
 */
 
 function eventorganiser_cron_jobs(){
-	wp_schedule_event(time()+600, 'daily', 'eventorganiser_delete_expired');
+	wp_schedule_event(time()+60, 'daily', 'eventorganiser_delete_expired');
 }
-
+//add_action('init','eo_my_delete_expired');
 add_action('eventorganiser_delete_expired', 'eo_my_delete_expired');
 function eo_my_delete_expired(){
 	$events = eo_get_events(array('showrepeats'=>0,'showpastevents'=>1,'eo_interval'=>'expired'));
+
 	if($events):
 		foreach($events as $event):
 			$now = new DateTime('now', EO_Event::get_timezone());
@@ -307,9 +308,9 @@ function eo_my_delete_expired(){
 			$duration = date_diff($start,$end);
 			$finished =  new DateTime($event->reoccurrence_end.' '.$event->StartTime, EO_Event::get_timezone());
 			$finished->add($duration);
-			$finished->modify('-1 day');
+			$finished->modify('+1 day');
 
-			if($finished >= $now):
+			if($finished <= $now):
 				wp_trash_post((int) $event->ID);
 			endif;
 		endforeach;

@@ -29,10 +29,9 @@ function eo_get_events($args=array()){
 	//These are preset to ensure the plugin functions properly
 	$required = array('post_type'=> 'event','suppress_filters'=>false);
 
-	//These are the defaults
 	$eo_settings_array= get_option('eventorganiser_options');
 
-
+	//These are the defaults
 	$defaults = array(
 		'numberposts'=>-1,
 		'orderby'=> 'eventstart',
@@ -540,18 +539,16 @@ function eo_display_reoccurence($id=''){
 *
  * @since 1.2.0
  */
-function eo_get_GoogleLink($id='',$occurrence=0){
+function eo_get_GoogleLink(){
 	global $post;
-	$event = $post;
+	setup_postdata($post);
 
-	if(isset($id)&& $id!='') $event = eo_get_by_postid($id,$occurrence=0); 
+	if(empty($post)|| get_post_type($post )!='event') return false;
 
-	if(empty($event)) return false;
+	$startDT = new DateTime($post->StartDate.' '.$post->StartTime);
+	$endDT = new DateTime($post->EndDate.' '.$post->FinishTime);
 
-	$startDT = new DateTime($event->StartDate.' '.$event->StartTime);
-	$endDT = new DateTime($event->EndDate.' '.$event->FinishTime);
-
-	if(eo_is_allday($id)):
+	if(eo_is_allday()):
 		$endDT->modify('+1 second');
 		$format = 'Ymd';
 	else:		
@@ -560,23 +557,23 @@ function eo_get_GoogleLink($id='',$occurrence=0){
 		$endDT->setTimezone( new DateTimeZone('UTC') );
 	endif;
 
-	$dates = $startDT->format($format).'/'.$endDT->format($format);
 	$excerpt = get_the_excerpt();
 	$excerpt = apply_filters('the_excerpt_rss', $excerpt);	
-		
-	$url ='http://www.google.com/calendar/event?action=TEMPLATE';
-	$url = add_query_arg('text',$post->post_title, $url);
-	$url = add_query_arg('dates',$dates, $url);
 
-	if($event->Venue):
-		//$venue =eo_get_venue_name((int) $event->Venue).", ".implode(', ',(int) $event->Venue);
-		//$url = add_query_arg('location',$venue, $url);
+	$url = add_query_arg(array(
+		'text'=>$post->post_title, 
+		'dates'=>$startDT->format($format).'/'.$endDT->format($format),
+		'trp'=>false,
+		'details'=>$excerpt,
+		'sprop'=>get_bloginfo('name')
+	),'http://www.google.com/calendar/event?action=TEMPLATE');
+
+	if($post->Venue):
+		$venue =eo_get_venue_name((int) $post->Venue).", ".implode(', ',eo_get_venue_address((int) $post->Venue));
+		$url = add_query_arg('location',$venue, $url);
 	endif;
 
-	$url = add_query_arg('details',$excerpt, $url);
-	$url = add_query_arg('trp','false', $url);
-	$url = add_query_arg('sprop','website name or url', $url);
-
-	return $url;;
+	wp_reset_postdata();
+	return $url;
 }
 ?>

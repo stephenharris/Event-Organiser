@@ -9,8 +9,8 @@ class EO_Events_Agenda_Widget extends WP_Widget
 		);
 
   function EO_Events_Agenda_Widget()  {
-	$widget_ops = array('classname' => 'widget_events', 'description' => 'Displays events' );
-	$this->WP_Widget('EO_Events_Agenda_Widget', 'Events Agenda', $widget_ops);
+	$widget_ops = array('classname' => 'widget_events', 'description' =>  __('Displays a list of events, grouped by date','eventorganiser'));
+	$this->WP_Widget('EO_Events_Agenda_Widget', __('Events Agenda','eventorganiser'), $widget_ops);
   }
  
 

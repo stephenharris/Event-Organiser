@@ -241,7 +241,6 @@ DESCRIPTION:<?php echo $this->escape_icalText($excerpt);?>
 
 if($event->venue_set()): 
 	$venue =eo_get_venue_name().", ".implode(', ',eo_get_venue_address());
-	$latlng = eo_get_venue_latlng();
 ?>
 LOCATION: <?php echo $this->escape_icalText($venue);?>
 

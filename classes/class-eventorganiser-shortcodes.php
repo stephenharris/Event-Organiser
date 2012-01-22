@@ -46,7 +46,7 @@ class EventOrganiser_Shortcodes {
 			$url = add_query_arg('cid',urlencode($url),'http://www.google.com/calendar/render');
 		endif;
 
-		$html = '<a href="'.$url.'" class="'.$class.'" title="'.$title.'" id="'.$id.'">'.$content.'</a>';
+		$html = '<a href="'.$url.'" target="_blank" class="'.$class.'" title="'.$title.'" id="'.$id.'">'.$content.'</a>';
 		return $html;
 	}
 

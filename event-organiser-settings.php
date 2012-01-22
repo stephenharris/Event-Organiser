@@ -59,7 +59,7 @@ function eventorganiser_update_settings(){
 			eventorganiser_clear_cron_jobs();
 		}else{
 			if(!wp_next_scheduled( 'eventorganiser_delete_expired' )){
-				wp_schedule_event(time()+600, 'daily', 'eventorganiser_delete_expired');
+				eventorganiser_cron_jobs();
 			}
 		}
 
@@ -210,7 +210,7 @@ class EventOrganiser_Settings_Page{
 					<tr <?php if($array_index==0)  echo 'class="alternate"';?>>
 						<td><?php echo $role_name; ?></td>
 						<?php foreach(self::$eventorganiser_roles as $eo_role => $eo_role_display): ?>
-							<td><input type="checkbox" name="eo_setting[permissions][<?php echo $role->name; ?>][<?php echo $eo_role; ?>]" value="1" <?php checked('1', $role->has_cap($eo_role)); ?> <?php if( $role_name=='administrator') echo 'disabled';?> /></td>
+							<td><input type="checkbox" name="eo_setting[permissions][<?php echo $role->name; ?>][<?php echo $eo_role; ?>]" value="1" <?php checked('1', $role->has_cap($eo_role)); ?> <?php if( $role->name=='administrator') echo 'disabled';?> /></td>
 						<?php endforeach; //End foreach $eventRoles ?>
 					</tr>
 				<?php	

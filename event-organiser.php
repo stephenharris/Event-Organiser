@@ -23,13 +23,8 @@ Author URI: http://www.HarrisWebSolutions.co.uk
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
-
 //TODO
-//Compress js
-//Improve templates
-
 //nice calendar / event list widget?
-//Potential bug: get_the_excerpt for add to google?
 //Style agenda with UI?
 
 //The database version

@@ -9,8 +9,8 @@ class EO_Calendar_Widget extends WP_Widget
 		);
 
   function EO_Calendar_Widget()  {
-	$widget_ops = array('classname' => 'widget_calendar', 'description' => 'Displays calendar' );
-	$this->WP_Widget('EO_Calendar_Widget', 'Events Calendar', $widget_ops);
+	$widget_ops = array('classname' => 'widget_calendar', 'description' => __('Displays a calendar of your events','eventorganiser') );
+	$this->WP_Widget('EO_Calendar_Widget', __('Events Calendar','eventorganiser'), $widget_ops);
   }
  
 
