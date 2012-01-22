@@ -28,7 +28,7 @@ get_header(); ?>
 				<!---- Page header, display category title-->
 				<header class="page-header">
 					<h1 class="page-title"><?php
-						printf( __( 'Event Category Archives: %s', 'twentyeleven' ), '<span>' . single_cat_title( '', false ) . '</span>' );
+						printf( __( 'Event Category Archives: %s', 'eventorganiser' ), '<span>' . single_cat_title( '', false ) . '</span>' );
 					?></h1>
 
 				<!---- If the category has a description display it-->
@@ -60,7 +60,13 @@ get_header(); ?>
 
 							<div class="entry-meta">
 								<!-- Output the date of the occurrence-->
-								<?php eo_the_start('d F Y'); ?> 
+								<?php if(eo_is_allday()):?>
+									<!-- Event is an all day event -->
+									<?php eo_the_start('d F Y'); ?> 
+								<?php else: ?>
+									<!-- Event is not an all day event - display time -->
+									<?php eo_the_start('d F Y G:ia'); ?> 
+								<?php endif; ?>
 
 								<!-- If the event has a venue saved, display this-->
 								<?php if(eo_get_venue_name()):?>
@@ -88,11 +94,11 @@ get_header(); ?>
 				<!---- If there are no events -->
 				<article id="post-0" class="post no-results not-found">
 					<header class="entry-header">
-						<h1 class="entry-title"><?php _e( 'Nothing Found', 'twentyeleven' ); ?></h1>
+						<h1 class="entry-title"><?php _e( 'Nothing Found', 'eventorganiser' ); ?></h1>
 					</header><!-- .entry-header -->
 
 					<div class="entry-content">
-						<p><?php _e( 'Apologies, but no events were found for the requested category. ', 'twentyeleven' ); ?></p>
+						<p><?php _e( 'Apologies, but no events were found for the requested category. ', 'eventorganiser' ); ?></p>
 					</div><!-- .entry-content -->
 				</article><!-- #post-0 -->
 

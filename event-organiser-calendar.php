@@ -11,8 +11,10 @@ function eventorganiser_cal_action(){
 	//Double check the page
 	if(isset($_REQUEST['page'])&& $_REQUEST['page']=='calendar' && isset($_REQUEST['post_type'])&& $_REQUEST['post_type']=='event'):
 
+		$actions =  array(__('Save Draft','eventorganiser'),__('Publish Event','eventorganiser'),__('Submit for Review','eventorganiser'));
+
 		//Check action
-		if(isset($_REQUEST['action'])&&($_REQUEST['action']=='Save Draft'||$_REQUEST['action']=='Publish Event'||$_REQUEST['action']=='Submit for Review')){
+		if(isset($_REQUEST['action'])&& in_array($_REQUEST['action'],$actions)){
 
 			//Check nonce
 			check_admin_referer('eventorganiser_calendar_save');
@@ -24,9 +26,9 @@ function eventorganiser_cal_action(){
 			$input = $_REQUEST['eo_event']; //Retrieve input from posted data
 			
 			//Set the status of the new event
-			if($_REQUEST['action']=='Publish Event')
+			if($_REQUEST['action']==__('Publish Event','eventorganiser'))
 				$status='publish';
-			elseif($_REQUEST['action']=='S	ave Draft')
+			elseif($_REQUEST['action']==__('Save Draft','eventorganiser'))
 				$status='draft';
 			else
 				$status='pending';
@@ -62,7 +64,23 @@ function eventorganiser_cal_action(){
 				exit; 
 			}
 
-		}//check action
+		}elseif(isset($_REQUEST['action'])&& $_REQUEST['action'] =='delete_occurrence' && isset($_REQUEST['series']) && isset($_REQUEST['event'])){
+
+			$post_id = intval($_REQUEST['series']);
+			$event_id = intval($_REQUEST['event']);
+
+			//Check nonce
+			check_admin_referer('eventorganiser_delete_occurrence_'.$event_id);
+
+			if (!current_user_can('delete_event', $post_id))
+				wp_die( __('You do not have sufficient permissions to delete this event') );
+
+			$del = $wpdb->get_results($wpdb->prepare("DELETE FROM $eventorganiser_events_table WHERE post_id=%d AND event_id=%d",$post_id,$event_id));
+
+			global $EO_Errors;
+			$EO_Errors = new WP_Error();
+			$EO_Errors->add('eo_notice', '<strong>'.__("Occurrence deleted.",'eventorganiser').'</strong>');
+		}
 	endif; //Check page
 	}
 
@@ -86,67 +104,64 @@ function eventorganiser_calendar_page() {
 	<h2><?php _e('Events Calendar', 'eventorganiser'); ?></h2>
 
 	<div id="calendar-view">
-		<span id='loading' style='display:none'>loading...</span>
-		<a href="" class="view-button" id="agendaDay">Day </a>
-		<a href="" class="view-button" id="agendaWeek">Week </a>
-		<a href="" class="view-button active" id="month">Month </a>
+		<span id='loading' style='display:none'><?php _e('Loading&#8230;');?></span>
+		<a href="" class="view-button" id="agendaDay"><?php _e('Day','eventorganiser');?> </a>
+		<a href="" class="view-button" id="agendaWeek"><?php _e('Week','eventorganiser');?></a>
+		<a href="" class="view-button active" id="month"><?php _e('Month','eventorganiser');?> </a>
 	</div>
 
-
-
-	<div id='calendar'></div>
-	<span>Current date/time: <?php echo $now->format('Y-m-d G:i:s \G\M\TP');?></span>
+	<div id='eo_admin_calendar'></div>
+	<span><?php _e('Current date/time','eventorganiser');?>: <?php echo $now->format('Y-m-d G:i:s \G\M\TP');?></span>
 	<div id='events-meta' class="thickbox"></div>
+
 	<?php if(current_user_can('publish_events')||current_user_can('edit_events')):?>
-	<div id='eo_event_create_cal' style="display:none;" class="thickbox">
-		<form name="eventorganiser_calendar" method="post" class="eo_cal">
-			<table>
-			<tr>
-				<th>When: </th>
-				<td id="date"></td>
-			</tr>
-			<tr>
-				<th>Event Title: </th>
-				<td><input name="eo_event[event_title]" size="30" placeholder="Event TItle"></input></td>
-			</tr>
-			<tr>
-				<th>Where: </th>
-				<td><!-- If javascript is disabed, a simple drop down menu box is displayed to choose venue.
-			Otherwise, the user is able to search the venues by typing in the input box.-->		
-				<select size="30" id="venue_select" name="eo_event[venue_id]">
-				<option>Select a venue </option>
-				<?php foreach ($AllVenues->results as $thevenue):?>
-					<option value="<?php echo intval($thevenue['venue_id']);?>"><?php echo $thevenue['venue_name']; ?></option>
-				<?php endforeach;?>
-				</select>
-				</td>
-			</tr>
-			<tr>
-				<th></th>
-				<td><textarea cols="30" rows="4" name="eo_event[event_content]"></textarea></td>
-			</tr>
-			</table>
-			<input type="hidden" name="eo_event[StartDate]">
-			<input type="hidden" name="eo_event[EndDate]">
-			<input type="hidden" name="eo_event[StartTime]">
-			<input type="hidden" name="eo_event[FinishTime]">
-			<input type="hidden" name="eo_event[allday]">
-	  		<?php wp_nonce_field('eventorganiser_calendar_save'); ?>
-			<?php if(current_user_can('publish_events')):?>
-				<p class="submit">	
-					<input type="reset" class="button" id="reset" value="Cancel">
-					<input type="submit" class="button button-highlighted" tabindex="4" value="Save Draft" id="event-draft" name="action">
-				<span class="eo_alignright">
-					<input type="submit" accesskey="p" tabindex="5" value="Publish Event" class="button-primary" id="publish" name="action">
-				</span>
-				<br class="clear">
-				</p>
+		<div id='eo_event_create_cal' style="display:none;" class="thickbox">
+			<form name="eventorganiser_calendar" method="post" class="eo_cal">
+				<table>
+				<tr>
+					<th><?php _e('When','eventorganiser');?>: </th>
+					<td id="date"></td>
+				</tr>
+				<tr>
+					<th><?php _e('Event Title','eventorganiser');?>: </th>
+					<td><input name="eo_event[event_title]" size="30"></input></td>
+				</tr>
+				<tr>
+					<th><?php _e('Where','eventorganiser');?>: </th>
+					<td><!-- If javascript is disabed, a simple drop down menu box is displayed to choose venue.
+				Otherwise, the user is able to search the venues by typing in the input box.-->		
+					<select size="30" id="venue_select" name="eo_event[venue_id]">
+					<option>Select a venue </option>
+					<?php foreach ($AllVenues->results as $thevenue):?>
+						<option value="<?php echo intval($thevenue['venue_id']);?>"><?php echo $thevenue['venue_name']; ?></option>
+					<?php endforeach;?>
+					</select>
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td><textarea cols="30" rows="4" name="eo_event[event_content]"></textarea></td>
+				</tr>
+				</table>
+				<input type="hidden" name="eo_event[StartDate]">
+				<input type="hidden" name="eo_event[EndDate]">
+				<input type="hidden" name="eo_event[StartTime]">
+				<input type="hidden" name="eo_event[FinishTime]">
+				<input type="hidden" name="eo_event[allday]">
+		  		<?php wp_nonce_field('eventorganiser_calendar_save'); ?>
+				<?php if(current_user_can('publish_events')):?>
+					<p class="submit">	
+						<input type="reset" class="button" id="reset" value="Cancel">
+						<input type="submit" class="button button-highlighted" tabindex="4" value="<?php _e('Save Draft','eventorganiser');?>"" id="event-draft" name="action">
+					<span class="eo_alignright">
+						<input type="submit" accesskey="p" tabindex="5" value="<?php _e('Publish Event','eventorganiser');?>" class="button-primary" id="publish" name="action">
+					</span>
+					<br class="clear">
+					</p>
 			<?php elseif(current_user_can('edit_events')):?>
 				<p class="submit">	
-					<input type="reset" class="button" id="reset" value="Cancel">
-				<span class="eo_alignright">
-					<input type="submit" accesskey="p" tabindex="5" value="Submit for Review" class="button-primary" id="submit-for-review" name="action">
-				</span>
+					<input type="reset" class="button" id="reset" value="<?php _e('Cancel','eventorganiser');?>">
+					<input type="submit" accesskey="p" tabindex="5" value="<?php _e('Submit for Review','eventorganiser');?>" class="eo_alignright button-primary" id="submit-for-review" name="action">
 				<br class="clear">
 				</p>
 			<?php endif; ?>

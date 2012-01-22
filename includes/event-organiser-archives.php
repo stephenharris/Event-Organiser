@@ -31,7 +31,7 @@ function eventorganiser_pre_get_posts( $query ) {
 	global $wp_query; 
 
 	//If venue or event-category is being queried, we must be after events
-	if( isset( $query->query_vars['venue'] ) || isset( $query->query_vars['venue_id'] )  || isset($query->query_vars['event-category'] )) {
+	if( isset( $query->query_vars['venue'] ) || isset( $query->query_vars['venue_id'] )  || isset($query->query_vars['event-category'] ) || isset($query->query_vars['event-tag'] )) {
 		$query->set('post_type', 'event');
 	}
 
@@ -160,7 +160,63 @@ function eventorganiser_events_where( $where, $query ){
 			$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.post_id =%d ",$series_id);
 		endif;
 
-	
+
+		//Retrieve blog's time and date
+		$blog_now = new DateTIme(null,EO_Event::get_timezone());
+		$now_date =$blog_now->format('Y-m-d');
+		$now_time =$blog_now->format('H:i:s');
+
+		$eo_settings_array= get_option('eventorganiser_options'); 
+		$running_event_is_past= (empty($eo_settings_array['runningisnotpast']) ? true : false);
+
+
+		//Query by interval
+		if(isset($query->query_vars['eo_interval'])):
+
+			switch($query->query_vars['eo_interval']):
+				case 'future':
+					$query->set('showpastevents',0);
+					$running_event_is_past=true;
+					break;
+				case 'expired':
+					$now_date =$blog_now->format('Y-m-d');
+					$now_time =$blog_now->format('H:i:s');
+
+					$where .= $wpdb->prepare(" 
+						AND {$eventorganiser_events_table}.post_id NOT IN (
+							SELECT post_id FROM {$eventorganiser_events_table} 
+							WHERE ({$eventorganiser_events_table}.EndDate > %s)
+							OR ({$eventorganiser_events_table}.EndDate=%s AND {$eventorganiser_events_table}.FinishTime >= %s)
+						)",$now_date,$now_date,$now_time );
+					break;
+				case 'P0D':
+				case 'P1D':
+				case 'P1W':
+				case 'P1M':
+				case 'P6M':
+				case 'P1Y':
+					$interval = new DateInterval($query->query_vars['eo_interval']);
+					$cutoff = clone $blog_now;
+					$cutoff->add($interval);
+					if(empty($query->query_vars['showrepeats'])):
+						$where .= $wpdb->prepare(" 
+							AND {$eventorganiser_events_table}.post_id IN (
+								SELECT post_id FROM {$eventorganiser_events_table} 
+								WHERE {$eventorganiser_events_table}.StartDate <= %s
+								AND {$eventorganiser_events_table}.EndDate >= %s)",
+							$cutoff->format('Y-m-d'),$blog_now->format('Y-m-d'));
+					else:
+						$where .= $wpdb->prepare(" 
+							AND {$eventorganiser_events_table}.StartDate <=%s'
+							AND {$eventorganiser_events_table}.EndDate >= %s",
+							$cutoff->format('Y-m-d'),$blog_now->format('Y-m-d')
+						);
+					endif;
+					break;
+			endswitch;
+		endif;
+
+
 		/*
 		* If requested, retrieve only future events. 
 		* Single pages behave differently - WordPress sees them as displaying the first event
@@ -170,28 +226,43 @@ function eventorganiser_events_where( $where, $query ){
 		*
 		* 'Future events' only works if we are showing all reoccurrences, and not wanting just the first occurrence of an event.
 		*/
+
 		if(isset($query->query_vars['showpastevents'])&& !$query->query_vars['showpastevents'] ){
-			//Retrieve the blog's local time and create the date part
-			$blog_now = new DateTIme(null,EO_Event::get_timezone());
-			$now_date =$blog_now->format('Y-m-d');
-			$now_time =$blog_now->format('H:i:s');
 
-			//If quering for all occurrences, look at start date 
+			//If quering for all occurrences, look at start/end date 
 			if(!empty($query->query_vars['showrepeats'])):
-				$query_date = $eventorganiser_events_table.'.StartDate';
+				$query_date = $eventorganiser_events_table.'.'.($running_event_is_past ? 'StartDate' : 'EndDate');
+				$query_time = $eventorganiser_events_table.'.'.($running_event_is_past ? 'StartTime' : 'FinishTime');	
+			
+				$where .= $wpdb->prepare(" AND ( 
+					({$query_date} > %s) OR
+					({$query_date} = %s AND {$query_time}>= %s))"
+					,$now_date,$now_date,$now_time);
 
-			//If querying for an 'event schedule': event is past if it all of its occurrences have finished
-			else:
-				$query_date = $eventorganiser_events_table.'.reoccurrence_end';
+			//If querying for an 'event schedule': event is past if it all of its occurrences are 'past'.
+			else:	
+				if($running_event_is_past):
+					//Check if each occurrence has started, i.e. just check reoccurrence_end
+					$query_date = $eventorganiser_events_table.'.reoccurrence_end';
+					$query_time = $eventorganiser_events_table.'.StartTime';
+
+					$where .= $wpdb->prepare(" AND ( 
+						({$query_date} > %s) OR
+						({$query_date} = %s AND {$query_time}>= %s))"
+						,$now_date,$now_date,$now_time);
+
+				else:
+					//Check each occurrence has finished, need to do a sub-query.
+					$where .= $wpdb->prepare(" 
+						AND {$eventorganiser_events_table}.post_id IN (
+							SELECT post_id FROM {$eventorganiser_events_table} 
+							WHERE ({$eventorganiser_events_table}.EndDate > %s)
+							OR ({$eventorganiser_events_table}.EndDate=%s AND {$eventorganiser_events_table}.FinishTime >= %s)
+							)",$now_date,$now_date,$now_time );
+				endif;
 			endif;
-
-			$where .= $wpdb->prepare(" AND ( 
-				({$query_date} > %s) OR
-				({$query_date} = %s AND {$eventorganiser_events_table}.StartTime >= %s))"
-				,$now_date,$now_date,$now_time);
 		}
 
-	
 		//If venue is specified, restrict events to that venue 
 		if( isset( $query->query_vars['venue'] ) && $query->query_vars['venue']!='') {
 			$venue = $query->query_vars['venue'];
@@ -233,7 +304,6 @@ function eventorganiser_events_where( $where, $query ){
 
 	return $where;
 }
-
 
 /**
 * Alter the order of posts. 

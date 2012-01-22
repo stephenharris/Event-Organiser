@@ -1,31 +1,30 @@
 jQuery(document).ready(function() {
-			var calendar = jQuery('#eo_admin_calendar');   
-			calendar.fullCalendar({
-				firstDay:  parseInt(EO_Ajax.startday),
+
+	if(jQuery("#eo_venue_map").length>0){
+		if(EOAjax.map !== undefined){
+			var script = document.createElement("script");
+			script.type = "text/javascript";
+			script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map";
+			document.body.appendChild(script);
+		}
+	}
+
+	if(jQuery(".eo-fullcalendar").length>0){
+		jQuery(".eo-fullcalendar").fullCalendar({
 				editable: false,
-				lazyFetching: 'true',
-				eventColor: '#21759B',
-				theme: true,
-				buttonText:{
-					today:   EO_Ajax.locale.today,
-			  		month:    EO_Ajax.locale.month,
-   		 			week:    EO_Ajax.locale.week,
-   					day:    EO_Ajax.locale.day,
-   					cat:    EO_Ajax.locale.cat,
-   					venue:    EO_Ajax.locale.venue
-				},
-				monthNames:EO_Ajax.locale.monthNames,
-				monthNamesShort:EO_Ajax.locale.monthAbbrev,
-				dayNames:EO_Ajax.locale.dayNames,
-				dayNamesShort:EO_Ajax.locale.dayAbbrev,
+				theme:true,
+				firstDay:  parseInt(EOAjax.fullcal.firstDay),
 				header: {
-					left: 'title',
-					center: 'category venue',
-					right: 'prev goto today next'
+					left: EOAjax.fullcal.headerleft,
+					center: EOAjax.fullcal.headercenter,
+					right: EOAjax.fullcal.headerright
 				},
+				eventColor:  '#21759B',
+				defaultView: EOAjax.fullcal.defaultview,
+				lazyFetching: 'true',
 				events:  function(start, end, callback) {
 					jQuery.ajax({
-						url: EO_Ajax.ajaxurl+"?action=event-admin-cal",
+						url: EOAjax.ajaxurl+"?action=eventorganiser-fullcal",
 						dataType: 'JSON',
            				 	data: {
 							start: jQuery.fullCalendar.formatDate(start, 'yyyy-MM-dd'),
@@ -36,165 +35,85 @@ jQuery(document).ready(function() {
             					}
 					})
 	    			},
-				categories: EO_Ajax.categories,
-				venues: EO_Ajax.venues,	
-				selectable:true,
-				selectHelper: true,
-				eventRender: function(event, element) {
-					cat =jQuery(".filter-category .eo-cal-filter").val();
-					venue =  jQuery(".filter-venue .eo-cal-filter").val();
-
-					if(typeof cat !== "undefined"&& cat != '' && (jQuery.inArray(cat, event.category)<0)){
-						return false
-					}
-					if(typeof venue !== "undefined" && venue!= '' && venue!=event.venue){
-						return false;
-					}
-			    	},
+				selectable:false,
 				weekMode: 'variable',
 				aspectRatio: 1.50,
-				loading: function(bool) {
-					if (bool) jQuery('#loading').show();
-					else jQuery('#loading').hide();
-				},
 				timeFormat:'HH:mm',
-				 eventClick: function(event, jsevent,view) {
-					jsevent.preventDefault();
-					jQuery("#events-meta").html('<div class="eo-cal-meta">'+event.summary+'</div>');
-					tb_show(event.title,"#TB_inline?height=230&amp;width=400&amp;inlineId=events-meta",null);
-			    	},
-				select: function( startDate, endDate, allDay, jsEvent, view ){
-					if(EO_Ajax.perm_edit){
-						jsEvent.preventDefault();
-						fc_format = 'yyyy-MM-dd'
-						options = jQuery(this)[0].calendar.options;
-
-						start_date =jQuery.fullCalendar.formatDate( startDate, fc_format);
-						start_time =jQuery.fullCalendar.formatDate( startDate, 'HH:mm');
-						end_date =jQuery.fullCalendar.formatDate( endDate, fc_format);
-						end_time =jQuery.fullCalendar.formatDate( endDate, 'HH:mm');
-
-						if(allDay){
-							format = 'ddd, dS MMMM';
-							allDay = 1;
-						}else{
-							format = 'ddd, dS MMMM h(:mm)tt';
-							allDay = 0;
-						}
-
-						if(start_date == end_date){
-							the_date = jQuery.fullCalendar.formatDate( startDate, format, options)
-							if(!allDay){
-								the_date =the_date +' &mdash; '+ jQuery.fullCalendar.formatDate( endDate, 'h(:mm)tt',options);
-							}
-						}else{
-							the_date = jQuery.fullCalendar.formatDate( startDate, format,options)+' &mdash; '+jQuery.fullCalendar.formatDate( endDate, format,options);
-						}
-
-						//Reset forms
-						jQuery("#eo_event_create_cal input[name='eo_event[event_title]']").val('');
-						jQuery("#eo_event_create_cal select[name='eo_event[Venue']] option:first-child").attr("selected",'selected');
-						jQuery("#eo_event_create_cal input.ui-autocomplete-input").val('');
-						jQuery("#eo_event_create_cal textarea[name='eo_event[event_content]']").val('');
-						jQuery("#eo_event_create_cal input[name='eo_event[StartDate]']").val(start_date);
-						jQuery("#eo_event_create_cal input[name='eo_event[StartTime]']").val(start_time);
-						jQuery("#eo_event_create_cal input[name='eo_event[EndDate]']").val(end_date);
-						jQuery("#eo_event_create_cal input[name='eo_event[FinishTime]']").val(end_time);
-						jQuery("#eo_event_create_cal input[name='eo_event[allday]']").val(allDay);
-						jQuery("#eo_event_create_cal td#date").html(the_date);
-						
-						tb_show('Create an event',"#TB_inline?height=290&amp;width=400&amp;inlineId=eo_event_create_cal",null);
-
-						jQuery("form.eo_cal input[type='submit']").removeAttr('disabled');
-						jQuery("form.eo_cal input#reset").click(function(event){
-							tb_remove();
-						});
+				loading: function(bool) {
+					loading = jQuery('#'+jQuery(this).attr('id')+'_loading');
+					if (bool){
+						 loadingTimeOut= window.setTimeout(function(){
+												loading.show();	
+											}, 1000);
+					}else{ 
+						window.clearTimeout(loadingTimeOut);
+						loading.hide();
 					}
 				}
 			});
+	}
 
-		/*
-		 * Add the calendar mode tabs
-		*/
-		jQuery('.view-button').click(function(event){
-			event.preventDefault();
-			jQuery('.view-button').removeClass('active');
-			calendar.fullCalendar( 'changeView', jQuery(this).attr('id') )		
-			jQuery(this).addClass('active');
-		});
-
-		/*
-		 * Add the mini-calendar to for navigating full-calendar
-		*/
-		jQuery('#miniCalendar').datepicker({
-			dateFormat: 'DD, d MM, yy',
-			firstDay:  parseInt(EO_Ajax.startday),
-			changeMonth: true,
-			monthNamesShort:EO_Ajax.locale.monthAbbrev,
-			dayNamesMin: EO_Ajax.locale.dayAbbrev,
-			changeYear: true,
-			showOn:'button',
-			buttonText:EO_Ajax.locale.gotodate,
-			onSelect: function(dateText,dp){
-				calendar.fullCalendar('gotoDate',new Date(Date.parse(dateText)));
-             		}
-		});
-		jQuery('button.ui-datepicker-trigger').button();
-
-		/*
-		 * Refetch events if filters are changed
-		*/
-		jQuery(".eo-cal-filter").change(function(){
-			calendar.fullCalendar('rerenderEvents');
-		});
-
-		jQuery('.filter-category .eo-cal-filter').selectmenu({
-			wrapperElement:"<span class='fc-header-filter'></span>",
-			icons: [
-					{find: '.cat'},
-				]
-			});
-		jQuery('.filter-venue .eo-cal-filter').selectmenu({
-			wrapperElement:"<span class='fc-header-filter'></span>"
-		});
-
-		jQuery('#eo-event-cat-menu li[class^="cat-colour-#"]').each(function(){
-			classes = this.className.split(' ');
-			var patt=/cat-colour-/g;
-			var n= patt.exec(classes[0]);
-			if(n!=null){
-				colour =classes[0].substring(11);
-				jQuery(this).find('.ui-selectmenu-item-icon.ui-icon').css({'background-color':colour});
-			}
-		})
-		
+	if(jQuery("#eo_calendar").length>0 && typeof EOAjaxUrl !== undefined){
+		jQuery('#eo_calendar tfoot').unbind("click");
+		jQuery('#eo_calendar tfoot a').die("click");
+		jQuery('#eo_calendar tfoot a').live('click', function(e){
+			e.preventDefault();
+			jQuery.getJSON(
+				EOAjaxUrl+"?action=eo_widget_cal",{
+					eo_month: getParameterByName('eo_month',jQuery(this).attr('href')),
+				},
+			  	function(data){
+					jQuery('#eo_calendar').html(data);
+				});
+		});	
+	}
 
 });
-/**
-************ WARNING ****************
-Below is an EDITED version of FullCalendar
-which generates the drop-down menus.
 
-If you wish to use this jQuery plug-in please
-go to the developer's website.
-***************************************
-*
-	/**
- * @preserve
- * FullCalendar v1.5.2
- * http://arshaw.com/fullcalendar/
- *
- * Use fullcalendar.css for basic styling.
- * For event drag & drop, requires jQuery UI draggable.
- * For event resizing, requires jQuery UI resizable.
- *
- * Copyright (c) 2011 Adam Shaw
- * Dual licensed under the MIT and GPL licenses, located in
- * MIT-LICENSE.txt and GPL-LICENSE.txt respectively.
- *
- * Date: Sun Aug 21 22:06:09 2011 -0700
- *
- */
+	function getParameterByName(name,url){
+		name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+		var regexS = "[\\?&]" + name + "=([^&#]*)";
+		var regex = new RegExp(regexS);
+		var results = regex.exec(url);
+		if(results == null)
+			return "";
+		else
+			return decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+
+	function eo_load_map(){
+		lat =EOAjax.map.lat;
+		lng = EOAjax.map.lng;
+		if(lat!==undefined && lng !=undefined){
+			var latlng = new google.maps.LatLng(lat,lng);
+			var myOptions = {
+				zoom: 15,
+				center: latlng,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			map = new google.maps.Map(document.getElementById("eo_venue_map"),myOptions);
+			var marker = new google.maps.Marker({
+				position: latlng, 
+				map: map
+			});
+		}
+	}
+
+/*
+ FullCalendar v1.5.2
+ http://arshaw.com/fullcalendar/
+
+ Use fullcalendar.css for basic styling.
+ For event drag & drop, requires jQuery UI draggable.
+ For event resizing, requires jQuery UI resizable.
+
+ Copyright (c) 2011 Adam Shaw
+ Dual licensed under the MIT and GPL licenses, located in
+ MIT-LICENSE.txt and GPL-LICENSE.txt respectively.
+
+ Date: Sun Aug 21 22:06:09 2011 -0700
+
+*/
 (function(m,oa){function wb(a){m.extend(true,Ya,a)}function Yb(a,b,e){function d(k){if(E){u();q();ma();S(k)}else f()}function f(){B=b.theme?"ui":"fc";a.addClass("fc");b.isRTL&&a.addClass("fc-rtl");b.theme&&a.addClass("ui-widget");E=m("<div class='fc-content' style='position:relative'/>").prependTo(a);C=new Zb(X,b);(P=C.render())&&a.prepend(P);y(b.defaultView);m(window).resize(na);t()||g()}function g(){setTimeout(function(){!n.start&&t()&&S()},0)}function l(){m(window).unbind("resize",na);C.destroy();
 E.remove();a.removeClass("fc fc-rtl ui-widget")}function j(){return i.offsetWidth!==0}function t(){return m("body")[0].offsetWidth!==0}function y(k){if(!n||k!=n.name){F++;pa();var D=n,Z;if(D){(D.beforeHide||xb)();Za(E,E.height());D.element.hide()}else Za(E,1);E.css("overflow","hidden");if(n=Y[k])n.element.show();else n=Y[k]=new Ja[k](Z=s=m("<div class='fc-view fc-view-"+k+"' style='position:absolute'/>").appendTo(E),X);D&&C.deactivateButton(D.name);C.activateButton(k);S();E.css("overflow","");D&&
 Za(E,1);Z||(n.afterShow||xb)();F--}}function S(k){if(j()){F++;pa();o===oa&&u();var D=false;if(!n.start||k||r<n.start||r>=n.end){n.render(r,k||0);fa(true);D=true}else if(n.sizeDirty){n.clearEvents();fa();D=true}else if(n.eventsDirty){n.clearEvents();D=true}n.sizeDirty=false;n.eventsDirty=false;ga(D);W=a.outerWidth();C.updateTitle(n.title);k=new Date;k>=n.start&&k<n.end?C.disableButton("today"):C.enableButton("today");F--;n.trigger("viewDisplay",i)}}function Q(){q();if(j()){u();fa();pa();n.clearEvents();
@@ -202,52 +121,9 @@ n.renderEvents(J);n.sizeDirty=false}}function q(){m.each(Y,function(k,D){D.sizeD
 ya(n.visStart,n.visEnd))ra();else k&&da()}function ra(){K(n.visStart,n.visEnd)}function sa(k){J=k;da()}function ha(k){da(k)}function da(k){ma();if(j()){n.clearEvents();n.renderEvents(J,k);n.eventsDirty=false}}function ma(){m.each(Y,function(k,D){D.eventsDirty=true})}function ua(k,D,Z){n.select(k,D,Z===oa?true:Z)}function pa(){n&&n.unselect()}function U(){S(-1)}function ca(){S(1)}function ka(){gb(r,-1);S()}function qa(){gb(r,1);S()}function G(){r=new Date;S()}function p(k,D,Z){if(k instanceof Date)r=
 N(k);else yb(r,k,D,Z);S()}function L(k,D,Z){k!==oa&&gb(r,k);D!==oa&&hb(r,D);Z!==oa&&ba(r,Z);S()}function c(){return N(r)}function z(){return n}function H(k,D){if(D===oa)return b[k];if(k=="height"||k=="contentHeight"||k=="aspectRatio"){b[k]=D;Q()}}function T(k,D){if(b[k])return b[k].apply(D||i,Array.prototype.slice.call(arguments,2))}var X=this;X.options=b;X.render=d;X.destroy=l;X.refetchEvents=ra;X.reportEvents=sa;X.reportEventChange=ha;X.rerenderEvents=da;X.changeView=y;X.select=ua;X.unselect=pa;
 X.prev=U;X.next=ca;X.prevYear=ka;X.nextYear=qa;X.today=G;X.gotoDate=p;X.incrementDate=L;X.formatDate=function(k,D){return Oa(k,D,b)};X.formatDates=function(k,D,Z){return ib(k,D,Z,b)};X.getDate=c;X.getView=z;X.option=H;X.trigger=T;$b.call(X,b,e);var ya=X.isFetchNeeded,K=X.fetchEvents,i=a[0],C,P,E,B,n,Y={},W,o,s,v=0,F=0,r=new Date,J=[],M;yb(r,b.year,b.month,b.date);b.droppable&&m(document).bind("dragstart",function(k,D){var Z=k.target,ja=m(Z);if(!ja.parents(".fc").length){var ia=b.dropAccept;if(m.isFunction(ia)?
-ia.call(Z,ja):ja.is(ia)){M=Z;n.dragStart(M,k,D)}}}).bind("dragstop",function(k,D){if(M){n.dragStop(M,k,D);M=null}})}function Zb(a,b){function e(){q=b.theme?"ui":"fc";if(b.header)return Q=m("<table class='fc-header' style='width:100%'/>").append(m("<tr/>").append(f("left")).append(f("center")).append(f("right")))}function d(){Q.remove()}
-
-function build_cat_dropdown(element){
-		terms = a.options.categories;
-
-		html="<select class='eo-cal-filter' id='eo-event-cat'>";
-		html+="<option value=''>"+a.options.buttonText.cat+"</option>";
-				
-		for (i=0; i<terms.length; i++){
-			html+= "<option class='cat-colour-"+terms[i].colour+" cat' value='"+terms[i].slug+"'>"+terms[i].name+"</option>";
-		}
-		html+="</select>";
-		element.append(html);
-	}
-
-	function build_venue_dropdown(element){
-		venues = a.options.venues;
-
-		html="<select class='eo-cal-filter' id='eo-event-venue'>";
-		html+="<option value=''>"+a.options.buttonText.venue+"</option>";
-				
-		for (i=0; i<venues.length; i++){
-			html+= "<option value='"+venues[i].venue_id+"'>"+venues[i].venue_name+"</option>";
-		}
-		html+="</select>";
-		element.append(html);
-	}
-
-function f(u){var fa=m("<td class='fc-header-"+u+"'/>");(u=b.header[u])&&m.each(u.split(" "),function(na){na>0&&fa.append("<span class='fc-header-space'/>");var ga;
-m.each(this.split(","),function(ra,sa){if(sa=="title"){fa.append("<span class='fc-header-title'><h2>&nbsp;</h2></span>");ga&&ga.addClass(q+"-corner-right");ga=null;
-}else if(sa == 'goto'){
-fa.append("<span class='fc-header-goto'><input type='hidden' id='miniCalendar'/></span>");
-}else if(sa == 'venue'){
-element = m("<span class='fc-header-dropdown filter-venue'></span>");
-fa.append(element);
-build_venue_dropdown(element)
-}else if(sa == 'category'){
-element = m("<span class='fc-header-dropdown filter-category'></span>");
-fa.append(element);
-build_cat_dropdown(element)
-}else{var ha;if(a[sa])ha=a[sa];else if(Ja[sa])ha=function(){ma.removeClass(q+"-state-hover");a.changeView(sa)};
-if(ha){ra=b.theme?jb(b.buttonIcons,sa):null;
-var da=jb(b.buttonText,sa);
-ma = m("<span class='fc-button fc-button-" + sa + " " + q + "-state-default'>" +da+"</span>");
-ma.button();
-if(ma){ma.click(function(){ma.hasClass(q+"-state-disabled")||ha()}).mousedown(function(){ma.not("."+q+"-state-active").not("."+q+"-state-disabled").addClass(q+"-state-down")}).mouseup(function(){ma.removeClass(q+"-state-down")}).hover(function(){ma.not("."+q+"-state-active").not("."+q+"-state-disabled").addClass(q+"-state-hover")},function(){ma.removeClass(q+"-state-hover").removeClass(q+"-state-down")}).appendTo(fa);
+ia.call(Z,ja):ja.is(ia)){M=Z;n.dragStart(M,k,D)}}}).bind("dragstop",function(k,D){if(M){n.dragStop(M,k,D);M=null}})}function Zb(a,b){function e(){q=b.theme?"ui":"fc";if(b.header)return Q=m("<table class='fc-header' style='width:100%'/>").append(m("<tr/>").append(f("left")).append(f("center")).append(f("right")))}function d(){Q.remove()}function f(u){var fa=m("<td class='fc-header-"+u+"'/>");(u=b.header[u])&&m.each(u.split(" "),function(na){na>0&&fa.append("<span class='fc-header-space'/>");var ga;
+m.each(this.split(","),function(ra,sa){if(sa=="title"){fa.append("<span class='fc-header-title'><h2>&nbsp;</h2></span>");ga&&ga.addClass(q+"-corner-right");ga=null}else{var ha;if(a[sa])ha=a[sa];else if(Ja[sa])ha=function(){ma.removeClass(q+"-state-hover");a.changeView(sa)};if(ha){ra=b.theme?jb(b.buttonIcons,sa):null;var da=jb(b.buttonText,sa),ma=m("<span class='fc-button fc-button-"+sa+" "+q+"-state-default'><span class='fc-button-inner'><span class='fc-button-content'>"+(ra?"<span class='fc-icon-wrap'><span class='ui-icon ui-icon-"+
+ra+"'/></span>":da)+"</span><span class='fc-button-effect'><span></span></span></span></span>");if(ma){ma.click(function(){ma.hasClass(q+"-state-disabled")||ha()}).mousedown(function(){ma.not("."+q+"-state-active").not("."+q+"-state-disabled").addClass(q+"-state-down")}).mouseup(function(){ma.removeClass(q+"-state-down")}).hover(function(){ma.not("."+q+"-state-active").not("."+q+"-state-disabled").addClass(q+"-state-hover")},function(){ma.removeClass(q+"-state-hover").removeClass(q+"-state-down")}).appendTo(fa);
 ga||ma.addClass(q+"-corner-left");ga=ma}}}});ga&&ga.addClass(q+"-corner-right")});return fa}function g(u){Q.find("h2").html(u)}function l(u){Q.find("span.fc-button-"+u).addClass(q+"-state-active")}function j(u){Q.find("span.fc-button-"+u).removeClass(q+"-state-active")}function t(u){Q.find("span.fc-button-"+u).addClass(q+"-state-disabled")}function y(u){Q.find("span.fc-button-"+u).removeClass(q+"-state-disabled")}var S=this;S.render=e;S.destroy=d;S.updateTitle=g;S.activateButton=l;S.deactivateButton=
 j;S.disableButton=t;S.enableButton=y;var Q=m([]),q}function $b(a,b){function e(c,z){return!ca||c<ca||z>ka}function d(c,z){ca=c;ka=z;L=[];c=++qa;G=z=U.length;for(var H=0;H<z;H++)f(U[H],c)}function f(c,z){g(c,function(H){if(z==qa){if(H){for(var T=0;T<H.length;T++){H[T].source=c;na(H[T])}L=L.concat(H)}G--;G||ua(L)}})}function g(c,z){var H,T=Aa.sourceFetchers,X;for(H=0;H<T.length;H++){X=T[H](c,ca,ka,z);if(X===true)return;else if(typeof X=="object"){g(X,z);return}}if(H=c.events)if(m.isFunction(H)){u();
 H(N(ca),N(ka),function(C){z(C);fa()})}else m.isArray(H)?z(H):z();else if(c.url){var ya=c.success,K=c.error,i=c.complete;H=m.extend({},c.data||{});T=Ta(c.startParam,a.startParam);X=Ta(c.endParam,a.endParam);if(T)H[T]=Math.round(+ca/1E3);if(X)H[X]=Math.round(+ka/1E3);u();m.ajax(m.extend({},ac,c,{data:H,success:function(C){C=C||[];var P=$a(ya,this,arguments);if(m.isArray(P))C=P;z(C)},error:function(){$a(K,this,arguments);z()},complete:function(){$a(i,this,arguments);fa()}}))}else z()}function l(c){if(c=
@@ -335,14 +211,3 @@ delete a.eventSources;if(a.events){d.push(a.events);delete a.events}a=m.extend(t
 6E4,dc={s:function(a){return a.getSeconds()},ss:function(a){return Pa(a.getSeconds())},m:function(a){return a.getMinutes()},mm:function(a){return Pa(a.getMinutes())},h:function(a){return a.getHours()%12||12},hh:function(a){return Pa(a.getHours()%12||12)},H:function(a){return a.getHours()},HH:function(a){return Pa(a.getHours())},d:function(a){return a.getDate()},dd:function(a){return Pa(a.getDate())},ddd:function(a,b){return b.dayNamesShort[a.getDay()]},dddd:function(a,b){return b.dayNames[a.getDay()]},
 M:function(a){return a.getMonth()+1},MM:function(a){return Pa(a.getMonth()+1)},MMM:function(a,b){return b.monthNamesShort[a.getMonth()]},MMMM:function(a,b){return b.monthNames[a.getMonth()]},yy:function(a){return(a.getFullYear()+"").substring(2)},yyyy:function(a){return a.getFullYear()},t:function(a){return a.getHours()<12?"a":"p"},tt:function(a){return a.getHours()<12?"am":"pm"},T:function(a){return a.getHours()<12?"A":"P"},TT:function(a){return a.getHours()<12?"AM":"PM"},u:function(a){return Oa(a,
 "yyyy-MM-dd'T'HH:mm:ss'Z'")},S:function(a){a=a.getDate();if(a>10&&a<20)return"th";return["st","nd","rd"][a%10-1]||"th"}};Aa.applyAll=$a;Ja.month=mc;Ja.basicWeek=nc;Ja.basicDay=oc;wb({weekMode:"fixed"});Ja.agendaWeek=qc;Ja.agendaDay=rc;wb({allDaySlot:true,allDayText:"all-day",firstHour:6,slotMinutes:30,defaultEventMinutes:120,axisFormat:"h(:mm)tt",timeFormat:{agenda:"h:mm{ - h:mm}"},dragOpacity:{agenda:0.5},minTime:0,maxTime:24})})(jQuery);
- /*
- * jQuery UI selectmenu dev version
- *
- * Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
- * Dual licensed under the MIT (MIT-LICENSE.txt)
- * and GPL (GPL-LICENSE.txt) licenses.
- *
- * http://docs.jquery.com/UI
- * https://github.com/fnagel/jquery-ui/wiki/Selectmenu
- */
-(function($){$.widget("ui.selectmenu",{getter:"value",version:"1.9",eventPrefix:"selectmenu",options:{transferClasses:true,typeAhead:1000,style:'dropdown',positionOptions:{my:"left top",at:"left bottom",offset:null},width:null,menuWidth:null,handleWidth:26,maxHeight:null,icons:null,format:null,escapeHtml:false,bgImage:function(){},wrapperElement:"<div />"},_create:function(){var self=this,o=this.options;var selectmenuId=(this.element.attr('id')||'ui-selectmenu-'+Math.random().toString(16).slice(2,10)).replace(':','\\:');this.ids=[selectmenuId,selectmenuId+'-button',selectmenuId+'-menu'];this._safemouseup=true;this.isOpen=false;this.newelement=$('<a />',{'class':this.widgetBaseClass+' ui-widget ui-state-default ui-corner-all','id':this.ids[1],'role':'button','href':'#nogo','tabindex':this.element.attr('disabled')?1:0,'aria-haspopup':true,'aria-owns':this.ids[2]});this.newelementWrap=$(o.wrapperElement).append(this.newelement).insertAfter(this.element);var tabindex=this.element.attr('tabindex');if(tabindex){this.newelement.attr('tabindex',tabindex)}this.newelement.data('selectelement',this.element);this.selectmenuIcon=$('<span class="'+this.widgetBaseClass+'-icon ui-icon"></span>').prependTo(this.newelement);this.newelement.prepend('<span class="'+self.widgetBaseClass+'-status" />');this.element.bind({'click.selectmenu':function(event){self.newelement.focus();event.preventDefault()}});this.newelement.bind('mousedown.selectmenu',function(event){self._toggle(event,true);if(o.style=="popup"){self._safemouseup=false;setTimeout(function(){self._safemouseup=true},300)}return false}).bind('click.selectmenu',function(){return false}).bind("keydown.selectmenu",function(event){var ret=false;switch(event.keyCode){case $.ui.keyCode.ENTER:ret=true;break;case $.ui.keyCode.SPACE:self._toggle(event);break;case $.ui.keyCode.UP:if(event.altKey){self.open(event)}else{self._moveSelection(-1)}break;case $.ui.keyCode.DOWN:if(event.altKey){self.open(event)}else{self._moveSelection(1)}break;case $.ui.keyCode.LEFT:self._moveSelection(-1);break;case $.ui.keyCode.RIGHT:self._moveSelection(1);break;case $.ui.keyCode.TAB:ret=true;break;case $.ui.keyCode.PAGE_UP:case $.ui.keyCode.HOME:self.index(0);break;case $.ui.keyCode.PAGE_DOWN:case $.ui.keyCode.END:self.index(self._optionLis.length);break;default:ret=true}return ret}).bind('keypress.selectmenu',function(event){if(event.which>0){self._typeAhead(event.which,'mouseup')}return true}).bind('mouseover.selectmenu',function(){if(!o.disabled)$(this).addClass('ui-state-hover')}).bind('mouseout.selectmenu',function(){if(!o.disabled)$(this).removeClass('ui-state-hover')}).bind('focus.selectmenu',function(){if(!o.disabled)$(this).addClass('ui-state-focus')}).bind('blur.selectmenu',function(){if(!o.disabled)$(this).removeClass('ui-state-focus')});$(document).bind("mousedown.selectmenu-"+this.ids[0],function(event){if(self.isOpen){self.close(event)}});this.element.bind("click.selectmenu",function(){self._refreshValue()}).bind("focus.selectmenu",function(){if(self.newelement){self.newelement[0].focus()}});if(!o.width){o.width=this.element.outerWidth()}this.newelement.width(o.width);this.element.hide();this.list=$('<ul />',{'class':'ui-widget ui-widget-content','aria-hidden':true,'role':'listbox','aria-labelledby':this.ids[1],'id':this.ids[2]});this.listWrap=$(o.wrapperElement).addClass(self.widgetBaseClass+'-menu').append(this.list).appendTo('body');this.list.bind("keydown.selectmenu",function(event){var ret=false;switch(event.keyCode){case $.ui.keyCode.UP:if(event.altKey){self.close(event,true)}else{self._moveFocus(-1)}break;case $.ui.keyCode.DOWN:if(event.altKey){self.close(event,true)}else{self._moveFocus(1)}break;case $.ui.keyCode.LEFT:self._moveFocus(-1);break;case $.ui.keyCode.RIGHT:self._moveFocus(1);break;case $.ui.keyCode.HOME:self._moveFocus(':first');break;case $.ui.keyCode.PAGE_UP:self._scrollPage('up');break;case $.ui.keyCode.PAGE_DOWN:self._scrollPage('down');break;case $.ui.keyCode.END:self._moveFocus(':last');break;case $.ui.keyCode.ENTER:case $.ui.keyCode.SPACE:self.close(event,true);$(event.target).parents('li:eq(0)').trigger('mouseup');break;case $.ui.keyCode.TAB:ret=true;self.close(event,true);$(event.target).parents('li:eq(0)').trigger('mouseup');break;case $.ui.keyCode.ESCAPE:self.close(event,true);break;default:ret=true}return ret}).bind('keypress.selectmenu',function(event){if(event.which>0){self._typeAhead(event.which,'focus')}return true}).bind('mousedown.selectmenu mouseup.selectmenu',function(){return false});$(window).bind("resize.selectmenu-"+this.ids[0],$.proxy(self.close,this))},_init:function(){var self=this,o=this.options;var selectOptionData=[];this.element.find('option').each(function(){var opt=$(this);selectOptionData.push({value:opt.attr('value'),text:self._formatText(opt.text()),selected:opt.attr('selected'),disabled:opt.attr('disabled'),classes:opt.attr('class'),typeahead:opt.attr('typeahead'),parentOptGroup:opt.parent('optgroup'),bgImage:o.bgImage.call(opt)})});var activeClass=(self.options.style=="popup")?" ui-state-active":"";this.list.html("");if(selectOptionData.length){for(var i=0;i<selectOptionData.length;i++){var thisLiAttr={role:'presentation'};if(selectOptionData[i].disabled){thisLiAttr['class']=this.namespace+'-state-disabled'}var thisAAttr={html:selectOptionData[i].text,href:'#nogo',tabindex:-1,role:'option','aria-selected':false};if(selectOptionData[i].disabled){thisAAttr['aria-disabled']=selectOptionData[i].disabled}if(selectOptionData[i].typeahead){thisAAttr['typeahead']=selectOptionData[i].typeahead}var thisA=$('<a/>',thisAAttr);var thisLi=$('<li/>',thisLiAttr).append(thisA).data('index',i).addClass(selectOptionData[i].classes).data('optionClasses',selectOptionData[i].classes||'').bind("mouseup.selectmenu",function(event){if(self._safemouseup&&!self._disabled(event.currentTarget)&&!self._disabled($(event.currentTarget).parents("ul>li."+self.widgetBaseClass+"-group "))){var changed=$(this).data('index')!=self._selectedIndex();self.index($(this).data('index'));self.select(event);if(changed){self.change(event)}self.close(event,true)}return false}).bind("click.selectmenu",function(){return false}).bind('mouseover.selectmenu focus.selectmenu',function(e){if(!$(e.currentTarget).hasClass(self.namespace+'-state-disabled')&&!$(e.currentTarget).parent("ul").parent("li").hasClass(self.namespace+'-state-disabled')){self._selectedOptionLi().addClass(activeClass);self._focusedOptionLi().removeClass(self.widgetBaseClass+'-item-focus ui-state-hover');$(this).removeClass('ui-state-active').addClass(self.widgetBaseClass+'-item-focus ui-state-hover')}}).bind('mouseout.selectmenu blur.selectmenu',function(){if($(this).is(self._selectedOptionLi().selector)){$(this).addClass(activeClass)}$(this).removeClass(self.widgetBaseClass+'-item-focus ui-state-hover')});if(selectOptionData[i].parentOptGroup.length){var optGroupName=self.widgetBaseClass+'-group-'+this.element.find('optgroup').index(selectOptionData[i].parentOptGroup);if(this.list.find('li.'+optGroupName).length){this.list.find('li.'+optGroupName+':last ul').append(thisLi)}else{$(' <li role="presentation" class="'+self.widgetBaseClass+'-group '+optGroupName+(selectOptionData[i].parentOptGroup.attr("disabled")?' '+this.namespace+'-state-disabled" aria-disabled="true"':'"')+'><span class="'+self.widgetBaseClass+'-group-label">'+selectOptionData[i].parentOptGroup.attr('label')+'</span><ul></ul></li> ').appendTo(this.list).find('ul').append(thisLi)}}else{thisLi.appendTo(this.list)}if(o.icons){for(var j in o.icons){if(thisLi.is(o.icons[j].find)){thisLi.data('optionClasses',selectOptionData[i].classes+' '+self.widgetBaseClass+'-hasIcon').addClass(self.widgetBaseClass+'-hasIcon');var iconClass=o.icons[j].icon||"";thisLi.find('a:eq(0)').prepend('<span class="'+self.widgetBaseClass+'-item-icon ui-icon '+iconClass+'"></span>');if(selectOptionData[i].bgImage){thisLi.find('span').css('background-image',selectOptionData[i].bgImage)}}}}}}else{$('<li role="presentation"><a href="#nogo" tabindex="-1" role="option"></a></li>').appendTo(this.list)}var isDropDown=(o.style=='dropdown');this.newelement.toggleClass(self.widgetBaseClass+'-dropdown',isDropDown).toggleClass(self.widgetBaseClass+'-popup',!isDropDown);this.list.toggleClass(self.widgetBaseClass+'-menu-dropdown ui-corner-bottom',isDropDown).toggleClass(self.widgetBaseClass+'-menu-popup ui-corner-all',!isDropDown).find('li:first').toggleClass('ui-corner-top',!isDropDown).end().find('li:last').addClass('ui-corner-bottom');this.selectmenuIcon.toggleClass('ui-icon-triangle-1-s',isDropDown).toggleClass('ui-icon-triangle-2-n-s',!isDropDown);if(o.transferClasses){var transferClasses=this.element.attr('class')||'';this.newelement.add(this.list).addClass(transferClasses)}if(o.style=='dropdown'){this.list.width(o.menuWidth?o.menuWidth:o.width)}else{this.list.width(o.menuWidth?o.menuWidth:o.width-o.handleWidth)}this.list.css('height','auto');var listH=this.listWrap.height();var winH=$(window).height();var maxH=o.maxHeight?Math.min(o.maxHeight,winH):winH/3;if(listH>maxH)this.list.height(maxH);this._optionLis=this.list.find('li:not(.'+self.widgetBaseClass+'-group)');if(this.element.attr('disabled')){this.disable()}else{this.enable()}this.index(this._selectedIndex());this._selectedOptionLi().addClass(this.widgetBaseClass+'-item-focus');window.setTimeout(function(){self._refreshPosition()},200)},destroy:function(){this.element.removeData(this.widgetName).removeClass(this.widgetBaseClass+'-disabled'+' '+this.namespace+'-state-disabled').removeAttr('aria-disabled').unbind(".selectmenu");$(window).unbind(".selectmenu-"+this.ids[0]);$(document).unbind(".selectmenu-"+this.ids[0]);this.newelementWrap.remove();this.listWrap.remove();this.element.unbind(".selectmenu").show();$.Widget.prototype.destroy.apply(this,arguments)},_typeAhead:function(code,eventType){var self=this,c=String.fromCharCode(code).toLowerCase(),matchee=null,nextIndex=null;if(self._typeAhead_timer){window.clearTimeout(self._typeAhead_timer);self._typeAhead_timer=undefined}self._typeAhead_chars=(self._typeAhead_chars===undefined?"":self._typeAhead_chars).concat(c);if(self._typeAhead_chars.length<2||(self._typeAhead_chars.substr(-2,1)===c&&self._typeAhead_cycling)){self._typeAhead_cycling=true;matchee=c}else{self._typeAhead_cycling=false;matchee=self._typeAhead_chars}var selectedIndex=(eventType!=='focus'?this._selectedOptionLi().data('index'):this._focusedOptionLi().data('index'))||0;for(var i=0;i<this._optionLis.length;i++){var thisText=this._optionLis.eq(i).text().substr(0,matchee.length).toLowerCase();if(thisText===matchee){if(self._typeAhead_cycling){if(nextIndex===null)nextIndex=i;if(i>selectedIndex){nextIndex=i;break}}else{nextIndex=i}}}if(nextIndex!==null){this._optionLis.eq(nextIndex).find("a").trigger(eventType)}self._typeAhead_timer=window.setTimeout(function(){self._typeAhead_timer=undefined;self._typeAhead_chars=undefined;self._typeAhead_cycling=undefined},self.options.typeAhead)},_uiHash:function(){var index=this.index();return{index:index,option:$("option",this.element).get(index),value:this.element[0].value}},open:function(event){var self=this,o=this.options;if(self.newelement.attr("aria-disabled")!='true'){self._closeOthers(event);self.newelement.addClass('ui-state-active');self.listWrap.appendTo(o.appendTo);self.list.attr('aria-hidden',false);self.listWrap.addClass(self.widgetBaseClass+'-open');var selected=this._selectedOptionLi();if(o.style=="dropdown"){self.newelement.removeClass('ui-corner-all').addClass('ui-corner-top')}else{this.list.css("left",-5000).scrollTop(this.list.scrollTop()+selected.position().top-this.list.outerHeight()/2+selected.outerHeight()/2).css("left","auto")}self._refreshPosition();var link=selected.find("a");if(link.length)link[0].focus();self.isOpen=true;self._trigger("open",event,self._uiHash())}},close:function(event,retainFocus){if(this.newelement.is('.ui-state-active')){this.newelement.removeClass('ui-state-active');this.listWrap.removeClass(this.widgetBaseClass+'-open');this.list.attr('aria-hidden',true);if(this.options.style=="dropdown"){this.newelement.removeClass('ui-corner-top').addClass('ui-corner-all')}if(retainFocus){this.newelement.focus()}this.isOpen=false;this._trigger("close",event,this._uiHash())}},change:function(event){this.element.trigger("change");this._trigger("change",event,this._uiHash())},select:function(event){if(this._disabled(event.currentTarget)){return false}this._trigger("select",event,this._uiHash())},_closeOthers:function(event){$('.'+this.widgetBaseClass+'.ui-state-active').not(this.newelement).each(function(){$(this).data('selectelement').selectmenu('close',event)});$('.'+this.widgetBaseClass+'.ui-state-hover').trigger('mouseout')},_toggle:function(event,retainFocus){if(this.isOpen){this.close(event,retainFocus)}else{this.open(event)}},_formatText:function(text){if(this.options.format){text=this.options.format(text)}else if(this.options.escapeHtml){text=$('<div />').text(text).html()}return text},_selectedIndex:function(){return this.element[0].selectedIndex},_selectedOptionLi:function(){return this._optionLis.eq(this._selectedIndex())},_focusedOptionLi:function(){return this.list.find('.'+this.widgetBaseClass+'-item-focus')},_moveSelection:function(amt,recIndex){if(!this.options.disabled){var currIndex=parseInt(this._selectedOptionLi().data('index')||0,10);var newIndex=currIndex+amt;if(newIndex<0){newIndex=0}if(newIndex>this._optionLis.size()-1){newIndex=this._optionLis.size()-1}if(newIndex===recIndex){return false}if(this._optionLis.eq(newIndex).hasClass(this.namespace+'-state-disabled')){(amt>0)?++amt:--amt;this._moveSelection(amt,newIndex)}else{this._optionLis.eq(newIndex).trigger('mouseover').trigger('mouseup')}}},_moveFocus:function(amt,recIndex){if(!isNaN(amt)){var currIndex=parseInt(this._focusedOptionLi().data('index')||0,10);var newIndex=currIndex+amt}else{var newIndex=parseInt(this._optionLis.filter(amt).data('index'),10)}if(newIndex<0){newIndex=0}if(newIndex>this._optionLis.size()-1){newIndex=this._optionLis.size()-1}if(newIndex===recIndex){return false}var activeID=this.widgetBaseClass+'-item-'+Math.round(Math.random()*1000);this._focusedOptionLi().find('a:eq(0)').attr('id','');if(this._optionLis.eq(newIndex).hasClass(this.namespace+'-state-disabled')){(amt>0)?++amt:--amt;this._moveFocus(amt,newIndex)}else{this._optionLis.eq(newIndex).find('a:eq(0)').attr('id',activeID).focus()}this.list.attr('aria-activedescendant',activeID)},_scrollPage:function(direction){var numPerPage=Math.floor(this.list.outerHeight()/this._optionLis.first().outerHeight());numPerPage=(direction=='up'?-numPerPage:numPerPage);this._moveFocus(numPerPage)},_setOption:function(key,value){this.options[key]=value;if(key=='disabled'){if(value)this.close();this.element.add(this.newelement).add(this.list)[value?'addClass':'removeClass'](this.widgetBaseClass+'-disabled'+' '+this.namespace+'-state-disabled').attr("aria-disabled",value)}},disable:function(index,type){if(typeof(index)=='undefined'){this._setOption('disabled',true)}else{if(type=="optgroup"){this._disableOptgroup(index)}else{this._disableOption(index)}}},enable:function(index,type){if(typeof(index)=='undefined'){this._setOption('disabled',false)}else{if(type=="optgroup"){this._enableOptgroup(index)}else{this._enableOption(index)}}},_disabled:function(elem){return $(elem).hasClass(this.namespace+'-state-disabled')},_disableOption:function(index){var optionElem=this._optionLis.eq(index);if(optionElem){optionElem.addClass(this.namespace+'-state-disabled').find("a").attr("aria-disabled",true);this.element.find("option").eq(index).attr("disabled","disabled")}},_enableOption:function(index){var optionElem=this._optionLis.eq(index);if(optionElem){optionElem.removeClass(this.namespace+'-state-disabled').find("a").attr("aria-disabled",false);this.element.find("option").eq(index).removeAttr("disabled")}},_disableOptgroup:function(index){var optGroupElem=this.list.find('li.'+this.widgetBaseClass+'-group-'+index);if(optGroupElem){optGroupElem.addClass(this.namespace+'-state-disabled').attr("aria-disabled",true);this.element.find("optgroup").eq(index).attr("disabled","disabled")}},_enableOptgroup:function(index){var optGroupElem=this.list.find('li.'+this.widgetBaseClass+'-group-'+index);if(optGroupElem){optGroupElem.removeClass(this.namespace+'-state-disabled').attr("aria-disabled",false);this.element.find("optgroup").eq(index).removeAttr("disabled")}},index:function(newValue){if(arguments.length){if(!this._disabled($(this._optionLis[newValue]))){this.element[0].selectedIndex=newValue;this._refreshValue()}else{return false}}else{return this._selectedIndex()}},value:function(newValue){if(arguments.length){this.element[0].value=newValue;this._refreshValue()}else{return this.element[0].value}},_refreshValue:function(){var activeClass=(this.options.style=="popup")?" ui-state-active":"";var activeID=this.widgetBaseClass+'-item-'+Math.round(Math.random()*1000);this.list.find('.'+this.widgetBaseClass+'-item-selected').removeClass(this.widgetBaseClass+"-item-selected"+activeClass).find('a').attr('aria-selected','false').attr('id','');this._selectedOptionLi().addClass(this.widgetBaseClass+"-item-selected"+activeClass).find('a').attr('aria-selected','true').attr('id',activeID);var currentOptionClasses=(this.newelement.data('optionClasses')?this.newelement.data('optionClasses'):"");var newOptionClasses=(this._selectedOptionLi().data('optionClasses')?this._selectedOptionLi().data('optionClasses'):"");this.newelement.removeClass(currentOptionClasses).data('optionClasses',newOptionClasses).addClass(newOptionClasses).find('.'+this.widgetBaseClass+'-status').html(this._selectedOptionLi().find('a:eq(0)').html());this.list.attr('aria-activedescendant',activeID)},_refreshPosition:function(){var o=this.options;if(o.style=="popup"&&!o.positionOptions.offset){var selected=this._selectedOptionLi();var _offset="0 "+(this.list.offset().top-selected.offset().top-(this.newelement.outerHeight()+selected.outerHeight())/2)}this.listWrap.zIndex(this.element.zIndex()+1).position({of:o.positionOptions.of||this.newelement,my:o.positionOptions.my,at:o.positionOptions.at,offset:o.positionOptions.offset||_offset,collision:o.positionOptions.collision||o.style=="popup"?'fit':'flip'})}})})(jQuery);

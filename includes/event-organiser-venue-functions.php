@@ -113,10 +113,13 @@ function eo_get_venue_description($venue_slug_or_id=''){
 		$EO_Venue = new EO_Venue((int) $post->Venue);
 	}
 	
-	if($EO_Venue->is_found()) 
-		return $EO_Venue->description;
-	
-	return false;
+	if(!$EO_Venue->is_found()) 
+		return false;
+
+	$description =$EO_Venue->description;
+	$description = apply_filters('the_content', $description);
+
+	return $description;
 }
 
 

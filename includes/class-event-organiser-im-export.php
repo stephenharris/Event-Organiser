@@ -18,7 +18,7 @@ class Event_Organiser_Im_Export  {
 		if ( NULL === self :: $classobj ) {
 			self :: $classobj = new self;
 		}
-		
+
 		return self :: $classobj;
 	}
 	
@@ -30,26 +30,42 @@ class Event_Organiser_Im_Export  {
 
 		if(!isset($EO_Errors)) $EO_Errors = new WP_Error();
 
+		if(isset($_GET['feed']) && $_GET['feed']=='eo-events'):
+			$this->get_export_file();
+		endif;
+
+		/*		
+		*If importing / exporting events make sure we a logged in and check nonces.
+*		*/
 		//Exporting events
-		if ( isset( $_GET['eventorganiser_download_events'] )&& check_admin_referer( 'eventorganiser_export' )
+		if (is_admin() && isset( $_GET['eventorganiser_download_events'] )&& check_admin_referer( 'eventorganiser_export' )
 			&& current_user_can('manage_options')&& $pagenow=="options-general.php"):
 			$this->get_export_file();
 		endif;
 
+		if(isset($_REQUEST['action']) &&$_REQUEST['action']=='eventorganiser_calendar_scrape' ){
+			$this->get_export_file();
+		}
+
+
 		//Importing events
-		if ( isset( $_POST['eventorganiser_import_events'] )&& check_admin_referer( 'eventorganiser_import' )
+		if ( is_admin() && isset( $_POST['eventorganiser_import_events'] )&& check_admin_referer( 'eventorganiser_import' )
 			&& current_user_can('manage_options')&& $pagenow=="options-general.php"):
 		
+
 			//Perform checks on file:
-			if (($_FILES["ics"]["type"] == "text/calendar")&& ($_FILES["ics"]["size"] < 20000)):
+			if (($_FILES["ics"]["type"] == "text/calendar")&& ($_FILES["ics"]["size"] < 2000000)):
 				if($_FILES["ics"]["error"] > 0){
-					$EO_Errors = new WP_Error('eo_error', __("File Error encountered: ".$_FILES["ics"]["error"]));
+					$EO_Errors = new WP_Error('eo_error', sprintf(__("File Error encountered: %d"), $_FILES["ics"]["error"]));
 				}else{
 					//Import file
 					$this->import_file($_FILES['ics']['tmp_name']);
   				}
+			elseif(!isset($_FILES) || empty($_FILES['ics']['name'])):
+				$EO_Errors = new WP_Error('eo_error', __("No file detected.",'eventorganiser'));
+
 			else:
-				$EO_Errors = new WP_Error('eo_error', __("Invalid file uploaded"));
+				$EO_Errors = new WP_Error('eo_error', __("Invalid file uploaded. The file must be a ics calendar file, no larger than 2MB.",'eventorganiser'));
 
 			endif;
 
@@ -78,7 +94,7 @@ class Event_Organiser_Im_Export  {
 
 			<h3 class="title"><?php _e('Import Events', 'eventorganiser'); ?></h3>
 			<div class="inside">
-				<p>Import an ICS file</p>
+			<p><?php _e( 'Import an ICS file.', 'eventorganiser'); ?></p>
 				<form method="post" action="" enctype="multipart/form-data">
 					<?php wp_nonce_field('eventorganiser_import'); ?>
 					<p class="submit">
@@ -119,7 +135,6 @@ class Event_Organiser_Im_Export  {
 	header('Content-type: text/calendar');
 	header("Pragma: 0");
 	header("Expires: 0");
-
 ?>
 BEGIN:VCALENDAR
 VERSION:2.0
@@ -216,7 +231,7 @@ SUMMARY:<?php echo $this->escape_icalText(get_the_title()); ?>
 
 <?php
 	$excerpt = get_the_excerpt();
-	apply_filters('the_excerpt_rss', $excerpt);
+	$excerpt = apply_filters('the_excerpt_rss', $excerpt);
 	if(!empty($excerpt)):
 ?>
 DESCRIPTION:<?php echo $this->escape_icalText($excerpt);?>
@@ -229,8 +244,6 @@ if($event->venue_set()):
 	$latlng = eo_get_venue_latlng();
 ?>
 LOCATION: <?php echo $this->escape_icalText($venue);?>
-
-GEO: <?php echo $latlng['lat'].';'.$latlng['lng'];?>
 
 <?php endif; 
 	$author = get_the_author();
@@ -274,7 +287,7 @@ function escape_icalText($text){
 		global $EO_Errors;
 
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'edit_events' ))
-			wp_die( __('Import failed - you do not have sufficient privilidges to import events.','event-organiser') );
+			wp_die( __('You do not have sufficient permissions to import events.','event-organiser') );
 
 		//Returns the file as an array of lines
 		$file_array =$this->parse_file($cal_file);
@@ -344,7 +357,7 @@ function escape_icalText($text){
 				//On the right side of the line we may have DTSTART;TZID= or DTSTART;VALUE= 
 				$modifiers = explode (';', $line[0]); 
 				$property =array_shift($modifiers);
-				$value = trim($line[1]);
+				$value = (isset($line[1]) ? trim($line[1]) : '');
 
 				//If we are in EVENT state
 		      		if ($state == "VEVENT") {
@@ -410,12 +423,15 @@ function escape_icalText($text){
    	 	endfor; //For each line
 
 		if($event_count ==0):
-			$EO_Errors->add('eo_error', __("No events were imported"));
+			$EO_Errors->add('eo_error', __("No events were imported.",'eventorganiser'));
 		elseif($error_count >0):
-			$EO_Errors->add('eo_error', __("There was an error with ".$error_count." of ".$event_count." events in the ical file"));
+			$EO_Errors->add('eo_error',sprintf( __("There was an error with %1$d of %2$d events in the ical file"),$error_count, $event_count));
 		else:
-			$events_imp  = ($event_count==1 ? '1 event was' : $event_count.' events were');
-			$EO_Errors->add('eo_notice', __($events_imp." successfully imported"));
+
+			if($event_count==1)
+				$EO_Errors->add('eo_notice', __("1 event was successfully imported",'eventorganiser'));
+			else
+				$EO_Errors->add('eo_notice',sprintf( __("%d events were successfully imported",'eventorganiser'),$event_count));
 		endif;
 
 		return true;

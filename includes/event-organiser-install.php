@@ -55,11 +55,19 @@
 		'templates'=> 1,
 		'addtomenu'=> 0,
 		'excludefromsearch'=>0,
-		'showpast'=> 0
+		'showpast'=> 0,
+		'url_venue'=>'events/event',
+		'url_venue'=> 'events/venues',
+		'url_cat' => 'events/category',
+		'url_tag' => 'events/tag',
+		'navtitle' => 'Events',
+		'runningisnotpast' => 0,
+		'deleteexpired' => 0
 	);
 	update_option("eventorganiser_version",$eventorganiser_db_version);
-	update_option('eventorganiser_options',$eventorganiser_options);
-			
+	add_option('eventorganiser_options',$eventorganiser_options);
+	
+	//Add roles to administrator		
 	global $wp_roles,$eventorganiser_roles;	
 	$all_roles = $wp_roles->roles;
 	foreach ($all_roles as $role_name => $display_name):
@@ -74,6 +82,7 @@
 
 
 function eventorganiser_deactivate(){
+	eventorganiser_clear_cron_jobs();
     }
 
 
@@ -81,12 +90,12 @@ add_action('admin_init', 'eventorganiser_upgradecheck');
 function eventorganiser_upgradecheck(){
        global $eventorganiser_db_version, $eventorganiser_events_table, $wpdb;
 	global $EO_Errors;
-
+	
 	$installed_ver = get_option('eventorganiser_version');
 
 	//If this is an old version, perform some updates.
 	if ( !empty($installed_ver ) && $installed_ver != $eventorganiser_db_version ):
-		  if ( get_option('plugin_db_version') < '1.1') {
+		  if ( $installed_ver < '1.1') {
 			$query = $wpdb->prepare("SELECT* 
 				FROM {$eventorganiser_events_table}
 				WHERE {$eventorganiser_events_table}.event_schedule = 'monthly'
@@ -118,6 +127,19 @@ function eventorganiser_upgradecheck(){
 				endif;
 			  endforeach;
 		}
+		if ( $installed_ver < '1.2') {
+			$settings = get_option('eventorganiser_options');
+			
+			//Add new settings
+			$settings['url_event']= 'events/event';
+			$settings['url_venue']= 'events/venues';
+			$settings['url_cat'] = 'events/category';
+			$settings['url_tag'] = 'events/tag';
+			$settings['navtitle'] = 'Events';
+			$settings['runningisnotpast'] = 0;
+			$settings['deleteexpired'] = 0;
+			update_option('eventorganiser_options',$settings);
+		}
 		update_option('eventorganiser_version', $eventorganiser_db_version);
 	endif;
 }
@@ -125,6 +147,8 @@ function eventorganiser_upgradecheck(){
 
 function eventorganiser_uninstall(){
 	global $wpdb,$eventorganiser_venue_table, $eventorganiser_events_table,$eventorganiser_roles, $wp_roles,$wp_taxonomies;
+
+	eventorganiser_clear_cron_jobs();
 
 	//Drop tables    
 	$wpdb->query("DROP TABLE IF EXISTS $eventorganiser_events_table");
@@ -148,6 +172,8 @@ function eventorganiser_uninstall(){
 			$role->remove_cap($eo_role);
 		endforeach;  
 	endforeach; 
+	
+	eventorganiser_clear_cron_jobs();
 
 	//Remove 	event category and terms
 	$terms = get_terms( 'event-category', 'hide_empty=0' );

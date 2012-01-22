@@ -20,8 +20,8 @@ class EO_List_Table extends WP_List_Table {
 		global $status, $page;
 		//Set parent defaults
 		parent::__construct( array(
-			'singular'  => 'venue',     //singular name of the listed records
-			'plural'    => 'venues',    //plural name of the listed records
+			'singular'  => __('venue','eventorganiser'),     //singular name of the listed records
+			'plural'    =>  __('venues','eventorganiser'),    //plural name of the listed records
 			'ajax'      => true        //does this table support ajax?
         	) );
 	    }
@@ -56,9 +56,9 @@ class EO_List_Table extends WP_List_Table {
 
         //Build row actions
         $actions = array(
-            'edit'      => sprintf('<a href="?post_type=event&page=%s&action=%s&venue=%d">Edit</a>',$_REQUEST['page'],'edit',$item['venue_id']),
-            'delete'    => '<a href="'.wp_nonce_url(sprintf('?post_type=event&page=%s&action=%s&venue=%d',$_REQUEST['page'],'delete',$item['venue_id']), 'bulk-venues' ).'">Delete </a>',
-            'view'    => sprintf('<a href="%s">View</a>',  eo_get_venue_link($item['venue_slug'])),
+            'edit'      => sprintf('<a href="?post_type=event&page=%s&action=%s&venue=%d">'.__('Edit').'</a>',$_REQUEST['page'],'edit',$item['venue_id']),
+            'delete'    => '<a href="'.wp_nonce_url(sprintf('?post_type=event&page=%s&action=%s&venue=%d',$_REQUEST['page'],'delete',$item['venue_id']), 'bulk-venues' ).'">'.__('Delete').' </a>',
+            'view'    => sprintf('<a href="%s">'.__('View').'</a>',  eo_get_venue_link($item['venue_slug'])),
         );
         
         //Return the title contents
@@ -110,7 +110,7 @@ class EO_List_Table extends WP_List_Table {
      */
     function get_bulk_actions() {
         $actions = array(
-            'delete'    => 'Delete selected'
+            'delete'    => __('Delete')
         );
         return $actions;
     }

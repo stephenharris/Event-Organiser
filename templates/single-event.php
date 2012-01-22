@@ -32,14 +32,22 @@ get_header(); ?>
 						<h1 class="entry-title"><?php the_title(); ?></h1>
 
 							<div class="entry-meta">
-								<?php $next =   eo_get_next_occurrence('d F Y'); ?>
-								<?php if($next): ?>
-									<!---- If the event is occurring again in the future, display the date -->
-									This event is running from <?php eo_schedule_start('d F Y'); ?>  until <?php  eo_schedule_end('d F Y',''); ?>. It is next showing at <?php echo $next;?>
+								<?php if(eo_reoccurs()):?>
+									<!----Event reoccurs - is there a next occurrence? -->
+									<?php $next =   eo_get_next_occurrence('d F Y');?>
+
+									<?php if($next): ?>
+										<!---- If the event is occurring again in the future, display the date -->
+										This event is running from <?php eo_schedule_start('d F Y'); ?>  until <?php  eo_schedule_end('d F Y',''); ?>. It is next occurring at <?php echo $next;?>
+									<?php else: ?>
+										<!---- Otherwise the event has finished (no more occurrences) -->
+										This event finished on <?php  eo_schedule_end('d F Y',''); ?>.
+									<?php endif;?>
+
 								<?php else: ?>
-									<!---- Otherwise the event has finished (no more occurrences) -->
-									This event finished on <?php  eo_schedule_end('d F Y',''); ?>.
-								<?php endif;?>
+									<!----Event is a single event -->
+										This event is on <?php   eo_the_start('d F Y',''); ?>.
+								<?php endif; ?>
 							</div><!-- .entry-meta -->
 
 					</header><!-- .entry-header -->

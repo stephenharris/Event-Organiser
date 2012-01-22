@@ -7,6 +7,8 @@
  * but would require front-end initialisation. Like global $eo_event for
  * event functions as well as global $post for WordPress standard functions.
  */
+global $wp_locale;
+
 class EO_Event{
 
 	var $event_id = -1;
@@ -27,7 +29,7 @@ class EO_Event{
 	var $timezone;
 
 	var $exists =false;
-
+	
 	static public $daysofweek = array(
 		array('D'=>'Sun','I'=>'Sunday','c'=>'S','ical'=>'SU'),
 		array('D'=>'Mon','I'=>'Monday','c'=>'M','ical'=>'MO'),
@@ -45,7 +47,6 @@ class EO_Event{
 		'TH'=>'Thursday',
 		'FR'=>'Friday',
 		'SA'=>'Saturday',
-		'SU'=>'Sunday',
 	);
 
 	static public $allowed_reoccurs= array(
@@ -238,8 +239,6 @@ class EO_Event{
 			$result = $event->createFromObjects($event_data);
 		else
 			$result = $event->create($event_data);
-
-
 
 		if($result){
 			if($delete){

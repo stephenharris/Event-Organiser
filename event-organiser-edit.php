@@ -4,8 +4,7 @@
  *
  * @since 1.0.0
  */
-
-
+//TODO Event.js - disabling input
 /**
  * Initialises the plug-ins metaboxs on Event CPT
  *
@@ -17,13 +16,18 @@ function eventorganiser_edit_init(){
 	if (current_user_can('delete_events')) add_action('delete_post', 'eventorganiser_event_delete', 10);
 	
 	// add a meta box to event post types.
-	add_meta_box('eventorganiser_detail', 'Event Details', 'eventorganiser_details_metabox', 'event', 'normal', 'high');
+	add_meta_box('eventorganiser_detail', __('Event Details','eventorganiser'), 'eventorganiser_details_metabox', 'event', 'normal', 'high');
 
 	// add a callback function to save any data a user enters in
 	add_action('save_post','eventorganiser_details_save');
+
 }
 
-
+add_action('add_meta_boxes', 'eventorganiser_author_meta_box_title',0);
+function eventorganiser_author_meta_box_title() {
+    global $wp_meta_boxes; // array of defined meta boxes
+	$wp_meta_boxes['event']['normal']['core']['authordiv']['title']= __('Organiser','eventorganiser');
+}
 
 /**
  * Sets up the event data metabox
@@ -33,6 +37,8 @@ function eventorganiser_edit_init(){
  */
 function eventorganiser_details_metabox(){
 	
+	global $wp_locale;	
+
 	//Retrieve all venues
 	$AllVenues = new EO_Venues;
 	$AllVenues->query();
@@ -59,36 +65,48 @@ function eventorganiser_details_metabox(){
 	//Start of meta box ?>	
 		<p>
 			<?php if($event->is_reoccurring()):?>
-				<strong> This a reoccuring event.</strong> <input type="checkbox" id="HWSEvent_rec" name="eo_input[AlterRe]" value="yes" /> Check to edit this event and its reocurrences
+				<strong><?php _e('This is a reoccurring event','eventorganiser');?></strong>. 
+				<input type="checkbox" id="HWSEvent_rec" name="eo_input[AlterRe]" value="yes" /> 
+				<?php _e('Check to edit this event and its reoccurrences','eventorganiser');?>.
 			<?php endif;?>
 		</p>
 
 		<div class="<?php if ($event->is_reoccurring()): echo 'reoccurence'; else: echo 'onetime'; endif;?>">
-			<p>Ensure dates are entered in <strong><?php echo $format;?></strong> format and times in  <strong>hh:mm</strong> (24 hour) format </p>
+			<p><?php sprintf(__('Ensure dates are entered in %1$s format and times in %2$s (24 hour) format','eventorganiser'),'<strong>'.$format.'</strong>',' <strong>hh:mm</strong>');?> </p>
 			<table>
 			<tr class="event-date">
-			<td>Start Date/Time: </td>
+			<td><?php echo __("Start Date/Time",'eventorganiser').':';?> </td>
 			<td> 
-			<input name="eo_input[StartDate]" size="10" maxlength="10" id="from_date" <?php disabled($event->is_reoccurring());?> value="<?php $event->the_start($phpFormat); ?>"/>
-			<input name="eo_input[StartTime]" class="eo_time" size="3" maxlength="5" id="HWSEvent_time" <?php disabled($event->is_reoccurring()|| $event->is_allday());?> value="<?php $event->the_start('H:i');?>"/>
+			<input class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" id="from_date" <?php disabled($event->is_reoccurring());?> value="<?php $event->the_start($phpFormat); ?>"/>
+			<input name="eo_input[StartTime]" class="eo_time ui-widget-content ui-corner-all" size="4" maxlength="5" id="HWSEvent_time" <?php disabled($event->is_reoccurring()|| $event->is_allday());?> value="<?php $event->the_start('H:i');?>"/>
+			</td>
+			</tr>
+			<tr class="event-date">
+			<td><?php echo __("End Date/Time",'eventorganiser').':';?> </td>
+			<td> 
+			<input class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" id="to_date" <?php disabled($event->is_reoccurring());?>  value="<?php $event->the_end($phpFormat); ?>"/>
+			<input name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all " size="4" maxlength="5" id="HWSEvent_time2" <?php disabled($event->is_reoccurring()|| $event->is_allday());?> value="<?php $event->the_end('H:i'); ?>""/>
+			<label>
+				<input type="checkbox" id="eo_allday"  <?php checked($event->is_allday()); ?> name="eo_input[allday]"<?php disabled($event->is_reoccurring());?> value="1"/>
+				<?php _e("All day",'eventorganiser');?>
+			 </label>
 			</td>
 			</tr>
 
 			<tr class="event-date">
-			<td>End Date/Time: </td>
+			<td><?php _e("Reoccurence:",'eventorganiser');?> </td>
 			<td> 
-			<input name="eo_input[EndDate]" size="10" maxlength="10" id="to_date" <?php disabled($event->is_reoccurring());?>  value="<?php $event->the_end($phpFormat); ?>"/>
-			<input name="eo_input[FinishTime]" class="eo_time" size="3" maxlength="5" id="HWSEvent_time2" <?php disabled($event->is_reoccurring()|| $event->is_allday());?> value="<?php $event->the_end('H:i'); ?>""/>
-			<label><input type="checkbox" id="eo_allday"  <?php checked($event->is_allday()); ?> name="eo_input[allday]"<?php disabled($event->is_reoccurring());?> value="1"/> All day </label>
-			</td>
-			</tr>
-
-			<tr class="event-date">
-			<td>Reoccurrence: </td>
-			<td> 
+			<?php 
+				$reoccurrence_schedules= array(
+					'once'=> __('once','eventorganiser'),
+					'daily'=> __('daily','eventorganiser'),
+					'weekly'=> __('weekly','eventorganiser'),
+					'monthly'=> __('monthly','eventorganiser'),
+					'yearly'=> __('yearly','eventorganiser')
+				);?>
 			<select id="HWSEventInput_Req" name="eo_input[schedule]" <?php disabled($event->is_reoccurring());?>>
-					<?php foreach (EO_Event::$allowed_reoccurs as $index=>$val): ?>
-						<option value="<?php echo $index;?>" <?php selected($event->is_schedule($index));?>><?php echo $index;?></option>
+					<?php foreach ($reoccurrence_schedules as $index=>$val): ?>
+						<option value="<?php echo $index;?>" <?php selected($event->is_schedule($index));?>><?php echo $val;?></option>
 					<?php endforeach;  //End foreach $allowed_reoccurs?>
 			</select>
 			</td>
@@ -97,55 +115,65 @@ function eventorganiser_details_metabox(){
 			<tr class="event-date reocurrence_row">
 			<td></td><td>
 			<p>
-				Repeat every
-				<input name="eo_input[event_frequency]" id="HWSEvent_freq" type="number" min="1" max="365" maxlength="4" size="4" disabled="disabled" value="<?php echo $event->frequency;?>"/> 
+				<?php _e("Repeat every ",'eventorganiser');?>
+				<input <?php disabled($event->is_reoccurring());?> class="ui-widget-content ui-corner-all" name="eo_input[event_frequency]" id="HWSEvent_freq" type="number" min="1" max="365" maxlength="4" size="4" disabled="disabled" value="<?php echo $event->frequency;?>" /> 
 				<span id="recpan" >  </span>				
 			</p>
+
 			<p id="dayofweekrepeat">
-			on 	
+			<?php _e("on",'eventorganiser');?>	
+
 				<?php for($i = 0; $i <= 6; $i++):
-				$d = ($start_day + $i)%7;?>
-				<input type="checkbox" id="day-<?php echo $index;?>"  <?php checked($event->meta[$d],'1'); ?>  value="<?php echo EO_Event::$daysofweek[$d]['ical'];?>" class="daysofweek" name="eo_input[days][]" disabled="disabled" /> <?php echo EO_Event::$daysofweek[$d]['D'];?>
+					$d = ($start_day + $i)%7;
+					$ical_d = EO_Event::$daysofweek[$d]['ical'];
+					$day =$wp_locale->weekday_abbrev[$wp_locale->weekday[$d]];
+				?>
+					<input type="checkbox" id="day-<?php echo $day;?>"  <?php checked($event->meta[$d],'1'); ?>  value="<?php echo $ical_d?>" class="daysofweek" name="eo_input[days][]" disabled="disabled" />
+					<label for="day-<?php echo $day;?>" > <?php echo $day;?></label>
 				<?php endfor;  ?>
 			</p>
+
 			<p id="dayofmonthrepeat">
-				<input type="radio" disabled="disabled" name="eo_input[schedule_meta]" <?php checked($event->occursBy(),'BYMONTHDAY'); ?> value="BYMONTHDAY=" /> day of month
-				<input type="radio" disabled="disabled" name="eo_input[schedule_meta]"  <?php checked($event->occursBy()=='BYMONTHDAY',false); ?> value="BYDAY=" /> day of week<br />
+				<input type="radio" id="bymonthday" disabled="disabled" name="eo_input[schedule_meta]" <?php checked($event->occursBy(),'BYMONTHDAY'); ?> value="BYMONTHDAY=" /> 
+				<label for="bymonthday" >	<?php _e("day of month",'eventorganiser');?>	</label>
+				<input type="radio" id="byday" disabled="disabled" name="eo_input[schedule_meta]"  <?php checked($event->occursBy()=='BYMONTHDAY',false); ?> value="BYDAY=" /> 
+				<label for="byday" >	<?php _e("day of week",'eventorganiser');?></label>
 			</p>
+
 			<p class="reoccurrence_label">
-			until 
-				<input name="eo_input[schedule_end]" id="recend" size="10" maxlength="10" disabled="disabled" value="<?php $event->the_schedule_end($phpFormat); ?>"/>
+			<?php _e("until",'eventorganiser');?> 
+				<input <?php disabled($event->is_reoccurring());?> class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="recend" size="10" maxlength="10" disabled="disabled" value="<?php $event->the_schedule_end($phpFormat); ?>"/>
 			</p>
+
 			<p id="event_summary"> </p>
+
 			</td>
 			</tr>
 
 			<tr>	
-			<td class="label"> Venue: </td>
+			<td class="label"> <?php _e("Venue",'eventorganiser');?> : </td>
 			<td> 
 			<!-- If javascript is disabed, a simple drop down menu box is displayed to choose venue.
 			Otherwise, the user is able to search the venues by typing in the input box.-->		
 				<select size="50" id="venue_select" name="eo_input[venue_id]">
-					<option>Select a venue </option>
+					<option><?php _e("Select a venue",'eventorganiser');?></option>
 				<?php foreach ($AllVenues->results as $thevenue):?>
 					<option <?php  selected($event->is_at_venue($thevenue['venue_id']));?> value="<?php echo intval($thevenue['venue_id']);?>"><?php echo $thevenue['venue_name']; ?></option>
 				<?php endforeach;?>
 				</select>
-			<span style="font-size:0.8em"> Search for a venue. To add a venues go to the venue page</span>
+			<span style="font-size:0.8em;line-height:0.8em;"> <?php _e("Search for a venue. To add a venues go to the venue page.",'eventorganiser');?></span>
 			</td>
 			</tr>
 			<tr class="venue_row <?php if (!$event->venue_set()) echo 'novenue';?>" >
 			<td></td>
 			<td>
-			<div id="eventorganiser_venue_meta">
+
+			<div id="eventorganiser_venue_meta" style="display:none;">
 				<input type="hidden" id="eo_venue_Lat" value="<?php  echo $current_Venue->latitude;?>" />
 				<input type="hidden" id="eo_venue_Lng" value="<?php  echo $current_Venue->longitude;?>" />
-				Address: <span id="hws_vm_addr"><?php echo $current_Venue->address; ?></span></br>
-				Postcode: <span id="hws_vm_postal"><?php echo $current_Venue->postcode;?></span></br>
-				Country: <span id="hws_vm_country"><?php echo $current_Venue->country?></span>
 			</div>
 			
-			<div id="venuemap" class="gmap3"></div>
+			<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
 			<div class="clear"></div>
 			</td>
 			</tr>
@@ -278,7 +306,7 @@ function event_edit_admin_notice(){
 function eventorganiser_event_delete($post_id){
 	global $wpdb, $eventorganiser_events_table;
 	if(!current_user_can('delete_event', $post_id))
-		wp_die( __('You are not allowed to delete events') );
+		wp_die( __('You are not allowed to delete events.','eventorganiser') );
 
 	$del = $wpdb->get_results($wpdb->prepare("DELETE FROM $eventorganiser_events_table WHERE post_id=%d",$post_id));
 }

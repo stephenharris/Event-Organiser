@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Do actions
  * Hooked on to venues page
@@ -16,11 +15,11 @@ function eventorganiser_venues_action() {
 	function mycolumns($columns){
 		 $columns = array(
        	     'cb' => '<input type="checkbox" />', //Render a checkbox instead of text
-       	     'name'  => 'Venue',
-       	     'venue_address'     => 'Address',
-       	     'venue_postal'     => 'Post Code',
-       	     'venue_country'     => 'Country',
-       	     'venue_slug'     => 'Slug',
+       	     'name'  => __('Venue', 'eventorganiser'),
+       	     'venue_address'     =>__('Address', 'eventorganiser'),
+       	     'venue_postal'     => __('Post Code', 'eventorganiser'),
+       	     'venue_country'     => __('Country', 'eventorganiser'),
+       	     'venue_slug'     =>__('Slug'),
        	 );
         return $columns;	
 	}
@@ -57,11 +56,11 @@ function eventorganiser_venues_action() {
 				$venues = EO_Venues::doaction($_REQUEST['venue'], $_REQUEST['action']);
 			}
 		else:
-			wp_die("You do not have permission to manage venues");
+			wp_die(__("You do not have permission to manage venues",'eventorganiser'));
 		endif;
 	endif;
 
-	add_screen_option( 'per_page', array('label' => 'Venues', 'default' => 20) );	
+	add_screen_option( 'per_page', array('label' => __('Venues','eventorganiser'), 'default' => 20) );	
 }
 
 
@@ -80,11 +79,11 @@ function eventorganiser_venues_page(){
 			if($_REQUEST['action'] == "edit"): ?>
 				<h2>
 					<?php _e('Edit Venue', 'eventorganiser'); ?>
-					<a href="edit.php?post_type=event&page=venues&action=create" class="add-new-h2"><?php _e('Add New', 'eventorganiser'); ?></a>
+					<a href="edit.php?post_type=event&page=venues&action=create" class="add-new-h2"><?php _ex('Add New','post'); ?></a>
 				</h2>
 
 			<?php else:
-				echo '<h2>Add New Venue</h2>';
+				echo '<h2>'.__('Add New Venue','eventorganiser').'</h2>';
 			endif; 	?>
 			<div id="poststuff" class="metabox-holder">
 				<div id="post-body">
@@ -107,7 +106,7 @@ function eventorganiser_venues_page(){
 		if ( isset($_REQUEST['s']) && $_REQUEST['s'] )	
 			$search_term = esc_attr($_REQUEST['s']);?>
 
-		<h2>Venues <a href="edit.php?post_type=event&page=venues&action=create" class="add-new-h2"><?php _e('Add New', 'eventorganiser'); ?></a> 
+		<h2><?php _e('Venues','eventorganiser');?> <a href="edit.php?post_type=event&page=venues&action=create" class="add-new-h2"><?php _ex('Add New','post'); ?></a> 
 		<?php
 			if ($search_term)
 				printf( '<span class="subtitle">' . __('Search results for &#8220;%s&#8221;') . '</span>',$search_term) ?>
@@ -122,7 +121,7 @@ function eventorganiser_venues_page(){
 
        	     <!-- Now we can render the completed list table -->
        	     <?php 
-			$venue_table->search_box( 'Search Venues','s' );
+			$venue_table->search_box( __('Search Venues','eventorganiser'),'s' );
 			$venue_table->display(); ?>
 		 </form>
 		<?php endif;?>
@@ -154,39 +153,39 @@ function event_organiser_display_venue_form(){
 		<div id="titlediv">
 			<div id="titlewrap">
 				<!--<label for="title" id="title-prompt-text" style="visibility:hidden" class="hide-if-no-js">Enter venue name here</label>-->
-				<input type="text" placeholder="Venue name" autocomplete="off" id="title" value="<?php echo $EO_Venue->name;?>" tabindex="1" size="30" name="eo_venue[Name]">
+				<input type="text" placeholder="<?php __('Venue name','eventorganiser');?>" autocomplete="off" id="title" value="<?php echo $EO_Venue->name;?>" tabindex="1" size="30" name="eo_venue[Name]">
 			</div>
 			<div class="inside">
 				<div id="edit-slug-box">
 					<?php if($EO_Venue->id): ?>
-						<strong>Permalink:</strong> 
+						<strong><?php _e('Permalink:');?></strong> 
 							<span id="sample-permalink">
 								<?php $EO_Venue->the_structure(); ?>
-								<input type="text" name="eo_venue[slug]"value="<?php echo $EO_Venue->slug;?>" id="<?php echo $EO_Venue->name; ?>-slug">
+								<input type="text" name="eo_venue[slug]"value="<?php echo $EO_Venue->slug;?>" id="<?php echo $EO_Venue->id; ?>-slug">
 							</span> 
 						<input type="hidden" value="<?php $EO_Venue->the_link(); ?>" id="shortlink">
-						<a onclick="prompt('URL:', jQuery('#shortlink').val()); return false;" class="button" href="">Get Link</a>	
-						<span id='view-post-btn'><a href="<?php $EO_Venue->the_link(); ?>" class='button' target='_blank'>View Venue</a></span>
+						<a onclick="prompt('URL:', jQuery('#shortlink').val()); return false;" class="button" href=""><?php _e('Get Link','eventorganiser');?></a>	
+						<span id='view-post-btn'><a href="<?php $EO_Venue->the_link(); ?>" class='button' target='_blank'><?php _e('View Venue','eventorganiser');?></a></span>
 					<?php endif;?>					
 				</div>
 			</div>
 		</div>
 
 		<div class="postbox " id="venue_address">
-			<h3 class="hndle"><span>Venue Location</span></h3>
+			<h3 class="hndle"><span><?php _e('Venue Location','eventorganiser');?></span></h3>
 			<table class ="inside address">
 				<tbody>
 					<tr>
-						<th><label>Address:</label></th>
+						<th><label><?php _e('Address','eventorganiser');?>:</label></th>
 						<td><input name="eo_venue[Add]" class="eo_addressInput" id="eo_venue_add"  value="<?php echo $EO_Venue->address;?>"/></td>
 					</tr>
 					<tr>
-						<th><label>Postcode:</label></th>
+						<th><label><?php _e('Post Code','eventorganiser');?>:</label></th>
 						<td><input name="eo_venue[PostCode]" class="eo_addressInput" id="eo_venue_pcode"  value="<?php echo $EO_Venue->postcode;?>"/></td>
 					</tr>
 					<tr>
-						<th><label>Country:</label></th>
-						<td><?php $EO_Venue->country_select();?></td>
+						<th><label><?php _e('Country','eventorganiser');?>:</label></th>
+						<td><input name="eo_venue[Country]" class="eo_addressInput" id="eo_venue_country"  value="<?php echo $EO_Venue->country;?>"/></td>
 					</tr>
 				</tbody>
 			</table>
@@ -202,7 +201,7 @@ function event_organiser_display_venue_form(){
 		<input type="hidden" name="eo_venue[Lng]" id="eo_venue_Lng"  value="<?php echo $EO_Venue->longitude;?>"/>
 		
 		<p class="submit">  
-			<input type="submit" class="button-primary" name="eo_venue[Submit]" value="<?php if($do=='update') esc_attr_e('Update Venue'); else esc_attr_e('Add Venue'); ?>" />  
+			<input type="submit" class="button-primary" name="eo_venue[Submit]" value="<?php if($do=='update') _e('Update Venue','eventorganiser'); else _e('Add Venue','eventorganiser'); ?>" />  
 		</p> 
  
 	</form> 		

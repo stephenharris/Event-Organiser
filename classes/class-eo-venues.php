@@ -1,7 +1,6 @@
 <?php
 /**
  * Class which manipulates arrays of Venues. Allows querying and deleting of Venues.
- * 
  */
 class EO_Venues{
 
@@ -99,7 +98,7 @@ class EO_Venues{
 			case 'delete':
 				//security check
 				if( !check_admin_referer('bulk-venues')){
-					$EO_Errors = new WP_Error('eo_error', __("You do not have permission to edit this venue"));
+					$EO_Errors = new WP_Error('eo_error', __("You do not have permission to edit this venue",'eventorganiser'));
 				}else{			
 					if(!empty($args)):
 						$argtype = array_fill(0, count($args), '%d');
@@ -107,12 +106,11 @@ class EO_Venues{
 						$sql = "DELETE FROM $eventorganiser_venue_table $where";
 						$del = $wpdb->query($wpdb->prepare($sql,$args));
 						if($del==0){
-							$EO_Errors = new WP_Error('eo_error', __("Venue(s) <strong>were not </strong> deleted"));
+							$EO_Errors = new WP_Error('eo_error', __("Venue(s) <strong>were not </strong> deleted",'eventorganiser'));
 						}else{
-							$EO_Errors = new WP_Error('eo_notice', __("Venue(s) <strong>deleted</strong>"));
+							$EO_Errors = new WP_Error('eo_notice', __("Venue(s) <strong>deleted</strong>",'eventorganiser'));
 						}
 					else:
-						$EO_Errors = new WP_Error('eo_error', __("No venues selected to delete"));
 					endif;
 				}
 			break;
@@ -133,7 +131,6 @@ class EO_Venues{
 			break;
 
 			default:
-					$EO_Errors = new WP_Error('eo_error', __("Action not recognised"));
 		endswitch;
 	}	
 }

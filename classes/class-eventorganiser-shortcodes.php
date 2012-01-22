@@ -14,6 +14,7 @@ class EventOrganiser_Shortcodes {
 		add_shortcode('eo_fullcalendar', array(__CLASS__, 'handle_fullcalendar_shortcode'));
 		add_shortcode('eo_venue_map', array(__CLASS__, 'handle_venuemap_shortcode'));
 		add_shortcode('eo_events', array(__CLASS__, 'handle_eventlist_shortcode'));
+		add_shortcode('eo_subscribe', array(__CLASS__, 'handle_subscription_shortcode'));
 		add_action('wp_footer', array(__CLASS__, 'print_script'));
 	}
  
@@ -23,6 +24,30 @@ class EventOrganiser_Shortcodes {
 		$month = new DateTime();
 		$month->modify('first day of this month');
  		return '<div class="widget_calendar eo-calendar eo-calendar-shortcode" id="eo_calendar">'.EO_Calendar_Widget::generate_output($month).'</div>';
+	}
+
+	function handle_subscription_shortcode($atts, $content=null) {
+		extract( shortcode_atts( array(
+			'title' => 'Subscribe to calendar',
+			'type' => 'google',
+		      'class' => '',
+		      'id' => '',
+		), $atts ) );
+
+		$url = add_query_arg('feed','eo-events',site_url());
+
+		$class = esc_attr($class);
+		$title = esc_attr($title);
+		$id = esc_attr($id);
+		
+		if(strtolower($type)=='webcal'):
+			$url = str_replace( 'http://', 'webcal://',$url);
+		else:
+			$url = add_query_arg('cid',urlencode($url),'http://www.google.com/calendar/render');
+		endif;
+
+		$html = '<a href="'.$url.'" class="'.$class.'" title="'.$title.'" id="'.$id.'">'.$content.'</a>';
+		return $html;
 	}
 
 	function handle_fullcalendar_shortcode($atts=array()) {
@@ -39,11 +64,26 @@ class EventOrganiser_Shortcodes {
 		$whitelist = array('headerleft','headercenter','headerright','defaultview','firstDay');
 		$atts = array_intersect_key($atts, array_flip($whitelist));
 		$n = rand(0,100);
+
+		$eo_settings_array= get_option('eventorganiser_options'); 
+		$EO_Venues = new EO_Venues;
+		$EO_Venues->query();
+	
+		$terms =get_terms( 'event-category', array('hide_empty' => 0));
+			foreach($terms as $term):
+				$term_meta = get_option( "eo-event-category_$term->term_id");
+				$colour = (isset($term_meta['colour']) ? $term_meta['colour'] : '');
+				$term->colour = $colour;
+			endforeach;
+
+		$atts['categories']=$terms;
+		$atts['venues']=$EO_Venues->results;
+
 		self::$fullcal =array_merge($atts);
 		self::$add_script = true;
 
 		$html='<div id="eo_fullcalendar_'.$n.'_loading" style="background:white;position:absolute;z-index:5" >';
-		$html.='<img src="'.EVENT_ORGANISER_URL.'/css/images/loading-image.gif'.'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />Loading...</div>';
+		$html.='<img src="'.EVENT_ORGANISER_URL.'/css/images/loading-image.gif'.'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />'.__('Loading&#8230;').'</div>';
 		$html.='<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$n.'"></div>';
 
  		return $html;
@@ -86,7 +126,7 @@ class EventOrganiser_Shortcodes {
 	function handle_eventlist_shortcode($atts=array()) {
 		global $post;
 		$atts['showrepeats']=1;
-		
+
 		if(isset($atts['venue'])&&$atts['venue']=='%this%'){
 			if(!empty($post->Venue)){
 				$atts['venue']=(int) $post->Venue;
@@ -109,7 +149,11 @@ class EventOrganiser_Shortcodes {
 				}else{
 					$format = get_option('date_format').'  '.get_option('time_format');
 				}
-				$return .= '<li><a title="'.$event->post_title.'" href="'.get_permalink($event->ID).'">'.$event->post_title.'</a> on '.eo_format_date($event->StartDate.' '.$event->StartTime, $format).'</li>';
+				$dateTime = new DateTime($event->StartDate.' '.$event->StartTime);
+				$datestring = date_i18n( $format , $dateTime->format('U'));
+
+				$return .= '<li><a title="'.$event->post_title.'" href="'.get_permalink($event->ID).'">'.$event->post_title.'</a> '.__('on','eventorganiser').' '.eo_format_date($event->StartDate.' '.$event->StartTime, $format).$datestring.'</li>';
+
 			endforeach;
 			$return.='</ul>';
 			return $return;
@@ -117,19 +161,34 @@ class EventOrganiser_Shortcodes {
 	}
  
 	function print_script() {
+		global $wp_locale;
 		if ( ! self::$add_script ) return;
 		wp_localize_script( 'eo_front', 'EOAjax', 
 		array(
 			'ajaxurl' => admin_url( 'admin-ajax.php'),
 			'fullcal' => self::$fullcal,
-			'map' => self::$map
+			'map' => self::$map,
+			'locale'=>array(
+				'monthNames'=>array_values($wp_locale->month),
+				'monthAbbrev'=>array_values($wp_locale->month_abbrev),
+				'dayNames'=>array_values($wp_locale->weekday),
+				'dayNamesAbbrev'=>array_values($wp_locale->weekday_abbrev),
+				'today'=>__('today','eventorganiser'),
+				'day'=>__('day','eventorganiser'),
+				'week'=>__('week','eventorganiser'),
+				'month'=>__('month','eventorganiser'),
+				'gotodate'=>__('go to date','eventorganiser'),
+				'cat'=>__('View all categories','eventorganiser'),
+				'venue'=>__('View all venues','eventorganiser'),
+			)
 		));	
-		if(!empty(self::$fullcal))
-			wp_enqueue_style('eo_calendar-style');	
+		if(!empty(self::$fullcal)):
+			wp_enqueue_style('eo_calendar-style');		
+			wp_enqueue_style('eventorganiser-style');
+		endif;
 		wp_enqueue_script( 'eo_front');	
 	}
 }
  
 EventOrganiser_Shortcodes::init();
-
 ?>

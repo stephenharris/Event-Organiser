@@ -4,16 +4,22 @@
 */ 
 
 //Register the custom taxonomy Event-category
-add_action( 'init', 'create_event_taxonomies', 0 );
+add_action( 'init', 'create_event_taxonomies', 10 );
 function create_event_taxonomies() {
+
+$eventorganiser_option_array = get_option('eventorganiser_options'); 
+
+$cat_slug = (empty($eventorganiser_option_array['url_cat']) ? 'events/category' : trim($eventorganiser_option_array['url_cat'], "/"));
+$tag_slug = (empty($eventorganiser_option_array['url_tag']) ? 'events/category' : trim($eventorganiser_option_array['url_tag'], "/"));
+
   // Add new taxonomy, make it hierarchical (like categories)
-  $labels = array(
-    'name' => _x( 'Event Categories', 'taxonomy general name' ),
-    'singular_name' => _x( 'Category', 'taxonomy singular name' ),
+  $category_labels = array(
+    'name' => __('Event Categories', 'eventorganiser'),
+    'singular_name' => _x( 'Category', 'taxonomy singular name'),
     'search_items' =>  __( 'Search Categories' ),
     'all_items' => __( 'All Categories' ),
     'parent_item' => __( 'Parent Category' ),
-    'parent_item_colon' => __( 'Parent Category:' ),
+    'parent_item_colon' => __( 'Parent Category' ).':',
     'edit_item' => __( 'Edit Category' ), 
     'update_item' => __( 'Update Category' ),
     'add_new_item' => __( 'Add New Category' ),
@@ -24,8 +30,9 @@ function create_event_taxonomies() {
 
 register_taxonomy('event-category',array('event'), array(
 	'hierarchical' => true,
-	'labels' => $labels,
+	'labels' => $category_labels,
 	'show_ui' => true,
+    'update_count_callback' => '_update_post_term_count',
 	'query_var' => true,
 	'capabilities'=>array(
 		'manage_terms' => 'manage_event_categories',
@@ -33,31 +40,68 @@ register_taxonomy('event-category',array('event'), array(
 		'delete_terms' => 'manage_event_categories',
 		'assign_terms' =>'edit_events'),
 	'public'=> true,
-	'rewrite' => array( 'slug' => 'events/category', 'with_front' => false ),
+	'rewrite' => array( 'slug' =>$cat_slug, 'with_front' => false )
+  ));
+
+  // Add new taxonomy, make it non-hierarchical (like tags)
+  $tag_labels = array(
+	'name' => __('Event Tags','eventorganiser'),
+    'singular_name' => _x( 'Tag', 'taxonomy singular name'),
+    'search_items' =>  __( 'Search Tags'),
+    'all_items' => __( 'All Tags'),
+    'popular_items' => __( 'Popular Tags'),
+    'parent_item' => null,
+    'parent_item_colon' => null,
+    'edit_item' => __( 'Edit Tag'),
+    'update_item' => __( 'Update Tag'),
+    'add_new_item' => __( 'Add New Tag'),
+    'new_item_name' => __( 'New Tag Name'),
+	'not_found' =>  __('No tags found'),
+    'choose_from_most_used' => __( 'Choose from the most used tags' ),
+    'menu_name' => __( 'Tags' ),
+    'add_or_remove_items' => __( 'Add or remove tags' ),
+    'separate_items_with_commas' => __( 'Separate tags with commas' )
+  ); 	
+
+register_taxonomy('event-tag',array('event'), array(
+    'hierarchical' => false,
+	'labels' => $tag_labels,
+	'show_ui' => true,
+    'update_count_callback' => '_update_post_term_count',
+	'query_var' => true,
+	'capabilities'=>array(
+		'manage_terms' => 'manage_event_categories',
+		'edit_terms' => 'manage_event_categories',
+		'delete_terms' => 'manage_event_categories',
+		'assign_terms' =>'edit_events'),
+	'public'=> true,
+	'rewrite' => array( 'slug' => $tag_slug, 'with_front' => false )
   ));
 }
+
 
 //Register the custom post type Event
 add_action('init', 'eventorganiser_cpt_register');
 function eventorganiser_cpt_register() {
 $eventorganiser_option_array = get_option('eventorganiser_options'); 
   	$labels = array(
-		'name' => _x('Events', 'post type general name'),
-		'singular_name' => _x('Event', 'post type singular name'),
-		'add_new' => _x('Add New', 'event'),
-		'add_new_item' => __('Add New Event'),
-		'edit_item' => __('Edit Event'),
-		'new_item' => __('New Event'),
-		'all_items' => __('All events'),
-		'view_item' => __('View Event'),
-		'search_items' => __('Search events'),
-		'not_found' =>  __('No events found'),
-		'not_found_in_trash' => __('No events found in Trash'), 
+		'name' => __('Events','eventorganiser'),
+		'singular_name' => __('Event','eventorganiser'),
+		'add_new' => _x('Add New','post'),
+		'add_new_item' => __('Add New Event','eventorganiser'),
+		'edit_item' =>  __('Edit Event','eventorganiser'),
+		'new_item' => __('New Event','eventorganiser'),
+		'all_items' =>__('All events','eventorganiser'),
+		'view_item' =>__('View Event','eventorganiser'),
+		'search_items' =>__('Search events','eventorganiser'),
+		'not_found' =>  __('No events found','eventorganiser'),
+		'not_found_in_trash' =>  __('No events found in Trash','eventorganiser'),
 		'parent_item_colon' => '',
-		'menu_name' =>  'Events'
+		'menu_name' => __('Events','eventorganiser'),
   );
 
 $exclude_from_search = ($eventorganiser_option_array['excludefromsearch']==0) ? false : true;
+$event_slug = (empty($eventorganiser_option_array['url_event']) ? 'events/event' : $eventorganiser_option_array['url_event']);
 
 $args = array(
 	'labels' => $labels,
@@ -69,7 +113,7 @@ $args = array(
 	'query_var' => true,
 	'capability_type' => 'event',
 	'rewrite' => array(
-		'slug'=> 'events/event',
+		'slug'=> $event_slug,
 		'with_front'=> false,
 		'feeds'=> true,
 		'pages'=> true
@@ -94,8 +138,6 @@ $args = array(
   register_post_type('event',$args);
 }
 
-
-
 //add filter to ensure the text event, or event, is displayed when user updates a event 
 add_filter('post_updated_messages', 'eventorganiser_messages');
 function eventorganiser_messages( $messages ) {
@@ -106,16 +148,16 @@ function eventorganiser_messages( $messages ) {
 		1 => sprintf( __('Event updated. <a href="%s">View event</a>'), esc_url( get_permalink($post_ID) ) ),
 		2 => __('Custom field updated.'),
 		3 => __('Custom field deleted.'),
-		4 => __('Event updated.'),
+		4 => __('Event updated.','eventorganiser'),
 		/* translators: %s: date and time of the revision */
-		5 => isset($_GET['revision']) ? sprintf( __('Event restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6 => sprintf( __('Event published. <a href="%s">View event</a>'), esc_url( get_permalink($post_ID) ) ),
+		5 => isset($_GET['revision']) ? sprintf( __('Event restored to revision from %s','eventorganiser'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6 => sprintf( __('Event published. <a href="%s">View event</a>','eventorganiser'), esc_url( get_permalink($post_ID) ) ),
 		7 => __('Event saved.'),
-		8 => sprintf( __('Event submitted. <a target="_blank" href="%s">Preview event</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-		9 => sprintf( __('Event scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview event</a>'),
+		8 => sprintf( __('Event submitted. <a target="_blank" href="%s">Preview event</a>','eventorganiser'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+		9 => sprintf( __('Event scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview event</a>','eventorganiser'),
 		 // translators: Publish box date format, see http://php.net/date
       		date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-		10 => sprintf( __('Event draft updated. <a target="_blank" href="%s">Preview event</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+		10 => sprintf( __('Event draft updated. <a target="_blank" href="%s">Preview event</a>','eventorganiser'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
   	);
 	return $messages;
 }
@@ -133,6 +175,8 @@ function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 
 		/* Set an empty array for the caps. */
 		$caps = array();
+		if($post_type!='event');
+			return $caps;
 	}
 
 	/* If editing a event, assign the required capability. */
@@ -145,7 +189,8 @@ function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 
 	/* If deleting a event, assign the required capability. */
 	elseif ( 'delete_event' == $cap ) {
-		if ( $user_id == $post->post_author )
+		var_dump($args);
+		if (isset($post->post_author ) && $user_id == $post->post_author)
 			$caps[] = $post_type->cap->delete_posts;
 		else
 			$caps[] = $post_type->cap->delete_others_posts;
@@ -175,14 +220,16 @@ function eventorganiser_create_rewrite_rules() {
 	// add rewrite tokens
 	$keytag = '%venue%';
 	$wp_rewrite->add_rewrite_tag($keytag, '(.+?)', 'post_type=event&venue=');
- 
-	$keywords_structure = $wp_rewrite->root . "events/venue/$keytag/";
+
+	$eventorganiser_option_array = get_option('eventorganiser_options'); 
+	$venue_slug = (empty($eventorganiser_option_array['url_venue']) ? 'events/venue' : trim($eventorganiser_option_array['url_venue'], "/"));
+	
+	$keywords_structure = $wp_rewrite->root . $venue_slug."/$keytag/";
 	$keywords_rewrite = $wp_rewrite->generate_rewrite_rules($keywords_structure);
  
 	$wp_rewrite->rules = $keywords_rewrite + $wp_rewrite->rules;
 	return $wp_rewrite->rules;
 }
-
 
 
 // This adds the Event Organiser icon to the page head
@@ -198,16 +245,18 @@ function eventorganiser_plugin_header_image() {
 }
 
 // Filter wp_nav_menu() to add event link if selected in options
-$eo_settings_array= get_option('eventorganiser_options'); 
-if($eo_settings_array['addtomenu']){
-	add_filter( 'wp_list_pages', 'eventorganiser_menu_link' );
-	add_filter( 'wp_nav_menu_items', 'eventorganiser_menu_link' );
-}
+ add_filter( 'wp_list_pages', 'eventorganiser_menu_link' );
+add_filter( 'wp_nav_menu_items', 'eventorganiser_menu_link' );
 function eventorganiser_menu_link($items) {
 	global $wp_query;
+	$eo_settings_array= get_option('eventorganiser_options');
+	if(!$eo_settings_array['addtomenu'])
+		return $items;
+
+	$title = (isset($eo_settings_array['navtitle']) ? $eo_settings_array['navtitle'] : 'Events');
 	$class ='menu-item menu-item-type-event';
 	if(isset($wp_query->query_vars['post_type'])&&$wp_query->query_vars['post_type']=='event') $class = 'current_page_item';
-		$eventlink = '<li class="'.$class.'"><a href="'.EO_Event::link_structure().'">Events</a></li>';
+		$eventlink = '<li class="'.$class.'"><a href="'.EO_Event::link_structure().'">'.$title.'</a></li>';
 		$items = $items . $eventlink;
 	return $items;
 }
@@ -224,32 +273,32 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 		case ('event'):
 			    $screen->add_help_tab( array(
 			        'id'      => 'creating-events', 
-			        'title'   => 'Creating events',
-        			'content' => '<p>' . __('Creating events:') . '</p>'.
+			        'title'   => __('Creating events','eventorganiser'),
+        			'content' => '<p>' . __('Creating events:','eventorganiser') . '</p>'.
 			'<ul>' .
-				'<li>' . __('The start date is the date the event starts. If the event is a reoccuring event, this is the start date of the first occurrence.') . '</li>' .
-				'<li>' . __('The end date is the date the event finishes. If the event is a reoccuring event, this is the end date of the first occurrence.') . '</li>' .
-				'<li>' . __('All dates and times must be entered in the specified format. This format can changed in the settings page.') . '</li>' .
+				'<li>' . __('The start date is the date the event starts. If the event is a reoccuring event, this is the start date of the first occurrence.','eventorganiser') . '</li>' .
+				'<li>' . __('The end date is the date the event finishes. If the event is a reoccuring event, this is the end date of the first occurrence.','eventorganiser') . '</li>' .
+				'<li>' . __('All dates and times must be entered in the specified format. This format can changed in the settings page.','eventorganiser') . '</li>' .
 			'</ul>'
 				));
 			    $screen->add_help_tab( array(
 			        'id'      => 'repeating-events',
-			        'title'   => 'Repeating events',
-        			'content' => '<p>' . __('To repeat an event according to some regular pattern, use the reocurrence dropdown menu to select how the event is to repeat. Further options then appear, ') . '</p>' .
+			        'title'   => __('Repeating events','eventorganiser'),
+        			'content' => '<p>' . __('To repeat an event according to some regular pattern, use the reocurrence dropdown menu to select how the event is to repeat. Further options then appear, ','eventorganiser') . '</p>' .
 			'<ul>' .
-				'<li>' . __('Specify how regularly the event should repeat (default 1)') . '</li>' .
-				'<li>' . __('Choose the reoccurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date.') . '</li>' .
-				'<li>' . __('If monthly reoccurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) ') . '</li>' .
-				'<li>' . __('If weekly reoccurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used') . '</li>' .
+				'<li>' . __('Specify how regularly the event should repeat (default 1)','eventorganiser') . '</li>' .
+				'<li>' . __('Choose the reoccurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date.','eventorganiser') . '</li>' .
+				'<li>' . __('If monthly reoccurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) ','eventorganiser') . '</li>' .
+				'<li>' . __('If weekly reoccurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used','eventorganiser') . '</li>' .
 			'</ul>'
 				));
 			    $screen->add_help_tab( array(
 			        'id'      => 'selecting-venues', 
-			        'title'   => 'Selecting a venue',
-        			'content' => '<p>' . __('Selecting a venue') . '</p>' .
+			        'title'   => __('Selecting a venue','eventorganiser'),
+        			'content' => '<p>' . __('Selecting a venue','eventorganiser') . '</p>' .
 					'<ul>' .
-						'<li>' . __('Use the venues input field to search for existing venues') . '</li>' .
-						'<li>' . __('Only pre-existing venues can be selected. To add a venue, go to the venues page.') . '</li>' .
+						'<li>' . __('Use the venues input field to search for existing venues','eventorganiser') . '</li>' .
+						'<li>' . __('Only pre-existing venues can be selected. To add a venue, go to the venues page.','eventorganiser') . '</li>' .
 					'</ul>'
 				));
 			break;
@@ -259,39 +308,18 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 
 			$screen->add_help_tab( array(
 				'id'=>'overview',
-				'title'=>'Overview',
-				'content'=>'<p>' . __('This is the list of all saved events. Note that ').'<strong>'.__('reoccurring events appear as a single row').'</strong>'.__(' in the table and the start and end date refers to the first occurrence of that event.') . '</p>' ));
-
-			    $screen->add_help_tab( array(
-			        'id'      => 'screen-content', // This should be unique for the screen.
-			        'title'   => 'Screen Content',
-        			'content' => '<p>' . __('You can customize the display of this screen in a number of ways:') . '</p>' .
-			'<ul>' .
-				'<li>' . __('You can hide/display columns based on your needs and decide how many posts to list per screen using the Screen Options tab.') . '</li>' .
-				'<li>' . __('You can filter the list of posts by post status using the text links in the upper left to show All, Published, Draft, or Trashed posts. The default view is to show all posts.') . '</li>' .
-				'<li>' . __('You can refine the list to show only events in a specific category or at a specific venue by using the dropdown menus above the posts list. Click the Filter button after making your selection. You also can refine the list by clicking on the event organiser or category in the posts list.') . '</li>' .
-			'</ul>' ));
-
-			    $screen->add_help_tab( array(
-			        'id'      => 'available-action', // This should be unique for the screen.
-			        'title'   => 'Available Actions',
-        			'content' => '<p>' . __('Hovering over a row in the events list will display action links that allow you to manage your post. You can perform the following actions:') . '</p>' .
-					'<ul>' .
-						'<li>' . __('Edit takes you to the editing screen for that event. You can also reach that screen by clicking on the event title.') . '</li>' .
-						'<li>' . __('Trash removes your event from this list and places it in the trash, from which you can permanently delete it.') . '</li>' .
-						'<li>' . __('Preview will show you what your event page will look like if you publish it. View will take you to your live site to view the event. Which link is available depends on your event&#8217;s status.') .'</li>' .
-						'</ul>' ));
+			        'title'   => __('Overview'),
+				'content'=>'<p>' . __('This is the list of all saved events. Note that <strong> reoccurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event.','eventorganiser') . '</p>' ));
 			break;
 
 		//Add help for venue admin table page
 		case ('event_page_venues'):
 			$contextual_help = 
-			'<p>'.__("You can hide/display columns based on your needs and decide how many posts to list per screen using the Screen Options tab").'</p>'.
-			'<p>' . __("Hovering over a row in the posts list will display action links that allow you to manage your post. You can perform the following actions:") . '</p>' .
+			'<p>' . __("Hovering over a row in the venues list will display action links that allow you to manage that venue. You can perform the following actions:",'eventorganiser') . '</p>' .
 			'<ul>' .
-				'<li>' . __('Edit takes you to the editing screen for that venue. You can also reach that screen by clicking on the post title.') . '</li>' .
-				'<li>' . __('Delete permanently remove the venue') . '</li>' .
-				'<li>' . __("View will take you to the venue's page") . '</li>' .
+				'<li>' . __('Edit takes you to the editing screen for that venue. You can also reach that screen by clicking on the venue title.','eventorganiser') . '</li>' .
+				'<li>' . __('Delete will permanently remove the venue','eventorganiser') . '</li>' .
+				'<li>' . __("View will take you to the venue's page",'eventorganiser') . '</li>' .
 			'</ul>';
 			break;
 
@@ -299,50 +327,110 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 		case ('event_page_calendar'):
 			$screen->add_help_tab( array(
 				'id'=>'overview',
-				'title'=>'Overview',
-				'content'=>'<p>' . __("This page shows all (occurrances of) events. You can view the summary of an event by clicking on it. If you have the necessary permissions, a link to the event's edit page will appear also.") . '</p>' .
-			'<p>' . __("By clicking the relevant tab, you can view events in Month, Week or Day mode.") . '</p>' 
+				'title'=>__('Overview'),
+				'content'=>'<p>' . __("This page shows all (occurrances of) events. You can view the summary of an event by clicking on it. If you have the necessary permissions, a link to the event's edit page will appear also.",'eventorganiser'). '</p>' .
+			'<p>' . __("By clicking the relevant tab, you can view events in Month, Week or Day mode. You can also filter the events by events by category and venue. The 'go to date' button allows you to quickly jump to a specific date.",'eventorganiser'). '</p>' 
 			));
-
-		case ('event_page_calendar'):
 			$screen->add_help_tab( array(
 				'id'=>'add-event',
-				'title'=>'Add Event',
-				'content'=>'<p>' . __("You can create an event on this Calendar, by clicking on day or dragging over multiple days (in Month view) or multiple times (in Week and Day view). This can be immediately published or saved as a draft. In any case, the event is created and you are forwarded that that event’s edit page.") . '</p>' 
-			));
+				'title'=>__('Add Event','eventorganiser'),
+				'content'=>'<p>' . __("You can create an event on this Calendar, by clicking on day or dragging over multiple days (in Month view) or multiple times (in Week and Day view). You can give the event a title, specify a venue and provide a descripton. The event can be immediately published or saved as a draft. In any case, the event is created and you are forwarded to that event's edit page.",'eventorganiser') . '</p>' ));
 			break;
-
-		//Add help for settings page
-		case ('settings_page_event-settings'):
-			$contextual_help = 
-			'<p>' . __('Here you can customise the settings of the Event Organiser plug-in. You can ') . '</p>' .
-			'<ul>' .
-				'<li>' . __('Assign permissions to user roles.') . '</li>' .
-				'<li>' . __('Select what features the Event post type shoul support (thumbnails, comments etc .') . '</li>' .
-				'<li>' . __("Specify general settings such as date format on the event edit page.") . '</li>' .
-			'</ul>'.
-			'<p>' . __("If there are other options you would like to appear here, then visit the plugin's forum") . '</p>' ;
-			break;
-
-		//Add help for event category page
-		case ('edit-event-category'):
-			$contextual_help = 
-			'<p>' . __('When adding a new category on this screen, you’ll fill in the following fields:') . '</p>' .
-			'<ul>' .
-				'<li>' . __('    Name - The name is how it appears on your site.') . '</li>' .
-				'<li>' . __('Slug - The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.') . '</li>' .
-				'<li>' . __(" Parent - Categories can have a hierarchy. You might have a comedy category, and under that have children categories for stand-up and sketch shows. To create a subcategory, just choose another category from the Parent dropdown.") . '</li>' .
-				'<li>' . __("Description - The description is not prominent by default; however, some themes may display it.") . '</li>' .
-			'</ul>'.
-			'<p>' . __('You can change the display of this screen using the Screen Options tab to set how many items are displayed per screen and to display/hide columns in the table.') . '</p>' ;
-			break;
-
 	endswitch;
 
 	//Add a link to Event Organiser documentation on every page
-	$screen->set_help_sidebar( '<p> <strong> For more information</strong> </p><p>See the <a target="_blank" href="http://www.harriswebsolutions.co.uk/event-organiser/documentation/"> documentation</a></p>');
+	$screen->set_help_sidebar( '<p> <strong>'. __('For more information','eventorganiser').'</strong> </p><p>'.sprintf(__('See the <a %s> documentation</a>','eventorganiser'),'target="_blank" href="http://www.harriswebsolutions.co.uk/event-organiser/documentation/"').'</p>' );
 	endif;
 
 	return $contextual_help;
+}
+
+/*
+* The following adds the ability to associate a colour with an event-category.
+* Currently stores data in the options table/
+* If Taxonomy meta table becomes core, then these options will be migrated there.
+*/
+
+//Enqueue the javascript necessary for colour-picker.
+add_action( 'admin_menu', 'eventorganiser_colour_scripts' );
+function eventorganiser_colour_scripts() {
+    wp_enqueue_style( 'farbtastic' );
+    wp_enqueue_script( 'farbtastic' );
+    wp_enqueue_script( 'jQuery' );
+}
+
+// Save the taxonomy meta on creation or edit
+add_action('created_event-category', 'eventorganiser_save_event_cat_meta', 10, 2);
+add_action( 'edited_event-category', 'eventorganiser_save_event_cat_meta', 10, 2);
+function eventorganiser_save_event_cat_meta( $term_id ) {
+	if ( isset( $_POST['eo_term_meta'] ) ):
+		$term_meta = get_option( "eo-event-category_$term_id");
+		$cat_keys = array_keys($_POST['eo_term_meta']);
+
+		foreach ($cat_keys as $key):
+			if (isset($_POST['eo_term_meta'][$key]))
+				$term_meta[$key] = $_POST['eo_term_meta'][$key];
+		endforeach;
+
+	        //save the option array
+	        update_option( "eo-event-category_$term_id", $term_meta );
+	endif;
+}
+
+add_action('delete_event-category','eventorganiser_tax_term_deleted',10,2);
+function eventorganiser_tax_term_deleted($term_id, $tt_id){
+	//Delete taxonomies meta
+	delete_option('eo-event-category_'.$term_id);
+}
+
+
+/*
+* Add the colour picker forms to main taxonomy page: (This one needs stuff wrapped in Divs)
+* uses eventorganiser_tax_meta_form to display the guts of the form.
+* @uses eventorganiser_tax_meta_form 
+*/
+add_action('event-category_add_form_fields', 'eventorganiser_add_tax_meta',10,1);
+function eventorganiser_add_tax_meta($taxonomy){
+	?>
+
+	<div class="form-field"><?php eventorganiser_tax_meta_form('');?></div>
+	<p> &nbsp; </br>&nbsp; </p>
+<?php
+}
+
+
+/*
+*Add the colour picker forms to taxonomy-edit page: (This one needs stuff wrapped in rows)
+* uses eventorganiser_tax_meta_form to display the guts of the form.
+* @uses eventorganiser_tax_meta_form
+*/
+add_action( 'event-category_edit_form_fields', 'eventorganiser_edit_tax_meta', 10, 2);
+function eventorganiser_edit_tax_meta($term,$taxonomy){
+	//Check for existing data
+	$term_meta = get_option( "eo-event-category_$term->term_id");
+	$colour = (!empty($term_meta) && isset($term_meta['colour']) ? $term_meta['colour'] : '');
+	?>
+	<tr class="form-field"><?php eventorganiser_tax_meta_form($colour);?></tr>
+<?php
+}
+
+/*
+* Displays the guts of the taxonomy-meta form.
+*/
+function eventorganiser_tax_meta_form($colour){
+	?>
+		<th>
+			<label for="tag-description"><?php _e('Color','eventorganiser')?></label>
+		</th>
+		<td> 
+			<input type="text" style="width:100px" name="eo_term_meta[colour]" class="color colour-input" id="color" value="<?php echo $colour; ?>" />
+			<a id="link-color-example" class="color  hide-if-no-js" style="border: 1px solid #DFDFDF;border-radius: 4px 4px 4px 4px;margin: 0 7px 0 3px;padding: 4px 14px;"></a>
+   			 <div style="z-index: 100; background: none repeat scroll 0% 0% rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); position: absolute;display: none;" id="colorpicker"></div>
+			<p><?php _e('Assign the category a colour.','eventorganiser')?></p>
+		</td>
+	<script>
+var farbtastic;(function($){var pickColor=function(a){farbtastic.setColor(a);$('.colour-input').val(a);$('a.color').css('background-color',a)};$(document).ready(function(){farbtastic=$.farbtastic('#colorpicker',pickColor);pickColor($('.colour-input').val());$('.color').click(function(e){e.preventDefault();console.log($('#colorpicker').is(":visible"));if($('#colorpicker').is(":visible")){$('#colorpicker').hide()}else{$('#colorpicker').show()}});$('.colour-input').keyup(function(){var a=$('.colour-input').val(),b=a;a=a.replace(/[^a-fA-F0-9]/,'');if('#'+a!==b)$('.colour-input').val(a);if(a.length===3||a.length===6)pickColor('#'+a)});$(document).mousedown(function(){$('#colorpicker').hide()})})})(jQuery);
+	</script>	
+<?php
 }
 ?>

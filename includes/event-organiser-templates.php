@@ -30,6 +30,11 @@ function eventorganiser_set_template( $template ){
 			if(file_exists($template_dir.'/taxonomy-event-category.php')) return $template_dir.'/taxonomy-event-category.php';
 	 		return EVENT_ORGANISER_DIR.'templates/taxonomy-event-category.php';
 		}
+
+		if(is_tax('event-tag')){
+			if(file_exists($template_dir.'/taxonomy-event-tag.php')) return $template_dir.'/taxonomy-event-tag.php';
+	 		return EVENT_ORGANISER_DIR.'templates/taxonomy-event-tag.php';
+		}
 	}
 
 	return $template;

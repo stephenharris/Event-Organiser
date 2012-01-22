@@ -1,6 +1,7 @@
+(function($){
 jQuery(document).ready(function() {
 
-	if(jQuery("#eo_venue_map").length>0){
+	if($("#eo_venue_map").length>0){
 		if(EOAjax.map !== undefined){
 			var script = document.createElement("script");
 			script.type = "text/javascript";
@@ -9,15 +10,42 @@ jQuery(document).ready(function() {
 		}
 	}
 
-	if(jQuery(".eo-fullcalendar").length>0){
-		jQuery(".eo-fullcalendar").fullCalendar({
+	if($(".eo-fullcalendar").length>0){
+		$(".eo-fullcalendar").fullCalendar({
 				editable: false,
+				//theme:true,
 				firstDay:  parseInt(EOAjax.fullcal.firstDay),
 				header: {
 					left: EOAjax.fullcal.headerleft,
 					center: EOAjax.fullcal.headercenter,
 					right: EOAjax.fullcal.headerright
 				},
+				categories: EOAjax.fullcal.categories,
+				venues: EOAjax.fullcal.venues,	
+				eventRender: function(event, element) {
+					cat =$(".filter-category .eo-cal-filter").val();
+					venue =  $(".filter-venue .eo-cal-filter").val();
+
+					if(typeof cat !== "undefined"&& cat != '' && ($.inArray(cat, event.category)<0)){
+						return false
+					}
+					if(typeof venue !== "undefined" && venue!= '' && venue!=event.venue){
+						return false;
+					}
+			    	},
+				buttonText:{
+					today:   EOAjax.locale.today,
+			  		month:    EOAjax.locale.month,
+   		 			week:    EOAjax.locale.week,
+   					day:    EOAjax.locale.day,
+   					cat:    EOAjax.locale.cat,
+   					venue:    EOAjax.locale.venue
+				},
+				monthNames:EOAjax.locale.monthNames,
+				monthNamesShort:EOAjax.locale.monthAbbrev,
+				dayNames:EOAjax.locale.dayNames,
+				dayNamesShort:EOAjax.locale.dayAbbrev,
+				eventColor:  '#21759B',
 				defaultView: EOAjax.fullcal.defaultview,
 				lazyFetching: 'true',
 				events:  function(start, end, callback) {
@@ -33,6 +61,10 @@ jQuery(document).ready(function() {
             					}
 					})
 	    			},
+				selectable:false,
+				weekMode: 'variable',
+				aspectRatio: 1.50,
+				timeFormat:'HH:mm',
 				loading: function(bool) {
 					loading = jQuery('#'+jQuery(this).attr('id')+'_loading');
 					if (bool){
@@ -43,30 +75,105 @@ jQuery(document).ready(function() {
 						window.clearTimeout(loadingTimeOut);
 						loading.hide();
 					}
-				},
-				selectable:false,
-				weekMode: 'variable',
-				aspectRatio: 1.50,
-				timeFormat:'HH:mm',
+				}
 			});
+		$(".eo-cal-filter").change(function(){
+			$(this).closest('.eo-fullcalendar').fullCalendar('rerenderEvents');
+		});
 	}
 
-	if(jQuery("#eo_calendar").length>0 && typeof EOAjaxUrl !== undefined){
-		jQuery('#eo_calendar tfoot').unbind("click");
-		jQuery('#eo_calendar tfoot a').die("click");
-		jQuery('#eo_calendar tfoot a').live('click', function(e){
+	if($("#eo_calendar").length>0 && typeof EOAjaxUrl !== undefined){
+		$('#eo_calendar tfoot').unbind("click");
+		$('#eo_calendar tfoot a').die("click").live('click', function(e){
 			e.preventDefault();
-			jQuery.getJSON(
+			$.getJSON(
 				EOAjaxUrl+"?action=eo_widget_cal",{
-					eo_month: getParameterByName('eo_month',jQuery(this).attr('href')),
+					eo_month: getParameterByName('eo_month',$(this).attr('href')),
 				},
 			  	function(data){
-					jQuery('#eo_calendar').html(data);
+					$('#eo_calendar').html(data);
 				});
 		});	
 	}
 
+
+	if($('.eo-agenda-widget').length>0){
+
+			var agendaWidget =$('.eo-agenda-widget');
+			var dateList = agendaWidget.find('ul.dates');
+			var events = agendaWidget.find('ul.date li.event');
+			var dates = dateList.find('li');
+			d = new Date();
+			var StartDate =$.fullCalendar.formatDate(d, 'yyyy-MM-dd' );
+			var EndDate =StartDate;
+
+			function getEvents(dir){
+				jQuery.ajax({
+						url: EOAjaxUrl,
+						dataType: 'JSON',
+           				 	data: {
+							action: 'eo_widget_agenda',
+							direction: dir,
+							start: StartDate,
+							end: EndDate
+						},
+			            		success: function(events){ 
+									StartDate=events[0].StartDate;
+									EndDate=events[(events.length-1)].StartDate;
+		                			populateAgenda(events)
+            					}
+					})
+			}
+			getEvents(1);
+
+			$('.eo-agenda-widget .agenda-nav span').click(function(event){
+				event.preventDefault();
+				if($(this).hasClass('next')) {
+					dir = '+1';
+				}else if($(this).hasClass('prev')){
+					dir = '-1';
+				}
+				getEvents(dir)		
+			});
+
+
+		function populateAgenda(events){
+
+			$(dates).remove();
+			current='';
+			for(i=0; i<events.length; i++){
+				d = new Date(events[i].StartDate); 
+				if(current==''||current!=events[i].StartDate){
+					current=events[i].StartDate;
+					currentList = $('<li class="date" >'+current+'<ul class="a-date"></ul></li>');
+					dateList.append(currentList);
+				}
+				if(events[i].color ){
+					color = events[i].color;
+				}else{
+					color = 'none'
+				}
+
+			event = $('<li class="event"></li>')
+				.append('<span class="cat"></span><span><strong>'+events[i].time+': </strong></span>'+events[i].post_title)
+				.append('<div class="meta" style="display:none;"><span><a href="'+events[i].link+'">View</a></span><span> &nbsp; </span><span><a href="'+events[i].Glink+'" target="_blank">Add to Google Calendar</a></span></div>');
+
+			event.find('span.cat').css({'background': color});
+
+			currentList.append(event)
+			}
+			dates = dateList.find('li');
+			events = agendaWidget.find('ul li.event');
+
+			events.on("click", function(){
+				$(this).find('.meta').toggle('400');
+			});
+		}
+
+	}
+
 });
+})(jQuery);
 
 	function getParameterByName(name,url){
 		name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -119,8 +226,47 @@ n.renderEvents(J);n.sizeDirty=false}}function q(){m.each(Y,function(k,D){D.sizeD
 ya(n.visStart,n.visEnd))ra();else k&&da()}function ra(){K(n.visStart,n.visEnd)}function sa(k){J=k;da()}function ha(k){da(k)}function da(k){ma();if(j()){n.clearEvents();n.renderEvents(J,k);n.eventsDirty=false}}function ma(){m.each(Y,function(k,D){D.eventsDirty=true})}function ua(k,D,Z){n.select(k,D,Z===oa?true:Z)}function pa(){n&&n.unselect()}function U(){S(-1)}function ca(){S(1)}function ka(){gb(r,-1);S()}function qa(){gb(r,1);S()}function G(){r=new Date;S()}function p(k,D,Z){if(k instanceof Date)r=
 N(k);else yb(r,k,D,Z);S()}function L(k,D,Z){k!==oa&&gb(r,k);D!==oa&&hb(r,D);Z!==oa&&ba(r,Z);S()}function c(){return N(r)}function z(){return n}function H(k,D){if(D===oa)return b[k];if(k=="height"||k=="contentHeight"||k=="aspectRatio"){b[k]=D;Q()}}function T(k,D){if(b[k])return b[k].apply(D||i,Array.prototype.slice.call(arguments,2))}var X=this;X.options=b;X.render=d;X.destroy=l;X.refetchEvents=ra;X.reportEvents=sa;X.reportEventChange=ha;X.rerenderEvents=da;X.changeView=y;X.select=ua;X.unselect=pa;
 X.prev=U;X.next=ca;X.prevYear=ka;X.nextYear=qa;X.today=G;X.gotoDate=p;X.incrementDate=L;X.formatDate=function(k,D){return Oa(k,D,b)};X.formatDates=function(k,D,Z){return ib(k,D,Z,b)};X.getDate=c;X.getView=z;X.option=H;X.trigger=T;$b.call(X,b,e);var ya=X.isFetchNeeded,K=X.fetchEvents,i=a[0],C,P,E,B,n,Y={},W,o,s,v=0,F=0,r=new Date,J=[],M;yb(r,b.year,b.month,b.date);b.droppable&&m(document).bind("dragstart",function(k,D){var Z=k.target,ja=m(Z);if(!ja.parents(".fc").length){var ia=b.dropAccept;if(m.isFunction(ia)?
-ia.call(Z,ja):ja.is(ia)){M=Z;n.dragStart(M,k,D)}}}).bind("dragstop",function(k,D){if(M){n.dragStop(M,k,D);M=null}})}function Zb(a,b){function e(){q=b.theme?"ui":"fc";if(b.header)return Q=m("<table class='fc-header' style='width:100%'/>").append(m("<tr/>").append(f("left")).append(f("center")).append(f("right")))}function d(){Q.remove()}function f(u){var fa=m("<td class='fc-header-"+u+"'/>");(u=b.header[u])&&m.each(u.split(" "),function(na){na>0&&fa.append("<span class='fc-header-space'/>");var ga;
-m.each(this.split(","),function(ra,sa){if(sa=="title"){fa.append("<span class='fc-header-title'><h2>&nbsp;</h2></span>");ga&&ga.addClass(q+"-corner-right");ga=null}else{var ha;if(a[sa])ha=a[sa];else if(Ja[sa])ha=function(){ma.removeClass(q+"-state-hover");a.changeView(sa)};if(ha){ra=b.theme?jb(b.buttonIcons,sa):null;var da=jb(b.buttonText,sa),ma=m("<span class='fc-button fc-button-"+sa+" "+q+"-state-default'><span class='fc-button-inner'><span class='fc-button-content'>"+(ra?"<span class='fc-icon-wrap'><span class='ui-icon ui-icon-"+
+ia.call(Z,ja):ja.is(ia)){M=Z;n.dragStart(M,k,D)}}}).bind("dragstop",function(k,D){if(M){n.dragStop(M,k,D);M=null}})}function Zb(a,b){function e(){q=b.theme?"ui":"fc";if(b.header)return Q=m("<table class='fc-header' style='width:100%'/>").append(m("<tr/>").append(f("left")).append(f("center")).append(f("right")))}function d(){Q.remove()}
+
+function build_cat_dropdown(element){
+		terms = a.options.categories;
+
+		html="<select class='eo-cal-filter' id='eo-event-cat'>";
+		html+="<option value=''>"+a.options.buttonText.cat+"</option>";
+				
+		for (i=0; i<terms.length; i++){
+			html+= "<option class='cat-colour-"+terms[i].colour+" cat' value='"+terms[i].slug+"'>"+terms[i].name+"</option>";
+		}
+		html+="</select>";
+		element.append(html);
+	}
+
+	function build_venue_dropdown(element){
+		venues = a.options.venues;
+
+		html="<select class='eo-cal-filter' id='eo-event-venue'>";
+		html+="<option value=''>"+a.options.buttonText.venue+"</option>";
+				
+		for (i=0; i<venues.length; i++){
+			html+= "<option value='"+venues[i].venue_id+"'>"+venues[i].venue_name+"</option>";
+		}
+		html+="</select>";
+		element.append(html);
+	}
+
+function f(u){var fa=m("<td class='fc-header-"+u+"'/>");(u=b.header[u])&&m.each(u.split(" "),function(na){na>0&&fa.append("<span class='fc-header-space'/>");var ga;
+m.each(this.split(","),function(ra,sa){if(sa=="title"){fa.append("<span class='fc-header-title'><h2>&nbsp;</h2></span>");ga&&ga.addClass(q+"-corner-right");ga=null;
+//}else if(sa == 'goto'){
+//fa.append("<span class='fc-header-goto'><input type='hidden' id='miniCalendar'/></span>");
+}else if(sa == 'venue'){
+element = m("<span class='fc-header-dropdown filter-venue'></span>");
+fa.append(element);
+build_venue_dropdown(element)
+}else if(sa == 'category'){
+element = m("<span class='fc-header-dropdown filter-category'></span>");
+fa.append(element);
+build_cat_dropdown(element)
+}else{var ha;if(a[sa])ha=a[sa];else if(Ja[sa])ha=function(){ma.removeClass(q+"-state-hover");a.changeView(sa)};if(ha){ra=b.theme?jb(b.buttonIcons,sa):null;var da=jb(b.buttonText,sa),ma=m("<span class='fc-button fc-button-"+sa+" "+q+"-state-default'><span class='fc-button-inner'><span class='fc-button-content'>"+(ra?"<span class='fc-icon-wrap'><span class='ui-icon ui-icon-"+
 ra+"'/></span>":da)+"</span><span class='fc-button-effect'><span></span></span></span></span>");if(ma){ma.click(function(){ma.hasClass(q+"-state-disabled")||ha()}).mousedown(function(){ma.not("."+q+"-state-active").not("."+q+"-state-disabled").addClass(q+"-state-down")}).mouseup(function(){ma.removeClass(q+"-state-down")}).hover(function(){ma.not("."+q+"-state-active").not("."+q+"-state-disabled").addClass(q+"-state-hover")},function(){ma.removeClass(q+"-state-hover").removeClass(q+"-state-down")}).appendTo(fa);
 ga||ma.addClass(q+"-corner-left");ga=ma}}}});ga&&ga.addClass(q+"-corner-right")});return fa}function g(u){Q.find("h2").html(u)}function l(u){Q.find("span.fc-button-"+u).addClass(q+"-state-active")}function j(u){Q.find("span.fc-button-"+u).removeClass(q+"-state-active")}function t(u){Q.find("span.fc-button-"+u).addClass(q+"-state-disabled")}function y(u){Q.find("span.fc-button-"+u).removeClass(q+"-state-disabled")}var S=this;S.render=e;S.destroy=d;S.updateTitle=g;S.activateButton=l;S.deactivateButton=
 j;S.disableButton=t;S.enableButton=y;var Q=m([]),q}function $b(a,b){function e(c,z){return!ca||c<ca||z>ka}function d(c,z){ca=c;ka=z;L=[];c=++qa;G=z=U.length;for(var H=0;H<z;H++)f(U[H],c)}function f(c,z){g(c,function(H){if(z==qa){if(H){for(var T=0;T<H.length;T++){H[T].source=c;na(H[T])}L=L.concat(H)}G--;G||ua(L)}})}function g(c,z){var H,T=Aa.sourceFetchers,X;for(H=0;H<T.length;H++){X=T[H](c,ca,ka,z);if(X===true)return;else if(typeof X=="object"){g(X,z);return}}if(H=c.events)if(m.isFunction(H)){u();

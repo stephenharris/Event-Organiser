@@ -31,7 +31,7 @@ Requires **WordPress 3.3** and **PHP 5.3** (or higher)
 * The **Calendar and Event List shortcodes**, similiar to their respective widgets, for use in themes or in posts and pages.
 * The **Venue map shortcodes** to display a map of a venue
 *  **Custom permissions** allow to specifiy which roles have the ability to create, edit and delete events or manage venues.
-* **Template** pages included in the plug-in for 'quick-start'. These can be over-ridden by including the appropriately named template files in your theme folder 
+* **Template** pages include in the plug-in for 'quick-start'. These can be over-ridden by including the appropriately named template files in your theme folder 
 * **Event functions** available which extend the post functions (e.g. `the_title()`,`get_the_author()`, `the_author()`) to ouput or return event data (the start date-time, the venue etc). For examples of their use see the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/) or the included template files.
 * Assign events to categories, and view events by category
 * Venue pages, to view events by venue
@@ -71,20 +71,7 @@ Each of the above have their own associated template. These template files are p
 
 The plug-in also provides event listing and event calendar widgets and shortocdes that can be used to display events.
 
-Finally, the plug-in provides a function `eo_get_events` which is similiar to WordPress' `get_posts`. The function returns an array of post objects (where the posts are events), and this can be used to display events through editing your theme. The usual WordPress functions for displaying associated information (author, title etc) are still available to you, and the plug-in provides a similar set of functions to display event related data (dates, venues etc). See the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/).
-
-= How do I display a calendar of events? =
-There are two shortcodes you can use. 
-* `[eo_calendar]` provides a widget-like calendar  
-* `[eo_fullcalendar]` provides a calendar, similiar to the admin calendar, with optional month, week and day views.
-Both use AJAX to populate the calendars. Documentation of these can be found [here](http://www.harriswebsolutions.co.uk/event-organiser/documentation/shortcodes/).
-
-= What shortcodes does the plug-in provide? =
-* `[eo_events]` - lists events in similar way to the 'events' widget, and allows you to filter by venue, categories and dates
-* `[eo_venue_map]` - displays a Google map of the current venue, or of a particular venue given as an attribute.
-* `[eo_calendar]` - a widget-like calendar  
-* `[eo_fullcalendar]` - a calendar, similiar to the admin calendar, with optional month, week and day views.
-Documentation of the plug-in shortcodes can be found [here](http://www.harriswebsolutions.co.uk/event-organiser/documentation/shortcodes/).
+Finally, the plug-in provides a function `eo_get_events` which is similiar to WordPress' `get_posts`. The function returns an array of post objects (where the posts are events), and this can be used to display events through editing your theme. The usual WordPress functions for display associated information (author, title etc) are still available to you, and the plug-in provides a similar set of functions to display event related data (dates, venues etc). See the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/).
 
 == Screenshots ==
 

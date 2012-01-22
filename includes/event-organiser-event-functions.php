@@ -32,6 +32,7 @@ function eo_get_events($args=array()){
 	//These are the defaults
 	$eo_settings_array= get_option('eventorganiser_options');
 
+
 	$defaults = array(
 		'numberposts'=>-1,
 		'orderby'=> 'eventstart',
@@ -41,6 +42,9 @@ function eo_get_events($args=array()){
 	
 	//Construct the query array	
 	$query_array = array_merge($defaults,$args,$required);
+	
+	//Make sure 'false' is passed as integer 0
+	if(strtolower($query_array['showpastevents'])==='false') $query_array['showpastevents']=0;
 
 	if($query_array){
 		$events=get_posts($query_array);
@@ -94,6 +98,8 @@ function eo_get_the_start($format='d-m-Y',$id='',$occurrence=0){
 	$event = $post;
 
 	if(isset($id)&&$id!='') $event = eo_get_by_postid($id,$occurrence);
+	
+	if(empty($event)) return false;
 
 	$date = esc_html($event->StartDate).' '.esc_html($event->StartTime);
 
@@ -132,6 +138,8 @@ function eo_get_the_end($format='d-m-Y',$id='',$occurrence=0){
 	$event = $post;
 
 	if(isset($id)&&$id!='') $event = eo_get_by_postid($id);
+
+	if(empty($event)) return false;
 
 	$date = esc_html($event->EndDate).' '.esc_html($event->FinishTime);
 
@@ -202,6 +210,28 @@ function eo_next_occurence($format='',$id=''){
 	echo eo_get_next_occurence($format,$id);
 }
 
+
+/**
+* Return true is the event is an all day event.
+*
+* @param id - Optional, the event series (post) ID, 
+* @return bol - True if event runs all day, or false otherwise
+ * @since 1.2
+ */
+function eo_is_allday($id=''){
+	global $post;
+	$event = $post;
+
+	if(!empty($id)) $event = eo_get_by_postid($id);
+
+	if(empty($event)) return false;
+
+	if(!empty($event->event_allday))
+		return true;
+
+	return false;
+}
+
 /**
 * Returns the formated date of first occurrence of an event
 *
@@ -218,7 +248,7 @@ function  eo_get_schedule_start($format='d-m-Y',$id=''){
 
 	if(isset($id)&&$id!='') $event = eo_get_by_postid($id);
 
-	$date = esc_html($event->reoccurrence_start);
+	$date = esc_html($event->reoccurrence_start.' '.$event->StartTime);
 
 	if(empty($date)||$date==" ")
 		return false;
@@ -258,7 +288,7 @@ function eo_get_schedule_end($format='d-m-Y',$id=''){
 
 	if(isset($id)&&$id!='') $event = eo_get_by_postid($id);
 
-	$date = esc_html($event->reoccurrence_end);
+	$date = esc_html($event->reoccurrence_end.' '.$event->StartTime);
 
 	if(empty($date)||$date==" ")
 		return false;
@@ -283,7 +313,8 @@ function  eo_schedule_end($format='d-m-Y',$id=''){
 
 /**
 * Returns true if event reoccurs or false if it is a one time event.
-*
+* @param integer - event (post) ID
+* @return boolean - true if event a reoccurring event
  * @since 1.0.0
  */
 function eo_reoccurs($id=''){
@@ -292,39 +323,80 @@ function eo_reoccurs($id=''){
 
 	if(isset($id)&&$id!='') $event = eo_get_by_postid($id);
 
-	if(isset($event->event_schedule)&&$event->event_schedule=='once')
+	if(isset($event->event_schedule)&&$event->event_schedule!='once')
 		return true;
 
 	return false;
 }
 
+/**
+* Formats a datetime object into a specified format and handles translations.
+*
+ * @since 1.2.0
+ */
+function eo_format_datetime($datetime,$format='d-m-Y'){
+	global  $wp_locale;
 
+	if ( ( !empty( $wp_locale->month ) ) && ( !empty( $wp_locale->weekday ) ) ) :
+			//Translate
+			$datemonth = $wp_locale->get_month($datetime->format('m'));
+			$datemonth_abbrev = $wp_locale->get_month_abbrev($datemonth);
+			$dateweekday = $wp_locale->get_weekday($datetime->format('w'));
+			$dateweekday_abbrev = $wp_locale->get_weekday_abbrev( $dateweekday );
+			$datemeridiem =  trim($wp_locale->get_meridiem($datetime->format('a')));
+			$datemeridiem_capital =$wp_locale->get_meridiem($datetime->format('A'));
 
+			$datemeridiem = (empty($datemeridiem) ? $datetime->format('a')  : $datemeridiem);
+	
+			$dateformatstring = ' '.$format;
+			$dateformatstring = preg_replace( "/([^\\\])D/", "\\1" . backslashit( $dateweekday_abbrev ), $dateformatstring );
+			$dateformatstring = preg_replace( "/([^\\\])F/", "\\1" . backslashit( $datemonth ), $dateformatstring );
+			$dateformatstring = preg_replace( "/([^\\\])l/", "\\1" . backslashit( $dateweekday ), $dateformatstring );
+			$dateformatstring = preg_replace( "/([^\\\])M/", "\\1" . backslashit( $datemonth_abbrev ), $dateformatstring );
+			$dateformatstring = preg_replace( "/([^\\\])a/", "\\1" . backslashit( $datemeridiem ), $dateformatstring );
+			$dateformatstring = preg_replace( "/([^\\\])A/", "\\1" . backslashit( $datemeridiem_capital ), $dateformatstring );
+			$dateformatstring = substr( $dateformatstring, 1, strlen( $dateformatstring ) -1 );
+	 endif;	
+
+	return $datetime->format($dateformatstring);
+}
 /**
 * Formats a date string in format 'YYYY-MM-DD' format into a specified format
 *
  * @since 1.0.0
  */
 function eo_format_date($dateString='',$format='d-m-Y'){
+
+
 	if($format!=''&& $dateString!=''){
 		$datetime = new DateTime($dateString);
-		return $datetime->format($format);
+		$formated =  eo_format_datetime($datetime,$format);
+		return $formated;
 	}
 	return false;
+
+
+
+
+
 }
 
 
 /**
 * Returns an array with details of the event's reoccurences
 *
-* @param string - the format to use, using PHP Date format
 * @param id - Optional, the event (post) ID, 
  * @since 1.0.0
  */
-function eo_get_reoccurence($format='',$id=''){
+function eo_get_reoccurrence($id=''){
+	eo_get_reoccurence($id);
+}
+function eo_get_reoccurence($id=''){
 	global $post, $allowed_reoccurs;
 	$event = $post;
 	if(isset($id)&& $id!='') $event = eo_get_by_postid($id); 
+
+	if(empty($event)) return false;
 
 	if($event->event_id){
 		$return['frequency'] = absint($event->event_frequency);
@@ -352,21 +424,20 @@ function eo_get_reoccurence($format='',$id=''){
  * @since 1.0.0
  */
 function eo_get_schedule_summary($id=''){
-	global $post;
+	global $post,$wp_locale;
 
 	$ical2day = array(
-		'SU'=>'Sunday',
-		'MO'=>'Monday',
-		'TU'=>'Tuesday',
-		'WE'=>'Wednesday',
-		'TH'=>'Thursday',
-		'FR'=>'Friday',
-		'SA'=>'Saturday',
-		'SU'=>'Sunday',
+		'SU'=>	$wp_locale->weekday[0],
+		'MO'=>$wp_locale->weekday[1],
+		'TU'=>	$wp_locale->weekday[2],
+		'WE'=>$wp_locale->weekday[3],
+		'TH'=>$wp_locale->weekday[4],
+		'FR'=>$wp_locale->weekday[5],
+		'SA'=>$wp_locale->weekday[6]
 	);
 
 	$nth= array(
-		'last','','first','second','third','fourth',
+		__('last','eventorganiser'),'',__('first','eventorganiser'),__('second','eventorganiser'),__('third','eventorganiser'),__('fourth','eventorganiser')
 	);
 
 	$reoccur = eo_get_reoccurence($id);
@@ -375,27 +446,41 @@ function eo_get_schedule_summary($id=''){
 
 	$return='';
 
-
 	if($reoccur['reoccurrence']=='once'){
-		$return = 'one time only';
-	}elseif(isset($reoccur['frequency']) && isset($reoccur['reoccurrence'])){
-		if($reoccur['frequency']>1){
-			$return =$reoccur['frequency'].' '.EO_Event::$allowed_reoccurs[$reoccur['reoccurrence']].'s';
-		}else{
-			$return = EO_Event::$allowed_reoccurs[$reoccur['reoccurrence']];
-		}
+		$return = __('one time only','eventorganiser');
 
+	}else{
 		switch($reoccur['reoccurrence']):
+
+			case 'daily':
+				if($reoccur['frequency']==1):
+					$return .=__('every day','eventorganiser');
+				else:
+					$return .=sprintf(__('every %d days','eventorganiser'),$reoccur['frequency']);
+				endif;
+				break;
+
 			case 'weekly':
+				if($reoccur['frequency']==1):
+					$return .=__('every week on','eventorganiser');
+				else:
+					$return .=sprintf(__('every %d weeks on','eventorganiser'),$reoccur['frequency']);
+				endif;
+
 				$weekdays = $reoccur['meta'];
 				foreach($weekdays as $ical_day){
 					$days[] =  $ical2day[$ical_day];
 					}
-				$return .=' on '.implode(', ',$days);
+				$return .=' '.implode(', ',$days);
 				break;
 
 			case 'monthly':
-				$return .= ' on the ';
+				if($reoccur['frequency']==1):
+					$return .=__('every month on the','eventorganiser');
+				else:
+					$return .=sprintf(__('every %d months on the','eventorganiser'),$reoccur['frequency']);
+				endif;
+				$return .= ' ';
 				$bymonthday =preg_match('/^BYMONTHDAY=(\d{1,2})/' ,$reoccur['meta'],$matches);
 
 				if($bymonthday ){
@@ -419,10 +504,17 @@ function eo_get_schedule_summary($id=''){
 					endif;
 				}
 				break;
+			case 'yearly':
+				if($reoccur['frequency']==1):
+					$return .=__('every year','eventorganiser');
+				else:
+					$return .=sprintf(__('every %d years','eventorganiser'),$reoccur['frequency']);
+				endif;
+				break;
 
 		endswitch;
 				
-		$return .= ' until '.$reoccur['end']->format('M, jS Y');
+		$return .= ' '.__('until','eventorganiser').' '. eo_format_datetime($reoccur['end'],'M, jS Y');
 	}
 	
 	return $return; 
@@ -439,3 +531,52 @@ function eo_display_reoccurence($id=''){
 }
 
 
+/**
+* Returns a the url which adds a particular occurrence of an event to
+* a google calendar.
+*
+* @param id - Optional, the event (post) ID, 
+* @param occurrence - Optional. Integer, the occurrence number.
+*
+ * @since 1.2.0
+ */
+function eo_get_GoogleLink($id='',$occurrence=0){
+	global $post;
+	$event = $post;
+
+	if(isset($id)&& $id!='') $event = eo_get_by_postid($id,$occurrence=0); 
+
+	if(empty($event)) return false;
+
+	$startDT = new DateTime($event->StartDate.' '.$event->StartTime);
+	$endDT = new DateTime($event->EndDate.' '.$event->FinishTime);
+
+	if(eo_is_allday($id)):
+		$endDT->modify('+1 second');
+		$format = 'Ymd';
+	else:		
+		$format = 'Ymd\THis\Z';
+		$startDT->setTimezone( new DateTimeZone('UTC') );
+		$endDT->setTimezone( new DateTimeZone('UTC') );
+	endif;
+
+	$dates = $startDT->format($format).'/'.$endDT->format($format);
+	$excerpt = get_the_excerpt();
+	$excerpt = apply_filters('the_excerpt_rss', $excerpt);	
+		
+	$url ='http://www.google.com/calendar/event?action=TEMPLATE';
+	$url = add_query_arg('text',$post->post_title, $url);
+	$url = add_query_arg('dates',$dates, $url);
+
+	if($event->Venue):
+		//$venue =eo_get_venue_name((int) $event->Venue).", ".implode(', ',(int) $event->Venue);
+		//$url = add_query_arg('location',$venue, $url);
+	endif;
+
+	$url = add_query_arg('details',$excerpt, $url);
+	$url = add_query_arg('trp','false', $url);
+	$url = add_query_arg('sprop','website name or url', $url);
+
+	return $url;;
+}
+?>

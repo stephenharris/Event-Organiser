@@ -53,7 +53,11 @@ div#events-meta{
 #loading{
 	position:absolute;
 	bottom:0;
+	font-size: 16px;
+	line-height: 16px;
+	margin-bottom: 5px;
 }
+
 #loading:before {
     content: url("images/loading-image.gif");
     padding-right: 5px;
@@ -61,9 +65,15 @@ div#events-meta{
 
 
 /*Added to fit with full calendar*/
-button.ui-datepicker-trigger.ui-button.ui-widget{vertical-align: top;}
-.ui-button-text{float: left;height: 1.75em;line-height: 1.75em;padding: 0 0.6em;position: relative;white-space: nowrap;}
+/*button.ui-datepicker-trigger.ui-button.ui-widget{vertical-align: top;}*/
 .ui-datepicker{z-index: 100 !important}
+.ui-selectmenu-menu{z-index: 10!important}
+
+/*For the blocks of colour*/
+.cat .ui-selectmenu-item-icon { height: 14px; width: 14px; border:1px solid #dfdfdf;border-radius: 4px;}
+.cat .ui-selectmenu-item-icon{ background-image:none!important; }
+
+#eo_admin_calendar select { width: 200px; }
 
 
 /*

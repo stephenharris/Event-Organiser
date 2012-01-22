@@ -56,7 +56,13 @@ get_header(); ?>
 
 							<div class="entry-meta">
 								<!-- Output the date of the occurrence-->
-								<?php eo_the_start('d F Y'); ?> 
+								<?php if(eo_is_allday()):?>
+									<!-- Event is an all day event -->
+									<?php eo_the_start('d F Y'); ?> 
+								<?php else: ?>
+									<!-- Event is not an all day event - display time -->
+									<?php eo_the_start('d F Y G:ia'); ?> 
+								<?php endif; ?>
 
 								<!-- If the event has a venue saved, display this-->
 								<?php if(eo_get_venue_name()):?>
