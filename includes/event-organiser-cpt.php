@@ -1,6 +1,6 @@
 <?php
  /*
-* add's custom taxonomy and then custom post type
+* add's custom taxonomies (categories and tags) and then custom post type 'event'.
 */ 
 
 //Register the custom taxonomy Event-category

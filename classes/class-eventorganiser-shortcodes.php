@@ -168,19 +168,6 @@ class EventOrganiser_Shortcodes {
 			'ajaxurl' => admin_url( 'admin-ajax.php'),
 			'fullcal' => self::$fullcal,
 			'map' => self::$map,
-			'locale'=>array(
-				'monthNames'=>array_values($wp_locale->month),
-				'monthAbbrev'=>array_values($wp_locale->month_abbrev),
-				'dayNames'=>array_values($wp_locale->weekday),
-				'dayNamesAbbrev'=>array_values($wp_locale->weekday_abbrev),
-				'today'=>__('today','eventorganiser'),
-				'day'=>__('day','eventorganiser'),
-				'week'=>__('week','eventorganiser'),
-				'month'=>__('month','eventorganiser'),
-				'gotodate'=>__('go to date','eventorganiser'),
-				'cat'=>__('View all categories','eventorganiser'),
-				'venue'=>__('View all venues','eventorganiser'),
-			)
 		));	
 		if(!empty(self::$fullcal)):
 			wp_enqueue_style('eo_calendar-style');		

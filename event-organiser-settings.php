@@ -48,7 +48,7 @@ function eventorganiser_update_settings(){
 		endforeach; //End foreach $editable_roles
 
 		//Checkboxes
-		$checkboxes = array('addtomenu','showpast','templates','prettyurl','excludefromsearch','deleteexpired');
+		$checkboxes = array('addtomenu','showpast','templates','prettyurl','excludefromsearch','deleteexpired','feed');
 
 		//If checkbox isn't set, set value to 0
 		foreach($checkboxes as $checkbox):
@@ -81,6 +81,7 @@ function eventorganiser_update_settings(){
 			'dateformat'=>esc_html($new_settings['format']),
 			'prettyurl'=>intval($new_settings['prettyurl']),
 			'templates'=>intval($new_settings['templates']),
+			'feed'=>intval($new_settings['feed']),
 			'addtomenu'=> intval($new_settings['addtomenu']),
 			'deleteexpired'=> intval($new_settings['deleteexpired']),
 			'navtitle'=> esc_attr($new_settings['navtitle']),
@@ -283,6 +284,14 @@ class EventOrganiser_Settings_Page{
 				<?php _e("If selected the event will be automatically trashed 24 hours after the last occurrence finishes.",'eventorganiser');?>
 		</label></td>
 	</tr>
+	<tr>
+		<th><?php _e("Enable events ICAL feed:",'eventorganiser');?></th>
+		<td> 
+				<input type="checkbox" name="eo_setting[feed]" value="1" <?php checked('1', self::$settings['feed']); ?>/>
+				<label> <?php printf(__('If selected, visitors can subscribe to your events with the url: %s'), '<code>'.eo_get_events_feed().'</code>') ?></label>
+		</td>
+	</tr>
+
 	<tr>
 		<th><?php _e("Exclude events from searches:",'eventorganiser');?></th>
 		<td> <label>

@@ -8,22 +8,20 @@ class EO_Events_Agenda_Widget extends WP_Widget
 		'title'=> '',
 		);
 
-  function EO_Events_Agenda_Widget()  {
-	$widget_ops = array('classname' => 'widget_events', 'description' =>  __('Displays a list of events, grouped by date','eventorganiser'));
-	$this->WP_Widget('EO_Events_Agenda_Widget', __('Events Agenda','eventorganiser'), $widget_ops);
-  }
+	function EO_Events_Agenda_Widget()  {
+		$widget_ops = array('classname' => 'widget_events', 'description' =>  __('Displays a list of events, grouped by date','eventorganiser'));
+		$this->WP_Widget('EO_Events_Agenda_Widget', __('Events Agenda','eventorganiser'), $widget_ops);
+  	}
  
 
-  function form($instance)  {
-	
-    $instance = wp_parse_args( (array) $instance, $this->w_arg );
+	function form($instance)  {
+		$instance = wp_parse_args( (array) $instance, $this->w_arg );
 ?>
-  <p>
-	<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'eventorganiser'); ?>: </label>
-	  <input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title'];?>" />
-  </p>
-  
-<?php
+	<p>
+		<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'eventorganiser'); ?>: </label>
+		<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title'];?>" />
+	</p>
+  <?php
   }
  
 
@@ -40,9 +38,9 @@ class EO_Events_Agenda_Widget extends WP_Widget
  
  
   function widget($args, $instance){
+	global $wp_locale;
 	wp_enqueue_script( 'eo_front');
-	wp_enqueue_style( 'eventorganiser-style');
-
+	wp_enqueue_style( 'eo_front');
 	extract($args, EXTR_SKIP);
 
 	//Echo widget
@@ -54,10 +52,10 @@ class EO_Events_Agenda_Widget extends WP_Widget
 ?>
 	<div class='agenda-nav'>
 		<span class="next button ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" title="">
-			<span class="ui-button-icon-primary ui-icon ui-icon-carat-1-e"></span><span class="ui-	button-text"></span>
+			<span class="ui-button-icon-primary ui-icon ui-icon-carat-1-e"></span><span class="ui-button-text"></span>
 		</span>
 		<span class="prev button ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" title="">
-			<span class="ui-button-icon-primary ui-icon ui-icon-carat-1-w"></span><span class="ui-	button-text"></span>
+			<span class="ui-button-icon-primary ui-icon ui-icon-carat-1-w"></span><span class="ui-button-text"></span>
 		</span>
 	</div>
 <?php
@@ -121,7 +119,5 @@ class EO_Events_Agenda_Widget extends WP_Widget
 	</style>
 <?php
   }
-
-
 }
 add_action( 'widgets_init', create_function('', 'return register_widget("EO_Events_Agenda_Widget");') );?>

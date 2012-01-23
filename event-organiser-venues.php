@@ -11,8 +11,8 @@ function eventorganiser_venues_action() {
 	$EO_Venue = new EO_Venue;
 	$screen = get_current_screen();
 
-	add_filter('manage_event_page_venues_columns','mycolumns') ;
-	function mycolumns($columns){
+	add_filter('manage_event_page_venues_columns','eventorganiser_venue_admin_columns') ;
+	function eventorganiser_venue_admin_columns($columns){
 		 $columns = array(
        	     'cb' => '<input type="checkbox" />', //Render a checkbox instead of text
        	     'name'  => __('Venue', 'eventorganiser'),

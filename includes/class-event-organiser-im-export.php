@@ -30,7 +30,8 @@ class Event_Organiser_Im_Export  {
 
 		if(!isset($EO_Errors)) $EO_Errors = new WP_Error();
 
-		if(isset($_GET['feed']) && $_GET['feed']=='eo-events'):
+		$feed = get_query_var('feed');
+		if(isset($feed) &&$feed=='eo-events'):
 			$this->get_export_file();
 		endif;
 

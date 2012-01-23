@@ -22,8 +22,7 @@ class EO_Calendar_Widget extends WP_Widget
 	<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'eventorganiser'); ?>: </label>
 	  <input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title'];?>" />
   </p>
-  
-<?php
+  <?php
   }
  
 

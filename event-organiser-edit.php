@@ -4,7 +4,6 @@
  *
  * @since 1.0.0
  */
-//TODO Event.js - disabling input
 /**
  * Initialises the plug-ins metaboxs on Event CPT
  *
@@ -20,12 +19,12 @@ function eventorganiser_edit_init(){
 
 	// add a callback function to save any data a user enters in
 	add_action('save_post','eventorganiser_details_save');
-
 }
 
 add_action('add_meta_boxes', 'eventorganiser_author_meta_box_title',0);
 function eventorganiser_author_meta_box_title() {
-    global $wp_meta_boxes; // array of defined meta boxes
+	global $wp_meta_boxes; // array of defined meta boxes
+	//Change the name of 'author' to 'organiser'.
 	$wp_meta_boxes['event']['normal']['core']['authordiv']['title']= __('Organiser','eventorganiser');
 }
 

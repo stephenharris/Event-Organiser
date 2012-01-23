@@ -1,6 +1,6 @@
 <?php
 /**
- * Actions for the content
+ * Actions for the calendar
  *
  * @since 1.0.0
  */

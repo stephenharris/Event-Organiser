@@ -8,6 +8,7 @@
  * to check if it's available and load it if necessary.
  */
 if(!class_exists('WP_List_Table')){
+	//TODO - A better way of doing this?
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 

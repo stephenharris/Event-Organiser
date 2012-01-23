@@ -576,4 +576,8 @@ function eo_get_GoogleLink(){
 	wp_reset_postdata();
 	return $url;
 }
+
+function eo_get_events_feed(){
+	return get_feed_link('eo-events');
+}
 ?>

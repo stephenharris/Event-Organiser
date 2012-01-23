@@ -1,7 +1,7 @@
 <?php
 	/*
 	 * Public full calendar:
-	 * This gets events to be displayed on the front-end full calendar
+	 * This returns events to be displayed on the front-end full calendar
 	*/
 	add_action( 'wp_ajax_eventorganiser-fullcal', 'eo_public_fullcal' ); 
 	add_action( 'wp_ajax_nopriv_eventorganiser-fullcal', 'eo_public_fullcal' ); 
@@ -25,7 +25,7 @@
 				$event['className']=array('eo-event');
 
 				//Title and url
-				$event['title']=html_entity_decode (get_the_title($post->ID),ENT_QUOTES,'UTF-8');
+				$event['title']=html_entity_decode(get_the_title($post->ID),ENT_QUOTES,'UTF-8');
 				$event['url']= esc_js(get_permalink( $post->ID));
 
 				//All day or not?
@@ -261,6 +261,8 @@
 
 		$dates = $wpdb->get_col($wpdb->prepare($selectDates.$whereDates.$orderlimit, $date,$today->format('Y-m-d')));
 
+		if(!$dates)
+			return false;
 
 		$date1  = min($dates[0],$dates[count($dates)-1]);
 		$date2 = max($dates[0],$dates[count($dates)-1]);
@@ -296,9 +298,9 @@
 					endif;
 				endforeach;
 			endif;
-
+			//'StartDate'=>eo_format_date($post->StartDate,'l jS F'),
 			$return_array[] = array(
-				'StartDate'=>eo_format_date($post->StartDate,'l jS F'),
+				'StartDate'=>$post->StartDate,
 				'time'=>$time,
 				'post_title'=>substr($post->post_title,0,25),
 				'event_allday'=>$post->event_allday,

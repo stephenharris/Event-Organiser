@@ -61,6 +61,7 @@
 		'url_cat' => 'events/category',
 		'url_tag' => 'events/tag',
 		'navtitle' => 'Events',
+		'feed' => 1,
 		'runningisnotpast' => 0,
 		'deleteexpired' => 0
 	);
@@ -136,7 +137,8 @@ function eventorganiser_upgradecheck(){
 			$settings['url_cat'] = 'events/category';
 			$settings['url_tag'] = 'events/tag';
 			$settings['navtitle'] = 'Events';
-			$settings['runningisnotpast'] = 0;
+			$settings['navtitle'] = 'Events';
+			$settings['feed'] = 1;
 			$settings['deleteexpired'] = 0;
 			update_option('eventorganiser_options',$settings);
 		}

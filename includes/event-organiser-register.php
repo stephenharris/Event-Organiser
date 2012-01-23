@@ -5,13 +5,29 @@
  *
  * @since 1.0.0
  */
+
 add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
-	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery'),'1.1.1',true);
-	wp_localize_script( 'eo_front', 'EOAjaxUrl', admin_url( 'admin-ajax.php' ));
-	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),'1.1.1');
-	//Beta
-	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css');
+	global $wp_locale;
+	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery'),'1.2',true);
+	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
+			'adminajax'=>admin_url( 'admin-ajax.php'),
+			'locale'=>array(
+				'monthNames'=>array_values($wp_locale->month),
+				'monthAbbrev'=>array_values($wp_locale->month_abbrev),
+				'dayNames'=>array_values($wp_locale->weekday),
+				'dayNamesAbbrev'=>array_values($wp_locale->weekday_abbrev),
+				'today'=>__('today','eventorganiser'),
+				'day'=>__('day','eventorganiser'),
+				'week'=>__('week','eventorganiser'),
+				'month'=>__('month','eventorganiser'),
+				'gotodate'=>__('go to date','eventorganiser'),
+				'cat'=>__('View all categories','eventorganiser'),
+				'venue'=>__('View all venues','eventorganiser'),
+				)
+			));
+	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),'1.2');
+	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array(),'1.2');
 }   
 
  /**
@@ -65,13 +81,11 @@ add_action('admin_init','eventorganiser_cal_action');
 
 add_action('init','eventorganiser_public_export');
 function eventorganiser_public_export(){
-	add_feed('eo-events', 'Event_Organiser_Im_Export::get_object');
+	$eo_settings = get_option('eventorganiser_options');
 
-	if(!isset($_REQUEST['action']) || $_REQUEST['action']!='eventorganiser_calendar_scrape' )
-		return;
-
-	require_once("class-event-organiser-im-export.php");
-	Event_Organiser_Im_Export::get_object();
+	if(!empty($eo_settings['feed'])){
+		add_feed('eo-events', array('Event_Organiser_Im_Export','get_object'));
+	}
 }
 
 
@@ -289,17 +303,16 @@ function eo_admin_notices(){
 
 
 /*
-Cron jobs
+Cron jobs - for automatically deleting expired events
 */
-
 function eventorganiser_cron_jobs(){
 	wp_schedule_event(time()+60, 'daily', 'eventorganiser_delete_expired');
 }
-//add_action('init','eo_my_delete_expired');
+
 add_action('eventorganiser_delete_expired', 'eo_my_delete_expired');
 function eo_my_delete_expired(){
+	//Get expired events
 	$events = eo_get_events(array('showrepeats'=>0,'showpastevents'=>1,'eo_interval'=>'expired'));
-
 	if($events):
 		foreach($events as $event):
 			$now = new DateTime('now', EO_Event::get_timezone());
@@ -310,6 +323,7 @@ function eo_my_delete_expired(){
 			$finished->add($duration);
 			$finished->modify('+1 day');
 
+			//Delete if 24 hours has passed
 			if($finished <= $now):
 				wp_trash_post((int) $event->ID);
 			endif;

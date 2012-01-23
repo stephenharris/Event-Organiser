@@ -1,5 +1,9 @@
 <?php 
 /**
+ * Handles the query manipulation of events
+ */
+
+/**
  * Registers our custom query variables
  *
  * @since 1.0.0
@@ -16,13 +20,10 @@ function eventorganiser_register_query_vars( $qvars ){
 	return $qvars;
 }
 
-
 /** 
 * Sets post type to 'event's if required.
 * If the query is for 'venue' then we want to return events (at that venue)
 * set the post_type accordingly.
-*
-* TODO add similiar for dates
 *
  * @since 1.0.0
  */

@@ -11,9 +11,8 @@ jQuery(document).ready(function() {
 	}
 
 	if($(".eo-fullcalendar").length>0){
-		$(".eo-fullcalendar").fullCalendar({
+	$(".eo-fullcalendar").fullCalendar({
 				editable: false,
-				//theme:true,
 				firstDay:  parseInt(EOAjax.fullcal.firstDay),
 				header: {
 					left: EOAjax.fullcal.headerleft,
@@ -34,17 +33,17 @@ jQuery(document).ready(function() {
 					}
 			    	},
 				buttonText:{
-					today:   EOAjax.locale.today,
-			  		month:    EOAjax.locale.month,
-   		 			week:    EOAjax.locale.week,
-   					day:    EOAjax.locale.day,
-   					cat:    EOAjax.locale.cat,
-   					venue:    EOAjax.locale.venue
+					today:   EOAjaxFront.locale.today,
+			  		month:    EOAjaxFront.locale.month,
+   		 			week:    EOAjaxFront.locale.week,
+   					day:    EOAjaxFront.locale.day,
+   					cat:    EOAjaxFront.locale.cat,
+   					venue:    EOAjaxFront.locale.venue
 				},
-				monthNames:EOAjax.locale.monthNames,
-				monthNamesShort:EOAjax.locale.monthAbbrev,
-				dayNames:EOAjax.locale.dayNames,
-				dayNamesShort:EOAjax.locale.dayAbbrev,
+				monthNames:EOAjaxFront.locale.monthNames,
+				monthNamesShort:EOAjaxFront.locale.monthAbbrev,
+				dayNames:EOAjaxFront.locale.dayNames,
+				dayNamesShort:EOAjaxFront.locale.dayAbbrev,
 				eventColor:  '#21759B',
 				defaultView: EOAjax.fullcal.defaultview,
 				lazyFetching: 'true',
@@ -77,17 +76,13 @@ jQuery(document).ready(function() {
 					}
 				}
 			});
-		$(".eo-cal-filter").change(function(){
-			$(this).closest('.eo-fullcalendar').fullCalendar('rerenderEvents');
-		});
-	}
 
-	if($("#eo_calendar").length>0 && typeof EOAjaxUrl !== undefined){
+if($("#eo_calendar").length>0 && typeof EOAjaxFront.adminajax !== undefined){
 		$('#eo_calendar tfoot').unbind("click");
 		$('#eo_calendar tfoot a').die("click").live('click', function(e){
 			e.preventDefault();
 			$.getJSON(
-				EOAjaxUrl+"?action=eo_widget_cal",{
+				EOAjaxFront.adminajax+"?action=eo_widget_cal",{
 					eo_month: getParameterByName('eo_month',$(this).attr('href')),
 				},
 			  	function(data){
@@ -96,9 +91,16 @@ jQuery(document).ready(function() {
 		});	
 	}
 
+	}
 
-	if($('.eo-agenda-widget').length>0){
 
+		if($('.eo-agenda-widget').length>0){
+			var locale ={
+				monthNames:EOAjax.locale.monthNames,
+				monthNamesShort:EOAjax.locale.monthAbbrev,
+				dayNames:EOAjax.locale.dayNames,
+				dayNamesShort:EOAjax.locale.dayAbbrev
+			};
 			var agendaWidget =$('.eo-agenda-widget');
 			var dateList = agendaWidget.find('ul.dates');
 			var events = agendaWidget.find('ul.date li.event');
@@ -109,7 +111,7 @@ jQuery(document).ready(function() {
 
 			function getEvents(dir){
 				jQuery.ajax({
-						url: EOAjaxUrl,
+						url: EOAjaxFront.adminajax,
 						dataType: 'JSON',
            				 	data: {
 							action: 'eo_widget_agenda',
@@ -118,9 +120,11 @@ jQuery(document).ready(function() {
 							end: EndDate
 						},
 			            		success: function(events){ 
+									if(!events[0])
+										return false;
 									StartDate=events[0].StartDate;
 									EndDate=events[(events.length-1)].StartDate;
-		                			populateAgenda(events)
+		                					populateAgenda(events)
             					}
 					})
 			}
@@ -136,16 +140,15 @@ jQuery(document).ready(function() {
 				getEvents(dir)		
 			});
 
-
 		function populateAgenda(events){
-
 			$(dates).remove();
 			current='';
 			for(i=0; i<events.length; i++){
 				d = new Date(events[i].StartDate); 
 				if(current==''||current!=events[i].StartDate){
 					current=events[i].StartDate;
-					currentList = $('<li class="date" >'+current+'<ul class="a-date"></ul></li>');
+					day = new Date(events[i].StartDate);
+					currentList = $('<li class="date" >'+jQuery.fullCalendar.formatDate(day, 'dddd, dS MMMM',locale)+'<ul class="a-date"></ul></li>');
 					dateList.append(currentList);
 				}
 				if(events[i].color ){

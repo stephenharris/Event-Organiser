@@ -8,7 +8,11 @@
 add_filter('template_include', 'eventorganiser_set_template');
 function eventorganiser_set_template( $template ){
 	$template_dir = get_stylesheet_directory();
-	
+	$eo_settings = get_option('eventorganiser_options');
+
+	if(!$eo_settings['templates'])
+		return $template;
+
 	if(!is_admin()){
 		if (is_venue()) {
 			if(file_exists($template_dir.'/venue.php')) return $template_dir.'/venue-template.php';
