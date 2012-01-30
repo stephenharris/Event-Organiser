@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-30 16:56+0100\n"
-"PO-Revision-Date: 2012-01-30 16:57+0100\n"
+"POT-Creation-Date: 2012-01-30 17:44+0100\n"
+"PO-Revision-Date: 2012-01-30 17:44+0100\n"
 "Last-Translator: Stephen Harris <stephen@HarrisWebSolutions.co.uk>\n"
 "Language-Team: Rémy Perona <remperona@gmail.com>\n"
 "Language: \n"
@@ -33,7 +33,7 @@ msgstr "Organisateur"
 #: ../event-organiser-manage.php:24
 #: ../event-organiser-venues.php:18
 #: ../event-organiser-edit.php:153
-#: ../classes/class-eo-event-list-widget.php:41
+#: ../classes/class-eo-event-list-widget.php:42
 msgid "Venue"
 msgstr "Lieu"
 
@@ -229,7 +229,7 @@ msgstr "Vous n'avez pas les permissions suffisantes pour gérer les options de c
 #: ../includes/event-organiser-install.php:141
 #: ../includes/event-organiser-cpt.php:90
 #: ../includes/event-organiser-cpt.php:102
-#: ../classes/class-eo-event-list-widget.php:21
+#: ../classes/class-eo-event-list-widget.php:22
 msgid "Events"
 msgstr "Evènements"
 
@@ -340,7 +340,7 @@ msgid "Display past events on calendars, event lists and archives (this can be o
 msgstr "Afficher les évènements passés sur le calendrier, dans la liste des évènements et les archives (Cela peut être écrasé par les attributs des shortcodes ou par les options du widget)."
 
 #: ../event-organiser-settings.php:281
-#: ../classes/class-eo-event-list-widget.php:68
+#: ../classes/class-eo-event-list-widget.php:69
 msgid "Group occurrences"
 msgstr ""
 
@@ -484,7 +484,7 @@ msgid "Repeat every "
 msgstr "Se répète chaque"
 
 #: ../event-organiser-edit.php:123
-#: ../classes/class-eo-event-list-widget.php:104
+#: ../classes/class-eo-event-list-widget.php:105
 msgid "on"
 msgstr "le"
 
@@ -1110,48 +1110,48 @@ msgstr "Toute la journée"
 msgid "No Venue"
 msgstr "Aucun lieu"
 
-#: ../classes/class-eo-event-list-widget.php:20
+#: ../classes/class-eo-event-list-widget.php:21
 msgid "Displays a list of events"
 msgstr "Afficher une liste des évènements"
 
-#: ../classes/class-eo-event-list-widget.php:28
-#: ../classes/class-eo-event-list-widget.php:56
+#: ../classes/class-eo-event-list-widget.php:29
+#: ../classes/class-eo-event-list-widget.php:57
 msgid "Title"
 msgstr "Titre"
 
-#: ../classes/class-eo-event-list-widget.php:32
+#: ../classes/class-eo-event-list-widget.php:33
 msgid "Number of events"
 msgstr "Nombre d'évènements"
 
-#: ../classes/class-eo-event-list-widget.php:36
+#: ../classes/class-eo-event-list-widget.php:37
 msgid "Event categories"
 msgstr "Catégories de l'évènement"
 
-#: ../classes/class-eo-event-list-widget.php:38
+#: ../classes/class-eo-event-list-widget.php:39
 msgid "List category slug(s), seperate by comma. Leave blank for all"
 msgstr "Listez les identifiants des catégories, séparés par une virgule. Laissez vide pour afficher toutes les catégories."
 
-#: ../classes/class-eo-event-list-widget.php:45
+#: ../classes/class-eo-event-list-widget.php:46
 msgid "All Venues"
 msgstr "Tous les lieux"
 
-#: ../classes/class-eo-event-list-widget.php:53
+#: ../classes/class-eo-event-list-widget.php:54
 msgid "Order by"
 msgstr "Trier par"
 
-#: ../classes/class-eo-event-list-widget.php:55
+#: ../classes/class-eo-event-list-widget.php:56
 msgid "Start date"
 msgstr "Date de début"
 
-#: ../classes/class-eo-event-list-widget.php:59
+#: ../classes/class-eo-event-list-widget.php:60
 msgid "ASC"
 msgstr "ASC"
 
-#: ../classes/class-eo-event-list-widget.php:60
+#: ../classes/class-eo-event-list-widget.php:61
 msgid "DESC"
 msgstr "DESC"
 
-#: ../classes/class-eo-event-list-widget.php:64
+#: ../classes/class-eo-event-list-widget.php:65
 msgid "Include past events"
 msgstr "Inclure les évènements passés"
 
@@ -1201,23 +1201,23 @@ msgstr "Le(s) lieu(x) <strong>n'ont pas été</strong> effacé"
 msgid "Venue(s) <strong>deleted</strong>"
 msgstr "Lieu(x) <strong>effacé(s)</strong>"
 
-#: ../classes/class-eo-agenda-widget.php:12
+#: ../classes/class-eo-agenda-widget.php:13
 msgid "Displays a list of events, grouped by date"
 msgstr "Affiche une list des évènements, groupés par date"
 
-#: ../classes/class-eo-agenda-widget.php:13
+#: ../classes/class-eo-agenda-widget.php:14
 msgid "Events Agenda"
 msgstr "Agenda des évènements"
 
-#: ../classes/class-eo-calendar-widget.php:12
+#: ../classes/class-eo-calendar-widget.php:13
 msgid "Displays a calendar of your events"
 msgstr "Affiche un calendrier de vos évènements"
 
-#: ../classes/class-eo-calendar-widget.php:124
+#: ../classes/class-eo-calendar-widget.php:125
 msgid "Previous month"
 msgstr "Mois précédent"
 
-#: ../classes/class-eo-calendar-widget.php:126
+#: ../classes/class-eo-calendar-widget.php:127
 msgid "Next month"
 msgstr "Mois prochain"
 

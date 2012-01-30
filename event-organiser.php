@@ -42,12 +42,12 @@ $eventorganiser_venue_table = $wpdb->prefix."eo_venues";
 //Set the wp-content and plugin urls/paths
 define('EVENT_ORGANISER_URL',plugin_dir_url(__FILE__ ));
 define('EVENT_ORGANISER_DIR',plugin_dir_path(__FILE__ ));
+define('EVENT_ORGANISER_I18N',basename(dirname(__FILE__)).'/languages');
 
 /****** Load translations ******/
 add_action('init', 'eventorganiser_i18n');
 function eventorganiser_i18n() {
-	$plugin_dir = basename(dirname(__FILE__));
-	load_plugin_textdomain( 'eventorganiser', false, $plugin_dir.'/languages' );
+	load_plugin_textdomain( 'eventorganiser', false, EVENT_ORGANISER_I18N);
 }
 
 global $eventorganiser_roles;

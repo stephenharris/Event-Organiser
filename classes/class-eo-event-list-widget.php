@@ -17,8 +17,9 @@ class EO_Event_List_Widget extends WP_Widget{
 		);
 
   function EO_Event_List_Widget(){
-    $widget_ops = array('classname' => 'EO_Event_List_Widget', 'description' => __('Displays a list of events','eventorganiser') );
-    $this->WP_Widget('EO_Event_List_Widget', __('Events','eventorganiser'), $widget_ops);
+	load_plugin_textdomain( 'eventorganiser', false, EVENT_ORGANISER_I18N);
+	$widget_ops = array('classname' => 'EO_Event_List_Widget', 'description' => __('Displays a list of events','eventorganiser') );
+	$this->WP_Widget('EO_Event_List_Widget', __('Events','eventorganiser'), $widget_ops);
   }
  
   function form($instance){	
