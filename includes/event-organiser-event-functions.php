@@ -37,6 +37,7 @@ function eo_get_events($args=array()){
 		'orderby'=> 'eventstart',
 		'order'=> 'ASC',
 		'showrepeats'=>1,
+		'group_events_by'=>'',
 		'showpastevents'=>$eo_settings_array['showpast']); 	
 	
 	//Construct the query array	
@@ -530,6 +531,38 @@ function eo_display_reoccurence($id=''){
 }
 
 
+/* Returns an array of DateTime objects for each start date of occurrence
+*
+* @param id - Optional, the event (post) ID, 
+* @return array|false - Array of DateTime objects of the start date-times of occurences. False if none exist.
+ * @since 1.0.0
+ */
+function eo_get_occurrences($id=''){
+	global $post,$eventorganiser_events_table, $wpdb;
+
+	$id = (empty($id)  ? $post->ID : $id);
+
+	if(empty($id)) 
+		return false;
+
+	$querystr = $wpdb->prepare("
+		SELECT StartDate,StartTime FROM $eventorganiser_events_table 
+		WHERE {$eventorganiser_events_table}.post_id=%d ORDER BY StartDate ASC",$id);
+	
+	$results = $wpdb->get_results($querystr);
+
+	if(!$results)
+		return false;
+
+	$occurrences=array();
+
+	foreach($results as $row):
+		$occurrences[] = new DateTime($row->StartDate.' '.$row->StartTime,EO_Event::get_timezone());
+	endforeach;
+
+	return $occurrences;
+}
+
 /**
 * Returns a the url which adds a particular occurrence of an event to
 * a google calendar.
@@ -579,5 +612,60 @@ function eo_get_GoogleLink(){
 
 function eo_get_events_feed(){
 	return get_feed_link('eo-events');
+}
+
+
+function eo_event_category_dropdown( $args = '' ) {
+	$defaults = array(
+		'show_option_all' => __('View all categories'), 
+		'hide_empty' => 1, 
+		'child_of' => 0,
+		'exclude' => '', 
+		'echo' => 1,
+		'selected' => 0, 
+		'name' => 'event-category', 
+		'id' => '',
+		'class' => 'postform event-organiser event-category-dropdown event-dropdown', 
+		'tab_index' => 0, 
+		'hide_if_empty' => false
+	);
+
+	$defaults['selected'] =  (is_tax('event-category') ? get_query_var('event-category') : 0);
+	$r = wp_parse_args( $args, $defaults );
+	$r['taxonomy']='event-category';
+	extract( $r );
+
+	$tab_index_attribute = '';
+	if ( (int) $tab_index > 0 )
+		$tab_index_attribute = " tabindex=\"$tab_index\"";
+
+	$categories = get_terms($taxonomy, $r ); 
+	$name = esc_attr( $name );
+	$class = esc_attr( $class );
+	$id = $id ? esc_attr( $id ) : $name;
+
+	if ( ! $r['hide_if_empty'] || ! empty($categories) )
+		$output = "<select style='width:150px' name='$name' id='$id' class='$class' $tab_index_attribute>\n";
+	else
+		$output = '';
+
+	if ( ! empty( $categories ) ) {
+
+		if ( $show_option_all ) {
+			$output .= '<option '.selected($selected,0,false).' value="0">'.$show_option_all.'</option>';
+		}
+
+		foreach ($categories as $term):
+			$output .= '<option value="'.$term->slug.'"'.selected($selected,$term->slug,false).'>'.$term->name.'</option>';
+		endforeach; 
+	}
+
+	if ( ! $r['hide_if_empty'] || ! empty($categories) )
+		$output .= "</select>\n";
+
+	if ( $echo )
+		echo $output;
+
+	return $output;
 }
 ?>

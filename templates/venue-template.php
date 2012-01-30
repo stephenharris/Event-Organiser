@@ -28,7 +28,7 @@ get_header(); ?>
 				<!---- Page header, display venue title-->
 				<header class="page-header">	
 				<h1 class="page-title"><?php
-					printf( __( 'Events at: %s', 'twentyeleven' ), '<span>' .eo_get_venue_name(). '</span>' );
+					printf( __( 'Events at: %s', 'eventorganiser' ), '<span>' .eo_get_venue_name(). '</span>' );
 				?></h1>
 
 				<?php
@@ -75,7 +75,7 @@ get_header(); ?>
 
 								<!-- If the event has a venue saved, display this-->
 								<?php if(eo_get_venue_name()):?>
-									at <a href="<?php eo_venue_link();?>"><?php eo_venue_name();?></a>
+									<?php _e('at','eventorganiser');?> <a href="<?php eo_venue_link();?>"><?php eo_venue_name();?></a>
 								<?php endif;?>
 							</div><!-- .entry-meta -->
 
@@ -98,16 +98,14 @@ get_header(); ?>
 			<?php else : ?>
 				<!---- If there are no events -->
 				<article id="post-0" class="post no-results not-found">
-
 					<header class="entry-header">
-						<h1 class="entry-title">Nothing Found</h1>
-					</header><!-- end .entry-header -->
+						<h1 class="entry-title"><?php _e( 'Nothing Found', 'eventorganiser' ); ?></h1>
+					</header><!-- .entry-header -->
 
 					<div class="entry-content">
-						<p>Apologies, but no events were found for the requested venue</p>
-					</div><!-- end .entry-content -->
-
-				</article><!-- end #post-0 -->
+						<p><?php _e( 'Apologies, but no events were found for the requested venue. ', 'eventorganiser' ); ?></p>
+					</div><!-- .entry-content -->
+				</article><!-- #post-0 -->
 
 			<?php endif; ?>
 

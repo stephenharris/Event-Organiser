@@ -10,7 +10,7 @@ jQuery(document).ready(function() {
 		}
 	}
 
-	if($(".eo-fullcalendar").length>0){
+if($(".eo-fullcalendar").length>0){
 	$(".eo-fullcalendar").fullCalendar({
 				editable: false,
 				firstDay:  parseInt(EOAjax.fullcal.firstDay),
@@ -24,7 +24,6 @@ jQuery(document).ready(function() {
 				eventRender: function(event, element) {
 					cat =$(".filter-category .eo-cal-filter").val();
 					venue =  $(".filter-venue .eo-cal-filter").val();
-
 					if(typeof cat !== "undefined"&& cat != '' && ($.inArray(cat, event.category)<0)){
 						return false
 					}
@@ -76,7 +75,14 @@ jQuery(document).ready(function() {
 					}
 				}
 			});
-
+		/*
+		 * Refetch events if filters are changed
+		*/
+		jQuery(".eo-cal-filter").change(function(){
+			$(".eo-fullcalendar").fullCalendar('rerenderEvents');
+		});
+}
+	
 if($("#eo_calendar").length>0 && typeof EOAjaxFront.adminajax !== undefined){
 		$('#eo_calendar tfoot').unbind("click");
 		$('#eo_calendar tfoot a').die("click").live('click', function(e){
@@ -91,7 +97,6 @@ if($("#eo_calendar").length>0 && typeof EOAjaxFront.adminajax !== undefined){
 		});	
 	}
 
-	}
 
 
 		if($('.eo-agenda-widget').length>0){
@@ -120,6 +125,9 @@ if($("#eo_calendar").length>0 && typeof EOAjaxFront.adminajax !== undefined){
 							end: EndDate
 						},
 			            		success: function(events){ 
+									console.log(events);
+									if(events == undefined)
+										return false;
 									if(!events[0])
 										return false;
 									StartDate=events[0].StartDate;

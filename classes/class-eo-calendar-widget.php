@@ -121,9 +121,9 @@ function generate_output($month,$args=array()){
 	$next = $months[$nextmonth->format('m')];
 
 	$foot = "<tfoot><tr>";
-	$foot .="<td id='prev' colspan='3'><a title='".__('Previous month','eventorganiser')." href='?eo_month=".$lastmonth->format('Y-m')."'>&laquo; ".$monthsAbbrev[$prev]."</a></td>";
+	$foot .="<td id='eo-widget-prev-month' colspan='3'><a title='".__('Previous month','eventorganiser')."' href='?eo_month=".$lastmonth->format('Y-m')."'>&laquo; ".$monthsAbbrev[$prev]."</a></td>";
 	$foot .="<td class='pad'>&nbsp;</td>";
-	$foot .="<td id='next' colspan='3'><a title='".__('Next month','eventorganiser')."' href='?eo_month=".$nextmonth->format('Y-m')."'>".$monthsAbbrev[$next]."&raquo; </a></td>";
+	$foot .="<td id='eo-widget-next-month' colspan='3'><a title='".__('Next month','eventorganiser')."' href='?eo_month=".$nextmonth->format('Y-m')."'>".$monthsAbbrev[$next]."&raquo; </a></td>";
 	$foot .= "</tr></tfoot>";
 
 	$body ="<tbody>";

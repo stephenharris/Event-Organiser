@@ -100,20 +100,7 @@ function restrict_events_by_category() {
     // only display these taxonomy filters on desired custom post_type listings
     global $typenow,$wp_query;
     if ($typenow == 'event') {
-
-		// retrieve array of term objects in event-category taxonomy.
-		$tax_obj = get_taxonomy('event-category');
-		$tax_name = $tax_obj->labels->name;
-		$terms = get_terms('event-category');
-		$selected=  (isset( $wp_query->query_vars['event-category']) ? $wp_query->query_vars['event-category'] : 0); ?>
-
-		<select style="width:150px;" name='event-category' id='event-category' class='postform'>
-			<option <?php selected($selected,0); ?> value="0"><?php _e('View all categories');?></option>
-			<?php foreach ($terms as $term): ?>
-				<option value="<?php echo $term->slug;?>" <?php selected($selected,$term->slug)?>> <?php echo $term->name;?> </option>
-			<?php endforeach; ?>
-		</select>
-		<?php
+	eo_event_category_dropdown();
     }
 }
 
@@ -124,22 +111,11 @@ function restrict_events_by_category() {
 add_action('restrict_manage_posts','restrict_events_by_venue');
 function restrict_events_by_venue() {
 	global $typenow;
-	global $wp_query,$wpdb, $eventorganiser_venue_table;
 
 	//Only add if CPT is event
 	if ($typenow=='event') :		
-		$selected=  (empty( $wp_query->query_vars['venue_id'] ) ? 0 : $wp_query->query_vars['venue_id']);
-		$venues = $wpdb->get_results(" SELECT* FROM $eventorganiser_venue_table"); ?>
-
-		<select style="width:150px;" id="HWSEventFilterVenue" name="venue_id">
-			<option <?php selected($selected,0); ?> value=""><?php _e('View all venues', 'eventorganiser');?></option>
-			<?php foreach ($venues as $index=>$venue): ?>
-				 <option value="<?php echo intval($venue->venue_id); ?>" <?php selected($venue->venue_id,$selected); ?> >
-					<?php echo $venue->venue_name; ?>
-				</option>
-			<?php endforeach;  //End foreach $venues?>
-		</select>
-	<?php endif; //End if CPT is event
+		 eo_event_venue_dropdown();
+	endif;
 }
 
 /**

@@ -48,7 +48,7 @@ function eventorganiser_update_settings(){
 		endforeach; //End foreach $editable_roles
 
 		//Checkboxes
-		$checkboxes = array('addtomenu','showpast','templates','prettyurl','excludefromsearch','deleteexpired','feed');
+		$checkboxes = array('addtomenu','showpast','templates','prettyurl','excludefromsearch','deleteexpired','feed','eventtag','group_events');
 
 		//If checkbox isn't set, set value to 0
 		foreach($checkboxes as $checkbox):
@@ -71,6 +71,8 @@ function eventorganiser_update_settings(){
 		//Default, then white list option
 		 $new_settings['format'] =	($new_settings['dateformat']=='mm-dd' ? 'mm-dd' : 'dd-mm')  ;
 
+		 $new_settings['navtitle'] =( !empty($new_settings['navtitle']) ? $new_settings['navtitle'] :  __('Events','eventorganiser'));
+
 		$eventorganiser_new_settings = array (
 			'supports' => $new_sup,
 			'url_event' =>str_replace (" ", "", $new_settings['url_event']),
@@ -82,11 +84,13 @@ function eventorganiser_update_settings(){
 			'prettyurl'=>intval($new_settings['prettyurl']),
 			'templates'=>intval($new_settings['templates']),
 			'feed'=>intval($new_settings['feed']),
+			'eventtag'=> intval($new_settings['eventtag']),
 			'addtomenu'=> intval($new_settings['addtomenu']),
 			'deleteexpired'=> intval($new_settings['deleteexpired']),
 			'navtitle'=> esc_attr($new_settings['navtitle']),
 			'excludefromsearch'=> intval($new_settings['excludefromsearch']),
 			'showpast'=> intval($new_settings['showpast']),
+			'group_events'=> (empty($new_settings['group_events']) ? '' : 'series'),
 		);
 		update_option('eventorganiser_options',$eventorganiser_new_settings);
 
@@ -107,7 +111,7 @@ class EventOrganiser_Settings_Page{
 	function __construct() {
 		global $eventorganiser_roles;
 	   	self::$editable_roles = get_editable_roles();
-		self::$sup_array = array(__('Organiser','eventorganiser').' ('.__('Author').')'=>'author',__('Thumbnail')=>'thumbnail',__('Excerpt')=>'excerpt',__('Custom Field')=>'custom-fields',__('Comments')=>'comments',__('Revisions')=>'revisions');
+		self::$sup_array = array(__('Organiser','eventorganiser').' ('.__('Author').')'=>'author',__('Thumbnail')=>'thumbnail',__('Excerpt')=>'excerpt',__('Custom Fields')=>'custom-fields',__('Comments')=>'comments',__('Revisions')=>'revisions');
 		self::$eventorganiser_roles = array(
 			 'edit_events' =>__('Edit Events','eventorganiser'),
 			 'publish_events' =>__('Publish Events','eventorganiser'),
@@ -227,22 +231,29 @@ class EventOrganiser_Settings_Page{
 
 	<table class="form-table">
 	<tr>
-		<th><?php _e('Select which features events should support.','eventorganiser');?></th>
+		<th><?php _e('Select which features events should support','eventorganiser');?>:</th>
 		<td>
 	<table>
 	<tr>
-	<?php foreach ( self::$sup_array as $supp_display =>$supp):?>
-		<td><input type="checkbox" name="eo_setting[supports][]" value="<?php echo $supp; ?>" <?php checked(true, in_array($supp,self::$settings['supports']) ); ?> /><?php echo $supp_display;?> </td>
-	<?php endforeach;?>
+	<?php	
+		$counter=1; 
+		foreach ( self::$sup_array as $supp_display =>$supp):
+			echo '<td><input type="checkbox" name="eo_setting[supports][]" value="'.$supp.'" '.checked(true, in_array($supp,self::$settings['supports']),false).' />'.$supp_display.'</td>';
+			if($counter==4)
+				echo '</tr><tr>';
+			$counter++;
+		endforeach;
+	?>
+		<td><input type="checkbox" name="eo_setting[eventtag]" value="1" <?php checked('1', self::$settings['eventtag']); ?>/><?php _e("Event Tags",'eventorganiser');?></td>
 	</tr>
 	</table>
-
 		</td>
 	</tr>
 	<tr>
 		<th><?php _e("Add an 'events' link to the navigation menu:",'eventorganiser');?></th>
 		<td>
 			<input type="checkbox" name="eo_setting[addtomenu]" value="1" <?php checked('1', self::$settings['addtomenu']); ?>/>
+			<?php self::$settings['navtitle'] =( !empty(self::$settings['navtitle']) ? self::$settings['navtitle'] :  __('Events','eventorganiser')); ?>
 			<input type="text" name="eo_setting[navtitle]" value="<?php echo self::$settings['navtitle'];?>" />
 			<?php _e("(This may not work with some themes):",'eventorganiser');?>
 		</td>
@@ -252,8 +263,8 @@ class EventOrganiser_Settings_Page{
 		<td>
 			<label>
 			<select  name="eo_setting[dateformat]">
-				<option  <?php selected('dd-mm', self::$settings['dateformat']);?> value="dd-mm">dd-mm-yyyy</option>
-				<option  <?php selected('mm-dd', self::$settings['dateformat']);?> value="mm-dd">mm-dd-yyyy</option>
+				<option  <?php selected('dd-mm', self::$settings['dateformat']);?> value="dd-mm"><?php _e('dd-mm-yyyy','eventorganiser');?></option>
+				<option  <?php selected('mm-dd', self::$settings['dateformat']);?> value="mm-dd"><?php _e('mm-dd-yyyy','eventorganiser');?></option>
 			</select>
 			<?php _e("This alters the default format for inputting dates.",'eventorganiser');?>
 			</label>
@@ -264,6 +275,13 @@ class EventOrganiser_Settings_Page{
 		<td> <label>
 				<input type="checkbox" name="eo_setting[showpast]" value="1" <?php checked('1', self::$settings['showpast']); ?>/>
 				<?php _e("Display past events on calendars, event lists and archives (this can be over-ridden by shortcode attributes and widget options).",'eventorganiser');?>
+		</label></td>
+	</tr>
+	<tr>
+		<th><?php _e("Group occurrences",'eventorganiser');?>:</th>
+		<td> <label>
+				<input type="checkbox" name="eo_setting[group_events]" value="series" <?php checked('series', self::$settings['group_events']); ?>/>
+				<?php _e("If selected only one occurrence of an event will be displayed on event lists and archives (this can be over-ridden by shortcode attributes and widget options).",'eventorganiser');?>
 		</label></td>
 	</tr>
 	<tr>
@@ -288,7 +306,7 @@ class EventOrganiser_Settings_Page{
 		<th><?php _e("Enable events ICAL feed:",'eventorganiser');?></th>
 		<td> 
 				<input type="checkbox" name="eo_setting[feed]" value="1" <?php checked('1', self::$settings['feed']); ?>/>
-				<label> <?php printf(__('If selected, visitors can subscribe to your events with the url: %s'), '<code>'.eo_get_events_feed().'</code>') ?></label>
+				<label> <?php printf(__('If selected, visitors can subscribe to your events with the url: %s','eventorganiser'), '<code>'.eo_get_events_feed().'</code>') ?></label>
 		</td>
 	</tr>
 
@@ -369,7 +387,5 @@ class EventOrganiser_Settings_Page{
 <?php
 
 	}
-
- 
 }
 ?>

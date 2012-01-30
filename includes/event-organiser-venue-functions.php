@@ -113,7 +113,7 @@ function eo_get_venue_description($venue_slug_or_id=''){
 		$EO_Venue = new EO_Venue((int) $post->Venue);
 	}
 	
-	if(!$EO_Venue->is_found()) 
+	if(empty($EO_Venue) || !$EO_Venue->is_found()) 
 		return false;
 
 	$description =$EO_Venue->description;
@@ -271,4 +271,65 @@ function eo_get_venue_address($venue_slug_or_id=''){
 	return $address;
 }
 
+function eo_get_the_venues(){
+	global $eventorganiser_venue_table,$wpdb;
+	//TODO take care of sanitisation?
+	$venues = $wpdb->get_results(" SELECT* FROM $eventorganiser_venue_table");
+	return $venues;
+}
+
+
+function eo_event_venue_dropdown( $args = '' ) {
+	$defaults = array(
+		'show_option_all' => __('View all venues','eventorganiser'), 
+		'hide_empty' => 1, 
+		'child_of' => 0,
+		'exclude' => '', 
+		'echo' => 1,
+		'selected' => 0, 
+		'name' => 'venue_id', 
+		'id' => '',
+		'class' => 'postform event-organiser event-venue-dropdown event-dropdown', 
+		'tab_index' => 0, 
+		'hide_if_empty' => false
+	);
+
+	$defaults['selected'] =  (eo_is_venue() ? get_query_var('venue_id') : 0);
+	$r = wp_parse_args( $args, $defaults );
+	$r['taxonomy']='event-category';
+	extract( $r );
+
+	$tab_index_attribute = '';
+	if ( (int) $tab_index > 0 )
+		$tab_index_attribute = " tabindex=\"$tab_index\"";
+
+	$venues =  eo_get_the_venues();
+	$name = esc_attr( $name );
+	$class = esc_attr( $class );
+	$id = $id ? esc_attr( $id ) : $name;
+
+	if ( !$r['hide_if_empty'] || !empty($venues) )
+		$output = "<select style='width:150px' name='$name' id='$id' class='$class' $tab_index_attribute>\n";
+	else
+		$output = '';
+
+	if ( ! empty( $venues ) ) {
+
+		if ( $show_option_all ) {
+			$output .= '<option '.selected($selected,0,false).' value="0">'.$show_option_all.'</option>';
+		}
+
+		foreach ($venues as $term):
+			$output .= '<option value="'.intval($term->venue_id).'"'.selected($selected,$term->venue_id,false).'>'.esc_attr($term->venue_name).'</option>';
+		endforeach; 
+	}
+
+	if ( !$r['hide_if_empty'] || !empty($venues) )
+		$output .= "</select>\n";
+
+	if ( $echo )
+		echo $output;
+
+	return $output;
+}
 ?>

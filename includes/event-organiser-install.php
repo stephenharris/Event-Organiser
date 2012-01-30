@@ -56,11 +56,13 @@
 		'addtomenu'=> 0,
 		'excludefromsearch'=>0,
 		'showpast'=> 0,
+		'group_events'=>'',
 		'url_venue'=>'events/event',
 		'url_venue'=> 'events/venues',
 		'url_cat' => 'events/category',
 		'url_tag' => 'events/tag',
-		'navtitle' => 'Events',
+		'navtitle' => __('Events','eventorganiser'),
+		'eventtag' => 1,
 		'feed' => 1,
 		'runningisnotpast' => 0,
 		'deleteexpired' => 0
@@ -136,9 +138,10 @@ function eventorganiser_upgradecheck(){
 			$settings['url_venue']= 'events/venues';
 			$settings['url_cat'] = 'events/category';
 			$settings['url_tag'] = 'events/tag';
-			$settings['navtitle'] = 'Events';
-			$settings['navtitle'] = 'Events';
+			$settings['navtitle'] =  __('Events','eventorganiser');
+			$settings['group_events']='';
 			$settings['feed'] = 1;
+			$settings['eventtag'] = 1;
 			$settings['deleteexpired'] = 0;
 			update_option('eventorganiser_options',$settings);
 		}

@@ -12,6 +12,7 @@ class EO_Event_List_Widget extends WP_Widget{
 		'venue'=> '',
 		'orderby'=> 'eventstart',
 		'showpastevents'=> 0,
+		'group_events_by'=>'',
 		'order'=> 'ASC'
 		);
 
@@ -41,7 +42,7 @@ class EO_Event_List_Widget extends WP_Widget{
 	<?php 	$venues = new EO_Venues;
 			$venues->query();?>
 	<select id="<?php echo $this->get_field_id('venue'); ?>" name="<?php echo $this->get_field_name('venue'); ?>" type="text">
-		<option value="" <?php selected($instance['venue'], ''); ?>><?php _e('All Venues'); ?> </option>
+		<option value="" <?php selected($instance['venue'], ''); ?>><?php _e('All Venues','eventorganiser'); ?> </option>
 		<?php foreach ($venues->results as $thevenue):?>
 			<option <?php  selected($instance['venue'],$thevenue['venue_slug']);?> value="<?php echo $thevenue['venue_slug'];?>"><?php echo $thevenue['venue_name']; ?></option>
 		<?php endforeach;?>
@@ -62,6 +63,10 @@ class EO_Event_List_Widget extends WP_Widget{
   <p>
     <label for="<?php echo $this->get_field_id('showpastevents'); ?>"><?php _e('Include past events', 'eventorganiser'); ?>  </label>
 	<input type="checkbox" id="<?php echo $this->get_field_id('showpastevents'); ?>" name="<?php echo $this->get_field_name('showpastevents'); ?>" <?php checked($instance['showpastevents'],1);?> value="1" />
+</p>
+  <p>
+    <label for="<?php echo $this->get_field_id('group_events_by'); ?>"><?php _e('Group occurrences', 'eventorganiser'); ?>  </label>
+	<input type="checkbox" id="<?php echo $this->get_field_id('group_events_by'); ?>" value="series" name="<?php echo $this->get_field_name('group_events_by'); ?>" <?php checked($instance['group_events_by'],'series');?> />
   </p>
 <?php
   }

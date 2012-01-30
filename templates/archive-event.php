@@ -30,7 +30,7 @@ get_header(); ?>
 				<!---- Page header-->
 				<header class="page-header">
 					<h1 class="page-title">
-						Events
+						<?php _e('Events','eventorganiser'); ?>
 					</h1>
 				</header>
 
@@ -66,7 +66,7 @@ get_header(); ?>
 
 								<!-- If the event has a venue saved, display this-->
 								<?php if(eo_get_venue_name()):?>
-									at <a href="<?php eo_venue_link();?>"><?php eo_venue_name();?></a>
+									<?php _e('at','eventorganiser');?> <a href="<?php eo_venue_link();?>"><?php eo_venue_name();?></a>
 								<?php endif;?>
 							</div><!-- .entry-meta -->
 
@@ -89,11 +89,11 @@ get_header(); ?>
 				<!---- If there are no events -->
 				<article id="post-0" class="post no-results not-found">
 					<header class="entry-header">
-						<h1 class="entry-title"><?php _e( 'Nothing Found', 'twentyeleven' ); ?></h1>
+						<h1 class="entry-title"><?php _e( 'Nothing Found', 'eventorganiser' ); ?></h1>
 					</header><!-- .entry-header -->
 
 					<div class="entry-content">
-						<p><?php _e( 'Apologies, but no results were found for the requested archive', 'twentyeleven' ); ?></p>
+						<p><?php _e( 'Apologies, but no results were found for the requested archive', 'eventorganiser' ); ?></p>
 					</div><!-- .entry-content -->
 				</article><!-- #post-0 -->
 

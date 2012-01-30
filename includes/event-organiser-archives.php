@@ -52,15 +52,22 @@ function eventorganiser_pre_get_posts( $query ) {
 	//Determine whether or not to show past events and each occurrence
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']){
 		//If not set, use options
+		$eo_settings_array= get_option('eventorganiser_options');
+
 		if(!is_admin() && !is_single() &&!isset($query->query_vars['showpastevents'])){
-			$eo_settings_array= get_option('eventorganiser_options');
 			$query->set('showpastevents',$eo_settings_array['showpast']);
 		}
+		
 		if(!isset($query->query_vars['showrepeats'])){
 			if(is_admin() || is_single())
 				$query->set('showrepeats',0);
 			else
 				$query->set('showrepeats',1);
+		}
+
+		if(!isset($query->query_vars['group_events_by'])&& !is_admin()){
+			if(!empty($eo_settings_array['group_events']) && $eo_settings_array['group_events']=='series')
+				$query->set('group_events_by','series');
 		}
 	}
 
@@ -94,8 +101,8 @@ add_filter('posts_groupby', 'eventorganiser_event_groupby',10,2);
 function eventorganiser_event_groupby( $groupby, $query ){
 	global $eventorganiser_events_table;
 
-	//if(!empty($query->query_vars['group_events_by']) && $query->query_vars['group_events_by'] == 'series')
-		//return "{$eventorganiser_events_table}.post_id";
+	if(!empty($query->query_vars['group_events_by']) && $query->query_vars['group_events_by'] == 'series')
+		return "{$eventorganiser_events_table}.post_id";
 
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']):
 		if(empty($groupby))
@@ -106,8 +113,6 @@ function eventorganiser_event_groupby( $groupby, $query ){
 
 	return $groupby;
 }
-
-
 
 /**
 * LEFT JOIN all EVENTS. 
@@ -145,12 +150,13 @@ function eventorganiser_events_where( $where, $query ){
 		//If in admin or single page - we probably don't want to see duplicates of (recurrent) events - unless specified otherwise.
 		if((is_admin() || is_single())&&(!$query->query_vars['showrepeats'])):
 
-			//Select the first event.
-			$where .= " AND ({$eventorganiser_events_table}.event_occurrence =0 OR {$eventorganiser_events_table}.event_occurrence IS NULL)";
+			//Group by series - returns 'first' occurrence.
+			$query->set('group_events_by','series');
 
 		//In other instances (archives, shortcode listing if showrepeats option is false display only the next event.
 		elseif(!$query->query_vars['showrepeats']):
-			$where .= " AND ({$eventorganiser_events_table}.event_occurrence =0 OR {$eventorganiser_events_table}.event_occurrence IS NULL)";
+			//$where .= " AND ({$eventorganiser_events_table}.event_occurrence =0 OR {$eventorganiser_events_table}.event_occurrence IS NULL)";
+			$query->set('group_events_by','series');
 
 		endif;
 
@@ -244,6 +250,7 @@ function eventorganiser_events_where( $where, $query ){
 			//If querying for an 'event schedule': event is past if it all of its occurrences are 'past'.
 			else:	
 				if($running_event_is_past):
+
 					//Check if each occurrence has started, i.e. just check reoccurrence_end
 					$query_date = $eventorganiser_events_table.'.reoccurrence_end';
 					$query_time = $eventorganiser_events_table.'.StartTime';
@@ -313,8 +320,8 @@ function eventorganiser_events_where( $where, $query ){
 *
  * @since 1.0.0
  */
-add_filter('posts_orderby','sort_custom',10,2);
-function sort_custom( $orderby, $query ){
+add_filter('posts_orderby','eventorganiser_sort_events',10,2);
+function eventorganiser_sort_events( $orderby, $query ){
 	global $wpdb, $eventorganiser_events_table;
 
 	//If the query sets an orderby return what to do if it is one of our custom orderbys
@@ -348,17 +355,9 @@ function sort_custom( $orderby, $query ){
 
 
 //These functions are useful for determining if venue or date is being queried
-function is_venue(){
+function eo_is_venue(){
 	global $wp_query;
-	if( isset( $wp_query->query_vars['venue']) || isset( $wp_query->query_vars['venue_slug'])) {
-		return true;
-	}
-	return false;
-}
-
-function is_ondate(){
-	global $wp_query;
-	if( isset( $wp_query->query_vars['ondate'] )) {
+	if( isset( $wp_query->query_vars['venue']) || isset( $wp_query->query_vars['venue_slug'])|| isset( $wp_query->query_vars['venue_id'])) {
 		return true;
 	}
 	return false;

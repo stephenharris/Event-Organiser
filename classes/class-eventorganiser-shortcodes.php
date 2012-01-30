@@ -95,7 +95,7 @@ class EventOrganiser_Shortcodes {
 
 		//If venue is not set, get the global venue or from the post being viewed
 		if(empty($atts['venue']) ){
-			if(is_venue()){
+			if(eo_is_venue()){
 				$atts['venue']= $EO_Venue->slug;
 			}else{
 				$atts['venue'] = eo_get_venue_slug($post->ID);
@@ -125,7 +125,6 @@ class EventOrganiser_Shortcodes {
  
 	function handle_eventlist_shortcode($atts=array()) {
 		global $post;
-		$atts['showrepeats']=1;
 
 		if(isset($atts['venue'])&&$atts['venue']=='%this%'){
 			if(!empty($post->Venue)){
@@ -150,9 +149,8 @@ class EventOrganiser_Shortcodes {
 					$format = get_option('date_format').'  '.get_option('time_format');
 				}
 				$dateTime = new DateTime($event->StartDate.' '.$event->StartTime);
-				$datestring = date_i18n( $format , $dateTime->format('U'));
 
-				$return .= '<li><a title="'.$event->post_title.'" href="'.get_permalink($event->ID).'">'.$event->post_title.'</a> '.__('on','eventorganiser').' '.eo_format_date($event->StartDate.' '.$event->StartTime, $format).$datestring.'</li>';
+				$return .= '<li><a title="'.$event->post_title.'" href="'.get_permalink($event->ID).'">'.$event->post_title.'</a> '.__('on','eventorganiser').' '.eo_format_date($event->StartDate.' '.$event->StartTime, $format).'</li>';
 
 			endforeach;
 			$return.='</ul>';

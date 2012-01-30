@@ -43,9 +43,10 @@ register_taxonomy('event-category',array('event'), array(
 	'rewrite' => array( 'slug' =>$cat_slug, 'with_front' => false )
   ));
 
+if(isset($eventorganiser_option_array['eventtag']) && $eventorganiser_option_array['eventtag']==1):
   // Add new taxonomy, make it non-hierarchical (like tags)
   $tag_labels = array(
-	'name' => __('Event Tags','eventorganiser'),
+     'name' => __('Event Tags','eventorganiser'),
     'singular_name' => _x( 'Tag', 'taxonomy singular name'),
     'search_items' =>  __( 'Search Tags'),
     'all_items' => __( 'All Tags'),
@@ -77,6 +78,7 @@ register_taxonomy('event-tag',array('event'), array(
 	'public'=> true,
 	'rewrite' => array( 'slug' => $tag_slug, 'with_front' => false )
   ));
+endif;
 }
 
 
@@ -189,7 +191,6 @@ function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 
 	/* If deleting a event, assign the required capability. */
 	elseif ( 'delete_event' == $cap ) {
-		var_dump($args);
 		if (isset($post->post_author ) && $user_id == $post->post_author)
 			$caps[] = $post_type->cap->delete_posts;
 		else

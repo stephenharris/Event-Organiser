@@ -70,7 +70,7 @@ get_header(); ?>
 
 								<!-- If the event has a venue saved, display this-->
 								<?php if(eo_get_venue_name()):?>
-									at <a href="<?php eo_venue_link();?>"><?php eo_venue_name();?></a>
+									<?php _e('at','eventorganiser');?> <a href="<?php eo_venue_link();?>"><?php eo_venue_name();?></a>
 								<?php endif;?>
 							</div><!-- .entry-meta -->
 
