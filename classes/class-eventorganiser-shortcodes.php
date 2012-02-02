@@ -143,7 +143,7 @@ class EventOrganiser_Shortcodes {
 			$return= '<ul class="eo-events eo-events-shortcode">';
 			foreach ($events as $event):
 				//Check if all day, set format accordingly
-				if($event->event_allday){
+				if(eo_is_all_day()){
 					$format = get_option('date_format');
 				}else{
 					$format = get_option('date_format').'  '.get_option('time_format');

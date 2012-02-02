@@ -243,7 +243,10 @@ class EventOrganiser_Settings_Page{
 				echo '</tr><tr>';
 			$counter++;
 		endforeach;
+	
+		 self::$settings['eventtag'] = (empty(self::$settings['eventtag']) ? 0 : 1);		
 	?>
+
 		<td><input type="checkbox" name="eo_setting[eventtag]" value="1" <?php checked('1', self::$settings['eventtag']); ?>/><?php _e("Event Tags",'eventorganiser');?></td>
 	</tr>
 	</table>
@@ -279,6 +282,7 @@ class EventOrganiser_Settings_Page{
 	</tr>
 	<tr>
 		<th><?php _e("Group occurrences",'eventorganiser');?>:</th>
+		<?php 	self::$settings['group_events'] = (isset(self::$settings['group_events']) ? self::$settings['group_events'] : '');?>
 		<td> <label>
 				<input type="checkbox" name="eo_setting[group_events]" value="series" <?php checked('series', self::$settings['group_events']); ?>/>
 				<?php _e("If selected only one occurrence of an event will be displayed on event lists and archives (this can be over-ridden by shortcode attributes and widget options).",'eventorganiser');?>

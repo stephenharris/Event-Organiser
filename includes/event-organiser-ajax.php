@@ -29,7 +29,7 @@
 				$event['url']= esc_js(get_permalink( $post->ID));
 
 				//All day or not?
-				$event['allDay'] = ($post->event_allday ? true : false);
+				$event['allDay'] = eo_is_all_day();
 	
 				//Get Event Start and End date, set timezone to the blog's timzone
 				$event_start = new DateTime($post->StartDate.' '.$post->StartTime, EO_Event::get_timezone());
@@ -120,7 +120,8 @@
 				$event['title']= html_entity_decode ($title,ENT_QUOTES,'UTF-8');
 
 				//Check if all day, set format accordingly
-				if($post->event_allday){
+
+				if(eo_is_all_day()){
 					$event['allDay'] = true;
 					$format = get_option('date_format');
 				}else{
@@ -280,7 +281,7 @@
 
 			$startDT = new DateTime($post->StartDate.' '.$post->StartTime);
 			
-			if(!$post->event_allday):
+			if(!eo_is_all_day()):
 				$ampm = trim($meridiem[$startDT->format('a')]);
 				$ampm =  (empty($ampm) ? $startDT->format('a') : $ampm); //Tranlsate am/pm
 				$time = $startDT->format('g:i').$ampm;
@@ -306,7 +307,7 @@
 				'event_allday'=>$post->event_allday,
 				'color'=>$color,
 				'link'=>get_permalink(),
-				'Glink'=>eo_get_GoogleLink()
+				'Glink'=>eo_get_the_GoogleLink()
 			);
 		endforeach;
 

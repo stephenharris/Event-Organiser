@@ -144,7 +144,7 @@ function event_organiser_display_venue_form(){
 	//Set the action of the form		
 	$do = ($_REQUEST['action']=='edit' ? 'update' : 'add');?>
 
-	<form name="venuedetails" class ="metabox-holder" id="eo_venue_form" method="post" action="<?php echo network_site_url('wp-admin/edit.php?post_type=event&page=venues'); ?>">  
+	<form name="venuedetails" class ="metabox-holder" id="eo_venue_form" method="post" action="<?php echo site_url('wp-admin/edit.php?post_type=event&page=venues'); ?>">  
 		<input type="hidden" name="action" value="<?php echo $do; ?>"> 
 		<input type="hidden" name="eo_venue[id]" value="<?php echo $EO_Venue->id;?>">  
 		<input type="hidden" name="venue" value="<?php echo $EO_Venue->id;?>">  

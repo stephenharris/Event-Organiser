@@ -858,9 +858,11 @@ function is_leapyear($date){
 	}
 
 	function is_allday(){
+		return $this->is_all_day();
+	}
+	function is_all_day(){
 		return $this->allday;
 	}
-
 
 	function get_timezone(){
 		$tzstring =get_option('timezone_string');

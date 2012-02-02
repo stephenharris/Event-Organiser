@@ -172,7 +172,7 @@ X-WR-CALDESC:<?php echo get_bloginfo('name');?> - Events
 
 
 			//Set up start and end date times
-			if($event->is_allday()){
+			if($event->is_all_day()){
 				$format =	'Ymd';
 				$start_date = $start->format($format);
 				$end->modify('+1 second');

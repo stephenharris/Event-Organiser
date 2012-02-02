@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-01-30 17:44+0100\n"
-"PO-Revision-Date: 2012-01-30 17:44+0100\n"
-"Last-Translator: Stephen Harris <stephen@HarrisWebSolutions.co.uk>\n"
+"PO-Revision-Date: 2012-01-30 19:15+0100\n"
+"Last-Translator: Rémy Perona <remperona@gmail.com>\n"
 "Language-Team: Rémy Perona <remperona@gmail.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -342,11 +342,11 @@ msgstr "Afficher les évènements passés sur le calendrier, dans la liste des �
 #: ../event-organiser-settings.php:281
 #: ../classes/class-eo-event-list-widget.php:69
 msgid "Group occurrences"
-msgstr ""
+msgstr "Grouper les occurrences"
 
 #: ../event-organiser-settings.php:284
 msgid "If selected only one occurrence of an event will be displayed on event lists and archives (this can be over-ridden by shortcode attributes and widget options)."
-msgstr ""
+msgstr "Si sélectionné, une seule occurrence d'un évènement sera affiché sur les listes et archives d'évènements (cela peut être écrasé grâce à un attribut de shortcode ou une option de widget)."
 
 #: ../event-organiser-settings.php:288
 msgid "Are current events past?"
@@ -500,7 +500,7 @@ msgstr "jour de la semaine"
 #: ../includes/event-organiser-register.php:225
 #: ../includes/event-organiser-event-functions.php:517
 msgid "until"
-msgstr "jusqu'à"
+msgstr "jusqu'au"
 
 #: ../event-organiser-edit.php:158
 msgid "Select a venue"
@@ -1259,17 +1259,17 @@ msgstr "Le lieu <strong>n'a pas été</strong créé"
 #: ../templates/single-event.php:49
 #, php-format
 msgid "This event is running from %1$s until %2$s. It is next occurring at %3$s"
-msgstr ""
+msgstr "Cet évènement dure du %1$s au %2$s. Sa prochaine occurrence est le %3$s"
 
 #: ../templates/single-event.php:53
 #, php-format
 msgid "This event finished on %s"
-msgstr ""
+msgstr "Cet évènement s'est terminé le %s"
 
 #: ../templates/single-event.php:58
 #, php-format
 msgid "This event is on %s"
-msgstr ""
+msgstr "Cet évènement est le %s"
 
 #: ../templates/single-event.php:67
 msgid "Pages:"
@@ -1315,7 +1315,7 @@ msgstr " <span class=\"meta-nav\">&larr;</span> Evènements plus récents"
 #: ../templates/archive-event.php:69
 #: ../templates/taxonomy-event-tag.php:73
 msgid "at"
-msgstr ""
+msgstr "à"
 
 #: ../templates/venue-template.php:102
 #: ../templates/taxonomy-event-category.php:97
@@ -1326,7 +1326,7 @@ msgstr "Rien trouvé"
 
 #: ../templates/venue-template.php:106
 msgid "Apologies, but no events were found for the requested venue. "
-msgstr ""
+msgstr "Veuillez nous excuser, mais aucun évènement n'a été trouvé pour le lieu demandé."
 
 #: ../templates/taxonomy-event-category.php:31
 #, php-format

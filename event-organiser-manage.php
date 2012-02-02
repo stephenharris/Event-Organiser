@@ -55,7 +55,7 @@ function eventorganiser_event_sort_columns($column_name, $id) {
 	$EO_Venue =new EO_Venue((int)eo_get_venue($series_id));
 
 	$phpFormat = 'M, jS Y';
-	if(!eo_is_allday($series_id))
+	if(!eo_is_all_day($series_id))
 		$phpFormat .= '\<\/\b\r\>'. get_option('time_format');
 	
 	switch ($column_name) {
@@ -100,7 +100,7 @@ function restrict_events_by_category() {
     // only display these taxonomy filters on desired custom post_type listings
     global $typenow,$wp_query;
     if ($typenow == 'event') {
-	eo_event_category_dropdown();
+	eo_event_category_dropdown(array('show_option_all' => __('View all categories')));
     }
 }
 
@@ -113,8 +113,8 @@ function restrict_events_by_venue() {
 	global $typenow;
 
 	//Only add if CPT is event
-	if ($typenow=='event') :		
-		 eo_event_venue_dropdown();
+	if ($typenow=='event') :	
+		 eo_event_venue_dropdown(array('show_option_all' => __('View all venues','eventorganiser')));
 	endif;
 }
 

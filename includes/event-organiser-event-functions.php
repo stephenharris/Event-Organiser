@@ -217,8 +217,20 @@ function eo_next_occurence($format='',$id=''){
 * @param id - Optional, the event series (post) ID, 
 * @return bol - True if event runs all day, or false otherwise
  * @since 1.2
+Depreciated in favour of eo_is_all_day().
  */
 function eo_is_allday($id=''){
+	eo_is_all_day($id='');
+}
+
+/**
+* Return true is the event is an all day event.
+*
+* @param id - Optional, the event series (post) ID, 
+* @return bol - True if event runs all day, or false otherwise
+ * @since 1.2
+ */
+function eo_is_all_day($id=''){
 	global $post;
 	$event = $post;
 
@@ -537,7 +549,7 @@ function eo_display_reoccurence($id=''){
 * @return array|false - Array of DateTime objects of the start date-times of occurences. False if none exist.
  * @since 1.0.0
  */
-function eo_get_occurrences($id=''){
+function eo_get_the_occurrences($id=''){
 	global $post,$eventorganiser_events_table, $wpdb;
 
 	$id = (empty($id)  ? $post->ID : $id);
@@ -566,13 +578,11 @@ function eo_get_occurrences($id=''){
 /**
 * Returns a the url which adds a particular occurrence of an event to
 * a google calendar.
-*
-* @param id - Optional, the event (post) ID, 
-* @param occurrence - Optional. Integer, the occurrence number.
+* Must be used inside the loop
 *
  * @since 1.2.0
  */
-function eo_get_GoogleLink(){
+function eo_get_the_GoogleLink(){
 	global $post;
 	setup_postdata($post);
 
@@ -617,17 +627,13 @@ function eo_get_events_feed(){
 
 function eo_event_category_dropdown( $args = '' ) {
 	$defaults = array(
-		'show_option_all' => __('View all categories'), 
-		'hide_empty' => 1, 
-		'child_of' => 0,
-		'exclude' => '', 
+		'show_option_all' => '', 
 		'echo' => 1,
 		'selected' => 0, 
 		'name' => 'event-category', 
 		'id' => '',
 		'class' => 'postform event-organiser event-category-dropdown event-dropdown', 
 		'tab_index' => 0, 
-		'hide_if_empty' => false
 	);
 
 	$defaults['selected'] =  (is_tax('event-category') ? get_query_var('event-category') : 0);
@@ -644,24 +650,18 @@ function eo_event_category_dropdown( $args = '' ) {
 	$class = esc_attr( $class );
 	$id = $id ? esc_attr( $id ) : $name;
 
-	if ( ! $r['hide_if_empty'] || ! empty($categories) )
-		$output = "<select style='width:150px' name='$name' id='$id' class='$class' $tab_index_attribute>\n";
-	else
-		$output = '';
+	$output = "<select style='width:150px' name='$name' id='$id' class='$class' $tab_index_attribute>\n";
+	
+	if ( $show_option_all ) {
+		$output .= '<option '.selected($selected,0,false).' value="0">'.$show_option_all.'</option>';
+	}
 
 	if ( ! empty( $categories ) ) {
-
-		if ( $show_option_all ) {
-			$output .= '<option '.selected($selected,0,false).' value="0">'.$show_option_all.'</option>';
-		}
-
 		foreach ($categories as $term):
 			$output .= '<option value="'.$term->slug.'"'.selected($selected,$term->slug,false).'>'.$term->name.'</option>';
 		endforeach; 
 	}
-
-	if ( ! $r['hide_if_empty'] || ! empty($categories) )
-		$output .= "</select>\n";
+	$output .= "</select>\n";
 
 	if ( $echo )
 		echo $output;

@@ -281,17 +281,13 @@ function eo_get_the_venues(){
 
 function eo_event_venue_dropdown( $args = '' ) {
 	$defaults = array(
-		'show_option_all' => __('View all venues','eventorganiser'), 
-		'hide_empty' => 1, 
-		'child_of' => 0,
-		'exclude' => '', 
+		'show_option_all' =>'', 
 		'echo' => 1,
 		'selected' => 0, 
 		'name' => 'venue_id', 
 		'id' => '',
 		'class' => 'postform event-organiser event-venue-dropdown event-dropdown', 
 		'tab_index' => 0, 
-		'hide_if_empty' => false
 	);
 
 	$defaults['selected'] =  (eo_is_venue() ? get_query_var('venue_id') : 0);
@@ -308,24 +304,18 @@ function eo_event_venue_dropdown( $args = '' ) {
 	$class = esc_attr( $class );
 	$id = $id ? esc_attr( $id ) : $name;
 
-	if ( !$r['hide_if_empty'] || !empty($venues) )
-		$output = "<select style='width:150px' name='$name' id='$id' class='$class' $tab_index_attribute>\n";
-	else
-		$output = '';
+	$output = "<select style='width:150px' name='$name' id='$id' class='$class' $tab_index_attribute>\n";
+
+	if ( $show_option_all ) {
+		$output .= '<option '.selected($selected,0,false).' value="0">'.$show_option_all.'</option>';
+	}
 
 	if ( ! empty( $venues ) ) {
-
-		if ( $show_option_all ) {
-			$output .= '<option '.selected($selected,0,false).' value="0">'.$show_option_all.'</option>';
-		}
-
 		foreach ($venues as $term):
 			$output .= '<option value="'.intval($term->venue_id).'"'.selected($selected,$term->venue_id,false).'>'.esc_attr($term->venue_name).'</option>';
 		endforeach; 
 	}
-
-	if ( !$r['hide_if_empty'] || !empty($venues) )
-		$output .= "</select>\n";
+	$output .= "</select>\n";
 
 	if ( $echo )
 		echo $output;

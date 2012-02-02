@@ -50,12 +50,12 @@ get_header(); ?>
 
 									<?php else: ?>
 										<!---- Otherwise the event has finished (no more occurrences) -->
-										<?php printf(__('This event finished on %s','eventorganiser'), eo_schedule_end('d F Y',''));?>
+										<?php printf(__('This event finished on %s','eventorganiser'), eo_get_schedule_end('d F Y',''));?>
 								<?php endif; ?>
 
 								<?php else: ?>
 									<!----Event is a single event -->
-										<?php printf(__('This event is on %s','eventorganiser'), eo_the_start($date_format) );?>
+										<?php printf(__('This event is on %s','eventorganiser'), eo_get_the_start($date_format) );?>
 								<?php endif; ?>
 							</div><!-- .entry-meta -->
 
@@ -70,7 +70,7 @@ get_header(); ?>
 					<footer class="entry-meta">
 					<?php
 					//Events have their own 'event-category' taxonomy. Get list of categories this event is in.
-					$categories_list = get_the_term_list( $post->ID, 'event-category', '', ', ',''); 
+					$categories_list = get_the_term_list( get_the_ID(), 'event-category', '', ', ',''); 
 
 					if ( '' != $categories_list ) {
 						$utility_text = __( 'This event was posted in %1$s by <a href="%5$s">%4$s</a>. Bookmark the <a href="%2$s" title="Permalink to %3$s" rel="bookmark">permalink</a>.', 'eventorganiser' );

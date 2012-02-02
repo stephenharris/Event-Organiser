@@ -4,8 +4,8 @@
 */ 
 
 //Register the custom taxonomy Event-category
-add_action( 'init', 'create_event_taxonomies', 10 );
-function create_event_taxonomies() {
+add_action( 'init', 'eventorganiser_create_event_taxonomies', 10 );
+function eventorganiser_create_event_taxonomies() {
 
 $eventorganiser_option_array = get_option('eventorganiser_options'); 
 
@@ -173,7 +173,7 @@ function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 	/* If editing, deleting, or reading a event, get the post and post type object. */
 	if ( 'edit_event' == $cap || 'delete_event' == $cap || 'read_event' == $cap ) {
 		$post = get_post( $args[0] );
-		$post_type = get_post_type_object( $post->post_type );
+		$post_type = get_post_type_object( $post->post_type );	
 
 		/* Set an empty array for the caps. */
 		$caps = array();
