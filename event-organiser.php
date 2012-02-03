@@ -24,7 +24,6 @@ Author URI: http://www.HarrisWebSolutions.co.uk
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
 //TODO
-//Update js files to 1.2
 //Update version to 1.2
 //Update readme
 
