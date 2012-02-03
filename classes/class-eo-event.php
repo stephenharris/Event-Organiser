@@ -103,7 +103,7 @@ class EO_Event{
 			$this->start = new DateTIme($events[0]['StartDate'].' '.$events[0]['StartTime'],$this->get_timezone());
 			$this->end = new DateTIme($events[0]['EndDate'].' '.$events[0]['FinishTime'],$this->get_timezone());
 
-			if(function_exists(date_diff)){
+			if(function_exists('date_diff')){
 				$this->duration = date_diff($this->start,$this->end);	
 			}
 		
@@ -283,7 +283,7 @@ class EO_Event{
 	
 		foreach($this->occurrences as $counter=> $occurrence):
 			$occurrence_end = clone $occurrence;
-			if(function_exists(date_diff)){
+			if(function_exists('date_diff')){
 				$occurrence_end->add($this->duration);
 				$this->duration = date_diff($this->start,$this->end);	
 
@@ -523,7 +523,7 @@ function createFromObjects($input=array()){
 	$this->venue=intval($venue);
 	$this->allday = ($allday ? 1 : 0);
 
-	if(function_exists(date_diff)){
+	if(function_exists('date_diff')){
 		$this->duration = date_diff($this->start,$this->end);
 	}
 		
@@ -751,7 +751,7 @@ protected function setupSchedule(){
 					$interval = $occurrence[$n].' '.$day.' of +'.$this->frequency.' month';
 					
 					//Work around for PHP <5.3
-					if(!function_exists(date_diff)){
+					if(!function_exists('date_diff')){
 						$workaround = 'php5.2';
 					}
 				endif;

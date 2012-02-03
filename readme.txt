@@ -55,6 +55,7 @@ Requires **WordPress 3.3** and **PHP 5.3** (or higher)
 
 = Localisation =
 A big thank you to those who have provided translations for Event Organiser
+
 * French - [Rémy Perona](http://remyperona.fr/)
 
 == Installation ==
