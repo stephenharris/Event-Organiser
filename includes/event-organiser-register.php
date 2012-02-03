@@ -265,13 +265,6 @@ function eo_admin_notices(){
 		</div>
 	<?php	endif;
 
-	//Check PHP version
-	if (version_compare(PHP_VERSION, '5.3.0') < 0):?>
-		<div class="error"	>
-			<p>Event Organiser requires <strong>PHP 5.3</strong> to function properly. Your version is <?php echo PHP_VERSION; ?>. </p>
-		</div>
-	<?php endif;
-
 	//Check WordPress version
 	if(get_bloginfo('version')<'3.3'):?>
 		<div class="error"	>

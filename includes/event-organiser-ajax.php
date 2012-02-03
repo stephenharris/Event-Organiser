@@ -225,8 +225,8 @@
 		if(isset($_GET['eo_month'])){
 			$month  = new DateTime($_GET['eo_month'].'-01'); 
 		}else{
-			$month = new DateTime();
-			$month->modify('first day of this month');
+			$month = new DateTime('now');
+			$month = date_create($month->format('Y-m-1'));
 		}		
 		echo json_encode(EO_Calendar_Widget::generate_output($month));
 		exit;

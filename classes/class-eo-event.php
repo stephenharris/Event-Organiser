@@ -17,6 +17,8 @@ class EO_Event{
 	var	$start ='';
 	var	$end='';
 	var	$duration='';
+	var $duration_seconds=0;
+	var $duration_string='';
 	var $allday = true;
 	var $schedule = 'once';
 	var $meta = '';
@@ -100,7 +102,18 @@ class EO_Event{
 
 			$this->start = new DateTIme($events[0]['StartDate'].' '.$events[0]['StartTime'],$this->get_timezone());
 			$this->end = new DateTIme($events[0]['EndDate'].' '.$events[0]['FinishTime'],$this->get_timezone());
-			$this->duration = date_diff($this->start,$this->end);	
+
+			if(function_exists(date_diff)){
+				$this->duration = date_diff($this->start,$this->end);	
+			}
+		
+			//Work around for PHP < 5.3
+			$seconds = round(abs($this->start->format('U') - $this->end->format('U')));
+			// 86400 = 60*60*24 seconds in a normal day
+			$days = floor($seconds/86400);
+			$sec_diff = $seconds - $days*86400;
+			$this->duration_string = '+'.$days.'days '.$sec_diff.' seconds';
+
 			$this->schedule_start = new DateTime($events[0]['reoccurrence_start'],$this->get_timezone());
 			$this->schedule_end = new DateTime($events[0]['reoccurrence_end'],$this->get_timezone());
 			$this->allday = ($events[0]['event_allday']==1 ? true : false);
@@ -268,13 +281,22 @@ class EO_Event{
 		if(empty($post_id))
 			return false;
 	
-		foreach($this->occurrences as $counter=> $occurrance):
-			$occurrance_input =array(
+		foreach($this->occurrences as $counter=> $occurrence):
+			$occurrence_end = clone $occurrence;
+			if(function_exists(date_diff)){
+				$occurrence_end->add($this->duration);
+				$this->duration = date_diff($this->start,$this->end);	
+
+			}else{
+				$occurrence_end->modify($this->duration_string);
+			}
+
+			$occurrence_input =array(
 				'post_id'=>$post_id,
-				'StartDate'=>$occurrance->format('Y-m-d'),
-				'StartTime'=>$occurrance->format('H:i:s'),
-				'EndDate'=>$occurrance->add($this->duration)->format('Y-m-d'),
-				'FinishTime'=>$occurrance->format('H:i:s'),
+				'StartDate'=>$occurrence->format('Y-m-d'),
+				'StartTime'=>$occurrence->format('H:i:s'),
+				'EndDate'=>$occurrence_end->format('Y-m-d'),
+				'FinishTime'=>$this->end->format('H:i:s'),
 				'Venue'=>$this->venue,
 				'event_schedule' => $this->schedule,
 				'event_schedule_meta' => $this->meta,
@@ -282,9 +304,9 @@ class EO_Event{
 				'event_occurrence' => $counter,
 				'event_allday' =>  $this->allday,
 				'reoccurrence_start' => $this->schedule_start->format('Y-m-d'),
-					'reoccurrence_end' => $this->schedule_end->format('Y-m-d'),
+				'reoccurrence_end' => $this->schedule_end->format('Y-m-d'),
 			);
-			$ins = $wpdb->insert($eventorganiser_events_table, $occurrance_input);
+			$ins = $wpdb->insert($eventorganiser_events_table, $occurrence_input);
 		endforeach;
 	
 		return true;
@@ -500,7 +522,18 @@ function createFromObjects($input=array()){
 	$this->schedule = $schedule;
 	$this->venue=intval($venue);
 	$this->allday = ($allday ? 1 : 0);
-	$this->duration = date_diff($this->start,$this->end);
+
+	if(function_exists(date_diff)){
+		$this->duration = date_diff($this->start,$this->end);
+	}
+		
+	//Work around for PHP < 5.3
+	$seconds = round(abs($this->start->format('U') - $this->end->format('U')));
+	// 86400 = 60*60*24 seconds in a normal day
+	$days = floor($seconds/86400);
+	$sec_diff = $seconds - $days*86400;
+	$this->duration_string = '+'.$days.'days '.$sec_diff.' seconds';
+
 	$this->frequency = $frequency;		
 	$this->meta = $schedule_meta;
 
@@ -543,13 +576,20 @@ function createFromObjects($input=array()){
 		$current = clone $start;
 			
 		switch($workaround):
+			case 'php5.2':
+				while($current <= $this->schedule_end):
+					$this->occurrences[] = clone $current;	
+					$current = $this->php52_modify($current,$interval);
+				endwhile;
+				break;
 
 			case 'short months':
 				 $day_int =intval($start->format('d'));
 	
 				//Set the first month
 				$current_month= clone $start;
-				$current_month->modify('first day of this month');
+				//$current_month->modify('first day of this month');
+				$current_month = date_create($current_month->format('Y-m-1'));
 				
 				while($current_month<=$this->schedule_end):
 					$month_int = intval($current_month->format('m'));		
@@ -601,7 +641,8 @@ function createFromObjects($input=array()){
 	$i = intval($this->start->format('i'));
 
 	foreach($this->occurrences as $occurrence):
-		$occurrence->setTime($H,$i )->setTimezone($blog_tz);
+		$occurrence->setTime($H,$i );
+		$occurrence->setTimezone($blog_tz);
 	endforeach;	
 
 	$this->start->setTimezone($blog_tz);
@@ -629,8 +670,6 @@ function removeDuplicate($array=array()){
 
         return $unique;
 } 
-
-
 
 
 /*
@@ -709,8 +748,12 @@ protected function setupSchedule(){
 						update_option('eo_notice',$errors);
 						return false;
 					}
-
 					$interval = $occurrence[$n].' '.$day.' of +'.$this->frequency.' month';
+					
+					//Work around for PHP <5.3
+					if(!function_exists(date_diff)){
+						$workaround = 'php5.2';
+					}
 				endif;
 				break;
 	
@@ -946,6 +989,53 @@ function is_leapyear($date){
 		endswitch;
 		return false;
 	}
+
+	/**
+	 * Deals with ordinal month manipulation (e.g. second day of +2 month) for PHP <5.3
+	 * @since 1.2
+	 * @param datetime - 'current' date-time 
+	 * @string the modify string: second day of +2 month
+	 * @return datetime - the date-time calculated.
+	 */
+	function php52_modify($date='',$modify=''){
+		$pattern = '/([a-zA-Z]+)\s([a-zA-Z]+) of \+(\d+) month/';
+		preg_match($pattern, $modify, $matches);
+
+		$ordinal_arr = array(
+			'last'=>0,
+			'first'=>1,
+			'second'=>2,
+			'third'=>3,
+			'fourth'=>4
+		);
+		$week = array('sunday','monday','tuesday','wednesday','thursday','friday','saturday');
+	
+		$ordinal =$ordinal_arr[$matches[1]];
+		$day = array_search(strtolower($matches[2]), $week); 
+		$freq = intval($matches[3]);
+
+		//set to first day of month
+		$date = date_create($date->format('Y-m-1'));
+
+		//add months
+		$date->modify('+'.$freq.' month');
+
+		//Calculate offset to day of week	
+		//Date of desired day
+		if($ordinal >0):
+			$offset = ($day-intval($date->format('w')) +7)%7;
+			$d =($offset) +7*($ordinal-1) +1;
+
+		else:
+			$date = date_create($date->format('Y-m-t'));
+			$offset = intval(($date->format('w')-$day+7)%7);
+			$d = intval($date->format('t'))-$offset;
+		endif;
+	
+		$date = date_create($date->format('Y-m-'.$d));
+
+		return $date;
+}
 
 
 	function occursBy(){
