@@ -135,12 +135,12 @@ function eventorganiser_upgradecheck(){
 				endif;
 			  endforeach;
 		}
+
 		if ( $installed_ver < '1.2') {
-			$settings = get_option('eventorganiser_options');
-			
+			$settings = get_option('eventorganiser_options');			
 			//Add new settings
 			$settings['url_event']= 'events/event';
-			$settings['url_venue']= 'events/venues';
+			$settings['url_venue']= 'events/venue';
 			$settings['url_cat'] = 'events/category';
 			$settings['url_tag'] = 'events/tag';
 			$settings['navtitle'] =  __('Events','eventorganiser');
@@ -149,6 +149,12 @@ function eventorganiser_upgradecheck(){
 			$settings['eventtag'] = 1;
 			$settings['deleteexpired'] = 0;
 			update_option('eventorganiser_options',$settings);
+		}
+		if($installed_ver <'1.2.1'){
+			$settings = get_option('eventorganiser_options');
+			$settings['url_venue']= (empty($settings['url_venue']) ? 'events/venue' : $settings['url_venue']);
+			update_option('eventorganiser_options',$settings);
+			flush_rewrite_rules();		
 		}
 		update_option('eventorganiser_version', $eventorganiser_db_version);
 	endif;

@@ -10,7 +10,7 @@ jQuery(document).ready(function() {
 			initialize(eo_venue_Lat,eo_venue_Lng);
 
 			//Every time form looses focus, use input to display map of address
-			jQuery(".eo_addressInput").blur(function(){
+			jQuery(".eo_addressInput").change(function(){
 				address="";
 				jQuery(".eo_addressInput").each(function(){
 					if(jQuery(this).attr('id')!='country-selector'){
@@ -37,11 +37,26 @@ function initialize(Lat,Lng) {
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 		map = new google.maps.Map(document.getElementById("venuemap"),myOptions);
+
+		if(typeof EO_Venue != 'undefined'){
+			draggable = true;
+		}else{
+			draggable = false;
+		}
+
 		marker = new google.maps.Marker({
 			position: latlng, 
-			map: map
+			map: map,
+			draggable: draggable
 		});
 
+		if(typeof EO_Venue != 'undefined'){
+			google.maps.event.addListener(marker, 'dragend', function(evt){
+				jQuery("#eo_venue_Lat").val(evt.latLng.lat().toFixed(6));
+				jQuery("#eo_venue_Lng").val( evt.latLng.lng().toFixed(6));
+				map.setCenter(marker.position);
+			});
+		}
 	}
 }
 	
@@ -58,10 +73,24 @@ function initialize(Lat,Lng) {
       		if (status == google.maps.GeocoderStatus.OK) {
 			map.setCenter(results[0].geometry.location);
 			marker.setMap(null);
+
+			if(typeof EO_Venue != 'undefined'){
+				draggable = true;
+			}else{
+				draggable = false;
+			}
 			marker = new google.maps.Marker({
 				map: map,
-				position: results[0].geometry.location
+				position: results[0].geometry.location,
+				draggable: draggable
 			});
+			if(typeof EO_Venue != 'undefined'){
+				google.maps.event.addListener(marker, 'dragend', function(evt){
+					jQuery("#eo_venue_Lat").val(evt.latLng.lat().toFixed(6));
+					jQuery("#eo_venue_Lng").val( evt.latLng.lng().toFixed(6));
+					map.setCenter(marker.position);
+				});
+			}
 
 		jQuery("#eo_venue_Lat").val(results[0].geometry.location.lat());
 		jQuery("#eo_venue_Lng").val(results[0].geometry.location.lng());;

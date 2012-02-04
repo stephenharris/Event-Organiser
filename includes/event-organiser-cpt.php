@@ -133,7 +133,7 @@ $args = array(
 	),
 	'has_archive' => true, 
 	'hierarchical' => false,
-	'menu_icon' => EVENT_ORGANISER_URL.'/css/images/eoicon-16.png',
+	'menu_icon' => EVENT_ORGANISER_URL.'css/images/eoicon-16.png',
 	'menu_position' => 5,
 	'supports' => $eventorganiser_option_array['supports']
   ); 

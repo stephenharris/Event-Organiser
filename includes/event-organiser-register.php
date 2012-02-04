@@ -42,7 +42,7 @@ function eventorganiser_register_scripts(){
 	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL.'js/venues.js',array(
 		'jquery',
 		'eo_GoogleMap'
-	),'1.1',true);
+	),'1.2.1',true);
 	
 	wp_register_script( 'eo_event', EVENT_ORGANISER_URL.'js/event.js',array(
 		'jquery',
@@ -50,7 +50,7 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',
 		'jquery-ui-position'
-	),'1.1',true);	
+	),'1.2',true);	
 
 	//Calendar View
 	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL.'js/fullcalendar.js',array(
@@ -59,7 +59,7 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-widget',
 		'jquery-ui-button',
 		'jquery-ui-position'),
-		'1.1',true);	
+		'1.2',true);	
 
 	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css');
 }
@@ -120,6 +120,9 @@ function eventorganiser_admin_pages() {
 function eventorganiser_venue_page_admin_styles() {
 	if(isset($_REQUEST['action']) && ($_REQUEST['action']=='create'||$_REQUEST['action']=='edit'||$_REQUEST['action']=='add' || $_REQUEST['action']=='update' )):
 		wp_enqueue_script('eo_venue');
+		wp_localize_script( 'eo_venue', 'EO_Venue', array( 
+			'draggable' => true
+		));
 		wp_enqueue_style('eventorganiser-style');
 		wp_enqueue_script('post');
 		wp_enqueue_script('media-upload');

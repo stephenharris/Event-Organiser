@@ -208,7 +208,8 @@ function eventorganiser_details_save($post_id) {
 	//authentication checks
 	if (!current_user_can('edit_event', $post_id)) return $post_id;
 
-	$raw_data = $_POST['eo_input'];
+	$raw_data = (isset($_POST['eo_input']) ? $_POST['eo_input'] : array());
+	$raw_data['Venue'] =(isset($raw_data['Venue']) ? $raw_data['Venue'] : 0);
 
 	//Check if there is existing event data.
 	$event = new EO_Event($post_id);
@@ -221,7 +222,7 @@ function eventorganiser_details_save($post_id) {
 	if($event->exists):
 
 		//We are updating a single event (and it is still a one time event), can just update all data easily				
-		if($raw_data['schedule']=='once'&& $event->is_schedule('once')){
+		if(isset($raw_data['schedule'])&&$raw_data['schedule']=='once'&& $event->is_schedule('once')){
 			$event->create($raw_data);
 			$event_input =array(
 				'post_id'=>$post_id,

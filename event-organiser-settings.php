@@ -369,21 +369,21 @@ class EventOrganiser_Settings_Page{
 		<th><?php _e("Venues",'eventorganiser');?></th>
 		<td> 
 			<input type="text" name="eo_setting[url_venue]" value="<?php echo self::$settings['url_venue'];?>" /> </br>
-			<label><code> <?php echo $site_url.'/<strong>'.self::$settings['url_venue'].'</strong>/'.'[event_slug]' ;?></code></label>
+			<label><code> <?php echo $site_url.'/<strong>'.self::$settings['url_venue'].'</strong>/'.'[venue_slug]' ;?></code></label>
 		</td>
 	</tr>
 	<tr>
 		<th><?php _e("Event Categories",'eventorganiser');?></th>
 		<td> 
 			<input type="text" name="eo_setting[url_cat]" value="<?php echo self::$settings['url_cat'];?>" /> </br>
-			<label><code> <?php echo $site_url.'/<strong>'.self::$settings['url_cat'].'</strong>/'.'[event_slug]' ;?></code></label>
+			<label><code> <?php echo $site_url.'/<strong>'.self::$settings['url_cat'].'</strong>/'.'[event_cat_slug]' ;?></code></label>
 		</td>
 	</tr>
 	<tr>
 		<th><?php _e("Event Tags",'eventorganiser');?></th>
 		<td> 
 			<input type="text" name="eo_setting[url_tag]" value="<?php echo self::$settings['url_tag']; ?>" /> </br>
-			<label><code> <?php echo $site_url.'/<strong>'.self::$settings['url_tag'].'</strong>/'.'[event_slug]' ;?></code></label>
+			<label><code> <?php echo $site_url.'/<strong>'.self::$settings['url_tag'].'</strong>/'.'[event_tag_slug]' ;?></code></label>
 		</td>
 	</tr>
 </table>

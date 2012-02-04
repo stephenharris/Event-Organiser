@@ -4,7 +4,7 @@ Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.3.1
-Stable tag: 1.2
+Stable tag: 1.2.1
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -12,7 +12,7 @@ Create and maintain events, including complex reoccurring patterns, venue manage
 
 Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows your to view your events in the familiar WordPress list or view all occurrences of your events in a calendar page in the amin area.
 
-Requires **WordPress 3.3** and **PHP 5.3** (or higher)
+Requires **WordPress 3.3** and **PHP 5.3** (or higher)  -  Event Organiser is now compatible with **PHP 5.2+**
 
 = New Features =
 
@@ -117,6 +117,12 @@ Event Organiser provides the following shortcodes:
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.2.1 =
+* Fixed permalink bug
+* Venue map marker can be manually dragged to a specific location
+* Event Organiser is now compatible with PHP 5.2+
+* Fixed minor calendar icon bug in IE
 
 = 1.2 =
 * Public events feed
