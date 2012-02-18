@@ -1,6 +1,8 @@
 <?php
 /****** SETTINGS PAGE ******/
-$settings_page = new EventOrganiser_Settings_Page();
+if(!class_exists('EventOrganiser_Admin_Page')){
+    require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+}
 class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
 {
 
@@ -406,4 +408,5 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
 	<?php
 	}
 }
+$settings_page = new EventOrganiser_Settings_Page();
 ?>

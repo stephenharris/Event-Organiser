@@ -1,6 +1,8 @@
 <?php
 /****** CALENDAR PAGE ******/
-$calendar_page = new EventOrganiser_Calendar_Page();
+if(!class_exists('EventOrganiser_Admin_Page')){
+    require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+}
 class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 {
 	function set_constants(){
@@ -219,4 +221,5 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 <?php
 	}
 }
+$calendar_page = new EventOrganiser_Calendar_Page();
 ?>

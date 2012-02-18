@@ -1,8 +1,10 @@
 <?php
-$settings_page = new EventOrganiser_Venues_Page();
+/****** VENUE PAGE ******/
+if(!class_exists('EventOrganiser_Admin_Page')){
+    require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+}
 class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 {
-
 	function set_constants(){
 		$this->hook = 'edit.php?post_type=event';
 		$this->title =  __('Venues','eventorganiser');
@@ -226,3 +228,4 @@ function display_venue_form(){
 	<?php
 }
 }
+$venues_page = new EventOrganiser_Venues_Page();
