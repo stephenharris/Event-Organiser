@@ -1,28 +1,38 @@
 <?php
-/**
- * Do actions
- * Hooked on to venues page
- *
- * @since 1.0.0
- */
-function eventorganiser_venues_action() {
-	global $EO_Venues,$EO_Venue;
-	$EO_Venues = new EO_Venues;
-	$EO_Venue = new EO_Venue;
-	$screen = get_current_screen();
+$settings_page = new EventOrganiser_Venues_Page();
+class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
+{
 
-	add_filter('manage_event_page_venues_columns','eventorganiser_venue_admin_columns') ;
-	function eventorganiser_venue_admin_columns($columns){
-		 $columns = array(
-       	     'cb' => '<input type="checkbox" />', //Render a checkbox instead of text
-       	     'name'  => __('Venue', 'eventorganiser'),
-       	     'venue_address'     =>__('Address', 'eventorganiser'),
-       	     'venue_postal'     => __('Post Code', 'eventorganiser'),
-       	     'venue_country'     => __('Country', 'eventorganiser'),
-       	     'venue_slug'     =>__('Slug'),
-       	 );
-        return $columns;	
+	function set_constants(){
+		$this->hook = 'edit.php?post_type=event';
+		$this->title =  __('Venues','eventorganiser');
+		$this->menu = __('Venues','eventorganiser');
+		$this->permissions ='manage_venues';
+		$this->slug ='venues';
 	}
+
+
+	/*
+	* Actions to be taken prior to page loading. Hooked on to load-{page}
+	*/
+	function page_actions(){
+		global $EO_Venues,$EO_Venue;
+		$EO_Venues = new EO_Venues;
+		$EO_Venue = new EO_Venue;
+		$screen = get_current_screen();
+	
+		add_filter('manage_event_page_venues_columns','eventorganiser_venue_admin_columns') ;
+		function eventorganiser_venue_admin_columns($columns){
+			 $columns = array(
+       		     'cb' => '<input type="checkbox" />', //Render a checkbox instead of text
+       		     'name'  => __('Venue', 'eventorganiser'),
+       		     'venue_address'     =>__('Address', 'eventorganiser'),
+       		     'venue_postal'     => __('Post Code', 'eventorganiser'),
+       		     'venue_country'     => __('Country', 'eventorganiser'),
+       		     'venue_slug'     =>__('Slug'),
+       		 );
+       	 return $columns;	
+		}
 
 	//Determine action if any
 	if(isset($_POST['screen-options-apply'])&& $_POST['screen-options-apply']=='Apply'){
@@ -59,15 +69,25 @@ function eventorganiser_venues_action() {
 			wp_die(__("You do not have permission to manage venues",'eventorganiser'));
 		endif;
 	endif;
+		add_screen_option( 'per_page', array('label' => __('Venues','eventorganiser'), 'default' => 20) );
+	}
 
-	add_screen_option( 'per_page', array('label' => __('Venues','eventorganiser'), 'default' => 20) );	
-}
+	function page_scripts(){
+		if(isset($_REQUEST['action']) && ($_REQUEST['action']=='create'||$_REQUEST['action']=='edit'||$_REQUEST['action']=='add' || $_REQUEST['action']=='update' )):
+			wp_enqueue_script('eo_venue');
+			wp_localize_script( 'eo_venue', 'EO_Venue', array( 
+				'draggable' => true
+			));
+			wp_enqueue_style('eventorganiser-style');
+			wp_enqueue_script('post');
+			wp_enqueue_script('media-upload');
+			add_thickbox();	
+		endif;
+	}
 
 
-
-function eventorganiser_venues_page(){
-
-?>    
+	function display(){
+	?>
     <div class="wrap">
 		<div id='icon-edit' class='icon32'><br/>
 		</div>
@@ -88,7 +108,7 @@ function eventorganiser_venues_page(){
 			<div id="poststuff" class="metabox-holder">
 				<div id="post-body">
 					<div id="post-body-content">
-					<?php event_organiser_display_venue_form();?>
+					<?php $this->display_venue_form();?>
 					</div>
 				</div>
 			</div>
@@ -128,9 +148,7 @@ function eventorganiser_venues_page(){
 
     </div><!--End .wrap -->
     <?php
-}
-
-
+	}
 
 /**
  * Display form for creating / editing venues
@@ -138,7 +156,7 @@ function eventorganiser_venues_page(){
  *
  * @since 1.0.0
  */
-function event_organiser_display_venue_form(){
+function display_venue_form(){
 	global $EO_Venue;
 
 	//Set the action of the form		
@@ -206,4 +224,5 @@ function event_organiser_display_venue_form(){
  
 	</form> 		
 	<?php
-}?>
+}
+}

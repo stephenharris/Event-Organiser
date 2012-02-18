@@ -177,7 +177,7 @@ function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 
 		/* Set an empty array for the caps. */
 		$caps = array();
-		if($post_type!='event');
+		if($post->post_type!='event')
 			return $caps;
 	}
 
@@ -433,5 +433,59 @@ function eventorganiser_tax_meta_form($colour){
 var farbtastic;(function($){var pickColor=function(a){farbtastic.setColor(a);$('.colour-input').val(a);$('a.color').css('background-color',a)};$(document).ready(function(){farbtastic=$.farbtastic('#colorpicker',pickColor);pickColor($('.colour-input').val());$('.color').click(function(e){e.preventDefault();console.log($('#colorpicker').is(":visible"));if($('#colorpicker').is(":visible")){$('#colorpicker').hide()}else{$('#colorpicker').show()}});$('.colour-input').keyup(function(){var a=$('.colour-input').val(),b=a;a=a.replace(/[^a-fA-F0-9]/,'');if('#'+a!==b)$('.colour-input').val(a);if(a.length===3||a.length===6)pickColor('#'+a)});$(document).mousedown(function(){$('#colorpicker').hide()})})})(jQuery);
 	</script>	
 <?php
+}
+
+add_filter('get_event-category','eventorganiser_append_cat_meta');
+function eventorganiser_append_cat_meta($term){
+	if($term):
+		$term_meta = get_option( "eo-event-category_{$term->term_id}");
+		$colour = (isset($term_meta['colour']) ? $term_meta['colour'] : '');
+		$term->color = $colour;
+	endif;
+	return $term;
+}
+
+add_filter('get_terms','eventorganiser_get_terms_meta');
+add_filter('get_the_terms','eventorganiser_get_terms_meta');
+function eventorganiser_get_terms_meta($terms){
+	if($terms):
+		foreach($terms as $term):
+			if(isset($term->taxonomy) && $term->taxonomy=='event-category'){
+				$term_meta = get_option( "eo-event-category_{$term->term_id}");
+				$colour = (isset($term_meta['colour']) ? $term_meta['colour'] : '');
+				$term->color = $colour;
+			}	
+		endforeach;
+	endif;
+	return $terms;
+}
+
+
+//TODO
+//Have meta array for event-category terms.
+function eo_get_category_meta($term,$key){
+
+	if (is_object($term)){
+		if(isset($term->color))
+			return $term->color;
+		else
+			$term = $term->slug;
+	}
+
+	if(!empty($term)){
+		$term = get_term_by('slug', $term,'event-category');
+		if( isset($term->color))
+			return $term->color;
+
+	}elseif(is_tax('event-category')){
+		$term = get_queried_object();
+		$taxonomy = $term->taxonomy;
+		$term = $term->term_id;
+		$term = get_term( $term, 'event-category' );
+		if( isset($term->color))
+			return $term->color;
+	}
+	
+	return false;
 }
 ?>

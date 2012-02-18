@@ -7,7 +7,8 @@
 class EventOrganiser_Shortcodes {
 	static $add_script;
 	static $fullcal =array();
-	static $map;
+	static $map = array();
+	static $event;
  
 	function init() {
 		add_shortcode('eo_calendar', array(__CLASS__, 'handle_calendar_shortcode'));
@@ -117,15 +118,16 @@ class EventOrganiser_Shortcodes {
 		
 		//Get latlng value by slug
 		$latlng = eo_get_venue_latlng($atts['venue']);
-		self::$map =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng']);
+		self::$map[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng']);
+		$id = count(self::$map);
 
-		$return = "<div class='".$class."' id='eo_venue_map' ".$style."></div>";
+		$return = "<div class='".$class."' id='eo_venue_map-{$id}' ".$style."></div>";
 		return $return;
 	}
  
-	function handle_eventlist_shortcode($atts=array()) {
+	function handle_eventlist_shortcode($atts=array(),$content=null) {
 		global $post;
-
+		$tmp_post = $post;
 		if(isset($atts['venue'])&&$atts['venue']=='%this%'){
 			if(!empty($post->Venue)){
 				$atts['venue']=(int) $post->Venue;
@@ -141,21 +143,155 @@ class EventOrganiser_Shortcodes {
 
 		if($events):	
 			$return= '<ul class="eo-events eo-events-shortcode">';
-			foreach ($events as $event):
+			foreach ($events as $post):
+				setup_postdata($post); 
+
 				//Check if all day, set format accordingly
 				if(eo_is_all_day()){
 					$format = get_option('date_format');
 				}else{
 					$format = get_option('date_format').'  '.get_option('time_format');
 				}
-				$dateTime = new DateTime($event->StartDate.' '.$event->StartTime);
-
-				$return .= '<li><a title="'.$event->post_title.'" href="'.get_permalink($event->ID).'">'.$event->post_title.'</a> '.__('on','eventorganiser').' '.eo_format_date($event->StartDate.' '.$event->StartTime, $format).'</li>';
+				$dateTime = new DateTime($post->StartDate.' '.$post->StartTime);
+				
+				if(empty($content)):
+					$return .= '<li><a title="'.$post->post_title.'" href="'.get_permalink($post->ID).'">'.$post->post_title.'</a> '.__('on','eventorganiser').' '.eo_format_date($post->StartDate.' '.$post->StartTime, $format).'</li>';
+				else:
+					$return .= '<li>'.self::read_template($content).'</li>';
+				endif;
 
 			endforeach;
 			$return.='</ul>';
+			$post = $tmp_post;
+			wp_reset_postdata();
+
 			return $return;
 		endif;
+	}
+	
+	function read_template($template){
+		$patterns = array();	
+		//TODO
+		//ICAL/Google link
+		//lat/lng?
+		$patterns[0] = '/%(event_title)%/';
+		$patterns[1] = "/%(start)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
+		$patterns[2] = "/%(end)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
+		$patterns[3] = '/%(event_venue)%/';
+		$patterns[4] = '/%(event_venue_url)%/';
+		$patterns[5] = '/%(event_cats)%/';
+		$patterns[6] = '/%(event_tags)%/';
+		$patterns[7] = '/%(event_venue_address)%/';
+		$patterns[8] = '/%(event_venue_postcode)%/';
+		$patterns[9] = '/%(event_venue_country)%/';
+		$patterns[10] = "/%(schedule_start)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
+		$patterns[11] = "/%(schedule_end)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
+		$patterns[12] = '/%(event_thumbnail)({[^{}]+})?%/';
+		$patterns[13] = '/%(event_url)%/';
+		$patterns[14] = '/%(event_custom_field){([^{}]+)}%/';
+		$patterns[15] = '/%(event_venue_map)({[^{}]+})?%/';
+		
+		$template = preg_replace_callback($patterns, array(__CLASS__,'parse_template'), $template);
+		return $template;
+	}
+	
+	function parse_template($matches){
+		global $post;
+		$replacement='';
+		$col = array(
+			'start'=>array('date'=>'StartDate','time'=>'StartTime'),
+			'end'=>array('date'=>'EndDate','time'=>'FinishTime'),
+			'schedule_start'=>array('date'=>'reoccurrence_start','time'=>'StartTime'),
+			'schedule_end'=>array('date'=>'reoccurrence_end','time'=>'FinishTime')
+		);
+		
+		switch($matches[1]):
+			case 'event_title':
+				$replacement = $post->post_title;
+				break;
+				
+			case 'start':
+			case 'end':
+			case 'schedule_start':
+			case 'schedule_end':
+				switch(count($matches)):
+					case 2:
+						$dateFormat = get_option('date_format');
+						$dateTime = get_option('time_format');
+						break;
+					case 3:
+						$dateFormat =  self::eo_clean_input($matches[2]);
+						$dateTime='';
+						break;
+
+					case 5:
+						$dateFormat =  self::eo_clean_input($matches[3]);
+						$dateTime =  self::eo_clean_input($matches[4]);
+						break;
+				endswitch;
+		
+				if(eo_is_all_day($post->ID)){
+					$replacement = eo_format_date($post->$col[$matches[1]]['date'].' '.$post->$col[$matches[1]]['time'], $dateFormat);
+				}else{	
+					$replacement = eo_format_date($post->$col[$matches[1]]['date'].' '.$post->$col[$matches[1]]['time'], $dateFormat.$dateTime);					
+				}
+				break;
+			case 'event_tags':
+				$replacement = get_the_term_list( $post->ID, 'event-tag', '', ', ',''); 
+				break;
+
+			case 'event_cats':
+				$replacement = get_the_term_list( $post->ID, 'event-category', '', ', ',''); 
+				break;
+
+			case 'event_venue':
+				$replacement =eo_get_venue_name();
+				break;
+
+			case 'event_venue_map':
+				if(eo_get_venue()){
+					$class = (isset($matches[2]) ? self::eo_clean_input($matches[2]) : '');
+					$class = (!empty($class) ?  'class='.$class : '');
+					$replacement = do_shortcode('[eo_venue_map '.$class.']');
+				}
+				break;
+
+			case 'event_venue_url':
+				$replacement =eo_get_venue_link();
+				break;
+			case 'event_venue_address':
+				$address = eo_get_venue_address();
+				$replacement =$address['address'];
+				break;
+			case 'event_venue_postcode':
+				$address = eo_get_venue_address();
+				$replacement =$address['postcode'];
+				break;
+			case 'event_venue_country':
+				$address = eo_get_venue_address();
+				$replacement =$address['country'];
+				break;
+			case 'event_thumbnail':
+				$size = (isset($matches[2]) ? self::eo_clean_input($matches[2]) : '');
+				$size = (!empty($size) ?  $size : 'thumbnail');
+				$replacement = get_the_post_thumbnail($post->ID,$size);
+				break;
+			case 'event_url':
+				$replacement =  get_permalink();
+				break;
+			case 'event_custom_field':
+				$field = $matches[2];
+				$meta = get_post_meta($post->ID, $field);
+				$replacement =  implode($meta);
+				break;
+		endswitch;
+		return $replacement;
+	}
+
+	function eo_clean_input($input){
+		$input = trim($input,"{}"); //remove { }
+		$input = str_replace(array("'",'"',"&#8221;","&#8216;", "&#8217;"),'',$input); //remove quotations
+		return $input;
 	}
  
 	function print_script() {

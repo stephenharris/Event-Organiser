@@ -1,11 +1,15 @@
 <?php
 	/*
+	* Deals with the plug-in's AJAX requests
+	*/
+
+	/*
 	 * Public full calendar:
 	 * This returns events to be displayed on the front-end full calendar
 	*/
-	add_action( 'wp_ajax_eventorganiser-fullcal', 'eo_public_fullcal' ); 
-	add_action( 'wp_ajax_nopriv_eventorganiser-fullcal', 'eo_public_fullcal' ); 
-	function eo_public_fullcal() {
+	add_action( 'wp_ajax_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' ); 
+	add_action( 'wp_ajax_nopriv_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' ); 
+	function eventorganiser_public_fullcalendar() {
 		$request = array(
 			'event_start_before'=>$_GET['end'],
 			'event_end_after'=>$_GET['start']
@@ -79,8 +83,8 @@
 	 * This gets events and generates summaries for events to be displayed
 	 *  in the admin 'calendar view'
 	*/
-	add_action( 'wp_ajax_event-admin-cal', 'eo_ajax_admin_cal' ); 
-	function eo_ajax_admin_cal() {
+	add_action( 'wp_ajax_event-admin-cal', 'eventorganiser_admin_calendar' ); 
+	function eventorganiser_admin_calendar() {
 		//request
 		$request = array(
 			'event_end_after'=>$_GET['start'],
@@ -161,6 +165,7 @@
 				$summary .= "</table><p>";
 							
 				//Include schedule summary if event reoccurrs
+			
 				if($post->event_schedule !='once')
 					$summary .='<em>'.__('This event reoccurs','eventorganiser').' '.eo_get_schedule_summary().'</em>';
 				$summary .='</p>';
@@ -187,13 +192,13 @@
 				}
 
 				$terms = get_the_terms( $post->ID, 'event-category' );
+
 				$event['category']=array();
 				if($terms):
 					foreach ($terms as $term):
 						$event['category'][]= $term->slug;
 						if(empty($event['color'])):
-							$term_meta = get_option( "eo-event-category_$term->term_id");
-							$event['color'] = (isset($term_meta['colour']) ? $term_meta['colour'] : '');
+							$event['color'] = (isset($term->color) ? $term->color : '');
 						endif;
 						$event['className'][]='category-'.$term->slug;
 					endforeach;
@@ -216,9 +221,9 @@
 	 * This gets the month being viewed and generates the
 	 * html code to view that month and its events. 
 	*/
- 	add_action( 'wp_ajax_nopriv_eo_widget_cal', 'ajax_widget_cal' );
-	add_action( 'wp_ajax_eo_widget_cal', 'ajax_widget_cal' );
-	function ajax_widget_cal() {
+ 	add_action( 'wp_ajax_nopriv_eo_widget_cal', 'eventorganiser_widget_cal' );
+	add_action( 'wp_ajax_eo_widget_cal', 'eventorganiser_widget_cal' );
+	function eventorganiser_widget_cal() {
 
 		/*Retrieve the month we are after. $month must be a 
 		DateTime object of the first of that month*/
@@ -237,9 +242,9 @@
 	 * This gets the month being viewed and generates the
 	 * html code to view that month and its events. 
 	*/
- 	add_action( 'wp_ajax_nopriv_eo_widget_agenda', 'ajax_widget_agenda' );
-	add_action( 'wp_ajax_eo_widget_agenda', 'ajax_widget_agenda' );
-	function ajax_widget_agenda() {
+ 	add_action( 'wp_ajax_nopriv_eo_widget_agenda', 'eventorganiser_widget_agenda' );
+	add_action( 'wp_ajax_eo_widget_agenda', 'eventorganiser_widget_agenda' );
+	function eventorganiser_widget_agenda() {
 		global $wpdb,$eventorganiser_events_table,$wp_locale;
 		$meridiem =$wp_locale->meridiem;
 		$direction = intval($_GET['direction']);
@@ -291,14 +296,11 @@
 
 			$color='';
 			$terms = get_the_terms( $post->ID, 'event-category' );
-			if($terms):
-				foreach ($terms as $term):
-					if(empty($color)):
-						$term_meta = get_option( "eo-event-category_$term->term_id");
-						$color = (isset($term_meta['colour']) ? $term_meta['colour'] : '');
-					endif;
-				endforeach;
-			endif;
+			if($terms){
+				$term= array_shift(array_values($terms));
+				$color = (isset($term->color) ? $term->color : '');
+			}
+
 			//'StartDate'=>eo_format_date($post->StartDate,'l jS F'),
 			$return_array[] = array(
 				'StartDate'=>$post->StartDate,

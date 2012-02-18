@@ -45,7 +45,7 @@ class EO_Calendar_Widget extends WP_Widget
 
 	//Set the month to display (DateTIme must be 1st of that month)
 	$month = new DateTime();
-	$month->modify('first day of this month');
+	$month = date_create($month->format('Y-m-1'));
 
 	//Echo widget
     	echo $before_widget;

@@ -1,6 +1,6 @@
 (function($){
 jQuery(document).ready(function() {
-if($("#eo_venue_map").length>0){if(EOAjax.map!==undefined){var script=document.createElement("script");script.type="text/javascript";script.src="http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map";document.body.appendChild(script)}};
+if($(".eo-venue-map").length>0){if(EOAjax.map!==undefined){var script=document.createElement("script");script.type="text/javascript";script.src="http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map";document.body.appendChild(script)}};
 
 if($(".eo-fullcalendar").length>0){
 $(".eo-fullcalendar").fullCalendar({editable:false,firstDay:parseInt(EOAjax.fullcal.firstDay),header:{left:EOAjax.fullcal.headerleft,center:EOAjax.fullcal.headercenter,right:EOAjax.fullcal.headerright},categories:EOAjax.fullcal.categories,venues:EOAjax.fullcal.venues,eventRender:function(event,element){cat=$(".filter-category .eo-cal-filter").val();venue=$(".filter-venue .eo-cal-filter").val();if(typeof cat!=="undefined"&&cat!=''&&($.inArray(cat,event.category)<0)){return false}if(typeof venue!=="undefined"&&venue!=''&&venue!=event.venue){return false}},buttonText:{today:EOAjaxFront.locale.today,month:EOAjaxFront.locale.month,week:EOAjaxFront.locale.week,day:EOAjaxFront.locale.day,cat:EOAjaxFront.locale.cat,venue:EOAjaxFront.locale.venue},monthNames:EOAjaxFront.locale.monthNames,monthNamesShort:EOAjaxFront.locale.monthAbbrev,dayNames:EOAjaxFront.locale.dayNames,dayNamesShort:EOAjaxFront.locale.dayAbbrev,eventColor:'#21759B',defaultView:EOAjax.fullcal.defaultview,lazyFetching:'true',events:function(start,end,callback){jQuery.ajax({url:EOAjax.ajaxurl+"?action=eventorganiser-fullcal",dataType:'JSON',data:{start:jQuery.fullCalendar.formatDate(start,'yyyy-MM-dd'),end:jQuery.fullCalendar.formatDate(end,'yyyy-MM-dd')},success:function(data){callback(data)}})},selectable:false,weekMode:'variable',aspectRatio:1.50,timeFormat:'HH:mm',loading:function(bool){loading=jQuery('#'+jQuery(this).attr('id')+'_loading');if(bool){loadingTimeOut=window.setTimeout(function(){loading.show()},1000)}else{window.clearTimeout(loadingTimeOut);loading.hide()}}});jQuery(".eo-cal-filter").change(function(){$(".eo-fullcalendar").fullCalendar('rerenderEvents')});
@@ -18,7 +18,9 @@ function populateAgenda(events){$(dates).remove();current='';for(i=0;i<events.le
 
 })(jQuery);
 
-function getParameterByName(name,url){name=name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");var regexS="[\\?&]"+name+"=([^&#]*)";var regex=new RegExp(regexS);var results=regex.exec(url);if(results==null)return"";else return decodeURIComponent(results[1].replace(/\+/g," "))}function eo_load_map(){lat=EOAjax.map.lat;lng=EOAjax.map.lng;if(lat!==undefined&&lng!=undefined){var latlng=new google.maps.LatLng(lat,lng);var myOptions={zoom:15,center:latlng,mapTypeId:google.maps.MapTypeId.ROADMAP};map=new google.maps.Map(document.getElementById("eo_venue_map"),myOptions);var marker=new google.maps.Marker({position:latlng,map:map})}}	
+function getParameterByName(name,url){name=name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");var regexS="[\\?&]"+name+"=([^&#]*)";var regex=new RegExp(regexS);var results=regex.exec(url);if(results==null)return"";else return decodeURIComponent(results[1].replace(/\+/g," "))}
+
+function eo_load_map(){maps=EOAjax.map;for(i=0;i<maps.length;i++){lat=maps[i].lat;lng=maps[i].lng;if(lat!==undefined&&lng!=undefined){var latlng=new google.maps.LatLng(lat,lng);var myOptions={zoom:15,center:latlng,mapTypeId:google.maps.MapTypeId.ROADMAP};map=new google.maps.Map(document.getElementById("eo_venue_map-"+(i+1)),myOptions);var marker=new google.maps.Marker({position:latlng,map:map})}}}
 /*
  FullCalendar v1.5.2
  http://arshaw.com/fullcalendar/

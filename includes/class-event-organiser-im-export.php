@@ -155,6 +155,10 @@ X-WR-CALDESC:<?php echo get_bloginfo('name');?> - Events
 		global $post;
 		foreach ($events as $post):
 
+			//If event has no corresponding row in events table then skip it
+			if(!isset($post->event_id) || $post->event_id==-1)
+				continue;
+
 			$now = new DateTime();
 			$dtstamp =$now->format('Ymd\THis\Z');
 
@@ -180,8 +184,10 @@ X-WR-CALDESC:<?php echo get_bloginfo('name');?> - Events
 			}else{
 				$format =	'Ymd\THis\Z';
 				$UTC_tz = new DateTimeZone('UTC');
-				$start_date = $start->setTimezone($UTC_tz)->format($format);
-				$end_date = $end->setTimezone($UTC_tz)->format($format);
+				$start->setTimezone($UTC_tz);
+				$start_date =$start->format($format);
+				$end->setTimezone($UTC_tz);
+				$end_date = $end->format($format);
 			}
 
 			//Get the reoccurrence rule in ICS format

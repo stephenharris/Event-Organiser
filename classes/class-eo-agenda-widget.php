@@ -63,6 +63,7 @@ class EO_Events_Agenda_Widget extends WP_Widget
 	echo "<ul class='dates'>";
 	echo '</ul>';//End dates
 	echo "</div>";
+    	echo $after_widget;
 ?>
 	<style>
 		.eo-agenda-widget ul{

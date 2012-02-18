@@ -28,7 +28,7 @@ function eventorganiser_set_template( $template ){
 		if(is_singular('event')){
 			if(file_exists($template_dir.'/single-event.php')) 
 				$template = $template_dir.'/single-event.php';
-			if(file_exists($parent_template_dir.'/single-event.php')) 
+			elseif(file_exists($parent_template_dir.'/single-event.php')) 
 				$template = $parent_template_dir.'/single-event.php';
 	 		else
 				$template = EVENT_ORGANISER_DIR.'templates/single-event.php';
@@ -37,7 +37,7 @@ function eventorganiser_set_template( $template ){
 		if (eo_is_venue()) {
 			if(file_exists($template_dir.'/venue.php')) 
 				$template = $template_dir.'/venue-template.php';
-			if(file_exists($parent_template_dir.'/venue.php')) 
+			elseif(file_exists($parent_template_dir.'/venue.php')) 
 				$template = $parent_template_dir.'/venue-template.php';
 	 		else
 				$template = EVENT_ORGANISER_DIR.'templates/venue-template.php';
@@ -46,7 +46,7 @@ function eventorganiser_set_template( $template ){
 		if(is_tax('event-category')){
 			if(file_exists($template_dir.'/taxonomy-event-category.php')) 
 				$template = $template_dir.'/taxonomy-event-category.php';
-			if(file_exists($parent_template_dir.'/taxonomy-event-category.php')) 
+			elseif(file_exists($parent_template_dir.'/taxonomy-event-category.php')) 
 				$template = $parent_template_dir.'/taxonomy-event-category.php';
 			else
 		 		$template = EVENT_ORGANISER_DIR.'templates/taxonomy-event-category.php';

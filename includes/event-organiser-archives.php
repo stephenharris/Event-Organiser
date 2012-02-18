@@ -147,6 +147,18 @@ function eventorganiser_events_where( $where, $query ){
 	//Only alter event queries
 	if (isset( $query->query_vars['post_type'] ) && $query->query_vars['post_type']=='event'):
 
+
+		//Ensure all date queries are yyyy-mm-dd format. Process relative strings ('today','tomorrow','+1 week')
+		$dates = array('ondate','event_start_after','event_start_before','event_end_after','event_end_after');
+		foreach($dates as $prop):
+			if(!empty($query->query_vars[$prop])):
+				$date = $query->query_vars[$prop];
+				$dateString = eo_format_date($date,'Y-m-d');
+				$query->set($prop,$dateString);
+			endif;
+		endforeach;
+
+
 		//If in admin or single page - we probably don't want to see duplicates of (recurrent) events - unless specified otherwise.
 		if((is_admin() || is_single())&&(!$query->query_vars['showrepeats'])):
 
@@ -159,6 +171,7 @@ function eventorganiser_events_where( $where, $query ){
 			$query->set('group_events_by','series');
 
 		endif;
+
 
 		//If we only want events (or occurrences of events) that belong to a particular 'event'
 		if(isset($query->query_vars['event_series'])):

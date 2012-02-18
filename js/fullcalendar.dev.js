@@ -148,27 +148,14 @@ jQuery(document).ready(function() {
 			calendar.fullCalendar('rerenderEvents');
 		});
 
-		jQuery('.filter-category .eo-cal-filter').selectmenu({
-			wrapperElement:"<span class='fc-header-filter'></span>",
-			icons: [
-					{find: '.cat'},
-				]
-			});
-		jQuery('.filter-venue .eo-cal-filter').selectmenu({
-			wrapperElement:"<span class='fc-header-filter'></span>"
-		});
+$('.filter-venue .eo-cal-filter').selectmenu({wrapperElement:"<span class='fc-header-filter'></span>",width:'auto'});
+$('.filter-category .eo-cal-filter').selectmenu({wrapperElement:"<span class='fc-header-filter'></span>",width:'auto',icons:[{find:'.cat'},]});
 
-		jQuery('#eo-event-cat-menu li[class^="cat-colour-#"]').each(function(){
-			classes = this.className.split(' ');
-			var patt=/cat-colour-/g;
-			var n= patt.exec(classes[0]);
-			if(n!=null){
-				colour =classes[0].substring(11);
-				jQuery(this).find('.ui-selectmenu-item-icon.ui-icon').css({'background-color':colour});
-			}
-		})
-		
-
+//Fixes width problem for drop-down menus
+$('.filter-venue .eo-cal-filter').selectmenu({wrapperElement:"<span class='fc-header-filter'></span>"});
+$('.filter-category .eo-cal-filter').selectmenu({wrapperElement:"<span class='fc-header-filter'></span>",icons:[{find:'.cat'},]});
+w = $('#eo-event-venue-button').width()+30;$('#eo-event-venue-button').width(w+'px');$('#eo-event-venue-menu').width(w+'px');
+w2 = $('#eo-event-cat-button').width()+30;$('#eo-event-cat-button').width(w2+'px');$('#eo-event-cat-menu').width(w2+'px');
 });
 /**
 ************ WARNING ****************
@@ -211,7 +198,7 @@ function build_cat_dropdown(element){
 		html+="<option value=''>"+a.options.buttonText.cat+"</option>";
 				
 		for (i=0; i<terms.length; i++){
-			html+= "<option class='cat-colour-"+terms[i].colour+" cat' value='"+terms[i].slug+"'>"+terms[i].name+"</option>";
+			html+= "<option class='cat-slug-"+terms[i].slug+" cat' value='"+terms[i].slug+"'>"+terms[i].name+"</option>";
 		}
 		html+="</select>";
 		element.append(html);

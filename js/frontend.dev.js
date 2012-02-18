@@ -1,7 +1,7 @@
 (function($){
 jQuery(document).ready(function() {
 
-	if($("#eo_venue_map").length>0){
+	if($(".eo-venue-map").length>0){
 		if(EOAjax.map !== undefined){
 			var script = document.createElement("script");
 			script.type = "text/javascript";
@@ -198,20 +198,24 @@ if($("#eo_calendar").length>0 && typeof EOAjaxFront.adminajax !== undefined){
 	}
 
 	function eo_load_map(){
-		lat =EOAjax.map.lat;
-		lng = EOAjax.map.lng;
-		if(lat!==undefined && lng !=undefined){
-			var latlng = new google.maps.LatLng(lat,lng);
-			var myOptions = {
-				zoom: 15,
-				center: latlng,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			};
-			map = new google.maps.Map(document.getElementById("eo_venue_map"),myOptions);
-			var marker = new google.maps.Marker({
-				position: latlng, 
-				map: map
-			});
+		maps =EOAjax.map;
+		for(i=0; i<maps.length; i++){
+			lat =maps[i].lat;
+			lng = maps[i].lng;
+			if(lat!==undefined && lng !=undefined){
+				var latlng = new google.maps.LatLng(lat,lng);
+				var myOptions = {
+					zoom: 15,
+					center: latlng,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				map = new google.maps.Map(document.getElementById("eo_venue_map-"+(i+1)),myOptions);
+
+				var marker = new google.maps.Marker({
+					position: latlng, 
+					map: map
+				});
+			}	
 		}
 	}
 

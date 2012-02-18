@@ -42,6 +42,13 @@ function eo_get_events($args=array()){
 	
 	//Construct the query array	
 	$query_array = array_merge($defaults,$args,$required);
+
+	//Ensure all date queries are yyyy-mm-dd format. Process relative strings ('today','tomorrow','+1 week')
+	$dates = array('ondate','event_start_after','event_start_before','event_end_after','event_end_after');
+	foreach($dates as $prop):
+		if(!empty($query_array[$prop]))
+			$query_array[$prop] = eo_format_date($query_array[$prop],'Y-m-d');
+	endforeach;
 	
 	//Make sure 'false' is passed as integer 0
 	if(strtolower($query_array['showpastevents'])==='false') $query_array['showpastevents']=0;
@@ -220,7 +227,7 @@ function eo_next_occurence($format='',$id=''){
 Depreciated in favour of eo_is_all_day().
  */
 function eo_is_allday($id=''){
-	eo_is_all_day($id='');
+	return eo_is_all_day($id);
 }
 
 /**
@@ -376,23 +383,17 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 * Formats a date string in format 'YYYY-MM-DD' format into a specified format
 *
  * @since 1.0.0
+ * @since 1.2.2 allows relative date strings: 'today', 'tomorrow' etc
  */
 function eo_format_date($dateString='',$format='d-m-Y'){
 
-
 	if($format!=''&& $dateString!=''){
-		$datetime = new DateTime($dateString);
+		$datetime = new DateTime($dateString,EO_Event::get_timezone());
 		$formated =  eo_format_datetime($datetime,$format);
 		return $formated;
 	}
 	return false;
-
-
-
-
-
 }
-
 
 /**
 * Returns an array with details of the event's reoccurences
@@ -499,7 +500,8 @@ function eo_get_schedule_summary($id=''){
 					$d = intval($matches[1]);
 					$m =intval($reoccur['start']->format('n'));
 					$y =intval($reoccur['start']->format('Y'));
-					$return .= $reoccur['start']->setDate($y,$m,$d)->format('jS');
+					$reoccur['start']->setDate($y,$m,$d);
+					$return .= $reoccur['start']->format('jS');
 
 				}elseif($reoccur['meta']=='date'){
 					$return .= $reoccur['start']->format('jS');
@@ -602,6 +604,7 @@ function eo_get_the_GoogleLink(){
 
 	$excerpt = get_the_excerpt();
 	$excerpt = apply_filters('the_excerpt_rss', $excerpt);	
+	$excerpt = esc_html($excerpt);
 
 	$url = add_query_arg(array(
 		'text'=>$post->post_title, 
@@ -667,5 +670,9 @@ function eo_event_category_dropdown( $args = '' ) {
 		echo $output;
 
 	return $output;
+}
+
+function eo_get_category_color($term){
+	return eo_get_category_meta($term,'color');
 }
 ?>

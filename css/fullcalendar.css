@@ -63,7 +63,6 @@ div#events-meta{
     padding-right: 5px;
 }
 
-
 /*Added to fit with full calendar*/
 /*button.ui-datepicker-trigger.ui-button.ui-widget{vertical-align: top;}*/
 .ui-datepicker{z-index: 100 !important}
@@ -73,8 +72,8 @@ div#events-meta{
 .cat .ui-selectmenu-item-icon { height: 14px; width: 14px; border:1px solid #dfdfdf;border-radius: 4px;}
 .cat .ui-selectmenu-item-icon{ background-image:none!important; }
 
-#eo_admin_calendar select { width: 200px; }
-
+/*Drop down filters*/
+#eo_admin_calendar select { min-width:180px; width:auto}
 
 /*
  * FullCalendar v1.5.2 Stylesheet
@@ -86,8 +85,6 @@ div#events-meta{
  * Date: Sun Aug 21 22:06:09 2011 -0700
  *
  */
-
-
 .fc {
 	direction: ltr;
 	text-align: left;
@@ -108,8 +105,6 @@ html .fc,
 	padding: 0;
 	vertical-align: top;
 	}
-
-
 
 /* Header
 ------------------------------------------------------------------------*/
@@ -177,8 +172,6 @@ html .fc,
 	z-index: 4;
 	}
 	
-	
-	
 /* Content
 ------------------------------------------------------------------------*/
 	
@@ -191,8 +184,6 @@ html .fc,
 	overflow: hidden;
 	}
 	
-	
-
 /* Cell Styles
 ------------------------------------------------------------------------*/
 
@@ -211,8 +202,6 @@ html .fc,
 	filter: alpha(opacity=20); /* for IE */
 	}
 	
-
-
 /* Buttons
 ------------------------------------------------------------------------*/
 
@@ -327,8 +316,6 @@ html .fc,
 	display: none;
 	}
 	
-	
-
 /* Global Event Styles
 ------------------------------------------------------------------------*/
 	 
@@ -380,9 +367,7 @@ a.fc-event {
 	font-size: 300%;  /* */
 	line-height: 50%; /* */
 	}
-	
-	
-	
+
 /* Horizontal Events
 ------------------------------------------------------------------------*/
 
@@ -452,8 +437,6 @@ a.fc-event {
 	margin-bottom: -1px;
 	}
 	
-	
-	
 /* Fake Rounded Corners SPECIFICALLY FOR EVENTS
 -----------------------------------------------------------------*/
 	
@@ -472,8 +455,6 @@ a.fc-event {
 .fc-corner-bottom .fc-event-inner {
 	border-bottom-width: 1px;
 	}
-	
-	
 	
 /* Reusable Separate-border Table
 ------------------------------------------------------------*/
@@ -501,8 +482,6 @@ table.fc-border-separate {
 .fc-border-separate tbody tr.fc-first th {
 	border-top-width: 0;
 	}
-	
-	
 
 /* Month View, Basic Week View, Basic Day View
 ------------------------------------------------------------------------*/
@@ -544,8 +523,6 @@ table.fc-border-separate {
 .fc-rtl .fc-grid .fc-event-time {
 	float: right;
 	}
-	
-	
 
 /* Agenda Week View, Agenda Day View
 ------------------------------------------------------------------------*/
@@ -632,8 +609,6 @@ table.fc-border-separate {
 	*border-top-style: solid; /* doesn't work with background in IE6/7 */
 	}
 	
-
-
 /* Vertical Events
 ------------------------------------------------------------------------*/
 
@@ -688,5 +663,3 @@ table.fc-border-separate {
 .fc-agenda .ui-resizable-resizing { /* TODO: better selector */
 	_overflow: hidden;
 	}
-	
-	

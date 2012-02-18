@@ -41,7 +41,6 @@ $(document).ready(function() {
 					.addClass( "ui-widget-content ui-corner-left" );
 
 				input.data( "autocomplete" )._renderItem = function( ul, item ) {
-					console.log();
 					if(item.venue_id==0){
 						return $( "<li></li>" )
 							.data( "item.autocomplete", item )
@@ -195,7 +194,7 @@ function eo_produce_summary(){
 				selected = $("#dayofweekrepeat :checkbox:checked");
 		
 				selected.each(function(index){
-					if(index==0)summary = summary+" on "+weekdays[ical_weekdays.indexOf($(this).val())];
+					if(index==0)summary = summary+" "+weekdays[ical_weekdays.indexOf($(this).val())];
 					if(index>0)summary = summary+", "+weekdays[ical_weekdays.indexOf($(this).val())];
 				});
 				break;
@@ -225,7 +224,7 @@ function eo_produce_summary(){
 					summary += locale.yearSingle;
 				}
 				//Show & enable reoccurrence forms. Disable & hide week & month meta 
-				summary = summary+" on "+$.datepicker.formatDate('MM d', fromdate, options)+eo_date_suffix(fromdate);
+				summary = summary+" "+$.datepicker.formatDate('MM d', fromdate, options)+eo_date_suffix(fromdate);
 				break;
 		}
 

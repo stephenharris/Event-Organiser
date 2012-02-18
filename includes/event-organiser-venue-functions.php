@@ -48,7 +48,7 @@ function eo_get_venue_slug($event_id=''){
 
 	$EO_Venue = new EO_Venue((int)$event->Venue);
 
-	if($EO_Venue->is_found()) 
+	if(isset($EO_Venue) && $EO_Venue->is_found())
 		return $EO_Venue->slug;
 
 	return false;
@@ -75,7 +75,7 @@ function eo_get_venue_name($venue_slug_or_id=''){
 		$EO_Venue = new EO_Venue((int) $post->Venue);
 	}
 	
-	if($EO_Venue->is_found()) 
+	if(isset($EO_Venue) && $EO_Venue->is_found())
 		return $EO_Venue->name;
 	
 	return false;
@@ -160,7 +160,7 @@ function eo_get_venue_latlng($venue_slug_or_id=''){
 		$EO_Venue = new EO_Venue((int) $post->Venue);
 	}
 
-	if($EO_Venue->is_found()) 
+	if(isset($EO_Venue) && $EO_Venue->is_found()) 
 		return array('lat'=>$EO_Venue->latitude,'lng'=>$EO_Venue->longitude);
 	
 	return array('lat'=>0, 'lng'=>0);
@@ -218,7 +218,7 @@ function eo_get_venue_link($venue_slug_or_id=''){
 		$EO_Venue = new EO_Venue((int) $post->Venue);
 	}
 
-	if($EO_Venue->is_found()) 
+	if(isset($EO_Venue) && $EO_Venue->is_found())
 		return $EO_Venue->get_the_link();
 
 	return false; 
@@ -262,7 +262,7 @@ function eo_get_venue_address($venue_slug_or_id=''){
 	$address['postcode'] = '';
 	$address['country'] = '';
 
-	if($EO_Venue->is_found()){
+	if(isset($EO_Venue) && $EO_Venue->is_found()){
 		$address['address'] = $EO_Venue->address;
 		$address['postcode'] = $EO_Venue->postcode;
 		$address['country'] = $EO_Venue->country;

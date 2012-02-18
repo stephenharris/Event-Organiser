@@ -964,7 +964,8 @@ function is_leapyear($date){
 		else
 			$format =	'Ymd\THis\Z';
 
-		$schedule_end = $the_end->setTimezone(new DateTimeZone('UTC'))->format($format);
+		$the_end->setTimezone(new DateTimeZone('UTC'));
+		$schedule_end = $the_end->format($format);
 
 		switch($this->schedule):
 			case 'once':

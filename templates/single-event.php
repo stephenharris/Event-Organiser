@@ -33,12 +33,12 @@ get_header(); ?>
 
 							<div class="entry-meta">
 								<!----Choose a different date format depending on whether we want to include time-->
-								<?php if(eo_is_allday()): ?>
+								<?php if(eo_is_all_day()): ?>
 									<!----Event is all day -->
-									<?php $date_format = 'd F Y'; ?>
+									<?php $date_format = 'j F Y'; ?>
 								<?php else: ?>
 									<!----Event is not all day - include time in format-->
-									<?php $date_format = 'd F Y G:ia'; ?>
+									<?php $date_format = 'j F Y g:ia'; ?>
 								<?php endif; ?>
 
 								<?php if(eo_reoccurs()):?>

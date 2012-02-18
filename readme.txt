@@ -4,7 +4,7 @@ Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.3.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -15,17 +15,10 @@ Event Organiser adds event management that integrates well with your WordPress s
 Requires **WordPress 3.3** and **PHP 5.3** (or higher)  -  Event Organiser is now compatible with **PHP 5.2+**
 
 = New Features =
-
+* `eo_get_events` and the event list shortcode now support relative date formats for data parameters (e.g. `event_start_before='+1 week',`event_end_after='now'`)
 * Public events feed - allow visitors to subscribe to your events.
 * Delete individual occurrences of events.
-* Color-coded event categories.
-* Events can now support tags.
-* (Optionally) automatically delete expired events.
-* Custom permalink structure.
 * Agenda widget .
-* Show all occurrences of an event or 'group occurrences'.
-* Localisation - [see this post](http://www.harriswebsolutions.co.uk/event-organiser/forums/topic/internationalisation/) if you wish to translate Event Organiser into your language
-
 
 = Features =
 * Adds an **event custom post type** that fits naturally into WordPress and allows for all the functionality of 'posts'.
@@ -40,10 +33,12 @@ Requires **WordPress 3.3** and **PHP 5.3** (or higher)  -  Event Organiser is no
 *  **Custom permissions** allow to specifiy which roles have the ability to create, edit and delete events or manage venues.
 * **Template** pages include in the plug-in for 'quick-start'. These can be over-ridden by including the appropriately named template files in your theme folder.
 * **Event functions** available which extend the post functions (e.g. `the_title()`,`get_the_author()`, `the_author()`) to ouput or return event data (the start date-time, the venue etc). For examples of their use see the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/) or the included template files.
-* Assign events to categories, and view events by category.
+* Assign events to categories and tags, and view events by category or tag.
+* Color-coded event categories.
 * Venue pages, to view events by venue.
 * **Export/import** events to and from ICAL files.
 * Supports 'pretty permalinks' for event pages, event archives, event category and venue pages.
+* (Optionally) automatically delete expired events.
 
 
 = Planned Features =
@@ -57,6 +52,8 @@ Requires **WordPress 3.3** and **PHP 5.3** (or higher)  -  Event Organiser is no
 A big thank you to those who have provided translations for Event Organiser
 
 * French - [Rémy Perona](http://remyperona.fr/)
+* Spanish - Joseba Sanchez
+* German - [Martin Grether](http://www.datema.de/) & [Henning Matthaei](http://www.partnerwerk.de/)
 
 == Installation ==
 
@@ -118,7 +115,18 @@ Event Organiser provides the following shortcodes:
 
 == Changelog ==
 
+= 1.2.2 =
+* Event list shortcode, `[eo_events]`, now supports templates which can be enclosed in the shortcode. [See the documenation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/shortcodes/event-list-shortcode/).
+* `eo_get_events` and the event list shortcode now support relative date formats for data parameters (e.g. `event_start_before='+1 week',`event_end_after='now'`). [See the documenation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/relative-date-formats/).
+* `eo_format_date` now supports relative date formats
+* Added `eo_get_category_color` function.
+* Added German and Spanish translations
+* Fixed PHP 5.2 related bugs affecting calendars and events export
+* Fixed event permissions bug
+* Fixed other minor bugs reported here
+
 = 1.2.1 =
+
 * Fixed permalink bug
 * Venue map marker can be manually dragged to a specific location
 * Event Organiser is now compatible with PHP 5.2+
