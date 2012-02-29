@@ -244,6 +244,7 @@ function eventorganiser_uninstall(){
 	$taxs = array('event-category','event-venue','event-tag');
 	$terms = get_terms($taxs, 'hide_empty=0' );
 	foreach ($terms as $term) {
+		wp_die(var_dump($term));
 		wp_delete_term( $term->term_id,$term->taxonomy);
 	}
 	foreach ($taxs as $tax){
