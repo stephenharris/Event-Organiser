@@ -23,7 +23,7 @@ class EventOrganiser_Shortcodes {
 		global $post;
 		self::$add_script = true;
 		$month = new DateTime();
-		$month->modify('first day of this month');
+		$month = date_create($month->format('Y-m-1'));
  		return '<div class="widget_calendar eo-calendar eo-calendar-shortcode" id="eo_calendar">'.EO_Calendar_Widget::generate_output($month).'</div>';
 	}
 

@@ -49,9 +49,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
 
 	function validate($option){
 		$this->update_roles($option['permissions']);
-		unset($option['permissions']);
 
-		//TODO Whitelist options
 		$clean = array();
 		$clean = $this->validate_checkboxes($option,$clean);
 		$clean = $this->validate_text($option,$clean);
@@ -68,6 +66,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
 		foreach(self::$checkboxes as $checkbox):
   			$clean[$checkbox] = (!empty($options[$checkbox]) ? 1 : 0);
 		endforeach;
+		$clean['group_events'] = ($clean['group_events'] ? 'series' : '');
 
 		return $clean;
 	}

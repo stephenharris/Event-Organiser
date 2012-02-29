@@ -35,9 +35,9 @@ function eventorganiser_set_template( $template ){
 		}
 
 		if (eo_is_venue()) {
-			if(file_exists($template_dir.'/venue.php')) 
+			if(file_exists($template_dir.'/venue-template.php')) 
 				$template = $template_dir.'/venue-template.php';
-			elseif(file_exists($parent_template_dir.'/venue.php')) 
+			elseif(file_exists($parent_template_dir.'/venue-template.php')) 
 				$template = $parent_template_dir.'/venue-template.php';
 	 		else
 				$template = EVENT_ORGANISER_DIR.'templates/venue-template.php';

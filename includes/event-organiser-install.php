@@ -82,16 +82,17 @@
 		}
 	endforeach;  //End foreach $all_roles
 
-	//Flush rewrite rules only on activation, and after CPT has been registered.
-	add_action('init','eventorganiser_flush',11,0);
-}
+	//Manually register CPT and CTs ready for flushing
+	eventorganiser_create_event_taxonomies();
+	eventorganiser_cpt_register();
 
-function eventorganiser_flush(){
+	//Flush rewrite rules only on activation, and after CPT/CTs has been registered.
 	flush_rewrite_rules();
 }
 
 function eventorganiser_deactivate(){
 	eventorganiser_clear_cron_jobs();
+	flush_rewrite_rules();
     }
 
 add_action('admin_init', 'eventorganiser_upgradecheck');

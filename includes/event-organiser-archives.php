@@ -43,10 +43,10 @@ function eventorganiser_pre_get_posts( $query ) {
 	}
 
 	//If querying for all events starting on given date, set the date parameters
-	if( !empty( $wp_query->query_vars['ondate'])) {
-		$wp_query->set('post_type', 'event');
-		$wp_query->set('event_start_before', $wp_query->query_vars['ondate']);
-		$wp_query->set('event_start_after', $wp_query->query_vars['ondate']);
+	if( !empty( $query->query_vars['ondate'])) {
+		$query->set('post_type', 'event');
+		$query->set('event_start_before', $wp_query->query_vars['ondate']);
+		$query->set('event_start_after', $wp_query->query_vars['ondate']);
 	}
 
 	//Determine whether or not to show past events and each occurrence
@@ -149,7 +149,7 @@ function eventorganiser_events_where( $where, $query ){
 
 
 		//Ensure all date queries are yyyy-mm-dd format. Process relative strings ('today','tomorrow','+1 week')
-		$dates = array('ondate','event_start_after','event_start_before','event_end_after','event_end_after');
+		$dates = array('ondate','event_start_after','event_start_before','event_end_after','event_end_before');
 		foreach($dates as $prop):
 			if(!empty($query->query_vars[$prop])):
 				$date = $query->query_vars[$prop];

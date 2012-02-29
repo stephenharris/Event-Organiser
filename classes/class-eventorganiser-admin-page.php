@@ -9,9 +9,9 @@ class EventOrganiser_Admin_Page{
 	static $page;
 
 	function __construct() {
+		add_action('init', array($this,'set_constants'));
 		add_action('admin_init', array($this,'admin_init_actions'));
 		add_action('admin_menu', array($this,'add_page'));
-		$this->set_constants();
 	}
 
 	function set_constants(){

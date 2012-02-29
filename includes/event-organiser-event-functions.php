@@ -44,7 +44,7 @@ function eo_get_events($args=array()){
 	$query_array = array_merge($defaults,$args,$required);
 
 	//Ensure all date queries are yyyy-mm-dd format. Process relative strings ('today','tomorrow','+1 week')
-	$dates = array('ondate','event_start_after','event_start_before','event_end_after','event_end_after');
+	$dates = array('ondate','event_start_after','event_start_before','event_end_after','event_end_before');
 	foreach($dates as $prop):
 		if(!empty($query_array[$prop]))
 			$query_array[$prop] = eo_format_date($query_array[$prop],'Y-m-d');

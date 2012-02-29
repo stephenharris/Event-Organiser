@@ -536,7 +536,7 @@ function escape_icalText($text){
 				$event_post['post_title']=$this->parse_icalText($value);
 				break;
 
-			//The event's description (AKA post content) - \\TODO escape this!
+			//The event's description (AKA post content)
 			case 'DESCRIPTION':
 				$event_post['post_content']=$this->parse_icalText($value);
 				break;

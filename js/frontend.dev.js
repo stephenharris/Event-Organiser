@@ -125,7 +125,6 @@ if($("#eo_calendar").length>0 && typeof EOAjaxFront.adminajax !== undefined){
 							end: EndDate
 						},
 			            		success: function(events){ 
-									console.log(events);
 									if(events == undefined)
 										return false;
 									if(!events[0])
