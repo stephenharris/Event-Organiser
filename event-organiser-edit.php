@@ -54,9 +54,6 @@ function eventorganiser_details_metabox($post){
 	//Retrieve event details (if they exist)
 	$event = new EO_Event(get_the_ID());
 
-	//Retrieve venue of event
-	$current_Venue = new EO_Venue((int) $event->venue);
-
 	//Start of meta box ?>	
 		<p>
 			<?php if($event->is_reoccurring()):?>

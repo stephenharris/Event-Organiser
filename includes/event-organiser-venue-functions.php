@@ -422,4 +422,21 @@ function eo_get_venue_by($field,$value,$output = OBJECT){
 		return $term;
 	}
 }
+
+function eventorganiser_venue_dropdown($post_id=0,$args){
+	$venues = get_terms('event-venue', array('hide_empty'=>false));
+	$current = get_the_terms($post_id,'event-venue');
+	$current = ($current ? array_pop($current) : '');
+	$current = ($current ? $current->term_id: 0);
+
+	$id = (!empty($args['id']) ? 'id="'.esc_attr($args['id']).'"' : '');
+	$name = (!empty($args['name']) ? 'name="'.esc_attr($args['name']).'"' : '');
+	?>
+	<select <?php echo $id.' '.$name; ?>>
+		<option><?php _e("Select a venue",'eventorganiser');?></option>
+		<?php foreach ($venues as $venue):?>
+			<option <?php  selected($venue->term_id,$current);?> value="<?php echo $venue->term_id;?>"><?php echo $venue->name; ?></option>
+		<?php endforeach;?>
+	</select><?php
+}
 ?>
