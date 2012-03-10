@@ -47,20 +47,26 @@ function eventorganiser_event_sortable_columns( $columns ) {
  * What to display in custom columns of Event CPT table
  * @since 1.0.0
  */
-add_action('manage_event_posts_custom_column', 'eventorganiser_event_sort_columns', 10, 2);
-function eventorganiser_event_sort_columns($column_name, $id) {
+add_action('manage_event_posts_custom_column', 'eventorganiser_event_fill_columns', 10, 2);
+function eventorganiser_event_fill_columns($column_name, $id) {
 	global $post;
 
 	$series_id = (empty($post->event_id) ? $id :'');
-	$EO_Venue =new EO_Venue((int)eo_get_venue($series_id));
-
+;
 	$phpFormat = 'M, jS Y';
 	if(!eo_is_all_day($series_id))
 		$phpFormat .= '\<\/\b\r\>'. get_option('time_format');
 	
 	switch ($column_name) {
 		case 'venue':
-			echo "<a href='".add_query_arg( 'venue_id', $EO_Venue->id )."'>".$EO_Venue->name."</a>";
+		    	$terms = get_the_terms($post->ID, 'event-venue');
+ 			
+			if ( !empty($terms) ) {
+       	 		foreach ( $terms as $term )
+			            $post_terms[] = "<a href='".add_query_arg( 'event-venue', $term->slug)."'>".esc_html(sanitize_term_field('name', $term->name, $term->term_id,'event-venue', 'display'))."</a>";
+			        echo join( ', ', $post_terms );
+				echo "<input type='hidden' value='".$term->term_id."'/>";
+			}
 			break;
 
 		case 'datestart':
@@ -80,7 +86,7 @@ function eventorganiser_event_sort_columns($column_name, $id) {
  			
 			if ( !empty($terms) ) {
        	 		foreach ( $terms as $term )
-			            $post_terms[] = "<a href='".add_query_arg( 'event-category', $term->slug)."'>".esc_html(sanitize_term_field('name', $term->name, $term->term_id,'event-category', 'edit'))."</a>";
+			            $post_terms[] = "<a href='".add_query_arg( 'event-category', $term->slug)."'>".esc_html(sanitize_term_field('name', $term->name, $term->term_id,'event-category', 'display'))."</a>";
 			        echo join( ', ', $post_terms );
 			}
 			break;
@@ -100,7 +106,7 @@ function restrict_events_by_category() {
     // only display these taxonomy filters on desired custom post_type listings
     global $typenow,$wp_query;
     if ($typenow == 'event') {
-	eo_event_category_dropdown(array('show_option_all' => __('View all categories')));
+	eo_event_category_dropdown(array('hide_empty'=>false,'show_option_all' => __('View all categories')));
     }
 }
 
@@ -114,7 +120,7 @@ function restrict_events_by_venue() {
 
 	//Only add if CPT is event
 	if ($typenow=='event') :	
-		 eo_event_venue_dropdown(array('show_option_all' => __('View all venues','eventorganiser')));
+		 eo_event_venue_dropdown(array('hide_empty'=>false,'show_option_all' => __('View all venues','eventorganiser')));
 	endif;
 }
 
@@ -147,4 +153,87 @@ function eventorganiser_display_occurrences() {
 <?php
 	endif;//End if CPT is event
 }
+
+
+/*
+ * Bulk and quick editting of venues. Add drop-down menu for quick editing
+ * @Since 1.3
+ */
+add_action('quick_edit_custom_box',  'eventorganiser_quick_edit_box', 10, 2);
+ function eventorganiser_quick_edit_box($column_name, $post_type) {
+	if ($column_name != 'venue' || $post_type !='event') return;?>
+
+	<fieldset class="inline-edit-col-left"><div class="inline-edit-col">
+	<?php wp_nonce_field('eventorganiser_event_quick_edit','_eononce');?>
+		<label class="">
+			<span class="title">Event Venue</span><?php
+			$args = array('show_option_all' =>'No venue','orderby'=> 'name','hide_empty' => 0, 'name'=> 'eo_input[event-venue]','id'=> 'eventorganiser_venue','taxonomy'=> 'event-venue');
+			 wp_dropdown_categories( $args ); ?>
+	</label>
+	</div></fieldset>
+	<?php
+}
+
+/*
+ * Bulk and quick editting of venues. Add drop-down menu for bulk editing
+ * @Since 1.3
+ */
+add_action('bulk_edit_custom_box',  'eventorganiser_bulk_edit_box', 10, 2);
+ function eventorganiser_bulk_edit_box($column_name, $post_type) {
+	if ($column_name != 'venue' || $post_type !='event') return;?>
+
+	<fieldset class="inline-edit-col-left"><div class="inline-edit-col">
+	<?php wp_nonce_field('eventorganiser_event_quick_edit','_eononce');?>
+		<label class="">
+			<span class="title">Event Venue</span><?php
+			$args = array('show_option_none' => __( '&mdash; No Change &mdash;' ),'orderby'=> 'name','hide_empty' => 0, 'name'=> 'eo_input[event-venue]','id'=> 'eventorganiser_venue_bulk','taxonomy'=> 'event-venue');
+			 wp_dropdown_categories( $args ); ?>
+	</label>
+	</div></fieldset>
+	<?php
+}
+
+/*
+ * Bulk and quick editting of venues. Save venue update.
+ * @Since 1.3
+ */
+add_action('save_post','eventorganiser_quick_edit_save');
+function eventorganiser_quick_edit_save($post_id) {
+	global $wpdb,$eventorganiser_events_table;
+
+	// verify this is not an auto save routine. 
+	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return $post_id;
+
+	//make sure data came from our quick/bulk box
+	if(!isset($_REQUEST['_eononce']) || !wp_verify_nonce($_REQUEST['_eononce'],'eventorganiser_event_quick_edit' ))
+		return;
+
+	//authentication checks
+	if (!current_user_can('edit_event', $post_id)) return $post_id;
+
+	$venue_id =(isset($_REQUEST['eo_input']['event-venue']) ? (int) $$_REQUEST['eo_input']['event-venue'] : -1);
+
+	if($venue_id < 0) return;
+
+	//Update venue
+	$r = wp_set_post_terms( $post_id, array($venue_id), 'event-venue', false );
+	$upd = $wpdb->update( $eventorganiser_events_table, array('Venue'=>$venue_id), array( 'post_id' => $post_id ));
+}
+
+
+add_action('admin_head-edit.php', 'eventorganiser_quick_edit_script');
+function eventorganiser_quick_edit_script() { ?>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery('a.editinline').live('click', function() {
+		jQuery('#eventorganiser_venue option[value=0]').attr('selected', 'selected');
+            var id = inlineEditPost.getId(this);
+            var val = parseInt(jQuery('#post-' + id + ' td.column-venue input').val());
+		jQuery('#eventorganiser_venue option[value="'+val+'"]').attr('selected', 'selected');
+        });
+    });
+    </script>
+    <?php
+}
+
 ?>

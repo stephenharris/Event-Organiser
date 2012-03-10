@@ -9,9 +9,9 @@ class EventOrganiser_Admin_Page{
 	static $page;
 
 	function __construct() {
-		add_action('init', array($this,'set_constants'));
 		add_action('admin_init', array($this,'admin_init_actions'));
 		add_action('admin_menu', array($this,'add_page'));
+		add_action('init', array($this,'set_constants'));
 	}
 
 	function set_constants(){
@@ -39,6 +39,17 @@ class EventOrganiser_Admin_Page{
 	}
 
 	function admin_init_actions(){
+	}
+
+	function current_action(){
+
+		if ( isset( $_REQUEST['action'] ) && -1 != $_REQUEST['action'] )
+			return $_REQUEST['action'];
+
+		if ( isset( $_REQUEST['action2'] ) && -1 != $_REQUEST['action2'] )
+			return $_REQUEST['action2'];
+
+		return false;
 	}
 
 	function init(){

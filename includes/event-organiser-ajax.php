@@ -14,12 +14,37 @@
 			'event_start_before'=>$_GET['end'],
 			'event_end_after'=>$_GET['start']
 		);
+
+		if(!empty($_GET['category'])){
+			$cats = explode(',',esc_attr($_GET['category']));
+			$request['tax_query'] = array(
+				array(
+					'taxonomy' => 'event-category',
+					'field' => 'slug',
+					'terms' => $cats
+				)
+			);
+		}
+		if(!empty($_GET['venue'])){
+			$venues = explode(',',esc_attr($_GET['venue']));
+			$request['tax_query'] = array(
+				array(
+					'taxonomy' => 'event-venue',
+					'field' => 'slug',
+					'terms' => $venues
+				)
+			);
+		}
+
 		$presets = array('numberposts'=>-1, 'showrepeats'=>true,'showpastevents'=>true);
 
 		//Retrieve events		
 		$query = array_merge($request,$presets);
 		$events = eo_get_events($query);
 		$eventsarray = array();
+
+		//Blog timezone
+		$tz = EO_Event::get_timezone();
 
 		//Loop through events
 		global $post;
@@ -36,22 +61,25 @@
 				$event['allDay'] = eo_is_all_day();
 	
 				//Get Event Start and End date, set timezone to the blog's timzone
-				$event_start = new DateTime($post->StartDate.' '.$post->StartTime, EO_Event::get_timezone());
-				$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, EO_Event::get_timezone());
+				$event_start = new DateTime($post->StartDate.' '.$post->StartTime, $tz);
+				$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, $tz);
 				$event['start']= $event_start->format('Y-m-d\TH:i:s\Z');
 				$event['end']= $event_end->format('Y-m-d\TH:i:s\Z');	
 
 				//Colour past events
-				$now = new DateTIme(null,EO_Event::get_timezone());
+				$now = new DateTIme(null,$tz);
 				if($event_start <= $now)
 					$event['className'][] = 'eo-past-event';
 				else
 					$event['className'][] = 'eo-future-event';
 				
 				//Include venue if this is set
-				if($post->Venue){
-					$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);
-					$event['venue']=$post->Venue;
+				$venue = get_the_terms($post->ID,'event-venue');
+
+				if($venue && !is_wp_error($venue)){
+					$venue = array_pop($venue);
+					$event['className'][]= 'venue-'.$venue->slug;
+					$event['venue']=$venue->term_id;
 				}
 				
 				//Event categories
@@ -106,6 +134,9 @@
 		$query->get_posts();
 		$eventsarray = array();
 
+		//Blog timezone
+		$tz = EO_Event::get_timezone();
+
 		//Loop through events
 		global $post;
 		if ( $query->have_posts() ) : 
@@ -137,8 +168,8 @@
 				$organiser = get_userdata( $post->post_author)->display_name;
 	
 				//Get Event Start and End date, set timezone to the blog's timzone
-				$event_start = new DateTime($post->StartDate.' '.$post->StartTime, EO_Event::get_timezone());
-				$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, EO_Event::get_timezone());
+				$event_start = new DateTime($post->StartDate.' '.$post->StartTime, $tz);
+				$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, $tz);
 	
 				$event['start']= $event_start->format('Y-m-d\TH:i:s\Z');
 				$event['end']= $event_end->format('Y-m-d\TH:i:s\Z');
@@ -151,15 +182,18 @@
 	
 				$event['className']=array('event');
 
-				 $now = new DateTIme(null,EO_Event::get_timezone());
+				 $now = new DateTIme(null,$tz);
 				if($event_start <= $now)
 					$event['className'][]='past-event';
 
 				//Include venue if this is set
-				if($post->Venue){
-					$summary .="<tr><th>".__('Where','eventorganiser').": </th><td>".eo_get_venue_name((int)$post->Venue)."</td></tr>";
-					$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);
-					$event['venue']=$post->Venue;
+				$venue = get_the_terms($post->ID,'event-venue');
+
+				if($venue && !is_wp_error($venue)){
+					$venue = array_pop($venue);
+					$summary .="<tr><th>".__('Where','eventorganiser').": </th><td>".$venue->name."</td></tr>";
+					$event['className'][]= 'venue-'.$venue->slug;
+					$event['venue']=$venue->term_id;
 				}
 	
 				$summary .= "</table><p>";
@@ -179,16 +213,37 @@
 
 				//Include a delete occurrence link in summary if user has permission
 				if (current_user_can('delete_event', $post->ID)){
-					$delete_url  = admin_url('edit.php');
+					$admin_url  = admin_url('edit.php');
+
 					$delete_url = add_query_arg(array(
 						'post_type'=>'event',
 						'page'=>'calendar',
 						'series'=>$post->ID,
 						'event'=>$post->event_id,
 						'action'=>'delete_occurrence'
-					),$delete_url);
+					),$admin_url);
+
 					$delete_url  = wp_nonce_url( $delete_url , 'eventorganiser_delete_occurrence_'.$post->event_id);
-					$summary .= "<span class='delete'><a class='submitdelete' style='color:red;float:right' title='".__('Delete this occurrence','eventorganiser')."' href='".$delete_url."'> ".__('Delete this occurrence','eventorganiser')."</a></span>";
+
+					$summary .= "<span class='delete'>
+					<a class='submitdelete' style='color:red;float:right' title='".__('Delete this occurrence','eventorganiser')."' href='".$delete_url."'> ".__('Delete this occurrence','eventorganiser')."</a>
+					</span>";
+
+					if($post->event_schedule !='once'){
+						$break_url = add_query_arg(array(
+							'post_type'=>'event',
+							'page'=>'calendar',
+							'series'=>$post->ID,
+							'event'=>$post->event_id,
+							'action'=>'break_series'
+						),$admin_url);
+						$break_url  = wp_nonce_url( $break_url , 'eventorganiser_break_series_'.$post->event_id);
+
+						$summary .= "<span class='break'>
+						<a class='submitbreak' style='color:red;float:right;padding-right: 2em;' title='".__('Break this series','eventorganiser')."' href='".$break_url."'> ".__('Break this series','eventorganiser')."</a>
+						</span>";
+					}
+
 				}
 
 				$terms = get_the_terms( $post->ID, 'event-category' );
@@ -325,16 +380,16 @@
 	*/
 	add_action( 'wp_ajax_eo-search-venue', 'eventorganiser_search_venues' ); 
 	function eventorganiser_search_venues() {
+		
 		// Query the venues with the given term
-		$EO_Venues = new EO_Venues;
-		$EO_Venues->query(array('s'=>$_GET["term"]));
+		$value = trim(esc_attr($_GET["term"]));
+		$venues =  get_terms('event-venue',array('hide_empty'=>false,'search'=>$value));
+		
+		$novenue = array('term_id'=>0,'name'=>__('No Venue','eventorganiser'));
+		$venues =array_merge (array($novenue),$venues);
 
-		$venues_array = $EO_Venues->results;
-		$novenue = array('venue_id'=>0,'venue_name'=>__('No Venue','eventorganiser'));
-
-		$venues_array =array_merge (array($novenue),$venues_array);
 		//echo JSON to page  
-		$response = $_GET["callback"] . "(" . json_encode($venues_array) . ")";  
+		$response = $_GET["callback"] . "(" . json_encode($venues) . ")";  
 		echo $response;  
 		exit;
 }

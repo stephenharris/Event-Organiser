@@ -41,11 +41,10 @@
 	  venue_description longtext NOT NULL,
 	  PRIMARY KEY  (venue_id) )".$charset_collate;
 
-   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-   dbDelta($sql_events_table);
-   dbDelta($sql_venue_table);
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	dbDelta($sql_events_table);
+	dbDelta($sql_venue_table);
 	
-
 	//Add options and capabilities
 	$eventorganiser_options = array (	
 		'supports' => array('title','editor','author','thumbnail','excerpt','custom-fields','comments'),
@@ -93,11 +92,13 @@
 function eventorganiser_deactivate(){
 	eventorganiser_clear_cron_jobs();
 	flush_rewrite_rules();
+	//TODO Remove before releasing
+	eventorganiser_uninstall();
     }
 
 add_action('admin_init', 'eventorganiser_upgradecheck');
 function eventorganiser_upgradecheck(){
-       global $eventorganiser_db_version, $eventorganiser_events_table, $wpdb;
+       global $eventorganiser_db_version, $eventorganiser_events_table, $wpdb,$eventorganiser_venue_table;
 	global $EO_Errors;
 	
 	$installed_ver = get_option('eventorganiser_version');
@@ -157,6 +158,56 @@ function eventorganiser_upgradecheck(){
 			update_option('eventorganiser_options',$settings);
 			flush_rewrite_rules();		
 		}
+		if($installed_ver <'1.2.9.1'){
+			//Venues being converted to taxonomy terms
+			$venues = eo_get_the_venues(); //Get venues from meta table
+			$slimetrail = array();	//Track changes from an old slug to another
+
+			//For each term insert it as a taxonomy term.
+			foreach ($venues as $venue){
+				$old_slug =esc_attr($venue->venue_slug);	
+				$term = wp_insert_term(esc_attr($venue->venue_name),'event-venue',array(
+						'description'=> $venue->venue_description,
+						'slug' => $old_slug ));
+
+				if(!is_wp_error($term)){
+					$term= get_term_by('id',$term['term_id'],'event-venue');
+					$slimetrail[$old_slug] = $term->slug;//WordPress may have changed the slug
+					if($term->slug != $old_slug){
+						$wpdb->update($eventorganiser_venue_table, array('venue_slug'=>$term->slug),  array('venue_id'=>$venue->venue_id), '%s', '%d'); 
+					}
+				}
+			}
+		
+			//Loop through ALL events...
+			$events = new WP_Query(array(
+				'post_type'=>'event',	'posts_per_page'=>-1,'showpastevents'=>1,'showrepeats'=>0,
+				'post_status' => array('publish','private', 'pending', 'draft', 'future','trash')
+			));
+
+			global $post;
+			if($events->have_posts()):
+				while($events->have_posts()): $events->the_post();
+					if(empty($post->Venue)) continue; //Doesn't have a venue
+
+					$post_id = intval($post->ID);
+					$venue_id =intval($post->Venue);
+					$venue = eo_get_venue_by('id',$venue_id);//Get venue meta.
+
+					if(!empty($venue)){
+						$slug = esc_attr($venue->venue_slug);
+						$venue_tax= get_term_by('slug',$slug,'event-venue');
+						if($venue_tax){
+							$venue_tax_id =(int) $venue_tax->term_id;
+							wp_set_object_terms( $post_id, array($venue_tax_id),'event-venue');
+							//Change Venue column to tax ID
+							$wpdb->update($eventorganiser_events_table, array('Venue'=>$venue_tax_id),  array('post_id'=>$post_id,'Venue'=>$venue_id), '%d', '%d'); 
+						}
+					}
+				endwhile;
+				wp_reset_postdata();
+			endif;
+		}
 		update_option('eventorganiser_version', $eventorganiser_db_version);
 	endif;
 }
@@ -166,10 +217,6 @@ function eventorganiser_uninstall(){
 	global $wpdb,$eventorganiser_venue_table, $eventorganiser_events_table,$eventorganiser_roles, $wp_roles,$wp_taxonomies;
 
 	eventorganiser_clear_cron_jobs();
-
-	//Drop tables    
-	$wpdb->query("DROP TABLE IF EXISTS $eventorganiser_events_table");
-	$wpdb->query("DROP TABLE IF EXISTS $eventorganiser_venue_table");
 
 	//Remove all posts of CPT Event
 	//?? $wpdb->query("DELETE FROM $wpdb->posts WHERE post_type = 'event'");
@@ -192,12 +239,19 @@ function eventorganiser_uninstall(){
 	
 	eventorganiser_clear_cron_jobs();
 
-	//Remove 	event category and terms
-	$terms = get_terms( 'event-category', 'hide_empty=0' );
-		foreach ($terms as $term) {
-			wp_delete_term( $term->term_id, 'event-category');
-		}
-		unset($wp_taxonomies['event-category']);
+	//Remove 	custom taxonomies and terms.
+	$taxs = array('event-category','event-venue','event-tag');
+	$terms = get_terms($taxs, 'hide_empty=0' );
+	foreach ($terms as $term) {
+		wp_delete_term( $term->term_id,$term->taxonomy);
+	}
+	foreach ($taxs as $tax){
+		unset($wp_taxonomies[$tax]);
+	}
+
+	//Drop tables    
+	$wpdb->query("DROP TABLE IF EXISTS $eventorganiser_events_table");
+	$wpdb->query("DROP TABLE IF EXISTS $eventorganiser_venue_table");
 
 	//Remove user-meta-data:
 	$meta_keys = array('metaboxhidden_event','closedpostboxes_event','wp_event_page_venues_per_page','manageedit-eventcolumnshidden');	
@@ -207,6 +261,6 @@ function eventorganiser_uninstall(){
 	endforeach;
 	$sql.=" 1=0 "; //Deal with final 'OR', must be something false!
 	$re =$wpdb->get_results( $sql);	
-
+	flush_rewrite_rules();
     }
 ?>

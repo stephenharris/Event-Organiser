@@ -39,13 +39,12 @@ class EO_Event_List_Widget extends WP_Widget{
    <em><?php _e('List category slug(s), seperate by comma. Leave blank for all', 'eventorganiser'); ?> </em>
 </p>
   <p>
-  <label for="<?php echo $this->get_field_id('venue'); ?>"><?php _e('Venue', 'eventorganiser'); ?>:   </label>
-	<?php 	$venues = new EO_Venues;
-			$venues->query();?>
+	  <label for="<?php echo $this->get_field_id('venue'); ?>"><?php _e('Venue', 'eventorganiser'); ?>:   </label>
+	<?php 	$venues = get_terms('event-venue', array('hide_empty'=>false));?>
 	<select id="<?php echo $this->get_field_id('venue'); ?>" name="<?php echo $this->get_field_name('venue'); ?>" type="text">
 		<option value="" <?php selected($instance['venue'], ''); ?>><?php _e('All Venues','eventorganiser'); ?> </option>
-		<?php foreach ($venues->results as $thevenue):?>
-			<option <?php  selected($instance['venue'],$thevenue['venue_slug']);?> value="<?php echo $thevenue['venue_slug'];?>"><?php echo $thevenue['venue_name']; ?></option>
+		<?php foreach ($venues as $venue):?>
+			<option <?php  selected($instance['venue'],$venue->slug);?> value="<?php echo $venue->slug;?>"><?php echo $venue->name; ?></option>
 		<?php endforeach;?>
 	</select>
 </p>

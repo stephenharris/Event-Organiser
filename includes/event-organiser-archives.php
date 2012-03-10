@@ -11,14 +11,14 @@
 add_filter('query_vars', 'eventorganiser_register_query_vars' );
 function eventorganiser_register_query_vars( $qvars ){
 	//Add these query variables
-	$qvars[] = 'venue';
-	$qvars[] = 'venue_id';
+	$qvars[] = 'venue';//Depreciated
 	$qvars[] = 'ondate';
 	$qvars[] = 'showrepeats';
 	$qvars[] = 'eo_interval';
 
 	return $qvars;
 }
+
 
 /** 
 * Sets post type to 'event's if required.
@@ -31,15 +31,15 @@ add_action( 'pre_get_posts', 'eventorganiser_pre_get_posts' );
 function eventorganiser_pre_get_posts( $query ) {
 	global $wp_query; 
 
-	//If venue or event-category is being queried, we must be after events
-	if( isset( $query->query_vars['venue'] ) || isset( $query->query_vars['venue_id'] )  || isset($query->query_vars['event-category'] ) || isset($query->query_vars['event-tag'] )) {
-		$query->set('post_type', 'event');
-	}
+	//Deprecited, use event-venue instead.
+	if(isset($query->query_vars['venue'] )){
+		$venue = esc_attr($query->query_vars['venue']);
+		$query->set('event-venue',$venue);
+       }
 
-	//If Global venue is set, set global $EO_Venue
-	if( isset( $wp_query->query_vars['venue'])) {
-		global $EO_Venue;
-		$EO_Venue = new EO_Venue($wp_query->query_vars['venue']);
+	//If venue or event-category is being queried, we must be after events
+	if(isset($query->query_vars['event-venue'])  || isset($query->query_vars['event-category'] ) || isset($query->query_vars['event-tag'] )) {
+		$query->set('post_type', 'event');
 	}
 
 	//If querying for all events starting on given date, set the date parameters
@@ -122,7 +122,7 @@ function eventorganiser_event_groupby( $groupby, $query ){
  */
 add_filter('posts_join', 'eventorganiser_join_tables',10,2);
 function eventorganiser_join_tables( $join, $query ){
-	global $wpdb, $eventorganiser_events_table, $eventorganiser_venue_table;
+	global $wpdb, $eventorganiser_events_table;
 
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']) {
 			$join .=" LEFT JOIN $eventorganiser_events_table ON $wpdb->posts.id = {$eventorganiser_events_table}.post_id ";
@@ -134,19 +134,16 @@ function eventorganiser_join_tables( $join, $query ){
 /**
 * Selects posts which satisfy custom WHERE statements
 * This funciton allows us to choose events within a certain date range,
-* or active on a particular day or at a venue.
-*
-* TODO allow an array of venues to be queried
+* or active on a particular day.
 *
  * @since 1.0.0
  */
 add_filter('posts_where','eventorganiser_events_where',10,2);
 function eventorganiser_events_where( $where, $query ){
-	global $wpdb, $eventorganiser_events_table, $eventorganiser_venue_table;
+	global $wpdb, $eventorganiser_events_table;
 
 	//Only alter event queries
 	if (isset( $query->query_vars['post_type'] ) && $query->query_vars['post_type']=='event'):
-
 
 		//Ensure all date queries are yyyy-mm-dd format. Process relative strings ('today','tomorrow','+1 week')
 		$dates = array('ondate','event_start_after','event_start_before','event_end_after','event_end_before');
@@ -177,6 +174,11 @@ function eventorganiser_events_where( $where, $query ){
 		if(isset($query->query_vars['event_series'])):
 			$series_id =$query->query_vars['event_series'];
 			$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.post_id =%d ",$series_id);
+		endif;
+
+		if(isset($query->query_vars['event_occurrence_id'])):
+			$occurrence_id =$query->query_vars['event_occurrence_id'];
+			$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.event_id=%d ",$occurrence_id);
 		endif;
 
 
@@ -285,26 +287,6 @@ function eventorganiser_events_where( $where, $query ){
 			endif;
 		}
 
-		//If venue is specified, restrict events to that venue 
-		if( isset( $query->query_vars['venue'] ) && $query->query_vars['venue']!='') {
-			$venue = $query->query_vars['venue'];
-			if(is_int($venue)){
-				$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.Venue =%d ",intval($venue));
-			}else{
-				$venue = new EO_Venue($query->query_vars['venue']);
-				if($venue->is_found()){
-					$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.Venue =%d ",$venue->id);
-				}else{
-					$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.Venue =NULL");
-				}
-			}
-		}elseif( !empty( $query->query_vars['venue_id'] )) {
-			$venue = $query->query_vars['venue_id'];
-			$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.Venue =%d ",$venue);
-		}
-
-
-
 		//Check date ranges were are interested in
 		if( isset( $query->query_vars['event_start_before'] ) && $query->query_vars['event_start_before']!='') {
 			$s_before = $query->query_vars['event_start_before'];
@@ -329,7 +311,7 @@ function eventorganiser_events_where( $where, $query ){
 
 /**
 * Alter the order of posts. 
-* This function allows to sort our events by a custom order (venue, date etc)
+* This function allows to sort our events by a custom order
 *
  * @since 1.0.0
  */
@@ -370,9 +352,6 @@ function eventorganiser_sort_events( $orderby, $query ){
 //These functions are useful for determining if venue or date is being queried
 function eo_is_venue(){
 	global $wp_query;
-	if( isset( $wp_query->query_vars['venue']) || isset( $wp_query->query_vars['venue_slug'])|| isset( $wp_query->query_vars['venue_id'])) {
-		return true;
-	}
-	return false;
+	return (isset($wp_query->query_vars['venue'] ) || is_tax('event-venue'));
 }
 ?>

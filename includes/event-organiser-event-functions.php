@@ -2,7 +2,6 @@
 /**
 * Event related functions
 */
-
 /**
 * Retrieve list of event matching criteria.
 * The defaults are as follows:
@@ -43,8 +42,13 @@ function eo_get_events($args=array()){
 	//Construct the query array	
 	$query_array = array_merge($defaults,$args,$required);
 
+	if(!empty($query_array['venue'])){	
+		$query_array['event-venue'] = $query_array['venue'];
+		unset($query_array['venue']);
+	}
+	
 	//Ensure all date queries are yyyy-mm-dd format. Process relative strings ('today','tomorrow','+1 week')
-	$dates = array('ondate','event_start_after','event_start_before','event_end_after','event_end_before');
+	$dates = array('ondate','event_start_after','event_start_before','event_end_before','event_end_after');
 	foreach($dates as $prop):
 		if(!empty($query_array[$prop]))
 			$query_array[$prop] = eo_format_date($query_array[$prop],'Y-m-d');
@@ -674,5 +678,10 @@ function eo_event_category_dropdown( $args = '' ) {
 
 function eo_get_category_color($term){
 	return eo_get_category_meta($term,'color');
+}
+
+
+function eo_is_event_taxonomy(){
+	return (is_tax(array('event-category','event-tag','event-venue')));
 }
 ?>

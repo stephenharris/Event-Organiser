@@ -9,7 +9,7 @@
 add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
 	global $wp_locale;
-	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery'),'1.2.4',true);
+	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery'),'1.2.2',true);
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
 			'adminajax'=>admin_url( 'admin-ajax.php'),
 			'locale'=>array(
@@ -26,8 +26,8 @@ function eventorganiser_register_script() {
 				'venue'=>__('View all venues','eventorganiser'),
 				)
 			));
-	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),'1.2.4');
-	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array(),'1.2.4');
+	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),'1.2.2');
+	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array(),'1.2.2');
 }   
 
  /**
@@ -42,7 +42,7 @@ function eventorganiser_register_scripts(){
 	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL.'js/venues.js',array(
 		'jquery',
 		'eo_GoogleMap'
-	),'1.2.4',true);
+	),'1.2.2',true);
 	
 	wp_register_script( 'eo_event', EVENT_ORGANISER_URL.'js/event.js',array(
 		'jquery',
@@ -50,7 +50,7 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',
 		'jquery-ui-position'
-	),'1.2.4',true);	
+	),'1.2.2',true);	
 
 	//Calendar View
 	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL.'js/fullcalendar.js',array(
@@ -59,7 +59,7 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-widget',
 		'jquery-ui-button',
 		'jquery-ui-position'),
-		'1.2.4',true);	
+		'1.2.2',true);	
 
 	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css');
 }

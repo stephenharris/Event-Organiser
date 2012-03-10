@@ -3,14 +3,12 @@
 if(!class_exists('EventOrganiser_Admin_Page')){
     require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
 }
-class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
-{
+class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 
 	static $editable_roles;
 	static $sup_array;
 	static $eventorganiser_roles;
 	static $settings;
-
 	static $checkboxes,$text,$permalinks,$select,$radio,$defaults;
 
 	function set_constants(){
@@ -20,13 +18,24 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
 		$this->permissions ='manage_options';
 		$this->slug ='event-settings';
 
-		self::$checkboxes = array('addtomenu','showpast','templates','prettyurl','excludefromsearch','deleteexpired','feed','eventtag','group_events');
+		self::$checkboxes = array('showpast','templates','prettyurl','excludefromsearch','deleteexpired','feed','eventtag','group_events');
 		self::$text = array('navtitle');
 		self::$permalinks = array('url_event','url_venue','url_cat','url_tag');
+
+		$menus = get_terms('nav_menu');
+
 		self::$select = array('dateformat' => array(
 				'dd-mm'=>__('dd-mm-yyyy','eventorganiser'),
 				'mm-dd'=>__('mm-dd-yyyy','eventorganiser')
-			));
+			));		
+		$menus = get_terms('nav_menu');
+		self::$select['addtomenu']['0'] = 'None';
+		self::$select['addtomenu']['1'] = 'Fallback';
+		 foreach($menus as $menu): 
+			self::$select['addtomenu'][$menu->slug] = $menu->name;
+		 endforeach; 
+
+
 		self::$radio = array(
 			'runningisnotpast' => array(
 				'0'=>__('Yes'),
@@ -48,7 +57,8 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
 	}
 
 	function validate($option){
-		$this->update_roles($option['permissions']);
+		$permissions = (isset($option['permissions']) ? $option['permissions'] : array());
+		$this->update_roles($permissions);
 
 		$clean = array();
 		$clean = $this->validate_checkboxes($option,$clean);
@@ -59,6 +69,9 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
 
 		$clean['supports'] = (isset($option['supports']) ? array_map('esc_html',$option['supports']) : array());
 		$clean['supports'] = array_merge($clean['supports'],array('title','editor'));
+
+		$clean = $this->update_nav_menu($option,$clean);
+
 		return $clean;
 	}
 
@@ -67,7 +80,6 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
   			$clean[$checkbox] = (!empty($options[$checkbox]) ? 1 : 0);
 		endforeach;
 		$clean['group_events'] = ($clean['group_events'] ? 'series' : '');
-
 		return $clean;
 	}
 
@@ -101,6 +113,47 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
 		endforeach;
 		return $clean;
 	}
+
+	function update_nav_menu($options,$clean){
+		$eo_options= get_option('eventorganiser_options');
+
+		$menu = $clean['addtomenu'];
+		$menu_item_db_id = isset($eo_options['menu_item_db_id']) ? (int) $eo_options['menu_item_db_id'] : 0;
+		$current = (isset($eo_options['addtomenu']) ? $eo_options['addtomenu'] : 0);
+
+		if(!is_nav_menu_item($menu_item_db_id)){
+			$menu_item_db_id=0;
+			$current ='';
+		}
+
+		if((empty($menu)||$menu=='1')&& is_nav_menu_item($menu_item_db_id) ){
+			wp_delete_post( $menu_item_db_id, true );
+			$menu_item_db_id=0;
+		}
+
+		if(( !empty($menu) && $menu !='1')){
+			$menu_item_data = array();
+			$menu_obj = wp_get_nav_menu_object($menu);
+			$menu_id = ($menu_obj ? $menu_obj->term_id : 0);
+			$status = ($menu_id==0 ? '' : 'publish');
+
+			$menu_item_data = array(	
+				'menu-item-title'=> $clean['navtitle'],
+				'menu-item-url' =>get_post_type_archive_link('event'),
+				'menu-item-object' =>'event',
+				'menu-item-status' =>$status,
+				'menu-item-type'=>'post_type_archive'
+			);
+			$menu_item_db_id = wp_update_nav_menu_item( $menu_id, $menu_item_db_id,$menu_item_data);
+		}
+
+		$clean['menu_item_db_id'] =$menu_item_db_id;
+		return $clean;
+	}
+
+
+
+
 
 	function update_roles($permissions){
 		global $wp_roles,$EO_Errors,$eventorganiser_roles;
@@ -171,7 +224,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
 		</form> 
 
 		<div class="tab-content eo-tab-imexport-content">
-			<?php do_action('eventorganiser_im_export'); ?>
+			<?php do_action('eventorganiser_event_settings_imexport'); ?>
 		</div>
 	<?php
 	}
@@ -247,8 +300,20 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page
 	<tr>
 		<th><?php _e("Add an 'events' link to the navigation menu:",'eventorganiser');?></th>
 		<td>
-			<input type="checkbox" name="eventorganiser_options[addtomenu]" value="1" <?php checked('1', self::$settings['addtomenu']); ?>/>
+			<?php self::$settings['addtomenu'] =( !empty(self::$settings['addtomenu']) ? self::$settings['addtomenu'] :  0); ?>
+			<?php $menus = get_terms('nav_menu');?>
+				<select  name="eventorganiser_options[addtomenu]">
+					<option  <?php selected(0,self::$settings['addtomenu']);?> value="0">Do not add to menu </option>
+				<?php foreach($menus as $menu): ?>
+					<option  <?php selected($menu->slug,self::$settings['addtomenu']);?> value="<?php echo $menu->slug; ?>"><?php echo $menu->name;?> </option>
+				<?php endforeach; ?>
+					<option  <?php selected(1,self::$settings['addtomenu']);?> value="1">Fallback option </option>
+				</select>
+
 			<?php self::$settings['navtitle'] =( !empty(self::$settings['navtitle']) ? self::$settings['navtitle'] :  __('Events','eventorganiser')); ?>
+			<?php self::$settings['menu_item_db_id'] =( !empty(self::$settings['menu_item_db_id']) ? (int) self::$settings['menu_item_db_id'] : 0); ?>
+
+			<input type="hidden" name ="eventorganiser_options[menu_item_db_id]" value="<?php echo self::$settings['menu_item_db_id'];?>" />
 			<input type="text" name="eventorganiser_options[navtitle]" value="<?php echo self::$settings['navtitle'];?>" />
 			<?php _e("(This may not work with some themes):",'eventorganiser');?>
 		</td>

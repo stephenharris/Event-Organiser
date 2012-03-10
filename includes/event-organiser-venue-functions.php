@@ -17,13 +17,19 @@ function eo_get_venue($event_id=''){
 	global $post;
 	$event = $post;
 
+	$post_id = (isset($post->ID) ? $post->ID : 0);
+
 	if(!empty($event_id)) 
-		$event = eo_get_by_postid($event_id);
+		$post_id = $event_id;
 
-	if(!empty($event->Venue))
-		return (int)$event->Venue;
+	$venue = get_the_terms($post_id,'event-venue');
 
-	return false;
+	if ( empty($venue) || is_wp_error( $venue ) )
+		return false;
+
+	$venue = array_pop($venue);
+
+	return $venue->term_id;	
 }
 
 /**
@@ -40,18 +46,19 @@ function eo_get_venue_slug($event_id=''){
 	global $post;
 	$event = $post;
 
-	if(!empty($event_id)) 
-		$event = eo_get_by_postid($event_id);
+	$post_id = (isset($post->ID) ? $post->ID : 0);
 
-	if(empty($event->Venue))
+	if(!empty($event_id)) 
+		$post_id = $event_id;
+
+	$venue = get_the_terms($post_id,'event-venue');
+
+	if ( empty($venue) || is_wp_error( $venue ) )
 		return false;
 
-	$EO_Venue = new EO_Venue((int)$event->Venue);
+	$venue = array_pop($venue);
 
-	if(isset($EO_Venue) && $EO_Venue->is_found())
-		return $EO_Venue->slug;
-
-	return false;
+	return $venue->slug;
 }
 
 
@@ -67,18 +74,25 @@ function eo_get_venue_slug($event_id=''){
  */
 function eo_get_venue_name($venue_slug_or_id=''){
 	global $post;
-	$EO_Venue = new EO_Venue();
+	$venue = $venue_slug_or_id;
+	if(empty($venue)){
+		$venue = get_the_terms($post->ID,'event-venue');
 
-	if(!empty($venue_slug_or_id)){ 
-		$EO_Venue = new EO_Venue($venue_slug_or_id);
-	}elseif(!empty($post->Venue)){
-		$EO_Venue = new EO_Venue((int) $post->Venue);
+		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
+	}else{
+		if(is_numeric($venue)){
+			$venue = get_term_by('id', (int) $venue, 'event-venue');
+		
+		}else{
+			$venue = 	get_term_by('slug', $venue, 'event-venue');
+		}
+		
 	}
+
+	if ( empty($venue) || is_wp_error( $venue ) )
+		return false;
 	
-	if(isset($EO_Venue) && $EO_Venue->is_found())
-		return $EO_Venue->name;
-	
-	return false;
+	return $venue->name;
 }
 
 /**
@@ -107,16 +121,23 @@ function eo_venue_name($venue_slug_or_id=''){
 function eo_get_venue_description($venue_slug_or_id=''){
 	global $post;
 
-	if(!empty($venue_slug_or_id)){ 
-		$EO_Venue = new EO_Venue($venue_slug_or_id);
-	}elseif(!empty($post->Venue)){
-		$EO_Venue = new EO_Venue((int) $post->Venue);
+	$venue = $venue_slug_or_id;
+	if(empty($venue)){
+		$venue = get_the_terms($post->ID,'event-venue');
+		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
+	}else{
+		if(is_numeric($venue)){
+			$venue = get_term_by('id', (int) $venue, 'event-venue');
+		
+		}else{
+			$venue = 	get_term_by('slug', $venue, 'event-venue');
+		}
 	}
-	
-	if(empty($EO_Venue) || !$EO_Venue->is_found()) 
+
+	if ( empty($venue) || is_wp_error( $venue ) )
 		return false;
 
-	$description =$EO_Venue->description;
+	$description =$venue->venue_description;
 	$description = apply_filters('the_content', $description);
 
 	return $description;
@@ -152,18 +173,23 @@ function eo_venue_description($venue_slug_or_id=''){
  */
 function eo_get_venue_latlng($venue_slug_or_id=''){
 	global $post;
-	$EO_Venue= new EO_Venue();
-
-	if(!empty($venue_slug_or_id)){ 
-		$EO_Venue = new EO_Venue($venue_slug_or_id);
-	}elseif(!empty($post->Venue)){
-		$EO_Venue = new EO_Venue((int) $post->Venue);
+	$venue = $venue_slug_or_id;
+	if(empty($venue)){
+		$venue = get_the_terms($post->ID,'event-venue');
+		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
+	}else{
+		if(is_numeric($venue)){
+			$venue = get_term_by('id', (int) $venue, 'event-venue');
+		
+		}else{
+			$venue = 	get_term_by('slug', $venue, 'event-venue');
+		}
 	}
 
-	if(isset($EO_Venue) && $EO_Venue->is_found()) 
-		return array('lat'=>$EO_Venue->latitude,'lng'=>$EO_Venue->longitude);
-	
-	return array('lat'=>0, 'lng'=>0);
+	if ( empty($venue) || is_wp_error( $venue ) )
+		return array('lat'=>0, 'lng'=>0);
+
+	return array('lat'=>$venue->venue_lat,'lng'=>$venue->venue_lng);
 }
 
 
@@ -212,16 +238,26 @@ function eo_venue_lng($venue_slug_or_id=''){
 function eo_get_venue_link($venue_slug_or_id=''){
 	global $post;
 
-	if(!empty($venue_slug_or_id)){ 
-		$EO_Venue = new EO_Venue($venue_slug_or_id);
-	}elseif(!empty($post->Venue)){
-		$EO_Venue = new EO_Venue((int) $post->Venue);
+	$venue = $venue_slug_or_id;
+	if(empty($venue)){
+		$venue = get_the_terms($post->ID,'event-venue');
+		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
+	}else{
+		if(is_numeric($venue)){
+			$venue = get_term_by('id', (int) $venue, 'event-venue');
+		
+		}else{
+			$venue = 	get_term_by('slug', $venue, 'event-venue');
+		}
+		
 	}
 
-	if(isset($EO_Venue) && $EO_Venue->is_found())
-		return $EO_Venue->get_the_link();
+	if ( empty($venue) || is_wp_error( $venue ) )
+		return '';
 
-	return false; 
+	$venue_link = get_term_link( $venue, 'event-venue' );
+
+	return $venue_link;
 }
 
 
@@ -252,28 +288,37 @@ function eo_venue_link($venue_slug_or_id=''){
 function eo_get_venue_address($venue_slug_or_id=''){
 	global $post;
 
-	if(!empty($venue_slug_or_id)){ 
-		$EO_Venue = new EO_Venue($venue_slug_or_id);
-	}elseif(!empty($post->Venue)){
-		$EO_Venue = new EO_Venue((int) $post->Venue);
+	$venue = $venue_slug_or_id;
+	if(empty($venue)){
+		$venue = get_the_terms($post->ID,'event-venue');
+		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
+	}else{
+		if(is_numeric($venue)){
+			$venue = get_term_by('id', (int) $venue, 'event-venue');
+		
+		}else{
+			$venue = 	get_term_by('slug', $venue, 'event-venue');
+		}
 	}
 
+	$address=array();
 	$address['address'] = '';
 	$address['postcode'] = '';
 	$address['country'] = '';
 
-	if(isset($EO_Venue) && $EO_Venue->is_found()){
-		$address['address'] = $EO_Venue->address;
-		$address['postcode'] = $EO_Venue->postcode;
-		$address['country'] = $EO_Venue->country;
-	}
+	if ( empty($venue) || is_wp_error( $venue ) )
+		return $address;
+
+	$address['address'] = $venue->venue_address;
+	$address['postcode'] = $venue->venue_postal;
+	$address['country'] = $venue->venue_country;
 
 	return $address;
 }
 
 function eo_get_the_venues(){
 	global $eventorganiser_venue_table,$wpdb;
-	//TODO take care of sanitisation?
+	//XXX take care of sanitisation?
 	$venues = $wpdb->get_results(" SELECT* FROM $eventorganiser_venue_table");
 	return $venues;
 }
@@ -284,35 +329,35 @@ function eo_event_venue_dropdown( $args = '' ) {
 		'show_option_all' =>'', 
 		'echo' => 1,
 		'selected' => 0, 
-		'name' => 'venue_id', 
+		'name' => 'event-venue', 
 		'id' => '',
 		'class' => 'postform event-organiser event-venue-dropdown event-dropdown', 
 		'tab_index' => 0, 
 	);
 
-	$defaults['selected'] =  (eo_is_venue() ? get_query_var('venue_id') : 0);
+	$defaults['selected'] =  (is_tax('event-venue') ? get_query_var('event-venue') : 0);
 	$r = wp_parse_args( $args, $defaults );
-	$r['taxonomy']='event-category';
+	$r['taxonomy']='event-venue';
 	extract( $r );
 
 	$tab_index_attribute = '';
 	if ( (int) $tab_index > 0 )
 		$tab_index_attribute = " tabindex=\"$tab_index\"";
 
-	$venues =  eo_get_the_venues();
+	$categories = get_terms($taxonomy, $r ); 
 	$name = esc_attr( $name );
 	$class = esc_attr( $class );
 	$id = $id ? esc_attr( $id ) : $name;
 
 	$output = "<select style='width:150px' name='$name' id='$id' class='$class' $tab_index_attribute>\n";
-
+	
 	if ( $show_option_all ) {
 		$output .= '<option '.selected($selected,0,false).' value="0">'.$show_option_all.'</option>';
 	}
 
-	if ( ! empty( $venues ) ) {
-		foreach ($venues as $term):
-			$output .= '<option value="'.intval($term->venue_id).'"'.selected($selected,$term->venue_id,false).'>'.esc_attr($term->venue_name).'</option>';
+	if ( ! empty( $categories ) ) {
+		foreach ($categories as $term):
+			$output .= '<option value="'.$term->slug.'"'.selected($selected,$term->slug,false).'>'.$term->name.'</option>';
 		endforeach; 
 	}
 	$output .= "</select>\n";
@@ -321,5 +366,77 @@ function eo_event_venue_dropdown( $args = '' ) {
 		echo $output;
 
 	return $output;
+}
+
+
+
+/**
+* Similiar to WordPress' native get_term_by
+* Get a (meta data of) venue term (object, or array) by 'name', 'slug' or 'id'.
+* Warning: $value is not escaped for 'name' $field. You must do it yourself, if required.
+* ID Is kind of depreciated - a new column will eventually hold the term ID
+*
+* The default $field is 'id', therefore it is possible to also use null for
+* field, but not recommended that you do so.
+*
+* If $value does not exist, the return value will be false. 
+* If $field and $value combinations exist, the meta row will be returned.
+*
+* @param $field (string) the field to query:  'name', 'slug' or 'id'.
+* @param string|int $value Search for this term value
+* @param $output (Constant) Output format, Object, ARRAY_A, or ARRAY_N
+*
+* @return Venue term | false - $term as object, array_a or array_nor false
+* @since 1.3
+*/
+function eo_get_venue_by($field,$value,$output = OBJECT){
+	global $eventorganiser_venue_table,$wpdb;
+
+	switch($field):
+		case 'slug':
+			$field = 'venue_slug';
+			$value = sanitize_title($value);
+			break;
+
+		case 'name':
+			$field = 'venue_name';
+			break;
+
+		default: 
+			$field = 'venue_id';
+			$value = intval($value);
+	endswitch;
+
+	$term = $wpdb->get_row($wpdb->prepare( "SELECT* FROM {$eventorganiser_venue_table} WHERE {$eventorganiser_venue_table}.$field = %s LIMIT 1", $value));
+
+	if ( !$term )
+		return false;
+
+	if ( $output == OBJECT ) {
+		return $term;
+	} elseif ( $output == ARRAY_A ) {
+		return get_object_vars($term);
+	} elseif ( $output == ARRAY_N ) {
+		return array_values(get_object_vars($term));
+	} else {
+		return $term;
+	}
+}
+
+function eventorganiser_venue_dropdown($post_id=0,$args){
+	$venues = get_terms('event-venue', array('hide_empty'=>false));
+	$current = get_the_terms($post_id,'event-venue');
+	$current = ($current ? array_pop($current) : '');
+	$current = ($current ? $current->term_id: 0);
+
+	$id = (!empty($args['id']) ? 'id="'.esc_attr($args['id']).'"' : '');
+	$name = (!empty($args['name']) ? 'name="'.esc_attr($args['name']).'"' : '');
+	?>
+	<select <?php echo $id.' '.$name; ?>>
+		<option><?php _e("Select a venue",'eventorganiser');?></option>
+		<?php foreach ($venues as $venue):?>
+			<option <?php  selected($venue->term_id,$current);?> value="<?php echo $venue->term_id;?>"><?php echo $venue->name; ?></option>
+		<?php endforeach;?>
+	</select><?php
 }
 ?>

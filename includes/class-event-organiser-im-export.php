@@ -71,7 +71,8 @@ class Event_Organiser_Im_Export  {
 			endif;
 
 		endif;
-		add_action( 'eventorganiser_im_export', array( $this, 'get_im_export_markup' ) );						
+						
+		add_action( 'eventorganiser_event_settings_imexport', array( $this, 'get_im_export_markup' ) );						
 	}
 
 
@@ -98,6 +99,8 @@ class Event_Organiser_Im_Export  {
 			<p><?php _e( 'Import an ICS file.', 'eventorganiser'); ?></p>
 				<form method="post" action="" enctype="multipart/form-data">
 					<?php wp_nonce_field('eventorganiser_import'); ?>
+					<input type="checkbox" name="eo_import_venue" value=1 /> <?php _e( 'Import venues', 'eventorganiser' ); ?>
+					<input type="checkbox" name="eo_import_cat" value=1 /> <?php _e( 'Import categories', 'eventorganiser' ); ?>
 					<p class="submit">
 						<input type="file" name="ics" />
 						<input type="submit" name="submit" value="<?php _e( 'Upload ICS file', 'eventorganiser' ); ?> &raquo;" />
@@ -353,6 +356,11 @@ function escape_icalText($text){
 		$cal_tz =$blog_tz; 
 		$output="";
 
+		//Record number of venues / categories created
+		global $eventorganiser_venues_created,$eventorganiser_cats_created;
+		$eventorganiser_venues_created = 0;
+		$eventorganiser_cats_created = 0;
+
 		//Read through each line
 		for ( $n = 0; $n < count ( $lines ) && ! $error; $n++ ):
 			$buff = trim($lines[$n]);
@@ -369,21 +377,19 @@ function escape_icalText($text){
 		      		if ($state == "VEVENT") {
 
 					//If END:VEVENT, insert event into database
-					if($property=='END' && $value=='VEVENT'):
+					if($property=='END' && $value=='VEVENT'){
 						$state = "VCALENDAR";
 
 						$event_array['event']['YmdFormated']= true;
 						$event_array['event']['dateObjects']= true;
 				
-						//Insert new post - insert from Object?
+						//Insert new post from objects
 						$post_id = EO_Event::insertNewEvent($event_array['event_post'],$event_array['event']);
-						if(!$post_id):
+						if(!$post_id){
 							$error_count++;
-						else:							
-							//$output .='<pre>'.print_r($event_array,true).'</pre>';
-						endif;
+						}
 						
-					else:
+					}else{
 						//Otherwise, parse event property
 						try{
 							$event_array = $this->parse_Event_Property($event_array,$property,$value,$modifiers,$blog_tz,$cal_tz);
@@ -395,8 +401,7 @@ function escape_icalText($text){
 							//Abort parsing event
 							$state = "VCALENDAR";
 						}
-
-					endif;
+					}
 
 				// If we are in CALENDAR state
 				}elseif ($state == "VCALENDAR") {
@@ -428,6 +433,7 @@ function escape_icalText($text){
 			endif; //If line is not empty
    	 	endfor; //For each line
 
+		//Display message
 		if($event_count ==0):
 			$EO_Errors->add('eo_error', __("No events were imported.",'eventorganiser'));
 		elseif($error_count >0):
@@ -435,11 +441,24 @@ function escape_icalText($text){
 		else:
 
 			if($event_count==1)
-				$EO_Errors->add('eo_notice', __("1 event was successfully imported",'eventorganiser'));
+				$message=__("1 event was successfully imported",'eventorganiser').".";
 			else
-				$EO_Errors->add('eo_notice',sprintf( __("%d events were successfully imported",'eventorganiser'),$event_count));
-		endif;
+				$message= sprintf( __("%d events were successfully imported",'eventorganiser'),$event_count).".";
 
+			if($eventorganiser_venues_created==1){
+				$message.= " ".__("1 venue was created",'eventorganiser').".";
+			}elseif($eventorganiser_venues_created>1){
+				$message .= " ".sprintf( __("%d venues were created",'eventorganiser'),$eventorganiser_venues_created).".";
+			}
+
+			if($eventorganiser_cats_created==1){
+				$message.= " ".__("1 category was created",'eventorganiser').".";
+			}elseif($eventorganiser_cats_created>1){
+				$message .= " ".sprintf( __("%d categories were created",'eventorganiser'),$eventorganiser_cats_created).".";
+			}
+
+			$EO_Errors->add('eo_notice',$message);
+		endif;
 		return true;
 	}
 
@@ -460,6 +479,9 @@ function escape_icalText($text){
  */
 	function parse_Event_Property($event_array,$property,$value,$modifiers,$blog_tz,$cal_tz){
 		extract($event_array);
+
+		$import_venues = (isset($_POST['eo_import_venue']) ? true : false);
+		$import_cats = (isset($_POST['eo_import_cat']) ? true : false);
 
 		$date_tz="";
 	
@@ -540,6 +562,59 @@ function escape_icalText($text){
 			case 'DESCRIPTION':
 				$event_post['post_content']=$this->parse_icalText($value);
 				break;
+
+			//Event venues, assign to existing venue - or if set, create new one
+			case 'LOCATION':
+				$venue_ids = array();
+				if(!empty($value)):
+					$venue_name = trim($value);
+					$venue = get_term_by('name',$venue_name,'event-venue');
+					if($venue){
+						$venue_ids[] = (int) $venue->term_id;
+					}elseif($import_venues){
+						//Create new venue, get ID. Count of venues created++
+						global $eventorganiser_venues_created;
+						$return = EO_Venue::insert(array('venue_name'=>$venue_name));
+
+						if($return){
+							$venue_ids[] = (int) $return['term_id'];
+							$eventorganiser_venues_created++;
+							$event['venue']= $return['term_id']; //XXX Setting Venue is depreciated
+						}
+					}
+					$venue_ids = array_filter($venue_ids);
+					if(!empty($venue_ids)){
+						$event_post['tax_input']['event-venue']=$venue_ids;	
+					}
+				endif;
+				break;			
+
+			//Event categories, assign to existing categories - or if set, create new ones
+			case 'CATEGORIES':
+				$cats=explode(',',$value);
+				$cat_ids = array();
+				if(!empty($cats)):
+					foreach ($cats as $cat_name):
+						$cat_name = trim($cat_name);
+						$cat = get_term_by('name',$cat_name,'event-category');
+						if($cat){
+							$cat_ids[] = (int) $cat->term_id;
+						}elseif($import_cats){
+							//Create new category, get ID. Count of cats created++
+							global $eventorganiser_cats_created;
+							$return = wp_insert_term($cat_name,'event-category',array());
+							if(!is_wp_error($return)){
+								$cat_ids[] = (int) $return['term_id'];
+								$eventorganiser_cats_created++;
+							}
+						}
+					endforeach;
+
+					$cat_ids = array_filter($cat_ids);
+					if(!empty($cat_ids))
+						$event_post['tax_input']['event-category']=$cat_ids;
+				endif;
+				break;	
 
 			//The event's status
 			case 'STATUS':

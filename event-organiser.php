@@ -4,7 +4,7 @@ Plugin Name: Event Organiser
 Plugin URI: http://www.HarrisWebSolutions.co.uk/event-organiser
 Description: Creates a custom post type 'events' with features such as reoccurring events, venues, Google Maps, calendar views and events and venue pages
 Author: Stephen Harris
-Version: 1.2.4
+Version: 1.2.3
 Author URI: http://www.HarrisWebSolutions.co.uk
 */
 /*  Copyright 2011 Stephen Harris (stephen@harriswebsolutions.co.uk)
@@ -23,10 +23,32 @@ Author URI: http://www.HarrisWebSolutions.co.uk
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
-
+//TODO Debug converter
+//TODO Use get_post_type_archive_link( $post_type ) for event archive link?
+//TODO test ICAL?
+//TODO template conditional statements?
+//TODO fullcalendar key
+//TODO fix menu link (few bugs)
+//TODO improve menu link (add option)
+//TODO add template option for widget
+//TODO Time for frontend calendar
+//XXX Jquery 1.6.2
+//TODO eo_insert_event function?
+//TODO Group by posts_ID rather than event table ID?
+/*
+add_action('load-edit-tags.php','myprefix_redirect_to_custompage');
+function myprefix_redirect_to_custompage(){
+	$screen = get_current_screen(); 
+	if($screen->id == 'edit-event-venue'){
+		$url = admin_url('edit.php?post_type=event&page=venues');
+		wp_redirect($url); 
+		exit;
+	}
+}
+*/
 //The database version
 global $eventorganiser_db_version;
-$eventorganiser_db_version = "1.2.4";
+$eventorganiser_db_version = "1.2.9.1";
 
 global $wpdb;
 
@@ -103,7 +125,6 @@ require_once("includes/event-organiser-venue-functions.php");
 
 /****** Event and Venue classes ******/
 require_once("classes/class-eo-event.php");
-require_once("classes/class-eo-venues.php");
 require_once("classes/class-eo-venue.php");
 
 /****** Widgets and Shortcodes ******/

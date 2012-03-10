@@ -34,13 +34,9 @@ function eventorganiser_author_meta_box_title() {
  *
  * @since 1.0.0
  */
-function eventorganiser_details_metabox(){
+function eventorganiser_details_metabox($post){
 	
 	global $wp_locale;	
-
-	//Retrieve all venues
-	$AllVenues = new EO_Venues;
-	$AllVenues->query();
 
 	//Sets the format as php understands it, and textual.
 	$eo_settings_array= get_option('eventorganiser_options');
@@ -57,9 +53,6 @@ function eventorganiser_details_metabox(){
 
 	//Retrieve event details (if they exist)
 	$event = new EO_Event(get_the_ID());
-
-	//Retrieve venue of event
-	$current_Venue = new EO_Venue((int) $event->venue);
 
 	//Start of meta box ?>	
 		<p>
@@ -152,24 +145,29 @@ function eventorganiser_details_metabox(){
 			<tr>	
 			<td class="label"> <?php _e("Venue",'eventorganiser');?> : </td>
 			<td> 
+			<?php 		
+				$venues = get_terms('event-venue', array('hide_empty'=>false));
+				$current = get_the_terms($post->ID,'event-venue');
+				$current = ($current ? array_pop($current) : '');?>
+
 			<!-- If javascript is disabed, a simple drop down menu box is displayed to choose venue.
 			Otherwise, the user is able to search the venues by typing in the input box.-->		
-				<select size="50" id="venue_select" name="eo_input[venue_id]">
+				<select size="50" id="venue_select" name="eo_input[event-venue]">
 					<option><?php _e("Select a venue",'eventorganiser');?></option>
-				<?php foreach ($AllVenues->results as $thevenue):?>
-					<option <?php  selected($event->is_at_venue($thevenue['venue_id']));?> value="<?php echo intval($thevenue['venue_id']);?>"><?php echo $thevenue['venue_name']; ?></option>
+				<?php foreach ($venues as $venue):?>
+					<option <?php  selected($venue->term_id,$current->term_id);?> value="<?php echo $venue->term_id;?>"><?php echo $venue->name; ?></option>
 				<?php endforeach;?>
 				</select>
 			<span style="font-size:0.8em;line-height:0.8em;"> <?php _e("Search for a venue. To add a venues go to the venue page.",'eventorganiser');?></span>
 			</td>
 			</tr>
-			<tr class="venue_row <?php if (!$event->venue_set()) echo 'novenue';?>" >
+			<tr class="venue_row <?php if (!$current) echo 'novenue';?>" >
 			<td></td>
 			<td>
 
 			<div id="eventorganiser_venue_meta" style="display:none;">
-				<input type="hidden" id="eo_venue_Lat" value="<?php  echo $current_Venue->latitude;?>" />
-				<input type="hidden" id="eo_venue_Lng" value="<?php  echo $current_Venue->longitude;?>" />
+				<input type="hidden" id="eo_venue_Lat" value="<?php  echo $current->venue_lat;?>" />
+				<input type="hidden" id="eo_venue_Lng" value="<?php  echo $current->venue_lng;?>" />
 			</div>
 			
 			<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
@@ -209,7 +207,15 @@ function eventorganiser_details_save($post_id) {
 	if (!current_user_can('edit_event', $post_id)) return $post_id;
 
 	$raw_data = (isset($_POST['eo_input']) ? $_POST['eo_input'] : array());
-	$raw_data['Venue'] =(isset($raw_data['Venue']) ? $raw_data['Venue'] : 0);
+	$raw_data['Venue'] =(isset($raw_data['event-venue']) ? $raw_data['event-venue'] : 0);
+
+	//Update venue
+	$venue_id = !empty($raw_data['Venue']) ? intval($raw_data['Venue']) : null;
+	$r = wp_set_post_terms( $post_id, array($venue_id), 'event-venue', false );
+
+	//XXX Venues are currently still being added to events table - but this will be later removed, along with occurrence data
+	//Venues will be solely be as taxonomy terms, with venue meta being stored in the venue table.
+	//Reoccurrence details wil be sotred as post meta - leaving just dates/occurrence/IDs
 
 	//Check if there is existing event data.
 	$event = new EO_Event($post_id);

@@ -39,8 +39,14 @@ class EO_List_Table extends WP_List_Table {
 			case 'venue_address':
 			case 'venue_postal':
 			case 'venue_country':
+				return $item->$column_name;
+				break;
 			case 'venue_slug':
-				return $item[$column_name];
+				return $item->slug;
+				break;
+			case 'posts':
+				return $item->count;
+				break;
 			default:
 				return print_r($item,true); //Show the whole array for troubleshooting purposes
 		}
@@ -56,17 +62,17 @@ class EO_List_Table extends WP_List_Table {
 
         //Build row actions
         $actions = array(
-            'edit'      => sprintf('<a href="?post_type=event&page=%s&action=%s&venue=%d">'.__('Edit').'</a>',$_REQUEST['page'],'edit',$item['venue_id']),
-            'delete'    => '<a href="'.wp_nonce_url(sprintf('?post_type=event&page=%s&action=%s&venue=%d',$_REQUEST['page'],'delete',$item['venue_id']), 'bulk-venues' ).'">'.__('Delete').' </a>',
-            'view'    => sprintf('<a href="%s">'.__('View').'</a>',  eo_get_venue_link($item['venue_slug'])),
+            'edit'      => sprintf('<a href="?post_type=event&page=%s&action=%s&event-venue=%s">'.__('Edit').'</a>',$_REQUEST['page'],'edit',$item->slug),
+            'delete'    => '<a href="'.wp_nonce_url(sprintf('?post_type=event&page=%s&action=%s&event-venue=%s',$_REQUEST['page'],'delete',$item->slug), 'eventorganiser_delete_venue_'.$item->slug).'">'.__('Delete').' </a>',
+            'view'    => sprintf('<a href="%s">'.__('View').'</a>',  eo_get_venue_link($item->slug)),
         );
         
         //Return the title contents
-        return sprintf('<a href="?post_type=event&page=%1$s&action=%2$s&venue=%3$d" class="row-title">%4$s</a>%5$s',
+        return sprintf('<a href="?post_type=event&page=%1$s&action=%2$s&event-venue=%3$s" class="row-title">%4$s</a>%5$s',
             /*$1%s*/ $_REQUEST['page'],
             /*$2%s*/ 'edit',
-            /*$3%s*/ $item['venue_id'],
-            /*$4%s*/ $item['venue_name'],
+            /*$3%s*/ $item->slug,
+            /*$4%s*/ $item->name,
             /*$5%s*/ $this->row_actions($actions)
         );
     }
@@ -81,8 +87,8 @@ class EO_List_Table extends WP_List_Table {
     function column_cb($item){
         return sprintf(
             '<input type="checkbox" name="%1$s[]" value="%2$s" />',
-            /*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("venue")
-            /*$2%s*/ $item['venue_id']                //The value of the checkbox should be the record's id
+            /*$1%s*/ 'event-venue',  
+            /*$2%s*/ $item->slug       //The value of the checkbox should be the record's id
         );
     }
     
@@ -98,6 +104,8 @@ class EO_List_Table extends WP_List_Table {
             'venue_address'     => array('address',false),     //true means its sorted by default
             'venue_postal'     => array('postcode',false),     //true means its sorted by default
             'venue_country'     => array('country',false),     //true means its sorted by default
+            'venue_slug'     => array('slug',false),     //true means its sorted by default
+            'posts'     => array('count',false),     //true means its sorted by default
         );
         return $sortable_columns;
     }
@@ -121,7 +129,7 @@ class EO_List_Table extends WP_List_Table {
      */       
 	function single_row( $item ) {
 		static $row_class = '';
-		$row_id = 'id="venue-'.$item['venue_id'].'"';
+		$row_id = 'id="venue-'.$item->term_id.'"';
 		$row_class = ( $row_class == '' ? ' class="alternate"' : '' );
 		echo '<tr' .$row_class.' '.$row_id.'>';
 		echo $this->single_row_columns( $item );
@@ -141,51 +149,38 @@ class EO_List_Table extends WP_List_Table {
     function prepare_items() {
 
         //Retrieve page number for pagination
-         $current_page = $this->get_pagenum();
+         $current_page = (int) $this->get_pagenum();
 
 	//First, lets decide how many records per page to show
-	$per_page = 20;
 	$screen = get_current_screen();
-	if(get_user_option($screen->id.'_per_page'))
-		$per_page = (int) get_user_option($screen->id.'_per_page');
-         
+	$per_page = (get_user_option($screen->id.'_per_page') ?  (int) get_user_option($screen->id.'_per_page') : 20);
+
 	//Get the columns, the hidden columns an sortable columns
-	 $columns = get_column_headers('event_page_venues');
-        $hidden = get_hidden_columns('event_page_venues');
-        $sortable = $this->get_sortable_columns();
-        $this->_column_headers = array($columns, $hidden, $sortable);
-                
-       //Fetch the venues
-	global $EO_Venues; 
-      
-	//Check search term
-	$search_term = false;
-	if ( isset($_REQUEST['s']) && $_REQUEST['s'] )	
-		$search_term = esc_attr($_REQUEST['s']);
+	$columns = get_column_headers('event_page_venues');
+	$hidden = get_hidden_columns('event_page_venues');
+	$sortable = $this->get_sortable_columns();
+	$this->_column_headers = array($columns, $hidden, $sortable);
+	$taxonomy ='event-venue';
 
-	//Check order
-	$orderby = 'name';
-	if ( isset($_REQUEST['orderby']) && $_REQUEST['orderby'] )	
-		$orderby = esc_attr($_REQUEST['orderby']);
-	
-	$order = 'asc';
-	if ( isset($_REQUEST['order']) && $_REQUEST['order'] )	
-		$order = esc_attr($_REQUEST['order']);
-
-	//Query venues
-	$EO_Venues->query(array('s'=>$search_term,'limit'=>$per_page,'offset'=>($current_page-1)*$per_page, 'orderby'=>$orderby, 'order'=>$order));
-
+	$search = (!empty( $_REQUEST['s'] ) ? trim( stripslashes( $_REQUEST['s'] ) ) : '');
+	$orderby =( !empty( $_REQUEST['orderby'] )  ? trim( stripslashes($_REQUEST['orderby'])) : '');
+	$order =( !empty( $_REQUEST['order'] )  ? trim( stripslashes($_REQUEST['order'])) : '');
 
 	//Display result
-	$this->items = $EO_Venues->results;
-        
-        
-        //REQUIRED. We also have to register our pagination options & calculations.
-        $this->set_pagination_args( array(
-            'total_items' => $EO_Venues->count,
-            'per_page'    => $per_page,
-            'total_pages' => ceil($EO_Venues->count/$per_page)   //WE have to calculate the total number of pages
-        ) );
+	$this->items = get_terms('event-venue',array(
+			'hide_empty'=>false,
+			'search'=>$search,
+			'offset'=> ($current_page-1)*$per_page,
+			'number'=>$per_page,
+			 'orderby'=>$orderby,
+			 'order'=>$order			
+		)
+	);
+
+	$this->set_pagination_args( array(
+		'total_items' => wp_count_terms('event-venue', compact( 'search' ) ),
+		'per_page' => $per_page,
+	) );     
 
     }
     

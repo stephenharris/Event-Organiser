@@ -6,7 +6,7 @@
  */
 class EventOrganiser_Shortcodes {
 	static $add_script;
-	static $fullcal =array();
+	static $calendars =array();
 	static $map = array();
 	static $event;
  
@@ -53,55 +53,40 @@ class EventOrganiser_Shortcodes {
 
 	function handle_fullcalendar_shortcode($atts=array()) {
 		global $post;
-
+		//TODO Allow multiple instances of full-calendar
 		$defaults = array(
 			'headerleft'=>'title', 
 			'headercenter'=>'',
 			'headerright'=>'prev,next today',
 			'defaultview'=>'month',
-			'firstDay'=>intval(get_option('start_of_week')),
+			'category'=>'',
+			'venue'=>'',
 		);
 		$atts = shortcode_atts( $defaults, $atts );
-		$whitelist = array('headerleft','headercenter','headerright','defaultview','firstDay');
-		$atts = array_intersect_key($atts, array_flip($whitelist));
-		$n = rand(0,100);
 
-		$eo_settings_array= get_option('eventorganiser_options'); 
-		$EO_Venues = new EO_Venues;
-		$EO_Venues->query();
-	
-		$terms =get_terms( 'event-category', array('hide_empty' => 0));
-			foreach($terms as $term):
-				$term_meta = get_option( "eo-event-category_$term->term_id");
-				$colour = (isset($term_meta['colour']) ? $term_meta['colour'] : '');
-				$term->colour = $colour;
-			endforeach;
-
-		$atts['categories']=$terms;
-		$atts['venues']=$EO_Venues->results;
-
-		self::$fullcal =array_merge($atts);
+		self::$calendars[] =array_merge($atts);
 		self::$add_script = true;
+		$id = count(self::$calendars);
 
-		$html='<div id="eo_fullcalendar_'.$n.'_loading" style="background:white;position:absolute;z-index:5" >';
+		$html='<div id="eo_fullcalendar_'.$id.'_loading" style="background:white;position:absolute;z-index:5" >';
 		$html.='<img src="'.EVENT_ORGANISER_URL.'/css/images/loading-image.gif'.'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />'.__('Loading&#8230;').'</div>';
-		$html.='<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$n.'"></div>';
+		$html.='<div calid="'.$id.'" class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
 
  		return $html;
 	}
 
 	function handle_venuemap_shortcode($atts) {
-		global $post,$EO_Venue;
+		global $post;
 		self::$add_script = true;
 
-		//If venue is not set, get the global venue or from the post being viewed
+		//If venue is not set get from the venue being quiered or the post being viewed
 		if(empty($atts['venue']) ){
 			if(eo_is_venue()){
-				$atts['venue']= $EO_Venue->slug;
+				$atts['venue']= esc_attr(get_query_var('term'));
 			}else{
 				$atts['venue'] = eo_get_venue_slug($post->ID);
 			}
-		} 
+		}
 		
 		//Set the attributes
 		$atts['width'] = ( !empty($atts['width']) ) ? $atts['width']:'100%';
@@ -128,17 +113,25 @@ class EventOrganiser_Shortcodes {
 	function handle_eventlist_shortcode($atts=array(),$content=null) {
 		global $post;
 		$tmp_post = $post;
-		if(isset($atts['venue'])&&$atts['venue']=='%this%'){
-			if(!empty($post->Venue)){
-				$atts['venue']=(int) $post->Venue;
-			}else{
-				unset($atts['venue']);
+
+		$taxs = array('category','tag','venue');
+		foreach ($taxs as $tax){
+			if(isset($atts['event_'.$tax])){
+				$atts['event-'.$tax]=	$atts['event_'.$tax];
+				unset($atts['event_'.$tax]);
 			}
 		}
-		if(isset($atts['event_category'])){
-			$atts['event-category']=	$atts['event_category'];
-			unset($atts['event_category']);
+
+		if((isset($atts['venue']) &&$atts['venue']=='%this%') ||( isset($atts['event-venue']) && $atts['event-venue']=='%this%' )){
+			if(!empty($post->Venue)){
+				$atts['event-venue']=  eo_get_venue_slug();
+			}else{
+				unset($atts['venue']);
+				unset($atts['event-venue']);
+			}
 		}
+
+
 		$events = eo_get_events($atts);
 
 		if($events):	
@@ -223,7 +216,6 @@ class EventOrganiser_Shortcodes {
 						$dateFormat =  self::eo_clean_input($matches[2]);
 						$dateTime='';
 						break;
-
 					case 5:
 						$dateFormat =  self::eo_clean_input($matches[3]);
 						$dateTime =  self::eo_clean_input($matches[4]);
@@ -297,13 +289,19 @@ class EventOrganiser_Shortcodes {
 	function print_script() {
 		global $wp_locale;
 		if ( ! self::$add_script ) return;
+		$fullcal = (empty(self::$calendars) ? array() : array(
+			'firstDay'=>intval(get_option('start_of_week')),
+			'venues' => get_terms( 'event-venue', array('hide_empty' => 0)),
+			'categories' => get_terms( 'event-category', array('hide_empty' => 0)),
+		));
 		wp_localize_script( 'eo_front', 'EOAjax', 
 		array(
 			'ajaxurl' => admin_url( 'admin-ajax.php'),
-			'fullcal' => self::$fullcal,
+			'calendars' => self::$calendars,
+			'fullcal' => $fullcal,
 			'map' => self::$map,
 		));	
-		if(!empty(self::$fullcal)):
+		if(!empty(self::$calendars)):
 			wp_enqueue_style('eo_calendar-style');		
 			wp_enqueue_style('eventorganiser-style');
 		endif;

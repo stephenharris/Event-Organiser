@@ -16,10 +16,10 @@ $(document).ready(function() {
 						source: function(req, response){  
 						$.getJSON(EO_Ajax_Event.ajaxurl+"?callback=?&action=eo-search-venue", req, function(data) {  
 							response( $.map( data, function( item ) {
-								if(item.venue_id==0){ 
+								if(item.term_id==0){ 
 									item.label = '';			
 								}else{
-									item.label = item.venue_name;
+									item.label = item.name;
 								}
 								return item;
 							}));
@@ -27,7 +27,7 @@ $(document).ready(function() {
 					},
 					select: function(event, ui) {
 						if($("tr.venue_row").length >0){
-							if(ui.item.venue_id==0){
+							if(ui.item.term_id==0){
 								$("tr.venue_row").hide();
 							}else{
 								$("tr.venue_row").show();
@@ -35,16 +35,16 @@ $(document).ready(function() {
 							initialize(ui.item.venue_lat,ui.item.venue_lng);
 						}
 						$("#venue_select").removeAttr("selected");
-						$("#venue_select").val(ui.item.venue_id);
+						$("#venue_select").val(ui.item.term_id);
 					}
 					})
 					.addClass( "ui-widget-content ui-corner-left" );
 
 				input.data( "autocomplete" )._renderItem = function( ul, item ) {
-					if(item.venue_id==0){
+					if(item.term_id==0){
 						return $( "<li></li>" )
 							.data( "item.autocomplete", item )
-							.append( "<a>"+item.venue_name+"</a>" )
+							.append( "<a>"+item.name+"</a>" )
 							.appendTo( ul );
 					}
 					return $( "<li></li>" )

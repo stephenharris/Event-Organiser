@@ -17,240 +17,173 @@ class EO_Venue{
 	var $owner = '';
 	var $isfound = false;
 
-
 	//Other Vars
 	static public $fields = array( 
-		'venue_id' => array('name'=>'id','type'=>'int'), 
-		'venue_slug' => array('name'=>'slug','type'=>'attr'), 
-		'venue_name' => array('name'=>'name','type'=>'attr'), 
-		'venue_address' => array('name'=>'address','type'=>'attr'),
-		'venue_postal' => array('name'=>'postcode','type'=>'attr'),
-		'venue_country' => array('name'=>'country','type'=>'attr'),
-		'venue_lat' =>  array('name'=>'latitude','type'=>'float'),
-		'venue_lng' => array('name'=>'longitude','type'=>'float'),
-		'venue_description' => array('name'=>'description','type'=>'html'),
+		'venue_id' => array('name'=>'id','type'=>'intval'), 
+		'venue_slug' => array('name'=>'slug','type'=>'esc_attr'), 
+		'venue_name' => array('name'=>'name','type'=>'esc_attr'), 
+		'venue_address' => array('name'=>'address','type'=>'esc_attr'),
+		'venue_postal' => array('name'=>'postcode','type'=>'esc_attr'),
+		'venue_country' => array('name'=>'country','type'=>'esc_attr'),
+		'venue_lat' =>  array('name'=>'latitude','type'=>'floatval'),
+		'venue_lng' => array('name'=>'longitude','type'=>'floatval'),
+		'venue_description' => array('name'=>'description','type'=>'stripslashes'),
 	);
+
+	static $defaults = array(
+		'venue_id'=>0,
+		'venue_name'=>'',
+		'venue_slug'=>'',
+		'venue_address' => '',
+		'venue_postal' => '',
+		'venue_country' => '',
+		'venue_lng' => 0,
+		'venue_lat' => 0,
+		'venue_description' => ''
+	);
+
+	function sanitize($input){
+		$clean = array();
+		foreach ($input as $key=>$value):
+			if(isset(self::$fields[$key]))
+				$clean[$key]= call_user_func(self::$fields[$key]['type'], $value);
+		endforeach;
+		return $clean;
+	}
+
+
+	/*
+	* Function which updates existing venue term
+	* NOTICE: This function does not check permissions or nonces have been checked.
+	*
+	* @Since 1.3
+	*/
+	function update($venue,$input){
+		global$eventorganiser_venue_table,$wpdb,$EO_Errors;
+
+		$venue = get_term_by('slug',esc_attr($venue),'event-venue');
+
+		//Provide defaults
+		$input = wp_parse_args($input,self::$defaults);
+
+		//Sanitize and whitelist
+		$clean = self::sanitize($input);
+
+		//Change action to edit
+		$_REQUEST['action']='edit';
+
+		if($clean['venue_name']==''|| $clean['venue_slug']==''){
+			$EO_Errors->add('eo_error', __("Venue name or slug is empty",'eventorganiser'));	
+
+		}else{
+			//Update taxonomy table
+			$return = wp_update_term($venue->term_id,'event-venue', array(
+				'name'=>$clean['venue_name'],
+				'slug'=>$clean['venue_slug'],
+				'description'=>$clean['venue_description'],
+			));
+			if(is_wp_error($return)){
+				$EO_Errors->add('eo_error', __("Venue <strong>was not </strong> updated",'eventorganiser'));	
+			}else{
+				$inserted = get_term_by('id',$return['term_id'],'event-venue');
+				$clean['venue_slug']= $inserted->slug;
+				unset($clean['venue_id']);
+				$update = $wpdb->update( $eventorganiser_venue_table,$clean, array( 'venue_slug' => $venue->slug));
+				$EO_Errors->add('eo_notice', __("Venue <strong>updated</strong>",'eventorganiser'));
+				$_REQUEST['event-venue'] = $clean['venue_slug'];
+			}
+		}
+	}
+
+	function insert($input){
+		global$eventorganiser_venue_table,$wpdb,$EO_Errors;
+
+		//Provide defaults
+		$input = wp_parse_args($input,self::$defaults);
+
+		//Sanitize and whitelist
+		$clean = self::sanitize($input);
+
+		//Change action to edit
+		$_REQUEST['action']='edit';
+
+		$return = wp_insert_term($clean['venue_name'],'event-venue',array(
+				 	'description'=> $clean['venue_description'],
+		    			'slug' => $clean['venue_slug'],
+		  		));
+					
+		if(!is_wp_error($return)){
+			//This will eventually be depreciated - replaced with just ID.
+			$inserted = get_term_by('id',$return['term_id'],'event-venue');
+			$clean['venue_slug']= $inserted->slug;
+			unset($clean['venue_id']);
+			$wpdb->insert($eventorganiser_venue_table,$clean);
+			$EO_Errors->add('eo_notice', __("Venue <strong>created</strong>",'eventorganiser'));
+			return $return;
+		}
+			$EO_Errors->add('eo_notice', __("Venue <strong>was not</strong> created",'eventorganiser'));
+		return false;
+	}
+
+
+	function delete($venues){
+		global$eventorganiser_venue_table,$wpdb,$EO_Errors;
+		$venues = (array) $venues;
+
+		//Count the number of deleted venues
+		$deleted=0;
+
+		foreach($venues as $venue):
+			$venue =  get_term_by('slug',esc_attr($venue),'event-venue');
+			$del =wp_delete_term( $venue->term_id, 'event-venue');
+			if(!is_wp_error($del)){
+				$delmeta = $wpdb->query($wpdb->prepare("DELETE FROM $eventorganiser_venue_table WHERE {$eventorganiser_venue_table}.venue_slug=%s", $venue->slug));
+				$deleted += (int) $del;
+			}
+		endforeach;
+
+		if($deleted>0){
+			$EO_Errors = new WP_Error('eo_notice', __("Venue(s) <strong>deleted</strong>",'eventorganiser'));
+			return true;
+		}else{
+			$EO_Errors = new WP_Error('eo_error', __("Venue(s) <strong>were not </strong> deleted",'eventorganiser'));
+			return false;
+		}
+	}
+
+
+
 
 	/**
 	 * Gets data from POST (default), supplied array, or from the database if an ID is supplied
 	 * @param $location_data
 	 * @return null
 	 */
-	function EO_Venue($venue = 0 ) {
-		//Initialize
-		if( !empty($venue) && !is_array($venue) ):
-			//Retreiving from the database		
-			global $wpdb, $eventorganiser_events_table, $eventorganiser_venue_table;
-			if( is_int($venue) ){
-				$venue =$wpdb->get_row($wpdb->prepare("SELECT* FROM $eventorganiser_venue_table WHERE venue_id= %d ", $venue), ARRAY_A);
-			}else{
-				$venue =$wpdb->get_row($wpdb->prepare("SELECT* FROM $eventorganiser_venue_table WHERE venue_slug= %s ", $venue), ARRAY_A);   
-			}
-			if($venue ){
-				$this->to_object($venue);
-				$this->isfound= true;
-			}
-		endif;
-	}
-
-	function to_object( $array = array() ){
-		//Save core data
-
-		$intvals = array('venue_id');
-		$floatvals = array('venue_lat','venue_lng');
-		$attrvals = array('vennue_name','venue_slug','venue_address','venue_postal','venue_country');
-		$textarea = array('description');
-
-		if(isset($array['venue_lat'])) 
-			$this->latitude = floatval($array['venue_lat']);
 
 
-		if( is_array($array) ):
-			foreach ( self::$fields as $key => $val ) :
-				if(array_key_exists($key, $array)){
-					switch($val['type']):
-						case 'intval':
-							$this->$val['name'] = intval($array[$key]);
-							break;
+	function generate_LatLng($address=''){
+		global $EO_Errors;
+		$lat=0;
+		$lng=0;
+		$address = trim($address);
 
-						case 'float':
-							$this->$val['name'] =floatval($array[$key]);
-							break;
+		if(empty($address))
+			return array('lat'=>$lat,'lng'=>$lng); //No address - no point showing error.
 
-						case 'attr':
-							$this->$val['name'] = esc_attr($array[$key]);
-							break;
-
-						case 'html':
-							$this->$val['name']  = stripslashes($array[$key]);
-							break;
-
-						default:
-							$this->$val['name'] = esc_html($array[$key]);
-						endswitch;
-				}
-			endforeach;
-		endif;
-	}
-
-	function is_found(){
-		return $this->isfound;
-	}
-
-	function update($venue, $dirtyInput = array()){
-		global $eventorganiser_venue_table, $wpdb,$EO_Errors,$EO_Venue;
-		$EO_Errors = new WP_Error();
-		
-		//security check
-		if( !check_admin_referer('eventorganiser-edit-venue') || !current_user_can('manage_venues')){
-			$EO_Errors = new WP_Error('eo_error', __("You do not have permission to edit this venue.",'eventorganiser'));
-			return false;
-		}elseif(is_array($dirtyInput) && !empty($dirtyInput)){			
-			$V_add= $dirtyInput['Add'];
-			$V_postcode= esc_attr($dirtyInput['PostCode']);
-			$V_Lat= esc_html($dirtyInput['Lat']);
-			$V_Lng= esc_html($dirtyInput['Lng']);
-			$V_Country= esc_html($dirtyInput['Country']);
-			$description= ( !empty( $dirtyInput['content']) ) ? stripslashes( $dirtyInput['content']):'';
-			$name= esc_html($dirtyInput['Name']);
-			$V_id = intval($dirtyInput['id']);
-
-			//Create slug
-			$slug = (empty($dirtyInput['slug'])) ? $name : $dirtyInput['slug'];
-			$slug =sanitize_title($slug);
-			$slug=	$this->slugify($slug, $V_id);
-			
-			$this->EO_Venue($V_id);
-
-			if(empty($V_Lng) || empty($V_Lat) ){							
-				$address = urlencode($V_add." ".$V_postcode." ".$V_Country);
-				$geocode=file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.$address.'&sensor=false');
-				$LatLng=false;
-				$LatLng= json_decode($geocode);
-
-				if(!$LatLng || empty($LatLng->results)){	
-					$EO_Errors->add('eo_error', __("There was a problem with locating the latitude and longitude co-ordinates of the venue.",'eventorganiser'));
-				}else{
-					$V_Lng = esc_html($LatLng->results[0]->geometry->location->lat);
-					$V_La = esc_html($LatLng->results[0]->geometry->location->lng);
-				}
-			}
-					
-					//Venue being updated, do not alter slug
-					$clearnInput = array( 
-						'venue_name' => $name, 
-						'venue_slug' => $slug, 
-						'venue_address' => $V_add,
-						'venue_postal' => $V_postcode,
-						'venue_country' => $V_Country,
-						'venue_lng' => $V_Lng,
-						'venue_lat' => $V_Lat,
-						'venue_description' => $description
-					);
-					$update = false;
-					if($name!=''&& $slug!=''){
-						$update = $wpdb->update( $eventorganiser_venue_table,$clearnInput, array( 'venue_id' => $V_id));
-					}else{
-						$EO_Errors->add('eo_error', __("Venue name or slug is empty",'eventorganiser'));	
-					}
-
-					$_REQUEST['action']='edit';
-					$this->to_object($clearnInput);
-
-					if($update!==false){
-						$EO_Errors->add('eo_notice', __("Venue <strong>updated</strong>",'eventorganiser'));
-						return true;
-					}else{
-						$EO_Errors->add('eo_error', __("Venue <strong>was not </strong> updated",'eventorganiser'));	
-						return false;
-					}
-		}		
-	}
-
-	function add($dirtyInput = array()){
-		global $eventorganiser_venue_table, $wpdb;
-		global $EO_Errors,$current_user;
-		$EO_Errors = new WP_Error();
-		get_currentuserinfo();
-		//security check
-		if( !check_admin_referer('eventorganiser-edit-venue')){
-			$EO_Errors = new WP_Error('eo_error', __("You do not have permission to create venues",'eventorganiser'));
-		}elseif(is_array($dirtyInput) && !empty($dirtyInput)){			
-						$V_add= $dirtyInput['Add'];
-						$V_postcode= esc_attr($dirtyInput['PostCode']);
-						$V_Lat= esc_html($dirtyInput['Lat']);
-						$V_Lng= esc_html($dirtyInput['Lng']);
-						$V_Country= esc_html($dirtyInput['Country']);
-			$name= esc_html($dirtyInput['Name']);
-						$description= ( !empty( $dirtyInput['content']) ) ? stripslashes( $dirtyInput['content']):'';
-						$V_id = intval(mysql_real_escape_string($dirtyInput['id']));
-			$slug = (empty($dirtyInput['slug'])) ? $name : $dirtyInput['slug'];
-			$slug =sanitize_title($slug);
-			$slug=	$this->slugify($slug, $V_id);
-			
-			if(empty($V_Lng) || empty($V_Lat) ){							
-				$address = urlencode($V_add." ".$V_postcode." ".$V_Country);
-				$LatLng=false;
-				if(file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.$address.'&sensor=false')){
-					$geocode=file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.$address.'&sensor=false');
-				
-				$LatLng= json_decode($geocode);
-				}
-				if(!$LatLng || empty($LatLng->results)){	
-					$EO_Errors->add('eo_error', __("There was a problem with locating the latitude and longitude co-ordinates of the venue.",'eventorganiser'));
-				}else{
-					$V_Lng = esc_html($LatLng->results[0]->geometry->location->lat);
-					$V_La = esc_html($LatLng->results[0]->geometry->location->lng);
-				}
-			}
-
-					//Venue being updated, do not alter slug
-					$cleaninput = array( 
-						'venue_slug' => $slug,
-						'venue_name' => $name, 
-						'venue_address' => $V_add,
-						'venue_postal' => $V_postcode,
-						'venue_country' => $V_Country,
-						'venue_lng' => $V_Lng,
-						'venue_lat' => $V_Lat,
-						'venue_description' => $description,
-						'venue_owner' => $current_user->ID
-					);
-					$ins = false;
-					if($name!=''&& $slug!=''){
-						$ins = $wpdb->insert($eventorganiser_venue_table,$cleaninput);
-					}else{
-						$EO_Errors->add('eo_error', __("Venue name or slug is empty"));	
-					}
-					
-					foreach ( self::$fields as $key => $val ) :
-						if(array_key_exists($key, $cleaninput)){
-							$this->$val['name'] = esc_html($cleaninput[$key]);
-						}
-					endforeach;
-
-					if($ins){
-						$EO_Errors->add('eo_notice', __("Venue <strong>created</strong>",'eventorganiser'));
-						$venue_id = intval($wpdb->insert_id);
-						$_REQUEST['action']='edit';
-						return new EO_Venue($venue_id);
-					}else{
-						$EO_Errors->add('eo_error', __("Venue <strong>was not </strong> created",'eventorganiser'));
-						$_REQUEST['action']='create';
-						return false;
-					}
+		$geocode=file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.$address.'&sensor=false');
+		$LatLng=false;
+		$LatLng= json_decode($geocode);
+	
+		if(!$LatLng || empty($LatLng->results)){	
+			$EO_Errors->add('eo_error', __("There was a problem with locating the latitude and longitude co-ordinates of the venue.",'eventorganiser'));
 		}else{
-			$EO_Errors->add('eo_error', __("Venue <strong>was not </strong> created",'eventorganiser'));;
-		}		
+			$lat = esc_html($LatLng->results[0]->geometry->location->lat);
+			$lng = esc_html($LatLng->results[0]->geometry->location->lng);
+		}
+		return array('lat'=>$lat,'lng'=>$lng);
 	}
 
-	function display_description($context){
-		switch($context):
-			case 'edit':
-				return $this->description;
-				break;
-		endswitch;
-	}
+
 
 	function get_the_link(){
 		global $wp_rewrite;
@@ -292,42 +225,28 @@ class EO_Venue{
 		echo $this->get_the_structure();
 	}
 
-	function venue_edit_link(){
-		if(!$this->isfound || !current_user_can('manage_venues'))
-			return false;
 
-		$link = admin_url( 'edit.php');
-		$link =add_query_arg(array(
-			'post_type'=>'event',
-			'page'=>'venues',
-			'venue'=>$this->id,
-			'action'=>'edit'
-			), $link);
-		
-			return $link;
-		
-	}
-
-	function slugify($slug, $venue_id){
+	function slugify($slug, $venue){
 		global $wpdb,$eventorganiser_venue_table;
+
+		$slug =sanitize_title($slug);
 	
 		//does slug exist?
-		$check_sql = "SELECT venue_slug FROM $eventorganiser_venue_table WHERE venue_slug = %s AND venue_id != %d LIMIT 1";
-		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $venue_id) );
+		$check_sql = "SELECT venue_slug FROM $eventorganiser_venue_table WHERE venue_slug = %s AND  venue_slug != %s LIMIT 1";
+		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $venue) );
 
 		if ( $post_name_check) {
 			//slug already exist, append suffix until unique.
 			$suffix = 2;
 			do {
 				 $alt_slug = substr( $slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
-				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_slug, $venue_id) );
+				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_slug, $venue) );
 				$suffix++;
 			} while ( $post_name_check);
 				$slug =  $alt_slug;
 			}
 		return $slug;
-}
+	}
 
-	
 }
 ?>

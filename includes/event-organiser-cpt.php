@@ -7,80 +7,109 @@
 add_action( 'init', 'eventorganiser_create_event_taxonomies', 10 );
 function eventorganiser_create_event_taxonomies() {
 
-$eventorganiser_option_array = get_option('eventorganiser_options'); 
+	$eo_options = get_option('eventorganiser_options'); 
 
-$cat_slug = (empty($eventorganiser_option_array['url_cat']) ? 'events/category' : trim($eventorganiser_option_array['url_cat'], "/"));
-$tag_slug = (empty($eventorganiser_option_array['url_tag']) ? 'events/category' : trim($eventorganiser_option_array['url_tag'], "/"));
+	$cat_slug = (empty($eo_options['url_cat']) ? 'events/category' : trim($eo_options['url_cat'], "/"));
+	$tag_slug = (empty($eo_options['url_tag']) ? 'events/category' : trim($eo_options['url_tag'], "/"));
+	$venue_slug = (empty($eo_options['url_venue']) ? 'events/venue' : trim($eo_options['url_venue'], "/"));
 
-  // Add new taxonomy, make it hierarchical (like categories)
-  $category_labels = array(
-    'name' => __('Event Categories', 'eventorganiser'),
-    'singular_name' => _x( 'Category', 'taxonomy singular name'),
-    'search_items' =>  __( 'Search Categories' ),
-    'all_items' => __( 'All Categories' ),
-    'parent_item' => __( 'Parent Category' ),
-    'parent_item_colon' => __( 'Parent Category' ).':',
-    'edit_item' => __( 'Edit Category' ), 
-    'update_item' => __( 'Update Category' ),
-    'add_new_item' => __( 'Add New Category' ),
-    'new_item_name' => __( 'New Category Name' ),
-	'not_found' =>  __('No categories found'),
-    'menu_name' => __( 'Categories' ),
-  ); 	
+	$venue_labels = array(
+		'name' => __('Event Venues','eventorganiser'),
+    		'singular_name' => _x( 'Venues', 'taxonomy singular name'),
+    		'search_items' =>  __( 'Search Venues'),
+    		'all_items' => __( 'All Venues'),
+		'edit_item' => __( 'Edit Venue'),
+		'update_item' => __( 'Update Venue'),
+		'add_new_item' => __( 'Add New Venue'),
+		'new_item_name' => __( 'New Venue Name'),
+		'not_found' =>  __('No venues found'),
+		'add_or_remove_items' => __( 'Add or remove venues' ),
+		'separate_items_with_commas' => __( 'Separate venues with commas' )
+  		); 		
 
-register_taxonomy('event-category',array('event'), array(
-	'hierarchical' => true,
-	'labels' => $category_labels,
-	'show_ui' => true,
-    'update_count_callback' => '_update_post_term_count',
-	'query_var' => true,
-	'capabilities'=>array(
+	register_taxonomy('event-venue',array('event'), array(
+		'hierarchical' => false,
+		'labels' => $venue_labels,
+		'public'=> true,
+		'show_ui' => false,//Use custom UI
+		'update_count_callback' => '_update_post_term_count',
+		'query_var' => true,
+		'capabilities'=>array(
+			'manage_terms' => 'manage_venues',
+			'edit_terms' => 'manage_venues',
+			'delete_terms' => 'manage_venues',
+			'assign_terms' =>'edit_events'),
+		'rewrite' => array( 'slug' => $venue_slug, 'with_front' => false )
+  		));
+
+	 // Add new taxonomy, make it hierarchical (like categories)
+	$category_labels = array(
+		'name' => __('Event Categories', 'eventorganiser'),
+		'singular_name' => _x( 'Category', 'taxonomy singular name'),
+		'search_items' =>  __( 'Search Categories' ),
+		'all_items' => __( 'All Categories' ),
+		'parent_item' => __( 'Parent Category' ),
+		'parent_item_colon' => __( 'Parent Category' ).':',
+		'edit_item' => __( 'Edit Category' ), 
+		'update_item' => __( 'Update Category' ),
+		'add_new_item' => __( 'Add New Category' ),
+		'new_item_name' => __( 'New Category Name' ),
+		'not_found' =>  __('No categories found'),
+		'menu_name' => __( 'Categories' ),
+  	); 	
+
+	register_taxonomy('event-category',array('event'), array(
+		'hierarchical' => true,
+		'labels' => $category_labels,
+		'show_ui' => true,
+    		'update_count_callback' => '_update_post_term_count',
+		'query_var' => true,
+		'capabilities'=>array(
 		'manage_terms' => 'manage_event_categories',
 		'edit_terms' => 'manage_event_categories',
 		'delete_terms' => 'manage_event_categories',
 		'assign_terms' =>'edit_events'),
-	'public'=> true,
-	'rewrite' => array( 'slug' =>$cat_slug, 'with_front' => false )
-  ));
+		'public'=> true,
+		'rewrite' => array( 'slug' =>$cat_slug, 'with_front' => false )
+  	));
 
-if(isset($eventorganiser_option_array['eventtag']) && $eventorganiser_option_array['eventtag']==1):
-  // Add new taxonomy, make it non-hierarchical (like tags)
-  $tag_labels = array(
-     'name' => __('Event Tags','eventorganiser'),
-    'singular_name' => _x( 'Tag', 'taxonomy singular name'),
-    'search_items' =>  __( 'Search Tags'),
-    'all_items' => __( 'All Tags'),
-    'popular_items' => __( 'Popular Tags'),
-    'parent_item' => null,
-    'parent_item_colon' => null,
-    'edit_item' => __( 'Edit Tag'),
-    'update_item' => __( 'Update Tag'),
-    'add_new_item' => __( 'Add New Tag'),
-    'new_item_name' => __( 'New Tag Name'),
-	'not_found' =>  __('No tags found'),
-    'choose_from_most_used' => __( 'Choose from the most used tags' ),
-    'menu_name' => __( 'Tags' ),
-    'add_or_remove_items' => __( 'Add or remove tags' ),
-    'separate_items_with_commas' => __( 'Separate tags with commas' )
-  ); 	
+	if(isset($eo_options['eventtag']) && $eo_options['eventtag']==1):
+	  // Add new taxonomy, make it non-hierarchical (like tags)
+		$tag_labels = array(
+			'name' => __('Event Tags','eventorganiser'),
+			'singular_name' => _x( 'Tag', 'taxonomy singular name'),
+			'search_items' =>  __( 'Search Tags'),
+			'all_items' => __( 'All Tags'),
+			'popular_items' => __( 'Popular Tags'),
+			'parent_item' => null,
+			'parent_item_colon' => null,
+			'edit_item' => __( 'Edit Tag'),
+			'update_item' => __( 'Update Tag'),
+			'add_new_item' => __( 'Add New Tag'),
+			'new_item_name' => __( 'New Tag Name'),
+			'not_found' =>  __('No tags found'),
+			'choose_from_most_used' => __( 'Choose from the most used tags' ),
+			'menu_name' => __( 'Tags' ),
+			'add_or_remove_items' => __( 'Add or remove tags' ),
+			'separate_items_with_commas' => __( 'Separate tags with commas' )
+  		); 	
 
-register_taxonomy('event-tag',array('event'), array(
-    'hierarchical' => false,
-	'labels' => $tag_labels,
-	'show_ui' => true,
-    'update_count_callback' => '_update_post_term_count',
-	'query_var' => true,
-	'capabilities'=>array(
-		'manage_terms' => 'manage_event_categories',
-		'edit_terms' => 'manage_event_categories',
-		'delete_terms' => 'manage_event_categories',
-		'assign_terms' =>'edit_events'),
-	'public'=> true,
-	'rewrite' => array( 'slug' => $tag_slug, 'with_front' => false )
-  ));
+		register_taxonomy('event-tag',array('event'), array(
+			'hierarchical' => false,
+			'labels' => $tag_labels,
+			'show_ui' => true,
+			'update_count_callback' => '_update_post_term_count',
+			'query_var' => true,
+			'capabilities'=>array(
+			'manage_terms' => 'manage_event_categories',
+			'edit_terms' => 'manage_event_categories',
+			'delete_terms' => 'manage_event_categories',
+			'assign_terms' =>'edit_events'),
+			'public'=> true,
+			'rewrite' => array( 'slug' => $tag_slug, 'with_front' => false )
+  		));
 endif;
 }
-
 
 //Register the custom post type Event
 add_action('init', 'eventorganiser_cpt_register');
@@ -165,7 +194,6 @@ function eventorganiser_messages( $messages ) {
 }
 
 
-
 //Meta capabilities for post type event
 add_filter( 'map_meta_cap', 'eventorganiser_event_meta_cap', 10, 4 );
 function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
@@ -212,28 +240,7 @@ function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 	return $caps;
 }
 
-
-// Rewrite rules for venues page
-add_action('generate_rewrite_rules', 'eventorganiser_create_rewrite_rules');
-function eventorganiser_create_rewrite_rules() {
-	global $wp_rewrite;
- 
-	// add rewrite tokens
-	$keytag = '%venue%';
-	$wp_rewrite->add_rewrite_tag($keytag, '(.+?)', 'post_type=event&venue=');
-
-	$eventorganiser_option_array = get_option('eventorganiser_options'); 
-	$venue_slug = (empty($eventorganiser_option_array['url_venue']) ? 'events/venue' : trim($eventorganiser_option_array['url_venue'], "/"));
-	
-	$keywords_structure = $wp_rewrite->root . $venue_slug."/$keytag/";
-	$keywords_rewrite = $wp_rewrite->generate_rewrite_rules($keywords_structure);
- 
-	$wp_rewrite->rules = $keywords_rewrite + $wp_rewrite->rules;
-	return $wp_rewrite->rules;
-}
-
-
-// This adds the Event Organiser icon to the page head
+//This adds the Event Organiser icon to the page head
 add_action('admin_head', 'eventorganiser_plugin_header_image');
 function eventorganiser_plugin_header_image() {
         global $post_type;
@@ -245,22 +252,48 @@ function eventorganiser_plugin_header_image() {
 	<?php endif; 
 }
 
-// Filter wp_nav_menu() to add event link if selected in options
- add_filter( 'wp_list_pages', 'eventorganiser_menu_link' );
-add_filter( 'wp_nav_menu_items', 'eventorganiser_menu_link' );
-function eventorganiser_menu_link($items) {
-	global $wp_query;
-	$eo_settings_array= get_option('eventorganiser_options');
-	if(!$eo_settings_array['addtomenu'])
-		return $items;
 
-	$title = (isset($eo_settings_array['navtitle']) ? $eo_settings_array['navtitle'] : 'Events');
-	$class ='menu-item menu-item-type-event';
-	if(isset($wp_query->query_vars['post_type'])&&$wp_query->query_vars['post_type']=='event') $class = 'current_page_item';
-		$eventlink = '<li class="'.$class.'"><a href="'.EO_Event::link_structure().'">'.$title.'</a></li>';
-		$items = $items . $eventlink;
+//Work-around:
+add_action('wp_update_nav_menu_item','eventorganiser_update_nav_item',10,3);
+function eventorganiser_update_nav_item($menu_id,$menu_item_db_id,$args){
+	if($args['menu-item-type'] == 'post_type_archive' && $args['menu-item-object'] =='event'){
+		$post_type = $args['menu-item-object'];
+		$args['menu-item-url'] = get_post_type_archive_link($post_type);
+		update_post_meta( $menu_item_db_id, '_menu_item_url', esc_url_raw($args['menu-item-url']) );
+	}
+}
+
+//Add 'current' class
+add_filter( 'wp_nav_menu_objects', 'eventorganiser_make_item_current',10,2);
+function eventorganiser_make_item_current($items,$args){
+	if(is_post_type_archive('event')|| is_singular('event')|| eo_is_event_taxonomy()){
+		foreach ($items as $item){
+			if('post_type_archive'==$item->type && 'event'==$item->object)
+				$item->classes[] = 'current-menu-item';
+		}
+	}
 	return $items;
 }
+
+//'Old school' - fallback case
+// Filter wp_nav_menu() to add event link if selected in options
+function eventorganiser_menu_link($items) {
+	$eo_options= get_option('eventorganiser_options');
+	if($eo_options['addtomenu']!='1')
+		return $items;
+
+	global $wp_query;
+	$title = (isset($eo_options['navtitle']) ? $eo_options['navtitle'] : 'Events');
+	$class ='menu-item menu-item-type-event';
+
+	if(is_post_type_archive('event')|| is_singular('event')|| eo_is_event_taxonomy())
+		$class = 'current_page_item';
+	
+	$eventlink = '<li class="'.$class.'"><a href="'.get_post_type_archive_link('event').'">'.$title.'</a></li>';
+	$items = $items . $eventlink;
+	return $items;
+}
+
 
 /*
  * Add contextual help
@@ -487,5 +520,59 @@ function eo_get_category_meta($term,$key){
 	}
 	
 	return false;
+}
+
+
+add_filter('get_event-venue','eventorganiser_venue_meta');
+function eventorganiser_venue_meta($term){
+	if($term && isset($term->taxonomy) && $term->taxonomy=='event-venue'):
+		$venue_meta = eo_get_venue_by('slug',$term->slug);
+		if($venue_meta){
+			$fields = array('venue_address','venue_postal','venue_country','venue_lng','venue_lat','venue_description');
+			foreach ($fields as $field){
+				if(!isset($term->$field))
+					$term->$field = $venue_meta->$field;
+			}
+		}
+	endif;
+	return $term;
+}
+add_filter('wp_get_object_terms','eventorganiser_venues_meta');
+function eventorganiser_venues_meta($terms){
+	if($terms):
+		foreach($terms as $term):
+			$term = eventorganiser_venue_meta($term);
+		endforeach;
+	endif;
+	return $terms;
+}
+
+add_filter('terms_clauses', 'eventorganiser_join_venue_meta',10,3);
+function eventorganiser_join_venue_meta($pieces,$taxonomies,$args){
+
+	if(!in_array('event-venue',$taxonomies))
+		return $pieces;
+
+	global $eventorganiser_venue_table, $wpdb;
+	$evt =$eventorganiser_venue_table;
+
+	if($args['fields'] =='all'){
+		$pieces['fields'] .= ", {$evt}.venue_id, {$evt}.venue_address, {$evt}.venue_postal, {$evt}.venue_country, {$evt}.venue_lat, {$evt}.venue_lng, {$evt}.venue_description";
+		$pieces['join'] .=" LEFT JOIN {$evt} ON t.slug = {$evt}.venue_slug";
+
+		switch($args['orderby']):
+			case 'address':
+				$pieces['orderby'] = "ORDER BY  {$evt}.venue_address";
+				break;
+			case 'country':
+				$pieces['orderby'] = "ORDER BY  {$evt}.venue_country";
+				break;
+			case 'postcode':
+				$pieces['orderby'] = "ORDER BY  {$evt}.venue_postal";
+				break;
+		endswitch;
+	}
+
+	return $pieces;
 }
 ?>
