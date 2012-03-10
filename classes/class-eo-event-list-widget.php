@@ -13,7 +13,8 @@ class EO_Event_List_Widget extends WP_Widget{
 		'orderby'=> 'eventstart',
 		'showpastevents'=> 0,
 		'group_events_by'=>'',
-		'order'=> 'ASC'
+		'order'=> 'ASC',
+		'template'=>'',
 		);
 
   function EO_Event_List_Widget(){
@@ -68,6 +69,10 @@ class EO_Event_List_Widget extends WP_Widget{
     <label for="<?php echo $this->get_field_id('group_events_by'); ?>"><?php _e('Group occurrences', 'eventorganiser'); ?>  </label>
 	<input type="checkbox" id="<?php echo $this->get_field_id('group_events_by'); ?>" value="series" name="<?php echo $this->get_field_name('group_events_by'); ?>" <?php checked($instance['group_events_by'],'series');?> />
   </p>
+  <p>
+    <label for="<?php echo $this->get_field_id('template'); ?>"><?php _e('Template', 'eventorganiser'); ?>  </label>
+	  <input  id="<?php echo $this->get_field_id('template'); ?>" class="widefat" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo $instance['template'];?>" />
+  </p>
 <?php
   }
  
@@ -81,9 +86,10 @@ class EO_Event_List_Widget extends WP_Widget{
     }
 
  
- 
   function widget($args, $instance){
 	extract($args, EXTR_SKIP);
+	$template = $instance['template'];
+	unset($instance['template']);
 
 	$events = eo_get_events($instance);
 	
@@ -92,18 +98,31 @@ class EO_Event_List_Widget extends WP_Widget{
 	echo $instance['title'];
     	echo $after_title;
 
+	global $post;
+	$tmp_post = $post;
 	if($events):	
 		echo '<ul class="eo-events eo-events-widget">';
-		foreach ($events as $event):
-			//Check if all day, set format accordingly
-			if($event->event_allday){
-				$format = get_option('date_format');
-			}else{
-				$format = get_option('date_format').'  '.get_option('time_format');
-			}
-			echo '<li><a title="'.$event->post_title.'" href="'.get_permalink($event->ID).'">'.$event->post_title.'</a> '.__('on','eventorganiser').' '.eo_format_date($event->StartDate.' '.$event->StartTime, $format).'</li>';
+		foreach ($events as $post):
+			setup_postdata($post); 
+			if(empty($template)):
+				//Use default template
+		
+				//Check if all day, set format accordingly
+				if($post->event_allday){
+					$format = get_option('date_format');
+				}else{
+					$format = get_option('date_format').'  '.get_option('time_format');
+				}
+				echo '<li><a title="'.$post->post_title.'" href="'.get_permalink($post->ID).'">'.$post->post_title.'</a> '.__('on','eventorganiser').' '.eo_format_date($post->StartDate.' '.$post->StartTime, $format).'</li>';
+
+			else:
+				echo '<li>'.EventOrganiser_Shortcodes::read_template($template).'</li>';
+			endif;
+
 		endforeach;
 		echo '</ul>';
+		$post = $tmp_post;
+		wp_reset_postdata();
 	endif;
      	echo $after_widget;
   }

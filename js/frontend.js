@@ -29,10 +29,10 @@
               		      cat = $(".filter-category .eo-cal-filter").val();
               		      venue = $(".filter-venue .eo-cal-filter").val();
               		      if (typeof cat !== "undefined" && cat != '' && ($.inArray(cat, event.category) < 0)) {
-              		          return false
+              		          return '<div></div>';
               		      }
               		      if (typeof venue !== "undefined" && venue != '' && venue != event.venue) {
-              		          return false
+              		          return '<div></div>';
               		      }
               		  },
               		  buttonText: {

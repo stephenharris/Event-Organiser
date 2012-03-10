@@ -131,7 +131,6 @@ class EventOrganiser_Shortcodes {
 			}
 		}
 
-
 		$events = eo_get_events($atts);
 
 		if($events):	
