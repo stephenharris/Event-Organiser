@@ -70,7 +70,7 @@ class EO_Event_List_Widget extends WP_Widget{
 	<input type="checkbox" id="<?php echo $this->get_field_id('group_events_by'); ?>" value="series" name="<?php echo $this->get_field_name('group_events_by'); ?>" <?php checked($instance['group_events_by'],'series');?> />
   </p>
   <p>
-    <label for="<?php echo $this->get_field_id('template'); ?>"><?php _e('Template', 'eventorganiser'); ?>  </label>
+    <label for="<?php echo $this->get_field_id('template'); ?>"><?php _e('Template (leave blank for default)', 'eventorganiser'); ?>  </label>
 	  <input  id="<?php echo $this->get_field_id('template'); ?>" class="widefat" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo $instance['template'];?>" />
   </p>
 <?php

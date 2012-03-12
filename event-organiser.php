@@ -23,22 +23,25 @@ Author URI: http://www.HarrisWebSolutions.co.uk
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
+//DONE fix menu link
+//DONE improve menu link (add option)
+//DONE Template for widgets
+//DONE Time for frontend calendar
+//DONE date  allow any delimitator . - or /
+
+
 //TODO Debug converter
-//TODO Use get_post_type_archive_link( $post_type ) for event archive link?
-//TODO test ICAL?
-//TODO template conditional statements?
-//TODO fullcalendar key
+//TODO Check ML
 
-//TODO fix menu link (few bugs)
-//TODO improve menu link (add option)
-
-
-//TODO add template option for widget
-
-//TODO Time for frontend calendar
-//XXX Jquery 1.6.2
+/** Maybe **/
+//TODO fullcalendar key - give tutorial on how to make custom one?? Provide functions if necessary?
 //TODO eo_insert_event function?
-//TODO Group by posts_ID rather than event table ID?
+//TODO template conditional statements?
+
+/** Testing **/
+//XXX Jquery 1.6.2
+//TODO test ICAL?
+
 /*
 add_action('load-edit-tags.php','myprefix_redirect_to_custompage');
 function myprefix_redirect_to_custompage(){

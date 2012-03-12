@@ -814,10 +814,12 @@ function check_date($date_string,$formated=false){
 
 	//Check for format
 	if($formated)
-		preg_match("/(\d{4})-(\d{1,})-(\d{1,})/", $date_string,$matches);
+		preg_match("/(\d{4})[-.\/](\d{1,})[-.\/](\d{1,})/", $date_string,$matches);
 
 	else
-		preg_match("/(\d{1,})-(\d{1,})-(\d{4})/", $date_string,$matches);
+		preg_match("/(\d{1,})[-.\/](\d{1,})[-.\/](\d{4})/", $date_string,$matches);
+
+	wp_die(var_dump($matches));
 
 	if(count($matches)<4) return false;
 

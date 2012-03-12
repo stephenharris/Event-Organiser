@@ -53,7 +53,6 @@ class EventOrganiser_Shortcodes {
 
 	function handle_fullcalendar_shortcode($atts=array()) {
 		global $post;
-		//TODO Allow multiple instances of full-calendar
 		$defaults = array(
 			'headerleft'=>'title', 
 			'headercenter'=>'',
@@ -61,8 +60,13 @@ class EventOrganiser_Shortcodes {
 			'defaultview'=>'month',
 			'category'=>'',
 			'venue'=>'',
+			'timeFormat'=>'H:m'
 		);
 		$atts = shortcode_atts( $defaults, $atts );
+		array_map('esc_attr',$atts);
+
+		//Convert php time format into xDate time format
+		$atts['timeFormat'] =eventorganiser_php2xdate($atts['timeFormat']);
 
 		self::$calendars[] =array_merge($atts);
 		self::$add_script = true;
@@ -309,4 +313,58 @@ class EventOrganiser_Shortcodes {
 }
  
 EventOrganiser_Shortcodes::init();
+
+/*
+* Very basic class to convert php date format into xdate date format used for javascript.
+*
+* Doesn't support
+* ** L Whether it's a leap year
+* ** N ISO-8601 numeric representation of the day of the week (added in PHP 5.1.0)
+* ** w Numeric representation of the day of the week (0=sun,...)
+* ** z The day of the year (starting from 0)
+* ** t Number of days in the given month
+* **B Swatch Internet time
+* **u microseconds
+
+* ** e 	Timezone identifier (added in PHP 5.1.0) 	Examples: UTC, GMT, Atlantic/Azores
+* ** I (capital i) 	Whether or not the date is in daylight saving time 	1 if Daylight Saving Time, 0 otherwise.
+* ** O 	Difference to Greenwich time (GMT) in hours 	Example: +0200
+* ** T 	Timezone abbreviation 	Examples: EST, MDT ...
+* ** Z 	Timezone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.
+
+* ** c 	ISO 8601 date (added in PHP 5) 	2004-02-12T15:19:21+00:00
+* ** r 	» RFC 2822 formatted date 	Example: Thu, 21 Dec 2000 16:01:07 +0200
+* ** U 	Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) 	See also time()
+*/
+	function eventorganiser_php2xdate($phpformat=""){
+		$php2xdate = array(
+				'Y'=>'yyyy','y'=>'yy','L'=>''/*NS*/,'o'=>'I',
+				'j'=>'d','d'=>'dd','D'=>'ddd','l'=>'dddd','N'=>'', /*NS*/ 'S'=>'S',
+				'w'=>'', /*NS*/ 'z'=>'',/*NS*/ 'W'=>'w',
+				'F'=>'MMMM','m'=>'MM','M'=>'MMM','n'=>'M','t'=>'',/*NS*/
+				'a'=>'tt','A'=>'TT',
+				'B'=>'',/*NS*/'g'=>'h','G'=>'H','h'=>'hh','H'=>'HH','u'=>'fff',
+				'i'=>'mm','s'=>'ss',
+				'O'=>'zz ', 'P'=>'zzz',
+				'c'=>'u',
+			);
+		$xdateformat="";
+
+		for($i=0;  $i< strlen($phpformat); $i++){
+
+			//Handle backslash excape
+			if($phpformat[$i]=="\\"){
+				$xdateformat .= "\\".$phpformat[$i+1];
+				$i++;
+				continue;
+			}
+
+			if(isset($php2xdate[$phpformat[$i]])){
+				$xdateformat .= $php2xdate[$phpformat[$i]];
+			}else{
+				$xdateformat .= $phpformat[$i];
+			}
+		}
+		return $xdateformat;
+	}
 ?>

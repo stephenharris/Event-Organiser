@@ -57,8 +57,8 @@
               		          data: {
               		              start: jQuery.fullCalendar.formatDate(start, 'yyyy-MM-dd'),
               		              end: jQuery.fullCalendar.formatDate(end, 'yyyy-MM-dd'),
-              		              //category: calendars[i].category,
-              		              //venue: calendars[i].venue
+              		              category: calendars[i].category,
+              		              venue: calendars[i].venue
 	              	          },
 						success: function (data) {
 							callback(data)
@@ -68,7 +68,7 @@
 				selectable: false,
 				weekMode: 'variable',
 				aspectRatio: 1.50,
-				timeFormat: 'HH:mm',
+				timeFormat: calendars[i].timeFormat,
 				loading: function (bool) {
 		                    loading = $('#' + $(this).attr('id') + '_loading');
 					if (bool) {

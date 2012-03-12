@@ -15,25 +15,24 @@
 			'event_end_after'=>$_GET['start']
 		);
 
+		//Restrict by category and/or venue
 		if(!empty($_GET['category'])){
 			$cats = explode(',',esc_attr($_GET['category']));
-			$request['tax_query'] = array(
-				array(
+			$request['tax_query'][] = array(
 					'taxonomy' => 'event-category',
 					'field' => 'slug',
-					'terms' => $cats
-				)
-			);
+					'terms' => $cats,
+					'operator' => 'IN'
+				);
 		}
 		if(!empty($_GET['venue'])){
 			$venues = explode(',',esc_attr($_GET['venue']));
-			$request['tax_query'] = array(
-				array(
+			$request['tax_query'][] = array(
 					'taxonomy' => 'event-venue',
 					'field' => 'slug',
-					'terms' => $venues
-				)
-			);
+					'terms' => $venues,
+					'operator' => 'IN'
+				);
 		}
 
 		$presets = array('numberposts'=>-1, 'showrepeats'=>true,'showpastevents'=>true);
