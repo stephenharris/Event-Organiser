@@ -308,15 +308,6 @@ class EO_Event{
 			);
 			$ins = $wpdb->insert($eventorganiser_events_table, $occurrence_input);
 		endforeach;
-
-		//Add post to venue category:
-
-		if($this->venue){
-			$venue_tax_id = (int) $this->venue;
-			$r = wp_set_object_terms( $post_id, array($venue_tax_id),'event-venue');	
-			//wp_die(var_dump($r));
-		}
-
 		return true;
 	}
 
