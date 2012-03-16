@@ -25,6 +25,7 @@ Author URI: http://www.HarrisWebSolutions.co.uk
 */
 //TODO
 //Debug converter
+//XXX XXX Change deactivate XXX XXX 
 
 //The database version
 global $eventorganiser_db_version;

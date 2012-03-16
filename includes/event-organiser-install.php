@@ -92,9 +92,6 @@
 function eventorganiser_deactivate(){
 	eventorganiser_clear_cron_jobs();
 	flush_rewrite_rules();
-	//XXX XXX Remove before relasing XXX XXX//
-	eventorganiser_uninstall();
-	// XXX XXX XXX XXX XXX //
     }
 
 add_action('admin_init', 'eventorganiser_upgradecheck');
