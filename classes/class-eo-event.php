@@ -1031,7 +1031,8 @@ function is_leapyear($date){
 			$d = intval($date->format('t'))-$offset;
 		endif;
 	
-		$date = date_create($date->format('Y-m-'.$d));
+		$blog_tz =$this->get_timezone();
+		$date = date_create($date->format('Y-m-'.$d),$blog_tz);
 
 		return $date;
 }
@@ -1075,20 +1076,9 @@ function is_leapyear($date){
 		return intval($this->venue)>0;
 	}
 
+	//Depreciated - use native get_post_type_archive_link()
 	function link_structure(){
-		global $wp_rewrite;
-		$event_link = $wp_rewrite->get_extra_permastruct('event');
-
-		if ( !empty($event_link)) {
-			$event_link = str_replace("%event%", '', $event_link);
-			$event_link = home_url( user_trailingslashit($event_link) );
-		} else {
-			$event_link = add_query_arg(array('post_type' =>'event'), '');
-			$event_link = home_url($event_link);
-		}
-		return $event_link;	
+		return get_post_type_archive_link('event');
 	}
-
-
 }	
 ?>
