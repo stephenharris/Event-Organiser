@@ -100,8 +100,8 @@ function eventorganiser_event_fill_columns($column_name, $id) {
  * Adds a drop-down filter to the Event CPT table by category
  * @since 1.0.0
  */
-add_action( 'restrict_manage_posts', 'restrict_events_by_category' );
-function restrict_events_by_category() {
+add_action( 'restrict_manage_posts', 'eventorganiser_restrict_events_by_category' );
+function eventorganiser_restrict_events_by_category() {
 
     // only display these taxonomy filters on desired custom post_type listings
     global $typenow,$wp_query;
@@ -114,8 +114,8 @@ function restrict_events_by_category() {
  * Adds a drop-down filter to the Event CPT table by venue
  * @since 1.0.0
  */
-add_action('restrict_manage_posts','restrict_events_by_venue');
-function restrict_events_by_venue() {
+add_action('restrict_manage_posts','eventorganiser_restrict_events_by_venue');
+function eventorganiser_restrict_events_by_venue() {
 	global $typenow;
 
 	//Only add if CPT is event

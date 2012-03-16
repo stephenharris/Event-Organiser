@@ -44,9 +44,8 @@ function eo_get_events($args=array()){
 	$query_array = array_merge($defaults,$args,$required);
 
 	if(!empty($query_array['venue'])){	
-		$venue = $query_array['venue'];
+		$query_array['event-venue'] = $query_array['venue'];
 		unset($query_array['venue']);
-		$query_array['event-venue']= $venue;
 	}
 	
 	//Ensure all date queries are yyyy-mm-dd format. Process relative strings ('today','tomorrow','+1 week')
@@ -680,5 +679,8 @@ function eo_event_category_dropdown( $args = '' ) {
 
 function eo_get_category_color($term){
 	return eo_get_category_meta($term,'color');
+}
+function eo_is_event_taxonomy(){
+	return (is_tax(array('event-category','event-tag','event-venue')));
 }
 ?>
