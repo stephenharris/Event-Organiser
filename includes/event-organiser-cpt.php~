@@ -550,30 +550,4 @@ function eventorganiser_join_venue_meta($pieces,$taxonomies,$args){
 
 	return $pieces;
 }
-
-add_action('quick_edit_custom_box',  'shiba_add_quick_edit', 10, 2);
- function shiba_add_quick_edit($column_name, $post_type) {
-	if ($column_name != 'widget_set') return;
-	?>
-    <fieldset class="inline-edit-col-left">
-	<div class="inline-edit-col">
-		<span class="title">Widget Set</span>
-		<input type="hidden" name="shiba_widget_set_noncename" id="shiba_widget_set_noncename" value="" />
-		<?php // Get all widget sets
-			$widget_sets = get_posts( array( 'post_type' => 'widget_set',
-							'numberposts' => -1,
-							'post_status' => 'publish') );
-		?>
-		<select name='post_widget_set' id='post_widget_set'>
-			<option class='widget-option' value='0'>None</option>
-			<?php 
-			foreach ($widget_sets as $widget_set) {
-				echo "<option class='widget-option' value='{$widget_set->ID}'>{$widget_set->post_title}</option>\n";
-			}
-		        ?>
-		</select>
-	</div>
-    </fieldset>
-	<?php
-}
 ?>

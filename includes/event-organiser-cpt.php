@@ -253,20 +253,44 @@ function eventorganiser_plugin_header_image() {
 	<?php endif; 
 }
 
+//Work-around:
+add_action('wp_update_nav_menu_item','eventorganiser_update_nav_item',10,3);
+function eventorganiser_update_nav_item($menu_id,$menu_item_db_id,$args){
+	if($args['menu-item-type'] == 'post_type_archive' && $args['menu-item-object'] =='event'){
+		$post_type = $args['menu-item-object'];
+		$args['menu-item-url'] = get_post_type_archive_link($post_type);
+		update_post_meta( $menu_item_db_id, '_menu_item_url', esc_url_raw($args['menu-item-url']) );
+	}
+}
+
+//Add 'current' class
+add_filter( 'wp_nav_menu_objects', 'eventorganiser_make_item_current',10,2);
+function eventorganiser_make_item_current($items,$args){
+	if(is_post_type_archive('event')|| is_singular('event')|| eo_is_event_taxonomy()){
+		foreach ($items as $item){
+			if('post_type_archive'==$item->type && 'event'==$item->object)
+				$item->classes[] = 'current-menu-item';
+		}
+	}
+	return $items;
+}
+
+//'Old school' - fallback case
 // Filter wp_nav_menu() to add event link if selected in options
- add_filter( 'wp_list_pages', 'eventorganiser_menu_link' );
-add_filter( 'wp_nav_menu_items', 'eventorganiser_menu_link' );
 function eventorganiser_menu_link($items) {
-	global $wp_query;
 	$eo_options= get_option('eventorganiser_options');
-	if(!$eo_options['addtomenu'])
+	if($eo_options['addtomenu']!='1')
 		return $items;
 
-	$title = (isset($eo_settings_array['navtitle']) ? $eo_settings_array['navtitle'] : 'Events');
+	global $wp_query;
+	$title = (isset($eo_options['navtitle']) ? $eo_options['navtitle'] : 'Events');
 	$class ='menu-item menu-item-type-event';
-	if(isset($wp_query->query_vars['post_type'])&&$wp_query->query_vars['post_type']=='event') $class = 'current_page_item';
-		$eventlink = '<li class="'.$class.'"><a href="'.EO_Event::link_structure().'">'.$title.'</a></li>';
-		$items = $items . $eventlink;
+
+	if(is_post_type_archive('event')|| is_singular('event')|| eo_is_event_taxonomy())
+		$class = 'current_page_item';
+	
+	$eventlink = '<li class="'.$class.'"><a href="'.get_post_type_archive_link('event').'">'.$title.'</a></li>';
+	$items = $items . $eventlink;
 	return $items;
 }
 
