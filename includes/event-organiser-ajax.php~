@@ -29,7 +29,7 @@
 			$venues = explode(',',esc_attr($_GET['venue']));
 			$request['tax_query'] = array(
 				array(
-					'taxonomy' => 'event-venu',
+					'taxonomy' => 'event-venue',
 					'field' => 'slug',
 					'terms' => $venues
 				)
