@@ -1,27 +1,181 @@
-(function($){
-jQuery(document).ready(function() {
-if($(".eo-venue-map").length>0){if(EOAjax.map!==undefined){var script=document.createElement("script");script.type="text/javascript";script.src="http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map";document.body.appendChild(script)}};
+(function ($) {
+    jQuery(document).ready(function () {
+        if ($(".eo-venue-map").length > 0) {
+            if (EOAjax.map !== undefined) {
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map";
+                document.body.appendChild(script)
+            }
+        };
 
-if($(".eo-fullcalendar").length>0){
-console.log(EOAjax.fullcal.category);
-$(".eo-fullcalendar").fullCalendar({editable:false,firstDay:parseInt(EOAjax.fullcal.firstDay),header:{left:EOAjax.fullcal.headerleft,center:EOAjax.fullcal.headercenter,right:EOAjax.fullcal.headerright},categories:EOAjax.fullcal.categories,venues:EOAjax.fullcal.venues,eventRender:function(event,element){cat=$(".filter-category .eo-cal-filter").val();venue=$(".filter-venue .eo-cal-filter").val();if(typeof cat!=="undefined"&&cat!=''&&($.inArray(cat,event.category)<0)){return false}if(typeof venue!=="undefined"&&venue!=''&&venue!=event.venue){return false}},buttonText:{today:EOAjaxFront.locale.today,month:EOAjaxFront.locale.month,week:EOAjaxFront.locale.week,day:EOAjaxFront.locale.day,cat:EOAjaxFront.locale.cat,venue:EOAjaxFront.locale.venue},monthNames:EOAjaxFront.locale.monthNames,monthNamesShort:EOAjaxFront.locale.monthAbbrev,dayNames:EOAjaxFront.locale.dayNames,dayNamesShort:EOAjaxFront.locale.dayAbbrev,eventColor:'#21759B',defaultView:EOAjax.fullcal.defaultview,lazyFetching:'true',events:function(start,end,callback){jQuery.ajax({url:EOAjax.ajaxurl+"?action=eventorganiser-fullcal",dataType:'JSON',data:{start:jQuery.fullCalendar.formatDate(start,'yyyy-MM-dd'),end:jQuery.fullCalendar.formatDate(end,'yyyy-MM-dd'),category:EOAjax.fullcal.category,venue:EOAjax.fullcal.venue},success:function(data){callback(data)}})},selectable:false,weekMode:'variable',aspectRatio:1.50,timeFormat:'HH:mm',loading:function(bool){loading=jQuery('#'+jQuery(this).attr('id')+'_loading');if(bool){loadingTimeOut=window.setTimeout(function(){loading.show()},1000)}else{window.clearTimeout(loadingTimeOut);loading.hide()}}});jQuery(".eo-cal-filter").change(function(){$(".eo-fullcalendar").fullCalendar('rerenderEvents')});
-}
+        if ($(".eo-fullcalendar").length > 0) {
+		var calendar=Array();
+		var calendars = EOAjax.calendars;
+		var loadingTimeOut;
+		for(i=0; i<calendars.length; i++){
+			calendar= "#eo_fullcalendar_"+(i+1);
+			var cat = calendars[i].category;
+			var venue = calendars[i].venue;
+			console.log(cat);
+			$(calendar).fullCalendar({
+                		editable: false,
+		                firstDay: parseInt(EOAjax.fullcal.firstDay),
+              		  header: {
+              		      left: calendars[i].headerleft,
+              		      center: calendars[i].headercenter,
+              		      right: calendars[i].headerright
+              		  },
+              		  categories: EOAjax.fullcal.categories,
+              		  venues:EOAjax.fullcal.venues,
+              		  eventRender: function (event, element) {
+              		      cat = $(".filter-category .eo-cal-filter").val();
+              		      venue = $(".filter-venue .eo-cal-filter").val();
+              		      if (typeof cat !== "undefined" && cat != '' && ($.inArray(cat, event.category) < 0)) {
+              		          return '<div></div>';
+              		      }
+              		      if (typeof venue !== "undefined" && venue != '' && venue != event.venue) {
+              		          return '<div></div>';
+              		      }
+              		  },
+              		  buttonText: {
+              		      today: EOAjaxFront.locale.today,
+              		      month: EOAjaxFront.locale.month,
+              		      week: EOAjaxFront.locale.week,
+              		      day: EOAjaxFront.locale.day,
+		                    cat: EOAjaxFront.locale.cat,
+              		      venue: EOAjaxFront.locale.venue
+              		  },
+              		  monthNames: EOAjaxFront.locale.monthNames,
+              		  monthNamesShort: EOAjaxFront.locale.monthAbbrev,
+              		  dayNames: EOAjaxFront.locale.dayNames,
+              		  dayNamesShort: EOAjaxFront.locale.dayAbbrev,
+              		  eventColor: '#21759B',
+              		  defaultView: calendars[i].defaultview,
+              		  lazyFetching: 'true',
+              		  events: function (start, end, callback) {
+					 jQuery.ajax({
+              		          url: EOAjax.ajaxurl + "?action=eventorganiser-fullcal",
+              		          dataType: 'JSON',
+              		          data: {
+              		              start: jQuery.fullCalendar.formatDate(start, 'yyyy-MM-dd'),
+              		              end: jQuery.fullCalendar.formatDate(end, 'yyyy-MM-dd'),
+              		              category: EOAjax.calendars[0].category,
+              		              venue: EOAjax.calendars[0].venue,
+	              	          },
+						success: function (data) {
+							callback(data)
+       	                 		}
+                    			})
+                		},
+				selectable: false,
+				weekMode: 'variable',
+				aspectRatio: 1.50,
+				timeFormat: calendars[i].timeFormat,
+				loading: function (bool) {
+		                    loading = $('#' + $(this).attr('id') + '_loading');
+					if (bool) {
+						window.clearTimeout(loadingTimeOut)
+						loadingTimeOut = window.setTimeout(function () {loading.show();}, 1000);
+					} else {
+						window.clearTimeout(loadingTimeOut)
+						loading.hide();
+	                    		}
+                		}
+            });
+	}
+           jQuery(".eo-cal-filter").change(function () {
+                $(".eo-fullcalendar").fullCalendar('rerenderEvents')
+            });
+        }
 
-if($("#eo_calendar").length>0&&typeof EOAjaxFront.adminajax!==undefined){$('#eo_calendar tfoot').unbind("click");$('#eo_calendar tfoot a').die("click").live('click',function(e){e.preventDefault();$.getJSON(EOAjaxFront.adminajax+"?action=eo_widget_cal",{eo_month:getParameterByName('eo_month',$(this).attr('href')),},function(data){$('#eo_calendar').html(data)})})}
+if($("#eo_calendar").length>0&&typeof EOAjaxFront.adminajax!==undefined){$('#eo_calendar tfoot').unbind("click");$('#eo_calendar tfoot a').die("click").live('click',function(e){e.preventDefault();$.getJSON(EOAjaxFront.adminajax+"?action=eo_widget_cal",{eo_month:getParameterByName('eo_month',$(this).attr('href')),},function(data){$('#eo_calendar').html(data)});});}
 
-if($('.eo-agenda-widget').length>0){
-var locale={monthNames:EOAjaxFront.locale.monthNames,monthNamesShort:EOAjaxFront.locale.monthAbbrev,dayNames:EOAjaxFront.locale.dayNames,dayNamesShort:EOAjaxFront.locale.dayAbbrev};var agendaWidget=$('.eo-agenda-widget');var dateList=agendaWidget.find('ul.dates');var events=agendaWidget.find('ul.date li.event');var dates=dateList.find('li');d=new Date();var StartDate=$.fullCalendar.formatDate(d,'yyyy-MM-dd');var EndDate=StartDate;
-function getEvents(dir){jQuery.ajax({url:EOAjaxFront.adminajax,dataType:'JSON',data:{action:'eo_widget_agenda',direction:dir,start:StartDate,end:EndDate},success:function(events){if(!jQuery.isArray(events)||!events[0]){return false}else{StartDate=events[0].StartDate;EndDate=events[(events.length-1)].StartDate;populateAgenda(events)}}})};getEvents(1);$('.eo-agenda-widget .agenda-nav span').click(function(event){event.preventDefault();if($(this).hasClass('next')){dir='+1'}else if($(this).hasClass('prev')){dir='-1'}getEvents(dir)});
-function populateAgenda(events){$(dates).remove();current='';for(i=0;i<events.length;i++){d=new Date(events[i].StartDate);if(current==''||current!=events[i].StartDate){current=events[i].StartDate;day=new Date(events[i].StartDate);currentList=$('<li class="date" >'+jQuery.fullCalendar.formatDate(day,'dddd, dS MMMM',locale)+'<ul class="a-date"></ul></li>');dateList.append(currentList)}if(events[i].color){color=events[i].color}else{color='none'}event=$('<li class="event"></li>').append('<span class="cat"></span><span><strong>'+events[i].time+': </strong></span>'+events[i].post_title).append('<div class="meta" style="display:none;"><span><a href="'+events[i].link+'">View</a></span><span> &nbsp; </span><span><a href="'+events[i].Glink+'" target="_blank">Add to Google Calendar</a></span></div>');event.find('span.cat').css({'background':color});currentList.append(event)}dates=dateList.find('li');events=agendaWidget.find('ul li.event');events.on("click",function(){$(this).find('.meta').toggle('400')})}
-}
 
-});
+        if ($('.eo-agenda-widget').length > 0) {
+            var locale = {
+                monthNames: EOAjaxFront.locale.monthNames,
+                monthNamesShort: EOAjaxFront.locale.monthAbbrev,
+                dayNames: EOAjaxFront.locale.dayNames,
+                dayNamesShort: EOAjaxFront.locale.dayAbbrev
+            };
+            var agendaWidget = $('.eo-agenda-widget');
+            var dateList = agendaWidget.find('ul.dates');
+            var events = agendaWidget.find('ul.date li.event');
+            var dates = dateList.find('li');
+            d = new Date();
+            var StartDate = $.fullCalendar.formatDate(d, 'yyyy-MM-dd');
+            var EndDate = StartDate;
+
+            function getEvents(dir) {
+                jQuery.ajax({
+                    url: EOAjaxFront.adminajax,
+                    dataType: 'JSON',
+                    data: {
+                        action: 'eo_widget_agenda',
+                        direction: dir,
+                        start: StartDate,
+                        end: EndDate
+                    },
+                    success: function (events) {
+                        if (!jQuery.isArray(events) || !events[0]) {
+                            return false
+                        } else {
+                            StartDate = events[0].StartDate;
+                            EndDate = events[(events.length - 1)].StartDate;
+                            populateAgenda(events)
+                        }
+                    }
+                })
+            };
+            getEvents(1);
+            $('.eo-agenda-widget .agenda-nav span').click(function (event) {
+                event.preventDefault();
+                if ($(this).hasClass('next')) {
+                    dir = '+1'
+                } else if ($(this).hasClass('prev')) {
+                    dir = '-1'
+                }
+                getEvents(dir)
+            });
+
+            function populateAgenda(events) {
+                $(dates).remove();
+                current = '';
+                for (i = 0; i < events.length; i++) {
+                    d = new Date(events[i].StartDate);
+                    if (current == '' || current != events[i].StartDate) {
+                        current = events[i].StartDate;
+                        day = new Date(events[i].StartDate);
+                        currentList = $('<li class="date" >' + jQuery.fullCalendar.formatDate(day, 'dddd, dS MMMM', locale) + '<ul class="a-date"></ul></li>');
+                        dateList.append(currentList)
+                    }
+                    if (events[i].color) {
+                        color = events[i].color
+                    } else {
+                        color = 'none'
+                    }
+                    event = $('<li class="event"></li>').append('<span class="cat"></span><span><strong>' + events[i].time + ': </strong></span>' + events[i].post_title).append('<div class="meta" style="display:none;"><span><a href="' + events[i].link + '">View</a></span><span> &nbsp; </span><span><a href="' + events[i].Glink + '" target="_blank">Add to Google Calendar</a></span></div>');
+                    event.find('span.cat').css({
+                        'background': color
+                    });
+                    currentList.append(event)
+                }
+                dates = dateList.find('li');
+                events = agendaWidget.find('ul li.event');
+                events.on("click", function () {
+                    $(this).find('.meta').toggle('400')
+                })
+            }
+        }
+
+    });
 
 })(jQuery);
 
 function getParameterByName(name,url){name=name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");var regexS="[\\?&]"+name+"=([^&#]*)";var regex=new RegExp(regexS);var results=regex.exec(url);if(results==null)return"";else return decodeURIComponent(results[1].replace(/\+/g," "))}
 
-function eo_load_map(){maps=EOAjax.map;for(i=0;i<maps.length;i++){lat=maps[i].lat;lng=maps[i].lng;if(lat!==undefined&&lng!=undefined){var latlng=new google.maps.LatLng(lat,lng);var myOptions={zoom:15,center:latlng,mapTypeId:google.maps.MapTypeId.ROADMAP};map=new google.maps.Map(document.getElementById("eo_venue_map-"+(i+1)),myOptions);var marker=new google.maps.Marker({position:latlng,map:map})}}}
+function eo_load_map(){maps=EOAjax.map;for(i=0;i<maps.length;i++){lat=maps[i].lat;lng=maps[i].lng;zoom=maps[i].zoom;if(lat!==undefined&&lng!=undefined){var latlng=new google.maps.LatLng(lat,lng);var myOptions={zoom:zoom,center:latlng,mapTypeId:google.maps.MapTypeId.ROADMAP};map=new google.maps.Map(document.getElementById("eo_venue_map-"+(i+1)),myOptions);var marker=new google.maps.Marker({position:latlng,map:map})}}}
 /*
  FullCalendar v1.5.2
  http://arshaw.com/fullcalendar/
@@ -66,7 +220,7 @@ function build_cat_dropdown(element){
 		html+="<option value=''>"+a.options.buttonText.venue+"</option>";
 				
 		for (i=0; i<venues.length; i++){
-			html+= "<option value='"+venues[i].venue_id+"'>"+venues[i].venue_name+"</option>";
+			html+= "<option value='"+venues[i].term_id+"'>"+venues[i].name+"</option>";
 		}
 		html+="</select>";
 		element.append(html);

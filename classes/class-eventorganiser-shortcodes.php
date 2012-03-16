@@ -1,5 +1,4 @@
 <?php
-//TODO - Venue
 /**
  * Class used to create the event calendar shortcode
  *
@@ -7,7 +6,7 @@
  */
 class EventOrganiser_Shortcodes {
 	static $add_script;
-	static $fullcal =array();
+	static $calendars =array();
 	static $map = array();
 	static $event;
  
@@ -23,7 +22,6 @@ class EventOrganiser_Shortcodes {
 	function handle_calendar_shortcode($atts) {
 		global $post;
 		self::$add_script = true;
-		$month = new DateTime();
 		$month = new DateTime();
 		$month = date_create($month->format('Y-m-1'));
  		return '<div class="widget_calendar eo-calendar eo-calendar-shortcode" id="eo_calendar">'.EO_Calendar_Widget::generate_output($month).'</div>';
@@ -55,33 +53,37 @@ class EventOrganiser_Shortcodes {
 
 	function handle_fullcalendar_shortcode($atts=array()) {
 		global $post;
-
 		$defaults = array(
 			'headerleft'=>'title', 
 			'headercenter'=>'',
 			'headerright'=>'prev,next today',
 			'defaultview'=>'month',
-			'firstDay'=>intval(get_option('start_of_week')),
 			'category'=>'',
 			'venue'=>'',
+			'timeFormat'=>'H:i',
+			'key'=>'true'
 		);
 		$atts = shortcode_atts( $defaults, $atts );
-		$n = rand(0,100);
+		array_map('esc_attr',$atts);
 
-		$eo_settings_array= get_option('eventorganiser_options'); 
-		$venues =get_terms( 'event-venue', array('hide_empty' => 0));
-		$terms =get_terms( 'event-category', array('hide_empty' => 0));
+		$key = ($atts['key'] ? true : false);
+		unset($atts['key']);
 
-		$atts['categories']=$terms;
-		$atts['venues']= $venues;
+	
+		//Convert php time format into xDate time format
+		$atts['timeFormat'] =eventorganiser_php2xdate($atts['timeFormat']);
 
-		self::$fullcal =array_merge($atts);
+		self::$calendars[] =array_merge($atts);
 		self::$add_script = true;
+		$id = count(self::$calendars);
 
-		$html='<div id="eo_fullcalendar_'.$n.'_loading" style="background:white;position:absolute;z-index:5" >';
+		$html='<div id="eo_fullcalendar_'.$id.'_loading" style="background:white;position:absolute;z-index:5" >';
 		$html.='<img src="'.EVENT_ORGANISER_URL.'/css/images/loading-image.gif'.'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />'.__('Loading&#8230;').'</div>';
-		$html.='<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$n.'"></div>';
-
+		$html.='<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
+		if($key){
+			$args = array('orderby'=> 'name','show_count'   => 0,'hide_empty'   => 0);
+			$html .= eventorganiser_category_key($args,$id);
+		}
  		return $html;
 	}
 
@@ -97,6 +99,10 @@ class EventOrganiser_Shortcodes {
 				$atts['venue'] = eo_get_venue_slug($post->ID);
 			}
 		}
+
+		//Set zoom
+		$zoom = isset($atts['zoom']) ? intval($atts['zoom']) : 15;
+		$zoom =(!empty($zoom) ? $zoom : 15);
 		
 		//Set the attributes
 		$atts['width'] = ( !empty($atts['width']) ) ? $atts['width']:'100%';
@@ -113,7 +119,7 @@ class EventOrganiser_Shortcodes {
 		
 		//Get latlng value by slug
 		$latlng = eo_get_venue_latlng($atts['venue']);
-		self::$map[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng']);
+		self::$map[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng'],'zoom'=>$zoom);
 		$id = count(self::$map);
 
 		$return = "<div class='".$class."' id='eo_venue_map-{$id}' ".$style."></div>";
@@ -134,13 +140,12 @@ class EventOrganiser_Shortcodes {
 
 		if((isset($atts['venue']) &&$atts['venue']=='%this%') ||( isset($atts['event-venue']) && $atts['event-venue']=='%this%' )){
 			if(!empty($post->Venue)){
-				$atts['event-venue']=(int) $post->Venue; //TODO get venue slug
+				$atts['event-venue']=  eo_get_venue_slug();
 			}else{
 				unset($atts['venue']);
 				unset($atts['event-venue']);
 			}
 		}
-
 
 		$events = eo_get_events($atts);
 
@@ -299,19 +304,93 @@ class EventOrganiser_Shortcodes {
 	function print_script() {
 		global $wp_locale;
 		if ( ! self::$add_script ) return;
+		$fullcal = (empty(self::$calendars) ? array() : array(
+			'firstDay'=>intval(get_option('start_of_week')),
+			'venues' => get_terms( 'event-venue', array('hide_empty' => 0)),
+			'categories' => get_terms( 'event-category', array('hide_empty' => 0)),
+		));
 		wp_localize_script( 'eo_front', 'EOAjax', 
 		array(
 			'ajaxurl' => admin_url( 'admin-ajax.php'),
-			'fullcal' => self::$fullcal,
+			'calendars' => self::$calendars,
+			'fullcal' => $fullcal,
 			'map' => self::$map,
 		));	
-		if(!empty(self::$fullcal)):
+		if(!empty(self::$calendars)):
 			wp_enqueue_style('eo_calendar-style');		
-			wp_enqueue_style('eventorganiser-style');
 		endif;
 		wp_enqueue_script( 'eo_front');	
 	}
 }
  
 EventOrganiser_Shortcodes::init();
+
+/*
+* Very basic class to convert php date format into xdate date format used for javascript.
+*
+* Doesn't support
+* ** L Whether it's a leap year
+* ** N ISO-8601 numeric representation of the day of the week (added in PHP 5.1.0)
+* ** w Numeric representation of the day of the week (0=sun,...)
+* ** z The day of the year (starting from 0)
+* ** t Number of days in the given month
+* **B Swatch Internet time
+* **u microseconds
+
+* ** e 	Timezone identifier (added in PHP 5.1.0) 	Examples: UTC, GMT, Atlantic/Azores
+* ** I (capital i) 	Whether or not the date is in daylight saving time 	1 if Daylight Saving Time, 0 otherwise.
+* ** O 	Difference to Greenwich time (GMT) in hours 	Example: +0200
+* ** T 	Timezone abbreviation 	Examples: EST, MDT ...
+* ** Z 	Timezone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.
+
+* ** c 	ISO 8601 date (added in PHP 5) 	2004-02-12T15:19:21+00:00
+* ** r 	» RFC 2822 formatted date 	Example: Thu, 21 Dec 2000 16:01:07 +0200
+* ** U 	Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) 	See also time()
+*/
+	function eventorganiser_php2xdate($phpformat=""){
+		$php2xdate = array(
+				'Y'=>'yyyy','y'=>'yy','L'=>''/*NS*/,'o'=>'I',
+				'j'=>'d','d'=>'dd','D'=>'ddd','l'=>'dddd','N'=>'', /*NS*/ 'S'=>'S',
+				'w'=>'', /*NS*/ 'z'=>'',/*NS*/ 'W'=>'w',
+				'F'=>'MMMM','m'=>'MM','M'=>'MMM','n'=>'M','t'=>'',/*NS*/
+				'a'=>'tt','A'=>'TT',
+				'B'=>'',/*NS*/'g'=>'h','G'=>'H','h'=>'hh','H'=>'HH','u'=>'fff',
+				'i'=>'mm','s'=>'ss',
+				'O'=>'zz ', 'P'=>'zzz',
+				'c'=>'u',
+			);
+		$xdateformat="";
+
+		for($i=0;  $i< strlen($phpformat); $i++){
+
+			//Handle backslash excape
+			if($phpformat[$i]=="\\"){
+				$xdateformat .= "\\".$phpformat[$i+1];
+				$i++;
+				continue;
+			}
+
+			if(isset($php2xdate[$phpformat[$i]])){
+				$xdateformat .= $php2xdate[$phpformat[$i]];
+			}else{
+				$xdateformat .= $phpformat[$i];
+			}
+		}
+		return $xdateformat;
+	}
+
+	function eventorganiser_category_key($args=array(),$id=1){
+		$args['taxonomy'] ='event-category';
+
+		$html ='<div class="eo-fullcalendar-key" id="eo_fullcalendar_key'.$id.'">';
+		$terms = get_terms( 'event-category', $args );
+		$html.= "<ul class='eo_fullcalendar_key'>";
+		foreach ($terms as $term):
+			$class = "class='eo_fullcalendar_key_cat eo_fullcalendar_key_cat_{$term->slug}'";
+			$html.= "<li {$class}><span class='eo_fullcalendar_key_colour' style='background:{$term->color}'> </span>".$term->name."</li>";			
+		endforeach;
+		$html.='</ul></div>';
+
+		return $html;
+	}
 ?>
