@@ -270,10 +270,37 @@ function eventorganiser_make_item_current($items,$args){
 		foreach ($items as $item){
 			if('post_type_archive'==$item->type && 'event'==$item->object)
 				$item->classes[] = 'current-menu-item';
+	
+			$_anc_id = (int) $item->db_id;
+			$active_ancestor_item_ids=array();
+			while(( $_anc_id = get_post_meta( $_anc_id, '_menu_item_menu_item_parent', true ) ) &&
+				! in_array( $_anc_id, $active_ancestor_item_ids )  ){
+					$active_ancestor_item_ids[] = $_anc_id;
+			}
+		
+			//Loop through ancestors and give them 'ancestor' or 'parent' class
+			foreach ($items as $key=>$parent_item){
+              	      $classes = (array) $parent_item->classes;
+
+              	      //If menu item is the parent
+              	      if ($parent_item->db_id == $item->menu_item_parent ) {
+              	           $classes[] = 'current-menu-parent';
+              	           $items[$key]->current_item_parent = true;
+              	      }
+
+              	      //If menu item is an ancestor
+              	      if ( in_array(  intval( $parent_item->db_id ), $active_ancestor_item_ids ) ) {
+              	           $classes[] = 'current-menu-ancestor';
+              	           $items[$key]->current_item_ancestor = true;
+              	      }
+
+              	      $items[$key]->classes = array_unique( $classes );
+			}
 		}
 	}
 	return $items;
 }
+
 
 //'Old school' - fallback case
 // Filter wp_nav_menu() to add event link if selected in options
