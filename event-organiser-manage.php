@@ -104,7 +104,7 @@ add_action( 'restrict_manage_posts', 'eventorganiser_restrict_events_by_category
 function eventorganiser_restrict_events_by_category() {
 
     // only display these taxonomy filters on desired custom post_type listings
-    global $typenow;
+    global $typenow,$wp_query;
     if ($typenow == 'event') {
 	eo_event_category_dropdown(array('hide_empty'=>false,'show_option_all' => __('View all categories')));
     }

@@ -15,6 +15,9 @@
 		var loadingTimeOut;
 		for(i=0; i<calendars.length; i++){
 			calendar= "#eo_fullcalendar_"+(i+1);
+			var cat = calendars[i].category;
+			var venue = calendars[i].venue;
+			console.log(cat);
 			$(calendar).fullCalendar({
                 		editable: false,
 		                firstDay: parseInt(EOAjax.fullcal.firstDay),
@@ -57,8 +60,8 @@
               		          data: {
               		              start: jQuery.fullCalendar.formatDate(start, 'yyyy-MM-dd'),
               		              end: jQuery.fullCalendar.formatDate(end, 'yyyy-MM-dd'),
-              		              category: calendars[i].category,
-              		              venue: calendars[i].venue
+              		              category: EOAjax.calendars[0].category,
+              		              venue: EOAjax.calendars[0].venue,
 	              	          },
 						success: function (data) {
 							callback(data)
@@ -86,17 +89,8 @@
             });
         }
 
-        if ($("#eo_calendar").length > 0 && typeof EOAjaxFront.adminajax !== undefined) {
-            $('#eo_calendar tfoot').unbind("click");
-            $('#eo_calendar tfoot a').die("click").live('click', function (e) {
-                e.preventDefault();
-                $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal", {
-                    eo_month: getParameterByName('eo_month', $(this).attr('href')),
-                }, function (data) {
-                    $('#eo_calendar').html(data)
-                })
-            })
-        }
+if($("#eo_calendar").length>0&&typeof EOAjaxFront.adminajax!==undefined){$('#eo_calendar tfoot').unbind("click");$('#eo_calendar tfoot a').die("click").live('click',function(e){e.preventDefault();$.getJSON(EOAjaxFront.adminajax+"?action=eo_widget_cal",{eo_month:getParameterByName('eo_month',$(this).attr('href')),},function(data){$('#eo_calendar').html(data)});});}
+
 
         if ($('.eo-agenda-widget').length > 0) {
             var locale = {
@@ -181,7 +175,7 @@
 
 function getParameterByName(name,url){name=name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");var regexS="[\\?&]"+name+"=([^&#]*)";var regex=new RegExp(regexS);var results=regex.exec(url);if(results==null)return"";else return decodeURIComponent(results[1].replace(/\+/g," "))}
 
-function eo_load_map(){maps=EOAjax.map;for(i=0;i<maps.length;i++){lat=maps[i].lat;lng=maps[i].lng;if(lat!==undefined&&lng!=undefined){var latlng=new google.maps.LatLng(lat,lng);var myOptions={zoom:15,center:latlng,mapTypeId:google.maps.MapTypeId.ROADMAP};map=new google.maps.Map(document.getElementById("eo_venue_map-"+(i+1)),myOptions);var marker=new google.maps.Marker({position:latlng,map:map})}}}
+function eo_load_map(){maps=EOAjax.map;for(i=0;i<maps.length;i++){lat=maps[i].lat;lng=maps[i].lng;zoom=maps[i].zoom;if(lat!==undefined&&lng!=undefined){var latlng=new google.maps.LatLng(lat,lng);var myOptions={zoom:zoom,center:latlng,mapTypeId:google.maps.MapTypeId.ROADMAP};map=new google.maps.Map(document.getElementById("eo_venue_map-"+(i+1)),myOptions);var marker=new google.maps.Marker({position:latlng,map:map})}}}
 /*
  FullCalendar v1.5.2
  http://arshaw.com/fullcalendar/

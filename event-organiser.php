@@ -4,7 +4,7 @@ Plugin Name: Event Organiser
 Plugin URI: http://www.HarrisWebSolutions.co.uk/event-organiser
 Description: Creates a custom post type 'events' with features such as reoccurring events, venues, Google Maps, calendar views and events and venue pages
 Author: Stephen Harris
-Version: 1.2.4
+Version: 1.2.3
 Author URI: http://www.HarrisWebSolutions.co.uk
 */
 /*  Copyright 2011 Stephen Harris (stephen@harriswebsolutions.co.uk)
@@ -23,36 +23,9 @@ Author URI: http://www.HarrisWebSolutions.co.uk
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
-//DONE fix menu link
-//DONE improve menu link (add option)
-//DONE Template for widgets
-//DONE Time for frontend calendar
-//DONE date  allow any delimitator . - or /
+//TODO
+//Debug converter
 
-
-//TODO Debug converter
-//TODO Check ML
-
-/** Maybe **/
-//TODO fullcalendar key - give tutorial on how to make custom one?? Provide functions if necessary?
-//TODO eo_insert_event function?
-//TODO template conditional statements?
-
-/** Testing **/
-//XXX Jquery 1.6.2
-//TODO test ICAL?
-
-/*
-add_action('load-edit-tags.php','myprefix_redirect_to_custompage');
-function myprefix_redirect_to_custompage(){
-	$screen = get_current_screen(); 
-	if($screen->id == 'edit-event-venue'){
-		$url = admin_url('edit.php?post_type=event&page=venues');
-		wp_redirect($url); 
-		exit;
-	}
-}
-*/
 //The database version
 global $eventorganiser_db_version;
 $eventorganiser_db_version = "1.2.9.1";

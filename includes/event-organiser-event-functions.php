@@ -2,6 +2,7 @@
 /**
 * Event related functions
 */
+
 /**
 * Retrieve list of event matching criteria.
 * The defaults are as follows:
@@ -679,7 +680,6 @@ function eo_event_category_dropdown( $args = '' ) {
 function eo_get_category_color($term){
 	return eo_get_category_meta($term,'color');
 }
-
 
 function eo_is_event_taxonomy(){
 	return (is_tax(array('event-category','event-tag','event-venue')));

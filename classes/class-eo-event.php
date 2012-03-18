@@ -650,7 +650,7 @@ function createFromObjects($input=array()){
 
 	$this->schedule_start = clone $this->occurrences[0];
 	$this->schedule_end = clone end($this->occurrences);
-	//XXX Insert schedule as post meta?
+
 	return true;
 }
 
@@ -818,8 +818,6 @@ function check_date($date_string,$formated=false){
 
 	else
 		preg_match("/(\d{1,})[-.\/](\d{1,})[-.\/](\d{4})/", $date_string,$matches);
-
-	wp_die(var_dump($matches));
 
 	if(count($matches)<4) return false;
 
@@ -1033,7 +1031,8 @@ function is_leapyear($date){
 			$d = intval($date->format('t'))-$offset;
 		endif;
 	
-		$date = date_create($date->format('Y-m-'.$d));
+		$blog_tz =$this->get_timezone();
+		$date = date_create($date->format('Y-m-'.$d),$blog_tz);
 
 		return $date;
 }
@@ -1081,7 +1080,5 @@ function is_leapyear($date){
 	function link_structure(){
 		return get_post_type_archive_link('event');
 	}
-
-
 }	
 ?>

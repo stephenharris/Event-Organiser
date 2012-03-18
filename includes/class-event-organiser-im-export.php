@@ -579,7 +579,7 @@ function escape_icalText($text){
 						if($return){
 							$venue_ids[] = (int) $return['term_id'];
 							$eventorganiser_venues_created++;
-							$event['venue']= $return['term_id']; //XXX Setting Venue is depreciated
+							$event['venue']= $return['term_id']; //XXX This is depreciated
 						}
 					}
 					$venue_ids = array_filter($venue_ids);

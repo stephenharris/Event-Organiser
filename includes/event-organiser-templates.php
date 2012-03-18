@@ -11,7 +11,7 @@ function eventorganiser_set_template( $template ){
 	if(!$eo_settings['templates'])
 		return $template;
 
-	//XXX Check for multiple queries and use archive 
+	//TODO Check for multiple queries and use archive 
 	if(!is_admin()){
 		$template_dir = get_stylesheet_directory(); //child theme
 		$parent_template_dir =get_template_directory(); //parent theme

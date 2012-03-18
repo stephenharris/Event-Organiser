@@ -60,11 +60,16 @@ class EventOrganiser_Shortcodes {
 			'defaultview'=>'month',
 			'category'=>'',
 			'venue'=>'',
-			'timeFormat'=>'H:m'
+			'timeFormat'=>'H:i',
+			'key'=>'true'
 		);
 		$atts = shortcode_atts( $defaults, $atts );
 		array_map('esc_attr',$atts);
 
+		$key = ($atts['key'] ? true : false);
+		unset($atts['key']);
+
+	
 		//Convert php time format into xDate time format
 		$atts['timeFormat'] =eventorganiser_php2xdate($atts['timeFormat']);
 
@@ -74,8 +79,11 @@ class EventOrganiser_Shortcodes {
 
 		$html='<div id="eo_fullcalendar_'.$id.'_loading" style="background:white;position:absolute;z-index:5" >';
 		$html.='<img src="'.EVENT_ORGANISER_URL.'/css/images/loading-image.gif'.'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />'.__('Loading&#8230;').'</div>';
-		$html.='<div calid="'.$id.'" class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
-
+		$html.='<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
+		if($key){
+			$args = array('orderby'=> 'name','show_count'   => 0,'hide_empty'   => 0);
+			$html .= eventorganiser_category_key($args,$id);
+		}
  		return $html;
 	}
 
@@ -91,6 +99,10 @@ class EventOrganiser_Shortcodes {
 				$atts['venue'] = eo_get_venue_slug($post->ID);
 			}
 		}
+
+		//Set zoom
+		$zoom = isset($atts['zoom']) ? intval($atts['zoom']) : 15;
+		$zoom =(!empty($zoom) ? $zoom : 15);
 		
 		//Set the attributes
 		$atts['width'] = ( !empty($atts['width']) ) ? $atts['width']:'100%';
@@ -107,7 +119,7 @@ class EventOrganiser_Shortcodes {
 		
 		//Get latlng value by slug
 		$latlng = eo_get_venue_latlng($atts['venue']);
-		self::$map[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng']);
+		self::$map[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng'],'zoom'=>$zoom);
 		$id = count(self::$map);
 
 		$return = "<div class='".$class."' id='eo_venue_map-{$id}' ".$style."></div>";
@@ -306,7 +318,6 @@ class EventOrganiser_Shortcodes {
 		));	
 		if(!empty(self::$calendars)):
 			wp_enqueue_style('eo_calendar-style');		
-			wp_enqueue_style('eventorganiser-style');
 		endif;
 		wp_enqueue_script( 'eo_front');	
 	}
@@ -366,5 +377,20 @@ EventOrganiser_Shortcodes::init();
 			}
 		}
 		return $xdateformat;
+	}
+
+	function eventorganiser_category_key($args=array(),$id=1){
+		$args['taxonomy'] ='event-category';
+
+		$html ='<div class="eo-fullcalendar-key" id="eo_fullcalendar_key'.$id.'">';
+		$terms = get_terms( 'event-category', $args );
+		$html.= "<ul class='eo_fullcalendar_key'>";
+		foreach ($terms as $term):
+			$class = "class='eo_fullcalendar_key_cat eo_fullcalendar_key_cat_{$term->slug}'";
+			$html.= "<li {$class}><span class='eo_fullcalendar_key_colour' style='background:{$term->color}'> </span>".$term->name."</li>";			
+		endforeach;
+		$html.='</ul></div>';
+
+		return $html;
 	}
 ?>

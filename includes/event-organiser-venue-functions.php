@@ -318,7 +318,7 @@ function eo_get_venue_address($venue_slug_or_id=''){
 
 function eo_get_the_venues(){
 	global $eventorganiser_venue_table,$wpdb;
-	//XXX take care of sanitisation?
+	//TODO take care of sanitisation?
 	$venues = $wpdb->get_results(" SELECT* FROM $eventorganiser_venue_table");
 	return $venues;
 }

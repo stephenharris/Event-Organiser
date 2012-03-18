@@ -12,6 +12,7 @@ add_filter('query_vars', 'eventorganiser_register_query_vars' );
 function eventorganiser_register_query_vars( $qvars ){
 	//Add these query variables
 	$qvars[] = 'venue';//Depreciated
+	//$qvars[] = 'venue_id'; 
 	$qvars[] = 'ondate';
 	$qvars[] = 'showrepeats';
 	$qvars[] = 'eo_interval';
@@ -45,8 +46,8 @@ function eventorganiser_pre_get_posts( $query ) {
 	//If querying for all events starting on given date, set the date parameters
 	if( !empty( $query->query_vars['ondate'])) {
 		$query->set('post_type', 'event');
-		$query->set('event_start_before', $wp_query->query_vars['ondate']);
-		$query->set('event_start_after', $wp_query->query_vars['ondate']);
+		$query->set('event_start_before', $query->query_vars['ondate']);
+		$query->set('event_end_after', $query->query_vars['ondate']);
 	}
 
 	//Determine whether or not to show past events and each occurrence
@@ -83,7 +84,7 @@ function eventorganiser_pre_get_posts( $query ) {
  */
 add_filter('posts_fields', 'eventorganiser_event_fields',10,2);
 function eventorganiser_event_fields( $selec, $query ){
-	global $wpdb, $eventorganiser_events_table, $eventorganiser_venue_table;
+	global $wpdb, $eventorganiser_events_table;
 
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']) {
 		$selec = "{$eventorganiser_events_table}.*,".$selec; 
@@ -134,7 +135,9 @@ function eventorganiser_join_tables( $join, $query ){
 /**
 * Selects posts which satisfy custom WHERE statements
 * This funciton allows us to choose events within a certain date range,
-* or active on a particular day.
+* or active on a particular day or at a venue.
+*
+* TODO allow an array of venues to be queried
 *
  * @since 1.0.0
  */
@@ -144,6 +147,7 @@ function eventorganiser_events_where( $where, $query ){
 
 	//Only alter event queries
 	if (isset( $query->query_vars['post_type'] ) && $query->query_vars['post_type']=='event'):
+
 
 		//Ensure all date queries are yyyy-mm-dd format. Process relative strings ('today','tomorrow','+1 week')
 		$dates = array('ondate','event_start_after','event_start_before','event_end_after','event_end_before');
@@ -311,7 +315,7 @@ function eventorganiser_events_where( $where, $query ){
 
 /**
 * Alter the order of posts. 
-* This function allows to sort our events by a custom order
+* This function allows to sort our events by a custom order (venue, date etc)
 *
  * @since 1.0.0
  */

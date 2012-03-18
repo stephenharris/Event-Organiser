@@ -205,7 +205,6 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 								add_post_meta($new_event_id,$meta_key,$meta_value,$unique);
 							}
 						}
-
 					}
 					//Redirect to prevent resubmisson
 					$redirect = add_query_arg(array('post_type'=>'event','page'=>'calendar'),admin_url('edit.php'));
