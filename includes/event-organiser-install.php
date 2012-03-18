@@ -156,7 +156,7 @@ function eventorganiser_upgradecheck(){
 			update_option('eventorganiser_options',$settings);
 			flush_rewrite_rules();		
 		}
-		if($installed_ver <'1.2.9.1'){
+		if($installed_ver <'1.3'){
 			//Venues being converted to taxonomy terms
 			$venues = eo_get_the_venues(); //Get venues from meta table
 			$slimetrail = array();	//Track changes from an old slug to another

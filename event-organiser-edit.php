@@ -1,12 +1,10 @@
 <?php
 /**
  * Functions for Event CPT editing / creating page 
- *
  * @since 1.0.0
  */
 /**
  * Initialises the plug-ins metaboxs on Event CPT
- *
  * @since 1.0.0
  */
 add_action('admin_init','eventorganiser_edit_init');
