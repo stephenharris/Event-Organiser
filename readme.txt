@@ -119,6 +119,20 @@ Event Organiser provides the following shortcodes:
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+= 1.3 =
+* Converted venues to event-venue taxnomy terms
+* Improved add events link to menu option
+* Import Categories and Venues
+* Break a reoccurring event
+* Templates for widgets (syntax as for event list shortcode)
+* Time format option for full calender shortcode
+* Quick/Bulk edit event venue
+* Category key option for full calendar shortcode
+* Set zoom level on venue map shortcode
+* Full calendar shortcode attribute to restrict events to a specific venue / category
+* Fixed 'daylight saving' bug for php5.2
+* Fixed IE7 Widget calendar bug (thanks to [Fej](http://wordpress.org/support/profile/fej) )
+
 = 1.2.4 =
 * Fixed bugs concerning
  * Relatve date formats
