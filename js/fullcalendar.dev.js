@@ -45,7 +45,7 @@ jQuery(document).ready(function() {
 					venue =  jQuery(".filter-venue .eo-cal-filter").val();
 
 					if(typeof cat !== "undefined"&& cat != '' && (jQuery.inArray(cat, event.category)<0)){
-						return false
+						return '<div></div>';
 					}
 					if(typeof venue !== "undefined" && venue!= '' && venue!=event.venue){
 						return '<div></div>';

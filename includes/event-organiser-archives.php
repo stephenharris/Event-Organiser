@@ -84,7 +84,7 @@ function eventorganiser_pre_get_posts( $query ) {
  */
 add_filter('posts_fields', 'eventorganiser_event_fields',10,2);
 function eventorganiser_event_fields( $selec, $query ){
-	global $wpdb, $eventorganiser_events_table, $eventorganiser_venue_table;
+	global $wpdb, $eventorganiser_events_table;
 
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']) {
 		$selec = "{$eventorganiser_events_table}.*,".$selec; 
@@ -123,7 +123,7 @@ function eventorganiser_event_groupby( $groupby, $query ){
  */
 add_filter('posts_join', 'eventorganiser_join_tables',10,2);
 function eventorganiser_join_tables( $join, $query ){
-	global $wpdb, $eventorganiser_events_table, $eventorganiser_venue_table;
+	global $wpdb, $eventorganiser_events_table;
 
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']) {
 			$join .=" LEFT JOIN $eventorganiser_events_table ON $wpdb->posts.id = {$eventorganiser_events_table}.post_id ";
@@ -143,7 +143,7 @@ function eventorganiser_join_tables( $join, $query ){
  */
 add_filter('posts_where','eventorganiser_events_where',10,2);
 function eventorganiser_events_where( $where, $query ){
-	global $wpdb, $eventorganiser_events_table, $eventorganiser_venue_table;
+	global $wpdb, $eventorganiser_events_table;
 
 	//Only alter event queries
 	if (isset( $query->query_vars['post_type'] ) && $query->query_vars['post_type']=='event'):

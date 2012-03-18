@@ -200,11 +200,11 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 
 						$post_custom = get_post_custom($post->ID);
 						foreach ($post_custom as $meta_key=>$meta_values) {
+							$unique = ($meta_key[0]=='_' ? true : false);
 							foreach ($meta_values as $meta_value) {
-								add_post_meta($new_event_id,$meta_key,$meta_value,true); //TODO allow non-unique keys?
+								add_post_meta($new_event_id,$meta_key,$meta_value,$unique);
 							}
 						}
-
 					}
 					//Redirect to prevent resubmisson
 					$redirect = add_query_arg(array('post_type'=>'event','page'=>'calendar'),admin_url('edit.php'));

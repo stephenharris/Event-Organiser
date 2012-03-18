@@ -211,7 +211,7 @@ function build_cat_dropdown(element){
 		html+="<option value=''>"+a.options.buttonText.venue+"</option>";
 				
 		for (i=0; i<venues.length; i++){
-			html+= "<option value='"+venues[i].venue_id+"'>"+venues[i].venue_name+"</option>";
+			html+= "<option value='"+venues[i].term_id+"'>"+venues[i].name+"</option>";
 		}
 		html+="</select>";
 		element.append(html);
