@@ -55,6 +55,7 @@ A big thank you to those who have provided translations for Event Organiser
 * Spanish - Joseba Sanchez
 * German - [Martin Grether](http://www.datema.de/) & [Henning Matthaei](http://www.partnerwerk.de/)
 * Italian - Emilio Frusciante, Pio Muto
+* Norwegian - Erlend Birkedal
 
 
 == Installation ==
