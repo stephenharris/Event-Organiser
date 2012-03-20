@@ -303,11 +303,11 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			<?php self::$settings['addtomenu'] =( !empty(self::$settings['addtomenu']) ? self::$settings['addtomenu'] :  0); ?>
 			<?php $menus = get_terms('nav_menu');?>
 				<select  name="eventorganiser_options[addtomenu]">
-					<option  <?php selected(0,self::$settings['addtomenu']);?> value="0">Do not add to menu </option>
+					<option  <?php selected(0,self::$settings['addtomenu']);?> value="0"><?php _e('Do not add to menu','eventorganiser'); ?> </option>
 				<?php foreach($menus as $menu): ?>
 					<option  <?php selected($menu->slug,self::$settings['addtomenu']);?> value="<?php echo $menu->slug; ?>"><?php echo $menu->name;?> </option>
 				<?php endforeach; ?>
-					<option  <?php selected(1,self::$settings['addtomenu']);?> value="1">Page List (fallback)</option>
+					<option  <?php selected(1,self::$settings['addtomenu']);?> value="1"><?php _e('Page List (fallback)','eventorganiser')</option>
 				</select>
 
 			<?php self::$settings['navtitle'] =( !empty(self::$settings['navtitle']) ? self::$settings['navtitle'] :  __('Events','eventorganiser')); ?>
