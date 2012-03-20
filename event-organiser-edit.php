@@ -1,10 +1,18 @@
 <?php
 /**
  * Functions for Event CPT editing / creating page 
+<<<<<<< HEAD
+=======
+ *
+>>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
  * @since 1.0.0
  */
 /**
  * Initialises the plug-ins metaboxs on Event CPT
+<<<<<<< HEAD
+=======
+ *
+>>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
  * @since 1.0.0
  */
 add_action('admin_init','eventorganiser_edit_init');

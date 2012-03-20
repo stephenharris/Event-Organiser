@@ -4,7 +4,11 @@ Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.3.1
+<<<<<<< HEAD
 Stable tag: 1.2.4
+=======
+Stable tag: 1.2.3
+>>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -15,14 +19,22 @@ Event Organiser adds event management that integrates well with your WordPress s
 Requires **WordPress 3.3** and **PHP 5.3** (or higher)  -  Event Organiser is now compatible with **PHP 5.2+**
 
 = New Features =
+<<<<<<< HEAD
 * `eo_get_events` and the event list shortcode now support relative date formats for data parameters (e.g. `event_start_before='+1 week'`,`event_end_after='now'`)
+=======
+* `eo_get_events` and the event list shortcode now support relative date formats for data parameters (e.g. `event_start_before='+1 week',`event_end_after='now'`)
+>>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
 * Public events feed - allow visitors to subscribe to your events.
 * Delete individual occurrences of events.
 * Agenda widget .
 
+<<<<<<< HEAD
 
 = Features =
 
+=======
+= Features =
+>>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
 * Adds an **event custom post type** that fits naturally into WordPress and allows for all the functionality of 'posts'.
 * Create one-time events or reoccuring events.
 * Allows complex reoccuring patterns for events. You can create events that last an arbirtary time, and repeat over a specified period. Events can repeat daily through to yearly, allowing complex schedules such as 'On the third Tuesday of every fourth month' or 'Every month on the 16th'.
@@ -45,10 +57,14 @@ Requires **WordPress 3.3** and **PHP 5.3** (or higher)  -  Event Organiser is no
 
 = Planned Features =
 
+<<<<<<< HEAD
 * Venues to be converted to custom taxonomy
 * Break a reoccurring event
 * Event importer to support importing venues and categories
 * Bulk and Quick edit events' venues
+=======
+* Public ICAL Feed.
+>>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
 * Introducing actions and filters to allow developers or plug-ins to modify and interact with Event Organiser.
 * Allowing users to exclude or include specific dates in an event's schedule.
 * Dashboard widgets (upcoming events / expiring events).
@@ -59,7 +75,10 @@ A big thank you to those who have provided translations for Event Organiser
 * French - [Rémy Perona](http://remyperona.fr/)
 * Spanish - Joseba Sanchez
 * German - [Martin Grether](http://www.datema.de/) & [Henning Matthaei](http://www.partnerwerk.de/)
+<<<<<<< HEAD
 * Italian - Emilio Frusciante, Pio Muto
+=======
+>>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
 
 == Installation ==
 
@@ -120,6 +139,7 @@ Event Organiser provides the following shortcodes:
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+<<<<<<< HEAD
 = 1.3 =
 * Converted venues to event-venue taxnomy terms
 * Improved add events link to menu option
@@ -141,6 +161,8 @@ Event Organiser provides the following shortcodes:
  * Localisation
  * Calendar shortcode on php5.2
 
+=======
+>>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
 = 1.2.3 =
 * Corrected potential 'class does not exist' bug
 

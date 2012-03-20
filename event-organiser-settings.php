@@ -307,7 +307,11 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 				<?php foreach($menus as $menu): ?>
 					<option  <?php selected($menu->slug,self::$settings['addtomenu']);?> value="<?php echo $menu->slug; ?>"><?php echo $menu->name;?> </option>
 				<?php endforeach; ?>
+<<<<<<< HEAD
 					<option  <?php selected(1,self::$settings['addtomenu']);?> value="1">Page List (fallback)</option>
+=======
+					<option  <?php selected(1,self::$settings['addtomenu']);?> value="1">Fallback option </option>
+>>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
 				</select>
 
 			<?php self::$settings['navtitle'] =( !empty(self::$settings['navtitle']) ? self::$settings['navtitle'] :  __('Events','eventorganiser')); ?>
