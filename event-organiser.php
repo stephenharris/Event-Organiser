@@ -27,18 +27,9 @@ Author URI: http://www.HarrisWebSolutions.co.uk
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
-<<<<<<< HEAD
 //The database version
 global $eventorganiser_db_version;
 $eventorganiser_db_version = "1.3";
-=======
-//TODO
-//Debug converter
-
-//The database version
-global $eventorganiser_db_version;
-$eventorganiser_db_version = "1.2.9.1";
->>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
 
 global $wpdb;
 

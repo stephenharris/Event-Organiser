@@ -92,9 +92,6 @@
 function eventorganiser_deactivate(){
 	eventorganiser_clear_cron_jobs();
 	flush_rewrite_rules();
-	//XXX XXX Remove before relasing XXX XXX//
-	eventorganiser_uninstall();
-	// XXX XXX XXX XXX XXX //
     }
 
 add_action('admin_init', 'eventorganiser_upgradecheck');
@@ -159,7 +156,8 @@ function eventorganiser_upgradecheck(){
 			update_option('eventorganiser_options',$settings);
 			flush_rewrite_rules();		
 		}
-		if($installed_ver <'1.2.9.1'){
+
+		if($installed_ver <'1.3'){
 			//Venues being converted to taxonomy terms
 			$venues = eo_get_the_venues(); //Get venues from meta table
 			$slimetrail = array();	//Track changes from an old slug to another

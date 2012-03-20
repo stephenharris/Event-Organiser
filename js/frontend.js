@@ -1,16 +1,7 @@
 (function ($) {
     jQuery(document).ready(function () {
         if ($(".eo-venue-map").length > 0) {
-<<<<<<< HEAD
 if(EOAjax.map!==undefined){var script=document.createElement("script");script.type="text/javascript";script.src="http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map";document.body.appendChild(script)}
-=======
-            if (EOAjax.map !== undefined) {
-                var script = document.createElement("script");
-                script.type = "text/javascript";
-                script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map";
-                document.body.appendChild(script)
-            }
->>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
         };
 
         if ($(".eo-fullcalendar").length > 0) {
