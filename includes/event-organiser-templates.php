@@ -54,6 +54,7 @@ function eventorganiser_set_template( $template ){
 			//Use default Venue template
 		 	}elseif(file_exists(EVENT_ORGANISER_DIR.'templates/taxonomy-event-venue.php')){
 				$template = EVENT_ORGANISER_DIR.'templates/taxonomy-event-venue.php';
+			}
 		}
 
 		if(is_tax('event-category')){
