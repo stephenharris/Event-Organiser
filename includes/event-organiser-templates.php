@@ -11,7 +11,6 @@ function eventorganiser_set_template( $template ){
 	if(!$eo_settings['templates'])
 		return $template;
 
-	//TODO Check for multiple queries and use archive 
 	if(!is_admin()){
 		$template_dir = get_stylesheet_directory(); //child theme
 		$parent_template_dir =get_template_directory(); //parent theme
@@ -36,22 +35,25 @@ function eventorganiser_set_template( $template ){
 			}
 		}
 
-		if(is_tax('event-venue')|| eo_is_venue()){		
+		if(is_tax('event-venue')|| eo_is_venue()){
+
+			//Venue template in child theme?		
 			if(file_exists($template_dir.'/taxonomy-event-venue.php')){ 
 				$template = $template_dir.'/taxonomy-event-venue.php';
-			}elseif(file_exists($parent_template_dir.'/taxonomy-event-venue.php')){
-				$template = $parent_template_dir.'/taxonomy-event-venue.php';
-		 	}elseif(file_exists(EVENT_ORGANISER_DIR.'templates/taxonomy-event-venue.php')){
-				$template = EVENT_ORGANISER_DIR.'templates/taxonomy-event-venue.php';
-
-			//Backwards comptability...
+			//Backwards comptability... This is depreciated use taxonomy-event-venue.php as template file name
 			}elseif(file_exists($template_dir.'/venue-template.php')){ 
 				$template = $template_dir.'/venue-template.php';
+
+			//Venue template in parent theme?		
+			}elseif(file_exists($parent_template_dir.'/taxonomy-event-venue.php')){
+				$template = $parent_template_dir.'/taxonomy-event-venue.php';
+			//Backwards comptability... This is depreciated use taxonomy-event-venue.php as template file name
 			}elseif(file_exists($parent_template_dir.'/venue-template.php')){
 				$template = $parent_template_dir.'/venue-template.php';
-		 	}else{
-				$template = EVENT_ORGANISER_DIR.'templates/venue-template.php';
-			}
+
+			//Use default Venue template
+		 	}elseif(file_exists(EVENT_ORGANISER_DIR.'templates/taxonomy-event-venue.php')){
+				$template = EVENT_ORGANISER_DIR.'templates/taxonomy-event-venue.php';
 		}
 
 		if(is_tax('event-category')){
