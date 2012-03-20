@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-19 13:19+0100\n"
-"PO-Revision-Date: 2012-03-19 13:20+0100\n"
+"POT-Creation-Date: 2012-03-19 15:15+0100\n"
+"PO-Revision-Date: 2012-03-19 15:15+0100\n"
 "Last-Translator: Stephen Harris <stephen@HarrisWebSolutions.co.uk>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -108,42 +108,42 @@ msgstr "Eventi nell'anno"
 msgid "&mdash; No Change &mdash;"
 msgstr ""
 
-#: ../event-organiser.php:51
+#: ../event-organiser.php:50
 #: ../event-organiser-settings.php:182
 msgid "Edit Events"
 msgstr "Modifica eventi"
 
-#: ../event-organiser.php:52
+#: ../event-organiser.php:51
 #: ../event-organiser-settings.php:183
 msgid "Publish Events"
 msgstr "Pubblica eventi"
 
-#: ../event-organiser.php:53
+#: ../event-organiser.php:52
 #: ../event-organiser-settings.php:184
 msgid "Delete Events"
 msgstr "Cancella eventi"
 
-#: ../event-organiser.php:54
+#: ../event-organiser.php:53
 #: ../event-organiser-settings.php:185
 msgid "Edit Others' Events"
 msgstr "Modifica gli eventi di altri"
 
-#: ../event-organiser.php:55
+#: ../event-organiser.php:54
 #: ../event-organiser-settings.php:186
 msgid "Delete Other's Events"
 msgstr "Cancella gli eventi di altri"
 
-#: ../event-organiser.php:56
+#: ../event-organiser.php:55
 #: ../event-organiser-settings.php:187
 msgid "Read Private Events"
 msgstr "Leggi eventi privati"
 
-#: ../event-organiser.php:57
+#: ../event-organiser.php:56
 #: ../event-organiser-settings.php:188
 msgid "Manage Venues"
 msgstr "Modifica luogo"
 
-#: ../event-organiser.php:58
+#: ../event-organiser.php:57
 #: ../event-organiser-settings.php:189
 msgid "Manage Event Categories & Tags"
 msgstr "Modifica le categorie e i tag degli eventi"
@@ -351,6 +351,14 @@ msgstr "Tag degli eventi"
 #: ../event-organiser-settings.php:301
 msgid "Add an 'events' link to the navigation menu:"
 msgstr "Aggiungi un link 'eventi' al menu di navigazione:"
+
+#: ../event-organiser-settings.php:306
+msgid "Do not add to menu"
+msgstr ""
+
+#: ../event-organiser-settings.php:310
+msgid "Page list (fallback)"
+msgstr ""
 
 #: ../event-organiser-settings.php:318
 msgid "(This may not work with some themes):"
