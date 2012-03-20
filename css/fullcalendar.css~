@@ -1,3 +1,8 @@
+/*Front-end full calendar key*/
+.eo-fullcalendar-key ul.eo_fullcalendar_key{display: inline-block;font-size: 0.8em;}
+.eo-fullcalendar-key ul.eo_fullcalendar_key li{display: inline-block;margin:0 3px}
+.eo-fullcalendar-key span.eo_fullcalendar_key_colour{margin: 4px 2px 4px 5px;border: 1px solid #DFDFDF;border-radius: 4px 4px 4px 4px;font-size: 0.9em;vertical-align: top;padding: 0 6px;}
+
 .view-button{
 	float:right;
 	background: #FFFFFF;
@@ -73,7 +78,7 @@ div#events-meta{
 .cat .ui-selectmenu-item-icon{ background-image:none!important; }
 
 /*Drop down filters*/
-#eo_admin_calendar select { min-width:170px; width:auto}
+#eo_admin_calendar select { min-width:180px; width:auto}
 
 /*
  * FullCalendar v1.5.2 Stylesheet

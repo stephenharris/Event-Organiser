@@ -60,18 +60,18 @@ class EventOrganiser_Shortcodes {
 			'defaultview'=>'month',
 			'category'=>'',
 			'venue'=>'',
-			'timeFormat'=>'H:i',
-			'key'=>'true'
+			'timeformat'=>'H:i',
+			'key'=>'false'
 		);
 		$atts = shortcode_atts( $defaults, $atts );
 		array_map('esc_attr',$atts);
 
-		$key = ($atts['key'] ? true : false);
+		$key = ($atts['key']=='true' ? true : false);
 		unset($atts['key']);
 
 	
 		//Convert php time format into xDate time format
-		$atts['timeFormat'] =eventorganiser_php2xdate($atts['timeFormat']);
+		$atts['timeformat'] =eventorganiser_php2xdate($atts['timeformat']);
 
 		self::$calendars[] =array_merge($atts);
 		self::$add_script = true;
@@ -386,8 +386,10 @@ EventOrganiser_Shortcodes::init();
 		$terms = get_terms( 'event-category', $args );
 		$html.= "<ul class='eo_fullcalendar_key'>";
 		foreach ($terms as $term):
-			$class = "class='eo_fullcalendar_key_cat eo_fullcalendar_key_cat_{$term->slug}'";
-			$html.= "<li {$class}><span class='eo_fullcalendar_key_colour' style='background:{$term->color}'> </span>".$term->name."</li>";			
+			$slug = esc_attr($term->slug);
+			$color = esc_attr($term->color);
+			$class = "class='eo_fullcalendar_key_cat eo_fullcalendar_key_cat_{$slug}'";
+			$html.= "<li {$class}><span class='eo_fullcalendar_key_colour' style='background:{$color}'> </span>".esc_attr($term->name)."</li>";			
 		endforeach;
 		$html.='</ul></div>';
 

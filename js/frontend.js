@@ -12,7 +12,6 @@ if(EOAjax.map!==undefined){var script=document.createElement("script");script.ty
 			calendar= "#eo_fullcalendar_"+(i+1);
 			var cat = calendars[i].category;
 			var venue = calendars[i].venue;
-			console.log(cat);
 			$(calendar).fullCalendar({
                 		editable: false,
 		                firstDay: parseInt(EOAjax.fullcal.firstDay),
@@ -66,7 +65,7 @@ if(EOAjax.map!==undefined){var script=document.createElement("script");script.ty
 				selectable: false,
 				weekMode: 'variable',
 				aspectRatio: 1.50,
-				timeFormat: calendars[i].timeFormat,
+				timeFormat: calendars[i].timeformat,
 				loading: function (bool) {
 		                    loading = $('#' + $(this).attr('id') + '_loading');
 					if (bool) {

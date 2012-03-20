@@ -12,13 +12,17 @@ Create and maintain events, including complex reoccurring patterns, venue manage
 
 Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows your to view your events in the familiar WordPress list or view all occurrences of your events in a calendar page in the amin area.
 
-Requires **WordPress 3.3** and **PHP 5.3** (or higher)  -  Event Organiser is now compatible with **PHP 5.2+**
+Requires **WordPress 3.3** or higher
 
 = New Features =
+* Improved add events link to menu option
+* Import Categories and Venues
+* Break a reoccurring event
+* Templates for widgets (syntax as for event list shortcode)
+* Time format option for full calender shortcode
+* Quick/Bulk edit event venue
 * `eo_get_events` and the event list shortcode now support relative date formats for data parameters (e.g. `event_start_before='+1 week'`,`event_end_after='now'`)
-* Public events feed - allow visitors to subscribe to your events.
-* Delete individual occurrences of events.
-* Agenda widget .
+
 
 = Features =
 
@@ -28,6 +32,7 @@ Requires **WordPress 3.3** and **PHP 5.3** (or higher)  -  Event Organiser is no
 * **Venue admin page** to add and maintain the venues for your events, with Google maps support to display a map of the venue and a fully-featured content editor.
 * The **Calendar widget**  displays a calendar (identical to the standard WordPress Calendar) that highlights events with links to the events archive page, listing events occuring that day.
 * The **Event List widget**  outputs a list of events, and allows you to specify the number of events, restrict to event categories or venues and their order etc.
+* The **Event Agent widget**.
 * The **Calendar and Event List shortcodes**, similiar to their respective widgets, for use in themes or in posts and pages.
 * Shortcode to dislay a public version of the admin **'full calendar'**.
 * The **Venue map shortcodes** to display a map of a venue.
@@ -38,6 +43,8 @@ Requires **WordPress 3.3** and **PHP 5.3** (or higher)  -  Event Organiser is no
 * Color-coded event categories.
 * Venue pages, to view events by venue.
 * **Export/import** events to and from ICAL files.
+* Delete individual occurrences of events.
+* **Public events feed:** allow visitors to subscribe to your events.
 * Supports 'pretty permalinks' for event pages, event archives, event category and venue pages.
 * (Optionally) automatically delete expired events.
 
@@ -139,8 +146,6 @@ Event Organiser provides the following shortcodes:
  * Localisation
  * Calendar shortcode on php5.2
 
-=======
->>>>>>> 43d184c16a994401cdc0fdf373f21fde2e9ccf67
 = 1.2.3 =
 * Corrected potential 'class does not exist' bug
 
@@ -205,6 +210,9 @@ Minor bug fixes and readme update.
 Initial release
 
 == Upgrade Notice ==
+
+= 1.3 =
+This a fairly big update and includes converting venues into a custom taxonomy. As a result some venue slugs *may* change. See the [plug-in website](http://www.harriswebsolutions.co.uk/event-organiser/uncategorized/2012/whats-new-in-1-3/) for more details.
 
 = 1.0.4 =
 The templates have been adapted to work as is in for more themes. Error messages now display for unsupported versions.
