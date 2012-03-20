@@ -59,6 +59,7 @@ A big thank you to those who have provided translations for Event Organiser
 * French - [Rémy Perona](http://remyperona.fr/)
 * Spanish - Joseba Sanchez
 * German - [Martin Grether](http://www.datema.de/) & [Henning Matthaei](http://www.partnerwerk.de/)
+* Italian - Emilio Frusciante, Pio Muto
 
 == Installation ==
 
