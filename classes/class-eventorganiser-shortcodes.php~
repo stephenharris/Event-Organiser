@@ -22,8 +22,10 @@ class EventOrganiser_Shortcodes {
 	function handle_calendar_shortcode($atts) {
 		global $post;
 		self::$add_script = true;
-		$month = new DateTime();
-		$month = date_create($month->format('Y-m-1'));
+
+		$tz = eo_get_blog_timezone();
+		$month = new DateTime('now',$tz);
+		$month = date_create($month->format('Y-m-1'),$tz);
  		return '<div class="widget_calendar eo-calendar eo-calendar-shortcode" id="eo_calendar">'.EO_Calendar_Widget::generate_output($month).'</div>';
 	}
 
@@ -148,6 +150,7 @@ class EventOrganiser_Shortcodes {
 		}
 
 		$events = eo_get_events($atts);
+		$tz = eo_get_blog_timezone();
 
 		if($events):	
 			$return= '<ul class="eo-events eo-events-shortcode">';
@@ -160,7 +163,7 @@ class EventOrganiser_Shortcodes {
 				}else{
 					$format = get_option('date_format').'  '.get_option('time_format');
 				}
-				$dateTime = new DateTime($post->StartDate.' '.$post->StartTime);
+				$dateTime = new DateTime($post->StartDate.' '.$post->StartTime, $tz);
 				
 				if(empty($content)):
 					$return .= '<li><a title="'.$post->post_title.'" href="'.get_permalink($post->ID).'">'.$post->post_title.'</a> '.__('on','eventorganiser').' '.eo_format_date($post->StartDate.' '.$post->StartTime, $format).'</li>';
@@ -388,7 +391,7 @@ EventOrganiser_Shortcodes::init();
 		foreach ($terms as $term):
 			$slug = esc_attr($term->slug);
 			$color = esc_attr($term->color);
-			$class = "class='eo_fullcalendar_key_cat eo_fullcalendar_key_cat_{}'";
+			$class = "class='eo_fullcalendar_key_cat eo_fullcalendar_key_cat_{$slug}'";
 			$html.= "<li {$class}><span class='eo_fullcalendar_key_colour' style='background:{$color}'> </span>".esc_attr($term->name)."</li>";			
 		endforeach;
 		$html.='</ul></div>';

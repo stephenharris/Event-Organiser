@@ -684,4 +684,9 @@ function eo_get_category_color($term){
 function eo_is_event_taxonomy(){
 	return (is_tax(array('event-category','event-tag','event-venue')));
 }
+
+function eo_get_blog_timezone(){
+	//TODO Cache
+	return EO_Event::get_timezone();
+}
 ?>

@@ -4,7 +4,7 @@ Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.3.1
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -63,6 +63,8 @@ A big thank you to those who have provided translations for Event Organiser
 * German - [Martin Grether](http://www.datema.de/) & [Henning Matthaei](http://www.partnerwerk.de/)
 * Italian - Emilio Frusciante, Pio Muto
 * Norwegian - Erlend Birkedal
+* Swedish - Sofia Bråvander
+* Portuguese (Brazilian) - [Rafael Wahasugui](http://www.twitter.com/rafawhs)
 
 
 == Installation ==
@@ -124,6 +126,15 @@ Event Organiser provides the following shortcodes:
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.3.1 =
+* 'Clever' template hierarchy. Recognises templates for specific venues, categories or tags. E.g. `taxonomy-event-venue-myvenueslug.php`
+* Fixed menu related bugs
+* Fixed bulk/quick edit errors
+* Fixed numeric venue slug bug
+* Widget calendar - added class 'today' to current date and 'show past events' option
+* Fixed calendar key (chrome browser) bug
+* Pretty Permalinks can now be turned off
 
 = 1.3 =
 * Converted venues to event-venue taxnomy terms

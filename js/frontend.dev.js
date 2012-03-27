@@ -83,20 +83,20 @@ if($(".eo-fullcalendar").length>0){
 		});
 }
 	
-if($("#eo_calendar").length>0 && typeof EOAjaxFront.adminajax !== undefined){
-		$('#eo_calendar tfoot').unbind("click");
-		$('#eo_calendar tfoot a').die("click").live('click', function(e){
-			e.preventDefault();
-			$.getJSON(
-				EOAjaxFront.adminajax+"?action=eo_widget_cal",{
-					eo_month: getParameterByName('eo_month',$(this).attr('href')),
-				},
-			  	function(data){
-					$('#eo_calendar').html(data);
-				});
-		});	
-	}
-
+if ($("#eo_calendar").length > 0 && typeof EOAjaxFront.adminajax !== undefined) {
+    $('#eo_calendar tfoot').unbind("click");
+    $('#eo_calendar tfoot a').die("click").live('click', function (e) {
+        e.preventDefault();
+	var w_id = $(this).closest('aside').attr('id');
+       cal = eo_widget_cal[w_id];
+	var showpastevents = (cal.showpastevents ==1) ? 1 :0;
+        $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal&showpastevents="+showpastevents, {
+            eo_month: getParameterByName('eo_month', $(this).attr('href')),
+        }, function (data) {
+            $('#'+w_id+' #eo_calendar').html(data);
+        });
+    });
+}
 
 
 		if($('.eo-agenda-widget').length>0){

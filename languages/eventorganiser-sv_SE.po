@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-19 15:15+0100\n"
-"PO-Revision-Date: 2012-03-24 13:42+0100\n"
+"POT-Creation-Date: 2012-03-27 14:47+0100\n"
+"PO-Revision-Date: 2012-03-27 16:04+0100\n"
 "Last-Translator: Stephen Harris <stephen@HarrisWebSolutions.co.uk>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -12,141 +12,142 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e;ngettext;_n\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-Language: Italian\n"
-"X-Poedit-Country: ITALY\n"
+"Plural-Forms: nplurals=2; plural=n !=1\n"
+"X-Poedit-Language: Swedish\n"
+"X-Poedit-Country: SWEDEN\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../event-organiser-manage.php:18
-#: ../includes/event-organiser-cpt.php:120
+#: ../includes/event-organiser-cpt.php:129
 msgid "Event"
-msgstr "Evento"
+msgstr "Evenemang"
 
 #: ../event-organiser-manage.php:22
 #: ../event-organiser-settings.php:180
 #: ../event-organiser-edit.php:27
 #: ../includes/event-organiser-ajax.php:180
 msgid "Organiser"
-msgstr "Agenda"
+msgstr "Organisatör"
 
 #: ../event-organiser-manage.php:24
 #: ../event-organiser-venues.php:27
 #: ../event-organiser-edit.php:145
 #: ../classes/class-eo-event-list-widget.php:43
 msgid "Venue"
-msgstr "Luogo"
+msgstr "Lokal"
 
 #: ../event-organiser-manage.php:25
-#: ../includes/event-organiser-cpt.php:58
+#: ../includes/event-organiser-cpt.php:67
 msgid "Categories"
-msgstr "Categorie"
+msgstr "Categorier"
 
 #: ../event-organiser-manage.php:26
 #: ../event-organiser-edit.php:69
 msgid "Start Date/Time"
-msgstr "Data/Ora inizio"
+msgstr "Startdatum/tid"
 
 #: ../event-organiser-manage.php:27
 #: ../event-organiser-edit.php:76
 msgid "End Date/Time"
-msgstr "Data/Ora fine"
+msgstr "Slutdatum/tid"
 
 #: ../event-organiser-manage.php:28
 msgid "Reoccurrence"
-msgstr "Ricorrenza"
+msgstr "Återkommande"
 
 #: ../event-organiser-manage.php:109
 #: ../event-organiser-calendar.php:48
 #: ../includes/event-organiser-register.php:25
 msgid "View all categories"
-msgstr "Visualizza tutte le categorie"
+msgstr "Visa alla kategorier"
 
 #: ../event-organiser-manage.php:123
 #: ../event-organiser-calendar.php:49
 #: ../includes/event-organiser-register.php:26
 msgid "View all venues"
-msgstr "Visualizza tutti i luoghi"
+msgstr "Visa alla lokaler"
 
 #: ../event-organiser-manage.php:136
 msgid "View all events"
-msgstr "Visualizza tutti gli eventi"
+msgstr "Visa alla evenemang"
 
 #: ../event-organiser-manage.php:137
 msgid "Future events"
-msgstr "Eventi futuri"
+msgstr "Framtida evenemang"
 
 #: ../event-organiser-manage.php:138
 msgid "Expired events"
-msgstr "Eventi passati"
+msgstr "Genomförda evenemang"
 
 #: ../event-organiser-manage.php:139
 msgid "Events within 24 hours"
-msgstr "Eventi entro 24 ore"
+msgstr "Evenemang inom 24 timmar"
 
 #: ../event-organiser-manage.php:140
 msgid "Events within 1 week"
-msgstr "Eventi entro una settimana"
+msgstr "Evenemang inom en vecka"
 
 #: ../event-organiser-manage.php:141
 #, php-format
 msgid "Events within %d weeks"
-msgstr "Eventi entro %d settimane"
+msgstr "Evenemang inom %d veckor"
 
 #: ../event-organiser-manage.php:142
 msgid "Events within 1 month"
-msgstr "Eventi entro un mese"
+msgstr "Evenemang inom 1 månad"
 
 #: ../event-organiser-manage.php:143
 #, php-format
 msgid "Events within %d months"
-msgstr "Eventi entro %d mesi"
+msgstr "Evenemang inom %d månader"
 
 #: ../event-organiser-manage.php:144
 msgid "Events within 1 year"
-msgstr "Eventi nell'anno"
+msgstr "Evenomang inom 1 år"
 
 #: ../event-organiser-manage.php:189
 msgid "&mdash; No Change &mdash;"
-msgstr "&mdash; Nessun Cambio &mdash;"
-
-#: ../event-organiser.php:50
-#: ../event-organiser-settings.php:182
-msgid "Edit Events"
-msgstr "Modifica eventi"
+msgstr "&mdash; Ingen ändring &mdash;"
 
 #: ../event-organiser.php:51
-#: ../event-organiser-settings.php:183
-msgid "Publish Events"
-msgstr "Pubblica eventi"
+#: ../event-organiser-settings.php:182
+msgid "Edit Events"
+msgstr "Redigera evenemang"
 
 #: ../event-organiser.php:52
-#: ../event-organiser-settings.php:184
-msgid "Delete Events"
-msgstr "Cancella eventi"
+#: ../event-organiser-settings.php:183
+msgid "Publish Events"
+msgstr "Publicera evenemang"
 
 #: ../event-organiser.php:53
-#: ../event-organiser-settings.php:185
-msgid "Edit Others' Events"
-msgstr "Modifica gli eventi di altri"
+#: ../event-organiser-settings.php:184
+msgid "Delete Events"
+msgstr "Ta bort evenemang"
 
 #: ../event-organiser.php:54
-#: ../event-organiser-settings.php:186
-msgid "Delete Other's Events"
-msgstr "Cancella gli eventi di altri"
+#: ../event-organiser-settings.php:185
+msgid "Edit Others' Events"
+msgstr "Redigera andras evenemang"
 
 #: ../event-organiser.php:55
-#: ../event-organiser-settings.php:187
-msgid "Read Private Events"
-msgstr "Leggi eventi privati"
+#: ../event-organiser-settings.php:186
+msgid "Delete Other's Events"
+msgstr "Ta bort andras evenemang"
 
 #: ../event-organiser.php:56
-#: ../event-organiser-settings.php:188
-msgid "Manage Venues"
-msgstr "Modifica luogo"
+#: ../event-organiser-settings.php:187
+msgid "Read Private Events"
+msgstr "Läsa privata evenemang"
 
 #: ../event-organiser.php:57
+#: ../event-organiser-settings.php:188
+msgid "Manage Venues"
+msgstr "Administrera lokaler"
+
+#: ../event-organiser.php:58
 #: ../event-organiser-settings.php:189
 msgid "Manage Event Categories & Tags"
-msgstr "Modifica le categorie e i tag degli eventi"
+msgstr "Administrera evenemangkategorier och etiketter"
 
 #: ../event-organiser-venues.php:10
 #: ../event-organiser-venues.php:11
@@ -154,22 +155,22 @@ msgstr "Modifica le categorie e i tag degli eventi"
 #: ../event-organiser-venues.php:139
 #: ../event-organiser-settings.php:426
 msgid "Venues"
-msgstr "Loghi"
+msgstr "Lokaler"
 
 #: ../event-organiser-venues.php:28
 #: ../event-organiser-venues.php:219
 msgid "Address"
-msgstr "Indirizzo"
+msgstr "Adress"
 
 #: ../event-organiser-venues.php:29
 #: ../event-organiser-venues.php:223
 msgid "Post Code"
-msgstr "CAP"
+msgstr "Postnummer"
 
 #: ../event-organiser-venues.php:30
 #: ../event-organiser-venues.php:227
 msgid "Country"
-msgstr "Nazione"
+msgstr "Land"
 
 #: ../event-organiser-venues.php:31
 msgid "Slug"
@@ -181,1038 +182,1041 @@ msgstr "Slug"
 #: ../event-organiser-settings.php:419
 #: ../includes/event-organiser-install.php:63
 #: ../includes/event-organiser-install.php:146
-#: ../includes/event-organiser-cpt.php:119
-#: ../includes/event-organiser-cpt.php:131
+#: ../includes/event-organiser-cpt.php:128
+#: ../includes/event-organiser-cpt.php:140
 #: ../classes/class-eo-event-list-widget.php:23
 msgid "Events"
-msgstr "Eventi"
+msgstr "Evenemang"
 
 #: ../event-organiser-venues.php:52
 msgid "You do not have permission to manage venues"
-msgstr "Non hai i permessi per modificare i luoghi"
+msgstr "Du har inte rättighet att administrera lokaler"
 
 #: ../event-organiser-venues.php:57
 #: ../event-organiser-venues.php:64
 msgid "You do not have permission to edit this venue."
-msgstr "Non hai i permessi per modificare questo luogo."
+msgstr "Du har inte rätt att redigera denna lokal"
 
 #: ../event-organiser-venues.php:76
 msgid "You do not have permission to delete this venue"
-msgstr "Devi avere i permessi per cancellare questo luogo"
+msgstr "Du har inte behörighet att ta bort denna lokal"
 
 #: ../event-organiser-venues.php:113
-#: ../includes/event-organiser-cpt.php:21
+#: ../includes/event-organiser-cpt.php:30
 msgid "Edit Venue"
-msgstr "Modifica luogo"
+msgstr "Redigera lokal"
 
 #: ../event-organiser-venues.php:117
-#: ../includes/event-organiser-cpt.php:23
+#: ../includes/event-organiser-cpt.php:32
 msgid "Add New Venue"
-msgstr "Aggiungi una nuova luogo"
+msgstr "Skapa ny lokal"
 
 #: ../event-organiser-venues.php:142
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
-msgstr "Risultati della ricerca per &#8220;%s&#8221;"
+msgstr "Sökresultat för &#8220;%s&#8221;"
 
 #: ../event-organiser-venues.php:152
-#: ../includes/event-organiser-cpt.php:19
+#: ../includes/event-organiser-cpt.php:28
 msgid "Search Venues"
-msgstr "Cerca luoghi"
+msgstr "Sök bland lokaler"
 
 #: ../event-organiser-venues.php:186
 msgid "Venue name"
-msgstr "Nome luogo"
+msgstr "Lokalnamn"
 
 #: ../event-organiser-venues.php:191
 msgid "Permalink:"
-msgstr "Permalink:"
+msgstr "Permalink;"
 
 #: ../event-organiser-venues.php:207
 msgid "Get Link"
-msgstr "Apri il link"
+msgstr "Hämta länk"
 
 #: ../event-organiser-venues.php:208
 msgid "View Venue"
-msgstr "Visualizza luogo"
+msgstr "Visa lokal"
 
 #: ../event-organiser-venues.php:215
 msgid "Venue Location"
-msgstr "Posizione del luogo"
+msgstr "Lokaladress"
 
 #: ../event-organiser-venues.php:244
-#: ../includes/event-organiser-cpt.php:22
+#: ../includes/event-organiser-cpt.php:31
 msgid "Update Venue"
-msgstr "Aggiorna Luogo"
+msgstr "Uppdatera lokal"
 
 #: ../event-organiser-venues.php:244
 msgid "Add Venue"
-msgstr "Aggiungi luogo"
+msgstr "Lägg till lokal"
 
 #: ../event-organiser-settings.php:16
 msgid "Event Organiser Settings"
-msgstr "Impostazioni del calendario eventi"
+msgstr "Inställningar för Event Organiser"
 
 #: ../event-organiser-settings.php:28
 #: ../event-organiser-settings.php:326
 msgid "dd-mm-yyyy"
-msgstr "gg-mm-anno"
+msgstr "dd-mm-yyyy"
 
 #: ../event-organiser-settings.php:29
 #: ../event-organiser-settings.php:327
 msgid "mm-dd-yyyy"
-msgstr "mm-gg-anno"
+msgstr "mm-dd-yyyy"
 
 #: ../event-organiser-settings.php:41
 #: ../event-organiser-settings.php:353
 msgid "Yes"
-msgstr "Si"
+msgstr "Ja"
 
 #: ../event-organiser-settings.php:42
 #: ../event-organiser-settings.php:355
 msgid "No"
-msgstr "No"
+msgstr "Nej"
 
 #: ../event-organiser-settings.php:180
 msgid "Author"
-msgstr "Autore"
+msgstr "Författare"
 
 #: ../event-organiser-settings.php:180
 msgid "Thumbnail"
-msgstr "Thumbnail"
+msgstr "Tumnagel"
 
 #: ../event-organiser-settings.php:180
 msgid "Excerpt"
-msgstr "Riassunto"
+msgstr "Utdrag"
 
 #: ../event-organiser-settings.php:180
 msgid "Custom Fields"
-msgstr "Campi personalizzati"
+msgstr "Anpassade fält"
 
 #: ../event-organiser-settings.php:180
 msgid "Comments"
-msgstr "Commenti"
+msgstr "Kommentarer"
 
 #: ../event-organiser-settings.php:180
 msgid "Revisions"
-msgstr "Revisioni"
+msgstr "Versioner"
 
 #: ../event-organiser-settings.php:200
 msgid "Event Settings"
-msgstr "Impostazioni eventi"
+msgstr "Inställningar för evenemang"
 
 #: ../event-organiser-settings.php:201
 msgid "General"
-msgstr "Generale"
+msgstr "Generella"
 
 #: ../event-organiser-settings.php:202
 msgid "Permissions"
-msgstr "Permessi"
+msgstr "Rättigheter"
 
 #: ../event-organiser-settings.php:203
 msgid "Permalinks"
-msgstr "Permalinks"
+msgstr "Permalänkar"
 
 #: ../event-organiser-settings.php:204
 msgid "Import"
-msgstr "Importa"
+msgstr "Importera"
 
 #: ../event-organiser-settings.php:204
 msgid "Export"
-msgstr "Esporta"
+msgstr "Exportera"
 
 #: ../event-organiser-settings.php:234
 msgid "Save Changes"
-msgstr "Salva modifiche"
+msgstr "Spara ändringar"
 
 #: ../event-organiser-settings.php:242
 msgid "Set permissions for events and venue management"
-msgstr "Setta i permessi per la gestione degli eventi e dei luoghi"
+msgstr "Ändra rättigheter för evenemang och lokalhantering"
 
 #: ../event-organiser-settings.php:247
 msgid "Role"
-msgstr "Ruolo"
+msgstr "Roll"
 
 #: ../event-organiser-settings.php:258
 msgid "None"
-msgstr "Nessuno"
+msgstr "INgen"
 
 #: ../event-organiser-settings.php:279
 msgid "Select which features events should support"
-msgstr "Seleziona le caratteristiche che gli eventi dovrebbero avere"
+msgstr "Välj vilka funktioner evenemang ska stödja"
 
 #: ../event-organiser-settings.php:295
 #: ../event-organiser-settings.php:440
-#: ../includes/event-organiser-cpt.php:79
+#: ../includes/event-organiser-cpt.php:88
 msgid "Event Tags"
-msgstr "Tag degli eventi"
+msgstr "Evenemangsetiketter"
 
 #: ../event-organiser-settings.php:301
 msgid "Add an 'events' link to the navigation menu:"
-msgstr "Aggiungi un link 'eventi' al menu di navigazione:"
+msgstr "Lägg till en 'evenemang'-länk till navigationsmenyn"
 
 #: ../event-organiser-settings.php:306
 msgid "Do not add to menu"
-msgstr "Non aggiunger al menu"
+msgstr "Lägg inte till i meny"
 
 #: ../event-organiser-settings.php:310
 msgid "Page list (fallback)"
-msgstr "Pagina lista (fallback)"
+msgstr "Sidlista (reserv)"
 
 #: ../event-organiser-settings.php:318
 msgid "(This may not work with some themes):"
-msgstr "(Potrebbe non funzionare con alcuni temi):"
+msgstr "(Detta kanske inte fungerar med alla teman):"
 
 #: ../event-organiser-settings.php:322
 msgid "Date Format:"
-msgstr "Formato data:"
+msgstr "Datumformat:"
 
 #: ../event-organiser-settings.php:329
 msgid "This alters the default format for inputting dates."
-msgstr "Altera il formato standard delle date."
+msgstr "Detta ändrar standardformatet för datuminmatning."
 
 #: ../event-organiser-settings.php:334
 msgid "Show past events:"
-msgstr "Visualizza eventi passati:"
+msgstr "Visa genomförda evenemang"
 
 #: ../event-organiser-settings.php:337
 msgid "Display past events on calendars, event lists and archives (this can be over-ridden by shortcode attributes and widget options)."
-msgstr "Visualizza eventi passati nei calendari, nelle liste degli eventi e negli archivi (pu&ograve; essere sovrascritto con gli attributi dello shortcode o le opzioni del widget)."
+msgstr "Visa genomförda evenemang i kalendrar, evenemansglistor och arkiv (detta kan skrivas över med short code-attribut och widgetalternativ)."
 
 #: ../event-organiser-settings.php:341
 #: ../classes/class-eo-event-list-widget.php:69
 msgid "Group occurrences"
-msgstr "Occorrenze del gruppo"
+msgstr "Grupptillfällen"
 
 #: ../event-organiser-settings.php:345
 msgid "If selected only one occurrence of an event will be displayed on event lists and archives (this can be over-ridden by shortcode attributes and widget options)."
-msgstr "Se &egrave; selezionato solo una occorrenza dell'evento sar&agrave; mostrata nella lista e archivio dell'evento (questo pu&ograve; essere sovrascritto dagli attributi dello shortcode e dalle opzioni del widget)."
+msgstr "Om detta väljs visas bara ett evenemangstillfälle i evenemansglistor och arkiv (detta kan skrivas över med short code-attribut och widgetalternativ)."
 
 #: ../event-organiser-settings.php:349
 msgid "Are current events past?"
-msgstr "Sono passati gli eventi correnti?"
+msgstr "Är pågående evenemang genomförda?"
 
 #: ../event-organiser-settings.php:356
 msgid "If 'no' is selected, an occurrence of an event is only past when it has finished. Otherwise, an occurrence is considered 'past' as soon as it starts."
-msgstr "Se &egrave; selezionato 'no', una occorrenza di un evento &egrave; passata solo se l'evento &egrave; 'terminato'. Altrimenti, una occorrenza &egrave; considerata 'passata' dall'inizio."
+msgstr "Om 'nej' väljs kommer ett evenemangstillfälle anses vara genomfört när sluttiden har passerats. Annars kommer ett evenmang anses vara genomfört så fort det börjat."
 
 #: ../event-organiser-settings.php:360
 msgid "Delete expired events:"
-msgstr "Elimina eventi terminati:"
+msgstr "Ta bort genomförda evenemang:"
 
 #: ../event-organiser-settings.php:363
 msgid "If selected the event will be automatically trashed 24 hours after the last occurrence finishes."
-msgstr "Se selezionato l'evento sar&agrave; automaticamente cestinato 24 ore dopo la fine dell'ultima occorrenza."
+msgstr "Om detta väljs kommer evenemanget att tas bort 24 timmar efter det sista tillfällets sluttid passerats. "
 
 #: ../event-organiser-settings.php:367
 msgid "Enable events ICAL feed:"
-msgstr "Attiva il feed ICAL degli eventi:"
+msgstr "Aktivera ICAL feed för evenemang:"
 
 #: ../event-organiser-settings.php:370
 #, php-format
 msgid "If selected, visitors can subscribe to your events with the url: %s"
-msgstr "Se selezionato, il visitatore pu&ograve; sottoscrivere l'evento con l'url: %s"
+msgstr "Om detta väljs kan besökare prenumerera på dina evenemang med url:en %s "
 
 #: ../event-organiser-settings.php:375
 msgid "Exclude events from searches:"
-msgstr "Escludi l'evento dalla ricerca"
+msgstr "Exkludera evenemang från sökningar: "
 
 #: ../event-organiser-settings.php:381
 msgid "Enable templates:"
-msgstr "Abilita templates"
+msgstr "Aktivera mallar:"
 
 #: ../event-organiser-settings.php:383
 msgid "For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. To prevent this, uncheck this option. WordPress will then decide which template from your theme's folder to use."
-msgstr "Per ogni pagina viene usato un template. Per usare un template personalizzato basta usare lo stesso nome e inserirlo nella cartella del tema. Il default, se Event Organiser non trova un template nella directory del tema, &egrave; usare il template rilasciato con il plugin. Per evitarlo deselezionare questa opzione. Sar&agrave; Wordpress a decidere quale template del tema usare."
+msgstr "För varje sida används motsvarande mall. Om du vill använda en egen mall ge den samma namn och spara den i din temafolder. Om Event Organiser inte kan hitta en mall i din temakatalog kommer den att använda sin egen mall. För att undvika detta bocka ur detta alternativ. WordPress kommer då bestämma vilken mall från ditt temas folder som används. "
 
 #: ../event-organiser-settings.php:385
 msgid "Events archives:"
-msgstr "Archivio eventi:"
+msgstr "Evenemangsarkiv"
 
 #: ../event-organiser-settings.php:388
 msgid "Event page:"
-msgstr "Pagina eventi:"
+msgstr "Evenemangssida"
 
 #: ../event-organiser-settings.php:391
 msgid "Venue page:"
-msgstr "Pagina luoghi:"
+msgstr "Lokalsida"
 
 #: ../event-organiser-settings.php:394
 msgid "Events Category page:"
-msgstr "Pagine della categoria degli eventi:"
+msgstr "Kategorisida för evenemang"
 
 #: ../event-organiser-settings.php:407
 msgid "Choose a custom permalink structure for events, venues, event categories and event tags."
-msgstr "Scegli una struttura permalink personalizzata per gli eventi, luoghi, categorie e tag di eventi."
+msgstr "Välj en specialanpassad permalänkstruktur för evenemang, lokaler, evenemangskategorier och evenemangstaggar."
 
 #: ../event-organiser-settings.php:409
 msgid "Please note to enable these structures you must first have pretty permalinks enabled on WordPress in Settings > Permalinks."
-msgstr "Ricorda che per abilitare queste strutture devi prima attivare i permalinks in Wordpress Impostazioni -> Permalink."
+msgstr "Observera att för att aktivera dessa strukturer måste du först ha aktiverat 'anpassade permalänkar' i WordPress under Inställningar > Permalänkar."
 
 #: ../event-organiser-settings.php:414
 msgid "Enable event pretty permalinks:"
-msgstr "Attiva eventi permalink:"
+msgstr "Aktivera anpassade permalänkar för evenemang:"
 
 #: ../event-organiser-settings.php:416
 msgid "If you have pretty permalinks enabled, select to have pretty premalinks for events."
-msgstr "Se hai attivato i permalink, selezionali per gli eventi."
+msgstr "Om du har aktiverat anpassade permalänkar, välj detta för att anpassa permalänkar för evenemang. "
 
 #: ../event-organiser-settings.php:433
-#: ../includes/event-organiser-cpt.php:47
+#: ../includes/event-organiser-cpt.php:56
 msgid "Event Categories"
-msgstr "Categorie degli eventi"
+msgstr "Evenemangskategorier"
 
 #: ../event-organiser-settings.php:447
 msgid "Please note that you will need go to WordPress Settings > Permalinks and click 'Save Changes' before any changes will take effect."
-msgstr "&Egrave; necessario andare in Wordpress Impostazioni -> Permalink e premere su 'Salva i Cambiamenti' prima che ogni cambiamento abbia effetto."
+msgstr "Observera att du måste gå till WordPress Inställningar > Permalänkar och klicka på 'Spara ändringar' innan ändringarna slår igenom. "
 
 #: ../event-organiser-edit.php:16
 msgid "Event Details"
-msgstr "Dettaglio eventi"
+msgstr "Evenemangsdetaljer"
 
 #: ../event-organiser-edit.php:59
 msgid "This is a reoccurring event"
-msgstr "Questo &egrave; un evento ricorrente"
+msgstr "Detta är ett återkommande evenemang"
 
 #: ../event-organiser-edit.php:61
 msgid "Check to edit this event and its reoccurrences"
-msgstr "Seleziona per modificare l'evento e riprogrammarlo"
+msgstr "Bocka i för att ändra detta återkommande evenemang "
 
 #: ../event-organiser-edit.php:66
 #, php-format
 msgid "Ensure dates are entered in %1$s format and times in %2$s (24 hour) format"
-msgstr "Verifica che le date siano nel formato %1$s e il tempo nel formato %2$s (24 ore)"
+msgstr "Kontrollera att datum är inskrivna i %1$sformat och tider i%2$s (24-timmarsformat)"
 
 #: ../event-organiser-edit.php:82
 msgid "All day"
-msgstr "Giornata intera"
+msgstr "Hela dagen"
 
 #: ../event-organiser-edit.php:88
 msgid "Reoccurence:"
-msgstr "Ricorrenza:"
+msgstr "Återkommande: "
 
 #: ../event-organiser-edit.php:92
 msgid "once"
-msgstr "una sola volta"
+msgstr "En gång"
 
 #: ../event-organiser-edit.php:93
 msgid "daily"
-msgstr "giornaliera"
+msgstr "dagligen"
 
 #: ../event-organiser-edit.php:94
 msgid "weekly"
-msgstr "settimanale"
+msgstr "veckovis"
 
 #: ../event-organiser-edit.php:95
 msgid "monthly"
-msgstr "mensile"
+msgstr "månadsvis"
 
 #: ../event-organiser-edit.php:96
 msgid "yearly"
-msgstr "annuale"
+msgstr "årligen"
 
 #: ../event-organiser-edit.php:109
 msgid "Repeat every "
-msgstr "Ripeti ogni"
+msgstr "Repetera varje"
 
+# Since the context is [event] on March 27, 2012 18:30
+# Translating "on" here in Swedish creates a strange sentence, therefore it has been replaced with a -
+# [event] - mars 27, 2012 18:30
 #: ../event-organiser-edit.php:115
 #: ../classes/class-eo-event-list-widget.php:116
 msgid "on"
-msgstr "su"
+msgstr "-"
 
 #: ../event-organiser-edit.php:129
 msgid "day of month"
-msgstr "giorno del mese"
+msgstr "dag i månaden"
 
 #: ../event-organiser-edit.php:131
 msgid "day of week"
-msgstr "giorno della settimana"
+msgstr "dag i veckan"
 
 #: ../event-organiser-edit.php:135
 #: ../includes/event-organiser-register.php:130
 #: ../includes/event-organiser-event-functions.php:536
 msgid "until"
-msgstr "fino a"
+msgstr "tills"
 
 #: ../event-organiser-edit.php:155
 #: ../includes/event-organiser-venue-functions.php:436
 msgid "Select a venue"
-msgstr "Seleziona un luogo"
+msgstr "Välj en lokal"
 
 #: ../event-organiser-edit.php:160
 msgid "Search for a venue. To add a venues go to the venue page."
-msgstr "Cerca un luogo. Aggiungi un luogo e vai alla pagina dei luoghi."
+msgstr "Sök efter en lokal. För att lägga till en lokal gå till lokalsidan."
 
 #: ../event-organiser-edit.php:314
 msgid "You are not allowed to delete events."
-msgstr "Non hai il permesso di cancellare gli eventi"
+msgstr "Du har inte rätt att ta bort evenemang. "
 
 #: ../event-organiser-calendar.php:10
 #: ../event-organiser-calendar.php:11
 msgid "Calendar View"
-msgstr "Vista calendario"
+msgstr "Kalendervy"
 
 #: ../event-organiser-calendar.php:43
 #: ../includes/event-organiser-register.php:20
 msgid "today"
-msgstr "oggi"
+msgstr "idag"
 
 #: ../event-organiser-calendar.php:44
 #: ../includes/event-organiser-register.php:21
 #: ../includes/event-organiser-register.php:113
 msgid "day"
-msgstr "giorno"
+msgstr "dag"
 
 #: ../event-organiser-calendar.php:45
 #: ../includes/event-organiser-register.php:22
 #: ../includes/event-organiser-register.php:115
 msgid "week"
-msgstr "settimana"
+msgstr "vecka"
 
 #: ../event-organiser-calendar.php:46
 #: ../includes/event-organiser-register.php:23
 #: ../includes/event-organiser-register.php:117
 msgid "month"
-msgstr "mese"
+msgstr "månad"
 
 #: ../event-organiser-calendar.php:47
 #: ../includes/event-organiser-register.php:24
 msgid "go to date"
-msgstr "vai alla data"
+msgstr "gå till datum"
 
 #: ../event-organiser-calendar.php:82
 msgid "You do not have sufficient permissions to create events"
-msgstr "Non hai i permessi sufficienti per creare gli eventi"
+msgstr "Du har inte rätt att skapa evenemang"
 
 #: ../event-organiser-calendar.php:139
 msgid "You do not have sufficient permissions to edit this event"
-msgstr "Non hai i permessi sufficienti per modificare questo evento"
+msgstr "Du har inte tillräcklig behörighet att redigera denna evenemang"
 
 #: ../event-organiser-calendar.php:221
 msgid "You do not have sufficient permissions to delete this event"
-msgstr "Non hai i permessi sufficienti per cancellare questo evento"
+msgstr "Du har inte rätt att ta bort detta evenemang"
 
 #: ../event-organiser-calendar.php:227
 msgid "Occurrence deleted."
-msgstr "Occorrenza eliminata."
+msgstr "Evenemang borttaget"
 
 #: ../event-organiser-calendar.php:241
 msgid "Events Calendar"
-msgstr "Calendario eventi"
+msgstr "Evenemangskalender"
 
 #: ../event-organiser-calendar.php:244
 msgid "Loading&#8230;"
-msgstr "Caricamento&#8230;"
+msgstr "Laddar&#8230;"
 
 #: ../event-organiser-calendar.php:245
 msgid "Day"
-msgstr "Giorno"
+msgstr "Dag"
 
 #: ../event-organiser-calendar.php:246
 msgid "Week"
-msgstr "Settimana"
+msgstr "Vecka"
 
 #: ../event-organiser-calendar.php:247
 msgid "Month"
-msgstr "Mese"
+msgstr "Månad"
 
 #: ../event-organiser-calendar.php:250
 msgid "Current date/time"
-msgstr "Data/ora attuale"
+msgstr "Nuvarande datum/tid"
 
 #: ../event-organiser-calendar.php:258
 msgid "When"
-msgstr "Quando"
+msgstr "När"
 
 #: ../event-organiser-calendar.php:262
 msgid "Event Title"
-msgstr "Titolo evento"
+msgstr "Evenemangstitel"
 
 #: ../event-organiser-calendar.php:266
 #: ../includes/event-organiser-ajax.php:193
 msgid "Where"
-msgstr "Dove"
+msgstr "Var"
 
 #: ../event-organiser-calendar.php:291
 msgid "Save Draft"
-msgstr "Salve bozza"
+msgstr "Spara utkast"
 
 #: ../event-organiser-calendar.php:293
 msgid "Publish Event"
-msgstr "Pubblica evento"
+msgstr "Publicera evenemang"
 
 #: ../event-organiser-calendar.php:299
 msgid "Cancel"
-msgstr "Cancella"
+msgstr "Ångra"
 
 #: ../event-organiser-calendar.php:300
 msgid "Submit for Review"
-msgstr "Sottoponi per revisione"
+msgstr "Skicka till granskning"
 
 #: ../includes/event-organiser-register.php:111
 msgid "Hour"
-msgstr "Ora"
+msgstr "Timme"
 
 #: ../includes/event-organiser-register.php:112
 msgid "Minute"
-msgstr "Minuto"
+msgstr "Minut"
 
 #: ../includes/event-organiser-register.php:114
 msgid "days"
-msgstr "giorni"
+msgstr "dagar"
 
 #: ../includes/event-organiser-register.php:116
 msgid "weeks"
-msgstr "settimane"
+msgstr "veckor"
 
 #: ../includes/event-organiser-register.php:118
 msgid "months"
-msgstr "mesi"
+msgstr "månader"
 
 #: ../includes/event-organiser-register.php:119
 msgid "year"
-msgstr "anno"
+msgstr "år"
 
 #: ../includes/event-organiser-register.php:120
 msgid "years"
-msgstr "anni"
+msgstr "år"
 
 #: ../includes/event-organiser-register.php:121
 #: ../includes/event-organiser-event-functions.php:475
 msgid "every day"
-msgstr "ogni giorno"
+msgstr "varje dag"
 
 #: ../includes/event-organiser-register.php:122
 #: ../includes/event-organiser-event-functions.php:477
 #, php-format
 msgid "every %d days"
-msgstr "ogni %d giorni"
+msgstr "var %d dag"
 
 #: ../includes/event-organiser-register.php:123
 #: ../includes/event-organiser-event-functions.php:483
 msgid "every week on"
-msgstr "ogni settimana il"
+msgstr "varje vecka på"
 
 #: ../includes/event-organiser-register.php:124
 #: ../includes/event-organiser-event-functions.php:485
 #, php-format
 msgid "every %d weeks on"
-msgstr "ogni %d settimane il"
+msgstr "va %d vecka på "
 
 #: ../includes/event-organiser-register.php:125
 #: ../includes/event-organiser-event-functions.php:497
 msgid "every month on the"
-msgstr "ogni mese il"
+msgstr "varje månade den"
 
 #: ../includes/event-organiser-register.php:126
 #: ../includes/event-organiser-event-functions.php:499
 #, php-format
 msgid "every %d months on the"
-msgstr "ogni %d mesi il"
+msgstr "var %d månad den"
 
 #: ../includes/event-organiser-register.php:127
 msgid "every year on the"
-msgstr "ogni anno il"
+msgstr "varje år den"
 
 #: ../includes/event-organiser-register.php:128
 #, php-format
 msgid "every %d years on the"
-msgstr "ogni %d anni il"
+msgstr "var %d år den"
 
 #: ../includes/event-organiser-register.php:129
 msgid "This event will repeat"
-msgstr "Questo evento si ripeter&agrave;"
+msgstr "Detta evenemang är återkommande"
 
 #: ../includes/event-organiser-register.php:131
 #: ../includes/event-organiser-event-functions.php:458
 msgid "first"
-msgstr "primo"
+msgstr "första"
 
 #: ../includes/event-organiser-register.php:131
 #: ../includes/event-organiser-event-functions.php:458
 msgid "second"
-msgstr "secondo"
+msgstr "andra"
 
 #: ../includes/event-organiser-register.php:131
 #: ../includes/event-organiser-event-functions.php:458
 msgid "third"
-msgstr "terzo"
+msgstr "tredje"
 
 #: ../includes/event-organiser-register.php:131
 #: ../includes/event-organiser-event-functions.php:458
 msgid "fourth"
-msgstr "quarto"
+msgstr "fjärde"
 
 #: ../includes/event-organiser-register.php:131
 #: ../includes/event-organiser-event-functions.php:458
 msgid "last"
-msgstr "ultimo"
+msgstr "sista"
 
 #: ../includes/event-organiser-event-functions.php:468
 msgid "one time only"
-msgstr "soltanto una volta"
+msgstr "endast en gång"
 
 #: ../includes/event-organiser-event-functions.php:528
 msgid "every year"
-msgstr "ogni anno"
+msgstr "varje år"
 
 #: ../includes/event-organiser-event-functions.php:530
 #, php-format
 msgid "every %d years"
-msgstr "ogni %d anni"
+msgstr "var %d år"
 
 #: ../includes/class-event-organiser-im-export.php:60
 #, php-format
 msgid "File Error encountered: %d"
-msgstr "File con errore: %d"
+msgstr "Fel i fil påträffat: %d"
 
 #: ../includes/class-event-organiser-im-export.php:66
 msgid "No file detected."
-msgstr "Nessun file."
+msgstr "Ingen fil hittades."
 
 #: ../includes/class-event-organiser-im-export.php:69
 msgid "Invalid file uploaded. The file must be a ics calendar file, no larger than 2MB."
-msgstr "File caricato non valido. Il file deve essere in formato ics e non pi&ugrave; grande di 2MB."
+msgstr "Felaktig fil uppladdad. Filen måste vara en ICS-kalenderfil, inte större än 2MB"
 
 #: ../includes/class-event-organiser-im-export.php:86
 msgid "Export Events"
-msgstr "Esporta eventi"
+msgstr "Exportera evenemang"
 
 #: ../includes/class-event-organiser-im-export.php:87
 msgid "The export button below generates an ICS file of your events that can be imported in to other calendar applications such as Google Calendar."
-msgstr "Il pulsante 'esporta' genera un file ICS degli eventi che pu&ograve; essere importato in un altra applicazione calendario come Google Calendario."
+msgstr "Exportknappen nedan genererar en ICS-fil med dina evenemang som kan importeras i en annan kalenderapplikation som Google Calendar."
 
 #: ../includes/class-event-organiser-im-export.php:92
 msgid "Download Export File"
-msgstr "Scarica il file di esportazione"
+msgstr "Ladda ner exportfil"
 
 #: ../includes/class-event-organiser-im-export.php:97
 msgid "Import Events"
-msgstr "Importa eventi"
+msgstr "Importera evenemang"
 
 #: ../includes/class-event-organiser-im-export.php:99
 msgid "Import an ICS file."
-msgstr "Importazione file ICS"
+msgstr "Importera en ICS-fil."
 
 #: ../includes/class-event-organiser-im-export.php:102
 msgid "Import venues"
-msgstr "Importa luogo"
+msgstr "Importera lokaler"
 
 #: ../includes/class-event-organiser-im-export.php:103
 msgid "Import categories"
-msgstr "Importa categorie"
+msgstr "Importera kategorier"
 
 #: ../includes/class-event-organiser-im-export.php:106
 msgid "Upload ICS file"
-msgstr "Carica file ICS"
+msgstr "Ladda upp en ICS-fil"
 
 #: ../includes/class-event-organiser-im-export.php:299
 msgid "You do not have sufficient permissions to import events."
-msgstr "Non hai i permessi sufficienti per importare eventi."
+msgstr "Du har inte rätt att importera evenemang"
 
 #: ../includes/class-event-organiser-im-export.php:438
 msgid "No events were imported."
-msgstr "Nessun evento importato."
+msgstr "Inga evenemang importerades"
 
 #: ../includes/class-event-organiser-im-export.php:444
 msgid "1 event was successfully imported"
-msgstr "1 evento &egrave; stato importato con successo"
+msgstr "1 evenemang importerades"
 
 #: ../includes/class-event-organiser-im-export.php:446
 #, php-format
 msgid "%d events were successfully imported"
-msgstr "%d eventi sono stati importati con successo"
+msgstr "%d evenemang importerades"
 
 #: ../includes/class-event-organiser-im-export.php:449
 msgid "1 venue was created"
-msgstr "è stata creato 1 luogo"
+msgstr "1 lokal skapades"
 
 #: ../includes/class-event-organiser-im-export.php:451
 #, php-format
 msgid "%d venues were created"
-msgstr "sono state create %d luoghi"
+msgstr "%d lokaler importerades"
 
 #: ../includes/class-event-organiser-im-export.php:455
 msgid "1 category was created"
-msgstr "è stata creata 1 categoria"
+msgstr "1 kategori skapades"
 
 #: ../includes/class-event-organiser-im-export.php:457
 #, php-format
 msgid "%d categories were created"
-msgstr "sono state create %d categorie"
-
-#: ../includes/event-organiser-cpt.php:17
-msgid "Event Venues"
-msgstr "Evento Luoghi"
-
-#: ../includes/event-organiser-cpt.php:20
-#: ../classes/class-eo-event-list-widget.php:46
-msgid "All Venues"
-msgstr "Tutti i luoghi"
-
-#: ../includes/event-organiser-cpt.php:24
-msgid "New Venue Name"
-msgstr "Nome luogo"
-
-#: ../includes/event-organiser-cpt.php:25
-msgid "No venues found"
-msgstr "Nessun luogo"
+msgstr "%d kategorier importerades"
 
 #: ../includes/event-organiser-cpt.php:26
+msgid "Event Venues"
+msgstr "Evenemangslokaler"
+
+#: ../includes/event-organiser-cpt.php:29
+#: ../classes/class-eo-event-list-widget.php:46
+msgid "All Venues"
+msgstr "Alla lokaler"
+
+#: ../includes/event-organiser-cpt.php:33
+msgid "New Venue Name"
+msgstr "Ny Lokalnamn"
+
+#: ../includes/event-organiser-cpt.php:34
+msgid "No venues found"
+msgstr "Inga lokaler hittades"
+
+#: ../includes/event-organiser-cpt.php:35
 msgid "Add or remove venues"
-msgstr "Aggiungere o rimuovere luoghi"
+msgstr "Lägg till eller ta bort lokaler"
 
-#: ../includes/event-organiser-cpt.php:27
+#: ../includes/event-organiser-cpt.php:36
 msgid "Separate venues with commas"
-msgstr "Separa i luoghi con virgole"
+msgstr "Separera lokaler med ett komma"
 
-#: ../includes/event-organiser-cpt.php:49
+#: ../includes/event-organiser-cpt.php:58
 msgid "Search Categories"
-msgstr "Categorie di ricerca"
+msgstr "Sök kategorier"
 
-#: ../includes/event-organiser-cpt.php:50
+#: ../includes/event-organiser-cpt.php:59
 msgid "All Categories"
-msgstr "Tutte le categorie"
+msgstr "Alla kategorier"
 
-#: ../includes/event-organiser-cpt.php:51
-#: ../includes/event-organiser-cpt.php:52
+#: ../includes/event-organiser-cpt.php:60
+#: ../includes/event-organiser-cpt.php:61
 msgid "Parent Category"
-msgstr "Categoria padre"
+msgstr "Föräldrakategori"
 
-#: ../includes/event-organiser-cpt.php:53
+#: ../includes/event-organiser-cpt.php:62
 msgid "Edit Category"
-msgstr "Modifica categoria"
+msgstr "Redigera kategori"
 
-#: ../includes/event-organiser-cpt.php:54
+#: ../includes/event-organiser-cpt.php:63
 msgid "Update Category"
-msgstr "Aggiorna categoria"
+msgstr "Uppdatera kategori"
 
-#: ../includes/event-organiser-cpt.php:55
+#: ../includes/event-organiser-cpt.php:64
 msgid "Add New Category"
-msgstr "Aggiungi una nuova categoria"
+msgstr "Skapa ny kategori"
 
-#: ../includes/event-organiser-cpt.php:56
+#: ../includes/event-organiser-cpt.php:65
 msgid "New Category Name"
-msgstr "Nuova categoria"
+msgstr "Nytt kategorinamn"
 
-#: ../includes/event-organiser-cpt.php:57
+#: ../includes/event-organiser-cpt.php:66
 msgid "No categories found"
-msgstr "Nessuna categoria"
-
-#: ../includes/event-organiser-cpt.php:81
-msgid "Search Tags"
-msgstr "Cerca tag"
-
-#: ../includes/event-organiser-cpt.php:82
-msgid "All Tags"
-msgstr "Tutti i tag"
-
-#: ../includes/event-organiser-cpt.php:83
-msgid "Popular Tags"
-msgstr "Tag pi&ugrave; popolari"
-
-#: ../includes/event-organiser-cpt.php:86
-msgid "Edit Tag"
-msgstr "Modifica tag"
-
-#: ../includes/event-organiser-cpt.php:87
-msgid "Update Tag"
-msgstr "Aggiorna tag"
-
-#: ../includes/event-organiser-cpt.php:88
-msgid "Add New Tag"
-msgstr "Aggiungi un nuovo tag"
-
-#: ../includes/event-organiser-cpt.php:89
-msgid "New Tag Name"
-msgstr "Nuovo tag"
+msgstr "Inga kategorier hittades"
 
 #: ../includes/event-organiser-cpt.php:90
-msgid "No tags found"
-msgstr "Nessun tag"
+msgid "Search Tags"
+msgstr "Sök bland etiketter"
 
 #: ../includes/event-organiser-cpt.php:91
-msgid "Choose from the most used tags"
-msgstr "Scegli fra i tag pi&ugrave; utilizzati"
+msgid "All Tags"
+msgstr "Alla etiketter"
 
 #: ../includes/event-organiser-cpt.php:92
+msgid "Popular Tags"
+msgstr "Populära etiketter"
+
+#: ../includes/event-organiser-cpt.php:95
+msgid "Edit Tag"
+msgstr "Redigera etikett"
+
+#: ../includes/event-organiser-cpt.php:96
+msgid "Update Tag"
+msgstr "Updatera etikett"
+
+#: ../includes/event-organiser-cpt.php:97
+msgid "Add New Tag"
+msgstr "Skapa ny etikett"
+
+#: ../includes/event-organiser-cpt.php:98
+msgid "New Tag Name"
+msgstr "Nytt etikettnamn"
+
+#: ../includes/event-organiser-cpt.php:99
+msgid "No tags found"
+msgstr "Inga etiketter hittades"
+
+#: ../includes/event-organiser-cpt.php:100
+msgid "Choose from the most used tags"
+msgstr "Välj bland de vanligaste etiketterna"
+
+#: ../includes/event-organiser-cpt.php:101
 msgid "Tags"
-msgstr "Tag"
+msgstr "Etiketter"
 
-#: ../includes/event-organiser-cpt.php:93
+#: ../includes/event-organiser-cpt.php:102
 msgid "Add or remove tags"
-msgstr "Aggiungi o rimuovi tag"
+msgstr "Lägg till eller ta bort etiketter"
 
-#: ../includes/event-organiser-cpt.php:94
+#: ../includes/event-organiser-cpt.php:103
 msgid "Separate tags with commas"
-msgstr "Separa i tag con una virgola"
+msgstr "Separera etiketter med ett komma"
 
-#: ../includes/event-organiser-cpt.php:122
+#: ../includes/event-organiser-cpt.php:131
 msgid "Add New Event"
-msgstr "Aggiungi un nuovo evento"
+msgstr "Skapa nytt evenemang"
 
-#: ../includes/event-organiser-cpt.php:123
+#: ../includes/event-organiser-cpt.php:132
 #: ../includes/event-organiser-ajax.php:209
 msgid "Edit Event"
-msgstr "Modifica evento"
+msgstr "Redigera evenemang"
 
-#: ../includes/event-organiser-cpt.php:124
+#: ../includes/event-organiser-cpt.php:133
 msgid "New Event"
-msgstr "Nuovo evento"
+msgstr "Nytt evenemang"
 
-#: ../includes/event-organiser-cpt.php:125
+#: ../includes/event-organiser-cpt.php:134
 msgid "All events"
-msgstr "Tutti gli eventi"
+msgstr "Alla evenemang"
 
-#: ../includes/event-organiser-cpt.php:126
+#: ../includes/event-organiser-cpt.php:135
 msgid "View Event"
-msgstr "Visualizza evento"
+msgstr "Visa evenemang"
 
-#: ../includes/event-organiser-cpt.php:127
+#: ../includes/event-organiser-cpt.php:136
 msgid "Search events"
-msgstr "Cerca evento"
+msgstr "Sök bland evenemang"
 
-#: ../includes/event-organiser-cpt.php:128
+#: ../includes/event-organiser-cpt.php:137
 msgid "No events found"
-msgstr "Nessun evento"
+msgstr "Inga evenemang hittades "
 
-#: ../includes/event-organiser-cpt.php:129
+#: ../includes/event-organiser-cpt.php:138
 msgid "No events found in Trash"
-msgstr "Nessun evento nel cestino"
-
-#: ../includes/event-organiser-cpt.php:179
-#, php-format
-msgid "Event updated. <a href=\"%s\">View event</a>"
-msgstr "Evento aggiornato. <a href=\"%s\">Vedi evento</a>"
-
-#: ../includes/event-organiser-cpt.php:180
-msgid "Custom field updated."
-msgstr "Campo personalizzato aggiornato."
-
-#: ../includes/event-organiser-cpt.php:181
-msgid "Custom field deleted."
-msgstr "Campo personalizzato eliminato."
-
-#: ../includes/event-organiser-cpt.php:182
-msgid "Event updated."
-msgstr "Evento aggiornato."
-
-#: ../includes/event-organiser-cpt.php:184
-#, php-format
-msgid "Event restored to revision from %s"
-msgstr "Evento ripristinato alla versione %s"
-
-#: ../includes/event-organiser-cpt.php:185
-#, php-format
-msgid "Event published. <a href=\"%s\">View event</a>"
-msgstr "Evento pubblicato. <a href=\"%s\">Vedi evento</a>"
-
-#: ../includes/event-organiser-cpt.php:186
-msgid "Event saved."
-msgstr "Evento salvato."
-
-#: ../includes/event-organiser-cpt.php:187
-#, php-format
-msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
-msgstr "Evento salvato. <a target=\"_blank\" href=\"%s\">Anteprima evento</a>"
+msgstr "Inga evenemang hittades i papperskorgen"
 
 #: ../includes/event-organiser-cpt.php:188
 #, php-format
-msgid "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview event</a>"
-msgstr "Evento programmato per: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Anteprima evento</a>"
+msgid "Event updated. <a href=\"%s\">View event</a>"
+msgstr "Evenemanget uppdaterades. <a href=\"%s\">Visa evenemang</a>"
+
+#: ../includes/event-organiser-cpt.php:189
+msgid "Custom field updated."
+msgstr "Anpassat fält uppdaterat."
 
 #: ../includes/event-organiser-cpt.php:190
-msgid "M j, Y @ G:i"
-msgstr "M j, Y @ G:i"
+msgid "Custom field deleted."
+msgstr "Anpassat fält borttaget."
 
 #: ../includes/event-organiser-cpt.php:191
+msgid "Event updated."
+msgstr "Evenemang uppdaterat. "
+
+#: ../includes/event-organiser-cpt.php:193
+#, php-format
+msgid "Event restored to revision from %s"
+msgstr "Evenemang återställt till utkast från %s"
+
+#: ../includes/event-organiser-cpt.php:194
+#, php-format
+msgid "Event published. <a href=\"%s\">View event</a>"
+msgstr "Evenemang publicerat. <a href=\"%s\">Visa evenemang</a>"
+
+#: ../includes/event-organiser-cpt.php:195
+msgid "Event saved."
+msgstr "Evenemang sparat. "
+
+#: ../includes/event-organiser-cpt.php:196
+#, php-format
+msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
+msgstr "Evenemanget skickat. <a target=\"_blank\" href=\"%s\">Förhandsgranska evenemang</a>"
+
+#: ../includes/event-organiser-cpt.php:197
+#, php-format
+msgid "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview event</a>"
+msgstr "Evenemanget bokat för: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Förhandsgranska evenemang</a>"
+
+#: ../includes/event-organiser-cpt.php:199
+msgid "M j, Y @ G:i"
+msgstr "j M Y @ G:i"
+
+#: ../includes/event-organiser-cpt.php:200
 #, php-format
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
-msgstr "Bozza evento aggiornata. <a target=\"_blank\" href=\"%s\">Anteprima evento</a>"
+msgstr "Evenemangsutkast uppdaterat. <a target=\"_blank\" href=\"%s\">Förhandsgranska evenemang</a>"
 
-#: ../includes/event-organiser-cpt.php:336
+#: ../includes/event-organiser-cpt.php:348
 msgid "Creating events"
-msgstr "Sto creando un evento"
-
-#: ../includes/event-organiser-cpt.php:337
-msgid "Creating events:"
-msgstr "Eventi creati:"
-
-#: ../includes/event-organiser-cpt.php:339
-msgid "The start date is the date the event starts. If the event is a reoccuring event, this is the start date of the first occurrence."
-msgstr "La data d'inizio corrisponde alla data in cui l'evento inizia. Se l'evento &egrave; un evento ricorrente, la data d'inizio corrisponde alla data della prima ricorrenza."
-
-#: ../includes/event-organiser-cpt.php:340
-msgid "The end date is the date the event finishes. If the event is a reoccuring event, this is the end date of the first occurrence."
-msgstr "La data di fine corrisponde alla data in cui l'evento finisce. Se l'evento &egrave; un evento ricorrente, la data di fine corrisponde alla data dell'ultima ricorrenza."
-
-#: ../includes/event-organiser-cpt.php:341
-msgid "All dates and times must be entered in the specified format. This format can changed in the settings page."
-msgstr "Tutte le date e gli orari devono essere inserite nel formato indicato. Puoi cambiare i formati nella pagine delle impostazioni."
-
-#: ../includes/event-organiser-cpt.php:346
-msgid "Repeating events"
-msgstr "Eventi ripetuti"
-
-#: ../includes/event-organiser-cpt.php:347
-msgid "To repeat an event according to some regular pattern, use the reocurrence dropdown menu to select how the event is to repeat. Further options then appear, "
-msgstr "Per ripetere un evento secondo un pattern, usa il menu a tendina per selezionare come l'evento deve essere ripetuto. Altre opzioni saranno aggiunte, "
+msgstr "Skapa evenemang"
 
 #: ../includes/event-organiser-cpt.php:349
-msgid "Specify how regularly the event should repeat (default 1)"
-msgstr "Specifica quale regola l'evento deve ripetere (default 1)"
-
-#: ../includes/event-organiser-cpt.php:350
-msgid "Choose the reoccurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date."
-msgstr "Scegli la data di fine ripetizione. Nessun altra occorrenza saranno aggiunte dopo questa data, ma un occorrenza che inizia prima di questa data potrebbe finire dopo."
+msgid "Creating events:"
+msgstr "Skapa evenemang:"
 
 #: ../includes/event-organiser-cpt.php:351
-msgid "If monthly reoccurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) "
-msgstr "Se &egrave; selezionata la ricorrenza mensile, seleziona in quale data avviene l'evento (es. il 24) o il giorno del mese (es. il terzo Martedì) "
+msgid "The start date is the date the event starts. If the event is a reoccuring event, this is the start date of the first occurrence."
+msgstr "Startdatument är det datum då evenemanget börjar. Om evenemanget är återkommande är detta startdatumet för det första tillfället. "
 
 #: ../includes/event-organiser-cpt.php:352
-msgid "If weekly reoccurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used"
-msgstr "Se &egrave; selezionata la ricorrenza settimanale, seleziona in quale giorno della settimana l'evento deve essere ripetuto. Se non &egrave; selezionato nessun giorno, viene usato il giorno della data d'inizio."
+msgid "The end date is the date the event finishes. If the event is a reoccuring event, this is the end date of the first occurrence."
+msgstr "Slutdatument är det datum då evenemanget slutar. Om evenemanget är återkommande är detta slutdatumet för det sista tillfället. "
 
-#: ../includes/event-organiser-cpt.php:357
+#: ../includes/event-organiser-cpt.php:353
+msgid "All dates and times must be entered in the specified format. This format can changed in the settings page."
+msgstr "Alla datum och tider måste skrivas in i det specifierade formatet. Detta format kan ändras på inställningssidan. "
+
 #: ../includes/event-organiser-cpt.php:358
-msgid "Selecting a venue"
-msgstr "Seleziona un luogo"
+msgid "Repeating events"
+msgstr "Återkommande evenemang"
 
-#: ../includes/event-organiser-cpt.php:360
-msgid "Use the venues input field to search for existing venues"
-msgstr "Usa il campo per inserire il luogo per cercare luoghi esistenti"
+#: ../includes/event-organiser-cpt.php:359
+msgid "To repeat an event according to some regular pattern, use the reocurrence dropdown menu to select how the event is to repeat. Further options then appear, "
+msgstr "Om att evenemanget ska återkomma enligt ett mönster använd dropdown-menyn Återkommande för att specificera mönstret. Fler val visas då"
 
 #: ../includes/event-organiser-cpt.php:361
-msgid "Only pre-existing venues can be selected. To add a venue, go to the venues page."
-msgstr "Pu&ograve; essere selezionato solo un luogo gi&agrave; esistente. Per aggiungere un luogo, vai alla relativa pagina"
+msgid "Specify how regularly the event should repeat (default 1)"
+msgstr "Specificera hur evenemanget ska återkomma (förinställning 1)"
 
-#: ../includes/event-organiser-cpt.php:371
-#: ../includes/event-organiser-cpt.php:390
-msgid "Overview"
-msgstr "Panoramica"
+#: ../includes/event-organiser-cpt.php:362
+msgid "Choose the reoccurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date."
+msgstr "Välj ett slutdatum för återkommande evenemang. Inga fler evenemanget läggs till efter detta datum, men ett evenemang som börjar innan kan sluta efter  detta datum. "
+
+#: ../includes/event-organiser-cpt.php:363
+msgid "If monthly reoccurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) "
+msgstr "Om evenemanget återkommer varje månad måste du välja om evenemanget ska repeteras på månadens datum (t.ex. på den 24e) eller på dagen i månaden (t.ex. på den tredje tisdagen)"
+
+#: ../includes/event-organiser-cpt.php:364
+msgid "If weekly reoccurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used"
+msgstr "Om evenemanget återkommer varje vecka måste du välja vilka dagar det ska repeteras på. Om inga dagar väljs kommer startdatumets dag att väljas."
+
+#: ../includes/event-organiser-cpt.php:369
+#: ../includes/event-organiser-cpt.php:370
+msgid "Selecting a venue"
+msgstr "Att välja en lokal"
 
 #: ../includes/event-organiser-cpt.php:372
+msgid "Use the venues input field to search for existing venues"
+msgstr "Använd inmatningsfältet för lokaler för att söka efter existerande lokaler"
+
+#: ../includes/event-organiser-cpt.php:373
+msgid "Only pre-existing venues can be selected. To add a venue, go to the venues page."
+msgstr "Endast existerande lokaler kan väljas. För att skapa en lokal gå till lokalsidan. "
+
+#: ../includes/event-organiser-cpt.php:383
+#: ../includes/event-organiser-cpt.php:402
+msgid "Overview"
+msgstr "Översikt"
+
+#: ../includes/event-organiser-cpt.php:384
 msgid "This is the list of all saved events. Note that <strong> reoccurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event."
-msgstr "Questa &egrave; la lista di tutti gli eventi salvati. Nota che <strong>gli eventi ripetitivi appaiono come una riga singola</strong> nella tabella e la data d'inizio e fine si riferiscono alla prima occorrenza dell'evento."
+msgstr "Detta är listan av alla sparade evenemang. Notera att <strong> återkommande evenemang visas på en enda rad </strong> i tabellen och att start- och slutdatumet är det första tillfällets start- och slutdatum. "
 
-#: ../includes/event-organiser-cpt.php:378
+#: ../includes/event-organiser-cpt.php:390
 msgid "Hovering over a row in the venues list will display action links that allow you to manage that venue. You can perform the following actions:"
-msgstr "Passando il mouse su un luogo della lista saranno mostrate le azioni per la gestione del luogo. &Egrave; possibile eseguire le seguenti azioni:"
-
-#: ../includes/event-organiser-cpt.php:380
-msgid "Edit takes you to the editing screen for that venue. You can also reach that screen by clicking on the venue title."
-msgstr "'Modifica' va alla schermata di modifica del luogo. Si pu&ograve; anche raggiungere la schermata cliccando sul nome del luogo."
-
-#: ../includes/event-organiser-cpt.php:381
-msgid "Delete will permanently remove the venue"
-msgstr "'Elimina' permette di eliminare il luogo definitivamente"
-
-#: ../includes/event-organiser-cpt.php:382
-msgid "View will take you to the venue's page"
-msgstr "'Mostra' permette di visualizzare la pagina del luogo"
-
-#: ../includes/event-organiser-cpt.php:391
-msgid "This page shows all (occurrances of) events. You can view the summary of an event by clicking on it. If you have the necessary permissions, a link to the event's edit page will appear also."
-msgstr "Questa pagina mostra tutti gli eventi. &Egrave; possibile vedere il riassunto dell'evento cliccandoci sopra. Se si dispone dei permessi necessari, sar&agrave; mostrato anche un link alla pagina di modifica."
+msgstr "Om du hovrar över en rad i lokallistan kommer du att se länkar som du kan använda för att uppdatera lokalen. Du kan göra följande: "
 
 #: ../includes/event-organiser-cpt.php:392
+msgid "Edit takes you to the editing screen for that venue. You can also reach that screen by clicking on the venue title."
+msgstr "Redigera tar dig till redigeringssidan för den lokalen. Du kan också nå denna sida genom att klicka på lokalens titel. "
+
+#: ../includes/event-organiser-cpt.php:393
+msgid "Delete will permanently remove the venue"
+msgstr "Ta bort kommer ta bort lokalen permanent"
+
+#: ../includes/event-organiser-cpt.php:394
+msgid "View will take you to the venue's page"
+msgstr "Visa tar dig till lokalens sida"
+
+#: ../includes/event-organiser-cpt.php:403
+msgid "This page shows all (occurrances of) events. You can view the summary of an event by clicking on it. If you have the necessary permissions, a link to the event's edit page will appear also."
+msgstr "Denna sida visar alla evenemang och deras tillfällen. Du kan se sammanfattningen av ett evenemang genom att klicka på den. Om du har rätt rättigheter kommer du också att se en länk till evenemangets redigeringssida. "
+
+#: ../includes/event-organiser-cpt.php:404
 msgid "By clicking the relevant tab, you can view events in Month, Week or Day mode. You can also filter the events by events by category and venue. The 'go to date' button allows you to quickly jump to a specific date."
-msgstr "Cliccando sulla tab relativa, puoi vedere gli eventi mensili, settimanali o giornalieri. Puoi anche filtrare gli eventi per categoria o luogo. Il pulsante 'alla data' permette di vedere gli eventi di una data specifica."
+msgstr "Du kan växla mellan månads-, vecko- och dagsvy genom att klicka på respektive flik. Du kan också filtrera evenemangen på kategori och lokal. 'Gå till datum'-knappen gör att du lätt kan hoppa till ett specifikt datum. "
 
-#: ../includes/event-organiser-cpt.php:396
+#: ../includes/event-organiser-cpt.php:408
 msgid "Add Event"
-msgstr "Aggiungi evento"
+msgstr "Skapa evenemang"
 
-#: ../includes/event-organiser-cpt.php:397
+#: ../includes/event-organiser-cpt.php:409
 msgid "You can create an event on this Calendar, by clicking on day or dragging over multiple days (in Month view) or multiple times (in Week and Day view). You can give the event a title, specify a venue and provide a descripton. The event can be immediately published or saved as a draft. In any case, the event is created and you are forwarded to that event's edit page."
-msgstr "Puoi creare un evento su questo Calendario, cliccando su un giorno o trascinando su pi&ugrave; giorni (nella vista mese) o pi&ugrave; orari (nella vista settimanale o giornaliera). Puoi fornire il titolo dell'evento, specificando il luogo e inserendo una descrizione. L'evento pu&ograve; essere pubblicato immediatamente o salvato come bozza. In ogni caso, l'evento viene creato e pu&ograve; essere modificato."
+msgstr "Du kan skapa ett evenemang i denna kalender genom att klicka på en dag eller dra mysen över flera dagar ( i månadsvyn) eller flera tider (i vecko- eller dagsvyn). Du kan ge evenemanget en titel, en lokal och en beskrivning. Evenemanget kan publiceras direkt eller sparas som ett utkast. I vilket fall kommer det att skapas och du kommer skickas vidare till evenemangets redigeringssida."
 
-#: ../includes/event-organiser-cpt.php:402
+#: ../includes/event-organiser-cpt.php:414
 msgid "For more information"
-msgstr "Per ulteriori informazioni"
+msgstr "För mer information"
 
-#: ../includes/event-organiser-cpt.php:402
+#: ../includes/event-organiser-cpt.php:414
 #, php-format
 msgid "See the <a %s> documentation</a>"
-msgstr "Guarda la <a href=\"%s\">documentazione</a>"
+msgstr "Se <a %s> dokumentationen</a>"
 
-#: ../includes/event-organiser-cpt.php:483
+#: ../includes/event-organiser-cpt.php:495
 msgid "Color"
-msgstr "Colore"
+msgstr "Färg"
 
-#: ../includes/event-organiser-cpt.php:489
+#: ../includes/event-organiser-cpt.php:501
 msgid "Assign the category a colour."
-msgstr "Assegna un colore alla categoria"
+msgstr "Ge kategorin en färg"
 
 #: ../includes/event-organiser-ajax.php:148
 msgid "Protected"
-msgstr "Protetto"
+msgstr "Skyddad"
 
 #: ../includes/event-organiser-ajax.php:150
 msgid "Private"
-msgstr "Privato"
+msgstr "Privat"
 
 #: ../includes/event-organiser-ajax.php:152
 msgid "Draft"
-msgstr "Bozza"
+msgstr "Utkast"
 
 #: ../includes/event-organiser-ajax.php:178
 msgid "Start"
-msgstr "Inizio"
+msgstr "Start"
 
 #: ../includes/event-organiser-ajax.php:179
 msgid "End"
-msgstr "Fine"
+msgstr "Slut"
 
 #: ../includes/event-organiser-ajax.php:203
 msgid "This event reoccurs"
-msgstr "Questo evento si ripete"
+msgstr "Detta evenemang är återkommande"
 
 #: ../includes/event-organiser-ajax.php:228
 msgid "Delete this occurrence"
-msgstr "Cancella questa ricorrenza"
+msgstr "Ta bort detta tillfälle"
 
 #: ../includes/event-organiser-ajax.php:242
 msgid "Break this series"
-msgstr "Spezza questa serie"
+msgstr "Avbryt denna serie"
 
-#: ../includes/event-organiser-ajax.php:348
+#: ../includes/event-organiser-ajax.php:354
 msgid "All Day"
-msgstr "Tutta la giornata"
+msgstr "Hela dagen"
 
-#: ../includes/event-organiser-ajax.php:387
+#: ../includes/event-organiser-ajax.php:393
 msgid "No Venue"
-msgstr "Nessun luogo"
+msgstr "Ingen lokal"
 
 #: ../classes/class-eo-event-list-widget.php:22
 msgid "Displays a list of events"
-msgstr "Mostra la lista degli eventi"
+msgstr "Visar en lista med evenemang"
 
 #: ../classes/class-eo-event-list-widget.php:30
 #: ../classes/class-eo-event-list-widget.php:57
 msgid "Title"
-msgstr "Titolo"
+msgstr "Titel"
 
 #: ../classes/class-eo-event-list-widget.php:34
 msgid "Number of events"
-msgstr "Numero di eventi"
+msgstr "Antal evenemang"
 
 #: ../classes/class-eo-event-list-widget.php:38
 msgid "Event categories"
-msgstr "Categorie degli eventi"
+msgstr "Evenemangskategorier"
 
 #: ../classes/class-eo-event-list-widget.php:40
 msgid "List category slug(s), seperate by comma. Leave blank for all"
-msgstr "Lista delle categorie slug, separate da virgola. Lasciare bianco per 'tutte'"
+msgstr "Lista slug(s) för kategorier, separera med komma. Lämna tom för alla. "
 
 #: ../classes/class-eo-event-list-widget.php:54
 msgid "Order by"
-msgstr "Ordina per"
+msgstr "Sortera på"
 
 #: ../classes/class-eo-event-list-widget.php:56
 msgid "Start date"
-msgstr "Data inizio"
+msgstr "Startdatum"
 
 #: ../classes/class-eo-event-list-widget.php:60
 msgid "ASC"
@@ -1224,102 +1228,102 @@ msgstr "DESC"
 
 #: ../classes/class-eo-event-list-widget.php:65
 msgid "Include past events"
-msgstr "Includi eventi passati"
+msgstr "Inkludera genomförda evenemang"
 
 #: ../classes/class-eo-event-list-widget.php:73
 msgid "Template (leave blank for default)"
-msgstr "Template (lascia vuoto per il tema di default)"
+msgstr "Mall (lämna tom för standardmall)"
 
 #: ../classes/class-eo-list-table.php:23
 msgid "venue"
-msgstr "luogo"
+msgstr "lokal"
 
 #: ../classes/class-eo-list-table.php:24
 msgid "venues"
-msgstr "luoghi"
+msgstr "lokaler"
 
 #: ../classes/class-eo-list-table.php:65
 #: ../templates/single-event.php:89
 msgid "Edit"
-msgstr "Modifica"
+msgstr "Redigera"
 
 #: ../classes/class-eo-list-table.php:66
 #: ../classes/class-eo-list-table.php:121
 msgid "Delete"
-msgstr "Elimina"
+msgstr "Ta bort"
 
 #: ../classes/class-eo-list-table.php:67
 msgid "View"
-msgstr "Visualizza"
+msgstr "Visa"
 
 #: ../classes/class-eo-event.php:177
 msgid "Inserting event error: Post or Event data must be supplied."
-msgstr "Errore nell'inserire l'evento: deve essere fornita la data del messaggio o dell'evento."
+msgstr "Inmatningsfel: post- eller eventdata måste ingå. "
 
 #: ../classes/class-eo-event.php:241
 msgid "Inserting event error: Event data and associated post id must be supplied."
-msgstr "Errore nell'inserire l'evento: deve essere fornita la data dell'evento e l'id del messaggio associato."
+msgstr "Inmatningsfel: Eventdata eller associerad post id måste ingå. "
 
 #: ../classes/class-eo-event.php:246
 msgid "Event Organiser error: Invalid post"
-msgstr "Event Organiser errore: messaggio non valido"
+msgstr "Fel Event Organiser: Posten är inte giltig"
 
 #: ../classes/class-eo-agenda-widget.php:13
 msgid "Displays a list of events, grouped by date"
-msgstr "Mostra una lista degli eventi, raggruppati per data"
+msgstr "Visare en lista av alla evenemang, grupperade per datum"
 
 #: ../classes/class-eo-agenda-widget.php:14
 msgid "Events Agenda"
-msgstr "Agenda eventi"
+msgstr "Evenemangsagenda"
 
-#: ../classes/class-eo-calendar-widget.php:13
+#: ../classes/class-eo-calendar-widget.php:15
 msgid "Displays a calendar of your events"
-msgstr "Mostra un calendario per gli eventi"
+msgstr "Visar en kalender med dina evenemang"
 
-#: ../classes/class-eo-calendar-widget.php:125
+#: ../classes/class-eo-calendar-widget.php:150
 msgid "Previous month"
-msgstr "Mese precedente"
+msgstr "Föregående månad"
 
-#: ../classes/class-eo-calendar-widget.php:127
+#: ../classes/class-eo-calendar-widget.php:152
 msgid "Next month"
-msgstr "Mese successivo"
+msgstr "Nästa månad"
 
 #: ../classes/class-eo-venue.php:76
 msgid "Venue name or slug is empty"
-msgstr "Il nome o lo slug del luogo &egrave; vuoto"
+msgstr "Lokalens namn eller slug är tom"
 
 #: ../classes/class-eo-venue.php:86
 msgid "Venue <strong>was not </strong> updated"
-msgstr "Il luogo <strong>non &egrave;</strong> stato aggiornato"
+msgstr "Lokal<strong>uppdaterades ej</strong>"
 
 #: ../classes/class-eo-venue.php:92
 msgid "Venue <strong>updated</strong>"
-msgstr "Il luogo <strong>&egrave; stato aggiornato</strong>"
+msgstr "Lokal<strong>uppdaterad</strong>"
 
-#: ../classes/class-eo-venue.php:121
+#: ../classes/class-eo-venue.php:123
 msgid "Venue <strong>created</strong>"
-msgstr "Il luogo <strong>&egrave; stato creato</strong>"
+msgstr "Lokal<strong>skapad</strong>"
 
-#: ../classes/class-eo-venue.php:124
+#: ../classes/class-eo-venue.php:126
 msgid "Venue <strong>was not</strong> created"
-msgstr "Il luogo <strong>non &egrave;</strong> stato creato"
+msgstr "Lokalen skapades <strong>inte</strong>"
 
-#: ../classes/class-eo-venue.php:146
+#: ../classes/class-eo-venue.php:148
 msgid "Venue(s) <strong>deleted</strong>"
-msgstr "Il luogo <strong>&egrave; stato cancellato</strong>"
+msgstr "Lokaler <strong>togs bort</strong>"
 
-#: ../classes/class-eo-venue.php:149
+#: ../classes/class-eo-venue.php:151
 msgid "Venue(s) <strong>were not </strong> deleted"
-msgstr "Il luogo <strong>non &egrave;</strong> stato cancellato"
+msgstr "Lokal(er) togs <strong>ej</strong> bort"
 
-#: ../classes/class-eo-venue.php:178
+#: ../classes/class-eo-venue.php:180
 msgid "There was a problem with locating the latitude and longitude co-ordinates of the venue."
-msgstr "C'&egrave; un problema con le coordinate latitudine e longitudine del luogo."
+msgstr "Det gick inte att identifera longitud och latitud för denna lokal. "
 
 #: ../templates/taxonomy-event-venue.php:31
 #, php-format
 msgid "Events at: %s"
-msgstr "Eventi al: %s"
+msgstr "Evenemang på: %s"
 
 #: ../templates/taxonomy-event-venue.php:54
 #: ../templates/taxonomy-event-venue.php:93
@@ -1329,7 +1333,7 @@ msgstr "Eventi al: %s"
 #: ../templates/taxonomy-event-tag.php:48
 #: ../templates/taxonomy-event-tag.php:87
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
-msgstr "Dopo gli eventi <span class\"meta-nav\">&rarr;</span>"
+msgstr "Senare evenemang <span class=\"meta-nav\">&rarr;</span>"
 
 #: ../templates/taxonomy-event-venue.php:55
 #: ../templates/taxonomy-event-venue.php:94
@@ -1339,84 +1343,99 @@ msgstr "Dopo gli eventi <span class\"meta-nav\">&rarr;</span>"
 #: ../templates/taxonomy-event-tag.php:49
 #: ../templates/taxonomy-event-tag.php:88
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
-msgstr " <span class=\"meta-nav\">&larr;</span> Eventi nuovi"
+msgstr " <span class=\"meta-nav\">&larr;</span> Nyare evenemang"
 
 #: ../templates/taxonomy-event-venue.php:78
 #: ../templates/taxonomy-event-category.php:73
 #: ../templates/archive-event.php:69
 #: ../templates/taxonomy-event-tag.php:73
 msgid "at"
-msgstr "al"
+msgstr "på"
 
 #: ../templates/taxonomy-event-venue.php:102
 #: ../templates/taxonomy-event-category.php:97
 #: ../templates/archive-event.php:92
 #: ../templates/taxonomy-event-tag.php:97
 msgid "Nothing Found"
-msgstr "Nessun risultato"
+msgstr "Inget hittat"
 
 #: ../templates/taxonomy-event-venue.php:106
 msgid "Apologies, but no events were found for the requested venue. "
-msgstr "Non c'&egrave; alcun evento per il luogo cercato"
+msgstr "Tyvärr hittades inga evenemang för denna lokal."
 
 #: ../templates/single-event.php:49
 #, php-format
 msgid "This event is running from %1$s until %2$s. It is next occurring at %3$s"
-msgstr "Questo evento &egrave; eseguito dal %1$s al %2$s. Segue la ricorrenza del %3$s"
+msgstr "Detta evenemang löper från %1$s till %2$s. Nästa tillfälle är %3$s"
 
 #: ../templates/single-event.php:53
 #, php-format
 msgid "This event finished on %s"
-msgstr "Evento finito il %s"
+msgstr "Detta evenemang slutade på %s"
 
 #: ../templates/single-event.php:58
 #, php-format
 msgid "This event is on %s"
-msgstr "Questo evento &egrave; stato creato il %s"
+msgstr "Detta evenemang inträffar den %s"
 
 #: ../templates/single-event.php:67
 msgid "Pages:"
-msgstr "Pagine:"
+msgstr "Sidor: "
 
 #: ../templates/single-event.php:76
 #, php-format
 msgid "This event was posted in %1$s by <a href=\"%5$s\">%4$s</a>. Bookmark the <a href=\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a>."
-msgstr "Questo evento &egrave; inserito nel %1$s da <a href=\"%5$s\">%4$s</a>. Salva il <a href=\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a> nel bookmark."
+msgstr "Detta evenemang postades i %s %1$s av <a href=\"%5$s\">%4$s</a>. Bokmärke till <a href=\"%2$s\" title=\"Permalänk till %3$s\" rel=\"bookmark\">permalänken</a>."
 
 #: ../templates/single-event.php:78
 #, php-format
 msgid "This event was posted by <a href=\"%5$s\">%4$s</a>. Bookmark the <a href=\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a>."
-msgstr "Questo evento &egrave; inserito da <a href=\"%5$s\">%4$s</a>. Salva il <a href=\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a> nel bookmark."
+msgstr "Detta evenemang postades av <a href=\"%5$s\">%4$s</a>. Bokmärke till <a href=\"%2$s\" title=\"Permalänk till %3$s\" rel=\"bookmark\">permalänken</a>."
 
 #: ../templates/taxonomy-event-category.php:31
 #, php-format
 msgid "Event Category Archives: %s"
-msgstr "Archivi delle categorie eventi: %s"
+msgstr "Arkiv för evenemangskategorier: %s"
 
 #: ../templates/taxonomy-event-category.php:101
 msgid "Apologies, but no events were found for the requested category. "
-msgstr "Non c'&egrave; alcun evento per la categoria selezionata"
+msgstr "Tyvärr hittades inga evenemang för denna kategori."
 
 #: ../templates/archive-event.php:83
 msgid "Later events <span class=\"meta-nav\">&larr;</span>"
-msgstr "Dopo gli eventi <span class=\"meta-nav\">&larr;</span>"
+msgstr "Senare evenemang <span class=\"meta-nav\">&rarr;</span>"
 
 #: ../templates/archive-event.php:84
 msgid " <span class=\"meta-nav\">&rarr;</span> Newer events"
-msgstr " <span class=\"meta-nav\">&rarr;</span> Eventi nuovi"
+msgstr " <span class=\"meta-nav\">&larr;</span> Nyare evenemang"
 
 #: ../templates/archive-event.php:96
 msgid "Apologies, but no results were found for the requested archive"
-msgstr "Spiacente, ma nessun risultato &egrave; stato trovato per l'archivio richiesto"
+msgstr "Tyvärr hittades inget i detta arkiv "
 
 #: ../templates/taxonomy-event-tag.php:31
 #, php-format
 msgid "Event Tag Archives: %s"
-msgstr "Archivi dei Tag Evento: %s"
+msgstr "Arkiv för evenemangsetiketter: %s"
 
 #: ../templates/taxonomy-event-tag.php:101
 msgid "Apologies, but no events were found for the requested tag. "
-msgstr "Non c'&egrave; alcun evento con il tag cercato"
+msgstr "Tyvärr hittades inga evenemang för denna etikett. "
 
 #~ msgid "You do not have permission to create venues"
-#~ msgstr "Non hai i permessi per create i luoghi"
+#~ msgstr "Du har inte rätt att skapa lokaler"
+
+#~ msgid "Cheatin&#8217; uh?"
+#~ msgstr "Haciendo trampas?"
+
+#~ msgid ""
+#~ "You do not have sufficient permissions to manage options for this site."
+#~ msgstr ""
+#~ "Tu no tienes suficientes privilegios para administrar las opciones de "
+#~ "este sitio"
+
+#~ msgid "Settings saved"
+#~ msgstr "Ajustes salvados"
+
+#~ msgid "You do not have sufficient permissions to publish events"
+#~ msgstr "No tienes suficientes privilegios para publicar eventos."

@@ -211,7 +211,7 @@ function eventorganiser_quick_edit_save($post_id) {
 	//authentication checks
 	if (!current_user_can('edit_event', $post_id)) return $post_id;
 
-	$venue_id =(isset($_REQUEST['eo_input']['event-venue']) ? (int) $$_REQUEST['eo_input']['event-venue'] : -1);
+	$venue_id =(isset($_REQUEST['eo_input']['event-venue']) ? (int) $_REQUEST['eo_input']['event-venue'] : -1);
 
 	if($venue_id < 0) return;
 

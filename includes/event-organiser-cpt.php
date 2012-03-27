@@ -9,9 +9,18 @@ function eventorganiser_create_event_taxonomies() {
 
 	$eo_options = get_option('eventorganiser_options'); 
 
-	$cat_slug = (empty($eo_options['url_cat']) ? 'events/category' : trim($eo_options['url_cat'], "/"));
-	$tag_slug = (empty($eo_options['url_tag']) ? 'events/category' : trim($eo_options['url_tag'], "/"));
-	$venue_slug = (empty($eo_options['url_venue']) ? 'events/venue' : trim($eo_options['url_venue'], "/"));
+	if(empty($eo_options['prettyurl'])){
+		$cat_rewrite =$tag_rewrite=$venue_rewrite= false;
+	}else{
+		$cat_slug = (empty($eo_options['url_cat']) ? 'events/category' : trim($eo_options['url_cat'], "/"));
+		$cat_rewrite = array( 'slug' => $cat_slug, 'with_front' => false );
+
+		$tag_slug = (empty($eo_options['url_tag']) ? 'events/category' : trim($eo_options['url_tag'], "/"));
+		$tag_rewrite = array( 'slug' => $tag_slug, 'with_front' => false );
+
+		$venue_slug = (empty($eo_options['url_venue']) ? 'events/venue' : trim($eo_options['url_venue'], "/"));
+		$venue_rewrite = array( 'slug' => $venue_slug, 'with_front' => false );
+	}
 
 	$venue_labels = array(
 		'name' => __('Event Venues','eventorganiser'),
@@ -39,7 +48,7 @@ function eventorganiser_create_event_taxonomies() {
 			'edit_terms' => 'manage_venues',
 			'delete_terms' => 'manage_venues',
 			'assign_terms' =>'edit_events'),
-		'rewrite' => array( 'slug' => $venue_slug, 'with_front' => false )
+		'rewrite' => $venue_rewrite
   		));
 
 	 // Add new taxonomy, make it hierarchical (like categories)
@@ -70,7 +79,7 @@ function eventorganiser_create_event_taxonomies() {
 		'delete_terms' => 'manage_event_categories',
 		'assign_terms' =>'edit_events'),
 		'public'=> true,
-		'rewrite' => array( 'slug' =>$cat_slug, 'with_front' => false )
+		'rewrite' => $cat_rewrite
   	));
 
 	if(isset($eo_options['eventtag']) && $eo_options['eventtag']==1):
@@ -106,7 +115,7 @@ function eventorganiser_create_event_taxonomies() {
 			'delete_terms' => 'manage_event_categories',
 			'assign_terms' =>'edit_events'),
 			'public'=> true,
-			'rewrite' => array( 'slug' => $tag_slug, 'with_front' => false )
+			'rewrite' => $tag_rewrite
   		));
 endif;
 }
@@ -132,7 +141,12 @@ $eventorganiser_option_array = get_option('eventorganiser_options');
   );
 
 $exclude_from_search = ($eventorganiser_option_array['excludefromsearch']==0) ? false : true;
-$event_slug = (empty($eventorganiser_option_array['url_event']) ? 'events/event' : $eventorganiser_option_array['url_event']);
+if(empty($eo_options['prettyurl'])){
+	$event_rewrite = false;
+}else{
+	$event_slug = (empty($eventorganiser_option_array['url_event']) ? 'events/event' : $eventorganiser_option_array['url_event']);
+	$event_rewrite = array( 'slug' => $event_slug, 'with_front' => false,'feeds'=> true,'pages'=> true );
+}
 
 $args = array(
 	'labels' => $labels,
@@ -143,12 +157,7 @@ $args = array(
 	'show_in_menu' => true, 
 	'query_var' => true,
 	'capability_type' => 'event',
-	'rewrite' => array(
-		'slug'=> $event_slug,
-		'with_front'=> false,
-		'feeds'=> true,
-		'pages'=> true
-	),		
+	'rewrite' => $event_rewrite,
 	'capabilities' => array(
 		'publish_posts' => 'publish_events',
 		'edit_posts' => 'edit_events',
@@ -268,8 +277,10 @@ add_filter( 'wp_nav_menu_objects', 'eventorganiser_make_item_current',10,2);
 function eventorganiser_make_item_current($items,$args){
 	if(is_post_type_archive('event')|| is_singular('event')|| eo_is_event_taxonomy()){
 		foreach ($items as $item){
-			if('post_type_archive'==$item->type && 'event'==$item->object)
-				$item->classes[] = 'current-menu-item';
+			if('post_type_archive'!=$item->type || 'event'!=$item->object)
+				continue;
+
+			$item->classes[] = 'current-menu-item';
 	
 			$_anc_id = (int) $item->db_id;
 			$active_ancestor_item_ids=array();
@@ -304,6 +315,7 @@ function eventorganiser_make_item_current($items,$args){
 
 //'Old school' - fallback case
 // Filter wp_nav_menu() to add event link if selected in options
+add_filter( 'wp_list_pages', 'eventorganiser_menu_link',10,1 );
 function eventorganiser_menu_link($items) {
 	$eo_options= get_option('eventorganiser_options');
 	if($eo_options['addtomenu']!='1')

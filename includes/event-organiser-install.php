@@ -217,6 +217,17 @@ function eventorganiser_uninstall(){
 
 	eventorganiser_clear_cron_jobs();
 
+	//Remove 	custom taxonomies and terms.
+	$taxs = array('event-category','event-venue','event-tag');
+	$terms = get_terms($taxs, 'hide_empty=0' );
+	foreach ($terms as $term) {
+		$term_id = (int)$term->term_id;
+		wp_delete_term($term_id ,$term->taxonomy);
+	}
+	foreach ($taxs as $tax){
+		unset($wp_taxonomies[$tax]);
+	}
+
 	//Remove all posts of CPT Event
 	//?? $wpdb->query("DELETE FROM $wpdb->posts WHERE post_type = 'event'");
 
@@ -237,16 +248,6 @@ function eventorganiser_uninstall(){
 	endforeach; 
 	
 	eventorganiser_clear_cron_jobs();
-
-	//Remove 	custom taxonomies and terms.
-	$taxs = array('event-category','event-venue','event-tag');
-	$terms = get_terms($taxs, 'hide_empty=0' );
-	foreach ($terms as $term) {
-		wp_delete_term( $term->term_id,$term->taxonomy);
-	}
-	foreach ($taxs as $tax){
-		unset($wp_taxonomies[$tax]);
-	}
 
 	//Drop tables    
 	$wpdb->query("DROP TABLE IF EXISTS $eventorganiser_events_table");

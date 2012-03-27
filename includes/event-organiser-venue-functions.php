@@ -80,8 +80,8 @@ function eo_get_venue_name($venue_slug_or_id=''){
 
 		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
 	}else{
-		if(is_numeric($venue)){
-			$venue = get_term_by('id', (int) $venue, 'event-venue');
+		if(is_int($venue)){
+			$venue = get_term_by('id', $venue, 'event-venue');
 		
 		}else{
 			$venue = 	get_term_by('slug', $venue, 'event-venue');
@@ -126,8 +126,8 @@ function eo_get_venue_description($venue_slug_or_id=''){
 		$venue = get_the_terms($post->ID,'event-venue');
 		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
 	}else{
-		if(is_numeric($venue)){
-			$venue = get_term_by('id', (int) $venue, 'event-venue');
+		if(is_int($venue)){
+			$venue = get_term_by('id', $venue, 'event-venue');
 		
 		}else{
 			$venue = 	get_term_by('slug', $venue, 'event-venue');
@@ -178,8 +178,8 @@ function eo_get_venue_latlng($venue_slug_or_id=''){
 		$venue = get_the_terms($post->ID,'event-venue');
 		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
 	}else{
-		if(is_numeric($venue)){
-			$venue = get_term_by('id', (int) $venue, 'event-venue');
+		if(is_int($venue)){
+			$venue = get_term_by('id', $venue, 'event-venue');
 		
 		}else{
 			$venue = 	get_term_by('slug', $venue, 'event-venue');
@@ -243,8 +243,8 @@ function eo_get_venue_link($venue_slug_or_id=''){
 		$venue = get_the_terms($post->ID,'event-venue');
 		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
 	}else{
-		if(is_numeric($venue)){
-			$venue = get_term_by('id', (int) $venue, 'event-venue');
+		if(is_int($venue)){
+			$venue = get_term_by('id', $venue, 'event-venue');
 		
 		}else{
 			$venue = 	get_term_by('slug', $venue, 'event-venue');
@@ -293,8 +293,8 @@ function eo_get_venue_address($venue_slug_or_id=''){
 		$venue = get_the_terms($post->ID,'event-venue');
 		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
 	}else{
-		if(is_numeric($venue)){
-			$venue = get_term_by('id', (int) $venue, 'event-venue');
+		if(is_int($venue)){
+			$venue = get_term_by('id', $venue, 'event-venue');
 		
 		}else{
 			$venue = 	get_term_by('slug', $venue, 'event-venue');
