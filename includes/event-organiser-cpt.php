@@ -123,7 +123,8 @@ endif;
 //Register the custom post type Event
 add_action('init', 'eventorganiser_cpt_register');
 function eventorganiser_cpt_register() {
-$eventorganiser_option_array = get_option('eventorganiser_options'); 
+	$eo_options = get_option('eventorganiser_options');
+
   	$labels = array(
 		'name' => __('Events','eventorganiser'),
 		'singular_name' => __('Event','eventorganiser'),
@@ -140,11 +141,12 @@ $eventorganiser_option_array = get_option('eventorganiser_options');
 		'menu_name' => __('Events','eventorganiser'),
   );
 
-$exclude_from_search = ($eventorganiser_option_array['excludefromsearch']==0) ? false : true;
+$exclude_from_search = ($eo_options['excludefromsearch']==0) ? false : true;
+
 if(empty($eo_options['prettyurl'])){
 	$event_rewrite = false;
 }else{
-	$event_slug = (empty($eventorganiser_option_array['url_event']) ? 'events/event' : $eventorganiser_option_array['url_event']);
+	$event_slug = (empty($eo_options['url_event']) ? 'events/event' : $eo_options['url_event']);
 	$event_rewrite = array( 'slug' => $event_slug, 'with_front' => false,'feeds'=> true,'pages'=> true );
 }
 
@@ -173,10 +175,12 @@ $args = array(
 	'hierarchical' => false,
 	'menu_icon' => EVENT_ORGANISER_URL.'css/images/eoicon-16.png',
 	'menu_position' => 5,
-	'supports' => $eventorganiser_option_array['supports']
+	'supports' => $eo_options['supports']
   ); 
+
   register_post_type('event',$args);
 }
+
 
 //add filter to ensure the text event, or event, is displayed when user updates a event 
 add_filter('post_updated_messages', 'eventorganiser_messages');
