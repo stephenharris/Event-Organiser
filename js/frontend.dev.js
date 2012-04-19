@@ -83,19 +83,23 @@ if($(".eo-fullcalendar").length>0){
 		});
 }
 	
-if ($("#eo_calendar").length > 0 && typeof EOAjaxFront.adminajax !== undefined) {
-    $('#eo_calendar tfoot').unbind("click");
-    $('#eo_calendar tfoot a').die("click").live('click', function (e) {
+if ($(".eo_widget_calendar").length > 0 && typeof EOAjaxFront.adminajax !== undefined) {
+    $('.eo_widget_calendar tfoot').unbind("click");
+    $('.eo_widget_calendar tfoot a').die("click").live('click', function (e) {
         e.preventDefault();
-	var w_id = $(this).closest('aside').attr('id');
-       cal = eo_widget_cal[w_id];
-	var showpastevents = (cal.showpastevents ==1) ? 1 :0;
-        $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal&showpastevents="+showpastevents, {
+        var w_id = $(this).closest('.eo_widget_calendar').attr('id');
+        cal = eo_widget_cal[w_id];
+	if(cal){
+		showpastevents = (cal.showpastevents == 1) ? 1 : 0;
+	}else{
+		showpastevents=1;
+	};
+        $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal&showpastevents=" + showpastevents, {
             eo_month: getParameterByName('eo_month', $(this).attr('href')),
         }, function (data) {
-            $('#'+w_id+' #eo_calendar').html(data);
-        });
-    });
+            $('#' + w_id+'_content').html(data)
+        })
+    })
 }
 
 
@@ -148,6 +152,10 @@ if ($("#eo_calendar").length > 0 && typeof EOAjaxFront.adminajax !== undefined) 
 				getEvents(dir)		
 			});
 
+	function eo_parseDate(input) {
+		var parts = input.match(/(\d+)/g);
+		return new Date(parts[0], parts[1]-1, parts[2]);
+	}
 		function populateAgenda(events){
 			$(dates).remove();
 			current='';
@@ -155,7 +163,7 @@ if ($("#eo_calendar").length > 0 && typeof EOAjaxFront.adminajax !== undefined) 
 				d = new Date(events[i].StartDate); 
 				if(current==''||current!=events[i].StartDate){
 					current=events[i].StartDate;
-					day = new Date(events[i].StartDate);
+		                     day = eo_parseDate(events[i].StartDate);
 					currentList = $('<li class="date" >'+jQuery.fullCalendar.formatDate(day, 'dddd, dS MMMM',locale)+'<ul class="a-date"></ul></li>');
 					dateList.append(currentList);
 				}

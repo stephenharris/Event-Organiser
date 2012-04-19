@@ -93,7 +93,7 @@ function initialize(Lat,Lng) {
 			}
 
 		jQuery("#eo_venue_Lat").val(results[0].geometry.location.lat());
-		jQuery("#eo_venue_Lng").val(results[0].geometry.location.lng());;
+		jQuery("#eo_venue_Lng").val(results[0].geometry.location.lng());
       		} 
 	});
 	}

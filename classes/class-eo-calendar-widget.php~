@@ -12,7 +12,7 @@ class EO_Calendar_Widget extends WP_Widget
 
 	function EO_Calendar_Widget()  {
 		load_plugin_textdomain( 'eventorganiser', false, EVENT_ORGANISER_I18N);
-		$widget_ops = array('classname' => 'widget_calendar', 'description' => __('Displays a calendar of your events','eventorganiser') );
+		$widget_ops = array('classname' => 'widget_calendar eo_widget_calendar', 'description' => __('Displays a calendar of your events','eventorganiser') );
 		$this->WP_Widget('EO_Calendar_Widget', __('Events Calendar','eventorganiser'), $widget_ops);
 		}
  
@@ -61,18 +61,19 @@ class EO_Calendar_Widget extends WP_Widget
 
 		add_action('wp_footer', array(__CLASS__, 'add_options_to_script'));
 		wp_enqueue_script( 'eo_front');
-		self::$widget_cal[$args['widget_id']] = $calendar;
+		$id = esc_attr($args['widget_id']);
+		self::$widget_cal[$id] = $calendar;
 
 		//Echo widget
     		echo $before_widget;
     		echo $before_title;
 		echo $instance['title'];
     		echo $after_title;
-		echo "<div class='eo-calendar eo-calendar-widget' id='eo_calendar'>";
+		echo "<div id='{$id}_content' >";
 		echo $this->generate_output($month,$calendar);
 		echo "</div>";
     		echo $after_widget;
-	}
+}
 
 	function add_options_to_script() {
 		if(!empty(self::$widget_cal))
@@ -195,9 +196,8 @@ function generate_output($month,$args=array()){
 					$body .="<td class='".$classes."'>".($cell-$offset)."</td>";
 				}
 
+				$currentDate->modify('+1 day');
 			}
-
-			$currentDate->modify('+1 day');
 
 		 endforeach;//Endforeach Week day
 		$body .="</tr>";

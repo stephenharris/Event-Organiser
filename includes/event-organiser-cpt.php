@@ -342,9 +342,12 @@ function eventorganiser_menu_link($items) {
 */
 add_action( 'contextual_help', 'eventorganiser_cpt_help_text', 10, 3 );
 function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) { 
-	//The add_help_tab function for screen was introduced in WordPress 3.3
-	if(method_exists($screen, 'add_help_tab')):
-	switch($screen->id):
+
+	//The add_help_tab function for screen was introduced in WordPress 3.3. Add it only to event pages.
+	if( ! method_exists($screen, 'add_help_tab') || ! in_array($screen_id, array('event','edit-event','event_page_venues','event_page_calendar')) )
+		return $contextual_help;
+	
+	switch($screen_id):
 		//Add help for event editing / creating page
 		case ('event'):
 			    $screen->add_help_tab( array(
@@ -414,9 +417,8 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 			break;
 	endswitch;
 
-	//Add a link to Event Organiser documentation on every page
+	//Add a link to Event Organiser documentation on every EO page
 	$screen->set_help_sidebar( '<p> <strong>'. __('For more information','eventorganiser').'</strong> </p><p>'.sprintf(__('See the <a %s> documentation</a>','eventorganiser'),'target="_blank" href="http://www.harriswebsolutions.co.uk/event-organiser/documentation/"').'</p>' );
-	endif;
 
 	return $contextual_help;
 }
@@ -536,9 +538,8 @@ function eventorganiser_get_terms_meta($terms){
 }
 
 
-//TODO
-//Have meta array for event-category terms.
-function eo_get_category_meta($term,$key){
+//TODO Have meta array for event-category terms.
+function eo_get_category_meta($term,$key=''){
 
 	if (is_object($term)){
 		if(isset($term->color))

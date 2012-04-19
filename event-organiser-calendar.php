@@ -1,10 +1,23 @@
 <?php
-/****** CALENDAR PAGE ******/
+/**
+ * Calendar Admin Page
+ */
 if(!class_exists('EventOrganiser_Admin_Page')){
     require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
 }
+/**
+ * Calendar Admin Page
+ * 
+ * Extends the EentOrganiser_Admin_Page class. Creates the calendar admin page
+ * @version 1.0
+ * @see EventOrganiser_Admin_Page
+ * @package event organiser
+ */
 class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 {
+    /**
+     * This sets the calendar page variables
+     */
 	function set_constants(){
 		$this->hook = 'edit.php?post_type=event';
 		$this->title =  __('Calendar View','eventorganiser');
@@ -12,7 +25,10 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		$this->permissions ='edit_events';
 		$this->slug ='calendar';
 	}
-
+        
+    /**
+     * Enqueues the page's scripts and styles, and localises them.
+     */
 	function page_scripts(){
 		global $wp_locale;
 	  	$eo_settings_array= get_option('eventorganiser_options'); 
@@ -53,6 +69,9 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		wp_enqueue_style('eventorganiser-style');
 	}
 
+    /**
+     * Prints page styles
+     */
 	function page_styles(){
 		$terms =get_terms( 'event-category', array('hide_empty' => 0));
 		if($terms && function_exists('eo_get_category_color')):

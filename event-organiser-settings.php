@@ -9,6 +9,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	static $sup_array;
 	static $eventorganiser_roles;
 	static $settings;
+	static $sections;
 	static $checkboxes,$text,$permalinks,$select,$radio,$defaults;
 
 	function set_constants(){
@@ -17,6 +18,24 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		$this->menu ='Event Organiser';
 		$this->permissions ='manage_options';
 		$this->slug ='event-settings';
+
+		self::$sections = array(
+			'general'=>array(
+				'title'=>__('General'),
+				'callback'=>array(__CLASS__,'display_general')
+			),
+			'permissions'=>array(
+				'title'=>__('Permissions'),
+				'callback'=>array(__CLASS__,'display_permissions')
+			),
+			'permalinks'=>array(
+				'title'=>__('Permalinks'),
+				'callback'=>array(__CLASS__,'display_permalinks')
+			),
+			'imexport'=>array(
+				'title'=>__('Import','eventorganiser').'/'.__('Export','eventorganiser'),
+				'callback'=>array(__CLASS__,'display_imexport'),
+			));
 
 		self::$checkboxes = array('showpast','templates','prettyurl','excludefromsearch','deleteexpired','feed','eventtag','group_events');
 		self::$text = array('navtitle');
@@ -54,9 +73,11 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	function  admin_init_actions(){
 		//Register options
 		register_setting( 'eventorganiser_options', 'eventorganiser_options', array($this,'validate'));
+		self::$sections = apply_filters('eventorganiser_settings_sections',self::$sections);
 	}
 
 	function validate($option){
+
 		$permissions = (isset($option['permissions']) ? $option['permissions'] : array());
 		$this->update_roles($permissions);
 
@@ -152,9 +173,6 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	}
 
 
-
-
-
 	function update_roles($permissions){
 		global $wp_roles,$EO_Errors,$eventorganiser_roles;
 		$editable_roles = get_editable_roles();
@@ -173,6 +191,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			endif; // Don't change administrator
 		endforeach; //End foreach $editable_roles
 	}
+
 
 	function init(){
 		global $eventorganiser_roles;
@@ -197,42 +216,38 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			<div id='icon-options-general' class='icon32'><br />
 		</div>
 		<h2 class="nav-tab-wrapper">
-		<?php _e('Event Settings', 'eventorganiser'); ?>
-				<a class="nav-tab nav-tab-active" id="eo-tab-general" href=""><?php _e('General');?></a>
-				<a class="nav-tab" id="eo-tab-permssions" href=""><?php _e('Permissions','eventorganiser');?></a>
-				<a class="nav-tab" id="eo-tab-permalinks" href=""><?php _e('Permalinks');?></a>
-				<a class="nav-tab" id="eo-tab-imexport" href=""><?php echo __('Import','eventorganiser').'/'.__('Export','eventorganiser');?></a>
+		<?php 
+			_e('Event Settings', 'eventorganiser'); 
+			foreach (self::$sections as $section_id => $section )
+				echo "<a class='nav-tab nav-tab-active' id='eo-tab-{$section_id}' href=''>".esc_html($section['title'])."</a>";
+		;?>
 		</h2>
 
 		<form name="eventorganiser_settings" method="post" action="options.php">  
-			<?php settings_fields('eventorganiser_options'); ?>
 
-			<div class="tab-content eo-tab-permssions-content">
-				<?php 	$this->display_permissions(); ?>
-				<?php 	$this->display_submit(); ?>
-			</div>
+			<?php settings_fields('eventorganiser_options'); 
 
-			<div class="tab-content eo-tab-general-content">
-				<?php 	$this->display_general(); ?>
-				<?php 	$this->display_submit(); ?>
-			</div>
+			foreach (self::$sections as $section_id => $section ):
+				if('imexport' == $section_id)
+					continue;
+				echo "<div class='tab-content eo-tab-{$section_id}-content'>";
+					call_user_func($section['callback']);
+					do_settings_fields(self::$slug, $section_id);
+					echo "<p class='submit'><input type='submit' name='eventorganiser_options[action]'  class='button-primary' value='".__('Save Changes')."' /></p>";
+				echo "</div>";
+			endforeach;
+		?>
+		</form>
+		<?php
 
-			<div class="tab-content eo-tab-permalinks-content">
-				<?php 	$this->display_permalinks(); ?>
-				<?php 	$this->display_submit(); ?>
-			</div>
-		</form> 
-
-		<div class="tab-content eo-tab-imexport-content">
-			<?php do_action('eventorganiser_event_settings_imexport'); ?>
-		</div>
-	<?php
+		echo "<div class='tab-content eo-tab-imexport-content'>";
+			call_user_func(self::$sections['imexport']['callback']);
+			do_settings_fields(self::$slug, 'imexport');
+		echo "</div>";
 	}
 
-	function display_submit(){
-		?>
-		<p class="submit"><input type="submit" name="eventorganiser_options[action]"  class="button-primary" value="<?php _e('Save Changes'); ?>" /></p>
-	<?php
+	function display_imexport(){
+		do_action('eventorganiser_event_settings_imexport'); 
 	}
 	
 	function display_permissions(){

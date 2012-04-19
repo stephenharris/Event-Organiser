@@ -244,7 +244,7 @@ SUMMARY:<?php echo $this->escape_icalText(get_the_title()); ?>
 	$excerpt = apply_filters('the_excerpt_rss', $excerpt);
 	if(!empty($excerpt)):
 ?>
-DESCRIPTION:<?php echo $this->escape_icalText($excerpt);?>
+DESCRIPTION:<?php echo html_entity_decode($this->escape_icalText($excerpt));?>
 
 <?php 
 	endif;

@@ -43,7 +43,7 @@
 		$eventsarray = array();
 
 		//Blog timezone
-		$tz = EO_Event::get_timezone();
+		$tz = eo_get_blog_timezone();
 
 		//Loop through events
 		global $post;
@@ -54,7 +54,7 @@
 
 				//Title and url
 				$event['title']=html_entity_decode(get_the_title($post->ID),ENT_QUOTES,'UTF-8');
-				$event['url']= esc_js(get_permalink( $post->ID));
+				$event['url'] = apply_filters('eventorganiser_calendar_event_link',esc_js(get_permalink( $post->ID)),$post->ID,$post->event_id);
 
 				//All day or not?
 				$event['allDay'] = eo_is_all_day();
@@ -134,7 +134,7 @@
 		$eventsarray = array();
 
 		//Blog timezone
-		$tz = EO_Event::get_timezone();
+		$tz = eo_get_blog_timezone();
 
 		//Loop through events
 		global $post;
@@ -194,6 +194,8 @@
 					$event['className'][]= 'venue-'.$venue->slug;
 					$event['venue']=$venue->term_id;
 				}
+						
+				$summary = apply_filters('eventorganiser_admin_cal_summary',$summary,$post->ID,$post->event_id,$post);
 	
 				$summary .= "</table><p>";
 							

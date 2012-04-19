@@ -147,14 +147,17 @@ function eventorganiser_details_metabox($post){
 			<?php 		
 				$venues = get_terms('event-venue', array('hide_empty'=>false));
 				$current = get_the_terms($post->ID,'event-venue');
-				$current = ($current ? array_pop($current) : '');?>
+				$current = ($current ? array_pop($current) : '');
+				$current_id = ( $current ? $current->term_id : 0 );
+				?>
+
 
 			<!-- If javascript is disabed, a simple drop down menu box is displayed to choose venue.
 			Otherwise, the user is able to search the venues by typing in the input box.-->		
 				<select size="50" id="venue_select" name="eo_input[event-venue]">
 					<option><?php _e("Select a venue",'eventorganiser');?></option>
 				<?php foreach ($venues as $venue):?>
-					<option <?php  selected($venue->term_id,$current->term_id);?> value="<?php echo $venue->term_id;?>"><?php echo $venue->name; ?></option>
+					<option <?php  selected($venue->term_id,$current_id);?> value="<?php echo $venue->term_id;?>"><?php echo $venue->name; ?></option>
 				<?php endforeach;?>
 				</select>
 			<span style="font-size:0.8em;line-height:0.8em;"> <?php _e("Search for a venue. To add a venues go to the venue page.",'eventorganiser');?></span>
@@ -165,8 +168,8 @@ function eventorganiser_details_metabox($post){
 			<td>
 
 			<div id="eventorganiser_venue_meta" style="display:none;">
-				<input type="hidden" id="eo_venue_Lat" value="<?php  echo $current->venue_lat;?>" />
-				<input type="hidden" id="eo_venue_Lng" value="<?php  echo $current->venue_lng;?>" />
+				<input type="hidden" id="eo_venue_Lat" value="<?php  if( $current ) echo esc_attr($current->venue_lat) ;?>" />
+				<input type="hidden" id="eo_venue_Lng" value="<?php  if( $current ) echo esc_attr($current->venue_lng) ; ?>" />
 			</div>
 			
 			<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>

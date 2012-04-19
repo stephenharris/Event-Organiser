@@ -31,6 +31,7 @@ class EventOrganiser_Admin_Page{
 	}
 	/*
 	* Actions to be taken prior to page loading. This is after headers have been set.
+        * @uses load-$hook
 	*/
 	function page_actions(){
 	}

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-03-27 16:02+0100\n"
-"PO-Revision-Date: 2012-03-27 17:09-0300\n"
+"PO-Revision-Date: 2012-04-03 11:57-0300\n"
 "Last-Translator: Rafael Wahasugui <rafael@waio.com.br>\n"
 "Language-Team: Rafael Wahasugui <rafael.wahasugui@waio.com.br>\n"
 "Language: \n"
@@ -1320,7 +1320,7 @@ msgstr "Houve um problema ao localizar as coordenadas de latitude e longitude do
 #: ../templates/taxonomy-event-venue.php:31
 #, php-format
 msgid "Events at: %s"
-msgstr "Eventos às: %s"
+msgstr "Eventos em: %s"
 
 #: ../templates/taxonomy-event-venue.php:54
 #: ../templates/taxonomy-event-venue.php:93
@@ -1330,7 +1330,7 @@ msgstr "Eventos às: %s"
 #: ../templates/taxonomy-event-tag.php:48
 #: ../templates/taxonomy-event-tag.php:87
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
-msgstr "Eventos posteriores<span class=\"meta-nav\">&rarr;</span>"
+msgstr "Próximos eventos<span class=\"meta-nav\">&rarr;</span>"
 
 #: ../templates/taxonomy-event-venue.php:55
 #: ../templates/taxonomy-event-venue.php:94
@@ -1340,14 +1340,14 @@ msgstr "Eventos posteriores<span class=\"meta-nav\">&rarr;</span>"
 #: ../templates/taxonomy-event-tag.php:49
 #: ../templates/taxonomy-event-tag.php:88
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
-msgstr " <span class=\"meta-nav\">&larr;</span> Novos eventos"
+msgstr " <span class=\"meta-nav\">&larr;</span> Eventos anteriores"
 
 #: ../templates/taxonomy-event-venue.php:78
 #: ../templates/taxonomy-event-category.php:73
 #: ../templates/archive-event.php:69
 #: ../templates/taxonomy-event-tag.php:73
 msgid "at"
-msgstr "às"
+msgstr "em"
 
 #: ../templates/taxonomy-event-venue.php:102
 #: ../templates/taxonomy-event-category.php:97
@@ -1363,7 +1363,7 @@ msgstr "Nenhum evento encontrado para o local solicitado."
 #: ../templates/single-event.php:49
 #, php-format
 msgid "This event is running from %1$s until %2$s. It is next occurring at %3$s"
-msgstr "Este evento está rodando desde %1$s até %2$s. A próxima ocorrência será as %3$s"
+msgstr "Este evento ocorre de: %1$s até %2$s. A próxima ocorrência será em %3$s"
 
 #: ../templates/single-event.php:53
 #, php-format
@@ -1392,7 +1392,7 @@ msgstr "Este evento foi postado por<a href=\"%5$s\">%4$s</a>. Salvar <a href=\"%
 #: ../templates/taxonomy-event-category.php:31
 #, php-format
 msgid "Event Category Archives: %s"
-msgstr "Arquivo de Eventos da Categoria: %s"
+msgstr "Eventos da Categoria: %s"
 
 #: ../templates/taxonomy-event-category.php:101
 msgid "Apologies, but no events were found for the requested category. "
@@ -1413,7 +1413,7 @@ msgstr "Nenhum evento encontrado nos arquivos solicitados"
 #: ../templates/taxonomy-event-tag.php:31
 #, php-format
 msgid "Event Tag Archives: %s"
-msgstr "Arquivo de Eventos com a Tag: %s"
+msgstr "Eventos com a Tag: %s"
 
 #: ../templates/taxonomy-event-tag.php:101
 msgid "Apologies, but no events were found for the requested tag. "

@@ -89,6 +89,9 @@ class EO_Venue{
 				$clean['venue_slug']= $inserted->slug;
 				unset($clean['venue_id']);
 				$update = $wpdb->update( $eventorganiser_venue_table,$clean, array( 'venue_slug' => $venue->slug));
+
+				do_action('eventorganiser_save_venue',$return['term_id'],$inserted->slug);
+
 				$EO_Errors->add('eo_notice', __("Venue <strong>updated</strong>",'eventorganiser'));
 				$_REQUEST['event-venue'] = $clean['venue_slug'];
 			}
@@ -118,6 +121,10 @@ class EO_Venue{
 			$clean['venue_slug']= $inserted->slug;
 			unset($clean['venue_id']);
 			$wpdb->insert($eventorganiser_venue_table,$clean);
+
+			do_action('eventorganiser_insert_venue',$return['term_id'],$inserted->slug);
+			do_action('eventorganiser_save_venue',$return['term_id'],$inserted->slug);
+
 			$EO_Errors->add('eo_notice', __("Venue <strong>created</strong>",'eventorganiser'));
 			return $return;
 		}
@@ -139,6 +146,8 @@ class EO_Venue{
 			if(!is_wp_error($del)){
 				$delmeta = $wpdb->query($wpdb->prepare("DELETE FROM $eventorganiser_venue_table WHERE {$eventorganiser_venue_table}.venue_slug=%s", $venue->slug));
 				$deleted += (int) $del;
+
+				do_action('eventorganiser_delete_venue',$venue->term_id,$venue->slug);
 			}
 		endforeach;
 
@@ -182,49 +191,6 @@ class EO_Venue{
 		}
 		return array('lat'=>$lat,'lng'=>$lng);
 	}
-
-
-
-	function get_the_link(){
-		global $wp_rewrite;
-		$venue_link = $wp_rewrite->get_extra_permastruct('event');
-
-		if ( !empty($venue_link)) {
-			 $eventorganiser_option_array = get_option('eventorganiser_options'); 
-			$venue_slug = trim($eventorganiser_option_array['url_venue'], "/");
-
-			$venue_link = $venue_slug.'/'.esc_attr($this->slug);
-			$venue_link = home_url( user_trailingslashit($venue_link) );
-		} else {
-			$venue_link = add_query_arg(array('venue' =>$this->slug), '');
-			$venue_link = home_url($venue_link);
-		}
-		return $venue_link;
-	}
-
-	function the_link(){
-		echo $this->get_the_link();
-	}
-
-	function get_the_structure(){
-		global $wp_rewrite;
-		$venue_link = $wp_rewrite->get_extra_permastruct('event');
-
-		if ( !empty($venue_link)) {
-			 $eventorganiser_option_array = get_option('eventorganiser_options'); 
-			$venue_link = trim($eventorganiser_option_array['url_venue'], "/");
-			$venue_link = home_url( user_trailingslashit($venue_link) );
-		} else {
-			$venue_link = add_query_arg(array('venue' =>'='), '');
-			$venue_link = home_url($venue_link);
-		}
-		return $venue_link;
-	}
-
-	function the_structure(){
-		echo $this->get_the_structure();
-	}
-
 
 	function slugify($slug, $venue){
 		global $wpdb,$eventorganiser_venue_table;

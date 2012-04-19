@@ -15,6 +15,7 @@ class EO_Event_List_Widget extends WP_Widget{
 		'group_events_by'=>'',
 		'order'=> 'ASC',
 		'template'=>'',
+		'no_events'=>'No Events'
 		);
 
   function EO_Event_List_Widget(){
@@ -28,15 +29,15 @@ class EO_Event_List_Widget extends WP_Widget{
   ?>
 <p>
 	<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'eventorganiser'); ?>: </label>
-	<input type="text" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $instance['title']; ?>" />
+	<input type="text" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo esc_attr($instance['title']); ?>" />
 </p>
   <p>
   <label for="<?php echo $this->get_field_id('numberposts'); ?>"><?php _e('Number of events','eventorganiser');?>:   </label>
-	  <input id="<?php echo $this->get_field_id('numberposts'); ?>" name="<?php echo $this->get_field_name('numberposts'); ?>" type="number" size="3" value="<?php echo $instance['numberposts'];?>" />
+	  <input id="<?php echo $this->get_field_id('numberposts'); ?>" name="<?php echo $this->get_field_name('numberposts'); ?>" type="number" size="3" value="<?php echo intval($instance['numberposts']);?>" />
 </p>
   <p>
   <label for="<?php echo $this->get_field_id('event-category'); ?>"><?php _e('Event categories', 'eventorganiser'); ?>:   </label>
-  <input  id="<?php echo $this->get_field_id('event-category'); ?>" class="widefat" name="<?php echo $this->get_field_name('event-category'); ?>" type="text" value="<?php echo $instance['event-category'];?>" />
+  <input  id="<?php echo $this->get_field_id('event-category'); ?>" class="widefat" name="<?php echo $this->get_field_name('event-category'); ?>" type="text" value="<?php echo esc_attr($instance['event-category']);?>" />
    <em><?php _e('List category slug(s), seperate by comma. Leave blank for all', 'eventorganiser'); ?> </em>
 </p>
   <p>
@@ -45,7 +46,7 @@ class EO_Event_List_Widget extends WP_Widget{
 	<select id="<?php echo $this->get_field_id('venue'); ?>" name="<?php echo $this->get_field_name('venue'); ?>" type="text">
 		<option value="" <?php selected($instance['venue'], ''); ?>><?php _e('All Venues','eventorganiser'); ?> </option>
 		<?php foreach ($venues as $venue):?>
-			<option <?php  selected($instance['venue'],$venue->slug);?> value="<?php echo $venue->slug;?>"><?php echo $venue->name; ?></option>
+			<option <?php  selected($instance['venue'],$venue->slug);?> value="<?php echo esc_attr($venue->slug);?>"><?php echo esc_html($venue->name); ?></option>
 		<?php endforeach;?>
 	</select>
 </p>
@@ -71,12 +72,16 @@ class EO_Event_List_Widget extends WP_Widget{
   </p>
   <p>
     <label for="<?php echo $this->get_field_id('template'); ?>"><?php _e('Template (leave blank for default)', 'eventorganiser'); ?>  </label>
-	  <input  id="<?php echo $this->get_field_id('template'); ?>" class="widefat" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo $instance['template'];?>" />
+	  <input  id="<?php echo $this->get_field_id('template'); ?>" class="widefat" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo esc_html($instance['template']);?>" />
   </p>
+  <p>
+    <label for="<?php echo $this->get_field_id('no_events'); ?>"><?php _e("'No events' message", 'eventorganiser'); ?>  </label>
+	  <input  id="<?php echo $this->get_field_id('no_events'); ?>" class="widefat" name="<?php echo $this->get_field_name('no_events'); ?>" type="text" value="<?php echo esc_html($instance['no_events']);?>" />
+  </p>
+
 <?php
   }
  
-
   function update($new_instance, $old_instance){  
 	foreach($this->w_arg as $name => $val){
 		if( empty($new_instance[$name]))
@@ -89,7 +94,10 @@ class EO_Event_List_Widget extends WP_Widget{
   function widget($args, $instance){
 	extract($args, EXTR_SKIP);
 	$template = $instance['template'];
+	$no_events = isset($instance['no_events']) ? $instance['no_events'] :'';
 	unset($instance['template']);
+	unset($instance['no_events']);
+
 
 	$events = eo_get_events($instance);
 	
@@ -100,8 +108,8 @@ class EO_Event_List_Widget extends WP_Widget{
 
 	global $post;
 	$tmp_post = $post;
+	echo '<ul class="eo-events eo-events-widget">';
 	if($events):	
-		echo '<ul class="eo-events eo-events-widget">';
 		foreach ($events as $post):
 			setup_postdata($post); 
 			if(empty($template)):
@@ -120,10 +128,12 @@ class EO_Event_List_Widget extends WP_Widget{
 			endif;
 
 		endforeach;
-		echo '</ul>';
 		$post = $tmp_post;
 		wp_reset_postdata();
+	else:
+		echo $no_events;
 	endif;
+	echo '</ul>';
      	echo $after_widget;
   }
  

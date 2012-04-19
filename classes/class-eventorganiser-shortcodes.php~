@@ -7,6 +7,7 @@
 class EventOrganiser_Shortcodes {
 	static $add_script;
 	static $calendars =array();
+	static $widget_calendars =array();
 	static $map = array();
 	static $event;
  
@@ -22,11 +23,17 @@ class EventOrganiser_Shortcodes {
 	function handle_calendar_shortcode($atts) {
 		global $post;
 		self::$add_script = true;
+		self::$widget_calendars[] =true;
+		$id = count(self::$calendars);
 
 		$tz = eo_get_blog_timezone();
 		$month = new DateTime('now',$tz);
 		$month = date_create($month->format('Y-m-1'),$tz);
- 		return '<div class="widget_calendar eo-calendar eo-calendar-shortcode" id="eo_calendar">'.EO_Calendar_Widget::generate_output($month).'</div>';
+		$html = '<div class="widget_calendar eo-calendar eo-calendar-shortcode eo_widget_calendar" id="eo_shortcode_calendar_'.$id.'">';
+		$html .= '<div id="eo_shortcode_calendar_'.$id.'_content">'.EO_Calendar_Widget::generate_output($month).'</div>';
+		$html .= '</div>';
+
+		return $html;
 	}
 
 	function handle_subscription_shortcode($atts, $content=null) {
@@ -104,15 +111,15 @@ class EventOrganiser_Shortcodes {
 
 		//Set zoom
 		$zoom = isset($atts['zoom']) ? intval($atts['zoom']) : 15;
-		$zoom =(!empty($zoom) ? $zoom : 15);
+		$zoom =( !empty($zoom) ? $zoom : 15);
 		
 		//Set the attributes
-		$atts['width'] = ( !empty($atts['width']) ) ? $atts['width']:'100%';
-		$atts['height'] = ( !empty($atts['height']) ) ? $atts['height']:'200px';
+		$atts['width'] = ( !empty($atts['width']) ) ? esc_attr($atts['width']):'100%';
+		$atts['height'] = ( !empty($atts['height']) ) ? esc_attr($atts['height']):'200px';
 
 		 //If class is selected use that style, otherwise use specified height and width
 		if(!empty($atts['class'])){
-			$class = $atts['class']." eo-venue-map googlemap";
+			$class = esc_attr($atts['class'])." eo-venue-map googlemap";
 			$style="";
 		}else{
 			$class ="eo-venue-map googlemap";
@@ -201,6 +208,8 @@ class EventOrganiser_Shortcodes {
 		$patterns[13] = '/%(event_url)%/';
 		$patterns[14] = '/%(event_custom_field){([^{}]+)}%/';
 		$patterns[15] = '/%(event_venue_map)({[^{}]+})?%/';
+		$patterns[16] = '/%(event_excerpt)%/';
+		$patterns[17] = '/%(event_color)%/';
 		
 		$template = preg_replace_callback($patterns, array(__CLASS__,'parse_template'), $template);
 		return $template;
@@ -293,6 +302,18 @@ class EventOrganiser_Shortcodes {
 				$field = $matches[2];
 				$meta = get_post_meta($post->ID, $field);
 				$replacement =  implode($meta);
+				break;
+			case 'event_excerpt':
+				//Using get_the_excerpt adds a link....
+				if ( post_password_required($post) ) {
+					$output = __('There is no excerpt because this is a protected post.');
+				}else{
+					$output = $post->post_excerpt;
+				}
+				$replacement = wp_trim_excerpt($output);
+				break;
+			case 'cat_color':
+				$replacement =  eo_event_color();
 				break;
 		endswitch;
 		return $replacement;
@@ -392,7 +413,7 @@ EventOrganiser_Shortcodes::init();
 			$slug = esc_attr($term->slug);
 			$color = esc_attr($term->color);
 			$class = "class='eo_fullcalendar_key_cat eo_fullcalendar_key_cat_{$slug}'";
-			$html.= "<li {$class}><span class='eo_fullcalendar_key_colour' style='background:{$color}'> </span>".esc_attr($term->name)."</li>";			
+			$html.= "<li {$class}><span class='eo_fullcalendar_key_colour' style='background:{$color}'>&nbsp;</span>".esc_attr($term->name)."</li>";			
 		endforeach;
 		$html.='</ul></div>';
 

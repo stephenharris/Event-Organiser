@@ -2,7 +2,7 @@
 /*
 Plugin Name: Event Organiser
 Plugin URI: http://www.HarrisWebSolutions.co.uk/event-organiser
-Version: 1.3.2
+Version: 1.3.3
 Description: Creates a custom post type 'events' with features such as reoccurring events, venues, Google Maps, calendar views and events and venue pages
 Author: Stephen Harris
 Author URI: http://www.HarrisWebSolutions.co.uk
@@ -23,9 +23,18 @@ Author URI: http://www.HarrisWebSolutions.co.uk
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
-//The database version
+/**
+ * The main plug-in loader
+ */
+
+/**
+ * Set the plug-in database version
+ * @global string $eventorganiser_db_version
+ * @name $eventorganiser_db_version
+ */ 
 global $eventorganiser_db_version;
 $eventorganiser_db_version = "1.3";
+
 
 global $wpdb;
 
@@ -35,16 +44,34 @@ $eventorganiser_events_table = $wpdb->prefix."eo_events";
 global $eventorganiser_venue_table;
 $eventorganiser_venue_table = $wpdb->prefix."eo_venues";
 
-//Set the wp-content and plugin urls/paths
+/**
+ * Defines the plug-in directory url
+ * 
+ * <code>url:http://mysite.com/wp-content/plugins/event-organiser</code>
+ */
 define('EVENT_ORGANISER_URL',plugin_dir_url(__FILE__ ));
+
+/**
+ * Defines the plug-in directory path
+ * 
+ * <code>/home/mysite/public_html/wp-content/plugins/event-organiser</code>
+ */
 define('EVENT_ORGANISER_DIR',plugin_dir_path(__FILE__ ));
+
+/**
+ * Defines the plug-in language directory relative to plugins
+ * 
+ * <code> event-organiser/languages </code> 
+ */
 define('EVENT_ORGANISER_I18N',basename(dirname(__FILE__)).'/languages');
 
-/****** Load translations ******/
-add_action('init', 'eventorganiser_i18n');
+/**
+ * Loads translations
+ */
 function eventorganiser_i18n() {
 	load_plugin_textdomain( 'eventorganiser', false, EVENT_ORGANISER_I18N);
 }
+add_action('init', 'eventorganiser_i18n');
 
 global $eventorganiser_roles;
 $eventorganiser_roles = array(
@@ -82,27 +109,31 @@ if(is_admin()):
 	/****** event editing pages******/
 	require_once('event-organiser-edit.php');
 	require_once('event-organiser-manage.php');
+        
+        require_once("classes/class-eo-venue.php");
 	
 	/****** settings, venue and calendar pages******/
 	require_once('event-organiser-settings.php');
 	require_once('event-organiser-venues.php');
 	require_once('event-organiser-calendar.php');
 	require_once("classes/class-eo-list-table.php");
+else:
+    /****** Templates ******/
+    require_once('includes/event-organiser-templates.php');    
 endif;
 
-/****** Ajax actions ******/
-require_once('includes/event-organiser-ajax.php');
-
-/****** Templates ******/
-require_once('includes/event-organiser-templates.php');
+if ( defined('DOING_AJAX') && DOING_AJAX ) {
+    /****** Ajax actions ******/
+    require_once('includes/event-organiser-ajax.php');
+}
 
 /****** Functions ******/
 require_once("includes/event-organiser-event-functions.php");
 require_once("includes/event-organiser-venue-functions.php");
 
-/****** Event and Venue classes ******/
+/****** Event class ******/
 require_once("classes/class-eo-event.php");
-require_once("classes/class-eo-venue.php");
+
 
 /****** Widgets and Shortcodes ******/
 require_once('classes/class-eo-agenda-widget.php');

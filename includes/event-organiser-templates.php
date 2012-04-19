@@ -28,7 +28,7 @@ function eventorganiser_is_event_template($templatePath,$context=''){
 		case 'event-category':
 			return (1 == preg_match('/^taxonomy-event-category((-(\S*))?).php/',$template));
 
-		case 'event-venue':
+		case 'event-tag':
 			return (1 == preg_match('/^taxonomy-event-tag((-(\S*))?).php/',$template));
 	endswitch;
 

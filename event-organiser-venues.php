@@ -16,10 +16,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 	/*
 	* Actions to be taken prior to page loading. Hooked on to load-{page}
 	*/
-	function page_actions(){
-		global $EO_Venue;
-		$screen = get_current_screen();
-	
+	function page_actions(){	
 		add_filter('manage_event_page_venues_columns','eventorganiser_venue_admin_columns') ;
 		function eventorganiser_venue_admin_columns($columns){
 			 $columns = array(
@@ -165,8 +162,6 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
  * @since 1.0.0
  */
 function edit_form($venue=''){
-	global $EO_Venue;
-	global  $wp_rewrite;
 
 	$venue = get_term_by('slug',$venue,'event-venue');
 
@@ -176,32 +171,22 @@ function edit_form($venue=''){
 	?>
 	<form name="venuedetails" class ="metabox-holder" id="eo_venue_form" method="post" action="<?php echo site_url('wp-admin/edit.php?post_type=event&page=venues'); ?>">  
 		<input type="hidden" name="action" value="<?php echo $do; ?>"> 
-		<input type="hidden" name="eo_venue[venue_id]" value="<?php echo isset($venue->term_id) ? $venue->term_id:'' ;?>">  
-		<input type="hidden" name="event-venue" value="<?php echo isset($venue->slug) ? $venue->slug:'' ;?>">  
+		<input type="hidden" name="eo_venue[venue_id]" value="<?php echo ( isset($venue->term_id) ? $venue->term_id : '' ) ;?>">  
+		<input type="hidden" name="event-venue" value="<?php echo ( isset($venue->slug) ? $venue->slug : '' ) ;?>">  
 		<?php wp_nonce_field($nonce);?>
 
 		<div id="titlediv">
 			<div id="titlewrap">
-				<!--<label for="title" id="title-prompt-text" style="visibility:hidden" class="hide-if-no-js">Enter venue name here</label>-->
 				<input type="text" placeholder="<?php __('Venue name','eventorganiser');?>" autocomplete="off" id="title" value="<?php echo isset($venue->name) ? $venue->name:'' ;?>" tabindex="1" size="30" name="eo_venue[venue_name]">
 			</div>
 			<div class="inside">
 				<div id="edit-slug-box">
 					<?php if($venue): ?>
 						<strong><?php _e('Permalink:');?></strong> 
-							<span id="sample-permalink">
-							<?php 	$termlink = $wp_rewrite->get_extra_permastruct('event-venue');
-									if(empty($termlink)){
-										$t = get_taxonomy('event-venue');
-										$termlink = "?$t->query_var=";
-									}else{
-										$termlink = preg_replace('/%event-venue%/','',$termlink);
-									}
-									$termlink = home_url($termlink);
-									echo $termlink;
-							?>
-								<input type="text" name="eo_venue[venue_slug]"value="<?php echo isset($venue->slug) ? $venue->slug:'' ;?>" id="<?php echo $venue-term_>id; ?>-slug">
-							</span> 
+						<span id="sample-permalink">
+							<?php echo eo_get_venue_permastructure();?>
+							<input type="text" name="eo_venue[venue_slug]"value="<?php echo (isset( $venue->slug ) ? esc_attr($venue->slug) : '' ) ;?>" id="<?php echo $venue->term_id; ?>-slug">
+						</span> 
 	
 						<input type="hidden" value="<?php echo get_term_link( $venue,'event-venue'); ?>" id="shortlink">
 						<a onclick="prompt('URL:', jQuery('#shortlink').val()); return false;" class="button" href=""><?php _e('Get Link','eventorganiser');?></a>	
@@ -249,3 +234,17 @@ function edit_form($venue=''){
 	}
 }
 $venues_page = new EventOrganiser_Venues_Page();
+
+function eo_get_venue_permastructure(){
+	global  $wp_rewrite;
+	$termlink = $wp_rewrite->get_extra_permastruct('event-venue');
+	if( empty($termlink) ){
+		$t = get_taxonomy('event-venue');
+		$termlink = "?$t->query_var=";
+	}else{
+		$termlink = preg_replace('/%event-venue%/','',$termlink);
+	}
+	$termlink = home_url($termlink);
+
+	return $termlink;
+}

@@ -9,7 +9,8 @@
 add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
 	global $wp_locale;
-	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery'),'1.2.2',true);
+	$version = '1.3.3';
+	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery'),$version,true);
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
 			'adminajax'=>admin_url( 'admin-ajax.php'),
 			'locale'=>array(
@@ -26,8 +27,8 @@ function eventorganiser_register_script() {
 				'venue'=>__('View all venues','eventorganiser'),
 				)
 			));
-	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),'1.2.2');
-	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array(),'1.2.2');
+	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),$version);
+	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array(),$version);
 }   
 
  /**
@@ -37,12 +38,13 @@ function eventorganiser_register_script() {
  */
 add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts');
 function eventorganiser_register_scripts(){
+	$version = '1.3.3';
 	wp_register_script( 'eo_GoogleMap', 'http://maps.googleapis.com/maps/api/js?sensor=true');
 
 	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL.'js/venues.js',array(
 		'jquery',
 		'eo_GoogleMap'
-	),'1.2.2',true);
+	),$version,true);
 	
 	wp_register_script( 'eo_event', EVENT_ORGANISER_URL.'js/event.js',array(
 		'jquery',
@@ -50,7 +52,7 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',
 		'jquery-ui-position'
-	),'1.2.2',true);	
+	),$version,true);	
 
 	//Calendar View
 	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL.'js/fullcalendar.js',array(
@@ -59,9 +61,9 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-widget',
 		'jquery-ui-button',
 		'jquery-ui-position'),
-		'1.2.2',true);	
+		$version,true);	
 
-	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css');
+	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css',array(),$version);
 }
 
  /**

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-27 15:03+0100\n"
-"PO-Revision-Date: 2012-03-27 15:04+0100\n"
+"POT-Creation-Date: 2012-04-04 01:40+0100\n"
+"PO-Revision-Date: 2012-04-04 01:40+0100\n"
 "Last-Translator: Stephen Harris <stephen@HarrisWebSolutions.co.uk>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../event-organiser-manage.php:18
-#: ../includes/event-organiser-cpt.php:129
+#: ../includes/event-organiser-cpt.php:130
 msgid "Event"
 msgstr ""
 
@@ -27,7 +27,7 @@ msgid "Organiser"
 msgstr ""
 
 #: ../event-organiser-manage.php:24
-#: ../event-organiser-venues.php:27
+#: ../event-organiser-venues.php:24
 #: ../event-organiser-edit.php:145
 #: ../classes/class-eo-event-list-widget.php:43
 msgid "Venue"
@@ -54,13 +54,13 @@ msgstr ""
 
 #: ../event-organiser-manage.php:109
 #: ../event-organiser-calendar.php:48
-#: ../includes/event-organiser-register.php:25
+#: ../includes/event-organiser-register.php:26
 msgid "View all categories"
 msgstr ""
 
 #: ../event-organiser-manage.php:123
 #: ../event-organiser-calendar.php:49
-#: ../includes/event-organiser-register.php:26
+#: ../includes/event-organiser-register.php:27
 msgid "View all venues"
 msgstr ""
 
@@ -148,102 +148,102 @@ msgstr ""
 
 #: ../event-organiser-venues.php:10
 #: ../event-organiser-venues.php:11
-#: ../event-organiser-venues.php:83
-#: ../event-organiser-venues.php:139
+#: ../event-organiser-venues.php:80
+#: ../event-organiser-venues.php:136
 #: ../event-organiser-settings.php:426
 msgid "Venues"
 msgstr ""
 
-#: ../event-organiser-venues.php:28
-#: ../event-organiser-venues.php:219
+#: ../event-organiser-venues.php:25
+#: ../event-organiser-venues.php:204
 msgid "Address"
 msgstr ""
 
-#: ../event-organiser-venues.php:29
-#: ../event-organiser-venues.php:223
+#: ../event-organiser-venues.php:26
+#: ../event-organiser-venues.php:208
 msgid "Post Code"
 msgstr ""
 
-#: ../event-organiser-venues.php:30
-#: ../event-organiser-venues.php:227
+#: ../event-organiser-venues.php:27
+#: ../event-organiser-venues.php:212
 msgid "Country"
 msgstr ""
 
-#: ../event-organiser-venues.php:31
+#: ../event-organiser-venues.php:28
 msgid "Slug"
 msgstr ""
 
-#: ../event-organiser-venues.php:32
+#: ../event-organiser-venues.php:29
 #: ../event-organiser-settings.php:102
 #: ../event-organiser-settings.php:313
 #: ../event-organiser-settings.php:419
 #: ../includes/event-organiser-install.php:63
 #: ../includes/event-organiser-install.php:146
-#: ../includes/event-organiser-cpt.php:128
-#: ../includes/event-organiser-cpt.php:140
+#: ../includes/event-organiser-cpt.php:129
+#: ../includes/event-organiser-cpt.php:141
 #: ../classes/class-eo-event-list-widget.php:23
 msgid "Events"
 msgstr ""
 
-#: ../event-organiser-venues.php:52
+#: ../event-organiser-venues.php:49
 msgid "You do not have permission to manage venues"
 msgstr ""
 
-#: ../event-organiser-venues.php:57
-#: ../event-organiser-venues.php:64
+#: ../event-organiser-venues.php:54
+#: ../event-organiser-venues.php:61
 msgid "You do not have permission to edit this venue."
 msgstr ""
 
-#: ../event-organiser-venues.php:76
+#: ../event-organiser-venues.php:73
 msgid "You do not have permission to delete this venue"
 msgstr ""
 
-#: ../event-organiser-venues.php:113
+#: ../event-organiser-venues.php:110
 #: ../includes/event-organiser-cpt.php:30
 msgid "Edit Venue"
 msgstr ""
 
-#: ../event-organiser-venues.php:117
+#: ../event-organiser-venues.php:114
 #: ../includes/event-organiser-cpt.php:32
 msgid "Add New Venue"
 msgstr ""
 
-#: ../event-organiser-venues.php:142
+#: ../event-organiser-venues.php:139
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr ""
 
-#: ../event-organiser-venues.php:152
+#: ../event-organiser-venues.php:149
 #: ../includes/event-organiser-cpt.php:28
 msgid "Search Venues"
 msgstr ""
 
-#: ../event-organiser-venues.php:186
+#: ../event-organiser-venues.php:180
 msgid "Venue name"
 msgstr ""
 
-#: ../event-organiser-venues.php:191
+#: ../event-organiser-venues.php:185
 msgid "Permalink:"
 msgstr ""
 
-#: ../event-organiser-venues.php:207
+#: ../event-organiser-venues.php:192
 msgid "Get Link"
 msgstr ""
 
-#: ../event-organiser-venues.php:208
+#: ../event-organiser-venues.php:193
 msgid "View Venue"
 msgstr ""
 
-#: ../event-organiser-venues.php:215
+#: ../event-organiser-venues.php:200
 msgid "Venue Location"
 msgstr ""
 
-#: ../event-organiser-venues.php:244
+#: ../event-organiser-venues.php:229
 #: ../includes/event-organiser-cpt.php:31
 msgid "Update Venue"
 msgstr ""
 
-#: ../event-organiser-venues.php:244
+#: ../event-organiser-venues.php:229
 msgid "Add Venue"
 msgstr ""
 
@@ -527,21 +527,21 @@ msgid "day of week"
 msgstr ""
 
 #: ../event-organiser-edit.php:135
-#: ../includes/event-organiser-register.php:130
+#: ../includes/event-organiser-register.php:132
 #: ../includes/event-organiser-event-functions.php:536
 msgid "until"
 msgstr ""
 
-#: ../event-organiser-edit.php:155
+#: ../event-organiser-edit.php:158
 #: ../includes/event-organiser-venue-functions.php:436
 msgid "Select a venue"
 msgstr ""
 
-#: ../event-organiser-edit.php:160
+#: ../event-organiser-edit.php:163
 msgid "Search for a venue. To add a venues go to the venue page."
 msgstr ""
 
-#: ../event-organiser-edit.php:314
+#: ../event-organiser-edit.php:317
 msgid "You are not allowed to delete events."
 msgstr ""
 
@@ -551,30 +551,30 @@ msgid "Calendar View"
 msgstr ""
 
 #: ../event-organiser-calendar.php:43
-#: ../includes/event-organiser-register.php:20
+#: ../includes/event-organiser-register.php:21
 msgid "today"
 msgstr ""
 
 #: ../event-organiser-calendar.php:44
-#: ../includes/event-organiser-register.php:21
-#: ../includes/event-organiser-register.php:113
+#: ../includes/event-organiser-register.php:22
+#: ../includes/event-organiser-register.php:115
 msgid "day"
 msgstr ""
 
 #: ../event-organiser-calendar.php:45
-#: ../includes/event-organiser-register.php:22
-#: ../includes/event-organiser-register.php:115
+#: ../includes/event-organiser-register.php:23
+#: ../includes/event-organiser-register.php:117
 msgid "week"
 msgstr ""
 
 #: ../event-organiser-calendar.php:46
-#: ../includes/event-organiser-register.php:23
-#: ../includes/event-organiser-register.php:117
+#: ../includes/event-organiser-register.php:24
+#: ../includes/event-organiser-register.php:119
 msgid "month"
 msgstr ""
 
 #: ../event-organiser-calendar.php:47
-#: ../includes/event-organiser-register.php:24
+#: ../includes/event-organiser-register.php:25
 msgid "go to date"
 msgstr ""
 
@@ -647,101 +647,101 @@ msgstr ""
 msgid "Submit for Review"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:111
+#: ../includes/event-organiser-register.php:113
 msgid "Hour"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:112
+#: ../includes/event-organiser-register.php:114
 msgid "Minute"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:114
+#: ../includes/event-organiser-register.php:116
 msgid "days"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:116
+#: ../includes/event-organiser-register.php:118
 msgid "weeks"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:118
+#: ../includes/event-organiser-register.php:120
 msgid "months"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:119
+#: ../includes/event-organiser-register.php:121
 msgid "year"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:120
+#: ../includes/event-organiser-register.php:122
 msgid "years"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:121
+#: ../includes/event-organiser-register.php:123
 #: ../includes/event-organiser-event-functions.php:475
 msgid "every day"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:122
+#: ../includes/event-organiser-register.php:124
 #: ../includes/event-organiser-event-functions.php:477
 #, php-format
 msgid "every %d days"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:123
+#: ../includes/event-organiser-register.php:125
 #: ../includes/event-organiser-event-functions.php:483
 msgid "every week on"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:124
+#: ../includes/event-organiser-register.php:126
 #: ../includes/event-organiser-event-functions.php:485
 #, php-format
 msgid "every %d weeks on"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:125
+#: ../includes/event-organiser-register.php:127
 #: ../includes/event-organiser-event-functions.php:497
 msgid "every month on the"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:126
+#: ../includes/event-organiser-register.php:128
 #: ../includes/event-organiser-event-functions.php:499
 #, php-format
 msgid "every %d months on the"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:127
+#: ../includes/event-organiser-register.php:129
 msgid "every year on the"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:128
+#: ../includes/event-organiser-register.php:130
 #, php-format
 msgid "every %d years on the"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:129
+#: ../includes/event-organiser-register.php:131
 msgid "This event will repeat"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:131
+#: ../includes/event-organiser-register.php:133
 #: ../includes/event-organiser-event-functions.php:458
 msgid "first"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:131
+#: ../includes/event-organiser-register.php:133
 #: ../includes/event-organiser-event-functions.php:458
 msgid "second"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:131
+#: ../includes/event-organiser-register.php:133
 #: ../includes/event-organiser-event-functions.php:458
 msgid "third"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:131
+#: ../includes/event-organiser-register.php:133
 #: ../includes/event-organiser-event-functions.php:458
 msgid "fourth"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:131
+#: ../includes/event-organiser-register.php:133
 #: ../includes/event-organiser-event-functions.php:458
 msgid "last"
 msgstr ""
@@ -945,201 +945,201 @@ msgstr ""
 msgid "Separate tags with commas"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:131
+#: ../includes/event-organiser-cpt.php:132
 msgid "Add New Event"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:132
+#: ../includes/event-organiser-cpt.php:133
 #: ../includes/event-organiser-ajax.php:209
 msgid "Edit Event"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:133
+#: ../includes/event-organiser-cpt.php:134
 msgid "New Event"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:134
+#: ../includes/event-organiser-cpt.php:135
 msgid "All events"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:135
+#: ../includes/event-organiser-cpt.php:136
 msgid "View Event"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:136
+#: ../includes/event-organiser-cpt.php:137
 msgid "Search events"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:137
+#: ../includes/event-organiser-cpt.php:138
 msgid "No events found"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:138
+#: ../includes/event-organiser-cpt.php:139
 msgid "No events found in Trash"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:188
+#: ../includes/event-organiser-cpt.php:192
 #, php-format
 msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:189
+#: ../includes/event-organiser-cpt.php:193
 msgid "Custom field updated."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:190
+#: ../includes/event-organiser-cpt.php:194
 msgid "Custom field deleted."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:191
-msgid "Event updated."
-msgstr ""
-
-#: ../includes/event-organiser-cpt.php:193
-#, php-format
-msgid "Event restored to revision from %s"
-msgstr ""
-
-#: ../includes/event-organiser-cpt.php:194
-#, php-format
-msgid "Event published. <a href=\"%s\">View event</a>"
-msgstr ""
-
 #: ../includes/event-organiser-cpt.php:195
-msgid "Event saved."
-msgstr ""
-
-#: ../includes/event-organiser-cpt.php:196
-#, php-format
-msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
+msgid "Event updated."
 msgstr ""
 
 #: ../includes/event-organiser-cpt.php:197
 #, php-format
-msgid "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview event</a>"
+msgid "Event restored to revision from %s"
+msgstr ""
+
+#: ../includes/event-organiser-cpt.php:198
+#, php-format
+msgid "Event published. <a href=\"%s\">View event</a>"
 msgstr ""
 
 #: ../includes/event-organiser-cpt.php:199
-msgid "M j, Y @ G:i"
+msgid "Event saved."
 msgstr ""
 
 #: ../includes/event-organiser-cpt.php:200
 #, php-format
+msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
+msgstr ""
+
+#: ../includes/event-organiser-cpt.php:201
+#, php-format
+msgid "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview event</a>"
+msgstr ""
+
+#: ../includes/event-organiser-cpt.php:203
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: ../includes/event-organiser-cpt.php:204
+#, php-format
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:348
+#: ../includes/event-organiser-cpt.php:355
 msgid "Creating events"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:349
+#: ../includes/event-organiser-cpt.php:356
 msgid "Creating events:"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:351
+#: ../includes/event-organiser-cpt.php:358
 msgid "The start date is the date the event starts. If the event is a reoccuring event, this is the start date of the first occurrence."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:352
+#: ../includes/event-organiser-cpt.php:359
 msgid "The end date is the date the event finishes. If the event is a reoccuring event, this is the end date of the first occurrence."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:353
+#: ../includes/event-organiser-cpt.php:360
 msgid "All dates and times must be entered in the specified format. This format can changed in the settings page."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:358
+#: ../includes/event-organiser-cpt.php:365
 msgid "Repeating events"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:359
+#: ../includes/event-organiser-cpt.php:366
 msgid "To repeat an event according to some regular pattern, use the reocurrence dropdown menu to select how the event is to repeat. Further options then appear, "
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:361
+#: ../includes/event-organiser-cpt.php:368
 msgid "Specify how regularly the event should repeat (default 1)"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:362
+#: ../includes/event-organiser-cpt.php:369
 msgid "Choose the reoccurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:363
+#: ../includes/event-organiser-cpt.php:370
 msgid "If monthly reoccurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) "
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:364
+#: ../includes/event-organiser-cpt.php:371
 msgid "If weekly reoccurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:369
-#: ../includes/event-organiser-cpt.php:370
+#: ../includes/event-organiser-cpt.php:376
+#: ../includes/event-organiser-cpt.php:377
 msgid "Selecting a venue"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:372
+#: ../includes/event-organiser-cpt.php:379
 msgid "Use the venues input field to search for existing venues"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:373
+#: ../includes/event-organiser-cpt.php:380
 msgid "Only pre-existing venues can be selected. To add a venue, go to the venues page."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:383
-#: ../includes/event-organiser-cpt.php:402
+#: ../includes/event-organiser-cpt.php:390
+#: ../includes/event-organiser-cpt.php:409
 msgid "Overview"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:384
+#: ../includes/event-organiser-cpt.php:391
 msgid "This is the list of all saved events. Note that <strong> reoccurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:390
+#: ../includes/event-organiser-cpt.php:397
 msgid "Hovering over a row in the venues list will display action links that allow you to manage that venue. You can perform the following actions:"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:392
+#: ../includes/event-organiser-cpt.php:399
 msgid "Edit takes you to the editing screen for that venue. You can also reach that screen by clicking on the venue title."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:393
+#: ../includes/event-organiser-cpt.php:400
 msgid "Delete will permanently remove the venue"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:394
+#: ../includes/event-organiser-cpt.php:401
 msgid "View will take you to the venue's page"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:403
+#: ../includes/event-organiser-cpt.php:410
 msgid "This page shows all (occurrances of) events. You can view the summary of an event by clicking on it. If you have the necessary permissions, a link to the event's edit page will appear also."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:404
+#: ../includes/event-organiser-cpt.php:411
 msgid "By clicking the relevant tab, you can view events in Month, Week or Day mode. You can also filter the events by events by category and venue. The 'go to date' button allows you to quickly jump to a specific date."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:408
+#: ../includes/event-organiser-cpt.php:415
 msgid "Add Event"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:409
+#: ../includes/event-organiser-cpt.php:416
 msgid "You can create an event on this Calendar, by clicking on day or dragging over multiple days (in Month view) or multiple times (in Week and Day view). You can give the event a title, specify a venue and provide a descripton. The event can be immediately published or saved as a draft. In any case, the event is created and you are forwarded to that event's edit page."
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:414
+#: ../includes/event-organiser-cpt.php:421
 msgid "For more information"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:414
+#: ../includes/event-organiser-cpt.php:421
 #, php-format
 msgid "See the <a %s> documentation</a>"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:495
+#: ../includes/event-organiser-cpt.php:501
 msgid "Color"
 msgstr ""
 
-#: ../includes/event-organiser-cpt.php:501
+#: ../includes/event-organiser-cpt.php:507
 msgid "Assign the category a colour."
 msgstr ""
 
@@ -1274,11 +1274,11 @@ msgstr ""
 msgid "Displays a calendar of your events"
 msgstr ""
 
-#: ../classes/class-eo-calendar-widget.php:150
+#: ../classes/class-eo-calendar-widget.php:151
 msgid "Previous month"
 msgstr ""
 
-#: ../classes/class-eo-calendar-widget.php:152
+#: ../classes/class-eo-calendar-widget.php:153
 msgid "Next month"
 msgstr ""
 
@@ -1294,23 +1294,23 @@ msgstr ""
 msgid "Venue <strong>updated</strong>"
 msgstr ""
 
-#: ../classes/class-eo-venue.php:123
+#: ../classes/class-eo-venue.php:121
 msgid "Venue <strong>created</strong>"
 msgstr ""
 
-#: ../classes/class-eo-venue.php:126
+#: ../classes/class-eo-venue.php:124
 msgid "Venue <strong>was not</strong> created"
 msgstr ""
 
-#: ../classes/class-eo-venue.php:148
+#: ../classes/class-eo-venue.php:146
 msgid "Venue(s) <strong>deleted</strong>"
 msgstr ""
 
-#: ../classes/class-eo-venue.php:151
+#: ../classes/class-eo-venue.php:149
 msgid "Venue(s) <strong>were not </strong> deleted"
 msgstr ""
 
-#: ../classes/class-eo-venue.php:180
+#: ../classes/class-eo-venue.php:178
 msgid "There was a problem with locating the latitude and longitude co-ordinates of the venue."
 msgstr ""
 

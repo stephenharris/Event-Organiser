@@ -686,7 +686,64 @@ function eo_is_event_taxonomy(){
 }
 
 function eo_get_blog_timezone(){
-	//TODO Cache
-	return EO_Event::get_timezone();
+	$timezone = wp_cache_get( 'eventorganiser_timezone' );
+	if ( false === $timezone ) {
+		$timezone = EO_Event::get_timezone();
+		wp_cache_set( 'eventorganiser_timezone', $timezone );
+	} 
+	return $timezone; 
+}
+
+function eo_has_event_started($id='',$occurrence=0){
+	$tz = eo_get_blog_timezone();
+	$start = new DateTime(eo_get_the_start('d-m-Y H:i',$id,$occurrence), $tz);
+	$now = new DateTime('now', $tz);
+
+	return ($start <= $now );
+}
+
+function eo_has_event_finished($id='',$occurrence=0){
+	$tz = eo_get_blog_timezone();
+	$end = new DateTime(eo_get_the_end('d-m-Y H:i',$id,$occurrence), $tz);
+	$now = new DateTime('now', $tz);
+
+	return ($end <= $now );
+}
+
+/**
+* Returns the colour of a category associated with the event
+*
+ * @since 1.3.3
+* @uses WordPress' get_posts
+* @param int $post_id - the event (post) ID. Leave blank to use in loop.
+* @return string The colour of the category in HEX format
+ */
+function eo_event_color($post_id=0){
+	$post_id = (int) $post_id;
+
+	if( empty($post_id) ){
+		global $post;
+		$post_id = $post->ID;
+	}
+
+	if( empty($post_id) )
+		return '';
+
+	$color='';
+	$terms = get_the_terms( $post->ID, 'event-category' );
+
+	if($terms){
+		foreach ($terms as $term):	
+			if( ! empty($term->color) ){
+				$colorCode = ltrim($term->color, '#');
+				if ( ctype_xdigit($colorCode) && (strlen($colorCode) == 6 || strlen($colorCode) == 3)){
+					$color = '#'.$colorCode;
+					break;
+                       	}
+			}
+		endforeach;
+	}
+
+	return esc_attr($color);
 }
 ?>
