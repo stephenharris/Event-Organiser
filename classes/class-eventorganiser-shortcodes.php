@@ -207,7 +207,7 @@ class EventOrganiser_Shortcodes {
 		$patterns[14] = '/%(event_custom_field){([^{}]+)}%/';
 		$patterns[15] = '/%(event_venue_map)({[^{}]+})?%/';
 		$patterns[16] = '/%(event_excerpt)%/';
-		$patterns[17] = '/%(event_color)%/';
+		$patterns[17] = '/%(cat_color)%/';
 		
 		$template = preg_replace_callback($patterns, array(__CLASS__,'parse_template'), $template);
 		return $template;

@@ -189,9 +189,7 @@ class EventOrganiser_Shortcodes {
 	
 	function read_template($template){
 		$patterns = array();	
-		//TODO
-		//ICAL/Google link
-		//lat/lng?
+		//TODO ICAL/Google link
 		$patterns[0] = '/%(event_title)%/';
 		$patterns[1] = "/%(start)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
 		$patterns[2] = "/%(end)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";

@@ -106,7 +106,9 @@ and, among others, the following shortcodes:
 
 Finally, the plug-in provides a function `eo_get_events` which is similiar to WordPress' `get_posts`. The function returns an array of post objects (where the posts are events), and this can be used to display events through editing your theme. The usual WordPress functions for display associated information (author, title etc) are still available to you, and the plug-in provides a similar set of functions to display event related data (dates, venues etc). See the [documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/).
 
+
 = The full calendar doesn't display any events =
+
 The calendar should display all published events. If you find the calendar doesn't appear this is usually caused by the theme you are using, and is verifiable by temporarily switching to the TwentyEleven theme. If the theme is the cause this is normally because:
 
 * The theme de-registers the jQuery / jQuery UI shipped with WordPress and registers an outdated version
@@ -114,20 +116,12 @@ The calendar should display all published events. If you find the calendar doesn
 
 If the calendar *does* appear, but gets stuck loading, the cause is usually the AJAX response. If your site is in 'debug' mode - this can be due to error messages from other plug-ins being printed. You can view the AJAX response in your browsers console (E.g. Firefox's firebug or Chrome's dev tools). If you are still unable to determine the cause of the problem, or how to fix, please use the plug-in forums with a link to your site and I'll take a look.
 
+
 = I cannot navigate between months on the widget calendar =
+
 If clicking on the 'next' month causes the page to reload - the javascript has not been loaded. This is usually because the theme does not call [`wp_footer`](http://codex.wordpress.org/Function_Reference/wp_footer) in the footer. 
 
-If the calendar simply does not respond this is usually because your theme does not allow widgets to add their own ID and classes. This how a widgetised area should be registered (notice the `before_widget` argument)
-
-    	register_sidebar( array(
-             'name' => __( 'Main Sidebar', 'twentyeleven' ),
-             'id' => 'sidebar-1',
-             'before_widget' => '<div id="%1$s" class="widget %2$s">',
-             'after_widget' => "</div>",
-             'before_title' => '<h3 class="widget-title">',
-             'after_title' => '</h3>',
-        ) );
-If you are still unable to determine the cause of the problem, or how to fix, please use the plug-in forums with a link to your site and I'll take a look.
+If the calendar simply does not respond this is usually because your theme does not allow widgets to add their own ID and classes. If you are still unable to determine the cause of the problem, or how to fix, please use the plug-in forums with a link to your site and I'll take a look.
 
 
 = What ShortCodes are available? = 
