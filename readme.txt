@@ -3,8 +3,8 @@ Contributors: stephenh1988
 Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 3.3.1
-Stable tag: 1.3.3
+Tested up to: 3.3.2
+Stable tag: 1.3.4
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -58,12 +58,12 @@ Requires **WordPress 3.3** or higher
 = Localisation =
 A big thank you to those who have provided translations for Event Organiser
 
-* French - [Rémy Perona](http://remyperona.fr/)
+* French - [RÃ©my Perona](http://remyperona.fr/)
 * Spanish - Joseba Sanchez
 * German - [Martin Grether](http://www.datema.de/) & [Henning Matthaei](http://www.partnerwerk.de/)
 * Italian - Emilio Frusciante, Pio Muto
 * Norwegian - Erlend Birkedal
-* Swedish - Sofia Bråvander
+* Swedish - Sofia BrÃ¥vander
 * Portuguese (Brazilian) - [Rafael Wahasugui](http://www.twitter.com/rafawhs)
 * Dutch  - [Ingrid Ekkers](http://www.247design.nl)
 * Polish - [Bartosz Arendt](http://digitalfactory.pl/)
@@ -145,6 +145,14 @@ Event Organiser provides the following shortcodes:
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.3.4 =
+* `%cat_color%` now works
+* Fixed IE8+ calendar and agenda bugs
+* Fixed shortcode calendar bug
+* Fixed timezone for 'add to google' link
+
+
 = 1.3.3 =
 * Added 'no events' option for event list widget
 * Added template tags for widget/shortcode: `%cat_color%` and `%event_excerpt%`

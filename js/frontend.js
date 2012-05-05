@@ -88,14 +88,18 @@ if ($(".eo_widget_calendar").length > 0 && typeof EOAjaxFront.adminajax !== unde
     $('.eo_widget_calendar tfoot a').die("click").live('click', function (e) {
         e.preventDefault();
         var w_id = $(this).closest('.eo_widget_calendar').attr('id');
-        cal = eo_widget_cal[w_id];
+	if (typeof eo_widget_cal === "undefined") {
+		cal = false;
+	}else{
+		cal = eo_widget_cal[w_id];
+	};
 	if(cal){
 		showpastevents = (cal.showpastevents == 1) ? 1 : 0;
 	}else{
 		showpastevents=1;
 	};
         $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal&showpastevents=" + showpastevents, {
-            eo_month: getParameterByName('eo_month', $(this).attr('href')),
+            eo_month: eveorg_getParameterByName('eo_month', $(this).attr('href'))
         }, function (data) {
             $('#' + w_id+'_content').html(data)
         })
@@ -142,11 +146,18 @@ if ($(".eo_widget_calendar").length > 0 && typeof EOAjaxFront.adminajax !== unde
             getEvents(1);
             $('.eo-agenda-widget .agenda-nav span').click(function (event) {
                 event.preventDefault();
-                if ($(this).hasClass('next')) {
-                    dir = '+1'
-                } else if ($(this).hasClass('prev')) {
-                    dir = '-1'
-                }
+		if ( $(this).hasClass('next') ) {
+			dir = '+1';
+        	}else if( $(this).hasClass('prev') ) {
+            		dir = '-1';
+        	}else{
+			par = $(this).parent();
+           		if( par.hasClass('prev') ){
+            			dir = '-1';
+           		}else{
+            			dir = '+1';
+           		}
+        	}
                 getEvents(dir)
             });
 
@@ -171,7 +182,7 @@ if ($(".eo_widget_calendar").length > 0 && typeof EOAjaxFront.adminajax !== unde
                     } else {
                         color = 'none'
                     }
-                    event = $('<li class="event"></li>').append('<span class="cat"></span><span><strong>' + events[i].time + ': </strong></span>' + events[i].post_title).append('<div class="meta" style="display:none;"><span><a href="' + events[i].link + '">View</a></span><span> &nbsp; </span><span><a href="' + events[i].Glink + '" target="_blank">Add to Google Calendar</a></span></div>');
+                    var event = $('<li class="event"></li>').append('<span class="cat"></span><span><strong>' + events[i].time + ': </strong></span>' + events[i].post_title).append('<div class="meta" style="display:none;"><span><a href="' + events[i].link + '">View</a></span><span> &nbsp; </span><span><a href="' + events[i].Glink + '" target="_blank">Add to Google Calendar</a></span></div>');
                     event.find('span.cat').css({
                         'background': color
                     });
@@ -189,7 +200,7 @@ if ($(".eo_widget_calendar").length > 0 && typeof EOAjaxFront.adminajax !== unde
 
 })(jQuery);
 
-function getParameterByName(name,url){name=name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");var regexS="[\\?&]"+name+"=([^&#]*)";var regex=new RegExp(regexS);var results=regex.exec(url);if(results==null)return"";else return decodeURIComponent(results[1].replace(/\+/g," "))}
+function eveorg_getParameterByName(name,url){name=name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");var regexS="[\\?&]"+name+"=([^&#]*)";var regex=new RegExp(regexS);var results=regex.exec(url);if(results==null)return"";else return decodeURIComponent(results[1].replace(/\+/g," "))}
 
 function eo_load_map(){maps=EOAjax.map;for(i=0;i<maps.length;i++){lat=maps[i].lat;lng=maps[i].lng;zoom=maps[i].zoom;if(lat!==undefined&&lng!=undefined){var latlng=new google.maps.LatLng(lat,lng);var myOptions={zoom:zoom,center:latlng,mapTypeId:google.maps.MapTypeId.ROADMAP};map=new google.maps.Map(document.getElementById("eo_venue_map-"+(i+1)),myOptions);var marker=new google.maps.Marker({position:latlng,map:map})}}}
 /*

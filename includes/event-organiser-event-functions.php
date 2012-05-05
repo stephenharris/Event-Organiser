@@ -595,8 +595,8 @@ function eo_get_the_GoogleLink(){
 
 	if(empty($post)|| get_post_type($post )!='event') return false;
 
-	$startDT = new DateTime($post->StartDate.' '.$post->StartTime);
-	$endDT = new DateTime($post->EndDate.' '.$post->FinishTime);
+	$startDT = new DateTime($post->StartDate.' '.$post->StartTime, eo_get_blog_timezone());
+	$endDT = new DateTime($post->EndDate.' '.$post->FinishTime, eo_get_blog_timezone());
 
 	if(eo_is_allday()):
 		$endDT->modify('+1 second');

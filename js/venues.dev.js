@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
 		if(typeof eo_venue_Lat !=="undefined" && typeof eo_venue_Lng !=="undefined"){
 			var map;
 			var marker;
-			initialize(eo_venue_Lat,eo_venue_Lng);
+			eo_initialize_map(eo_venue_Lat,eo_venue_Lng);
 
 			//Every time form looses focus, use input to display map of address
 			jQuery(".eo_addressInput").change(function(){
@@ -27,7 +27,7 @@ jQuery(document).ready(function() {
  * Function that puts a marker on the Google Map at the latitue - longtitude co-ordinates (Lat, Lng)
  * @since 1.0.0
  */
-function initialize(Lat,Lng) {
+function eo_initialize_map(Lat,Lng) {
 	if(typeof google !=="undefined"){
 
 		var latlng = new google.maps.LatLng(Lat,Lng);

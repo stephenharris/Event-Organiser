@@ -82,8 +82,8 @@ class EO_Venue{
 				'slug'=>$clean['venue_slug'],
 				'description'=>$clean['venue_description'],
 			));
-			if(is_wp_error($return)){
-				$EO_Errors->add('eo_error', __("Venue <strong>was not </strong> updated",'eventorganiser'));	
+			if( is_wp_error($return) ){
+				$EO_Errors->add('eo_error', __("Venue <strong>was not</strong> updated",'eventorganiser').": ".$return->get_error_message());
 			}else{
 				$inserted = get_term_by('id',$return['term_id'],'event-venue');
 				$clean['venue_slug']= $inserted->slug;
@@ -128,7 +128,7 @@ class EO_Venue{
 			$EO_Errors->add('eo_notice', __("Venue <strong>created</strong>",'eventorganiser'));
 			return $return;
 		}
-			$EO_Errors->add('eo_notice', __("Venue <strong>was not</strong> created",'eventorganiser'));
+			$EO_Errors->add('eo_error', __("Venue <strong>was not</strong> created",'eventorganiser').": ".$return->get_error_message());
 		return false;
 	}
 
@@ -161,15 +161,11 @@ class EO_Venue{
 	}
 
 
-
-
-	/**
-	 * Gets data from POST (default), supplied array, or from the database if an ID is supplied
-	 * @param $location_data
-	 * @return null
-	 */
-
-
+	/*
+	* Given an address in string format, use Google Maps to generate latitude and longtitude co-ordinates.
+	* **Really** crappy. Please ignore.
+	*/
+	//TODO Remove this
 	function generate_LatLng($address=''){
 		global $EO_Errors;
 		$lat=0;
@@ -191,28 +187,5 @@ class EO_Venue{
 		}
 		return array('lat'=>$lat,'lng'=>$lng);
 	}
-
-	function slugify($slug, $venue){
-		global $wpdb,$eventorganiser_venue_table;
-
-		$slug =sanitize_title($slug);
-	
-		//does slug exist?
-		$check_sql = "SELECT venue_slug FROM $eventorganiser_venue_table WHERE venue_slug = %s AND  venue_slug != %s LIMIT 1";
-		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $venue) );
-
-		if ( $post_name_check) {
-			//slug already exist, append suffix until unique.
-			$suffix = 2;
-			do {
-				 $alt_slug = substr( $slug, 0, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
-				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_slug, $venue) );
-				$suffix++;
-			} while ( $post_name_check);
-				$slug =  $alt_slug;
-			}
-		return $slug;
-	}
-
 }
 ?>

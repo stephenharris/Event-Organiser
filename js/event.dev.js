@@ -32,7 +32,7 @@ $(document).ready(function() {
 							}else{
 								$("tr.venue_row").show();
 							}
-							initialize(ui.item.venue_lat,ui.item.venue_lng);
+							eo_initialize_map(ui.item.venue_lat,ui.item.venue_lng);
 						}
 						$("#venue_select").removeAttr("selected");
 						$("#venue_select").val(ui.item.term_id);
