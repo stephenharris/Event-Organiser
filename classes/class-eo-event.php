@@ -100,8 +100,8 @@ class EO_Event{
 			$this->event_id =intval($events[0]['event_id']);
 			$this->post_id =intval($events[0]['post_id']);
 
-			$this->start = new DateTIme($events[0]['StartDate'].' '.$events[0]['StartTime'],$this->get_timezone());
-			$this->end = new DateTIme($events[0]['EndDate'].' '.$events[0]['FinishTime'],$this->get_timezone());
+			$this->start = new DateTIme($events[0]['StartDate'].' '.$events[0]['StartTime'], eo_get_blog_timezone());
+			$this->end = new DateTIme($events[0]['EndDate'].' '.$events[0]['FinishTime'], eo_get_blog_timezone());
 
 			if(function_exists('date_diff')){
 				$this->duration = date_diff($this->start,$this->end);	
@@ -114,8 +114,8 @@ class EO_Event{
 			$sec_diff = $seconds - $days*86400;
 			$this->duration_string = '+'.$days.'days '.$sec_diff.' seconds';
 
-			$this->schedule_start = new DateTime($events[0]['reoccurrence_start'],$this->get_timezone());
-			$this->schedule_end = new DateTime($events[0]['reoccurrence_end'],$this->get_timezone());
+			$this->schedule_start = new DateTime($events[0]['reoccurrence_start'], eo_get_blog_timezone());
+			$this->schedule_end = new DateTime($events[0]['reoccurrence_end'], eo_get_blog_timezone());
 			$this->allday = ($events[0]['event_allday']==1 ? true : false);
 
 			$this->venue = intval($events[0]['Venue']);
@@ -151,7 +151,7 @@ class EO_Event{
 			//Save event occurrences
 			foreach ($events as $event):				
 				//Occurrences, array of datetime objects (start date time) in UTC Timezone
-				$this->occurrences[$event['event_occurrence']] = new DateTIme($event['StartDate'].' '.$event['StartTime'],$this->get_timezone());
+				$this->occurrences[$event['event_occurrence']] = new DateTIme($event['StartDate'].' '.$event['StartTime'], eo_get_blog_timezone());
 			endforeach;	
 	endif;
 	}
@@ -634,7 +634,7 @@ function createFromObjects($input=array()){
 	$this->occurrences  = EO_Event::removeDuplicate($this->occurrences);
 
 	//Make sure datetime is in blog's timezone
-	$blog_tz =$this->get_timezone();
+	$blog_tz = eo_get_blog_timezone();
 	$H = intval($this->start->format('H'));
 	$i = intval($this->start->format('i'));
 
@@ -840,7 +840,7 @@ function check_date($date_string,$formated=false){
 	if (!checkdate($month, $day, $year)) return false;
 
 	//Get blog tz
-	$blog_tz =$this->get_timezone();
+	$blog_tz =eo_get_blog_timezone();
 	if(!($this->timezone instanceof DateTimeZone))
 		$this->timezone = $blog_tz;
 
@@ -906,34 +906,7 @@ function is_leapyear($date){
 	}
 
 	function get_timezone(){
-		$tzstring =get_option('timezone_string');
-		$offset = get_option('gmt_offset');
-		$allowed_zones = timezone_abbreviations_list();
-
-		// Remove old Etc mappings.  Fallback to gmt_offset.
-		if ( !empty($tz_string) && false !== strpos($tzstring,'Etc/GMT') )
-			$tzstring = '';
-
-		if(empty($tzstring) && $offset!=0):
-			//use offset		
-			$offset *= 3600; // convert hour offset to seconds
-
-			foreach ($allowed_zones as $abbr):
-				foreach ($abbr as $city):
-					if ($city['offset'] == $offset){
-						$tzstring=$city['timezone_id'];
-						break 2;
-					}
-				endforeach;
-			endforeach;
-		endif;
-
-		//Issue with the timezone selected, set to 'UTC'
-		if(empty($tzstring)):
-			$tzstring = 'UTC';
-		endif;
-
-		return new DateTimezone($tzstring);
+		return eo_get_blog_timezone();
 	}
 
 
@@ -1031,7 +1004,7 @@ function is_leapyear($date){
 			$d = intval($date->format('t'))-$offset;
 		endif;
 	
-		$blog_tz =$this->get_timezone();
+		$blog_tz =eo_get_blog_timezone();
 		$date = date_create($date->format('Y-m-'.$d),$blog_tz);
 
 		return $date;

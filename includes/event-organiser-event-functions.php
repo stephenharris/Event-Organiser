@@ -187,7 +187,7 @@ function eo_get_next_occurrence($format='d-m-Y',$id=''){
 	if(!isset($id) || $id=='') $id = $post->ID;
 	
 	//Retrieve the blog's local time and create the date part
-	$blog_now = new DateTIme(null,EO_Event::get_timezone());
+	$blog_now = new DateTIme(null, eo_get_blog_timezone());
 	$now_date =$blog_now->format('Y-m-d');
 	$now_time =$blog_now->format('H:i:s');
 	
@@ -393,7 +393,7 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 function eo_format_date($dateString='',$format='d-m-Y'){
 
 	if($format!=''&& $dateString!=''){
-		$datetime = new DateTime($dateString,EO_Event::get_timezone());
+		$datetime = new DateTime($dateString,eo_get_blog_timezone());
 		$formated =  eo_format_datetime($datetime,$format);
 		return $formated;
 	}
@@ -576,7 +576,7 @@ function eo_get_the_occurrences($id=''){
 	$occurrences=array();
 
 	foreach($results as $row):
-		$occurrences[] = new DateTime($row->StartDate.' '.$row->StartTime,EO_Event::get_timezone());
+		$occurrences[] = new DateTime($row->StartDate.' '.$row->StartTime,eo_get_blog_timezone());
 	endforeach;
 
 	return $occurrences;
@@ -687,12 +687,45 @@ function eo_is_event_taxonomy(){
 
 function eo_get_blog_timezone(){
 	$timezone = wp_cache_get( 'eventorganiser_timezone' );
-	if ( false === $timezone ) {
-		$timezone = EO_Event::get_timezone();
+
+	if ( false === $timezone || ! ($timezone instanceof DateTimeZone) ) {
+
+		$tzstring =get_option('timezone_string');
+		$offset = get_option('gmt_offset');
+		$allowed_zones = timezone_abbreviations_list();
+
+		// Remove old Etc mappings.  Fallback to gmt_offset.
+		if ( !empty($tz_string) && false !== strpos($tzstring,'Etc/GMT') )
+			$tzstring = '';
+
+		if( empty($tzstring) && $offset!=0 ):
+			//use offset		
+			$offset *= 3600; // convert hour offset to seconds
+
+			foreach ($allowed_zones as $abbr):
+				foreach ($abbr as $city):
+					if ($city['offset'] == $offset){
+						$tzstring=$city['timezone_id'];
+						break 2;
+					}
+				endforeach;
+			endforeach;
+		endif;
+
+		//Issue with the timezone selected, set to 'UTC'
+		if( empty($tzstring) ):
+			$tzstring = 'UTC';
+		endif;
+
+		$timezone = new DateTimeZone($tzstring);
+
 		wp_cache_set( 'eventorganiser_timezone', $timezone );
 	} 
+
 	return $timezone; 
 }
+
+
 
 function eo_has_event_started($id='',$occurrence=0){
 	$tz = eo_get_blog_timezone();

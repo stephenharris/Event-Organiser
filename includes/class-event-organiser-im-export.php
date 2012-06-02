@@ -22,9 +22,6 @@ class Event_Organiser_Im_Export  {
 		return self :: $classobj;
 	}
 	
-	/**
-	 * Constructor
-	 */
 	public function __construct() {
 		global $pagenow, $EO_Errors;
 
@@ -32,41 +29,40 @@ class Event_Organiser_Im_Export  {
 
 		$feed = get_query_var('feed');
 		if(isset($feed) &&$feed=='eo-events'):
-			$this->get_export_file();
+			$options = get_option('eventorganiser_options');
+			if( $options['feed'] )
+				$this->get_export_file();
 		endif;
 
-		/*		
-		*If importing / exporting events make sure we a logged in and check nonces.
-*		*/
-		//Exporting events
+		//If importing / exporting events make sure we a logged in and check nonces.
+
 		if (is_admin() && isset( $_GET['eventorganiser_download_events'] )&& check_admin_referer( 'eventorganiser_export' )
 			&& current_user_can('manage_options')&& $pagenow=="options-general.php"):
+			//Exporting events
 			$this->get_export_file();
-		endif;
 
-		if(isset($_REQUEST['action']) &&$_REQUEST['action']=='eventorganiser_calendar_scrape' ){
-			$this->get_export_file();
-		}
-
-
-		//Importing events
-		if ( is_admin() && isset( $_POST['eventorganiser_import_events'] )&& check_admin_referer( 'eventorganiser_import' )
-			&& current_user_can('manage_options')&& $pagenow=="options-general.php"):
-		
+		elseif ( is_admin() && isset( $_POST['eventorganiser_import_events'] )&& check_admin_referer( 'eventorganiser_import' )
+				&& current_user_can('manage_options')&& $pagenow=="options-general.php"):
+			//Importing events		
 
 			//Perform checks on file:
-			if (($_FILES["ics"]["type"] == "text/calendar")&& ($_FILES["ics"]["size"] < 2000000)):
+			if (($_FILES["ics"]["type"] == "text/calendar")&& ($_FILES["ics"]["size"] < 2097152)):
 				if($_FILES["ics"]["error"] > 0){
 					$EO_Errors = new WP_Error('eo_error', sprintf(__("File Error encountered: %d"), $_FILES["ics"]["error"]));
 				}else{
 					//Import file
 					$this->import_file($_FILES['ics']['tmp_name']);
   				}
+
 			elseif(!isset($_FILES) || empty($_FILES['ics']['name'])):
 				$EO_Errors = new WP_Error('eo_error', __("No file detected.",'eventorganiser'));
 
 			else:
 				$EO_Errors = new WP_Error('eo_error', __("Invalid file uploaded. The file must be a ics calendar file, no larger than 2MB.",'eventorganiser'));
+				$size = (int) $_FILES["ics"]["size"];
+				$size =  number_format(floatval($size*0.0009765625),2);
+				$details = sprintf( __('File size: %01.2fkb. File type: %2$s','eventorganiser'),$size, $_FILES["ics"]["type"]);
+				$EO_Errors->add('eo_error', esc_html($details));
 
 			endif;
 
@@ -119,7 +115,7 @@ class Event_Organiser_Im_Export  {
  */
 	public function get_export_file() {
 		$filename = urlencode( 'event-organiser_' . date('Y-m-d') . '.ics' );
-		$this -> export_events( $filename, 'text/calendar' );
+		$this->export_events( $filename, 'text/calendar' );
 	}
 
 /**
@@ -179,7 +175,7 @@ X-WR-CALDESC:<?php echo get_bloginfo('name');?> - Events
 
 
 			//Set up start and end date times
-			if($event->is_all_day()){
+			if( $event->is_all_day() ){
 				$format =	'Ymd';
 				$start_date = $start->format($format);
 				$end->modify('+1 second');
@@ -229,9 +225,15 @@ CREATED:<?php echo $created_date;?>
 
 LAST-MODIFIED:<?php echo $modified_date;?>
 
+<?php if( $event->is_all_day() ): ?>
+DTSTART;VALUE=DATE:<?php echo $start_date ; ?>
+
+DTEND;VALUE=DATE:<?php echo $end_date; ?>
+<?php else: ?>
 DTSTART:<?php echo $start_date ; ?>
 
 DTEND:<?php echo $end_date; ?>
+<?php endif;?>
 
 <?php if ($reoccurrence_rule):?>
 RRULE:<?php echo $reoccurrence_rule;?>
@@ -396,7 +398,8 @@ function escape_icalText($text){
 
 						}catch(Exception $e){
 							$error_count++;
-							$EO_Errors->add('eo_error', __($e->getMessage()));
+							$preamble= sprintf( __('Line: %1$d','eventorganiser'),$n+1);
+							$EO_Errors->add('eo_error', $preamble.'   '.$e->getMessage());
 
 							//Abort parsing event
 							$state = "VCALENDAR";
@@ -421,7 +424,8 @@ function escape_icalText($text){
 						try{
 							$cal_tz = self::parse_TZID($value);
 						}catch(Exception $e){
-							$EO_Errors->add('eo_error', __($e->getMessage()));
+							$preamble= sprintf( __('Line: %1$d','eventorganiser'),$n+1);
+							$EO_Errors->add('eo_error', $preamble.'   '.$e->getMessage());
 							break;
 						}
 					}
@@ -437,7 +441,7 @@ function escape_icalText($text){
 		if($event_count ==0):
 			$EO_Errors->add('eo_error', __("No events were imported.",'eventorganiser'));
 		elseif($error_count >0):
-			$EO_Errors->add('eo_error',sprintf( __("There was an error with %1$d of %2$d events in the ical file"),$error_count, $event_count));
+			$EO_Errors->add('eo_error',sprintf( __('There was an error with %1$d of %2$d events in the ical file'),$error_count, $event_count));
 		else:
 
 			if($event_count==1)
@@ -587,7 +591,7 @@ function escape_icalText($text){
 						$event_post['tax_input']['event-venue']=$venue_ids;	
 					}
 				endif;
-				break;			
+				break;					
 
 			//Event categories, assign to existing categories - or if set, create new ones
 			case 'CATEGORIES':
@@ -687,7 +691,7 @@ function escape_icalText($text){
 		preg_match('/^(\d{8})*/', $ical_date, $matches);
 
 		if(count($matches)!=2){
-			throw new Exception('Invalid date');
+			throw new Exception(__('Invalid date. Date expected in YYYYMMDD format.','eventorganiser'));
 		}
 
 		$datetime = new DateTime($matches[1],$blog_tz);
@@ -719,7 +723,7 @@ function escape_icalText($text){
 			$tz = new DateTimeZone('UTC');
 
 		}else{
-			throw new Exception('Invalid date');
+			throw new Exception(__('Invalid datetime. Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss format.','eventorganiser'));
 			return false;
 		}
 
