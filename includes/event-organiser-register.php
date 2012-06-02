@@ -9,7 +9,7 @@
 add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
 	global $wp_locale;
-	$version = '1.3.3';
+	$version = '1.3.5';
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery'),$version,true);
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
 			'adminajax'=>admin_url( 'admin-ajax.php'),
@@ -38,7 +38,7 @@ function eventorganiser_register_script() {
  */
 add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts');
 function eventorganiser_register_scripts(){
-	$version = '1.3.3';
+	$version = '1.3.5';
 	wp_register_script( 'eo_GoogleMap', 'http://maps.googleapis.com/maps/api/js?sensor=true');
 
 	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL.'js/venues.js',array(
