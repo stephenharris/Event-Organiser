@@ -3,8 +3,8 @@ Contributors: stephenh1988
 Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 3.3.2
-Stable tag: 1.3.5
+Tested up to: 3.4
+Stable tag: 1.3.6
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -144,6 +144,9 @@ Event Organiser provides the following shortcodes:
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.3.5 =
+* Works with WordPress 3.4
 
 = 1.3.5 =
 * Fixed events export bug.

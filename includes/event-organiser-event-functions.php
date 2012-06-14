@@ -692,7 +692,6 @@ function eo_get_blog_timezone(){
 
 		$tzstring =get_option('timezone_string');
 		$offset = get_option('gmt_offset');
-		$allowed_zones = timezone_abbreviations_list();
 
 		// Remove old Etc mappings.  Fallback to gmt_offset.
 		if ( !empty($tz_string) && false !== strpos($tzstring,'Etc/GMT') )
@@ -701,6 +700,7 @@ function eo_get_blog_timezone(){
 		if( empty($tzstring) && $offset!=0 ):
 			//use offset		
 			$offset *= 3600; // convert hour offset to seconds
+			$allowed_zones = timezone_abbreviations_list();
 
 			foreach ($allowed_zones as $abbr):
 				foreach ($abbr as $city):
