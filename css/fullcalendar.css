@@ -33,8 +33,12 @@ line-height: 15px;
     outline: 1px none;
     padding: 3px;
     resize: none;
-    width: 96px;
+    width: 100%;
 }
+.eo_cal .eo-event-title{
+	width: 255px !important;
+}
+
 
 .view-button.active{
     border-color: #dfdfdf #dfdfdf #FFFFFF;

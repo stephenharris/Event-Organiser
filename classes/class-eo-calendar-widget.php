@@ -10,20 +10,18 @@ class EO_Calendar_Widget extends WP_Widget
 		);
 	static $widget_cal =array();
 
-	function EO_Calendar_Widget()  {
-		load_plugin_textdomain( 'eventorganiser', false, EVENT_ORGANISER_I18N);
+	function __construct() {
 		$widget_ops = array('classname' => 'widget_calendar eo_widget_calendar', 'description' => __('Displays a calendar of your events','eventorganiser') );
-		$this->WP_Widget('EO_Calendar_Widget', __('Events Calendar','eventorganiser'), $widget_ops);
-		}
+		parent::__construct('EO_Calendar_Widget', __('Events Calendar','eventorganiser'), $widget_ops);
+  	}
  
-
 	function form($instance)  {
 	
 		$instance = wp_parse_args( (array) $instance, $this->w_arg ); 	
 		?>
 	  	<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'eventorganiser'); ?>: </label>
-			<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title'];?>" />
+			<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance['title']);?>" />
 		</p>
 
 		<p>
@@ -35,13 +33,10 @@ class EO_Calendar_Widget extends WP_Widget
  
 
 	function update($new_instance, $old_instance){
-    
-		foreach( $this->w_arg as $name => $val ){
-			if( empty($new_instance[$name]) )
-				$new_instance[$name] = $val;
-		}
-
-		return $new_instance;
+		$validated=array();
+		$validated['title'] = sanitize_text_field( $new_instance['title'] );
+		$validated['showpastevents'] = ( !empty($new_instance['showpastevents']) ? 1:  0);
+		return $validated;
 	}
 
  
@@ -67,7 +62,7 @@ class EO_Calendar_Widget extends WP_Widget
 		//Echo widget
     		echo $before_widget;
     		echo $before_title;
-		echo $instance['title'];
+		echo esc_html($instance['title']);
     		echo $after_title;
 		echo "<div id='{$id}_content' >";
 		echo $this->generate_output($month,$calendar);
@@ -139,18 +134,20 @@ function generate_output($month,$args=array()){
 	$head="<thead><tr>";
 	for ($d=0; $d <= 6; $d++): 
 			$day = $weekdays_initial[$weekdays[($d+$startDay)%7]];
-			$head.="<th title='".$day."' scope='col'>".$day."</th>";
+			$head.="<th title='".esc_attr($day)."' scope='col'>".esc_html($day)."</th>";
 	endfor;
 
 	$head.="</tr></thead>";
 
 	$prev = esc_html($monthsAbbrev[$months[$lastmonth->format('m')]]);
 	$next = esc_html($monthsAbbrev[$months[$nextmonth->format('m')]]);
+	$prev_link = add_query_arg('eo_month',$lastmonth->format('Y-m'));
+	$next_link = add_query_arg('eo_month',$nextmonth->format('Y-m'));
 
 	$foot = "<tfoot><tr>";
-	$foot .="<td id='eo-widget-prev-month' colspan='3'><a title='".__('Previous month','eventorganiser')."' href='?eo_month=".$lastmonth->format('Y-m')."'>&laquo; ".$prev."</a></td>";
+	$foot .="<td id='eo-widget-prev-month' colspan='3'><a title='".esc_html__('Previous month','eventorganiser')."' href='{$prev_link}'>&laquo; ".$prev."</a></td>";
 	$foot .="<td class='pad'>&nbsp;</td>";
-	$foot .="<td id='eo-widget-next-month' colspan='3'><a title='".__('Next month','eventorganiser')."' href='?eo_month=".$nextmonth->format('Y-m')."'>".$next."&raquo; </a></td>";
+	$foot .="<td id='eo-widget-next-month' colspan='3'><a title='".esc_html__('Next month','eventorganiser')."' href='{$next_link}'>".$next."&raquo; </a></td>";
 	$foot .= "</tr></tfoot>";
 
 	$body ="<tbody>";
@@ -187,7 +184,7 @@ function generate_output($month,$args=array()){
 					$titles = esc_attr($titles);
 
 					$link = add_query_arg('ondate',$currentDate->format('Y-m-d'),$event_archive_link);
-					$link = esc_attr($link);
+					$link = esc_url($link);
 
 					$body .="<td class='".$classes."'> <a title='".$titles."' href='".$link."'>".($cell-$offset)."</a></td>";
 
@@ -210,5 +207,4 @@ function generate_output($month,$args=array()){
 	return $before.$title.$head.$foot.$body.$after;
 }
  
-}
-add_action( 'widgets_init', create_function('', 'return register_widget("EO_Calendar_Widget");') );?>
+}?>

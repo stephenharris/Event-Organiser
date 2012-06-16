@@ -118,7 +118,7 @@ class EO_Event{
 			$this->schedule_end = new DateTime($events[0]['reoccurrence_end'], eo_get_blog_timezone());
 			$this->allday = ($events[0]['event_allday']==1 ? true : false);
 
-			$this->venue = intval($events[0]['Venue']);
+			$this->venue = (int) eo_get_venue($this->post_id);
 
 			$this->schedule = esc_html($events[0]['event_schedule']);
 

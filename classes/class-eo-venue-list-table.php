@@ -11,7 +11,7 @@ if(!class_exists('WP_List_Table')){
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-class EO_List_Table extends WP_List_Table {
+class EO_Venue_List_Table extends WP_List_Table {
         
     /*
      * Constructor. Set some default configs.
@@ -35,18 +35,21 @@ class EO_List_Table extends WP_List_Table {
      * @return string Text or HTML to be placed inside the column <td>
      */
     function column_default($item, $column_name){
+		$term_id = (int) $item->term_id;
 		 switch($column_name){
 			case 'venue_address':
+				$address = eo_get_venue_address($term_id);
+				return esc_html($address['address']);
 			case 'venue_postal':
+				$address = eo_get_venue_address($term_id);
+				return esc_html($address['postcode']);
 			case 'venue_country':
-				return $item->$column_name;
-				break;
+				$address = eo_get_venue_address($term_id);
+				return esc_html($address['country']);
 			case 'venue_slug':
-				return $item->slug;
-				break;
+				return esc_html($item->slug);
 			case 'posts':
-				return $item->count;
-				break;
+				return intval($item->count);
 			default:
 				return print_r($item,true); //Show the whole array for troubleshooting purposes
 		}
@@ -59,12 +62,13 @@ class EO_List_Table extends WP_List_Table {
      * @return string Text to be placed inside the column <td>
      */
     function column_name($item){
+	$term_id = (int) $item->term_id;
 
         //Build row actions
         $actions = array(
             'edit'      => sprintf('<a href="?post_type=event&page=%s&action=%s&event-venue=%s">'.__('Edit').'</a>',$_REQUEST['page'],'edit',$item->slug),
             'delete'    => '<a href="'.wp_nonce_url(sprintf('?post_type=event&page=%s&action=%s&event-venue=%s',$_REQUEST['page'],'delete',$item->slug), 'eventorganiser_delete_venue_'.$item->slug).'">'.__('Delete').' </a>',
-            'view'    => sprintf('<a href="%s">'.__('View').'</a>',  eo_get_venue_link($item->slug)),
+            'view'    => sprintf('<a href="%s">'.__('View').'</a>',  eo_get_venue_link($term_id)),
         );
         
         //Return the title contents
@@ -97,6 +101,7 @@ class EO_List_Table extends WP_List_Table {
      * Set columns sortable
      * 
      * @return array An associative array containing all the columns that should be sortable: 'slugs'=>array('data_values',bool)
+     *  //TODO - Make meta sortable?
      */
     function get_sortable_columns() {
         $sortable_columns = array(
@@ -153,7 +158,7 @@ class EO_List_Table extends WP_List_Table {
 
 	//First, lets decide how many records per page to show
 	$screen = get_current_screen();
-	$per_page = (get_user_option($screen->id.'_per_page') ?  (int) get_user_option($screen->id.'_per_page') : 20);
+	$per_page = $this->get_items_per_page( 'edit_event_venue_per_page' );
 
 	//Get the columns, the hidden columns an sortable columns
 	$columns = get_column_headers('event_page_venues');
@@ -178,7 +183,7 @@ class EO_List_Table extends WP_List_Table {
 	);
 
 	$this->set_pagination_args( array(
-		'total_items' => wp_count_terms('event-venue', compact( 'search' ) ),
+		'total_items' => wp_count_terms('event-venue', compact( 'search', 'orderby' ) ),
 		'per_page' => $per_page,
 	) );     
 

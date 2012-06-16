@@ -35,7 +35,7 @@
 				);
 		}
 
-		$presets = array('numberposts'=>-1, 'showrepeats'=>true,'showpastevents'=>true);
+		$presets = array('numberposts'=>-1, 'group_events_by'=>'','showpastevents'=>true);
 
 		//Retrieve events		
 		$query = array_merge($request,$presets);
@@ -73,12 +73,11 @@
 					$event['className'][] = 'eo-future-event';
 				
 				//Include venue if this is set
-				$venue = get_the_terms($post->ID,'event-venue');
+				$venue = eo_get_venue($post->ID);
 
 				if($venue && !is_wp_error($venue)){
-					$venue = array_pop($venue);
-					$event['className'][]= 'venue-'.$venue->slug;
-					$event['venue']=$venue->term_id;
+					$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);
+					$event['venue']=$venue;
 				}
 				
 				//Event categories
@@ -122,7 +121,7 @@
 		$presets = array( 
 			'posts_per_page'=>-1,
 			'post_type'=>'event',
-			'showrepeats'=>true,
+			'group_events_by'=>'',
 			'perm' => 'readable');
 
 		//Create query
@@ -186,13 +185,12 @@
 					$event['className'][]='past-event';
 
 				//Include venue if this is set
-				$venue = get_the_terms($post->ID,'event-venue');
+				$venue = eo_get_venue($post->ID);
 
 				if($venue && !is_wp_error($venue)){
-					$venue = array_pop($venue);
-					$summary .="<tr><th>".__('Where','eventorganiser').": </th><td>".$venue->name."</td></tr>";
-					$event['className'][]= 'venue-'.$venue->slug;
-					$event['venue']=$venue->term_id;
+					$summary .="<tr><th>".__('Where','eventorganiser').": </th><td>".eo_get_venue_name($venue)."</td></tr>";
+					$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);
+					$event['venue']=$venue;
 				}
 						
 				$summary = apply_filters('eventorganiser_admin_cal_summary',$summary,$post->ID,$post->event_id,$post);
@@ -307,25 +305,25 @@
  	add_action( 'wp_ajax_nopriv_eo_widget_agenda', 'eventorganiser_widget_agenda' );
 	add_action( 'wp_ajax_eo_widget_agenda', 'eventorganiser_widget_agenda' );
 	function eventorganiser_widget_agenda() {
-		global $wpdb,$eventorganiser_events_table,$wp_locale;
+		global $wpdb,$wp_locale;
 		$meridiem =$wp_locale->meridiem;
 		$direction = intval($_GET['direction']);
-		$today= new DateTIme('now');
+		$today= new DateTIme('now', eo_get_blog_timezone());
 
 		$before_or_after = ($direction <1 ? 'before' : 'after');
 		$date = ($direction <1? $_GET['start'] : $_GET['end']);
 		$order = ($direction <1? 'DESC' : 'ASC');
 		
-		$selectDates="SELECT DISTINCT StartDate FROM {$eventorganiser_events_table}";
+		$selectDates="SELECT DISTINCT StartDate FROM {$wpdb->eo_events}";
 
 		if($order=='ASC')
-			$whereDates = " WHERE {$eventorganiser_events_table}.StartDate >= %s ";
+			$whereDates = " WHERE {$wpdb->eo_events}.StartDate >= %s ";
 		else
-			$whereDates = " WHERE {$eventorganiser_events_table}.StartDate <= %s ";
+			$whereDates = " WHERE {$wpdb->eo_events}.StartDate <= %s ";
 
-		$whereDates .= " AND {$eventorganiser_events_table}.StartDate >= %s ";
+		$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
 
-		$orderlimit = "ORDER BY  {$eventorganiser_events_table}.StartDate $order LIMIT 4";
+		$orderlimit = "ORDER BY  {$wpdb->eo_events}.StartDate $order LIMIT 4";
 
 		$dates = $wpdb->get_col($wpdb->prepare($selectDates.$whereDates.$orderlimit, $date,$today->format('Y-m-d')));
 
@@ -390,7 +388,26 @@
 		
 		// Query the venues with the given term
 		$value = trim(esc_attr($_GET["term"]));
-		$venues =  get_terms('event-venue',array('hide_empty'=>false,'search'=>$value));
+		$venues = eo_get_venues(array('search'=>$value));
+
+		foreach($venues as $venue){
+			$term_id = (int) $venue->term_id;
+			if( !isset($term->venue_address) ){
+				$address = eo_get_venue_address($term_id);
+				$term->venue_address =  isset($address['address']) ? $address['address'] : '';
+				$term->venue_postal =  isset($address['postcode']) ? $address['postcode'] : '';
+				$term->venue_country =  isset($address['country']) ? $address['country'] : '';
+			}
+
+			if( !isset($term->venue_lat) || !isset($term->venue_lng) ){
+				$term->venue_lat =  number_format(floatval(eo_get_venue_lat($term_id)), 6);
+				$term->venue_lng =  number_format(floatval(eo_get_venue_lng($term_id)), 6);
+			}
+
+			if( !isset($term->venue_description) ){
+				$term->venue_description = eo_get_venue_description($term_id);
+			}
+		}
 		
 		$novenue = array('term_id'=>0,'name'=>__('No Venue','eventorganiser'));
 		$venues =array_merge (array($novenue),$venues);
@@ -399,5 +416,5 @@
 		$response = $_GET["callback"] . "(" . json_encode($venues) . ")";  
 		echo $response;  
 		exit;
-}
+	}
 ?>

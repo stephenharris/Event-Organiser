@@ -5,11 +5,10 @@
  *
  * @since 1.0.0
  */
-
 add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
 	global $wp_locale;
-	$version = '1.3.5';
+	$version = '1.4';
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery'),$version,true);
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
 			'adminajax'=>admin_url( 'admin-ajax.php'),
@@ -38,7 +37,7 @@ function eventorganiser_register_script() {
  */
 add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts');
 function eventorganiser_register_scripts(){
-	$version = '1.3.5';
+	$version = '1.4';
 	wp_register_script( 'eo_GoogleMap', 'http://maps.googleapis.com/maps/api/js?sensor=true');
 
 	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL.'js/venues.js',array(
@@ -79,6 +78,7 @@ function eventorganiser_admin_init(){
 	$EO_Errors = new WP_Error();
 }
 add_action('admin_init', array('Event_Organiser_Im_Export', 'get_object'));
+
 
 add_action('init','eventorganiser_public_export');
 function eventorganiser_public_export(){
@@ -142,22 +142,20 @@ function eventorganiser_add_admin_scripts( $hook ) {
 }
 
 /**
- * Notices
- * Display error mesages or other notices on venue and settings pages
- *
- * @since 1.0.0
+ * Perform database and WP version checks. Display appropriate error messages. 
+ * Triggered on update.
+ * @since 1.4.0
  */
-add_action('admin_notices', 'eo_admin_notices',0);
-function eo_admin_notices(){
-	global $EO_Errors,$eventorganiser_events_table,$eventorganiser_venue_table,$wpdb;
+function eventorganiser_db_checks(){
+	global $wpdb;
 
 	//Check tables exist
 	$table_errors = array();
-	if($wpdb->get_var("show tables like '$eventorganiser_events_table'") != $eventorganiser_events_table):
-		$table_errors[]=$eventorganiser_events_table;
+	if($wpdb->get_var("show tables like '$wpdb->eo_events'") != $wpdb->eo_events):
+		$table_errors[]= $wpdb->eo_events;
 	endif;
-	if($wpdb->get_var("show tables like '$eventorganiser_venue_table'") != $eventorganiser_venue_table):
-		$table_errors[]=$eventorganiser_venue_table;
+	if($wpdb->get_var("show tables like '$wpdb->eo_venuemeta'") != $wpdb->eo_venuemeta):
+		$table_errors[]=$wpdb->eo_venuemeta;
 	endif;
 
 	if(!empty($table_errors)):?>
@@ -178,7 +176,11 @@ function eo_admin_notices(){
 			<p>Event Organiser requires <strong>WordPress 3.3</strong> to function properly. Your version is <?php echo get_bloginfo('version'); ?>. </p>
 		</div>
 	<?php endif; 
+}
 
+add_action('admin_notices','eventorganiser_admin_notices');
+function eventorganiser_admin_notices(){
+	global $EO_Errors;
 	$errors=array();
 	$notices=array();
 	if(isset($EO_Errors)):
@@ -187,14 +189,14 @@ function eo_admin_notices(){
 		if(!empty($errors)):?>
 			<div class="error"	>
 			<?php foreach ($errors as $error):?>
-				<p><?php	echo $error;?></p>
+				<p><?php echo $error;?></p>
 			<?php endforeach;?>
 			</div>
 		<?php endif;?>
 		<?php if(!empty($notices)):?>
 			<div class="updated">
 			<?php foreach ($notices as $notice):?>
-				<p><?php	echo $notice;?></p>
+				<p><?php echo $notice;?></p>
 			<?php endforeach;?>
 			</div>
 		<?php	endif;
@@ -215,11 +217,11 @@ function eventorganiser_delete_expired_events(){
 	$events = eo_get_events(array('showrepeats'=>0,'showpastevents'=>1,'eo_interval'=>'expired'));
 	if($events):
 		foreach($events as $event):
-			$now = new DateTime('now', EO_Event::get_timezone());
-			$start = new DateTime($event->StartDate.' '.$event->StartTime, EO_Event::get_timezone());
-			$end = new DateTime($event->EndDate.' '.$event->FinishTime, EO_Event::get_timezone());
+			$now = new DateTime('now', eo_get_blog_timezone());
+			$start = new DateTime($event->StartDate.' '.$event->StartTime, eo_get_blog_timezone());
+			$end = new DateTime($event->EndDate.' '.$event->FinishTime, eo_get_blog_timezone());
 			$duration = date_diff($start,$end);
-			$finished =  new DateTime($event->reoccurrence_end.' '.$event->StartTime, EO_Event::get_timezone());
+			$finished =  new DateTime($event->reoccurrence_end.' '.$event->StartTime, eo_get_blog_timezone());
 			$finished->add($duration);
 			$finished->modify('+1 day');
 

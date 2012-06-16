@@ -18,11 +18,11 @@ class EO_Event_List_Widget extends WP_Widget{
 		'no_events'=>'No Events'
 		);
 
-  function EO_Event_List_Widget(){
-	load_plugin_textdomain( 'eventorganiser', false, EVENT_ORGANISER_I18N);
-	$widget_ops = array('classname' => 'EO_Event_List_Widget', 'description' => __('Displays a list of events','eventorganiser') );
-	$this->WP_Widget('EO_Event_List_Widget', __('Events','eventorganiser'), $widget_ops);
-  }
+	function __construct() {
+		$widget_ops = array('classname' => 'EO_Event_List_Widget', 'description' => __('Displays a list of events','eventorganiser') );
+		parent::__construct('EO_Event_List_Widget', __('Events','eventorganiser'), $widget_ops);
+	}
+
  
   function form($instance){	
 	$instance = wp_parse_args( (array) $instance, $this->w_arg );
@@ -72,22 +72,30 @@ class EO_Event_List_Widget extends WP_Widget{
   </p>
   <p>
     <label for="<?php echo $this->get_field_id('template'); ?>"><?php _e('Template (leave blank for default)', 'eventorganiser'); ?>  </label>
-	  <input  id="<?php echo $this->get_field_id('template'); ?>" class="widefat" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo esc_html($instance['template']);?>" />
+	  <input  id="<?php echo $this->get_field_id('template'); ?>" class="widefat" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo esc_attr($instance['template']);?>" />
   </p>
   <p>
     <label for="<?php echo $this->get_field_id('no_events'); ?>"><?php _e("'No events' message", 'eventorganiser'); ?>  </label>
-	  <input  id="<?php echo $this->get_field_id('no_events'); ?>" class="widefat" name="<?php echo $this->get_field_name('no_events'); ?>" type="text" value="<?php echo esc_html($instance['no_events']);?>" />
+	  <input  id="<?php echo $this->get_field_id('no_events'); ?>" class="widefat" name="<?php echo $this->get_field_name('no_events'); ?>" type="text" value="<?php echo esc_attr($instance['no_events']);?>" />
   </p>
 
 <?php
   }
  
   function update($new_instance, $old_instance){  
-	foreach($this->w_arg as $name => $val){
-		if( empty($new_instance[$name]))
-			$new_instance[$name] = $val;
-    	}
-	return $new_instance;
+	$validated=array();
+	$validated['title'] = sanitize_text_field( $new_instance['title'] );
+	$validated['numberposts'] = intval($new_instance['numberposts']);
+	$event_cats = array_map('sanitize_text_field', explode(',',$new_instance['event-category']));
+	$validated['event-category'] = implode(',',$event_cats);
+	$validated['venue'] = sanitize_text_field( $new_instance['venue'] );
+	$validated['order'] = ($new_instance['order'] == 'asc' ? 'asc' : 'desc');
+	$validated['orderby'] = ($new_instance['order'] == 'title' ? 'title' : 'eventstart');
+	$validated['showpastevents'] = ( !empty($validated['showpastevents']) ? 1:  0);
+	$validated['group_events_by'] = ( isset($validated['group_events_by']) && $validated['group_events_by']=='series' ? 'series':  '');
+	$validated['template'] = sanitize_text_field( $new_instance['template'] );
+	$validated['no_events'] = sanitize_text_field( $new_instance['no_events'] );
+	return $validated;
     }
 
  
@@ -103,7 +111,7 @@ class EO_Event_List_Widget extends WP_Widget{
 	
     	echo $before_widget;
     	echo $before_title;
-	echo $instance['title'];
+	echo esc_html($instance['title']);
     	echo $after_title;
 
 	global $post;
@@ -121,7 +129,7 @@ class EO_Event_List_Widget extends WP_Widget{
 				}else{
 					$format = get_option('date_format').'  '.get_option('time_format');
 				}
-				echo '<li><a title="'.$post->post_title.'" href="'.get_permalink($post->ID).'">'.$post->post_title.'</a> '.__('on','eventorganiser').' '.eo_format_date($post->StartDate.' '.$post->StartTime, $format).'</li>';
+				echo '<li><a title="'.the_title_attribute(array('echo'=>false)).'" href="'.get_permalink().'">'.esc_html(get_the_title()).'</a> '.__('on','eventorganiser').' '.eo_format_date($post->StartDate.' '.$post->StartTime, $format).'</li>';
 
 			else:
 				echo '<li>'.EventOrganiser_Shortcodes::read_template($template).'</li>';
@@ -138,4 +146,4 @@ class EO_Event_List_Widget extends WP_Widget{
   }
  
 }
-add_action( 'widgets_init', create_function('', 'return register_widget("EO_Event_List_Widget");') );?>
+?>

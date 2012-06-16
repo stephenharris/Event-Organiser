@@ -113,13 +113,14 @@ function eventorganiser_details_metabox($post){
 
 			<p id="dayofweekrepeat">
 			<?php _e("on",'eventorganiser');?>	
-
+			<?php _e("on",'eventorganiser');?>	
 				<?php for($i = 0; $i <= 6; $i++):
 					$d = ($start_day + $i)%7;
-					$ical_d = EO_Event::$daysofweek[$d]['ical'];
+					$ical_days =array('SU','MO','TU','WE','TH','FR','SA');
+					$ical_d = $ical_days[$d];
 					$day =$wp_locale->weekday_abbrev[$wp_locale->weekday[$d]];
 				?>
-					<input type="checkbox" id="day-<?php echo $day;?>"  <?php checked($event->meta[$d],'1'); ?>  value="<?php echo $ical_d?>" class="daysofweek" name="eo_input[days][]" disabled="disabled" />
+					<input type="checkbox" id="day-<?php echo $day;?>"  <?php checked(in_array($ical_d,$event->meta), true); ?>  value="<?php echo esc_attr($ical_d)?>" class="daysofweek" name="eo_input[days][]" disabled="disabled" />
 					<label for="day-<?php echo $day;?>" > <?php echo $day;?></label>
 				<?php endfor;  ?>
 			</p>
@@ -146,11 +147,8 @@ function eventorganiser_details_metabox($post){
 			<td> 
 			<?php 		
 				$venues = get_terms('event-venue', array('hide_empty'=>false));
-				$current = get_the_terms($post->ID,'event-venue');
-				$current = ($current ? array_pop($current) : '');
-				$current_id = ( $current ? $current->term_id : 0 );
+				$current_id = (int) eo_get_venue(get_the_ID());
 				?>
-
 
 			<!-- If javascript is disabed, a simple drop down menu box is displayed to choose venue.
 			Otherwise, the user is able to search the venues by typing in the input box.-->		
@@ -163,13 +161,13 @@ function eventorganiser_details_metabox($post){
 			<span style="font-size:0.8em;line-height:0.8em;"> <?php _e("Search for a venue. To add a venues go to the venue page.",'eventorganiser');?></span>
 			</td>
 			</tr>
-			<tr class="venue_row <?php if (!$current) echo 'novenue';?>" >
+			<tr class="venue_row <?php if (!$current_id) echo 'novenue';?>" >
 			<td></td>
 			<td>
 
 			<div id="eventorganiser_venue_meta" style="display:none;">
-				<input type="hidden" id="eo_venue_Lat" value="<?php  if( $current ) echo esc_attr($current->venue_lat) ;?>" />
-				<input type="hidden" id="eo_venue_Lng" value="<?php  if( $current ) echo esc_attr($current->venue_lng) ; ?>" />
+				<input type="hidden" id="eo_venue_Lat" value="<?php eo_venue_lat($current_id);?>" />
+				<input type="hidden" id="eo_venue_Lng" value="<?php eo_venue_lng($current_id); ?>" />
 			</div>
 			
 			<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
@@ -195,12 +193,12 @@ function eventorganiser_details_metabox($post){
  * @param int $post_id the event post ID
  * @return int $post_id the event post ID
  */
-function eventorganiser_details_save($post_id) {
+function eventorganiser_details_save( $post_id ) {
 	global $wpdb,$eventorganiser_events_table;
 
 	//make sure data came from our meta box
 	if(!isset($_POST['_eononce']) || !wp_verify_nonce($_POST['_eononce'],'eventorganiser_event_update_'.$post_id))
-		return $post_id;
+		return;
 
 	// verify this is not an auto save routine. 
 	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return $post_id;
@@ -209,15 +207,12 @@ function eventorganiser_details_save($post_id) {
 	if (!current_user_can('edit_event', $post_id)) return $post_id;
 
 	$raw_data = (isset($_POST['eo_input']) ? $_POST['eo_input'] : array());
-	$raw_data['Venue'] =(isset($raw_data['event-venue']) ? $raw_data['event-venue'] : 0);
 
 	//Update venue
-	$venue_id = !empty($raw_data['Venue']) ? intval($raw_data['Venue']) : null;
-	$r = wp_set_post_terms( $post_id, array($venue_id), 'event-venue', false );
+	$raw_data['Venue'] = !empty($raw_data['event-venue']) ? intval($raw_data['event-venue']) : null;
+	$r = wp_set_post_terms( $post_id, array( $raw_data['Venue'] ), 'event-venue', false );
 
-	//XXX Venues are currently still being added to events table - but this will be later removed, along with occurrence data
-	//Venues will be solely be as taxonomy terms, with venue meta being stored in the venue table.
-	//Reoccurrence details wil be sotred as post meta - leaving just dates/occurrence/IDs
+	//TODO Reoccurrence details wil be sotred as post meta - leaving just dates/occurrence/IDs
 
 	//Check if there is existing event data.
 	$event = new EO_Event($post_id);
@@ -227,10 +222,11 @@ function eventorganiser_details_save($post_id) {
 	* First we check if this is necessary. If not, we just update the data and exit.
 	*/
 	$delete_existing=false;
-	if($event->exists):
+	if( $event->exists ):
 
-		//We are updating a single event (and it is still a one time event), can just update all data easily				
 		if(isset($raw_data['schedule'])&&$raw_data['schedule']=='once'&& $event->is_schedule('once')){
+			//We are updating a single event (and it is still a one time event), can just update all data easily				
+
 			$event->create($raw_data);
 			$event_input =array(
 				'post_id'=>$post_id,
@@ -248,29 +244,26 @@ function eventorganiser_details_save($post_id) {
 				'reoccurrence_end' => $event->schedule_end->format('Y-m-d'),
 			);
 			$upd = $wpdb->update( $eventorganiser_events_table, $event_input, array( 'post_id' => $post_id ));		
-			return $post_id;
+			return;
 
-		//Event was reoccurring 
-		}elseif(!$event->is_schedule('once')){
+		}elseif( !$event->is_schedule('once') ){
+			//Event was reoccurring 
 			
 			//If 'edit reocurrences' is checked we need to replace reoccurrences
 			if((isset($raw_data['AlterRe']) && $raw_data['AlterRe']=='yes')){
 				$delete_existing=true;
-				
-			//Edit 'edit reocurrences' is not checked - reoccurrances are to remain. Just update Venue and exist
-			}else{
-				$upd = $wpdb->update( $eventorganiser_events_table, array('Venue'=>intval($raw_data['venue_id'])), array( 'post_id' => $post_id ));
-				return $post_id;
 			}
 
-		//Was a one-time event, is now a reoccurring event - delete event.
 		}else{
-				$delete_existing=true;
+			//Was a one-time event, is now a reoccurring event - delete event.
+			$delete_existing=true;
 		}
 	endif;
 
 	//Populate event data from raw input and inserts (after deleting existing occurrences, if necessary)
 	$event->insertEvent($raw_data, $post_id, $delete_existing);
+
+	do_action('eventorganiser_save_event', $post_id);
 
 	return $post_id;
 }

@@ -17,10 +17,14 @@ function eo_get_venue($event_id=''){
 	global $post;
 	$event = $post;
 
-	$post_id = (isset($post->ID) ? $post->ID : 0);
-
-	if(!empty($event_id)) 
+	if( !empty($event_id) ){
 		$post_id = $event_id;
+	}else{
+		$post_id = (isset($post->ID) ? $post->ID : 0);
+	}
+
+	if( empty($post_id) )
+		return false;
 
 	$venue = get_the_terms($post_id,'event-venue');
 
@@ -29,7 +33,7 @@ function eo_get_venue($event_id=''){
 
 	$venue = array_pop($venue);
 
-	return $venue->term_id;	
+	return (int) $venue->term_id;	
 }
 
 /**
@@ -46,10 +50,11 @@ function eo_get_venue_slug($event_id=''){
 	global $post;
 	$event = $post;
 
-	$post_id = (isset($post->ID) ? $post->ID : 0);
-
-	if(!empty($event_id)) 
+	if( !empty($event_id) ){
 		$post_id = $event_id;
+	}else{
+		$post_id = (isset($post->ID) ? $post->ID : 0);
+	}
 
 	$venue = get_the_terms($post_id,'event-venue');
 
@@ -63,6 +68,50 @@ function eo_get_venue_slug($event_id=''){
 
 
 
+/*
+*  Venue Utility Functions
+*/
+function eo_get_venue_id_by_slugorid($venue_slug_or_id=''){
+
+	$venue = $venue_slug_or_id;
+
+	if( empty($venue) )
+		return eo_get_venue();
+
+	if( is_int($venue) )
+		return (int) $venue;
+
+	$venue = get_term_by('slug', $venue, 'event-venue');
+
+	return (int) $venue->term_id;
+}
+
+// Calls WordPress' get_term_by
+function eo_get_venue_by($field,$value,$output = OBJECT){
+	$venue = get_term_by($field, $value, 'event-venue');
+	return $venue;
+}
+
+
+/*
+*  Venue meta
+*/
+function eo_get_venue_meta($venue_id, $key, $single=true){	
+	return get_metadata('eo_venue', $venue_id, $key, $single); 
+}
+
+function eo_add_venue_meta($venue_id, $key, $value, $unique = false ){
+	return add_metadata('eo_venue',$venue_id, $key, $value, $unique);
+}
+
+function eo_update_venue_meta($venue_id, $key, $value, $prev_value=''){
+	return update_metadata('eo_venue', $venue_id, $key, $value, $prev_value);
+}
+
+function eo_delete_venue_meta($venue_id, $key, $value = '', $delete_all = false ){
+	return delete_metadata('eo_venue',$venue_id, $key, $value, $delete_all);
+}
+
 /**
 * Returns the name of the venue of the event.
 * Can be used inside the loop to output the 
@@ -73,25 +122,12 @@ function eo_get_venue_slug($event_id=''){
 * @since 1.0.0
  */
 function eo_get_venue_name($venue_slug_or_id=''){
-	global $post;
-	$venue = $venue_slug_or_id;
-	if(empty($venue)){
-		$venue = get_the_terms($post->ID,'event-venue');
-
-		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
-	}else{
-		if(is_int($venue)){
-			$venue = get_term_by('id', $venue, 'event-venue');
-		
-		}else{
-			$venue = 	get_term_by('slug', $venue, 'event-venue');
-		}
-		
-	}
-
+	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
+	$venue = get_term($venue_id,'event-venue');
+	
 	if ( empty($venue) || is_wp_error( $venue ) )
 		return false;
-	
+
 	return $venue->name;
 }
 
@@ -119,30 +155,15 @@ function eo_venue_name($venue_slug_or_id=''){
 * @since 1.0.0
  */
 function eo_get_venue_description($venue_slug_or_id=''){
-	global $post;
-
-	$venue = $venue_slug_or_id;
-	if(empty($venue)){
-		$venue = get_the_terms($post->ID,'event-venue');
-		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
-	}else{
-		if(is_int($venue)){
-			$venue = get_term_by('id', $venue, 'event-venue');
-		
-		}else{
-			$venue = 	get_term_by('slug', $venue, 'event-venue');
-		}
-	}
-
-	if ( empty($venue) || is_wp_error( $venue ) )
-		return false;
-
-	$description =$venue->venue_description;
-	$description = apply_filters('the_content', $description);
-
+	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
+	$description = eo_get_venue_meta($venue_id,'_description');
+	$description = wptexturize($description);
+	$description = convert_chars($description);
+	$description = wpautop($description);
+	$description = shortcode_unautop($description);
+	$description = do_shortcode($description);
 	return $description;
 }
-
 
 
 /**
@@ -171,25 +192,24 @@ function eo_venue_description($venue_slug_or_id=''){
 *
  * @since 1.0.0
  */
-function eo_get_venue_latlng($venue_slug_or_id=''){
-	global $post;
-	$venue = $venue_slug_or_id;
-	if(empty($venue)){
-		$venue = get_the_terms($post->ID,'event-venue');
-		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
-	}else{
-		if(is_int($venue)){
-			$venue = get_term_by('id', $venue, 'event-venue');
-		
-		}else{
-			$venue = 	get_term_by('slug', $venue, 'event-venue');
-		}
-	}
 
-	if ( empty($venue) || is_wp_error( $venue ) )
-		return array('lat'=>0, 'lng'=>0);
+function eo_get_venue_latlng($venue_slug_or_id=''){	
+	$lat = eo_get_venue_lat($venue_slug_or_id);
+	$lng = eo_get_venue_lng($venue_slug_or_id);	
+	return array('lat'=>$lat,'lng'=>$lng);
+}
 
-	return array('lat'=>$venue->venue_lat,'lng'=>$venue->venue_lng);
+function eo_get_venue_lat($venue_slug_or_id=''){
+	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
+	$lat = eo_get_venue_meta($venue_id,'_lat');
+	$lat =  ! empty($lat) ? $lat : 0;
+	return $lat;
+}
+function eo_get_venue_lng($venue_slug_or_id=''){
+	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
+	$lng = eo_get_venue_meta($venue_id,'_lng');
+	$lng =  ! empty($lng) ? $lng : 0;
+	return $lng;
 }
 
 
@@ -203,8 +223,7 @@ function eo_get_venue_latlng($venue_slug_or_id=''){
  * @since 1.0.0
  */
 function eo_venue_lat($venue_slug_or_id=''){
-	$latling =  eo_get_venue_latlng($venue_slug_or_id);
-	echo $latling['lat'];
+	echo eo_get_venue_lat($venue_slug_or_id);
 }
 
 
@@ -219,8 +238,7 @@ function eo_venue_lat($venue_slug_or_id=''){
  * @since 1.0.0
  */
 function eo_venue_lng($venue_slug_or_id=''){
-	$latling =  eo_get_venue_latlng($venue_slug_or_id);
-	echo $latling['lng'];
+	echo eo_get_venue_lng($venue_slug_or_id);
 }
 
 
@@ -236,30 +254,9 @@ function eo_venue_lng($venue_slug_or_id=''){
  * @since 1.0.0
  */
 function eo_get_venue_link($venue_slug_or_id=''){
-	global $post;
-
-	$venue = $venue_slug_or_id;
-	if(empty($venue)){
-		$venue = get_the_terms($post->ID,'event-venue');
-		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
-	}else{
-		if(is_int($venue)){
-			$venue = get_term_by('id', $venue, 'event-venue');
-		
-		}else{
-			$venue = 	get_term_by('slug', $venue, 'event-venue');
-		}
-		
-	}
-
-	if ( empty($venue) || is_wp_error( $venue ) )
-		return '';
-
-	$venue_link = get_term_link( $venue, 'event-venue' );
-
-	return $venue_link;
+	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
+	return get_term_link( $venue_id, 'event-venue' );
 }
-
 
 
 /**
@@ -272,6 +269,7 @@ function eo_get_venue_link($venue_slug_or_id=''){
  * @since 1.0.0
  */
 function eo_venue_link($venue_slug_or_id=''){
+	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
 	echo  eo_get_venue_link($venue_slug_or_id);
 }
 
@@ -286,41 +284,26 @@ function eo_venue_link($venue_slug_or_id=''){
  * @since 1.0.0
  */
 function eo_get_venue_address($venue_slug_or_id=''){
-	global $post;
-
-	$venue = $venue_slug_or_id;
-	if(empty($venue)){
-		$venue = get_the_terms($post->ID,'event-venue');
-		$venue = ($venue && is_array($venue) ? array_pop($venue) : '');
-	}else{
-		if(is_int($venue)){
-			$venue = get_term_by('id', $venue, 'event-venue');
-		
-		}else{
-			$venue = 	get_term_by('slug', $venue, 'event-venue');
-		}
-	}
-
-	$address=array();
-	$address['address'] = '';
-	$address['postcode'] = '';
-	$address['country'] = '';
-
-	if ( empty($venue) || is_wp_error( $venue ) )
-		return $address;
-
-	$address['address'] = $venue->venue_address;
-	$address['postcode'] = $venue->venue_postal;
-	$address['country'] = $venue->venue_country;
+	$address=array();	
+	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
+	$address['address'] = eo_get_venue_meta($venue_id,'_address');
+	$address['postcode'] = eo_get_venue_meta($venue_id,'_postcode');
+	$address['country'] = eo_get_venue_meta($venue_id,'_country');
 
 	return $address;
 }
 
-function eo_get_the_venues(){
-	global $eventorganiser_venue_table,$wpdb;
-	//TODO take care of sanitisation?
-	$venues = $wpdb->get_results(" SELECT* FROM $eventorganiser_venue_table");
-	return $venues;
+
+/**
+* Wrapper for get_terms. Maybe depcreciate in favour of eo_get_venues?
+ */
+function eo_get_the_venues($args=array()){
+	return eo_get_venues($args);
+}
+//Used in ajax file
+function eo_get_venues($args=array()){
+	$args = wp_parse_args( $args, array('hide_empty'=>0 ) );
+	return get_terms('event-venue',$args);
 }
 
 
@@ -370,64 +353,175 @@ function eo_event_venue_dropdown( $args = '' ) {
 
 
 
+
 /**
-* Similiar to WordPress' native get_term_by
-* Get a (meta data of) venue term (object, or array) by 'name', 'slug' or 'id'.
-* Warning: $value is not escaped for 'name' $field. You must do it yourself, if required.
-* ID Is kind of depreciated - a new column will eventually hold the term ID
-*
-* The default $field is 'id', therefore it is possible to also use null for
-* field, but not recommended that you do so.
-*
-* If $value does not exist, the return value will be false. 
-* If $field and $value combinations exist, the meta row will be returned.
-*
-* @param $field (string) the field to query:  'name', 'slug' or 'id'.
-* @param string|int $value Search for this term value
-* @param $output (Constant) Output format, Object, ARRAY_A, or ARRAY_N
-*
-* @return Venue term | false - $term as object, array_a or array_nor false
-* @since 1.3
-*/
-function eo_get_venue_by($field,$value,$output = OBJECT){
-	global $eventorganiser_venue_table,$wpdb;
+ * Updates new venue in the database. 
+ *
+ * Calls wp_insert_term to create the taxonomy term
+ * Adds venue meta data to database (for 'core' meta keys)
+ * 
+ * The $args is an array - the same as that accepted by wp_update_term
+ * The $args array can also accept the following keys: 
+ * *  description, address, postcode, country, latitude, longtitude
+ *
+ * @since 1.4.0
+ *
+ * @uses wp_update_term to update venue (taxonomy) term
+ * @uses do_action() Calls 'eventorganiser_save_venue' hook with the venue id
+ *
+ * @param (int) the Term ID of the venue to update
+ * @param array $args as accepted by wp_insert_term and including the default meta data
+ * @return array|WP_Error array of term ID and term-taxonomy ID or a WP_Error
+ */
+	function eo_update_venue($venue_id, $args=array()){
 
-	switch($field):
-		case 'slug':
-			$field = 'venue_slug';
-			$value = sanitize_title($value);
-			break;
+		$term_args = array_intersect_key($args, array('name'=>'','term_id'=>'','term_group'=>'','term_taxonomy_id'=>'','alias_of'=>'','parent'=>0,'slug'=>'','count'=>''));
+		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','country'=>'','latitude'=>'','longtitude'=>''));
+		$venue_id = (int) $venue_id;
 
-		case 'name':
-			$field = 'venue_name';
-			break;
+		//Update taxonomy table
+		$resp = wp_update_term($venue_id,'event-venue', $term_args);
+		
+		if( is_wp_error($resp) ){
+			return $resp;
+		}
 
-		default: 
-			$field = 'venue_id';
-			$value = intval($value);
-	endswitch;
+		$venue_id = (int) $resp['term_id'];
 
-	$term = $wpdb->get_row($wpdb->prepare( "SELECT* FROM {$eventorganiser_venue_table} WHERE {$eventorganiser_venue_table}.$field = %s LIMIT 1", $value));
+		foreach( $meta_args as $key => $value ){
+			switch($key):
+				case 'latitude':
+					$meta_key = '_lat';
+					break;
+				case 'longtitude':
+					$meta_key = '_lng';
+					break;
+				default:
+					$meta_key = '_'.$key;
+					break;
+			endswitch;
 
-	if ( !$term )
-		return false;
+			$validated_value = eventorganiser_sanitize_meta($meta_key, $value);
 
-	if ( $output == OBJECT ) {
-		return $term;
-	} elseif ( $output == ARRAY_A ) {
-		return get_object_vars($term);
-	} elseif ( $output == ARRAY_N ) {
-		return array_values(get_object_vars($term));
-	} else {
-		return $term;
+			update_metadata('eo_venue', $venue_id, $meta_key, $validated_value);		
+		}
+		do_action('eventorganiser_save_venue',$venue_id);
+
+		return array('term_id' => $venue_id, 'term_taxonomy_id' => $resp['term_taxonomy_id']);
 	}
-}
+
+
+/**
+ * Adds a new venue to the database. 
+ *
+ * Calls wp_insert_term to create the taxonomy term
+ * Adds venue meta data to database (for 'core' meta keys)
+ * 
+ * The $args is an array - the same as that accepted by wp_insert_term
+ * The $args array can also accept the following keys: 
+ * *  description, address, postcode, country, latitude, longtitude
+ *
+ * @since 1.4.0
+ *
+ * @uses wp_insert_term to create venue (taxonomy) term
+ * @uses do_action() Calls 'eventorganiser_insert_venue' hook with the venue id
+ * @uses do_action() Calls 'eventorganiser_save_venue' hook with the venue id
+ *
+ * @param string $name the venue to insert
+ * @param array $args as accepted by wp_insert_term and including the default meta data
+ * @return array|WP_Error array of term ID and term-taxonomy ID or a WP_Error
+ */
+	function eo_insert_venue($name, $args=array()){
+		$term_args = array_intersect_key($args, array('name'=>'','term_id'=>'','term_group'=>'','term_taxonomy_id'=>'','alias_of'=>'','parent'=>0,'slug'=>'','count'=>''));
+		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','country'=>'','latitude'=>'','longtitude'=>''));
+
+		$resp = wp_insert_term($name,'event-venue',$term_args);
+
+		if(is_wp_error($resp)){
+			return $resp;
+		}
+
+		$venue_id = (int) $resp['term_id'];
+
+		foreach( $meta_args as $key => $value ){
+			switch($key):
+				case 'latitude':
+					$meta_key = '_lat';
+					break;
+				case 'longtitude':
+					$meta_key = '_lng';
+					break;
+				default:
+					$meta_key = '_'.$key;
+					break;
+			endswitch;
+
+			$validated_value = eventorganiser_sanitize_meta($meta_key, $value);
+
+			if( !empty($validated_value) )
+				add_metadata('eo_venue', $venue_id, $meta_key, $validated_value, true);		
+		}
+	
+		do_action('eventorganiser_insert_venue',$venue_id);
+		do_action('eventorganiser_save_venue',$venue_id);
+
+		return array('term_id' => $venue_id, 'term_taxonomy_id' => $resp['term_taxonomy_id']);
+	}
+
+/**
+ * Deletes a venue in the database. 
+ *
+ * Calls wp_delete_term to delete the taxonomy term
+ * Deletes all the venue's meta 
+ * 
+ * @since 1.4.0
+ *
+ * @uses wp_delete_term to delete venue (taxonomy) term
+ * @uses do_action() Calls 'eventorganiser_delete_venue' hook with the venue id
+ *
+ * @param (int) the Term ID of the venue to update
+ * @return bool|WP_Error false or error on failure. True after sucessfully deleting the venue and its meta data.
+ */
+	function eo_delete_venue($venue_id){
+		global $wpdb;
+		$resp =wp_delete_term( $venue_id, 'event-venue');
+		if( is_wp_error($resp) || false === $resp ){
+			return $resp;
+		}
+		$venue_meta_ids = $wpdb->get_col( $wpdb->prepare( "SELECT meta_id FROM $wpdb->eo_venuemeta WHERE eo_venue_id = %d ", $venue_id ));
+
+		if ( !empty($venue_meta_ids) ) {
+			$in_venue_meta_ids = "'" . implode("', '", $venue_meta_ids) . "'";
+			$wpdb->query( "DELETE FROM $wpdb->eo_venuemeta WHERE meta_id IN($in_venue_meta_ids)" );
+		}
+		do_action('eventorganiser_delete_venue',$venue_id);
+
+		return true;
+	}
+
+
+
+	function eventorganiser_sanitize_meta($key,$value){
+		$validation= array(
+			'_address' => 'sanitize_text_field',
+			'_postcode' => 'sanitize_text_field',
+			'_country' => 'sanitize_text_field',
+			'_lat' =>  'floatval',
+			'_lng' => 'floatval',
+			'_description' => 'wp_filter_post_kses',
+		);
+
+		if( !isset($validation[$key]) )
+			return false;
+
+		return call_user_func($validation[$key], $value);
+	}
+
+
 
 function eventorganiser_venue_dropdown($post_id=0,$args){
 	$venues = get_terms('event-venue', array('hide_empty'=>false));
-	$current = get_the_terms($post_id,'event-venue');
-	$current = ($current ? array_pop($current) : '');
-	$current = ($current ? $current->term_id: 0);
+	$current = (int) eo_get_venue($post_id); 
 
 	$id = (!empty($args['id']) ? 'id="'.esc_attr($args['id']).'"' : '');
 	$name = (!empty($args['name']) ? 'name="'.esc_attr($args['name']).'"' : '');
@@ -439,4 +533,10 @@ function eventorganiser_venue_dropdown($post_id=0,$args){
 		<?php endforeach;?>
 	</select><?php
 }
+
+
+	function eo_get_venue_map($venue_slug_or_id='', $args=array()){
+		$venue_id = eo_get_venue_id_by_slugorid($venue_slug_or_id);
+		return EventOrganiser_Shortcodes::get_venue_map($venue_id, $args=array());
+	}
 ?>

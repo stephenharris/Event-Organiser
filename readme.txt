@@ -4,7 +4,7 @@ Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.4
-Stable tag: 1.3.6
+Stable tag: 1.4
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -13,9 +13,8 @@ Create and maintain events, including complex reoccurring patterns, venue manage
 Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows your to view your events in the familiar WordPress list or view all occurrences of your events in a calendar page in the amin area.
 
 = New Features =
+* Custom fields and metaboxes for venues
 * Improved add events link to menu option
-* Import Categories and Venues
-* Break a reoccurring event
 * Templates for widgets (syntax as for event list shortcode)
 * Time format option for full calender shortcode
 * Quick/Bulk edit event venue
@@ -28,6 +27,7 @@ Event Organiser adds event management that integrates well with your WordPress s
 * Create one-time events or reoccuring events.
 * Allows complex reoccuring patterns for events. You can create events that last an arbirtary time, and repeat over a specified period. Events can repeat daily through to yearly, allowing complex schedules such as 'On the third Tuesday of every fourth month' or 'Every month on the 16th'.
 * **Venue admin page** to add and maintain the venues for your events, with Google maps support to display a map of the venue and a fully-featured content editor.
+* Custom metaboxes and meta data support for venues.
 * The **Calendar widget**  displays a calendar (identical to the standard WordPress Calendar) that highlights events with links to the events archive page, listing events occuring that day.
 * The **Event List widget**  outputs a list of events, and allows you to specify the number of events, restrict to event categories or venues and their order etc.
 * The **Event Agent widget**.
@@ -49,7 +49,6 @@ Event Organiser adds event management that integrates well with your WordPress s
 
 = Planned Features =
 
-* Metaboxes for the venue admin page, allowing the addition of custom fields.
 * Introducing actions and filters to allow developers or plug-ins to modify and interact with Event Organiser.
 * Allowing users to exclude or include specific dates in an event's schedule.
 * Dashboard widgets (upcoming events / expiring events).
@@ -144,6 +143,14 @@ Event Organiser provides the following shortcodes:
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.4 =
+* A big update: venue address data migrated to new venue meta table
+* Introduces support for venue meta data and custom metaboxes (see )
+* Improved venue admin page UI
+
+= 1.3.6 =
+* Works with WordPress 3.4
 
 = 1.3.5 =
 * Works with WordPress 3.4

@@ -565,57 +565,106 @@ function eo_get_category_meta($term,$key=''){
 	return false;
 }
 
+	/*
+	 * Quick touchup to wpdb
+	 */
+	add_action( 'init', 'eventorganiser_wpdb_fix',1);
+	add_action( 'switch_blog', 'eventorganiser_wpdb_fix');
+	function eventorganiser_wpdb_fix(){
+		global $wpdb;
+		$wpdb->eo_venuemeta = "{$wpdb->prefix}eo_venuemeta";
+		$wpdb->eo_events = "{$wpdb->prefix}eo_events";
+	}
 
-add_filter('get_event-venue','eventorganiser_venue_meta');
-function eventorganiser_venue_meta($term){
-	if($term && isset($term->taxonomy) && $term->taxonomy=='event-venue'):
-		$venue_meta = eo_get_venue_by('slug',$term->slug);
-		if($venue_meta){
-			$fields = array('venue_address','venue_postal','venue_country','venue_lng','venue_lat','venue_description');
-			foreach ($fields as $field){
-				if(!isset($term->$field))
-					$term->$field = $venue_meta->$field;
+
+	add_filter('wp_get_object_terms','_eventorganiser_get_event_venue',10,4);
+	function _eventorganiser_get_event_venue($terms, $post_ids,$taxonomies,$args){
+		//Passes taxonomies as a string inside quotes...
+		$taxonomies = explode(',',trim($taxonomies,"\x22\x27"));
+		return eventorganiser_update_venue_meta_cache( $terms, $taxonomies);
+	}
+
+	add_filter('get_terms','eventorganiser_update_venue_meta_cache',10,2);
+	add_filter('get_event-venue','eventorganiser_update_venue_meta_cache',10,2);
+
+	function eventorganiser_update_venue_meta_cache( $terms, $tax){
+
+		if( is_array($tax) && !in_array('event-venue',$tax) ){
+			return $terms;
+		}
+		if( !is_array($tax) && $tax != 'event-venue'){
+			return $terms;
+		}
+
+		$single = false;
+		if( ! is_array($terms) ){
+			$single = true;
+			$terms = array( $terms );
+		}
+
+		if( empty($terms) )
+		       return $terms;
+
+
+          	$term_ids = wp_list_pluck($terms,'term_id');
+
+   		update_meta_cache('eo_venue',$term_ids);
+		$fields = array('venue_address','venue_postal','venue_country','venue_lng','venue_lat','venue_description');
+
+		//Backwards compatible. Depreciated - use the functions, not properties.
+		foreach ($terms as $term){
+			if( !is_object($term) )
+				continue;
+			$term_id = (int) $term->term_id;
+
+			if( !isset($term->venue_address) ){
+				$address = eo_get_venue_address($term_id);
+				$term->venue_address =  isset($address['address']) ? $address['address'] : '';
+				$term->venue_postal =  isset($address['postcode']) ? $address['postcode'] : '';
+				$term->venue_country =  isset($address['country']) ? $address['country'] : '';
+			}
+
+			if( !isset($term->venue_lat) || !isset($term->venue_lng) ){
+				$term->venue_lat =  number_format(floatval(eo_get_venue_lat($term_id)), 6);
+				$term->venue_lng =  number_format(floatval(eo_get_venue_lng($term_id)), 6);
+			}
+
+			if( !isset($term->venue_description) ){
+				$term->venue_description = eo_get_venue_description($term_id);
 			}
 		}
-	endif;
-	return $term;
-}
-add_filter('wp_get_object_terms','eventorganiser_venues_meta');
-function eventorganiser_venues_meta($terms){
-	if($terms):
-		foreach($terms as $term):
-			$term = eventorganiser_venue_meta($term);
-		endforeach;
-	endif;
-	return $terms;
-}
+		
+		if( $single ) return $terms[0];
 
-add_filter('terms_clauses', 'eventorganiser_join_venue_meta',10,3);
-function eventorganiser_join_venue_meta($pieces,$taxonomies,$args){
+		return $terms;
+	} 
 
-	if(!in_array('event-venue',$taxonomies))
-		return $pieces;
 
-	global $eventorganiser_venue_table, $wpdb;
-	$evt =$eventorganiser_venue_table;
+	add_filter('terms_clauses', 'eventorganiser_join_venue_meta',10,3);
+	function eventorganiser_join_venue_meta($pieces,$taxonomies,$args){
+		global $wpdb;
 
-	if($args['fields'] =='all'){
-		$pieces['fields'] .= ", {$evt}.venue_id, {$evt}.venue_address, {$evt}.venue_postal, {$evt}.venue_country, {$evt}.venue_lat, {$evt}.venue_lng, {$evt}.venue_description";
-		$pieces['join'] .=" LEFT JOIN {$evt} ON t.slug = {$evt}.venue_slug";
+		if( ! in_array('event-venue',$taxonomies) )
+			return $pieces;
 
 		switch($args['orderby']):
 			case 'address':
-				$pieces['orderby'] = "ORDER BY  {$evt}.venue_address";
-				break;
 			case 'country':
-				$pieces['orderby'] = "ORDER BY  {$evt}.venue_country";
-				break;
 			case 'postcode':
-				$pieces['orderby'] = "ORDER BY  {$evt}.venue_postal";
+				$meta_key ='_'.$args['orderby'];
 				break;
+			default:
+				$meta_key = false;
 		endswitch;
-	}
 
-	return $pieces;
-}
+		if(false === $meta_key)
+			return $pieces;
+
+		$sql = get_meta_sql(array(array('key'=>$meta_key)), 'eo_venue', 't', 'term_id');
+
+		$pieces['join'] .= $sql['join'];
+		$pieces['where'] .= $sql['where'];
+		$pieces['orderby'] = "ORDER BY {$wpdb->eo_venuemeta}.meta_value";
+		return $pieces;
+	}
 ?>

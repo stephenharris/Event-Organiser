@@ -87,7 +87,7 @@ class EventOrganiser_Shortcodes {
 		$id = count(self::$calendars);
 
 		$html='<div id="eo_fullcalendar_'.$id.'_loading" style="background:white;position:absolute;z-index:5" >';
-		$html.='<img src="'.EVENT_ORGANISER_URL.'/css/images/loading-image.gif'.'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />'.__('Loading&#8230;').'</div>';
+		$html.='<img src="'.esc_url(EVENT_ORGANISER_URL.'/css/images/loading-image.gif').'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />'.__('Loading&#8230;').'</div>';
 		$html.='<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
 		if($key){
 			$args = array('orderby'=> 'name','show_count'   => 0,'hide_empty'   => 0);
@@ -99,35 +99,51 @@ class EventOrganiser_Shortcodes {
 	function handle_venuemap_shortcode($atts) {
 		global $post;
 		self::$add_script = true;
-
 		//If venue is not set get from the venue being quiered or the post being viewed
-		if(empty($atts['venue']) ){
-			if(eo_is_venue()){
+		if( empty($atts['venue']) ){
+			if( eo_is_venue() ){
 				$atts['venue']= esc_attr(get_query_var('term'));
 			}else{
-				$atts['venue'] = eo_get_venue_slug($post->ID);
+				$atts['venue'] = eo_get_venue_slug(get_the_ID());
 			}
 		}
 
+		$venue_id = eo_get_venue_id_by_slugorid($atts['venue'] );
+
+		return self::get_venue_map($venue_id, $atts);
+	}
+
+
+	function get_venue_map($venue_id, $args){
+
+		self::$add_script = true;
+
+		extract( shortcode_atts( array(
+			'zoom' => 15,
+			'width' => '100%',
+			'height' => '200px',
+		      'class' => ''
+			), $args ) );
+
+
 		//Set zoom
-		$zoom = isset($atts['zoom']) ? intval($atts['zoom']) : 15;
-		$zoom =( !empty($zoom) ? $zoom : 15);
+		$zoom = (int) $zoom; 
 		
 		//Set the attributes
-		$atts['width'] = ( !empty($atts['width']) ) ? esc_attr($atts['width']):'100%';
-		$atts['height'] = ( !empty($atts['height']) ) ? esc_attr($atts['height']):'200px';
+		$width = esc_attr($width);
+		$height = esc_attr($height);
 
 		 //If class is selected use that style, otherwise use specified height and width
-		if(!empty($atts['class'])){
-			$class = esc_attr($atts['class'])." eo-venue-map googlemap";
+		if( !empty($class) ){
+			$class = esc_attr($class)." eo-venue-map googlemap";
 			$style="";
 		}else{
 			$class ="eo-venue-map googlemap";
-			$style="style='height:".$atts['height'].";width:".$atts['width'].";' ";
+			$style="style='height:".$height.";width:".$width.";' ";
 		}
 		
 		//Get latlng value by slug
-		$latlng = eo_get_venue_latlng($atts['venue']);
+		$latlng = eo_get_venue_latlng($venue_id);
 		self::$map[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng'],'zoom'=>$zoom);
 		$id = count(self::$map);
 
@@ -135,6 +151,7 @@ class EventOrganiser_Shortcodes {
 		return $return;
 	}
  
+
 	function handle_eventlist_shortcode($atts=array(),$content=null) {
 		global $post;
 		$tmp_post = $post;
@@ -173,7 +190,8 @@ class EventOrganiser_Shortcodes {
 				$dateTime = new DateTime($post->StartDate.' '.$post->StartTime, $tz);
 				
 				if(empty($content)):
-					$return .= '<li><a title="'.$post->post_title.'" href="'.get_permalink($post->ID).'">'.$post->post_title.'</a> '.__('on','eventorganiser').' '.eo_format_date($post->StartDate.' '.$post->StartTime, $format).'</li>';
+					$return .= '<li><a title="'.the_title_attribute(array('echo'=>false)).'" href="'.get_permalink().'">'.get_the_title().'</a> '.__('on','eventorganiser').' '.eo_format_date($post->StartDate.' '.$post->StartTime, $format).'</li>';
+
 				else:
 					$return .= '<li>'.self::read_template($content).'</li>';
 				endif;
@@ -225,7 +243,7 @@ class EventOrganiser_Shortcodes {
 		
 		switch($matches[1]):
 			case 'event_title':
-				$replacement = $post->post_title;
+				$replacement = get_the_title();
 				break;
 				
 			case 'start':
@@ -247,18 +265,18 @@ class EventOrganiser_Shortcodes {
 						break;
 				endswitch;
 		
-				if(eo_is_all_day($post->ID)){
+				if( eo_is_all_day(get_the_ID()) ){
 					$replacement = eo_format_date($post->$col[$matches[1]]['date'].' '.$post->$col[$matches[1]]['time'], $dateFormat);
 				}else{	
 					$replacement = eo_format_date($post->$col[$matches[1]]['date'].' '.$post->$col[$matches[1]]['time'], $dateFormat.$dateTime);					
 				}
 				break;
 			case 'event_tags':
-				$replacement = get_the_term_list( $post->ID, 'event-tag', '', ', ',''); 
+				$replacement = get_the_term_list( get_the_ID(), 'event-tag', '', ', ',''); 
 				break;
 
 			case 'event_cats':
-				$replacement = get_the_term_list( $post->ID, 'event-category', '', ', ',''); 
+				$replacement = get_the_term_list( get_the_ID(), 'event-category', '', ', ',''); 
 				break;
 
 			case 'event_venue':
@@ -291,14 +309,14 @@ class EventOrganiser_Shortcodes {
 			case 'event_thumbnail':
 				$size = (isset($matches[2]) ? self::eo_clean_input($matches[2]) : '');
 				$size = (!empty($size) ?  $size : 'thumbnail');
-				$replacement = get_the_post_thumbnail($post->ID,$size);
+				$replacement = get_the_post_thumbnail(get_the_ID(),$size);
 				break;
 			case 'event_url':
 				$replacement =  get_permalink();
 				break;
 			case 'event_custom_field':
 				$field = $matches[2];
-				$meta = get_post_meta($post->ID, $field);
+				$meta = get_post_meta(get_the_ID(), $field);
 				$replacement =  implode($meta);
 				break;
 			case 'event_excerpt':

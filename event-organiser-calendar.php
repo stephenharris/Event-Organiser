@@ -279,7 +279,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				</tr>
 				<tr>
 					<th><?php _e('Event Title','eventorganiser');?>: </th>
-					<td><input name="eo_event[event_title]" size="30"></input></td>
+					<td><input name="eo_event[event_title]" class="eo-event-title ui-autocomplete-input ui-widget-content ui-corner-all" ></td>
 				</tr>
 				<tr>
 					<th><?php _e('Where','eventorganiser');?>: </th>
@@ -295,7 +295,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				</tr>
 				<tr>
 					<th></th>
-					<td><textarea cols="30" rows="4" name="eo_event[event_content]"></textarea></td>
+					<td><textarea rows="4" name="eo_event[event_content]"></textarea></td>
 				</tr>
 				</table>
 				<input type="hidden" name="eo_event[StartDate]">

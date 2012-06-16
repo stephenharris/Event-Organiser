@@ -2,7 +2,7 @@
 /*
 Plugin Name: Event Organiser
 Plugin URI: http://www.HarrisWebSolutions.co.uk/event-organiser
-Version: 1.3.6
+Version: 1.4
 Description: Creates a custom post type 'events' with features such as reoccurring events, venues, Google Maps, calendar views and events and venue pages
 Author: Stephen Harris
 Author URI: http://www.HarrisWebSolutions.co.uk
@@ -33,16 +33,11 @@ Author URI: http://www.HarrisWebSolutions.co.uk
  * @name $eventorganiser_db_version
  */ 
 global $eventorganiser_db_version;
-$eventorganiser_db_version = "1.3";
+$eventorganiser_db_version = "1.4";
 
 
-global $wpdb;
-
-global $eventorganiser_events_table;
+global $wpdb, $eventorganiser_events_table;
 $eventorganiser_events_table = $wpdb->prefix."eo_events";
-
-global $eventorganiser_venue_table;
-$eventorganiser_venue_table = $wpdb->prefix."eo_venues";
 
 /**
  * Defines the plug-in directory url
@@ -106,17 +101,16 @@ require_once("includes/class-event-organiser-im-export.php");
 
 if(is_admin()):
 	require_once('classes/class-eventorganiser-admin-page.php');
+
 	/****** event editing pages******/
 	require_once('event-organiser-edit.php');
 	require_once('event-organiser-manage.php');
-        
-        require_once("classes/class-eo-venue.php");
-	
+        	
 	/****** settings, venue and calendar pages******/
 	require_once('event-organiser-settings.php');
 	require_once('event-organiser-venues.php');
 	require_once('event-organiser-calendar.php');
-	require_once("classes/class-eo-list-table.php");
+	
 else:
     /****** Templates ******/
     require_once('includes/event-organiser-templates.php');    
@@ -134,10 +128,17 @@ require_once("includes/event-organiser-venue-functions.php");
 /****** Event class ******/
 require_once("classes/class-eo-event.php");
 
-
 /****** Widgets and Shortcodes ******/
 require_once('classes/class-eo-agenda-widget.php');
 require_once('classes/class-eo-event-list-widget.php');
 require_once('classes/class-eo-calendar-widget.php');
 require_once('classes/class-eventorganiser-shortcodes.php');
+
+add_action( 'widgets_init', 'eventorganiser_widgets_init');
+function eventorganiser_widgets_init(){
+	load_plugin_textdomain( 'eventorganiser', false, EVENT_ORGANISER_I18N);
+	register_widget('EO_Event_List_Widget');
+	register_widget('EO_Events_Agenda_Widget');
+	register_widget('EO_Calendar_Widget');
+}
 ?>

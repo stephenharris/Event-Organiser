@@ -79,12 +79,12 @@ function eo_get_events($args=array()){
 * @return row object of event's row in Events table
 */
 function eo_get_by_postid($postid,$occurrence=0){
-	global $eventorganiser_events_table, $wpdb;
+	global $wpdb;
 
 	$querystr = $wpdb->prepare("
-		SELECT * FROM  $eventorganiser_events_table 
-		WHERE {$eventorganiser_events_table}.post_id=%d
-		 AND ({$eventorganiser_events_table}.event_occurrence=%d)
+		SELECT * FROM  {$wpdb->eo_events} 
+		WHERE {$wpdb->eo_events}.post_id=%d
+		 AND ({$wpdb->eo_events}.event_occurrence=%d)
 		LIMIT 1",$postid,$occurrence);
 
 	return $wpdb->get_row($querystr);
@@ -182,23 +182,23 @@ function eo_the_end($format='d-m-Y',$id=''){
  * @since 1.0.0
  */
 function eo_get_next_occurrence($format='d-m-Y',$id=''){
-	global $post,$eventorganiser_events_table, $wpdb;
+	global $post, $wpdb;
 
 	if(!isset($id) || $id=='') $id = $post->ID;
 	
 	//Retrieve the blog's local time and create the date part
-	$blog_now = new DateTIme(null, eo_get_blog_timezone());
+	$blog_now = new DateTIme(null, eo_get_blog_timezone() );
 	$now_date =$blog_now->format('Y-m-d');
 	$now_time =$blog_now->format('H:i:s');
 	
 	$querystr =$wpdb->prepare("
 		SELECT StartDate, StartTime
-		FROM  $eventorganiser_events_table
-		WHERE {$eventorganiser_events_table}.post_id=%d
+		FROM  {$wpdb->eo_events}
+		WHERE {$wpdb->eo_events}.post_id=%d
 		AND ( 
-			({$eventorganiser_events_table}.StartDate > %s) OR
-			({$eventorganiser_events_table}.StartDate = %s AND {$eventorganiser_events_table}.StartTime >= %s))
-		ORDER BY {$eventorganiser_events_table}.StartDate ASC
+			({$wpdb->eo_events}.StartDate > %s) OR
+			({$wpdb->eo_events}.StartDate = %s AND {$wpdb->eo_events}.StartTime >= %s))
+		ORDER BY {$wpdb->eo_events}.StartDate ASC
 		LIMIT 1",$id,$now_date,$now_date,$now_time);
 
 	$nextoccurrence  = $wpdb->get_row($querystr);
@@ -393,7 +393,7 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 function eo_format_date($dateString='',$format='d-m-Y'){
 
 	if($format!=''&& $dateString!=''){
-		$datetime = new DateTime($dateString,eo_get_blog_timezone());
+		$datetime = new DateTime($dateString, eo_get_blog_timezone());
 		$formated =  eo_format_datetime($datetime,$format);
 		return $formated;
 	}
@@ -557,7 +557,7 @@ function eo_display_reoccurence($id=''){
  * @since 1.0.0
  */
 function eo_get_the_occurrences($id=''){
-	global $post,$eventorganiser_events_table, $wpdb;
+	global $post, $wpdb;
 
 	$id = (empty($id)  ? $post->ID : $id);
 
@@ -565,8 +565,8 @@ function eo_get_the_occurrences($id=''){
 		return false;
 
 	$querystr = $wpdb->prepare("
-		SELECT StartDate,StartTime FROM $eventorganiser_events_table 
-		WHERE {$eventorganiser_events_table}.post_id=%d ORDER BY StartDate ASC",$id);
+		SELECT StartDate,StartTime FROM {$wpdb->eo_events} 
+		WHERE {$wpdb->eo_events}.post_id=%d ORDER BY StartDate ASC",$id);
 	
 	$results = $wpdb->get_results($querystr);
 
@@ -576,7 +576,7 @@ function eo_get_the_occurrences($id=''){
 	$occurrences=array();
 
 	foreach($results as $row):
-		$occurrences[] = new DateTime($row->StartDate.' '.$row->StartTime,eo_get_blog_timezone());
+		$occurrences[] = new DateTime($row->StartDate.' '.$row->StartTime, eo_get_blog_timezone());
 	endforeach;
 
 	return $occurrences;
@@ -760,7 +760,7 @@ function eo_event_color($post_id=0){
 	}
 
 	if( empty($post_id) )
-		return '';
+		return false;
 
 	$color='';
 	$terms = get_the_terms( $post->ID, 'event-category' );
@@ -779,4 +779,6 @@ function eo_event_color($post_id=0){
 
 	return esc_attr($color);
 }
+
+
 ?>

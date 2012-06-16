@@ -47,26 +47,15 @@
 	width: 60%;
 }
 
-#eo_venue_form .name{
-	font-size: 1.7em;
-	width: 90%;
-}
-#eo_venue_form .addresswrap{
+#eo_venue_form table.address {
 	float:left;
-	margin-right:-300px;
+	text-align:left;
+	margin: 10px;
 }
-#eo_venue_form {
-	padding:10px;
-}
-#eo_venue_form .postbox .inside, .stuffbox .inside.address{
-	float:left;
-	margin-right:-60%;
-}
-#eo_venue_form .postbox .hndle{
-	cursor: auto;
-}
-#venue_description{
-	height: 300px;
+
+#eo_venue_form #venue_address .inside{
+	padding:0;
+	margin:0;
 }
 
 /*

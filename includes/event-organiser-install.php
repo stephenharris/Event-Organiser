@@ -1,7 +1,8 @@
 <?php
  function eventorganiser_install(){
-       global $wpdb, $eventorganiser_db_version, $eventorganiser_venue_table, $eventorganiser_events_table;
-	$table_posts = $wpdb->prefix . "posts";
+       global $wpdb, $eventorganiser_db_version;
+
+	eventorganiser_wpdb_fix();
 
 	$charset_collate = '';
 	if ( ! empty($wpdb->charset) )
@@ -10,7 +11,7 @@
 		$charset_collate .= " COLLATE $wpdb->collate";
 
 	//Events table
-	$sql_events_table = "CREATE TABLE " .$eventorganiser_events_table. " (
+	$sql_events_table = "CREATE TABLE " .$wpdb->eo_events. " (
 		event_id bigint(20) NOT NULL AUTO_INCREMENT,
 		post_id bigint(20) NOT NULL,
 		Venue bigint(20) NOT NULL,
@@ -27,24 +28,21 @@
 		reoccurrence_end DATE NOT NULL,
 		PRIMARY KEY  (event_id))".$charset_collate;
 	
-	//Venue table
-	$sql_venue_table = "CREATE TABLE " . $eventorganiser_venue_table. " (
-	  venue_id bigint(20) NOT NULL AUTO_INCREMENT,
-	  venue_name text NOT NULL,
-	  venue_slug text NOT NULL,
-	  venue_address text NOT NULL,
-	  venue_postal text NOT NULL,
-	  venue_country text NOT NULL,
-	  venue_lng FLOAT( 10, 6 ) NOT NULL DEFAULT 0,
-	  venue_lat FLOAT( 10, 6 ) NOT NULL DEFAULT 0,
-	  venue_owner bigint(20) NOT NULL,
-	  venue_description longtext NOT NULL,
-	  PRIMARY KEY  (venue_id) )".$charset_collate;
+	//Venue meta table
+	$sql_venuemeta_table ="CREATE TABLE {$wpdb->prefix}eo_venuemeta (
+		meta_id bigint(20) unsigned NOT NULL auto_increment,
+		eo_venue_id bigint(20) unsigned NOT NULL default '0',
+ 		meta_key varchar(255) default NULL,
+		meta_value longtext,
+		PRIMARY KEY (meta_id),
+		KEY eo_venue_id (eo_venue_id),
+		KEY meta_key (meta_key)
+		) $charset_collate; ";
 
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	dbDelta($sql_events_table);
-	dbDelta($sql_venue_table);
-	
+	dbDelta($sql_venuemeta_table);
+
 	//Add options and capabilities
 	$eventorganiser_options = array (	
 		'supports' => array('title','editor','author','thumbnail','excerpt','custom-fields','comments'),
@@ -96,18 +94,17 @@ function eventorganiser_deactivate(){
 
 add_action('admin_init', 'eventorganiser_upgradecheck');
 function eventorganiser_upgradecheck(){
-       global $eventorganiser_db_version, $eventorganiser_events_table, $wpdb,$eventorganiser_venue_table;
+       global $eventorganiser_db_version, $wpdb;
 	global $EO_Errors;
 	
 	$installed_ver = get_option('eventorganiser_version');
-
 	//If this is an old version, perform some updates.
 	if ( !empty($installed_ver ) && $installed_ver != $eventorganiser_db_version ):
 		  if ( $installed_ver < '1.1') {
 			$query = $wpdb->prepare("SELECT* 
-				FROM {$eventorganiser_events_table}
-				WHERE {$eventorganiser_events_table}.event_schedule = 'monthly'
-				GROUP BY {$eventorganiser_events_table}.post_id");
+				FROM {$wpdb->eo_events}
+				WHERE {$wpdb->eo_events}.event_schedule = 'monthly'
+				GROUP BY {$wpdb->eo_events}.post_id");
 		
 			$results = $wpdb->get_results($query); 
 		
@@ -128,7 +125,7 @@ function eventorganiser_upgradecheck(){
 					endif;
 					
 					$result = $wpdb->update(
-						$eventorganiser_events_table, 
+						$wpdb->eo_events, 
 						array('event_schedule_meta'=>$meta), 
 						array('post_id'=>$post_id)
 					); 
@@ -150,6 +147,7 @@ function eventorganiser_upgradecheck(){
 			$settings['deleteexpired'] = 0;
 			update_option('eventorganiser_options',$settings);
 		}
+
 		if($installed_ver <'1.2.1'){
 			$settings = get_option('eventorganiser_options');
 			$settings['url_venue']= (empty($settings['url_venue']) ? 'events/venue' : $settings['url_venue']);
@@ -158,74 +156,118 @@ function eventorganiser_upgradecheck(){
 		}
 
 		if($installed_ver <'1.3'){
-			//Venues being converted to taxonomy terms
-			$venues = eo_get_the_venues(); //Get venues from meta table
-			$slimetrail = array();	//Track changes from an old slug to another
+			eventorgniaser_130_update();
+		}
 
-			//For each term insert it as a taxonomy term.
-			foreach ($venues as $venue){
-				$old_slug =esc_attr($venue->venue_slug);	
-				$term = wp_insert_term(esc_attr($venue->venue_name),'event-venue',array(
-						'description'=> $venue->venue_description,
-						'slug' => $old_slug ));
-
-				if(!is_wp_error($term)){
-					$term= get_term_by('id',$term['term_id'],'event-venue');
-					$slimetrail[$old_slug] = $term->slug;//WordPress may have changed the slug
-					if($term->slug != $old_slug){
-						$wpdb->update($eventorganiser_venue_table, array('venue_slug'=>$term->slug),  array('venue_id'=>$venue->venue_id), '%s', '%d'); 
-					}
-				}
-			}
-		
-			//Loop through ALL events...
-			$events = new WP_Query(array(
-				'post_type'=>'event',	'posts_per_page'=>-1,'showpastevents'=>1,'showrepeats'=>0,
-				'post_status' => array('publish','private', 'pending', 'draft', 'future','trash')
-			));
-
-			global $post;
-			if($events->have_posts()):
-				while($events->have_posts()): $events->the_post();
-					if(empty($post->Venue)) continue; //Doesn't have a venue
-
-					$post_id = intval($post->ID);
-					$venue_id =intval($post->Venue);
-					$venue = eo_get_venue_by('id',$venue_id);//Get venue meta.
-
-					if(!empty($venue)){
-						$slug = esc_attr($venue->venue_slug);
-						$venue_tax= get_term_by('slug',$slug,'event-venue');
-						if($venue_tax){
-							$venue_tax_id =(int) $venue_tax->term_id;
-							wp_set_object_terms( $post_id, array($venue_tax_id),'event-venue');
-							//Change Venue column to tax ID
-							$wpdb->update($eventorganiser_events_table, array('Venue'=>$venue_tax_id),  array('post_id'=>$post_id,'Venue'=>$venue_id), '%d', '%d'); 
-						}
-					}
-				endwhile;
-				wp_reset_postdata();
-			endif;
+		if($installed_ver <'1.4'){
+			eventorganiser_140_update();
 		}
 		update_option('eventorganiser_version', $eventorganiser_db_version);
+
+		//Run upgrade checks
+		add_action('admin_notices', 'eventorganiser_db_checks',0);
 	endif;
 }
 
 
+function eventorgniaser_130_update(){
+
+	global $wpdb;
+	$eventorganiser_venue_table = $wpdb->prefix."eo_venues";
+
+	//Venues being converted to taxonomy terms
+	$venues = $wpdb->get_results(" SELECT* FROM $eventorganiser_venue_table");
+	$slimetrail = array();	//Track changes from an old slug to another
+
+	//For each term insert it as a taxonomy term.
+	foreach ($venues as $venue){
+		$old_slug =esc_attr($venue->venue_slug);	
+		$term = wp_insert_term(esc_attr($venue->venue_name),'event-venue',array(
+				'description'=> $venue->venue_description,
+				'slug' => $old_slug ));
+
+		if(!is_wp_error($term)){
+			$term= get_term_by('id',$term['term_id'],'event-venue');
+			$slimetrail[$old_slug] = $term->slug;//WordPress may have changed the slug
+			if($term->slug != $old_slug){
+				$wpdb->update($eventorganiser_venue_table, array('venue_slug'=>$term->slug),  array('venue_id'=>$venue->venue_id), '%s', '%d'); 
+			}
+		}
+	}
+		
+	//Loop through ALL events...
+	$events = new WP_Query(array(
+		'post_type'=>'event',	'posts_per_page'=>-1,'showpastevents'=>1,'showrepeats'=>0,
+		'post_status' => array('publish','private', 'pending', 'draft', 'future','trash')
+		));
+
+	global $post;
+	if($events->have_posts()):
+		while($events->have_posts()): $events->the_post();
+			if(empty($post->Venue)) continue; //Doesn't have a venue
+
+			$post_id = intval($post->ID);
+			$venue_id =intval($post->Venue);
+			$venue = eo_get_venue_by('id',$venue_id);//Get venue meta.
+
+			if(!empty($venue)){
+				$slug = esc_attr($venue->slug);
+				$venue_tax= get_term_by('slug',$slug,'event-venue');
+				if($venue_tax){
+					$venue_tax_id =(int) $venue_tax->term_id;
+					wp_set_object_terms( $post_id, array($venue_tax_id),'event-venue');
+					//Change Venue column to tax ID
+					$wpdb->update($wpdb->eo_events, array('Venue'=>$venue_tax_id),  array('post_id'=>$post_id,'Venue'=>$venue_id), '%d', '%d'); 
+				}
+			}
+		endwhile;
+		wp_reset_postdata();
+	endif;
+}
+
+function eventorganiser_140_update(){
+	//Migrates from Venue table to venue meta table
+
+	//Run install to create new table:
+	eventorganiser_install();
+
+	global $wpdb;
+	$eventorganiser_venue_table = $wpdb->prefix."eo_venues";
+
+	$venues = eo_get_the_venues();
+	$venue_metavalues = $wpdb->get_results(" SELECT venue_slug, venue_address, venue_postal, venue_country, venue_lng, venue_lat, venue_description FROM $eventorganiser_venue_table");
+	$fields = array('venue_address'=>'_address','venue_postal'=>'_postcode','venue_country'=>'_country','venue_lng'=>'_lng','venue_lat'=>'_lat','venue_description'=>'_description');
+
+	foreach( $venue_metavalues as $venue ){
+		$term = get_term_by('slug',$venue->venue_slug,'event-venue');
+		if( empty($term) || is_wp_error($term) )
+			continue;
+
+		foreach ($fields as $column_name => $meta_key){
+			if( ! empty($venue->$column_name) ){
+				update_metadata('eo_venue',$term->term_id,$meta_key,$venue->$column_name);
+			}
+		}
+	}
+}
+
+
+
 function eventorganiser_uninstall(){
-	global $wpdb,$eventorganiser_venue_table, $eventorganiser_events_table,$eventorganiser_roles, $wp_roles,$wp_taxonomies;
+	global $wpdb,$eventorganiser_roles, $wp_roles,$wp_taxonomies;
 
 	eventorganiser_clear_cron_jobs();
+	eventorganiser_create_event_taxonomies();
 
 	//Remove 	custom taxonomies and terms.
 	$taxs = array('event-category','event-venue','event-tag');
 	$terms = get_terms($taxs, 'hide_empty=0' );
-	foreach ($terms as $term) {
-		$term_id = (int)$term->term_id;
-		wp_delete_term($term_id ,$term->taxonomy);
-	}
-	foreach ($taxs as $tax){
-		unset($wp_taxonomies[$tax]);
+
+	if( $terms ){
+		foreach ($terms as $term) {
+			$term_id = (int)$term->term_id;
+			wp_delete_term($term_id ,$term->taxonomy);
+		}
 	}
 
 	//Remove all posts of CPT Event
@@ -250,8 +292,10 @@ function eventorganiser_uninstall(){
 	eventorganiser_clear_cron_jobs();
 
 	//Drop tables    
-	$wpdb->query("DROP TABLE IF EXISTS $eventorganiser_events_table");
+	$wpdb->query("DROP TABLE IF EXISTS $wpdb->eo_events");
+	$eventorganiser_venue_table = $wpdb->prefix."eo_venues";
 	$wpdb->query("DROP TABLE IF EXISTS $eventorganiser_venue_table");
+	$wpdb->query("DROP TABLE IF EXISTS $wpdb->eo_venuemeta");
 
 	//Remove user-meta-data:
 	$meta_keys = array('metaboxhidden_event','closedpostboxes_event','wp_event_page_venues_per_page','manageedit-eventcolumnshidden');	

@@ -147,11 +147,12 @@ X-WR-CALDESC:<?php echo get_bloginfo('name');?> - Events
 <?php
   
 	// Query for events
-	$events = eo_get_events(array('numberofposts'=>-1,'showrepeats'=>0,'showpastevents'=>1));
+	$events = eo_get_events(array('numberofposts'=>-1,'group_events_by'=>'series','showpastevents'=>1));
  
 	// Loop through events
 	if ($events):
 		global $post;
+
 		foreach ($events as $post):
 
 			//If event has no corresponding row in events table then skip it
@@ -252,9 +253,9 @@ DESCRIPTION:<?php echo html_entity_decode($this->escape_icalText($excerpt));?>
 	endif;
 
 if($event->venue_set()): 
-	$venue =eo_get_venue_name().", ".implode(', ',eo_get_venue_address());
+	$venue =eo_get_venue_name(eo_get_venue());
 ?>
-LOCATION: <?php echo $this->escape_icalText($venue);?>
+LOCATION: <?php echo $this->escape_icalText($venue);;?>
 
 <?php endif; 
 	$author = get_the_author();
@@ -264,6 +265,7 @@ ORGANIZER: <?php echo $this->escape_icalText($author);?>
 END:VEVENT
 <?php
 		endforeach;
+
 	endif;
 ?>
 END:VCALENDAR
@@ -354,7 +356,7 @@ function escape_icalText($text){
 		$event_array['event_meta'] = array();
 
 		//Get Blog timezone, set Calendar timezone to this by default
-		$blog_tz = EO_Event::get_timezone();
+		$blog_tz = eo_get_blog_timezone();
 		$cal_tz =$blog_tz; 
 		$output="";
 
@@ -570,17 +572,18 @@ function escape_icalText($text){
 			//Event venues, assign to existing venue - or if set, create new one
 			case 'LOCATION':
 				$venue_ids = array();
-				if(!empty($value)):
+				if( !empty($value) ):
 					$venue_name = trim($value);
 					$venue = get_term_by('name',$venue_name,'event-venue');
 					if($venue){
 						$venue_ids[] = (int) $venue->term_id;
+
 					}elseif($import_venues){
 						//Create new venue, get ID. Count of venues created++
 						global $eventorganiser_venues_created;
-						$return = EO_Venue::insert(array('venue_name'=>$venue_name));
+						$return = eo_insert_venue($venue_name);
 
-						if($return){
+						if( !is_wp_error($return) && !$return ){
 							$venue_ids[] = (int) $return['term_id'];
 							$eventorganiser_venues_created++;
 							$event['venue']= $return['term_id']; //XXX This is depreciated
@@ -591,7 +594,7 @@ function escape_icalText($text){
 						$event_post['tax_input']['event-venue']=$venue_ids;	
 					}
 				endif;
-				break;					
+				break;			
 
 			//Event categories, assign to existing categories - or if set, create new ones
 			case 'CATEGORIES':

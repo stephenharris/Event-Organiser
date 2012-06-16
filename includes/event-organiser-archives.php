@@ -12,7 +12,6 @@ add_filter('query_vars', 'eventorganiser_register_query_vars' );
 function eventorganiser_register_query_vars( $qvars ){
 	//Add these query variables
 	$qvars[] = 'venue';//Depreciated
-	//$qvars[] = 'venue_id'; 
 	$qvars[] = 'ondate';
 	$qvars[] = 'showrepeats';
 	$qvars[] = 'eo_interval';
@@ -56,20 +55,29 @@ function eventorganiser_pre_get_posts( $query ) {
 		$eo_settings_array= get_option('eventorganiser_options');
 
 		if(!is_admin() && !is_single() &&!isset($query->query_vars['showpastevents'])){
+			//Whether or not to include past events.
 			$query->set('showpastevents',$eo_settings_array['showpast']);
 		}
-		
-		if(!isset($query->query_vars['showrepeats'])){
-			if(is_admin() || is_single())
-				$query->set('showrepeats',0);
-			else
-				$query->set('showrepeats',1);
-		}
 
-		if(!isset($query->query_vars['group_events_by'])&& !is_admin()){
-			if(!empty($eo_settings_array['group_events']) && $eo_settings_array['group_events']=='series')
+
+		//Depreciated; showrepeats - use group_events_by instead
+		if( isset($query->query_vars['showrepeats']) && !isset($query->query_vars['group_events_by']) ){
+			if( !$query->query_vars['showrepeats'] )
 				$query->set('group_events_by','series');
 		}
+		
+		if( !isset($query->query_vars['group_events_by']) ){
+			if( is_admin() || is_single() ){
+				//If in admin or single page - we probably don't want to see duplicates of (recurrent) events - unless specified otherwise.
+				$query->set('group_events_by','series');
+			}elseif(!empty($eo_settings_array['group_events']) && $eo_settings_array['group_events']=='series'){
+				//In other instances (archives, shortcode listing if showrepeats option is false display only the next event.
+				$query->set('group_events_by','series');
+			}else{
+				$query->set('group_events_by','occurrence');
+			}
+		}
+
 	}
 
 	 return $query;	
@@ -84,10 +92,10 @@ function eventorganiser_pre_get_posts( $query ) {
  */
 add_filter('posts_fields', 'eventorganiser_event_fields',10,2);
 function eventorganiser_event_fields( $selec, $query ){
-	global $wpdb, $eventorganiser_events_table;
+	global $wpdb;
 
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']) {
-		$selec = "{$eventorganiser_events_table}.*,".$selec; 
+		$selec = "{$wpdb->eo_events}.*,".$selec; 
 	}
 	return $selec;
 }
@@ -100,16 +108,16 @@ function eventorganiser_event_fields( $selec, $query ){
  */
 add_filter('posts_groupby', 'eventorganiser_event_groupby',10,2);
 function eventorganiser_event_groupby( $groupby, $query ){
-	global $eventorganiser_events_table;
+	global $wpdb;
 
 	if(!empty($query->query_vars['group_events_by']) && $query->query_vars['group_events_by'] == 'series')
-		return "{$eventorganiser_events_table}.post_id";
+		return "{$wpdb->eo_events}.post_id";
 
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']):
 		if(empty($groupby))
 			return $groupby;
 
-		return "{$eventorganiser_events_table}.event_id";
+		return "{$wpdb->eo_events}.event_id";
 	endif;
 
 	return $groupby;
@@ -123,10 +131,10 @@ function eventorganiser_event_groupby( $groupby, $query ){
  */
 add_filter('posts_join', 'eventorganiser_join_tables',10,2);
 function eventorganiser_join_tables( $join, $query ){
-	global $wpdb, $eventorganiser_events_table;
+	global $wpdb;
 
 	if( isset( $query->query_vars['post_type'] ) && 'event'== $query->query_vars['post_type']) {
-			$join .=" LEFT JOIN $eventorganiser_events_table ON $wpdb->posts.id = {$eventorganiser_events_table}.post_id ";
+			$join .=" LEFT JOIN $wpdb->eo_events ON $wpdb->posts.id = {$wpdb->eo_events}.post_id ";
 	}
 	return $join;
 }
@@ -137,13 +145,11 @@ function eventorganiser_join_tables( $join, $query ){
 * This funciton allows us to choose events within a certain date range,
 * or active on a particular day or at a venue.
 *
-* TODO allow an array of venues to be queried
-*
  * @since 1.0.0
  */
 add_filter('posts_where','eventorganiser_events_where',10,2);
 function eventorganiser_events_where( $where, $query ){
-	global $wpdb, $eventorganiser_events_table;
+	global $wpdb;
 
 	//Only alter event queries
 	if (isset( $query->query_vars['post_type'] ) && $query->query_vars['post_type']=='event'):
@@ -160,34 +166,21 @@ function eventorganiser_events_where( $where, $query ){
 		endforeach;
 
 
-		//If in admin or single page - we probably don't want to see duplicates of (recurrent) events - unless specified otherwise.
-		if((is_admin() || is_single())&&(!$query->query_vars['showrepeats'])):
-
-			//Group by series - returns 'first' occurrence.
-			$query->set('group_events_by','series');
-
-		//In other instances (archives, shortcode listing if showrepeats option is false display only the next event.
-		elseif(!$query->query_vars['showrepeats']):
-			//$where .= " AND ({$eventorganiser_events_table}.event_occurrence =0 OR {$eventorganiser_events_table}.event_occurrence IS NULL)";
-			$query->set('group_events_by','series');
-
-		endif;
-
 
 		//If we only want events (or occurrences of events) that belong to a particular 'event'
 		if(isset($query->query_vars['event_series'])):
 			$series_id =$query->query_vars['event_series'];
-			$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.post_id =%d ",$series_id);
+			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.post_id =%d ",$series_id);
 		endif;
 
 		if(isset($query->query_vars['event_occurrence_id'])):
 			$occurrence_id =$query->query_vars['event_occurrence_id'];
-			$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.event_id=%d ",$occurrence_id);
+			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.event_id=%d ",$occurrence_id);
 		endif;
 
 
 		//Retrieve blog's time and date
-		$blog_now = new DateTIme(null,EO_Event::get_timezone());
+		$blog_now = new DateTIme(null, eo_get_blog_timezone());
 		$now_date =$blog_now->format('Y-m-d');
 		$now_time =$blog_now->format('H:i:s');
 
@@ -208,10 +201,10 @@ function eventorganiser_events_where( $where, $query ){
 					$now_time =$blog_now->format('H:i:s');
 
 					$where .= $wpdb->prepare(" 
-						AND {$eventorganiser_events_table}.post_id NOT IN (
-							SELECT post_id FROM {$eventorganiser_events_table} 
-							WHERE ({$eventorganiser_events_table}.EndDate > %s)
-							OR ({$eventorganiser_events_table}.EndDate=%s AND {$eventorganiser_events_table}.FinishTime >= %s)
+						AND {$wpdb->eo_events}.post_id NOT IN (
+							SELECT post_id FROM {$wpdb->eo_events} 
+							WHERE ({$wpdb->eo_events}.EndDate > %s)
+							OR ({$wpdb->eo_events}.EndDate=%s AND {$wpdb->eo_events}.FinishTime >= %s)
 						)",$now_date,$now_date,$now_time );
 					break;
 				case 'P1D':
@@ -227,15 +220,15 @@ function eventorganiser_events_where( $where, $query ){
 
 					if(empty($query->query_vars['showrepeats'])):
 						$where .= $wpdb->prepare(" 
-							AND {$eventorganiser_events_table}.post_id IN (
-								SELECT post_id FROM {$eventorganiser_events_table} 
-								WHERE {$eventorganiser_events_table}.StartDate <= %s
-								AND {$eventorganiser_events_table}.EndDate >= %s)",
+							AND {$wpdb->eo_events}.post_id IN (
+								SELECT post_id FROM {$wpdb->eo_events} 
+								WHERE {$wpdb->eo_events}.StartDate <= %s
+								AND {$wpdb->eo_events}.EndDate >= %s)",
 							$cutoff->format('Y-m-d'),$blog_now->format('Y-m-d'));
 					else:
 						$where .= $wpdb->prepare(" 
-							AND {$eventorganiser_events_table}.StartDate <=%s'
-							AND {$eventorganiser_events_table}.EndDate >= %s",
+							AND {$wpdb->eo_events}.StartDate <=%s'
+							AND {$wpdb->eo_events}.EndDate >= %s",
 							$cutoff->format('Y-m-d'),$blog_now->format('Y-m-d')
 						);
 					endif;
@@ -257,9 +250,9 @@ function eventorganiser_events_where( $where, $query ){
 		if(isset($query->query_vars['showpastevents'])&& !$query->query_vars['showpastevents'] ){
 
 			//If quering for all occurrences, look at start/end date 
-			if(!empty($query->query_vars['showrepeats'])):
-				$query_date = $eventorganiser_events_table.'.'.($running_event_is_past ? 'StartDate' : 'EndDate');
-				$query_time = $eventorganiser_events_table.'.'.($running_event_is_past ? 'StartTime' : 'FinishTime');	
+			if( !$query->get('group_events_by') || $query->get('group_events_by')=='occurrence' ):
+				$query_date = $wpdb->eo_events.'.'.($running_event_is_past ? 'StartDate' : 'EndDate');
+				$query_time = $wpdb->eo_events.'.'.($running_event_is_past ? 'StartTime' : 'FinishTime');	
 			
 				$where .= $wpdb->prepare(" AND ( 
 					({$query_date} > %s) OR
@@ -271,8 +264,8 @@ function eventorganiser_events_where( $where, $query ){
 				if($running_event_is_past):
 
 					//Check if each occurrence has started, i.e. just check reoccurrence_end
-					$query_date = $eventorganiser_events_table.'.reoccurrence_end';
-					$query_time = $eventorganiser_events_table.'.StartTime';
+					$query_date = $wpdb->eo_events.'.reoccurrence_end';
+					$query_time = $wpdb->eo_events.'.StartTime';
 
 					$where .= $wpdb->prepare(" AND ( 
 						({$query_date} > %s) OR
@@ -282,10 +275,10 @@ function eventorganiser_events_where( $where, $query ){
 				else:
 					//Check each occurrence has finished, need to do a sub-query.
 					$where .= $wpdb->prepare(" 
-						AND {$eventorganiser_events_table}.post_id IN (
-							SELECT post_id FROM {$eventorganiser_events_table} 
-							WHERE ({$eventorganiser_events_table}.EndDate > %s)
-							OR ({$eventorganiser_events_table}.EndDate=%s AND {$eventorganiser_events_table}.FinishTime >= %s)
+						AND {$wpdb->eo_events}.post_id IN (
+							SELECT post_id FROM {$wpdb->eo_events} 
+							WHERE ({$wpdb->eo_events}.EndDate > %s)
+							OR ({$wpdb->eo_events}.EndDate=%s AND {$wpdb->eo_events}.FinishTime >= %s)
 							)",$now_date,$now_date,$now_time );
 				endif;
 			endif;
@@ -294,19 +287,19 @@ function eventorganiser_events_where( $where, $query ){
 		//Check date ranges were are interested in
 		if( isset( $query->query_vars['event_start_before'] ) && $query->query_vars['event_start_before']!='') {
 			$s_before = $query->query_vars['event_start_before'];
-			$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.StartDate <= %s ",$s_before);
+			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.StartDate <= %s ",$s_before);
 		}
 		if( isset( $query->query_vars['event_start_after'] ) && $query->query_vars['event_start_after']!='') {
 			$s_after = $query->query_vars['event_start_after'];
-			$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.StartDate >= %s ",$s_after);
+			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.StartDate >= %s ",$s_after);
 		}
 		if( isset( $query->query_vars['event_end_before'] ) && $query->query_vars['event_end_before']!='') {
 			$e_before = $query->query_vars['event_end_before'];
-			$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.EndDate <= %s ",$e_before);
+			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.EndDate <= %s ",$e_before);
 		}
 		if( isset( $query->query_vars['event_end_after'] ) && $query->query_vars['event_end_after']!='') {
 			$e_after = $query->query_vars['event_end_after'];
-			$where .= $wpdb->prepare(" AND {$eventorganiser_events_table}.EndDate >= %s ",$e_after);
+			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.EndDate >= %s ",$e_after);
 		}
 	endif;
 
@@ -321,7 +314,7 @@ function eventorganiser_events_where( $where, $query ){
  */
 add_filter('posts_orderby','eventorganiser_sort_events',10,2);
 function eventorganiser_sort_events( $orderby, $query ){
-	global $wpdb, $eventorganiser_events_table;
+	global $wpdb;
 
 	//If the query sets an orderby return what to do if it is one of our custom orderbys
 	if( !empty($query->query_vars['orderby'])):
@@ -331,11 +324,11 @@ function eventorganiser_sort_events( $orderby, $query ){
 		
 		switch ($order_crit):
 		case 'eventstart':
-			return  " {$eventorganiser_events_table}.StartDate $order_dir, {$eventorganiser_events_table}.StartTime $order_dir";
+			return  " {$wpdb->eo_events}.StartDate $order_dir, {$wpdb->eo_events}.StartTime $order_dir";
 			break;
 
 		case 'eventend':
-			return  " {$eventorganiser_events_table}.EndDate $order_dir, {$eventorganiser_events_table}.FinishTime $order_dir";
+			return  " {$wpdb->eo_events}.EndDate $order_dir, {$wpdb->eo_events}.FinishTime $order_dir";
 			break;
 
 		default:
@@ -344,7 +337,7 @@ function eventorganiser_sort_events( $orderby, $query ){
 
 	//If no orderby is set, but we are querying events, return the default order for events;
 	elseif(isset($query->query_vars['post_type']) && $query->query_vars['post_type']=='event'):
-			$orderby = " {$eventorganiser_events_table}.StartDate ASC, {$eventorganiser_events_table}.StartTime ASC";
+			$orderby = " {$wpdb->eo_events}.StartDate ASC, {$wpdb->eo_events}.StartTime ASC";
 
 	endif;
 	 //End if variables set

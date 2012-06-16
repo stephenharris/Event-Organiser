@@ -8,10 +8,9 @@ class EO_Events_Agenda_Widget extends WP_Widget
 		'title'=> '',
 		);
 
-	function EO_Events_Agenda_Widget()  {
-		load_plugin_textdomain( 'eventorganiser', false, EVENT_ORGANISER_I18N);
+	function __construct() {
 		$widget_ops = array('classname' => 'widget_events', 'description' =>  __('Displays a list of events, grouped by date','eventorganiser'));
-		$this->WP_Widget('EO_Events_Agenda_Widget', __('Events Agenda','eventorganiser'), $widget_ops);
+		parent::__construct('EO_Events_Agenda_Widget', __('Events Agenda','eventorganiser'), $widget_ops);
   	}
  
 
@@ -20,20 +19,16 @@ class EO_Events_Agenda_Widget extends WP_Widget
 ?>
 	<p>
 		<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'eventorganiser'); ?>: </label>
-		<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title'];?>" />
+		<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance['title']);?>" />
 	</p>
   <?php
   }
  
 
   function update($new_instance, $old_instance){
-    
-	foreach($this->w_arg as $name => $val){
-		if( empty($new_instance[$name]) ){
-			$new_instance[$name] = $val;
-		}
-	}
-	return $new_instance;
+    	$validated=array();
+	$validated['title'] = sanitize_text_field( $new_instance['title'] );
+	return $validated;
     }
 
  
@@ -47,7 +42,7 @@ class EO_Events_Agenda_Widget extends WP_Widget
 	//Echo widget
     	echo $before_widget;
     	echo $before_title;
-	echo $instance['title'];
+	echo esc_html($instance['title']);
     	echo $after_title;
 	echo "<div style='min-width:250px' class='eo-agenda-widget'>";
 ?>
@@ -122,4 +117,3 @@ class EO_Events_Agenda_Widget extends WP_Widget
 <?php
   }
 }
-add_action( 'widgets_init', create_function('', 'return register_widget("EO_Events_Agenda_Widget");') );?>
