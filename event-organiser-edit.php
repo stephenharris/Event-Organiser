@@ -113,14 +113,14 @@ function eventorganiser_details_metabox($post){
 
 			<p id="dayofweekrepeat">
 			<?php _e("on",'eventorganiser');?>	
-			<?php _e("on",'eventorganiser');?>	
+                                <?php $days_meta = is_array($event->meta) ? $event->meta : array() ?>
 				<?php for($i = 0; $i <= 6; $i++):
 					$d = ($start_day + $i)%7;
 					$ical_days =array('SU','MO','TU','WE','TH','FR','SA');
 					$ical_d = $ical_days[$d];
 					$day =$wp_locale->weekday_abbrev[$wp_locale->weekday[$d]];
 				?>
-					<input type="checkbox" id="day-<?php echo $day;?>"  <?php checked(in_array($ical_d,$event->meta), true); ?>  value="<?php echo esc_attr($ical_d)?>" class="daysofweek" name="eo_input[days][]" disabled="disabled" />
+					<input type="checkbox" id="day-<?php echo $day;?>"  <?php checked(in_array($ical_d,$days_meta), true); ?>  value="<?php echo esc_attr($ical_d)?>" class="daysofweek" name="eo_input[days][]" disabled="disabled" />
 					<label for="day-<?php echo $day;?>" > <?php echo $day;?></label>
 				<?php endfor;  ?>
 			</p>
