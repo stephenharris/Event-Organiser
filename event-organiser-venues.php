@@ -67,7 +67,10 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 						$_REQUEST['action']='create';
 					}else{
 						$EO_Errors->add('eo_notice', __("Venue <strong>created</strong>",'eventorganiser'));
+						$term_id = (int) $return['term_id'];
+						$venue = get_term($term_id,'event-venue');
 						$_REQUEST['action']='edit';
+						$_REQUEST['event-venue'] = $venue->slug;
 					}
 					break;
 	

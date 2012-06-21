@@ -752,18 +752,14 @@ function eo_has_event_finished($id='',$occurrence=0){
 * @return string The colour of the category in HEX format
  */
 function eo_event_color($post_id=0){
-	$post_id = (int) $post_id;
 
-	if( empty($post_id) ){
-		global $post;
-		$post_id = $post->ID;
-	}
+	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
 	if( empty($post_id) )
 		return false;
 
 	$color='';
-	$terms = get_the_terms( $post->ID, 'event-category' );
+	$terms = get_the_terms( $post_id, 'event-category' );
 
 	if($terms){
 		foreach ($terms as $term):	

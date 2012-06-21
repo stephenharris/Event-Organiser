@@ -4,7 +4,7 @@ Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.4
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -143,6 +143,11 @@ Event Organiser provides the following shortcodes:
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.4.2 =
+* Fixes event list widget past events, and template not saving correctly bugs
+* Fixes 'add new venue' error message
+* Fixes shortcode error message when retrieving url of non-existant venue
 
 = 1.4.1 =
 * Fixes a [weekly schedule bug](http://www.harriswebsolutions.co.uk/event-organiser/forums/topic/1-4-update-weekly-recurring-days-of-week-array-error/#post-2278), occurs for some users.
