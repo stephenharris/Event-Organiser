@@ -719,7 +719,7 @@ function eo_get_blog_timezone(){
 
 		$timezone = new DateTimeZone($tzstring);
 
-		if ( $timezone->getOffset() !== false )
+		if ( version_compare( PHP_VERSION, '5.2.0', '<=' ) )
 			wp_cache_set( 'eventorganiser_timezone', $timezone );
 	} 
 
