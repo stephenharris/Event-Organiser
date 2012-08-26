@@ -65,19 +65,18 @@ class EventOrganiser_Shortcodes {
 		$defaults = array(
 			'headerleft'=>'title', 
 			'headercenter'=>'',
-			'headerright'=>'prev,next today',
+			'headerright'=>'prev next today',
 			'defaultview'=>'month',
 			'category'=>'',
 			'venue'=>'',
 			'timeformat'=>'H:i',
-			'key'=>'false'
+			'key'=>'false',
+			'tooltip'=>'true',
 		);
 		$atts = shortcode_atts( $defaults, $atts );
-		array_map('esc_attr',$atts);
-
+		$atts['tooltip'] = ($atts['tooltip']=='true' ? true : false);
 		$key = ($atts['key']=='true' ? true : false);
 		unset($atts['key']);
-
 	
 		//Convert php time format into xDate time format
 		$atts['timeformat'] =eventorganiser_php2xdate($atts['timeformat']);
@@ -125,7 +124,6 @@ class EventOrganiser_Shortcodes {
 		      'class' => ''
 			), $args ) );
 
-
 		//Set zoom
 		$zoom = (int) $zoom; 
 		
@@ -153,9 +151,6 @@ class EventOrganiser_Shortcodes {
  
 
 	function handle_eventlist_shortcode($atts=array(),$content=null) {
-		global $post;
-		$tmp_post = $post;
-
 		$taxs = array('category','tag','venue');
 		foreach ($taxs as $tax){
 			if(isset($atts['event_'.$tax])){
@@ -165,7 +160,7 @@ class EventOrganiser_Shortcodes {
 		}
 
 		if((isset($atts['venue']) &&$atts['venue']=='%this%') ||( isset($atts['event-venue']) && $atts['event-venue']=='%this%' )){
-			if(!empty($post->Venue)){
+			if( eo_get_venue_slug() ){
 				$atts['event-venue']=  eo_get_venue_slug();
 			}else{
 				unset($atts['venue']);
@@ -173,41 +168,18 @@ class EventOrganiser_Shortcodes {
 			}
 		}
 
-		$events = eo_get_events($atts);
-		$tz = eo_get_blog_timezone();
+		$args = array(
+			'class'=>'eo-events eo-events-shortcode',
+			'template'=>$content,
+			'no_events'=>'',
+		);
 
-		if($events):	
-			$return= '<ul class="eo-events eo-events-shortcode">';
-			foreach ($events as $post):
-				setup_postdata($post); 
-
-				//Check if all day, set format accordingly
-				if(eo_is_all_day()){
-					$format = get_option('date_format');
-				}else{
-					$format = get_option('date_format').'  '.get_option('time_format');
-				}
-				$dateTime = new DateTime($post->StartDate.' '.$post->StartTime, $tz);
-				
-				if(empty($content)):
-					$return .= '<li><a title="'.the_title_attribute(array('echo'=>false)).'" href="'.get_permalink().'">'.get_the_title().'</a> '.__('on','eventorganiser').' '.eo_format_date($post->StartDate.' '.$post->StartTime, $format).'</li>';
-
-				else:
-					$return .= '<li>'.self::read_template($content).'</li>';
-				endif;
-
-			endforeach;
-			$return.='</ul>';
-			$post = $tmp_post;
-			wp_reset_postdata();
-
-			return $return;
-		endif;
+		return eventorganiser_list_events( $atts,$args, 0);
 	}
-	
+
+
 	function read_template($template){
 		$patterns = array();	
-		//TODO ICAL/Google link
 		$patterns[0] = '/%(event_title)%/';
 		$patterns[1] = "/%(start)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
 		$patterns[2] = "/%(end)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
@@ -226,7 +198,8 @@ class EventOrganiser_Shortcodes {
 		$patterns[15] = '/%(event_venue_map)({[^{}]+})?%/';
 		$patterns[16] = '/%(event_excerpt)%/';
 		$patterns[17] = '/%(cat_color)%/';
-		
+		$patterns[18] = '/%(event_title_attr)%/';
+		$patterns[19] ='/%(event_duration){([^{}]+)}%/';
 		$template = preg_replace_callback($patterns, array(__CLASS__,'parse_template'), $template);
 		return $template;
 	}
@@ -271,6 +244,20 @@ class EventOrganiser_Shortcodes {
 					$replacement = eo_format_date($post->$col[$matches[1]]['date'].' '.$post->$col[$matches[1]]['time'], $dateFormat.$dateTime);					
 				}
 				break;
+			case 'event_duration':
+				$start = eo_get_the_start(DATETIMEOBJ);
+				$end = eo_get_the_end(DATETIMEOBJ);
+				if( eo_is_all_day() )
+					$end->modify('+1 minute');
+
+				if( !function_exists('date_diff') ){
+					$duration = date_diff($start,$end);
+					$replacement = $duration->format($matches[2]);
+				}else{
+					$replacement = eo_date_interval($start,$end,$matches[2]);
+				}
+				break;
+
 			case 'event_tags':
 				$replacement = get_the_term_list( get_the_ID(), 'event-tag', '', ', ',''); 
 				break;
@@ -292,8 +279,7 @@ class EventOrganiser_Shortcodes {
 				break;
 
 			case 'event_venue_url':
-				$venue_link =eo_get_venue_link();
-				$replacement = ( !is_wp_error($venue_link) ? $venue_link : '');				
+				$replacement =eo_get_venue_link();
 				break;
 			case 'event_venue_address':
 				$address = eo_get_venue_address();
@@ -313,7 +299,8 @@ class EventOrganiser_Shortcodes {
 				$replacement = get_the_post_thumbnail(get_the_ID(),$size);
 				break;
 			case 'event_url':
-				$replacement =  get_permalink();
+				$venue_link =eo_get_venue_link();
+				$replacement = ( !is_wp_error($venue_link) ? $venue_link : '');
 				break;
 			case 'event_custom_field':
 				$field = $matches[2];
@@ -332,6 +319,10 @@ class EventOrganiser_Shortcodes {
 			case 'cat_color':
 				$replacement =  eo_event_color();
 				break;
+			case 'event_title_attr':
+				$replacement = get_the_title();
+				break;
+
 		endswitch;
 		return $replacement;
 	}
@@ -358,67 +349,17 @@ class EventOrganiser_Shortcodes {
 			'map' => self::$map,
 		));	
 		if(!empty(self::$calendars)):
-			wp_enqueue_style('eo_calendar-style');		
+	
+			wp_enqueue_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array());	
+			wp_enqueue_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css');	
+			wp_enqueue_style('eo_calendar-style');	
+			wp_enqueue_style('eo_front');	
 		endif;
 		wp_enqueue_script( 'eo_front');	
 	}
 }
  
 EventOrganiser_Shortcodes::init();
-
-/*
-* Very basic class to convert php date format into xdate date format used for javascript.
-*
-* Doesn't support
-* ** L Whether it's a leap year
-* ** N ISO-8601 numeric representation of the day of the week (added in PHP 5.1.0)
-* ** w Numeric representation of the day of the week (0=sun,...)
-* ** z The day of the year (starting from 0)
-* ** t Number of days in the given month
-* **B Swatch Internet time
-* **u microseconds
-
-* ** e 	Timezone identifier (added in PHP 5.1.0) 	Examples: UTC, GMT, Atlantic/Azores
-* ** I (capital i) 	Whether or not the date is in daylight saving time 	1 if Daylight Saving Time, 0 otherwise.
-* ** O 	Difference to Greenwich time (GMT) in hours 	Example: +0200
-* ** T 	Timezone abbreviation 	Examples: EST, MDT ...
-* ** Z 	Timezone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.
-
-* ** c 	ISO 8601 date (added in PHP 5) 	2004-02-12T15:19:21+00:00
-* ** r 	» RFC 2822 formatted date 	Example: Thu, 21 Dec 2000 16:01:07 +0200
-* ** U 	Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) 	See also time()
-*/
-	function eventorganiser_php2xdate($phpformat=""){
-		$php2xdate = array(
-				'Y'=>'yyyy','y'=>'yy','L'=>''/*NS*/,'o'=>'I',
-				'j'=>'d','d'=>'dd','D'=>'ddd','l'=>'dddd','N'=>'', /*NS*/ 'S'=>'S',
-				'w'=>'', /*NS*/ 'z'=>'',/*NS*/ 'W'=>'w',
-				'F'=>'MMMM','m'=>'MM','M'=>'MMM','n'=>'M','t'=>'',/*NS*/
-				'a'=>'tt','A'=>'TT',
-				'B'=>'',/*NS*/'g'=>'h','G'=>'H','h'=>'hh','H'=>'HH','u'=>'fff',
-				'i'=>'mm','s'=>'ss',
-				'O'=>'zz ', 'P'=>'zzz',
-				'c'=>'u',
-			);
-		$xdateformat="";
-
-		for($i=0;  $i< strlen($phpformat); $i++){
-
-			//Handle backslash excape
-			if($phpformat[$i]=="\\"){
-				$xdateformat .= "\\".$phpformat[$i+1];
-				$i++;
-				continue;
-			}
-
-			if(isset($php2xdate[$phpformat[$i]])){
-				$xdateformat .= $php2xdate[$phpformat[$i]];
-			}else{
-				$xdateformat .= $phpformat[$i];
-			}
-		}
-		return $xdateformat;
-	}
 
 	function eventorganiser_category_key($args=array(),$id=1){
 		$args['taxonomy'] ='event-category';

@@ -2,12 +2,12 @@
 /*
 Plugin Name: Event Organiser
 Plugin URI: http://www.HarrisWebSolutions.co.uk/event-organiser
-Version: 1.4.2
+Version: 1.5
 Description: Creates a custom post type 'events' with features such as reoccurring events, venues, Google Maps, calendar views and events and venue pages
 Author: Stephen Harris
-Author URI: http://www.HarrisWebSolutions.co.uk
+Author URI: http://www.stephenharris.info
 */
-/*  Copyright 2011 Stephen Harris (stephen@harriswebsolutions.co.uk)
+/*  Copyright 2011 Stephen Harris (contact@stephenharris.info)
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ Author URI: http://www.HarrisWebSolutions.co.uk
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
+
 /**
  * The main plug-in loader
  */
@@ -33,7 +34,7 @@ Author URI: http://www.HarrisWebSolutions.co.uk
  * @name $eventorganiser_db_version
  */ 
 global $eventorganiser_db_version;
-$eventorganiser_db_version = "1.4";
+$eventorganiser_db_version = "1.5";
 
 
 global $wpdb, $eventorganiser_events_table;
@@ -41,21 +42,23 @@ $eventorganiser_events_table = $wpdb->prefix."eo_events";
 
 /**
  * Defines the plug-in directory url
- * 
  * <code>url:http://mysite.com/wp-content/plugins/event-organiser</code>
  */
 define('EVENT_ORGANISER_URL',plugin_dir_url(__FILE__ ));
 
 /**
+ * For use in datetime formats. To return a datetime object rather than formatted string
+ */
+define( 'DATETIMEOBJ', 'DATETIMEOBJ', true );
+
+/**
  * Defines the plug-in directory path
- * 
  * <code>/home/mysite/public_html/wp-content/plugins/event-organiser</code>
  */
 define('EVENT_ORGANISER_DIR',plugin_dir_path(__FILE__ ));
 
 /**
  * Defines the plug-in language directory relative to plugins
- * 
  * <code> event-organiser/languages </code> 
  */
 define('EVENT_ORGANISER_I18N',basename(dirname(__FILE__)).'/languages');
@@ -86,6 +89,31 @@ require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-install.php');
 register_activation_hook(__FILE__,'eventorganiser_install'); 
 register_deactivation_hook( __FILE__, 'eventorganiser_deactivate' );
 register_uninstall_hook( __FILE__,'eventorganiser_uninstall');
+
+
+function eventorganiser_get_option($option,$default=false){
+
+      $defaults = array(
+		'url_event'=> 'events/event',
+		'url_events'=> 'events/event',
+		'url_venue'=> 'events/venue',
+		'url_cat' => 'events/category',
+		'url_tag' => 'events/tag',
+		'navtitle' =>  __('Events','eventorganiser'),
+		'group_events'=>'',
+		'feed' => 1,
+		'eventtag' => 1,
+		'deleteexpired' => 0,
+      );
+      $options = get_option('eventorganiser_options',$defaults);
+      $options = wp_parse_args( $options, $defaults );
+
+      if( !isset($options[$option]) )
+           return $default;
+
+      return $options[$option];
+}
+
 
 /****** Register event post type and event taxonomy******/
 require_once('includes/event-organiser-cpt.php');
@@ -124,9 +152,11 @@ if ( defined('DOING_AJAX') && DOING_AJAX ) {
 /****** Functions ******/
 require_once("includes/event-organiser-event-functions.php");
 require_once("includes/event-organiser-venue-functions.php");
+require_once("includes/event-organiser-utility-functions.php");
 
 /****** Event class ******/
-require_once("classes/class-eo-event.php");
+require_once("classes/class-eo-event.php");//Depreciated, migrating to includes/event.php
+require_once("includes/event.php");
 
 /****** Widgets and Shortcodes ******/
 require_once('classes/class-eo-agenda-widget.php');

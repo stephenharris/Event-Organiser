@@ -46,11 +46,11 @@ get_header(); ?>
 									<?php $next =   eo_get_next_occurrence($date_format);?>
 									<?php if($next): ?>
 										<!-- If the event is occurring again in the future, display the date -->
-										<?php printf(__('This event is running from %1$s until %2$s. It is next occurring at %3$s','eventorganiser'), eo_get_schedule_start('d F Y'), eo_get_schedule_end('d F Y'), $next);?>
+										<?php printf(__('This event is running from %1$s until %2$s. It is next occurring at %3$s','eventorganiser'), eo_get_schedule_start('d F Y'), eo_get_schedule_last('d F Y'), $next);?>
 
 									<?php else: ?>
 										<!-- Otherwise the event has finished (no more occurrences) -->
-										<?php printf(__('This event finished on %s','eventorganiser'), eo_get_schedule_end('d F Y',''));?>
+										<?php printf(__('This event finished on %s','eventorganiser'), eo_get_schedule_last('d F Y',''));?>
 								<?php endif; ?>
 
 								<?php else: ?>
@@ -89,6 +89,10 @@ get_header(); ?>
 					<?php edit_post_link( __( 'Edit'), '<span class="edit-link">', '</span>' ); ?>
 					</footer><!-- .entry-meta -->
 				</article><!-- #post-<?php the_ID(); ?> -->
+				<div class="comments-template">
+<?php comments_template(); ?>
+</div>				
+
 						
 				<?php endwhile; // end of the loop. ?>
 

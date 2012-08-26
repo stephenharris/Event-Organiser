@@ -3,8 +3,8 @@ Contributors: stephenh1988
 Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 3.4
-Stable tag: 1.4.2
+Tested up to: 3.4.1
+Stable tag: 1.5
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -12,12 +12,16 @@ Create and maintain events, including complex reoccurring patterns, venue manage
 
 Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows your to view your events in the familiar WordPress list or view all occurrences of your events in a calendar page in the amin area.
 
+**1.5 is a big update, so please back-up before upgrading.**
+
 = New Features =
+* Tooltip for the frontend fullCalendar
+* Ability to add or remove specific dates for an event schedule
+* Improved agenda widget: group events by date or month
 * Custom fields and metaboxes for venues
 * Improved add events link to menu option
 * Templates for widgets (syntax as for event list shortcode)
 * Time format option for full calender shortcode
-* Quick/Bulk edit event venue
 * `eo_get_events` and the event list shortcode now support relative date formats for data parameters (e.g. `event_start_before='+1 week'`,`event_end_after='now'`)
 
 
@@ -143,6 +147,21 @@ Event Organiser provides the following shortcodes:
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.5 =
+* Caching and other performance improvements
+* Adding tooltips for the fullcalendar
+* Select/deselect individual occurrences
+* Options added for event agenda
+* Adds classes to event list
+* Separate event and archive permalink structure
+* Improved UI see http://core.trac.wordpress.org/ticket/18909
+* Improved fullCalendar look
+* Adds support for hiding/minimizing venue post boxes
+* Adds retina support for screen icons (thanks to numeeja (http://cubecolour.co.uk/))
+* Fixes 'trying to add extra pimary key' (on activation) bug
+* Fixes some locales using comma in floats
+* Fixes GROUP BY bug
 
 = 1.4.2 =
 * Fixes event list widget past events, and template not saving correctly bugs
@@ -283,6 +302,9 @@ Minor bug fixes and readme update.
 Initial release
 
 == Upgrade Notice ==
+= 1.5 =
+1.5 is a big update, so please back-up before upgrading.
+
 = 1.3.2 =
 This fixes permalink bug introduced in 1.3.1. If you upgraded to 1.3.1, you should upgrade to 1.3.2. You're advised to 'flush rewrite rules' by simplying visiting your permalinks setting page.
 

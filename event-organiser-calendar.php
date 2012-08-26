@@ -32,7 +32,8 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 	function page_scripts(){
 		global $wp_locale;
 	  	$eo_settings_array= get_option('eventorganiser_options'); 
-
+		
+		$screen = get_current_screen();
 		$cats =get_terms( 'event-category', array('hide_empty' => 0));
 		$venues =get_terms( 'event-venue', array('hide_empty' => 0));
 
@@ -48,6 +49,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'startday'=>intval(get_option('start_of_week')),
 			'format'=> $eo_settings_array['dateformat'].'-yy',
+			'timeFormat'=> ( $screen->get_option('eofc_time_format','value') ? 'h:mmtt' : 'HH:mm'),
 			'perm_edit'=> current_user_can('edit_events'),
 			'categories'=>$cats,
 			'venues'=>$venues,
@@ -90,9 +92,14 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 
 		global $wpdb, $eventorganiser_events_table;
 
+		//Add screen option
+		$user =wp_get_current_user();
+		$is12hour = get_user_meta($user->ID,'eofc_time_format',true);
+		add_screen_option('eofc_time_format',array('value'=>$is12hour));
+		add_filter('screen_settings', array($this,'screen_options'), 10, 2);
+
 		//Check action
 		if(!empty($_REQUEST['save'])|| !empty($_REQUEST['publish'])){
-
 			//Check nonce
 			check_admin_referer('eventorganiser_calendar_save');
 
@@ -106,15 +113,10 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			if(!empty($_REQUEST['save'])):
 				$status='draft';
 			else:
-				if(current_user_can('publish_events'))
-					$status='publish';
-				else
-					$status='pending';
+				$status = (current_user_can('publish_events') ? 'publish' : 'pending');
 			endif;
 	
 			//Set post and event details
-			$input['occurrence']='once';
-			$input['YmdFormated']= true;
 			$venue = (int) $input['venue_id'];
 
 			$post_input = array(
@@ -124,9 +126,15 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				'post_type' => 'event',
 				'tax_input' => array('event-venue'=>array($venue))
 			);
+			$event_data=array(
+				'schedule'=>'once',
+				'all_day'=>$input['allday'],
+				'start'=>new DateTime($input['StartDate'].' '.$input['StartTime']),
+				'end'=>new DateTime($input['EndDate'].' '.$input['FinishTime']),
+			);
 
 			//Insert event
-			$post_id = EO_Event::insertNewEvent($post_input,$input);
+			$post_id = eo_insert_event($post_input,$event_data);
 
 			if($post_id){
 				//If event was successfully inserted, redirect and display appropriate message
@@ -149,7 +157,6 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			$action = $_REQUEST['action'];
 
 			if($action=='break_series'):
-
 				//Check nonce
 				check_admin_referer('eventorganiser_break_series_'.$event_id);
 
@@ -157,15 +164,13 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				if (!current_user_can('edit_event', $post_id) || !current_user_can('delete_event', $post_id) )
 					wp_die( __('You do not have sufficient permissions to edit this event','eventorganiser') );
 		
-				//Get current event
-				$query_array= array( 
+				//Get current event.
+				$query = new WP_Query( array( 
 					'event_occurrence_id'=>$event_id,
 					'posts_per_page'=>-1,
 					'post_type'=>'event',
 					'showpastevents'=>true,
-					'perm' => 'readable');
-
-				$query = new WP_Query($query_array );
+					'perm' => 'readable'));
 
 				global $post;
 				if($query->have_posts()):	
@@ -183,47 +188,34 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 
 					//Post details
 					$post_array=array(
-						'post_title' => $post->post_title,
-					  	'post_name' =>$post->post_name,
-						'post_author' => $post->post_author,
-						'post_content' => $post->post_content,
-						'post_status' => $post->post_status,
-						'post_date' => $post->post_date,
-					  	'post_date_gmt' => $post->post_date_gmt,
-					  	'post_excerpt' =>$post->post_excerpt,
-						'post_password' => $post->post_password,
-						'post_type' => 'event',
-						'tax_input' =>$tax_input,
-						'comment_status' => $post->comment_status,
-						'ping_status' => $post->ping_status
-					);  
+						'post_title' => $post->post_title,'post_name' =>$post->post_name,'post_author' => $post->post_author,
+						'post_content' => $post->post_content,'post_status' => $post->post_status,'post_date' => $post->post_date,
+					  	'post_date_gmt' => $post->post_date_gmt,'post_excerpt' =>$post->post_excerpt,'post_password' => $post->post_password,
+						'post_type' => 'event','tax_input' =>$tax_input,'comment_status' => $post->comment_status,'ping_status' => $post->ping_status);  
 
 					//Event details
-					$tz = EO_Event::get_timezone(); //blog timzone
 					$event_array = array(
-						'dateObjects'=>true,
-						'start'=>new DateTIme($post->StartDate.' '.$post->StartTime,$tz),
-						'end'=>new DateTIme($post->EndDate.' '.$post->FinishTime, $tz),
-						'allday'=>$post->event_allday,
+						'start'=> new DateTime(trim($post->StartDate).' '.trim($post->StartTime), eo_get_blog_timezone()),
+						'end'=>new DateTime(trim($post->EndDate).' '.trim($post->FinishTime), eo_get_blog_timezone()),
+						'all_day'=> (eo_is_all_day($post_id) ? 1 : 0),
 						'schedule'=>'once',
 						'frequency'=>1,
-						'venue'=>$post->Venue,
 					);
 
 					//Create new event with duplicated details
-					$new_event_id = EO_Event::insertNewEvent($post_array,$event_array);
+					$new_event_id = eo_insert_event($post_array,$event_array);
 
 					//delete occurrence, 
-					if($new_event_id){
-						$del = $wpdb->get_results($wpdb->prepare("DELETE FROM $eventorganiser_events_table WHERE post_id=%d AND event_id=%d",$post_id,$event_id));
-
-						$post_custom = get_post_custom($post->ID);
+					if( $new_event_id && !is_wp_error($new_event_id) ){
+						$response = _eventorganiser_remove_occurrence($post_id,$event_id);
+						//FIXME copying post meta over-rides schedule information.
+						/*$post_custom = get_post_custom($post->ID);
 						foreach ($post_custom as $meta_key=>$meta_values) {
 							$unique = ($meta_key[0]=='_' ? true : false);
 							foreach ($meta_values as $meta_value) {
 								add_post_meta($new_event_id,$meta_key,$meta_value,$unique);
 							}
-						}
+						}*/
 					}
 					//Redirect to prevent resubmisson
 					$redirect = add_query_arg(array('post_type'=>'event','page'=>'calendar'),admin_url('edit.php'));
@@ -231,6 +223,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				endif;
 
 			elseif($action=='delete_occurrence'):
+				global $EO_Errors;
 
 				//Check nonce
 				check_admin_referer('eventorganiser_delete_occurrence_'.$event_id);
@@ -239,24 +232,43 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				if (!current_user_can('delete_event', $post_id))
 					wp_die( __('You do not have sufficient permissions to delete this event','eventorganiser') );
 
-				$del = $wpdb->get_results($wpdb->prepare("DELETE FROM $eventorganiser_events_table WHERE post_id=%d AND event_id=%d",$post_id,$event_id));
+				$response = _eventorganiser_remove_occurrence($post_id,$event_id);
 
-				global $EO_Errors;
-				$EO_Errors = new WP_Error();
-				$EO_Errors->add('eo_notice', '<strong>'.__("Occurrence deleted.",'eventorganiser').'</strong>');
+				//Break Cache!
+				_eventorganiser_delete_calendar_cache();
+
+				if( is_wp_error($response) ){
+					$EO_Errors =$response;
+				}else{
+					$EO_Errors = new WP_Error('eo_notice', '<strong>'.__("Occurrence deleted.",'eventorganiser').'</strong>');
+				}
 			endif;
 		}
 	}
+
+
+	function screen_options($options, $screen){
+		$options .= '<h5>'.__('Calendar options','eventorganiser').'</h5>';
+		$options .= sprintf('<p><label for="%s" style="line-height: 20px;"> <input type="checkbox" name="%s" id="%s" %s> %s </label></p>',
+						'eofc_time_format',
+						'eofc_time_format',
+						'eofc_time_format',
+						checked($screen->get_option('eofc_time_format','value'),0,false),
+						__('24 hour time', 'eventorganiser')
+       					 );
+		return $options;
+	}
+
+
 	
 	function display(){
 		//Get the time 'now' according to blog's timezone
-		 $now = new DateTIme(null,EO_Event::get_timezone());
-		$venues = get_terms('event-venue', array('hide_empty'=>false));
+		 $now = new DateTIme(null,eo_get_blog_timezone());
+		$venues = eo_get_venues();
 	?>
 
 	<div class="wrap">  
-		<div id='icon-edit' class='icon32'><br/>
-		</div>
+		<?php screen_icon('edit');?>
 		<h2><?php _e('Events Calendar', 'eventorganiser'); ?></h2>
 
 		<div id="calendar-view">
@@ -267,12 +279,13 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		</div>
 		<div id='eo_admin_calendar'></div>
 		<span><?php _e('Current date/time','eventorganiser');?>: <?php echo $now->format('Y-m-d G:i:s \G\M\TP');?></span>
-		<div id='events-meta' class="thickbox"></div>
+		<div id='events-meta' class="thickbox" style="display:none;"></div>
 
 		<?php if(current_user_can('publish_events')||current_user_can('edit_events')):?>
 			<div id='eo_event_create_cal' style="display:none;" class="thickbox">
 			<form name="eventorganiser_calendar" method="post" class="eo_cal">
-				<table>
+
+				<table class="form-table">
 				<tr>
 					<th><?php _e('When','eventorganiser');?>: </th>
 					<td id="date"></td>
@@ -298,28 +311,29 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 					<td><textarea rows="4" name="eo_event[event_content]"></textarea></td>
 				</tr>
 				</table>
-				<input type="hidden" name="eo_event[StartDate]">
-				<input type="hidden" name="eo_event[EndDate]">
-				<input type="hidden" name="eo_event[StartTime]">
-				<input type="hidden" name="eo_event[FinishTime]">
-				<input type="hidden" name="eo_event[allday]">
-		  		<?php wp_nonce_field('eventorganiser_calendar_save'); ?>
+			<p class="submit">
+			<input type="hidden" name="eo_event[StartDate]">
+			<input type="hidden" name="eo_event[EndDate]">
+			<input type="hidden" name="eo_event[StartTime]">
+			<input type="hidden" name="eo_event[FinishTime]">
+			<input type="hidden" name="eo_event[allday]">
+		  	<?php wp_nonce_field('eventorganiser_calendar_save'); ?>
 			<?php if(current_user_can('publish_events')):?>
-					<p class="submit">	
-						<input type="reset" class="button" id="reset" value="Cancel">
-						<input type="submit" class="button button-highlighted" tabindex="4" value="<?php _e('Save Draft','eventorganiser');?>"" id="event-draft" name="save">
-					<span class="eo_alignright">
-						<input type="submit" accesskey="p" tabindex="5" value="<?php _e('Publish Event','eventorganiser');?>" class="button-primary" id="publish" name="publish">
-					</span>
-					<br class="clear">
-					</p>
+				<input type="submit" class="button" tabindex="4" value="<?php _e('Save Draft','eventorganiser');?>"" id="event-draft" name="save">
+				<input type="reset" class="button" id="reset" value="Cancel">
+
+				<span id="publishing-action">
+					<input type="submit" accesskey="p" tabindex="5" value="<?php _e('Publish Event','eventorganiser');?>" class="button-primary" id="publish" name="publish">
+				</span>
+
 			<?php elseif(current_user_can('edit_events')):?>
-				<p class="submit">	
-					<input type="reset" class="button" id="reset" value="<?php _e('Cancel','eventorganiser');?>">
+				<input type="reset" class="button" id="reset" value="<?php _e('Cancel','eventorganiser');?>">
+				<span id="publishing-action">
 					<input type="submit" accesskey="p" tabindex="5" value="<?php _e('Submit for Review','eventorganiser');?>" class="eo_alignright button-primary" id="submit-for-review" name="publish">
-				<br class="clear">
-				</p>
+				</span>
 			<?php endif; ?>
+			
+			<br class="clear">
 			</form>
 		</div>
 		<?php endif; ?>

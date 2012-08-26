@@ -12,13 +12,14 @@ function eventorganiser_create_event_taxonomies() {
 	if(empty($eo_options['prettyurl'])){
 		$cat_rewrite =$tag_rewrite=$venue_rewrite= false;
 	}else{
-		$cat_slug = (empty($eo_options['url_cat']) ? 'events/category' : trim($eo_options['url_cat'], "/"));
+
+		$cat_slug = trim(eventorganiser_get_option('url_cat','events/category'), "/");
 		$cat_rewrite = array( 'slug' => $cat_slug, 'with_front' => false );
 
-		$tag_slug = (empty($eo_options['url_tag']) ? 'events/category' : trim($eo_options['url_tag'], "/"));
+		$tag_slug = trim(eventorganiser_get_option('url_tag','events/tag'), "/");
 		$tag_rewrite = array( 'slug' => $tag_slug, 'with_front' => false );
 
-		$venue_slug = (empty($eo_options['url_venue']) ? 'events/venue' : trim($eo_options['url_venue'], "/"));
+		$venue_slug = trim(eventorganiser_get_option('url_venue','events/venue'), "/");
 		$venue_rewrite = array( 'slug' => $venue_slug, 'with_front' => false );
 	}
 
@@ -145,8 +146,10 @@ $exclude_from_search = ($eo_options['excludefromsearch']==0) ? false : true;
 
 if(empty($eo_options['prettyurl'])){
 	$event_rewrite = false;
+	$events_slug = true;
 }else{
-	$event_slug = (empty($eo_options['url_event']) ? 'events/event' : $eo_options['url_event']);
+	$event_slug = trim(eventorganiser_get_option('url_event','events/event'), "/");
+	$events_slug = trim(eventorganiser_get_option('url_events','events/event'), "/");
 	$event_rewrite = array( 'slug' => $event_slug, 'with_front' => false,'feeds'=> true,'pages'=> true );
 }
 
@@ -171,10 +174,10 @@ $args = array(
 		'delete_post' => 'delete_event',
 		'read_post' => 'read_event',
 	),
-	'has_archive' => true, 
+	'has_archive' => $events_slug, 
 	'hierarchical' => false,
 	'menu_icon' => EVENT_ORGANISER_URL.'css/images/eoicon-16.png',
-	'menu_position' => 5,
+	'menu_position' => apply_filters('eventorganiser_menu_position',5),
 	'supports' => $eo_options['supports']
   ); 
 
@@ -336,7 +339,20 @@ function eventorganiser_menu_link($items) {
 	$items = $items . $eventlink;
 	return $items;
 }
+	add_filter( 'contextual_help', 'wptuts_contextual_help', 10, 3 );
+	function wptuts_contextual_help($contextual_help, $screen_id, $screen) { 
 
+		//Only add to certain screen(s). The add_help_tab function for screen was introduced in WordPress 3.3. 
+		if( $screen_id != 'post' || ! method_exists($screen, 'add_help_tab') )
+			return $contextual_help;
+	
+		$screen->add_help_tab( array(
+				'id'      => 'wptuts-overview-tab', 
+				'title'   => __('My Plug-in Help','plugin_domain'),
+				'content' => '<p>' . __('Some help text here','plugin_domain') . '</p>',
+			));
+		return $contextual_help;
+	}
 /*
  * Add contextual help
 */
@@ -538,8 +554,10 @@ function eventorganiser_get_terms_meta($terms){
 }
 
 
-//TODO Have meta array for event-category terms.
+
 function eo_get_category_meta($term,$key=''){
+	if( $key != 'color' )
+		return false;
 
 	if (is_object($term)){
 		if(isset($term->color))
@@ -548,14 +566,13 @@ function eo_get_category_meta($term,$key=''){
 			$term = $term->slug;
 	}
 
-	if(!empty($term)){
+	if( !empty($term) ){
 		$term = get_term_by('slug', $term,'event-category');
 		if( isset($term->color))
 			return $term->color;
 
 	}elseif(is_tax('event-category')){
 		$term = get_queried_object();
-		$taxonomy = $term->taxonomy;
 		$term = $term->term_id;
 		$term = get_term( $term, 'event-category' );
 		if( isset($term->color))

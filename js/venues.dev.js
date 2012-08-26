@@ -1,4 +1,8 @@
 jQuery(document).ready(function () {
+	if (typeof EO_Venue != 'undefined') {
+		postboxes.add_postbox_toggles(pagenow);
+	}
+
     if (typeof google !== "undefined") {
         var eo_venue_Lat = jQuery("#eo_venue_Lat").val();
         var eo_venue_Lng = jQuery("#eo_venue_Lng").val();

@@ -39,7 +39,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 
 		self::$checkboxes = array('showpast','templates','prettyurl','excludefromsearch','deleteexpired','feed','eventtag','group_events');
 		self::$text = array('navtitle');
-		self::$permalinks = array('url_event','url_venue','url_cat','url_tag');
+		self::$permalinks = array('url_event','url_events','url_venue','url_cat','url_tag');
 
 		$menus = get_terms('nav_menu');
 
@@ -213,11 +213,10 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	function display(){
 		?>
 		<div class="wrap">  
-			<div id='icon-options-general' class='icon32'><br />
-		</div>
+			<?php screen_icon('options-general'); ?>
 		<h2 class="nav-tab-wrapper">
 		<?php 
-			_e('Event Settings', 'eventorganiser'); 
+			echo __('Event Settings', 'eventorganiser').' '; 
 			foreach (self::$sections as $section_id => $section )
 				echo "<a class='nav-tab nav-tab-active' id='eo-tab-{$section_id}' href=''>".esc_html($section['title'])."</a>";
 		;?>
@@ -431,31 +430,38 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		<?php _e("If you have pretty permalinks enabled, select to have pretty premalinks for events.",'eventorganiser');?>
 	</tr>
 	<tr>
-		<th><?php _e("Events",'eventorganiser');?></th>
+		<th><?php _e("Event (single)",'eventorganiser');?></th>
 		<td> 
-			<input type="text" name="eventorganiser_options[url_event]" value="<?php echo self::$settings['url_event'];?>" /> </br>
-			<label><code> <?php echo $site_url.'/<strong>'.self::$settings['url_event'].'</strong>/'.'[event_slug]' ;?></code></label>
+			<input type="text" name="eventorganiser_options[url_event]" value="<?php echo eventorganiser_get_option('url_event');?>" /> </br>
+			<label><code> <?php echo $site_url.'/<strong>'.eventorganiser_get_option('url_event').'</strong>/'.'[event_slug]' ;?></code></label>
+		</td>
+	</tr>
+	<tr>
+		<th><?php _e("Event (archive)",'eventorganiser');?></th>
+		<td> 
+			<input type="text" name="eventorganiser_options[url_events]" value="<?php echo eventorganiser_get_option('url_events');?>" /> </br>
+			<label><code> <?php echo $site_url.'/<strong>'.eventorganiser_get_option('url_events').'</strong>' ;?></code></label>
 		</td>
 	</tr>
 	<tr>
 		<th><?php _e("Venues",'eventorganiser');?></th>
 		<td> 
-			<input type="text" name="eventorganiser_options[url_venue]" value="<?php echo self::$settings['url_venue'];?>" /> </br>
-			<label><code> <?php echo $site_url.'/<strong>'.self::$settings['url_venue'].'</strong>/'.'[venue_slug]' ;?></code></label>
+			<input type="text" name="eventorganiser_options[url_venue]" value="<?php echo eventorganiser_get_option('url_venue');?>" /> </br>
+			<label><code> <?php echo $site_url.'/<strong>'.eventorganiser_get_option('url_venue').'</strong>/'.'[venue_slug]' ;?></code></label>
 		</td>
 	</tr>
 	<tr>
 		<th><?php _e("Event Categories",'eventorganiser');?></th>
 		<td> 
-			<input type="text" name="eventorganiser_options[url_cat]" value="<?php echo self::$settings['url_cat'];?>" /> </br>
-			<label><code> <?php echo $site_url.'/<strong>'.self::$settings['url_cat'].'</strong>/'.'[event_cat_slug]' ;?></code></label>
+			<input type="text" name="eventorganiser_options[url_cat]" value="<?php echo eventorganiser_get_option('url_cat');?>" /> </br>
+			<label><code> <?php echo $site_url.'/<strong>'.eventorganiser_get_option('url_cat').'</strong>/'.'[event_cat_slug]' ;?></code></label>
 		</td>
 	</tr>
 	<tr>
 		<th><?php _e("Event Tags",'eventorganiser');?></th>
 		<td> 
-			<input type="text" name="eventorganiser_options[url_tag]" value="<?php echo self::$settings['url_tag']; ?>" /> </br>
-			<label><code> <?php echo $site_url.'/<strong>'.self::$settings['url_tag'].'</strong>/'.'[event_tag_slug]' ;?></code></label>
+			<input type="text" name="eventorganiser_options[url_tag]" value="<?php echo eventorganiser_get_option('url_tag'); ?>" /> </br>
+			<label><code> <?php echo $site_url.'/<strong>'.eventorganiser_get_option('url_tag').'</strong>/'.'[event_tag_slug]' ;?></code></label>
 		</td>
 	</tr>
 </table>

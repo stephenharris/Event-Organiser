@@ -2,11 +2,15 @@
 /**
  * Class used to create the event calendar widget
  */
-class EO_Events_Agenda_Widget extends WP_Widget
-{
+class EO_Events_Agenda_Widget extends WP_Widget{
 	var $w_arg = array(
 		'title'=> '',
+		'mode'=> 'day',
+		'group_format'=>'l, jS F',
+		'item_format'=>'g:i a'
 		);
+
+	static $agendas=array();
 
 	function __construct() {
 		$widget_ops = array('classname' => 'widget_events', 'description' =>  __('Displays a list of events, grouped by date','eventorganiser'));
@@ -21,13 +25,33 @@ class EO_Events_Agenda_Widget extends WP_Widget
 		<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'eventorganiser'); ?>: </label>
 		<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance['title']);?>" />
 	</p>
+	<p>
+		<label for="<?php echo $this->get_field_id('mode'); ?>"><?php _e('Group by', 'eventorganiser'); ?>: </label>
+		<select id="<?php echo $this->get_field_id('mode'); ?>" name="<?php echo $this->get_field_name('mode'); ?>" type="text">
+			<option value="day" <?php selected($instance['mode'], ''); ?>><?php _e('Day','eventorganiser'); ?> </option>
+			<option value="month" <?php selected($instance['mode'], 'month'); ?>><?php _e('Month','eventorganiser'); ?> </option>
+		</select>
+	</p>
+	<p>
+		<label for="<?php echo $this->get_field_id('group_format'); ?>"><?php _e('Group date format', 'eventorganiser'); ?>: </label>
+		<input id="<?php echo $this->get_field_id('group_format'); ?>" name="<?php echo $this->get_field_name('group_format'); ?>" type="text" value="<?php echo esc_attr($instance['group_format']);?>" />
+	</p>
+	<p>
+		<label for="<?php echo $this->get_field_id('item_format'); ?>"><?php _e('Event date/time format', 'eventorganiser'); ?>: </label>
+		<input id="<?php echo $this->get_field_id('item_format'); ?>" name="<?php echo $this->get_field_name('item_format'); ?>" type="text" value="<?php echo esc_attr($instance['item_format']);?>" />
+	</p>
+
   <?php
   }
  
 
   function update($new_instance, $old_instance){
     	$validated=array();
+	delete_transient('eo_widget_agenda');
 	$validated['title'] = sanitize_text_field( $new_instance['title'] );
+	$validated['mode'] = sanitize_text_field( $new_instance['mode'] );
+	$validated['group_format'] = sanitize_text_field( $new_instance['group_format'] );
+	$validated['item_format'] = sanitize_text_field( $new_instance['item_format'] );
 	return $validated;
     }
 
@@ -39,12 +63,19 @@ class EO_Events_Agenda_Widget extends WP_Widget
 	wp_enqueue_style( 'eo_front');
 	extract($args, EXTR_SKIP);
 
+	add_action('wp_footer', array(__CLASS__, 'add_options_to_script'));
+	$id = esc_attr($args['widget_id']).'_container';
+	self::$agendas[$id] = array(
+		'id'=>esc_attr($args['widget_id']),
+		'number'=>$this->number,
+		'mode'=>$instance['mode']
+	);
+
 	//Echo widget
     	echo $before_widget;
-    	echo $before_title;
-	echo esc_html($instance['title']);
-    	echo $after_title;
-	echo "<div style='min-width:250px' class='eo-agenda-widget'>";
+    	if ( $instance['title'] )
+   		echo $before_title.esc_html($instance['title']).$after_title;
+	echo "<div style='width:100%' id='{$id}' class='eo-agenda-widget'>";
 ?>
 	<div class='agenda-nav'>
 		<span class="next button ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" title="">
@@ -59,61 +90,11 @@ class EO_Events_Agenda_Widget extends WP_Widget
 	echo '</ul>';//End dates
 	echo "</div>";
     	echo $after_widget;
-?>
-	<style>
-		.eo-agenda-widget ul{
-			list-style: none;
-			margin:0;
-		}	
-		.eo-agenda-widget .agenda-nav{
-			overflow:hidden;
-		}	
-		.eo-agenda-widget .next, .eo-agenda-widget .prev{
-			float:right;
-			padding: 5px 0px;
-			background: #ececec;
-			margin: 3px;
-		}	
-		.eo-agenda-widget ul.dates{
-			border-bottom: 1px solid #ececec;
-			font-weight:bold;
-		}	
-		.eo-agenda-widget ul.a-date{
-			margin:0;
-		}
-		.eo-agenda-widget li.date{
-			border-top: 1px solid #ececec;
-			padding: 10px 0px;
-		}	
-		.eo-agenda-widget li.event{
-			padding: 5px 0px 5px 10px;;
-			font-weight:normal;
-			background:#ececec;
-			border-radius:3px;
-			overflow:hidden;
-			cursor:pointer;
-			opacity:0.75;
-			color:#333;
-			margin:1px 0px;
-			position:relative;
-		}	
-		.eo-agenda-widget li.event:hover{
-			opacity:1;
-			background:#ececec;
-		}	
-		.eo-agenda-widget li.event .cat{
-			padding: 10px 3px;
-			background: red;
-			margin-right:5px;
-			height:100%;
-			position: absolute;
-		   	 top: 0;
-			left:0;
-		}	
-		.eo-agenda-widget li.event .meta{
-			font-size:0.9em;
-		}	
-	</style>
-<?php
   }
+
+	function add_options_to_script() {
+		if(!empty(self::$agendas))
+			wp_localize_script( 'eo_front', 'eo_widget_agenda', self::$agendas);	
+	}
+
 }

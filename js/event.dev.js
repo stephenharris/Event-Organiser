@@ -1,358 +1,567 @@
-(function( $ ) {
-$(document).ready(function() {
-//Venue picker - combobox
-		$.widget( "ui.combobox", {
-			_create: function() {
-				var self = this,
-					select = this.element.hide(),
-					selected = select.children( ":selected" ),
-					value = selected.val() ? selected.text() : "";
-				var input = this.input = $( "<input>" )
-					.insertAfter( select )
-					.val( value )
-					.autocomplete({
-						delay: 0,
-						minLength: 0,
-						source: function(req, response){  
-						$.getJSON(EO_Ajax_Event.ajaxurl+"?callback=?&action=eo-search-venue", req, function(data) {  
-							response( $.map( data, function( item ) {
-								if(item.term_id==0){ 
-									item.label = '';			
-								}else{
-									item.label = item.name;
-								}
-								return item;
-							}));
-                				});  
-					},
-					select: function(event, ui) {
-						if($("tr.venue_row").length >0){
-							if(ui.item.term_id==0){
-								$("tr.venue_row").hide();
-							}else{
-								$("tr.venue_row").show();
-							}
-							eo_initialize_map(ui.item.venue_lat,ui.item.venue_lng);
-						}
-						$("#venue_select").removeAttr("selected");
-						$("#venue_select").val(ui.item.term_id);
-					}
-					})
-					.addClass( "ui-widget-content ui-corner-left" );
+jQuery(document).ready(function($) {
 
-				input.data( "autocomplete" )._renderItem = function( ul, item ) {
-					if(item.term_id==0){
-						return $( "<li></li>" )
-							.data( "item.autocomplete", item )
-							.append( "<a>"+item.name+"</a>" )
-							.appendTo( ul );
-					}
-					return $( "<li></li>" )
-						.data( "item.autocomplete", item )
-						.append( "<a>" + item.label +"</br> <span style='font-size: 0.8em'><em>"+item.venue_address+", "+item.venue_postal+", "+item.venue_country+"</span></em></a>" )
-						.appendTo( ul );
-				};
+    eo_occurrences_by_rule = new Array();
+    if ($('#eo_occurrence_includes').length > 0) {
+        eo_include_dates = $('#eo_occurrence_includes').val().split(",");
+        eo_exclude_dates = $('#eo_occurrence_excludes').val().split(",");
+    }
 
-				this.button = $( "<button type='button'>&nbsp;</button>" )
-					.attr( "tabIndex", -1 )
-					.attr( "title", "Show All Items" )
-					.insertAfter( input )
-					.button({
-						icons: {primary: "ui-icon-triangle-1-s"},
-						text: false
-					})
-					.removeClass( "ui-corner-all" )
-					.addClass( "ui-corner-right ui-button-icon" )
-					.click(function() {
-						// close if already visible
-						if ( input.autocomplete( "widget" ).is( ":visible" ) ) {
-							input.autocomplete( "close" );
-							return;
-						}
+    // Update textareas to reflect inclusion, exclusion arrays
+    function eo_update_inc_ex_Input() {
+        $('#eo_occurrence_includes').val(eo_include_dates.join(',\r\n'));
+        $('#eo_occurrence_excludes').val(eo_exclude_dates.join(',\r\n'));
+    }
 
-						// work around a bug (likely same cause as #5265)
-						$( this ).blur();
+    $(document).ready(function() {
+        //Venue picker - combobox
+        $.widget("ui.combobox", {
+            _create: function() {
+                var input,
+                self = this,
+                select = this.element.hide(),
+                selected = select.children(":selected"),
+                value = selected.val() ? selected.text() : "";
+                wrapper = this.wrapper = $("<span>").addClass("ui-combobox").insertAfter(select);
+                var input = this.input = $("<input>").appendTo(wrapper).val(value).addClass("ui-combobox-input").autocomplete({
+                    delay: 0,
+                    minLength: 0,
+                    source: function(req, response) {
+                        $.getJSON(EO_Ajax_Event.ajaxurl + "?callback=?&action=eo-search-venue", req, function(data) {
+                            response($.map(data, function(item) {
+                                if (item.term_id == 0) {
+                                    item.label = '';
+                                } else {
+                                    item.label = item.name;
+                                }
+                                return item;
+                            }));
+                        });
+                    },
+                    select: function(event, ui) {
+                        if ($("tr.venue_row").length > 0) {
+                            if (ui.item.term_id == 0) {
+                                $("tr.venue_row").hide();
+                            } else {
+                                $("tr.venue_row").show();
+                            }
+                            eo_initialize_map(ui.item.venue_lat, ui.item.venue_lng);
+                        }
+                        $("#venue_select").removeAttr("selected");
+                        $("#venue_select").val(ui.item.term_id);
+                    }
+                }).addClass("ui-widget-content ui-corner-left");
 
-						// pass empty string as value to search for, displaying all results
-						input.autocomplete( "search", "" );
-						input.focus();
-					});
-			},
-		});
+                input.data("autocomplete")._renderItem = function(ul, item) {
+                    if (item.term_id == 0) {
+                        return $("<li></li>").data("item.autocomplete", item).append("<a>" + item.name + "</a>").appendTo(ul);
+                    }
+                    return $("<li></li>").data("item.autocomplete", item).append("<a>" + item.label + "</br> <span style='font-size: 0.8em'><em>" + item.venue_address + ", " + item.venue_postal + ", " + item.venue_country + "</span></em></a>").appendTo(ul);
+                };
 
-	//Venue selection
-	$( "#venue_select" ).combobox();
+                $("<a>").attr("tabIndex", -1).attr("title", "Show All Items").appendTo(wrapper).button({
+                    icons: {
+                        primary: "ui-icon-triangle-1-s"
+                    },
+                    text: false
+                }).removeClass("ui-corner-all").addClass("ui-corner-right ui-combobox-toggle").click(function() {
+                    // close if already visible
+                    if (input.autocomplete("widget").is(":visible")) {
+                        input.autocomplete("close");
+                        return;
+                    }
 
-	 //Date and time selection
-	if( $("#eventorganiser_detail #from_date, #eventorganiser_detail #to_date" ).length>0){
-	var dates = $("#eventorganiser_detail #from_date, #eventorganiser_detail #to_date" ).datepicker({
-			dateFormat: EO_Ajax_Event.format,
-			changeMonth: true,
-			changeYear: true,
-			monthNamesShort: EO_Ajax_Event.locale.monthAbbrev,
-			dayNamesMin:  EO_Ajax_Event.locale.dayAbbrev,
-			firstDay:  parseInt(EO_Ajax_Event.startday),
-			buttonImage: 'images/ui-icon-calendar.png',
-			buttonImageOnly: true,
-			onSelect: function( selectedDate ) {
-				var option = this.id == "from_date" ? "minDate" : "maxDate",
-					instance = $( this ).data( "datepicker" ),
-					date = $.datepicker.parseDate(
-						instance.settings.dateFormat ||
-						$.datepicker._defaults.dateFormat,
-						selectedDate, instance.settings );
-				dates.not( this ).datepicker( "option", option, date );
-				if( this.id == "from_date"){
-					$( "#recend").datepicker( "option", "minDate", date );
-				}
-				eo_update_event_form()
-			}
-		});
+                    // work around a bug (likely same cause as #5265)
+                    $(this).blur();
 
-	$( "#recend").datepicker({
-		dateFormat: EO_Ajax_Event.format,
-		monthNamesShort: EO_Ajax_Event.locale.monthAbbrev,
-		dayNamesMin:  EO_Ajax_Event.locale.dayAbbrev,
-		changeMonth: true,
-		changeYear: true,
-		firstDay:  parseInt(EO_Ajax_Event.startday),
-	});
+                    // pass empty string as value to search for, displaying all results
+                    input.autocomplete("search", "");
+                    input.focus();
+                });
+            },
+            });
 
-	$('#HWSEvent_time, #HWSEvent_time2').timepicker({
-		showPeriodLabels: false,
-		hourText:  EO_Ajax_Event.locale.hour,
-		minuteText:  EO_Ajax_Event.locale.minute
-	});
+        //Venue selection
+        $("#venue_select").combobox();
+    });
 
-	//When checked, a user wants to edit a reoccurring event.
-	$("#HWSEvent_rec").click(function(){
-		eo_update_event_form();
-	});
+    var locale = EO_Ajax_Event.locale;
+    function eo_update_event_form() {
+        speed = 700;
+        var a = !$("#HWSEvent_rec").prop("checked");
+        $(".reoccurence .event-date :input").attr("disabled", a);
+        $(".reoccurence .event-date :input").toggleClass("ui-state-disabled", a);
+        var a = !$("#eo_allday:checkbox").attr("checked");
+        $(".eo_time").attr("disabled", !a);
+        $(".eo_time").toggleClass("ui-state-disabled", !a);
+        switch ($("#HWSEventInput_Req").val()) {
+        case "once":
+        case "custom":
+            $("#HWSEvent_freq").val("1");
+            $(".reocurrence_row").hide();
+            $("#dayofweekrepeat").show();
+            $("#dayofmonthrepeat").show();
+            $(".reocurrence_row").attr("disabled", true);
+            break;
+        case "weekly":
+            $(".reocurrence_row :input").attr("disabled", false);
+            if ($("#HWSEvent_freq").val() > 1) {
+                $("#recpan").text(locale.weeks)
+                } else {
+                $("#recpan").text(locale.week)
+                }
+            $(".reocurrence_row").fadeIn(speed);
+            $("#dayofweekrepeat").fadeIn(speed);
+            $("#dayofweekrepeat :input").attr("disabled", false);
+            $("#dayofweekrepeat").buttonset("enable");
+            $("#dayofmonthrepeat").hide();
+            $("#dayofmonthrepeat :radio").attr("disabled", true);
+            break;
+        case "monthly":
+            $(".reocurrence_row :input").attr("disabled", false);
+            if ($("#HWSEvent_freq").val() > 1) {
+                $("#recpan").text(locale.months)
+                } else {
+                $("#recpan").text(locale.month)
+                }
+            $(".reocurrence_row").fadeIn(speed);
+            $("#dayofmonthrepeat").fadeIn(speed);
+            $("#dayofmonthrepeat :input").attr("disabled", false);
+            $("#dayofweekrepeat").hide();
+            $("#dayofweekrepeat :input").attr("disabled", true);
+            break;
+        case "daily":
+            $(".reocurrence_row :input").attr("disabled", false);
+            $(".reocurrence_row").fadeIn(speed);
+            if ($("#HWSEvent_freq").val() > 1) {
+                $("#recpan").text(locale.days)
+                } else {
+                $("#recpan").text(locale.day)
+                }
+            $("#dayofweekrepeat").hide();
+            $("#dayofweekrepeat :input").attr("disabled", true);
+            $("#dayofmonthrepeat").hide();
+            $("#dayofmonthrepeat :radio").attr("disabled", true);
+            break;
+        case "yearly":
+            $(".reocurrence_row :input").attr("disabled", false);
+            $(".reocurrence_row").fadeIn(speed);
+            if ($("#HWSEvent_freq").val() > 1) {
+                $("#recpan").text(locale.years)
+                } else {
+                $("#recpan").text(locale.year)
+                }
+            $("#dayofweekrepeat").hide();
+            $("#dayofweekrepeat :input").attr("disabled", true);
+            $("#dayofmonthrepeat").hide();
+            $("#dayofmonthrepeat :radio").attr("disabled", true);
+            break
+        }
+        if ($("#venue_select").val() === null) {
+            $("tr.venue_row").hide()
+            }
+        eo_produce_summary()
+        }
 
-	//When any input is altered. Update the form.
-	$(".reoccurence .event-date :input, .onetime .event-date :input").change(function(){
-		eo_update_event_form();
-	});
+    function eo_produce_summary() {
+        if ($("#HWSEventInput_Req").val() == "once") {
+            $("#event_summary").html("This event will be a one-time event");
+            return
+        }
+        var a = $("#from_date").datepicker("getDate");
+        var b = EO_Ajax_Event.locale.weekDay;
+        var c = new Array("SU", "MO", "TU", "WE", "TH", "FR", "SA");
+        options = {
+            monthNamesShort: EO_Ajax_Event.locale.monthAbbrev,
+            dayNamesMin: EO_Ajax_Event.locale.dayAbbrev,
+            monthNames: EO_Ajax_Event.locale.monthNames
+        };
+        reoccurrence = $("#HWSEventInput_Req :selected").text();
+        frequency = parseInt($("#HWSEvent_freq").val());
+        summary = locale.summary + " ";
+        switch ($("#HWSEventInput_Req").val()) {
+        case "custom":
+        case "daily":
+            if (frequency > 1) {
+                summary += sprintf(locale.dayPlural, frequency)
+                } else {
+                summary += locale.daySingle
+            }
+            break;
+        case "weekly":
+            if (frequency > 1) {
+                summary += sprintf(locale.weekPlural, frequency)
+                } else {
+                summary += locale.weekSingle
+            }
+            selected = $("#dayofweekrepeat :checkbox:checked");
+            if (selected.length == 0) {
+                day = a.getDay();
+                $("#dayofweekrepeat :checkbox[value='" + c[day] + "']").attr("checked", true)
+                }
+            selected = $("#dayofweekrepeat :checkbox:checked");
+            selected.each(function(a) {
+                if (a == 0)
+                    summary = summary + " " + b[c.indexOf($(this).val())];
+                if (a > 0)
+                    summary = summary + ", " + b[c.indexOf($(this).val())]
+                });
+            break;
+        case "monthly":
+            if (frequency > 1) {
+                summary += sprintf(locale.monthPlural, frequency)
+                } else {
+                summary += locale.monthSingle
+            }
+            if ($("#dayofmonthrepeat :radio:checked").val() == "BYMONTHDAY=") {
+                summary = summary + " " + a.getDate() + eo_date_suffix(a)
+                } else {
+                day = a.getDay() % 7;
+                n = parseInt(Math.floor((a.getDate() - 1) / 7));
+                occurrence = locale.occurrence;
+                summary = summary + " " + occurrence[n] + " " + b[day]
+                }
+            break;
+        case "yearly":
+            if (frequency > 1) {
+                summary += sprintf(locale.yearPlural, frequency)
+                } else {
+                summary += locale.yearSingle
+            }
+            summary = summary + " " + $.datepicker.formatDate("MM d", a, options) + eo_date_suffix(a);
+            break
+        }
+        var d = $("#recend").datepicker("getDate");
+        if (d != null) {
+            summary = summary + " " + locale.until + " " + $.datepicker.formatDate("MM d'" + eo_date_suffix(d) + "' yy", d, options)
+            }
+        $("#event_summary").html(summary)
+        }
 
-	//Initiate form
-	eo_update_event_form();
+    function eo_date_suffix(date) {
+        var suffix = ["th", "st", "nd", "rd"];
+        if (3 < date.getDate() && date.getDate() < 20) {
+            var s = 0
+        } else {
+            var s = Math.min(date.getDate() % 10, 4) % 4
+        }
+        return suffix[s]
+        };
 
-	//Disable if reoccurring
-	var bool = !$(this).prop("checked");
-	$(".reoccurence .event-date :input").attr('disabled', bool);
-	$(".reoccurence .event-date :input").toggleClass('ui-state-disabled', bool);
-	}
+    if ($("#eventorganiser_detail #from_date, #eventorganiser_detail #to_date").length > 0) {
+        var dates = $("#eventorganiser_detail #from_date, #eventorganiser_detail #to_date").datepicker({
+            dateFormat: EO_Ajax_Event.format,
+            changeMonth: true,
+            changeYear: true,
+            monthNamesShort: EO_Ajax_Event.locale.monthAbbrev,
+            dayNamesMin: EO_Ajax_Event.locale.dayAbbrev,
+            firstDay: parseInt(EO_Ajax_Event.startday),
+            buttonImage: 'images/ui-icon-calendar.png',
+            buttonImageOnly: true,
+            onSelect: function(selectedDate) {
+                var option = this.id == "from_date" ? "minDate": "maxDate",
+                instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+                if (this.id == "from_date") {
+                    $("#recend").datepicker("option", "minDate", date)
+                    }
+                eo_update_occurrencepicker_rules();
+                eo_update_event_form()
+                }
+        });
+        $("#recend").datepicker({
+            dateFormat: EO_Ajax_Event.format,
+            monthNamesShort: EO_Ajax_Event.locale.monthAbbrev,
+            dayNamesMin: EO_Ajax_Event.locale.dayAbbrev,
+            changeMonth: true,
+            changeYear: true,
+            firstDay: parseInt(EO_Ajax_Event.startday),
+            });
+        $('#HWSEvent_time, #HWSEvent_time2').timepicker({
+            showPeriodLabels: false,
+            hourText: EO_Ajax_Event.locale.hour,
+            minuteText: EO_Ajax_Event.locale.minute
+        });
+        $("#HWSEvent_rec").click(function() {
+            eo_update_event_form()
+            });
+        $(".reoccurence .event-date :input, .onetime .event-date :input").not('.eo_time').change(function(o) {
+            eo_update_event_form();
+            if ($(this).attr('id') != 'eo_allday') {
+                eo_update_occurrencepicker_rules()
+                };
+        });
+        eo_update_event_form();
+        var bool = !$(this).prop("checked");
+        $(".reoccurence .event-date :input").attr('disabled', bool);
+        $(".reoccurence .event-date :input").toggleClass('ui-state-disabled', bool)
+        }
+
+    //When rule changes, wipe include/exclude dates clean
+    function eo_update_occurrencepicker_rules() {
+        eo_exclude_dates = new Array();
+        eo_include_dates = new Array();
+        eo_update_inc_ex_Input();
+        eo_generate_dates_by_rule(eo_viewing_month[0], eo_viewing_month[1], {})
+            dp.datepicker("refresh");
+    };
+
+    //Show/hide calendar
+    $('.eo_occurrence_toogle').click(function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dp.toggle();
+    });
+
+    //Fires before each date. Decides what classes to add
+    function eo_pre_show_date(date) {
+        date_str = $.datepicker.formatDate('yy-mm-dd', date);
+        isEventful = eo_is_date_eventful(date_str);
+        if (isEventful[0]) {
+            return [true, "ui-state-active", ""];
+        }
+        return [true, "ui-state-disabled", ''];
+    }
+
+    //Is given date an occurrence of the event?
+    function eo_is_date_eventful(date) {
+        index = $.inArray(date, eo_occurrences_by_rule);
+
+        if (index > -1) {
+            //Occurs by rule - is it excluded manually?
+            excluded = $.inArray(date, eo_exclude_dates);
+            if (excluded > -1) {
+                return [false, excluded];
+            } else {
+                return [true, -1];
+            }
+        } else {
+            //Doesn't occurs by rule - is it included manually?
+            included = $.inArray(date, eo_include_dates);
+            if (included > -1) {
+                return [true, included];
+            } else {
+                return [false, -1];
+            }
+        }
+    }
+
+    //Generate array of eventful dates in given month by the event's current rule.
+    function eo_generate_dates_by_rule(year, month, inst) {
+        //month is 1-12.
+        eo_occurrences_by_rule = new Array();
+        eo_viewing_month = [year, month];
+
+        schedule = $('#HWSEventInput_Req').val();
+        frequency = parseInt($('#HWSEvent_freq').val());
+
+        start = $("#from_date").datepicker("getDate");
+        end = $("#recend").datepicker("getDate");
+
+        //Get month start/end dates. Date expects month 0-11.
+        month = month - 1;
+        month_start = new Date(year, month, 1);
+        nxt_mon = new Date(year, month + 1, 1);
+        month_end = new Date(nxt_mon - 1);
+
+        if (end < month_start || start > month_end) {
+            return;
+        }
+
+        //If event starts in previous month - how many days from start to first occurrence in current month?
+        // Depends on occurrence (and 'stream' for weekly events.
+        switch (schedule) {
+        case 'once':
+        case 'custom':
+            formateddate = $.datepicker.formatDate('yy-mm-dd', start);
+            eo_occurrences_by_rule.push(formateddate);
+            return;
+            break;
+
+        case 'daily':
+            if (start < month_start) {
+                count_days = Math.abs((month_start - start) / (1000 * 60 * 60 * 24)) - 1;
+                count_days = count_days % frequency;
+            } else {
+                count_days = parseInt(start.getDate());
+            }
+            skip = frequency;
+            streams = new Array();
+            start_stream = new Date(month_start);
+            start_stream.setDate(month_start.getDate() + (count_days - 1));
+            streams.push(start_stream);
+            break;
+
+        case 'weekly':
+            month_start_day = month_start.getDay();
+            selected = $("#dayofweekrepeat :checkbox:checked");
+
+            var ical_weekdays = new Array("SU", "MO", "TU", "WE", "TH", "FR", "SA");
+            streams = new Array();
+            selected.each(function(index) {
+                index = ical_weekdays.indexOf($(this).val());
+                start_stream = new Date(start);
+                start_stream.setDate(start.getDate() + (index - start.getDay() + 7) % 7);
+                if (start_stream < month_start) {
+                    count_days = Math.abs((month_start - start) / (1000 * 60 * 60 * 24));
+                    count_days = count_days - count_days % (frequency * 7);
+                    start_stream.setDate(start_stream.getDate() + count_days);
+                }
+                streams.push(start_stream);
+            });
+            skip = 7 * frequency;
+            break;
+
+            //These are easy
+            case 'monthly':
+            month_difference = (year - start.getFullYear()) * 12 + month - (start.getMonth() + 1);
+            if (month_difference % frequency != 0) {
+                return;
+            }
+            meta = $('input[name="eo_input[schedule_meta]"]:checked').val();
+            if (meta == 'BYMONTHDAY=') {
+                day = start.getDate();
+                daysinmonth = month_end.getDate();
+                if (day <= daysinmonth) {
+                    //If valid date
+                    pointer = new Date(year, month, day);
+                }
+
+            } else {
+                //e.g. 3rd friday of month:
+                n = Math.ceil(start.getDate() / 7);
+                occurrence_day = start.getDay();
+                if (n >= 5) {
+                    //Last day
+                    month_end_day = month_end.getDay();
+                    occurence_date = month_end.getDate() + (occurrence_day - month_end_day - 7) % 7;
+                } else {
+                    month_start_day = month_start.getDay();
+                    offset = (occurrence_day - month_start_day + 7) % 7;
+                    occurence_date = offset + (n - 1) * 7 + 1;
+                }
+                pointer = new Date(month_start);
+                pointer.setDate(occurence_date);
+            }
+            if (pointer <= end) {
+                //If before end
+                formateddate = $.datepicker.formatDate('yy-mm-dd', pointer);
+                eo_occurrences_by_rule.push(formateddate);
+            }
+            return;
+            break;
+
+        case 'yearly':
+            year_difference = (year - start.getFullYear());
+            if (year_difference % frequency != 0) {
+                return;
+            }
+
+            dateCheck = new Date(year, start.getMonth(), start.getDate());
+
+            if (month == start.getMonth() && dateCheck.getMonth() == start.getMonth()) {
+                pointer = new Date(start);
+                pointer.setYear(year);
+                if (pointer <= end) {
+                    //If before end
+                    formateddate = $.datepicker.formatDate('yy-mm-dd', pointer);
+                    eo_occurrences_by_rule.push(formateddate);
+                }
+            }
+            return;
+            break;
+
+        default:
+            return;
+            break;
+
+        }
+        //End switch
+        //While in current month, and event has not finished - generate occurrences.
+        for (x in streams) {
+            pointer = new Date(streams[x]);
+            while (pointer <= month_end && pointer <= end) {
+                formateddate = $.datepicker.formatDate('yy-mm-dd', pointer);
+                eo_occurrences_by_rule.push(formateddate);
+                pointer.setDate(pointer.getDate() + skip);
+            }
+        }
+    }
+
+    //When a date is selected, add or remove it based on current state
+    function eo_addOrRemoveDate(date, inst) {
+
+        isEventful = eo_is_date_eventful(date);
+        if (isEventful[0]) {
+            //Date is eventful. Remove date
+            index = isEventful[1];
+            if (index > -1) {
+                //Date was manually included
+                eo_removeDateFromInclude(index);
+            } else {
+                //Date was eventful by rule
+                eo_addDateToExclude(date)
+                }
+        } else {
+            //Date is not eventful. Add date
+            index = isEventful[1];
+            if (index > -1) {
+                //Date was manually excluded
+                eo_removeDateFromExclude(index);
+            } else {
+                //Date was not an event by rule
+                eo_addDateToInclude(date)
+                }
+        }
+        //Update inclusion, exclusion textareas
+        eo_update_inc_ex_Input();
+    }
+
+    // Add/remove dates from inclusion, exclusion arrays
+    function eo_addDateToInclude(date) {
+        if ($.inArray(date, eo_include_dates) < 0)
+            eo_include_dates.push(date);
+    }
+    function eo_removeDateFromInclude(index) {
+        eo_include_dates.splice(index, 1);
+    }
+    function eo_addDateToExclude(date) {
+        if ($.inArray(date, eo_exclude_dates) < 0)
+            eo_exclude_dates.push(date);
+    }
+    function eo_removeDateFromExclude(index) {
+        eo_exclude_dates.splice(index, 1);
+    }
+
+    now = new Date();
+    eo_generate_dates_by_rule(now.getFullYear(), now.getMonth() + 1, {});
+
+    dp = $('#eo_occurrence_datepicker');
+    if (dp.length > 0) {
+        dp.datepicker({
+            dateFormat: "yy-mm-dd",
+            onSelect: eo_addOrRemoveDate,
+            beforeShowDay: eo_pre_show_date,
+            onChangeMonthYear: eo_generate_dates_by_rule,
+            changeMonth: true,
+            changeYear: true,
+            monthNamesShort: EO_Ajax_Event.locale.monthAbbrev,
+            dayNamesMin: EO_Ajax_Event.locale.dayAbbrev,
+            firstDay: parseInt(EO_Ajax_Event.startday),
+            }).hide();
+    }
+    $('html').click(function() {
+        dp.hide();
+    });
+    dp.find('.ui-datepicker-inline').click(function(e) {
+        if (!e)
+            var e = window.event;
+        e.cancelBubble = true;
+        if (e.stopPropagation)
+            e.stopPropagation();
+    });
 });
 
-var locale = EO_Ajax_Event.locale;
-function eo_produce_summary(){
-	
-		//If single occurrence
-		if($("#HWSEventInput_Req").val()=='once'){
-			$("#event_summary").html('This event will be a one-time event');
-			return;
-		}
-	
-		var fromdate = $("#from_date").datepicker("getDate");
-		var weekdays= EO_Ajax_Event.locale.weekDay; 
-		var ical_weekdays=new Array("SU","MO","TU","WE","TH","FR","SA");
-
-		options= {
-			monthNamesShort: EO_Ajax_Event.locale.monthAbbrev,
-			dayNamesMin:  EO_Ajax_Event.locale.dayAbbrev,
-			monthNames:  EO_Ajax_Event.locale.monthNames
-		};
-
-		//Get reoccurrence and frequency
-		reoccurrence =$("#HWSEventInput_Req :selected").text();
-		frequency =parseInt($("#HWSEvent_freq").val());
-
-		summary = locale.summary+" ";
-
-		switch($("#HWSEventInput_Req").val()){
-			case 'daily':
-				if(frequency>1){
-					summary += sprintf(locale.dayPlural, frequency);
-				}else{
-					summary += locale.daySingle;
-				}
-				break;
-
-			case 'weekly':
-				if(frequency>1){
-					summary += sprintf(locale.weekPlural, frequency);
-				}else{
-					summary += locale.weekSingle;
-				}
-
-				selected = $("#dayofweekrepeat :checkbox:checked");
-	
-				if(selected.length==0){
-					day =fromdate.getDay();
-					$("#dayofweekrepeat :checkbox[value='"+ical_weekdays[day]+"']").attr('checked',true);
-				}
-				selected = $("#dayofweekrepeat :checkbox:checked");
-		
-				selected.each(function(index){
-					if(index==0)summary = summary+" "+weekdays[ical_weekdays.indexOf($(this).val())];
-					if(index>0)summary = summary+", "+weekdays[ical_weekdays.indexOf($(this).val())];
-				});
-				break;
-
-			case 'monthly':
-				if(frequency>1){
-					summary += sprintf(locale.monthPlural, frequency);
-				}else{
-					summary += locale.monthSingle;
-				}
-
-				//Show & enable reoccurrence forms and month meta. Disable & hide week meta 
-				if($("#dayofmonthrepeat :radio:checked").val()=='BYMONTHDAY='){
-					summary = summary+" "+fromdate.getDate()+eo_date_suffix(fromdate);
-				}else{
-					day =fromdate.getDay()%7;
-					n = parseInt(Math.floor((fromdate.getDate()-1)/7));
-					occurrence =locale.occurrence;
-					summary = summary+" "+occurrence[n]+" "+weekdays[day];
-				}
-				break;
-
-			case 'yearly':
-				if(frequency>1){
-					summary += sprintf(locale.yearPlural, frequency);
-				}else{
-					summary += locale.yearSingle;
-				}
-				//Show & enable reoccurrence forms. Disable & hide week & month meta 
-				summary = summary+" "+$.datepicker.formatDate('MM d', fromdate, options)+eo_date_suffix(fromdate);
-				break;
-		}
-
-		//Add 'until' to summary if the schedule's end is entered
-		var schedule_end = $("#recend").datepicker("getDate");
-		if(schedule_end!= null){			
-			summary = summary+" "+locale.until+" "+$.datepicker.formatDate("MM d'"+eo_date_suffix(schedule_end)+"' yy", schedule_end,options);
-		}
-
-		//Display summary
-		$("#event_summary").html(summary);		
-	};
-
-
-function eo_update_event_form(){
-		speed = 700;
-
-		var bool = !$("#HWSEvent_rec").prop("checked");
-		$(".reoccurence .event-date :input").attr('disabled', bool);
-		$(".reoccurence .event-date :input").toggleClass('ui-state-disabled', bool);	
-
-		//If all day, disable times		
-		var bool = !$("#eo_allday:checkbox").attr('checked');
-		$(".eo_time").attr('disabled', !bool);
-		$(".eo_time").toggleClass('ui-state-disabled', !bool);
-
-		/*
-		* Decide what forms to show depending on selected schedule
-		*/
-		switch($("#HWSEventInput_Req").val()){
-			case 'once':
-				//Hide & disable everything (except daysofweek & dayofmonth - this sit inside a hidden row)
-				$('#HWSEvent_freq').val('1');
-				$(".reocurrence_row").hide();
-				$("#dayofweekrepeat").show();
-				$("#dayofmonthrepeat").show();
-				$(".reocurrence_row").attr('disabled', true);
-				break;
-
-			case 'weekly':
-				//Show & enable reoccurrence forms and week metaa. Disable & hide month meta 
-				$(".reocurrence_row :input").attr('disabled', false);
-				if($("#HWSEvent_freq").val() >1){
-					$("#recpan").text(locale.weeks);
-				}else{
-					$("#recpan").text(locale.week);
-				}
-				$(".reocurrence_row").fadeIn(speed);
-				$("#dayofweekrepeat").fadeIn(speed);
-				$("#dayofweekrepeat :input").attr('disabled', false);
-				$( "#dayofweekrepeat" ).buttonset('enable');
-				$("#dayofmonthrepeat").hide();
-				$("#dayofmonthrepeat :radio").attr('disabled', true);
-				break;
-
-			case 'monthly':
-				//Show & enable reoccurrence forms and month meta. Disable & hide week meta 
-				$(".reocurrence_row :input").attr('disabled', false);
-				if($("#HWSEvent_freq").val() >1){
-					$("#recpan").text(locale.months);
-				}else{
-					$("#recpan").text(locale.month);
-				}
-				$(".reocurrence_row").fadeIn(speed);
-				$("#dayofmonthrepeat").fadeIn(speed);
-				$("#dayofmonthrepeat :input").attr('disabled', false);
-				$("#dayofweekrepeat").hide();
-				$("#dayofweekrepeat :input").attr('disabled', true);
-				break;
-
-			case 'daily':
-				//Show & enable reoccurrence forms. Disable & hide week & month meta 
-				$(".reocurrence_row :input").attr('disabled', false);
-				$(".reocurrence_row").fadeIn(speed);
-				if($("#HWSEvent_freq").val() >1){
-					$("#recpan").text(locale.days);
-				}else{
-					$("#recpan").text(locale.day);
-				}
-				$("#dayofweekrepeat").hide();
-				$("#dayofweekrepeat :input").attr('disabled', true);
-				$("#dayofmonthrepeat").hide();
-				$("#dayofmonthrepeat :radio").attr('disabled', true);
-				break;
-
-			case 'yearly':
-				//Show & enable reoccurrence forms. Disable & hide week & month meta 
-				$(".reocurrence_row :input").attr('disabled', false);
-				$(".reocurrence_row").fadeIn(speed);
-				if($("#HWSEvent_freq").val() >1){
-					$("#recpan").text(locale.years);
-				}else{
-					$("#recpan").text(locale.year);
-				}
-				$("#dayofweekrepeat").hide();
-				$("#dayofweekrepeat :input").attr('disabled', true);
-				$("#dayofmonthrepeat").hide();
-				$("#dayofmonthrepeat :radio").attr('disabled', true);
-				break;
-		}
-
-		if($("#venue_select").val() === null){
-			$("tr.venue_row").hide();
-		}
-
-		/*
-		* Form updated, now produce a reoccurrence summary
-		*/
-		eo_produce_summary();
-	};
-
-
-
-	/*
-	* Takes a date object and returns it's suffix
-	*/
-	function eo_date_suffix(date){
-		var suffix = ["th", "st", "nd", "rd"];
-		if (3<date.getDate() && date.getDate()<20){
-			var s=0;
-		}else{
-			var s = Math.min(date.getDate()%10,4)%4;
-		}
-		return suffix[s];
-	}
-
-
-	})( jQuery );
 /**
 sprintf() for JavaScript 0.7-beta1
 http://www.diveintojavascript.com/projects/javascript-sprintf
@@ -371,130 +580,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
-
-var sprintf = (function() {
-	function get_type(variable) {
-		return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
-	}
-	function str_repeat(input, multiplier) {
-		for (var output = []; multiplier > 0; output[--multiplier] = input) {/* do nothing */}
-		return output.join('');
-	}
-
-	var str_format = function() {
-		if (!str_format.cache.hasOwnProperty(arguments[0])) {
-			str_format.cache[arguments[0]] = str_format.parse(arguments[0]);
-		}
-		return str_format.format.call(null, str_format.cache[arguments[0]], arguments);
-	};
-
-	str_format.format = function(parse_tree, argv) {
-		var cursor = 1, tree_length = parse_tree.length, node_type = '', arg, output = [], i, k, match, pad, pad_character, pad_length;
-		for (i = 0; i < tree_length; i++) {
-			node_type = get_type(parse_tree[i]);
-			if (node_type === 'string') {
-				output.push(parse_tree[i]);
-			}
-			else if (node_type === 'array') {
-				match = parse_tree[i]; // convenience purposes only
-				if (match[2]) { // keyword argument
-					arg = argv[cursor];
-					for (k = 0; k < match[2].length; k++) {
-						if (!arg.hasOwnProperty(match[2][k])) {
-							throw(sprintf('[sprintf] property "%s" does not exist', match[2][k]));
-						}
-						arg = arg[match[2][k]];
-					}
-				}
-				else if (match[1]) { // positional argument (explicit)
-					arg = argv[match[1]];
-				}
-				else { // positional argument (implicit)
-					arg = argv[cursor++];
-				}
-
-				if (/[^s]/.test(match[8]) && (get_type(arg) != 'number')) {
-					throw(sprintf('[sprintf] expecting number but found %s', get_type(arg)));
-				}
-				switch (match[8]) {
-					case 'b': arg = arg.toString(2); break;
-					case 'c': arg = String.fromCharCode(arg); break;
-					case 'd': arg = parseInt(arg, 10); break;
-					case 'e': arg = match[7] ? arg.toExponential(match[7]) : arg.toExponential(); break;
-					case 'f': arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg); break;
-					case 'o': arg = arg.toString(8); break;
-					case 's': arg = ((arg = String(arg)) && match[7] ? arg.substring(0, match[7]) : arg); break;
-					case 'u': arg = Math.abs(arg); break;
-					case 'x': arg = arg.toString(16); break;
-					case 'X': arg = arg.toString(16).toUpperCase(); break;
-				}
-				arg = (/[def]/.test(match[8]) && match[3] && arg >= 0 ? '+'+ arg : arg);
-				pad_character = match[4] ? match[4] == '0' ? '0' : match[4].charAt(1) : ' ';
-				pad_length = match[6] - String(arg).length;
-				pad = match[6] ? str_repeat(pad_character, pad_length) : '';
-				output.push(match[5] ? arg + pad : pad + arg);
-			}
-		}
-		return output.join('');
-	};
-
-	str_format.cache = {};
-
-	str_format.parse = function(fmt) {
-		var _fmt = fmt, match = [], parse_tree = [], arg_names = 0;
-		while (_fmt) {
-			if ((match = /^[^\x25]+/.exec(_fmt)) !== null) {
-				parse_tree.push(match[0]);
-			}
-			else if ((match = /^\x25{2}/.exec(_fmt)) !== null) {
-				parse_tree.push('%');
-			}
-			else if ((match = /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/.exec(_fmt)) !== null) {
-				if (match[2]) {
-					arg_names |= 1;
-					var field_list = [], replacement_field = match[2], field_match = [];
-					if ((field_match = /^([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
-						field_list.push(field_match[1]);
-						while ((replacement_field = replacement_field.substring(field_match[0].length)) !== '') {
-							if ((field_match = /^\.([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
-								field_list.push(field_match[1]);
-							}
-							else if ((field_match = /^\[(\d+)\]/.exec(replacement_field)) !== null) {
-								field_list.push(field_match[1]);
-							}
-							else {
-								throw('[sprintf] huh?');
-							}
-						}
-					}
-					else {
-						throw('[sprintf] huh?');
-					}
-					match[2] = field_list;
-				}
-				else {
-					arg_names |= 2;
-				}
-				if (arg_names === 3) {
-					throw('[sprintf] mixing positional and named placeholders is not (yet) supported');
-				}
-				parse_tree.push(match);
-			}
-			else {
-				throw('[sprintf] huh?');
-			}
-			_fmt = _fmt.substring(match[0].length);
-		}
-		return parse_tree;
-	};
-
-	return str_format;
-})();
-
-var vsprintf = function(fmt, argv) {
-	argv.unshift(fmt);
-	return sprintf.apply(null, argv);
-};
+var sprintf=(function(){function get_type(variable){return Object.prototype.toString.call(variable).slice(8,-1).toLowerCase()}function str_repeat(input,multiplier){for(var output=[];multiplier>0;output[--multiplier]=input){}return output.join('')}var str_format=function(){if(!str_format.cache.hasOwnProperty(arguments[0])){str_format.cache[arguments[0]]=str_format.parse(arguments[0])}return str_format.format.call(null,str_format.cache[arguments[0]],arguments)};str_format.format=function(parse_tree,argv){var cursor=1,tree_length=parse_tree.length,node_type='',arg,output=[],i,k,match,pad,pad_character,pad_length;for(i=0;i<tree_length;i++){node_type=get_type(parse_tree[i]);if(node_type==='string'){output.push(parse_tree[i])}else if(node_type==='array'){match=parse_tree[i];if(match[2]){arg=argv[cursor];for(k=0;k<match[2].length;k++){if(!arg.hasOwnProperty(match[2][k])){throw(sprintf('[sprintf] property "%s" does not exist',match[2][k]))}arg=arg[match[2][k]]}}else if(match[1]){arg=argv[match[1]]}else{arg=argv[cursor++]}if(/[^s]/.test(match[8])&&(get_type(arg)!='number')){throw(sprintf('[sprintf] expecting number but found %s',get_type(arg)))}switch(match[8]){case'b':arg=arg.toString(2);break;case'c':arg=String.fromCharCode(arg);break;case'd':arg=parseInt(arg,10);break;case'e':arg=match[7]?arg.toExponential(match[7]):arg.toExponential();break;case'f':arg=match[7]?parseFloat(arg).toFixed(match[7]):parseFloat(arg);break;case'o':arg=arg.toString(8);break;case's':arg=((arg=String(arg))&&match[7]?arg.substring(0,match[7]):arg);break;case'u':arg=Math.abs(arg);break;case'x':arg=arg.toString(16);break;case'X':arg=arg.toString(16).toUpperCase();break}arg=(/[def]/.test(match[8])&&match[3]&&arg>=0?'+'+arg:arg);pad_character=match[4]?match[4]=='0'?'0':match[4].charAt(1):' ';pad_length=match[6]-String(arg).length;pad=match[6]?str_repeat(pad_character,pad_length):'';output.push(match[5]?arg+pad:pad+arg)}}return output.join('')};str_format.cache={};str_format.parse=function(fmt){var _fmt=fmt,match=[],parse_tree=[],arg_names=0;while(_fmt){if((match=/^[^\x25]+/.exec(_fmt))!==null){parse_tree.push(match[0])}else if((match=/^\x25{2}/.exec(_fmt))!==null){parse_tree.push('%')}else if((match=/^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/.exec(_fmt))!==null){if(match[2]){arg_names|=1;var field_list=[],replacement_field=match[2],field_match=[];if((field_match=/^([a-z_][a-z_\d]*)/i.exec(replacement_field))!==null){field_list.push(field_match[1]);while((replacement_field=replacement_field.substring(field_match[0].length))!==''){if((field_match=/^\.([a-z_][a-z_\d]*)/i.exec(replacement_field))!==null){field_list.push(field_match[1])}else if((field_match=/^\[(\d+)\]/.exec(replacement_field))!==null){field_list.push(field_match[1])}else{throw('[sprintf] huh?')}}}else{throw('[sprintf] huh?')}match[2]=field_list}else{arg_names|=2}if(arg_names===3){throw('[sprintf] mixing positional and named placeholders is not (yet) supported')}parse_tree.push(match)}else{throw('[sprintf] huh?')}_fmt=_fmt.substring(match[0].length)}return parse_tree};return str_format})();var vsprintf=function(fmt,argv){argv.unshift(fmt);return sprintf.apply(null,argv)};
 
 /**
  * Timepicker. Not made by me. 

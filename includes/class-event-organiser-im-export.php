@@ -14,7 +14,7 @@ class Event_Organiser_Im_Export  {
 	 * Handler for the action 'init'. Instantiates this class.
 	 */
 	public function get_object() {
-		
+
 		if ( NULL === self :: $classobj ) {
 			self :: $classobj = new self;
 		}
@@ -27,11 +27,11 @@ class Event_Organiser_Im_Export  {
 
 		if(!isset($EO_Errors)) $EO_Errors = new WP_Error();
 
-		$feed = get_query_var('feed');
-		if(isset($feed) &&$feed=='eo-events'):
+		if( is_feed('eo-events') ):
 			$options = get_option('eventorganiser_options');
-			if( $options['feed'] )
+			if( $options['feed'] ){
 				$this->get_export_file();
+			}
 		endif;
 
 		//If importing / exporting events make sure we a logged in and check nonces.
@@ -39,6 +39,12 @@ class Event_Organiser_Im_Export  {
 		if (is_admin() && isset( $_GET['eventorganiser_download_events'] )&& check_admin_referer( 'eventorganiser_export' )
 			&& current_user_can('manage_options')&& $pagenow=="options-general.php"):
 			//Exporting events
+			//mmm... maybe finally a legitimate use of query_posts
+			query_posts(array(
+				'post_type'=>'event',
+				'showpastevents'=>true,
+				'group_events_by'=>'series',
+			));
 			$this->get_export_file();
 
 		elseif ( is_admin() && isset( $_POST['eventorganiser_import_events'] )&& check_admin_referer( 'eventorganiser_import' )
@@ -58,7 +64,7 @@ class Event_Organiser_Im_Export  {
 				$EO_Errors = new WP_Error('eo_error', __("No file detected.",'eventorganiser'));
 
 			else:
-				$EO_Errors = new WP_Error('eo_error', __("Invalid file uploaded. The file must be a ics calendar file, no larger than 2MB.",'eventorganiser'));
+				$EO_Errors = new WP_Error('eo_error', __("Invalid file uploaded. The file must be a ics calendar file of type 'text/calendar', no larger than 2MB.",'eventorganiser'));
 				$size = (int) $_FILES["ics"]["size"];
 				$size =  number_format(floatval($size*0.0009765625),2);
 				$details = sprintf( __('File size: %01.2fkb. File type: %2$s','eventorganiser'),$size, $_FILES["ics"]["type"]);
@@ -126,64 +132,55 @@ class Event_Organiser_Im_Export  {
 *  @param string filetype - the type of the file ('text/calendar')
  */
 	public function export_events( $filename, $filetype ){ 
-	//Collect output 
-	ob_start();
+		//Collect output 
+		ob_start();
 
-	// File header
-	header( 'Content-Description: File Transfer' );
-	header( 'Content-Disposition: attachment; filename=' . $filename );
-	header('Content-type: text/calendar');
-	header("Pragma: 0");
-	header("Expires: 0");
+		// File header
+		header( 'Content-Description: File Transfer' );
+		header( 'Content-Disposition: attachment; filename=' . $filename );
+		header('Content-type: text/calendar');
+		header("Pragma: 0");
+		header("Expires: 0");
 ?>
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//<?php  get_bloginfo('name'); ?>//NONSGML Events //EN
 CALSCALE:GREGORIAN
 X-WR-CALNAME:<?php echo get_bloginfo('name');?> - Events
-X-ORIGINAL-URL:<?php echo EO_Event::link_structure(); ?>
+X-ORIGINAL-URL:<?php echo get_post_type_archive_link('event'); ?>
 
 X-WR-CALDESC:<?php echo get_bloginfo('name');?> - Events
 <?php
-  
-	// Query for events
-	$events = eo_get_events(array('numberofposts'=>-1,'group_events_by'=>'series','showpastevents'=>1));
- 
-	// Loop through events
-	if ($events):
-		global $post;
 
-		foreach ($events as $post):
+	// Loop through events
+	if ( have_posts() ):
+		$now = new DateTime();
+		$dtstamp =$now->format('Ymd\THis\Z');
+		$UTC_tz = new DateTimeZone('UTC');
+
+		while( have_posts() ): the_post();
+			global $post;
 
 			//If event has no corresponding row in events table then skip it
 			if(!isset($post->event_id) || $post->event_id==-1)
 				continue;
 
-			$now = new DateTime();
-			$dtstamp =$now->format('Ymd\THis\Z');
+			$start = eo_get_the_start(DATETIMEOBJ);
+			$end = eo_get_the_end(DATETIMEOBJ);
 
-			//Set up event data
-			setup_postdata($post);
-			$event = new EO_Event($post->ID);
-			$start = clone $event->start;
-			$end = clone $event->end;
+			$created_date = get_post_time('Ymd\THis\Z',true);
+			$modified_date = get_post_modified_time('Ymd\THis\Z',true);
 
-			$created = new DateTime($post->post_date_gmt);
-			$created_date = $created->format('Ymd\THis\Z');
-
-			$modified = new DateTime($post->post_modified_gmt);
-			$modified_date = $modified->format('Ymd\THis\Z');
-
+			$schedule_data = eo_get_event_schedule();
 
 			//Set up start and end date times
-			if( $event->is_all_day() ){
+			if( eo_is_all_day() ){
 				$format =	'Ymd';
 				$start_date = $start->format($format);
 				$end->modify('+1 second');
 				$end_date = $end->format($format);				
 			}else{
 				$format =	'Ymd\THis\Z';
-				$UTC_tz = new DateTimeZone('UTC');
 				$start->setTimezone($UTC_tz);
 				$start_date =$start->format($format);
 				$end->setTimezone($UTC_tz);
@@ -191,10 +188,10 @@ X-WR-CALDESC:<?php echo get_bloginfo('name');?> - Events
 			}
 
 			//Get the reoccurrence rule in ICS format
-			$reoccurrence_rule =$event->ics_rrule();
+			$reoccurrence_rule = eventorganiser_generate_ics_rrule();
 
 			//Generate Event status
-			if(get_post_status($post->ID)=='publish')
+			if( get_post_status(get_the_ID()) == 'publish' )
 				$status = 'CONFIRMED';
 			else
 				$status = 'TENTATIVE';
@@ -226,7 +223,7 @@ CREATED:<?php echo $created_date;?>
 
 LAST-MODIFIED:<?php echo $modified_date;?>
 
-<?php if( $event->is_all_day() ): ?>
+<?php if( eo_is_all_day() ): ?>
 DTSTART;VALUE=DATE:<?php echo $start_date ; ?>
 
 DTEND;VALUE=DATE:<?php echo $end_date; ?>
@@ -240,7 +237,37 @@ DTEND:<?php echo $end_date; ?>
 RRULE:<?php echo $reoccurrence_rule;?>
 
 <?php endif;?>
-SUMMARY:<?php echo $this->escape_icalText(get_the_title()); ?>
+<?php if( !empty($schedule_data['exclude']) ):
+	$exclude_strings = array();
+	foreach ( $schedule_data['include'] as $include ){
+		if( !eo_is_all_day() ){
+			$vdate='';
+			$include->setTimezone($UTC_tz);
+			$include_strings[] = $include->format('Ymd\THis\Z');
+		}else{
+			$vdate=';VALUE=DATE';
+			$include_strings[] = $include->format('Ymd');
+		}
+	}?>
+EXDATE<?php echo $vdate;?>:<?php echo implode(',',$exclude_strings);
+
+endif; ?>
+<?php if( !empty($schedule_data['include']) ):
+	$include_strings = array();
+		foreach ( $schedule_data['include'] as $include ){
+			if( !eo_is_all_day() ){
+				$vdate='';
+				$include->setTimezone($UTC_tz);
+				$include_strings[] = $include->format('Ymd\THis\Z');
+			}else{
+				$vdate=';VALUE=DATE';
+				$include_strings[] = $include->format('Ymd');
+			}
+	}?>
+RDATE<?php echo $vdate;?>:<?php echo implode(',',$include_strings);?>
+
+<?php endif; ?>
+SUMMARY:<?php echo $this->escape_icalText(get_the_title_rss()); ?>
 
 <?php
 	$excerpt = get_the_excerpt();
@@ -249,10 +276,17 @@ SUMMARY:<?php echo $this->escape_icalText(get_the_title()); ?>
 ?>
 DESCRIPTION:<?php echo html_entity_decode($this->escape_icalText($excerpt));?>
 
-<?php 
-	endif;
+<?php endif;
 
-if($event->venue_set()): 
+	$cats = get_the_terms( get_the_ID(), 'event-category' );
+if( $cats && !is_wp_error($cats) ):
+	$cat_names = wp_list_pluck($cats, 'name');
+	$cat_names = array_map(array($this,'parse_icalText'),$cat_names); ?>
+CATEGORIES:<?php echo implode(',',$cat_names); ?>
+
+<?php endif; ?>
+<?php
+if( eo_get_venue() ): 
 	$venue =eo_get_venue_name(eo_get_venue());
 ?>
 LOCATION: <?php echo $this->escape_icalText($venue);;?>
@@ -264,7 +298,7 @@ ORGANIZER: <?php echo $this->escape_icalText($author);?>
 
 END:VEVENT
 <?php
-		endforeach;
+		endwhile;
 
 	endif;
 ?>
@@ -383,12 +417,10 @@ function escape_icalText($text){
 					//If END:VEVENT, insert event into database
 					if($property=='END' && $value=='VEVENT'){
 						$state = "VCALENDAR";
-
-						$event_array['event']['YmdFormated']= true;
-						$event_array['event']['dateObjects']= true;
-				
+			
 						//Insert new post from objects
-						$post_id = EO_Event::insertNewEvent($event_array['event_post'],$event_array['event']);
+						$post_id = eo_insert_event($event_array['event_post'],$event_array['event']);
+
 						if(!$post_id){
 							$error_count++;
 						}
@@ -525,7 +557,7 @@ function escape_icalText($text){
 				switch($property):
 					case'DTSTART':
 						$event['start']= $date;
-						$event['allday']=$allday;
+						$event['all_day']=$allday;
 						break;
 	
 					case 'DTEND':
@@ -543,13 +575,18 @@ function escape_icalText($text){
 				break;
 
 			case 'EXDATE':
+			case 'RDATE':
 				//The modifiers have been dealt with above. We do similiar to above, except for an array of dates...
 				$value_array = explode(',',$value);
 							
 				//Note, we only consider the Date part and ignore the time
 				foreach($value_array as $val):
 					$date = $this->parse_icalDate($val, $blog_tz);
-					$event['exception_dates'][] = $date;
+					if( $property == 'EXDATE' ){
+						$event['exclude'][] = $date;
+					}else{
+						$event['include'][] = $date;
+					}
 				endforeach;
 		
 				break;							

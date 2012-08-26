@@ -75,6 +75,9 @@ class EO_Event{
 			'exception_dates'=> array('name'=>'exception_dates'  ,'type'=>'%s'),
 		);
 
+	function __constructor(){
+		_deprecated_function(__FUNCTION__,'1.5');
+	}
 
 
 	/**
@@ -84,7 +87,7 @@ class EO_Event{
 	 */
 	function EO_Event($post_id) {
 		global $wpdb,$eventorganiser_events_table;
-
+		_deprecated_function(__FUNCTION__,'1.5');
 		//Generate defaults
 		$this->start = new DateTime();
 		$this->end = new DateTime('+1 hour');
@@ -95,6 +98,7 @@ class EO_Event{
 	}
 
 	function to_object( $events = array() ){
+		_deprecated_function(__FUNCTION__,'1.5');
 		if( is_array($events) && !empty($events)):
 			//Save event data
 			$this->event_id =intval($events[0]['event_id']);
@@ -168,55 +172,8 @@ class EO_Event{
  */
 	function insertNewEvent($post_data=array(),$event_data=array()){
 		global $EO_Errors;
-
-		//Perform some checks
-		if (!current_user_can('edit_events')) 
-			wp_die( __('You do not have sufficient permissions to create events') );
-
-		if(empty($post_data)||empty($event_data))
-			wp_die( __('Inserting event error: Post or Event data must be supplied.') );
-
-
-		/*
-		* First of all 'create' the event - this performs necessary validation checks and populates the event object
-		* We either use EO_Event::create if dates are given by strings (assumed to be blog local-time)
-		* Or we use EO_Event::createFromObject if dates are given by DateTime objects
-		*/
-		$event = new EO_Event(0);
-		if(!empty($event_data['dateObjects'])):
-			$result = $event->createFromObjects($event_data);
-		else:
-			
-			$result = $event->create($event_data);
-		endif;
-
-		if($result):
-			//Event is valid, now create new 'event' post
-			$post_data_preset=array('post_type'=>'event');
-			$post_input = array_merge($post_data,$post_data_preset);
-
-			if(empty($post_input['post_title']))
-				$post_input['post_title']='untitled event';
-			
-			$post_id = wp_insert_post($post_input);
-
-			//Did the event insert correctly?
-			if ( is_wp_error( $post_id) || $post_id==0) :
-				$EO_Errors->add('eo_error', "Event was <strong>not </strong> created");
-				$EO_Errors->add('eo_error', $post_id->get_error_message());
-
-			else:
-				//Insert event date details. 
-				$event->insert($post_id);
-			endif;
-
-		else:
-			$EO_Errors->add('eo_error', "Event was <strong>not </strong> created");
-			return false;
-
-		endif;
-
-	return $post_id;
+		_deprecated_function(__FUNCTION__,'1.5','eo_insert_event');
+		return eo_insert_event($post_data,$event_data);
 	}
 
 /**
@@ -233,6 +190,7 @@ class EO_Event{
  * @return EO_Event $event - the event object
  */
 	function insertEvent($event_data=array(),$post_id=null,$delete=false){
+		_deprecated_function(__FUNCTION__,'1.5','eo_update_event');
 
 		if (!current_user_can('edit_events')) 
 			wp_die( __('You do not have sufficient permissions to create events') );
@@ -276,6 +234,7 @@ class EO_Event{
  * @return bool - if true insertion was successful
  */
 	protected function insert($post_id=null){
+		_deprecated_function(__FUNCTION__,'1.5','_eventorganiser_insert_occurrences');
 		global $wpdb, $eventorganiser_events_table;
 
 		if(empty($post_id))
@@ -322,6 +281,7 @@ class EO_Event{
  * @return array $input checked input array or false if there is an error
  */
 function create($raw_data){
+	_deprecated_function(__FUNCTION__,'1.5','eo_update_event');
 	global $EO_Errors;
 
 	//Populate raw_input array 
@@ -447,7 +407,7 @@ function create($raw_data){
  * @return bool true if no errors encountered.
  */
 function createFromObjects($input=array()){
-
+	_deprecated_function(__FUNCTION__,'1.5','eo_update_event');
 	$errors = get_option('eo_notice');
 	$defaults = array(
 		'start'=>null,
@@ -656,17 +616,8 @@ function createFromObjects($input=array()){
 
 
 function removeDuplicate($array=array()){
-
-	if(empty($array))
-		return $array;
-
-        $unique = array();
-	foreach ($array as $key=>$object){
-		if (!in_array($object, $unique))
-			$unique[$key] = $object;
-        }
-
-        return $unique;
+	_deprecated_function(__FUNCTION__,'1.5','_eventorganiser_remove_duplicates');
+	return  _eventorganiser_remove_duplicates($array);
 } 
 
 
@@ -783,11 +734,8 @@ protected function setupSchedule(){
  * @return int 1 | 0 | -1
  */
 function eo_compare_dates($date1,$date2){
-	//Don't wish to compare times
-	if($date1->format('Ymd') == $date2->format('Ymd'))
-		return 0;
-
-	 return ($date1 > $date2)? 1:-1;
+	_deprecated_function(__FUNCTION__,'1.5','eo_compare_dates');
+	return _eventorganiser_compare_dates($date1,$date2);
 }
 
 
@@ -802,7 +750,7 @@ function eo_compare_dates($date1,$date2){
 			blog's timezone.
  */
 function check_date($date_string,$formated=false){
-
+	_deprecated_function(__FUNCTION__,'1.5',' _eventorganiser_check_datetime');
 	//If nothing set, return false.
 	if(!isset($date_string)||$date_string=='') return false;
 
@@ -860,6 +808,7 @@ function check_date($date_string,$formated=false){
  * @param string $time_string the time being checked in string format
  */
 function check_time($time_string){
+	_deprecated_function(__FUNCTION__,'1.5',' _eventorganiser_check_datetime');
 	//Check time is in correct format
 	preg_match("/(\d{2}):(\d{2})/", $time_string,$matches);
 	if(count($matches)<3)  return false;
@@ -881,15 +830,8 @@ function check_time($time_string){
  * @bool true if it is a leap year, false otherwise
  */
 function is_leapyear($date){
-	$year =intval($date->format('Y'));
-	if($year%4==0){
-		if($year%100==0){
-			if($year%400==0) return true;
-			return false;
-		}
-		return true;
-	}
-	return false;
+	_deprecated_function(__FUNCTION__,'1.5');
+	return (1==$date->format('L'));
 }
 
 
@@ -927,6 +869,7 @@ function is_leapyear($date){
 
 
 	function ics_rrule(){
+		_deprecated_function(__FUNCTION__,'1.5','eventorganiser_generate_ics_rrule');
 		//Set up schedule end date in UTC
 		$the_end = clone $this->schedule_end;
 		
@@ -970,45 +913,9 @@ function is_leapyear($date){
 	 * @return datetime - the date-time calculated.
 	 */
 	function php52_modify($date='',$modify=''){
-		$pattern = '/([a-zA-Z]+)\s([a-zA-Z]+) of \+(\d+) month/';
-		preg_match($pattern, $modify, $matches);
-
-		$ordinal_arr = array(
-			'last'=>0,
-			'first'=>1,
-			'second'=>2,
-			'third'=>3,
-			'fourth'=>4
-		);
-		$week = array('sunday','monday','tuesday','wednesday','thursday','friday','saturday');
-	
-		$ordinal =$ordinal_arr[$matches[1]];
-		$day = array_search(strtolower($matches[2]), $week); 
-		$freq = intval($matches[3]);
-
-		//set to first day of month
-		$date = date_create($date->format('Y-m-1'));
-
-		//add months
-		$date->modify('+'.$freq.' month');
-
-		//Calculate offset to day of week	
-		//Date of desired day
-		if($ordinal >0):
-			$offset = ($day-intval($date->format('w')) +7)%7;
-			$d =($offset) +7*($ordinal-1) +1;
-
-		else:
-			$date = date_create($date->format('Y-m-t'));
-			$offset = intval(($date->format('w')-$day+7)%7);
-			$d = intval($date->format('t'))-$offset;
-		endif;
-	
-		$blog_tz =eo_get_blog_timezone();
-		$date = date_create($date->format('Y-m-'.$d),$blog_tz);
-
-		return $date;
-}
+		_deprecated_function(__FUNCTION__,'1.5','_eventorganiser_php52_modify');
+		return _eventorganiser_php52_modify($date='',$modify='');
+	}
 
 
 	function occursBy(){

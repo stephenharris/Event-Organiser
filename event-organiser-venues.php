@@ -116,6 +116,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 			add_meta_box('submitdiv', __('Save','eventorganiser'), 'eventorganiser_venue_submit', 'event_page_venues', 'side', 'high');
 			do_action('add_meta_boxes_event_page_venues', $venue);
 		 	do_action('add_meta_boxes', 'event_page_venues', $venue);
+			add_screen_option('layout_columns', array('max' => 2, 'default' => 2) );
 
 		}else{
 			//Venue admin list
@@ -154,43 +155,47 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 
 
 	function display(){
-	?>
-	<div class="wrap columns-2">
-		<div id='icon-edit' class='icon32'><br/></div>
-		<?php	
+
 		$action = $this->current_action();
 		$venue =  (isset($_REQUEST['event-venue']) ? $_REQUEST['event-venue'] : false);
+	?>
+	<div class="wrap">
+		<?php screen_icon('edit');?>
 
-		if(  (( $action== "edit"||$action == "update" )&& $venue )  || $action == "create" ):
-			$this->edit_form($venue);
+		<?php	
+			if(  (( $action== "edit"||$action == "update" )&& $venue )  || $action == "create" ):
+				$this->edit_form($venue);
 	
-		else: 
+			else: 
 
-			//Else we are not creating or editing. Display table  
-			$venue_table = new EO_Venue_List_Table();
-		    	$venue_table->prepare_items();    
+				//Else we are not creating or editing. Display table  
+				$venue_table = new EO_Venue_List_Table();
+			    	$venue_table->prepare_items();    
 	
-			//Check if we have searched the venues
-			$search_term = ( isset($_REQUEST['s']) ?  esc_attr($_REQUEST['s']) : '');?>
+				//Check if we have searched the venues
+				$search_term = ( isset($_REQUEST['s']) ?  esc_attr($_REQUEST['s']) : '');?>
 
-			<h2><?php _e('Venues','eventorganiser');?> <a href="edit.php?post_type=event&page=venues&action=create" class="add-new-h2"><?php _ex('Add New','post'); ?></a> 
-				<?php
-				if ($search_term)
-					printf( '<span class="subtitle">' . __('Search results for &#8220;%s&#8221;') . '</span>',$search_term) ?>
-			</h2>
+				<h2>
+					<?php _e('Venues','eventorganiser');?>
+					 <a href="edit.php?post_type=event&page=venues&action=create" class="add-new-h2"><?php _ex('Add New','post'); ?></a> 
+					<?php
+					if ($search_term)
+						printf( '<span class="subtitle">' . __('Search results for &#8220;%s&#8221;') . '</span>',$search_term) 
+					?>
+				</h2>
   
-	       	 <form id="eo-venue-table" method="get">
-       		     <!-- Ensure that the form posts back to our current page -->
-       		     <input type="hidden" name="page" value="venues" />
-       		     <input type="hidden" name="post_type" value="event" />
+		       	 <form id="eo-venue-table" method="get">
+	       		     <!-- Ensure that the form posts back to our current page -->
+	       		     <input type="hidden" name="page" value="venues" />
+	       		     <input type="hidden" name="post_type" value="event" />
 	
-       		     <!-- Now we can render the completed list table -->
-       		     <?php $venue_table->search_box( __('Search Venues','eventorganiser'),'s' ); ?>
-			     <?php $venue_table->display(); ?>
-			 </form>
-		<?php endif;?>
+	       		     <!-- Now we can render the completed list table -->
+	       		     <?php $venue_table->search_box( __('Search Venues','eventorganiser'),'s' ); ?>
+				     <?php $venue_table->display(); ?>
+				 </form>
+			<?php endif;?>
 
-    </div><!--End .wrap -->
+	</div><!--End .wrap -->
     <?php
 	}
 
@@ -212,13 +217,13 @@ function edit_form($venue=false){
 			<?php _e('Edit Venue', 'eventorganiser'); ?>
 			<a href="edit.php?post_type=event&page=venues&action=create" class="add-new-h2"><?php _ex('Add New','post'); ?></a>
 		</h2>
-
 	<?php else: ?>
-		<h2><?php _e('Add New Venue','eventorganiser');?> </h2>
-
+		<h2>
+			<?php _e('Add New Venue','eventorganiser');?> 
+		</h2>
 	<?php endif; ?>
 
-	<form name="venuedetails" id="eo_venue_form" method="post" action="<?php echo site_url('wp-admin/edit.php?post_type=event&page=venues'); ?>">  
+	<form name="venuedetails" id="eo_venue_form" method="post" action="<?php echo admin_url('edit.php?post_type=event&page=venues'); ?>">  
 		<input type="hidden" name="action" value="<?php echo $do; ?>"> 
 		<input type="hidden" name="eo_venue[venue_id]" value="<?php echo $term_id;?>">  
 		<input type="hidden" name="event-venue" value="<?php echo ( isset($venue->slug) ? $venue->slug : '' ) ;?>">  
@@ -227,34 +232,34 @@ function edit_form($venue=false){
 		<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 		<?php wp_nonce_field($nonce); ?>
 
-		<div id="poststuff" class="metabox-holder has-right-sidebar">
-			<?php do_action('add_meta_boxes_event_page_venues', $venue); ?>
-			<?php	do_action('add_meta_boxes', 'event_page_venues', $venue); ?>
+		<div id="poststuff">
 
+			<div id="post-body" class="metabox-holder columns-<?php echo 1 == get_current_screen()->get_columns() ? '1' : '2'; ?>">
 
-			<div id="side-info-column" class="inner-sidebar">
-				<?php do_meta_boxes('','side',$venue); ?>
-			</div>	
-
-			<div id="post-body">
 				<div id="post-body-content">
 					<div id="titlediv"><?php eventorganiser_venue_title($venue); ?></div>
-
 					<div class="postbox " id="venue_address">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php _e('Venue Location','eventorganiser');?></span></h3>
 						<div class="inside"><?php eventorganiser_venue_location($venue); ?></div>
 					</div><!-- .postbox -->
-
 					<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="venue_description postarea">
 						<?php wp_editor(eo_get_venue_description($term_id) , 'content', array('textarea_name'=>'eo_venue[description]','dfw' => false, 'tabindex' => 1) ); ?>
 					</div>
+		 		</div><!-- #post-body-content -->
 
+				<div id="postbox-container-1" class="postbox-container">
+					<?php do_meta_boxes('','side',$venue); ?>
+				</div>	
+
+				<div id="postbox-container-2" class="postbox-container">
 					<?php do_meta_boxes('','normal',$venue);  ?>
 					<?php do_meta_boxes('','advanced',$venue); ?>
+		 		</div>
 
-		 		</div><!-- #post-body-content -->
 		 	</div><!-- #post-body -->
+				<br class="clear"> 
+
 		</div><!-- #poststuff -->
 	</form> 	
 	<?php

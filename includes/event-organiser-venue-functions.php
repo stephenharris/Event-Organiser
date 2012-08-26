@@ -379,9 +379,10 @@ function eo_event_venue_dropdown( $args = '' ) {
 		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','country'=>'','latitude'=>'','longtitude'=>''));
 		$venue_id = (int) $venue_id;
 
+
 		//Update taxonomy table
 		$resp = wp_update_term($venue_id,'event-venue', $term_args);
-		
+
 		if( is_wp_error($resp) ){
 			return $resp;
 		}
@@ -502,19 +503,28 @@ function eo_event_venue_dropdown( $args = '' ) {
 
 
 	function eventorganiser_sanitize_meta($key,$value){
-		$validation= array(
-			'_address' => 'sanitize_text_field',
-			'_postcode' => 'sanitize_text_field',
-			'_country' => 'sanitize_text_field',
-			'_lat' =>  'floatval',
-			'_lng' => 'floatval',
-			'_description' => 'wp_filter_post_kses',
-		);
+		switch($key):
+			case '_address':
+			case '_postcode':
+			case '_country':
+				$value = sanitize_text_field($value);
+				break;
 
-		if( !isset($validation[$key]) )
-			return false;
+			case '_description':
+				$value = wp_filter_post_kses($value);
+				break;
 
-		return call_user_func($validation[$key], $value);
+			case '_lat':
+			case '_lng':
+				//Cast as float and then string: make sure string uses . not , for decimal point
+				$value = floatval($value);
+				$value = number_format($value, 6);
+				break;
+			default:
+				$value = false;
+		endswitch;
+
+		return $value;
 	}
 
 

@@ -2,21 +2,26 @@
 
  /**
  * Register jQuery scripts and CSS files
- *
  * @since 1.0.0
  */
 add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
 	global $wp_locale;
 	$version = '1.4';
-	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array('jquery'),$version,true);
+	wp_register_script( 'eo_qtip2', EVENT_ORGANISER_URL.'js/qtip2.js',array('jquery'),$version,true);
+	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array(
+		'jquery','eo_qtip2',
+		'jquery-ui-core',
+		'jquery-ui-widget',
+		'jquery-ui-button',
+	),$version,true);
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
 			'adminajax'=>admin_url( 'admin-ajax.php'),
 			'locale'=>array(
 				'monthNames'=>array_values($wp_locale->month),
 				'monthAbbrev'=>array_values($wp_locale->month_abbrev),
 				'dayNames'=>array_values($wp_locale->weekday),
-				'dayNamesAbbrev'=>array_values($wp_locale->weekday_abbrev),
+				'dayAbbrev'=>array_values($wp_locale->weekday_abbrev),
 				'today'=>__('today','eventorganiser'),
 				'day'=>__('day','eventorganiser'),
 				'week'=>__('week','eventorganiser'),
@@ -32,10 +37,9 @@ function eventorganiser_register_script() {
 
  /**
  *Register jQuery scripts and CSS files for admin
- *
  * @since 1.0.0
  */
-add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts');
+add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts',10);
 function eventorganiser_register_scripts(){
 	$version = '1.4';
 	wp_register_script( 'eo_GoogleMap', 'http://maps.googleapis.com/maps/api/js?sensor=true');
@@ -62,7 +66,12 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-position'),
 		$version,true);	
 
-	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css',array(),$version);
+	if ( 'classic' == get_user_option( 'admin_color') )
+		wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-classic.css',array(),$version);
+	else
+		wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array(),$version);
+
+	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css',array('eventorganiser-jquery-ui-style'),$version);
 }
 
  /**
@@ -93,7 +102,7 @@ function eventorganiser_public_export(){
  *
  * @since 1.0.0
  */
-add_action( 'admin_enqueue_scripts', 'eventorganiser_add_admin_scripts', 10, 1 );
+add_action( 'admin_enqueue_scripts', 'eventorganiser_add_admin_scripts', 998, 1 );
 function eventorganiser_add_admin_scripts( $hook ) {
 	global $post,$current_screen,$wp_locale;
 
@@ -204,6 +213,20 @@ function eventorganiser_admin_notices(){
 }
 
 
+    add_filter('plugin_action_links', 'eventorganiser_plugin_settings_link', 10, 2);
+    function eventorganiser_plugin_settings_link($links, $file) {
+    
+        if( $file == 'event-organiser/event-organiser.php' ) {
+            /* Insert the link at the end*/
+            $links['settings'] = sprintf('<a href="%s"> %s </a>',
+                    admin_url('options-general.php?page=event-settings'),
+                     __('Settings','eventorganiser')
+                );
+        }
+        return $links;
+    }
+    
+
 /*
 Cron jobs - for automatically deleting expired events
 */
@@ -220,10 +243,9 @@ function eventorganiser_delete_expired_events(){
 			$now = new DateTime('now', eo_get_blog_timezone());
 			$start = new DateTime($event->StartDate.' '.$event->StartTime, eo_get_blog_timezone());
 			$end = new DateTime($event->EndDate.' '.$event->FinishTime, eo_get_blog_timezone());
-			$duration = date_diff($start,$end);
+			$expired = round(abs($end->format('U')-$start->format('U'))) + 24*60*60; //Duration + 24 hours
 			$finished =  new DateTime($event->reoccurrence_end.' '.$event->StartTime, eo_get_blog_timezone());
-			$finished->add($duration);
-			$finished->modify('+1 day');
+			$finished->modify("+$expired seconds");
 
 			//Delete if 24 hours has passed
 			if($finished <= $now):
@@ -236,4 +258,97 @@ function eventorganiser_delete_expired_events(){
 function eventorganiser_clear_cron_jobs(){
 	wp_clear_scheduled_hook('eventorganiser_delete_expired');
 }
+
+
+
+/**
+ *  Adds retina support for the screen icon
+ * Thanks to numeeja (http://cubecolour.co.uk/)
+ */
+add_action('admin_print_styles','eventorganiser_screen_retina_icon');
+function eventorganiser_screen_retina_icon(){
+
+	$screen_id = get_current_screen()->id;
+
+	if( !in_array($screen_id, array('event','edit-event','edit-event-tag','edit-event-category','event_page_venues','event_page_calendar')) )
+		return;
+
+	$icon_url = EVENT_ORGANISER_URL.'css/images/eoicon-64.png'
+	?>
+	<style>
+	@media screen and (-webkit-min-device-pixel-ratio: 2) {
+		#icon-edit.icon32 {
+			background: url(<?php echo $icon_url;?>) no-repeat;
+			background-size: 32px 32px;
+			height: 32px;
+			width: 32px;
+		}
+	}
+	</style>
+	<?php
+}
+
+
+/**
+* Handles admin pointers
+*/
+/**
+ * Kick starts the enquing. Rename this to something unique (i.e. include your plugin/theme name).
+*/
+add_action( 'admin_enqueue_scripts', 'eventorganiser_pointer_load',99999);
+function eventorganiser_pointer_load( $hook_suffix ) {
+
+		$screen_id = get_current_screen()->id;
+
+		//Get pointers for this screen
+		$pointers = apply_filters('eventorganiser_admin_pointers-'.$screen_id, array());
+
+		if( !$pointers || !is_array($pointers) )
+			return;
+
+		// Get dismissed pointers
+		$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+		$valid_pointers =array();
+
+		//Check pointers and remove dismissed ones.
+		foreach ($pointers as $pointer_id => $pointer ){
+
+			//Sanity check
+			if ( in_array( $pointer_id, $dismissed ) || empty($pointer)  || empty( $pointer_id ) || empty( $pointer['target'] ) || empty( $pointer['options'] ) )
+				continue;
+
+			 $pointer['pointer_id'] = $pointer_id;
+
+			//Add the pointer to $valid_pointers array
+			$valid_pointers['pointers'][] =  $pointer;
+		}
+
+		//No valid pointers? Stop here.
+		if( empty($valid_pointers) )	
+			return;
+
+		// Add pointers style to queue. 
+		wp_enqueue_style( 'wp-pointer' );
+		
+		// Add pointers script to queue. Add custom script.
+		wp_enqueue_script('eventorganiser-pointer',EVENT_ORGANISER_URL.'js/eventorganiser-pointer.js',array('wp-pointer','eo_event'));
+
+		// Add pointer options to script. 
+		wp_localize_script('eventorganiser-pointer', 'eventorganiserPointer', $valid_pointers);
+	}
+
+	add_filter('eventorganiser_admin_pointers-event','eventorganiser_occurrencepicker_pointer');
+	function eventorganiser_occurrencepicker_pointer( $p ){
+		$p['occpicker150'] =array(	
+							'target' =>'.eo_occurrence_toogle',
+							'options'=>array(
+									'content'  => sprintf('<h3> %s </h3> <p> %s </p>',
+													__( 'New Feature: Add / Remove Dates' ,'eventorganiser'),
+													 __( 'This link reveals a datepicker which highlights the dates on which the event occurs. Click a date to add or remove it from the event\'s schedule.','eventorganiser')
+													),
+									'position' => array('edge' => 'left', 'align' => 'middle'),
+							)
+		); 
+		return $p;
+	}
  ?>

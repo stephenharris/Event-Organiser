@@ -101,7 +101,6 @@ class EO_Venue_List_Table extends WP_List_Table {
      * Set columns sortable
      * 
      * @return array An associative array containing all the columns that should be sortable: 'slugs'=>array('data_values',bool)
-     *  //TODO - Make meta sortable?
      */
     function get_sortable_columns() {
         $sortable_columns = array(

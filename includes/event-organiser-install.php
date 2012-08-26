@@ -34,7 +34,7 @@
 		eo_venue_id bigint(20) unsigned NOT NULL default '0',
  		meta_key varchar(255) default NULL,
 		meta_value longtext,
-		PRIMARY KEY (meta_id),
+		PRIMARY KEY  (meta_id),
 		KEY eo_venue_id (eo_venue_id),
 		KEY meta_key (meta_key)
 		) $charset_collate; ";
@@ -42,49 +42,6 @@
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	dbDelta($sql_events_table);
 	dbDelta($sql_venuemeta_table);
-
-	//Add options and capabilities
-	$eventorganiser_options = array (	
-		'supports' => array('title','editor','author','thumbnail','excerpt','custom-fields','comments'),
-		'event_redirect' => 'events',
-		'dateformat'=>'dd-mm',
-		'prettyurl'=> 1,
-		'templates'=> 1,
-		'addtomenu'=> 0,
-		'excludefromsearch'=>0,
-		'showpast'=> 0,
-		'group_events'=>'',
-		'url_venue'=>'events/event',
-		'url_venue'=> 'events/venues',
-		'url_cat' => 'events/category',
-		'url_tag' => 'events/tag',
-		'navtitle' => __('Events','eventorganiser'),
-		'eventtag' => 1,
-		'feed' => 1,
-		'runningisnotpast' => 0,
-		'deleteexpired' => 0
-	);
-	update_option("eventorganiser_version",$eventorganiser_db_version);
-	add_option('eventorganiser_options',$eventorganiser_options);
-	
-	//Add roles to administrator		
-	global $wp_roles,$eventorganiser_roles;	
-	$all_roles = $wp_roles->roles;
-	foreach ($all_roles as $role_name => $display_name):
-		$role = $wp_roles->get_role($role_name);
-		if($role->has_cap('manage_options')){
-			foreach($eventorganiser_roles as $eo_role=>$eo_role_display):
-				$role->add_cap($eo_role);
-			endforeach;  
-		}
-	endforeach;  //End foreach $all_roles
-
-	//Manually register CPT and CTs ready for flushing
-	eventorganiser_create_event_taxonomies();
-	eventorganiser_cpt_register();
-
-	//Flush rewrite rules only on activation, and after CPT/CTs has been registered.
-	flush_rewrite_rules();
 }
 
 function eventorganiser_deactivate(){
@@ -156,11 +113,15 @@ function eventorganiser_upgradecheck(){
 		}
 
 		if($installed_ver <'1.3'){
-			eventorgniaser_130_update();
+			eventorganiser_130_update();
 		}
 
 		if($installed_ver <'1.4'){
 			eventorganiser_140_update();
+		}
+
+		if($installed_ver <'1.5'){
+			eventorganiser_150_update();
 		}
 		update_option('eventorganiser_version', $eventorganiser_db_version);
 
@@ -169,8 +130,48 @@ function eventorganiser_upgradecheck(){
 	endif;
 }
 
+function eventorganiser_150_update(){
+	global $wpdb;
+	$et =$wpdb->eo_events;
+	$events = $wpdb->get_results("SELECT*, min({$et}.StartDate) as StartDate, min({$et}.EndDate) as EndDate FROM $wpdb->eo_events GROUP BY {$et}.post_id ORDER BY {$et}.StartDate");
+	if( $events ):
+		foreach( $events as $event ):
 
-function eventorgniaser_130_update(){
+			$post_id = (int) $event->post_id;
+
+			$event_data = array(
+				'schedule' => $event->event_schedule,
+				'all_day' => $event->event_allday,
+				'schedule_meta' => ('weekly' == $event->event_schedule ? maybe_unserialize($event->event_schedule_meta) : $event->event_schedule_meta),
+				'frequency' => $event->event_frequency,
+				'exclude'=>array(),
+				'include'=>array(),
+			);
+			$start = new DateTime($event->StartDate.' '.$event->StartTime, eo_get_blog_timezone());
+			$end = new DateTime($event->EndDate.' '.$event->FinishTime, eo_get_blog_timezone());
+			$schedule_last = new DateTime($event->reoccurrence_end.' '.$event->StartTime, eo_get_blog_timezone());
+
+			$seconds = round(abs($start->format('U') - $end->format('U')));
+			$days = floor($seconds/86400);// 86400 = 60*60*24 seconds in a normal day
+			$sec_diff = $seconds - $days*86400;
+			$duration_str = '+'.$days.'days '.$sec_diff.' seconds';
+			$event_data['duration_str'] =$duration_str;
+
+			$schedule_last_end = clone $schedule_last;
+			$schedule_last_end->modify($duration_str);
+
+			update_post_meta( $post_id,'_eventorganiser_event_schedule', $event_data);
+			update_post_meta( $post_id,'_eventorganiser_schedule_start_start', $start->format('Y-m-d H:i:s')); //Schedule start
+			update_post_meta( $post_id,'_eventorganiser_schedule_start_finish', $end->format('Y-m-d H:i:s')); //Schedule start
+			update_post_meta( $post_id,'_eventorganiser_schedule_last_start', $schedule_last->format('Y-m-d H:i:s'));//Schedule last
+			update_post_meta( $post_id,'_eventorganiser_schedule_last_finish', $schedule_last_end->format('Y-m-d H:i:s'));//Schedule last
+
+		endforeach;
+	endif;
+
+}
+
+function eventorganiser_130_update(){
 
 	global $wpdb;
 	$eventorganiser_venue_table = $wpdb->prefix."eo_venues";

@@ -61,9 +61,8 @@ class EO_Calendar_Widget extends WP_Widget
 
 		//Echo widget
     		echo $before_widget;
-    		echo $before_title;
-		echo esc_html($instance['title']);
-    		echo $after_title;
+	    	if ( $instance['title'] )
+   			echo $before_title.esc_html($instance['title']).$after_title;
 		echo "<div id='{$id}_content' >";
 		echo $this->generate_output($month,$calendar);
 		echo "</div>";
@@ -81,6 +80,12 @@ class EO_Calendar_Widget extends WP_Widget
 * param $month - DateTime object for first day of the month (in blog timezone)
 */
 function generate_output($month,$args=array()){
+
+	$key= $month->format('YM');
+	$calendar = get_transient('eo_widget_calendar');
+	if( $calendar && is_array($calendar) && isset($calendar[$key]) ){
+		return $calendar[$key];
+	}
 	
 	//Translations
 	global $wp_locale;
@@ -204,7 +209,29 @@ function generate_output($month,$args=array()){
 	$body .="</tbody>";
 	$after = "</table>";
 
-	return $before.$title.$head.$foot.$body.$after;
+	if( !$calendar || !is_array($calendar) )
+		$calendar = array();
+	
+	$calendar[$key] = $before.$title.$head.$foot.$body.$after;
+
+	set_transient('eo_widget_calendar',$calendar, 60*60*24);
+	return $calendar[$key];
+	}
 }
- 
-}?>
+
+/**
+ * Purge the cached results of get_calendar.
+ * @since 1.5
+ */
+function _eventorganiser_delete_calendar_cache() {
+	delete_transient( 'eo_widget_calendar' );
+	delete_transient('eo_full_calendar_public');
+	delete_transient('eo_full_calendar_admin');
+	delete_transient('eo_widget_agenda');
+}
+add_action( 'eventorganiser_save_event', '_eventorganiser_delete_calendar_cache' );
+add_action( 'eventorganiser_delete_event', '_eventorganiser_delete_calendar_cache' );
+add_action( 'wp_trash_post', '_eventorganiser_delete_calendar_cache' );
+add_action( 'update_option_start_of_week', '_eventorganiser_delete_calendar_cache' );
+add_action( 'update_option_gmt_offset', '_eventorganiser_delete_calendar_cache' );
+?>

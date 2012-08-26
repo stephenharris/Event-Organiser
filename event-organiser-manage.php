@@ -52,7 +52,7 @@ function eventorganiser_event_fill_columns($column_name, $id) {
 	global $post;
 
 	$series_id = (empty($post->event_id) ? $id :'');
-;
+
 	$phpFormat = 'M, jS Y';
 	if(!eo_is_all_day($series_id))
 		$phpFormat .= '\<\/\b\r\>'. get_option('time_format');
@@ -199,7 +199,7 @@ add_action('bulk_edit_custom_box',  'eventorganiser_bulk_edit_box', 10, 2);
  */
 add_action('save_post','eventorganiser_quick_edit_save');
 function eventorganiser_quick_edit_save($post_id) {
-	global $wpdb,$eventorganiser_events_table;
+	global $wpdb;
 
 	// verify this is not an auto save routine. 
 	if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return $post_id;
@@ -213,11 +213,12 @@ function eventorganiser_quick_edit_save($post_id) {
 
 	$venue_id =(isset($_REQUEST['eo_input']['event-venue']) ? (int) $_REQUEST['eo_input']['event-venue'] : -1);
 
-	if($venue_id < 0) return;
+	if($venue_id >= 0){
+		$r = wp_set_post_terms( $post_id, array($venue_id), 'event-venue', false );
+	}
 
-	//Update venue
-	$r = wp_set_post_terms( $post_id, array($venue_id), 'event-venue', false );
-	$upd = $wpdb->update( $eventorganiser_events_table, array('Venue'=>$venue_id), array( 'post_id' => $post_id ));
+	do_action('eventorganiser_save_event', $post_id);
+	return;	
 }
 
 
