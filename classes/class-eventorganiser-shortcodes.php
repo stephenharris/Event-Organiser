@@ -280,6 +280,7 @@ class EventOrganiser_Shortcodes {
 
 			case 'event_venue_url':
 				$replacement =eo_get_venue_link();
+				$replacement = ( !is_wp_error($venue_link) ? $venue_link : '');
 				break;
 			case 'event_venue_address':
 				$address = eo_get_venue_address();
@@ -299,8 +300,7 @@ class EventOrganiser_Shortcodes {
 				$replacement = get_the_post_thumbnail(get_the_ID(),$size);
 				break;
 			case 'event_url':
-				$venue_link =eo_get_venue_link();
-				$replacement = ( !is_wp_error($venue_link) ? $venue_link : '');
+				$replacement =get_permalink();
 				break;
 			case 'event_custom_field':
 				$field = $matches[2];

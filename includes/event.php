@@ -193,7 +193,7 @@ function eventorganiser_event_delete($post_id){
 			$duration = date_diff($start,$end);
 			$event_data['duration'] =$duration;
 		}
-		
+
 		//Work around for PHP < 5.3
 		$seconds = round(abs($start->format('U') - $end->format('U')));
 		$days = floor($seconds/86400);// 86400 = 60*60*24 seconds in a normal day
@@ -206,7 +206,7 @@ function eventorganiser_event_delete($post_id){
 			if( $duration ){
 				$occurrence_end->add($duration);
 			}else{
-				$occurrence_end->modify($duration_string);
+				$occurrence_end->modify($duration_str);
 			}
 
 			$occurrence_input =array(
