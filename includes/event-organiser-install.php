@@ -42,6 +42,49 @@
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	dbDelta($sql_events_table);
 	dbDelta($sql_venuemeta_table);
+
+	//Add options and capabilities
+	$eventorganiser_options = array (	
+		'supports' => array('title','editor','author','thumbnail','excerpt','custom-fields','comments'),
+		'event_redirect' => 'events',
+		'dateformat'=>'dd-mm',
+		'prettyurl'=> 1,
+		'templates'=> 1,
+		'addtomenu'=> 0,
+		'excludefromsearch'=>0,
+		'showpast'=> 0,
+		'group_events'=>'',
+		'url_venue'=>'events/event',
+		'url_venue'=> 'events/venues',
+		'url_cat' => 'events/category',
+		'url_tag' => 'events/tag',
+		'navtitle' => __('Events','eventorganiser'),
+		'eventtag' => 1,
+		'feed' => 1,
+		'runningisnotpast' => 0,
+		'deleteexpired' => 0
+	);
+	add_option('eventorganiser_options',$eventorganiser_options);
+	
+	//Add roles to administrator		
+	global $wp_roles,$eventorganiser_roles;	
+	$all_roles = $wp_roles->roles;
+	foreach ($all_roles as $role_name => $display_name):
+		$role = $wp_roles->get_role($role_name);
+		if($role->has_cap('manage_options')){
+			foreach($eventorganiser_roles as $eo_role=>$eo_role_display):
+				$role->add_cap($eo_role);
+			endforeach;  
+		}
+	endforeach;  //End foreach $all_roles
+
+	//Manually register CPT and CTs ready for flushing
+	eventorganiser_create_event_taxonomies();
+	eventorganiser_cpt_register();
+
+	//Flush rewrite rules only on activation, and after CPT/CTs has been registered.
+	flush_rewrite_rules();
+
 }
 
 function eventorganiser_deactivate(){

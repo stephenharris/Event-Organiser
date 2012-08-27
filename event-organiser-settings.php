@@ -296,6 +296,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	<tr>
 	<?php	
 		$counter=1; 
+		 self::$settings['supports'] = (empty(self::$settings['supports']) ? array() :  self::$settings['supports'] );	
 		foreach ( self::$sup_array as $supp_display =>$supp):
 			echo '<td><input type="checkbox" name="eventorganiser_options[supports][]" value="'.$supp.'" '.checked(true, in_array($supp,self::$settings['supports']),false).' />'.$supp_display.'</td>';
 			if($counter==4)
