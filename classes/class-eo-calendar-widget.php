@@ -36,6 +36,7 @@ class EO_Calendar_Widget extends WP_Widget
 		$validated=array();
 		$validated['title'] = sanitize_text_field( $new_instance['title'] );
 		$validated['showpastevents'] = ( !empty($new_instance['showpastevents']) ? 1:  0);
+		delete_transient( 'eo_widget_calendar' );
 		return $validated;
 	}
 

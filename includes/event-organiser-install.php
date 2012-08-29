@@ -14,18 +14,18 @@
 	$sql_events_table = "CREATE TABLE " .$wpdb->eo_events. " (
 		event_id bigint(20) NOT NULL AUTO_INCREMENT,
 		post_id bigint(20) NOT NULL,
-		Venue bigint(20) NOT NULL,
+		Venue bigint(20),
 		StartDate DATE NOT NULL,
 		EndDate DATE NOT NULL,
 		StartTime TIME NOT NULL,
 		FinishTime TIME NOT NULL,
-		event_schedule text NOT NULL,
-		event_schedule_meta text NOT NULL,
-		event_frequency smallint NOT NULL,
+		event_schedule text,
+		event_schedule_meta text,
+		event_frequency smallint,
 		event_occurrence bigint(20) NOT NULL,
-		event_allday TINYINT(1) NOT NULL,
-		reoccurrence_start DATE NOT NULL,
-		reoccurrence_end DATE NOT NULL,
+		event_allday TINYINT(1),
+		reoccurrence_start DATE,
+		reoccurrence_end DATE,
 		PRIMARY KEY  (event_id))".$charset_collate;
 	
 	//Venue meta table

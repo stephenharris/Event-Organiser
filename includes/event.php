@@ -34,9 +34,12 @@
 		if( !empty($event_data['venue']) || !empty($event_data['category']) ){
 			$post_data['taxonomy']['event-venue'] = isset($event_data['venue']) ? $event_data['venue'] : null;
 			$post_data['taxonomy']['event-category'] = isset($event_data['category']) ? $event_data['category'] : null;
-			$post_data['ID'] = $post_id;		
 			unset($event_data['venue']);
 			unset($event_data['category']);
+		}
+
+		if( !empty($post_data) ){
+			$post_data['ID'] = $post_id;		
 			wp_update_post( $post_data );
 		}
 
@@ -191,7 +194,11 @@ function eventorganiser_event_delete($post_id){
 		$duration=false;
 		if( function_exists('date_diff') ){
 			$duration = date_diff($start,$end);
-			$event_data['duration'] =$duration;
+
+			/* Storing a DateInterval object can cause errors. Serialize it.
+			http://www.harriswebsolutions.co.uk/event-organiser/forums/topic/error-when-saving-events/
+			 Thanks to Mathieu Parisot, Mathias & Dave Page */
+			$event_data['duration'] = maybe_serialize($duration);
 		}
 
 		//Work around for PHP < 5.3
@@ -216,6 +223,11 @@ function eventorganiser_event_delete($post_id){
 				'EndDate'=>$occurrence_end->format('Y-m-d'),
 				'FinishTime'=>$end->format('H:i:s'),
 				'event_occurrence' => $counter,
+				'Venue'=>0,//Default to avoid SQL error
+				'event_schedule'=>0,//Default to avoid SQL error
+				'event_schedule_meta'=>0,//Default to avoid SQL error
+				'event_frequency'=>0,//Default to avoid SQL error
+				'event_allday'=>0,//Default to avoid SQL error
 			);
 			$wpdb->insert($wpdb->eo_events, $occurrence_input);
 		endforeach;
@@ -229,8 +241,8 @@ function eventorganiser_event_delete($post_id){
 
 		unset($event_data['start']);
 		unset($event_data['end']);
-		unset($event_data['schecule_start']);
-		unset($event_data['schecule_last']);
+		unset($event_data['schedule_start']);
+		unset($event_data['schedule_last']);
 
 		update_post_meta( $post_id,'_eventorganiser_event_schedule', $event_data);
 		update_post_meta( $post_id,'_eventorganiser_schedule_start_start', $start->format('Y-m-d H:i:s'));
@@ -578,13 +590,13 @@ function _eventorganiser_check_datetime($datetime_string='',$ymd_formated=false)
 
 	//Get regulgar expression.
 	if( $ymd_formated ){
-		$reg_exp = "/(?<year>\d{4})[-.\/](?<month>\d{1,})[-.\/](?<day>\d{1,}) (?<hour>\d{2}):(?<minute>\d{2})/";
+		$reg_exp = "/(?P<year>\d{4})[-.\/](?P<month>\d{1,})[-.\/](?P<day>\d{1,}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
 
 	}elseif($formatString =='dd-mm' ){
-		$reg_exp = "/(?<day>\d{1,})[-.\/](?<month>\d{1,})[-.\/](?<year>\d{4}) (?<hour>\d{2}):(?<minute>\d{2})/";
+		$reg_exp = "/(?P<day>\d{1,})[-.\/](?P<month>\d{1,})[-.\/](?P<year>\d{4}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
 
 	}else{
-		$reg_exp = "/(?<month>\d{1,})[-.\/](?<day>\d{1,})[-.\/](?<year>\d{4}) (?<hour>\d{2}):(?<minute>\d{2})/";
+		$reg_exp = "/(?P<month>\d{1,})[-.\/](?P<day>\d{1,})[-.\/](?P<year>\d{4}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
 	}
 
 	if( !preg_match($reg_exp, $datetime_string,$matches) ) 

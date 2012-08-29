@@ -267,7 +267,7 @@ function eo_is_all_day($post_id=''){
 *
  * @since 1.0.0
  */
-function  eo_get_schedule_start($format='d-m-Y',$id=''){
+function  eo_get_schedule_start($format='d-m-Y',$post_id=0){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$schedule = eo_get_event_schedule($post_id);
 	return eo_format_datetime($schedule['schedule_start'],$format);
@@ -299,14 +299,14 @@ function  eo_schedule_start($format='d-m-Y',$id=''){
 *
  * @since 1.0.0
  */
-function eo_get_schedule_last($format='d-m-Y',$id=''){
+function eo_get_schedule_last($format='d-m-Y',$post_id=''){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$schedule = eo_get_event_schedule($post_id);
 	return eo_format_datetime($schedule['schedule_last'],$format);
 }
 
-function eo_get_schedule_end($format='d-m-Y',$id=''){
-	return eo_get_schedule_last($format,$id);
+function eo_get_schedule_end($format='d-m-Y',$post_id=''){
+	return eo_get_schedule_last($format,$post_id);
 }
 
 /**
@@ -319,12 +319,12 @@ function eo_get_schedule_end($format='d-m-Y',$id=''){
 *
  * @since 1.0.0
  */
-function  eo_schedule_last($format='d-m-Y',$id=''){
-	echo eo_get_schedule_last($format,$id);
+function  eo_schedule_last($format='d-m-Y',$post_id=''){
+	echo eo_get_schedule_last($format,$post_id);
 }
 //Deprecated
-function  eo_schedule_end($format='d-m-Y',$id=''){
-	echo eo_get_schedule_last($format,$id);
+function  eo_schedule_end($format='d-m-Y',$post_id=''){
+	echo eo_get_schedule_last($format,$post_id);
 }
 
 
@@ -354,8 +354,8 @@ function eo_reoccurs($post_id=''){
  * @since 1.0.0
  * @deprecated use eo_get_event_schedule();
  */
-function eo_get_reoccurrence($id=''){
-	return eo_get_reoccurence($id);
+function eo_get_reoccurrence($post_id=''){
+	return eo_get_reoccurence($post_id);
 }
 
 /**

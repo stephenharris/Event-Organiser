@@ -65,10 +65,13 @@ function eventorganiser_pre_get_posts( $query ) {
 
 	//Determine how to group events: by series or show each occurrence
 	if( !isset($query->query_vars['group_events_by']) ){
+
 		//Group by isn't set - default depends on context:
 		if( is_admin() || is_single() || $query->is_feed('eo-events') ){
+
 			//If in admin or single page - we probably don't want to see duplicates of (recurrent) events - unless specified otherwise.
 			$query->set('group_events_by','series');
+
 		}elseif(!empty($eo_settings_array['group_events']) && $eo_settings_array['group_events']=='series'){
 			//In other instances (archives, shortcode listing) if showrepeats option is false display only the next event.
 			$query->set('group_events_by','series');
@@ -146,32 +149,15 @@ function eventorganiser_pre_get_posts( $query ) {
 	//Set date range according to whether we show past events
 	if(isset($query->query_vars['showpastevents'])&& !$query->query_vars['showpastevents'] ){
 		//Showing only future events
-		if( $query->get('group_events_by') != 'series' ):
-			//We are not grouping events by series
 
-			//Running event is past - Get events which start in the future
-			//A current event is not past - Get events which finish in the future
-			$key = ( $running_event_is_past ? 'event_start_after' : 'event_end_after');
+		//Running event is past - Get events which start in the future
+		//A current event is not past - Get events which finish in the future
+		$key = ( $running_event_is_past ? 'event_start_after' : 'event_end_after');
 
-			//If current queried date is not set or before now, set the queried date to now
-			$date_objs[$key]  = (empty($date_objs[$key]) || $blog_now > $date_objs[$key]) ? $blog_now : $date_objs[$key];
-
-		else:
-			//Grouping by series. (suffices to check last occurrence: use post meta).
-			$meta_query = $query->get('meta_query');
-			$meta_query = empty($meta_query) ? array() : $meta_query;
-
-			//Running event is past - Check if each occurrence has started, 
-			//A current event is not past - Check each occurrence has finished
-			$key = ( $running_event_is_past ? '_eventorganiser_schedule_last_start' : '_eventorganiser_schedule_last_finish');
-			$meta_query [] = array(
-					'key' => $key,
-					'value' => $blog_now->format('Y-m-d H:i:s'),
-					'compare' => '<='
-				);
-			$query->set('meta_query',$meta_query) ;
-		endif;
+		//If current queried date is not set or before now, set the queried date to now
+		$date_objs[$key]  = (empty($date_objs[$key]) || $blog_now > $date_objs[$key]) ? $blog_now : $date_objs[$key];
 	}
+
 
 	//Set event dates to 'Y-m-d H:i:s' format.
 	foreach ($date_objs as $prop => $datetime ){
