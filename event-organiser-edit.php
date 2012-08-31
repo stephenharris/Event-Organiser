@@ -134,7 +134,7 @@ function eventorganiser_details_metabox($post){
 							<?php _e("day of month",'eventorganiser');?>
 						</label>
 						<label for="byday" >
-							<input type="radio" id="byday" disabled="disabled" name="eo_input[schedule_meta]"  <?php checked($occurs_by, 'BYDAY'); ?> value="BYDAY=" /> 
+							<input type="radio" id="byday" disabled="disabled" name="eo_input[schedule_meta]"  <?php checked($occurs_by != 'BYMONTHDAY', true); ?> value="BYDAY=" /> 
 							<?php _e("day of week",'eventorganiser');?>
 						</label>
 						</p>
@@ -257,7 +257,14 @@ function eventorganiser_details_save( $post_id ) {
 	$schedule_last =  _eventorganiser_check_datetime(trim($raw_data["schedule_end"]).' '.trim($raw_data["StartTime"]));
 
 	$schedule = $raw_data["schedule"];
-	$schedule_meta = (  'weekly' == $schedule ? $raw_data["days"] : $raw_data['schedule_meta'] );
+	if(  'weekly' == $schedule ){
+		$schedule_meta = $raw_data["days"];
+	}elseif(  'monthly' == $schedule ){
+		$schedule_meta = $raw_data['schedule_meta'];
+	}else{
+		$schedule_meta = '';
+	}
+
 
 	$in_ex=array();
 	foreach (array('include','exclude') as $key ):
@@ -280,6 +287,7 @@ function eventorganiser_details_save( $post_id ) {
 		'frequency'=>(int) $raw_data["event_frequency"],
 		'schedule_last'=>$schedule_last,
 		'schedule_meta'=>$schedule_meta,
+		'occurs_by' => trim($schedule_meta,'='),
 		'include'=>$in_ex['include'],
 		'exclude'=>$in_ex['exclude'],
 	);

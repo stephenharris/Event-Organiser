@@ -58,14 +58,14 @@
 		if( $prev ){
 			foreach ( $prev as $key => $prev_value ){
 				if( $event_data[$key] != $prev_value ){
-					if('monthly' == $event_data['schedule'] && $key ='schedule_meta'){
+					if('monthly' == $event_data['schedule'] && $key =='schedule_meta'){
 						if( $event_data['occurs_by'] != $prev['occurs_by'] ){
 							$diff[]=$key;
 							$delete_existing = true;
 							break;
 						}
 					}else{
-							$diff[]=$key;
+						$diff[]=$key;
 						$delete_existing = true;
 						break;
 					}
