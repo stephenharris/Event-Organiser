@@ -259,10 +259,13 @@ function eventorganiser_details_save( $post_id ) {
 	$schedule = $raw_data["schedule"];
 	if(  'weekly' == $schedule ){
 		$schedule_meta = $raw_data["days"];
+		$occurs_by='';
 	}elseif(  'monthly' == $schedule ){
 		$schedule_meta = $raw_data['schedule_meta'];
+		$occurs_by = trim($schedule_meta,'=');
 	}else{
 		$schedule_meta = '';
+		$occurs_by='';
 	}
 
 
@@ -287,7 +290,7 @@ function eventorganiser_details_save( $post_id ) {
 		'frequency'=>(int) $raw_data["event_frequency"],
 		'schedule_last'=>$schedule_last,
 		'schedule_meta'=>$schedule_meta,
-		'occurs_by' => trim($schedule_meta,'='),
+		'occurs_by' => $occurs_by,
 		'include'=>$in_ex['include'],
 		'exclude'=>$in_ex['exclude'],
 	);

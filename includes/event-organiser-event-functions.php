@@ -79,7 +79,7 @@ function eo_get_by_postid($postid,$occurrence=0){
 	global $wpdb;
 
 	$querystr = $wpdb->prepare("
-		SELECT * FROM  {$wpdb->eo_events} 
+		SELECT StartDate,EndDate,StartTime,FinishTime FROM  {$wpdb->eo_events} 
 		WHERE {$wpdb->eo_events}.post_id=%d
 		 AND ({$wpdb->eo_events}.event_occurrence=%d)
 		LIMIT 1",$postid,$occurrence);
@@ -110,6 +110,28 @@ function eo_get_the_start($format='d-m-Y',$post_id='',$occurrence=0){
 	if(empty($event)) return false;
 
 	$date = trim($event->StartDate).' '.trim($event->StartTime);
+
+	if(empty($date)||$date==" ")
+		return false;
+
+	return eo_format_date($date,$format);
+}
+
+
+function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
+	global $wpdb;
+
+	$querystr = $wpdb->prepare("
+		SELECT StartDate,StartTime FROM  {$wpdb->eo_events} 
+		WHERE {$wpdb->eo_events}.event_id=%d
+		LIMIT 1",$occurrence_id);
+
+	$occurrence =  $wpdb->get_row($querystr);
+
+	if( !$occurrence )
+		return false;
+
+	$date = trim($occurrence->StartDate).' '.trim($occurrence->StartTime);
 
 	if(empty($date)||$date==" ")
 		return false;

@@ -126,11 +126,12 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				'post_type' => 'event',
 				'tax_input' => array('event-venue'=>array($venue))
 			);
+			$tz = eo_get_blog_timezone();
 			$event_data=array(
 				'schedule'=>'once',
 				'all_day'=>$input['allday'],
-				'start'=>new DateTime($input['StartDate'].' '.$input['StartTime']),
-				'end'=>new DateTime($input['EndDate'].' '.$input['FinishTime']),
+				'start'=>new DateTime($input['StartDate'].' '.$input['StartTime'],$tz),
+				'end'=>new DateTime($input['EndDate'].' '.$input['FinishTime'], $tz),
 			);
 
 			//Insert event

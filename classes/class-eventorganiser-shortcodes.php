@@ -279,7 +279,7 @@ class EventOrganiser_Shortcodes {
 				break;
 
 			case 'event_venue_url':
-				$replacement =eo_get_venue_link();
+				$venue_link =eo_get_venue_link();
 				$replacement = ( !is_wp_error($venue_link) ? $venue_link : '');
 				break;
 			case 'event_venue_address':

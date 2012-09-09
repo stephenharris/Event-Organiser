@@ -73,22 +73,21 @@
 			}
 		}
 
-		//Nothing to do
-		if( !$delete_existing ){
-			return $post_id;
+		//Need to replace occurrences
+		if( $delete_existing ){
+			//Generate occurrences
+			$event_data = _eventorganiser_generate_occurrences($event_data);
+
+			if( is_wp_error($event_data) )
+				return $event_data;
+
+			//Delete old dates
+			eo_delete_event_occurrences($post_id);
+
+			//Insert new ones and update meta
+			$re = _eventorganiser_insert_occurrences($post_id,$event_data);
 		}
 
-		//Generate occurrences
-		$event_data = _eventorganiser_generate_occurrences($event_data);
-
-		if( is_wp_error($event_data) )
-			return $event_data;
-
-		//Delete old dates
-		eo_delete_event_occurrences($post_id);
-
-		//Insert new ones and update meta
-		$re = _eventorganiser_insert_occurrences($post_id,$event_data);
 		do_action('eventorganiser_save_event', $post_id);
 		return $post_id;
 	}
@@ -149,7 +148,8 @@
 
 		 _eventorganiser_insert_occurrences($post_id, $event_data);
 			
-		do_action('eventorganiser_save_event');
+		//Action used to break cache & trigger Pro actions (& by other plug-ins?)
+		do_action('eventorganiser_save_event',$post_id);
 		return $post_id;
 	}
 
@@ -208,6 +208,8 @@ function eventorganiser_event_delete($post_id){
 		$duration_str = '+'.$days.'days '.$sec_diff.' seconds';
 		$event_data['duration_str'] =$duration_str;
 
+		$occurrence_array = array();
+
 		foreach( $occurrences as $counter=> $occurrence ):
 			$occurrence_end = clone $occurrence;
 			if( $duration ){
@@ -230,9 +232,11 @@ function eventorganiser_event_delete($post_id){
 				'event_allday'=>0,//Default to avoid SQL error
 			);
 			$wpdb->insert($wpdb->eo_events, $occurrence_input);
+			$occurrence_array[$wpdb->insert_id] = $occurrence->format('Y-m-d H:i:s');
 		endforeach;
 
 		unset($event_data['occurrences']);
+		$event_data['_occurrences'] = $occurrence_array;
 		
 		if( !empty($include) )
 			$event_data['include'] = array_map('eo_format_datetime', $include, array_fill(0, count($include), 'Y-m-d H:i:s') );
@@ -290,7 +294,8 @@ function eventorganiser_event_delete($post_id){
 			'all_day'=>0,
 			'duration_str'=>'',
 			'include'=>array(),
-			'exclude'=>array()
+			'exclude'=>array(),
+			'_occurrences'=>array(),
 		));
 
 		$tz = eo_get_blog_timezone();
@@ -299,16 +304,20 @@ function eventorganiser_event_delete($post_id){
 		$event_details['schedule_start'] = clone $event_details['start'];
 		$event_details['schedule_last'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_start', true), $tz);
 		$event_details['schedule_finish'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_finish', true), $tz);
-		
+
+		if( !empty($event_details['_occurrences']) ){
+			$event_details['_occurrences'] = array_map('eventorganiser_date_create', $event_details['_occurrences']);
+		}
+
 		if( !empty($event_details['include']) ){
-			$event_details['include'] = array_map('date_create', $event_details['include'], array_fill(0, count($event_details['include']), $tz) );
+			$event_details['include'] = array_map('eventorganiser_date_create', $event_details['include'] );
 		}
 		if( !empty($event_details['exclude']) ){
-			$event_details['exclude'] = array_map('date_create', $event_details['exclude'], array_fill(0, count($event_details['exclude']), $tz) );
+			$event_details['exclude'] = array_map('eventorganiser_date_create',$event_details['exclude'] );
 		}
 
 		if($event_details['schedule'] == 'weekly'){
-			$event_details['occurs_by'] = 'BYDAY';
+			$event_details['occurs_by'] = '';
 		}elseif($event_details['schedule'] == 'monthly'){
 			$bymonthday = preg_match('/BYMONTHDAY=/',$event_details['schedule_meta']);
 			$event_details['occurs_by'] = ($bymonthday ? 'BYMONTHDAY' : 'BYDAY');
@@ -319,6 +328,16 @@ function eventorganiser_event_delete($post_id){
 		return $event_details;
 	}
 
+	/**
+	 * A helper function, creates a DateTime object from a date string and sets the timezone to the blog's current timezone
+	 *@uses date_create
+	 *@param (string) A date-time in string format
+	 *@param (DateTime) The corresponding DateTime object.
+	*/
+	function eventorganiser_date_create($datetime_string){
+		$tz = eo_get_blog_timezone();
+		return date_create($datetime_string,$tz);
+	}
 
 /**
 * This is a private function - handles the generation of occurrence dates from the schedule data
@@ -683,6 +702,9 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 			$event_details['exclude'][] = $date;
 		}else{
 			unset($event_details['include'][$key]);
+		}
+		if( isset($event_details['_occurrences'][$event_id]) ){
+			unset($event_details['_occurrences'][$event_id]);
 		}
 
 		update_post_meta( $post_id,'_eventorganiser_event_schedule',$event_details);					

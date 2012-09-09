@@ -227,9 +227,9 @@ function eventorganiser_quick_edit_script() { ?>
     <script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery('a.editinline').live('click', function() {
-		jQuery('#eventorganiser_venue option[value=0]').attr('selected', 'selected');
-            var id = inlineEditPost.getId(this);
-            var val = parseInt(jQuery('#post-' + id + ' td.column-venue input').val());
+		jQuery('#eventorganiser_venue option').attr("selected", false);
+		var id = inlineEditPost.getId(this);
+		var val = parseInt(jQuery('#post-' + id + ' td.column-venue input').val());
 		jQuery('#eventorganiser_venue option[value="'+val+'"]').attr('selected', 'selected');
         });
     });

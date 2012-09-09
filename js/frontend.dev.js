@@ -8,9 +8,152 @@
         };
 
         if ($(".eo-fullcalendar").length > 0) {
-var calendar=Array();var calendars=EOAjax.calendars;var loadingTimeOut;for(i=0;i<calendars.length;i++){calendar="#eo_fullcalendar_"+(i+1);var cat=calendars[i].category;var venue=calendars[i].venue;$(calendar).fullCalendar({editable:false,tooltip:calendars[i].tooltip,firstDay:parseInt(EOAjax.fullcal.firstDay),header:{left:calendars[i].headerleft,center:calendars[i].headercenter,right:calendars[i].headerright},theme:true,categories:EOAjax.fullcal.categories,venues:EOAjax.fullcal.venues,eventRender:function(a,b){cat=$(".filter-category .eo-cal-filter").val();venue=$(".filter-venue .eo-cal-filter").val();if(typeof cat!=="undefined"&&cat!=""&&$.inArray(cat,a.category)<0){return"<div></div>"}if(typeof venue!=="undefined"&&venue!=""&&venue!=a.venue){return"<div></div>"}if(!$(calendar).fullCalendar("option","tooltip")){return}timeformat=$(calendar).fullCalendar("option","timeFormat");if($.fullCalendar.formatDate(a.start,"ddmmyyyy")!=$.fullCalendar.formatDate(a.end,"ddmmyyyy")){if(!a.allDay){content=$.fullCalendar.formatDate(a.start,"MMMM d");content+=" "+$.fullCalendar.formatDate(a.start,timeformat);content+=" - "+$.fullCalendar.formatDate(a.end,"MMMM d");content+=" "+$.fullCalendar.formatDate(a.end,timeformat)}else{if($.fullCalendar.formatDate(a.start,"mmyyyy")!=$.fullCalendar.formatDate(a.end,"mmyyyy")){content=$.fullCalendar.formatDate(a.start,"MMMM d");content+=" - "+$.fullCalendar.formatDate(a.end,"d, yyyy")}else{content=$.fullCalendar.formatDate(a.start,"MMMM d");content+=" - "+$.fullCalendar.formatDate(a.end,"MMMM d")}}}else{content=$.fullCalendar.formatDate(a.start,"MMMM d, yyyy");if(!a.allDay){content+=" "+$.fullCalendar.formatDate(a.start,timeformat)+" - "+$.fullCalendar.formatDate(a.end,timeformat)}}if(typeof a.description!="undefined"){content+="</br></br>"+a.description}$(b).qtip({content:{text:content,button:"x",title:a.title},position:{my:"top center",at:"bottom center"},hide:{fixed:true,delay:500,effect:function(a){$(this).fadeOut("50")}},border:{radius:4,width:3},style:{classes:"ui-tooltip-shadow",widget:true,tip:"topMiddle"}})},buttonText:{today:EOAjaxFront.locale.today,month:EOAjaxFront.locale.month,week:EOAjaxFront.locale.week,day:EOAjaxFront.locale.day,cat:EOAjaxFront.locale.cat,venue:EOAjaxFront.locale.venue},monthNames:EOAjaxFront.locale.monthNames,monthNamesShort:EOAjaxFront.locale.monthAbbrev,dayNames:EOAjaxFront.locale.dayNames,dayNamesShort:EOAjaxFront.locale.dayAbbrev,eventColor:"#21759B",defaultView:calendars[i].defaultview,lazyFetching:"true",events:function(a,b,c){jQuery.ajax({url:EOAjax.ajaxurl+"?action=eventorganiser-fullcal",dataType:"JSON",data:{start:jQuery.fullCalendar.formatDate(a,"yyyy-MM-dd"),end:jQuery.fullCalendar.formatDate(b,"yyyy-MM-dd"),category:EOAjax.calendars[0].category,venue:EOAjax.calendars[0].venue},success:function(a){c(a)}})},selectable:false,weekMode:"variable",aspectRatio:1.5,timeFormat:calendars[i].timeformat,loading:function(a){loading=$("#"+$(this).attr("id")+"_loading");if(a){window.clearTimeout(loadingTimeOut);loadingTimeOut=window.setTimeout(function(){loading.show()},1e3)}else{window.clearTimeout(loadingTimeOut);loading.hide()}}})}jQuery(".eo-cal-filter").change(function(){$(".eo-fullcalendar").fullCalendar("rerenderEvents")})
+var calendar = Array();
+var calendars = EOAjax.calendars;
+var loadingTimeOut;
+for (i = 0; i < calendars.length; i++) {
+    calendar = "#eo_fullcalendar_" + (i + 1);
+    var cat = calendars[i].category;
+    var venue = calendars[i].venue;
+    $(calendar).fullCalendar({
+        editable: false,
+        tooltip: calendars[i].tooltip,
+        firstDay: parseInt(EOAjax.fullcal.firstDay),
+        header: {
+            left: calendars[i].headerleft,
+            center: calendars[i].headercenter,
+            right: calendars[i].headerright
+        },
+        theme: true,
+        categories: EOAjax.fullcal.categories,
+        venues: EOAjax.fullcal.venues,
+        eventRender: function (a, b) {
+            var c = $(".filter-category .eo-cal-filter").val();
+            var d = $(".filter-venue .eo-cal-filter").val();
+            if (typeof c !== "undefined" && c != "" && $.inArray(c, a.category) < 0) {
+                return "<div></div>"
+            }
+            if (typeof d !== "undefined" && d != "" && d != a.venue) {
+                return "<div></div>"
+            }
+            if (!$(calendar).fullCalendar("option", "tooltip")) {
+                return
+            }
+            var e = $(calendar).fullCalendar("option", "timeFormat");
+            var f;
+            if ($.fullCalendar.formatDate(a.start, "ddMMyyyy") != $.fullCalendar.formatDate(a.end, "ddMMyyyy")) {
+                if (!a.allDay) {
+                    f = $.fullCalendar.formatDate(a.start, "MMMM d");
+                    f += " " + $.fullCalendar.formatDate(a.start, e);
+                    f += " - " + $.fullCalendar.formatDate(a.end, "MMMM d");
+                    f += " " + $.fullCalendar.formatDate(a.end, e)
+                } else {
+                    if ($.fullCalendar.formatDate(a.start, "MMyyyy") == $.fullCalendar.formatDate(a.end, "MMyyyy")) {
+                        f = $.fullCalendar.formatDate(a.start, "MMMM d");
+                        f += " - " + $.fullCalendar.formatDate(a.end, "d, yyyy")
+                    } else {
+                        f = $.fullCalendar.formatDate(a.start, "MMMM d");
+                        f += " - " + $.fullCalendar.formatDate(a.end, "MMMM d");
+                    }
+                }
+            } else {
+                f = $.fullCalendar.formatDate(a.start, "MMMM d, yyyy");
+                if (!a.allDay) {
+                    f += " " + $.fullCalendar.formatDate(a.start, e) + " - " + $.fullCalendar.formatDate(a.end, e)
+                }
+            }
+            if (typeof a.description != "undefined") {
+                f += "</br></br>" + a.description
+            }
+            $(b).qtip({
+                content: {
+                    text: f,
+                    button: "x",
+                    title: a.title
+                },
+                position: {
+                    my: "top center",
+                    at: "bottom center"
+                },
+                hide: {
+                    fixed: true,
+                    delay: 500,
+                    effect: function (a) {
+                        $(this).fadeOut("50")
+                    }
+                },
+                border: {
+                    radius: 4,
+                    width: 3
+                },
+                style: {
+                    classes: "ui-tooltip-shadow",
+                    widget: true,
+                    tip: "topMiddle"
+                }
+            })
+        },
+        buttonText: {
+            today: EOAjaxFront.locale.today,
+            month: EOAjaxFront.locale.month,
+            week: EOAjaxFront.locale.week,
+            day: EOAjaxFront.locale.day,
+            cat: EOAjaxFront.locale.cat,
+            venue: EOAjaxFront.locale.venue
+        },
+        monthNames: EOAjaxFront.locale.monthNames,
+        monthNamesShort: EOAjaxFront.locale.monthAbbrev,
+        dayNames: EOAjaxFront.locale.dayNames,
+        dayNamesShort: EOAjaxFront.locale.dayAbbrev,
+        eventColor: "#21759B",
+        defaultView: calendars[i].defaultview,
+        lazyFetching: "true",
+        events: function (a, b, c) {
+            request = {
+                start: jQuery.fullCalendar.formatDate(a, "yyyy-MM-dd"),
+                end: jQuery.fullCalendar.formatDate(b, "yyyy-MM-dd")
+            };
+            if (typeof EOAjax.calendars[0].category !== "undefined" && EOAjax.calendars[0].category != "") {
+                request.category = EOAjax.calendars[0].category
+            }
+            if (typeof EOAjax.calendars[0].venue !== "undefined" && EOAjax.calendars[0].venue != "") {
+                request.venue = EOAjax.calendars[0].venue
+            }
+            jQuery.ajax({
+                url: EOAjax.ajaxurl + "?action=eventorganiser-fullcal",
+                dataType: "JSON",
+                data: request,
+                success: function (a) {
+                    c(a)
+                }
+            })
+        },
+        selectable: false,
+        weekMode: "variable",
+        aspectRatio: 1.5,
+        timeFormat: calendars[i].timeformat,
+        loading: function (a) {
+            loading = $("#" + $(this).attr("id") + "_loading");
+            if (a) {
+                window.clearTimeout(loadingTimeOut);
+                loadingTimeOut = window.setTimeout(function () {
+                    loading.show()
+                }, 1e3)
+            } else {
+                window.clearTimeout(loadingTimeOut);
+                loading.hide()
+            }
         }
-
+    })
+}
+jQuery(".eo-cal-filter").change(function () {
+    $(".eo-fullcalendar").fullCalendar("rerenderEvents")
+})
+}
+jQuery(".eo-cal-filter").change(function () {
+    $(".eo-fullcalendar").fullCalendar("rerenderEvents");
+})
+        }
 if ($(".eo_widget_calendar").length > 0 && typeof EOAjaxFront.adminajax !== undefined) {
   $(".eo_widget_calendar tfoot").unbind("click");$(".eo_widget_calendar tfoot a").die("click").live("click",function(a){a.preventDefault();var b=$(this).closest(".eo_widget_calendar").attr("id");if(typeof eo_widget_cal==="undefined"){cal=false}else{cal=eo_widget_cal[b]}if(cal){showpastevents=cal.showpastevents==1?1:0}else{showpastevents=1}$.getJSON(EOAjaxFront.adminajax+"?action=eo_widget_cal&showpastevents="+showpastevents,{eo_month:eveorg_getParameterByName("eo_month",$(this).attr("href"))},function(a){$("#"+b+"_content").html(a)})})
 }
