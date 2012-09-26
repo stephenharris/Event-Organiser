@@ -7,7 +7,7 @@
 add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
 	global $wp_locale;
-	$version = '1.4';
+	$version = '1.5.6';
 	wp_register_script( 'eo_qtip2', EVENT_ORGANISER_URL.'js/qtip2.js',array('jquery'),$version,true);
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array(
 		'jquery','eo_qtip2',
@@ -44,7 +44,7 @@ function eventorganiser_register_script() {
  */
 add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts',10);
 function eventorganiser_register_scripts(){
-	$version = '1.4';
+	$version = '1.5.6';
 	wp_register_script( 'eo_GoogleMap', 'http://maps.googleapis.com/maps/api/js?sensor=true');
 
 	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL.'js/venues.js',array(

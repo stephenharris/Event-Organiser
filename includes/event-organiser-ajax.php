@@ -75,7 +75,7 @@
 
 				//Don't use get_the_excerpt as this adds a link
 				$excerpt_length = apply_filters('excerpt_length', 55);
-				$event['description']  = wp_trim_words( get_the_content(), $excerpt_length, '...' );
+				$event['description']  = wp_trim_words( strip_shortcodes(get_the_content()), $excerpt_length, '...' );
 
 				//Colour past events
 				$now = new DateTIme(null,$tz);

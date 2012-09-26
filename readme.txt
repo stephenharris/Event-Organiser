@@ -4,7 +4,7 @@ Donate link: http://www.harriswebsolutions.co.uk/event-organiser/
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.4.2
-Stable tag: 1.5.5
+Stable tag: 1.5.6
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -60,7 +60,7 @@ Event Organiser adds event management that integrates well with your WordPress s
 = Localisation =
 A big thank you to those who have provided translations for Event Organiser
 
-* French - [RÃ©my Perona](http://remyperona.fr/)
+* French - [Remy Perona](http://remyperona.fr/)
 * Spanish - Joseba Sanchez
 * German - [Martin Grether](http://www.datema.de/) & [Henning Matthaei](http://www.partnerwerk.de/)
 * Italian - Emilio Frusciante, Pio Muto
@@ -69,7 +69,7 @@ A big thank you to those who have provided translations for Event Organiser
 * Portuguese (Brazilian) - [Rafael Wahasugui](http://www.twitter.com/rafawhs)
 * Dutch  - [Ingrid Ekkers](http://www.247design.nl)
 * Polish - [Bartosz Arendt](http://digitalfactory.pl/)
-
+* Russian =[Sergei](www.vortexinter.ru)
 
 == Installation ==
 
@@ -148,20 +148,30 @@ Event Organiser provides the following shortcodes:
 
 == Changelog ==
 
+= 1.5.6 =
+* Add filter for formatting datetime objects
+* Minor UI improvements
+* Added Russian translation
+* Depreciate use of 'occurrence' for date functions. Use occurrence ID instead. See http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/eo_get_the_start-2/
+* Custom schedule is considered a recurring event
+* Fixed import ICS bug
+* Fixed calendar feed posts_per_page_rss bug
+* Fixed shortcode bug for tooltip excerpts
+
 = 1.5.5 =
-Fixes IE7/8-fullCalendar bug experienced on some themes
-Fixed timezone bug when creating events in the calendar.
-Corrects tooltip date/time formatting
-Fixes venue bulk/quick edit bug
-Fixes venue link for shortcode/widget tags
+* Fixes IE7/8-fullCalendar bug experienced on some themes
+* Fixed timezone bug when creating events in the calendar.
+* Corrects tooltip date/time formatting
+* Fixes venue bulk/quick edit bug
+* Fixes venue link for shortcode/widget tags
 
 = 1.5.4 =
-Fixes monthly recurring event creation bug
+* Fixes monthly recurring event creation bug
 
 = 1.5.3 =
-Fixes 'group by series' bug
-Fixes event creation bug (occurs on some servers)
-Fixes eo_get_schedule_end bug
+* Fixes 'group by series' bug
+* Fixes event creation bug (occurs on some servers)
+* Fixes eo_get_schedule_end bug
 
 = 1.5.2 =
 * Fixes event widget/shortcode url bug

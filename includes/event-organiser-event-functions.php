@@ -75,14 +75,23 @@ function eo_get_events($args=array()){
 *
 * @return row object of event's row in Events table
 */
-function eo_get_by_postid($postid,$occurrence=0){
+function eo_get_by_postid($postid,$occurrence=0, $occurrence_id=0){
 	global $wpdb;
+
+	if( !empty($occurrence_id) ){
+		$column = 'event_id';
+		$value = $occurrence_id;
+	}else{
+		//Backwards compatibility!
+		$column = 'event_occurrence';
+		$value = $occurrence;
+	}
 
 	$querystr = $wpdb->prepare("
 		SELECT StartDate,EndDate,StartTime,FinishTime FROM  {$wpdb->eo_events} 
 		WHERE {$wpdb->eo_events}.post_id=%d
-		 AND ({$wpdb->eo_events}.event_occurrence=%d)
-		LIMIT 1",$postid,$occurrence);
+		 AND ({$wpdb->eo_events}.{$column}=%d)
+		LIMIT 1",$postid,$value);
 
 	return $wpdb->get_row($querystr);
 }
@@ -101,12 +110,16 @@ function eo_get_by_postid($postid,$occurrence=0){
 * 
  * @since 1.0.0
  */
-function eo_get_the_start($format='d-m-Y',$post_id='',$occurrence=0){
+function eo_get_the_start($format='d-m-Y',$post_id='',$occurrence=0, $occurrence_id=0){
 	global $post;
 	$event = $post;
 
-	if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$occurrence);
-	
+	if( !empty($occurrence) ){
+		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->event_id' );
+	}
+
+	if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$occurrence, $occurrence_id);	
+
 	if(empty($event)) return false;
 
 	$date = trim($event->StartDate).' '.trim($event->StartTime);
@@ -145,8 +158,8 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
  * @since 1.0.0
  * @uses eo_get_the_start
  */
-function eo_the_start($format='d-m-Y',$id='',$occurrence=0){
-	echo eo_get_the_start($format,$id,$occurrence);
+function eo_the_start($format='d-m-Y',$id='',$occurrence=0,	$occurrence_id=0){
+	echo eo_get_the_start($format,$id,$occurrence, $occurrence_id);
 }
 
 
@@ -163,11 +176,15 @@ function eo_the_start($format='d-m-Y',$id='',$occurrence=0){
 *
  * @since 1.0.0
  */
-function eo_get_the_end($format='d-m-Y',$post_id='',$occurrence=0){
+function eo_get_the_end($format='d-m-Y',$post_id='',$occurrence=0, $occurrence_id=0){
 	global $post;
 	$event = $post;
 
-	if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$occurrence);
+	if( !empty($occurrence) ){
+		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->event_id' );
+	}
+
+	if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$occurrence,$occurrence_id);
 
 	if(empty($event)) return false;
 
@@ -185,8 +202,8 @@ function eo_get_the_end($format='d-m-Y',$post_id='',$occurrence=0){
  * @since 1.0.0
  * @uses eo_get_the_end
  */
-function eo_the_end($format='d-m-Y',$id=''){
-	echo eo_get_the_end($format,$id);
+function eo_the_end($format='d-m-Y',$post_id='',$occurrence=0, $occurrence_id=0){
+	echo eo_get_the_end($format,$post_id,$occurrence, $occurrence_id);
 }
 
 
@@ -365,7 +382,7 @@ function eo_reoccurs($post_id=''){
 
 	$schedule = eo_get_event_schedule($post_id);
 	
-	return ($schedule['schedule'] != 'once' && $schedule['schedule'] != 'custom');
+	return ($schedule['schedule'] != 'once');
 }
 
 

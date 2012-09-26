@@ -53,7 +53,7 @@ function eventorganiser_event_fill_columns($column_name, $id) {
 
 	$series_id = (empty($post->event_id) ? $id :'');
 
-	$phpFormat = 'M, jS Y';
+	$phpFormat = 'M, j Y';
 	if(!eo_is_all_day($series_id))
 		$phpFormat .= '\<\/\b\r\>'. get_option('time_format');
 	

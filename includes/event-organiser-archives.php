@@ -165,8 +165,11 @@ function eventorganiser_pre_get_posts( $query ) {
 			$query->set($prop, $datetime->format('Y-m-d H:i:s'));
 	}
 
-	if( $query->is_feed('eo-events') )
+	if( $query->is_feed('eo-events') ){
+		//Posts per page for feeds bug http://core.trac.wordpress.org/ticket/17853
+		add_filter('pre_option_posts_per_rss','wp17853_eventorganiser_workaround');
 		$query->set('posts_per_page',-1);
+	}
 
 	//Add the posts_* filters to modify the query
 	add_filter('posts_fields', 'eventorganiser_event_fields',10,2);
@@ -177,6 +180,16 @@ function eventorganiser_pre_get_posts( $query ) {
 }
 
 
+/**
+ * A work around for a bug that posts_per_page is over-ridden by the posts_per_rss option.
+ * For ics feeds this should be -1. We intercept the option using a filter, added in pre_get_posts for event feeds
+ * We return -1 and then remove the filter.
+ *@see http://core.trac.wordpress.org/ticket/17853
+ */
+function wp17853_eventorganiser_workaround( $posts_per_page_rss ){
+	remove_filter(current_filter(),__FUNCTION__);
+	return -1;
+}
 
 /**
  * SELECT only date fields from events and venue table for events
@@ -189,11 +202,13 @@ function eventorganiser_event_fields( $select, $query ){
 
 	if('event'== $query->get('post_type') ) {
 		$et =$wpdb->eo_events;
+		/* Include 'event_occurrence' for backwards compatibility. Will eventually be removed. */
+		/* Renaming event_id as occurrence id. Keep event_id for backwards compatibility */
 		if( 'series'== $query->get('group_events_by') ) {
 			//Work-around for group_events_by series.
-			$select = "{$et}.event_id, {$et}.StartTime, min({$et}.StartDate) as StartDate, min({$et}.EndDate) as EndDate, {$et}.FinishTime, ".$select;
+			$select = "{$et}.event_id, {$et}.event_id AS occurrence_id, {$et}.StartTime, min({$et}.StartDate) as StartDate, min({$et}.EndDate) as EndDate, {$et}.FinishTime, {$et}.event_occurrence, ".$select;
 		}else{
-			$select = "{$et}.event_id, {$et}.StartDate, {$et}.StartTime, {$et}.EndDate, {$et}.FinishTime, ".$select;
+			$select = "{$et}.event_id, {$et}.event_id AS occurrence_id, {$et}.StartDate, {$et}.StartTime, {$et}.EndDate, {$et}.FinishTime, {$et}.event_occurrence, ".$select;
 		}
 	}
 	return $select;

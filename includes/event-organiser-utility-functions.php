@@ -35,7 +35,7 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 			$dateformatstring = substr( $dateformatstring, 1, strlen( $dateformatstring ) -1 );
 	 endif;	
 
-	return $datetime->format($dateformatstring);
+	return apply_filters('eventorganiser_format_datetime', $datetime->format($dateformatstring), $format, $datetime);
 }
 /**
 * Formats a date string in format 'YYYY-MM-DD' format into a specified format

@@ -52,7 +52,7 @@ class Event_Organiser_Im_Export  {
 			//Importing events		
 
 			//Perform checks on file:
-			if (($_FILES["ics"]["type"] == "text/calendar")&& ($_FILES["ics"]["size"] < 2097152)):
+			if ( in_array($_FILES["ics"]["type"], array("text/calendar","application/octet-stream")) && ($_FILES["ics"]["size"] < 2097152) ):
 				if($_FILES["ics"]["error"] > 0){
 					$EO_Errors = new WP_Error('eo_error', sprintf(__("File Error encountered: %d"), $_FILES["ics"]["error"]));
 				}else{
@@ -239,7 +239,7 @@ RRULE:<?php echo $reoccurrence_rule;?>
 <?php endif;?>
 <?php if( !empty($schedule_data['exclude']) ):
 	$exclude_strings = array();
-	foreach ( $schedule_data['include'] as $include ){
+	foreach ( $schedule_data['exclude'] as $include ){
 		if( !eo_is_all_day() ){
 			$vdate='';
 			$include->setTimezone($UTC_tz);
