@@ -273,7 +273,7 @@ function eventorganiser_event_delete($post_id){
  *  *  * 'all_day' =>  1 | 0  --1 if its an all day event, 0 if not
  *  *  * 'start' =>  start date (of first occurrence)  as a datetime object
  *  *  * 'end' => end date (of first occurrence)  as a datetime object
- *  *  * 'schedule_end' =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
+ *  *  * 'schedule_last' =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
  *  *  * 'include' => array of datetime objects to include in the schedule
  *  *  * 'exclude' => array of datetime objects to exclude in the schedule
 * @param int $post_id -  The post ID of the event
@@ -652,7 +652,7 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 		$format = ( $all_day ? 'Ymd' : 'Ymd\THis\Z' );
 
 		$schedule_last->setTimezone(new DateTimeZone('UTC'));
-		$schedule_last = $end->format($format);
+		$schedule_last = $schedule_last->format($format);
 
 		switch($schedule):
 			case 'once':

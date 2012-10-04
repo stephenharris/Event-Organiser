@@ -436,21 +436,21 @@
 		$venues = eo_get_venues(array('search'=>$value));
 
 		foreach($venues as $venue){
-			$term_id = (int) $venue->term_id;
+			$venue_id = (int) $venue->term_id;
 			if( !isset($term->venue_address) ){
-				$address = eo_get_venue_address($term_id);
-				$term->venue_address =  isset($address['address']) ? $address['address'] : '';
-				$term->venue_postal =  isset($address['postcode']) ? $address['postcode'] : '';
-				$term->venue_country =  isset($address['country']) ? $address['country'] : '';
+				$address = eo_get_venue_address($venue_id);
+				$venue->venue_address =  isset($address['address']) ? $address['address'] : '';
+				$venue->venue_postal =  isset($address['postcode']) ? $address['postcode'] : '';
+				$venue->venue_country =  isset($address['country']) ? $address['country'] : '';
 			}
 
-			if( !isset($term->venue_lat) || !isset($term->venue_lng) ){
-				$term->venue_lat =  number_format(floatval(eo_get_venue_lat($term_id)), 6);
-				$term->venue_lng =  number_format(floatval(eo_get_venue_lng($term_id)), 6);
+			if( !isset($venue->venue_lat) || !isset($venue->venue_lng) ){
+				$venue->venue_lat =  number_format(floatval(eo_get_venue_lat($venue_id)), 6);
+				$venue->venue_lng =  number_format(floatval(eo_get_venue_lng($venue_id)), 6);
 			}
 
-			if( !isset($term->venue_description) ){
-				$term->venue_description = eo_get_venue_description($term_id);
+			if( !isset($venue->venue_description) ){
+				$venue->venue_description = eo_get_venue_description($venue_id);
 			}
 		}
 		

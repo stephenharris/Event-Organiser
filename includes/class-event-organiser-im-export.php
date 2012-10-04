@@ -44,6 +44,7 @@ class Event_Organiser_Im_Export  {
 				'post_type'=>'event',
 				'showpastevents'=>true,
 				'group_events_by'=>'series',
+				'posts_per_page'=>-1,
 			));
 			$this->get_export_file();
 
@@ -239,14 +240,14 @@ RRULE:<?php echo $reoccurrence_rule;?>
 <?php endif;?>
 <?php if( !empty($schedule_data['exclude']) ):
 	$exclude_strings = array();
-	foreach ( $schedule_data['exclude'] as $include ){
+	foreach ( $schedule_data['exclude'] as $exclude ){
 		if( !eo_is_all_day() ){
 			$vdate='';
-			$include->setTimezone($UTC_tz);
-			$include_strings[] = $include->format('Ymd\THis\Z');
+			$exclude->setTimezone($UTC_tz);
+			$exclude_strings[] = $exclude->format('Ymd\THis\Z');
 		}else{
 			$vdate=';VALUE=DATE';
-			$include_strings[] = $include->format('Ymd');
+			$exclude_strings[] = $exclude->format('Ymd');
 		}
 	}?>
 EXDATE<?php echo $vdate;?>:<?php echo implode(',',$exclude_strings);
@@ -264,6 +265,7 @@ endif; ?>
 				$include_strings[] = $include->format('Ymd');
 			}
 	}?>
+
 RDATE<?php echo $vdate;?>:<?php echo implode(',',$include_strings);?>
 
 <?php endif; ?>
