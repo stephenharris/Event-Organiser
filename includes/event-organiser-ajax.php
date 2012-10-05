@@ -289,6 +289,9 @@
 
 				$event['summary'] = $summary;
 
+				//Filter the event array
+				$event = apply_filters('eventorganiser_admin_calendar',$event, $post);
+
 				//Add event to array
 				$eventsarray[]=$event;
 			endwhile;
