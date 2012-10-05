@@ -280,10 +280,11 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		</div>
 		<div id='eo_admin_calendar'></div>
 		<span><?php _e('Current date/time','eventorganiser');?>: <?php echo $now->format('Y-m-d G:i:s \G\M\TP');?></span>
-		<div id='events-meta' class="thickbox" style="display:none;"></div>
+
+		<?php eventorganiser_event_detail_dialog(); ?>
 
 		<?php if(current_user_can('publish_events')||current_user_can('edit_events')):?>
-			<div id='eo_event_create_cal' style="display:none;" class="thickbox">
+			<div id='eo_event_create_cal' style="display:none;" class="eo-dialog" title="<?php esc_attr_e('Create an event','eventorganiser'); ?>">
 			<form name="eventorganiser_calendar" method="post" class="eo_cal">
 
 				<table class="form-table">
@@ -309,7 +310,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				</tr>
 				<tr>
 					<th></th>
-					<td><textarea rows="4" name="eo_event[event_content]"></textarea></td>
+					<td><textarea rows="4" name="eo_event[event_content]" style="width: 220px;"></textarea></td>
 				</tr>
 				</table>
 			<p class="submit">
@@ -343,4 +344,31 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 	}
 }
 $calendar_page = new EventOrganiser_Calendar_Page();
+
+
+	function eventorganiser_event_detail_dialog(){
+
+		$tabs = apply_filters('eventorganiser_calendar_dialog_tabs', array( 'summary'=>__('Event Details','eventorganiser')));
+	
+		printf("<div id='events-meta' class='eo-dialog' style='display:none;' title='%s'>",esc_attr__('Event Detail','eventorganiser'));
+			echo "<div id='eo-dialog-tabs'>";
+					echo "<ul style='position: relative;'>";
+					foreach( $tabs as $id => $label ){
+						printf("<li><a href='#%s'>%s</a></li>", esc_attr('eo-dialog-tab-'.$id), esc_html($label));
+					}
+					echo "</ul>";
+					foreach( $tabs as $id=> $label){
+						printf("<div id='%s'> </div>",esc_attr('eo-dialog-tab-'.$id));
+					}
+			echo "</div>";
+		echo "</div>";
+	?>
+<style>
+#eo-dialog-tabs, #events-meta {
+    border: none;
+    padding: 0;
+}
+</style>
+	<?php
+	}
 ?>
