@@ -200,6 +200,7 @@ class EventOrganiser_Shortcodes {
 		$patterns[17] = '/%(cat_color)%/';
 		$patterns[18] = '/%(event_title_attr)%/';
 		$patterns[19] ='/%(event_duration){([^{}]+)}%/';
+		$patterns[20] ='/%(event_content){([^{}]+)}%/';
 		$template = preg_replace_callback($patterns, array(__CLASS__,'parse_template'), $template);
 		return $template;
 	}
@@ -315,6 +316,9 @@ class EventOrganiser_Shortcodes {
 					$output = $post->post_excerpt;
 				}
 				$replacement = wp_trim_excerpt($output);
+				break;
+			case 'event_content':
+				$replacement = get_the_content();
 				break;
 			case 'cat_color':
 				$replacement =  eo_event_color();
