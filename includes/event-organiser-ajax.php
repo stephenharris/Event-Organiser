@@ -380,8 +380,33 @@
 			$query['date1']  = min($dates[0],$dates[count($dates)-1]);
 			$query['date2'] = max($dates[0],$dates[count($dates)-1]);
 
+		}elseif( 'week' == $query['mode'] ){		
+			//Week mode - find the week of the next/previous event
+			$selectDates="SELECT DISTINCT StartDate FROM {$wpdb->eo_events}";
+			$whereDates = " WHERE {$wpdb->eo_events}.StartDate".( $query['order']=='ASC' ? " > " : " < ")."%s ";
+			$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
+			$orderlimit = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
+			$date = $wpdb->get_row($wpdb->prepare($selectDates.$whereDates.$orderlimit, $query['date'],$today->format('Y-m-d')));
+
+			if(!$date)
+				return false;
+
+			$datetime = new DateTime($date->StartDate, eo_get_blog_timezone());
+
+			//Get the week day, and the start of the week	
+			$week_start_day = (int) get_option('start_of_week');
+			$event_day = (int) $datetime->format('w');
+			$offset_from_week_start = ($event_day - $week_start_day +7)%7;
+			$week_start_date = clone $datetime;
+			$week_start_date->modify('- '.$offset_from_week_start.' days');
+			$week_end_date = clone $week_start_date;
+			$week_end_date->modify('+6 days');//Query is inclusive.
+
+			$query['date1']  = $week_start_date->format('Y-m-d');
+			$query['date2'] = $week_end_date->format('Y-m-d'); 
+
 		}else{
-			//Month mode
+			//Month mode - find the month of the next date
 			$selectDates="SELECT DISTINCT StartDate FROM {$wpdb->eo_events}";
 			$whereDates = " WHERE {$wpdb->eo_events}.StartDate".( $query['order']=='ASC' ? " > " : " < ")."%s ";
 			$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
