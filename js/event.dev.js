@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
                 select = this.element.hide(),
                 selected = select.children(":selected"),
                 value = selected.val() ? selected.text() : "";
-                wrapper = this.wrapper = $("<span>").addClass("ui-combobox").insertAfter(select);
+                wrapper = this.wrapper = $("<span>").wrap(input).addClass("ui-combobox").insertAfter(select);
                 var input = this.input = $("<input>").appendTo(wrapper).val(value).addClass("ui-combobox-input").autocomplete({
                     delay: 0,
                     minLength: 0,
