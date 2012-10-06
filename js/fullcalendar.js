@@ -1,28 +1,180 @@
-(function( $ ) {
-$(document).ready(function() {
-var calendar=jQuery('#eo_admin_calendar');calendar.fullCalendar({
-firstDay:parseInt(EO_Ajax.startday),editable:false,lazyFetching:'true',eventColor:'#21759B',theme:true,buttonText:{today:EO_Ajax.locale.today,month:EO_Ajax.locale.month,week:EO_Ajax.locale.week,day:EO_Ajax.locale.day,cat:EO_Ajax.locale.cat,venue:EO_Ajax.locale.venue},monthNames:EO_Ajax.locale.monthNames,monthNamesShort:EO_Ajax.locale.monthAbbrev,dayNames:EO_Ajax.locale.dayNames,dayNamesShort:EO_Ajax.locale.dayAbbrev,header:{left:'title',center:'category venue',right:'prev goto today next'},events:function(start,end,callback){jQuery.ajax({url:EO_Ajax.ajaxurl+"?action=event-admin-cal",dataType:'JSON',data:{start:jQuery.fullCalendar.formatDate(start,'yyyy-MM-dd'),end:jQuery.fullCalendar.formatDate(end,'yyyy-MM-dd')},success:function(data){callback(data)}})},categories:EO_Ajax.categories,venues:EO_Ajax.venues,selectable:true,selectHelper:true,eventRender:function(event,element){cat=jQuery(".filter-category .eo-cal-filter").val();venue=jQuery(".filter-venue .eo-cal-filter").val();if(typeof cat!=="undefined"&&cat!=''&&(jQuery.inArray(cat,event.category)<0)){return'<div></div>'}if(typeof venue!=="undefined"&&venue!=''&&venue!=event.venue){return'<div></div>'}},weekMode:'variable',aspectRatio:1.50,loading:function(bool){if(bool)jQuery('#loading').show();else jQuery('#loading').hide()},timeFormat:EO_Ajax.timeFormat,eventClick:function(event,jsevent,view){jsevent.preventDefault();jQuery("#events-meta").html('<div class="eo-cal-meta">'+event.summary+'</div>');tb_show(event.title,"#TB_inline?height=230&amp;width=400&amp;inlineId=events-meta",null)},select:function(startDate,endDate,allDay,jsEvent,view){if(EO_Ajax.perm_edit){jsEvent.preventDefault();fc_format='yyyy-MM-dd';options=jQuery(this)[0].calendar.options;start_date=jQuery.fullCalendar.formatDate(startDate,fc_format);start_time=jQuery.fullCalendar.formatDate(startDate,'HH:mm');end_date=jQuery.fullCalendar.formatDate(endDate,fc_format);end_time=jQuery.fullCalendar.formatDate(endDate,'HH:mm');if(allDay){format='ddd, dS MMMM';allDay=1}else{format='ddd, dS MMMM h(:mm)tt';allDay=0}if(start_date==end_date){the_date=jQuery.fullCalendar.formatDate(startDate,format,options);if(!allDay){the_date=the_date+' &mdash; '+jQuery.fullCalendar.formatDate(endDate,'h(:mm)tt',options)}}else{the_date=jQuery.fullCalendar.formatDate(startDate,format,options)+' &mdash; '+jQuery.fullCalendar.formatDate(endDate,format,options)}jQuery("#eo_event_create_cal input[name='eo_event[event_title]']").val('');jQuery("#eo_event_create_cal select[name='eo_event[Venue']] option:first-child").attr("selected",'selected');jQuery("#eo_event_create_cal input.ui-autocomplete-input").val('');jQuery("#eo_event_create_cal textarea[name='eo_event[event_content]']").val('');jQuery("#eo_event_create_cal input[name='eo_event[StartDate]']").val(start_date);jQuery("#eo_event_create_cal input[name='eo_event[StartTime]']").val(start_time);jQuery("#eo_event_create_cal input[name='eo_event[EndDate]']").val(end_date);jQuery("#eo_event_create_cal input[name='eo_event[FinishTime]']").val(end_time);jQuery("#eo_event_create_cal input[name='eo_event[allday]']").val(allDay);jQuery("#eo_event_create_cal td#date").html(the_date);tb_show('Create an event',"#TB_inline?height=290&amp;width=400&amp;inlineId=eo_event_create_cal",null);jQuery("form.eo_cal input[type='submit']").removeAttr('disabled');jQuery("form.eo_cal input#reset").click(function(event){tb_remove()})}}});
-
-$('#eofc_time_format').change(function(){
-	format = ($('#eofc_time_format').is(":checked")? 'HH:mm' : 'h:mmtt');
-	calendar.fullCalendar('option', 'timeFormat', format).fullCalendar( 'rerenderEvents' );
-		$.post(ajaxurl,{
-			action: 'eofc-format-time',
-			is24:$('#eofc_time_format').is(":checked"),
-			}
-		);
+(function ($) {
+    $(document).ready(function () {
 	
-});
-		
-$('.view-button').click(function(event){event.preventDefault();$('.view-button').removeClass('active');calendar.fullCalendar('changeView',$(this).attr('id'));$(this).addClass('active')});$('#miniCalendar').datepicker({dateFormat:'DD, d MM, yy',firstDay:parseInt(EO_Ajax.startday),changeMonth:true,monthNamesShort:EO_Ajax.locale.monthAbbrev,dayNamesMin:EO_Ajax.locale.dayAbbrev,changeYear:true,showOn:'button',buttonText:EO_Ajax.locale.gotodate,onSelect:function(dateText,dp){calendar.fullCalendar('gotoDate',new Date(Date.parse(dateText)))}});$('button.ui-datepicker-trigger').button();$(".eo-cal-filter").change(function(){calendar.fullCalendar('rerenderEvents')});
+	$('#eo-dialog-tabs').tabs();
 
-$('.filter-venue .eo-cal-filter').selectmenu({wrapperElement:"<span class='fc-header-filter'></span>"});
-$('.filter-category .eo-cal-filter').selectmenu({wrapperElement:"<span class='fc-header-filter'></span>",icons:[{find:'.cat'},]});
-w = $('#eo-event-venue-button').width()+30;$('#eo-event-venue-button').width(w+'px');$('#eo-event-venue-menu').width(w+'px');
-w2 = $('#eo-event-cat-button').width()+30;$('#eo-event-cat-button').width(w2+'px');$('#eo-event-cat-menu').width(w2+'px');
+	$('#eo_event_create_cal').dialog({ 
+		autoOpen: false,
+		width: 450,
+		modal:true,
+	});
+
+	$('#events-meta').dialog({ 
+		autoOpen: false,
+		width: 450,
+		modal:true,
+	 }).parent().find('.ui-dialog-titlebar-close').appendTo('.ui-tabs-nav').closest('.ui-dialog').children('.ui-dialog-titlebar').remove();
+
+        var calendar = jQuery('#eo_admin_calendar');
+        calendar.fullCalendar({
+            firstDay: parseInt(EO_Ajax.startday),
+            editable: false,
+            lazyFetching: 'true',
+            eventColor: '#21759B',
+            theme: true,
+            buttonText: {
+                today: EO_Ajax.locale.today,
+                month: EO_Ajax.locale.month,
+                week: EO_Ajax.locale.week,
+                day: EO_Ajax.locale.day,
+                cat: EO_Ajax.locale.cat,
+                venue: EO_Ajax.locale.venue
+            },
+            monthNames: EO_Ajax.locale.monthNames,
+            monthNamesShort: EO_Ajax.locale.monthAbbrev,
+            dayNames: EO_Ajax.locale.dayNames,
+            dayNamesShort: EO_Ajax.locale.dayAbbrev,
+            header: {
+                left: 'title',
+                center: 'category venue',
+                right: 'prev goto today next'
+            },
+            events: function (start, end, callback) {
+                jQuery.ajax({
+                    url: EO_Ajax.ajaxurl + "?action=event-admin-cal",
+                    dataType: 'JSON',
+                    data: {
+                        start: jQuery.fullCalendar.formatDate(start, 'yyyy-MM-dd'),
+                        end: jQuery.fullCalendar.formatDate(end, 'yyyy-MM-dd')
+                    },
+                    success: function (data) {
+                        callback(data)
+                    }
+                })
+            },
+            categories: EO_Ajax.categories,
+            venues: EO_Ajax.venues,
+            selectable: true,
+            selectHelper: true,
+            eventRender: function (event, element) {
+                cat = jQuery(".filter-category .eo-cal-filter").val();
+                venue = jQuery(".filter-venue .eo-cal-filter").val();
+                if (typeof cat !== "undefined" && cat != '' && (jQuery.inArray(cat, event.category) < 0)) {
+                    return '<div></div>'
+                }
+                if (typeof venue !== "undefined" && venue != '' && venue != event.venue) {
+                    return '<div></div>'
+                }
+            },
+            weekMode: 'variable',
+            aspectRatio: 1.50,
+            loading: function (bool) {
+                if (bool) jQuery('#loading').show();
+                else jQuery('#loading').hide()
+            },
+            timeFormat: EO_Ajax.timeFormat,
+            eventClick: function (event, jsevent, view) {
+                jsevent.preventDefault();
+                jQuery("#eo-dialog-tab-summary").html('<div id="eo-cal-meta">' + event.summary + '</div>');
+		$('#events-meta').dialog('open');
+                //tb_show(event.title, "#TB_inline?height=230&amp;width=400&amp;inlineId=events-meta", null)
+            },
+            select: function (startDate, endDate, allDay, jsEvent, view) {
+                if (EO_Ajax.perm_edit) {
+                    jsEvent.preventDefault();
+                    fc_format = 'yyyy-MM-dd';
+                    options = jQuery(this)[0].calendar.options;
+                    start_date = jQuery.fullCalendar.formatDate(startDate, fc_format);
+                    start_time = jQuery.fullCalendar.formatDate(startDate, 'HH:mm');
+                    end_date = jQuery.fullCalendar.formatDate(endDate, fc_format);
+                    end_time = jQuery.fullCalendar.formatDate(endDate, 'HH:mm');
+                    if (allDay) {
+                        format = 'ddd, dS MMMM';
+                        allDay = 1
+                    } else {
+                        format = 'ddd, dS MMMM h(:mm)tt';
+                        allDay = 0
+                    }
+                    if (start_date == end_date) {
+                        the_date = jQuery.fullCalendar.formatDate(startDate, format, options);
+                        if (!allDay) {
+                            the_date = the_date + ' &mdash; ' + jQuery.fullCalendar.formatDate(endDate, 'h(:mm)tt', options)
+                        }
+                    } else {
+                        the_date = jQuery.fullCalendar.formatDate(startDate, format, options) + ' &mdash; ' + jQuery.fullCalendar.formatDate(endDate, format, options)
+                    }
+                    jQuery("#eo_event_create_cal input[name='eo_event[event_title]']").val('');
+                    jQuery("#eo_event_create_cal select[name='eo_event[Venue']] option:first-child").attr("selected", 'selected');
+                    jQuery("#eo_event_create_cal input.ui-autocomplete-input").val('');
+                    jQuery("#eo_event_create_cal textarea[name='eo_event[event_content]']").val('');
+                    jQuery("#eo_event_create_cal input[name='eo_event[StartDate]']").val(start_date);
+                    jQuery("#eo_event_create_cal input[name='eo_event[StartTime]']").val(start_time);
+                    jQuery("#eo_event_create_cal input[name='eo_event[EndDate]']").val(end_date);
+                    jQuery("#eo_event_create_cal input[name='eo_event[FinishTime]']").val(end_time);
+                    jQuery("#eo_event_create_cal input[name='eo_event[allday]']").val(allDay);
+                    jQuery("#eo_event_create_cal td#date").html(the_date);
+			$('#eo_event_create_cal').dialog('open');
+                 //   tb_show('Create an event', "#TB_inline?height=290&amp;width=400&amp;inlineId=eo_event_create_cal", null);
+                    jQuery("form.eo_cal input[type='submit']").removeAttr('disabled');
+                    jQuery("form.eo_cal input#reset").click(function (event) {
+                        tb_remove()
+                    })
+                }
+            }
+        });
+
+        $('#eofc_time_format').change(function () {
+            format = ($('#eofc_time_format').is(":checked") ? 'HH:mm' : 'h:mmtt');
+            calendar.fullCalendar('option', 'timeFormat', format).fullCalendar('rerenderEvents');
+            $.post(ajaxurl, {
+                action: 'eofc-format-time',
+                is24: $('#eofc_time_format').is(":checked"),
+            });
+
+        });
+
+        $('.view-button').click(function (event) {
+            event.preventDefault();
+            $('.view-button').removeClass('active');
+            calendar.fullCalendar('changeView', $(this).attr('id'));
+            $(this).addClass('active')
+        });
+        $('#miniCalendar').datepicker({
+            dateFormat: 'DD, d MM, yy',
+            firstDay: parseInt(EO_Ajax.startday),
+            changeMonth: true,
+            monthNamesShort: EO_Ajax.locale.monthAbbrev,
+            dayNamesMin: EO_Ajax.locale.dayAbbrev,
+            changeYear: true,
+            showOn: 'button',
+            buttonText: EO_Ajax.locale.gotodate,
+            onSelect: function (dateText, dp) {
+                calendar.fullCalendar('gotoDate', new Date(Date.parse(dateText)))
+            }
+        });
+        $('button.ui-datepicker-trigger').button();
+        $(".eo-cal-filter").change(function () {
+            calendar.fullCalendar('rerenderEvents')
+        });
+
+        $('.filter-venue .eo-cal-filter').selectmenu({
+            wrapperElement: "<span class='fc-header-filter'></span>"
+        });
+        $('.filter-category .eo-cal-filter').selectmenu({
+            wrapperElement: "<span class='fc-header-filter'></span>",
+            icons: [{
+                find: '.cat'
+            }, ]
+        });
+        w = $('#eo-event-venue-button').width() + 30;
+        $('#eo-event-venue-button').width(w + 'px');
+        $('#eo-event-venue-menu').width(w + 'px');
+        w2 = $('#eo-event-cat-button').width() + 30;
+        $('#eo-event-cat-button').width(w2 + 'px');
+        $('#eo-event-cat-menu').width(w2 + 'px');
 
 
-});
+    });
 })(jQuery);
 /**
 ************ WARNING ****************
@@ -48,20 +200,13 @@ go to the developer's website.
  *
  * Date: Sun Aug 21 22:06:09 2011 -0700
  *
- * The following changes have been made:
-* - Fixes use of curCSS instead of css http://code.google.com/p/fullcalendar/issues/detail?id=1499
- * - Allowing any option to be updated using the option setting. ~L53 see http://code.google.com/p/fullcalendar/issues/detail?id=1181
-* - Adding category/venue drop-down filter ~L67-100
-* - Always uses button text (not UI icons) and .button() jQuery UI method
  */
 (function(m,oa){function wb(a){m.extend(true,Ya,a)}function Yb(a,b,e){function d(k){if(E){u();q();ma();S(k)}else f()}function f(){B=b.theme?"ui":"fc";a.addClass("fc");b.isRTL&&a.addClass("fc-rtl");b.theme&&a.addClass("ui-widget");E=m("<div class='fc-content' style='position:relative'/>").prependTo(a);C=new Zb(X,b);(P=C.render())&&a.prepend(P);y(b.defaultView);m(window).resize(na);t()||g()}function g(){setTimeout(function(){!n.start&&t()&&S()},0)}function l(){m(window).unbind("resize",na);C.destroy();
 E.remove();a.removeClass("fc fc-rtl ui-widget")}function j(){return i.offsetWidth!==0}function t(){return m("body")[0].offsetWidth!==0}function y(k){if(!n||k!=n.name){F++;pa();var D=n,Z;if(D){(D.beforeHide||xb)();Za(E,E.height());D.element.hide()}else Za(E,1);E.css("overflow","hidden");if(n=Y[k])n.element.show();else n=Y[k]=new Ja[k](Z=s=m("<div class='fc-view fc-view-"+k+"' style='position:absolute'/>").appendTo(E),X);D&&C.deactivateButton(D.name);C.activateButton(k);S();E.css("overflow","");D&&
 Za(E,1);Z||(n.afterShow||xb)();F--}}function S(k){if(j()){F++;pa();o===oa&&u();var D=false;if(!n.start||k||r<n.start||r>=n.end){n.render(r,k||0);fa(true);D=true}else if(n.sizeDirty){n.clearEvents();fa();D=true}else if(n.eventsDirty){n.clearEvents();D=true}n.sizeDirty=false;n.eventsDirty=false;ga(D);W=a.outerWidth();C.updateTitle(n.title);k=new Date;k>=n.start&&k<n.end?C.disableButton("today"):C.enableButton("today");F--;n.trigger("viewDisplay",i)}}function Q(){q();if(j()){u();fa();pa();n.clearEvents();
 n.renderEvents(J);n.sizeDirty=false}}function q(){m.each(Y,function(k,D){D.sizeDirty=true})}function u(){o=b.contentHeight?b.contentHeight:b.height?b.height-(P?P.height():0)-Sa(E):Math.round(E.width()/Math.max(b.aspectRatio,0.5))}function fa(k){F++;n.setHeight(o,k);if(s){s.css("position","relative");s=null}n.setWidth(E.width(),k);F--}function na(){if(!F)if(n.start){var k=++v;setTimeout(function(){if(k==v&&!F&&j())if(W!=(W=a.outerWidth())){F++;Q();n.trigger("windowResize",i);F--}},200)}else g()}function ga(k){if(!b.lazyFetching||
 ya(n.visStart,n.visEnd))ra();else k&&da()}function ra(){K(n.visStart,n.visEnd)}function sa(k){J=k;da()}function ha(k){da(k)}function da(k){ma();if(j()){n.clearEvents();n.renderEvents(J,k);n.eventsDirty=false}}function ma(){m.each(Y,function(k,D){D.eventsDirty=true})}function ua(k,D,Z){n.select(k,D,Z===oa?true:Z)}function pa(){n&&n.unselect()}function U(){S(-1)}function ca(){S(1)}function ka(){gb(r,-1);S()}function qa(){gb(r,1);S()}function G(){r=new Date;S()}function p(k,D,Z){if(k instanceof Date)r=
-N(k);else yb(r,k,D,Z);S()}function L(k,D,Z){k!==oa&&gb(r,k);D!==oa&&hb(r,D);Z!==oa&&ba(r,Z);S()}function c(){return N(r)}function z(){return n}function H(k,D){if(D===oa)return b[k];if(k=="height"||k=="contentHeight"||k=="aspectRatio"){b[k]=D;Q()
-}else {b[k]=D;}
-}function T(k,D){if(b[k])return b[k].apply(D||i,Array.prototype.slice.call(arguments,2))}var X=this;X.options=b;X.render=d;X.destroy=l;X.refetchEvents=ra;X.reportEvents=sa;X.reportEventChange=ha;X.rerenderEvents=da;X.changeView=y;X.select=ua;X.unselect=pa;
+N(k);else yb(r,k,D,Z);S()}function L(k,D,Z){k!==oa&&gb(r,k);D!==oa&&hb(r,D);Z!==oa&&ba(r,Z);S()}function c(){return N(r)}function z(){return n}function H(k,D){if(D===oa)return b[k];if(k=="height"||k=="contentHeight"||k=="aspectRatio"){b[k]=D;Q()}}function T(k,D){if(b[k])return b[k].apply(D||i,Array.prototype.slice.call(arguments,2))}var X=this;X.options=b;X.render=d;X.destroy=l;X.refetchEvents=ra;X.reportEvents=sa;X.reportEventChange=ha;X.rerenderEvents=da;X.changeView=y;X.select=ua;X.unselect=pa;
 X.prev=U;X.next=ca;X.prevYear=ka;X.nextYear=qa;X.today=G;X.gotoDate=p;X.incrementDate=L;X.formatDate=function(k,D){return Oa(k,D,b)};X.formatDates=function(k,D,Z){return ib(k,D,Z,b)};X.getDate=c;X.getView=z;X.option=H;X.trigger=T;$b.call(X,b,e);var ya=X.isFetchNeeded,K=X.fetchEvents,i=a[0],C,P,E,B,n,Y={},W,o,s,v=0,F=0,r=new Date,J=[],M;yb(r,b.year,b.month,b.date);b.droppable&&m(document).bind("dragstart",function(k,D){var Z=k.target,ja=m(Z);if(!ja.parents(".fc").length){var ia=b.dropAccept;if(m.isFunction(ia)?
 ia.call(Z,ja):ja.is(ia)){M=Z;n.dragStart(M,k,D)}}}).bind("dragstop",function(k,D){if(M){n.dragStop(M,k,D);M=null}})}function Zb(a,b){function e(){q=b.theme?"ui":"fc";if(b.header)return Q=m("<table class='fc-header' style='width:100%'/>").append(m("<tr/>").append(f("left")).append(f("center")).append(f("right")))}function d(){Q.remove()}
 
