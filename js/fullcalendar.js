@@ -3,17 +3,13 @@
 	
 	$('#eo-dialog-tabs').tabs();
 
-	$('#eo_event_create_cal').dialog({ 
+	$('.eo-dialog').dialog({ 
 		autoOpen: false,
 		width: 450,
 		modal:true,
 	});
 
-	$('#events-meta').dialog({ 
-		autoOpen: false,
-		width: 450,
-		modal:true,
-	 }).parent().find('.ui-dialog-titlebar-close').appendTo('.ui-tabs-nav').closest('.ui-dialog').children('.ui-dialog-titlebar').remove();
+	$('#events-meta').parent().find('.ui-dialog-titlebar-close').appendTo('.ui-tabs-nav').closest('.ui-dialog').children('.ui-dialog-titlebar').remove();
 
         var calendar = jQuery('#eo_admin_calendar');
         calendar.fullCalendar({

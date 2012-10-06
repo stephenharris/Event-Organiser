@@ -104,6 +104,16 @@ function eventorganiser_get_option($option,$default=false){
 		'feed' => 1,
 		'eventtag' => 1,
 		'deleteexpired' => 0,
+		'supports' => array('title','editor','author','thumbnail','excerpt','custom-fields','comments'),
+		'event_redirect' => 'events',
+		'dateformat'=>'dd-mm',
+		'prettyurl'=> 1,
+		'templates'=> 1,
+		'addtomenu'=> 0,
+		'excludefromsearch'=>0,
+		'showpast'=> 0,
+		'eventtag' => 1,
+		'runningisnotpast' => 0,
       );
       $options = get_option('eventorganiser_options',$defaults);
       $options = wp_parse_args( $options, $defaults );

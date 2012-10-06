@@ -37,7 +37,6 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		$cats =get_terms( 'event-category', array('hide_empty' => 0));
 		$venues =get_terms( 'event-venue', array('hide_empty' => 0));
 
-		//add_thickbox();
 		wp_enqueue_script("eo_calendar",true);
 		wp_enqueue_script("eo_event",true);
 		wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
