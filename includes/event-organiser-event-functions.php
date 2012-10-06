@@ -738,4 +738,34 @@ function eo_event_color($post_id=0){
 	return esc_attr($color);
 }
 
+
+function eo_get_event_classes(){
+
+	$event_classes = array();
+			
+	//Add venue class
+	if( eo_get_venue_slug() )
+		$event_classes[] = 'eo-event-venue-'.eo_get_venue_slug();
+
+		//Add category classes
+		$cats= get_the_terms(get_the_ID(), 'event-category');
+		if( $cats ){	
+			foreach ($cats as $cat)
+				$event_classes[] = 'eo-event-cat-'.$cat->slug;
+		}
+		$start = eo_get_the_start(DATETIMEOBJ);
+		$end= eo_get_the_end(DATETIMEOBJ);
+		$now = new DateTime('now',eo_get_blog_timezone());
+
+		//Add 'time' class
+		if( $start > $now ){
+			$event_classes[] = 'eo-event-future';
+		}elseif( $end < $now ){
+			$event_classes[] = 'eo-event-past';
+		}else{
+			$event_classes[] = 'eo-event-running';
+		}
+
+		return  array_unique($event_classes);
+}
 ?>

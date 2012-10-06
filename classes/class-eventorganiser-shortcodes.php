@@ -200,7 +200,7 @@ class EventOrganiser_Shortcodes {
 		$patterns[17] = '/%(cat_color)%/';
 		$patterns[18] = '/%(event_title_attr)%/';
 		$patterns[19] ='/%(event_duration){([^{}]+)}%/';
-		$patterns[20] ='/%(event_content){([^{}]+)}%/';
+		$patterns[20] ='/%(event_content)%/';
 		$template = preg_replace_callback($patterns, array(__CLASS__,'parse_template'), $template);
 		return $template;
 	}

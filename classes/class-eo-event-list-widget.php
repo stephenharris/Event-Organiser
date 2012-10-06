@@ -101,15 +101,19 @@ class EO_Event_List_Widget extends WP_Widget{
  
   function widget($args, $instance){
 	extract($args, EXTR_SKIP);
+
 	$template = $instance['template'];
 	$no_events = isset($instance['no_events']) ? $instance['no_events'] :'';
 	unset($instance['template']);
 	unset($instance['no_events']);
 
     	echo $before_widget;
+
     	if ( $instance['title'] )
    		echo $before_title.esc_html($instance['title']).$after_title;
+
 	eventorganiser_list_events($instance, array('class'=>'eo-events eo-events-widget','template'=>$template, 'no_events'=>$no_events));
+
      	echo $after_widget;
   }
  
@@ -118,70 +122,66 @@ class EO_Event_List_Widget extends WP_Widget{
 function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 	
 	$args = array_merge(array(
-					'auto_wrap'=>true,
 					'id'=>'',
 					'class'=>'eo-event-list',
 				),$args);
 
-	$no_events = isset($args['no_events']) ? $args['no_events'] :'';
-	$template = isset($args['template']) ? $args['template'] :'';
+	/* Pass these defaults - backwards compat with using eo_get_events()*/
+	$query = wp_parse_args($query, array(		
+		'posts_per_page'=>-1,
+		'post_type'=>'event',
+		'supress_filters'=>false,
+		'orderby'=> 'eventstart',
+		'order'=> 'ASC',
+		'showrepeats'=>1,
+		'group_events_by'=>'',
+		'showpastevents'=>true,
+	));
 
-	$line_wrap = '<li class="%2$s">%1$s</li>';
-	$id = (!empty($args['id']) ? 'id="'.esc_attr($args['id']).'"' : '');
-	$container = '<ul '.$id.' class="%2$s">%1$s</ul>';
+	global $event_loop;
+	$event_loop = new WP_Query($query);
+
+	/* Try to find template */
+	if( $template_file = locate_template('event-loop.php') ){
+		ob_start();
+		require( $template_file );
+		$html = ob_get_contents();
+		ob_end_clean();
+
+	}else{
+
+		$no_events = isset($args['no_events']) ? $args['no_events'] :'';
+		$template = isset($args['template']) ? $args['template'] :'';
+
+		$line_wrap = '<li class="%2$s">%1$s</li>';
+		$id = (!empty($args['id']) ? 'id="'.esc_attr($args['id']).'"' : '');
+		$container = '<ul '.$id.' class="%2$s">%1$s</ul>';
 	
-	global $post;
-	$tmp_post = $post;
-	$events = eo_get_events($query);
+		$html='';
+		if( $event_loop->have_posts() ):	
+			while( $event_loop->have_posts() ): $event_loop->the_post();
 
-	$html='';
-	if($events):	
-		foreach ($events as $post):
-			setup_postdata($post); 
-			$event_classes = array();
-		
-			//Add venue class
-			if( eo_get_venue_slug() )
-				$event_classes[] = 'eo-event-venue-'.eo_get_venue_slug();
+				$event_classes = eo_get_event_classes();
+	
+				if( empty($template) ){
+						//Use default template
+						$date = get_option('date_format');
+						$time = ' '.get_option('time_format');
+						$template = "<a title='%event_title_attr%' href='%event_url%'>%event_title%</a> ".__('on','eventorganiser')." %start{{$date}}{{$time}}%";
+				}
+	
+				$html .= sprintf($line_wrap, EventOrganiser_Shortcodes::read_template($template), esc_attr(implode(' ',$event_classes)) );
 
-			//Add category classes
-			$cats= get_the_terms(get_the_ID(), 'event-category');
-			if( $cats ){	
-				foreach ($cats as $cat)
-					$event_classes[] = 'eo-event-cat-'.$cat->slug;
-			}
-			$start = eo_get_the_start(DATETIMEOBJ);
-			$end= eo_get_the_end(DATETIMEOBJ);
-			$now = new DateTime('now',eo_get_blog_timezone());
+			endwhile;
 
-			//Add 'time' class
-			if( $start > $now ){
-				$event_classes[] = 'eo-event-future';
-			}elseif( $end < $now ){
-				$event_classes[] = 'eo-event-past';
-			}else{
-				$event_classes[] = 'eo-event-running';
-			}
+		elseif( $no_events ):
+			$html .= sprintf($line_wrap, $no_events, 'eo-no-events');
+		endif;
 
-			$event_classes =  array_unique($event_classes);
-			if( empty($template) ){
-					//Use default template
-					$date = get_option('date_format');
-					$time = ' '.get_option('time_format');
-					$template = "<a title='%event_title_attr%' href='%event_url%'>%event_title%</a> ".__('on','eventorganiser')." %start{{$date}}{{$time}}%";
-			}
+		$html = sprintf($container, $html, esc_attr($args['class']) );
+	}
 
-			$html .= sprintf($line_wrap, EventOrganiser_Shortcodes::read_template($template), esc_attr(implode(' ',$event_classes)) );
-		endforeach;
-
-		$post = $tmp_post;
-		wp_reset_postdata();
-
-	elseif( $no_events ):
-		$html .= sprintf($line_wrap, $no_events, 'eo-no-events');
-	endif;
-
-	$html = sprintf($container, $html, esc_attr($args['class']) );
+	wp_reset_query();
 
 	if( $echo )
 		echo $html;
