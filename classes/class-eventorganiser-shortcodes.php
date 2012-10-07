@@ -70,16 +70,33 @@ class EventOrganiser_Shortcodes {
 			'category'=>'',
 			'venue'=>'',
 			'timeformat'=>'H:i',
+			'axisformat'=>'ga',
 			'key'=>'false',
 			'tooltip'=>'true',
+			'weekends'=>'true',
+			'mintime'=>'0',
+			'maxtime'=>'24',
+			'alldayslot'=>'true',
+			'alldaytext'=>__('All Day','eventorganiser'),
+			'columnformatmonth'=>'D',
+			'columnformatweek'=>'D n/j',
+			'columnformatday'=>'l n/j',
 		);
 		$atts = shortcode_atts( $defaults, $atts );
-		$atts['tooltip'] = ($atts['tooltip']=='true' ? true : false);
+
+		/* Handle Boolean attributes */
+		$atts['tooltip'] = (strtolower($atts['tooltip'])=='true' ? true : false);
+		$atts['weekends'] = (strtolower($atts['weekends'])=='true' ? true : false);
+		$atts['alldayslot'] = (strtolower($atts['alldayslot'])=='true' ? true : false);
+
+		/* Handley key attribute */
 		$key = ($atts['key']=='true' ? true : false);
 		unset($atts['key']);
 	
 		//Convert php time format into xDate time format
-		$atts['timeformat'] =eventorganiser_php2xdate($atts['timeformat']);
+		$date_attributes = array('timeformat','axisformat','columnformatday','columnformatweek','columnformatmonth');
+		foreach( $date_attributes as $date_attribute )
+			$atts[$date_attribute] =eventorganiser_php2xdate($atts[$date_attribute]);
 
 		self::$calendars[] =array_merge($atts);
 		self::$add_script = true;

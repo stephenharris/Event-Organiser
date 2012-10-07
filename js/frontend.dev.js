@@ -1,93 +1,82 @@
 (function ($) {
-    jQuery(document).ready(function () {
+jQuery(document).ready(function () {
 
-        if ($(".eo-venue-map").length > 0) {
-            if (EOAjax.map !== undefined) {
-                var script = document.createElement("script");
-                script.type = "text/javascript";
-                script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map";
-                document.body
-                    .appendChild(script)
+	if ($(".eo-venue-map").length > 0) {
+		if (EOAjax.map !== undefined) {
+			var script = document.createElement("script");
+                	script.type = "text/javascript";
+                	script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map";
+                	document.body.appendChild(script)
             }
         }
 
         if ($(".eo-fullcalendar").length > 0) {
-            var calendar = Array();
-            var calendars = EOAjax.calendars;
-            var loadingTimeOut;
-            for (i = 0; i < calendars.length; i++) {
-                calendar = "#eo_fullcalendar_" + (i + 1);
-                var cat = calendars[i].category;
-                var venue = calendars[i].venue;
-                $(calendar).fullCalendar({
-                    editable: false,
-                    tooltip: calendars[i].tooltip,
-                    firstDay: parseInt(EOAjax.fullcal
-                        .firstDay),
-                    header: {
-                        left: calendars[i].headerleft,
-                        center: calendars[i].headercenter,
-                        right: calendars[i].headerright
-                    },
-                    theme: true,
-                    categories: EOAjax.fullcal
-                        .categories,
-                    venues: EOAjax.fullcal
-                        .venues,
-                    eventRender: function (a, b) {
-                        var c = $(".filter-category .eo-cal-filter").val();
-                        var d = $(".filter-venue .eo-cal-filter").val();
-                        if (typeof c !== "undefined" && c != "" && $.inArray(c, a.category) < 0) {
-                            return "<div></div>"
-                        }
-                        if (typeof d !== "undefined" && d != "" && d != a.venue) {
-                            return "<div></div>"
-                        }
-                        if (!$(calendar).fullCalendar("option", "tooltip")) {
-                            return
-                        }
-                        var e = $(calendar).fullCalendar("option", "timeFormat");
-                        var f;
-                        var g = {
-                            monthNames: EOAjaxFront.locale
-                                .monthNames,
-                            monthNamesShort: EOAjaxFront.locale
-                                .monthAbbrev,
-                            dayNames: EOAjaxFront.locale
-                                .dayNames,
-                            dayNamesShort: EOAjaxFront.locale
-                                .dayAbbrev
-                        };
-                        if ($.fullCalendar
-                            .formatDate(a.start, "ddMMyyyy") != $
-                            .fullCalendar
-                            .formatDate(a.end, "ddMMyyyy")) {
-                            if (!a.allDay) {
-                                f = $.fullCalendar
-                                    .formatDate(a.start, "MMMM d", g);
-                                f += " " + $.fullCalendar
-                                    .formatDate(a.start, e, g);
-                                f += " - " + $.fullCalendar
-                                    .formatDate(a.end, "MMMM d", g);
-                                f += " " + $.fullCalendar
-                                    .formatDate(a.end, e, g)
-                            } else {
-                                if ($.fullCalendar
-                                    .formatDate(a.start, "MMyyyy") == $
-                                    .fullCalendar
-                                    .formatDate(a.end, "MMyyyy")) {
-                                    f = $.fullCalendar
-                                        .formatDate(a.start, "MMMM d", g);
-                                    f += " - " + $.fullCalendar
-                                        .formatDate(a.end, "d, yyyy", g)
-                                } else {
-                                    f = $.fullCalendar
-                                        .formatDate(a.start, "MMMM d", g);
-                                    f += " - " + $.fullCalendar
-                                        .formatDate(a.end, "MMMM d", g)
-                                }
-                            }
-                        } else {
+		var calendar = Array();
+		var calendars = EOAjax.calendars;
+		var loadingTimeOut;
+            	for (i = 0; i < calendars.length; i++) {
+			calendar = "#eo_fullcalendar_" + (i + 1);
+                	var cat = calendars[i].category;
+                	var venue = calendars[i].venue;
+                	$(calendar).fullCalendar({
+				editable: false,
+                    		tooltip: calendars[i].tooltip,
+                    		firstDay: parseInt(EOAjax.fullcal.firstDay),
+				weekends: calendars[i].weekends,
+				allDaySlot: calendars[i].alldayslot,//#Pascal - addo to shortocode
+				allDayText: calendars[i].alldaytext,//#Pascal - addo to shortocode
+				axisFormat: calendars[i].axisformat,//#Pascal - add to shortcode
+				minTime: calendars[i].mintime,
+				maxTime:calendars[i].maxtime,
+				columnFormat: {
+					month: calendars[i].columnformatmonth,
+					week: calendars[i].columnformatweek,
+					day: calendars[i].columnformatday
+				},
+				header: {
+					left: calendars[i].headerleft,
+					center: calendars[i].headercenter,
+					right: calendars[i].headerright
+				},
+				theme: true,
+				categories: EOAjax.fullcal.categories,
+				venues: EOAjax.fullcal.venues,
+				eventRender: function (a, b) {
+                        		var c = $(".filter-category .eo-cal-filter").val();
+                        		var d = $(".filter-venue .eo-cal-filter").val();
+                        		if (typeof c !== "undefined" && c != "" && $.inArray(c, a.category) < 0) {
+						return "<div></div>"
+                        		}
+                        		if (typeof d !== "undefined" && d != "" && d != a.venue) {
+                            			return "<div></div>"
+                        		}
+                        		if (!$(calendar).fullCalendar("option", "tooltip")) {
+                            			return
+                        		}
+                        		var e = $(calendar).fullCalendar("option", "timeFormat");
+                        		var f;
+                        		var g = {
+						monthNames: EOAjaxFront.locale.monthNames,
+						monthNamesShort: EOAjaxFront.locale.monthAbbrev,
+						dayNames: EOAjaxFront.locale.dayNames,
+						dayNamesShort: EOAjaxFront.locale.dayAbbrev
+                        		};
+					if ($.fullCalendar.formatDate(a.start, "ddMMyyyy") != $.fullCalendar.formatDate(a.end, "ddMMyyyy")) {
+						if (!a.allDay) {
+                                			f = $.fullCalendar.formatDate(a.start, "MMMM d", g);
+							f += " " + $.fullCalendar.formatDate(a.start, e, g);
+							f += " - " + $.fullCalendar.formatDate(a.end, "MMMM d", g);
+                                			f += " " + $.fullCalendar.formatDate(a.end, e, g)
+						} else {
+							if ($.fullCalendar.formatDate(a.start, "MMyyyy") == $.fullCalendar.formatDate(a.end, "MMyyyy")) {
+								f = $.fullCalendar.formatDate(a.start, "MMMM d", g);
+								f += " - " + $.fullCalendar.formatDate(a.end, "d, yyyy", g)
+							} else {
+                                    				f = $.fullCalendar.formatDate(a.start, "MMMM d", g);
+                                   				 f += " - " + $.fullCalendar.formatDate(a.end, "MMMM d", g)
+                                			}
+                            			}
+                        		} else {
                             f = $.fullCalendar
                                 .formatDate(a.start, "MMMM d, yyyy", g);
                             if (!a.allDay) {
