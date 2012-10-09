@@ -53,69 +53,34 @@ jQuery(document).ready(function () {
                         		if (!$(calendar).fullCalendar("option", "tooltip")) {
                             			return
                         		}
-                        		var e = $(calendar).fullCalendar("option", "timeFormat");
-                        		var f;
-                        		var g = {
-						monthNames: EOAjaxFront.locale.monthNames,
-						monthNamesShort: EOAjaxFront.locale.monthAbbrev,
-						dayNames: EOAjaxFront.locale.dayNames,
-						dayNamesShort: EOAjaxFront.locale.dayAbbrev
-                        		};
-					if ($.fullCalendar.formatDate(a.start, "ddMMyyyy") != $.fullCalendar.formatDate(a.end, "ddMMyyyy")) {
-						if (!a.allDay) {
-                                			f = $.fullCalendar.formatDate(a.start, "MMMM d", g);
-							f += " " + $.fullCalendar.formatDate(a.start, e, g);
-							f += " - " + $.fullCalendar.formatDate(a.end, "MMMM d", g);
-                                			f += " " + $.fullCalendar.formatDate(a.end, e, g)
-						} else {
-							if ($.fullCalendar.formatDate(a.start, "MMyyyy") == $.fullCalendar.formatDate(a.end, "MMyyyy")) {
-								f = $.fullCalendar.formatDate(a.start, "MMMM d", g);
-								f += " - " + $.fullCalendar.formatDate(a.end, "d, yyyy", g)
-							} else {
-                                    				f = $.fullCalendar.formatDate(a.start, "MMMM d", g);
-                                   				 f += " - " + $.fullCalendar.formatDate(a.end, "MMMM d", g)
-                                			}
-                            			}
-                        		} else {
-                            f = $.fullCalendar
-                                .formatDate(a.start, "MMMM d, yyyy", g);
-                            if (!a.allDay) {
-                                f += " " + $.fullCalendar
-                                    .formatDate(a.start, e, g) + " - " + $
-                                    .fullCalendar
-                                    .formatDate(a.end, e, g)
-                            }
-                        }
-                        if (typeof a.description != "undefined") {
-                            f += "</br></br>" + a.description
-                        }
-                        $(b).qtip({
-                            content: {
-                                text: f,
-                                button: "x",
-                                title: a.title
-                            },
-                            position: {
-                                my: "top center",
-                                at: "bottom center"
-                            },
-                            hide: {
-                                fixed: true,
-                                delay: 500,
-                                effect: function (a) {
-                                    $(this).fadeOut("50")
-                                }
-                            },
-                            border: {
-                                radius: 4,
-                                width: 3
-                            },
-                            style: {
-                                classes: "ui-tooltip-shadow",
-                                widget: true,
-                                tip: "topMiddle"
-                            }
-                        })
+
+					$(b).qtip({
+                            			content: {
+							text:  a.description,
+							button: "x",
+							title: a.title
+						},
+						position: {
+							my: "top center",
+							at: "bottom center"
+						},
+						hide: {
+							fixed: true,
+							delay: 500,
+							effect: function (a) {
+								$(this).fadeOut("50")
+							}
+						},
+						border: {
+							radius: 4,
+							width: 3
+						},
+						style: {
+							classes: "ui-tooltip-shadow",
+							widget: true,
+							tip: "topMiddle"
+						}
+					})
                     },
                     buttonText: {
                         today: EOAjaxFront.locale
@@ -144,10 +109,9 @@ jQuery(document).ready(function () {
                     lazyFetching: "true",
                     events: function (a, b, c) {
                         request = {
-                            start: jQuery.fullCalendar
-                                .formatDate(a, "yyyy-MM-dd"),
-                            end: jQuery.fullCalendar
-                                .formatDate(b, "yyyy-MM-dd")
+				start: jQuery.fullCalendar.formatDate(a, "yyyy-MM-dd"),
+				end: jQuery.fullCalendar.formatDate(b, "yyyy-MM-dd"),
+				timeformat:calendars[i].timeformat,
                         };
                         if (typeof EOAjax.calendars[0]
                             .category !== "undefined" && EOAjax
