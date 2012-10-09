@@ -48,7 +48,8 @@ class EO_Calendar_Widget extends WP_Widget
 
 		//Set the month to display (DateTIme must be 1st of that month)
 		$tz = eo_get_blog_timezone();
-		$month = new DateTime('now',$tz);
+		$date =  get_query_var('ondate') ?  get_query_var('ondate') : 'now';
+		$month = new DateTime($date,$tz);
 		$month = date_create($month->format('Y-m-1'),$tz);
 	
 		$calendar = array(
