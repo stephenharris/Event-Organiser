@@ -225,6 +225,8 @@ function eventorganiser_event_delete($post_id){
 				'EndDate'=>$occurrence_end->format('Y-m-d'),
 				'FinishTime'=>$end->format('H:i:s'),
 				'event_occurrence' => $counter,
+			/* Deprecated columns - but if they exist may need to provide default in some SQL version. If so, uncomment*/
+			/* Leave uncommented until they are removed */
 				'Venue'=>0,//Default to avoid SQL error
 				'event_schedule'=>0,//Default to avoid SQL error
 				'event_schedule_meta'=>0,//Default to avoid SQL error
@@ -233,7 +235,16 @@ function eventorganiser_event_delete($post_id){
 			);
 			$wpdb->insert($wpdb->eo_events, $occurrence_input);
 			$occurrence_array[$wpdb->insert_id] = $occurrence->format('Y-m-d H:i:s');
+
+			//Add to occurrence cache: TODO use post meta
+			$occurrence_cache[$wpdb->insert_id] = array(
+				'start' =>$occurrence,
+				'end' => new DateTime($occurrence_end->format('Y-m-d').' '.$end->format('H:i:s'), eo_get_blog_timezone())
+			);
 		endforeach;
+
+		//Set occurrence cache
+		wp_cache_set( 'eventorganiser_occurrences_'.$post_id, $occurrence_cache );
 
 		unset($event_data['occurrences']);
 		$event_data['_occurrences'] = $occurrence_array;

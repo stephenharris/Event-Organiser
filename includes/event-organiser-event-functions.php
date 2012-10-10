@@ -116,18 +116,31 @@ function eo_get_the_start($format='d-m-Y',$post_id='',$occurrence=0, $occurrence
 
 	if( !empty($occurrence) ){
 		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->event_id' );
+
+		//Backwards compatiblity
+		if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$occurrence, $occurrence_id);	
+	
+		if(empty($event)) 
+			return false;
+	
+		$date = trim($event->StartDate).' '.trim($event->StartTime);
+
+		if(empty($date)||$date==" ")
+			return false;
+
+		return eo_format_date($date,$format);
 	}
 
-	if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$occurrence, $occurrence_id);	
+	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
 
-	if(empty($event)) return false;
+	$occurrences = eo_get_the_occurrences_of($post_id);
 
-	$date = trim($event->StartDate).' '.trim($event->StartTime);
-
-	if(empty($date)||$date==" ")
+	if( !$occurrences || !isset($occurrences[$occurrence_id]) )
 		return false;
 
-	return eo_format_date($date,$format);
+	$start = $occurrences[$occurrence_id]['start'];
+
+	return eo_format_datetime($start,$format);
 }
 
 
@@ -182,18 +195,30 @@ function eo_get_the_end($format='d-m-Y',$post_id='',$occurrence=0, $occurrence_i
 
 	if( !empty($occurrence) ){
 		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->event_id' );
+
+		//Backwards compatiblity
+		if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$occurrence, $occurrence_id);	
+	
+		if(empty($event)) 
+			return false;
+	
+		$date = trim($event->EndDate).' '.trim($event->FinishTime);
+
+		if(empty($date)||$date==" ")
+			return false;
+
+		return eo_format_date($date,$format);
 	}
+	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
 
-	if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$occurrence,$occurrence_id);
+	$occurrences = eo_get_the_occurrences_of($post_id);
 
-	if(empty($event)) return false;
-
-	$date = trim($event->EndDate).' '.trim($event->FinishTime);
-
-	if(empty($date)||$date==" ")
+	if( !$occurrences || !isset($occurrences[$occurrence_id]) )
 		return false;
 
-	return eo_format_date($date,$format);
+	$start = $occurrences[$occurrence_id]['end'];
+
+	return eo_format_datetime($start,$format);
 }
 
 /**
@@ -271,19 +296,6 @@ function eo_next_occurence($format='',$id=''){
 * @param id - Optional, the event series (post) ID, 
 * @return bol - True if event runs all day, or false otherwise
  * @since 1.2
-Depreciated in favour of eo_is_all_day().
- */
-function eo_is_allday($id=''){
-	_deprecated_function( __FUNCTION__, '1.5', 'eo_is_all_day()' );
-	return eo_is_all_day($id);
-}
-
-/**
-* Return true is the event is an all day event.
-*
-* @param id - Optional, the event series (post) ID, 
-* @return bol - True if event runs all day, or false otherwise
- * @since 1.2
  */
 function eo_is_all_day($post_id=''){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
@@ -344,9 +356,6 @@ function eo_get_schedule_last($format='d-m-Y',$post_id=''){
 	return eo_format_datetime($schedule['schedule_last'],$format);
 }
 
-function eo_get_schedule_end($format='d-m-Y',$post_id=''){
-	return eo_get_schedule_last($format,$post_id);
-}
 
 /**
 * Echos the formated date of the last occurrence
@@ -354,18 +363,13 @@ function eo_get_schedule_end($format='d-m-Y',$post_id=''){
 * @param string - the format to use, using PHP Date format
 * @param id - Optional, the event (post) ID, 
 *
-* @uses eo_get_schedule_start
+* @uses eo_get_schedule_last
 *
  * @since 1.0.0
  */
 function  eo_schedule_last($format='d-m-Y',$post_id=''){
 	echo eo_get_schedule_last($format,$post_id);
 }
-//Deprecated
-function  eo_schedule_end($format='d-m-Y',$post_id=''){
-	echo eo_get_schedule_last($format,$post_id);
-}
-
 
 
 /**
@@ -383,43 +387,6 @@ function eo_reoccurs($post_id=''){
 	$schedule = eo_get_event_schedule($post_id);
 	
 	return ($schedule['schedule'] != 'once');
-}
-
-
-/**
-* Returns an array with details of the event's reoccurences
-*
-* @param id - Optional, the event (post) ID, 
- * @since 1.0.0
- * @deprecated use eo_get_event_schedule();
- */
-function eo_get_reoccurrence($post_id=''){
-	return eo_get_reoccurence($post_id);
-}
-
-/**
-* Returns an array with details of the event's reoccurences
-*
-* @param id - Optional, the event (post) ID, 
- * @since 1.0.0
- * @deprecated use eo_get_event_schedule();
- */
-function eo_get_reoccurence($post_id=''){
-	_deprecated_function( __FUNCTION__, '1.5', 'eo_get_event_schedule()' );
-	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
-
-	if( empty($post_id) || 'event' != get_post_type($post_id) ) 
-		return false;
-		
-	$return = eo_get_event_schedule( $post_id );	
-
-	if ( !$return )
-		return false;
-
-	$return['reoccurrence'] =$return['schedule'];
-	$return['meta'] =	$return['schedule_meta'];
-	$return['end'] = $return['schedule_last']; 
-	return $return; 
 }
 
 
@@ -533,19 +500,6 @@ function eo_display_reoccurence($post_id=''){
 }
 
 
-/* Returns an array of DateTime objects for each start date of occurrence
-*
-* @param id - Optional, the event (post) ID, 
-* @return array|false - Array of DateTime objects of the start date-times of occurences. False if none exist.
- * @since 1.0.0
- * @deprecated use eo_get_the_occurrences_of() instead
- */
-function eo_get_the_occurrences($post_id=''){
-	_deprecated_function( __FUNCTION__, '1.5', 'eo_get_the_occurrences_of()' );
-	$occurrences = eo_get_the_occurrences_of($post_id);
-	return wp_list_pluck($occurrences, 'start');
-}
-
 /* Returns an array of occurrences. Each occurrence is an array with 'start' and 'end' key. 
  *  Both of these hold a DateTime object (for the start and end of that occurrence respecitvely).
 *
@@ -565,7 +519,7 @@ function eo_get_the_occurrences_of($post_id=''){
 	if( !$occurrences ){
 
 		$results = $wpdb->get_results($wpdb->prepare("
-			SELECT StartDate,StartTime,EndDate,FinishTime FROM {$wpdb->eo_events} 
+			SELECT event_id, StartDate,StartTime,EndDate,FinishTime FROM {$wpdb->eo_events} 
 			WHERE {$wpdb->eo_events}.post_id=%d ORDER BY StartDate ASC",$post_id));
 	
 		if( !$results )
@@ -573,7 +527,7 @@ function eo_get_the_occurrences_of($post_id=''){
 
 		$occurrences=array();
 		foreach($results as $row):
-			$occurrences[] = array(
+			$occurrences[$row->event_id] = array(
 				'start' => new DateTime($row->StartDate.' '.$row->StartTime, eo_get_blog_timezone()),
 				'end' => new DateTime($row->EndDate.' '.$row->FinishTime, eo_get_blog_timezone())
 			);
@@ -596,31 +550,33 @@ function eo_get_the_GoogleLink(){
 	global $post;
 	setup_postdata($post);
 
-	if(empty($post)|| get_post_type($post )!='event') return false;
+	if(empty($post)|| get_post_type($post )!='event'){ 
+		wp_reset_postdata();
+		return false;
+	}
 
-	$startDT = new DateTime($post->StartDate.' '.$post->StartTime, eo_get_blog_timezone());
-	$endDT = new DateTime($post->EndDate.' '.$post->FinishTime, eo_get_blog_timezone());
+	$start = eo_get_the_start(DATETIMEOBJ); 
+	$end = eo_get_the_start(DATETIMEOBJ); 
 
 	if(eo_is_all_day()):
 		$endDT->modify('+1 second');
 		$format = 'Ymd';
 	else:		
 		$format = 'Ymd\THis\Z';
-		$startDT->setTimezone( new DateTimeZone('UTC') );
-		$endDT->setTimezone( new DateTimeZone('UTC') );
+		$start->setTimezone( new DateTimeZone('UTC') );
+		$end->setTimezone( new DateTimeZone('UTC') );
 	endif;
 
-	$excerpt = get_the_excerpt();
-	$excerpt = apply_filters('the_excerpt_rss', $excerpt);	
-	$excerpt = esc_html($excerpt);
+	$excerpt = apply_filters('the_excerpt_rss', get_the_excerpt());
 
 	$url = add_query_arg(array(
-		'text'=>$post->post_title, 
-		'dates'=>$startDT->format($format).'/'.$endDT->format($format),
+		'text'=>get_the_title(), 
+		'dates'=>$start->format($format).'/'.$end->format($format),
 		'trp'=>false,
-		'details'=>$excerpt,
+		'details'=> esc_html($excerpt),
 		'sprop'=>get_bloginfo('name')
 	),'http://www.google.com/calendar/event?action=TEMPLATE');
+
 	$venue_id = eo_get_venue();
 	if($venue_id):
 		$venue =eo_get_venue_name($venue_id).", ".implode(', ',eo_get_venue_address($venue_id));

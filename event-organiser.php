@@ -163,6 +163,7 @@ if ( defined('DOING_AJAX') && DOING_AJAX ) {
 require_once("includes/event-organiser-event-functions.php");
 require_once("includes/event-organiser-venue-functions.php");
 require_once("includes/event-organiser-utility-functions.php");
+require_once("includes/deprecated.php");
 
 /****** Event class ******/
 require_once("classes/class-eo-event.php");//Depreciated, migrating to includes/event.php
