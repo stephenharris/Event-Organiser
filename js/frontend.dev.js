@@ -320,30 +320,45 @@ function eveorg_getParameterByName(a, b) {
 }
 
 function eo_load_map() {
-    maps = EOAjax.map;
-    for (i = 0; i < maps.length; i++) {
-        lat = maps[i].lat;
-        lng = maps[i].lng;
-        zoom = maps[i].zoom;
-        if (lat !== undefined && lng != undefined) {
-            var a = new google.maps
-                .LatLng(lat, lng);
-            var b = {
-                zoom: zoom,
-                center: a,
-                mapTypeId: google.maps
-                    .MapTypeId
-                    .ROADMAP
-            };
-            map = new google.maps
-                .Map(document.getElementById("eo_venue_map-" + (i + 1)), b);
-            var c = new google.maps
-                .Marker({
-                position: a,
-                map: map
-            })
-        }
-    }
+	maps = EOAjax.map;
+	for (i = 0; i < maps.length; i++) {
+		locations = maps[i].locations;
+		zoom = maps[i].zoom;
+
+		var b = {
+              		zoom: zoom,
+               		//center: LatLngList[0],
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+        	};
+		map = new google.maps.Map(document.getElementById("eo_venue_map-" + (i + 1)), b);
+
+		//  Create a new viewpoint bound
+		var bounds = new google.maps.LatLngBounds();
+
+		var LatLngList = new Array();
+		for( j=0; j<locations.length; j++){
+			lat = locations[j].lat;
+        		lng = locations[j].lng;
+        		if (lat !== undefined && lng != undefined) {
+				LatLngList.push(new google.maps.LatLng(lat, lng));
+			  	bounds.extend (LatLngList[j]);
+				var c = new google.maps.Marker({
+					position: LatLngList[j],
+	                		map: map
+	            		})
+        		}
+		}
+		
+   		if( locations.length > 1 ){	
+			//  Fit these bounds to the map
+			map.fitBounds (bounds);
+		}else{
+			map.setCenter ( LatLngList[0]);
+		}
+		google.maps.event.addListenerOnce(map, 'zoom_changed', function() {
+    			map.setZoom(zoom); //Or whatever
+		});
+	}
 }
 /*
  FullCalendar v1.5.2

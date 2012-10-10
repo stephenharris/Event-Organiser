@@ -125,13 +125,19 @@ class EventOrganiser_Shortcodes {
 			}
 		}
 
-		$venue_id = eo_get_venue_id_by_slugorid($atts['venue'] );
+		$venue_slugs = explode(',',$atts['venue']);
+		foreach( $venue_slugs as $slug ){
+			$venue_ids[] = eo_get_venue_id_by_slugorid($slug );
+		}
 
-		return self::get_venue_map($venue_id, $atts);
+		return self::get_venue_map($venue_ids, $atts);
 	}
 
 
-	function get_venue_map($venue_id, $args){
+	function get_venue_map($venue_ids, $args){
+
+		if( !is_array($venue_ids) )
+			$venue_ids = array( $venue_ids );
 
 		self::$add_script = true;
 
@@ -159,8 +165,11 @@ class EventOrganiser_Shortcodes {
 		}
 		
 		//Get latlng value by slug
-		$latlng = eo_get_venue_latlng($venue_id);
-		self::$map[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng'],'zoom'=>$zoom);
+		foreach( $venue_ids as $venue_id ){
+			$latlng = eo_get_venue_latlng($venue_id);
+			$locations[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng']);
+		}
+		self::$map[] = array('locations'=>$locations,'zoom'=>$zoom);
 		$id = count(self::$map);
 
 		$return = "<div class='".$class."' id='eo_venue_map-{$id}' ".$style."></div>";
