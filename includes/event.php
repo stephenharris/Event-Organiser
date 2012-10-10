@@ -226,12 +226,13 @@ function eventorganiser_event_delete($post_id){
 				'FinishTime'=>$end->format('H:i:s'),
 				'event_occurrence' => $counter,
 			/* Deprecated columns - but if they exist may need to provide default in some SQL version. If so, uncomment*/
-			/* Leave uncommented until they are removed */
+			/* 
 				'Venue'=>0,//Default to avoid SQL error
 				'event_schedule'=>0,//Default to avoid SQL error
 				'event_schedule_meta'=>0,//Default to avoid SQL error
 				'event_frequency'=>0,//Default to avoid SQL error
 				'event_allday'=>0,//Default to avoid SQL error
+			*/
 			);
 			$wpdb->insert($wpdb->eo_events, $occurrence_input);
 			$occurrence_array[$wpdb->insert_id] = $occurrence->format('Y-m-d H:i:s');
