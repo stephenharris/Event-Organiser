@@ -55,7 +55,7 @@ function eventorganiser_details_metabox($post){
 	$venues = eo_get_venues();
 	$venue_id= (int) eo_get_venue($post->ID);
 
-	$sche_once = ($schedule =='once'||$schedule =='custom');
+	$sche_once = $schedule =='once';
 	//Start of meta box ?>	
 	<p>
 		<?php if(!$sche_once ):?>
