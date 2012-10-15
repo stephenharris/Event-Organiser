@@ -559,7 +559,7 @@ function eo_get_the_GoogleLink(){
 	$end = eo_get_the_start(DATETIMEOBJ); 
 
 	if(eo_is_all_day()):
-		$endDT->modify('+1 second');
+		$end->modify('+1 second');
 		$format = 'Ymd';
 	else:		
 		$format = 'Ymd\THis\Z';
