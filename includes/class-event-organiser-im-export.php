@@ -139,7 +139,7 @@ class Event_Organiser_Im_Export  {
 		// File header
 		header( 'Content-Description: File Transfer' );
 		header( 'Content-Disposition: attachment; filename=' . $filename );
-		header('Content-type: text/calendar');
+		header('Content-type: text/calendar; charset=' . get_option('blog_charset').';');
 		header("Pragma: 0");
 		header("Expires: 0");
 ?>
