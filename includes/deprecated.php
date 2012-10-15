@@ -102,3 +102,15 @@ function eo_get_reoccurence($post_id=''){
 }
 
 
+/**
+* Returns the colour of a category associated with the event
+*
+ * @since 1.3.3
+* @param int $post_id - the event (post) ID. Leave blank to use in loop.
+* @return string The colour of the category in HEX format
+ */
+function eo_event_color($post_id=0){
+	_deprecated_function( __FUNCTION__, '1.6', 'eo_get_event_color()' );
+	return eo_get_event_color($post_id);
+}
+

@@ -538,6 +538,95 @@ function eo_get_the_occurrences_of($post_id=''){
 	return $occurrences;
 }
 
+function eo_get_category_color($term){
+	return eo_get_category_meta($term,'color');
+}
+
+/**
+* Returns the colour of a category associated with the event
+*
+ * @since 1.6
+* @param int $post_id - the event (post) ID. Leave blank to use in loop.
+* @return string The colour of the category in HEX format
+ */
+function eo_get_event_color($post_id=0){
+	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
+
+	if( empty($post_id) )
+		return false;
+
+	$color = false;
+
+	if( $terms && !is_wp_error($terms) ){
+		foreach ($terms as $term):	
+			if( ! empty($term->color) ){
+				$color_code = ltrim($term->color, '#');
+				if ( ctype_xdigit($color_code) && (strlen($color_code) == 6 || strlen($color_code) == 3)){
+					$color = '#'.$color_code;
+					break;
+                       		}
+			}
+		endforeach;
+	}
+
+	return apply_filters('eventorganiser_event_color',$color,$post_id);
+}
+
+function eo_get_event_classes($post_id=0, $occurrence_id=0){
+	global $post;
+
+	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id );
+	$occurrence_id = (int) ( empty($occurrence_id) && isset($post->occurrence_id)  ? $post->occurrence_id : $occurrence_id );
+
+	$event_classes = array();
+			
+	//Add venue class
+	if( eo_get_venue_slug() )
+		$event_classes[] = 'eo-event-venue-'.eo_get_venue_slug();
+
+	//Add category classes
+	$cats= get_the_terms(get_the_ID(), 'event-category');
+	if( $cats && !is_wp_error($cats) ){	
+		foreach ($cats as $cat)
+			$event_classes[] = 'eo-event-cat-'.$cat->slug;
+	}
+
+	//Add 'time' class
+	$start = eo_get_the_start(DATETIMEOBJ, $post_id, null, $occurrence_id);
+	$end= eo_get_the_end(DATETIMEOBJ, $post_id, null, $occurrence_id);
+	$now = new DateTime('now',eo_get_blog_timezone());
+	if( $start > $now ){
+		$event_classes[] = 'eo-event-future';
+	}elseif( $end < $now ){
+		$event_classes[] = 'eo-event-past';
+	}else{
+		$event_classes[] = 'eo-event-running';
+	}
+
+	return  apply_filters('eventorganiser_event_classes', array_unique($event_classes), $post_id, $occurrence_id);
+}
+
+function eo_is_event_taxonomy(){
+	return (is_tax(array('event-category','event-tag','event-venue')));
+}
+
+
+function eo_has_event_started($id='',$occurrence=0){
+	$tz = eo_get_blog_timezone();
+	$start = new DateTime(eo_get_the_start('d-m-Y H:i',$id,$occurrence), $tz);
+	$now = new DateTime('now', $tz);
+
+	return ($start <= $now );
+}
+
+function eo_has_event_finished($id='',$occurrence=0){
+	$tz = eo_get_blog_timezone();
+	$end = new DateTime(eo_get_the_end('d-m-Y H:i',$id,$occurrence), $tz);
+	$now = new DateTime('now', $tz);
+
+	return ($end <= $now );
+}
+
 
 /**
 * Returns a the url which adds a particular occurrence of an event to
@@ -634,94 +723,5 @@ function eo_event_category_dropdown( $args = '' ) {
 		echo $output;
 
 	return $output;
-}
-
-function eo_get_category_color($term){
-	return eo_get_category_meta($term,'color');
-}
-
-function eo_is_event_taxonomy(){
-	return (is_tax(array('event-category','event-tag','event-venue')));
-}
-
-
-function eo_has_event_started($id='',$occurrence=0){
-	$tz = eo_get_blog_timezone();
-	$start = new DateTime(eo_get_the_start('d-m-Y H:i',$id,$occurrence), $tz);
-	$now = new DateTime('now', $tz);
-
-	return ($start <= $now );
-}
-
-function eo_has_event_finished($id='',$occurrence=0){
-	$tz = eo_get_blog_timezone();
-	$end = new DateTime(eo_get_the_end('d-m-Y H:i',$id,$occurrence), $tz);
-	$now = new DateTime('now', $tz);
-
-	return ($end <= $now );
-}
-
-/**
-* Returns the colour of a category associated with the event
-*
- * @since 1.3.3
-* @uses WordPress' get_posts
-* @param int $post_id - the event (post) ID. Leave blank to use in loop.
-* @return string The colour of the category in HEX format
- */
-function eo_event_color($post_id=0){
-
-	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
-
-	if( empty($post_id) )
-		return false;
-
-	$color='';
-	$terms = get_the_terms( $post_id, 'event-category' );
-
-	if($terms){
-		foreach ($terms as $term):	
-			if( ! empty($term->color) ){
-				$colorCode = ltrim($term->color, '#');
-				if ( ctype_xdigit($colorCode) && (strlen($colorCode) == 6 || strlen($colorCode) == 3)){
-					$color = '#'.$colorCode;
-					break;
-                       		}
-			}
-		endforeach;
-	}
-
-	return esc_attr($color);
-}
-
-
-function eo_get_event_classes(){
-
-	$event_classes = array();
-			
-	//Add venue class
-	if( eo_get_venue_slug() )
-		$event_classes[] = 'eo-event-venue-'.eo_get_venue_slug();
-
-		//Add category classes
-		$cats= get_the_terms(get_the_ID(), 'event-category');
-		if( $cats ){	
-			foreach ($cats as $cat)
-				$event_classes[] = 'eo-event-cat-'.$cat->slug;
-		}
-		$start = eo_get_the_start(DATETIMEOBJ);
-		$end= eo_get_the_end(DATETIMEOBJ);
-		$now = new DateTime('now',eo_get_blog_timezone());
-
-		//Add 'time' class
-		if( $start > $now ){
-			$event_classes[] = 'eo-event-future';
-		}elseif( $end < $now ){
-			$event_classes[] = 'eo-event-past';
-		}else{
-			$event_classes[] = 'eo-event-running';
-		}
-
-		return  array_unique($event_classes);
 }
 ?>

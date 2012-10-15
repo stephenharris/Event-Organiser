@@ -111,7 +111,7 @@
 				}
 				$description = $date.'</br></br>'.$description;
 			
-				$event['description']  = apply_filters('eventorganiser_event_tooltip_description', $description, $post->ID,$post->event_id,$post);
+				$event['description']  = apply_filters('eventorganiser_event_tooltip', $description, $post->ID,$post->event_id,$post);
 
 				//Colour past events
 				$now = new DateTIme(null,$tz);
@@ -134,16 +134,19 @@
 				if($terms):
 					foreach ($terms as $term):
 						$event['category'][]= $term->slug;
-						if(empty($event['color'])):
-							$term_meta = get_option( "eo-event-category_$term->term_id");
-							$event['color'] = (isset($term_meta['colour']) ? $term_meta['colour'] : '');
-						endif;
 						$event['className'][]='category-'.$term->slug;
 					endforeach;
 				endif;
 
+				//Event colour
+				if( eo_get_event_color() )
+					$event['color'] = eo_get_event_color();
+
 				//Add event to array
-				$eventsarray[]=$event;
+				$event = apply_filters('eventorganiser_fullcalendar_event',$event, $post->ID,$post->event_id);
+				if( $event )
+					$eventsarray[]=$event;
+
 			endforeach;
 			wp_reset_postdata();
 		endif;
@@ -310,19 +313,21 @@
 
 				}
 
+				//Event categories
 				$terms = get_the_terms( $post->ID, 'event-category' );
-
 				$event['category']=array();
 				if($terms):
 					foreach ($terms as $term):
 						$event['category'][]= $term->slug;
-						if(empty($event['color'])):
-							$event['color'] = (isset($term->color) ? $term->color : '');
-						endif;
 						$event['className'][]='category-'.$term->slug;
 					endforeach;
 				endif;
 
+				//Event colour
+				if( eo_get_event_color() )
+					$event['color'] = eo_get_event_color();
+
+				//Event summary
 				$event['summary'] = $summary;
 
 				//Filter the event array
@@ -469,7 +474,7 @@
 				'display'=>eo_get_the_start($instance['group_format']),
 				'time'=> ( ($instance['mode']=='day' && eo_is_all_day())  ? __('All Day','eventorganiser') : eo_get_the_start($instance['item_format']) ),
 				'post_title'=>get_the_title(),
-				'color'=>eo_event_color(),
+				'color'=>eo_get_event_color(),
 				'link'=>'<a href="'.get_permalink().'">'.__('View','eventorganiser').'</a>',
 				'Glink'=>'<a href="'.eo_get_the_GoogleLink().'" target="_blank">'.__('Add To Google Calendar','eventorganiser').'</a>'
 			);
