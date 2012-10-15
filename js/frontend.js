@@ -113,21 +113,11 @@ jQuery(document).ready(function () {
 				end: jQuery.fullCalendar.formatDate(b, "yyyy-MM-dd"),
 				timeformat:calendars[i].timeformat,
                         };
-                        if (typeof EOAjax.calendars[0]
-                            .category !== "undefined" && EOAjax
-                            .calendars[0]
-                            .category != "") {
-                            request.category = EOAjax
-                                .calendars[0]
-                                .category
+                        if (typeof EOAjax.calendars[0].category !== "undefined" && EOAjax.calendars[0].category != "") {
+                            request.category = EOAjax.calendars[0].category
                         }
-                        if (typeof EOAjax.calendars[0]
-                            .venue !== "undefined" && EOAjax
-                            .calendars[0]
-                            .venue != "") {
-                            request.venue = EOAjax
-                                .calendars[0]
-                                .venue
+                        if (typeof EOAjax.calendars[0].venue !== "undefined" && EOAjax.calendars[0].venue != "") {
+                            request.venue = EOAjax.calendars[0].venue
                         }
                         jQuery.ajax({
                             url: EOAjax.ajaxurl + "?action=eventorganiser-fullcal",
@@ -161,31 +151,31 @@ jQuery(document).ready(function () {
             })
         }
 
-        if ($(".eo_widget_calendar").length > 0 && typeof EOAjaxFront
-            .adminajax !== undefined) {
-            $(".eo_widget_calendar tfoot").unbind("click");
-            $(".eo_widget_calendar tfoot a").die("click")
-                .live("click", function (a) {
-                a.preventDefault();
-                var b = $(this).closest(".eo_widget_calendar")
-                    .attr("id");
-                if (typeof eo_widget_cal === "undefined") {
-                    cal = false
-                } else {
-                    cal = eo_widget_cal[b]
-                }
-                if (cal) {
-                    showpastevents = cal.showpastevents == 1 ? 1 : 0
-                } else {
-                    showpastevents = 1
-                }
-                $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal&showpastevents=" + showpastevents, {
-                    eo_month: eveorg_getParameterByName("eo_month", $(this).attr("href"))
-                }, function (a) {
-                    $("#" + b + "_content").html(a)
-                })
-            })
+        if ($(".eo_widget_calendar").length > 0 && typeof EOAjaxFront.adminajax !== undefined) {
+		$(".eo_widget_calendar tfoot").unbind("click");
+		$(".eo_widget_calendar tfoot a").die("click").live("click", function (a) {
+                	a.preventDefault();
+                	var b = $(this).closest(".eo_widget_calendar").attr("id");
+	
+			//Defaults
+			cal = {showpastevents: 1};
+
+			//Shortcode widget calendar
+			if( typeof EOAjax.widget_calendars !== "undefined" ){
+				cal = EOAjax.widget_calendars[b];
+			}
+			//Widget calendar
+                	if (typeof eo_widget_cal !== "undefined") {
+                    		cal = eo_widget_cal[b];
+                	}
+
+			//Set month
+			cal.eo_month = eveorg_getParameterByName("eo_month", $(this).attr("href"));
+
+			$.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal", cal,function (a) {$("#" + b + "_content").html(a)})
+            	})
         }
+
         if ($('.eo-agenda-widget').length > 0) {
             function getEvents(a, b) {
                 $.ajax({

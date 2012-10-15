@@ -557,6 +557,7 @@ function eo_get_event_color($post_id=0){
 
 	$color = false;
 
+	$terms = get_the_terms($post_id, 'event-category');
 	if( $terms && !is_wp_error($terms) ){
 		foreach ($terms as $term):	
 			if( ! empty($term->color) ){

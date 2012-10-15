@@ -20,18 +20,35 @@ class EventOrganiser_Shortcodes {
 		add_action('wp_footer', array(__CLASS__, 'print_script'));
 	}
  
-	function handle_calendar_shortcode($atts) {
+	function handle_calendar_shortcode($atts=array()) {
 		global $post;
+
+		/* Shortcodes don't accept hyphens, so convert taxonomy names */
+		$taxs = array('category','tag','venue');
+		foreach ($taxs as $tax){
+			if(isset($atts['event_'.$tax])){
+				$atts['event-'.$tax]=	$atts['event_'.$tax];
+				unset($atts['event_'.$tax]);
+			}
+		}
+
+		/* Backwards compatibility */
+		$atts = wp_parse_args($atts,array(
+			'showpastevents'=>1,
+		));
+	
 		self::$add_script = true;
-		self::$widget_calendars[] =true;
-		$id = count(self::$calendars);
+
+		$id = count(self::$widget_calendars);
+		self::$widget_calendars['eo_shortcode_calendar_'.$id] = $atts;
 
 		$tz = eo_get_blog_timezone();
 		$date =  get_query_var('ondate') ?  get_query_var('ondate') : 'now';
 		$month = new DateTime($date,$tz);
 		$month = date_create($month->format('Y-m-1'),$tz);
+
 		$html = '<div class="widget_calendar eo-calendar eo-calendar-shortcode eo_widget_calendar" id="eo_shortcode_calendar_'.$id.'">';
-		$html .= '<div id="eo_shortcode_calendar_'.$id.'_content">'.EO_Calendar_Widget::generate_output($month).'</div>';
+		$html .= '<div id="eo_shortcode_calendar_'.$id.'_content">'.EO_Calendar_Widget::generate_output($month,$atts).'</div>';
 		$html .= '</div>';
 
 		return $html;
@@ -387,16 +404,18 @@ class EventOrganiser_Shortcodes {
 		array(
 			'ajaxurl' => admin_url( 'admin-ajax.php'),
 			'calendars' => self::$calendars,
+			'widget_calendars' => self::$widget_calendars,
 			'fullcal' => $fullcal,
 			'map' => self::$map,
 		));	
+
 		if(!empty(self::$calendars) || !empty(self::$map) ):
-			wp_enqueue_script( 'eo_qtip2');	
-			wp_enqueue_script( 'eo_front');		
+			wp_enqueue_script( 'eo_qtip2');			
 			wp_enqueue_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array());	
 			wp_enqueue_style('eo_calendar-style');	
 			wp_enqueue_style('eo_front');	
 		endif;
+		wp_enqueue_script( 'eo_front');
 	}
 }
  

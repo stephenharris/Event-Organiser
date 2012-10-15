@@ -7,6 +7,8 @@ class EO_Calendar_Widget extends WP_Widget
 
 	var $w_arg = array(
 		'title'=> '',
+		'event-category'=>'',
+		'event-venue'=>'',
 		);
 	static $widget_cal =array();
 
@@ -18,23 +20,56 @@ class EO_Calendar_Widget extends WP_Widget
 	function form($instance)  {
 	
 		$instance = wp_parse_args( (array) $instance, $this->w_arg ); 	
-		?>
-	  	<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'eventorganiser'); ?>: </label>
-			<input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance['title']);?>" />
-		</p>
 
-		<p>
-			<label for="<?php echo $this->get_field_id('showpastevents'); ?>"><?php _e('Include past events', 'eventorganiser'); ?>  </label>
-			<input type="checkbox" id="<?php echo $this->get_field_id('showpastevents'); ?>" name="<?php echo $this->get_field_name('showpastevents'); ?>" <?php checked($instance['showpastevents'],1);?> value="1" />
-			</p>
-		  <?php
+		printf('<p>
+					<label for="%1$s"> %2$s: </label>
+					<input type="text" id="%1$s" name="%3$s" value="%4$s">
+				</p>',
+				esc_attr( $this->get_field_id('title') ),
+				 esc_html__('Title', 'eventorganiser'),
+				esc_attr( $this->get_field_name('title') ),
+				esc_attr($instance['title'])
+		);
+
+		printf('<p>
+					<label for="%1$s"> %2$s: </label>
+					<input type="checkbox" id="%1$s" name="%3$s" value="1" %4$s>
+				</p>',
+				esc_attr( $this->get_field_id('showpastevents') ),
+				 esc_html__('Include past events', 'eventorganiser'),
+				esc_attr( $this->get_field_name('showpastevents') ),
+				checked($instance['showpastevents'], 1, false)
+		);
+
+		printf('<p>
+					<label for="%1$s"> %2$s: </label>
+					<input type="text" id="%1$s" name="%3$s" value="%4$s" class="widefat">
+					<em> %5$s </em>
+				</p>',
+				esc_attr( $this->get_field_id('event-category') ),
+				 esc_html__('Event categories', 'eventorganiser'),
+				esc_attr( $this->get_field_name('event-category') ),
+				esc_attr($instance['event-category']),
+				 esc_html__('List category slug(s), seperate by comma. Leave blank for all', 'eventorganiser')
+		);
+
+		printf('<p>
+					<label for="%1$s"> %2$s: </label>
+					%3$s
+				</p>',
+				esc_attr( $this->get_field_id('event-venue') ),
+				 esc_html__('Event venue', 'eventorganiser'),
+				eo_event_venue_dropdown(array('echo'=>0,'show_option_all'=>esc_html__('All Venues','eventorganiser'),'id'=>$this->get_field_id('event-venue'),'selected'=>$instance['event-venue'], 'name'=>$this->get_field_name('event-venue'),'hide_empty'=>false))
+		);
+
 	}
  
 
 	function update($new_instance, $old_instance){
 		$validated=array();
 		$validated['title'] = sanitize_text_field( $new_instance['title'] );
+		$validated['event-category'] = sanitize_text_field( $new_instance['event-category'] );
+		$validated['event-venue'] = sanitize_text_field( $new_instance['event-venue'] );
 		$validated['showpastevents'] = ( !empty($new_instance['showpastevents']) ? 1:  0);
 		delete_transient( 'eo_widget_calendar' );
 		return $validated;
@@ -52,12 +87,15 @@ class EO_Calendar_Widget extends WP_Widget
 		$month = new DateTime($date,$tz);
 		$month = date_create($month->format('Y-m-1'),$tz);
 	
+		/* Set up the event query */
 		$calendar = array(
 			'showpastevents'=> (empty($instance['showpastevents']) ? 0 : 1),
+			'event-venue'=> (!empty($instance['event-venue']) ? $instance['event-venue'] : 0),
+			'event-category'=> (!empty($instance['event-category']) ? $instance['event-category'] : 0),
 		);
 
 		add_action('wp_footer', array(__CLASS__, 'add_options_to_script'));
-		wp_enqueue_script( 'eo_front');
+
 		$id = esc_attr($args['widget_id']);
 		self::$widget_cal[$id] = $calendar;
 
@@ -67,11 +105,13 @@ class EO_Calendar_Widget extends WP_Widget
    			echo $before_title.esc_html($instance['title']).$after_title;
 		echo "<div id='{$id}_content' >";
 		echo $this->generate_output($month,$calendar);
+
 		echo "</div>";
     		echo $after_widget;
 	}
 
 	function add_options_to_script() {
+		wp_enqueue_script( 'eo_front');
 		if(!empty(self::$widget_cal))
 			wp_localize_script( 'eo_front', 'eo_widget_cal', self::$widget_cal);	
 	}
@@ -83,7 +123,7 @@ class EO_Calendar_Widget extends WP_Widget
 */
 function generate_output($month,$args=array()){
 
-	$key= $month->format('YM');
+	$key= $month->format('YM').serialize($args);
 	$calendar = get_transient('eo_widget_calendar');
 	if( $calendar && is_array($calendar) && isset($calendar[$key]) ){
 		return $calendar[$key];
@@ -122,10 +162,9 @@ function generate_output($month,$args=array()){
 	$start = $month->format('Y-m-d');
 	$end = $month->format('Y-m').'-'.$daysinmonth;
 
+	//Query events
 	$required = array( 'numberposts'=>-1, 'showrepeats'=>1, 'start_before'=>$end, 'start_after'=>$start );
-	$query_array = array_merge($args,$required);
-
-	$events=  eo_get_events($query_array);
+	$events=  eo_get_events(array_merge($args,$required));
 	
 	//Populate events array
 	$tableArray =array();

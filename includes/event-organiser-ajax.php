@@ -368,11 +368,16 @@
 			$month = date_create($month->format('Y-m-1'));
 		}		
 
+		$args = array();
+		if( !empty($_GET['event-category']) )
+			$args['event-category'] = $_GET['event-category'];
+
+		if( !empty($_GET['event-venue']) )
+			$args['event-venue'] = $_GET['event-venue'];
+
 		//Options for the calendar
-		$args=array(
-			'showpastevents'=>(empty($_GET['showpastevents']) ? 0 : 1)
-		);
-	
+		$args['showpastevents'] = (empty($_GET['showpastevents']) ? 0 : 1);
+
 		echo json_encode(EO_Calendar_Widget::generate_output($month,$args));
 		exit;
 	}
