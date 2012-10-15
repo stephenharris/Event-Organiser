@@ -310,9 +310,11 @@ function eo_load_map() {
 				var c = new google.maps.Marker({
 					position: LatLngList[j],
 	                		map: map,
-					content:locations[j].tooltip,
+					content:locations[j].tooltipContent,
 	            		});
-				google.maps.event.addListener(c, 'mouseover',eventorganiser_map_tooltip);
+				if( 'false' != maps[i].tooltip ){
+					google.maps.event.addListener(c, 'mouseover',eventorganiser_map_tooltip);
+				}
         		}
 		}
 

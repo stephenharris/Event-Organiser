@@ -145,7 +145,8 @@ class EventOrganiser_Shortcodes {
 			'zoom' => 15,
 			'width' => '100%',
 			'height' => '200px',
-		      'class' => ''
+		      	'class' => '',
+			'tooltip'=>'false'
 			), $args ) );
 
 		//Set zoom
@@ -170,16 +171,16 @@ class EventOrganiser_Shortcodes {
 			$latlng = eo_get_venue_latlng($venue_id);
 
 			//Venue tooltip description
-			$tooltip = '<strong>'.eo_get_venue_name($venue_id).'</strong>';
+			$tooltip_content = '<strong>'.eo_get_venue_name($venue_id).'</strong>';
 			$address = array_filter(eo_get_venue_address($venue_id));
 			if( !empty($address) )
-				$tooltip .='</br>'.implode(', ',$address);
+				$tooltip_content .='</br>'.implode(', ',$address);
 			
-			$tooltip = apply_filters('eventorganiser_venue_tooltip',$tooltip,$venue_id);
+			$tooltip_content = apply_filters('eventorganiser_venue_tooltip',$tooltip_content,$venue_id);
 	
-			$locations[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng'],'tooltip'=>$tooltip);
+			$locations[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng'], 'tooltipContent'=>$tooltip_content);
 		}
-		self::$map[] = array('locations'=>$locations,'zoom'=>$zoom);
+		self::$map[] = array('locations'=>$locations,'zoom'=>$zoom,'tooltip'=>$tooltip);
 		$id = count(self::$map);
 
 		$return = "<div class='".$class."' id='eo_venue_map-{$id}' ".$style."></div>";
