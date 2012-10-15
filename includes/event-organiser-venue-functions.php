@@ -550,6 +550,6 @@ function eventorganiser_venue_dropdown($post_id=0,$args){
 
 	function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 		$venue_id = eo_get_venue_id_by_slugorid($venue_slug_or_id);
-		return EventOrganiser_Shortcodes::get_venue_map($venue_id, $args=array());
+		return EventOrganiser_Shortcodes::get_venue_map($venue_id, $args);
 	}
 ?>
