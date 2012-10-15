@@ -350,6 +350,7 @@ function eventorganiser_sort_events( $orderby, $query ){
 }
 
 
+
 //These functions are useful for determining if venue or date is being queried
 function eo_is_venue(){
 	global $wp_query;

@@ -166,8 +166,18 @@ class EventOrganiser_Shortcodes {
 		
 		//Get latlng value by slug
 		foreach( $venue_ids as $venue_id ){
+			//Venue lat/lng array
 			$latlng = eo_get_venue_latlng($venue_id);
-			$locations[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng']);
+
+			//Venue tooltip description
+			$tooltip = '<strong>'.eo_get_venue_name($venue_id).'</strong>';
+			$address = array_filter(eo_get_venue_address($venue_id));
+			if( !empty($address) )
+				$tooltip .='</br>'.implode(', ',$address);
+			
+			$tooltip = apply_filters('eventorganiser_venue_tooltip',$tooltip,$venue_id);
+	
+			$locations[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng'],'tooltip'=>$tooltip);
 		}
 		self::$map[] = array('locations'=>$locations,'zoom'=>$zoom);
 		$id = count(self::$map);
@@ -379,14 +389,13 @@ class EventOrganiser_Shortcodes {
 			'fullcal' => $fullcal,
 			'map' => self::$map,
 		));	
-		if(!empty(self::$calendars)):
-	
+		if(!empty(self::$calendars) || !empty(self::$map) ):
+			wp_enqueue_script( 'eo_qtip2');	
+			wp_enqueue_script( 'eo_front');		
 			wp_enqueue_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array());	
-			wp_enqueue_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css');	
 			wp_enqueue_style('eo_calendar-style');	
 			wp_enqueue_style('eo_front');	
 		endif;
-		wp_enqueue_script( 'eo_front');	
 	}
 }
  

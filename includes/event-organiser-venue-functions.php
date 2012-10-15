@@ -83,7 +83,10 @@ function eo_get_venue_id_by_slugorid($venue_slug_or_id=''){
 
 	$venue = get_term_by('slug', $venue, 'event-venue');
 
-	return (int) $venue->term_id;
+	if( $venue )
+		return (int) $venue->term_id;
+	
+	return false;
 }
 
 // Calls WordPress' get_term_by

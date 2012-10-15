@@ -100,7 +100,6 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		}
 
 		global $eventorganiser_roles;
-	   	self::$editable_roles = get_editable_roles();
 		self::$sup_array = array(__('Organiser','eventorganiser').' ('.__('Author').')'=>'author',__('Thumbnail')=>'thumbnail',__('Excerpt')=>'excerpt',__('Custom Fields')=>'custom-fields',__('Comments')=>'comments',__('Revisions')=>'revisions');
 		self::$eventorganiser_roles = array(
 			 'edit_events' =>__('Edit Events','eventorganiser'),
@@ -473,7 +472,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		<tbody id="the-list">
 			<?php
 			$array_index =0;
-			foreach( self::$editable_roles as $role_name => $display_name):
+			foreach( get_editable_roles() as $role_name => $display_name):
 				$role = $wp_roles->get_role($role_name); 
 				$role_name = isset( $wp_roles->role_names[$role_name] ) ? translate_user_role( $wp_roles->role_names[$role_name] ) : __( 'None' );
 				?>

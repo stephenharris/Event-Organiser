@@ -287,17 +287,18 @@ function eo_load_map() {
 	maps = EOAjax.map;
 	for (i = 0; i < maps.length; i++) {
 		locations = maps[i].locations;
-		zoom = maps[i].zoom;
-
 		var b = {
-              		zoom: zoom,
-               		//center: LatLngList[0],
+              		zoom: maps[i].zoom,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
         	};
 		map = new google.maps.Map(document.getElementById("eo_venue_map-" + (i + 1)), b);
 
 		//  Create a new viewpoint bound
 		var bounds = new google.maps.LatLngBounds();
+
+		LatLngToPixel= new google.maps.OverlayView(); 
+    		LatLngToPixel.draw = function() {}
+		LatLngToPixel.setMap(map);
 
 		var LatLngList = new Array();
 		for( j=0; j<locations.length; j++){
@@ -308,22 +309,65 @@ function eo_load_map() {
 			  	bounds.extend (LatLngList[j]);
 				var c = new google.maps.Marker({
 					position: LatLngList[j],
-	                		map: map
-	            		})
+	                		map: map,
+					content:locations[j].tooltip,
+	            		});
+				google.maps.event.addListener(c, 'mouseover',eventorganiser_map_tooltip);
         		}
 		}
-		
+
    		if( locations.length > 1 ){	
 			//  Fit these bounds to the map
 			map.fitBounds (bounds);
 		}else{
 			map.setCenter ( LatLngList[0]);
 		}
-		google.maps.event.addListenerOnce(map, 'zoom_changed', function() {
-    			map.setZoom(zoom); //Or whatever
-		});
-	}
+		//google.maps.event.addListenerOnce(map, 'zoom_changed', function() {map.setZoom(zoom);});
+
+	}//Foreach map
 }
+
+function eventorganiser_map_tooltip(event) {
+
+	// Grab marker position
+	var pixel = LatLngToPixel.getProjection().fromLatLngToContainerPixel(this.position);
+	var pos = [ pixel.x, pixel.y ];
+
+	if(this.tooltip){
+		this.tooltip.qtip('api').set('position.target', pos);
+		this.tooltip.qtip('show');
+		return;
+	}
+
+	// Create the tooltip on a dummy div and store it on the marker
+	this.tooltip = jQuery('<div />').qtip({
+        	content: {
+			text: this.content,
+		},
+		border: {
+			radius: 4,
+			width: 3
+		},
+		style: {
+			classes: "ui-tooltip-shadow",
+			widget: true,
+		},
+        	position: {
+        	    at: "right center",
+        	    my: "top center",
+        	    target: pos,
+        	    container: jQuery(this.getMap().getDiv())
+        	},
+        	show: {
+        	    ready: true,
+        	    event: false,
+        	    solo: true
+        	},
+        	hide: {
+        	    event: 'mouseleave unfocus mousemove'
+        	}
+	    });
+  }
 /*
  FullCalendar v1.5.2
  http://arshaw.com/fullcalendar/
