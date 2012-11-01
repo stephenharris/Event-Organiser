@@ -260,19 +260,4 @@ function generate_output($month,$args=array()){
 	}
 }
 
-/**
- * Purge the cached results of get_calendar.
- * @since 1.5
- */
-function _eventorganiser_delete_calendar_cache() {
-	delete_transient( 'eo_widget_calendar' );
-	delete_transient('eo_full_calendar_public');
-	delete_transient('eo_full_calendar_admin');
-	delete_transient('eo_widget_agenda');
-}
-add_action( 'eventorganiser_save_event', '_eventorganiser_delete_calendar_cache' );
-add_action( 'eventorganiser_delete_event', '_eventorganiser_delete_calendar_cache' );
-add_action( 'wp_trash_post', '_eventorganiser_delete_calendar_cache' );
-add_action( 'update_option_start_of_week', '_eventorganiser_delete_calendar_cache' );
-add_action( 'update_option_gmt_offset', '_eventorganiser_delete_calendar_cache' );
 ?>

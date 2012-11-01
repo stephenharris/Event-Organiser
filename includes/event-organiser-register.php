@@ -295,6 +295,28 @@ function eventorganiser_screen_retina_icon(){
 
 
 /**
+ * Purge the cached results of get_calendar.
+ * @since 1.5
+ */
+function _eventorganiser_delete_calendar_cache() {
+	delete_transient( 'eo_widget_calendar' );
+	delete_transient('eo_full_calendar_public');
+	delete_transient('eo_full_calendar_admin');
+	delete_transient('eo_widget_agenda');
+}
+
+//The following need to trigger the cache clear clearly need to trigger a cache clear
+$hooks = array(
+	'eventorganiser_save_event', 'eventorganiser_delete_event', 'wp_trash_post','update_option_gmt_offset', /* obvious */
+	'update_option_start_of_week', /* Start of week is used for calendars */
+	'update_option_rewrite_rules', /* If permalinks updated - links on fullcalendar might now be invalid */ 
+	'edited_event-category', /* Colours of events may change */
+);
+foreach( $hooks as $hook ){
+	add_action($hook, '_eventorganiser_delete_calendar_cache');
+}
+
+/**
 * Handles admin pointers
 */
 /**
