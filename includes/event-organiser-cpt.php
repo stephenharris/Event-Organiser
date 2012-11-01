@@ -684,4 +684,25 @@ function eo_get_category_meta($term,$key=''){
 		$pieces['orderby'] = "ORDER BY {$wpdb->eo_venuemeta}.meta_value";
 		return $pieces;
 	}
+
+	add_filter('get_edit_term_link','eventorganiser_edit_venue_link',10,3);
+	function eventorganiser_edit_venue_link($link, $term_id, $taxonomy){
+
+		if( $taxonomy != 'event-venue' )
+        		return $link;
+
+		$tax = get_taxonomy( $taxonomy );
+		if ( !current_user_can( $tax->cap->edit_terms ) )
+				return;
+
+		$venue = get_term($term_id, $taxonomy);
+
+		$link = add_query_arg(array(
+				'page'=>'venues',
+				'action'=>'edit',
+				'event-venue'=> $venue->slug,
+		), admin_url('edit.php?post_type=event'));
+
+		return $link;
+	}
 ?>
