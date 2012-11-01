@@ -113,6 +113,7 @@ class EventOrganiser_Shortcodes {
 	
 		//Convert php time format into xDate time format
 		$date_attributes = array('timeformat','axisformat','columnformatday','columnformatweek','columnformatmonth');
+		$atts['timeformatphp'] = $atts['timeformat'];
 		foreach( $date_attributes as $date_attribute )
 			$atts[$date_attribute] =eventorganiser_php2xdate($atts[$date_attribute]);
 
@@ -160,6 +161,14 @@ class EventOrganiser_Shortcodes {
 
 		extract( shortcode_atts( array(
 			'zoom' => 15,
+			'scrollwheel'=>'true',
+			'zoomcontrol'=>'true',
+			'rotatecontrol'=>'true',
+			'pancontrol'=>'true',
+			'overviewmapcontrol'=>'true',
+			'streetviewcontrol'=>'true',
+			'maptypecontrol'=>'true',
+			'draggable'=>'true',
 			'width' => '100%',
 			'height' => '200px',
 		      	'class' => '',
@@ -168,6 +177,12 @@ class EventOrganiser_Shortcodes {
 
 		//Set zoom
 		$zoom = (int) $zoom; 
+
+		//Cast options as boolean:
+		$bool_options = compact('scrollwheel','zoomcontrol','rotatecontrol','pancontrol','overviewmapcontrol','streetviewcontrol','draggable','maptypecontrol');
+		foreach( $bool_options as $option => $value ){
+			$bool_options[$option] = ( $value == 'false' ? false : true );
+		}
 		
 		//Set the attributes
 		$width = esc_attr($width);
@@ -197,7 +212,7 @@ class EventOrganiser_Shortcodes {
 	
 			$locations[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng'], 'tooltipContent'=>$tooltip_content);
 		}
-		self::$map[] = array('locations'=>$locations,'zoom'=>$zoom,'tooltip'=>$tooltip);
+		self::$map[] = array_merge($bool_options, array('locations'=>$locations,'zoom'=>$zoom,'tooltip'=>$tooltip) );
 		$id = count(self::$map);
 
 		$return = "<div class='".$class."' id='eo_venue_map-{$id}' ".$style."></div>";
@@ -246,12 +261,12 @@ class EventOrganiser_Shortcodes {
 		$patterns[8] = '/%(event_venue_postcode)%/';
 		$patterns[9] = '/%(event_venue_country)%/';
 		$patterns[10] = "/%(schedule_start)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
-		$patterns[11] = "/%(schedule_end)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
-		$patterns[12] = '/%(event_thumbnail)({[^{}]+})?%/';
+		$patterns[11] = '/%(schedule_end)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/';
+		$patterns[12] = '/%(event_thumbnail)(?:{([^{}]+)})?(?:{([^{}]+)})?%/';
 		$patterns[13] = '/%(event_url)%/';
 		$patterns[14] = '/%(event_custom_field){([^{}]+)}%/';
 		$patterns[15] = '/%(event_venue_map)({[^{}]+})?%/';
-		$patterns[16] = '/%(event_excerpt)%/';
+		$patterns[16] = '/%(event_excerpt)(?:{(\d+)})?%/';
 		$patterns[17] = '/%(cat_color)%/';
 		$patterns[18] = '/%(event_title_attr)%/';
 		$patterns[19] ='/%(event_duration){([^{}]+)}%/';
@@ -330,7 +345,7 @@ class EventOrganiser_Shortcodes {
 				if(eo_get_venue()){
 					$class = (isset($matches[2]) ? self::eo_clean_input($matches[2]) : '');
 					$class = (!empty($class) ?  'class='.$class : '');
-					$replacement = do_shortcode('[eo_venue_map '.$class.']');
+					$replacement =  eo_get_venue_map( eo_get_venue(), compact('class') );
 				}
 				break;
 
@@ -353,7 +368,11 @@ class EventOrganiser_Shortcodes {
 			case 'event_thumbnail':
 				$size = (isset($matches[2]) ? self::eo_clean_input($matches[2]) : '');
 				$size = (!empty($size) ?  $size : 'thumbnail');
-				$replacement = get_the_post_thumbnail(get_the_ID(),$size);
+				$attr = (isset($matches[3]) ? self::eo_clean_input($matches[3]) : '');
+
+				//Decode HTML entities as shortcode encodes them
+				$attr = html_entity_decode($attr);
+				$replacement = get_the_post_thumbnail(get_the_ID(),$size, $attr);
 				break;
 			case 'event_url':
 				$replacement =get_permalink();
@@ -364,19 +383,20 @@ class EventOrganiser_Shortcodes {
 				$replacement =  implode($meta);
 				break;
 			case 'event_excerpt':
+				$length = ( isset($matches[2]) ? intval($matches[2]) : 55 );
 				//Using get_the_excerpt adds a link....
 				if ( post_password_required($post) ) {
 					$output = __('There is no excerpt because this is a protected post.');
 				}else{
 					$output = $post->post_excerpt;
 				}
-				$replacement = wp_trim_excerpt($output);
+				$replacement = eventorganiser_trim_excerpt( $output, $length);
 				break;
 			case 'event_content':
 				$replacement = get_the_content();
 				break;
 			case 'cat_color':
-				$replacement =  eo_event_color();
+				$replacement =  eo_get_event_color();
 				break;
 			case 'event_title_attr':
 				$replacement = get_the_title();
@@ -409,13 +429,13 @@ class EventOrganiser_Shortcodes {
 			'map' => self::$map,
 		));	
 
-		if(!empty(self::$calendars) || !empty(self::$map) ):
-			wp_enqueue_script( 'eo_qtip2');			
+		if(!empty(self::$calendars) || !empty(self::$map) ):				
+			wp_enqueue_script( 'eo_qtip2');	
 			wp_enqueue_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array());	
 			wp_enqueue_style('eo_calendar-style');	
 			wp_enqueue_style('eo_front');	
+			wp_enqueue_script( 'eo_front');
 		endif;
-		wp_enqueue_script( 'eo_front');
 	}
 }
  

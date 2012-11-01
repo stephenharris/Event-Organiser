@@ -552,4 +552,5 @@ function eventorganiser_venue_dropdown($post_id=0,$args){
 		$venue_id = eo_get_venue_id_by_slugorid($venue_slug_or_id);
 		return EventOrganiser_Shortcodes::get_venue_map($venue_id, $args);
 	}
+
 ?>
