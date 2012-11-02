@@ -8,12 +8,23 @@ add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
 	global $wp_locale;
 	$version = '1.6';
-	wp_register_script( 'eo_qtip2', EVENT_ORGANISER_URL.'js/qtip2.js',array('jquery'),$version,true);
+
+	/* FullCalendar */
+	wp_register_script( 'eo_fullcalendar', EVENT_ORGANISER_URL.'js/fullcalendar.js',array(
+		'jquery',
+		'jquery-ui-core',
+		'jquery-ui-widget',
+		'jquery-ui-button',
+	),$version,true);	
+
+	/* Front-end script */
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array(
 		'jquery','eo_qtip2',
 		'jquery-ui-core',
 		'jquery-ui-widget',
 		'jquery-ui-button',
+		'jquery-ui-datepicker',
+		'eo_fullcalendar'	
 	),$version,true);
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
 			'adminajax'=>admin_url( 'admin-ajax.php'),
@@ -31,11 +42,14 @@ function eventorganiser_register_script() {
 				'venue'=>__('View all venues','eventorganiser'),
 				)
 			));
+
+	/* Q-Tip */
+	wp_register_script( 'eo_qtip2', EVENT_ORGANISER_URL.'js/qtip2.js',array('jquery'),$version,true);
+
+	/* Styles */
 	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),$version);
 	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array('eventorganiser-jquery-ui-style'),$version);
-
 	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array(),$version);
-
 }   
 
  /**
@@ -60,16 +74,14 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-position'
 	),$version,true);	
 
-	//Calendar View
-	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL.'js/fullcalendar.js',array(
-		'jquery',
-		'jquery-ui-core',
-		'jquery-ui-widget',
-		'jquery-ui-button',
+	//Admin calendar
+	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL.'js/admin-calendar.js',array(
+		'eo_fullcalendar',
 		'jquery-ui-dialog',
 		'jquery-ui-tabs',
-		'jquery-ui-position'),
-		$version,true);	
+		'jquery-ui-position'
+	),$version,true);
+
 
 	if ( 'classic' == get_user_option( 'admin_color') )
 		wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-classic.css',array(),$version);
