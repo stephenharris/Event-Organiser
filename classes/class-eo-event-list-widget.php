@@ -137,6 +137,9 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 		'group_events_by'=>'',
 		'showpastevents'=>true,
 	));
+	if( !empty($query['numberposts']) ){
+		$query['posts_per_page'] = (int) $query['numberposts'];
+	}
 
 	global $event_loop;
 	$event_loop = new WP_Query($query);
