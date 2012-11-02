@@ -19,7 +19,10 @@
 		StartTime TIME NOT NULL,
 		FinishTime TIME NOT NULL,
 		event_occurrence bigint(20) NOT NULL,
-		PRIMARY KEY  (event_id))".$charset_collate;
+		PRIMARY KEY  (event_id),
+		KEY StartDate (StartDate),
+		KEY EndDate (EndDate)
+		)".$charset_collate;
 	
 	//Venue meta table
 	$sql_venuemeta_table ="CREATE TABLE {$wpdb->prefix}eo_venuemeta (
