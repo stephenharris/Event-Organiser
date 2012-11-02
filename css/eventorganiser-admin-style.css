@@ -4,7 +4,13 @@
 /*Hide post date filter*/
 .tablenav.top .alignleft.actions select[name="m"]{display: none; }
 
+#eventorganiser_event_detail tr.eo-add-new-venue{
+	display: none;
+}
 
+#eventorganiser_event_detail tr .eo-label{
+	width:190px;
+}
 /* Venue page address form spacing */
 #venue_address table tr{line-height: 4em;}
 

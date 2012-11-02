@@ -438,7 +438,7 @@ function eo_event_venue_dropdown( $args = '' ) {
 	function eo_insert_venue($name, $args=array()){
 		$term_args = array_intersect_key($args, array('name'=>'','term_id'=>'','term_group'=>'','term_taxonomy_id'=>'','alias_of'=>'','parent'=>0,'slug'=>'','count'=>''));
 		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','country'=>'','latitude'=>'','longtitude'=>''));
-
+	
 		$resp = wp_insert_term($name,'event-venue',$term_args);
 
 		if(is_wp_error($resp)){
