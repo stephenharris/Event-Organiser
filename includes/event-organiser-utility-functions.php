@@ -293,4 +293,58 @@ function eventorganiser_trim_excerpt($text = '', $excerpt_length=55) {
 	}
 	return apply_filters('eventorganiser_trim_excerpt', $text, $raw_excerpt);
 }
+
+
+/**
+ * A helper function, creates a DateTime object from a date string and sets the timezone to the blog's current timezone
+ *
+ *@uses date_create
+ *@param string $datetime_string A date-time in string format
+ *@param datetime The corresponding DateTime object.
+*/
+	function eventorganiser_date_create($datetime_string){
+		$tz = eo_get_blog_timezone();
+		return date_create($datetime_string,$tz);
+	}
+
+
+/**
+ * (Private) Utility function checks a date-time string is formatted correctly (according to the options)
+* @access private
+ * @since 1.0.0
+
+ * @param datetime_string - a datetime string 
+ * @param (bool) $ymd_formated - whether the date is formated in the format YYYY-MM-DD or 
+ * @return int DateTime| false - the parsed datetime string as a DateTime object or false on error (incorrectly formatted for example)
+ */
+function _eventorganiser_check_datetime($datetime_string='',$ymd_formated=false){
+
+	$eo_settings_array= get_option('eventorganiser_options');
+	$formatString = $eo_settings_array['dateformat'];
+
+	//Get regulgar expression.
+	if( $ymd_formated ){
+		$reg_exp = "/(?P<year>\d{4})[-.\/](?P<month>\d{1,})[-.\/](?P<day>\d{1,}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
+
+	}elseif($formatString =='dd-mm' ){
+		$reg_exp = "/(?P<day>\d{1,})[-.\/](?P<month>\d{1,})[-.\/](?P<year>\d{4}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
+
+	}else{
+		$reg_exp = "/(?P<month>\d{1,})[-.\/](?P<day>\d{1,})[-.\/](?P<year>\d{4}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
+	}
+
+	if( !preg_match($reg_exp, $datetime_string,$matches) ) 
+		return false;
+
+	extract(array_map('intval',$matches));
+
+	if ( !checkdate($month, $day, $year) || $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 )
+		return false;
+
+	$datetime = new DateTime(null, eo_get_blog_timezone());
+	$datetime->setDate($year, $month, $day);
+	$datetime->setTime($hour, $minute);
+	return $datetime;
+}
+
 ?>

@@ -114,3 +114,22 @@ function eo_event_color($post_id=0){
 	return eo_get_event_color($post_id);
 }
 
+
+/**
+* Wrapper for get_terms. Maybe depcreciate in favour of eo_get_venues?
+ */
+function eo_get_the_venues($args=array()){
+	_deprecated_function( __FUNCTION__, '1.6', 'eo_get_venues()' );
+	return eo_get_venues($args);
+}
+
+/**
+ * Deletes the event data associated with post
+ * @since 1.0.0
+ * @param int $post_id the post id, whose event data is being deleted
+ */
+function eventorganiser_event_delete($post_id){
+	//Depreciated 	
+	eo_delete_event_occurrences($post_id);
+}
+

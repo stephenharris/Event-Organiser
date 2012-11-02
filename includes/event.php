@@ -1,27 +1,38 @@
 <?php
 /**
 * This functions updates a post of event type, with data given in the $post_data
-* and event data given in $event_data. Returns the post_id.
- * @since 1.5
+* and event data given in $event_data. Returns the post_id. 
+*
+* The event data array can contain
+*
+* 'schedule' =>'custom' | 'once' | 'daily' | 'weekly' | 'monthly', 'yearly'   -- specifies the reoccurrence pattern
+*
+*  'schedule_meta' => For monthly schedules,
+                                                   (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
+                                                   (string) BYDAY=ND. N= 1|2|3|4|-1 (first, second, third, fourth, last). D is day of week SU|MO|TU|WE|TH|FR|SA. E.g. BYDAY=2TU (repeat on second tuesday)
+                                                   For weekly schedules,
+                                                   (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
+                                                   Can be left blank to repeat weekly on the start date.
+*
+* 'frequency' => (int) positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
+*
+* 'all_day' => 1 if its an all day event, 0 if not
+*
+* 'start' =>  start date (of first occurrence)  as a datetime object
+*
+*  'end' => end date (of first occurrence)  as a datetime objec
+*
+*  'schedule_end' =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
+*
+*  'include' => array of datetime objects to include in the schedule
+*
+*  'exclude' => array of datetime objects to exclude in the schedule
+*
+* @since 1.5
  *
  * @param int $post_id - the event (post) ID for the event you want to update
  * @param array $post_data - array of data to be used by wp_update_post.
  * @param array $event_data - array of event data
- *  *  * 'schedule' =>'custom' | 'once' | 'daily' | 'weekly' | 'monthly', 'yearly'   -- specifies the reoccurrence pattern
- *  *  * 'schedule_meta' => For monthly schedules. 
-                                                   BYMONTHDAY=XX to repeat on Xth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month
-                                                   BYDAY=ND. N= 1|2|3|4|-1 (first, second, third, fourth, last. D is day of week SU|MO|TU|WE|TH|FR|SA. E.g. BYDAY=2TU (repeat on second tuesday)
-                                                   For weekly schedules. 
-                                                   Array of days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Wednesdays. 
-                                                   Can be left blank to repeat weekly on the start date.
- *  *  * 'frequency' =>(int)  -- positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
- *  *  * 'all_day' =>  1 | 0  --1 if its an all day event, 0 if not
- *  *  * 'start' =>  start date (of first occurrence)  as a datetime object
- *  *  * 'end' => end date (of first occurrence)  as a datetime object
- *  *  * 'schedule_end' =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
- *  *  * 'include' => array of datetime objects to include in the schedule
- *  *  * 'exclude' => array of datetime objects to exclude in the schedule
- *
  * @return int $post_id - the post ID of the updated event
  */
 	function eo_update_event($post_id, $event_data=array(), $post_data=array() ){
@@ -96,26 +107,37 @@
 /**
 * This functions inserts a post of event type, with data given in the $post_data
 * and event data given in $event_data. Returns the post_id.
+*
+* The event data array can contain
+*
+* 'schedule' =>'custom' | 'once' | 'daily' | 'weekly' | 'monthly', 'yearly'   -- specifies the reoccurrence pattern
+*
+*  'schedule_meta' => For monthly schedules,
+                                                   (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
+                                                   (string) BYDAY=ND. N= 1|2|3|4|-1 (first, second, third, fourth, last). D is day of week SU|MO|TU|WE|TH|FR|SA. E.g. BYDAY=2TU (repeat on second tuesday)
+                                                   For weekly schedules,
+                                                   (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
+                                                   Can be left blank to repeat weekly on the start date.
+*
+* 'frequency' => (int) positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
+*
+* 'all_day' => 1 if its an all day event, 0 if not
+*
+* 'start' =>  start date (of first occurrence)  as a datetime object
+*
+*  'end' => end date (of first occurrence)  as a datetime objec
+*
+*  'schedule_end' =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
+*
+*  'include' => array of datetime objects to include in the schedule
+*
+*  'exclude' => array of datetime objects to exclude in the schedule
+*
 * @since 1.5
  *
- * @param array $post_data - array of data to be used by wp_insert_post.
- * @param array $event_data - array of event data
- *  *  * 'schedule' =>'custom' | 'once' | 'daily' | 'weekly' | 'monthly', 'yearly'   -- specifies the reoccurrence pattern
- *  *  * 'schedule_meta' => For monthly schedules. 
-                                                   BYMONTHDAY=XX to repeat on Xth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month
-                                                   BYDAY=ND. N= 1|2|3|4|-1 (first, second, third, fourth, last. D is day of week SU|MO|TU|WE|TH|FR|SA. E.g. BYDAY=2TU (repeat on second tuesday)
-                                                   For weekly schedules. 
-                                                   Array of days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Wednesdays. 
-                                                   Can be left blank to repeat weekly on the start date.
- *  *  * 'frequency' =>(int)  -- positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
- *  *  * 'all_day' =>  1 | 0  --1 if its an all day event, 0 if not
- *  *  * 'start' =>  start date (of first occurrence)  as a datetime object
- *  *  * 'end' => end date (of first occurrence)  as a datetime object
- *  *  * 'schedule_end' =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
- *  *  * 'include' => array of datetime objects to include in the schedule
- *  *  * 'exclude' => array of datetime objects to exclude in the schedule
- *
- * @return int $post_id - the post ID of the updated event
+ * @param array $post_data array of data to be used by wp_insert_post.
+ * @param array $event_data array of event data
+ * @return int the post ID of the updated event
  */
 	function eo_insert_event($post_data=array(),$event_data=array()){
 		global $wpdb;
@@ -159,7 +181,7 @@
 * Triggers eventorganiser_delete_event (this action is used to break the cache).
  * @since 1.5
  *
- * @param int $post_id - the event's (post) ID to be deleted
+ * @param int $post_id the event's (post) ID to be deleted
  */
 function eo_delete_event_occurrences($post_id){
 	global $wpdb;
@@ -169,21 +191,14 @@ function eo_delete_event_occurrences($post_id){
 	$del = $wpdb->get_results($wpdb->prepare("DELETE FROM $wpdb->eo_events WHERE post_id=%d",$post_id));
 }
 
-/**
- * Deletes the event data associated with post
- * @since 1.0.0
- * @param int $post_id the post id, whose event data is being deleted
- */
-function eventorganiser_event_delete($post_id){
-	//Depreciated 	
-	eo_delete_event_occurrences($post_id);
-}
 
 
 /**
 * This is a private function - handles the insertion of dates into the database. Use eo_insert_event or eo_update_event instead.
-* @param int $post_id -  The post ID of the event
-* @param array $event_data - Array of event data, including schedule meta (saved as post meta), duration and occurrences
+* @access private
+*
+* @param int $post_id The post ID of the event
+* @param array $event_data Array of event data, including schedule meta (saved as post meta), duration and occurrences
 * @return int $post_id
 */
 	function  _eventorganiser_insert_occurrences($post_id, $event_data){
@@ -225,15 +240,8 @@ function eventorganiser_event_delete($post_id){
 				'EndDate'=>$occurrence_end->format('Y-m-d'),
 				'FinishTime'=>$end->format('H:i:s'),
 				'event_occurrence' => $counter,
-			/* Deprecated columns - but if they exist may need to provide default in some SQL version. If so, uncomment*/
-			/* 
-				'Venue'=>0,//Default to avoid SQL error
-				'event_schedule'=>0,//Default to avoid SQL error
-				'event_schedule_meta'=>0,//Default to avoid SQL error
-				'event_frequency'=>0,//Default to avoid SQL error
-				'event_allday'=>0,//Default to avoid SQL error
-			*/
 			);
+
 			$wpdb->insert($wpdb->eo_events, $occurrence_input);
 			$occurrence_array[$wpdb->insert_id] = $occurrence->format('Y-m-d H:i:s');
 
@@ -272,22 +280,33 @@ function eventorganiser_event_delete($post_id){
 /**
 * Gets schedule meta from the database (post meta)
 * Datetimes are converted to DateTime objects, in blog's currenty timezone
+*
 *  Event details include
- *  *  * 'schedule' =>'custom' | 'once' | 'daily' | 'weekly' | 'monthly', 'yearly'   -- specifies the reoccurrence pattern
- *  *  * 'schedule_meta' => For monthly schedules. 
-                                                   BYMONTHDAY=XX to repeat on Xth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month
-                                                   BYDAY=ND. N= 1|2|3|4|-1 (first, second, third, fourth, last. D is day of week SU|MO|TU|WE|TH|FR|SA. E.g. BYDAY=2TU (repeat on second tuesday)
-                                                   For weekly schedules. 
-                                                   Array of days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Wednesdays. 
-                                                   Can be left blank to repeat weekly on the start date.
- *  *  * 'occurs_by' => string BYDAY or BYMONTHDAY
- *  *  * 'frequency' =>(int)  -- positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
- *  *  * 'all_day' =>  1 | 0  --1 if its an all day event, 0 if not
- *  *  * 'start' =>  start date (of first occurrence)  as a datetime object
- *  *  * 'end' => end date (of first occurrence)  as a datetime object
- *  *  * 'schedule_last' =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
- *  *  * 'include' => array of datetime objects to include in the schedule
- *  *  * 'exclude' => array of datetime objects to exclude in the schedule
+*
+* 'schedule' =>'custom' | 'once' | 'daily' | 'weekly' | 'monthly', 'yearly'   -- specifies the reoccurrence pattern
+*
+*  'schedule_meta' => For monthly schedules,
+                                                   (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
+                                                   (string) BYDAY=ND. N= 1|2|3|4|-1 (first, second, third, fourth, last). D is day of week SU|MO|TU|WE|TH|FR|SA. E.g. BYDAY=2TU (repeat on second tuesday)
+                                                   For weekly schedules,
+                                                   (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
+*
+* 'occurs_by' - For use with montly schedules: how the event reoccurs: BYDAY or BYMONTHDAY
+*
+* 'frequency' => (int) positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
+*
+* 'all_day' => 1 if its an all day event, 0 if not
+*
+* 'start' =>  start date (of first occurrence)  as a datetime object
+*
+*  'end' => end date (of first occurrence)  as a datetime objec
+*
+*  'schedule_end' =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
+*
+*  'include' => array of datetime objects to include in the schedule
+*
+*  'exclude' => array of datetime objects to exclude in the schedule
+*
 * @param int $post_id -  The post ID of the event
 * @return array event schedule details
 */
@@ -340,19 +359,11 @@ function eventorganiser_event_delete($post_id){
 		return $event_details;
 	}
 
-	/**
-	 * A helper function, creates a DateTime object from a date string and sets the timezone to the blog's current timezone
-	 *@uses date_create
-	 *@param (string) A date-time in string format
-	 *@param (DateTime) The corresponding DateTime object.
-	*/
-	function eventorganiser_date_create($datetime_string){
-		$tz = eo_get_blog_timezone();
-		return date_create($datetime_string,$tz);
-	}
 
 /**
 * This is a private function - handles the generation of occurrence dates from the schedule data
+* @access private
+*
 * @param array $event_data - Array containing the event's schedule data
 * @return array $event_data - Array containing the event's schedule data including 'occurrences', an array of DateTimes
 */
@@ -604,52 +615,13 @@ function eventorganiser_event_delete($post_id){
 		);
 	}
 
-
-
-
 /**
- * (Private) Utility function checks a date-time string is formatted correctly (according to the options)
+ * Generates the ICS RRULE fromthe event schedule data. 
+ * @access private
  * @since 1.0.0
- * @param datetime_string - a datetime string 
- * @param (bool) $ymd_formated - whether the date is formated in the format YYYY-MM-DD or 
- * @return int DateTime| false - the parsed datetime string as a DateTime object or false on error (incorrectly formatted for example)
- */
-function _eventorganiser_check_datetime($datetime_string='',$ymd_formated=false){
-
-	$eo_settings_array= get_option('eventorganiser_options');
-	$formatString = $eo_settings_array['dateformat'];
-
-	//Get regulgar expression.
-	if( $ymd_formated ){
-		$reg_exp = "/(?P<year>\d{4})[-.\/](?P<month>\d{1,})[-.\/](?P<day>\d{1,}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
-
-	}elseif($formatString =='dd-mm' ){
-		$reg_exp = "/(?P<day>\d{1,})[-.\/](?P<month>\d{1,})[-.\/](?P<year>\d{4}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
-
-	}else{
-		$reg_exp = "/(?P<month>\d{1,})[-.\/](?P<day>\d{1,})[-.\/](?P<year>\d{4}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
-	}
-
-	if( !preg_match($reg_exp, $datetime_string,$matches) ) 
-		return false;
-
-	extract(array_map('intval',$matches));
-
-	if ( !checkdate($month, $day, $year) || $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 )
-		return false;
-
-	$datetime = new DateTime(null, eo_get_blog_timezone());
-	$datetime->setDate($year, $month, $day);
-	$datetime->setTime($hour, $minute);
-	return $datetime;
-}
-
-
-/**
- * (Private) Utility function that generates the ICS RRULE fromthe event schedule data. 
- * @since 1.0.0
- * @param int $post_id - the event (post) ID
- * @return string - the RRULE to be used in an ICS calendar
+ *
+ * @param int $post_id The event (post) ID. Uses current event if empty.
+ * @return string The RRULE to be used in an ICS calendar
  */
 function eventorganiser_generate_ics_rrule($post_id=0){
 
@@ -691,11 +663,13 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 }
 
 /**
- * Deletes a single occurrence and adds it to the event's 'excluded' dates.
+ * Removes a single occurrence and adds it to the event's 'excluded' dates.
+ * @access private
  * @since 1.5
- * @param int $post_id - the event (post) ID
- * @param int $event_id - the event occurrence ID
- * @return bool|WP_Error true on success,WP_Error object on failure
+ *
+ * @param int $post_id The event (post) ID
+ * @param int $event_id The event occurrence ID
+ * @return bool|WP_Error True on success, WP_Error object on failure
  */
 	function _eventorganiser_remove_occurrence($post_id=0, $event_id=0){
 		global $wpdb;
@@ -709,18 +683,29 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 			return new WP_Error('eo_notice', '<strong>'.__("Occurrence note deleted. Occurrence not found",'eventorganiser').'</strong>');
 
 		$date = trim($remove->StartDate).' '.trim($remove->StartTime);
+
 		$event_details = get_post_meta( $post_id,'_eventorganiser_event_schedule',true);
+
 		if( ($key = array_search($date,$event_details['include'])) === false){
+			//If the date was not manually included, add it to the 'exclude' array
 			$event_details['exclude'][] = $date;
 		}else{
+			//If the date was manually included, just remove it from the included dates
 			unset($event_details['include'][$key]);
 		}
+
+		//Remove the date from the occurrences
 		if( isset($event_details['_occurrences'][$event_id]) ){
 			unset($event_details['_occurrences'][$event_id]);
 		}
 
+		//Update post meta and delete date from events table
 		update_post_meta( $post_id,'_eventorganiser_event_schedule',$event_details);					
 		$del = $wpdb->get_results($wpdb->prepare("DELETE FROM {$wpdb->eo_events} WHERE post_id=%d AND event_id=%d",$post_id,$event_id));
+
+		//Clear cache
+		_eventorganiser_delete_calendar_cache();
+
 		return true;
 	}
 ?>

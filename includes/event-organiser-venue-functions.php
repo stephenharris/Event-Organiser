@@ -7,11 +7,10 @@
 * Returns the id of the venue of an event.
 * Can be used inside the loop to output the 
 * venue id of the current event.
-*
-* @param (int) post id
-* @return (int) venue id
-*
 * @since 1.0.0
+*
+* @param int $post_id The event (post) ID. Uses current event if empty.
+* @return int The corresponding venue (event-venue term) ID
  */
 function eo_get_venue($event_id=''){
 	global $post;
@@ -36,15 +35,15 @@ function eo_get_venue($event_id=''){
 	return (int) $venue->term_id;	
 }
 
+
 /**
 * Returns the slug of the venue of an event.
 * Can be used inside the loop to output the 
-* venue slug of the current event.
-*
-* @param (int) post id
-* @return (string) venue slug
-*
+* venue id of the current event.
 * @since 1.0.0
+*
+* @param int $post_id The event (post) ID. Uses current event if empty.
+* @return int The corresponding venue (event-venue term) slug
  */
 function eo_get_venue_slug($event_id=''){
 	global $post;
@@ -68,9 +67,14 @@ function eo_get_venue_slug($event_id=''){
 
 
 
-/*
-*  Venue Utility Functions
-*/
+/**
+* A utility function for getting the venue ID from a venue ID or slug.
+* Useful for when we don't know which is being passed to us, but we want the ID.
+* @since 1.6
+*
+* @param mixed $venue_slug_or_id The venue ID as an integer. Or Slug as string. Uses venue of current event if empty.
+* @return int The corresponding venue (event-venue term) ID or false if not found.
+ */
 function eo_get_venue_id_by_slugorid($venue_slug_or_id=''){
 
 	$venue = $venue_slug_or_id;
@@ -81,7 +85,7 @@ function eo_get_venue_id_by_slugorid($venue_slug_or_id=''){
 	if( is_int($venue) )
 		return (int) $venue;
 
-	$venue = get_term_by('slug', $venue, 'event-venue');
+	$venue = eo_get_venue_by('slug', $venue);
 
 	if( $venue )
 		return (int) $venue->term_id;
@@ -89,40 +93,36 @@ function eo_get_venue_id_by_slugorid($venue_slug_or_id=''){
 	return false;
 }
 
-// Calls WordPress' get_term_by
-function eo_get_venue_by($field,$value,$output = OBJECT){
-	$venue = get_term_by($field, $value, 'event-venue');
+
+/**
+ * Get all venue data from database by venue field and data. This acts as a simple wrapper for get_term_by
+ *
+ * Warning: $value is not escaped for 'name' $field. You must do it yourself, if required.
+ * 
+ * If $value does not exist, the return value will be false. If $taxonomy exists
+ * and $field and $value combinations exist, the Term will be returned.
+ * @uses get_term_by()
+ * @since 1.6
+ *
+ * @param string $field Either 'slug', 'name', or 'id'
+ * @param string|int $value Search for this term value
+ * @param string $output Constant OBJECT, ARRAY_A, or ARRAY_N
+ * @param string $filter Optional, default is raw or no WordPress defined filter will applied.
+ * @return mixed Term Row from database. Will return false if $taxonomy does not exist or $term was not found.
+ */
+function eo_get_venue_by($field,$value,$output = OBJECT, $filter = 'raw' ){
+	$venue = get_term_by($field, $value, 'event-venue',$output, $filter);
 	return $venue;
 }
 
 
-/*
-*  Venue meta
-*/
-function eo_get_venue_meta($venue_id, $key, $single=true){	
-	return get_metadata('eo_venue', $venue_id, $key, $single); 
-}
-
-function eo_add_venue_meta($venue_id, $key, $value, $unique = false ){
-	return add_metadata('eo_venue',$venue_id, $key, $value, $unique);
-}
-
-function eo_update_venue_meta($venue_id, $key, $value, $prev_value=''){
-	return update_metadata('eo_venue', $venue_id, $key, $value, $prev_value);
-}
-
-function eo_delete_venue_meta($venue_id, $key, $value = '', $delete_all = false ){
-	return delete_metadata('eo_venue',$venue_id, $key, $value, $delete_all);
-}
-
 /**
-* Returns the name of the venue of the event.
-* Can be used inside the loop to output the 
-* venue's name of the current event.
-*
-* @param (int) venue id or (string) venue slug
-*
+* Returns the name of the venue of an event.
+* If used with any arguments uses the venue of the current event.
 * @since 1.0.0
+*
+* @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
+* @return string The name of the corresponding venue
  */
 function eo_get_venue_name($venue_slug_or_id=''){
 	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
@@ -147,15 +147,13 @@ function eo_venue_name($venue_slug_or_id=''){
 }
 
 
-
 /**
-* Returns the description of the venue
-* Can be used inside the loop to output the 
-* venue's description of the current event.
-*
-* @param (int) venue id or (string) venue slug
-*
+* Returns the description of the description of an event.
+* If used with any arguments uses the venue of the current event.
 * @since 1.0.0
+*
+* @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
+* @return string The description. of the corresponding venue
  */
 function eo_get_venue_description($venue_slug_or_id=''){
 	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
@@ -168,16 +166,14 @@ function eo_get_venue_description($venue_slug_or_id=''){
 	return $description;
 }
 
-
 /**
-* Echos the description of the venue
+* Prints the name of the description of an event.
 * Can be used inside the loop to output the 
-* venue's description of the current event.
+* venue id of the current event.
+* @since 1.0.0
+* @uses eo_get_venue_description()
 *
-* @param (int) venue id or (string) venue slug
-*
-* @uses eo_get_venue_description
- * @since 1.0.0
+* @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
  */
 function eo_venue_description($venue_slug_or_id=''){
 	echo  eo_get_venue_description($venue_slug_or_id);
@@ -186,28 +182,42 @@ function eo_venue_description($venue_slug_or_id=''){
 
 
 /**
-* Returns an array (latitude, longitude) of the venue
-* Can be used inside the loop to return an array of the 
-* latitude and longitude of the venue of the current event.
+* Returns an latitude-longtitude array (keys 'lat', 'lng')
+* If used with any arguments uses the venue of the current event.
+* @since 1.0.0
 *
-* @param (int) venue id or (string) venue slug
-* @return (array of floats) (latitude,longitude)
-*
- * @since 1.0.0
+* @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
+* @return array Array with keys 'lat' and 'lng' with corresponding float values.
  */
-
 function eo_get_venue_latlng($venue_slug_or_id=''){	
 	$lat = eo_get_venue_lat($venue_slug_or_id);
 	$lng = eo_get_venue_lng($venue_slug_or_id);	
 	return array('lat'=>$lat,'lng'=>$lng);
 }
 
+/**
+* Returns the latitude co-ordinate of a venue.
+* If used with any arguments uses the venue of the current event.
+* @since 1.0.0
+*
+* @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
+* @return float The latitude of the venue as a float. 0 If it doesn't exist.
+ */
 function eo_get_venue_lat($venue_slug_or_id=''){
 	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
 	$lat = eo_get_venue_meta($venue_id,'_lat');
 	$lat =  ! empty($lat) ? $lat : 0;
 	return $lat;
 }
+
+/**
+* Returns the longtitude co-ordinate of a venue.
+* If used with any arguments uses the venue of the current event.
+* @since 1.0.0
+*
+* @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
+* @return float The longtitude of the venue as a float. 0 If it doesn't exist.
+ */
 function eo_get_venue_lng($venue_slug_or_id=''){
 	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
 	$lng = eo_get_venue_meta($venue_id,'_lng');
@@ -217,44 +227,39 @@ function eo_get_venue_lng($venue_slug_or_id=''){
 
 
 /**
-* Echos the latitude of the venue of the event
-* Can be used inside the loop to output  the 
-* latitude of the venue of the current event.
+* Prints the latitude co-ordinate of a venue.
+* If used with any arguments uses the venue of the current event.
+* @uses eo_get_venue_lat()
+* @since 1.0.0
 *
-* @param (int) venue id or (string) venue slug
-*
- * @since 1.0.0
+* @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
  */
 function eo_venue_lat($venue_slug_or_id=''){
 	echo eo_get_venue_lat($venue_slug_or_id);
 }
 
 
-
 /**
-* Echos the longtitude of the venue of the event
-* Can be used inside the loop to output  the 
-* longitude of the venue of the current event.
+* Prints the longtitude co-ordinate of a venue.
+* If used with any arguments uses the venue of the current event.
+* @uses eo_get_venue_lng()
+* @since 1.0.0
 *
-* @param (int) venue id or (string) venue slug
-*
- * @since 1.0.0
+* @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
  */
 function eo_venue_lng($venue_slug_or_id=''){
 	echo eo_get_venue_lng($venue_slug_or_id);
 }
 
 
-
 /**
-* Returns the permalink of a  venue
-* Can be used inside the loop to output the 
-* venue's link of the current event.
+* Returns the permalink of a venue
+* If used with any arguments uses the venue of the current event.
+* @uses get_term_link()
+* @since 1.0.0
 *
-* @param (int) venue id or (string) venue slug
-* @return (string) link of venue
-*
- * @since 1.0.0
+* @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
+* @return string Link of the venue page
  */
 function eo_get_venue_link($venue_slug_or_id=''){
 	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
@@ -263,13 +268,12 @@ function eo_get_venue_link($venue_slug_or_id=''){
 
 
 /**
-* Echos the permalink of the event's venue
-* Can be used inside the loop to output the 
-* venue's link of the current event.
+* Prints the permalink of a venue
+* If used with any arguments uses the venue of the current event.
+* @uses eo_get_venue_link()
+* @since 1.0.0
 *
-* @param (int) venue id or (string) venue slug
-*
- * @since 1.0.0
+* @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
  */
 function eo_venue_link($venue_slug_or_id=''){
 	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
@@ -278,13 +282,13 @@ function eo_venue_link($venue_slug_or_id=''){
 
 
 /**
-* Returns an array with address details of the event's venue
-* Can be used inside the loop to return an array of venue address
-* of the current event.
-*
-* @param (int) venue id or (string) venue slug
-*
+* Returns an array with address details of the event's venue.
+* The keys consist of 'address', 'postcode' and 'country'
+* If used with any arguments uses the venue of the current event.
  * @since 1.0.0
+*
+* @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
+* @return array Array of venue address details
  */
 function eo_get_venue_address($venue_slug_or_id=''){
 	$address=array();	
@@ -298,83 +302,78 @@ function eo_get_venue_address($venue_slug_or_id=''){
 
 
 /**
-* Wrapper for get_terms. Maybe depcreciate in favour of eo_get_venues?
+ * Retrieve array of venues. Acts as a wrapper for get_terms, except hide_empty defaults to false.
+ *
+ * The list of arguments that $args can contain, which will overwrite the defaults:
+ *
+ * orderby - Default is 'name'. Can be name, count, term_group, slug or nothing
+ * (will use venue/term ID), Passing a custom value other than these will cause it to
+ * order based on the custom value.
+ *
+ * order - Default is ASC. Can use DESC.
+ *
+ * hide_empty - Default is 0
+ *
+ * exclude - Default is an empty array. An array, comma- or space-delimited string
+ * of term ids to exclude from the return array. If 'include' is non-empty,
+ * 'exclude' is ignored.
+ *
+ * include - Default is an empty array. An array, comma- or space-delimited string
+ * of term ids to include in the return array.
+ *
+ * number - The maximum number of terms to return. Default is to return them all.
+ *
+ * offset - The number by which to offset the terms query.
+ *
+ * fields - Default is 'all', which returns an array of term objects.
+ * If 'fields' is 'ids' or 'names', returns an array of
+ * integers or strings, respectively.
+ *
+ * slug - Returns terms whose "slug" matches this value. Default is empty string.
+ *
+ * search - Returned terms' names will contain the value of 'search',
+ * case-insensitive. Default is an empty string.
+ *
+ * The argument 'pad_counts', if set to true will include the quantity of a term's
+ * children in the quantity of each term's "count" object variable.
+ *
+ * The 'get' argument, if set to 'all' instead of its default empty string,
+ * returns terms regardless of ancestry or whether the terms are empty.
+ *
+ * The 'cache_domain' argument enables a unique cache key to be produced when this query is stored
+ * in object cache. For instance, if you are using one of this function's filters to modify the
+ * query (such as 'terms_clauses'), setting 'cache_domain' to a unique value will not overwrite
+ * the cache for similar queries. Default value is 'core'.
+ *
+ * @uses get_terms()
+ * @since 1.0.0
+ *
+ * @param string|array $args The values of what to search for when returning venues
+ * @return array List of Term (venue) Objects
  */
-function eo_get_the_venues($args=array()){
-	return eo_get_venues($args);
-}
-//Used in ajax file
 function eo_get_venues($args=array()){
 	$args = wp_parse_args( $args, array('hide_empty'=>0 ) );
 	return get_terms('event-venue',$args);
 }
 
 
-function eo_event_venue_dropdown( $args = '' ) {
-	$defaults = array(
-		'show_option_all' =>'', 
-		'echo' => 1,
-		'selected' => 0, 
-		'name' => 'event-venue', 
-		'id' => '',
-		'class' => 'postform event-organiser event-venue-dropdown event-dropdown', 
-		'tab_index' => 0, 
-	);
-
-	$defaults['selected'] =  (is_tax('event-venue') ? get_query_var('event-venue') : 0);
-	$r = wp_parse_args( $args, $defaults );
-	$r['taxonomy']='event-venue';
-	extract( $r );
-
-	$tab_index_attribute = '';
-	if ( (int) $tab_index > 0 )
-		$tab_index_attribute = " tabindex=\"$tab_index\"";
-
-	$categories = get_terms($taxonomy, $r ); 
-	$name = esc_attr( $name );
-	$class = esc_attr( $class );
-	$id = $id ? esc_attr( $id ) : $name;
-
-	$output = "<select style='width:150px' name='$name' id='$id' class='$class' $tab_index_attribute>\n";
-	
-	if ( $show_option_all ) {
-		$output .= '<option '.selected($selected,0,false).' value="0">'.$show_option_all.'</option>';
-	}
-
-	if ( ! empty( $categories ) ) {
-		foreach ($categories as $term):
-			$output .= '<option value="'.$term->slug.'"'.selected($selected,$term->slug,false).'>'.$term->name.'</option>';
-		endforeach; 
-	}
-	$output .= "</select>\n";
-
-	if ( $echo )
-		echo $output;
-
-	return $output;
-}
-
-
-
-
 /**
  * Updates new venue in the database. 
  *
- * Calls wp_insert_term to create the taxonomy term
- * Adds venue meta data to database (for 'core' meta keys)
+ * Calls wp_update_term to update the taxonomy term
+ * Updates venue meta data to database (for 'core' meta keys)
  * 
  * The $args is an array - the same as that accepted by wp_update_term
- * The $args array can also accept the following keys: 
- * *  description, address, postcode, country, latitude, longtitude
+ * The $args array can also accept the following keys: description, address, postcode, country, latitude, longtitude
  *
  * @since 1.4.0
  *
  * @uses wp_update_term to update venue (taxonomy) term
  * @uses do_action() Calls 'eventorganiser_save_venue' hook with the venue id
  *
- * @param (int) the Term ID of the venue to update
- * @param array $args as accepted by wp_insert_term and including the default meta data
- * @return array|WP_Error array of term ID and term-taxonomy ID or a WP_Error
+ * @param int $venue_id The Term ID of the venue to update
+ * @param array $args Array as accepted by wp_update_term and including the 'core' metadata
+ * @return array|WP_Error Array of term ID and term-taxonomy ID or a WP_Error on error
  */
 	function eo_update_venue($venue_id, $args=array()){
 
@@ -432,8 +431,8 @@ function eo_event_venue_dropdown( $args = '' ) {
  * @uses do_action() Calls 'eventorganiser_save_venue' hook with the venue id
  *
  * @param string $name the venue to insert
- * @param array $args as accepted by wp_insert_term and including the default meta data
- * @return array|WP_Error array of term ID and term-taxonomy ID or a WP_Error
+ * @param array $args Array as accepted by wp_update_term and including the 'core' metadata
+ * @return array|WP_Error Array of term ID and term-taxonomy ID or a WP_Error on error
  */
 	function eo_insert_venue($name, $args=array()){
 		$term_args = array_intersect_key($args, array('name'=>'','term_id'=>'','term_group'=>'','term_taxonomy_id'=>'','alias_of'=>'','parent'=>0,'slug'=>'','count'=>''));
@@ -483,7 +482,7 @@ function eo_event_venue_dropdown( $args = '' ) {
  * @uses wp_delete_term to delete venue (taxonomy) term
  * @uses do_action() Calls 'eventorganiser_delete_venue' hook with the venue id
  *
- * @param (int) the Term ID of the venue to update
+ * @param int the Term ID of the venue to update
  * @return bool|WP_Error false or error on failure. True after sucessfully deleting the venue and its meta data.
  */
 	function eo_delete_venue($venue_id){
@@ -503,8 +502,50 @@ function eo_event_venue_dropdown( $args = '' ) {
 		return true;
 	}
 
+/**
+ * Returns the mark-up for a Google map of the venue (and enqueues scripts).
+ * Accepts an arguments array corresponding to the attributes supported by the shortcode.
+ * @since 1.6
+ *
+ * @uses EventOrganiser_Shortcodes::get_venue_map()
+ *
+* @param mixed $venue_slug_or_id The venue ID as an integer. Or Slug as string. Uses venue of current event if empty.
+* @return string The markup of the map
+ */
+	function eo_get_venue_map($venue_slug_or_id='', $args=array()){
+		$venue_id = eo_get_venue_id_by_slugorid($venue_slug_or_id);
+		return EventOrganiser_Shortcodes::get_venue_map($venue_id, $args);
+	}
 
 
+
+/*  Venue metadata functions */
+function eo_get_venue_meta($venue_id, $key, $single=true){	
+	return get_metadata('eo_venue', $venue_id, $key, $single); 
+}
+
+function eo_add_venue_meta($venue_id, $key, $value, $unique = false ){
+	return add_metadata('eo_venue',$venue_id, $key, $value, $unique);
+}
+
+function eo_update_venue_meta($venue_id, $key, $value, $prev_value=''){
+	return update_metadata('eo_venue', $venue_id, $key, $value, $prev_value);
+}
+
+function eo_delete_venue_meta($venue_id, $key, $value = '', $delete_all = false ){
+	return delete_metadata('eo_venue',$venue_id, $key, $value, $delete_all);
+}
+
+/**
+ * Sanitizes (or validates) the metadata (expects raw) before being inserted into the databse.
+ * 
+ * @since 1.4.0
+ * @access private
+ *
+ * @param string The key of the meta data
+ * @param mixed The meta data being validated.
+ * @return mixed The validated value. False if the key is not recognised.
+ */
 	function eventorganiser_sanitize_meta($key,$value){
 		switch($key):
 			case '_address':
@@ -532,6 +573,7 @@ function eo_event_venue_dropdown( $args = '' ) {
 
 
 
+
 function eventorganiser_venue_dropdown($post_id=0,$args){
 	$venues = get_terms('event-venue', array('hide_empty'=>false));
 	$current = (int) eo_get_venue($post_id); 
@@ -546,11 +588,48 @@ function eventorganiser_venue_dropdown($post_id=0,$args){
 		<?php endforeach;?>
 	</select><?php
 }
+function eo_event_venue_dropdown( $args = '' ) {
+	$defaults = array(
+		'show_option_all' =>'', 
+		'echo' => 1,
+		'selected' => 0, 
+		'name' => 'event-venue', 
+		'id' => '',
+		'class' => 'postform event-organiser event-venue-dropdown event-dropdown', 
+		'tab_index' => 0, 
+	);
 
+	$defaults['selected'] =  (is_tax('event-venue') ? get_query_var('event-venue') : 0);
+	$r = wp_parse_args( $args, $defaults );
+	$r['taxonomy']='event-venue';
+	extract( $r );
 
-	function eo_get_venue_map($venue_slug_or_id='', $args=array()){
-		$venue_id = eo_get_venue_id_by_slugorid($venue_slug_or_id);
-		return EventOrganiser_Shortcodes::get_venue_map($venue_id, $args);
+	$tab_index_attribute = '';
+	if ( (int) $tab_index > 0 )
+		$tab_index_attribute = " tabindex=\"$tab_index\"";
+
+	$categories = get_terms($taxonomy, $r ); 
+	$name = esc_attr( $name );
+	$class = esc_attr( $class );
+	$id = $id ? esc_attr( $id ) : $name;
+
+	$output = "<select style='width:150px' name='$name' id='$id' class='$class' $tab_index_attribute>\n";
+	
+	if ( $show_option_all ) {
+		$output .= '<option '.selected($selected,0,false).' value="0">'.$show_option_all.'</option>';
 	}
+
+	if ( ! empty( $categories ) ) {
+		foreach ($categories as $term):
+			$output .= '<option value="'.$term->slug.'"'.selected($selected,$term->slug,false).'>'.$term->name.'</option>';
+		endforeach; 
+	}
+	$output .= "</select>\n";
+
+	if ( $echo )
+		echo $output;
+
+	return $output;
+}
 
 ?>
