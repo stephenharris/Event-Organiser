@@ -145,7 +145,7 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 	$event_loop = new WP_Query($query);
 
 	/* Try to find template */
-	if( $template_file = locate_template('event-loop.php') ){
+	if( $template_file = locate_template( apply_filters('eventorganiser_event_list_loop','') ){
 		ob_start();
 		require( $template_file );
 		$html = ob_get_contents();
