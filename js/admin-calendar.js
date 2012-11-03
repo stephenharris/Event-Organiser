@@ -169,7 +169,7 @@
 
 		var html="<select class='eo-cal-filter' id='eo-event-cat'>";
 		html+="<option value=''>"+options.buttonText.cat+"</option>";
-		for (var i=0;i<2; i++) {
+		for (var i=0;i<terms.length; i++) {
 			html+= "<option class='cat-slug-"+terms[i].slug+" cat' value='"+terms[i].slug+"'>"+terms[i].name+"</option>";
 		}
 		html+="</select>";

@@ -737,10 +737,6 @@ function Header(calendar, options) {
 					}else if( $.isFunction(options.customButtons[buttonName]) ){
 						var element = options.customButtons[buttonName](options);
 						e.append(element);
-					}else if ( options.buttonui ){
-						var text = smartProperty(options.buttonText, buttonName); // why are we using smartProperty here?
-						var button = $("<span class='fc-button fc-button-" + buttonName + " " + tm + "-state-default'>" +text+"</span>");
-						button.button().appendTo(e);
 					}else{
 						var buttonClick;
 						if (calendar[buttonName]) {
@@ -755,21 +751,27 @@ function Header(calendar, options) {
 						if (buttonClick) {
 							var icon = options.theme ? smartProperty(options.buttonIcons, buttonName) : null; // why are we using smartProperty here?
 							var text = smartProperty(options.buttonText, buttonName); // why are we using smartProperty here?
-							var button = $(
-								"<span class='fc-button fc-button-" + buttonName + " " + tm + "-state-default'>" +
-									"<span class='fc-button-inner'>" +
-										"<span class='fc-button-content'>" +
-											(icon ?
-												"<span class='fc-icon-wrap'>" +
-													"<span class='ui-icon ui-icon-" + icon + "'/>" +
-												"</span>" :
-												text
-												) +
+
+							if ( options.buttonui ){
+								var button = $("<span class='fc-button fc-button-" + buttonName + " " + tm + "-state-default'>" +text+"</span>");
+								button.button();
+							}else{
+								var button = $(
+									"<span class='fc-button fc-button-" + buttonName + " " + tm + "-state-default'>" +
+										"<span class='fc-button-inner'>" +
+											"<span class='fc-button-content'>" +
+												(icon ?
+													"<span class='fc-icon-wrap'>" +
+														"<span class='ui-icon ui-icon-" + icon + "'/>" +
+													"</span>" :
+													text
+													) +
+											"</span>" +
+												"<span class='fc-button-effect'><span></span></span>" +
 										"</span>" +
-										"<span class='fc-button-effect'><span></span></span>" +
-									"</span>" +
-								"</span>"
-							);
+									"</span>"
+								);
+							}
 							if (button) {
 								button
 									.click(function() {
