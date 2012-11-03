@@ -352,7 +352,7 @@ function eo_get_schedule_start($format='d-m-Y',$post_id=0){
 * @param string $format The format to use, using PHP Date format
 * @param int $post_id The event (post) ID. Uses current event if empty.
  */
-function  eo_schedule_start($format='d-m-Y',$post_id=''){
+function eo_schedule_start($format='d-m-Y',$post_id=''){
 	echo eo_get_schedule_start($format,$post_id);
 }
 
@@ -380,7 +380,7 @@ function eo_get_schedule_last($format='d-m-Y',$post_id=0){
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @return string The formatted date 
  */
-function  eo_schedule_last($format='d-m-Y',$post_id=''){
+function eo_schedule_last($format='d-m-Y',$post_id=''){
 	echo eo_get_schedule_last($format,$post_id);
 }
 

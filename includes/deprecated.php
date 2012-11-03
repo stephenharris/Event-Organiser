@@ -1,18 +1,13 @@
 <?php
 
-/**
- * This file contains deprecated functions and provides the alternative function you should use 
- * Functions with _deprecated_function inside should not be used as these could be removed at any time.
- */
-
-
-
-/* Returns an array of DateTime objects for each start date of occurrence
+/** 
+* Returns an array of DateTime objects for each start date of occurrence
+* @since 1.0.0
+* @deprecated 1.5
+* @see eo_get_the_occurrences_of()
 *
-* @param id - Optional, the event (post) ID, 
-* @return array|false - Array of DateTime objects of the start date-times of occurences. False if none exist.
- * @since 1.0.0
- * @deprecated use eo_get_the_occurrences_of() instead
+* @param int $post_id Optional, the event (post) ID, 
+* @return array|false Array of DateTime objects of the start date-times of occurences. False if none exist.
  */
 function eo_get_the_occurrences($post_id=''){
 	_deprecated_function( __FUNCTION__, '1.5', 'eo_get_the_occurrences_of()' );
@@ -22,42 +17,40 @@ function eo_get_the_occurrences($post_id=''){
 
 /**
 * Return true is the event is an all day event.
+* @since 1.2
+* @deprecated 1.5
+* @see eo_is_all_day()
 *
-* @param id - Optional, the event series (post) ID, 
-* @return bol - True if event runs all day, or false otherwise
- * @since 1.2
-Depreciated in favour of eo_is_all_day().
+* @param int $post_id Optional, the event series (post) ID, 
+* @return bool True if event runs all day, or false otherwise
  */
-function eo_is_allday($id=''){
+function eo_is_allday($post_id=''){
 	_deprecated_function( __FUNCTION__, '1.5', 'eo_is_all_day()' );
-	return eo_is_all_day($id);
+	return eo_is_all_day($post_id);
 }
 
 /**
 * Returns the formated date of the last occurrence of an event
+* @since 1.0.0
+* @deprecated 1.5 use eo_get_schedule_last
+* @see eo_get_schedule_last
 *
-* @param string - the format to use, using PHP Date format
-* @param id - Optional, the event (post) ID, 
-*
+* @param string $format the format to use, using PHP Date format
+* @param int $post_id Optional, the event (post) ID, 
 * @return string the formatted date 
-*
- * @since 1.0.0
- * @deprecated use eo_get_schedule_last
  */
 function eo_get_schedule_end($format='d-m-Y',$post_id=''){
 	return eo_get_schedule_last($format,$post_id);
 }
 
 /**
-* Echos the formated date of the last occurrence
+* Prints the formated date of the last occurrence of an event
+* @since 1.0.0
+* @deprecated 1.5 use eo_schedule_last
+* @see eo_schedule_last
 *
-* @param string - the format to use, using PHP Date format
-* @param id - Optional, the event (post) ID, 
-*
-* @uses eo_get_schedule_last
-*
- * @since 1.0.0
- * @deprecated use eo_schedule_last
+* @param string $format the format to use, using PHP Date format
+* @param int $post_id Optional, the event (post) ID, 
  */
 function  eo_schedule_end($format='d-m-Y',$post_id=''){
 	echo eo_get_schedule_last($format,$post_id);
@@ -66,22 +59,29 @@ function  eo_schedule_end($format='d-m-Y',$post_id=''){
 
 /**
 * Returns an array with details of the event's reoccurences
+* @since 1.0.0
+* @deprecated 1.6
+* @see eo_get_event_schedule()
 *
-* @param id - Optional, the event (post) ID, 
- * @since 1.0.0
- * @deprecated use eo_get_event_schedule();
- */
+* @param int $post_id Optional, the event (post) ID, 
+* @return array Schedule information
+*/
 function eo_get_reoccurrence($post_id=''){
 	return eo_get_reoccurence($post_id);
 }
 
 
 /**
-* Returns an array with details of the event's reoccurences
+* Returns an array with details of the event's reoccurences. 
+* Note this is is identical to eo_get_reoccurrence() which corrects a spelling error.
 *
-* @param id - Optional, the event (post) ID, 
+* @param int Optional, the event (post) ID, 
  * @since 1.0.0
- * @deprecated use eo_get_event_schedule();
+ * @deprecated 1.6
+ * @see eo_get_event_schedule()
+*
+* @param int $post_id Optional, the event (post) ID, 
+* @return array Schedule information
  */
 function eo_get_reoccurence($post_id=''){
 	_deprecated_function( __FUNCTION__, '1.5', 'eo_get_event_schedule()' );
@@ -104,11 +104,13 @@ function eo_get_reoccurence($post_id=''){
 
 /**
 * Returns the colour of a category associated with the event
+* @since 1.3.3
+* @deprecated 1.6
+* @see eo_get_event_color()
 *
- * @since 1.3.3
-* @param int $post_id - the event (post) ID. Leave blank to use in loop.
+* @param int $post_id The event (post) ID
 * @return string The colour of the category in HEX format
- */
+*/
 function eo_event_color($post_id=0){
 	_deprecated_function( __FUNCTION__, '1.6', 'eo_get_event_color()' );
 	return eo_get_event_color($post_id);
@@ -116,7 +118,13 @@ function eo_event_color($post_id=0){
 
 
 /**
-* Wrapper for get_terms. Maybe depcreciate in favour of eo_get_venues?
+ * Retrieve array of venues. Acts as a wrapper for get_terms, except hide_empty defaults to false.
+ * @since 1.0.0
+ * @deprecated 1.6
+ * @see eo_get_venues()
+ *
+ * @param string|array $args The values of what to search for when returning venues
+ * @return array List of Term (venue) Objects
  */
 function eo_get_the_venues($args=array()){
 	_deprecated_function( __FUNCTION__, '1.6', 'eo_get_venues()' );
@@ -124,12 +132,16 @@ function eo_get_the_venues($args=array()){
 }
 
 /**
- * Deletes the event data associated with post
+ * Deletes the event data associated with post. Should be called when an event is being deleted.
+ * This does not delete the post.
  * @since 1.0.0
- * @param int $post_id the post id, whose event data is being deleted
+ * @deprecated 1.6
+ * @see eo_delete_event_occurrences()
+ *
+* @param int $post_id The event (post) ID
  */
 function eventorganiser_event_delete($post_id){
-	//Depreciated 	
 	eo_delete_event_occurrences($post_id);
 }
 
+?>
