@@ -202,7 +202,7 @@ jQuery(document).ready(function () {
 	            	buttonText: 'Go to Date',
         	});
 
-        if ($(".eo_widget_calendar").length > 0 && typeof EOAjaxFront.adminajax !== undefined) {
+        if ($(".eo_widget_calendar").length > 0 ) {
 		$(".eo_widget_calendar tfoot").unbind("click");
 		$(".eo_widget_calendar tfoot a").die("click").live("click", function (a) {
                 	a.preventDefault();
@@ -212,7 +212,7 @@ jQuery(document).ready(function () {
 			cal = {showpastevents: 1};
 
 			//Shortcode widget calendar
-			if( typeof EOAjax.widget_calendars !== "undefined" ){
+			if( typeof EOAjax !== "undefined" && typeof EOAjax.widget_calendars !== "undefined" ){
 				cal = EOAjax.widget_calendars[b];
 			}
 			//Widget calendar

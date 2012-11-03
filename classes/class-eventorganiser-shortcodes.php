@@ -43,7 +43,7 @@ class EventOrganiser_Shortcodes {
 		self::$widget_calendars['eo_shortcode_calendar_'.$id] = $atts;
 
 		$tz = eo_get_blog_timezone();
-		$date =  get_query_var('ondate') ?  get_query_var('ondate') : 'now';
+		$date =  isset($_GET['eo_month']) ? $_GET['eo_month'].'-01' : 'now';
 		$month = new DateTime($date,$tz);
 		$month = date_create($month->format('Y-m-1'),$tz);
 
@@ -429,7 +429,7 @@ class EventOrganiser_Shortcodes {
 			'map' => self::$map,
 		));	
 
-		if(!empty(self::$calendars) || !empty(self::$map) ):				
+		if(!empty(self::$calendars) || !empty(self::$map) || !empty(self::$widget_calendars) ):				
 			wp_enqueue_script( 'eo_qtip2');	
 			wp_enqueue_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array());	
 			wp_enqueue_style('eo_calendar-style');	
