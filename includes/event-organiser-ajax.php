@@ -27,6 +27,7 @@
 					'operator' => 'IN'
 				);
 		}
+
 		if(!empty($_GET['venue'])){
 			$venues = explode(',',esc_attr($_GET['venue']));
 			$request['tax_query'][] = array(
@@ -369,11 +370,26 @@
 		}		
 
 		$args = array();
-		if( !empty($_GET['event-category']) )
-			$args['event-category'] = $_GET['event-category'];
+		//Restrict by category and/or venue
+		if(!empty($_GET['category'])){
+			$cats = explode(',',esc_attr($_GET['category']));
+			$args['tax_query'][] = array(
+					'taxonomy' => 'event-category',
+					'field' => 'slug',
+					'terms' => $cats,
+					'operator' => 'IN'
+				);
+		}
 
-		if( !empty($_GET['event-venue']) )
-			$args['event-venue'] = $_GET['event-venue'];
+		if(!empty($_GET['venue'])){
+			$venues = explode(',',esc_attr($_GET['venue']));
+			$args['tax_query'][] = array(
+					'taxonomy' => 'event-venue',
+					'field' => 'slug',
+					'terms' => $venues,
+					'operator' => 'IN'
+				);
+		}
 
 		//Options for the calendar
 		$args['showpastevents'] = (empty($_GET['showpastevents']) ? 0 : 1);
