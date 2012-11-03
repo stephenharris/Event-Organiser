@@ -305,9 +305,23 @@ function eventorganiser_screen_retina_icon(){
 	<?php
 }
 
+/** 
+ * Purge the occurrences cache
+ *@access private
+ *@since 1.6
+ */
+function _eventorganiser_delete_occurrences_cache($post_id=0){
+	wp_cache_delete( 'eventorganiser_occurrences_'.$post_id );
+}
+//The following need to trigger the cache clear clearly need to trigger a cache clear
+$hooks = array('eventorganiser_save_event', 'eventorganiser_delete_event');
+foreach( $hooks as $hook ){
+	add_action($hook, '_eventorganiser_delete_occurrences_cache');
+}
 
 /**
  * Purge the cached results of get_calendar.
+ * @access private
  * @since 1.5
  */
 function _eventorganiser_delete_calendar_cache() {
@@ -317,7 +331,7 @@ function _eventorganiser_delete_calendar_cache() {
 	delete_transient('eo_widget_agenda');
 }
 
-//The following need to trigger the cache clear clearly need to trigger a cache clear
+//The following need to trigger the cache
 $hooks = array(
 	'eventorganiser_save_event', 'eventorganiser_delete_event', 'wp_trash_post','update_option_gmt_offset', /* obvious */
 	'update_option_start_of_week', /* Start of week is used for calendars */
