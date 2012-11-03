@@ -87,7 +87,7 @@ class EventOrganiser_Shortcodes {
 			'defaultview'=>'month',
 			'category'=>'',
 			'venue'=>'',
-			'timeformat'=>'H:i',
+			'timeformat'=>'G:i',
 			'axisformat'=>'ga',
 			'key'=>'false',
 			'tooltip'=>'true',

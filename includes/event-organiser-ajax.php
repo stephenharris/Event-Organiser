@@ -40,7 +40,7 @@
 		$presets = array('numberposts'=>-1, 'group_events_by'=>'','showpastevents'=>true);
 
 		//Retrieve events		
-		$query = array_merge($request,$presets);
+		$query = array_merge($request,$presets,array($time_format));
 		$key = 'eo_fc_'.md5(serialize($query));
 		$calendar = get_transient('eo_full_calendar_public');
 		if( $calendar && is_array($calendar) && isset($calendar[$key]) ){
@@ -102,7 +102,7 @@
 							
 					if( !eo_is_all_day() ){
 						//Not all day, include time
-						 $date = eo_format_datetime($event_start,$format='F j, Y g:i').' - '.eo_format_datetime($event_end,$format='g:i');
+						 $date = eo_format_datetime($event_start,$format="F j, Y $time_format").' - '.eo_format_datetime($event_end,$time_format);
 					}else{
 						//All day
 						 $date = eo_format_datetime($event_start,$format='F j, Y');

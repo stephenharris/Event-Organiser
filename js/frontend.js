@@ -203,6 +203,7 @@ jQuery(document).ready(function () {
         	});
 
         if ($(".eo_widget_calendar").length > 0 ) {
+
 		$(".eo_widget_calendar tfoot").unbind("click");
 		$(".eo_widget_calendar tfoot a").die("click").live("click", function (a) {
                 	a.preventDefault();
