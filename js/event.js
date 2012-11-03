@@ -45,6 +45,7 @@ $(document).ready(function () {
 							.append("<a>" + b.label + "</br> <span style='font-size: 0.8em'><em>" + b.venue_address + ", " + b.venue_postal + ", " + b.venue_country + "</span></em></a>")
 							.appendTo(a)
             };
+
             $("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Show All Items").appendTo(wrapper).button({
                 icons: {
                     primary: "ui-icon-triangle-1-s"
@@ -59,21 +60,25 @@ $(document).ready(function () {
                 a.autocomplete("search", "");
                 a.focus()
             })
-            $("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Create New Venue").appendTo(wrapper).button({
-                icons: {
-                    primary: "ui-icon-plus"
-                },
-                text: false
-            }).removeClass("ui-corner-all").addClass("ui-corner-right add-new-venue").click(function () {
-			$("#eventorganiser_event_detail tr.eo-add-new-venue").show();			
-			$("tr.venue_row").show();
-			$("#venue_select").removeAttr("selected");
-			$("#venue_select").val(0);
-			$('.eo-venue-combobox-select').hide();
-			$('.eo-venue-input input').val('');
-			eo_initialize_map(0,0);
-			$(this).blur();
-            })
+
+		if( 'event' == pagenow ){
+			//Only add this on event edit page
+			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Create New Venue").appendTo(wrapper).button({
+                		icons: {
+                    			primary: "ui-icon-plus"
+                		},
+                		text: false
+            		}).removeClass("ui-corner-all").addClass("ui-corner-right add-new-venue").click(function () {
+				$("#eventorganiser_event_detail tr.eo-add-new-venue").show();			
+				$("tr.venue_row").show();
+				$("#venue_select").removeAttr("selected");
+				$("#venue_select").val(0);
+				$('.eo-venue-combobox-select').hide();
+				$('.eo-venue-input input').val('');
+				eo_initialize_map(0,0);
+				$(this).blur();
+            		})
+		}	
         }
     });
     $("#venue_select").combobox()

@@ -117,7 +117,7 @@
 					$('#eo_event_create_cal').dialog('open');
 					$("form.eo_cal input[type='submit']").removeAttr('disabled');
 					$("form.eo_cal input#reset").click(function (event) {
-                        			tb_remove()
+						$('#eo_event_create_cal').dialog('close');
                     			})
                 	}
 		}
