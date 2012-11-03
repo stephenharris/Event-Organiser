@@ -45,7 +45,7 @@ $(document).ready(function () {
 							.append("<a>" + b.label + "</br> <span style='font-size: 0.8em'><em>" + b.venue_address + ", " + b.venue_postal + ", " + b.venue_country + "</span></em></a>")
 							.appendTo(a)
             };
-            $("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("tabIndex", - 1).attr("title", "Show All Items").appendTo(wrapper).button({
+            $("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Show All Items").appendTo(wrapper).button({
                 icons: {
                     primary: "ui-icon-triangle-1-s"
                 },
@@ -59,7 +59,7 @@ $(document).ready(function () {
                 a.autocomplete("search", "");
                 a.focus()
             })
-            $("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("tabIndex", - 1).attr("title", "Create New Venue").appendTo(wrapper).button({
+            $("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Create New Venue").appendTo(wrapper).button({
                 icons: {
                     primary: "ui-icon-plus"
                 },

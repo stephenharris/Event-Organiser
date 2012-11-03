@@ -419,11 +419,11 @@ function escape_icalText($text){
 					//If END:VEVENT, insert event into database
 					if($property=='END' && $value=='VEVENT'){
 						$state = "VCALENDAR";
-			
+
 						//Insert new post from objects
 						$post_id = eo_insert_event($event_array['event_post'],$event_array['event']);
 
-						if(!$post_id){
+						if(!$post_id || is_wp_error($post_id) ){
 							$error_count++;
 						}
 						
@@ -809,7 +809,7 @@ function escape_icalText($text){
 					else
 						$date = $this->parse_icalDate($value, new DateTimeZone('UTC'));
 
-					$rule_array['schedule_end'] = $date;
+					$rule_array['schedule_last'] = $date;
 					break;				
 
 				case 'BYDAY':

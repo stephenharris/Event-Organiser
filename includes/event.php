@@ -157,6 +157,7 @@
 		}
 
 		$event_data = _eventorganiser_generate_occurrences($event_data);
+
 		if( is_wp_error($event_data) )
 			return $event_data;
 
