@@ -9,7 +9,7 @@ $(document).ready(function () {
                 c = this.element.hide(),
                 d = c.children(":selected"),
                 e = d.val() ? d.text() : "";
-            wrapper = this.wrapper = $("<span>").addClass("ui-combobox eo-venue-input").insertAfter(c);
+            var wrapper = this.wrapper = $("<span>").addClass("ui-combobox eo-venue-input").insertAfter(c);
             var a = this.input = $("<input>").appendTo(wrapper).val(e).addClass("ui-combobox-input").autocomplete({
                 delay: 0,
                 minLength: 0,
@@ -41,17 +41,24 @@ $(document).ready(function () {
                 if (b.term_id == 0 ) {
                     return $("<li></li>").data("item.autocomplete", b).append("<a>" + b.label + "</a>").appendTo(a)
                 }
+		//Clean address
+		var address_array = [b.venue_address, b.venue_postal, b.venue_country]
+		address_array = $.grep(address_array,function(n){
+		    return(n);
+		});
+
                 return $("<li></li>").data("item.autocomplete", b)
-							.append("<a>" + b.label + "</br> <span style='font-size: 0.8em'><em>" + b.venue_address + ", " + b.venue_postal + ", " + b.venue_country + "</span></em></a>")
+							.append("<a>" + b.label + "</br> <span style='font-size: 0.8em'><em>" +address_array.join(', ')+ "</span></em></a>")
 							.appendTo(a)
             };
 
-            $("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Show All Items").appendTo(wrapper).button({
+	var button_wrappers = $("<span>").addClass("eo-venue-combobox-buttons").appendTo(wrapper);
+            $("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
                 icons: {
                     primary: "ui-icon-triangle-1-s"
                 },
                 text: false
-            }).removeClass("ui-corner-all").addClass("ui-corner-right ui-combobox-toggle").click(function () {
+            }).removeClass("ui-corner-all").addClass("ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
                 if (a.autocomplete("widget").is(":visible")) {
                     a.autocomplete("close");
                     return
@@ -62,17 +69,16 @@ $(document).ready(function () {
             })
 
 		if( 'event' == pagenow ){
-			//Only add this on event edit page
-			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Create New Venue").appendTo(wrapper).button({
+			//Only add this on event edit page - i.e. not on calendar page.
+			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Create New Venue").appendTo(button_wrappers).button({
                 		icons: {
                     			primary: "ui-icon-plus"
                 		},
                 		text: false
-            		}).removeClass("ui-corner-all").addClass("ui-corner-right add-new-venue").click(function () {
+            		}).removeClass("ui-corner-all").addClass("ui-corner-right add-new-venue ui-combobox-button").click(function () {
 				$("#eventorganiser_event_detail tr.eo-add-new-venue").show();			
 				$("tr.venue_row").show();
-				$("#venue_select").removeAttr("selected");
-				$("#venue_select").val(0);
+				$("#venue_select").removeAttr("selected").val(0);
 				$('.eo-venue-combobox-select').hide();
 				$('.eo-venue-input input').val('');
 				eo_initialize_map(0,0);
