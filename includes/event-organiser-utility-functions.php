@@ -289,7 +289,7 @@ function eventorganiser_trim_excerpt($text = '', $excerpt_length=55) {
 		$text = strip_shortcodes( $text );
 		$text = apply_filters('the_content', $text);
 		$text = str_replace(']]>', ']]&gt;', $text);
-		$text = wp_trim_words( $text, $excerpt_length, ' ' . '[...]' );
+		$text = wp_trim_words( $text, $excerpt_length, '...' );
 	}
 	return apply_filters('eventorganiser_trim_excerpt', $text, $raw_excerpt);
 }
