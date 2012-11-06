@@ -36,8 +36,8 @@ class Event_Organiser_Im_Export  {
 
 		//If importing / exporting events make sure we a logged in and check nonces.
 
-		if (is_admin() && isset( $_GET['eventorganiser_download_events'] )&& check_admin_referer( 'eventorganiser_export' )
-			&& current_user_can('manage_options')&& $pagenow=="options-general.php"):
+		if (is_admin() && isset( $_POST['eventorganiser_download_events'] ) && check_admin_referer( 'eventorganiser_export', '_eo_download_ics' )
+			&& current_user_can('manage_options') ):
 			//Exporting events
 			//mmm... maybe finally a legitimate use of query_posts
 			query_posts(array(
@@ -48,8 +48,8 @@ class Event_Organiser_Im_Export  {
 			));
 			$this->get_export_file();
 
-		elseif ( is_admin() && isset( $_POST['eventorganiser_import_events'] )&& check_admin_referer( 'eventorganiser_import' )
-				&& current_user_can('manage_options')&& $pagenow=="options-general.php"):
+		elseif ( is_admin() && isset( $_POST['eventorganiser_import_events'] )&& check_admin_referer( 'eventorganiser_import')
+				&& current_user_can('manage_options') ):
 			//Importing events		
 
 			//Perform checks on file:
@@ -74,7 +74,7 @@ class Event_Organiser_Im_Export  {
 			endif;
 
 		endif;
-						
+
 		add_action( 'eventorganiser_event_settings_imexport', array( $this, 'get_im_export_markup' ) );						
 	}
 
@@ -88,14 +88,14 @@ class Event_Organiser_Im_Export  {
 		?>
 			<h3 class="title"><?php _e('Export Events', 'eventorganiser'); ?></h3>
 			<p><?php _e( 'The export button below generates an ICS file of your events that can be imported in to other calendar applications such as Google Calendar.', 'eventorganiser'); ?></p>
-			<form method="get" action="">
-				<?php wp_nonce_field( 'eventorganiser_export' ); ?>
-				<input type="hidden" name="page" value="event-settings" />
+
+				<?php wp_nonce_field( 'eventorganiser_export', '_eo_download_ics'); ?>
+				<!--<input type="hidden" name="page" value="event-settings" />-->
 				<p class="submit">
 					<input type="submit" name="submit" value="<?php _e( 'Download Export File', 'eventorganiser' ); ?> &raquo;" />
 					<input type="hidden" name="eventorganiser_download_events" value="true" />
 				</p>
-			</form>
+
 
 			<h3 class="title"><?php _e('Import Events', 'eventorganiser'); ?></h3>
 			<div class="inside">
@@ -178,7 +178,7 @@ X-WR-CALDESC:<?php echo get_bloginfo('name');?> - Events
 			if( eo_is_all_day() ){
 				$format =	'Ymd';
 				$start_date = $start->format($format);
-				$end->modify('+1 second');
+				$end->modify('+1 minute');
 				$end_date = $end->format($format);				
 			}else{
 				$format =	'Ymd\THis\Z';
