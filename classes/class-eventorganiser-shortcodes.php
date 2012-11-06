@@ -249,28 +249,29 @@ class EventOrganiser_Shortcodes {
 
 
 	function read_template($template){
-		$patterns = array();	
-		$patterns[0] = '/%(event_title)%/';
-		$patterns[1] = "/%(start)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
-		$patterns[2] = "/%(end)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
-		$patterns[3] = '/%(event_venue)%/';
-		$patterns[4] = '/%(event_venue_url)%/';
-		$patterns[5] = '/%(event_cats)%/';
-		$patterns[6] = '/%(event_tags)%/';
-		$patterns[7] = '/%(event_venue_address)%/';
-		$patterns[8] = '/%(event_venue_postcode)%/';
-		$patterns[9] = '/%(event_venue_country)%/';
-		$patterns[10] = "/%(schedule_start)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/";
-		$patterns[11] = '/%(schedule_end)({([^{}]+)}{([^{}]+)}|{[^{}]+})%/';
-		$patterns[12] = '/%(event_thumbnail)(?:{([^{}]+)})?(?:{([^{}]+)})?%/';
-		$patterns[13] = '/%(event_url)%/';
-		$patterns[14] = '/%(event_custom_field){([^{}]+)}%/';
-		$patterns[15] = '/%(event_venue_map)({[^{}]+})?%/';
-		$patterns[16] = '/%(event_excerpt)(?:{(\d+)})?%/';
-		$patterns[17] = '/%(cat_color)%/';
-		$patterns[18] = '/%(event_title_attr)%/';
-		$patterns[19] ='/%(event_duration){([^{}]+)}%/';
-		$patterns[20] ='/%(event_content)%/';
+		$patterns = array(;	
+			'/%(event_title)%/',
+			'/%(start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
+			'/%(end)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
+			'/%(event_venue)%/',
+			'/%(event_venue_url)%/',
+			'/%(event_cats)%/',
+			'/%(event_tags)%/',
+			'/%(event_venue_address)%/',
+			'/%(event_venue_postcode)%/',
+			'/%(event_venue_country)%/',
+			'/%(schedule_start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
+			'/%(schedule_end)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
+			'/%(event_thumbnail)(?:{([^{}]+)})?(?:{([^{}]+)})?%/',
+			'/%(event_url)%/',
+			'/%(event_custom_field){([^{}]+)}%/',
+			'/%(event_venue_map)({[^{}]+})?%/',
+			'/%(event_excerpt)(?:{(\d+)})?%/',
+			'/%(cat_color)%/',
+			'/%(event_title_attr)%/',
+			'/%(event_duration){([^{}]+)}%/',
+			'/%(event_content)%/',
+		);
 		$template = preg_replace_callback($patterns, array(__CLASS__,'parse_template'), $template);
 		return $template;
 	}
