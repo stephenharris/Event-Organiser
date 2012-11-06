@@ -124,7 +124,6 @@ endif;
 //Register the custom post type Event
 add_action('init', 'eventorganiser_cpt_register');
 function eventorganiser_cpt_register() {
-	$eo_options = get_option('eventorganiser_options');
 
   	$labels = array(
 		'name' => __('Events','eventorganiser'),
@@ -142,9 +141,9 @@ function eventorganiser_cpt_register() {
 		'menu_name' => __('Events','eventorganiser'),
   );
 
-$exclude_from_search = ($eo_options['excludefromsearch']==0) ? false : true;
+$exclude_from_search = (eventorganiser_get_option('excludefromsearch')==0) ? false : true;
 
-if(empty($eo_options['prettyurl'])){
+if( !eventorganiser_get_option('prettyurl') ){
 	$event_rewrite = false;
 	$events_slug = true;
 }else{
@@ -178,7 +177,7 @@ $args = array(
 	'hierarchical' => false,
 	'menu_icon' => EVENT_ORGANISER_URL.'css/images/eoicon-16.png',
 	'menu_position' => apply_filters('eventorganiser_menu_position',5),
-	'supports' => $eo_options['supports']
+	'supports' => eventorganiser_get_option('supports'),
   ); 
 
   register_post_type('event',$args);

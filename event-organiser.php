@@ -110,6 +110,7 @@ function eventorganiser_get_option($option,$default=false){
 		'prettyurl'=> 1,
 		'templates'=> 1,
 		'addtomenu'=> 0,
+		'menu_item_db_id'=>0,
 		'excludefromsearch'=>0,
 		'showpast'=> 0,
 		'eventtag' => 1,
