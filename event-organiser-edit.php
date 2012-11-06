@@ -37,8 +37,7 @@ function eventorganiser_details_metabox($post){
 	global $wp_locale;	
 
 	//Sets the format as php understands it, and textual.
-	$eo_settings_array= get_option('eventorganiser_options');
-	if($eo_settings_array['dateformat']=='dd-mm'){
+	if( eventorganiser_get_option('dateformat') =='dd-mm'){
 		$phpFormat = 'd-m-Y';
 		$format = 'dd-mm-yyyy';
 	}else{

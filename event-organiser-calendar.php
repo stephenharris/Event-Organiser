@@ -31,7 +31,6 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
      */
 	function page_scripts(){
 		global $wp_locale;
-	  	$eo_settings_array= get_option('eventorganiser_options'); 
 		
 		$screen = get_current_screen();
 		$cats =get_terms( 'event-category', array('hide_empty' => 0));
@@ -42,12 +41,12 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'startday'=>intval(get_option('start_of_week')),
-			'format'=> $eo_settings_array['dateformat'].'-yy'
+			'format'=> eventorganiser_get_option('dateformat').'-yy'
 			));
 		wp_localize_script( 'eo_calendar', 'EO_Ajax', array( 
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'startday'=>intval(get_option('start_of_week')),
-			'format'=> $eo_settings_array['dateformat'].'-yy',
+			'format'=> eventorganiser_get_option('dateformat').'-yy',
 			'timeFormat'=> ( $screen->get_option('eofc_time_format','value') ? 'h:mmtt' : 'HH:mm'),
 			'perm_edit'=> current_user_can('edit_events'),
 			'categories'=>$cats,
@@ -88,8 +87,6 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 	}
 
 	function page_actions(){
-
-		global $wpdb, $eventorganiser_events_table;
 
 		//Add screen option
 		$user =wp_get_current_user();
