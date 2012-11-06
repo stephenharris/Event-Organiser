@@ -165,9 +165,6 @@ require_once(EVENT_ORGANISER_DIR."includes/event-organiser-event-functions.php")
 require_once(EVENT_ORGANISER_DIR."includes/event-organiser-venue-functions.php");
 require_once(EVENT_ORGANISER_DIR."includes/event-organiser-utility-functions.php");
 require_once(EVENT_ORGANISER_DIR."includes/deprecated.php");
-
-/****** Event class ******/
-require_once(EVENT_ORGANISER_DIR."classes/class-eo-event.php");//Depreciated, migrating to includes/event.php
 require_once(EVENT_ORGANISER_DIR."includes/event.php");
 
 /****** Widgets and Shortcodes ******/
