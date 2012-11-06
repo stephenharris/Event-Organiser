@@ -108,8 +108,7 @@ add_action('admin_init', array('Event_Organiser_Im_Export', 'get_object'));
 
 add_action('init','eventorganiser_public_export');
 function eventorganiser_public_export(){
-	$eo_settings = get_option('eventorganiser_options');
-	if(!empty($eo_settings['feed'])){
+	if( eventorganiser_get_option('feed') ){
 		add_feed('eo-events', array('Event_Organiser_Im_Export','get_object'));
 	}
 }
@@ -125,12 +124,12 @@ function eventorganiser_add_admin_scripts( $hook ) {
 
 	if ( $hook == 'post-new.php' || $hook == 'post.php') {
 		if( $post->post_type == 'event' ) {     
-			$eo_settings_array= get_option('eventorganiser_options'); 
+
 			wp_enqueue_script('eo_event');
 			wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'startday'=>intval(get_option('start_of_week')),
-					'format'=> $eo_settings_array['dateformat'].'-yy',
+					'format'=> eventorganiser_get_option('dateformat').'-yy',
 					'locale'=>array(
 						'monthNames'=>array_values($wp_locale->month),
 						'monthAbbrev'=>array_values($wp_locale->month_abbrev),

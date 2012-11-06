@@ -48,13 +48,12 @@ function eventorganiser_pre_get_posts( $query ) {
 	if('event'!= $query->get('post_type') )
 		return $query;
 
-	$eo_settings_array= get_option('eventorganiser_options');
 	$blog_now = new DateTIme(null, eo_get_blog_timezone());
 
 	//Determine whether or not to show past events and each occurrence. //If not set, use options
 	if( !is_admin() && !is_single() && !$query->is_feed('eo-events') && !isset($query->query_vars['showpastevents']) ){
 		//If showpastevents is not set - use options (except for admin / single pages.
-		$query->set('showpastevents',$eo_settings_array['showpast']);
+		$query->set('showpastevents', eventorganiser_get_option('showpast') );
 	}
 
 	//Deprecated: showrepeats - use group_events_by instead
@@ -72,7 +71,7 @@ function eventorganiser_pre_get_posts( $query ) {
 			//If in admin or single page - we probably don't want to see duplicates of (recurrent) events - unless specified otherwise.
 			$query->set('group_events_by','series');
 
-		}elseif(!empty($eo_settings_array['group_events']) && $eo_settings_array['group_events']=='series'){
+		}elseif( eventorganiser_get_option('group_events') == 'series' ){
 			//In other instances (archives, shortcode listing) if showrepeats option is false display only the next event.
 			$query->set('group_events_by','series');
 		}else{
@@ -144,7 +143,7 @@ function eventorganiser_pre_get_posts( $query ) {
 		endswitch;
 	}//Endif interval set
 
-	$running_event_is_past= (empty($eo_settings_array['runningisnotpast']) ? true : false);
+	$running_event_is_past= (  eventorganiser_get_option('runningisnotpast') ? true : false);
 
 	//Set date range according to whether we show past events
 	if(isset($query->query_vars['showpastevents'])&& !$query->query_vars['showpastevents'] ){

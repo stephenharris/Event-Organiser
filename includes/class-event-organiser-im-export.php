@@ -27,12 +27,9 @@ class Event_Organiser_Im_Export  {
 
 		if(!isset($EO_Errors)) $EO_Errors = new WP_Error();
 
-		if( is_feed('eo-events') ):
-			$options = get_option('eventorganiser_options');
-			if( $options['feed'] ){
-				$this->get_export_file();
-			}
-		endif;
+		if( is_feed('eo-events') && eventorganiser_get_option('feed') ){
+			$this->get_export_file();
+		}
 
 		//If importing / exporting events make sure we a logged in and check nonces.
 

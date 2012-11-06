@@ -49,25 +49,24 @@ function eventorganiser_set_template( $template ){
 		return $template;
 
 	//Has EO template handling been turned off?
-	$eo_settings = get_option('eventorganiser_options');
-	if(!$eo_settings['templates'])
+	if( !eventorganiser_get_option('templates') )
 		return $template;
 
-	//WordPress couldn't find an 'event' template. Use plug-in instead:
+	//If WordPress couldn't find an 'event' template use plug-in instead:
 
-	if(is_post_type_archive('event') && !eventorganiser_is_event_template($template,'archive'))
+	if( is_post_type_archive('event') && !eventorganiser_is_event_template($template,'archive'))
 		$template = EVENT_ORGANISER_DIR.'templates/archive-event.php';
 		
-	if(is_singular('event') && !eventorganiser_is_event_template($template,'event'))
+	if( is_singular('event') && !eventorganiser_is_event_template($template,'event'))
 		$template = EVENT_ORGANISER_DIR.'templates/single-event.php';
 
-	if( (is_tax('event-venue')|| eo_is_venue()) && !eventorganiser_is_event_template($template,'event-venue'))
+	if( ( is_tax('event-venue') || eo_is_venue() ) && !eventorganiser_is_event_template($template,'event-venue'))
 		$template = EVENT_ORGANISER_DIR.'templates/taxonomy-event-venue.php';
 
-	if(is_tax('event-category')  && !eventorganiser_is_event_template($template,'event-category'))
+	if( is_tax('event-category')  && !eventorganiser_is_event_template($template,'event-category'))
 		$template = EVENT_ORGANISER_DIR.'templates/taxonomy-event-category.php';
 
-	if( is_tax('event-tag')&& isset($eo_settings['eventtag']) && $eo_settings['eventtag']==1 && !eventorganiser_is_event_template($template,'event-tag') )
+	if( is_tax('event-tag') && eventorganiser_get_option('eventtag') && !eventorganiser_is_event_template($template,'event-tag') )
 		$template = EVENT_ORGANISER_DIR.'templates/taxonomy-event-tag.php';
 
 	return $template;

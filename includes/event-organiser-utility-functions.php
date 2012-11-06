@@ -319,8 +319,7 @@ function eventorganiser_trim_excerpt($text = '', $excerpt_length=55) {
  */
 function _eventorganiser_check_datetime($datetime_string='',$ymd_formated=false){
 
-	$eo_settings_array= get_option('eventorganiser_options');
-	$formatString = $eo_settings_array['dateformat'];
+	$formatString = eventorganiser_get_option('dateformat');
 
 	//Get regulgar expression.
 	if( $ymd_formated ){

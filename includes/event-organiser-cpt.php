@@ -7,12 +7,10 @@
 add_action( 'init', 'eventorganiser_create_event_taxonomies', 10 );
 function eventorganiser_create_event_taxonomies() {
 
-	$eo_options = get_option('eventorganiser_options'); 
-
-	if(empty($eo_options['prettyurl'])){
+	if( !eventorganiser_get_option('prettyurl') ){
 		$cat_rewrite =$tag_rewrite=$venue_rewrite= false;
-	}else{
 
+	}else{
 		$cat_slug = trim(eventorganiser_get_option('url_cat','events/category'), "/");
 		$cat_rewrite = array( 'slug' => $cat_slug, 'with_front' => false );
 
@@ -83,7 +81,7 @@ function eventorganiser_create_event_taxonomies() {
 		'rewrite' => $cat_rewrite
   	));
 
-	if(isset($eo_options['eventtag']) && $eo_options['eventtag']==1):
+	if( eventorganiser_get_option('eventtag') ):
 	  // Add new taxonomy, make it non-hierarchical (like tags)
 		$tag_labels = array(
 			'name' => __('Event Tags','eventorganiser'),
@@ -323,35 +321,23 @@ function eventorganiser_make_item_current($items,$args){
 // Filter wp_nav_menu() to add event link if selected in options
 add_filter( 'wp_list_pages', 'eventorganiser_menu_link',10,1 );
 function eventorganiser_menu_link($items) {
-	$eo_options= get_option('eventorganiser_options');
-	if($eo_options['addtomenu']!='1')
+
+	if( eventorganiser_get_option('addtomenu') != '1' )
 		return $items;
 
-	global $wp_query;
-	$title = (isset($eo_options['navtitle']) ? $eo_options['navtitle'] : 'Events');
 	$class ='menu-item menu-item-type-event';
 
 	if(is_post_type_archive('event')|| is_singular('event')|| eo_is_event_taxonomy())
 		$class = 'current_page_item';
 	
-	$eventlink = '<li class="'.$class.'"><a href="'.get_post_type_archive_link('event').'">'.$title.'</a></li>';
-	$items = $items . $eventlink;
+	$items .= sprintf('<li class="%s"><a href="%s" > %s </a></li>',
+						$class,
+						get_post_type_archive_link('event'),
+						esc_html(eventorganiser_get_option('navtitle'))
+					);
 	return $items;
 }
-	add_filter( 'contextual_help', 'wptuts_contextual_help', 10, 3 );
-	function wptuts_contextual_help($contextual_help, $screen_id, $screen) { 
 
-		//Only add to certain screen(s). The add_help_tab function for screen was introduced in WordPress 3.3. 
-		if( $screen_id != 'post' || ! method_exists($screen, 'add_help_tab') )
-			return $contextual_help;
-	
-		$screen->add_help_tab( array(
-				'id'      => 'wptuts-overview-tab', 
-				'title'   => __('My Plug-in Help','plugin_domain'),
-				'content' => '<p>' . __('Some help text here','plugin_domain') . '</p>',
-			));
-		return $contextual_help;
-	}
 /*
  * Add contextual help
 */

@@ -321,10 +321,9 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	 *
 	*/
 	function update_nav_menu( $menu_id, $menu_item_title ){
-		$eo_options= get_option('eventorganiser_options');
-		
+
 		//Get existing menu item
-		$menu_item_db_id = isset($eo_options['menu_item_db_id']) ? (int) $eo_options['menu_item_db_id'] : 0;
+		$menu_item_db_id = (int) eventorganiser_get_option('menu_item_db_id');
 	
 		//Validate exiting menu item ID
 		if( !is_nav_menu_item($menu_item_db_id) ){
@@ -466,7 +465,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						<input type="checkbox" name="eventorganiser_options[eventtag]" value="1" %s /> %s
 					</td>',
 					checked(1,eventorganiser_get_option('eventtag')),
-					esc_html__s("Event Tags",'eventorganiser')
+					esc_html__("Event Tags",'eventorganiser')
 			);
 			echo '</tr>';
 		echo '</table>';
