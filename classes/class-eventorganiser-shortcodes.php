@@ -249,7 +249,7 @@ class EventOrganiser_Shortcodes {
 
 
 	function read_template($template){
-		$patterns = array(;	
+		$patterns = array(
 			'/%(event_title)%/',
 			'/%(start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
 			'/%(end)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',

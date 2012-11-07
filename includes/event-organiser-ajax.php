@@ -370,23 +370,18 @@
 		}		
 
 		$args = array();
-		//Restrict by category and/or venue
-		if(!empty($_GET['category'])){
-			$cats = explode(',',esc_attr($_GET['category']));
-			$args['tax_query'][] = array(
-					'taxonomy' => 'event-category',
-					'field' => 'slug',
-					'terms' => $cats,
-					'operator' => 'IN'
-				);
-		}
 
-		if(!empty($_GET['venue'])){
-			$venues = explode(',',esc_attr($_GET['venue']));
+		//Restrict by category and/or venue
+		foreach( array('event-venue','event-category') as $tax ){
+			if( empty($_GET[$tax]) )
+				continue;
+
+			$terms = explode(',',trim($_GET[$tax]));
+
 			$args['tax_query'][] = array(
-					'taxonomy' => 'event-venue',
+					'taxonomy' => $tax,
 					'field' => 'slug',
-					'terms' => $venues,
+					'terms' => $terms,
 					'operator' => 'IN'
 				);
 		}

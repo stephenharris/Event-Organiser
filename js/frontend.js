@@ -214,7 +214,7 @@ jQuery(document).ready(function () {
 
 			//Shortcode widget calendar
 			if( typeof EOAjax !== "undefined" && typeof EOAjax.widget_calendars !== "undefined" ){
-				cal = EOAjax.widget_calendars[b];
+				cal = EOAjax.widget_calendars[b];	
 			}
 			//Widget calendar
                 	if (typeof eo_widget_cal !== "undefined") {
