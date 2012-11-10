@@ -339,7 +339,7 @@ function eo_load_map() {
 			streetViewControl: maps[i].streetviewcontrol,
 			draggable: maps[i].draggable,
 			mapTypeControl: maps[i].maptypecontrol,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
+			mapTypeId: google.maps.MapTypeId[maps[i].maptypeid],
         	};
 		map = new google.maps.Map(document.getElementById("eo_venue_map-" + (i + 1)), b);
 

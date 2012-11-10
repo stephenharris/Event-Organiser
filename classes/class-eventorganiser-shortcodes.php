@@ -133,7 +133,7 @@ class EventOrganiser_Shortcodes {
 
 	function handle_venuemap_shortcode($atts) {
 		global $post;
-		self::$add_script = true;
+
 		//If venue is not set get from the venue being quiered or the post being viewed
 		if( empty($atts['venue']) ){
 			if( eo_is_venue() ){
@@ -144,81 +144,26 @@ class EventOrganiser_Shortcodes {
 		}
 
 		$venue_slugs = explode(',',$atts['venue']);
-		foreach( $venue_slugs as $slug ){
-			$venue_ids[] = eo_get_venue_id_by_slugorid($slug );
-		}
 
-		return self::get_venue_map($venue_ids, $atts);
-	}
-
-
-	function get_venue_map($venue_ids, $args){
-
-		if( !is_array($venue_ids) )
-			$venue_ids = array( $venue_ids );
-
-		self::$add_script = true;
-
-		extract( shortcode_atts( array(
-			'zoom' => 15,
-			'scrollwheel'=>'true',
-			'zoomcontrol'=>'true',
-			'rotatecontrol'=>'true',
-			'pancontrol'=>'true',
-			'overviewmapcontrol'=>'true',
-			'streetviewcontrol'=>'true',
-			'maptypecontrol'=>'true',
-			'draggable'=>'true',
-			'width' => '100%',
-			'height' => '200px',
-		      	'class' => '',
+		$args = shortcode_atts( array(
+			'zoom' => 15, 'scrollwheel'=>'true','zoomcontrol'=>'true',
+			'rotatecontrol'=>'true','pancontrol'=>'true','overviewmapcontrol'=>'true',
+			'streetviewcontrol'=>'true','maptypecontrol'=>'true','draggable'=>'true',
+			'maptypeid' => 'ROADMAP',
+			'width' => '100%','height' => '200px','class' => '',
 			'tooltip'=>'false'
-			), $args ) );
-
-		//Set zoom
-		$zoom = (int) $zoom; 
+			), $atts );
 
 		//Cast options as boolean:
-		$bool_options = compact('scrollwheel','zoomcontrol','rotatecontrol','pancontrol','overviewmapcontrol','streetviewcontrol','draggable','maptypecontrol');
-		foreach( $bool_options as $option => $value ){
-			$bool_options[$option] = ( $value == 'false' ? false : true );
+		$bool_options = array('tooltip','scrollwheel','zoomcontrol','rotatecontrol','pancontrol','overviewmapcontrol','streetviewcontrol','draggable','maptypecontrol');
+		foreach( $bool_options as $option  ){
+			$args[$option] = ( $args[$option] == 'false' ? false : true );
 		}
-		
-		//Set the attributes
-		$width = esc_attr($width);
-		$height = esc_attr($height);
 
-		 //If class is selected use that style, otherwise use specified height and width
-		if( !empty($class) ){
-			$class = esc_attr($class)." eo-venue-map googlemap";
-			$style="";
-		}else{
-			$class ="eo-venue-map googlemap";
-			$style="style='height:".$height.";width:".$width.";' ";
-		}
-		
-		//Get latlng value by slug
-		foreach( $venue_ids as $venue_id ){
-			//Venue lat/lng array
-			$latlng = eo_get_venue_latlng($venue_id);
-
-			//Venue tooltip description
-			$tooltip_content = '<strong>'.eo_get_venue_name($venue_id).'</strong>';
-			$address = array_filter(eo_get_venue_address($venue_id));
-			if( !empty($address) )
-				$tooltip_content .='</br>'.implode(', ',$address);
-			
-			$tooltip_content = apply_filters('eventorganiser_venue_tooltip',$tooltip_content,$venue_id);
-	
-			$locations[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng'], 'tooltipContent'=>$tooltip_content);
-		}
-		self::$map[] = array_merge($bool_options, array('locations'=>$locations,'zoom'=>$zoom,'tooltip'=>$tooltip) );
-		$id = count(self::$map);
-
-		$return = "<div class='".$class."' id='eo_venue_map-{$id}' ".$style."></div>";
-		return $return;
+		return eo_get_venue_map($venue_slugs, $args);
 	}
- 
+
+
 
 	function handle_eventlist_shortcode($atts=array(),$content=null) {
 		$taxs = array('category','tag','venue');

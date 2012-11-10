@@ -513,11 +513,65 @@ function eo_get_venues($args=array()){
 * @return string The markup of the map
  */
 	function eo_get_venue_map($venue_slug_or_id='', $args=array()){
-		$venue_id = eo_get_venue_id_by_slugorid($venue_slug_or_id);
-		return EventOrganiser_Shortcodes::get_venue_map($venue_id, $args);
+
+		//Cast as array to allow multi venue support
+		if( !is_array($venue_slug_or_id) )
+			$venue_slug_or_id = array( $venue_slug_or_id );
+
+		$venue_ids = array_map('eo_get_venue_id_by_slugorid',$venue_slug_or_id);
+
+		//Map properties
+		$args = shortcode_atts( array(
+			'zoom' => 15, 'scrollwheel'=>true, 'zoomcontrol'=>true, 'rotatecontrol'=>true,
+			'pancontrol'=>true, 'overviewmapcontrol'=>true, 'streetviewcontrol'=>true,
+			'maptypecontrol'=>true, 'draggable'=>true,'maptypeid' => 'ROADMAP',
+			'width' => '100%','height' => '200px','class' => '',
+			'tooltip'=>false
+			), $args );
+
+		//Cast zoom as integer
+		$zoom = (int) $args['zoom']; 
+		
+		//Escape attributes
+		$width = esc_attr($args['width']);
+		$height = esc_attr($args['height']);
+		$class = esc_attr($args['class']);
+
+		$args['maptypeid'] = strtoupper($args['maptypeid']);
+
+		 //If class is selected use that style, otherwise use specified height and width
+		if( !empty($class) ){
+			$class .= " eo-venue-map googlemap";
+			$style = "";
+		}else{
+			$class = "eo-venue-map googlemap";
+			$style = "style='height:".$height.";width:".$width.";' ";
+		}
+		
+		//Set up venue locations for map
+		foreach( $venue_ids as $venue_id ){
+
+			//Venue lat/lng array
+			$latlng = eo_get_venue_latlng($venue_id);
+
+			//Venue tooltip description
+			$tooltip_content = '<strong>'.eo_get_venue_name($venue_id).'</strong>';
+			$address = array_filter(eo_get_venue_address($venue_id));
+			if( !empty($address) )
+				$tooltip_content .='</br>'.implode(', ',$address);
+			
+			$tooltip_content = apply_filters('eventorganiser_venue_tooltip',$tooltip_content,$venue_id);
+	
+			$locations[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng'], 'tooltipContent'=>$tooltip_content);
+		}
+
+		//This could be improved
+		EventOrganiser_Shortcodes::$map[] = array_merge($args, array('locations'=>$locations) );
+		EventOrganiser_Shortcodes::$add_script = true;
+		$id = count(EventOrganiser_Shortcodes::$map);
+
+		return  "<div class='".$class."' id='eo_venue_map-{$id}' ".$style."></div>";
 	}
-
-
 
 /*  Venue metadata functions */
 function eo_get_venue_meta($venue_id, $key, $single=true){	
