@@ -393,9 +393,10 @@ function eventorganiser_venue_tooltip() {
 		this.tooltip.qtip('show');
 		return;
 	}
-	
+	jQuery(this.getMap().getDiv()).css({overflow: 'visible'});
+
 	// Create the tooltip on a dummy div and store it on the marker
-	 this.tooltip = jQuery('<div />').qtip({
+	 this.tooltip =jQuery('<div />').qtip({
         	content: {
 			text: this.content,
 		},
@@ -419,7 +420,7 @@ function eventorganiser_venue_tooltip() {
         	    solo: true
         	},
         	hide: {
-        	    event: 'mouseleave unfocus'
+        	   event: 'mouseleave unfocus'
         	}
 	    });
   }
