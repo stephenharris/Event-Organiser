@@ -82,7 +82,7 @@ function eventorganiser_details_metabox($post){
 					<td class="eo-label"><?php echo __("End Date/Time",'eventorganiser').':';?> </td>
 					<td> 
 					<input class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" id="to_date" <?php disabled(!$sche_once);?>  value="<?php echo $end->format($phpFormat); ?>"/>
-					<input name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all " size="4" maxlength="5" id="HWSEvent_time2" <?php disabled( (!$sche_once) || $all_day );?> value=" <?php echo $end->format('H:i'); ?>""/>
+					<input name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all " size="4" maxlength="5" id="HWSEvent_time2" <?php disabled( (!$sche_once) || $all_day );?> value="<?php echo $end->format('H:i'); ?>"/>
 
 					<label>
 					<input type="checkbox" id="eo_allday"  <?php checked($all_day); ?> name="eo_input[allday]"  <?php  disabled( !$sche_once );?> value="1"/>
