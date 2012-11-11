@@ -69,7 +69,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 	self::$agendas[$id] = array(
 		'id'=>esc_attr($args['widget_id']),
 		'number'=>$this->number,
-		'mode'=>$instance['mode']
+		'mode'=> isset($instance['mode']) ? $instance['mode'] : 'day',
 	);
 
 	//Echo widget

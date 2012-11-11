@@ -7,6 +7,7 @@ class EO_Calendar_Widget extends WP_Widget
 
 	var $w_arg = array(
 		'title'=> '',
+		'showpastevents'=>1,
 		'event-category'=>'',
 		'event-venue'=>'',
 		);
