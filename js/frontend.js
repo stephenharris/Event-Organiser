@@ -199,7 +199,7 @@ jQuery(document).ready(function () {
 			changeMonth: true,
 			changeYear: true,
 			showOn: 'button',
-	            	buttonText: 'Go to Date',
+	            	buttonText: 'Go to Date'
         	});
 
         if ($(".eo_widget_calendar").length > 0 ) {
@@ -339,7 +339,7 @@ function eo_load_map() {
 			streetViewControl: maps[i].streetviewcontrol,
 			draggable: maps[i].draggable,
 			mapTypeControl: maps[i].maptypecontrol,
-			mapTypeId: google.maps.MapTypeId[maps[i].maptypeid],
+			mapTypeId: google.maps.MapTypeId[maps[i].maptypeid]
         	};
 		map = new google.maps.Map(document.getElementById("eo_venue_map-" + (i + 1)), b);
 
@@ -356,7 +356,7 @@ function eo_load_map() {
 				var c = new google.maps.Marker({
 					position: LatLngList[j],
 	                		map: map,
-					content:locations[j].tooltipContent,
+					content:locations[j].tooltipContent
 	            		});
 				if( 'false' != maps[i].tooltip ){
 					google.maps.event.addListener(c, 'click',eventorganiser_venue_tooltip);
@@ -398,7 +398,7 @@ function eventorganiser_venue_tooltip() {
 	// Create the tooltip on a dummy div and store it on the marker
 	 this.tooltip =jQuery('<div />').qtip({
         	content: {
-			text: this.content,
+			text: this.content
 		},
 		border: {
 			radius: 4,
@@ -406,7 +406,7 @@ function eventorganiser_venue_tooltip() {
 		},
 		style: {
 			classes: "ui-tooltip-shadow",
-			widget: true,
+			widget: true
 		},
         	position: {
         	    at: "right center",
