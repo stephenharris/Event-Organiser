@@ -156,7 +156,7 @@ jQuery(document).ready(function () {
                 		        request = {
 						start: jQuery.fullCalendar.formatDate(a, "yyyy-MM-dd"),
 						end: jQuery.fullCalendar.formatDate(b, "yyyy-MM-dd"),
-						timeformat:d.timeFormatphp,
+						timeformat:d.timeFormatphp
                 		        };
                 		        if (typeof d.category !== "undefined" &&d.category != "") {
                 		            request.category = d.category
