@@ -359,7 +359,7 @@ function eo_load_map() {
 					content:locations[j].tooltipContent,
 	            		});
 				if( 'false' != maps[i].tooltip ){
-					google.maps.event.addListener(c, 'mouseover',eventorganiser_venue_tooltip);
+					google.maps.event.addListener(c, 'click',eventorganiser_venue_tooltip);
 				}
         		}
 		}
