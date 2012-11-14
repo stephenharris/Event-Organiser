@@ -111,7 +111,7 @@ function eventorganiser_upgradecheck(){
 		}
 		if( $installed_ver < '1.6'  ){
 			//Remove columns:
-			/*
+
 			$columns = $wpdb->get_col("DESC {$wpdb->eo_events}", 0);
 			$remove_columns = array('Venue','event_schedule','event_schedule_meta', 'event_frequency','reoccurrence_start', 'reoccurrence_end' );
 			$delete_columns = array_intersect($remove_columns, $columns);
@@ -119,7 +119,6 @@ function eventorganiser_upgradecheck(){
 				$sql = $wpdb->query("ALTER TABLE {$wpdb->eo_events} DROP COLUMN ".implode(', DROP COLUMN ',$delete_columns)).';';
 		
 			eventorganiser_install();
-			*/
 		}
 		update_option('eventorganiser_version', $eventorganiser_db_version);
 
