@@ -10,7 +10,7 @@
 * @return array|false Array of DateTime objects of the start date-times of occurences. False if none exist.
  */
 function eo_get_the_occurrences($post_id=''){
-	_deprecated_function( __FUNCTION__, '1.5', 'eo_get_the_occurrences_of()' );
+	//_deprecated_function( __FUNCTION__, '1.5', 'eo_get_the_occurrences_of()' );
 	$occurrences = eo_get_the_occurrences_of($post_id);
 	return wp_list_pluck($occurrences, 'start');
 }

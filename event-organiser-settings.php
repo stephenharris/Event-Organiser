@@ -586,7 +586,7 @@ function eventorganiser_radio_field( $args ){
 		if ( $args['label_for'] ){
 			$current = $args['select'];
 			$name_prefix = isset($args['name_prefix']) ?  $args['name_prefix'] : 'eventorganiser_options';
-			printf('<select %s name="%s]" id="%s">',
+			printf('<select %s name="%s" id="%s">',
 				isset($args['class']) ? 'class="'.esc_attr($args['class']).'"'  : '',
 				esc_attr($name_prefix.'['.$args['label_for'].']'),
 				esc_attr($args['label_for'])
@@ -662,7 +662,7 @@ function eventorganiser_radio_field( $args ){
 
 			}else{
 
-				printf('<textarea cols="50" rows="4" name="[%s]" class="%s large-text" id="%s"> %s </textarea>',
+				printf('<textarea cols="50" rows="4" name="%s" class="%s large-text" id="%s">%s</textarea>',
 					esc_attr($name_prefix.'['.$args['label_for'].']'),
 					isset($args['class']) ? esc_attr($args['class'])  : '',
 					esc_attr($args['label_for']),
