@@ -22,6 +22,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 	function page_actions(){	
 
 		global $EO_Errors;
+		add_action('admin_notices',array($this,'admin_notices'));
 
 		//Determine action if any
 		$action = $this->current_action();
@@ -46,10 +47,16 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 					}else{
 						$term_id = (int) $return['term_id'];
 						$venue = get_term($term_id,'event-venue');
-						$_REQUEST['event-venue'] = $venue->slug;
-						$EO_Errors->add('eo_notice', __("Venue <strong>updated</strong>",'eventorganiser'));
+						$url = add_query_arg(array(
+								'page'=>'venues',
+								'action'=>'edit',
+								'event-venue'=> $venue->slug,
+								'message'=>2,
+						    ), admin_url('edit.php?post_type=event'));
+
+						wp_redirect($url);
+						exit();
 					}
-					$_REQUEST['action']='edit';
 					break;
 
 
@@ -66,11 +73,19 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 						$EO_Errors->add('eo_error', __("Venue <strong>was not</strong> created",'eventorganiser').": ".$return->get_error_message());
 						$_REQUEST['action']='create';
 					}else{
-						$EO_Errors->add('eo_notice', __("Venue <strong>created</strong>",'eventorganiser'));
 						$term_id = (int) $return['term_id'];
 						$venue = get_term($term_id,'event-venue');
-						$_REQUEST['action']='edit';
-						$_REQUEST['event-venue'] = $venue->slug;
+
+						$venue = get_term($term_id,'event-venue');
+						$url = add_query_arg(array(
+								'page'=>'venues',
+								'action'=>'edit',
+								'event-venue'=> $venue->slug,
+								'message'=>1,
+						    ), admin_url('edit.php?post_type=event'));
+
+						wp_redirect($url);
+						exit();
 					}
 					break;
 	
@@ -99,7 +114,12 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 					endforeach;
 		
 					if($deleted>0){
-						$EO_Errors = new WP_Error('eo_notice', __("Venue(s) <strong>deleted</strong>",'eventorganiser'));
+						$url = add_query_arg(array(
+								'page'=>'venues',
+								'message'=>3,
+						    ), admin_url('edit.php?post_type=event'));
+						wp_redirect($url);
+						exit();
 					}else{
 						$EO_Errors = new WP_Error('eo_error', __("Venue(s) <strong>were not </strong> deleted",'eventorganiser'));
 					}
@@ -127,9 +147,22 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 	}
 
 
+	function admin_notices(){
+		$m =  isset( $_GET['message']) ? (int) $_GET['message'] : 0;
+		$messages=array(
+			1 => __("Venue <strong>created</strong>",'eventorganiser'),
+			 2 => __("Venue <strong>updated</strong>",'eventorganiser'),
+			3 => __("Venue(s) <strong>deleted</strong>",'eventorganiser')
+		);
+
+		if( isset($messages[$m]) )
+			printf('<div class="updated"><p>%s</p></div>', $messages[$m] );
+	}
+
 	function page_scripts(){
 		$action = $this->current_action();
 		$screen = get_current_screen();
+
 		if(in_array($action,array('create','edit','add','update'))):
 			wp_enqueue_script('eo_venue');
 			wp_localize_script( 'eo_venue', 'EO_Venue', array( 'draggable' => true, 'screen_id'=>$screen->id));
@@ -225,7 +258,7 @@ function edit_form($venue=false){
 
 	<form name="venuedetails" id="eo_venue_form" method="post" action="<?php echo admin_url('edit.php?post_type=event&page=venues'); ?>">  
 		<input type="hidden" name="action" value="<?php echo $do; ?>"> 
-		<input type="hidden" name="eo_venue[venue_id]" value="<?php echo $term_id;?>">  
+		<input type="hidden" id="eo_venue_id" name="eo_venue[venue_id]" value="<?php echo $term_id;?>">  
 		<input type="hidden" name="event-venue" value="<?php echo ( isset($venue->slug) ? $venue->slug : '' ) ;?>">  
 
 		<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
