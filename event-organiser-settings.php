@@ -623,24 +623,41 @@ function eventorganiser_radio_field( $args ){
 			}
 		}
 	}
+	
 
 	function eventorganiser_checkbox_field($args=array()){
 		if ( $args['label_for'] ){
-			$current = $args['checked'];
-			$value = isset($args['value']) ? $args['value'] : 1;
+
+			/* Backwards compatible - now accept an options array: */
+			/* $options = array( option_id =>array('value'=>value,'checked'=>1|0,'label'=>label ) */
+			$options =  isset($args['options']) ? $args['options'] : false;
+			$values =  isset($args['value']) ? $args['value'] : 1;
+			$checked =  isset($args['checked']) ? $args['checked'] : 0;
+						
+			if( empty($options) && !is_array( $values ) ){
+				$options = array( 
+							$args['label_for'] => array(
+								'label'=>'',
+								'value'=>$values,
+								'checked'=>$checked,
+							));
+			}
+
 			$name_prefix = isset($args['name_prefix']) ?  $args['name_prefix'] : 'eventorganiser_options';
-			$label = '';
-			printf('<label for="%s">
-						<input type="checkbox" name="%s" id="%s" value="%s" %s %s> 
-						%s
-					</label>',
-					$args['label_for'],
-					esc_attr($name_prefix.'['.$args['label_for'].']'),
-					$args['label_for'],
-					$value,
-					( $current ? 'checked="checked"' : ''),
-					isset($args['class']) ? 'class"'.esc_attr($args['class']).'"'  : '', 
-					$label);
+
+			foreach( $options as $id => $checkbox ){
+				printf('<label for="%1$s">
+							<input type="checkbox" name="%2$s" id="%1$s" value="%3$s" %4$s %5$s> 
+							%6$s </br>
+						</label>',
+						$id,
+						esc_attr($name_prefix.'['.$id.']'),
+						esc_attr($checkbox['value']),
+						( $checkbox['checked'] ? 'checked="checked"' : ''),
+						isset($args['class']) ? 'class"'.esc_attr($args['class']).'"'  : '', 
+						 isset($checkbox['label']) ? $checkbox['label'] : ''
+				);
+			}
 
 			if(!empty($args['help'])){
 				echo '<p class="description">'.$args['help'].'</p>';

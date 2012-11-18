@@ -76,7 +76,6 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 						$term_id = (int) $return['term_id'];
 						$venue = get_term($term_id,'event-venue');
 
-						$venue = get_term($term_id,'event-venue');
 						$url = add_query_arg(array(
 								'page'=>'venues',
 								'action'=>'edit',
