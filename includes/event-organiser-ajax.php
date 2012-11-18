@@ -329,7 +329,7 @@
 					$event['color'] = eo_get_event_color();
 
 				//Event summary
-				$event['summary'] = $summary;
+				$event['summary'] = '<div id="eo-cal-meta">'.$summary.'</div>';
 
 				//Filter the event array
 				$event = apply_filters('eventorganiser_admin_calendar',$event, $post);

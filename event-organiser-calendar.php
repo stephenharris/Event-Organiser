@@ -350,11 +350,11 @@ $calendar_page = new EventOrganiser_Calendar_Page();
 			echo "<div id='eo-dialog-tabs'>";
 					echo "<ul style='position: relative;'>";
 					foreach( $tabs as $id => $label ){
-						printf("<li><a href='#%s'>%s</a></li>", esc_attr('eo-dialog-tab-'.$id), esc_html($label));
+						printf('<li id="eo-dialog-tab-%1$s"><a href="#eo-dialog-tab-%1$s-content">%2$s</a></li>', esc_attr($id), esc_html($label));
 					}
 					echo "</ul>";
 					foreach( $tabs as $id=> $label){
-						printf("<div id='%s'> </div>",esc_attr('eo-dialog-tab-'.$id));
+						printf("<div id='eo-dialog-tab-%s-content'> </div>",esc_attr($id));
 					}
 			echo "</div>";
 		echo "</div>";

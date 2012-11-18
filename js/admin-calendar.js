@@ -77,7 +77,11 @@
 		timeFormat: EO_Ajax.timeFormat,
 		eventClick: function (event, jsevent, view) {
                 	jsevent.preventDefault();
-                	jQuery("#eo-dialog-tab-summary").html('<div id="eo-cal-meta">' + event.summary + '</div>');
+			jQuery("#eo-dialog-tabs ul li").each(function(){
+				var id = $(this).attr('id').substring(14);
+	                	jQuery("#eo-dialog-tabs #"+$(this).attr('id')+'-content').html(event[id]);
+			});
+
 			$('#events-meta').dialog('open');
 		},
 		select: function (startDate, endDate, allDay, jsEvent, view) {
