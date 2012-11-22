@@ -48,7 +48,7 @@ function eventorganiser_pre_get_posts( $query ) {
 	if('event'!= $query->get('post_type') )
 		return $query;
 
-	$blog_now = new DateTIme(null, eo_get_blog_timezone());
+	$blog_now = new DateTime(null, eo_get_blog_timezone());
 
 	//Determine whether or not to show past events and each occurrence. //If not set, use options
 	if( !is_admin() && !is_single() && !$query->is_feed('eo-events') && !isset($query->query_vars['showpastevents']) ){
