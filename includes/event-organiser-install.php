@@ -96,8 +96,11 @@ function eventorganiser_upgradecheck(){
 	$installed_ver = get_option('eventorganiser_version');
 
 	if( empty($installed_ver) ){
-		//This is a fresh install. But a bug in 1.5 means that it could be that they first installed in 1.5
-		//So set to 1.5 - fresh installs won't be effected
+		//This is a fresh install. Add current database version
+		add_option('eventorganiser_version', $eventorganiser_db_version);
+
+		//But a bug in 1.5 means that it could be that they first installed in 1.5 (as no db version was added)
+		//So set to 1.5.  Fresh installs will have to go through the 1.6 (and above) update, but this is ok.
 		$installed_ver = '1.5';
 	}
 
@@ -117,7 +120,6 @@ function eventorganiser_upgradecheck(){
 		}
 		if( $installed_ver < '1.6'  ){
 			//Remove columns:
-
 			$columns = $wpdb->get_col("DESC {$wpdb->eo_events}", 0);
 			$remove_columns = array('Venue','event_schedule','event_schedule_meta', 'event_frequency','reoccurrence_start', 'reoccurrence_end' );
 			$delete_columns = array_intersect($remove_columns, $columns);
