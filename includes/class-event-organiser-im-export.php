@@ -566,7 +566,7 @@ function escape_icalText($text){
 						break;
 
 					case 'CREATED':
-						$date->setTimezone(new DateTImeZone('utc'));
+						$date->setTimezone(new DateTimeZone('utc'));
 						$event_post['post_date_gmt']= $date->format('Y-m-d H:i:s');
 						break;
 

@@ -276,7 +276,7 @@ function eo_get_next_occurrence_of($post_id=0){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	
 	//Retrieve the blog's local time and create the date part
-	$blog_now = new DateTIme(null, eo_get_blog_timezone() );
+	$blog_now = new DateTime(null, eo_get_blog_timezone() );
 	$now_date =$blog_now->format('Y-m-d');
 	$now_time =$blog_now->format('H:i:s');
 	

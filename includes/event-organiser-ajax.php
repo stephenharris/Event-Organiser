@@ -125,7 +125,7 @@ function eventorganiser_public_fullcalendar() {
 			$event['description']  = apply_filters('eventorganiser_event_tooltip', $description, $post->ID,$post->event_id,$post);
 
 			//Colour past events
-			$now = new DateTIme(null,$tz);
+			$now = new DateTime(null,$tz);
 			if($event_start <= $now)
 				$event['className'][] = 'eo-past-event';
 			else
@@ -265,7 +265,7 @@ function eventorganiser_admin_calendar() {
 	
 				$event['className']=array('event');
 
-				 $now = new DateTIme(null,$tz);
+				 $now = new DateTime(null,$tz);
 				if($event_start <= $now)
 					$event['className'][]='past-event';
 
@@ -430,7 +430,7 @@ function eventorganiser_widget_agenda() {
 		$wid = new EO_Events_Agenda_Widget();
 		$settings =  $wid->get_settings();
 		$instance = $settings[$number];
-		$today= new DateTIme('now', eo_get_blog_timezone());
+		$today= new DateTime('now', eo_get_blog_timezone());
 		$query=array();
 		$return_array = array();
 

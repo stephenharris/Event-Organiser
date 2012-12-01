@@ -260,7 +260,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 	
 	function display(){
 		//Get the time 'now' according to blog's timezone
-		 $now = new DateTIme(null,eo_get_blog_timezone());
+		 $now = new DateTime(null,eo_get_blog_timezone());
 		$venues = eo_get_venues();
 	?>
 

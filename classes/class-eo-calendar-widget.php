@@ -82,7 +82,7 @@ class EO_Calendar_Widget extends WP_Widget
 		wp_enqueue_script( 'eo_front');
 		extract($args, EXTR_SKIP);
 
-		//Set the month to display (DateTIme must be 1st of that month)
+		//Set the month to display (DateTime must be 1st of that month)
 		$tz = eo_get_blog_timezone();
 		$date =  get_query_var('ondate') ?  get_query_var('ondate') : 'now';
 		$month = new DateTime($date,$tz);
