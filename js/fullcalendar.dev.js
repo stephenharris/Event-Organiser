@@ -1,6 +1,6 @@
 /** 
- * NOTE: This is an edited version of the FullCalendar v1.5.4 (eventorganiser branch)
-*/
+- * NOTE: This is an edited version of the FullCalendar v1.5.4 (eventorganiser branch)
+-*/
 /**
  * @preserve
  * FullCalendar v1.5.4
@@ -14,7 +14,8 @@
  * Dual licensed under the MIT and GPL licenses, located in
  * MIT-LICENSE.txt and GPL-LICENSE.txt respectively.
  *
- * Date: Wed Oct 31 15:56:21 2012 +0000
+ * Date: Sat Nov 3 20:29:34 2012 +0000
+ *
  */
  
 (function($, undefined) {
@@ -634,6 +635,9 @@ function Calendar(element, options, eventSources) {
 		if (name == 'height' || name == 'contentHeight' || name == 'aspectRatio') {
 			options[name] = value;
 			updateSize();
+		}else{
+			options[name] = value;
+			rerenderEvents();
 		}
 	}
 	

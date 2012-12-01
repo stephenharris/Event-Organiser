@@ -88,7 +88,7 @@ class EventOrganiser_Shortcodes {
 			'category'=>'',
 			'venue'=>'',
 			'timeformat'=>'G:i',
-			'axisformat'=>'ga',
+			'axisformat'=>get_option('timeformat'),
 			'key'=>'false',
 			'tooltip'=>'true',
 			'weekends'=>'true',

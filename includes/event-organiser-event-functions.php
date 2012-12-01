@@ -497,7 +497,6 @@ function eo_get_schedule_summary($post_id=0){
 				break;
 
 		endswitch;
-				
 		$return .= ' '.__('until','eventorganiser').' '. eo_format_datetime($reoccur['schedule_last'],'M, jS Y');
 	}
 	

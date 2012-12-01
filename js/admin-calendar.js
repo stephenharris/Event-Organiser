@@ -10,6 +10,9 @@
 	});
 	$('#events-meta').parent().find('.ui-dialog-titlebar-close').appendTo('.ui-tabs-nav').closest('.ui-dialog').children('.ui-dialog-titlebar').remove();
 
+	/* Time Format from screen option */
+	   format = ($('#eofc_time_format').is(":checked") ? 'HH:mm' : 'h:mmtt');
+
 	/* Calendar */
         var calendar = jQuery('#eo_admin_calendar').fullCalendar({
 		firstDay: parseInt(EO_Ajax.startday),
@@ -74,7 +77,8 @@
 			if (bool) jQuery('#loading').show();
                 	else jQuery('#loading').hide()
 		},
-		timeFormat: EO_Ajax.timeFormat,
+		timeFormat:format,
+		axisFormat: format,
 		eventClick: function (event, jsevent, view) {
                 	jsevent.preventDefault();
 			jQuery("#eo-dialog-tabs ul li").each(function(){
@@ -130,7 +134,7 @@
 	/* Update time format screen option */
         $('#eofc_time_format').change(function () {
             format = ($('#eofc_time_format').is(":checked") ? 'HH:mm' : 'h:mmtt');
-            calendar.fullCalendar('option', 'timeFormat', format).fullCalendar('rerenderEvents');
+            calendar.fullCalendar('option', 'timeFormat', format);
             $.post(ajaxurl, {
                 action: 'eofc-format-time',
                 is24: $('#eofc_time_format').is(":checked"),
