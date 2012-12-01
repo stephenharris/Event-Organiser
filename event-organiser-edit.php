@@ -330,7 +330,7 @@ function eventorganiser_details_save( $post_id ) {
 		global $EO_Errors;
 		$code = $response->get_error_code();
 		$message = $response->get_error_message($code);
-		$errors[$post_id][] = "Event dates were not saved.";
+		$errors[$post_id][] = __("Event dates were not saved.",'eventorganiser');
 		$errors[$post_id][] = $message;
 		$EO_Errors->add('eo_error',$message);
 		update_option('eo_notice',$errors);

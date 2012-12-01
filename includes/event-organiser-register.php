@@ -1,10 +1,12 @@
 <?php
-
  /**
  * Register jQuery scripts and CSS files
+ * Hooked on to init
+ *
  * @since 1.0.0
+ * @ignore
+ * @access private
  */
-add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
 	global $wp_locale;
 	$version = '1.6';
@@ -51,12 +53,15 @@ function eventorganiser_register_script() {
 	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array('eventorganiser-jquery-ui-style'),$version);
 	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array(),$version);
 }   
+add_action('init', 'eventorganiser_register_script');
 
  /**
  *Register jQuery scripts and CSS files for admin
+ *
  * @since 1.0.0
+ * @ignore
+ * @access private
  */
-add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts',10);
 function eventorganiser_register_scripts(){
 	$version = '1.6';
 	wp_register_script( 'eo_GoogleMap', 'http://maps.googleapis.com/maps/api/js?sensor=true');
@@ -90,6 +95,8 @@ function eventorganiser_register_scripts(){
 
 	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css',array('eventorganiser-jquery-ui-style'),$version);
 }
+add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts',10);
+
 
  /**
  * Check the export and event creation (from Calendar view) actions. 
@@ -97,28 +104,36 @@ function eventorganiser_register_scripts(){
  * the appropriate page is loading.
  *
  * @since 1.0.0
+ * @ignore
+ * @access private
  */
-add_action('admin_init','eventorganiser_admin_init',0);
 function eventorganiser_admin_init(){
 	global $EO_Errors;
 	$EO_Errors = new WP_Error();
 }
+add_action('admin_init','eventorganiser_admin_init',0);
 add_action('admin_init', array('Event_Organiser_Im_Export', 'get_object'));
 
-
-add_action('init','eventorganiser_public_export');
+ /**
+ * @since 1.0.0
+ * @ignore
+ * @access private
+ */
 function eventorganiser_public_export(){
 	if( eventorganiser_get_option('feed') ){
 		add_feed('eo-events', array('Event_Organiser_Im_Export','get_object'));
 	}
 }
+add_action('init','eventorganiser_public_export');
 
 /**
  * Queues up the javascript / style scripts for Events custom page type 
+ * Hooked onto admin_enqueue_scripts
  *
  * @since 1.0.0
+ * @ignore
+ * @access private
  */
-add_action( 'admin_enqueue_scripts', 'eventorganiser_add_admin_scripts', 998, 1 );
 function eventorganiser_add_admin_scripts( $hook ) {
 	global $post,$current_screen,$wp_locale;
 
@@ -165,11 +180,16 @@ function eventorganiser_add_admin_scripts( $hook ) {
 			wp_enqueue_style('eventorganiser-style');
 	}
 }
+add_action( 'admin_enqueue_scripts', 'eventorganiser_add_admin_scripts', 998, 1 );
+
 
 /**
  * Perform database and WP version checks. Display appropriate error messages. 
  * Triggered on update.
+ *
  * @since 1.4.0
+ * @ignore
+ * @access private
  */
 function eventorganiser_db_checks(){
 	global $wpdb;
@@ -203,7 +223,14 @@ function eventorganiser_db_checks(){
 	<?php endif; 
 }
 
-add_action('admin_notices','eventorganiser_admin_notices');
+
+/**
+ * Displays any errors or notices in the global $EO_Errors
+ *
+ * @since 1.4.0
+ * @ignore
+ * @access private
+ */
 function eventorganiser_admin_notices(){
 	global $EO_Errors;
 	$errors=array();
@@ -227,30 +254,61 @@ function eventorganiser_admin_notices(){
 		<?php	endif;
 	endif;
 }
+add_action('admin_notices','eventorganiser_admin_notices');
 
 
-    add_filter('plugin_action_links', 'eventorganiser_plugin_settings_link', 10, 2);
-    function eventorganiser_plugin_settings_link($links, $file) {
+ /**
+ * Adds link to the plug-in settings on the settings page
+ *
+ * @since 1.5
+ * @ignore
+ * @access private
+ */
+function eventorganiser_plugin_settings_link($links, $file) {
     
-        if( $file == 'event-organiser/event-organiser.php' ) {
-            /* Insert the link at the end*/
-            $links['settings'] = sprintf('<a href="%s"> %s </a>',
-                    admin_url('options-general.php?page=event-settings'),
-                     __('Settings','eventorganiser')
+	if( $file == 'event-organiser/event-organiser.php' ) {
+		/* Insert the link at the end*/
+		$links['settings'] = sprintf('<a href="%s"> %s </a>',
+			admin_url('options-general.php?page=event-settings'),
+			__('Settings','eventorganiser')
                 );
         }
-        return $links;
-    }
-    
+	return $links;
+}
+add_filter('plugin_action_links', 'eventorganiser_plugin_settings_link', 10, 2);    
 
-/*
-Cron jobs - for automatically deleting expired events
-*/
+/**
+ * Schedules cron job for automatically deleting expired events
+ *
+ * @since 1.4.0
+ * @ignore
+ * @access private
+ */
 function eventorganiser_cron_jobs(){
 	wp_schedule_event(time()+60, 'daily', 'eventorganiser_delete_expired');
 }
 
-add_action('eventorganiser_delete_expired', 'eventorganiser_delete_expired_events');
+
+/**
+ * Clears the 'delete expired events' cron job.
+ *
+ * @since 1.4.0
+ * @ignore
+ * @access private
+ */
+function eventorganiser_clear_cron_jobs(){
+	wp_clear_scheduled_hook('eventorganiser_delete_expired');
+}
+
+
+/**
+ * Callback for the delete expired events cron job. Deletes events that finished at least 24 hours ago.
+ * For recurring events it is only deleted once the last occurrence has expired.
+ *
+ * @since 1.4.0
+ * @ignore
+ * @access private
+ */
 function eventorganiser_delete_expired_events(){
 	//Get expired events
 	$events = eo_get_events(array('showrepeats'=>0,'showpastevents'=>1,'eo_interval'=>'expired'));
@@ -270,18 +328,18 @@ function eventorganiser_delete_expired_events(){
 		endforeach;
 	endif;
 }
-
-function eventorganiser_clear_cron_jobs(){
-	wp_clear_scheduled_hook('eventorganiser_delete_expired');
-}
+add_action('eventorganiser_delete_expired', 'eventorganiser_delete_expired_events');
 
 
 
 /**
  *  Adds retina support for the screen icon
  * Thanks to numeeja (http://cubecolour.co.uk/)
+ *
+ * @since 1.5.0
+ * @ignore
+ * @access private
  */
-add_action('admin_print_styles','eventorganiser_screen_retina_icon');
 function eventorganiser_screen_retina_icon(){
 
 	$screen_id = get_current_screen()->id;
@@ -303,10 +361,15 @@ function eventorganiser_screen_retina_icon(){
 	</style>
 	<?php
 }
+add_action('admin_print_styles','eventorganiser_screen_retina_icon');
+
 
 /** 
  * Purge the occurrences cache
+ * Hooked onto eventorganiser_save_event and eventorganiser_delete_event
+ *
  *@access private
+ * @ignore
  *@since 1.6
  */
 function _eventorganiser_delete_occurrences_cache($post_id=0){
@@ -318,10 +381,16 @@ foreach( $hooks as $hook ){
 	add_action($hook, '_eventorganiser_delete_occurrences_cache');
 }
 
+
 /**
  * Purge the cached results of get_calendar.
- * @access private
- * @since 1.5
+ * Hooked onto eventorganiser_save_event, eventorganiser_delete_event, wp_trash_post,
+ * update_option_gmt_offset,update_option_start_of_week,update_option_rewrite_rules
+ * and edited_event-category.
+ *
+ *@access private
+ * @ignore
+ *@since 1.5
  */
 function _eventorganiser_delete_calendar_cache() {
 	delete_transient( 'eo_widget_calendar' );
@@ -341,13 +410,16 @@ foreach( $hooks as $hook ){
 	add_action($hook, '_eventorganiser_delete_calendar_cache');
 }
 
+
 /**
-* Handles admin pointers
-*/
-/**
+ * Handles admin pointers
+ *
  * Kick starts the enquing. Rename this to something unique (i.e. include your plugin/theme name).
-*/
-add_action( 'admin_enqueue_scripts', 'eventorganiser_pointer_load',99999);
+ *
+ *@access private
+ *@ignore
+ *@since 1.5
+ */
 function eventorganiser_pointer_load( $hook_suffix ) {
 
 		$screen_id = get_current_screen()->id;
@@ -387,20 +459,29 @@ function eventorganiser_pointer_load( $hook_suffix ) {
 
 		// Add pointer options to script. 
 		wp_localize_script('eventorganiser-pointer', 'eventorganiserPointer', $valid_pointers);
-	}
+}
+add_action( 'admin_enqueue_scripts', 'eventorganiser_pointer_load',99999);
 
-	add_filter('eventorganiser_admin_pointers-event','eventorganiser_occurrencepicker_pointer');
-	function eventorganiser_occurrencepicker_pointer( $p ){
-		$p['occpicker150'] =array(	
-							'target' =>'.eo_occurrence_toogle',
-							'options'=>array(
-									'content'  => sprintf('<h3> %s </h3> <p> %s </p>',
-													__( 'New Feature: Add / Remove Dates' ,'eventorganiser'),
-													 __( 'This link reveals a datepicker which highlights the dates on which the event occurs. Click a date to add or remove it from the event\'s schedule.','eventorganiser')
-													),
-									'position' => array('edge' => 'left', 'align' => 'middle'),
-							)
-		); 
-		return $p;
-	}
+
+/**
+ * Adds pointer for 1.5
+ *
+ *@access private
+ *@ignore
+ *@since 1.5
+ */
+function eventorganiser_occurrencepicker_pointer( $p ){
+	$p['occpicker150'] =array(	
+		'target' =>'.eo_occurrence_toogle',
+		'options'=>array(
+					'content'  => sprintf('<h3> %s </h3> <p> %s </p>',
+							__( 'New Feature: Add / Remove Dates' ,'eventorganiser'),
+							 __( 'This link reveals a datepicker which highlights the dates on which the event occurs. Click a date to add or remove it from the event\'s schedule.','eventorganiser')
+							),
+					'position' => array('edge' => 'left', 'align' => 'middle'),
+					)
+	); 
+	return $p;
+}
+add_filter('eventorganiser_admin_pointers-event','eventorganiser_occurrencepicker_pointer');
  ?>

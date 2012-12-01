@@ -512,7 +512,7 @@ function eo_get_venues($args=array()){
 * @param mixed $venue_slug_or_id The venue ID as an integer. Or Slug as string. Uses venue of current event if empty.
 * @return string The markup of the map
  */
-	function eo_get_venue_map($venue_slug_or_id='', $args=array()){
+function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 
 		//Cast as array to allow multi venue support
 		if( !is_array($venue_slug_or_id) )
@@ -571,21 +571,74 @@ function eo_get_venues($args=array()){
 		$id = count(EventOrganiser_Shortcodes::$map);
 
 		return  "<div class='".$class."' id='eo_venue_map-{$id}' ".$style."></div>";
-	}
+}
 
-/*  Venue metadata functions */
+
+/**
+ * Retrieve post meta field for a venue.
+ *
+ * @since 1.5.0
+ *
+ * @param int $venue_id Venue (term) ID.
+ * @param string $key Optional. The meta key to retrieve. By default, returns data for all keys.
+ * @param bool $single Whether to return a single value.
+ * @return mixed Will be an array if $single is false. Will be value of meta data field if $single
+ *  is true.
+ */
 function eo_get_venue_meta($venue_id, $key, $single=true){	
 	return get_metadata('eo_venue', $venue_id, $key, $single); 
 }
 
+
+/**
+ * Add meta data field to a venue
+ *
+ * @since 1.5.0
+ *
+ * @param int $venue_id Venue (term) ID.
+ * @param string $meta_key Metadata name.
+ * @param mixed $meta_value Metadata value.
+ * @param bool $unique Optional, default is false. Whether the same key should not be added.
+ * @return bool False for failure. True for success.
+ */
 function eo_add_venue_meta($venue_id, $key, $value, $unique = false ){
 	return add_metadata('eo_venue',$venue_id, $key, $value, $unique);
 }
 
+/**
+ * Update venue meta field based on venue (term) ID.
+ *
+ * Use the $prev_value parameter to differentiate between meta fields with the
+ * same key and venue ID.
+ *
+ * If the meta field for the venue does not exist, it will be added.
+ *
+ * @since 1.5.0
+
+ * @param int $venue_id Venue (term) ID.
+ * @param string $meta_key Metadata key.
+ * @param mixed $meta_value Metadata value.
+ * @param mixed $prev_value Optional. Previous value to check before removing.
+ * @return bool False on failure, true if success.
+ */
 function eo_update_venue_meta($venue_id, $key, $value, $prev_value=''){
 	return update_metadata('eo_venue', $venue_id, $key, $value, $prev_value);
 }
 
+/**
+ * Remove metadata matching criteria from a venue.
+ *
+ * You can match based on the key, or key and value. Removing based on key and
+ * value, will keep from removing duplicate metadata with the same key. It also
+ * allows removing all metadata matching key, if needed.
+ *
+ * @since 1.5.0
+ *
+ * @param int $venue_id Venue (term) ID.
+ * @param string $meta_key Metadata name.
+ * @param mixed $meta_value Optional. Metadata value.
+ * @return bool False for failure. True for success.
+ */
 function eo_delete_venue_meta($venue_id, $key, $value = '', $delete_all = false ){
 	return delete_metadata('eo_venue',$venue_id, $key, $value, $delete_all);
 }
@@ -626,8 +679,10 @@ function eo_delete_venue_meta($venue_id, $key, $value = '', $delete_all = false 
 	}
 
 
-
-
+/**
+ *@ignore
+ *@access private
+ */
 function eventorganiser_venue_dropdown($post_id=0,$args){
 	$venues = get_terms('event-venue', array('hide_empty'=>false));
 	$current = (int) eo_get_venue($post_id); 
@@ -642,6 +697,10 @@ function eventorganiser_venue_dropdown($post_id=0,$args){
 		<?php endforeach;?>
 	</select><?php
 }
+/**
+ *@ignore
+ *@access private
+ */
 function eo_event_venue_dropdown( $args = '' ) {
 	$defaults = array(
 		'show_option_all' =>'', 

@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Install routine
+ *
+ *@since 1.0
+ *@access private
+ *@ignore
+*/
  function eventorganiser_install(){
        global $wpdb, $eventorganiser_db_version;
 
@@ -83,12 +91,28 @@
 
 }
 
+/**
+ * Deactivate routine
+ *
+ * Clears cron jobs and flushes rewrite rules
+ *
+ *@since 1.5
+ *@access private
+ *@ignore
+*/
 function eventorganiser_deactivate(){
 	eventorganiser_clear_cron_jobs();
 	flush_rewrite_rules();
     }
 
-add_action('admin_init', 'eventorganiser_upgradecheck');
+
+/**
+ * Upgrade routine. Hooked onto admin_init
+ *
+ *@since 1.1
+ *@access private
+ *@ignore
+*/
 function eventorganiser_upgradecheck(){
        global $eventorganiser_db_version, $wpdb;
 	global $EO_Errors;
@@ -134,7 +158,15 @@ function eventorganiser_upgradecheck(){
 		add_action('admin_notices', 'eventorganiser_db_checks',0);
 	endif;
 }
+add_action('admin_init', 'eventorganiser_upgradecheck');
 
+/**
+ * Upgrade routine for 1.5
+ *
+ *@since 1.5
+ *@access private
+ *@ignore
+*/
 function eventorganiser_150_update(){
 	global $wpdb;
 	$et =$wpdb->eo_events;
@@ -176,6 +208,13 @@ function eventorganiser_150_update(){
 
 }
 
+/**
+ * Upgrade routine for 1.4
+ *
+ *@since 1.4
+ *@access private
+ *@ignore
+*/
 function eventorganiser_140_update(){
 	//Migrates from Venue table to venue meta table
 
@@ -203,7 +242,13 @@ function eventorganiser_140_update(){
 }
 
 
-
+/**
+ * Uninstall routine
+ *
+ *@since 1.0
+ *@access private
+ *@ignore
+*/
 function eventorganiser_uninstall(){
 	global $wpdb,$eventorganiser_roles, $wp_roles,$wp_taxonomies;
 

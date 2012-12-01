@@ -401,10 +401,10 @@ function eo_delete_event_occurrences($post_id){
 
 		//Check dates are in chronological order
 		if($end < $start)
-			return new WP_Error('eo_error',__('Start date occurs after end date.'));
+			return new WP_Error('eo_error',__('Start date occurs after end date.','eventorganiser'));
 		
 		if($schedule_last < $start)
-			return new WP_Error('eo_error',__('Schedule end date is before is before the start date.'));
+			return new WP_Error('eo_error',__('Schedule end date is before is before the start date.','eventorganiser'));
 
 		//Now set timezones
 		$timezone = eo_get_blog_timezone();
@@ -416,7 +416,7 @@ function eo_delete_event_occurrences($post_id){
 
 		//White list schedule
 		if( !in_array($schedule, array('once','daily','weekly','monthly','yearly','custom')) )
-			return new WP_Error('eo_error',__('Schedule not recognised.'));
+			return new WP_Error('eo_error',__('Schedule not recognised.','eventorganiser'));
 
 		//Ensure event frequency is a positive integer. Else set to 1.
 		$frequency = max(absint($frequency),1);
