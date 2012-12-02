@@ -1,3 +1,5 @@
+var map;
+var marker;
 jQuery(document).ready(function () {
 	if (typeof EO_Venue != 'undefined') {
 		postboxes.add_postbox_toggles(pagenow);
@@ -7,11 +9,9 @@ jQuery(document).ready(function () {
         var eo_venue_Lat = jQuery("#eo_venue_Lat").val();
         var eo_venue_Lng = jQuery("#eo_venue_Lng").val();
         if (typeof eo_venue_Lat !== "undefined" && typeof eo_venue_Lng !== "undefined") {
-            var map;
-            var marker;
             eo_initialize_map(eo_venue_Lat, eo_venue_Lng);
             jQuery(".eo_addressInput").change(function () {
-                address = "";
+                var address = "";
                 jQuery(".eo_addressInput").each(function () {
                     if (jQuery(this).attr('id') != 'country-selector') {
                         address = address + " " + jQuery(this).val()
@@ -37,9 +37,9 @@ function eo_initialize_map(Lat, Lng) {
         map = new google.maps.Map(document.getElementById("venuemap"), myOptions);
 
         if (typeof EO_Venue != 'undefined') {
-            draggable = true
+            var draggable = true
         } else {
-            draggable = false
+            var draggable = false
         }
 
         marker = new google.maps.Marker({
@@ -59,33 +59,31 @@ function eo_initialize_map(Lat, Lng) {
 }
 
 function codeAddress(addrStr) {
-    var geocoder;
-    geocoder = new google.maps.Geocoder();
-    geocoder.geocode({
-        'address': addrStr
-    }, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            map.setCenter(results[0].geometry.location);
-            marker.setMap(null);
-            if (typeof EO_Venue != 'undefined') {
-                draggable = true
-            } else {
-                draggable = false
-            }
-            marker = new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location,
-                draggable: draggable
-            });
-            if (typeof EO_Venue != 'undefined') {
-                google.maps.event.addListener(marker, 'dragend', function (evt) {
-                    jQuery("#eo_venue_Lat").val(evt.latLng.lat().toFixed(6));
-                    jQuery("#eo_venue_Lng").val(evt.latLng.lng().toFixed(6));
-                    map.setCenter(marker.position)
-                })
-            }
-            jQuery("#eo_venue_Lat").val(results[0].geometry.location.lat());
-            jQuery("#eo_venue_Lng").val(results[0].geometry.location.lng())
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({'address': addrStr}, function (results, status) {
+		if ( status == google.maps.GeocoderStatus.OK){
+
+			marker.setMap(null);
+			map.setCenter(results[0].geometry.location);
+			if (typeof EO_Venue != 'undefined') {
+				var draggable = true
+			} else {
+				var draggable = false
+			}
+			marker = new google.maps.Marker({
+               	 		map: map,
+		                position: results[0].geometry.location,
+                		draggable: draggable
+            		});
+            	if (typeof EO_Venue != 'undefined') {
+			google.maps.event.addListener(marker, 'dragend', function (evt) {
+				jQuery("#eo_venue_Lat").val(evt.latLng.lat().toFixed(6));
+				jQuery("#eo_venue_Lng").val(evt.latLng.lng().toFixed(6));
+				map.setCenter(marker.position)
+			})
+		}
+		jQuery("#eo_venue_Lat").val(results[0].geometry.location.lat());
+		jQuery("#eo_venue_Lng").val(results[0].geometry.location.lng());
         }
-    })
+})
 }

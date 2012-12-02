@@ -11,8 +11,10 @@ function eventorganiser_register_script() {
 	global $wp_locale;
 	$version = '1.6';
 
+	$ext = (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG) ? '' : '.min';
+
 	/* FullCalendar */
-	wp_register_script( 'eo_fullcalendar', EVENT_ORGANISER_URL.'js/fullcalendar.js',array(
+	wp_register_script( 'eo_fullcalendar', EVENT_ORGANISER_URL."js/fullcalendar{$ext}.js",array(
 		'jquery',
 		'jquery-ui-core',
 		'jquery-ui-widget',
@@ -20,7 +22,7 @@ function eventorganiser_register_script() {
 	),$version,true);	
 
 	/* Front-end script */
-	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array(
+	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",array(
 		'jquery','eo_qtip2',
 		'jquery-ui-core',
 		'jquery-ui-widget',
@@ -28,6 +30,8 @@ function eventorganiser_register_script() {
 		'jquery-ui-datepicker',
 		'eo_fullcalendar'	
 	),$version,true);
+	
+	/* Add js variables to frontend script */
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
 			'adminajax'=>admin_url( 'admin-ajax.php'),
 			'locale'=>array(
@@ -64,14 +68,19 @@ add_action('init', 'eventorganiser_register_script');
  */
 function eventorganiser_register_scripts(){
 	$version = '1.6';
+	$ext = (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG) ? '' : '.min';
+
+	/* Google Maps */
 	wp_register_script( 'eo_GoogleMap', 'http://maps.googleapis.com/maps/api/js?sensor=true');
 
-	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL.'js/venues.js',array(
+	/*  Venue scripts for venue & event edit */
+	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL."js/venues{$ext}.js",array(
 		'jquery',
 		'eo_GoogleMap'
 	),$version,true);
 	
-	wp_register_script( 'eo_event', EVENT_ORGANISER_URL.'js/event.js',array(
+	/*  Script for event edit page */
+	wp_register_script( 'eo_event', EVENT_ORGANISER_URL."js/event{$ext}.js",array(
 		'jquery',
 		'jquery-ui-datepicker',
 		'jquery-ui-autocomplete',
@@ -79,20 +88,19 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-position'
 	),$version,true);	
 
-	//Admin calendar
-	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL.'js/admin-calendar.js',array(
+	/*  Script for admin calendar */
+	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL."js/admin-calendar{$ext}.js",array(
 		'eo_fullcalendar',
 		'jquery-ui-dialog',
 		'jquery-ui-tabs',
 		'jquery-ui-position'
 	),$version,true);
 
+	/*  Pick and register jQuery UI style */
+	$style = ( 'classic' == get_user_option( 'admin_color') ? 'classic' : 'fresh' );
+	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL."css/eventorganiser-admin-{$style}.css",array(),$version);
 
-	if ( 'classic' == get_user_option( 'admin_color') )
-		wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-classic.css',array(),$version);
-	else
-		wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array(),$version);
-
+	/* Admin styling */
 	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css',array('eventorganiser-jquery-ui-style'),$version);
 }
 add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts',10);
