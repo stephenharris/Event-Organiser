@@ -300,10 +300,6 @@ function _eventorganiser_remove_duplicates( $array=array() ){
  * @return int 1 | 0 | -1
  */
 function _eventorganiser_compare_dates($date1,$date2){
-
-	$date1->setTimezone('utc');
-	$date2->setTimezone('utc');
-
 	//Don't wish to compare times
 	if($date1->format('Ymd') == $date2->format('Ymd'))
 		return 0;
