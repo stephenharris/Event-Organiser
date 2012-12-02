@@ -17,7 +17,7 @@ jQuery(document).ready(function () {
                         address = address + " " + jQuery(this).val()
                     }
                 });
-                codeAddress(address)
+                eventorganiser_code_address(address)
             })
         }
     }
@@ -58,7 +58,7 @@ function eo_initialize_map(Lat, Lng) {
     }
 }
 
-function codeAddress(addrStr) {
+function eventorganiser_code_address(addrStr) {
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({'address': addrStr}, function (results, status) {
 		if ( status == google.maps.GeocoderStatus.OK){
