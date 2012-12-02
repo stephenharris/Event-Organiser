@@ -16,75 +16,101 @@ jQuery(document).ready(function($) {
 
     $(document).ready(function() {
         //Venue picker - combobox
-        $.widget("ui.combobox", {
-            _create: function() {
-                var input,
-                self = this,
-                select = this.element.hide(),
-                selected = select.children(":selected"),
-                value = selected.val() ? selected.text() : "";
-                var wrapper = $("<span>").wrap(input).addClass("ui-combobox").insertAfter(select);
-                input = $("<input>").appendTo(wrapper).val(value).addClass("ui-combobox-input").autocomplete({
-                    delay: 0,
-                    minLength: 0,
-                    source: function(req, response) {
-                        $.getJSON(EO_Ajax_Event.ajaxurl + "?callback=?&action=eo-search-venue", req, function(data) {
-                            response($.map(data, function(item) {
-                                if (item.term_id == 0) {
-                                    item.label = '';
-                                } else {
-                                    item.label = item.name;
-                                }
-                                return item;
-                            }));
-                        });
-                    },
-                    select: function(event, ui) {
-                        if ($("tr.venue_row").length > 0) {
-                            if (ui.item.term_id == 0) {
-                                $("tr.venue_row").hide();
-                            } else {
-                                $("tr.venue_row").show();
-                            }
-                            eo_initialize_map(ui.item.venue_lat, ui.item.venue_lng);
+    $.widget("ui.combobox", {
+        _create: function () {
+            var input, b = this,
+                c = this.element.hide(),
+                d = c.children(":selected"),
+                e = d.val() ? d.text() : "";
+            var wrapper  = $("<span>").addClass("ui-combobox eo-venue-input").insertAfter(c);
+             input = $("<input>").appendTo(wrapper).val(e).addClass("ui-combobox-input").autocomplete({
+                delay: 0,
+                minLength: 0,
+                source: function (a, b) {
+                    $.getJSON(EO_Ajax_Event.ajaxurl + "?callback=?&action=eo-search-venue", a, function (a) {
+			var venues = $.map(a, function (a) {
+                                			a.label = a.name
+                            				return a;
+                        				});
+                        b(venues);
+                    })
+                },
+                select: function (a, b) {
+                    if ($("tr.venue_row").length > 0) {
+                        if (b.item.term_id == 0) {
+				$("tr.venue_row").hide();
+				$("#eventorganiser_event_detail tr.eo-add-new-venue").hide();
+                        } else {
+				$("tr.venue_row").show();
+				$("#eventorganiser_event_detail tr.eo-add-new-venue").hide();
                         }
-                        $("#venue_select").removeAttr("selected");
-                        $("#venue_select").val(ui.item.term_id);
+                        eo_initialize_map(b.item.venue_lat, b.item.venue_lng)
                     }
-                }).addClass("ui-widget-content ui-corner-left");
+                    $("#venue_select").removeAttr("selected");
+                    $("#venue_select").val(b.item.term_id)
+                }
+            }).addClass("ui-widget-content ui-corner-left");
+            input.data("autocomplete")._renderItem = function (a, b) {
+                if (b.term_id == 0 ) {
+                    return $("<li></li>").data("item.autocomplete", b).append("<a>" + b.label + "</a>").appendTo(a)
+                }
+		//Clean address
+		var address_array = [b.venue_address, b.venue_postal, b.venue_country]
+		address_array = $.grep(address_array,function(n){
+		    return(n);
+		});
 
-                input.data("autocomplete")._renderItem = function(ul, item) {
-                    if (item.term_id == 0) {
-                        return $("<li></li>").data("item.autocomplete", item).append("<a>" + item.name + "</a>").appendTo(ul);
-                    }
-                    return $("<li></li>").data("item.autocomplete", item).append("<a>" + item.label + "</br> <span style='font-size: 0.8em'><em>" + item.venue_address + ", " + item.venue_postal + ", " + item.venue_country + "</span></em></a>").appendTo(ul);
-                };
+                return $("<li></li>").data("item.autocomplete", b)
+							.append("<a>" + b.label + "</br> <span style='font-size: 0.8em'><em>" +address_array.join(', ')+ "</span></em></a>")
+							.appendTo(a)
+            };
 
-                $("<a>").attr("tabIndex", -1).attr("title", "Show All Items").appendTo(wrapper).button({
-                    icons: {
-                        primary: "ui-icon-triangle-1-s"
-                    },
-                    text: false
-                }).removeClass("ui-corner-all").addClass("ui-corner-right ui-combobox-toggle").click(function() {
-                    // close if already visible
-                    if (input.autocomplete("widget").is(":visible")) {
-                        input.autocomplete("close");
-                        return;
-                    }
+	var button_wrappers = $("<span>").addClass("eo-venue-combobox-buttons").appendTo(wrapper);
+            $("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
+                icons: {
+                    primary: "ui-icon-triangle-1-s"
+                },
+                text: false
+            }).removeClass("ui-corner-all").addClass("ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
+                if (input.autocomplete("widget").is(":visible")) {
+                    input.autocomplete("close");
+                    return
+                }
+                $(this).blur();
+                input.autocomplete("search", "");
+                input.focus()
+            })
 
-                    // work around a bug (likely same cause as #5265)
-                    $(this).blur();
-
-                    // pass empty string as value to search for, displaying all results
-                    input.autocomplete("search", "");
-                    input.focus();
-                });
-            }
-            });
-
-        //Venue selection
-        $("#venue_select").combobox();
+		if( 'event' == pagenow ){
+			//Only add this on event edit page - i.e. not on calendar page.
+			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Create New Venue").appendTo(button_wrappers).button({
+                		icons: {
+                    			primary: "ui-icon-plus"
+                		},
+                		text: false
+            		}).removeClass("ui-corner-all").addClass("ui-corner-right add-new-venue ui-combobox-button").click(function () {
+				$("#eventorganiser_event_detail tr.eo-add-new-venue").show();			
+				$("tr.venue_row").show();
+				$("#venue_select").removeAttr("selected").val(0);
+				$('.eo-venue-combobox-select').hide();
+				$('.eo-venue-input input').val('');
+				eo_initialize_map(0,0);
+				$(this).blur();
+            		})
+		}	
+        }
     });
+    $("#venue_select").combobox()
+})
+
+
+$('.eo-add-new-venue-cancel').click(function(e){
+	e.preventDefault();
+	$('.eo-venue-combobox-select').show();
+	$('.eo-add-new-venue input').val('');
+	$("#eventorganiser_event_detail tr.eo-add-new-venue").hide();		
+});
+
 
     var locale = EO_Ajax_Event.locale;
     function eo_update_event_form() {
@@ -351,7 +377,7 @@ jQuery(document).ready(function($) {
     function eo_generate_dates_by_rule(year, month, inst) {
         //month is 1-12.
         eo_occurrences_by_rule = new Array();
-        var eo_viewing_month = [year, month];
+        eo_viewing_month = [year, month];
 
        var schedule = $('#HWSEventInput_Req').val();
        var frequency = parseInt($('#HWSEvent_freq').val());

@@ -255,7 +255,6 @@ function eventorganiser_details_save( $post_id ) {
 	//Maybe create a new venue
 	if( empty($venue_id) && !empty($_POST['eo_venue']) ){
 		$venue = $_POST['eo_venue'];
-		echo '<pre>';
 		if( !empty($venue['name']) ){
 			$new_venue = eo_insert_venue($venue['name'], $venue);
 			if( !is_wp_error($new_venue) )
