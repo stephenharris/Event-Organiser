@@ -79,9 +79,9 @@ jQuery(document).ready(function () {
                     		tooltip: calendars[i].tooltip,
                     		firstDay: parseInt(EOAjax.fullcal.firstDay),
 				weekends: calendars[i].weekends,
-				allDaySlot: calendars[i].alldayslot,//#Pascal - addo to shortocode
-				allDayText: calendars[i].alldaytext,//#Pascal - addo to shortocode
-				axisFormat: calendars[i].axisformat,//#Pascal - add to shortcode
+				allDaySlot: calendars[i].alldayslot,
+				allDayText: calendars[i].alldaytext,
+				axisFormat: calendars[i].axisformat,
 				minTime: calendars[i].mintime,
 				maxTime:calendars[i].maxtime,
 				columnFormat: {

@@ -318,7 +318,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		  	<?php wp_nonce_field('eventorganiser_calendar_save'); ?>
 			<?php if(current_user_can('publish_events')):?>
 				<input type="submit" class="button" tabindex="4" value="<?php _e('Save Draft','eventorganiser');?>"" id="event-draft" name="save">
-				<input type="reset" class="button" id="reset" value="Cancel">
+				<input type="reset" class="button" id="reset" value="<?php _e('Cancel','eventorganiser');?>">
 
 				<span id="publishing-action">
 					<input type="submit" accesskey="p" tabindex="5" value="<?php _e('Publish Event','eventorganiser');?>" class="button-primary" id="publish" name="publish">

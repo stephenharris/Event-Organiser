@@ -16,9 +16,9 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	 */
 	function setup_tabs(){
 		return apply_filters('eventorganiser_settings_tabs',array(
-					'general'=>__('General','wpmember'),
-					'permissions'=>__('Permissions'),
-					'permalinks'=>__('Permalinks'),
+					'general'=>__('General','eventorganiser'),
+					'permissions'=>__('Permissions','eventorganiser'),
+					'permalinks'=>__('Permalinks','eventorganiser'),
 					'imexport'=>__('Import','eventorganiser').'/'.__('Export','eventorganiser'),
 				));
 	}
@@ -26,7 +26,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	function set_constants(){
 		$this->hook = 'options-general.php';
 		$this->title = __('Event Organiser Settings','eventorganiser');
-		$this->menu ='Event Organiser';
+		$this->menu = __('Event Organiser','eventorganiser');
 		$this->permissions ='manage_options';
 		$this->slug ='event-settings';
 	}

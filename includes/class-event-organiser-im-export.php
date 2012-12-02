@@ -333,7 +333,7 @@ function escape_icalText($text){
 		global $EO_Errors;
 
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'edit_events' ))
-			wp_die( __('You do not have sufficient permissions to import events.','event-organiser') );
+			wp_die( __('You do not have sufficient permissions to import events.','eventorganiser') );
 
 		//Returns the file as an array of lines
 		$file_array =$this->parse_file($cal_file);
