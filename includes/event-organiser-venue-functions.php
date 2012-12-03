@@ -1,6 +1,7 @@
 <?php
 /**
 * Venue related functions
+*@package venue-functions
 */
 
 /**
@@ -119,6 +120,10 @@ function eo_get_venue_by($field,$value,$output = OBJECT, $filter = 'raw' ){
 /**
 * Returns the name of the venue of an event.
 * If used with any arguments uses the venue of the current event.
+*
+* Returns the name of a venue specified by it's slug or ID. If used inside the loop, it can return the name of the current post's venue. If specifying the venue by ID, **the ID must be an integer**.
+* This function behaves differently to `eo_get_venue_slug` which takes the event ID, rather than venue ID or slug, as an optional argument.
+*
 * @since 1.0.0
 *
 * @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
@@ -577,6 +582,8 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 /**
  * Retrieve post meta field for a venue.
  *
+ * This function returns the values of the venue meta with the specified key from the specified venue. (Specified by the venue ID - the taxonomy term ID).
+ *
  * @since 1.5.0
  *
  * @param int $venue_id Venue (term) ID.
@@ -609,7 +616,7 @@ function eo_add_venue_meta($venue_id, $key, $value, $unique = false ){
  * Update venue meta field based on venue (term) ID.
  *
  * Use the $prev_value parameter to differentiate between meta fields with the
- * same key and venue ID.
+ * same key and venue ID. This may be used in place of `eo_add_venue_meta()` function. The first thing this function will do is make sure that `$meta_key` already exists on `$venue_id`. If it does not, `add_post_meta($venue_id, $meta_key, $meta_value)` is called instead and its result is returned. Returns meta_id if the meta doesn't exist, otherwise returns true on success and false on failure.
  *
  * If the meta field for the venue does not exist, it will be added.
  *

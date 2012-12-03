@@ -70,6 +70,8 @@ class EventOrganiser_Shortcodes {
 		
 		if(strtolower($type)=='webcal'):
 			$url = str_replace( 'http://', 'webcal://',$url);
+		elseif( strtolower($type)=='ical' ):
+			//Do nothing
 		else:
 			$url = add_query_arg('cid',urlencode($url),'http://www.google.com/calendar/render');
 		endif;

@@ -1,6 +1,8 @@
 <?php
 /**
-* Utility functions
+ * Utility functions
+ *
+ * @package utility-functions
 */
 
 /**

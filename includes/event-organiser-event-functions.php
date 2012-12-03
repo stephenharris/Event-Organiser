@@ -1,6 +1,8 @@
 <?php
 /**
-* Event related functions
+ * Event related functions
+ *
+ * @package event-functions
 */
 
 /**
@@ -359,7 +361,7 @@ function eo_schedule_start($format='d-m-Y',$post_id=''){
 
 /**
 * Returns the formated date of the last occurrence of an event
- * @since 1.0.0
+ * @since 1.4.0
 *
 * @param string $format The format to use, using PHP Date format
 * @param int $post_id The event (post) ID. Uses current event if empty.
@@ -373,7 +375,7 @@ function eo_get_schedule_last($format='d-m-Y',$post_id=0){
 
 /**
 * Prints the formated date of the last occurrence of an event
- * @since 1.0.0
+ * @since 1.4.0
 * @uses eo_get_schedule_last
 *
 * @param string $format The format to use, using PHP Date format
@@ -649,6 +651,11 @@ function eo_is_event_taxonomy(){
 
 /**
 * Retrieves the permalink for the ICAL event feed. A simple wrapper for get_feed_link().
+*
+* Retrieve the permalink for the events feed. The returned link is the url with which visitors can subscribe 
+* to your events. Visiting the url directly will prompt a download an ICAL file of your events. The events feed 
+* includes only **public** events (draft, private and trashed events are not included).
+*
 * @since 1.6
 *
 * @return string The link to the ICAL event feed..
@@ -659,12 +666,16 @@ function eo_get_events_feed(){
 
 
 /**
-* Returns a the url which adds a particular occurrence of an event to
-* a google calendar.
-* Must be used inside the loop
-* @since 1.2.0
-*
-* @return string Url which adds event to a google calendar
+ * Returns a the url which adds a particular occurrence of an event to
+ * a google calendar. Must be used inside the loop
+ *
+ *Returns an url which adds a particular occurrence of an event to a Google calendar. This function can only be used inside the loop. 
+ * An entire series cannot be added to a Google calendar - however users can subscribe to your events. Please note that, unlike 
+ * subscribing to events, changes made to an event will not be reflected on an event added to the Google calendar.
+ *
+ * @since 1.2.0
+ *
+ * @return string Url which adds event to a google calendar
  */
 function eo_get_the_GoogleLink(){
 	global $post;
