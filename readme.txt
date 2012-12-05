@@ -69,7 +69,8 @@ A big thank you to those who have provided translations for Event Organiser
 * Portuguese (Brazilian) - [Rafael Wahasugui](http://www.twitter.com/rafawhs)
 * Dutch  - [Ingrid Ekkers](http://www.247design.nl)
 * Polish - [Bartosz Arendt](http://digitalfactory.pl/)
-* Russian =[Sergei](www.vortexinter.ru)
+* Russian -[Sergei](www.vortexinter.ru)
+* Hungarian - Csaba Erdei 
 
 == Installation ==
 
