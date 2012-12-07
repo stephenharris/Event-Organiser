@@ -95,6 +95,14 @@ jQuery(document).ready(function($) {
 				$('.eo-venue-combobox-select').hide();
 				$('.eo-venue-input input').val('');
 				eo_initialize_map(0,0);
+				var address = EO_Ajax_Event.location;
+				if( address ){
+					address =address.split("/");
+					address = address[address.length-1];
+					eventorganiser_code_address(address);
+				}else{
+					map.setZoom(1);
+				}
 				$(this).blur();
             		})
 		}	

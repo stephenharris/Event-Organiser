@@ -9,7 +9,19 @@ jQuery(document).ready(function () {
         var eo_venue_Lat = jQuery("#eo_venue_Lat").val();
         var eo_venue_Lng = jQuery("#eo_venue_Lng").val();
         if (typeof eo_venue_Lat !== "undefined" && typeof eo_venue_Lng !== "undefined") {
-            eo_initialize_map(eo_venue_Lat, eo_venue_Lng);
+		eo_initialize_map(eo_venue_Lat, eo_venue_Lng);
+
+		if( eo_venue_Lat == 0 && eo_venue_Lng == 0 ){
+			if( typeof EO_Venue != 'undefined'){
+				var address = EO_Venue.location.split("/");	
+				address = address[address.length-1];
+			}
+			if(  typeof address != 'undefined' && address ){
+		                eventorganiser_code_address(address);
+			}else{
+				map.setZoom(1);
+			}
+		}
             jQuery(".eo_addressInput").change(function () {
                 var address = "";
                 jQuery(".eo_addressInput").each(function () {
@@ -75,6 +87,7 @@ function eventorganiser_code_address(addrStr) {
 		                position: results[0].geometry.location,
                 		draggable: draggable
             		});
+			map.setZoom(15);
             	if (typeof EO_Venue != 'undefined') {
 			google.maps.event.addListener(marker, 'dragend', function (evt) {
 				jQuery("#eo_venue_Lat").val(evt.latLng.lat().toFixed(6));

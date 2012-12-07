@@ -153,6 +153,7 @@ function eventorganiser_add_admin_scripts( $hook ) {
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'startday'=>intval(get_option('start_of_week')),
 					'format'=> eventorganiser_get_option('dateformat').'-yy',
+					'location'=>get_option('timezone_string'),
 					'locale'=>array(
 						'monthNames'=>array_values($wp_locale->month),
 						'monthAbbrev'=>array_values($wp_locale->month_abbrev),
