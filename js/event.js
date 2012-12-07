@@ -108,7 +108,8 @@ $('.eo-add-new-venue-cancel').click(function(e){
 	e.preventDefault();
 	$('.eo-venue-combobox-select').show();
 	$('.eo-add-new-venue input').val('');
-	$("#eventorganiser_event_detail tr.eo-add-new-venue").hide();		
+	$("#eventorganiser_event_detail tr.eo-add-new-venue").hide();	
+	$("#eventorganiser_event_detail tr.venue_row ").hide();
 });
 
 
