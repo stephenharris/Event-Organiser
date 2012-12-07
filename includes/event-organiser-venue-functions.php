@@ -520,6 +520,12 @@ function eo_get_venues($args=array()){
 function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 
 		//Cast as array to allow multi venue support
+		if( $venue_slug_or_id == '%all%' || is_array($venue_slug_or_id) && in_array('%all%',$venue_slug_or_id) ){
+			$all_venues = eo_get_venues();
+			if( $all_venues )
+				$venue_slug_or_id = array_map('intval',wp_list_pluck($all_venues,'term_id'));
+
+		}
 		if( !is_array($venue_slug_or_id) )
 			$venue_slug_or_id = array( $venue_slug_or_id );
 
