@@ -556,6 +556,11 @@ function eo_get_the_occurrences_of($post_id=0){
 	return $occurrences;
 }
 
+/**
+ * Returns the colour of a category
+ * @ignore
+ * @access private
+ */
 function eo_get_category_color($term){
 	return eo_get_category_meta($term,'color');
 }
