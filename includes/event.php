@@ -29,12 +29,13 @@
 *  'exclude' => array of datetime objects to exclude in the schedule
 *
 * @since 1.5
- *
- * @param int $post_id - the event (post) ID for the event you want to update
- * @param array $post_data - array of data to be used by wp_update_post.
- * @param array $event_data - array of event data
- * @return int $post_id - the post ID of the updated event
- */
+* @uses wp_insert_post()
+*
+* @param int $post_id - the event (post) ID for the event you want to update
+* @param array $post_data - array of data to be used by wp_update_post.
+* @param array $event_data - array of event data
+* @return int $post_id - the post ID of the updated event
+*/
 	function eo_update_event($post_id, $event_data=array(), $post_data=array() ){
 
 		$post_id = (int) $post_id;
@@ -135,6 +136,7 @@
 *
 * @since 1.5
 * @link http://www.stephenharris.info/2012/front-end-event-posting/ Tutorial on front-end event posting
+* @uses wp_insert_post() 
 *
 * @param array $post_data array of data to be used by wp_insert_post.
 * @param array $event_data array of event data

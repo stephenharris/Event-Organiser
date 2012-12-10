@@ -12,6 +12,7 @@
  * Applies eventorganiser_format_datetime filter
  *
  * @since 1.2.0
+ * @link http://php.net/manual/en/function.date.php PHP Date
  *
  * @param dateTime $datetime The datetime to format
  * @param string|constant $format How to format the date, see http://php.net/manual/en/function.date.php  or DATETIMEOBJ constant to return the datetime object.
@@ -51,8 +52,9 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 * Formats a date string in the format 'YYYY-MM-DD H:i:s' format or even
  * relative strings like 'today' into a specified format.
  *
- * @uses eo_format_datetime
+ * @uses eo_format_datetime()
  * @since 1.2.0
+ * @link http://php.net/manual/en/function.date.php PHP Date
  *
  * @param string $dateString The date as a string
  * @param string $format How to format the date. DATETIMEOBJ for datetime object.
@@ -385,7 +387,7 @@ function eventorganiser_trim_excerpt($text = '', $excerpt_length=55) {
  * A helper function, creates a DateTime object from a date string and sets the timezone to the blog's current timezone
  *
  *@since 1.3
- *@uses date_create
+ *@uses date_create()
  *@param string $datetime_string A date-time in string format
  *@return datetime The corresponding DateTime object.
 */

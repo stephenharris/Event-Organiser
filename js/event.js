@@ -1,5 +1,29 @@
 jQuery(document).ready(function($) {
 
+//Workaround for indexOf in IE 7&8
+if (!Array.prototype.indexOf)
+{
+  Array.prototype.indexOf = function(elt /*, from*/)
+  {
+    var len = this.length;
+
+    var from = Number(arguments[1]) || 0;
+    from = (from < 0)
+         ? Math.ceil(from)
+         : Math.floor(from);
+    if (from < 0)
+      from += len;
+
+    for (; from < len; from++)
+    {
+      if (from in this &&
+          this[from] === elt)
+        return from;
+    }
+    return -1;
+  };
+}
+
     var eo_occurrences_by_rule = new Array;
 	var eo_include_dates;
 	var eo_exclude_dates;

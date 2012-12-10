@@ -514,6 +514,7 @@ function eo_get_venues($args=array()){
  * @since 1.6
  *
  * @uses EventOrganiser_Shortcodes::get_venue_map()
+ * @link http://www.stephenharris.info/2012/event-organiser-1-6-whats-new/ Examples of using eo_get_venue_map()
  *
 * @param mixed $venue_slug_or_id The venue ID as an integer. Or Slug as string. Uses venue of current event if empty.
 * @return string The markup of the map
@@ -592,6 +593,7 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
  * This function returns the values of the venue meta with the specified key from the specified venue. (Specified by the venue ID - the taxonomy term ID).
  *
  * @since 1.5.0
+ * @link http://www.harriswebsolutions.co.uk/event-organiser/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
  *
  * @param int $venue_id Venue (term) ID.
  * @param string $key Optional. The meta key to retrieve. By default, returns data for all keys.
@@ -608,10 +610,11 @@ function eo_get_venue_meta($venue_id, $key, $single=true){
  * Add meta data field to a venue
  *
  * @since 1.5.0
+ * @link http://www.harriswebsolutions.co.uk/event-organiser/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
  *
  * @param int $venue_id Venue (term) ID.
- * @param string $meta_key Metadata name.
- * @param mixed $meta_value Metadata value.
+ * @param string $key Metadata name.
+ * @param mixed $value Metadata value.
  * @param bool $unique Optional, default is false. Whether the same key should not be added.
  * @return bool False for failure. True for success.
  */
@@ -628,10 +631,11 @@ function eo_add_venue_meta($venue_id, $key, $value, $unique = false ){
  * If the meta field for the venue does not exist, it will be added.
  *
  * @since 1.5.0
-
+ * @link http://www.harriswebsolutions.co.uk/event-organiser/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
+ *
  * @param int $venue_id Venue (term) ID.
- * @param string $meta_key Metadata key.
- * @param mixed $meta_value Metadata value.
+ * @param string $key Metadata key.
+ * @param mixed $value Metadata value.
  * @param mixed $prev_value Optional. Previous value to check before removing.
  * @return bool False on failure, true if success.
  */
@@ -647,10 +651,11 @@ function eo_update_venue_meta($venue_id, $key, $value, $prev_value=''){
  * allows removing all metadata matching key, if needed.
  *
  * @since 1.5.0
+ * @link http://www.harriswebsolutions.co.uk/event-organiser/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
  *
  * @param int $venue_id Venue (term) ID.
- * @param string $meta_key Metadata name.
- * @param mixed $meta_value Optional. Metadata value.
+ * @param string $key Metadata name.
+ * @param mixed $value Optional. Metadata value.
  * @return bool False for failure. True for success.
  */
 function eo_delete_venue_meta($venue_id, $key, $value = '', $delete_all = false ){

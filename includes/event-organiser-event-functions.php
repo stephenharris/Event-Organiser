@@ -20,6 +20,7 @@
 * @since 1.0.0
 * @uses get_posts()
 * @link https://gist.github.com/4165380 List up-coming events
+ *@link https://gist.github.com/4190351 Adds up-coming events in the venue tooltip
 * @param array $args Event query arguments.
 * @return array An array of event (post) objects. Like get_posts. In case of failure it returns null.
 */
@@ -178,7 +179,7 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
 /**
 * Echos the start date of occurence of event
  * @since 1.0.0
- * @uses eo_get_the_start
+ * @uses eo_get_the_start()
  *
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id Post ID of the event
@@ -202,7 +203,7 @@ function eo_the_start($format='d-m-Y',$post_id=0,$occurrence=0,	$occurrence_id=0
 * @param int $occurrence_id  The occurrence ID
 * @return string the end date formated to given format, as accepted by PHP date
  */
-function eo_get_the_end($format='d-m-Y',$post_id='',$occurrence=0, $occurrence_id=0){
+function eo_get_the_end($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id=0){
 	global $post;
 	$event = $post;
 
@@ -237,7 +238,7 @@ function eo_get_the_end($format='d-m-Y',$post_id='',$occurrence=0, $occurrence_i
 /**
 * Echos the end date of occurence of event
  * @since 1.0.0
- * @uses eo_get_the_start
+ * @uses eo_get_the_end()
  *
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id Post ID of the event
@@ -257,7 +258,7 @@ function eo_the_end($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id=0){
 * @param int $post_id The event (post) ID, 
 * @return string The formatted date or false if no date exists
  */
-function eo_get_next_occurrence($format='d-m-Y',$post_id=''){
+function eo_get_next_occurrence($format='d-m-Y',$post_id=0){
 	$next_occurrence = eo_get_next_occurrence_of($post_id);
 
 	if( !$next_occurrence )
@@ -322,7 +323,7 @@ function eo_next_occurence($format='',$post_id=0){
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @return bool True if event runs all day, or false otherwise
  */
-function eo_is_all_day($post_id=''){
+function eo_is_all_day($post_id=0){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
 	if( empty($post_id) ) 
@@ -350,12 +351,12 @@ function eo_get_schedule_start($format='d-m-Y',$post_id=0){
 /**
 * Prints the formated date of first occurrence of an event
 * @since 1.0.0
-* @uses eo_get_schedule_start
+* @uses eo_get_schedule_start()
 *
 * @param string $format The format to use, using PHP Date format
 * @param int $post_id The event (post) ID. Uses current event if empty.
  */
-function eo_schedule_start($format='d-m-Y',$post_id=''){
+function eo_schedule_start($format='d-m-Y',$post_id=0){
 	echo eo_get_schedule_start($format,$post_id);
 }
 
@@ -377,13 +378,13 @@ function eo_get_schedule_last($format='d-m-Y',$post_id=0){
 /**
 * Prints the formated date of the last occurrence of an event
  * @since 1.4.0
-* @uses eo_get_schedule_last
+* @uses eo_get_schedule_last()
 *
 * @param string $format The format to use, using PHP Date format
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @return string The formatted date 
  */
-function eo_schedule_last($format='d-m-Y',$post_id=''){
+function eo_schedule_last($format='d-m-Y',$post_id=0){
 	echo eo_get_schedule_last($format,$post_id);
 }
 
@@ -513,7 +514,7 @@ function eo_get_schedule_summary($post_id=0){
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
  */
-function eo_display_reoccurence($post_id=''){
+function eo_display_reoccurence($post_id=0){
 	echo eo_get_schedule_summary($post_id);
 }
 

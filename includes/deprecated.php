@@ -9,7 +9,7 @@
 * @param int $post_id Optional, the event (post) ID, 
 * @return array|false Array of DateTime objects of the start date-times of occurences. False if none exist.
  */
-function eo_get_the_occurrences($post_id=''){
+function eo_get_the_occurrences($post_id=0){
 	//_deprecated_function( __FUNCTION__, '1.5', 'eo_get_the_occurrences_of()' );
 	$occurrences = eo_get_the_occurrences_of($post_id);
 	return wp_list_pluck($occurrences, 'start');
@@ -24,7 +24,7 @@ function eo_get_the_occurrences($post_id=''){
 * @param int $post_id Optional, the event series (post) ID, 
 * @return bool True if event runs all day, or false otherwise
  */
-function eo_is_allday($post_id=''){
+function eo_is_allday($post_id=0){
 	_deprecated_function( __FUNCTION__, '1.5', 'eo_is_all_day()' );
 	return eo_is_all_day($post_id);
 }
@@ -39,7 +39,7 @@ function eo_is_allday($post_id=''){
 * @param int $post_id Optional, the event (post) ID, 
 * @return string the formatted date 
  */
-function eo_get_schedule_end($format='d-m-Y',$post_id=''){
+function eo_get_schedule_end($format='d-m-Y',$post_id=0){
 	return eo_get_schedule_last($format,$post_id);
 }
 
@@ -52,7 +52,7 @@ function eo_get_schedule_end($format='d-m-Y',$post_id=''){
 * @param string $format the format to use, using PHP Date format
 * @param int $post_id Optional, the event (post) ID, 
  */
-function  eo_schedule_end($format='d-m-Y',$post_id=''){
+function  eo_schedule_end($format='d-m-Y',$post_id=0){
 	echo eo_get_schedule_last($format,$post_id);
 }
 
@@ -66,7 +66,7 @@ function  eo_schedule_end($format='d-m-Y',$post_id=''){
 * @param int $post_id Optional, the event (post) ID, 
 * @return array Schedule information
 */
-function eo_get_reoccurrence($post_id=''){
+function eo_get_reoccurrence($post_id=0){
 	return eo_get_reoccurence($post_id);
 }
 
@@ -83,7 +83,7 @@ function eo_get_reoccurrence($post_id=''){
 * @param int $post_id Optional, the event (post) ID, 
 * @return array Schedule information
  */
-function eo_get_reoccurence($post_id=''){
+function eo_get_reoccurence($post_id=0){
 	_deprecated_function( __FUNCTION__, '1.5', 'eo_get_event_schedule()' );
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
