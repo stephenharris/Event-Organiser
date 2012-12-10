@@ -18,7 +18,8 @@
 * 	'suppress_filters' - is set to false
 *
 * @since 1.0.0
-* @uses WordPress' get_posts
+* @uses get_posts()
+* @link https://gist.github.com/4165380 List up-coming events
 * @param array $args Event query arguments.
 * @return array An array of event (post) objects. Like get_posts. In case of failure it returns null.
 */

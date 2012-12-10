@@ -351,6 +351,7 @@ function eo_get_venue_address($venue_slug_or_id=''){
  * the cache for similar queries. Default value is 'core'.
  *
  * @uses get_terms()
+ * @link https://gist.github.com/3902494 Gist for creating an archive page of all the venues
  * @since 1.0.0
  *
  * @param string|array $args The values of what to search for when returning venues

@@ -134,11 +134,12 @@
 *  'exclude' => array of datetime objects to exclude in the schedule
 *
 * @since 1.5
- *
- * @param array $post_data array of data to be used by wp_insert_post.
- * @param array $event_data array of event data
- * @return int the post ID of the updated event
- */
+* @link http://www.stephenharris.info/2012/front-end-event-posting/ Tutorial on front-end event posting
+*
+* @param array $post_data array of data to be used by wp_insert_post.
+* @param array $event_data array of event data
+* @return int the post ID of the updated event
+*/
 	function eo_insert_event($post_data=array(),$event_data=array()){
 		global $wpdb;
 
