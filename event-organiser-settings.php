@@ -410,17 +410,19 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 				echo '</h2>';
 				?>
 
-				<form method="post" action="options.php">  
-					<?php  
+				<?php if( 'imexport' != $active_tab ){
+					echo '<form method="post" action="options.php">';
 						settings_fields( 'eventorganiser_'.$active_tab);
 						do_settings_sections( 'eventorganiser_'.$active_tab ); 
 						//Tab identifier - so we know which tab we are validating. See $this->validate().
 						printf('<input type="hidden" name="eventorganiser_options[tab]" value="%s" />',esc_attr($active_tab));
+						submit_button(); 
+				        echo '</form>';
 
-						if( 'imexport' != $active_tab )
-							submit_button(); 
-					?>  
-			        </form>  
+				}else{
+					do_action('eventorganiser_event_settings_imexport'); 
+				}
+				?>
           
 		</div><!-- /.wrap -->  
 

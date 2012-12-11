@@ -32,8 +32,7 @@ class Event_Organiser_Im_Export  {
 		}
 
 		//If importing / exporting events make sure we a logged in and check nonces.
-
-		if (is_admin() && isset( $_POST['eventorganiser_download_events'] ) && check_admin_referer( 'eventorganiser_export', '_eo_download_ics' )
+		if ( is_admin() && !empty($_POST['eventorganiser_download_events']) && check_admin_referer( 'eventorganiser_download_events' ) 
 			&& current_user_can('manage_options') ):
 			//Exporting events
 			//mmm... maybe finally a legitimate use of query_posts
@@ -45,9 +44,9 @@ class Event_Organiser_Im_Export  {
 			));
 			$this->get_export_file();
 
-		elseif ( is_admin() && isset( $_POST['eventorganiser_import_events'] )&& check_admin_referer( 'eventorganiser_import')
-				&& current_user_can('manage_options') ):
-			//Importing events		
+		elseif ( is_admin() && !empty($_POST['eventorganiser_import_events']) && check_admin_referer( 'eventorganiser_import_events') 
+			&& current_user_can('manage_options') ):
+			//Importing events	
 
 			//Perform checks on file:
 			if ( in_array($_FILES["ics"]["type"], array("text/calendar","application/octet-stream")) && ($_FILES["ics"]["size"] < 2097152) ):
@@ -84,33 +83,28 @@ class Event_Organiser_Im_Export  {
 	public function get_im_export_markup() {
 		?>
 			<h3 class="title"><?php _e('Export Events', 'eventorganiser'); ?></h3>
-			<p><?php _e( 'The export button below generates an ICS file of your events that can be imported in to other calendar applications such as Google Calendar.', 'eventorganiser'); ?></p>
-
-				<?php wp_nonce_field( 'eventorganiser_export', '_eo_download_ics'); ?>
-				<!--<input type="hidden" name="page" value="event-settings" />-->
-				<p class="submit">
-					<input type="submit" name="submit" value="<?php _e( 'Download Export File', 'eventorganiser' ); ?> &raquo;" />
-					<input type="hidden" name="eventorganiser_download_events" value="true" />
-				</p>
-
-
+			<form method="post" action="">
+				<?php 	settings_fields( 'eventorganiser_imexport'); ?>
+				<p><?php _e( 'The export button below generates an ICS file of your events that can be imported in to other calendar applications such as Google Calendar.', 'eventorganiser'); ?></p>
+				<?php wp_nonce_field('eventorganiser_download_events'); ?>
+				<input type="hidden" name="eventorganiser_download_events" value="true" />
+				<?php submit_button(  __( 'Download Export File', 'eventorganiser' )." &raquo;", 'secondary',  'eventorganiser_download_events' ); ?>
+			</form>
+			
 			<h3 class="title"><?php _e('Import Events', 'eventorganiser'); ?></h3>
-			<div class="inside">
-			<p><?php _e( 'Import an ICS file.', 'eventorganiser'); ?></p>
-				<form method="post" action="" enctype="multipart/form-data">
-					<?php wp_nonce_field('eventorganiser_import'); ?>
+			<form method="post" action="" enctype="multipart/form-data">
+				<div class="inside">
+					<p><?php _e( 'Import an ICS file.', 'eventorganiser'); ?></p>
 					<input type="checkbox" name="eo_import_venue" value=1 /> <?php _e( 'Import venues', 'eventorganiser' ); ?>
 					<input type="checkbox" name="eo_import_cat" value=1 /> <?php _e( 'Import categories', 'eventorganiser' ); ?>
-					<p class="submit">
-						<input type="file" name="ics" />
-						<input type="submit" name="submit" value="<?php _e( 'Upload ICS file', 'eventorganiser' ); ?> &raquo;" />
-						<input type="hidden" name="eventorganiser_import_events" value="true" />
-					</p>
-				</form>
-			</div>
+					<p><input type="file" name="ics" /></p>
+					<?php wp_nonce_field('eventorganiser_import_events'); ?>
+					<input type="hidden" name="eventorganiser_import_events" value="true" />
+					<?php submit_button(  __( 'Upload ICS file', 'eventorganiser' )." &raquo;", 'secondary',  'eventorganiser_import_events' ); ?>
+				</div>
+			</form>
 		<?php 
 	}
-
 
 /**
 * Gets an ICAL file of events in the database, to be downloaded
