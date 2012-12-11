@@ -137,6 +137,12 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 		'group_events_by'=>'',
 		'showpastevents'=>true,
 	));
+
+	//Make sure false and 'False' etc actually get parsed as 0/false (input from shortcodes, for instance, can be varied).
+	//This maybe moved to the shortcode handler if this function is made public.
+	if( strtolower($query['showpastevents']) === 'false' )
+		$query['showpastevents'] = 0;
+
 	if( !empty($query['numberposts']) ){
 		$query['posts_per_page'] = (int) $query['numberposts'];
 	}
