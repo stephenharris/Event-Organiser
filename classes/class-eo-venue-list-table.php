@@ -43,6 +43,9 @@ class EO_Venue_List_Table extends WP_List_Table {
 			case 'venue_postal':
 				$address = eo_get_venue_address($term_id);
 				return esc_html($address['postcode']);
+			case 'venue_city':
+				$address = eo_get_venue_address($term_id);
+				return esc_html($address['city']);
 			case 'venue_country':
 				$address = eo_get_venue_address($term_id);
 				return esc_html($address['country']);
@@ -107,6 +110,7 @@ class EO_Venue_List_Table extends WP_List_Table {
             'name'     => array('name',true),     //true means its sorted by default
             'venue_address'     => array('address',false),     //true means its sorted by default
             'venue_postal'     => array('postcode',false),     //true means its sorted by default
+            'venue_city'     => array('city',false),     //true means its sorted by default
             'venue_country'     => array('country',false),     //true means its sorted by default
             'venue_slug'     => array('slug',false),     //true means its sorted by default
             'posts'     => array('count',false),     //true means its sorted by default
