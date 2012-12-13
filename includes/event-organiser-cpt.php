@@ -1,18 +1,19 @@
 <?php
- /*
-* add's custom taxonomies (categories and tags) and then custom post type 'event'.
-*/ 
 
-//Register the custom taxonomy Event-category
-add_action( 'init', 'eventorganiser_create_event_taxonomies', 10 );
+/**
+ * Registers the event taxonomies: event-venue, event-category and optinally event-tag
+ * Hooked onto init
+ *
+ * @ignore
+ * @access private
+ * @since 1.0
+ */
 function eventorganiser_create_event_taxonomies() {
 
-	$eo_options = get_option('eventorganiser_options'); 
-
-	if(empty($eo_options['prettyurl'])){
+	if( !eventorganiser_get_option('prettyurl') ){
 		$cat_rewrite =$tag_rewrite=$venue_rewrite= false;
-	}else{
 
+	}else{
 		$cat_slug = trim(eventorganiser_get_option('url_cat','events/category'), "/");
 		$cat_rewrite = array( 'slug' => $cat_slug, 'with_front' => false );
 
@@ -83,7 +84,7 @@ function eventorganiser_create_event_taxonomies() {
 		'rewrite' => $cat_rewrite
   	));
 
-	if(isset($eo_options['eventtag']) && $eo_options['eventtag']==1):
+	if( eventorganiser_get_option('eventtag') ):
 	  // Add new taxonomy, make it non-hierarchical (like tags)
 		$tag_labels = array(
 			'name' => __('Event Tags','eventorganiser'),
@@ -120,11 +121,18 @@ function eventorganiser_create_event_taxonomies() {
   		));
 endif;
 }
+add_action( 'init', 'eventorganiser_create_event_taxonomies', 10 );
 
-//Register the custom post type Event
-add_action('init', 'eventorganiser_cpt_register');
+
+/**
+ * Registers the event custom post type
+ * Hooked onto init
+ *
+ * @ignore
+ * @access private
+ * @since 1.0
+ */
 function eventorganiser_cpt_register() {
-	$eo_options = get_option('eventorganiser_options');
 
   	$labels = array(
 		'name' => __('Events','eventorganiser'),
@@ -142,9 +150,9 @@ function eventorganiser_cpt_register() {
 		'menu_name' => __('Events','eventorganiser'),
   );
 
-$exclude_from_search = ($eo_options['excludefromsearch']==0) ? false : true;
+$exclude_from_search = (eventorganiser_get_option('excludefromsearch')==0) ? false : true;
 
-if(empty($eo_options['prettyurl'])){
+if( !eventorganiser_get_option('prettyurl') ){
 	$event_rewrite = false;
 	$events_slug = true;
 }else{
@@ -178,21 +186,28 @@ $args = array(
 	'hierarchical' => false,
 	'menu_icon' => EVENT_ORGANISER_URL.'css/images/eoicon-16.png',
 	'menu_position' => apply_filters('eventorganiser_menu_position',5),
-	'supports' => $eo_options['supports']
+	'supports' => eventorganiser_get_option('supports'),
   ); 
 
   register_post_type('event',$args);
 }
+add_action('init', 'eventorganiser_cpt_register');
 
 
-//add filter to ensure the text event, or event, is displayed when user updates a event 
-add_filter('post_updated_messages', 'eventorganiser_messages');
+/**
+ * Sets the messages that appear when an event is updated / saved.
+ * Hooked onto post_updated_messages
+ *
+ * @ignore
+ * @access private
+ * @since 1.0
+ */
 function eventorganiser_messages( $messages ) {
 	global $post, $post_ID;
 
 	$messages['event'] = array(
     		0 => '', // Unused. Messages start at index 1.
-		1 => sprintf( __('Event updated. <a href="%s">View event</a>'), esc_url( get_permalink($post_ID) ) ),
+		1 => sprintf( __('Event updated. <a href="%s">View event</a>','eventorganiser'), esc_url( get_permalink($post_ID) ) ),
 		2 => __('Custom field updated.'),
 		3 => __('Custom field deleted.'),
 		4 => __('Event updated.','eventorganiser'),
@@ -208,10 +223,16 @@ function eventorganiser_messages( $messages ) {
   	);
 	return $messages;
 }
+add_filter('post_updated_messages', 'eventorganiser_messages');
 
 
-//Meta capabilities for post type event
-add_filter( 'map_meta_cap', 'eventorganiser_event_meta_cap', 10, 4 );
+/**
+ * Maps meta capabilities to primitve ones for event post type
+ *
+ * @ignore
+ * @access private
+ * @since 1.0
+ */
 function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 
 	/* If editing, deleting, or reading a event, get the post and post type object. */
@@ -255,10 +276,17 @@ function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 	/* Return the capabilities required by the user. */
 	return $caps;
 }
+add_filter( 'map_meta_cap', 'eventorganiser_event_meta_cap', 10, 4 );
 
 
-// This adds the Event Organiser icon to the page head
-add_action('admin_head', 'eventorganiser_plugin_header_image');
+/**
+ * Adds the Event Organiser icon to the page head
+ * Hooked onto admin_head
+ *
+ * @ignore
+ * @access private
+ * @since 1.0
+ */
 function eventorganiser_plugin_header_image() {
         global $post_type;
 
@@ -268,9 +296,17 @@ function eventorganiser_plugin_header_image() {
         </style>
 	<?php endif; 
 }
+add_action('admin_head', 'eventorganiser_plugin_header_image');
 
-//Work-around:
-add_action('wp_update_nav_menu_item','eventorganiser_update_nav_item',10,3);
+/**
+ * With appropriate settings we add a menu item of 'post_type_archive' type. 
+ * WP doesn't understand this so we set the url ourself - hooking just before its saved to db.
+ * Hooked onto wp_update_nav_menu_item
+ *
+ * @ignore
+ * @access private
+ * @since 1.0
+ */
 function eventorganiser_update_nav_item($menu_id,$menu_item_db_id,$args){
 	if($args['menu-item-type'] == 'post_type_archive' && $args['menu-item-object'] =='event'){
 		$post_type = $args['menu-item-object'];
@@ -278,9 +314,18 @@ function eventorganiser_update_nav_item($menu_id,$menu_item_db_id,$args){
 		update_post_meta( $menu_item_db_id, '_menu_item_url', esc_url_raw($args['menu-item-url']) );
 	}
 }
+add_action('wp_update_nav_menu_item','eventorganiser_update_nav_item',10,3);
 
-//Add 'current' class
-add_filter( 'wp_nav_menu_objects', 'eventorganiser_make_item_current',10,2);
+
+/**
+ * WP doesn't know when our custom menu item ('Events') is 'current'. We make it 'current', by
+ * adding the appropriate classes if viewing an event, event archive or event taxonomy
+ * Hooked onto wp_nav_menu_objects
+ *
+ * @ignore
+ * @access private
+ * @since 1.0
+ */
 function eventorganiser_make_item_current($items,$args){
 	if(is_post_type_archive('event')|| is_singular('event')|| eo_is_event_taxonomy()){
 		foreach ($items as $item){
@@ -318,45 +363,44 @@ function eventorganiser_make_item_current($items,$args){
 	}
 	return $items;
 }
+add_filter( 'wp_nav_menu_objects', 'eventorganiser_make_item_current',10,2);
 
 
-//'Old school' - fallback case
-// Filter wp_nav_menu() to add event link if selected in options
-add_filter( 'wp_list_pages', 'eventorganiser_menu_link',10,1 );
+/**
+ * If a menu isn't being used the above won't work. They're using wp_list_pages, so the
+ * best we can do is append a link to the end of the list.
+ * Hooked onto wp_list_pages
+ *
+ * @ignore
+ * @access private
+ * @since 1.0
+ */
 function eventorganiser_menu_link($items) {
-	$eo_options= get_option('eventorganiser_options');
-	if($eo_options['addtomenu']!='1')
+
+	if( eventorganiser_get_option('addtomenu') != '1' )
 		return $items;
 
-	global $wp_query;
-	$title = (isset($eo_options['navtitle']) ? $eo_options['navtitle'] : 'Events');
 	$class ='menu-item menu-item-type-event';
 
 	if(is_post_type_archive('event')|| is_singular('event')|| eo_is_event_taxonomy())
 		$class = 'current_page_item';
 	
-	$eventlink = '<li class="'.$class.'"><a href="'.get_post_type_archive_link('event').'">'.$title.'</a></li>';
-	$items = $items . $eventlink;
+	$items .= sprintf('<li class="%s"><a href="%s" > %s </a></li>',
+						$class,
+						get_post_type_archive_link('event'),
+						esc_html(eventorganiser_get_option('navtitle'))
+					);
 	return $items;
 }
-	add_filter( 'contextual_help', 'wptuts_contextual_help', 10, 3 );
-	function wptuts_contextual_help($contextual_help, $screen_id, $screen) { 
+add_filter( 'wp_list_pages', 'eventorganiser_menu_link',10,1 );
 
-		//Only add to certain screen(s). The add_help_tab function for screen was introduced in WordPress 3.3. 
-		if( $screen_id != 'post' || ! method_exists($screen, 'add_help_tab') )
-			return $contextual_help;
-	
-		$screen->add_help_tab( array(
-				'id'      => 'wptuts-overview-tab', 
-				'title'   => __('My Plug-in Help','plugin_domain'),
-				'content' => '<p>' . __('Some help text here','plugin_domain') . '</p>',
-			));
-		return $contextual_help;
-	}
-/*
- * Add contextual help
-*/
-add_action( 'contextual_help', 'eventorganiser_cpt_help_text', 10, 3 );
+/**
+ * Contextual help for event pages
+ *
+ * @ignore
+ * @access private
+ * @since 1.0
+ */
 function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) { 
 
 	//The add_help_tab function for screen was introduced in WordPress 3.3. Add it only to event pages.
@@ -438,6 +482,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 
 	return $contextual_help;
 }
+add_action( 'contextual_help', 'eventorganiser_cpt_help_text', 10, 3 );
 
 /*
 * The following adds the ability to associate a colour with an event-category.
@@ -445,17 +490,30 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 * If Taxonomy meta table becomes core, then these options will be migrated there.
 */
 
-//Enqueue the javascript necessary for colour-picker.
-add_action( 'admin_menu', 'eventorganiser_colour_scripts' );
+/**
+ * Enqueue the javascript necessary for colour-picker on category pages.
+ * Hooked onto admin_menu. Why?
+ *
+ * @ignore
+ * @access private
+ * @since 1.3
+ */
 function eventorganiser_colour_scripts() {
     wp_enqueue_style( 'farbtastic' );
     wp_enqueue_script( 'farbtastic' );
     wp_enqueue_script( 'jQuery' );
 }
+add_action( 'admin_menu', 'eventorganiser_colour_scripts' );
 
-// Save the taxonomy meta on creation or edit
-add_action('created_event-category', 'eventorganiser_save_event_cat_meta', 10, 2);
-add_action( 'edited_event-category', 'eventorganiser_save_event_cat_meta', 10, 2);
+
+/**
+ * When a category is created/updated save its color
+ * Hooked onto created_event-category and edited_event-category
+ *
+ * @ignore
+ * @access private
+ * @since 1.3
+ */
 function eventorganiser_save_event_cat_meta( $term_id ) {
 	if ( isset( $_POST['eo_term_meta'] ) ):
 		$term_meta = get_option( "eo-event-category_$term_id");
@@ -470,35 +528,52 @@ function eventorganiser_save_event_cat_meta( $term_id ) {
 	        update_option( "eo-event-category_$term_id", $term_meta );
 	endif;
 }
+add_action('created_event-category', 'eventorganiser_save_event_cat_meta', 10, 2);
+add_action( 'edited_event-category', 'eventorganiser_save_event_cat_meta', 10, 2);
 
-add_action('delete_event-category','eventorganiser_tax_term_deleted',10,2);
+/**
+ * When a category is deleted, delete the saved colour (saved in options table).
+ * Hooked onto delete_event-category
+ *
+ * @ignore
+ * @access private
+ * @since 1.3
+ */
 function eventorganiser_tax_term_deleted($term_id, $tt_id){
 	//Delete taxonomies meta
 	delete_option('eo-event-category_'.$term_id);
 }
+add_action('delete_event-category','eventorganiser_tax_term_deleted',10,2);
 
-
-/*
-* Add the colour picker forms to main taxonomy page: (This one needs stuff wrapped in Divs)
-* uses eventorganiser_tax_meta_form to display the guts of the form.
-* @uses eventorganiser_tax_meta_form 
-*/
-add_action('event-category_add_form_fields', 'eventorganiser_add_tax_meta',10,1);
+/**
+ * Add the colour picker forms to main taxonomy page: (This one needs stuff wrapped in Divs)
+ * uses eventorganiser_tax_meta_form to display the guts of the form.
+ * Hooked onto event-category_add_form_fields
+ * @uses eventorganiser_tax_meta_form 
+ *
+ * @ignore
+ * @access private
+ * @since 1.3
+ */
 function eventorganiser_add_tax_meta($taxonomy){
 	?>
-
 	<div class="form-field"><?php eventorganiser_tax_meta_form('');?></div>
 	<p> &nbsp; </br>&nbsp; </p>
 <?php
 }
+add_action('event-category_add_form_fields', 'eventorganiser_add_tax_meta',10,1);
 
 
-/*
-*Add the colour picker forms to taxonomy-edit page: (This one needs stuff wrapped in rows)
-* uses eventorganiser_tax_meta_form to display the guts of the form.
-* @uses eventorganiser_tax_meta_form
-*/
-add_action( 'event-category_edit_form_fields', 'eventorganiser_edit_tax_meta', 10, 2);
+/**
+ * Add the colour picker forms to taxonomy-edit page: (This one needs stuff wrapped in rows)
+ * uses eventorganiser_tax_meta_form to display the guts of the form.
+ * Hooked onto event-category_edit_form_fields
+ * @uses eventorganiser_tax_meta_form
+ *
+ * @ignore
+ * @access private
+ * @since 1.3
+ */
 function eventorganiser_edit_tax_meta($term,$taxonomy){
 	//Check for existing data
 	$term_meta = get_option( "eo-event-category_$term->term_id");
@@ -507,10 +582,15 @@ function eventorganiser_edit_tax_meta($term,$taxonomy){
 	<tr class="form-field"><?php eventorganiser_tax_meta_form($colour);?></tr>
 <?php
 }
+add_action( 'event-category_edit_form_fields', 'eventorganiser_edit_tax_meta', 10, 2);
 
-/*
-* Displays the guts of the taxonomy-meta form.
-*/
+/**
+ * Displays the guts of the taxonomy-meta form (i.e. colour picker);
+ *
+ * @ignore
+ * @access private
+ * @since 1.3
+ */
 function eventorganiser_tax_meta_form($colour){
 	?>
 		<th>
@@ -528,7 +608,14 @@ var farbtastic;(function($){var pickColor=function(a){farbtastic.setColor(a);$('
 <?php
 }
 
-add_filter('get_event-category','eventorganiser_append_cat_meta');
+/**
+ * Add the colour of the category to the term object.
+ * Hooked onto get_event-category
+ *
+ * @ignore
+ * @access private
+ * @since 1.3
+ */
 function eventorganiser_append_cat_meta($term){
 	if($term):
 		$term_meta = get_option( "eo-event-category_{$term->term_id}");
@@ -537,9 +624,17 @@ function eventorganiser_append_cat_meta($term){
 	endif;
 	return $term;
 }
+add_filter('get_event-category','eventorganiser_append_cat_meta');
 
-add_filter('get_terms','eventorganiser_get_terms_meta');
-add_filter('get_the_terms','eventorganiser_get_terms_meta');
+
+/**
+ * Add the colour of the category to the term object.
+ * Hooked onto get_event-category
+ *
+ * @ignore
+ * @access private
+ * @since 1.3
+ */
 function eventorganiser_get_terms_meta($terms){
 	if($terms):
 		foreach($terms as $term):
@@ -552,10 +647,18 @@ function eventorganiser_get_terms_meta($terms){
 	endif;
 	return $terms;
 }
+add_filter('get_terms','eventorganiser_get_terms_meta');
+add_filter('get_the_terms','eventorganiser_get_terms_meta');
 
 
-
-function eo_get_category_meta($term,$key=''){
+/**
+ * Retrieve a category term's colour.
+ *
+ * @since 1.3
+ * @param term|slug $term The event category term object, or slug. Can be empty to get colour of term being viewed.
+ * @return string The event category colour in Hex format
+ */
+function eo_get_category_meta($term='',$key=''){
 	if( $key != 'color' )
 		return false;
 
@@ -571,7 +674,7 @@ function eo_get_category_meta($term,$key=''){
 		if( isset($term->color))
 			return $term->color;
 
-	}elseif(is_tax('event-category')){
+	}elseif( is_tax('event-category') ){
 		$term = get_queried_object();
 		$term = $term->term_id;
 		$term = get_term( $term, 'event-category' );
@@ -582,29 +685,53 @@ function eo_get_category_meta($term,$key=''){
 	return false;
 }
 
-	/*
-	 * Quick touchup to wpdb
-	 */
-	add_action( 'init', 'eventorganiser_wpdb_fix',1);
-	add_action( 'switch_blog', 'eventorganiser_wpdb_fix');
-	function eventorganiser_wpdb_fix(){
-		global $wpdb;
-		$wpdb->eo_venuemeta = "{$wpdb->prefix}eo_venuemeta";
-		$wpdb->eo_events = "{$wpdb->prefix}eo_events";
-	}
+/**
+ * Adds custom tables to $wpdb;
+ *
+ * @ignore
+ * @access private
+ * @since 1.5
+ */
+function eventorganiser_wpdb_fix(){
+	global $wpdb;
+	$wpdb->eo_venuemeta = "{$wpdb->prefix}eo_venuemeta";
+	$wpdb->eo_events = "{$wpdb->prefix}eo_events";
+}
+add_action( 'init', 'eventorganiser_wpdb_fix',1);
+add_action( 'switch_blog', 'eventorganiser_wpdb_fix');
+	
+
+/**
+ * Updates venue meta cache when an event's venue is retrieved..
+ * Hooked onto wp_get_object_terms
+ *
+ * @ignore
+ * @access private
+ * @since 1.5
+ */
+function _eventorganiser_get_event_venue($terms, $post_ids,$taxonomies,$args){
+	//Passes taxonomies as a string inside quotes...
+	$taxonomies = explode(',',trim($taxonomies,"\x22\x27"));
+	return eventorganiser_update_venue_meta_cache( $terms, $taxonomies);
+}
+add_filter('wp_get_object_terms','_eventorganiser_get_event_venue',10,4);
 
 
-	add_filter('wp_get_object_terms','_eventorganiser_get_event_venue',10,4);
-	function _eventorganiser_get_event_venue($terms, $post_ids,$taxonomies,$args){
-		//Passes taxonomies as a string inside quotes...
-		$taxonomies = explode(',',trim($taxonomies,"\x22\x27"));
-		return eventorganiser_update_venue_meta_cache( $terms, $taxonomies);
-	}
-
-	add_filter('get_terms','eventorganiser_update_venue_meta_cache',10,2);
-	add_filter('get_event-venue','eventorganiser_update_venue_meta_cache',10,2);
-
-	function eventorganiser_update_venue_meta_cache( $terms, $tax){
+/**
+ * Updates venue meta cache when event venues are retrieved.
+ *
+ * For backwards compatibility it adds the venue details to the taxonomy terms.
+ * Hooked onto get_terms and get_event-venue
+ *
+ * @ignore
+ * @access private
+ * @since 1.5
+ *
+ * @param array $terms Array of terms,
+ * @param string $tax Should be (an array containing) 'event-venue'.
+ * @param array  Array of event-venue terms,
+ */
+function eventorganiser_update_venue_meta_cache( $terms, $tax){
 
 		if( is_array($tax) && !in_array('event-venue',$tax) ){
 			return $terms;
@@ -655,33 +782,73 @@ function eo_get_category_meta($term,$key=''){
 
 		return $terms;
 	} 
+add_filter('get_terms','eventorganiser_update_venue_meta_cache',10,2);
+add_filter('get_event-venue','eventorganiser_update_venue_meta_cache',10,2);
 
 
-	add_filter('terms_clauses', 'eventorganiser_join_venue_meta',10,3);
-	function eventorganiser_join_venue_meta($pieces,$taxonomies,$args){
-		global $wpdb;
 
-		if( ! in_array('event-venue',$taxonomies) )
-			return $pieces;
+/**
+ * Allows event-venue terms to be sorted by address, country, or postcode (on venue admin table)
+ * Hooked onto terms_clauses
+ *
+ * @ignore
+ * @access private
+ * @since 1.5
+ */
+function eventorganiser_join_venue_meta($pieces,$taxonomies,$args){
+	global $wpdb;
 
-		switch($args['orderby']):
-			case 'address':
-			case 'country':
-			case 'postcode':
-				$meta_key ='_'.$args['orderby'];
-				break;
-			default:
-				$meta_key = false;
-		endswitch;
-
-		if(false === $meta_key)
-			return $pieces;
-
-		$sql = get_meta_sql(array(array('key'=>$meta_key)), 'eo_venue', 't', 'term_id');
-
-		$pieces['join'] .= $sql['join'];
-		$pieces['where'] .= $sql['where'];
-		$pieces['orderby'] = "ORDER BY {$wpdb->eo_venuemeta}.meta_value";
+	if( ! in_array('event-venue',$taxonomies) )
 		return $pieces;
-	}
+
+	switch($args['orderby']):
+		case 'address':
+		case 'country':
+		case 'postcode':
+			$meta_key ='_'.$args['orderby'];
+			break;
+		default:
+			$meta_key = false;
+	endswitch;
+
+	if(false === $meta_key)
+		return $pieces;
+
+	$sql = get_meta_sql(array(array('key'=>$meta_key)), 'eo_venue', 't', 'term_id');
+
+	$pieces['join'] .= $sql['join'];
+	$pieces['where'] .= $sql['where'];
+	$pieces['orderby'] = "ORDER BY {$wpdb->eo_venuemeta}.meta_value";
+	return $pieces;
+}
+add_filter('terms_clauses', 'eventorganiser_join_venue_meta',10,3);
+
+/**
+ * Filters to the edit venue term link so that points to the correct place
+ * Hooked onto get_edit_term_link
+ *
+ * @ignore
+ * @access private
+ * @since 1.5
+ */
+function eventorganiser_edit_venue_link($link, $term_id, $taxonomy){
+
+	if( $taxonomy != 'event-venue' )
+        	return $link;
+
+	$tax = get_taxonomy( $taxonomy );
+	if ( !current_user_can( $tax->cap->edit_terms ) )
+			return;
+
+	$venue = get_term($term_id, $taxonomy);
+
+	$link = add_query_arg(array(
+			'page'=>'venues',
+			'action'=>'edit',
+			'event-venue'=> $venue->slug,
+	), admin_url('edit.php?post_type=event'));
+
+	return $link;
+}
+add_filter('get_edit_term_link','eventorganiser_edit_venue_link',10,3);
 ?>

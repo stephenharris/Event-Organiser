@@ -27,17 +27,13 @@ class Event_Organiser_Im_Export  {
 
 		if(!isset($EO_Errors)) $EO_Errors = new WP_Error();
 
-		if( is_feed('eo-events') ):
-			$options = get_option('eventorganiser_options');
-			if( $options['feed'] ){
-				$this->get_export_file();
-			}
-		endif;
+		if( is_feed('eo-events') && eventorganiser_get_option('feed') ){
+			$this->get_export_file();
+		}
 
 		//If importing / exporting events make sure we a logged in and check nonces.
-
-		if (is_admin() && isset( $_GET['eventorganiser_download_events'] )&& check_admin_referer( 'eventorganiser_export' )
-			&& current_user_can('manage_options')&& $pagenow=="options-general.php"):
+		if ( is_admin() && !empty($_POST['eventorganiser_download_events']) && check_admin_referer( 'eventorganiser_download_events' ) 
+			&& current_user_can('manage_options') ):
 			//Exporting events
 			//mmm... maybe finally a legitimate use of query_posts
 			query_posts(array(
@@ -48,14 +44,14 @@ class Event_Organiser_Im_Export  {
 			));
 			$this->get_export_file();
 
-		elseif ( is_admin() && isset( $_POST['eventorganiser_import_events'] )&& check_admin_referer( 'eventorganiser_import' )
-				&& current_user_can('manage_options')&& $pagenow=="options-general.php"):
-			//Importing events		
+		elseif ( is_admin() && !empty($_POST['eventorganiser_import_events']) && check_admin_referer( 'eventorganiser_import_events') 
+			&& current_user_can('manage_options') ):
+			//Importing events	
 
 			//Perform checks on file:
 			if ( in_array($_FILES["ics"]["type"], array("text/calendar","application/octet-stream")) && ($_FILES["ics"]["size"] < 2097152) ):
 				if($_FILES["ics"]["error"] > 0){
-					$EO_Errors = new WP_Error('eo_error', sprintf(__("File Error encountered: %d"), $_FILES["ics"]["error"]));
+					$EO_Errors = new WP_Error('eo_error', sprintf(__("File Error encountered: %d",'eventorganiser'), $_FILES["ics"]["error"]));
 				}else{
 					//Import file
 					$this->import_file($_FILES['ics']['tmp_name']);
@@ -66,15 +62,14 @@ class Event_Organiser_Im_Export  {
 
 			else:
 				$EO_Errors = new WP_Error('eo_error', __("Invalid file uploaded. The file must be a ics calendar file of type 'text/calendar', no larger than 2MB.",'eventorganiser'));
-				$size = (int) $_FILES["ics"]["size"];
-				$size =  number_format(floatval($size*0.0009765625),2);
-				$details = sprintf( __('File size: %01.2fkb. File type: %2$s','eventorganiser'),$size, $_FILES["ics"]["type"]);
-				$EO_Errors->add('eo_error', esc_html($details));
+				$size = size_format($_FILES["ics"]["size"],2);
+				$details = sprintf( __('File size: %s. File type: %s','eventorganiser'),$size, $_FILES["ics"]["type"]);
+				$EO_Errors->add('eo_error', $details);
 
 			endif;
 
 		endif;
-						
+
 		add_action( 'eventorganiser_event_settings_imexport', array( $this, 'get_im_export_markup' ) );						
 	}
 
@@ -87,33 +82,28 @@ class Event_Organiser_Im_Export  {
 	public function get_im_export_markup() {
 		?>
 			<h3 class="title"><?php _e('Export Events', 'eventorganiser'); ?></h3>
-			<p><?php _e( 'The export button below generates an ICS file of your events that can be imported in to other calendar applications such as Google Calendar.', 'eventorganiser'); ?></p>
-			<form method="get" action="">
-				<?php wp_nonce_field( 'eventorganiser_export' ); ?>
-				<input type="hidden" name="page" value="event-settings" />
-				<p class="submit">
-					<input type="submit" name="submit" value="<?php _e( 'Download Export File', 'eventorganiser' ); ?> &raquo;" />
-					<input type="hidden" name="eventorganiser_download_events" value="true" />
-				</p>
+			<form method="post" action="">
+				<?php 	settings_fields( 'eventorganiser_imexport'); ?>
+				<p><?php _e( 'The export button below generates an ICS file of your events that can be imported in to other calendar applications such as Google Calendar.', 'eventorganiser'); ?></p>
+				<?php wp_nonce_field('eventorganiser_download_events'); ?>
+				<input type="hidden" name="eventorganiser_download_events" value="true" />
+				<?php submit_button(  __( 'Download Export File', 'eventorganiser' )." &raquo;", 'secondary',  'eventorganiser_download_events' ); ?>
 			</form>
-
+			
 			<h3 class="title"><?php _e('Import Events', 'eventorganiser'); ?></h3>
-			<div class="inside">
-			<p><?php _e( 'Import an ICS file.', 'eventorganiser'); ?></p>
-				<form method="post" action="" enctype="multipart/form-data">
-					<?php wp_nonce_field('eventorganiser_import'); ?>
+			<form method="post" action="" enctype="multipart/form-data">
+				<div class="inside">
+					<p><?php _e( 'Import an ICS file.', 'eventorganiser'); ?></p>
 					<input type="checkbox" name="eo_import_venue" value=1 /> <?php _e( 'Import venues', 'eventorganiser' ); ?>
 					<input type="checkbox" name="eo_import_cat" value=1 /> <?php _e( 'Import categories', 'eventorganiser' ); ?>
-					<p class="submit">
-						<input type="file" name="ics" />
-						<input type="submit" name="submit" value="<?php _e( 'Upload ICS file', 'eventorganiser' ); ?> &raquo;" />
-						<input type="hidden" name="eventorganiser_import_events" value="true" />
-					</p>
-				</form>
-			</div>
+					<p><input type="file" name="ics" /></p>
+					<?php wp_nonce_field('eventorganiser_import_events'); ?>
+					<input type="hidden" name="eventorganiser_import_events" value="true" />
+					<?php submit_button(  __( 'Upload ICS file', 'eventorganiser' )." &raquo;", 'secondary',  'eventorganiser_import_events' ); ?>
+				</div>
+			</form>
 		<?php 
 	}
-
 
 /**
 * Gets an ICAL file of events in the database, to be downloaded
@@ -139,7 +129,7 @@ class Event_Organiser_Im_Export  {
 		// File header
 		header( 'Content-Description: File Transfer' );
 		header( 'Content-Disposition: attachment; filename=' . $filename );
-		header('Content-type: text/calendar');
+		header('Content-type: text/calendar; charset=' . get_option('blog_charset').';');
 		header("Pragma: 0");
 		header("Expires: 0");
 ?>
@@ -178,7 +168,7 @@ X-WR-CALDESC:<?php echo get_bloginfo('name');?> - Events
 			if( eo_is_all_day() ){
 				$format =	'Ymd';
 				$start_date = $start->format($format);
-				$end->modify('+1 second');
+				$end->modify('+1 minute');
 				$end_date = $end->format($format);				
 			}else{
 				$format =	'Ymd\THis\Z';
@@ -336,7 +326,7 @@ function escape_icalText($text){
 		global $EO_Errors;
 
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'edit_events' ))
-			wp_die( __('You do not have sufficient permissions to import events.','event-organiser') );
+			wp_die( __('You do not have sufficient permissions to import events.','eventorganiser') );
 
 		//Returns the file as an array of lines
 		$file_array =$this->parse_file($cal_file);
@@ -419,11 +409,11 @@ function escape_icalText($text){
 					//If END:VEVENT, insert event into database
 					if($property=='END' && $value=='VEVENT'){
 						$state = "VCALENDAR";
-			
+
 						//Insert new post from objects
 						$post_id = eo_insert_event($event_array['event_post'],$event_array['event']);
 
-						if(!$post_id){
+						if(!$post_id || is_wp_error($post_id) ){
 							$error_count++;
 						}
 						
@@ -569,7 +559,7 @@ function escape_icalText($text){
 						break;
 
 					case 'CREATED':
-						$date->setTimezone(new DateTImeZone('utc'));
+						$date->setTimezone(new DateTimeZone('utc'));
 						$event_post['post_date_gmt']= $date->format('Y-m-d H:i:s');
 						break;
 
@@ -809,7 +799,7 @@ function escape_icalText($text){
 					else
 						$date = $this->parse_icalDate($value, new DateTimeZone('UTC'));
 
-					$rule_array['schedule_end'] = $date;
+					$rule_array['schedule_last'] = $date;
 					break;				
 
 				case 'BYDAY':

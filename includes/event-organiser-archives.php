@@ -5,9 +5,15 @@
 
 /**
  * Registers our custom query variables
+ *
+ * Hooked onto query_vars
  * @since 1.0.0
+ * @access private
+ * @ignore;
+ *
+ * @param array $qvars Query variables
+ * @param array Query variables with plug-in added variables
  */
-add_filter('query_vars', 'eventorganiser_register_query_vars' );
 function eventorganiser_register_query_vars( $qvars ){
 	//Add these query variables
 	$qvars[] = 'venue';//Depreciated
@@ -16,14 +22,22 @@ function eventorganiser_register_query_vars( $qvars ){
 	$qvars[] = 'eo_interval';
 	return $qvars;
 }
+add_filter('query_vars', 'eventorganiser_register_query_vars' );
 
 
 /**
+ * Parses event queries and alters the WP_Query object appropriately
+ *
  * Parse's the query, and sets date range and other event specific query variables.
  * If query is for 'event' post type - the posts_* filters are added.
+ *
+ * Hooked onto pre_get_posts
  * @since 1.0.0
+ * @access private
+ * @ignore;
+ *
+ * @param WP_Query $query The query
  */
-add_action( 'pre_get_posts', 'eventorganiser_pre_get_posts' );
 function eventorganiser_pre_get_posts( $query ) {
 
 	//Deprecated, use event-venue instead.
@@ -48,13 +62,12 @@ function eventorganiser_pre_get_posts( $query ) {
 	if('event'!= $query->get('post_type') )
 		return $query;
 
-	$eo_settings_array= get_option('eventorganiser_options');
-	$blog_now = new DateTIme(null, eo_get_blog_timezone());
+	$blog_now = new DateTime(null, eo_get_blog_timezone());
 
 	//Determine whether or not to show past events and each occurrence. //If not set, use options
 	if( !is_admin() && !is_single() && !$query->is_feed('eo-events') && !isset($query->query_vars['showpastevents']) ){
 		//If showpastevents is not set - use options (except for admin / single pages.
-		$query->set('showpastevents',$eo_settings_array['showpast']);
+		$query->set('showpastevents', eventorganiser_get_option('showpast') );
 	}
 
 	//Deprecated: showrepeats - use group_events_by instead
@@ -72,7 +85,7 @@ function eventorganiser_pre_get_posts( $query ) {
 			//If in admin or single page - we probably don't want to see duplicates of (recurrent) events - unless specified otherwise.
 			$query->set('group_events_by','series');
 
-		}elseif(!empty($eo_settings_array['group_events']) && $eo_settings_array['group_events']=='series'){
+		}elseif( eventorganiser_get_option('group_events') == 'series' ){
 			//In other instances (archives, shortcode listing) if showrepeats option is false display only the next event.
 			$query->set('group_events_by','series');
 		}else{
@@ -144,7 +157,7 @@ function eventorganiser_pre_get_posts( $query ) {
 		endswitch;
 	}//Endif interval set
 
-	$running_event_is_past= (empty($eo_settings_array['runningisnotpast']) ? true : false);
+	$running_event_is_past= (  eventorganiser_get_option('runningisnotpast') ? true : false);
 
 	//Set date range according to whether we show past events
 	if(isset($query->query_vars['showpastevents'])&& !$query->query_vars['showpastevents'] ){
@@ -178,24 +191,40 @@ function eventorganiser_pre_get_posts( $query ) {
 	add_filter('posts_orderby','eventorganiser_sort_events',10,2);
 	add_filter('posts_groupby', 'eventorganiser_event_groupby',10,2);
 }
+add_action( 'pre_get_posts', 'eventorganiser_pre_get_posts' );
 
 
 /**
- * A work around for a bug that posts_per_page is over-ridden by the posts_per_rss option. nopaging is also set to 'false'.
+ * A work around for a bug that posts_per_page is over-ridden by the posts_per_rss option. http://core.trac.wordpress.org/ticket/17853
+
+ * posts_per_rss option overirdes posts_per_page  and nopaging is also set to 'false'.
  * For ics feeds nopaging should be true and post_per_page should be -1. We intercept the LIMIT part of the query and remove it.
  * We return '' so there is no LIMIT part to the query.
- *@see http://core.trac.wordpress.org/ticket/17853
+ * Hooked on in eventorganiser_pre_get_posts
+ * @since 1.5.7
+ * @access private
+ * @ignore;
+ *
+ *@param string $limit LIMIT part of the SQL statement
+ *@return string Empty string
  */
 function wp17853_eventorganiser_workaround( $limit ){
 	remove_filter(current_filter(),__FUNCTION__);
 	return '';
 }
 
+
 /**
  * SELECT only date fields from events and venue table for events
  * All other fields deprecated and stored in post meta since 1.5
+ * Hooked onto posts_fields
  *
- * @since 1.0.0
+ *@since 1.0.0
+ *@access private
+ *@ignore
+ *@param string $select SELECT part of the SQL statement
+ *@param string $query WP_Query
+ *@return string
  */
 function eventorganiser_event_fields( $select, $query ){
 	global $wpdb;
@@ -214,11 +243,18 @@ function eventorganiser_event_fields( $select, $query ){
 	return $select;
 }
 
+
 /**
 * GROUP BY Event (occurrence) ID
 * Event posts do not want to be grouped by post, but by occurrence - unless otherwise specified.
-*
- * @since 1.0.0
+ * Hooked onto posts_groupby
+ *
+ *@since 1.0.0
+ *@access private
+ *@ignore
+ *@param string $groupby GROUP BY part of the SQL statement
+ *@param string $query WP_Query
+ *@return string
  */
 function eventorganiser_event_groupby( $groupby, $query ){
 	global $wpdb;
@@ -237,11 +273,18 @@ function eventorganiser_event_groupby( $groupby, $query ){
 	return $groupby;
 }
 
+
 /**
 * LEFT JOIN all EVENTS.
 * Joins events table when querying for events
-*
- * @since 1.0.0
+ * Hooked onto posts_join
+ *
+ *@since 1.0.0
+ *@access private
+ *@ignore
+ *@param string $join JOIN part of the SQL statement
+ *@param string $query WP_Query
+ *@return string
  */
 function eventorganiser_join_tables( $join, $query ){
 	global $wpdb;
@@ -255,8 +298,14 @@ function eventorganiser_join_tables( $join, $query ){
 
 /**
  * Selects posts which satisfy custom WHERE statements
+ * Hooked onto posts_where
  *
- * @since 1.0.0
+ *@since 1.0.0
+ *@access private
+ *@ignore
+ *@param string $where WHERE part of the SQL statement
+ *@param string $query WP_Query
+ *@return string
  */
 function eventorganiser_events_where( $where, $query ){
 	global $wpdb;
@@ -317,8 +366,14 @@ function eventorganiser_events_where( $where, $query ){
 /**
 * Alter the order of posts.
 * This function allows to sort our events by a custom order (venue, date etc)
-*
- * @since 1.0.0
+ * Hooked onto posts_orderby
+ *
+ *@since 1.0.0
+ *@access private
+ *@ignore
+ *@param string $orderby ORDER BY part of the SQL statement
+ *@param string $query WP_Query
+ *@return string
  */
 function eventorganiser_sort_events( $orderby, $query ){
 	global $wpdb;
@@ -350,7 +405,15 @@ function eventorganiser_sort_events( $orderby, $query ){
 }
 
 
-//These functions are useful for determining if venue or date is being queried
+
+
+/**
+ * Checks if the main query is for a venue
+ * This will be deprecated shortly
+ *@since 1.0.0
+ *@ignore
+ *@return bool True if the main query is for a venue, false otherwise.
+ */
 function eo_is_venue(){
 	global $wp_query;
 	return (isset($wp_query->query_vars['venue'] ) || is_tax('event-venue'));

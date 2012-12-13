@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Install routine
+ *
+ *@since 1.0
+ *@access private
+ *@ignore
+*/
  function eventorganiser_install(){
        global $wpdb, $eventorganiser_db_version;
 
@@ -14,19 +22,15 @@
 	$sql_events_table = "CREATE TABLE " .$wpdb->eo_events. " (
 		event_id bigint(20) NOT NULL AUTO_INCREMENT,
 		post_id bigint(20) NOT NULL,
-		Venue bigint(20),
 		StartDate DATE NOT NULL,
 		EndDate DATE NOT NULL,
 		StartTime TIME NOT NULL,
 		FinishTime TIME NOT NULL,
-		event_schedule text,
-		event_schedule_meta text,
-		event_frequency smallint,
 		event_occurrence bigint(20) NOT NULL,
-		event_allday TINYINT(1),
-		reoccurrence_start DATE,
-		reoccurrence_end DATE,
-		PRIMARY KEY  (event_id))".$charset_collate;
+		PRIMARY KEY  (event_id),
+		KEY StartDate (StartDate),
+		KEY EndDate (EndDate)
+		)".$charset_collate;
 	
 	//Venue meta table
 	$sql_venuemeta_table ="CREATE TABLE {$wpdb->prefix}eo_venuemeta (
@@ -87,76 +91,48 @@
 
 }
 
+/**
+ * Deactivate routine
+ *
+ * Clears cron jobs and flushes rewrite rules
+ *
+ *@since 1.5
+ *@access private
+ *@ignore
+*/
 function eventorganiser_deactivate(){
 	eventorganiser_clear_cron_jobs();
 	flush_rewrite_rules();
     }
 
-add_action('admin_init', 'eventorganiser_upgradecheck');
+
+/**
+ * Upgrade routine. Hooked onto admin_init
+ *
+ *@since 1.1
+ *@access private
+ *@ignore
+*/
 function eventorganiser_upgradecheck(){
        global $eventorganiser_db_version, $wpdb;
 	global $EO_Errors;
 	
 	$installed_ver = get_option('eventorganiser_version');
+
+	if( empty($installed_ver) ){
+		//This is a fresh install. Add current database version
+		add_option('eventorganiser_version', $eventorganiser_db_version);
+
+		//But a bug in 1.5 means that it could be that they first installed in 1.5 (as no db version was added)
+		//So set to 1.5.  Fresh installs will have to go through the 1.6 (and above) update, but this is ok.
+		$installed_ver = '1.5';
+	}
+
 	//If this is an old version, perform some updates.
 	if ( !empty($installed_ver ) && $installed_ver != $eventorganiser_db_version ):
-		  if ( $installed_ver < '1.1') {
-			$query = $wpdb->prepare("SELECT* 
-				FROM {$wpdb->eo_events}
-				WHERE {$wpdb->eo_events}.event_schedule = 'monthly'
-				GROUP BY {$wpdb->eo_events}.post_id");
-		
-			$results = $wpdb->get_results($query); 
-		
-			foreach ( $results as $event ):
-				$meta = $event->event_schedule_meta;
-				$start = new DateTime(esc_attr($event->StartDate));
-				$post_id = $event->post_id;
-
-				$bymonthday =preg_match('/^BYMONTHDAY=(\d{1,2})/' ,$meta,$matches);
-				$byday = preg_match('/^BYDAY=(-?\d{1,2})([a-zA-Z]{2})/' ,$meta,$matchesOLD);
-				
-				if(!($bymonthday || $byday )):
-
-					if($meta=='date'):
-						$meta = 'BYMONTHDAY='.$start->format('d');
-					else:
-						$meta = 'BYDAY='.$meta;
-					endif;
-					
-					$result = $wpdb->update(
-						$wpdb->eo_events, 
-						array('event_schedule_meta'=>$meta), 
-						array('post_id'=>$post_id)
-					); 
-				endif;
-			  endforeach;
-		}
-
-		if ( $installed_ver < '1.2') {
-			$settings = get_option('eventorganiser_options');			
-			//Add new settings
-			$settings['url_event']= 'events/event';
-			$settings['url_venue']= 'events/venue';
-			$settings['url_cat'] = 'events/category';
-			$settings['url_tag'] = 'events/tag';
-			$settings['navtitle'] =  __('Events','eventorganiser');
-			$settings['group_events']='';
-			$settings['feed'] = 1;
-			$settings['eventtag'] = 1;
-			$settings['deleteexpired'] = 0;
-			update_option('eventorganiser_options',$settings);
-		}
-
-		if($installed_ver <'1.2.1'){
-			$settings = get_option('eventorganiser_options');
-			$settings['url_venue']= (empty($settings['url_venue']) ? 'events/venue' : $settings['url_venue']);
-			update_option('eventorganiser_options',$settings);
-			flush_rewrite_rules();		
-		}
 
 		if($installed_ver <'1.3'){
-			eventorganiser_130_update();
+			wp_die('You cannot upgrade to this version from 1.3 or before. Please upgrade to 1.5.7 first.');
 		}
 
 		if($installed_ver <'1.4'){
@@ -166,13 +142,31 @@ function eventorganiser_upgradecheck(){
 		if($installed_ver <'1.5'){
 			eventorganiser_150_update();
 		}
+		if( $installed_ver < '1.6'  ){
+			//Remove columns:
+			$columns = $wpdb->get_col("DESC {$wpdb->eo_events}", 0);
+			$remove_columns = array('Venue','event_schedule','event_schedule_meta', 'event_frequency','reoccurrence_start', 'reoccurrence_end' );
+			$delete_columns = array_intersect($remove_columns, $columns);
+			if( !empty($delete_columns) )
+				$sql = $wpdb->query("ALTER TABLE {$wpdb->eo_events} DROP COLUMN ".implode(', DROP COLUMN ',$delete_columns).';');
+		
+			eventorganiser_install();
+		}
 		update_option('eventorganiser_version', $eventorganiser_db_version);
 
 		//Run upgrade checks
 		add_action('admin_notices', 'eventorganiser_db_checks',0);
 	endif;
 }
+add_action('admin_init', 'eventorganiser_upgradecheck');
 
+/**
+ * Upgrade routine for 1.5
+ *
+ *@since 1.5
+ *@access private
+ *@ignore
+*/
 function eventorganiser_150_update(){
 	global $wpdb;
 	$et =$wpdb->eo_events;
@@ -214,61 +208,13 @@ function eventorganiser_150_update(){
 
 }
 
-function eventorganiser_130_update(){
-
-	global $wpdb;
-	$eventorganiser_venue_table = $wpdb->prefix."eo_venues";
-
-	//Venues being converted to taxonomy terms
-	$venues = $wpdb->get_results(" SELECT* FROM $eventorganiser_venue_table");
-	$slimetrail = array();	//Track changes from an old slug to another
-
-	//For each term insert it as a taxonomy term.
-	foreach ($venues as $venue){
-		$old_slug =esc_attr($venue->venue_slug);	
-		$term = wp_insert_term(esc_attr($venue->venue_name),'event-venue',array(
-				'description'=> $venue->venue_description,
-				'slug' => $old_slug ));
-
-		if(!is_wp_error($term)){
-			$term= get_term_by('id',$term['term_id'],'event-venue');
-			$slimetrail[$old_slug] = $term->slug;//WordPress may have changed the slug
-			if($term->slug != $old_slug){
-				$wpdb->update($eventorganiser_venue_table, array('venue_slug'=>$term->slug),  array('venue_id'=>$venue->venue_id), '%s', '%d'); 
-			}
-		}
-	}
-		
-	//Loop through ALL events...
-	$events = new WP_Query(array(
-		'post_type'=>'event',	'posts_per_page'=>-1,'showpastevents'=>1,'showrepeats'=>0,
-		'post_status' => array('publish','private', 'pending', 'draft', 'future','trash')
-		));
-
-	global $post;
-	if($events->have_posts()):
-		while($events->have_posts()): $events->the_post();
-			if(empty($post->Venue)) continue; //Doesn't have a venue
-
-			$post_id = intval($post->ID);
-			$venue_id =intval($post->Venue);
-			$venue = eo_get_venue_by('id',$venue_id);//Get venue meta.
-
-			if(!empty($venue)){
-				$slug = esc_attr($venue->slug);
-				$venue_tax= get_term_by('slug',$slug,'event-venue');
-				if($venue_tax){
-					$venue_tax_id =(int) $venue_tax->term_id;
-					wp_set_object_terms( $post_id, array($venue_tax_id),'event-venue');
-					//Change Venue column to tax ID
-					$wpdb->update($wpdb->eo_events, array('Venue'=>$venue_tax_id),  array('post_id'=>$post_id,'Venue'=>$venue_id), '%d', '%d'); 
-				}
-			}
-		endwhile;
-		wp_reset_postdata();
-	endif;
-}
-
+/**
+ * Upgrade routine for 1.4
+ *
+ *@since 1.4
+ *@access private
+ *@ignore
+*/
 function eventorganiser_140_update(){
 	//Migrates from Venue table to venue meta table
 
@@ -296,7 +242,13 @@ function eventorganiser_140_update(){
 }
 
 
-
+/**
+ * Uninstall routine
+ *
+ *@since 1.0
+ *@access private
+ *@ignore
+*/
 function eventorganiser_uninstall(){
 	global $wpdb,$eventorganiser_roles, $wp_roles,$wp_taxonomies;
 

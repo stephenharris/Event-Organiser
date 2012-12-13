@@ -31,24 +31,22 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
      */
 	function page_scripts(){
 		global $wp_locale;
-	  	$eo_settings_array= get_option('eventorganiser_options'); 
 		
 		$screen = get_current_screen();
 		$cats =get_terms( 'event-category', array('hide_empty' => 0));
 		$venues =get_terms( 'event-venue', array('hide_empty' => 0));
 
-		add_thickbox();
 		wp_enqueue_script("eo_calendar",true);
 		wp_enqueue_script("eo_event",true);
 		wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'startday'=>intval(get_option('start_of_week')),
-			'format'=> $eo_settings_array['dateformat'].'-yy'
+			'format'=> eventorganiser_get_option('dateformat').'-yy'
 			));
 		wp_localize_script( 'eo_calendar', 'EO_Ajax', array( 
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'startday'=>intval(get_option('start_of_week')),
-			'format'=> $eo_settings_array['dateformat'].'-yy',
+			'format'=> eventorganiser_get_option('dateformat').'-yy',
 			'timeFormat'=> ( $screen->get_option('eofc_time_format','value') ? 'h:mmtt' : 'HH:mm'),
 			'perm_edit'=> current_user_can('edit_events'),
 			'categories'=>$cats,
@@ -89,8 +87,6 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 	}
 
 	function page_actions(){
-
-		global $wpdb, $eventorganiser_events_table;
 
 		//Add screen option
 		$user =wp_get_current_user();
@@ -264,7 +260,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 	
 	function display(){
 		//Get the time 'now' according to blog's timezone
-		 $now = new DateTIme(null,eo_get_blog_timezone());
+		 $now = new DateTime(null,eo_get_blog_timezone());
 		$venues = eo_get_venues();
 	?>
 
@@ -280,10 +276,11 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		</div>
 		<div id='eo_admin_calendar'></div>
 		<span><?php _e('Current date/time','eventorganiser');?>: <?php echo $now->format('Y-m-d G:i:s \G\M\TP');?></span>
-		<div id='events-meta' class="thickbox" style="display:none;"></div>
+
+		<?php eventorganiser_event_detail_dialog(); ?>
 
 		<?php if(current_user_can('publish_events')||current_user_can('edit_events')):?>
-			<div id='eo_event_create_cal' style="display:none;" class="thickbox">
+			<div id='eo_event_create_cal' style="display:none;" class="eo-dialog" title="<?php esc_attr_e('Create an event','eventorganiser'); ?>">
 			<form name="eventorganiser_calendar" method="post" class="eo_cal">
 
 				<table class="form-table">
@@ -309,7 +306,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				</tr>
 				<tr>
 					<th></th>
-					<td><textarea rows="4" name="eo_event[event_content]"></textarea></td>
+					<td><textarea rows="4" name="eo_event[event_content]" style="width: 220px;"></textarea></td>
 				</tr>
 				</table>
 			<p class="submit">
@@ -321,7 +318,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		  	<?php wp_nonce_field('eventorganiser_calendar_save'); ?>
 			<?php if(current_user_can('publish_events')):?>
 				<input type="submit" class="button" tabindex="4" value="<?php _e('Save Draft','eventorganiser');?>"" id="event-draft" name="save">
-				<input type="reset" class="button" id="reset" value="Cancel">
+				<input type="reset" class="button" id="reset" value="<?php _e('Cancel','eventorganiser');?>">
 
 				<span id="publishing-action">
 					<input type="submit" accesskey="p" tabindex="5" value="<?php _e('Publish Event','eventorganiser');?>" class="button-primary" id="publish" name="publish">
@@ -343,4 +340,31 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 	}
 }
 $calendar_page = new EventOrganiser_Calendar_Page();
+
+
+	function eventorganiser_event_detail_dialog(){
+
+		$tabs = apply_filters('eventorganiser_calendar_dialog_tabs', array( 'summary'=>__('Event Details','eventorganiser')));
+	
+		printf("<div id='events-meta' class='eo-dialog' style='display:none;' title='%s'>",esc_attr__('Event Detail','eventorganiser'));
+			echo "<div id='eo-dialog-tabs'>";
+					echo "<ul style='position: relative;'>";
+					foreach( $tabs as $id => $label ){
+						printf('<li id="eo-dialog-tab-%1$s"><a href="#eo-dialog-tab-%1$s-content">%2$s</a></li>', esc_attr($id), esc_html($label));
+					}
+					echo "</ul>";
+					foreach( $tabs as $id=> $label){
+						printf("<div id='eo-dialog-tab-%s-content'> </div>",esc_attr($id));
+					}
+			echo "</div>";
+		echo "</div>";
+	?>
+<style>
+#eo-dialog-tabs, #events-meta {
+    border: none;
+    padding: 0;
+}
+</style>
+	<?php
+	}
 ?>

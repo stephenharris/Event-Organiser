@@ -57,8 +57,10 @@ html .fc,.fc table{font-size:1em}
 .fc-state-default{border-style:solid;border-width:1px 0}
 .fc-button-inner{position:relative;float:left;overflow:hidden}
 .fc-state-default .fc-button-inner{border-style:solid;border-width:0 1px}
-.fc-button-content{position:relative;float:left;height:1.9em;line-height:1.9em;white-space:nowrap;padding:0 .6em}
-.fc-button-content .fc-icon-wrap{position:relative;float:left;top:50%}
+/*.fc-button-content{position:relative;float:left;height:1.9em;line-height:1.9em;white-space:nowrap;padding:0 .6em}*/
+.fc-button-content{position: relative;float: left;height: 20px;white-space: nowrap;padding: 0 .6em;line-height: 20px;}
+/*.fc-button-content .fc-icon-wrap{position:relative;float:left;top:50%}*/
+.fc-button-content .fc-icon-wrap {position: relative;float: left;top: 2px;}
 .fc-button-content .ui-icon{position:relative;float:left;margin-top:0;top:-50%}
 .fc-state-default .fc-button-effect{position:absolute;top:50%;left:0}
 .fc-state-default .fc-button-effect span{position:absolute;top:-100px;left:0;width:500px;height:100px;background:#444;opacity:.09;filter:alpha(opacity=9);border-color:#fff;border-style:solid;border-width:100px 0 0 1px}

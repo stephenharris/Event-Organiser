@@ -37,8 +37,7 @@ function eventorganiser_details_metabox($post){
 	global $wp_locale;	
 
 	//Sets the format as php understands it, and textual.
-	$eo_settings_array= get_option('eventorganiser_options');
-	if($eo_settings_array['dateformat']=='dd-mm'){
+	if( eventorganiser_get_option('dateformat') =='dd-mm'){
 		$phpFormat = 'd-m-Y';
 		$format = 'dd-mm-yyyy';
 	}else{
@@ -55,7 +54,7 @@ function eventorganiser_details_metabox($post){
 	$venues = eo_get_venues();
 	$venue_id= (int) eo_get_venue($post->ID);
 
-	$sche_once = ($schedule =='once'||$schedule =='custom');
+	$sche_once = $schedule =='once';
 	//Start of meta box ?>	
 	<p>
 		<?php if(!$sche_once ):?>
@@ -70,7 +69,7 @@ function eventorganiser_details_metabox($post){
 
 		<table id="eventorganiser_event_detail" class="form-table">
 				<tr valign="top"  class="event-date">
-					<td><?php echo __("Start Date/Time",'eventorganiser').':';?> </td>
+					<td class="eo-label"><?php echo __("Start Date/Time",'eventorganiser').':';?> </td>
 					<td> 
 						<input class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" id="from_date" <?php disabled(!$sche_once);?> value="<?php echo $start->format($phpFormat); ?>"/>
 
@@ -80,10 +79,10 @@ function eventorganiser_details_metabox($post){
 				</tr>
 
 				<tr valign="top"  class="event-date">
-					<td><?php echo __("End Date/Time",'eventorganiser').':';?> </td>
+					<td class="eo-label"><?php echo __("End Date/Time",'eventorganiser').':';?> </td>
 					<td> 
 					<input class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" id="to_date" <?php disabled(!$sche_once);?>  value="<?php echo $end->format($phpFormat); ?>"/>
-					<input name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all " size="4" maxlength="5" id="HWSEvent_time2" <?php disabled( (!$sche_once) || $all_day );?> value=" <?php echo $end->format('H:i'); ?>""/>
+					<input name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all " size="4" maxlength="5" id="HWSEvent_time2" <?php disabled( (!$sche_once) || $all_day );?> value="<?php echo $end->format('H:i'); ?>"/>
 
 					<label>
 					<input type="checkbox" id="eo_allday"  <?php checked($all_day); ?> name="eo_input[allday]"  <?php  disabled( !$sche_once );?> value="1"/>
@@ -94,7 +93,7 @@ function eventorganiser_details_metabox($post){
 				</tr>
 
 				<tr class="event-date">
-					<td><?php _e("Reoccurence:",'eventorganiser');?> </td>
+					<td class="eo-label"><?php _e("Reoccurence:",'eventorganiser');?> </td>
 					<td> 
 					<?php $reoccurrence_schedules= array('once'=> __('once','eventorganiser'),'daily'=> __('daily','eventorganiser'),'weekly'=> __('weekly','eventorganiser'),
 														'monthly'=> __('monthly','eventorganiser'),'yearly'=> __('yearly','eventorganiser'),'custom'=>__('custom','eventorganiser'));?>
@@ -174,8 +173,8 @@ function eventorganiser_details_metabox($post){
 					</td>
 				</tr>
 
-				<tr>	
-					<td class="label"> <?php _e("Venue",'eventorganiser');?>: </td>
+				<tr valign="top"class="eo-venue-combobox-select">
+					<td class="eo-label"> <?php _e("Venue",'eventorganiser');?>: </td>
 					<td> 	
 						<select size="50" id="venue_select" name="eo_input[event-venue]">
 							<option><?php _e("Select a venue",'eventorganiser');?></option>
@@ -183,18 +182,37 @@ function eventorganiser_details_metabox($post){
 								<option <?php  selected($venue->term_id,$venue_id);?> value="<?php echo $venue->term_id;?>"><?php echo $venue->name; ?></option>
 							<?php endforeach;?>
 						</select>
-						<span style="font-size:0.8em;line-height:0.8em;"> 
-							<?php _e("Search for a venue. To add a venues go to the venue page.",'eventorganiser');?>
-						</span>
+					</td>
+				</tr>
+				<tr valign="top"class="eo-add-new-venue">
+					<td class="eo-label"><label><?php _e('Venue Name','eventorganiser');?>:</label></td>
+					<td><input type="text" name="eo_venue[name]" id="eo_venue_name"  value=""/></td>
+				</tr>
+				<tr valign="top"class="eo-add-new-venue">
+					<td class="eo-label"><label><?php _e('Address','eventorganiser');?>:</label></td>
+					<td><input type="text" name="eo_venue[address]" class="eo_addressInput" id="eo_venue_add"  value=""/></td>
+				</tr>
+				<tr valign="top" class="eo-add-new-venue" >
+					<td class="eo-label"><label><?php _e('Post Code','eventorganiser');?>:</label></td>
+					<td><input type="text" name="eo_venue[postcode]" class="eo_addressInput" id="eo_venue_pcode"  value=""/></td>
+				</tr>
+				<tr valign="top" class="eo-add-new-venue" >
+					<td class="eo-label"><label><?php _e('Country','eventorganiser');?>:</label></td>
+					<td><input type="text" name="eo_venue[country]" class="eo_addressInput" id="eo_venue_country"  value=""/></td>
+				</tr>
+				<tr valign="top" class="eo-add-new-venue" >
+					<td class="eo-label"></td>
+					<td>
+						<a class="button eo-add-new-venue-cancel" href="#"><?php esc_html_e('Cancel','eventorganiser');?> </a>
 					</td>
 				</tr>
 
 				<tr valign="top"  class="venue_row <?php if (!$venue_id) echo 'novenue';?>" >
-					<td></td>
+					<td class="eo-label"></td>
 					<td>
 						<div id="eventorganiser_venue_meta" style="display:none;">
-							<input type="hidden" id="eo_venue_Lat" value="<?php eo_venue_lat($venue_id);?>" />
-							<input type="hidden" id="eo_venue_Lng" value="<?php eo_venue_lng($venue_id); ?>" />
+							<input type="hidden" id="eo_venue_Lat" name="eo_venue[latitude]" value="<?php eo_venue_lat($venue_id);?>" />
+							<input type="hidden" id="eo_venue_Lng" name="eo_venue[longtitude]" value="<?php eo_venue_lng($venue_id); ?>" />
 						</div>
 						<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
 						<div class="clear"></div>
@@ -229,12 +247,22 @@ function eventorganiser_details_save( $post_id ) {
 	//authentication checks
 	if (!current_user_can('edit_event', $post_id)) return;
 
-
 	$raw_data = (isset($_POST['eo_input']) ? $_POST['eo_input'] : array());
 
 	//Update venue
 	$venue_id = !empty($raw_data['event-venue']) ? intval($raw_data['event-venue']) : null;
+
+	//Maybe create a new venue
+	if( empty($venue_id) && !empty($_POST['eo_venue']) ){
+		$venue = $_POST['eo_venue'];
+		if( !empty($venue['name']) ){
+			$new_venue = eo_insert_venue($venue['name'], $venue);
+			if( !is_wp_error($new_venue) )
+				$venue_id = $new_venue['term_id'];
+		}
+	}
 	$r = wp_set_post_terms( $post_id, array( $venue_id ), 'event-venue', false );
+
 
 	$raw_data =wp_parse_args($raw_data,array(
 		'StartDate'=>'','EndDate'=>'','StartTime'=>'00:00','FinishTime'=>'23:59','schedule'=>'once','event_frequency'=>1,
@@ -301,7 +329,7 @@ function eventorganiser_details_save( $post_id ) {
 		global $EO_Errors;
 		$code = $response->get_error_code();
 		$message = $response->get_error_message($code);
-		$errors[$post_id][] = "Event dates were not saved.";
+		$errors[$post_id][] = __("Event dates were not saved.",'eventorganiser');
 		$errors[$post_id][] = $message;
 		$EO_Errors->add('eo_error',$message);
 		update_option('eo_notice',$errors);

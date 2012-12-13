@@ -43,7 +43,7 @@ get_header(); ?>
 						<?php } ?>
 		
 				<!-- Display the venue map. If you specify a class, ensure that class has height/width dimensions-->
-				<?php echo do_shortcode('[eo_venue_map width="100%"]'); ?>
+				<?php echo eo_get_venue_map( eo_get_venue(), array('width'=>"100%") ); ?>
 			</header><!-- end header -->
 
 				<!---- Navigate between pages-->

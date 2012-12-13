@@ -1,20 +1,37 @@
 <?php
-
  /**
  * Register jQuery scripts and CSS files
+ * Hooked on to init
+ *
  * @since 1.0.0
+ * @ignore
+ * @access private
  */
-add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_script() {
 	global $wp_locale;
-	$version = '1.5.6';
-	wp_register_script( 'eo_qtip2', EVENT_ORGANISER_URL.'js/qtip2.js',array('jquery'),$version,true);
-	wp_register_script( 'eo_front', EVENT_ORGANISER_URL.'js/frontend.js',array(
+	$version = '1.6';
+
+	$ext = (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG) ? '' : '.min';
+
+	/* FullCalendar */
+	wp_register_script( 'eo_fullcalendar', EVENT_ORGANISER_URL."js/fullcalendar{$ext}.js",array(
+		'jquery',
+		'jquery-ui-core',
+		'jquery-ui-widget',
+		'jquery-ui-button',
+	),$version,true);	
+
+	/* Front-end script */
+	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",array(
 		'jquery','eo_qtip2',
 		'jquery-ui-core',
 		'jquery-ui-widget',
 		'jquery-ui-button',
+		'jquery-ui-datepicker',
+		'eo_fullcalendar'	
 	),$version,true);
+	
+	/* Add js variables to frontend script */
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
 			'adminajax'=>admin_url( 'admin-ajax.php'),
 			'locale'=>array(
@@ -31,28 +48,39 @@ function eventorganiser_register_script() {
 				'venue'=>__('View all venues','eventorganiser'),
 				)
 			));
+
+	/* Q-Tip */
+	wp_register_script( 'eo_qtip2', EVENT_ORGANISER_URL.'js/qtip2.js',array('jquery'),$version,true);
+
+	/* Styles */
 	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),$version);
-	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array(),$version);
-
+	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array('eventorganiser-jquery-ui-style'),$version);
 	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array(),$version);
-
 }   
+add_action('init', 'eventorganiser_register_script');
 
  /**
  *Register jQuery scripts and CSS files for admin
+ *
  * @since 1.0.0
+ * @ignore
+ * @access private
  */
-add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts',10);
 function eventorganiser_register_scripts(){
-	$version = '1.5.6';
+	$version = '1.6';
+	$ext = (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG) ? '' : '.min';
+
+	/* Google Maps */
 	wp_register_script( 'eo_GoogleMap', 'http://maps.googleapis.com/maps/api/js?sensor=true');
 
-	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL.'js/venues.js',array(
+	/*  Venue scripts for venue & event edit */
+	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL."js/venues{$ext}.js",array(
 		'jquery',
 		'eo_GoogleMap'
 	),$version,true);
 	
-	wp_register_script( 'eo_event', EVENT_ORGANISER_URL.'js/event.js',array(
+	/*  Script for event edit page */
+	wp_register_script( 'eo_event', EVENT_ORGANISER_URL."js/event{$ext}.js",array(
 		'jquery',
 		'jquery-ui-datepicker',
 		'jquery-ui-autocomplete',
@@ -60,22 +88,23 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-position'
 	),$version,true);	
 
-	//Calendar View
-	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL.'js/fullcalendar.js',array(
-		'jquery',
-		'jquery-ui-core',
-		'jquery-ui-widget',
-		'jquery-ui-button',
-		'jquery-ui-position'),
-		$version,true);	
+	/*  Script for admin calendar */
+	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL."js/admin-calendar{$ext}.js",array(
+		'eo_fullcalendar',
+		'jquery-ui-dialog',
+		'jquery-ui-tabs',
+		'jquery-ui-position'
+	),$version,true);
 
-	if ( 'classic' == get_user_option( 'admin_color') )
-		wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-classic.css',array(),$version);
-	else
-		wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array(),$version);
+	/*  Pick and register jQuery UI style */
+	$style = ( 'classic' == get_user_option( 'admin_color') ? 'classic' : 'fresh' );
+	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL."css/eventorganiser-admin-{$style}.css",array(),$version);
 
+	/* Admin styling */
 	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css',array('eventorganiser-jquery-ui-style'),$version);
 }
+add_action('admin_enqueue_scripts', 'eventorganiser_register_scripts',10);
+
 
  /**
  * Check the export and event creation (from Calendar view) actions. 
@@ -83,40 +112,48 @@ function eventorganiser_register_scripts(){
  * the appropriate page is loading.
  *
  * @since 1.0.0
+ * @ignore
+ * @access private
  */
-add_action('admin_init','eventorganiser_admin_init',0);
 function eventorganiser_admin_init(){
 	global $EO_Errors;
 	$EO_Errors = new WP_Error();
 }
+add_action('admin_init','eventorganiser_admin_init',0);
 add_action('admin_init', array('Event_Organiser_Im_Export', 'get_object'));
 
-
-add_action('init','eventorganiser_public_export');
+ /**
+ * @since 1.0.0
+ * @ignore
+ * @access private
+ */
 function eventorganiser_public_export(){
-	$eo_settings = get_option('eventorganiser_options');
-	if(!empty($eo_settings['feed'])){
+	if( eventorganiser_get_option('feed') ){
 		add_feed('eo-events', array('Event_Organiser_Im_Export','get_object'));
 	}
 }
+add_action('init','eventorganiser_public_export');
 
 /**
  * Queues up the javascript / style scripts for Events custom page type 
+ * Hooked onto admin_enqueue_scripts
  *
  * @since 1.0.0
+ * @ignore
+ * @access private
  */
-add_action( 'admin_enqueue_scripts', 'eventorganiser_add_admin_scripts', 998, 1 );
 function eventorganiser_add_admin_scripts( $hook ) {
 	global $post,$current_screen,$wp_locale;
 
 	if ( $hook == 'post-new.php' || $hook == 'post.php') {
 		if( $post->post_type == 'event' ) {     
-			$eo_settings_array= get_option('eventorganiser_options'); 
+
 			wp_enqueue_script('eo_event');
 			wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'startday'=>intval(get_option('start_of_week')),
-					'format'=> $eo_settings_array['dateformat'].'-yy',
+					'format'=> eventorganiser_get_option('dateformat').'-yy',
+					'location'=>get_option('timezone_string'),
 					'locale'=>array(
 						'monthNames'=>array_values($wp_locale->month),
 						'monthAbbrev'=>array_values($wp_locale->month_abbrev),
@@ -152,11 +189,16 @@ function eventorganiser_add_admin_scripts( $hook ) {
 			wp_enqueue_style('eventorganiser-style');
 	}
 }
+add_action( 'admin_enqueue_scripts', 'eventorganiser_add_admin_scripts', 998, 1 );
+
 
 /**
  * Perform database and WP version checks. Display appropriate error messages. 
  * Triggered on update.
+ *
  * @since 1.4.0
+ * @ignore
+ * @access private
  */
 function eventorganiser_db_checks(){
 	global $wpdb;
@@ -190,7 +232,14 @@ function eventorganiser_db_checks(){
 	<?php endif; 
 }
 
-add_action('admin_notices','eventorganiser_admin_notices');
+
+/**
+ * Displays any errors or notices in the global $EO_Errors
+ *
+ * @since 1.4.0
+ * @ignore
+ * @access private
+ */
 function eventorganiser_admin_notices(){
 	global $EO_Errors;
 	$errors=array();
@@ -214,30 +263,61 @@ function eventorganiser_admin_notices(){
 		<?php	endif;
 	endif;
 }
+add_action('admin_notices','eventorganiser_admin_notices');
 
 
-    add_filter('plugin_action_links', 'eventorganiser_plugin_settings_link', 10, 2);
-    function eventorganiser_plugin_settings_link($links, $file) {
+ /**
+ * Adds link to the plug-in settings on the settings page
+ *
+ * @since 1.5
+ * @ignore
+ * @access private
+ */
+function eventorganiser_plugin_settings_link($links, $file) {
     
-        if( $file == 'event-organiser/event-organiser.php' ) {
-            /* Insert the link at the end*/
-            $links['settings'] = sprintf('<a href="%s"> %s </a>',
-                    admin_url('options-general.php?page=event-settings'),
-                     __('Settings','eventorganiser')
+	if( $file == 'event-organiser/event-organiser.php' ) {
+		/* Insert the link at the end*/
+		$links['settings'] = sprintf('<a href="%s"> %s </a>',
+			admin_url('options-general.php?page=event-settings'),
+			__('Settings','eventorganiser')
                 );
         }
-        return $links;
-    }
-    
+	return $links;
+}
+add_filter('plugin_action_links', 'eventorganiser_plugin_settings_link', 10, 2);    
 
-/*
-Cron jobs - for automatically deleting expired events
-*/
+/**
+ * Schedules cron job for automatically deleting expired events
+ *
+ * @since 1.4.0
+ * @ignore
+ * @access private
+ */
 function eventorganiser_cron_jobs(){
 	wp_schedule_event(time()+60, 'daily', 'eventorganiser_delete_expired');
 }
 
-add_action('eventorganiser_delete_expired', 'eventorganiser_delete_expired_events');
+
+/**
+ * Clears the 'delete expired events' cron job.
+ *
+ * @since 1.4.0
+ * @ignore
+ * @access private
+ */
+function eventorganiser_clear_cron_jobs(){
+	wp_clear_scheduled_hook('eventorganiser_delete_expired');
+}
+
+
+/**
+ * Callback for the delete expired events cron job. Deletes events that finished at least 24 hours ago.
+ * For recurring events it is only deleted once the last occurrence has expired.
+ *
+ * @since 1.4.0
+ * @ignore
+ * @access private
+ */
 function eventorganiser_delete_expired_events(){
 	//Get expired events
 	$events = eo_get_events(array('showrepeats'=>0,'showpastevents'=>1,'eo_interval'=>'expired'));
@@ -257,18 +337,18 @@ function eventorganiser_delete_expired_events(){
 		endforeach;
 	endif;
 }
-
-function eventorganiser_clear_cron_jobs(){
-	wp_clear_scheduled_hook('eventorganiser_delete_expired');
-}
+add_action('eventorganiser_delete_expired', 'eventorganiser_delete_expired_events');
 
 
 
 /**
  *  Adds retina support for the screen icon
  * Thanks to numeeja (http://cubecolour.co.uk/)
+ *
+ * @since 1.5.0
+ * @ignore
+ * @access private
  */
-add_action('admin_print_styles','eventorganiser_screen_retina_icon');
 function eventorganiser_screen_retina_icon(){
 
 	$screen_id = get_current_screen()->id;
@@ -290,15 +370,65 @@ function eventorganiser_screen_retina_icon(){
 	</style>
 	<?php
 }
+add_action('admin_print_styles','eventorganiser_screen_retina_icon');
+
+
+/** 
+ * Purge the occurrences cache
+ * Hooked onto eventorganiser_save_event and eventorganiser_delete_event
+ *
+ *@access private
+ * @ignore
+ *@since 1.6
+ */
+function _eventorganiser_delete_occurrences_cache($post_id=0){
+	wp_cache_delete( 'eventorganiser_occurrences_'.$post_id );
+}
+//The following need to trigger the cache clear clearly need to trigger a cache clear
+$hooks = array('eventorganiser_save_event', 'eventorganiser_delete_event');
+foreach( $hooks as $hook ){
+	add_action($hook, '_eventorganiser_delete_occurrences_cache');
+}
 
 
 /**
-* Handles admin pointers
-*/
+ * Purge the cached results of get_calendar.
+ * Hooked onto eventorganiser_save_event, eventorganiser_delete_event, wp_trash_post,
+ * update_option_gmt_offset,update_option_start_of_week,update_option_rewrite_rules
+ * and edited_event-category.
+ *
+ *@access private
+ * @ignore
+ *@since 1.5
+ */
+function _eventorganiser_delete_calendar_cache() {
+	delete_transient( 'eo_widget_calendar' );
+	delete_transient('eo_full_calendar_public');
+	delete_transient('eo_full_calendar_admin');
+	delete_transient('eo_widget_agenda');
+}
+
+//The following need to trigger the cache
+$hooks = array(
+	'eventorganiser_save_event', 'eventorganiser_delete_event', 'wp_trash_post','update_option_gmt_offset', /* obvious */
+	'update_option_start_of_week', /* Start of week is used for calendars */
+	'update_option_rewrite_rules', /* If permalinks updated - links on fullcalendar might now be invalid */ 
+	'edited_event-category', /* Colours of events may change */
+);
+foreach( $hooks as $hook ){
+	add_action($hook, '_eventorganiser_delete_calendar_cache');
+}
+
+
 /**
+ * Handles admin pointers
+ *
  * Kick starts the enquing. Rename this to something unique (i.e. include your plugin/theme name).
-*/
-add_action( 'admin_enqueue_scripts', 'eventorganiser_pointer_load',99999);
+ *
+ *@access private
+ *@ignore
+ *@since 1.5
+ */
 function eventorganiser_pointer_load( $hook_suffix ) {
 
 		$screen_id = get_current_screen()->id;
@@ -338,20 +468,29 @@ function eventorganiser_pointer_load( $hook_suffix ) {
 
 		// Add pointer options to script. 
 		wp_localize_script('eventorganiser-pointer', 'eventorganiserPointer', $valid_pointers);
-	}
+}
+add_action( 'admin_enqueue_scripts', 'eventorganiser_pointer_load',99999);
 
-	add_filter('eventorganiser_admin_pointers-event','eventorganiser_occurrencepicker_pointer');
-	function eventorganiser_occurrencepicker_pointer( $p ){
-		$p['occpicker150'] =array(	
-							'target' =>'.eo_occurrence_toogle',
-							'options'=>array(
-									'content'  => sprintf('<h3> %s </h3> <p> %s </p>',
-													__( 'New Feature: Add / Remove Dates' ,'eventorganiser'),
-													 __( 'This link reveals a datepicker which highlights the dates on which the event occurs. Click a date to add or remove it from the event\'s schedule.','eventorganiser')
-													),
-									'position' => array('edge' => 'left', 'align' => 'middle'),
-							)
-		); 
-		return $p;
-	}
+
+/**
+ * Adds pointer for 1.5
+ *
+ *@access private
+ *@ignore
+ *@since 1.5
+ */
+function eventorganiser_occurrencepicker_pointer( $p ){
+	$p['occpicker150'] =array(	
+		'target' =>'.eo_occurrence_toogle',
+		'options'=>array(
+					'content'  => sprintf('<h3> %s </h3> <p> %s </p>',
+							__( 'New Feature: Add / Remove Dates' ,'eventorganiser'),
+							 __( 'This link reveals a datepicker which highlights the dates on which the event occurs. Click a date to add or remove it from the event\'s schedule.','eventorganiser')
+							),
+					'position' => array('edge' => 'left', 'align' => 'middle'),
+					)
+	); 
+	return $p;
+}
+add_filter('eventorganiser_admin_pointers-event','eventorganiser_occurrencepicker_pointer');
  ?>
