@@ -83,7 +83,7 @@ if (!Array.prototype.indexOf)
                     return $("<li></li>").data("item.autocomplete", b).append("<a>" + b.label + "</a>").appendTo(a)
                 }
 		//Clean address
-		var address_array = [b.venue_address, b.venue_postal, b.venue_country]
+		var address_array = [b.venue_address, b.venue_postal, b.venue_city, b.venue_country]
 		address_array = $.grep(address_array,function(n){
 		    return(n);
 		});
