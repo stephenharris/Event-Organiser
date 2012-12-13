@@ -300,6 +300,7 @@ function eo_get_venue_address($venue_slug_or_id=''){
 	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
 	$address['address'] = eo_get_venue_meta($venue_id,'_address');
 	$address['postcode'] = eo_get_venue_meta($venue_id,'_postcode');
+	$address['city'] = eo_get_venue_meta($venue_id,'_city');
 	$address['country'] = eo_get_venue_meta($venue_id,'_country');
 
 	return $address;
@@ -384,7 +385,7 @@ function eo_get_venues($args=array()){
 	function eo_update_venue($venue_id, $args=array()){
 
 		$term_args = array_intersect_key($args, array('name'=>'','term_id'=>'','term_group'=>'','term_taxonomy_id'=>'','alias_of'=>'','parent'=>0,'slug'=>'','count'=>''));
-		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','country'=>'','latitude'=>'','longtitude'=>''));
+		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','city'=>'','country'=>'','latitude'=>'','longtitude'=>''));
 		$venue_id = (int) $venue_id;
 
 
@@ -442,7 +443,7 @@ function eo_get_venues($args=array()){
  */
 	function eo_insert_venue($name, $args=array()){
 		$term_args = array_intersect_key($args, array('name'=>'','term_id'=>'','term_group'=>'','term_taxonomy_id'=>'','alias_of'=>'','parent'=>0,'slug'=>'','count'=>''));
-		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','country'=>'','latitude'=>'','longtitude'=>''));
+		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','city'=>'','country'=>'','latitude'=>'','longtitude'=>''));
 	
 		$resp = wp_insert_term($name,'event-venue',$term_args);
 
@@ -676,6 +677,7 @@ function eo_delete_venue_meta($venue_id, $key, $value = '', $delete_all = false 
 		switch($key):
 			case '_address':
 			case '_postcode':
+			case '_city':
 			case '_country':
 				$value = sanitize_text_field($value);
 				break;
