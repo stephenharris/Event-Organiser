@@ -393,14 +393,14 @@ function eventorganiser_venue_title($venue){
 
 function eventorganiser_venue_admin_columns($columns){
 	$columns = array(
-		'cb' => '<input type="checkbox" />', //Render a checkbox instead of text
-		'name'  => __('Venue', 'eventorganiser'),
-		'venue_address'     =>__('Address', 'eventorganiser'),
-		'venue_postal'     => __('Post Code', 'eventorganiser'),
-		'venue_city'     => __('City', 'eventorganiser'),
-		'venue_country'     => __('Country', 'eventorganiser'),
-		'venue_slug'     =>__('Slug'),
-		'posts'     =>__('Events', 'eventorganiser'),
+		'cb'		=> '<input type="checkbox" />', //Render a checkbox instead of text
+		'name'		=> __('Venue', 'eventorganiser'),
+		'venue_address' =>__('Address', 'eventorganiser'),
+		'venue_postal'	=> __('Post Code', 'eventorganiser'),
+		'venue_city'	=> __('City', 'eventorganiser'),
+		'venue_country' => __('Country', 'eventorganiser'),
+		'venue_slug'    =>__('Slug'),
+		'posts'		=>__('Events', 'eventorganiser'),
 	);
 	return $columns;	
 }
