@@ -345,6 +345,10 @@ function eventorganiser_venue_location($venue){
 				<td><input type="text" name="eo_venue[postcode]" class="eo_addressInput" id="eo_venue_pcode"  value="<?php echo esc_attr($address['postcode']);?>"/></td>
 			</tr>
 			<tr>
+				<th><label><?php _e('City','eventorganiser');?>:</label></th>
+				<td><input type="text" name="eo_venue[city]" class="eo_addressInput" id="eo_venue_city"  value="<?php echo esc_attr($address['city']) ;?>"/></td>
+			</tr>
+			<tr>
 				<th><label><?php _e('Country','eventorganiser');?>:</label></th>
 				<td><input type="text" name="eo_venue[country]" class="eo_addressInput" id="eo_venue_country"  value="<?php echo esc_attr($address['country']) ;?>"/></td>
 			</tr>
@@ -393,6 +397,7 @@ function eventorganiser_venue_admin_columns($columns){
 		'name'  => __('Venue', 'eventorganiser'),
 		'venue_address'     =>__('Address', 'eventorganiser'),
 		'venue_postal'     => __('Post Code', 'eventorganiser'),
+		'venue_city'     => __('City', 'eventorganiser'),
 		'venue_country'     => __('Country', 'eventorganiser'),
 		'venue_slug'     =>__('Slug'),
 		'posts'     =>__('Events', 'eventorganiser'),
