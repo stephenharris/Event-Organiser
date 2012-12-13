@@ -206,6 +206,7 @@ class EventOrganiser_Shortcodes {
 			'/%(event_tags)%/',
 			'/%(event_venue_address)%/',
 			'/%(event_venue_postcode)%/',
+			'/%(event_venue_city)%/',
 			'/%(event_venue_country)%/',
 			'/%(schedule_start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
 			'/%(schedule_end)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
@@ -308,6 +309,10 @@ class EventOrganiser_Shortcodes {
 			case 'event_venue_postcode':
 				$address = eo_get_venue_address();
 				$replacement =$address['postcode'];
+				break;
+			case 'event_venue_city':
+				$address = eo_get_venue_address();
+				$replacement =$address['city'];
 				break;
 			case 'event_venue_country':
 				$address = eo_get_venue_address();
