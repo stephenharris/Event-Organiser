@@ -550,6 +550,7 @@ function eventorganiser_search_venues() {
 				$address = eo_get_venue_address($venue_id);
 				$venue->venue_address =  isset($address['address']) ? $address['address'] : '';
 				$venue->venue_postal =  isset($address['postcode']) ? $address['postcode'] : '';
+				$venue->venue_city =  	isset($address['city']) ? $address['city'] : '';
 				$venue->venue_country =  isset($address['country']) ? $address['country'] : '';
 			}
 
