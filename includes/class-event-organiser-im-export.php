@@ -51,7 +51,7 @@ class Event_Organiser_Im_Export  {
 			//Perform checks on file:
 			if ( in_array($_FILES["ics"]["type"], array("text/calendar","application/octet-stream")) && ($_FILES["ics"]["size"] < 2097152) ):
 				if($_FILES["ics"]["error"] > 0){
-					$EO_Errors = new WP_Error('eo_error', sprintf(__("File Error encountered: %d"), $_FILES["ics"]["error"]));
+					$EO_Errors = new WP_Error('eo_error', sprintf(__("File Error encountered: %d",'eventorganiser'), $_FILES["ics"]["error"]));
 				}else{
 					//Import file
 					$this->import_file($_FILES['ics']['tmp_name']);
@@ -62,10 +62,9 @@ class Event_Organiser_Im_Export  {
 
 			else:
 				$EO_Errors = new WP_Error('eo_error', __("Invalid file uploaded. The file must be a ics calendar file of type 'text/calendar', no larger than 2MB.",'eventorganiser'));
-				$size = (int) $_FILES["ics"]["size"];
-				$size =  number_format(floatval($size*0.0009765625),2);
-				$details = sprintf( __('File size: %01.2fkb. File type: %2$s','eventorganiser'),$size, $_FILES["ics"]["type"]);
-				$EO_Errors->add('eo_error', esc_html($details));
+				$size = size_format($_FILES["ics"]["size"],2);
+				$details = sprintf( __('File size: %s. File type: %s','eventorganiser'),$size, $_FILES["ics"]["type"]);
+				$EO_Errors->add('eo_error', $details);
 
 			endif;
 

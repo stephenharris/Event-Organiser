@@ -128,7 +128,7 @@ function eo_get_blog_timezone(){
 
 /**
  * Calculates and formats an interval between two days, passed in any order.
- * It's a PHP 5.2 workaround for http://www.php.net/manual/en/dateinterval.format.php
+ * It's a PHP 5.2 workaround for {@link http://www.php.net/manual/en/dateinterval.format.php date interval format}
  * @since 1.5
  *
  * @param dateTime $_date1 One date to compare
@@ -203,7 +203,7 @@ function eo_date_interval($_date1,$_date2, $format){
 /**
 * Very basic class to convert php date format into xdate date format used for javascript.
 *
-* Takes a php date format and converts it to xdate format (see http://arshaw.com/xdate/#Formatting) so
+* Takes a php date format and converts it to {@link http://arshaw.com/xdate/#Formatting xdate format} so
 * that it can b used in javascript (notably the fullCalendar).
 *
 * Doesn't support
@@ -267,7 +267,6 @@ function eventorganiser_php2xdate($phpformat=""){
 * A utilty function intended for removing duplicate DateTime objects from array
 * @since 1.5
  *@access private
-* @ignore
 * @ignore
 *
 * @param array $array Array of DateTime objects (though can work for other objects)

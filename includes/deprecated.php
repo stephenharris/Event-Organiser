@@ -1,5 +1,7 @@
 <?php
-
+/**
+ *@package deprecated
+ */
 /** 
 * Returns an array of DateTime objects for each start date of occurrence
 * @since 1.0.0
