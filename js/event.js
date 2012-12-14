@@ -27,6 +27,8 @@ if (!Array.prototype.indexOf)
     var eo_occurrences_by_rule = new Array;
 	var eo_include_dates;
 	var eo_exclude_dates;
+	//Used to restore venue map when cancelling 'add new'
+	var eo_venue_obj;
     if ($('#eo_occurrence_includes').length > 0) {
         eo_include_dates = $('#eo_occurrence_includes').val().split(",");
         eo_exclude_dates = $('#eo_occurrence_excludes').val().split(",");
@@ -69,6 +71,8 @@ if (!Array.prototype.indexOf)
 				$("#eventorganiser_event_detail tr.eo-add-new-venue").hide();
                         }
                         eo_initialize_map(b.item.venue_lat, b.item.venue_lng)
+			$("#eo_venue_Lat").val(b.item.venue_lat);
+			$("#eo_venue_Lng").val(b.item.venue_lng);
                     }
                     $("#venue_select").removeAttr("selected");
                     $("#venue_select").val(b.item.term_id)
@@ -115,6 +119,13 @@ if (!Array.prototype.indexOf)
             		}).removeClass("ui-corner-all").addClass("ui-corner-right add-new-venue ui-combobox-button").click(function () {
 				$("#eventorganiser_event_detail tr.eo-add-new-venue").show();			
 				$("tr.venue_row").show();
+				//Store existing venue details in case the user cancels creating a new on
+				eo_venue_obj={
+					id: $("#venue_select").val(),
+					label: $(".eo-venue-input input").val(),
+					lat: $("#eo_venue_Lat").val(),
+					lng: $("#eo_venue_Lng").val()
+				};
 				$("#venue_select").removeAttr("selected").val(0);
 				$('.eo-venue-combobox-select').hide();
 				$('.eo-venue-input input').val('');
@@ -140,8 +151,14 @@ $('.eo-add-new-venue-cancel').click(function(e){
 	e.preventDefault();
 	$('.eo-venue-combobox-select').show();
 	$('.eo-add-new-venue input').val('');
+
+	//Restore old venue details
+	eo_initialize_map(eo_venue_obj.lat,eo_venue_obj.lng);
+	$("#venue_select").val(eo_venue_obj.id);
+	$(".eo-venue-input input").val(eo_venue_obj.label);
+
 	$("#eventorganiser_event_detail tr.eo-add-new-venue").hide();	
-	$("#eventorganiser_event_detail tr.venue_row ").hide();
+	//$("#eventorganiser_event_detail tr.venue_row ").hide();
 });
 
 
