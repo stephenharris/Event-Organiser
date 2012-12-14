@@ -205,7 +205,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 					//delete occurrence, 
 					if( $new_event_id && !is_wp_error($new_event_id) ){
 						$response = _eventorganiser_remove_occurrence($post_id,$event_id);
-.
+
 						$post_custom = get_post_custom($post->ID);
 						foreach ($post_custom as $meta_key=>$meta_values) {
 
