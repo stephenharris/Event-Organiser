@@ -199,21 +199,30 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 						'frequency'=>1,
 					);
 
-					//Create new event with duplicated details
+					//Create new event with duplicated details (new event clears cache)
 					$new_event_id = eo_insert_event($post_array,$event_array);
 
 					//delete occurrence, 
 					if( $new_event_id && !is_wp_error($new_event_id) ){
 						$response = _eventorganiser_remove_occurrence($post_id,$event_id);
-						//FIXME copying post meta over-rides schedule information.
-						/*$post_custom = get_post_custom($post->ID);
+.
+						$post_custom = get_post_custom($post->ID);
 						foreach ($post_custom as $meta_key=>$meta_values) {
-							$unique = ($meta_key[0]=='_' ? true : false);
+
+							//Don't copy these
+							if( in_array($meta_key, array('_edit_last','_edit_last') ) )
+								continue;
+		
+							//Don't copy event meta
+							if( strncmp($meta_key, '_eventorganiser', 15) )
+								continue;
+
 							foreach ($meta_values as $meta_value) {
-								add_post_meta($new_event_id,$meta_key,$meta_value,$unique);
+								add_post_meta($new_event_id,$meta_key,$meta_value);
 							}
-						}*/
+						}
 					}
+
 					//Redirect to prevent resubmisson
 					$redirect = add_query_arg(array('post_type'=>'event','page'=>'calendar'),admin_url('edit.php'));
 					wp_redirect($redirect);
