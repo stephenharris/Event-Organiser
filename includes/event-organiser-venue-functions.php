@@ -5,11 +5,14 @@
 */
 
 /**
-* Returns the id of the venue of an event.
-* Can be used inside the loop to output the 
-* venue id of the current event.
-* @since 1.0.0
+* Returns the ID of the venue of an event.
 *
+* Can be used inside the loop to output the 
+* venue id of the current event by not passing an ID.
+*
+* Otherwise it returns the venue ID of the passed event ID.
+*
+* @since 1.0.0
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @return int The corresponding venue (event-venue term) ID
  */
@@ -308,51 +311,29 @@ function eo_get_venue_address($venue_slug_or_id=''){
 
 
 /**
- * Retrieve array of venues. Acts as a wrapper for get_terms, except hide_empty defaults to false.
+ * Retrieve array of venues. 
  *
+ * Acts as a wrapper for {@link http://codex.wordpress.org/Function_Reference/get_terms get_terms()}, except hide_empty defaults to false.
  * The list of arguments that $args can contain, which will overwrite the defaults:
  *
- * orderby - Default is 'name'. Can be name, count, term_group, slug or nothing
+ * * orderby - Default is 'name'. Can be name, count, term_group, slug or nothing
  * (will use venue/term ID), Passing a custom value other than these will cause it to
  * order based on the custom value.
- *
- * order - Default is ASC. Can use DESC.
- *
- * hide_empty - Default is 0
- *
- * exclude - Default is an empty array. An array, comma- or space-delimited string
- * of term ids to exclude from the return array. If 'include' is non-empty,
- * 'exclude' is ignored.
- *
- * include - Default is an empty array. An array, comma- or space-delimited string
+ * * order - Default is ASC. Can use DESC.
+ * * hide_empty - Default is 0
+ * * exclude - Default is an empty array. An array, comma- or space-delimited string
+ * of term ids to exclude from the return array. If 'include' is non-empty,'exclude' is ignored.
+ * * include - Default is an empty array. An array, comma- or space-delimited string
  * of term ids to include in the return array.
- *
- * number - The maximum number of terms to return. Default is to return them all.
- *
- * offset - The number by which to offset the terms query.
- *
- * fields - Default is 'all', which returns an array of term objects.
- * If 'fields' is 'ids' or 'names', returns an array of
- * integers or strings, respectively.
- *
- * slug - Returns terms whose "slug" matches this value. Default is empty string.
- *
- * search - Returned terms' names will contain the value of 'search',
- * case-insensitive. Default is an empty string.
- *
- * The argument 'pad_counts', if set to true will include the quantity of a term's
- * children in the quantity of each term's "count" object variable.
- *
- * The 'get' argument, if set to 'all' instead of its default empty string,
- * returns terms regardless of ancestry or whether the terms are empty.
- *
- * The 'cache_domain' argument enables a unique cache key to be produced when this query is stored
- * in object cache. For instance, if you are using one of this function's filters to modify the
- * query (such as 'terms_clauses'), setting 'cache_domain' to a unique value will not overwrite
- * the cache for similar queries. Default value is 'core'.
+ * * number - The maximum number of terms to return. Default is to return them all.
+ * * offset - The number by which to offset the terms query.
+ * * fields - Default is 'all', which returns an array of term objects. If 'fields' is 'ids' or 'names', returns an array of integers or strings, respectively.
+ * * slug - Returns terms whose "slug" matches this value. Default is empty string.
+ * * search - Returned terms' names will contain the value of 'search', case-insensitive. Default is an empty string.
  *
  * @uses get_terms()
  * @link https://gist.github.com/3902494 Gist for creating an archive page of all the venues
+ * @link http://codex.wordpress.org/Function_Reference/get_terms get_terms()
  * @since 1.0.0
  *
  * @param string|array $args The values of what to search for when returning venues
@@ -367,11 +348,17 @@ function eo_get_venues($args=array()){
 /**
  * Updates new venue in the database. 
  *
- * Calls wp_update_term to update the taxonomy term
- * Updates venue meta data to database (for 'core' meta keys)
- * 
- * The $args is an array - the same as that accepted by wp_update_term
- * The $args array can also accept the following keys: description, address, postcode, country, latitude, longtitude
+ * Calls wp_update_term to update the taxonomy term. Updates venue meta data to database (for 'core' meta keys)
+ * The $args is an array - the same as that accepted by {@link http://codex.wordpress.org/Function_Reference/wp_insert_term wp_insert_term()}
+ * The $args array can also accept the following keys: 
+ *
+ * * description
+ * * address
+ * * city
+ * * postcode
+ * * country
+ * * latitude
+ * * longtitude
  *
  * @since 1.4.0
  *
@@ -424,18 +411,24 @@ function eo_get_venues($args=array()){
 /**
  * Adds a new venue to the database. 
  *
- * Calls wp_insert_term to create the taxonomy term
- * Adds venue meta data to database (for 'core' meta keys)
- * 
- * The $args is an array - the same as that accepted by wp_insert_term
+ * Calls wp_insert_term() to create the taxonomy term. Adds venue meta data to database (for 'core' meta keys)
+ * The $args is an array - the same as that accepted by {@link http://codex.wordpress.org/Function_Reference/wp_update_term wp_update_term()}
  * The $args array can also accept the following keys: 
- * *  description, address, postcode, country, latitude, longtitude
+ *
+ * * description
+ * * address
+ * * city
+ * * postcode
+ * * country
+ * * latitude
+ * * longtitude
  *
  * @since 1.4.0
  *
  * @uses wp_insert_term to create venue (taxonomy) term
  * @uses do_action() Calls 'eventorganiser_insert_venue' hook with the venue id
  * @uses do_action() Calls 'eventorganiser_save_venue' hook with the venue id
+ * @link http://codex.wordpress.org/Function_Reference/wp_insert_term wp_insert_term()
  *
  * @param string $name the venue to insert
  * @param array $args Array as accepted by wp_update_term and including the 'core' metadata
@@ -594,7 +587,7 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
  * This function returns the values of the venue meta with the specified key from the specified venue. (Specified by the venue ID - the taxonomy term ID).
  *
  * @since 1.5.0
- * @link http://www.harriswebsolutions.co.uk/event-organiser/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
+ * @link http://wp-event-organiser.com/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
  *
  * @param int $venue_id Venue (term) ID.
  * @param string $key Optional. The meta key to retrieve. By default, returns data for all keys.
@@ -610,8 +603,20 @@ function eo_get_venue_meta($venue_id, $key, $single=true){
 /**
  * Add meta data field to a venue
  *
+ * You should avoid the following 'core' keys:
+ *
+ * * _description
+ * * _address
+ * * _city
+ * * _postcode
+ * * _country
+ * * _latitude
+ * * _longtitude
+ *
+ * It is **strongly** recommended that you prefix your keys with and underscore.
+ *
  * @since 1.5.0
- * @link http://www.harriswebsolutions.co.uk/event-organiser/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
+ * @link http://wp-event-organiser.com/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
  *
  * @param int $venue_id Venue (term) ID.
  * @param string $key Metadata name.
@@ -631,8 +636,20 @@ function eo_add_venue_meta($venue_id, $key, $value, $unique = false ){
  *
  * If the meta field for the venue does not exist, it will be added.
  *
+ * You should avoid the following 'core' keys:
+ *
+ * * _description
+ * * _address
+ * * _city
+ * * _postcode
+ * * _country
+ * * _latitude
+ * * _longtitude
+ *
+ * It is **strongly** recommended that you prefix your keys with and underscore.
+ *
  * @since 1.5.0
- * @link http://www.harriswebsolutions.co.uk/event-organiser/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
+ * @link http://wp-event-organiser.com/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
  *
  * @param int $venue_id Venue (term) ID.
  * @param string $key Metadata key.
@@ -652,7 +669,7 @@ function eo_update_venue_meta($venue_id, $key, $value, $prev_value=''){
  * allows removing all metadata matching key, if needed.
  *
  * @since 1.5.0
- * @link http://www.harriswebsolutions.co.uk/event-organiser/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
+ * @link http://wp-event-organiser.com/documentation/developers/venue-meta-data-and-metaboxes/ How to create custom fields for venues
  *
  * @param int $venue_id Venue (term) ID.
  * @param string $key Metadata name.
