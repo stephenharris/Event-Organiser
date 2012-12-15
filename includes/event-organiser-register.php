@@ -470,27 +470,4 @@ function eventorganiser_pointer_load( $hook_suffix ) {
 		wp_localize_script('eventorganiser-pointer', 'eventorganiserPointer', $valid_pointers);
 }
 add_action( 'admin_enqueue_scripts', 'eventorganiser_pointer_load',99999);
-
-
-/**
- * Adds pointer for 1.5
- *
- *@access private
- *@ignore
- *@since 1.5
- */
-function eventorganiser_occurrencepicker_pointer( $p ){
-	$p['occpicker150'] =array(	
-		'target' =>'.eo_occurrence_toogle',
-		'options'=>array(
-					'content'  => sprintf('<h3> %s </h3> <p> %s </p>',
-							__( 'New Feature: Add / Remove Dates' ,'eventorganiser'),
-							 __( 'This link reveals a datepicker which highlights the dates on which the event occurs. Click a date to add or remove it from the event\'s schedule.','eventorganiser')
-							),
-					'position' => array('edge' => 'left', 'align' => 'middle'),
-					)
-	); 
-	return $p;
-}
-add_filter('eventorganiser_admin_pointers-event','eventorganiser_occurrencepicker_pointer');
  ?>
