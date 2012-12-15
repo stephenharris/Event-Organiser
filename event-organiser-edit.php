@@ -193,12 +193,12 @@ function eventorganiser_details_metabox($post){
 					<td><input type="text" name="eo_venue[address]" class="eo_addressInput" id="eo_venue_add"  value=""/></td>
 				</tr>
 				<tr valign="top" class="eo-add-new-venue" >
-					<td class="eo-label"><label><?php _e('Post Code','eventorganiser');?>:</label></td>
-					<td><input type="text" name="eo_venue[postcode]" class="eo_addressInput" id="eo_venue_pcode"  value=""/></td>
-				</tr>
-				<tr valign="top" class="eo-add-new-venue" >
 					<td class="eo-label"><label><?php _e('City','eventorganiser');?>:</label></td>
 					<td><input type="text" name="eo_venue[city]" class="eo_addressInput" id="eo_venue_city"  value=""/></td>
+				</tr>
+				<tr valign="top" class="eo-add-new-venue" >
+					<td class="eo-label"><label><?php _e('Post Code','eventorganiser');?>:</label></td>
+					<td><input type="text" name="eo_venue[postcode]" class="eo_addressInput" id="eo_venue_pcode"  value=""/></td>
 				</tr>
 				<tr valign="top" class="eo-add-new-venue" >
 					<td class="eo-label"><label><?php _e('Country','eventorganiser');?>:</label></td>
