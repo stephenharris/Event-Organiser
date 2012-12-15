@@ -6,6 +6,9 @@ Version: 1.6
 Description: Creates a custom post type 'events' with features such as reoccurring events, venues, Google Maps, calendar views and events and venue pages
 Author: Stephen Harris
 Author URI: http://www.stephenharris.info
+Network: false
+Text Domain: eventorganiser
+Domain Path: /languages
 */
 /*  Copyright 2011 Stephen Harris (contact@stephenharris.info)
 
@@ -57,19 +60,38 @@ define( 'DATETIMEOBJ', 'DATETIMEOBJ', true );
  */
 define('EVENT_ORGANISER_DIR',plugin_dir_path(__FILE__ ));
 
-/**
- * Defines the plug-in language directory relative to plugins
- * <code> event-organiser/languages </code> 
- */
-define('EVENT_ORGANISER_I18N',basename(dirname(__FILE__)).'/languages');
 
 /**
- * Loads translations
+ * Load the translation file for current language. Checks in wp-content/languages first
+ * and then the event-organiser/languages.
+ *
+ * Edits to translation files inside event-organiser/languages will be lost with an update
+ * **If you're creating custom translation files, please use the global language folder.**
+ *
+ * @since 1.3
+ * @ignore
+ * @uses apply_filters() Calls 'plugin_locale' with the get_locale() value
+ * @uses load_textdomain() To load the textdomain from global language folder
+ * @uses load_plugin_textdomain() To load the textdomain from plugin folder
  */
-function eventorganiser_i18n() {
-	load_plugin_textdomain( 'eventorganiser', false, EVENT_ORGANISER_I18N);
+function eventorganiser_load_textdomain() {
+	$domain = 'eventorganiser';
+	$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+		
+	$mofile = $domain . '-' . $locale . '.mo';
+
+	/* Check the global language folder */
+	$files = array(WP_LANG_DIR . '/event-organiser/' . $mofile,WP_LANG_DIR . '/' . $mofile);
+	foreach( $files as $file ){
+		if( file_exists( $file ) )
+			return load_textdomain( $domain, $file );
+	}
+
+	//If we got this far, fallback to the plug-in language folder.
+	//We could use load_textdomain - but this avoids touching any more constants.
+	load_plugin_textdomain('eventorganiser',false, basename(dirname(__FILE__)).'/languages');
 }
-add_action('init', 'eventorganiser_i18n');
+add_action('init', 'eventorganiser_load_textdomain');
 
 global $eventorganiser_roles;
 $eventorganiser_roles = array(
@@ -175,7 +197,7 @@ require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-shortcodes.php');
 
 add_action( 'widgets_init', 'eventorganiser_widgets_init');
 function eventorganiser_widgets_init(){
-	load_plugin_textdomain( 'eventorganiser', false, EVENT_ORGANISER_I18N);
+	eventorganiser_load_textdomain();
 	register_widget('EO_Event_List_Widget');
 	register_widget('EO_Events_Agenda_Widget');
 	register_widget('EO_Calendar_Widget');
