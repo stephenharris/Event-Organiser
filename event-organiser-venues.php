@@ -341,12 +341,12 @@ function eventorganiser_venue_location($venue){
 				<td><input type="text" name="eo_venue[address]" class="eo_addressInput" id="eo_venue_add"  value="<?php echo esc_attr($address['address']) ;?>"/></td>
 			</tr>
 			<tr>
-				<th><label><?php _e('Post Code','eventorganiser');?>:</label></th>
-				<td><input type="text" name="eo_venue[postcode]" class="eo_addressInput" id="eo_venue_pcode"  value="<?php echo esc_attr($address['postcode']);?>"/></td>
-			</tr>
-			<tr>
 				<th><label><?php _e('City','eventorganiser');?>:</label></th>
 				<td><input type="text" name="eo_venue[city]" class="eo_addressInput" id="eo_venue_city"  value="<?php echo esc_attr($address['city']) ;?>"/></td>
+			</tr>
+			<tr>
+				<th><label><?php _e('Post Code','eventorganiser');?>:</label></th>
+				<td><input type="text" name="eo_venue[postcode]" class="eo_addressInput" id="eo_venue_pcode"  value="<?php echo esc_attr($address['postcode']);?>"/></td>
 			</tr>
 			<tr>
 				<th><label><?php _e('Country','eventorganiser');?>:</label></th>
