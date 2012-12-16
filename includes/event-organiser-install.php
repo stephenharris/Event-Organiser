@@ -69,6 +69,10 @@
 		'deleteexpired' => 0
 	);
 	add_option('eventorganiser_options',$eventorganiser_options);
+
+	/* Add existing notices */
+	$notices = array('autofillvenue17');
+	add_option('eventorganiser_admin_notices',$notices);
 	
 	//Add roles to administrator		
 	global $wp_roles,$eventorganiser_roles;	
@@ -271,6 +275,7 @@ function eventorganiser_uninstall(){
 
 	//Delete options
 	delete_option('eventorganiser_options');
+	delete_option('eventorganiser_admin_notices');
 	delete_option('eventorganiser_version');
 	delete_option('eo_notice');
 	delete_option('widget_eo_calendar_widget');
