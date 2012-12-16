@@ -508,13 +508,13 @@ class EO_Admin_Notice_Handler{
 
 		//Notices of the form ID=> array('screen_id'=>screen ID, 'message' => Message,'type'=>error|alert)
 		$notices = array(
-			/*'autofillvenue17'=>array(
+			'autofillvenue17'=>array(
 				'screen_id'=>'event_page_venues',
 				'message' => sprintf(__('A <strong>city field</strong> for venues has now been added. </br> If you like, Event Organiser can <a href="%s">attempt to auto-fill the city field</a>. You can always manually change the details aftewards.','eventorganiser'),
 								add_query_arg('action','eo-autofillcity',admin_url('admin-post.php'))
 								),
 				'type' => 'alert'
-			),*/
+			),
 		);
 
 		if( !$notices )
@@ -639,6 +639,7 @@ EO_Admin_Notice_Handler::load();
  *@ignore
  *@access private
  *@link https://github.com/stephenh1988/Event-Organiser/issues/18
+ *@link http://open.mapquestapi.com/nominatim/ Nominatim Search Service
  */
 function _eventorganiser_autofill_city(){
 	$seen_notices = get_option('eventorganiser_admin_notices',array());
@@ -647,6 +648,25 @@ function _eventorganiser_autofill_city(){
 		return;
 
 	EO_Admin_Notice_Handler::dismiss_notice('autofillvenue17');
+
+	$cities =array();
+	$venues = eo_get_venues();
+
+	foreach( $venues as $venue ){
+		$venue_id = (int) $venue->term_id;
+		$latlng =extract(eo_get_venue_latlng($venue_id));
+
+		if( eo_get_venue_meta($venue_id,'_city',true) )
+			continue;
+
+		$response=wp_remote_get("http://open.mapquestapi.com/nominatim/v1/reverse?format=json&lat={$lat}&lon={$lng}&osm_type=N&limit=1");	
+		$geo = json_decode(wp_remote_retrieve_body( $response ));
+		if( isset($geo->address->city) ){
+			$cities[$venue_id] = $geo->address->city;
+			eo_update_venue_meta($venue_id, '_city', $geo->address->city);
+		}		
+	}	
+
 	wp_safe_redirect(admin_url('edit.php?post_type=event&page=venues'));
 }
 add_action('admin_post_eo-autofillcity','_eventorganiser_autofill_city');
