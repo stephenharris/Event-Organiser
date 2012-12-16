@@ -291,7 +291,14 @@ function eo_venue_link($venue_slug_or_id=''){
 
 /**
 * Returns an array with address details of the event's venue.
-* The keys consist of 'address', 'postcode' and 'country'
+* The keys consist of
+*
+* * 'address'
+* * 'city'
+* * 'state' - the state/province/county of the venue
+* * 'postcode'
+* * 'country'
+*
 * If used with any arguments uses the venue of the current event.
  * @since 1.0.0
 *
@@ -301,11 +308,11 @@ function eo_venue_link($venue_slug_or_id=''){
 function eo_get_venue_address($venue_slug_or_id=''){
 	$address=array();	
 	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
-	$address['address'] = eo_get_venue_meta($venue_id,'_address');
-	$address['postcode'] = eo_get_venue_meta($venue_id,'_postcode');
-	$address['city'] = eo_get_venue_meta($venue_id,'_city');
-	$address['country'] = eo_get_venue_meta($venue_id,'_country');
-
+	$address_keys = array_keys(_eventorganiser_get_venue_address_fields());
+	foreach( $address_keys as $meta_key ){
+		$key = trim($meta_key,'_');
+		$address[$key] = eo_get_venue_meta($venue_id,$meta_key);
+	}
 	return $address;
 }
 
@@ -355,6 +362,7 @@ function eo_get_venues($args=array()){
  * * description
  * * address
  * * city
+ * * state
  * * postcode
  * * country
  * * latitude
@@ -372,7 +380,7 @@ function eo_get_venues($args=array()){
 	function eo_update_venue($venue_id, $args=array()){
 
 		$term_args = array_intersect_key($args, array('name'=>'','term_id'=>'','term_group'=>'','term_taxonomy_id'=>'','alias_of'=>'','parent'=>0,'slug'=>'','count'=>''));
-		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','city'=>'','country'=>'','latitude'=>'','longtitude'=>''));
+		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','city'=>'','state'=>'','country'=>'','latitude'=>'','longtitude'=>''));
 		$venue_id = (int) $venue_id;
 
 
@@ -418,6 +426,7 @@ function eo_get_venues($args=array()){
  * * description
  * * address
  * * city
+ * * state
  * * postcode
  * * country
  * * latitude
@@ -436,7 +445,7 @@ function eo_get_venues($args=array()){
  */
 	function eo_insert_venue($name, $args=array()){
 		$term_args = array_intersect_key($args, array('name'=>'','term_id'=>'','term_group'=>'','term_taxonomy_id'=>'','alias_of'=>'','parent'=>0,'slug'=>'','count'=>''));
-		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','city'=>'','country'=>'','latitude'=>'','longtitude'=>''));
+		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','city'=>'','state'=>'','country'=>'','latitude'=>'','longtitude'=>''));
 	
 		$resp = wp_insert_term($name,'event-venue',$term_args);
 
@@ -608,6 +617,7 @@ function eo_get_venue_meta($venue_id, $key, $single=true){
  * * _description
  * * _address
  * * _city
+ * * _state
  * * _postcode
  * * _country
  * * _latitude
@@ -641,6 +651,7 @@ function eo_add_venue_meta($venue_id, $key, $value, $unique = false ){
  * * _description
  * * _address
  * * _city
+ * * _state
  * * _postcode
  * * _country
  * * _latitude
@@ -690,31 +701,42 @@ function eo_delete_venue_meta($venue_id, $key, $value = '', $delete_all = false 
  * @param mixed The meta data being validated.
  * @return mixed The validated value. False if the key is not recognised.
  */
-	function eventorganiser_sanitize_meta($key,$value){
-		switch($key):
-			case '_address':
-			case '_postcode':
-			case '_city':
-			case '_country':
+function eventorganiser_sanitize_meta($key,$value){
+
+	switch($key):
+		case '_description':
+			$value = wp_filter_post_kses($value);
+			break;
+		case '_lat':
+		case '_lng':
+			//Cast as float and then string: make sure string uses . not , for decimal point
+			$value = floatval($value);
+			$value = number_format($value, 6);
+			break;
+		default:
+			$address_keys = _eventorganiser_get_venue_address_fields();
+			if( isset($address_keys[$key]) )
 				$value = sanitize_text_field($value);
-				break;
-
-			case '_description':
-				$value = wp_filter_post_kses($value);
-				break;
-
-			case '_lat':
-			case '_lng':
-				//Cast as float and then string: make sure string uses . not , for decimal point
-				$value = floatval($value);
-				$value = number_format($value, 6);
-				break;
-			default:
+			else
 				$value = false;
-		endswitch;
+	endswitch;
 
-		return $value;
-	}
+	return $value;
+}
+
+function _eventorganiser_get_venue_address_fields(){
+	//Keys *must* be prefixed by a '_'.
+	$address_fields = array(
+		'_address'=>  __('Address','eventorganiser'),
+		'_city'=>  __('City','eventorganiser'),
+		'_state'=>  __('State / Province','eventorganiser'),
+		'_postcode'=>  __('Post Code','eventorganiser'),
+		'_state'=>  __('State / Province','eventorganiser'),
+		'_country'=>  __('Country','eventorganiser'),
+	);
+
+	return apply_filters('eventorganiser_venue_address_fields', $address_fields);
+}
 
 
 /**

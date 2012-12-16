@@ -510,7 +510,7 @@ class EO_Admin_Notice_Handler{
 		$notices = array(
 			'autofillvenue17'=>array(
 				'screen_id'=>'event_page_venues',
-				'message' => sprintf(__('A <strong>city field</strong> for venues has now been added. </br> If you like, Event Organiser can <a href="%s">attempt to auto-fill the city field</a>. You can always manually change the details aftewards.','eventorganiser'),
+				'message' => sprintf(__("<h4>City & State Fields Added</h4>City and state / province fields for venues have now been added. </br> If you'd like, Event Organiser can <a href='%s'>attempt to auto-fill them</a>. You can always manually change the details aftewards.",'eventorganiser'),
 								add_query_arg('action','eo-autofillcity',admin_url('admin-post.php'))
 								),
 				'type' => 'alert'
@@ -535,7 +535,7 @@ class EO_Admin_Notice_Handler{
 
 			$class = $notice['type'] == 'error' ? 'error' : 'updated';
 	
-			printf("<div class='%s-notice {$class}' id='%s'><p>%s </p><p> <a class='%s' href='%s' title='%s'><strong>%s</strong></a></p></div>",
+			printf("<div class='%s-notice {$class}' id='%s'>%s<p> <a class='%s' href='%s' title='%s'><strong>%s</strong></a></p></div>",
 						esc_attr(self::$prefix),
 						esc_attr(self::$prefix.'-notice-'.$id),
 						$notice['message'],
@@ -656,7 +656,7 @@ function _eventorganiser_autofill_city(){
 		$venue_id = (int) $venue->term_id;
 		$latlng =extract(eo_get_venue_latlng($venue_id));
 
-		if( eo_get_venue_meta($venue_id,'_city',true) )
+		If( eo_get_venue_meta($venue_id,'_city',true) )
 			continue;
 
 		$response=wp_remote_get("http://open.mapquestapi.com/nominatim/v1/reverse?format=json&lat={$lat}&lon={$lng}&osm_type=N&limit=1");	
@@ -664,7 +664,19 @@ function _eventorganiser_autofill_city(){
 		if( isset($geo->address->city) ){
 			$cities[$venue_id] = $geo->address->city;
 			eo_update_venue_meta($venue_id, '_city', $geo->address->city);
-		}		
+		}
+		if( isset($geo->address->country_code) && 'gb' == $geo->address->country_code ){
+			//For the UK use county not state.
+			if( isset($geo->address->county) ){
+				$cities[$venue_id] = $geo->address->county;
+				eo_update_venue_meta($venue_id, '_state', $geo->address->county);
+			}
+		}else{
+			if( isset($geo->address->state) ){
+				$cities[$venue_id] = $geo->address->state;
+				eo_update_venue_meta($venue_id, '_state', $geo->address->state);
+			}
+		}
 	}	
 
 	wp_safe_redirect(admin_url('edit.php?post_type=event&page=venues'));

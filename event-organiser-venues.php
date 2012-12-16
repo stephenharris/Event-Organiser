@@ -336,22 +336,21 @@ function eventorganiser_venue_location($venue){
 
 	<table class ="address">
 		<tbody>
-			<tr>
-				<th><label><?php _e('Address','eventorganiser');?>:</label></th>
-				<td><input type="text" name="eo_venue[address]" class="eo_addressInput" id="eo_venue_add"  value="<?php echo esc_attr($address['address']) ;?>"/></td>
-			</tr>
-			<tr>
-				<th><label><?php _e('City','eventorganiser');?>:</label></th>
-				<td><input type="text" name="eo_venue[city]" class="eo_addressInput" id="eo_venue_city"  value="<?php echo esc_attr($address['city']) ;?>"/></td>
-			</tr>
-			<tr>
-				<th><label><?php _e('Post Code','eventorganiser');?>:</label></th>
-				<td><input type="text" name="eo_venue[postcode]" class="eo_addressInput" id="eo_venue_pcode"  value="<?php echo esc_attr($address['postcode']);?>"/></td>
-			</tr>
-			<tr>
-				<th><label><?php _e('Country','eventorganiser');?>:</label></th>
-				<td><input type="text" name="eo_venue[country]" class="eo_addressInput" id="eo_venue_country"  value="<?php echo esc_attr($address['country']) ;?>"/></td>
-			</tr>
+			<?php
+				$address_fields = _eventorganiser_get_venue_address_fields();
+				foreach( $address_fields as $key => $label ){
+					//Keys are prefixed by '_'.
+					$key = trim($key,'_');
+					printf('<tr>
+								<th><label>%1$s:</label></th>
+								<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo_venue_add"  value="%3$s"/></td>
+							</tr>',
+							$label,
+							esc_attr($key),
+							esc_attr($address[$key]) 
+					);
+				}
+			?>
 		</tbody>
 	</table>
 
@@ -395,12 +394,15 @@ function eventorganiser_venue_admin_columns($columns){
 	$columns = array(
 		'cb'		=> '<input type="checkbox" />', //Render a checkbox instead of text
 		'name'		=> __('Venue', 'eventorganiser'),
-		'venue_address' =>__('Address', 'eventorganiser'),
-		'venue_city'	=> __('City', 'eventorganiser'),
-		'venue_postal'	=> __('Post Code', 'eventorganiser'),
-		'venue_country' => __('Country', 'eventorganiser'),
+	);
+	$address_columns = _eventorganiser_get_venue_address_fields();
+	foreach( $address_columns  as $key => $label )
+		$columns['venue'.$key] = $label;
+
+	$columns += array(
 		'venue_slug'    =>__('Slug'),
 		'posts'		=>__('Events', 'eventorganiser'),
 	);
+
 	return $columns;	
 }

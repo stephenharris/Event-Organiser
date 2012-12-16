@@ -172,7 +172,6 @@ function eventorganiser_details_metabox($post){
 
 					</td>
 				</tr>
-
 				<tr valign="top"class="eo-venue-combobox-select">
 					<td class="eo-label"> <?php _e("Venue",'eventorganiser');?>: </td>
 					<td> 	
@@ -184,26 +183,26 @@ function eventorganiser_details_metabox($post){
 						</select>
 					</td>
 				</tr>
+		
+				<!-- Add New Venue --> 
 				<tr valign="top"class="eo-add-new-venue">
 					<td class="eo-label"><label><?php _e('Venue Name','eventorganiser');?>:</label></td>
 					<td><input type="text" name="eo_venue[name]" id="eo_venue_name"  value=""/></td>
 				</tr>
-				<tr valign="top"class="eo-add-new-venue">
-					<td class="eo-label"><label><?php _e('Address','eventorganiser');?>:</label></td>
-					<td><input type="text" name="eo_venue[address]" class="eo_addressInput" id="eo_venue_add"  value=""/></td>
-				</tr>
-				<tr valign="top" class="eo-add-new-venue" >
-					<td class="eo-label"><label><?php _e('City','eventorganiser');?>:</label></td>
-					<td><input type="text" name="eo_venue[city]" class="eo_addressInput" id="eo_venue_city"  value=""/></td>
-				</tr>
-				<tr valign="top" class="eo-add-new-venue" >
-					<td class="eo-label"><label><?php _e('Post Code','eventorganiser');?>:</label></td>
-					<td><input type="text" name="eo_venue[postcode]" class="eo_addressInput" id="eo_venue_pcode"  value=""/></td>
-				</tr>
-				<tr valign="top" class="eo-add-new-venue" >
-					<td class="eo-label"><label><?php _e('Country','eventorganiser');?>:</label></td>
-					<td><input type="text" name="eo_venue[country]" class="eo_addressInput" id="eo_venue_country"  value=""/></td>
-				</tr>
+			<?php
+				$address_fields = _eventorganiser_get_venue_address_fields();
+				foreach( $address_fields as $key => $label ){
+					//Keys are prefixed by '_'.
+					$key = trim($key,'_');
+					printf('<tr valign="top"class="eo-add-new-venue">
+								<th><label>%1$s:</label></th>
+								<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo_venue_add"  value=""/></td>
+							</tr>',
+							$label,
+							esc_attr($key)
+					);
+				}
+			?>
 				<tr valign="top" class="eo-add-new-venue" >
 					<td class="eo-label"></td>
 					<td>
@@ -211,6 +210,7 @@ function eventorganiser_details_metabox($post){
 					</td>
 				</tr>
 
+				<!-- Venue Map --> 
 				<tr valign="top"  class="venue_row <?php if (!$venue_id) echo 'novenue';?>" >
 					<td class="eo-label"></td>
 					<td>

@@ -753,7 +753,6 @@ function eventorganiser_update_venue_meta_cache( $terms, $tax){
           	$term_ids = wp_list_pluck($terms,'term_id');
 
    		update_meta_cache('eo_venue',$term_ids);
-		$fields = array('venue_address','venue_postal','venue_city','venue_country','venue_lng','venue_lat','venue_description');
 
 		//Backwards compatible. Depreciated - use the functions, not properties.
 		foreach ($terms as $term){
@@ -763,10 +762,8 @@ function eventorganiser_update_venue_meta_cache( $terms, $tax){
 
 			if( !isset($term->venue_address) ){
 				$address = eo_get_venue_address($term_id);
-				$term->venue_address =  isset($address['address']) ? $address['address'] : '';
-				$term->venue_postal =  isset($address['postcode']) ? $address['postcode'] : '';
-				$term->venue_city =  isset($address['city']) ? $address['city'] : '';
-				$term->venue_country =  isset($address['country']) ? $address['country'] : '';
+				foreach( $address as $key => $value )
+					$term->{'venue_'.$key} = $value;
 			}
 
 			if( !isset($term->venue_lat) || !isset($term->venue_lng) ){
@@ -789,7 +786,7 @@ add_filter('get_event-venue','eventorganiser_update_venue_meta_cache',10,2);
 
 
 /**
- * Allows event-venue terms to be sorted by address, city, country, or postcode (on venue admin table)
+ * Allows event-venue terms to be sorted by address, city, state, country, or postcode (on venue admin table)
  * Hooked onto terms_clauses
  *
  * @ignore
@@ -802,16 +799,12 @@ function eventorganiser_join_venue_meta($pieces,$taxonomies,$args){
 	if( ! in_array('event-venue',$taxonomies) )
 		return $pieces;
 
-	switch($args['orderby']):
-		case 'address':
-		case 'city':
-		case 'country':
-		case 'postcode':
-			$meta_key ='_'.$args['orderby'];
-			break;
-		default:
-			$meta_key = false;
-	endswitch;
+	/* Order by */
+	$address_keys = array_keys(_eventorganiser_get_venue_address_fields());
+	if( in_array('_'.$args['orderby'], $address_keys) )
+		$meta_key ='_'.$args['orderby'];
+	else
+		$meta_key = false;
 
 	if(false === $meta_key)
 		return $pieces;

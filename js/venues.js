@@ -25,9 +25,6 @@ jQuery(document).ready(function () {
             jQuery(".eo_addressInput").change(function () {
                 var address = "";
                 jQuery(".eo_addressInput").each(function () {
-                    if (jQuery(this).attr('id') != 'country-selector') {
-                        address = address + " " + jQuery(this).val()
-                    }
                 });
                 eventorganiser_code_address(address)
             })

@@ -546,12 +546,16 @@ function eventorganiser_search_venues() {
 
 		foreach($venues as $venue){
 			$venue_id = (int) $venue->term_id;
+
 			if( !isset($term->venue_address) ){
+				/* This is all deprecated - use the API {@link http://wp-event-organiser.com/documentation/function/eo_get_venue_address/} */
 				$address = eo_get_venue_address($venue_id);
 				$venue->venue_address =  isset($address['address']) ? $address['address'] : '';
-				$venue->venue_postal =  isset($address['postcode']) ? $address['postcode'] : '';
+				$venue->venue_postal =  isset($address['postcode']) ? $address['postcode'] : ''; 
+				$venue->venue_postcode =  isset($address['postcode']) ? $address['postcode'] : '';
 				$venue->venue_city =  	isset($address['city']) ? $address['city'] : '';
 				$venue->venue_country =  isset($address['country']) ? $address['country'] : '';
+				$venue->venue_state =  isset($address['state']) ? $address['state'] : '';
 			}
 
 			if( !isset($venue->venue_lat) || !isset($venue->venue_lng) ){
