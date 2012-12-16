@@ -515,6 +515,11 @@ class EO_Admin_Notice_Handler{
 								),
 				'type' => 'alert'
 			),
+			'changedtemplate17'=>array(
+				'screen_id'=>'',
+				'message' => __("<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, see this post.",'eventorganiser'),
+				'type' => 'alert'
+			),
 		);
 
 		if( !$notices )
@@ -529,8 +534,11 @@ class EO_Admin_Notice_Handler{
 			if( in_array($id, $seen_notices)  || empty($notice['message'])  )
 				continue;
 
-			//Notices must for this screen.
-			if( !isset($notice['screen_id']) || $notice['screen_id'] !== $screen_id )
+			$notice_screen_id = (array) $notice['screen_id'];
+			$notice_screen_id = array_filter($notice_screen_id);
+		
+			//Notices must for this screen. If empty, its for all screens.
+			if( !empty($notice_screen_id) && !in_array($screen_id, $notice_screen_id) )
 				continue;
 
 			$class = $notice['type'] == 'error' ? 'error' : 'updated';
