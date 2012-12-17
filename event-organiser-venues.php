@@ -343,7 +343,7 @@ function eventorganiser_venue_location($venue){
 					$key = trim($key,'_');
 					printf('<tr>
 								<th><label>%1$s:</label></th>
-								<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo_venue_add"  value="%3$s"/></td>
+								<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo-venue-%2$s"  value="%3$s"/></td>
 							</tr>',
 							$label,
 							esc_attr($key),
