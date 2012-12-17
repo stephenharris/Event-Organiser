@@ -173,7 +173,6 @@ $('.eo-add-new-venue-cancel').click(function(e){
             $(".reocurrence_row").fadeIn(speed);
             $("#dayofweekrepeat").fadeIn(speed);
             $("#dayofweekrepeat :input").attr("disabled", false);
-            $("#dayofweekrepeat").buttonset("enable");
             $("#dayofmonthrepeat").hide();
             $("#dayofmonthrepeat :radio").attr("disabled", true);
             break;
