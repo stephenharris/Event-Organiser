@@ -338,6 +338,19 @@ function eo_get_venue_address($venue_slug_or_id=''){
  * * slug - Returns terms whose "slug" matches this value. Default is empty string.
  * * search - Returned terms' names will contain the value of 'search', case-insensitive. Default is an empty string.
  *
+ * ###Example
+ *
+ *     $venues = eo_get_venues(); 
+ *     
+ *     if( $venues ){
+ *          echo '<ul>'; 
+ *          foreach($venues as $venue): 
+ *		  $venue_id = (int) $venue->term_id;
+ *               printf('<li> <a href="%s">%s</a>', eo_get_venue_link($venue_id), esc_html($venue->name));
+ *          endforeach; 
+ *          echo '</ul>';
+ *     }
+ *
  * @uses get_terms()
  * @link https://gist.github.com/3902494 Gist for creating an archive page of all the venues
  * @link http://codex.wordpress.org/Function_Reference/get_terms get_terms()
