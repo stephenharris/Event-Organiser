@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.6
+Stable tag: 1.6.1
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -143,6 +143,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.6.1 =
+* Fixes js bug for weekly events (see [https://github.com/stephenh1988/Event-Organiser/issues/17](https://github.com/stephenh1988/Event-Organiser/issues/17)).
+* Fixes recurrence bug for some monthly events (see [https://github.com/stephenh1988/Event-Organiser/issues/10](https://github.com/stephenh1988/Event-Organiser/issues/10)).
 
 = 1.6 =
 * You can create venues 'on the fly'

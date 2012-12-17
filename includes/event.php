@@ -20,7 +20,7 @@
 * * `all_day` => 1 if its an all day event, 0 if not
 * * `start` =>  start date (of first occurrence)  as a datetime object
 * * `end` => end date (of first occurrence)  as a datetime object
-* * `schedule_end` =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
+* * `schedule_last` =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
 * * `include` => array of datetime objects to include in the schedule
 * * `exclude` => array of datetime objects to exclude in the schedule
 *
@@ -119,7 +119,7 @@
 * * `all_day` => 1 if its an all day event, 0 if not
 * * `start` =>  start date (of first occurrence)  as a datetime object
 * * `end` => end date (of first occurrence)  as a datetime object
-* * `schedule_end` =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
+* * `schedule_last` =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
 * * `include` => array of datetime objects to include in the schedule
 * * `exclude` => array of datetime objects to exclude in the schedule
 *
@@ -289,7 +289,7 @@ function eo_delete_event_occurrences($post_id){
 * * `all_day` => 1 if its an all day event, 0 if not
 * * `start` =>  start date (of first occurrence)  as a datetime object
 * * `end` => end date (of first occurrence)  as a datetime object
-* * `schedule_end` =>  **START** date of last occurrence as a datetime object
+* * `schedule_last` =>  **START** date of last occurrence as a datetime object
 * * `include` => array of datetime objects to include in the schedule
 * * `exclude` => array of datetime objects to exclude in the schedule
 *
@@ -466,7 +466,7 @@ function eo_delete_event_occurrences($post_id){
 				else:
 					if( empty($values) ){
 						$date = (int) $start_days[0]->format('d');
-						$n = ceil(($date+1)/7); // nth weekday of month.
+						$n = ceil($date/7); // nth weekday of month.
 						$day_num = intval($start_days[0]->format('w')); //0 (Sun) - 6(Sat)
 
 					}else{

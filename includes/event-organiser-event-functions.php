@@ -23,6 +23,28 @@
 * * 'post_type' - is set to 'event'
 * * 'suppress_filters' - is set to false
 *
+* ###Example
+*
+*     $events = eo_get_events(array(
+*            'numberposts'=>5,
+*            'events_start_after'=>'today',
+*            'showpastevents'=>true,//Will be deprecated, but set it to true to play it safe.
+*       ));
+*
+*     <?php if($events):
+*        echo '<ul>'; 
+*        foreach ($events as $event):
+*                //Check if all day, set format accordingly
+*                $format = ( eo_is_all_day($event->ID) ? get_option('date_format') ? get_option('date_format').' '.get_option('time_format') );
+*                printf('<li><a href="%s"> %s </a> on %s </li>',
+*                                   get_permalink($event->ID),
+*                                   get_the_title($event->ID),
+*                                   eo_get_the_start($format, $event->ID,null,$event->occurrence_id)
+*                               );                           
+*        endforeach; 
+*         echo '</ul>'; 
+*     endif; ?>
+*
 * @since 1.0.0
 * @uses get_posts()
 * @link https://gist.github.com/4165380 List up-coming events
