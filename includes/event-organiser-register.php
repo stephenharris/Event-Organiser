@@ -567,14 +567,16 @@ class EO_Admin_Notice_Handler{
 	static function dismiss_handler(){
 
 		$notice = isset($_REQUEST['notice']) ? $_REQUEST['notice'] : false;
+		if( empty($notice) )
+			return;
 
 		if ( defined('DOING_AJAX') && DOING_AJAX ){
 			//Ajax dismiss handler
 			if( empty($_REQUEST['notice'])  || empty($_REQUEST['_wpnonce'])  || $_REQUEST['action'] !== self::$prefix.'-dismiss-notice' )
-				wp_die(0);
+				return;
 	
 			if( !wp_verify_nonce( $_REQUEST['_wpnonce'],self::$prefix."-ajax-dismiss") )
-				wp_die(0);
+				return;
 
 		}else{
 			//Fallback dismiss handler
