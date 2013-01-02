@@ -202,19 +202,19 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 					//Create new event with duplicated details (new event clears cache)
 					$new_event_id = eo_insert_event($post_array,$event_array);
 
-					//delete occurrence, 
+					//delete occurrence, and copy post meta
 					if( $new_event_id && !is_wp_error($new_event_id) ){
 						$response = _eventorganiser_remove_occurrence($post_id,$event_id);
 
-						$post_custom = get_post_custom($post->ID);
+						$post_custom = get_post_custom($post_id);
 						foreach ($post_custom as $meta_key=>$meta_values) {
 
 							//Don't copy these
-							if( in_array($meta_key, array('_edit_last','_edit_last') ) )
+							if( in_array($meta_key, array('_edit_last','_edit_last','_edit_lock') ) )
 								continue;
 		
 							//Don't copy event meta
-							if( strncmp($meta_key, '_eventorganiser', 15) )
+							if( 0 == strncmp($meta_key, '_eventorganiser', 15) )
 								continue;
 
 							foreach ($meta_values as $meta_value) {
