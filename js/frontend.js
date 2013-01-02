@@ -43,7 +43,7 @@ jQuery(document).ready(function () {
 		if (EOAjax.map !== undefined) {
 			var script = document.createElement("script");
                 	script.type = "text/javascript";
-                	script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map";
+                	script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map&language="+EOAjaxFront.locale.locale;
                 	document.body.appendChild(script)
             }
         }
