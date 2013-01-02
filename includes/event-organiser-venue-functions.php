@@ -560,11 +560,10 @@ function eo_get_venues($args=array()){
  * Accepts an arguments array corresponding to the attributes supported by the shortcode.
  * @since 1.6
  *
- * @uses EventOrganiser_Shortcodes::get_venue_map()
  * @link http://www.stephenharris.info/2012/event-organiser-1-6-whats-new/ Examples of using eo_get_venue_map()
  *
 * @param mixed $venue_slug_or_id The venue ID as an integer. Or Slug as string. Uses venue of current event if empty.
-* @return string The markup of the map
+* @return string The markup of the map. False is no venue found.
  */
 function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 
@@ -607,6 +606,11 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 			$class = "eo-venue-map googlemap";
 			$style = "style='height:".$height.";width:".$width.";' ";
 		}
+
+		$venue_ids = array_filter($venue_ids);
+
+		if( empty($venue_ids) )
+			return false;
 		
 		//Set up venue locations for map
 		foreach( $venue_ids as $venue_id ){
