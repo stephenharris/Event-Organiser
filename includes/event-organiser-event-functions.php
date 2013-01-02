@@ -176,7 +176,7 @@ function eo_get_the_start($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_
 }
 
 /**
-* Returns the start date of occurrence of event an event, like eo_get_the_start().
+* Returns the start date of occurrence of event an event, like {@see `eo_get_the_start()`}.
 * The difference is that the occurrence ID *must* be supplied (event ID is not). 
 * @since 1.6
 *
@@ -298,7 +298,8 @@ function eo_get_next_occurrence($format='d-m-Y',$post_id=0){
 
 /**
 * Returns an array of datetimes (start and end) corresponding to the next occurrence of an event
-* eo_get_next_occurrence() on the other hand returns a formated datetime of the start date.
+* {@see `eo_get_next_occurrence()`} on the other hand returns a formated datetime of the start date.
+*
 * @since 1.6
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
@@ -598,7 +599,7 @@ function eo_get_category_color($term){
 
 /**
 * Returns the colour of a category associated with the event.
-* Applies the 'eventorganiser_event_color' filter.
+* Applies the {@see `eventorganiser_event_color`} filter.
 * @since 1.6
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
@@ -633,7 +634,7 @@ function eo_get_event_color($post_id=0){
 * Adds eo-event-venue-[venue slug] for the event's venue.
 * Adds eo-event-cat-[category slug] for each event category it bleongs to. 
 * Adds eo-event-[future|past|running].
-* Applies filter eventorganiser_event_classes
+* Applies filter {@see `eventorganiser_event_classes`}
 * @since 1.6
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
@@ -676,7 +677,7 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 
 
 /**
-* Checks if an event taxonomy archive page is being displayed. A simple wrapper for is_tax().
+* Checks if an event taxonomy archive page is being displayed. A simple wrapper for `is_tax()`.
 * @since 1.6
 *
 * @return bool True if an event category, tag or venue archive page is being displayed. False otherwise.
@@ -686,7 +687,7 @@ function eo_is_event_taxonomy(){
 }
 
 /**
-* Retrieves the permalink for the ICAL event feed. A simple wrapper for get_feed_link().
+* Retrieves the permalink for the ICAL event feed. A simple wrapper for `get_feed_link()`.
 *
 * Retrieve the permalink for the events feed. The returned link is the url with which visitors can subscribe 
 * to your events. Visiting the url directly will prompt a download an ICAL file of your events. The events feed 
@@ -754,8 +755,9 @@ function eo_get_the_GoogleLink(){
 	return $url;
 }
 
-
-
+/**
+ * @ignore
+*/
 function eo_has_event_started($id='',$occurrence=0){
 	$tz = eo_get_blog_timezone();
 	$start = new DateTime(eo_get_the_start('d-m-Y H:i',$id,$occurrence), $tz);
@@ -764,6 +766,9 @@ function eo_has_event_started($id='',$occurrence=0){
 	return ($start <= $now );
 }
 
+/**
+ * @ignore
+*/
 function eo_has_event_finished($id='',$occurrence=0){
 	$tz = eo_get_blog_timezone();
 	$end = new DateTime(eo_get_the_end('d-m-Y H:i',$id,$occurrence), $tz);
@@ -772,6 +777,9 @@ function eo_has_event_finished($id='',$occurrence=0){
 	return ($end <= $now );
 }
 
+/**
+ * @ignore
+*/
 function eo_event_category_dropdown( $args = '' ) {
 	$defaults = array(
 		'show_option_all' => '', 

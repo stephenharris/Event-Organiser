@@ -18,7 +18,7 @@ jQuery(document).ready(function () {
 	}
 
 	function eventorganiser_mini_calendar(){
-		var element = $("<span class='fc-header-goto'><input type='hidden' id='miniCalendar'/></span>");
+		var element = $("<span class='fc-header-goto'><input type='hidden' class='eo-mini-calendar'/></span>");
 		return element;
 	}
 
@@ -193,12 +193,20 @@ jQuery(document).ready(function () {
 		})
 	}
 
-		$('.miniCalendar').datepicker({
+		$('.eo-mini-calendar').datepicker({
 			dateFormat: 'DD, d MM, yy',
 			changeMonth: true,
 			changeYear: true,
+			dateFormat: 'DD, d MM, yy',
+			firstDay: parseInt(EOAjax.fullcal.firstDay),
+			buttonText: EOAjaxFront.locale.gotodate,
+			monthNamesShort: EOAjaxFront.locale.monthAbbrev,
+			dayNamesMin: EOAjaxFront.locale.dayAbbrev,
 			showOn: 'button',
-	            	buttonText: 'Go to Date'
+			onSelect: function (dateText, dp) {
+				var cal_id = $(this).parents('div.eo-fullcalendar').attr('id');
+				$('#'+cal_id).fullCalendar('gotoDate', new Date(Date.parse(dateText)));
+            		}
         	});
 
         if ($(".eo_widget_calendar").length > 0 ) {

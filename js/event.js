@@ -1,3 +1,6 @@
+var eo_occurrences_by_rule = new Array;
+var eo_include_dates;
+var eo_exclude_dates;
 jQuery(document).ready(function($) {
 
 //Workaround for indexOf in IE 7&8
@@ -24,9 +27,6 @@ if (!Array.prototype.indexOf)
   };
 }
 
-    var eo_occurrences_by_rule = new Array;
-	var eo_include_dates;
-	var eo_exclude_dates;
     if ($('#eo_occurrence_includes').length > 0) {
         eo_include_dates = $('#eo_occurrence_includes').val().split(",");
         eo_exclude_dates = $('#eo_occurrence_excludes').val().split(",");

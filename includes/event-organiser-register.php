@@ -9,7 +9,7 @@
  */
 function eventorganiser_register_script() {
 	global $wp_locale;
-	$version = '1.6.1';
+	$version = '1.6.2';
 
 	$ext = (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG) ? '' : '.min';
 
@@ -54,8 +54,7 @@ function eventorganiser_register_script() {
 
 	/* Styles */
 	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),$version);
-	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array('eventorganiser-jquery-ui-style'),$version);
-	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array(),$version);
+	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array(),$version);
 }   
 add_action('init', 'eventorganiser_register_script');
 
@@ -67,7 +66,7 @@ add_action('init', 'eventorganiser_register_script');
  * @access private
  */
 function eventorganiser_register_scripts(){
-	$version = '1.6.1';
+	$version = '1.6.2';
 	$ext = (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG) ? '' : '.min';
 
 	/* Google Maps */

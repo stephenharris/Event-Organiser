@@ -73,6 +73,7 @@ class EO_Event_List_Widget extends WP_Widget{
   <p>
     <label for="<?php echo $this->get_field_id('template'); ?>"><?php _e('Template (leave blank for default)', 'eventorganiser'); ?>  </label>
 	  <input  id="<?php echo $this->get_field_id('template'); ?>" class="widefat" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo esc_attr($instance['template']);?>" />
+	<small><a href="http://wp-event-organiser.com/documentation/widgets/#whatistemplate" target="_blank"><?php _e("What's this?","eventorganiser"); ?></a></small>
   </p>
   <p>
     <label for="<?php echo $this->get_field_id('no_events'); ?>"><?php _e("'No events' message", 'eventorganiser'); ?>  </label>

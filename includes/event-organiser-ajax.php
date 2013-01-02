@@ -203,7 +203,8 @@ function eventorganiser_admin_calendar() {
 
 		$calendar = get_transient('eo_full_calendar_admin');
 		$key = $_GET['start'].'--'.$_GET['end'];
-		if( $calendar && is_array($calendar) && isset($calendar[$key]) ){
+
+		if( ( !defined('WP_DEBUG') || !WP_DEBUG ) && $calendar && is_array($calendar) && isset($calendar[$key]) ){
 			echo json_encode($calendar[$key]);
 			exit;
 		}
