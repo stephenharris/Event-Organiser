@@ -26,7 +26,7 @@
 
 	<?php else: ?>
 		<!-- Event is a single event -->
-		<?php printf('<p>'.__('This event is on %s','eventorganiser').'<./p>', eo_get_the_start($date_format) );?>
+		<?php printf('<p>'.__('This event is on %s','eventorganiser').'.</p>', eo_get_the_start($date_format) );?>
 	<?php endif; ?>
 
 
