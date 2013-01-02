@@ -42,8 +42,9 @@ function eo_get_venue($event_id=''){
 
 /**
 * Returns the slug of the venue of an event.
-* Can be used inside the loop to output the 
-* venue id of the current event.
+*
+* When used without an argument it uses the event specified in the global $post (e.g. current event in the loop).
+* Can be used inside the loop to output the venue id of the current event.
 * @since 1.0.0
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
@@ -74,6 +75,7 @@ function eo_get_venue_slug($event_id=''){
 /**
 * A utility function for getting the venue ID from a venue ID or slug.
 * Useful for when we don't know which is being passed to us, but we want the ID.
+* IDs **must** be cast as integers
 * @since 1.6
 *
 * @param mixed $venue_slug_or_id The venue ID as an integer. Or Slug as string. Uses venue of current event if empty.
@@ -99,7 +101,7 @@ function eo_get_venue_id_by_slugorid($venue_slug_or_id=''){
 
 
 /**
- * Get all venue data from database by venue field and data. This acts as a simple wrapper for get_term_by
+ * Get all venue data from database by venue field and data. This acts as a simple wrapper for  {@see `get_term_by()`}
  *
  * Warning: $value is not escaped for 'name' $field. You must do it yourself, if required.
  * 
@@ -125,7 +127,8 @@ function eo_get_venue_by($field,$value,$output = OBJECT, $filter = 'raw' ){
 * If used with any arguments uses the venue of the current event.
 *
 * Returns the name of a venue specified by it's slug or ID. If used inside the loop, it can return the name of the current post's venue. If specifying the venue by ID, **the ID must be an integer**.
-* This function behaves differently to `eo_get_venue_slug` which takes the event ID, rather than venue ID or slug, as an optional argument.
+*
+* This function behaves differently to {@see `eo_get_venue_slug()`} which takes the event ID, rather than venue ID or slug, as an optional argument.
 *
 * @since 1.0.0
 *
@@ -145,7 +148,7 @@ function eo_get_venue_name($venue_slug_or_id=''){
 /**
 * Echos the venue of the event
 *
-* @uses eo_get_venue_name
+* @uses eo_get_venue_name()
 * @param (int) venue id or (string) venue slug
 *
  * @since 1.0.0
@@ -158,6 +161,10 @@ function eo_venue_name($venue_slug_or_id=''){
 /**
 * Returns the description of the description of an event.
 * If used with any arguments uses the venue of the current event.
+*
+* Returns the description of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If specifying the 
+* venue by ID, **the ID must be an integer**.
+*
 * @since 1.0.0
 *
 * @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
@@ -192,6 +199,9 @@ function eo_venue_description($venue_slug_or_id=''){
 /**
 * Returns an latitude-longtitude array (keys 'lat', 'lng')
 * If used with any arguments uses the venue of the current event.
+*
+* Returns a latitude-longitude array of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If 
+* specifying the venue by ID, **the ID must be an integer**.
 * @since 1.0.0
 *
 * @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
@@ -206,6 +216,9 @@ function eo_get_venue_latlng($venue_slug_or_id=''){
 /**
 * Returns the latitude co-ordinate of a venue.
 * If used with any arguments uses the venue of the current event.
+*
+* Returns the latitude of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If specifying the 
+* specifying the venue by ID, **the ID must be an integer**.
 * @since 1.0.0
 *
 * @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
@@ -221,6 +234,9 @@ function eo_get_venue_lat($venue_slug_or_id=''){
 /**
 * Returns the longtitude co-ordinate of a venue.
 * If used with any arguments uses the venue of the current event.
+*
+* Returns the longtitude of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If specifying the 
+* specifying the venue by ID, **the ID must be an integer**.
 * @since 1.0.0
 *
 * @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
@@ -318,25 +334,27 @@ function eo_get_venue_address($venue_slug_or_id=''){
 
 
 /**
- * Retrieve array of venues. 
+ * Retrieve array of venues. Acts as a wrapper for {@link http://codex.wordpress.org/Function_Reference/get_terms get_terms()}, except hide_empty defaults to false.
  *
- * Acts as a wrapper for {@link http://codex.wordpress.org/Function_Reference/get_terms get_terms()}, except hide_empty defaults to false.
- * The list of arguments that $args can contain, which will overwrite the defaults:
+ * The list of arguments that `$args` can contain, which will overwrite the defaults:
  *
- * * orderby - Default is 'name'. Can be name, count, term_group, slug or nothing
+ * * **orderby** - Default is 'name'. Can be name, count, term_group, slug or nothing
  * (will use venue/term ID), Passing a custom value other than these will cause it to
  * order based on the custom value.
- * * order - Default is ASC. Can use DESC.
- * * hide_empty - Default is 0
- * * exclude - Default is an empty array. An array, comma- or space-delimited string
- * of term ids to exclude from the return array. If 'include' is non-empty,'exclude' is ignored.
- * * include - Default is an empty array. An array, comma- or space-delimited string
+ * * **order** - Default is ASC. Can use DESC.
+ * * **hide_empty** - Default is 0 (false)
+ * * **exclude** - Default is an empty array. An array, comma- or space-delimited string
+ * of term ids to exclude from the return array. If 'include' is non-empty,
+ * 'exclude' is ignored.
+ * * **include** - Default is an empty array. An array, comma- or space-delimited string
  * of term ids to include in the return array.
- * * number - The maximum number of terms to return. Default is to return them all.
- * * offset - The number by which to offset the terms query.
- * * fields - Default is 'all', which returns an array of term objects. If 'fields' is 'ids' or 'names', returns an array of integers or strings, respectively.
- * * slug - Returns terms whose "slug" matches this value. Default is empty string.
- * * search - Returned terms' names will contain the value of 'search', case-insensitive. Default is an empty string.
+ * * **number** - The maximum number of terms to return. Default is to return them all.
+ * * **offset** - The number by which to offset the terms query.
+ * * **fields** - Default is 'all', which returns an array of term objects.
+ * If 'fields' is 'ids' or 'names', returns an array of integers or strings, respectively.
+ * *  **slug** - Returns terms whose "slug" matches this value. Default is empty string.
+ * * **search** - Returned terms' names will contain the value of 'search',
+ * * **case-insensitive**. Default is an empty string.
  *
  * ###Example
  *
@@ -360,16 +378,27 @@ function eo_get_venue_address($venue_slug_or_id=''){
  * @return array List of Term (venue) Objects
  */
 function eo_get_venues($args=array()){
-	$args = wp_parse_args( $args, array('hide_empty'=>0 ) );
-	return get_terms('event-venue',$args);
+	$args = wp_parse_args( $args, array('hide_empty'=>0, 'fields'=>'all') );
+	$venues = get_terms('event-venue',$args);
+	if( $venues ){
+		//Ensure IDs are cast as integers {@link https://github.com/stephenh1988/Event-Organiser/issues/21}
+		if( $args['fields'] == 'ids' ){
+			$venues = array_map('intval', $venues);
+		}elseif( $args['fields'] == 'all' ){
+			foreach( $venues as $venue)
+				$venue->term_id = (int)$venue->term_id;
+		}
+	}
+	return $venues;
 }
 
 
 /**
  * Updates new venue in the database. 
  *
- * Calls wp_update_term to update the taxonomy term. Updates venue meta data to database (for 'core' meta keys)
- * The $args is an array - the same as that accepted by {@link http://codex.wordpress.org/Function_Reference/wp_insert_term wp_insert_term()}
+ * Calls {@see `wp_insert_term()`} to update the taxonomy term
+ * Updates venue meta data to database (for 'core' meta keys)
+ * The $args is an array - the same as that accepted by {@link http://codex.wordpress.org/Function_Reference/wp_update_term wp_update_term()}
  * The $args array can also accept the following keys: 
  *
  * * description
@@ -383,7 +412,7 @@ function eo_get_venues($args=array()){
  *
  * @since 1.4.0
  *
- * @uses wp_update_term to update venue (taxonomy) term
+ * @uses wp_update_term() to update venue (taxonomy) term
  * @uses do_action() Calls 'eventorganiser_save_venue' hook with the venue id
  *
  * @param int $venue_id The Term ID of the venue to update
@@ -432,7 +461,9 @@ function eo_get_venues($args=array()){
 /**
  * Adds a new venue to the database. 
  *
- * Calls wp_insert_term() to create the taxonomy term. Adds venue meta data to database (for 'core' meta keys)
+ * Calls {@see `wp_insert_term()`} to create the taxonomy term
+ * Adds venue meta data to database (for 'core' meta keys)
+ *
  * The $args is an array - the same as that accepted by {@link http://codex.wordpress.org/Function_Reference/wp_update_term wp_update_term()}
  * The $args array can also accept the following keys: 
  *
@@ -447,7 +478,7 @@ function eo_get_venues($args=array()){
  *
  * @since 1.4.0
  *
- * @uses wp_insert_term to create venue (taxonomy) term
+ * @uses `wp_insert_term()` to create venue (taxonomy) term
  * @uses do_action() Calls 'eventorganiser_insert_venue' hook with the venue id
  * @uses do_action() Calls 'eventorganiser_save_venue' hook with the venue id
  * @link http://codex.wordpress.org/Function_Reference/wp_insert_term wp_insert_term()
@@ -496,7 +527,7 @@ function eo_get_venues($args=array()){
 /**
  * Deletes a venue in the database. 
  *
- * Calls wp_delete_term to delete the taxonomy term
+ * Calls {@see `wp_delete_term()`} to delete the taxonomy term
  * Deletes all the venue's meta 
  * 
  * @since 1.4.0
@@ -559,7 +590,7 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 			), $args );
 
 		//Cast zoom as integer
-		$zoom = (int) $args['zoom']; 
+		$args['zoom'] = (int) $args['zoom']; 
 		
 		//Escape attributes
 		$width = esc_attr($args['width']);
@@ -655,7 +686,7 @@ function eo_add_venue_meta($venue_id, $key, $value, $unique = false ){
  * Update venue meta field based on venue (term) ID.
  *
  * Use the $prev_value parameter to differentiate between meta fields with the
- * same key and venue ID. This may be used in place of `eo_add_venue_meta()` function. The first thing this function will do is make sure that `$meta_key` already exists on `$venue_id`. If it does not, `add_post_meta($venue_id, $meta_key, $meta_value)` is called instead and its result is returned. Returns meta_id if the meta doesn't exist, otherwise returns true on success and false on failure.
+ * same key and venue ID. This may be used in place of {@see `eo_add_venue_meta()`} function. The first thing this function will do is make sure that `$meta_key` already exists on `$venue_id`. If it does not, `add_post_meta($venue_id, $meta_key, $meta_value)` is called instead and its result is returned. Returns meta_id if the meta doesn't exist, otherwise returns true on success and false on failure.
  *
  * If the meta field for the venue does not exist, it will be added.
  *

@@ -1,10 +1,10 @@
 === Event Organiser ===
 Contributors: stephenh1988
-Donate link: http://www.wp-event-organiser.com
+Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organiser, event calendar, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -143,6 +143,14 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.6. 2 =
+* Fixes 'zoom' bug for venue maps (see [https://github.com/stephenh1988/Event-Organiser/issues/20](https://github.com/stephenh1988/Event-Organiser/issues/20))
+* Fixes yes/no label error for 'are current events past?' (see [https://github.com/stephenh1988/Event-Organiser/issues/23](https://github.com/stephenh1988/Event-Organiser/issues/23))
+* Adds a condensed jQuery UI for frontend css (see [https://github.com/stephenh1988/Event-Organiser/issues/22](https://github.com/stephenh1988/Event-Organiser/issues/22))
+* `eo_get_venues()` now automatically casts IDs as integers (see [https://github.com/stephenh1988/Event-Organiser/issues/21](https://github.com/stephenh1988/Event-Organiser/issues/21))
+* General code refactoring
+* Improved documentation
 
 = 1.6.1 =
 * Fixes js bug for weekly events (see [https://github.com/stephenh1988/Event-Organiser/issues/17](https://github.com/stephenh1988/Event-Organiser/issues/17)).

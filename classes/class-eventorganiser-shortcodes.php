@@ -382,9 +382,8 @@ class EventOrganiser_Shortcodes {
 			'map' => self::$map,
 		));	
 
-		if(!empty(self::$calendars) || !empty(self::$map) || !empty(self::$widget_calendars) ):				
+		if( !empty(self::$calendars) || !empty(self::$map) || !empty(self::$widget_calendars) ):				
 			wp_enqueue_script( 'eo_qtip2');	
-			wp_enqueue_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-fresh.css',array());	
 			wp_enqueue_style('eo_calendar-style');	
 			wp_enqueue_style('eo_front');	
 			wp_enqueue_script( 'eo_front');

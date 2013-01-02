@@ -6,6 +6,8 @@
 * This functions updates a post of event type, with data given in the $post_data
 * and event data given in $event_data. Returns the post_id. 
 *
+* Triggers {@see `eventorganiser_save_event`} passing event (post) ID
+*
 * The event data array can contain
 *
 * * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the reoccurrence pattern
@@ -105,6 +107,8 @@
 * This functions inserts a post of event type, with data given in the $post_data
 * and event data given in $event_data. Returns the post ID.
 *
+* Triggers {@see `eventorganiser_save_event`} passing event (post) ID
+*
 * The event data array can contain
 *
 * * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the reoccurrence pattern
@@ -168,10 +172,9 @@
 		return $post_id;
 	}
 
-
 /**
 * Deletes all occurrences for an event (removes them from the eo_events table).
-* Triggers `eventorganiser_delete_event` (this action is used to break the caches).
+* Triggers {@see `eventorganiser_delete_event`} (this action is used to break the caches).
  * @since 1.5
  *
  * @param int $post_id the event's (post) ID to be deleted
@@ -183,8 +186,6 @@ function eo_delete_event_occurrences($post_id){
 	do_action('eventorganiser_delete_event', $post_id);
 	$del = $wpdb->get_results($wpdb->prepare("DELETE FROM $wpdb->eo_events WHERE post_id=%d",$post_id));
 }
-
-
 
 /**
 * This is a private function - handles the insertion of dates into the database. Use eo_insert_event or eo_update_event instead.
