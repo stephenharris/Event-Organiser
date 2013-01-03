@@ -191,7 +191,6 @@ jQuery(document).ready(function () {
 		$(".eo-cal-filter").change(function () {
 			$(".eo-fullcalendar").fullCalendar("rerenderEvents")
 		})
-	}
 
 		$('.eo-mini-calendar').datepicker({
 			dateFormat: 'DD, d MM, yy',
@@ -208,6 +207,7 @@ jQuery(document).ready(function () {
 				$('#'+cal_id).fullCalendar('gotoDate', new Date(Date.parse(dateText)));
             		}
         	});
+	}
 
         if ($(".eo_widget_calendar").length > 0 ) {
 
