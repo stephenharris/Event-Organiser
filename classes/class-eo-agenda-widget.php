@@ -74,8 +74,12 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 
 	//Echo widget
     	echo $before_widget;
-    	if ( $instance['title'] )
-   		echo $before_title.esc_html($instance['title']).$after_title;
+
+	$widget_title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
+
+    	if ( $widget_title )
+   		echo $before_title.esc_html($widget_title).$after_title;
+
 	echo "<div style='width:100%' id='{$id}' class='eo-agenda-widget'>";
 ?>
 	<div class='agenda-nav'>

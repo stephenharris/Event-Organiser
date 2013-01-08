@@ -110,8 +110,10 @@ class EO_Event_List_Widget extends WP_Widget{
 
     	echo $before_widget;
 
-    	if ( $instance['title'] )
-   		echo $before_title.esc_html($instance['title']).$after_title;
+	$widget_title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
+
+    	if ( $widget_title )
+   		echo $before_title.esc_html($widget_title).$after_title;
 
 	eventorganiser_list_events($instance, array('class'=>'eo-events eo-events-widget','template'=>$template, 'no_events'=>$no_events));
 

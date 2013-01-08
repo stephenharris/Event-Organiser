@@ -102,8 +102,12 @@ class EO_Calendar_Widget extends WP_Widget
 
 		//Echo widget
     		echo $before_widget;
-	    	if ( $instance['title'] )
-   			echo $before_title.esc_html($instance['title']).$after_title;
+
+		$widget_title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
+
+	    	if ( $widget_title )
+	   		echo $before_title.esc_html($widget_title).$after_title;
+
 		echo "<div id='{$id}_content' >";
 		echo $this->generate_output($month,$calendar);
 
