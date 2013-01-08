@@ -26,7 +26,11 @@ Domain Path: /languages
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 */
-
+/*  Cookies used:
+         eo_admin_cal_last_viewed_date   -   stores the last viewed date on the admin calendar. 
+         eo_admin_cal_last_view   -   stores the last used admin calendar view (month, week, day).
+         Expires: 10 minutes. Used for persitant admin calendar
+*/
 /**
  * The main plug-in loader
  */

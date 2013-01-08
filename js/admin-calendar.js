@@ -12,10 +12,19 @@
 
 	/* Time Format from screen option */
 	var format = ($('#eofc_time_format').is(":checked") ? 'HH:mm' : 'h:mmtt');
+	if( $.cookie('eo_admin_cal_last_viewed_date') ){
+		var initial_date = new Date($.cookie('eo_admin_cal_last_viewed_date'));
+	}else{
+		var initial_date = new Date();
+	}
 
 	/* Calendar */
         var calendar = jQuery('#eo_admin_calendar').fullCalendar({
 		firstDay: parseInt(EO_Ajax.startday),
+		date:initial_date.getDate(),
+		month:initial_date.getMonth(),
+		year: initial_date.getFullYear(),
+		defaultView: ($.cookie('eo_admin_cal_last_view') ? $.cookie('eo_admin_cal_last_view') : 'month'),
 		editable: false,
 		lazyFetching: 'true',
 		eventColor: '#21759B',
@@ -50,7 +59,7 @@
                     		dataType: 'JSON',
 				data: {
 					start: jQuery.fullCalendar.formatDate(start, 'yyyy-MM-dd'),
-                        		end: jQuery.fullCalendar.formatDate(end, 'yyyy-MM-dd')
+					end: jQuery.fullCalendar.formatDate(end, 'yyyy-MM-dd')
                     		},
                     		success: function (data) {
                         		callback(data)
@@ -71,6 +80,16 @@
                     		return '<div></div>'
                 	}
 		},
+		viewDisplay: function (element) {
+			var date = jQuery.fullCalendar.formatDate( element.start,'yyyy-MM-dd');
+			var view = element.name;
+
+			//Expire cooke after 10 minutes
+			var expires_date = new Date();
+			expires_date = new Date(expires_date.getTime() + (10 * 60 * 1000));			
+			$.cookie('eo_admin_cal_last_viewed_date', date,{ expires: expires_date });
+			$.cookie('eo_admin_cal_last_view', view,{ expires: expires_date });
+    		},
 		weekMode: 'variable',
 		aspectRatio: 1.50,
 		loading: function (bool) {
@@ -1106,3 +1125,75 @@ $.widget("ui.selectmenu", {
 });
 
 })(jQuery);
+/*!
+ * jQuery Cookie Plugin v1.3
+ * https://github.com/carhartl/jquery-cookie
+ *
+ * Copyright 2011, Klaus Hartl
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://www.opensource.org/licenses/GPL-2.0
+ */
+(function ($, document, undefined) {
+
+	var pluses = /\+/g;
+
+	function raw(s) {
+		return s;
+	}
+
+	function decoded(s) {
+		return decodeURIComponent(s.replace(pluses, ' '));
+	}
+
+	var config = $.cookie = function (key, value, options) {
+
+		// write
+		if (value !== undefined) {
+			options = $.extend({}, config.defaults, options);
+
+			if (value === null) {
+				options.expires = -1;
+			}
+
+			if (typeof options.expires === 'number') {
+				var days = options.expires, t = options.expires = new Date();
+				t.setDate(t.getDate() + days);
+			}
+
+			value = config.json ? JSON.stringify(value) : String(value);
+
+			return (document.cookie = [
+				encodeURIComponent(key), '=', config.raw ? value : encodeURIComponent(value),
+				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+				options.path    ? '; path=' + options.path : '',
+				options.domain  ? '; domain=' + options.domain : '',
+				options.secure  ? '; secure' : ''
+			].join(''));
+		}
+
+		// read
+		var decode = config.raw ? raw : decoded;
+		var cookies = document.cookie.split('; ');
+		for (var i = 0, l = cookies.length; i < l; i++) {
+			var parts = cookies[i].split('=');
+			if (decode(parts.shift()) === key) {
+				var cookie = decode(parts.join('='));
+				return config.json ? JSON.parse(cookie) : cookie;
+			}
+		}
+
+		return null;
+	};
+
+	config.defaults = {};
+
+	$.removeCookie = function (key, options) {
+		if ($.cookie(key) !== null) {
+			$.cookie(key, null, options);
+			return true;
+		}
+		return false;
+	};
+
+})(jQuery, document);

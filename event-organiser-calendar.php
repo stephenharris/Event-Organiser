@@ -277,12 +277,17 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		<?php screen_icon('edit');?>
 		<h2><?php _e('Events Calendar', 'eventorganiser'); ?></h2>
 
+		<?php 
+			$current = !empty($_COOKIE['eo_admin_cal_last_view']) ? $_COOKIE['eo_admin_cal_last_view'] : 'month'; 
+			$views = array('agendaDay'=> __('Day','eventorganiser'), 'agendaWeek' =>__('Week','eventorganiser'), 'month' => __('Month','eventorganiser') );
+		?>
 		<div id="calendar-view">
 			<span id='loading' style='display:none'><?php _e('Loading&#8230;');?></span>
-			<a href="" class="view-button" id="agendaDay"><?php _e('Day','eventorganiser');?> </a>
-			<a href="" class="view-button" id="agendaWeek"><?php _e('Week','eventorganiser');?></a>
-			<a href="" class="view-button active" id="month"><?php _e('Month','eventorganiser');?> </a>
+			<?php foreach( $views as $id => $label ) 
+				printf('<a href="#" class="view-button %s" id="%s">%s</a>', ($id == $current ? 'active' : ''), $id, $label );
+			?>
 		</div>
+
 		<div id='eo_admin_calendar'></div>
 		<span><?php _e('Current date/time','eventorganiser');?>: <?php echo $now->format('Y-m-d G:i:s \G\M\TP');?></span>
 
