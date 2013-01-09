@@ -16,7 +16,8 @@
 .eo-agenda-widget li.event:hover{opacity:1; background:#ececec}
 .eo-agenda-widget li.event .cat{padding:10px 3px; background:none; margin-right:5px; height:100%; position:absolute;  top:0; left:0}
 .eo-agenda-widget li.event .meta{font-size:0.9em}
-
+.eo-agenda-widget li.event a.eo-agenda-event-permalink{display:block;text-decoration:none;color:#333;}
+.eo-agenda-widget li.event a.eo-agenda-event-permalink:hover{text-decoration:none;color:#333;}
 /*
  * jQuery UI CSS Framework 1.8.16
  *

@@ -515,6 +515,7 @@ function eventorganiser_widget_agenda() {
 				'time'=> ( ($instance['mode']=='day' && eo_is_all_day())  ? __('All Day','eventorganiser') : eo_get_the_start($instance['item_format']) ),
 				'post_title'=>get_the_title(),
 				'color'=>eo_get_event_color(),
+				'event_url'=>get_permalink(),
 				'link'=>'<a href="'.get_permalink().'">'.__('View','eventorganiser').'</a>',
 				'Glink'=>'<a href="'.eo_get_the_GoogleLink().'" target="_blank">'.__('Add To Google Calendar','eventorganiser').'</a>'
 			);

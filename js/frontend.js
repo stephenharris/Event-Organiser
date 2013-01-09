@@ -272,11 +272,16 @@ jQuery(document).ready(function () {
                         var currentList = $('<li class="date" >' + a[i].display + '<ul class="a-date"></ul></li>');
                         dateList.append(currentList)
                     }
+		if( b.add_to_google ){
                     var c = $('<li class="event"></li>').append('<span class="cat"></span><span><strong>' + a[i].time + ": </strong></span>" + a[i]
                         .post_title)
                         .append('<div class="meta" style="display:none;"><span>' + a[i].link + "</span><span>   </span><span>" + a[i]
                         .Glink + "</span></div>");
-                    c.find("span.cat")
+		}else{
+                    var c = $('<li class="event"></li>').append("<a class='eo-agenda-event-permalink' href='"+a[i].event_url+"'><span class='cat'></span><span><strong>" + a[i].time + ": </strong></span>" + a[i]
+                        .post_title+"</a>")
+		}
+                 c.find("span.cat")
                         .css({
                         background: a[i].color
                     });
