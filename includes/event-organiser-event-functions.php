@@ -6,22 +6,28 @@
 */
 
 /**
-* Retrieve list of event matching criteria.
+* Retrieve list of events matching criteria.
 *
-* The defaults are as follows:
+* This function is a wrapper for {@link http://codex.wordpress.org/Template_Tags/get_posts `get_posts()`}, setting the 'post_type' to 'event' and 'suppress_filters' to false. As such you can also use `get_posts()` or {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events. All the arguments listed below can be used with them. 
 *
-* * 'event_start_before' - default: null
-* * 'event_end_before' - default: null
-* * 'event_start_after' - default: null
-* * 'event_end_after' - This argument, and the above can take a date in 'Y-m-d' format or {@link http://wp-event-organiser.com/documentation/relative-date-formats/ relative dates}. Default: null
-* * 'numberposts' - default is - 1 (all events)
-* * 'orderby' - default is 'eventstart'
-* * 'showpastevents' - default is true (it's recommended to use `event_start_after=today` or `event_end_after=today` instead) 
+* The `$args` array can include the following.
 *
-* Other defaults are set by WordPress with {@link http://codex.wordpress.org/Template_Tags/get_posts `get_posts()`}. The function sets the following parameters
+* * **event_start_before** - default: null
+* * **event_end_before** - default: null
+* * **event_start_after** - default: null
+* * **event_end_after** - default: null. This argument, and those above can take a date in 'Y-m-d' format or {@link http://wp-event-organiser.com/documentation/relative-date-formats/ relative dates}. 
+* * **numberposts** - default is - 1 (all events)
+* * **orderby** - default is 'eventstart'
+* * **showpastevents** - default is true (it's recommended to use `event_start_after=today` or `event_end_after=today` instead) 
+*
+* Arguments from {@link http://codex.wordpress.org/Template_Tags/get_posts `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} can also be used. Their default values are as indicated by the relevant codex page.
+*
+*
+* If you use `get_posts()` or `WP_Query` instead then you should ensure the following:
 *
 * * 'post_type' - is set to 'event'
 * * 'suppress_filters' - is set to false
+*
 *
 * ###Example
 *
@@ -50,6 +56,7 @@
 * @link https://gist.github.com/4165380 List up-coming events
  *@link https://gist.github.com/4190351 Adds up-coming events in the venue tooltip
  *@link http://wp-event-organiser.com/documentation/relative-date-formats/ Using relative dates in event queries
+ *@link http://wp-event-organiser.com/forums/topic/retrieving-events-using-wp_query/ Retrieving events with `WP_Query`
 * @param array $args Event query arguments.
 * @return array An array of event (post) objects. Like get_posts. In case of failure it returns null.
 */
