@@ -20,6 +20,10 @@ function eventorganiser_register_query_vars( $qvars ){
 	$qvars[] = 'ondate';
 	$qvars[] = 'showrepeats';
 	$qvars[] = 'eo_interval';
+	$qvars[] = 'event_start_before';
+	$qvars[] = 'event_start_after';
+	$qvars[] = 'event_end_before';
+	$qvars[] = 'event_after_after';
 	return $qvars;
 }
 add_filter('query_vars', 'eventorganiser_register_query_vars' );
@@ -53,9 +57,30 @@ function eventorganiser_pre_get_posts( $query ) {
 
 	//If querying for all events starting on given date, set the date parameters
 	if( !empty($query->query_vars['ondate']) ) {
+
+		$ondate_start = str_replace('/','-',$query->query_vars['ondate']);
+		$ondate_end = str_replace('/','-',$query->query_vars['ondate']);
+
+		$parts = count(explode('-',$ondate_start));
+		if( $parts == 1 && is_numeric($ondate_start) ){
+			//Numeric - interpret as year
+			$ondate_start .= '-01-01';
+			$ondate_end .= '-12-31';
+		}elseif( $parts == 2 ){
+			// 2012-01 format: interpret as month
+			$ondate_start .= '-01';
+			try{
+				$end = new DateTime($ondate_start);
+				$ondate_end = $end->format('Y-m-t');
+			}catch( Exception $e){
+				$query->set('ondate',false);
+				break;
+			}
+		}
+	
 		$query->set('post_type', 'event');
-		$query->set('event_start_before', $query->query_vars['ondate']);
-		$query->set('event_end_after', $query->query_vars['ondate']);
+		$query->set('event_start_after', $ondate_start);
+		$query->set('event_end_before', $ondate_end);
 	}
 
 	//If not on event, stop here.
@@ -97,7 +122,14 @@ function eventorganiser_pre_get_posts( $query ) {
 	$date_objs = array('event_start_after'=>'','event_start_before'=>'','event_end_after'=>'','event_end_before'=>'');
 	foreach($date_objs as $prop => $value):
 		$date = $query->get($prop);
-		$date_objs[$prop] = ( empty($date) ? false : new DateTime($date, eo_get_blog_timezone()) );
+		try{
+			$date = ( empty($date) ? false : new DateTime($date, eo_get_blog_timezone()) );
+		}catch( Exception $e){
+			$date = false;
+		}
+		$date_objs[$prop] = $date;
+		$query->set($prop, $date);
+		
 	endforeach;
 
 	//If eo_interval is set, determine date ranges

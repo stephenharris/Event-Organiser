@@ -84,8 +84,12 @@ class EO_Calendar_Widget extends WP_Widget
 
 		//Set the month to display (DateTime must be 1st of that month)
 		$tz = eo_get_blog_timezone();
-		$date =  get_query_var('ondate') ?  get_query_var('ondate') : 'now';
-		$month = new DateTime($date,$tz);
+		$date =  get_query_var('ondate') ?  str_replace('/','-',get_query_var('ondate')) : 'now';
+		try{
+			$month = new DateTime($date,$tz);
+		}catch( Exception $e){
+			$month = new DateTime('now',$tz);
+		}
 		$month = date_create($month->format('Y-m-1'),$tz);
 	
 		/* Set up the event query */
@@ -226,7 +230,8 @@ function generate_output($month,$args=array()){
 					$class[] ='event';
 					$events = $calendar_events[$formated_date];
 
-					$link = esc_url(add_query_arg('ondate',$current_date->format('Y-m-d'),$event_archive_link));
+					$link = esc_url(eo_get_event_archive_link($current_date->format('Y'),$current_date->format('m'),$current_date->format('d')));
+
 					/**
 					 * Filters the the link of a date on the events widget calendar
 					 *@param string $link The link

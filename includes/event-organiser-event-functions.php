@@ -334,11 +334,12 @@ function eo_get_next_occurrence_of($post_id=0){
 	if( ! $nextoccurrence )
 		return false;
 
-	$start = new DateTime($nextoccurrence->StartDate.' '.$nextoccurrence->StartTime);
-	$end = new DateTime($nextoccurrence->EndDate.' '.$nextoccurrence->FinishTime);
+	$start = new DateTime($nextoccurrence->StartDate.' '.$nextoccurrence->StartTime, $tz);
+	$end = new DateTime($nextoccurrence->EndDate.' '.$nextoccurrence->FinishTime, $tz);
 
 	return compact('start','end');
 }
+
 
 /**
 * Prints the formated date of next occurrence of an event
@@ -880,5 +881,49 @@ function eventorganiser_get_event_meta_list( $post_id=0 ){
 	$html ='</ul>';
 
 	return apply_filters('eventorganiser_event_meta_list', $html, $post_id);
+}
+
+
+/**
+ * Returns an the link for the event archive
+ * 
+ * Optionally provide the year , or month or day to get an year/month/day archive link. 
+ * To get a month archive you should provide a year
+ * To get a day archive you should provide a year and month.
+ *
+ *@since 1.7 
+ *@param int $year Year in full format, e.g. 2018. Must be provide for date-based archive link.
+ *@param int $month Numeric representation of month. 1 = Jan, 12 = Dec. Must be provide for month or day archive link
+ *@param int $day Day of the month 1-31
+ *@return string Link to the requested archive
+ *
+*/
+function eo_get_event_archive_link( $year=false,$month=false, $day=false){
+	global $wp_rewrite;
+
+	$archive = get_post_type_archive_link('event');
+
+	if( $year == false && $month == false && $day == false )
+		return $archive;
+	
+	$_year = str_pad($year, 4, "0", STR_PAD_LEFT);
+	$_month = str_pad($month, 2, "0", STR_PAD_LEFT);
+	$_day = str_pad($day, 2, "0", STR_PAD_LEFT);
+
+	if( $day ){
+		$date = compact('_year','_month','_day');
+	}elseif( $month ){
+		$date = compact('_year','_month');
+	}else{
+		$date = compact('_year');
+	}
+
+	if( $archive && $wp_rewrite->using_mod_rewrite_permalinks() && $permastruct = $wp_rewrite->get_extra_permastruct('event_archive') ){
+		$archive = home_url( $wp_rewrite->front.str_replace('%event_ondate%',implode('/',$date), $permastruct ) );
+	}else{
+		$archive = add_query_arg('ondate',implode('-',$date),$archive);
+	}
+
+	return $archive;
 }
 ?>
