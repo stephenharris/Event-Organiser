@@ -413,6 +413,7 @@ $hooks = array(
 	'eventorganiser_save_event', 'eventorganiser_delete_event', 'wp_trash_post','update_option_gmt_offset', /* obvious */
 	'update_option_start_of_week', /* Start of week is used for calendars */
 	'update_option_rewrite_rules', /* If permalinks updated - links on fullcalendar might now be invalid */ 
+	'delete_option_rewrite_rules',
 	'edited_event-category', /* Colours of events may change */
 );
 foreach( $hooks as $hook ){
