@@ -35,6 +35,8 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		//Register options
 		register_setting( 'eventorganiser_options', 'eventorganiser_options', array($this,'validate'));
 
+		add_action('eventorganiser_event_settings_permalinks','flush_rewrite_rules');
+
 		//Initialise the tab array
 		$this->tabs = $this->setup_tabs();
 		
