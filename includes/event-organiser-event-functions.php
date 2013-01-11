@@ -912,7 +912,7 @@ function eo_event_category_dropdown( $args = '' ) {
  * @param int $post_id The event (post) ID. Uses current event if not supplied
  * @return string|bool HTML mark-up. False if an invalid $post_is provided.
 */
-function eventorganiser_get_event_meta_list( $post_id=0 ){
+function eo_get_event_meta_list( $post_id=0 ){
 
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
