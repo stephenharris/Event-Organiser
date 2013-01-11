@@ -306,7 +306,7 @@ function eo_get_next_occurrence($format='d-m-Y',$post_id=0){
 /**
 * Returns an array of datetimes (start and end) corresponding to the next occurrence of an event
 * {@see `eo_get_next_occurrence()`} on the other hand returns a formated datetime of the start date.
-* To get the current occurrence{@see `eo_get_currence_occurrence_of()`}
+* To get the current occurrence{@see `eo_get_current_occurrence_of()`}
 *
 * @since 1.6
 *
@@ -364,7 +364,7 @@ function eo_next_occurence($format='',$post_id=0){
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @return array Array with keys 'start' and 'end', with corresponding datetime objects
  */
-function eo_get_currence_occurrence_of($post_id=0){
+function eo_get_current_occurrence_of($post_id=0){
 	global $wpdb;
 
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
