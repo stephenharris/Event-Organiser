@@ -53,6 +53,7 @@
 *
 * @since 1.0.0
 * @uses get_posts()
+* @package event-query-functions
 * @link https://gist.github.com/4165380 List up-coming events
  *@link https://gist.github.com/4190351 Adds up-coming events in the venue tooltip
  *@link http://wp-event-organiser.com/documentation/relative-date-formats/ Using relative dates in event queries
@@ -142,6 +143,7 @@ function eo_get_by_postid($post_id,$occurrence=0, $occurrence_id=0){
 * If used inside the loop, with no id no set, returns start date of
 * current event occurrence.
 * @since 1.0.0
+* @package event-date-functions
 *
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id Post ID of the event
@@ -186,6 +188,7 @@ function eo_get_the_start($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_
 * Returns the start date of occurrence of event an event, like {@see `eo_get_the_start()`}.
 * The difference is that the occurrence ID *must* be supplied (event ID is not). 
 * @since 1.6
+* @ignore
 *
 * @param string $format String of format as accepted by PHP date
 * @param int $occurrence_id  The occurrence ID
@@ -216,6 +219,7 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
 * Echos the start date of occurence of event
  * @since 1.0.0
  * @uses eo_get_the_start()
+ * @package event-date-functions
  *
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id Post ID of the event
@@ -232,6 +236,7 @@ function eo_the_start($format='d-m-Y',$post_id=0,$occurrence=0,	$occurrence_id=0
 * If used inside the loop, with no id no set, returns end date of
 * current event occurrence.
  * @since 1.0.0
+* @package event-date-functions
 *
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id The event (post) ID. Uses current event if empty.
@@ -275,7 +280,8 @@ function eo_get_the_end($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id
 * Echos the end date of occurence of event
  * @since 1.0.0
  * @uses eo_get_the_end()
- *
+* @package event-date-functions
+ * 
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id Post ID of the event
 * @param int $occurrence The occurrence number. Deprecated. Use $occurrence_id instead
@@ -289,6 +295,7 @@ function eo_the_end($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id=0){
 /**
 * Gets the formated date of next occurrence of an event
 * @since 1.0.0
+* @package event-date-functions
 *
 * @param string $format The format to use, using PHP Date format
 * @param int $post_id The event (post) ID, 
@@ -308,6 +315,7 @@ function eo_get_next_occurrence($format='d-m-Y',$post_id=0){
 * {@see `eo_get_next_occurrence()`} on the other hand returns a formated datetime of the start date.
 * To get the current occurrence{@see `eo_get_current_occurrence_of()`}
 *
+* @package event-date-functions
 * @since 1.6
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
@@ -346,6 +354,7 @@ function eo_get_next_occurrence_of($post_id=0){
 * Prints the formated date of next occurrence of an event
 * @since 1.0.0
 * @uses eo_get_next_occurence()
+* @package event-date-functions
 *
 * @param string $format The format to use, using PHP Date format
 * @param int $post_id The event (post) ID. Uses current event if empty. 
@@ -360,6 +369,7 @@ function eo_next_occurence($format='',$post_id=0){
 * To get the next occurrence{@see `eo_get_next_occurrence_of()`}
 *
 * @since 1.7
+* @package event-date-functions
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @return array Array with keys 'start' and 'end', with corresponding datetime objects
@@ -421,6 +431,7 @@ function eo_is_all_day($post_id=0){
 /**
 * Returns the formated date of first occurrence of an event
 * @since 1.0.0
+* @package event-date-functions
 *
 * @param string $format the format to use, using PHP Date format
 * @param int $post_id The event (post) ID. Uses current event if empty.
@@ -436,6 +447,7 @@ function eo_get_schedule_start($format='d-m-Y',$post_id=0){
 * Prints the formated date of first occurrence of an event
 * @since 1.0.0
 * @uses eo_get_schedule_start()
+* @package event-date-functions
 *
 * @param string $format The format to use, using PHP Date format
 * @param int $post_id The event (post) ID. Uses current event if empty.
@@ -447,7 +459,8 @@ function eo_schedule_start($format='d-m-Y',$post_id=0){
 
 /**
 * Returns the formated date of the last occurrence of an event
- * @since 1.4.0
+* @since 1.4.0
+* @package event-date-functions
 *
 * @param string $format The format to use, using PHP Date format
 * @param int $post_id The event (post) ID. Uses current event if empty.
@@ -463,6 +476,7 @@ function eo_get_schedule_last($format='d-m-Y',$post_id=0){
 * Prints the formated date of the last occurrence of an event
  * @since 1.4.0
 * @uses eo_get_schedule_last()
+* @package event-date-functions
 *
 * @param string $format The format to use, using PHP Date format
 * @param int $post_id The event (post) ID. Uses current event if empty.
@@ -495,6 +509,7 @@ function eo_reoccurs($post_id=0){
 /**
 * Returns a summary of the events schedule.
  * @since 1.0.0
+ * @ignore
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @return string A summary of the events schedule.
@@ -595,6 +610,7 @@ function eo_get_schedule_summary($post_id=0){
 * Prints a summary of the events schedule.
 * @since 1.0.0
 * @uses eo_get_schedule_summary()
+* @ignore
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
  */
@@ -607,6 +623,7 @@ function eo_display_reoccurence($post_id=0){
 * Returns an array of occurrences. Each occurrence is an array with 'start' and 'end' key. 
 *  Both of these hold a DateTime object (for the start and end of that occurrence respecitvely).
 * @since 1.5
+* @package event-date-functions
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @return array Array of arrays of DateTime objects of the start and end date-times of occurences. False if none exist.
