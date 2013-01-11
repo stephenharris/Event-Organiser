@@ -159,6 +159,11 @@ if( !eventorganiser_get_option('prettyurl') ){
 	$event_slug = trim(eventorganiser_get_option('url_event','events/event'), "/");
 	$events_slug = trim(eventorganiser_get_option('url_events','events/event'), "/");
 	$event_rewrite = array( 'slug' => $event_slug, 'with_front' => false,'feeds'=> true,'pages'=> true );
+
+	/* Workaround for http://core.trac.wordpress.org/ticket/19871 */
+	global $wp_rewrite;  
+	$wp_rewrite->add_rewrite_tag('%event_ondate%','([0-9]{4}(?:/[0-9]{2}(?:/[0-9]{2})?)?)','post_type=event&ondate='); 
+	add_permastruct('event_archive', $events_slug.'/on/%event_ondate%');
 }
 
 $args = array(
