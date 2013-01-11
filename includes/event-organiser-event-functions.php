@@ -904,7 +904,9 @@ function eo_event_category_dropdown( $args = '' ) {
 
 
 /**
- * Returns HTML mark-up for a list of event meta information
+ * Returns HTML mark-up for a list of event meta information.
+ *
+ * Uses microformat.
  * @since 1.7
  * @ignore
  * @param int $post_id The event (post) ID. Uses current event if not supplied
@@ -919,11 +921,20 @@ function eventorganiser_get_event_meta_list( $post_id=0 ){
 
 	$html = '<ul id="eo-event-meta" style="margin:10px 0px;">';
 
-	if( $venue_id = eo_get_venue() ){
-		$html .= sprintf('<li><strong>%s:</strong> <a href="%s">%s</a></li>',
+	if( $venue_id = eo_get_venue($post_id) ){
+		$html .= sprintf('<li><strong>%s:</strong> <a href="%s">
+								<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/​Organization">
+									<span itemprop="name">%s</span>
+									<span itemprop="geo" itemscope itemtype="http://data-vocabulary.org/​Geo">
+										<meta itemprop="latitude" content="%f" />
+										<meta itemprop="longitude" content="%f" />
+     									</span>
+								</span></a></li>',
 							__('Venue','eventorganiser'),
 							eo_get_venue_link($venue_id), 
-							eo_get_venue_name($venue_id)
+							eo_get_venue_name($venue_id),
+							eo_get_venue_lat($venue_id),
+							eo_get_venue_lng($venue_id)
 						);
 	}
 
@@ -937,11 +948,11 @@ function eventorganiser_get_event_meta_list( $post_id=0 ){
 	if( get_the_terms(get_the_ID(),'event-tag') ){
 		$html .= sprintf('<li><strong>%s:</strong> %s</li>',
 							__('Tags','eventorganiser'),
-							get_the_term_list( get_the_ID(),'event-category', '', ', ', '' )
+							get_the_term_list( get_the_ID(),'event-tag', '', ', ', '' )
 						);
 	}
 
-	$html ='</ul>';
+	$html .='</ul>';
 
 	return apply_filters('eventorganiser_event_meta_list', $html, $post_id);
 }
