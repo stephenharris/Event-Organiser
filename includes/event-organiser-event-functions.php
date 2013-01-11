@@ -306,6 +306,7 @@ function eo_get_next_occurrence($format='d-m-Y',$post_id=0){
 /**
 * Returns an array of datetimes (start and end) corresponding to the next occurrence of an event
 * {@see `eo_get_next_occurrence()`} on the other hand returns a formated datetime of the start date.
+* To get the current occurrence{@see `eo_get_currence_occurrence_of()`}
 *
 * @since 1.6
 *
@@ -351,6 +352,51 @@ function eo_get_next_occurrence_of($post_id=0){
  */
 function eo_next_occurence($format='',$post_id=0){
 	echo eo_get_next_occurence($format,$post_id);
+}
+
+/**
+* Returns an array of datetimes (start and end) corresponding to the current occurrence of an event.
+* If the event has multiple overlapping occurrences currently running, returns the one with the latest start date.
+* To get the next occurrence{@see `eo_get_next_occurrence_of()`}
+*
+* @since 1.7
+*
+* @param int $post_id The event (post) ID. Uses current event if empty.
+* @return array Array with keys 'start' and 'end', with corresponding datetime objects
+ */
+function eo_get_currence_occurrence_of($post_id=0){
+	global $wpdb;
+
+	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
+	
+	//Retrieve the blog's local time and create the date part
+	$tz = eo_get_blog_timezone();
+	$blog_now = new DateTime(null, $tz );
+	$now_date =$blog_now->format('Y-m-d');
+	$now_time =$blog_now->format('H:i:s');
+	
+	//Get the current occurrence. May be multiple (overlapping) occurrences. Pick the latest.
+	$current_occurrence  = $wpdb->get_row($wpdb->prepare("
+		SELECT StartDate, StartTime, EndDate, FinishTime
+		FROM  {$wpdb->eo_events}
+		WHERE {$wpdb->eo_events}.post_id=%d
+		AND ( 
+			({$wpdb->eo_events}.StartDate < %s) OR
+			({$wpdb->eo_events}.StartDate = %s AND {$wpdb->eo_events}.StartTime <= %s)
+		)AND(
+			({$wpdb->eo_events}.EndDate > %s) OR
+			({$wpdb->eo_events}.EndDate = %s AND {$wpdb->eo_events}.EndDate >= %s)
+		)
+		ORDER BY {$wpdb->eo_events}.StartDate DESC
+		LIMIT 1",$post_id,$now_date,$now_date,$now_time, $now_date,$now_date,$now_time));
+
+	if( ! $current_occurrence )
+		return false;
+
+	$start = new DateTime($current_occurrence->StartDate.' '.$current_occurrence->StartTime, $tz);
+	$end = new DateTime($current_occurrence->EndDate.' '.$current_occurrence->FinishTime, $tz);
+
+	return compact('start','end');
 }
 
 
