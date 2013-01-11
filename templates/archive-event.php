@@ -21,86 +21,118 @@
 //Call the template header
 get_header(); ?>
 
-		<!-- This template follows the TwentyEleven theme-->
-		<section id="primary">
-			<div id="content" role="main">
+<!-- This template follows the TwentyTwelve theme-->
+<div id="primary" class="site-content">
+	<div id="content" role="main">
 
-			<?php if ( have_posts() ) : ?>
+		<!---- Page header-->
+		<header class="page-header">
+		<h1 class="page-title">
+			<?php
+				if( eo_is_event_archive('day') )
+					//Viewing date archive
+					echo __('Events: ','eventorganiser').' '.eo_get_event_archive_date('jS F Y');
+				elseif( eo_is_event_archive('month') )
+					//Viewing month archive
+					echo __('Events: ','eventorganiser').' '.eo_get_event_archive_date('F Y');
+				elseif( eo_is_event_archive('year') )
+					//Viewing year archive
+					echo __('Events: ','eventorganiser').' '.eo_get_event_archive_date('Y');
+				else
+					_e('Events','eventorganiser');
+			?>
+			</h1>
+		</header>
 
-				<!---- Page header-->
-				<header class="page-header">
-					<h1 class="page-title">
-						<?php _e('Events','eventorganiser'); ?>
-					</h1>
-				</header>
+		<?php if ( have_posts() ) : ?>
 
-				<!---- Navigate between pages-->
-				<!---- In TwentyEleven theme this is done by twentyeleven_content_nav-->
-				<?php 
-				global $wp_query;
-				if ( $wp_query->max_num_pages > 1 ) : ?>
-					<nav id="nav-above">
-						<div class="nav-next events-nav-newer"><?php next_posts_link( __( 'Later events <span class="meta-nav">&rarr;</span>' , 'eventorganiser' ) ); ?></div>
-						<div class="nav-previous events-nav-newer"><?php previous_posts_link( __( ' <span class="meta-nav">&larr;</span> Newer events', 'eventorganiser' ) ); ?></div>
-					</nav><!-- #nav-above -->
-				<?php endif; ?>
+			<!---- Navigate between pages-->
+			<!---- In TwentyEleven theme this is done by twentyeleven_content_nav-->
+			<?php 
+			global $wp_query;
+			if ( $wp_query->max_num_pages > 1 ) : ?>
+				<nav id="nav-above">
+					<div class="nav-next events-nav-newer"><?php next_posts_link( __( 'Later events <span class="meta-nav">&rarr;</span>' , 'eventorganiser' ) ); ?></div>
+					<div class="nav-previous events-nav-newer"><?php previous_posts_link( __( ' <span class="meta-nav">&larr;</span> Newer events', 'eventorganiser' ) ); ?></div>
+				</nav><!-- #nav-above -->
+			<?php endif; ?>
 
-				<?php /* Start the Loop */ ?>
+			<?php /* Start the Loop */ ?>
 
-				<?php while ( have_posts() ) : the_post(); ?>
+			<?php while ( have_posts() ) : the_post(); ?>
 
-					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<header class="entry-header">
 
-						<header class="entry-header">
-							<h1 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
+				<h1 class="entry-title" style="display: inline;">
+				<a href="<?php the_permalink(); ?>">
+					<?php 
+						//If it has one, display the thumbnail
+						if( has_post_thumbnail() )
+							the_post_thumbnail('thumbnail', array('style'=>'float:left;margin-right:20px;'));
 
-							<div class="entry-meta">
-								<!-- Output the date of the occurrence-->
-								<?php if(eo_is_all_day()):?>
-									<!-- Event is an all day event -->
-									<?php eo_the_start('d F Y'); ?> 
-								<?php else: ?>
-									<!-- Event is not an all day event - display time -->
-									<?php eo_the_start('d F Y g:ia'); ?> 
-								<?php endif; ?>
+						//Display the title
+						the_title()
+					;?>
+				</a>
+				</h1>
 
-								<!-- If the event has a venue saved, display this-->
-								<?php if(eo_get_venue_name()):?>
-									<?php _e('at','eventorganiser');?> <a href="<?php eo_venue_link();?>"><?php eo_venue_name();?></a>
-								<?php endif;?>
-							</div><!-- .entry-meta -->
+				<div class="event-entry-meta">
 
-						</header><!-- .entry-header -->
+					<!-- Output the date of the occurrence-->
+					<?php
+						//Format date/time according to whether its an all day event.
+						//Use microdata http://support.google.com/webmasters/bin/answer.py?hl=en&answer=176035
+ 						if( eo_is_all_day() ){
+							$format = 'd F Y';
+							$microformat = 'Y-m-d';
+						}else{
+							$format = 'd F Y '.get_option('time_format');
+							$microformat = 'c';
+						}?>
+						<time itemprop="startDate" datetime="<?php eo_the_start($microformat); ?>"><?php eo_the_start($format); ?></time>
 
-					</article><!-- #post-<?php the_ID(); ?> -->
+					<!-- Display event meta list -->
+					<?php echo eo_get_event_meta_list(); ?>
 
-    				<?php endwhile; ?><!----The Loop ends-->
+					<!-- Event excerpt -->
+					<?php the_excerpt(); ?>
+			
+				</div><!-- .event-entry-meta -->			
+		
+				<div style="clear:both;"></div>
+				</header><!-- .entry-header -->
 
-				<!---- Navigate between pages-->
-				<?php 
-				if ( $wp_query->max_num_pages > 1 ) : ?>
-					<nav id="nav-below">
-						<div class="nav-next events-nav-newer"><?php next_posts_link( __( 'Later events <span class="meta-nav">&larr;</span>' , 'eventorganiser' ) ); ?></div>
-						<div class="nav-previous events-nav-newer"><?php previous_posts_link( __( ' <span class="meta-nav">&rarr;</span> Newer events', 'eventorganiser' ) ); ?></div>
-					</nav><!-- #nav-below -->
-				<?php endif; ?>
+			</article><!-- #post-<?php the_ID(); ?> -->
 
-			<?php else : ?>
-				<!---- If there are no events -->
-				<article id="post-0" class="post no-results not-found">
-					<header class="entry-header">
-						<h1 class="entry-title"><?php _e( 'Nothing Found', 'eventorganiser' ); ?></h1>
-					</header><!-- .entry-header -->
 
-					<div class="entry-content">
-						<p><?php _e( 'Apologies, but no results were found for the requested archive', 'eventorganiser' ); ?></p>
-					</div><!-- .entry-content -->
-				</article><!-- #post-0 -->
+    		<?php endwhile; ?><!----The Loop ends-->
+
+		<!---- Navigate between pages-->
+		<?php 
+			if ( $wp_query->max_num_pages > 1 ) : ?>
+				<nav id="nav-below">
+					<div class="nav-next events-nav-newer"><?php next_posts_link( __( 'Later events <span class="meta-nav">&larr;</span>' , 'eventorganiser' ) ); ?></div>
+					<div class="nav-previous events-nav-newer"><?php previous_posts_link( __( ' <span class="meta-nav">&rarr;</span> Newer events', 'eventorganiser' ) ); ?></div>
+				</nav><!-- #nav-below -->
+			<?php endif; ?>
+
+		<?php else : ?>
+			<!---- If there are no events -->
+			<article id="post-0" class="post no-results not-found">
+				<header class="entry-header">
+					<h1 class="entry-title"><?php _e( 'Nothing Found', 'eventorganiser' ); ?></h1>
+				</header><!-- .entry-header -->
+
+				<div class="entry-content">
+					<p><?php _e( 'Apologies, but no results were found for the requested archive', 'eventorganiser' ); ?></p>
+				</div><!-- .entry-content -->
+			</article><!-- #post-0 -->
 
 			<?php endif; ?>
 
 			</div><!-- #content -->
-		</section><!-- #primary -->
+		</div><!-- #primary -->
 
 <!-- Call template sidebar and footer -->
 <?php get_sidebar(); ?>
