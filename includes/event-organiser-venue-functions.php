@@ -535,7 +535,7 @@ function eo_get_venues($args=array()){
  * @uses wp_delete_term to delete venue (taxonomy) term
  * @uses do_action() Calls 'eventorganiser_delete_venue' hook with the venue id
  *
- * @param int the Term ID of the venue to update
+ * @param int $venue_id the Term ID of the venue to update
  * @return bool|WP_Error false or error on failure. True after sucessfully deleting the venue and its meta data.
  */
 	function eo_delete_venue($venue_id){

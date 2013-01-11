@@ -226,8 +226,14 @@ function generate_output($month,$args=array()){
 					$class[] ='event';
 					$events = $calendar_events[$formated_date];
 
-					$link = add_query_arg('ondate',$current_date->format('Y-m-d'),$event_archive_link);
-					$link = apply_filters('eventorganiser_widget_calendar_date_link', esc_url($link), $current_date, $events );
+					$link = esc_url(add_query_arg('ondate',$current_date->format('Y-m-d'),$event_archive_link));
+					/**
+					 * Filters the the link of a date on the events widget calendar
+					 *@param string $link The link
+					 *@param datetime $current_date The date being filtered
+					 *@param array $events Array of events starting on this day
+					*/
+					$link = apply_filters('eventorganiser_widget_calendar_date_link', $link, $current_date, $events );
 					
 					$classes = implode(' ',$class);
 					$titles = implode(', ',wp_list_pluck( $events, 'post_title') );

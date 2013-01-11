@@ -8,7 +8,7 @@
 /**
 * Retrieve list of events matching criteria.
 *
-* This function is a wrapper for {@link http://codex.wordpress.org/Template_Tags/get_posts `get_posts()`}, setting the 'post_type' to 'event' and 'suppress_filters' to false. As such you can also use `get_posts()` or {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events. All the arguments listed below can be used with them. 
+* This function is a wrapper for {@see `get_posts()`}, setting the 'post_type' to 'event' and 'suppress_filters' to false. As such you can also use `get_posts()` or {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events. All the arguments listed below can be used with them. 
 *
 * The `$args` array can include the following.
 *
@@ -633,6 +633,12 @@ function eo_get_event_color($post_id=0){
 		endforeach;
 	}
 
+	/**
+	 * Filters the colour associated with an event
+	 *@link http://wordpress.org/support/topic/plugin-event-organiser-color-code-for-venues-instead-of-categories
+	 *@param string $color Event colour in HEX format
+	 *@param int $post_id The event (post) ID
+	*/
 	return apply_filters('eventorganiser_event_color',$color,$post_id);
 }
 
@@ -679,7 +685,8 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 		$event_classes[] = 'eo-event-running';
 	}
 
-	return  apply_filters('eventorganiser_event_classes', array_unique($event_classes), $post_id, $occurrence_id);
+	$event_classes = array_unique($event_classes);
+	return  apply_filters('eventorganiser_event_classes', $event_classes, $post_id, $occurrence_id);
 }
 
 
@@ -829,5 +836,49 @@ function eo_event_category_dropdown( $args = '' ) {
 		echo $output;
 
 	return $output;
+}
+
+
+/**
+ * Returns HTML mark-up for a list of event meta information
+ * @since 1.7
+ * @ignore
+ * @param int $post_id The event (post) ID. Uses current event if not supplied
+ * @return string|bool HTML mark-up. False if an invalid $post_is provided.
+*/
+function eventorganiser_get_event_meta_list( $post_id=0 ){
+
+	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
+
+	if( empty($post_id) ) 
+		return false;
+
+	$html = '<ul id="eo-event-meta" style="margin:10px 0px;">';
+
+	if( $venue_id = eo_get_venue() ){
+		$html .= sprintf('<li><strong>%s:</strong> <a href="%s">%s</a></li>',
+							__('Venue','eventorganiser'),
+							eo_get_venue_link($venue_id), 
+							eo_get_venue_name($venue_id)
+						);
+	}
+
+	if( get_the_terms(get_the_ID(),'event-category') ){
+		$html .= sprintf('<li><strong>%s:</strong> %s</li>',
+							__('Categories','eventorganiser'),
+							get_the_term_list( get_the_ID(),'event-category', '', ', ', '' )
+						);
+	}
+
+	if( get_the_terms(get_the_ID(),'event-tag') ){
+		$html .= sprintf('<li><strong>%s:</strong> %s</li>',
+							__('Tags','eventorganiser'),
+							get_the_term_list( get_the_ID(),'event-category', '', ', ', '' )
+						);
+	}
+
+	$html ='</ul>';
+
+	return apply_filters('eventorganiser_event_meta_list', $html, $post_id);
 }
 ?>

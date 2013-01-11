@@ -50,8 +50,8 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 			$dateformatstring = preg_replace( "/([^\\\])A/", "\\1" . backslashit( $datemeridiem_capital ), $dateformatstring );
 			$dateformatstring = substr( $dateformatstring, 1, strlen( $dateformatstring ) -1 );
 	 endif;	
-
-	return apply_filters('eventorganiser_format_datetime', $datetime->format($dateformatstring), $format, $datetime);
+	$formatted_datetime = $datetime->format($dateformatstring);
+	return apply_filters('eventorganiser_format_datetime', $formatted_datetime , $format, $datetime);
 }
 
 /**
