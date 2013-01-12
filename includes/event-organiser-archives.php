@@ -105,7 +105,7 @@ function eventorganiser_pre_get_posts( $query ) {
 	if( !isset($query->query_vars['group_events_by']) ){
 
 		//Group by isn't set - default depends on context:
-		if( is_admin() || is_single() || $query->is_feed('eo-events') ){
+		if( $query->is_main_query() &&  (is_admin() || is_single() || $query->is_feed('eo-events') ) ){
 
 			//If in admin or single page - we probably don't want to see duplicates of (recurrent) events - unless specified otherwise.
 			$query->set('group_events_by','series');
