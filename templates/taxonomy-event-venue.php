@@ -7,7 +7,7 @@
  * will be overwritten if the plug-in is updated.
  *
  * To overwrite this template with your own, make a copy of it (with the same name)
- * in your theme directory. 
+ * in your theme directory. See http://wp-event-organiser.com/documentation/editing-the-templates/ for more information
  *
  * WordPress will automatically prioritise the template in your theme directory.
  ***************** NOTICE: *****************
@@ -19,98 +19,109 @@
 //Call the template header
 get_header(); ?>
 
-		<!-- This template follows the TwentyEleven theme-->
-		<div id="primary">
-		<div id="content" role="main">
+<!-- This template follows the TwentyTwelve theme-->
+<div id="primary" class="site-content">
+	<div id="content" role="main">
 
-			<?php if ( have_posts() ) : ?>
-
-				<!---- Page header, display venue title-->
-				<header class="page-header">	
-				<h1 class="page-title"><?php
-					printf( __( 'Events at: %s', 'eventorganiser' ), '<span>' .eo_get_venue_name(). '</span>' );
-				?></h1>
-
-				<?php
-						//Get the description and print it if it exists
-						$venue_description =eo_get_venue_description();
-
-						if(!empty($venue_description)){?>
-							<!---- If the venue has a description display it-->
-							<div class="venue-archive-meta">
-								<?php echo $venue_description; ?>
-							</div>
-						<?php } ?>
+	<!---- Page header, display venue title-->
+	<header class="page-header">	
 		
-				<!-- Display the venue map. If you specify a class, ensure that class has height/width dimensions-->
-				<?php echo eo_get_venue_map( eo_get_venue(), array('width'=>"100%") ); ?>
-			</header><!-- end header -->
+		<?php $venue_id = get_queried_object_id(); ?>
+		
+		<h1 class="page-title"><?php printf( __( 'Events at: %s', 'eventorganiser' ), '<span>' .eo_get_venue_name($venue_id). '</span>' );?></h1>
 
-				<!---- Navigate between pages-->
-				<!---- In TwentyEleven theme this is done by twentyeleven_content_nav-->
-				<?php 
-				if ( $wp_query->max_num_pages > 1 ) : ?>
-					<nav id="nav-above">
-						<div class="nav-next events-nav-newer"><?php next_posts_link( __( 'Later events <span class="meta-nav">&rarr;</span>' , 'eventorganiser' ) ); ?></div>
-						<div class="nav-previous events-nav-newer"><?php previous_posts_link( __( ' <span class="meta-nav">&larr;</span> Newer events', 'eventorganiser' ) ); ?></div>
-					</nav><!-- #nav-above -->
-				<?php endif; ?>
+		<?php if( $venue_description = eo_get_venue_description() ){
+			 echo '<div class="venue-archive-meta">'.$venue_description.'</div>';
+		} ?>
+		
+		<!-- Display the venue map. If you specify a class, ensure that class has height/width dimensions-->
+		<?php echo eo_get_venue_map( $venue_id, array('width'=>"100%") ); ?>
+	</header><!-- end header -->
 
-				<!-- This is the usual loop, familiar in WordPress templates-->
-				<?php while ( have_posts()) : the_post(); ?>
-					<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+	<?php if ( have_posts() ) : ?>
 
-						<header class="entry-header">
-							<h1 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
+		<!---- Navigate between pages-->
+		<!---- In TwentyEleven theme this is done by twentyeleven_content_nav-->
+		<?php 
+			if ( $wp_query->max_num_pages > 1 ) : ?>
+				<nav id="nav-above">
+					<div class="nav-next events-nav-newer"><?php next_posts_link( __( 'Later events <span class="meta-nav">&rarr;</span>' , 'eventorganiser' ) ); ?></div>
+					<div class="nav-previous events-nav-newer"><?php previous_posts_link( __( ' <span class="meta-nav">&larr;</span> Newer events', 'eventorganiser' ) ); ?></div>
+				</nav><!-- #nav-above -->
+		<?php endif; ?>
 
-							<div class="entry-meta">
-								<!-- Output the date of the occurrence-->
-								<?php if(eo_is_all_day()):?>
-									<!-- Event is an all day event -->
-									<?php eo_the_start('d F Y'); ?> 
-								<?php else: ?>
-									<!-- Event is not an all day event - display time -->
-									<?php eo_the_start('d F Y g:ia'); ?> 
-								<?php endif; ?>
+		<!-- This is the usual loop, familiar in WordPress templates-->
+		<?php while ( have_posts()) : the_post(); ?>
+	
+			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+			<header class="entry-header">
 
-								<!-- If the event has a venue saved, display this-->
-								<?php if(eo_get_venue_name()):?>
-									<?php _e('at','eventorganiser');?> <a href="<?php eo_venue_link();?>"><?php eo_venue_name();?></a>
-								<?php endif;?>
-							</div><!-- .entry-meta -->
+				<h1 class="entry-title" style="display: inline;">
+				<a href="<?php the_permalink(); ?>">
+					<?php 
+						//If it has one, display the thumbnail
+						if( has_post_thumbnail() )
+							the_post_thumbnail('thumbnail', array('style'=>'float:left;margin-right:20px;'));
 
-						</header><!-- .entry-header -->
+						//Display the title
+						the_title()
+					;?>
+				</a>
+				</h1>
+		
+				<div class="event-entry-meta">
 
-					</article><!-- #post-<?php the_ID(); ?> -->
+					<!-- Output the date of the occurrence-->
+					<?php
+					//Format date/time according to whether its an all day event.
+					//Use microdata http://support.google.com/webmasters/bin/answer.py?hl=en&answer=176035
+ 					if( eo_is_all_day() ){
+						$format = 'd F Y';
+						$microformat = 'Y-m-d';
+					}else{
+						$format = 'd F Y '.get_option('time_format');
+						$microformat = 'c';
+					}?>
+					<time itemprop="startDate" datetime="<?php eo_the_start($microformat); ?>"><?php eo_the_start($format); ?></time>
 
-    				<?php endwhile; ?><!----The Loop ends-->
+					<!-- Display event meta list -->
+					<?php echo eo_get_event_meta_list(); ?>
 
-				<!---- Navigate between pages-->
-				<?php 
-				global $wp_query;
-				if ( $wp_query->max_num_pages > 1 ) : ?>
-					<nav id="nav-below">
-						<div class="nav-next events-nav-newer"><?php next_posts_link( __( 'Later events <span class="meta-nav">&rarr;</span>' , 'eventorganiser' ) ); ?></div>
-						<div class="nav-previous events-nav-newer"><?php previous_posts_link( __( ' <span class="meta-nav">&larr;</span> Newer events', 'eventorganiser' ) ); ?></div>
-					</nav><!-- #nav-below -->
-				<?php endif; ?>
+					<!-- Event excerpt -->
+					<?php the_excerpt(); ?>
+			
+				</div><!-- .event-entry-meta -->
+		
+				<div style="clear:both;"></div>
+			</header><!-- .entry-header -->
+			</article><!-- #post-<?php the_ID(); ?> -->
 
-			<?php else : ?>
-				<!---- If there are no events -->
-				<article id="post-0" class="post no-results not-found">
-					<header class="entry-header">
-						<h1 class="entry-title"><?php _e( 'Nothing Found', 'eventorganiser' ); ?></h1>
-					</header><!-- .entry-header -->
+    		<?php endwhile; ?><!----The Loop ends-->
 
-					<div class="entry-content">
-						<p><?php _e( 'Apologies, but no events were found for the requested venue. ', 'eventorganiser' ); ?></p>
-					</div><!-- .entry-content -->
-				</article><!-- #post-0 -->
-
+			<!---- Navigate between pages-->
+			<?php 
+			if ( $wp_query->max_num_pages > 1 ) : ?>
+				<nav id="nav-below">
+					<div class="nav-next events-nav-newer"><?php next_posts_link( __( 'Later events <span class="meta-nav">&rarr;</span>' , 'eventorganiser' ) ); ?></div>
+					<div class="nav-previous events-nav-newer"><?php previous_posts_link( __( ' <span class="meta-nav">&larr;</span> Newer events', 'eventorganiser' ) ); ?></div>
+				</nav><!-- #nav-below -->
 			<?php endif; ?>
 
-			</div><!-- #content -->
-		</div><!-- #primary -->
+
+	<?php else : ?>
+			<!---- If there are no events -->
+			<article id="post-0" class="post no-results not-found">
+				<header class="entry-header">
+					<h1 class="entry-title"><?php _e( 'Nothing Found', 'eventorganiser' ); ?></h1>
+				</header><!-- .entry-header -->
+				<div class="entry-content">
+					<p><?php _e( 'Apologies, but no events were found for the requested venue. ', 'eventorganiser' ); ?></p>
+				</div><!-- .entry-content -->
+			</article><!-- #post-0 -->
+	<?php endif; ?>
+
+	</div><!-- #content -->
+</div><!-- #primary -->
 
 <!-- Call template sidebar and footer -->
 <?php get_sidebar(); ?>
