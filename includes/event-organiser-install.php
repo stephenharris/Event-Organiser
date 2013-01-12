@@ -71,7 +71,7 @@
 	add_option('eventorganiser_options',$eventorganiser_options);
 
 	/* Add existing notices */
-	$notices = array('autofillvenue17');
+	$notices = array('autofillvenue17','changedtemplate17');
 	add_option('eventorganiser_admin_notices',$notices);
 	
 	//Add roles to administrator		
