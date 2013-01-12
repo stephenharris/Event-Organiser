@@ -34,7 +34,7 @@
 	<hr>
 
 	<!-- Event details -->
-		<strong><?php _e('Event Details', 'eventorganiser') ;?></strong>
+		<h4><?php _e('Event Details', 'eventorganiser') ;?></h4>
 
 		<!-- Is event recurring or a single event -->
 		<?php if( eo_reoccurs() ):?>
