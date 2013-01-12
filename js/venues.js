@@ -23,10 +23,11 @@ jQuery(document).ready(function () {
 			}
 		}
             jQuery(".eo_addressInput").change(function () {
-                var address = "";
+                var address = [];
                 jQuery(".eo_addressInput").each(function () {
+			address.push(jQuery(this).val());
                 });
-                eventorganiser_code_address(address)
+                eventorganiser_code_address(address.join(', '))
             })
         }
     }
