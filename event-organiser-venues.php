@@ -276,7 +276,7 @@ function edit_form($venue=false){
 						<div class="inside"><?php eventorganiser_venue_location($venue); ?></div>
 					</div><!-- .postbox -->
 					<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="venue_description postarea">
-						<?php wp_editor(eo_get_venue_description($term_id) , 'content', array('textarea_name'=>'eo_venue[description]','dfw' => false, 'tabindex' => 1) ); ?>
+						<?php wp_editor(eo_get_venue_description($term_id) , 'content', array('textarea_name'=>'eo_venue[description]','dfw' => false, 'tabindex' => 7) ); ?>
 					</div>
 		 		</div><!-- #post-body-content -->
 
@@ -321,7 +321,7 @@ function eventorganiser_venue_submit($venue){
 
 	<div id="minor-publishing-actions">
 		<div id="save-action">
-			<input type="submit" class="button button-primary" id="save-venue" name="eo_venue[Submit]" value="<?php echo esc_attr($value); ?>" />  
+			<input type="submit" class="button button-primary" id="save-venue" name="eo_venue[Submit]" value="<?php echo esc_attr($value); ?>" tabindex="10" />  
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -338,17 +338,20 @@ function eventorganiser_venue_location($venue){
 		<tbody>
 			<?php
 				$address_fields = _eventorganiser_get_venue_address_fields();
+				$tabindex = 2;
 				foreach( $address_fields as $key => $label ){
 					//Keys are prefixed by '_'.
 					$key = trim($key,'_');
 					printf('<tr>
 								<th><label>%1$s:</label></th>
-								<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo-venue-%2$s"  value="%3$s"/></td>
+								<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo-venue-%2$s"  value="%3$s" tabindex="%4$s"/></td>
 							</tr>',
 							$label,
 							esc_attr($key),
-							esc_attr($address[$key]) 
+							esc_attr($address[$key]),
+							$tabindex++
 					);
+					
 				}
 			?>
 		</tbody>
