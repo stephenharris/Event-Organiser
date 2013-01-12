@@ -1,5 +1,85 @@
 <?php
 /**
+ * Template functions
+ *
+ * @package template-functions
+*/
+
+
+/**
+ * Load a template part into a template
+ *
+ * Identical to {@see `get_template_part()`} except that it uses {@see `eo_locate_template()`}
+ * instead of {@see `locate_template()`}.
+ *
+ * Makes it easy for a theme to reuse sections of code in a easy to overload way
+ * for child themes. Looks for and includes templates {$slug}-{$name}.php
+ *
+ * You may include the same template part multiple times.
+ *
+ * @uses eo_locate_template()
+ * @since 1.7
+ * @uses do_action() Calls `get_template_part_{$slug}` action.
+ *
+ * @param string $slug The slug name for the generic template.
+ * @param string $name The name of the specialised template.
+ */
+function  eo_get_template_part( $slug, $name = null ) {
+	do_action( "get_template_part_{$slug}", $slug, $name );
+
+	$templates = array();
+	if ( isset($name) )
+		$templates[] = "{$slug}-{$name}.php";
+
+	$templates[] = "{$slug}.php";
+
+	eo_locate_template($templates, true, false);
+}
+
+
+/**
+ * Retrieve the name of the highest priority template file that exists.
+ *
+ * Searches the child theme first, then the parent theme before checking the plug-in templates folder.
+ * So parent themes can override the default plug-in templates, and child themes can over-ride both.
+ *
+ * Behaves almost identically to {@see locate_template()} 
+ *
+ * @since 1.7
+ *
+ * @param string|array $template_names Template file(s) to search for, in order.
+ * @param bool $load If true the template file will be loaded if it is found.
+ * @param bool $require_once Whether to require_once or require. Default true. Has no effect if $load is false.
+ * @return string The template filename if one is located.
+ */
+function eo_locate_template($template_names, $load = false, $require_once = true ) {
+	$located = '';
+
+	$template_dir = get_stylesheet_directory(); //child theme
+	$parent_template_dir =get_template_directory(); //parent theme
+
+	foreach ( (array) $template_names as $template_name ) {
+		if ( !$template_name )
+			continue;
+		if ( file_exists($template_dir . '/' . $template_name)) {
+			$located = $template_dir . '/' . $template_name;
+			break;
+		} else if ( file_exists($paremt_template_dir . '/' . $template_name) ) {
+			$located = $parent_template_dir . '/' . $template_name;
+			break;
+		}else if ( file_exists(EVENT_ORGANISER_DIR . 'templates/' . $template_name) ) {
+			$located = EVENT_ORGANISER_DIR . 'templates/' . $template_name;
+			break;
+		}
+	}
+
+	if ( $load && '' != $located )
+		load_template( $located, $require_once );
+
+	return $located;
+}
+
+/**
  * Checks if provided template path points to an 'event' template recognised by EO, given the context.
  * This will one day ignore context, and if only the event archive template is present in theme folder
  * it will use that  regardless. If no event-archive tempate is present the plug-in will pick the most appropriate
