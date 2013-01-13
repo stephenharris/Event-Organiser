@@ -95,8 +95,8 @@
  
 					<?php 
 					wp_reset_postdata(); 
-					//JS will hide all but the next 5 dates, with options to show more.
-					//wp_enqueue_script('eo_front');
+					//With the ID 'eo-upcoming-dates', JS will hide all but the next 5 dates, with options to show more.
+					wp_enqueue_script('eo_front');
 					?>
 				<?php endif; ?>
 		<?php } ?>
