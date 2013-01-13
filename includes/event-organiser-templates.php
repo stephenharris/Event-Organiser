@@ -24,7 +24,7 @@
  * @param string $slug The slug name for the generic template.
  * @param string $name The name of the specialised template.
  */
-function  eo_get_template_part( $slug, $name = null ) {
+function eo_get_template_part( $slug, $name = null ) {
 	do_action( "get_template_part_{$slug}", $slug, $name );
 
 	$templates = array();
@@ -64,7 +64,7 @@ function eo_locate_template($template_names, $load = false, $require_once = true
 		if ( file_exists($template_dir . '/' . $template_name)) {
 			$located = $template_dir . '/' . $template_name;
 			break;
-		} else if ( file_exists($paremt_template_dir . '/' . $template_name) ) {
+		} else if ( file_exists($parent_template_dir . '/' . $template_name) ) {
 			$located = $parent_template_dir . '/' . $template_name;
 			break;
 		}else if ( file_exists(EVENT_ORGANISER_DIR . 'templates/' . $template_name) ) {
@@ -77,6 +77,81 @@ function eo_locate_template($template_names, $load = false, $require_once = true
 		load_template( $located, $require_once );
 
 	return $located;
+}
+
+/**
+ * Whether an event archive is being viewed
+ * 
+ * My specifying the type of archive ( e.g. 'day', 'month' or 'year'), we can check if its 
+ * a day, month or year archive. By default, it will just return `is_post_type_archive('event')`
+ *
+ * You can get the date of the archive via {@see `eo_get_event_archive_date()`}
+ *
+ *@uses is_post_type_archive()
+ *@since 1.7
+ *@param string $type The type archive. 'day', 'month', or 'year'
+ *@return bool Whether an event archive is being viewed, where type is specified, if its an event archive of that type.
+*/
+function eo_is_event_archive( $type = false ){
+
+	if( !is_post_type_archive('event') )
+		return false;
+	
+	$ondate = str_replace('/','-',get_query_var('ondate'));
+
+	switch( $type ){
+		case 'year':
+			if( _eventorganiser_check_datetime($ondate.'-01-01 00:00',true) )
+				return true;
+			return false;
+
+		case 'month':
+			if( _eventorganiser_check_datetime($ondate.'-01 00:00',true) )
+				return true;
+			return false;
+
+		case 'day':
+			if( _eventorganiser_check_datetime($ondate.' 00:00',true) )
+				return true;
+			return false;
+
+		default:
+			return true;
+	}
+}
+
+/**
+ * Returns formatted date of an event archive.
+ *
+ * Returns the formatted ate of an event archive. E.g. for date archives, returns that date, 
+ * for year archives returns 1st January of that year, for month archives 1st of that month.
+ * The date is formatted according to `$format` via {@see `eo_format_datetime()`}
+ *
+ * @since 1.7
+ * @uses is_post_type_archive()
+ * @uses eo_format_datetime()
+ * @link http://php.net/manual/en/function.date.php Formatting dates
+ * @param string|constant $format How to format the date, see http://php.net/manual/en/function.date.php  or DATETIMEOBJ constant to return the datetime object.
+ * @return string|dateTime The formatted date
+*/
+function eo_get_event_archive_date( $format = DATETIMEOBJ ){
+
+	if( !is_post_type_archive('event') )
+		return false;
+	
+	$ondate = str_replace('/','-',get_query_var('ondate'));
+	$parts = count(explode('-',$ondate));
+
+	if( $parts == 1 && is_numeric($ondate) ){
+		//Numeric - interpret as year
+		$ondate .= '-01-01';
+	}elseif( $parts == 2 ){
+		// 2012-01 format: interpret as month
+		$ondate .= '-01';
+	}
+		
+	$ondate =  _eventorganiser_check_datetime($ondate.' 00:00',true);
+	return eo_format_datetime($ondate, $format);
 }
 
 /**
@@ -177,7 +252,8 @@ function _eventorganiser_single_event_content( $content ){
 
 	//Object buffering				
 	ob_start();
-	include(EVENT_ORGANISER_DIR.'templates/event-meta-event-single.php');
+	eo_get_template_part('event-meta','event-single');
+	//include(EVENT_ORGANISER_DIR.'templates/event-meta-event-single.php');
 	$event_content = ob_get_contents();
 	ob_end_clean();
 
