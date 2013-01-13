@@ -103,10 +103,18 @@ function eo_get_venue_id_by_slugorid($venue_slug_or_id=''){
 /**
  * Get all venue data from database by venue field and data. This acts as a simple wrapper for  {@see `get_term_by()`}
  *
- * Warning: $value is not escaped for 'name' $field. You must do it yourself, if required.
+ * Warning: `$value` is not escaped for 'name' `$field`. You must do it yourself, if required.
  * 
- * If $value does not exist, the return value will be false. If $taxonomy exists
- * and $field and $value combinations exist, the Term will be returned.
+ * If `$value` does not exist for that `$field`, the return value will be false other the term will be returned.
+ *
+ * ###Example
+ * Get the venue ID by slug (A better way is to use {@see `eo_get_venue_id_by_slugorid()`}
+ *
+ *     $venue = eo_get_venue_by('slug','my-venue-slug'); 
+ *     if( $venue )
+ *          $venue_id = (int) $venue->term_id;
+ *
+ *
  * @uses get_term_by()
  * @since 1.6
  *

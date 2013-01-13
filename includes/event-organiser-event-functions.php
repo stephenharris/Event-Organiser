@@ -109,14 +109,15 @@ function eo_get_events($args=array()){
 /**
 * Retrieve a row object from events table of the event by ID of the event
 * @access private
+*@ignore
 * @since 1.0
 *
 * @param int $post_id Post ID of the event.
-* @param int $occurrence The occurrence number. Deprecated use $occurrence_id
+* @param int $deprecated The occurrence number. Deprecated use $occurrence_id
 * @param int $occurrence_id The occurrence ID
 * @return row object of event's row in Events table
 */
-function eo_get_by_postid($post_id,$occurrence=0, $occurrence_id=0){
+function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
 	global $wpdb;
 
 	if( !empty($occurrence_id) ){
@@ -125,7 +126,7 @@ function eo_get_by_postid($post_id,$occurrence=0, $occurrence_id=0){
 	}else{
 		//Backwards compatibility!
 		$column = 'event_occurrence';
-		$value = $occurrence;
+		$value = $deprecated;
 	}
 
 	$querystr = $wpdb->prepare("
@@ -147,19 +148,19 @@ function eo_get_by_postid($post_id,$occurrence=0, $occurrence_id=0){
 *
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id Post ID of the event
-* @param int $occurrence The occurrence number. Deprecated. Use $occurrence_id
+* @param int $deprecated The occurrence number. Deprecated. Use $occurrence_id
 * @param int $occurrence_id  The occurrence ID
 * @return string the start date formated to given format, as accepted by PHP date
  */
-function eo_get_the_start($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id=0){
+function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id=0){
 	global $post;
 	$event = $post;
 
-	if( !empty($occurrence) ){
-		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->event_id' );
+	if( !empty($deprecated) ){
+		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->occurrence_id' );
 
 		//Backwards compatiblity
-		if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$occurrence, $occurrence_id);	
+		if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$deprecated, $occurrence_id);	
 	
 		if(empty($event)) 
 			return false;
@@ -223,11 +224,11 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
  *
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id Post ID of the event
-* @param int $occurrence The occurrence number. Deprecated. Use $occurrence_id instead
+* @param int $deprecated The occurrence number. Deprecated. Use $occurrence_id instead
 * @param int $occurrence_id  The occurrence ID
  */
-function eo_the_start($format='d-m-Y',$post_id=0,$occurrence=0,	$occurrence_id=0){
-	echo eo_get_the_start($format,$post_id,$occurrence, $occurrence_id);
+function eo_the_start($format='d-m-Y',$post_id=0,$deprecated=0,$occurrence_id=0){
+	echo eo_get_the_start($format,$post_id,$deprecated, $occurrence_id);
 }
 
 
@@ -240,19 +241,19 @@ function eo_the_start($format='d-m-Y',$post_id=0,$occurrence=0,	$occurrence_id=0
 *
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id The event (post) ID. Uses current event if empty.
-* @param int $occurrence The occurrence number. Deprecated. Use $occurrence_id instead
+* @param int $deprecated The occurrence number. Deprecated. Use $occurrence_id instead
 * @param int $occurrence_id  The occurrence ID
 * @return string the end date formated to given format, as accepted by PHP date
  */
-function eo_get_the_end($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id=0){
+function eo_get_the_end($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id=0){
 	global $post;
 	$event = $post;
 
-	if( !empty($occurrence) ){
-		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->event_id' );
+	if( !empty($deprecated) ){
+		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->occurrence_id' );
 
 		//Backwards compatiblity
-		if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$occurrence, $occurrence_id);	
+		if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$deprecated, $occurrence_id);	
 	
 		if(empty($event)) 
 			return false;
@@ -837,7 +838,7 @@ function eo_get_the_GoogleLink(){
 /**
  * @ignore
 */
-function eo_has_event_started($id='',$occurrence=0){
+function eo_has_event_started($id='',$occurrence){
 	$tz = eo_get_blog_timezone();
 	$start = new DateTime(eo_get_the_start('d-m-Y H:i',$id,$occurrence), $tz);
 	$now = new DateTime('now', $tz);
