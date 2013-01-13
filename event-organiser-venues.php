@@ -66,8 +66,15 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 
 					$args = $_POST['eo_venue'];
 					$name = isset( $args['name'] ) ?  $args['name'] : '';
-
-					$return  = eo_insert_venue($name, $args);
+	
+					//Venue may already exist in database since it may have been added via ajax (by pro plug-in);
+					if( !empty($args['venue_id']) && $_venue = eo_get_venue_by('id',$args['venue_id']) ){
+						//Since we're updating, need to explicitly provide slug to update it. Slug will be 'new-venue'.
+						$args['slug'] = sanitize_title($args['name']);
+						$return = eo_update_venue($_venue->term_id, $args);
+					}else{
+						$return  = eo_insert_venue($name, $args);
+					}
 
 					if( is_wp_error($return)){
 						$EO_Errors->add('eo_error', __("Venue <strong>was not</strong> created",'eventorganiser').": ".$return->get_error_message());
