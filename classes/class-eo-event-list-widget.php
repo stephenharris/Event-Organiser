@@ -115,7 +115,7 @@ class EO_Event_List_Widget extends WP_Widget{
     	if ( $widget_title )
    		echo $before_title.esc_html($widget_title).$after_title;
 
-	eventorganiser_list_events($instance, array('class'=>'eo-events eo-events-widget','template'=>$template, 'no_events'=>$no_events));
+	eventorganiser_list_events($instance, array('type'=>'widget','class'=>'eo-events eo-events-widget','template'=>$template, 'no_events'=>$no_events));
 
      	echo $after_widget;
   }
@@ -127,6 +127,8 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 	$args = array_merge(array(
 					'id'=>'',
 					'class'=>'eo-event-list',
+					'type'=>'shortcode',
+					'no_events' => '',
 				),$args);
 
 	/* Pass these defaults - backwards compat with using eo_get_events()*/
@@ -150,20 +152,29 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 		$query['posts_per_page'] = (int) $query['numberposts'];
 	}
 
-	global $event_loop;
+	$template = isset($args['template']) ? $args['template'] :'';
+
+	global $event_loop,$event_loop_args;
+	$event_loop_args = $args;
 	$event_loop = new WP_Query($query);
 
-	/* Try to find template */
-	if( $template_file = locate_template(apply_filters('eventorganiser_event_list_loop',false)) ){
+	/* Try to find template - backwards compat. Don't use this filter. Will be removed! */
+	$template_file = locate_template(apply_filters('eventorganiser_event_list_loop',false));
+	if( $template_file || empty($template) ){
 		ob_start();
+		if( empty($template_file) )
+			$template_file = eo_locate_template( array($event_loop_args['type'].'-event-list.php', 'event-list.php') );
+
 		require( $template_file );
+
 		$html = ob_get_contents();
 		ob_end_clean();
 
-	}else{
 
+	}else{
+		//Using the 'placeholder' template
 		$no_events = isset($args['no_events']) ? $args['no_events'] :'';
-		$template = isset($args['template']) ? $args['template'] :'';
+
 
 		$line_wrap = '<li class="%2$s">%1$s</li>';
 		$id = (!empty($args['id']) ? 'id="'.esc_attr($args['id']).'"' : '');
@@ -174,14 +185,6 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 			while( $event_loop->have_posts() ): $event_loop->the_post();
 
 				$event_classes = eo_get_event_classes();
-	
-				if( empty($template) ){
-						//Use default template
-						$date = get_option('date_format');
-						$time = ' '.get_option('time_format');
-						$template = "<a title='%event_title_attr%' href='%event_url%'>%event_title%</a> ".__('on','eventorganiser')." %start{{$date}}{{$time}}%";
-				}
-	
 				$html .= sprintf($line_wrap, EventOrganiser_Shortcodes::read_template($template), esc_attr(implode(' ',$event_classes)) );
 
 			endwhile;

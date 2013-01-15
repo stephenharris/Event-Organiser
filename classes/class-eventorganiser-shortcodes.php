@@ -189,6 +189,7 @@ class EventOrganiser_Shortcodes {
 			'class'=>'eo-events eo-events-shortcode',
 			'template'=>$content,
 			'no_events'=>'',
+			'type'=>'shortcode',
 		);
 
 		return eventorganiser_list_events( $atts,$args, 0);
