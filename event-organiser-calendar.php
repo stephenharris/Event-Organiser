@@ -372,13 +372,5 @@ $calendar_page = new EventOrganiser_Calendar_Page();
 					}
 			echo "</div>";
 		echo "</div>";
-	?>
-<style>
-#eo-dialog-tabs, #events-meta {
-    border: none;
-    padding: 0;
-}
-</style>
-	<?php
 	}
 ?>

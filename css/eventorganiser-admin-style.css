@@ -23,7 +23,6 @@
 /* Venue address metabox fix */
 #eo_venue_form #venue_address .inside{padding:0;margin:0;}
 
-
 /* Calendar View*/
 .event.past-event{opacity:0.5;}
 form.eo_cal .ui-autocomplete-input{width:220px;}
@@ -31,6 +30,8 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .eo-cal-meta .form-table th {width:50px;}
 /*Drop down filters*/
 #eo_admin_calendar select { min-width:180px; width:auto}
+
+#eo-dialog-tabs, #events-meta {border: none;padding: 0}
 
 /* Selectmenu
 ----------------------------------*/
