@@ -33,7 +33,7 @@
 *
 *     $events = eo_get_events(array(
 *            'numberposts'=>5,
-*            'events_start_after'=>'today',
+*            'event_start_after'=>'today',
 *            'showpastevents'=>true,//Will be deprecated, but set it to true to play it safe.
 *       ));
 *
