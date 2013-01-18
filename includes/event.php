@@ -186,6 +186,7 @@ function eo_delete_event_occurrences($post_id){
 	do_action('eventorganiser_delete_event', $post_id);
 	$del = $wpdb->get_results($wpdb->prepare("DELETE FROM $wpdb->eo_events WHERE post_id=%d",$post_id));
 }
+add_action( 'delete_post', 'eo_delete_event_occurrences', 10 );
 
 /**
 * This is a private function - handles the insertion of dates into the database. Use eo_insert_event or eo_update_event instead.

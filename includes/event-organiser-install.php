@@ -75,8 +75,18 @@
 	add_option('eventorganiser_admin_notices',$notices);
 	
 	//Add roles to administrator		
-	global $wp_roles,$eventorganiser_roles;	
+	global $wp_roles;
 	$all_roles = $wp_roles->roles;
+	$eventorganiser_roles =  array(
+			 'edit_events' => __( 'Edit Events', 'eventorganiser' ),
+			 'publish_events' => __( 'Publish Events', 'eventorganiser' ),
+			 'delete_events' => __( 'Delete Events', 'eventorganiser' ),
+			'edit_others_events' => __( 'Edit Others\' Events', 'eventorganiser' ),
+			 'delete_others_events' => __( 'Delete Other\'s Events', 'eventorganiser' ),
+			'read_private_events' => __( 'Read Private Events', 'eventorganiser' ),
+			 'manage_venues' => __( 'Manage Venues', 'eventorganiser' ),
+			 'manage_event_categories' => __( 'Manage Event Categories & Tags', 'eventorganiser' ),
+		);
 	foreach ($all_roles as $role_name => $display_name):
 		$role = $wp_roles->get_role($role_name);
 		if($role->has_cap('manage_options')){
