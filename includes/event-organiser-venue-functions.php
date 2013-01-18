@@ -780,6 +780,10 @@ function eventorganiser_sanitize_meta($key,$value){
 	return $value;
 }
 
+/**
+ *@ignore
+ *@access private
+ */
 function _eventorganiser_get_venue_address_fields(){
 	//Keys *must* be prefixed by a '_'.
 	$address_fields = array(
