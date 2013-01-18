@@ -586,7 +586,6 @@ function eo_get_schedule_summary($post_id=0){
 						$n=intval($matches[1])+1;
 						$return .=$nth[$n].' '.$ical2day[$matches[2]];
 					else:
-						var_dump($reoccur['schedule_meta']);
 						$bydayOLD = preg_match('/^(-?\d{1,2})([a-zA-Z]{2})/' ,$reoccur['schedule_meta'],$matchesOLD);
 						$n=intval($matchesOLD[1])+1;
 						$return .=$nth[$n].' '.$ical2day[$matchesOLD[2]];
@@ -902,6 +901,73 @@ function eo_event_category_dropdown( $args = '' ) {
 		echo $output;
 
 	return $output;
+}
+
+/**
+ * Returns HTML mark-up for the fullCalendar
+ *
+ * It also (indirectly) triggers the enquing of the necessary scripts and styles. The `$args` array
+ * accepts exactly the same arguments as the shortcode, they are
+ *
+ * * **headerleft** (string) What appears on the left of the calendar header. Default 'title'.
+ * * **headercenter** (string) What appears on the left of the calendar header. Default ''.
+ * * **headerright** (string) What appears on the left of the calendar header. Default 'prev next today'.
+ * * **defaultview** (string) The view the calendar loads on. Default 'month',
+ * * **category** (string) Restrict calendar to specified category. Default '' (all categories)
+ * * **venue** (string) Restrict calendar to specified venue. Default '' (all venues)
+ * * **timeformat** (string) Time format for calendar. Default 'G:i'.
+ * * **axisformat** (string) Axis time format (for day/week views). WP's time format option.
+ * * **key** (bool) Whether to show a category key. Default false.
+ * * **tooltip** (bool) Whether to show a tooltips. Default true.
+ * * **weekends** (bool) Whether to include weekends in the calendar. Default true.
+ * * **mintime** (string) Earliest time to show on week/day views. Default '0',
+ * * **maxtime** (string) Latest time to show on week/day views. Default '24',
+ * * **alldayslot** (bool) Whether to include an all day slot (week / day views) in the calendar. Default true.
+ * * **alldaytext** (string) Text to display in all day slot. Default 'All Day'.
+ * * **columnformatmonth** (string) Dateformat for month columns. Default 'D'.
+ * * **columnformatweek** (string) Dateformat for month columns. Default 'D n/j'.
+ * * **columnformatday** (string) Dateformat for month columns. Default 'l n/j',
+ *
+ * @link http://arshaw.com/fullcalendar/ The fullCalendar (jQuery plug-in)
+ * @link https://github.com/stephenharris/fullcalendar Event Organiser version of fullCalendar
+ * @since 1.7
+ * @param array $args An array of attributes for the calendar 
+ * @return string HTML mark-up.
+*/
+function eo_get_event_fullcalendar( $args ){
+
+	$defaults = array(
+		'headerleft'=>'title', 'headercenter'=>'', 'headerright'=>'prev next today', 'defaultview'=>'month',
+		'category'=>'', 'venue'=>'', 'timeformat'=>'G:i', 'axisformat'=>get_option('time_format'), 'key'=>false,
+		'tooltip'=>true, 'weekends'=>true, 'mintime'=>'0', 'maxtime'=>'24', 'alldayslot'=>true,
+		'alldaytext'=>__('All Day','eventorganiser'), 'columnformatmonth'=>'D', 'columnformatweek'=>'D n/j', 'columnformatday'=>'l n/j',
+	);
+	$args = shortcode_atts( $defaults, $args );
+	$key = $args['key'];
+	unset($args['key']);
+	
+	//Convert php time format into xDate time format
+	$date_attributes = array( 'timeformat', 'axisformat', 'columnformatday', 'columnformatweek', 'columnformatmonth' );
+	$args['timeformatphp'] = $args['timeformat'];
+	foreach ( $date_attributes as $date_attribute ){
+		$args[$date_attribute.'php'] = $args[$date_attribute];
+		$args[$date_attribute] = eventorganiser_php2xdate( $args[$date_attribute] );
+	}
+
+	EventOrganiser_Shortcodes::$calendars[] = array_merge( $args );
+	EventOrganiser_Shortcodes::$add_script = true;
+	$id = count( EventOrganiser_Shortcodes::$calendars );
+
+	$html = '<div id="eo_fullcalendar_'.$id.'_loading" style="background:white;position:absolute;z-index:5" >';
+	$html .= '<img src="'.esc_url(EVENT_ORGANISER_URL.'/css/images/loading-image.gif').'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />' . __( 'Loading&#8230;', 'eventorganiser' );
+	$html .= '</div>';
+	$html .= '<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
+
+	if ( $key ){
+		$args = array( 'orderby' => 'name', 'show_count' => 0, 'hide_empty' => 0 );
+		$html .= eventorganiser_category_key( $args,$id );
+	}
+ 	return $html;
 }
 
 

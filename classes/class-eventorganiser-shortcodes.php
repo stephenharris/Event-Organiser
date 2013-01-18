@@ -81,56 +81,20 @@ class EventOrganiser_Shortcodes {
 	}
 
 	function handle_fullcalendar_shortcode($atts=array()) {
-		global $post;
-		$defaults = array(
-			'headerleft'=>'title', 
-			'headercenter'=>'',
-			'headerright'=>'prev next today',
-			'defaultview'=>'month',
-			'category'=>'',
-			'venue'=>'',
-			'timeformat'=>'G:i',
-			'axisformat'=>get_option('time_format'),
+
+		/* Handle Boolean attributes - this will be passed as strings, we want them as boolean */
+		$bool_atts = array(
 			'key'=>'false',
 			'tooltip'=>'true',
 			'weekends'=>'true',
-			'mintime'=>'0',
-			'maxtime'=>'24',
 			'alldayslot'=>'true',
-			'alldaytext'=>__('All Day','eventorganiser'),
-			'columnformatmonth'=>'D',
-			'columnformatweek'=>'D n/j',
-			'columnformatday'=>'l n/j',
 		);
-		$atts = shortcode_atts( $defaults, $atts );
+		$atts = wp_parse_args( $atts, $bool_atts );
 
-		/* Handle Boolean attributes */
-		$atts['tooltip'] = (strtolower($atts['tooltip'])=='true' ? true : false);
-		$atts['weekends'] = (strtolower($atts['weekends'])=='true' ? true : false);
-		$atts['alldayslot'] = (strtolower($atts['alldayslot'])=='true' ? true : false);
+		foreach( $bool_atts as $att => $value )
+			$atts[$att] = ( strtolower( $atts[$att] ) == 'true' ? true : false );
 
-		/* Handley key attribute */
-		$key = ($atts['key']=='true' ? true : false);
-		unset($atts['key']);
-	
-		//Convert php time format into xDate time format
-		$date_attributes = array('timeformat','axisformat','columnformatday','columnformatweek','columnformatmonth');
-		$atts['timeformatphp'] = $atts['timeformat'];
-		foreach( $date_attributes as $date_attribute )
-			$atts[$date_attribute] =eventorganiser_php2xdate($atts[$date_attribute]);
-
-		self::$calendars[] =array_merge($atts);
-		self::$add_script = true;
-		$id = count(self::$calendars);
-
-		$html='<div id="eo_fullcalendar_'.$id.'_loading" style="background:white;position:absolute;z-index:5" >';
-		$html.='<img src="'.esc_url(EVENT_ORGANISER_URL.'/css/images/loading-image.gif').'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />'.__('Loading&#8230;').'</div>';
-		$html.='<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
-		if($key){
-			$args = array('orderby'=> 'name','show_count'   => 0,'hide_empty'   => 0);
-			$html .= eventorganiser_category_key($args,$id);
-		}
- 		return $html;
+		return eo_get_event_fullcalendar( $atts );
 	}
 
 	function handle_venuemap_shortcode($atts) {
