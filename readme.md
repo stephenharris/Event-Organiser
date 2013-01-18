@@ -1,24 +1,24 @@
-=== Event Organiser ===
-Contributors: stephenharris
-Donate link: http://www.wp-event-organiser.com/donate
-Tags: events, event, event categories, event organiser, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
-Requires at least: 3.3
-Tested up to: 3.5
-Stable tag: 1.6.3
-License: GPLv3
+# Event Organiser #
+**Contributors:** stephenharris  
+**Donate link:** http://www.wp-event-organiser.com/donate  
+**Tags:** events, event, event categories, event organiser, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
+**Requires at least:** 3.3  
+**Tested up to:** 3.5  
+**Stable tag:** 1.6.3  
+**License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
-== Description ==
+## Description ##
 
 Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows you to view your events in the familiar WordPress list or in a calendar page in the amin area.
 
 [Documentation](http://wp-event-organiser.com/documentation/) | [Function Reference](http://wp-event-organiser.com/documentation/function-reference/) | [Forums](http://wp-event-organiser.com/forums/) | [Demo](http://wp-event-organiser.com/demo/)
 
-= New Features =
+### New Features ###
 * Tooltip for the frontend fullCalendar
 * Ability to add or remove specific dates for an event schedule
-* Improved agenda widget: group events by date or month
+*** Improved agenda widget:** group events by date or month  
 * Custom fields and metaboxes for venues
 * Improved add events link to menu option
 * Templates for widgets (syntax as for event list shortcode)
@@ -26,7 +26,7 @@ Event Organiser adds event management that integrates well with your WordPress s
 * `eo_get_events` and the event list shortcode now support relative date formats for data parameters (e.g. `event_start_before='+1 week'`,`event_end_after='now'`)
 
 
-= Features =
+### Features ###
 
 * Adds an **event custom post type** that fits naturally into WordPress and allows for all the functionality of 'posts'.
 * Create one-time events or reoccuring events.
@@ -52,7 +52,7 @@ Event Organiser adds event management that integrates well with your WordPress s
 * (Optionally) automatically delete expired events.
 
 
-= Localisation =
+### Localisation ###
 A big thank you to those who have provided translations for Event Organiser
 
 * French - [Remy Perona](http://remyperona.fr/)
@@ -67,7 +67,7 @@ A big thank you to those who have provided translations for Event Organiser
 * Russian - [Sergei](www.vortexinter.ru)
 * Hungarian - Csaba Erdei 
 
-== Installation ==
+## Installation ##
 
 Installation is standard and straight forward. 
 
@@ -76,22 +76,22 @@ Installation is standard and straight forward.
 1. Check the settings sub-page of the Events menu
 
 
-== Frequently Asked Questions ==
+## Frequently Asked Questions ##
 
-= How to create an event =
+### How to create an event ###
 
 Events behave very similarly to standard posts. To create a event, select the 'Add New' submenu from 'Events' menu. The chief difference between events and post is the 'Event Details' metabox which sets the date and venue data related to the event.
 
 You can also add events in the Calendar view in a manner similiar to Google Calendar. By selecting one (or multiple) days (in month mode) or times (in week/day mode) you can create an event that spans the selected period. 
 
-= The Event Pages Don't Look Right =
+### The Event Pages Don't Look Right ###
 
 Unfortunately its impossible for the default templates to work with *every* theme. Occasionally, they simply don't work well with a given theme - the event content might not appear right, or the sidebar might seem displaced. The solution is to edit the default templates to fit in with your theme (you can use your theme's own templates as a guideline). [You can find more information here](http://wp-event-organiser.com/documentation/editing-the-templates/)
 
 
-= How do I display events? =
+### How do I display events? ###
 
-Events are automatically displayed on the events page: try `www.your-wordpress-site.com/?post_type=event` (If you have permalinks enabled these will have 'prettier' versions). Similarly there are venue and event category pages. Each of these pages have their own associated template which are present in the **template** sub-directory of the Event Organiser plug-in folder. To override the default templates, simply create the appropriately named files in your theme directory.
+**Events are automatically displayed on the events page:** try `www.your-wordpress-site.com/?post_type=event` (If you have permalinks enabled these will have 'prettier' versions). Similarly there are venue and event category pages. Each of these pages have their own associated template which are present in the **template** sub-directory of the Event Organiser plug-in folder. To override the default templates, simply create the appropriately named files in your theme directory.  
 
 **Widgets**
 The plug-in also provides the following widgets ([see widget documentation](http://wp-event-organiser.com/documentation/widgets/)):
@@ -110,7 +110,7 @@ Among others, the plug-in also provides the following shortcodes ([see shortcode
 Finally, the plug-in provides a function `eo_get_events()` which is similiar to WordPress' `get_posts()`. It returns an array of post objects (where the posts are events), and this can be used to display events through editing your theme. The usual WordPress functions for display associated information (author, title etc) are still available to you, and the plug-in provides a similar set of functions to display event related data (dates, venues etc). [See the documentation for mmore information](http://www.wp-event-organiser.com/documentation/function-reference/).
 
 
-= The full calendar doesn't display any events =
+### The full calendar doesn't display any events ###
 
 The calendar should display all published events. If you find the calendar doesn't appear this is usually caused by the theme you are using, and is verifiable by temporarily switching to the TwentyEleven theme. If the theme is the cause this is normally because:
 
@@ -120,7 +120,7 @@ The calendar should display all published events. If you find the calendar doesn
 If the calendar *does* appear, but gets stuck loading, the cause is usually the AJAX response. If your site is in 'debug' mode - this can be due to error messages from other plug-ins being printed. You can view the AJAX response in your browsers console (E.g. Firefox's firebug or Chrome's dev tools). If you are still unable to determine the cause of the problem, or how to fix, please use the plug-in forums with a link to your site and I'll take a look.
 
 
-= I cannot navigate between months on the widget calendar =
+### I cannot navigate between months on the widget calendar ###
 
 If clicking on the 'next' month causes the page to reload - the javascript has not been loaded. This is usually because the theme does not call [`wp_footer`](http://codex.wordpress.org/Function_Reference/wp_footer) in the footer. 
 
@@ -141,7 +141,7 @@ Notice the `%1$s` and `%2$s` in the `before_widget` argument. These allow the wi
 If you are still unable to determine the cause of the problem, or how to fix, please use the plug-in forums with a link to your site and I'll take a look.
 
 
-= What ShortCodes are available? = 
+### What ShortCodes are available? ###
 
 Event Organiser provides the following shortcodes:
 
@@ -149,22 +149,34 @@ Event Organiser provides the following shortcodes:
 * `[eo_calendar]`  - displays a widget-calendar of your events, similiar to WordPress' calendar, and navigated with AJAX.
 * `[eo_fullcalendar]`  - displays a calendar, similiar to the admin calendar, with optional month, week and day views and category and venue filters.
 * `[eo_venue_map]` - displays a Google map of the current venue, or of a particular venue given as an attribute.
-* `[eo_subscribe]` - wraps the content in a link which allows visitors to subscribe to your events; there are two types: 'Google' and 'Webcal'.
+* `[eo_subscribe]` - wraps the content in a link which allows visitors to subscribe to your events; there are two types:** 'Google' and 'Webcal'.  
 
 More information on shortcodes is [available here](http://wp-event-organiser.com/documentation/shortcodes/)
 
-== Screenshots ==
+## Screenshots ##
 
-1. Event admin screen
-2. Venue admin screen
-3. Event details metabox, showing the full reoccurrence options and venue selection
-4. Venue editing screen, with Google Maps
-5. Calendar View screen
-6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
+###1. Event admin screen###
+![Event admin screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-1.png)
 
-== Changelog ==
+###2. Venue admin screen###
+![Venue admin screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-2.png)
 
-= 1.7 =
+###3. Event details metabox, showing the full reoccurrence options and venue selection###
+![Event details metabox, showing the full reoccurrence options and venue selection](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-3.png)
+
+###4. Venue editing screen, with Google Maps###
+![Venue editing screen, with Google Maps](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-4.png)
+
+###5. Calendar View screen###
+![Calendar View screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-5.png)
+
+###6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)###
+![View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-6.png)
+
+
+## Changelog ##
+
+### 1.7 ###
 * [Added city & state fields](https://github.com/stephenh1988/Event-Organiser/pull/7). Props @JoryHogeveen
 * Improved default templates ([see ticket](https://github.com/stephenh1988/Event-Organiser/issues/14))
 * Improved theme compatibility templates ([see ticket](https://github.com/stephenh1988/Event-Organiser/issues/13))
@@ -177,10 +189,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Copy custom fields when breaking a series [see ticket](https://github.com/stephenh1988/Event-Organiser/issues/12).
 * General UI improvements ( [venues](https://github.com/stephenh1988/Event-Organiser/issues/5), [calendar](https://github.com/stephenh1988/Event-Organiser/issues/28))
 
-= 1.6.3 =
+### 1.6.3 ###
  * Fixes 'EOAjax is not defined' error (see [https://github.com/stephenh1988/Event-Organiser/issues/20](https://github.com/stephenh1988/Event-Organiser/issues/27))
 
-= 1.6. 2 =
+### 1.6. 2 ###
 * Fixes 'zoom' bug for venue maps (see [https://github.com/stephenh1988/Event-Organiser/issues/20](https://github.com/stephenh1988/Event-Organiser/issues/20))
 * Fixes yes/no label error for 'are current events past?' (see [https://github.com/stephenh1988/Event-Organiser/issues/23](https://github.com/stephenh1988/Event-Organiser/issues/23))
 * Adds a condensed jQuery UI for frontend css (see [https://github.com/stephenh1988/Event-Organiser/issues/22](https://github.com/stephenh1988/Event-Organiser/issues/22))
@@ -188,11 +200,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * General code refactoring
 * Improved documentation
 
-= 1.6.1 =
+### 1.6.1 ###
 * Fixes js bug for weekly events (see [https://github.com/stephenh1988/Event-Organiser/issues/17](https://github.com/stephenh1988/Event-Organiser/issues/17)).
 * Fixes recurrence bug for some monthly events (see [https://github.com/stephenh1988/Event-Organiser/issues/10](https://github.com/stephenh1988/Event-Organiser/issues/10)).
 
-= 1.6 =
+### 1.6 ###
 * You can create venues 'on the fly'
 * Adds venue map tooltip
 * Extra 'Google Map' options for the venue map shortcode
@@ -203,18 +215,18 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * 'Under the hood' improvements
 * Improved documentation & source-code comments
 * More tags for shortcode & event list widget template - [see this page](http://wp-event-organiser.com/documentation/shortcodes/event-list-shortcode/)
-* Extra hooks available, see: http://wp-event-organiser.com/documentation/developers/hooks/
+* Extra hooks available, see: http://wp-event-organiser.com/documentation/developers/hooks/  
 * Various bug fixes and major code refactoring (especially of javascript).
-* Improved default location for venues: https://github.com/stephenh1988/Event-Organiser/issues/3
+* Improved default location for venues: https://github.com/stephenh1988/Event-Organiser/issues/3  
 
 A special thanks to **kuemerle** and **csaba-erdei**.
 
-= 1.5.7 =
+### 1.5.7 ###
 * Fixes ICS related bugs
 * Minor UI improvements
 * Adds Danish translation
 
-= 1.5.6 =
+### 1.5.6 ###
 * Add filter for formatting datetime objects
 * Minor UI improvements
 * Added Russian translation
@@ -224,29 +236,29 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 * Fixed calendar feed posts_per_page_rss bug
 * Fixed shortcode bug for tooltip excerpts
 
-= 1.5.5 =
+### 1.5.5 ###
 * Fixes IE7/8-fullCalendar bug experienced on some themes
 * Fixed timezone bug when creating events in the calendar.
 * Corrects tooltip date/time formatting
 * Fixes venue bulk/quick edit bug
 * Fixes venue link for shortcode/widget tags
 
-= 1.5.4 =
+### 1.5.4 ###
 * Fixes monthly recurring event creation bug
 
-= 1.5.3 =
+### 1.5.3 ###
 * Fixes 'group by series' bug
 * Fixes event creation bug (occurs on some servers)
 * Fixes eo_get_schedule_end bug
 
-= 1.5.2 =
+### 1.5.2 ###
 * Fixes event widget/shortcode url bug
 * Fixes php 5.2 duration bug
 
-= 1.5.1 =
+### 1.5.1 ###
 * Fixes permissions not added on new installs
 
-= 1.5 =
+### 1.5 ###
 * Caching and other performance improvements
 * Adding tooltips for the fullcalendar
 * Select/deselect individual occurrences
@@ -261,37 +273,37 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 * Fixes some locales using comma in floats
 * Fixes GROUP BY bug
 
-= 1.4.2 =
+### 1.4.2 ###
 * Fixes event list widget past events, and template not saving correctly bugs
 * Fixes 'add new venue' error message
 * Fixes shortcode error message when retrieving url of non-existant venue
 
-= 1.4.1 =
+### 1.4.1 ###
 * Fixes a weekly schedule bug, occurs for some users.
 
-= 1.4 =
-* A big update: venue address data migrated to new venue meta table
+### 1.4 ###
+*** A big update:** venue address data migrated to new venue meta table  
 * Introduces support for venue meta data and custom metaboxes (see )
 * Improved venue admin page UI
 
-= 1.3.6 =
+### 1.3.6 ###
 * Works with WordPress 3.4
 
-= 1.3.5 =
+### 1.3.5 ###
 * Fixed events export bug.
 * Cached timezone object, improved performance.
 
 
-= 1.3.4 =
+### 1.3.4 ###
 * `%cat_color%` now works
 * Fixed IE8+ calendar and agenda bugs
 * Fixed shortcode calendar bug
 * Fixed timezone for 'add to google' link
 
 
-= 1.3.3 =
+### 1.3.3 ###
 * Added 'no events' option for event list widget
-* Added template tags for widget/shortcode: `%cat_color%` and `%event_excerpt%`
+*** Added template tags for widget/shortcode:** `%cat_color%` and `%event_excerpt%`  
 * Added hook `eventorganiser_calendar_event_link` to alter full calendar event link
 * Added `eo_has_event_started`, `eo_has_event_finished`, `eo_event_color`,`eo_get_blog_timezone` functions
 * Fixed the following bugs
@@ -300,13 +312,13 @@ A special thanks to **kuemerle** and **csaba-erdei**.
  * HTML in widget template breaking form
  * Fullcalendar in IE6/7
  * Event-tag template not loading
- *Other minor bugs
+ * Other minor bugs
 
 
-= 1.3.2 =
+### 1.3.2 ###
 * Fixes permalink bug introduced in 1.3.1
 
-= 1.3.1 =
+### 1.3.1 ###
 * 'Clever' template hierarchy. Recognises templates for specific venues, categories or tags. E.g. `taxonomy-event-venue-myvenueslug.php`
 * Fixed menu related bugs
 * Fixed bulk/quick edit errors
@@ -315,7 +327,7 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 * Fixed calendar key (chrome browser) bug
 * Pretty Permalinks can now be turned off
 
-= 1.3 =
+### 1.3 ###
 * Converted venues to event-venue taxnomy terms
 * Improved add events link to menu option
 * Import Categories and Venues
@@ -329,17 +341,17 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 * Fixed 'daylight saving' bug for php5.2
 * Fixed IE7 Widget calendar bug (thanks to [Fej](http://wordpress.org/support/profile/fej) )
 
-= 1.2.4 =
+### 1.2.4 ###
 * Fixed bugs concerning
  * Relatve date formats
  * Child-theme templates
  * Localisation
  * Calendar shortcode on php5.2
 
-= 1.2.3 =
+### 1.2.3 ###
 * Corrected potential 'class does not exist' bug
 
-= 1.2.2 =
+### 1.2.2 ###
 * Event list shortcode, `[eo_events]`, now supports templates which can be enclosed in the shortcode. [See the documenation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/shortcodes/event-list-shortcode/).
 * `eo_get_events` and the event list shortcode now support relative date formats for data parameters (e.g. `event_start_before='+1 week',`event_end_after='now'`). [See the documenation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/relative-date-formats/).
 * `eo_format_date` now supports relative date formats
@@ -349,14 +361,14 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 * Fixed event permissions bug
 * Fixed other minor bugs reported here
 
-= 1.2.1 =
+### 1.2.1 ###
 
 * Fixed permalink bug
 * Venue map marker can be manually dragged to a specific location
 * Event Organiser is now compatible with PHP 5.2+
 * Fixed minor calendar icon bug in IE
 
-= 1.2 =
+### 1.2 ###
 * Public events feed
 * Delete individual occurrences
 * Color-coded event categories
@@ -370,44 +382,44 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 * Option to decide when event is past
 * Show all occurrences of an event or 'group occurrences'
 * Improved user-interface
-* Added template functions: `eo_get_the_occurrences`, `eo_get_the_venues`, `eo_event_venue_dropdown`, `eo_event_category_dropdown`, `eo_is_allday`, `eo_get_the_GoogleLink`, `eo_get_events_feed`. See [template functions documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/)
+* Added template functions:** `eo_get_the_occurrences`, `eo_get_the_venues`, `eo_event_venue_dropdown`, `eo_event_category_dropdown`, `eo_is_allday`, `eo_get_the_GoogleLink`, `eo_get_events_feed`. See [template functions documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/)  
 * Localisation (currently translations for French and Portugese (Brazil) are included)
 * Improved default templates
 * Fixed bugs [reported here](http://www.harriswebsolutions.co.uk/event-organiser/forums/forum/bugs/)
 
-= 1.1.1 =
+### 1.1.1 ###
 A minor update, fixing a few bugs and improving the (admin and public) calendars' performance. The bug which meant calendars and the calendar widget couldn't be displayed together is now fixed. For a full list of alterations [see here](http://www.harriswebsolutions.co.uk/event-organiser/uncategorized/2012/bug-fixing-update-due-1-1-1/).
 
-= 1.1 =
+### 1.1 ###
 Improved admin calendar navigation, with category/venue filters. Public version of the 'admin calendar' now available as a shortcode. You can now import events from an ICAL file. Further details included in the ics export file. The venue content editor is now fully featured. Venue descriptions now understand shortcodes. Fixed a few bugs.
 
-= 1.0.5 =
+### 1.0.5 ###
 Fixed export bug.
 
-= 1.0.4 =
+### 1.0.4 ###
 Introduced warning messages for unsupported PHP / WP versions and missing tables. Updated templates to work with more themes. Updated event table install.
 
-= 1.0.3 =
+### 1.0.3 ###
 Fixed 'blank screen of death' for unsupported versions (WP < 3.3). The plug-in will still not operate correctly for versions before 3.3.
 
-= 1.0.2 =
+### 1.0.2 ###
 Fixed ics exporter and deactivation/uninstall
 
-= 1.0.1 =
+### 1.0.1 ###
 Minor bug fixes and readme update.
 
-= 1.0.0 =
+### 1.0.0 ###
 Initial release
 
-== Upgrade Notice ==
-= 1.5 =
+## Upgrade Notice ##
+### 1.5 ###
 1.5 is a big update, so please back-up before upgrading.
 
-= 1.3.2 =
+### 1.3.2 ###
 This fixes permalink bug introduced in 1.3.1. If you upgraded to 1.3.1, you should upgrade to 1.3.2. You're advised to 'flush rewrite rules' by simplying visiting your permalinks setting page.
 
-= 1.3 =
+### 1.3 ###
 This a fairly big update and includes converting venues into a custom taxonomy. As a result some venue slugs *may* change. See the [plug-in website](http://www.harriswebsolutions.co.uk/event-organiser/uncategorized/2012/whats-new-in-1-3/) for more details.
 
-= 1.0.4 =
+### 1.0.4 ###
 The templates have been adapted to work as is in for more themes. Error messages now display for unsupported versions.

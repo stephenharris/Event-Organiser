@@ -9,7 +9,7 @@
  */
 function eventorganiser_register_script() {
 	global $wp_locale;
-	$version = '1.6.3';
+	$version = '1.7';
 
 	$ext = (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG) ? '' : '.min';
 
@@ -69,7 +69,7 @@ add_action('init', 'eventorganiser_register_script');
  * @access private
  */
 function eventorganiser_register_scripts(){
-	$version = '1.6.3';
+	$version = '1.7';
 	$ext = (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG) ? '' : '.min';
 
 	/* Google Maps */
@@ -518,9 +518,9 @@ class EO_Admin_Notice_Handler{
 								),
 				'type' => 'alert'
 			),
-			'changedtemplate17'=>array(
+			'Xchangedtemplate17'=>array(
 				'screen_id'=>'',
-				'message' => __("<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, see this post.",'eventorganiser'),
+				'message' => __("<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post<a/>.",'eventorganiser'),
 				'type' => 'alert'
 			),
 		);
