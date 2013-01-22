@@ -441,7 +441,7 @@ function eventorganiser_widget_agenda() {
 		$query['date'] = ($query['direction'] <1? $_GET['start'] : $_GET['end']);
 		$query['order'] = ($query['direction'] <1? 'DESC' : 'ASC');
 
-		$key = 'eo_ag_'.md5(serialize($query));
+		$key = 'eo_ag_'.md5(serialize($query)).get_locale();
 		$agenda = get_transient('eo_widget_agenda');
 		if( $agenda && is_array($agenda) && isset($agenda[$key]) ){
 			echo json_encode($agenda[$key]);
