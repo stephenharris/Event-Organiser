@@ -279,9 +279,16 @@ function edit_form( $venue = false ){
 		<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 		<?php wp_nonce_field( $nonce ); ?>
 
+		<?php 
+		//WP3.3-3.3.1 backwards compabt
+		if( version_compare( get_bloginfo('version'), 3.4 ) < 0 ) 
+			$columns = '1';
+		else
+			$columns = (1 == get_current_screen()->get_columns() ? '1' : '2' );
+		?>
 		<div id="poststuff">
 
-			<div id="post-body" class="metabox-holder columns-<?php echo 1 == get_current_screen()->get_columns() ? '1' : '2'; ?>">
+			<div id="post-body" class="metabox-holder columns-<?php echo $columns;?>">
 
 				<div id="post-body-content">
 					<div id="titlediv"><?php eventorganiser_venue_title( $venue ); ?></div>
