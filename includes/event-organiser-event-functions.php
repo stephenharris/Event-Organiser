@@ -8,7 +8,9 @@
 /**
 * Retrieve list of events matching criteria.
 *
-* This function is a wrapper for {@see `get_posts()`}, setting the 'post_type' to 'event' and 'suppress_filters' to false. As such you can also use `get_posts()` or {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events. All the arguments listed below can be used with them. 
+* This function is a wrapper for {@see `get_posts()`}. As such you can also use `get_posts()` or {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events. 
+* **All the arguments listed below can be used with them**. 
+* *Arguments from {@link http://codex.wordpress.org/Template_Tags/get_posts `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} can also be used. Their default values are as indicated by the relevant codex page.*
 *
 * The `$args` array can include the following.
 *
@@ -20,13 +22,10 @@
 * * **orderby** - default is 'eventstart'
 * * **showpastevents** - default is true (it's recommended to use `event_start_after=today` or `event_end_after=today` instead) 
 *
-* Arguments from {@link http://codex.wordpress.org/Template_Tags/get_posts `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} can also be used. Their default values are as indicated by the relevant codex page.
-*
-*
 * If you use `get_posts()` or `WP_Query` instead then you should ensure the following:
 *
-* * 'post_type' - is set to 'event'
-* * 'suppress_filters' - is set to false
+* * **post_type** - is set to 'event'
+* * **suppress_filters** - is set to false
 *
 *
 * ###Example
