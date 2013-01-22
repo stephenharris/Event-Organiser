@@ -154,18 +154,18 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 
 	$template = isset($args['template']) ? $args['template'] :'';
 
-	global $event_loop,$event_loop_args;
-	$event_loop_args = $args;
-	$event_loop = new WP_Query($query);
+	global $eo_event_loop,$eo_event_loop_args;
+	$eo_event_loop_args = $args;
+	$eo_event_loop = new WP_Query($query);
 
 	/* Try to find template - backwards compat. Don't use this filter. Will be removed! */
 	$template_file = locate_template(apply_filters('eventorganiser_event_list_loop',false));
 	if( $template_file || empty($template) ){
 		ob_start();
 		if( empty($template_file) )
-			$template_file = eo_locate_template( array($event_loop_args['type'].'-event-list.php', 'event-list.php') );
-
-		require( $template_file );
+			$template_file = eo_locate_template( array($eo_event_loop_args['type'].'-event-list.php', 'event-list.php'), true, false );
+		else
+			require( $template_file );
 
 		$html = ob_get_contents();
 		ob_end_clean();
@@ -181,8 +181,8 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 		$container = '<ul '.$id.' class="%2$s">%1$s</ul>';
 	
 		$html='';
-		if( $event_loop->have_posts() ):	
-			while( $event_loop->have_posts() ): $event_loop->the_post();
+		if( $eo_event_loop->have_posts() ):	
+			while( $eo_event_loop->have_posts() ): $eo_event_loop->the_post();
 
 				$event_classes = eo_get_event_classes();
 				$html .= sprintf($line_wrap, EventOrganiser_Shortcodes::read_template($template), esc_attr(implode(' ',$event_classes)) );
