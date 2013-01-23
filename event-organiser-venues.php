@@ -298,7 +298,7 @@ function edit_form( $venue = false ){
 						<div class="inside"><?php eventorganiser_venue_location( $venue ); ?></div>
 					</div><!-- .postbox -->
 					<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="venue_description postarea">
-						<?php wp_editor( eo_get_venue_description( $term_id ), 'content', array( 'textarea_name' => 'eo_venue[description]', 'dfw' => false, 'tabindex' => 7 ) ); ?>
+						<?php wp_editor(eo_get_venue_meta($term_id,'_description'), 'content', array( 'textarea_name' => 'eo_venue[description]', 'dfw' => false, 'tabindex' => 7 ) ); ?>
 					</div>
 		 		</div><!-- #post-body-content -->
 

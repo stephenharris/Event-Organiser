@@ -782,9 +782,6 @@ function eventorganiser_update_venue_meta_cache( $terms, $tax){
 				$term->venue_lng =  number_format(floatval(eo_get_venue_lng($term_id)), 6);
 			}
 
-			if( !isset($term->venue_description) ){
-				$term->venue_description = eo_get_venue_description($term_id);
-			}
 		}
 		
 		if( $single ) return $terms[0];
