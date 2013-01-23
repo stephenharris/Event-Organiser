@@ -92,8 +92,8 @@ jQuery(document).ready(function () {
 
                 	$(calendar).fullCalendar({
 				id: calendar,
-				category: calendars[i].category,
-				venue: calendars[i].venue,
+				category: calendars[i].event_category,
+				venue: calendars[i].event_venue,
 				customButtons:{
 					category:  eventorganiser_cat_dropdown,
 					venue:  eventorganiser_venue_dropdown,

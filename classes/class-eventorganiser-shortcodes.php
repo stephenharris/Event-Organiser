@@ -94,11 +94,19 @@ class EventOrganiser_Shortcodes {
 		foreach( $bool_atts as $att => $value )
 			$atts[$att] = ( strtolower( $atts[$att] ) == 'true' ? true : false );
 
+		if( isset($atts['venue']) && !isset( $atts['event_venue'] ) )
+			$atts['event_venue'] = $atts['venue'];
+		if( isset($atts['category']) && !isset( $atts['event_category'] ) )
+			$atts['event_category'] = $atts['venue'];
+
 		return eo_get_event_fullcalendar( $atts );
 	}
 
 	function handle_venuemap_shortcode($atts) {
 		global $post;
+
+		if( !empty($atts['event_venue']) )
+			$atts['venue'] = $atts['event_venue'];
 
 		//If venue is not set get from the venue being quiered or the post being viewed
 		if( empty($atts['venue']) ){

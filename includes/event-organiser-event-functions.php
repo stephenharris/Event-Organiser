@@ -912,8 +912,8 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **headercenter** (string) What appears on the left of the calendar header. Default ''.
  * * **headerright** (string) What appears on the left of the calendar header. Default 'prev next today'.
  * * **defaultview** (string) The view the calendar loads on. Default 'month',
- * * **category** (string) Restrict calendar to specified category. Default '' (all categories)
- * * **venue** (string) Restrict calendar to specified venue. Default '' (all venues)
+ * * **event_category** (string) Restrict calendar to specified category. Default '' (all categories)
+ * * **event_venue** (string) Restrict calendar to specified venue. Default '' (all venues)
  * * **timeformat** (string) Time format for calendar. Default 'G:i'.
  * * **axisformat** (string) Axis time format (for day/week views). WP's time format option.
  * * **key** (bool) Whether to show a category key. Default false.
@@ -937,7 +937,7 @@ function eo_get_event_fullcalendar( $args ){
 
 	$defaults = array(
 		'headerleft'=>'title', 'headercenter'=>'', 'headerright'=>'prev next today', 'defaultview'=>'month',
-		'category'=>'', 'venue'=>'', 'timeformat'=>'G:i', 'axisformat'=>get_option('time_format'), 'key'=>false,
+		'event_category'=>'', 'event_venue'=>'', 'timeformat'=>'G:i', 'axisformat'=>get_option('time_format'), 'key'=>false,
 		'tooltip'=>true, 'weekends'=>true, 'mintime'=>'0', 'maxtime'=>'24', 'alldayslot'=>true,
 		'alldaytext'=>__('All Day','eventorganiser'), 'columnformatmonth'=>'D', 'columnformatweek'=>'D n/j', 'columnformatday'=>'l n/j',
 	);
