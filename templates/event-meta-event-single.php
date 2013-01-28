@@ -69,7 +69,7 @@
 		<?php } ?>
 
 	
-		<?php if( get_the_terms(get_the_ID(),'event-category') ){ ?>
+		<?php if( get_the_terms(get_the_ID(),'event-tag') && !is_wp_error( get_the_terms(get_the_ID(),'event-tag') ) ){ ?>
 			<li><strong><?php _e('Tags','eventorganiser'); ?>:</strong> <?php echo get_the_term_list( get_the_ID(),'event-tag', '', ', ', '' ); ?></li>
 		<?php } ?>
 
