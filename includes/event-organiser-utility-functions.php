@@ -532,6 +532,9 @@ function eventorganiser_select_field($args){
 			esc_attr($id),
 			$multiselect.' '.$disabled
 		);
+		if( !empty( $args['show_option_all'] ) ){
+			$html .= sprintf('<option value="" %s> %s </option>',selected( empty($selected), true, false ), esc_html( $args['show_option_all'] ) );
+		}
 
 		if( !empty($args['options']) ){
 			foreach ($args['options'] as $value => $label ){
@@ -589,8 +592,8 @@ function eventorganiser_text_field($args){
 	$type = $args['type'];
 	$class = isset($args['class']) ? esc_attr($args['class'])  : '';
 
-	$min = (  !empty($args['min']) ?  sprintf('min="%d"', $args['min']) : '' );
-	$max = (  !empty($args['max']) ?  sprintf('max="%d"', $args['max']) : '' );
+	$min = (  $args['min'] !== false ?  sprintf('min="%d"', $args['min']) : '' );
+	$max = (  $args['max'] !== false ?  sprintf('max="%d"', $args['max']) : '' );
 	$size = (  !empty($args['size']) ?  sprintf('size="%d"', $args['size']) : '' );
 	$style = (  !empty($args['style']) ?  sprintf('style="%s"', $args['style']) : '' );
 	$placeholder = ( !empty($args['placeholder']) ? sprintf('placeholder="%s"', $args['placeholder']) : '');
