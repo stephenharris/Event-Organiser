@@ -56,21 +56,19 @@ function eo_locate_template($template_names, $load = false, $require_once = true
 	$located = '';
 
 	$template_dir = get_stylesheet_directory(); //child theme
-	$parent_template_dir =get_template_directory(); //parent theme
+	$parent_template_dir = get_template_directory(); //parent theme
+
+	$stack = apply_filters( 'eventorganiser_template_stack', array( $template_dir, $parent_template_dir, EVENT_ORGANISER_DIR . 'templates' ) );
 
 	foreach ( (array) $template_names as $template_name ) {
 		if ( !$template_name )
 			continue;
-		if ( file_exists($template_dir . '/' . $template_name)) {
-			$located = $template_dir . '/' . $template_name;
-			break;
-		} else if ( file_exists($parent_template_dir . '/' . $template_name) ) {
-			$located = $parent_template_dir . '/' . $template_name;
-			break;
-		}else if ( file_exists(EVENT_ORGANISER_DIR . 'templates/' . $template_name) ) {
-			$located = EVENT_ORGANISER_DIR . 'templates/' . $template_name;
-			break;
-		}
+		foreach ( $stack as $template_stack ){
+			if ( file_exists( trailingslashit( $template_stack ) . $template_name ) ) {
+				$located = trailingslashit( $template_stack ) . $template_name;
+				break;
+			}
+		} 
 	}
 
 	if ( $load && '' != $located )
