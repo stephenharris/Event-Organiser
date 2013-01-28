@@ -618,7 +618,50 @@ function eo_display_reoccurence($post_id=0){
 	echo eo_get_schedule_summary($post_id);
 }
 
+/** 
+* Returns an array of occurrences. Each occurrence is an array with 'start' and 'end' key. 
+*  Both of these hold a DateTime object (for the start and end of that occurrence respecitvely).
+* @since 1.5
+* @package event-date-functions
+* @access private
+* @ignore
+*
+* @param int $post_id The event (post) ID. Uses current event if empty.
+* @return array Array of arrays of DateTime objects of the start and end date-times of occurences. False if none exist.
+ */
+function eo_get_the_future_occurrences_of( $post_id=0 ){
+	global $wpdb;
 
+	$today = new DateTime('now',eo_get_blog_timezone());
+	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
+
+	if(empty($post_id)) 
+		return false;
+
+	$results = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT event_id, StartDate,StartTime,EndDate,FinishTime FROM {$wpdb->eo_events} 
+			WHERE {$wpdb->eo_events}.post_id=%d AND ( StartDate > %s OR ( StartDate = %s AND StartTime >= %s) ) ORDER BY StartDate ASC",
+			$post_id,
+			$today->format('Y-m-d'),
+			$today->format('Y-m-d'),
+			$today->format('H:i:s')				
+		)
+	);
+	
+	if( !$results )
+		return false;
+
+	$occurrences=array();
+	foreach($results as $row):
+		$occurrences[$row->event_id] = array(
+			'start' => new DateTime($row->StartDate.' '.$row->StartTime, eo_get_blog_timezone()),
+			'end' => new DateTime($row->EndDate.' '.$row->FinishTime, eo_get_blog_timezone())
+		);
+	endforeach;
+	
+	return $occurrences;
+}
 /** 
 * Returns an array of occurrences. Each occurrence is an array with 'start' and 'end' key. 
 *  Both of these hold a DateTime object (for the start and end of that occurrence respecitvely).
