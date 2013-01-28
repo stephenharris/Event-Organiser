@@ -361,6 +361,9 @@ class EventOrganiser_Shortcodes {
 			wp_enqueue_style('eo_front');	
 			wp_enqueue_script( 'eo_front');
 		endif;
+
+		if( !empty( self::$map ) )
+			wp_enqueue_script( 'eo_GoogleMap' );
 	}
 }
  

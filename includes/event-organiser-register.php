@@ -19,7 +19,14 @@ function eventorganiser_register_script() {
 		'jquery-ui-core',
 		'jquery-ui-widget',
 		'jquery-ui-button',
-	),$version,true);	
+	),$version,true);
+	
+	/* Google Maps */
+	$protocal = is_ssl() ? 'https://' : 'http://';
+	if( is_admin() )
+		wp_register_script( 'eo_GoogleMap', $protocal.'maps.googleapis.com/maps/api/js?sensor=false&language='.substr(get_locale(),0,2));
+	else
+		wp_register_script( 'eo_GoogleMap', $protocal.'maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map&language='.substr(get_locale(),0,2));
 
 	/* Front-end script */
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",array(
@@ -28,7 +35,7 @@ function eventorganiser_register_script() {
 		'jquery-ui-widget',
 		'jquery-ui-button',
 		'jquery-ui-datepicker',
-		'eo_fullcalendar'	
+		'eo_fullcalendar',
 	),$version,true);
 	
 	/* Add js variables to frontend script */
@@ -71,9 +78,6 @@ add_action('init', 'eventorganiser_register_script');
 function eventorganiser_register_scripts(){
 	$version = '1.7';
 	$ext = (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG) ? '' : '.min';
-
-	/* Google Maps */
-	wp_register_script( 'eo_GoogleMap', 'http://maps.googleapis.com/maps/api/js?sensor=true&language='.substr(get_locale(),0,2));
 
 	/*  Venue scripts for venue & event edit */
 	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL."js/venues{$ext}.js",array(

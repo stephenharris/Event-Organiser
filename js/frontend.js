@@ -68,15 +68,6 @@ jQuery(document).ready(function () {
 		});
 	}
 
-	if ($(".eo-venue-map").length > 0) {
-		if (EOAjax.map !== undefined) {
-			var script = document.createElement("script");
-                	script.type = "text/javascript";
-                	script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map&language="+EOAjaxFront.locale.locale;
-                	document.body.appendChild(script)
-            }
-        }
-
         if ($(".eo-fullcalendar").length > 0) {
 		var calendars = EOAjax.calendars;
 		var loadingTimeOut;
