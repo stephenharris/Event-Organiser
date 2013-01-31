@@ -269,6 +269,54 @@ function eventorganiser_php2xdate($phpformat=""){
 	return $xdateformat;
 }
 
+
+/**
+ * Very basic class to convert php date format into jQuery UI date format used for javascript.
+ *
+ * Similar to {@see `eventorganiser_php2xdate()`} - but the format is slightly different for jQuery UI  
+ * Takes a php date format and converts it to {@link http://docs.jquery.com/UI/Datepicker/formatDate} so
+ * that it can b used in javascript (notably by the datepicker).
+ * 
+ * **Please note that this function does not convert time formats**
+ *
+ * @since 1.7
+ *
+ *@param string $phpformat Format according to http://php.net/manual/en/function.date.php
+ *@return string The format translated to xdate format: http://docs.jquery.com/UI/Datepicker/formatDate
+ */
+function eventorganiser_php2jquerydate($phpformat=""){
+	$php2jquerydate = array(
+			'Y'=>'yy','y'=>'y','L'=>''/*Not Supported*/,'o'=>'',/*Not Supported*/
+			'j'=>'d','d'=>'dd','D'=>'D','DD'=>'dddd','N'=>'',/*NS*/ 'S' => ''/*NS*/,
+			'w'=>'', /*NS*/ 'z'=>'o',/*NS*/ 'W'=>'w',
+			'F'=>'MM','m'=>'mm','M'=>'M','n'=>'m','t'=>'',/*NS*/
+			'a'=>''/*NS*/,'A'=>''/*NS*/,
+			'B'=>'',/*NS*/'g'=>''/*NS*/,'G'=>''/*NS*/,'h'=>''/*NS*/,'H'=>''/*NS*/,'u'=>'fff',
+			'i'=>''/*NS*/,'s'=>''/*NS*/,
+			'O'=>''/*NS*/, 'P'=>''/*NS*/,
+	);
+
+	$jqueryformat="";
+
+	for($i=0;  $i< strlen($phpformat); $i++){
+
+		//Handle backslash excape
+		if($phpformat[$i]=="\\"){
+			$jqueryformat .= "\\".$phpformat[$i+1];
+			$i++;
+			continue;
+		}
+
+		if(isset($php2jquerydate[$phpformat[$i]])){
+			$jqueryformat .= $php2jquerydate[$phpformat[$i]];
+		}else{
+			$jqueryformat .= $phpformat[$i];
+		}
+	}
+	return $jqueryformat;
+}
+
+
 /**
 * A utilty function intended for removing duplicate DateTime objects from array
 * @since 1.5
@@ -749,7 +797,45 @@ function eventorganiser_textarea_field($args){
 	return $html;
 }
 
+
 function eventorganiser_esc_printf($text){
 	return str_replace('%','%%',$text);
 }
+
+
+function eventorganiser_cache_get( $key, $group ){
+
+	$ns_key = wp_cache_get( 'eventorganiser_'.$group.'_key' );
+
+	// if not set, initialize it
+	if ( $ns_key === false )
+		wp_cache_set( 'eventorganiser_'.$group.'_key', 1 );
+
+	return wp_cache_get( "eo_".$ns_key."_".$key, $group );
+}
+
+
+function eventorganiser_clear_cache( $group, $key = false ){
+
+	if( $key == false ){
+		//If a key is not specified clear entire group by incrementing name space
+		return wp_cache_incr( 'eventorganiser_'.$group.'_key' );
+		
+	}elseif( $ns_key = wp_cache_get( 'eventorganiser_'.$group.'_key' ) ){
+		//If key is specified - clear particular key from the group
+		return wp_cache_delete( "eo_".$ns_key."_".$key, $group );
+	}
+}
+	
+
+function eventorganiser_cache_set( $key, $value, $group, $expire = 0 ){
+	$ns_key = wp_cache_get( 'eventorganiser_'.$group.'_key' );
+
+	// if not set, initialize it
+	if ( $ns_key === false )
+		wp_cache_set( 'eventorganiser_'.$group.'_key', 1 );
+
+	return wp_cache_add( "eo_".$ns_key."_".$key, $value, $group, $expire );
+}
+	
 ?>
