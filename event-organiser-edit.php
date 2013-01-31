@@ -57,15 +57,20 @@ function _eventorganiser_details_metabox( $post ){
 	$venue_id = (int) eo_get_venue( $post->ID );
 
 	$sche_once = $schedule == 'once';
-	//Start of meta box ?>	
-	<p>
-		<?php if ( !$sche_once ):?>
-			<strong><?php _e( 'This is a reoccurring event', 'eventorganiser' );?></strong>. 
-			<input type="checkbox" id="HWSEvent_rec" name="eo_input[AlterRe]" value="yes" /> 
-			<?php _e( 'Check to edit this event and its reoccurrences', 'eventorganiser' );?>.
-		<?php endif;?>
-	</p>
-
+	 
+	if ( !$sche_once ){
+		$notices = '<strong>'. __( 'This is a reoccurring event', 'eventorganiser' ).'</strong>. '
+					. __( 'Check to edit this event and its reoccurrences', 'eventorganiser' )
+					.' <input type="checkbox" id="HWSEvent_rec" name="eo_input[AlterRe]" value="yes">';
+	}else{
+		$notices = '';
+	}
+	
+	//Start of meta box
+	if( $notices = apply_filters('eventorganiser_event_metabox_notice', $notices, $post ) ){
+		echo '<div class="updated below-h2"><p>'.$notices.'</p></div>';		
+	}
+	?>
 	<div class="<?php echo ( $sche_once ? 'onetime': 'reoccurence' );?>">
 		<p><?php printf( __( 'Ensure dates are entered in %1$s format and times in %2$s (24 hour) format', 'eventorganiser' ), '<strong>'.$format.'</strong>', ' <strong>hh:mm</strong>' );?> </p>
 
