@@ -164,6 +164,8 @@ function eventorganiser_add_admin_scripts( $hook ) {
 						'monthNames'=>array_values($wp_locale->month),
 						'monthAbbrev'=>array_values($wp_locale->month_abbrev),
 						'dayAbbrev'=>array_values($wp_locale->weekday_abbrev),
+						'showDates' => __( 'Show dates', 'eventorganiser' ),
+						'hideDates' => __( 'Hide dates', 'eventorganiser' ),
 						'weekDay'=>$wp_locale->weekday,
 						'hour'=>__('Hour','eventorganiser'),
 						'minute'=>__('Minute','eventorganiser'),

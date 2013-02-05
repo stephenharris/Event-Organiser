@@ -154,9 +154,13 @@ function _eventorganiser_details_metabox( $post ){
 					</td>
 				</tr>
 
-				<tr valign="top" id="eo_occurrence_picker_row">
-					<td class="eo-label">	<a href="#" class="eo_occurrence_toogle"><?php _e( 'Include/Exclude occurrences', 'eventorganiser' );?>: </a></td>
-					<td>	
+				<tr valign="top" id="eo_occurrence_picker_row" class="event-date">
+					<td class="eo-label">	
+						<?php esc_html_e( 'Include/Exclude occurrences', 'eventorganiser' );?>
+					</td>
+					<td>
+						<?php submit_button( __( 'Show dates', 'eventorganiser' ), 'hide-if-no-js eo_occurrence_toogle button small', 'eo_date_toggle', false ); ?>
+						
 						<div id="eo_occurrence_datepicker"></div>
 						<?php 	
 						//var_dump($include);

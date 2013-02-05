@@ -369,7 +369,7 @@ $('.eo-add-new-venue-cancel').click(function(e){
         eo_update_event_form();
         var bool = !$(this).prop("checked");
         $(".reoccurence .event-date :input").attr('disabled', bool);
-        $(".reoccurence .event-date :input").toggleClass('ui-state-disabled', bool)
+        $(".reoccurence .event-date :input").toggleClass('ui-state-disabled', bool);
         }
 
     //When rule changes, wipe include/exclude dates clean
@@ -377,8 +377,8 @@ $('.eo-add-new-venue-cancel').click(function(e){
         eo_exclude_dates = new Array();
         eo_include_dates = new Array();
         eo_update_inc_ex_Input();
-        eo_generate_dates_by_rule(eo_viewing_month[0], eo_viewing_month[1], {})
-            dp.datepicker("refresh");
+        eo_generate_dates_by_rule(eo_viewing_month[0], eo_viewing_month[1], {});
+        dp.datepicker("refresh");
     };
 
     //Show/hide calendar
@@ -386,6 +386,11 @@ $('.eo-add-new-venue-cancel').click(function(e){
         e.preventDefault();
         e.stopPropagation();
         dp.toggle();
+        if( dp.is(":visible") ){
+        	$('.eo_occurrence_toogle').val(EO_Ajax_Event.locale.hideDates);
+        }else{
+        	$('.eo_occurrence_toogle').val(EO_Ajax_Event.locale.showDates);
+        }
     });
 
     //Fires before each date. Decides what classes to add
