@@ -44,9 +44,9 @@ if (!Array.prototype.indexOf)
     $.widget("ui.combobox", {
         _create: function () {
             var input;
-                c = this.element.hide(),
-                d = c.children(":selected"),
-                e = d.val() ? d.text() : "";
+            var c = this.element.hide();
+            var d = c.children(":selected");
+            var e = d.val() ? d.text() : "";
             var wrapper  = $("<span>").addClass("ui-combobox eo-venue-input").insertAfter(c);
              input = $("<input>").appendTo(wrapper).val(e).addClass("ui-combobox-input").autocomplete({
                 delay: 0,
