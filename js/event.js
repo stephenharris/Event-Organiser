@@ -177,7 +177,7 @@ $('.eo-add-new-venue-cancel').click(function(e){
             $(".reocurrence_row").hide();
             $("#dayofweekrepeat").show();
             $("#dayofmonthrepeat").show();
-            $(".reocurrence_row").attr("disabled", true);
+            $(".reocurrence_row :input").attr("disabled", true);
             break;
         case "weekly":
             $(".reocurrence_row :input").attr("disabled", false);
