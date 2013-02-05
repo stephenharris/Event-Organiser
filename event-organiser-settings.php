@@ -224,15 +224,19 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'label_for' => 'url_event',
 						'name' => 'eventorganiser_options[url_event]',
 						'value' => eventorganiser_get_option( 'url_event' ),
-						'help' => "<label><code>{$site_url}/<strong>".eventorganiser_get_option( 'url_event' )."</strong>/[event_slug]</code></label>"
+						'help' => "<code>{$site_url}/<strong>".eventorganiser_get_option( 'url_event' )."</strong>/[event_slug]</code>"
 				) );
 
+				$now = new DateTime();
 				add_settings_field( 'url_events', __("Event (archive)", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
 					array(
 						'label_for' => 'url_events',
 						'name' => 'eventorganiser_options[url_events]',
 						'value' => eventorganiser_get_option( 'url_events' ),
-						'help' => "<label><code>{$site_url}/<strong>".eventorganiser_get_option( 'url_events' )."</strong></code></label>"
+						'help' => "<code>{$site_url}/<strong>".eventorganiser_get_option( 'url_events' )."</strong></code>".'<br>'
+								  ."<code>{$site_url}/<strong>".eventorganiser_get_option( 'url_events' )."</strong>/on/{$now->format('Y')}</code> ".__('Year archive', 'eventorganiser').'<br>'
+								  ."<code>{$site_url}/<strong>".eventorganiser_get_option( 'url_events' )."</strong>/on/{$now->format('Y/m')}</code>".__('Month archive', 'eventorganiser').'<br>'
+								  ."<code>{$site_url}/<strong>".eventorganiser_get_option( 'url_events' )."</strong>/on/{$now->format('Y/m/d')}</code>".__('Day archive', 'eventorganiser')
 				) );
 	
 				add_settings_field( 'url_venue', __("Venues", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
@@ -240,7 +244,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'label_for' => 'url_venue',
 						'name' => 'eventorganiser_options[url_venue]',
 						'value' => eventorganiser_get_option( 'url_venue' ),
-						'help' => "<label><code>{$site_url}/<strong>".eventorganiser_get_option( 'url_venue' )."</strong>/[venue_slug]</code></label>"
+						'help' => "<code>{$site_url}/<strong>".eventorganiser_get_option( 'url_venue' )."</strong>/[venue_slug]</code>"
 				) );
 
 				add_settings_field( 'url_cat', __("Event Categories", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
@@ -248,7 +252,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'label_for' => 'url_cat',
 						'name' => 'eventorganiser_options[url_cat]',
 						'value' => eventorganiser_get_option( 'url_cat' ),
-						'help' => "<label><code>{$site_url}/<strong>".eventorganiser_get_option( 'url_cat' )."</strong>/[event_cat_slug]</code></label>"
+						'help' => "<code>{$site_url}/<strong>".eventorganiser_get_option( 'url_cat' )."</strong>/[event_cat_slug]</code>"
 				) );
 
 				add_settings_field( 'url_cat', __("Event Tags", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
