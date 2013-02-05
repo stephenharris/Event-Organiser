@@ -25,7 +25,7 @@ get_header(); ?>
 <div id="primary" class="site-content">
 	<div id="content" role="main">
 
-		<!---- Page header-->
+		<!-- Page header-->
 		<header class="page-header">
 		<h1 class="page-title">
 			<?php
@@ -46,8 +46,8 @@ get_header(); ?>
 
 		<?php if ( have_posts() ) : ?>
 
-			<!---- Navigate between pages-->
-			<!---- In TwentyEleven theme this is done by twentyeleven_content_nav-->
+			<!-- Navigate between pages-->
+			<!-- In TwentyEleven theme this is done by twentyeleven_content_nav-->
 			<?php 
 			global $wp_query;
 			if ( $wp_query->max_num_pages > 1 ) : ?>
@@ -106,9 +106,9 @@ get_header(); ?>
 			</article><!-- #post-<?php the_ID(); ?> -->
 
 
-    		<?php endwhile; ?><!----The Loop ends-->
+    		<?php endwhile; ?><!--The Loop ends-->
 
-		<!---- Navigate between pages-->
+		<!-- Navigate between pages-->
 		<?php 
 			if ( $wp_query->max_num_pages > 1 ) : ?>
 				<nav id="nav-below">
@@ -118,7 +118,7 @@ get_header(); ?>
 			<?php endif; ?>
 
 		<?php else : ?>
-			<!---- If there are no events -->
+			<!-- If there are no events -->
 			<article id="post-0" class="post no-results not-found">
 				<header class="entry-header">
 					<h1 class="entry-title"><?php _e( 'Nothing Found', 'eventorganiser' ); ?></h1>

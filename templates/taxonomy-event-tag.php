@@ -25,13 +25,13 @@ get_header(); ?>
 
 			<?php if ( have_posts() ) : ?>
 
-				<!---- Page header, display tag title-->
+				<!-- Page header, display tag title-->
 				<header class="page-header">
 					<h1 class="page-title"><?php
 						printf( __( 'Event Tag Archives: %s', 'eventorganiser' ), '<span>' . single_cat_title( '', false ) . '</span>' );
 					?></h1>
 
-				<!---- If the tag has a description display it-->
+				<!-- If the tag has a description display it-->
 					<?php
 						$tag_description = category_description();
 						if ( ! empty( $tag_description ) )
@@ -39,8 +39,8 @@ get_header(); ?>
 					?>
 				</header>
 
-				<!---- Navigate between pages-->
-				<!---- In TwentyEleven theme this is done by twentyeleven_content_nav-->
+				<!-- Navigate between pages-->
+				<!-- In TwentyEleven theme this is done by twentyeleven_content_nav-->
 				<?php 
 				global $wp_query;
 				if ( $wp_query->max_num_pages > 1 ) : ?>
@@ -97,9 +97,9 @@ get_header(); ?>
 
 				</article><!-- #post-<?php the_ID(); ?> -->
 
-    				<?php endwhile; ?><!----The Loop ends-->
+    				<?php endwhile; ?><!--The Loop ends-->
 
-				<!---- Navigate between pages-->
+				<!-- Navigate between pages-->
 				<?php 
 				if ( $wp_query->max_num_pages > 1 ) : ?>
 					<nav id="nav-below">
@@ -110,7 +110,7 @@ get_header(); ?>
 
 			<?php else : ?>
 
-				<!---- If there are no events -->
+				<!-- If there are no events -->
 				<article id="post-0" class="post no-results not-found">
 					<header class="entry-header">
 						<h1 class="entry-title"><?php _e( 'Nothing Found', 'eventorganiser' ); ?></h1>
