@@ -565,10 +565,6 @@ function eventorganiser_search_venues() {
 				$venue->venue_lat =  number_format(floatval(eo_get_venue_lat($venue_id)), 6);
 				$venue->venue_lng =  number_format(floatval(eo_get_venue_lng($venue_id)), 6);
 			}
-
-			if( !isset($venue->venue_description) ){
-				$venue->venue_description = eo_get_venue_description($venue_id);
-			}
 		}
 		
 		$novenue = array('term_id'=>0,'name'=>__('No Venue','eventorganiser'));
