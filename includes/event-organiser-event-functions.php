@@ -1101,9 +1101,9 @@ function eo_get_event_archive_link( $year=false,$month=false, $day=false){
 	}else{
 		$date = compact('_year');
 	}
-
+	
 	if( $archive && $wp_rewrite->using_mod_rewrite_permalinks() && $permastruct = $wp_rewrite->get_extra_permastruct('event_archive') ){
-		$archive = home_url( $wp_rewrite->front.str_replace('%event_ondate%',implode('/',$date), $permastruct ) );
+		$archive = home_url( str_replace('%event_ondate%',implode('/',$date), $permastruct ) );
 	}else{
 		$archive = add_query_arg('ondate',implode('-',$date),$archive);
 	}
