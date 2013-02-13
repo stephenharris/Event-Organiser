@@ -1055,7 +1055,7 @@ function eo_get_event_meta_list( $post_id=0 ){
 						);
 	}
 
-	if( get_the_terms(get_the_ID(),'event-tag') ){
+	if( get_the_terms(get_the_ID(),'event-tag') && !is_wp_error( get_the_terms(get_the_ID(),'event-tag') ) ){
 		$html .= sprintf('<li><strong>%s:</strong> %s</li>',
 							__('Tags','eventorganiser'),
 							get_the_term_list( get_the_ID(),'event-tag', '', ', ', '' )
