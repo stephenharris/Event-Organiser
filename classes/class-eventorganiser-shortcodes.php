@@ -97,7 +97,7 @@ class EventOrganiser_Shortcodes {
 		if( isset($atts['venue']) && !isset( $atts['event_venue'] ) )
 			$atts['event_venue'] = $atts['venue'];
 		if( isset($atts['category']) && !isset( $atts['event_category'] ) )
-			$atts['event_category'] = $atts['venue'];
+			$atts['event_category'] = $atts['category'];
 
 		return eo_get_event_fullcalendar( $atts );
 	}
