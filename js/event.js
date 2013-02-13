@@ -1,6 +1,4 @@
 var eo_occurrences_by_rule = new Array;
-var eo_include_dates;
-var eo_exclude_dates;
 jQuery(document).ready(function($) {
 
 //Workaround for indexOf in IE 7&8
@@ -108,7 +106,7 @@ if (!Array.prototype.indexOf)
                 input.focus();
             });
 
-		if( 'event' == pagenow ){
+		if( 'event' == pagenow && EO_Ajax_Event.current_user_can.manage_venues ){
 			//Only add this on event edit page - i.e. not on calendar page.
 			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Create New Venue").appendTo(button_wrappers).button({
                 		icons: {
