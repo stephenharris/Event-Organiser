@@ -270,7 +270,7 @@ function eventorganiser_details_save( $post_id ) {
 	$venue_id = !empty( $raw_data['event-venue'] ) ? intval( $raw_data['event-venue'] ) : null;
 
 	//Maybe create a new venue
-	if ( empty( $venue_id ) && !empty( $_POST['eo_venue']) ){
+	if ( empty( $venue_id ) && !empty( $_POST['eo_venue']) && current_user_can( 'manage_venues' ) ){
 		$venue = $_POST['eo_venue'];
 		if ( !empty( $venue['name'] ) ){
 			$new_venue = eo_insert_venue( $venue['name'], $venue );
