@@ -4,7 +4,7 @@
 **Tags:** events, event, event categories, event organiser, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
 **Tested up to:** 3.5  
-**Stable tag:** 1.7.1  
+**Stable tag:** 1.7.2
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -173,6 +173,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 1.7.2 ###
+* Fixes template bug introduced in 1.7.1
+* Check permissions before adding 'add new venue' button.
+* Fixes fullCalendar 'category' attribute bug.
 
 ### 1.7.1 ###
 * Fixes archive bug. See [ticket](https://github.com/stephenharris/Event-Organiser/issues/39)
