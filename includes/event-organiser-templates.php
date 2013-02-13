@@ -226,9 +226,9 @@ function eventorganiser_set_template( $template ){
 	 * rather than using our own single-event.php, we use ordinary single.php and
 	 * add content in via the_content
 	*/
-	if( is_singular('event') && !eventorganiser_is_event_template($template,'single') ){	
+	if( is_singular('event') && !eventorganiser_is_event_template($template,'event') ){	
 		//Viewing a single event
-
+		
 		//Hide next/previous post link
 		add_filter("next_post_link",'__return_false');
 		add_filter("previous_post_link",'__return_false');
