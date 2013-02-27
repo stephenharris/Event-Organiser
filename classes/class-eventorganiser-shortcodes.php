@@ -200,13 +200,7 @@ class EventOrganiser_Shortcodes {
 	function parse_template($matches){
 		global $post;
 		$replacement='';
-		$col = array(
-			'start'=>array('date'=>'StartDate','time'=>'StartTime'),
-			'end'=>array('date'=>'EndDate','time'=>'FinishTime'),
-			'schedule_start'=>array('date'=>'reoccurrence_start','time'=>'StartTime'),
-			'schedule_end'=>array('date'=>'reoccurrence_end','time'=>'FinishTime')
-		);
-		
+
 		switch($matches[1]):
 			case 'event_title':
 				$replacement = get_the_title();
@@ -231,11 +225,23 @@ class EventOrganiser_Shortcodes {
 						break;
 				endswitch;
 		
-				if( eo_is_all_day(get_the_ID()) ){
-					$replacement = eo_format_date($post->$col[$matches[1]]['date'].' '.$post->$col[$matches[1]]['time'], $dateFormat);
-				}else{	
-					$replacement = eo_format_date($post->$col[$matches[1]]['date'].' '.$post->$col[$matches[1]]['time'], $dateFormat.$dateTime);					
-				}
+				$format = eo_is_all_day(get_the_ID()) ? $dateFormat : $dateFormat . $dateTime;
+
+				switch( $matches[1] ):
+					case 'start':
+						$replacement = eo_get_the_start( $format );
+					break;
+					case 'end':
+						$replacement = eo_get_the_end( $format );
+					break;
+					case 'schedule_start':
+						$replacement = eo_get_schedule_start( $format );
+					break;
+          				case 'schedule_end':
+						$replacement = eo_get_schedule_end( $format );
+					break;
+				endswitch;
+
 				break;
 			case 'event_duration':
 				$start = eo_get_the_start(DATETIMEOBJ);
