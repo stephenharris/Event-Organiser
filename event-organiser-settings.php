@@ -255,7 +255,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'help' => "<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_cat' )."</strong>/[event_cat_slug]</code>"
 				) );
 
-				add_settings_field( 'url_cat', __("Event Tags", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
+				add_settings_field( 'url_tag', __("Event Tags", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
 					array(
 						'label_for' => 'url_tag',
 						'name' => 'eventorganiser_options[url_tag]',
