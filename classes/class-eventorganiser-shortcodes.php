@@ -181,6 +181,8 @@ class EventOrganiser_Shortcodes {
 			'/%(event_venue_postcode)%/',
 			'/%(event_venue_city)%/',
 			'/%(event_venue_country)%/',
+			'/%(event_venue_state)%/',
+			'/%(event_venue_city)%/',
 			'/%(schedule_start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
 			'/%(schedule_last)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
 			'/%(schedule_end)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
@@ -300,6 +302,14 @@ class EventOrganiser_Shortcodes {
 				$address = eo_get_venue_address();
 				$replacement =$address['country'];
 				break;
+			case 'event_venue_state':
+                                $address = eo_get_venue_address();
+                                $replacement =$address['state'];
+                                break;
+			case 'event_venue_city':
+                                $address = eo_get_venue_address();
+                                $replacement =$address['city'];
+                                break;
 			case 'event_thumbnail':
 				$size = (isset($matches[2]) ? self::eo_clean_input($matches[2]) : '');
 				$size = (!empty($size) ?  $size : 'thumbnail');
