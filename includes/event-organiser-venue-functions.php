@@ -791,7 +791,6 @@ function _eventorganiser_get_venue_address_fields(){
 		'_city'=>  __('City','eventorganiser'),
 		'_state'=>  __('State / Province','eventorganiser'),
 		'_postcode'=>  __('Post Code','eventorganiser'),
-		'_state'=>  __('State / Province','eventorganiser'),
 		'_country'=>  __('Country','eventorganiser'),
 	);
 
