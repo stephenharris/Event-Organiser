@@ -372,7 +372,7 @@ function _eventorganiser_event_edit_admin_notice(){
 
 	foreach ( $notice as $pid => $messages ){
 		if ( $post->ID == $pid ){
-			printf( '<div id="message" class="error"> <p> %s </p> </div>', implode( ' </p> <p> ', $m ) );
+			printf( '<div id="message" class="error"> <p> %s </p> </div>', implode( ' </p> <p> ', $messages ) );
 
 			//make sure to remove notice after its displayed so its only displayed when needed.
 			unset( $notice[0] );
