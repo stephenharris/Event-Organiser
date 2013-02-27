@@ -182,6 +182,7 @@ class EventOrganiser_Shortcodes {
 			'/%(event_venue_city)%/',
 			'/%(event_venue_country)%/',
 			'/%(schedule_start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
+			'/%(schedule_last)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
 			'/%(schedule_end)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
 			'/%(event_thumbnail)(?:{([^{}]+)})?(?:{([^{}]+)})?%/',
 			'/%(event_url)%/',
@@ -209,6 +210,7 @@ class EventOrganiser_Shortcodes {
 			case 'start':
 			case 'end':
 			case 'schedule_start':
+			case 'schedule_last':
 			case 'schedule_end':
 				switch(count($matches)):
 					case 2:
@@ -237,6 +239,7 @@ class EventOrganiser_Shortcodes {
 					case 'schedule_start':
 						$replacement = eo_get_schedule_start( $format );
 					break;
+          				case 'schedule_last':
           				case 'schedule_end':
 						$replacement = eo_get_schedule_end( $format );
 					break;
