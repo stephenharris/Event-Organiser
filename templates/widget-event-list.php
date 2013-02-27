@@ -27,7 +27,7 @@ $time_format = get_option('time_format');
 
 //The list ID / classes
 $id = $eo_event_loop_args['id'];
-$class = $eo_event_loop_args['class'];
+$classes = $eo_event_loop_args['class'];
 
 ?>
 
