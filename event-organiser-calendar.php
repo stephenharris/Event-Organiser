@@ -184,7 +184,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 					//Event details
 					$event_array = array(
 						'start' => eo_get_the_start( DATETIMEOBJ ),
-						'end' => eo_get_the_start( DATETIMEOBJ ),
+						'end' => eo_get_the_end( DATETIMEOBJ ),
 						'all_day' => ( eo_is_all_day( $post_id )  ? 1 : 0 ),
 						'schedule' => 'once',
 						'frequency' => 1,
