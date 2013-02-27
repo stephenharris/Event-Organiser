@@ -151,72 +151,11 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				if ( !current_user_can( 'edit_event', $post_id ) || !current_user_can( 'delete_event', $post_id ) )
 					wp_die( __( 'You do not have sufficient permissions to edit this event', 'eventorganiser' ) );
 		
-				//Get current event.
-				$query = new WP_Query( array( 
-					'event_occurrence_id' => $event_id,
-					'posts_per_page' => - 1,
-					'post_type' => 'event',
-					'showpastevents' => true,
-					'perm' => 'readable',
-				));
+				eo_break_occurrence( $post_id, $event_id );
 
-				global $post;
-				if ( $query->have_posts() ):	
-					$query->the_post();
-
-					//Assign new event taxonomy terms
-					$tax_input = array();
-					foreach ( array( 'event-category', 'event-tag', 'event-venue' ) as $tax ):
-						$terms = get_the_terms( $post->ID, $tax );
-						if ( $terms &&  !is_wp_error( $terms ) ){
-							$tax_input[$tax] = array_map( 'intval', wp_list_pluck( $terms, 'term_id' ) );
-						}
-					endforeach;
-
-					//Post details
-					$post_array = array(
-						'post_title' => $post->post_title, 'post_name' => $post->post_name, 'post_author' => $post->post_author,
-						'post_content' => $post->post_content, 'post_status' => $post->post_status, 'post_date' => $post->post_date,
-					  	'post_date_gmt' => $post->post_date_gmt, 'post_excerpt' => $post->post_excerpt, 'post_password' => $post->post_password,
-						'post_type' => 'event', 'tax_input' => $tax_input, 'comment_status' => $post->comment_status, 'ping_status' => $post->ping_status,
-					);  
-
-					//Event details
-					$event_array = array(
-						'start' => eo_get_the_start( DATETIMEOBJ ),
-						'end' => eo_get_the_end( DATETIMEOBJ ),
-						'all_day' => ( eo_is_all_day( $post_id )  ? 1 : 0 ),
-						'schedule' => 'once',
-						'frequency' => 1,
-					);
-
-					//Create new event with duplicated details (new event clears cache)
-					$new_event_id = eo_insert_event( $post_array, $event_array );
-
-					//delete occurrence, and copy post meta
-					if ( $new_event_id && !is_wp_error( $new_event_id ) ){
-						$response = _eventorganiser_remove_occurrence( $post_id, $event_id );
-
-						$post_custom = get_post_custom( $post_id );
-						foreach ( $post_custom as $meta_key => $meta_values ) {
-							//Don't copy these
-							if( in_array( $meta_key, array( '_edit_last', '_edit_last', '_edit_lock' ) ) )
-								continue;
-		
-							//Don't copy event meta
-							if( 0 == strncmp( $meta_key,  '_eventorganiser', 15 ) )
-								continue;
-
-							foreach ( $meta_values as $meta_value ) {
-								add_post_meta( $new_event_id, $meta_key, $meta_value );
-							}
-						}
-					}
-
-					//Redirect to prevent resubmisson
-					$redirect = add_query_arg( array( 'post_type' => 'event', 'page' => 'calendar' ), admin_url( 'edit.php' ) );
-					wp_redirect( $redirect );
-				endif;
+				//Redirect to prevent resubmisson
+				$redirect = add_query_arg( array( 'post_type' => 'event', 'page' => 'calendar' ), admin_url( 'edit.php' ) );
+				wp_redirect( $redirect );
 
 			elseif( $action == 'delete_occurrence' ):
 				global $EO_Errors;
