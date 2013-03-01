@@ -223,7 +223,10 @@ function eventorganiser_pre_get_posts( $query ) {
 	add_filter('posts_orderby','eventorganiser_sort_events',10,2);
 	add_filter('posts_groupby', 'eventorganiser_event_groupby',10,2);
 }
-add_action( 'pre_get_posts', 'eventorganiser_pre_get_posts' );
+add_action( 'pre_get_posts', 'eventorganiser_pre_get_posts', 11 );
+
+//Workaround for https://github.com/stephenharris/Event-Organiser/issues/55,
+add_action( 'pre_get_posts', '__return_false', 10 );
 
 
 /**
