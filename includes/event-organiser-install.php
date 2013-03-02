@@ -7,8 +7,34 @@
  *@access private
  *@ignore
 */
- function eventorganiser_install(){
-       global $wpdb, $eventorganiser_db_version;
+ function eventorganiser_install( $is_networkwide ){
+       global $wpdb;
+
+    	// Is this multisite and did the user click network activate?
+    	$is_multisite = ( function_exists('is_multisite') && is_multisite() );
+
+    	if ($is_multisite && $is_networkwide) {
+    	    	// Get the current blog so we can return to it.
+	        $current_blog_id = get_current_blog_id();
+
+	        // Get a list of all blogs.
+	         $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+		if( $blog_ids ){
+			foreach ( $blog_ids as $blog_id ) {
+				switch_to_blog( $blog_id );
+	            		eventorganiser_site_install();
+	       		 }
+			switch_to_blog( $current_blog_id );
+		}else{
+			eventorganiser_site_install();
+		}
+    	}else {
+    	    eventorganiser_site_install();
+    	}
+}
+
+function eventorganiser_site_install(){
+	global $wpdb, $eventorganiser_db_version;
 
 	eventorganiser_wpdb_fix();
 
@@ -277,7 +303,34 @@ function eventorganiser_140_update(){
  *@access private
  *@ignore
 */
-function eventorganiser_uninstall(){
+function eventorganiser_uninstall( $is_networkwide ){
+	global $wpdb;
+
+    	// Is this multisite and did the user click network activate?
+    	$is_multisite = ( function_exists('is_multisite') && is_multisite() );
+
+    	if ( $is_multisite && $is_networkwide ) {
+    	    	// Get the current blog so we can return to it.
+	        $current_blog_id = get_current_blog_id();
+
+	        // Get a list of all blogs.
+	        $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+		if( $blog_ids ){
+			foreach ( $blog_ids as $blog_id ) {
+				switch_to_blog( $blog_id );
+	            		eventorganiser_uninstall_install();
+	       		 }
+			switch_to_blog( $current_blog_id );
+		}else{
+			eventorganiser_uninstall_install();
+		}
+    	}else {
+    	    eventorganiser_uninstall_install();
+    	}
+
+}
+
+function eventorganiser_uninstall_site(){
 	global $wpdb,$eventorganiser_roles, $wp_roles,$wp_taxonomies;
 
 	eventorganiser_clear_cron_jobs();
