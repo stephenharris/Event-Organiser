@@ -84,7 +84,7 @@
 		}
 
 		//Need to replace occurrences
-		if( $delete_existing ){
+		if( $delete_existing || !empty( $event_data['force_regenerate_dates'] ) ){
 			//Generate occurrences
 			$event_data = _eventorganiser_generate_occurrences($event_data);
 
