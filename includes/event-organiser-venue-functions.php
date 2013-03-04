@@ -660,7 +660,7 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
  * @return mixed Will be an array if $single is false. Will be value of meta data field if $single
  *  is true.
  */
-function eo_get_venue_meta($venue_id, $key, $single=true){	
+function eo_get_venue_meta($venue_id, $key ='', $single=true){	
 	return get_metadata('eo_venue', $venue_id, $key, $single); 
 }
 
