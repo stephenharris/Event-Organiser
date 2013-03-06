@@ -679,7 +679,14 @@ function eo_get_the_occurrences_of($post_id=0){
 	if(empty($post_id)) 
 		return false;
 
-	$occurrences = wp_cache_get( 'eventorganiser_occurrences_'.$post_id );
+	 //Can't cache datetime objects before 5.3
+	 //@see{http://wordpress.org/support/topic/warning-datetimeformat-functiondatetime-format?replies=7#post-3940247}
+	if( version_compare(PHP_VERSION, '5.3.0') >= 0 ){
+		$occurrences = wp_cache_get( 'eventorganiser_occurrences_'.$post_id );
+	}else{
+		$occurrences = false;
+	}
+
 	if( !$occurrences ){
 
 		$results = $wpdb->get_results($wpdb->prepare("
