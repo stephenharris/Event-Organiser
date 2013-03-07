@@ -51,13 +51,13 @@ function _eventorganiser_set_constants(){
  	* <code>url:http://mysite.com/wp-content/plugins/event-organiser</code>
 	*/
 	define( 'EVENT_ORGANISER_URL', plugin_dir_url( __FILE__ ) );
-
-	/*
-	 * Defines the plug-in directory path
- 	* <code>/home/mysite/public_html/wp-content/plugins/event-organiser</code>
- 	*/
-	define( 'EVENT_ORGANISER_DIR', plugin_dir_path( __FILE__ ) );
 }
+
+/*
+ * Defines the plug-in directory path
+ * <code>/home/mysite/public_html/wp-content/plugins/event-organiser</code>
+*/
+define( 'EVENT_ORGANISER_DIR', plugin_dir_path( __FILE__ ) );
 
 /**
  * For use in datetime formats. To return a datetime object rather than formatted string
