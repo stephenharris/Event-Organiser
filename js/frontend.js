@@ -80,7 +80,6 @@ jQuery(document).ready(function () {
                         if (typeof calendars[i].venue === "undefined") {
 	                             calendars[i].venue ='';
                         }
-
                 	$(calendar).fullCalendar({
 				id: calendar,
 				category: calendars[i].event_category,
@@ -108,6 +107,11 @@ jQuery(document).ready(function () {
 					month: calendars[i].columnformatmonth,
 					week: calendars[i].columnformatweek,
 					day: calendars[i].columnformatday
+				},
+				titleFormat: {
+					month: calendars[i].titleformatmonth,
+					week: calendars[i].titleformatweek,
+					day: calendars[i].titleformatday
 				},
 				header: {
 					left: calendars[i].headerleft,

@@ -990,15 +990,19 @@ function eo_get_event_fullcalendar( $args ){
 		'event_category'=>'', 'event_venue'=>'', 'timeformat'=>'G:i', 'axisformat'=>get_option('time_format'), 'key'=>false,
 		'tooltip'=>true, 'weekends'=>true, 'mintime'=>'0', 'maxtime'=>'24', 'alldayslot'=>true,
 		'alldaytext'=>__('All Day','eventorganiser'), 'columnformatmonth'=>'D', 'columnformatweek'=>'D n/j', 'columnformatday'=>'l n/j',
+		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j Y}", 'titleformatday' => 'l, M j, Y'
 	);
 	$args = shortcode_atts( $defaults, $args );
 	$key = $args['key'];
 	unset($args['key']);
 	
 	//Convert php time format into xDate time format
-	$date_attributes = array( 'timeformat', 'axisformat', 'columnformatday', 'columnformatweek', 'columnformatmonth' );
+	$date_attributes = array( 'timeformat', 'axisformat', 'columnformatday', 'columnformatweek', 'columnformatmonth',
+	'titleformatmonth', 'titleformatday', 'titleformatweek' );
 	$args['timeformatphp'] = $args['timeformat'];
 	foreach ( $date_attributes as $date_attribute ){
+		$args[$date_attribute] = str_replace( '((', '[', $args[$date_attribute] );
+		$args[$date_attribute] = str_replace( '))', ']', $args[$date_attribute] );
 		$args[$date_attribute.'php'] = $args[$date_attribute];
 		$args[$date_attribute] = eventorganiser_php2xdate( $args[$date_attribute] );
 	}
