@@ -837,5 +837,39 @@ function eventorganiser_cache_set( $key, $value, $group, $expire = 0 ){
 
 	return wp_cache_add( "eo_".$ns_key."_".$key, $value, $group, $expire );
 }
+
+/**
+ * Display inline help via a qTip2 tooltip.
+ * 
+ * The function handles the javascript/css loading and generates the link HTML which will trigger the tooltip. 
+ * The HTML can be returned or printed using the fourth argument. 
+ * 
+ * @param string $title The title of the tooltip that will appear
+ * @param string $content The content of the tooltip
+ * @param bool $echo Whether the link HTML should be printed as well as returned.
+ * @return string
+ */
+function eventorganiser_inline_help( $title, $content, $echo = false ){
+	static $help = array();
+	
+	$help[] = array(
+		'title' => $title,
+		'content' => $content,
+	);
+	
+	wp_localize_script( 'eo-inline-help', 'eoHelp', $help );
+	wp_enqueue_script( 'eo-inline-help' );
+	wp_enqueue_style( 'eventorganiser-admin-style' );
+
+	$id = count($help)-1;
+	$src = EVENT_ORGANISER_URL.'css/images/help-14.png';
+	
+	$link = sprintf( '<a href="#" id="%s" class="eo-inline-help"><img src="%s" width="16" height="16"></a>', 'eo-inline-help-' . $id, $src );
+	
+	if( $echo )
+		echo $link;
+	
+	return $link;
+}
 	
 ?>
