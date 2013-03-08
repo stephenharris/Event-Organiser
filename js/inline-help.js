@@ -15,8 +15,7 @@ jQuery(document).ready(function($) {
 			},
 			hide: 'unfocus',
 			style: {
-				classes: "ui-tooltip-shadow",
-				widget: true,
+				classes: 'qtip-wiki qtip-light qtip-shadow',
 			}
 		});
 	});
