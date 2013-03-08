@@ -1,0 +1,1699 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Event Organiser v1.7.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-03-08 13:11+0200\n"
+"PO-Revision-Date: 2013-03-08 13:58+0200\n"
+"Last-Translator: Kristjan Roosipuu <kristjanr@outlook.com>\n"
+"Language-Team: Kristjan Roosipuu <kristjanr@outlook.com>\n"
+"Language: Estonian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;ngettext;_n;esc_html__;_ex;_nx;_x;esc_attr_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../event-organiser-settings.php:19 ../event-organiser-settings.php:46
+msgid "General"
+msgstr "Üldine"
+
+#: ../event-organiser-settings.php:20
+msgid "Permissions"
+msgstr "Õigused"
+
+#: ../event-organiser-settings.php:21
+msgid "Permalinks"
+msgstr "Püsiviited"
+
+#: ../event-organiser-settings.php:22
+msgid "Import"
+msgstr "Impordi"
+
+#: ../event-organiser-settings.php:22
+msgid "Export"
+msgstr "Expordi"
+
+#: ../event-organiser-settings.php:28
+msgid "Event Organiser Settings"
+msgstr "Event Organiser sätted"
+
+#: ../event-organiser-settings.php:29
+msgid "Event Organiser"
+msgstr "Event Organiser"
+
+#: ../event-organiser-settings.php:47
+msgid "Templates"
+msgstr "Mallid"
+
+#: ../event-organiser-settings.php:68 ../event-organiser.php:76
+msgid "Edit Events"
+msgstr "Muuda sündmusi"
+
+#: ../event-organiser-settings.php:69 ../event-organiser.php:77
+msgid "Publish Events"
+msgstr "Avalda sündmusi"
+
+#: ../event-organiser-settings.php:70 ../event-organiser.php:78
+msgid "Delete Events"
+msgstr "Kustuta sündmusi"
+
+#: ../event-organiser-settings.php:71 ../event-organiser.php:79
+msgid "Edit Others' Events"
+msgstr "Muuda teiste sündmusi"
+
+#: ../event-organiser-settings.php:72 ../event-organiser.php:80
+msgid "Delete Other's Events"
+msgstr "Kustuta teiste sündmusi"
+
+#: ../event-organiser-settings.php:73 ../event-organiser.php:81
+msgid "Read Private Events"
+msgstr "Loe privaatseid sündmusi"
+
+#: ../event-organiser-settings.php:74 ../event-organiser.php:82
+msgid "Manage Venues"
+msgstr "Halda toimumispaiku"
+
+#: ../event-organiser-settings.php:75 ../event-organiser.php:83
+msgid "Manage Event Categories & Tags"
+msgstr "Halda sündmuste rubriike ja silte"
+
+#: ../event-organiser-settings.php:93
+msgid "Select which features events should support"
+msgstr "Vali, mis võimalusi sündmused toetavad"
+
+#: ../event-organiser-settings.php:98
+msgid "Add an 'events' link to the navigation menu:"
+msgstr "Lisa viide 'sündmused' menüüsse"
+
+#: ../event-organiser-settings.php:103
+msgid "Date Format:"
+msgstr "Kuupäevavorming:"
+
+#: ../event-organiser-settings.php:108
+msgid "dd-mm-yyyy"
+msgstr "dd-mm-yyyy"
+
+#: ../event-organiser-settings.php:109
+msgid "mm-dd-yyyy"
+msgstr "mm-dd-yyyy"
+
+#: ../event-organiser-settings.php:111
+msgid "This alters the default format for inputting dates."
+msgstr "See muudab vaikimisi formaati kuupäevade sisestamiseks."
+
+#: ../event-organiser-settings.php:114
+msgid "Show past events:"
+msgstr "Näita toimunud sündmuseid:"
+
+#: ../event-organiser-settings.php:118
+msgid ""
+"Display past events on calendars, event lists and archives (this can be over-"
+"ridden by shortcode attributes and widget options)."
+msgstr ""
+"Kuva toimunud sündmusi kalendris, sündmuste nimekirjas ja arhiivis (seda "
+"saab ignoreerida lühikoodi attribuutide ja moodulite eelistustega)."
+
+#: ../event-organiser-settings.php:121
+msgid "Group occurrences"
+msgstr "Grupeeri toimumised"
+
+#: ../event-organiser-settings.php:126
+msgid ""
+"If selected only one occurrence of an event will be displayed on event lists "
+"and archives (this can be over-ridden by shortcode attributes and widget "
+"options."
+msgstr ""
+"Kui valitud, siis kuvatakse sündmuste nimekirjas ja arhiivis ainult üks "
+"sündmuse toimumine (seda saab ignoreerida lühikoodi attribuutide ja "
+"moodulite eelistustega)."
+
+#: ../event-organiser-settings.php:129
+msgid "Are current events past?"
+msgstr "Käimasolevad sündmused on toimunud?"
+
+#: ../event-organiser-settings.php:134
+msgid "Yes"
+msgstr "Jah"
+
+#: ../event-organiser-settings.php:135
+msgid "No"
+msgstr "Ei"
+
+#: ../event-organiser-settings.php:137
+msgid ""
+"If 'no' is selected, an occurrence of an event is only past when it has "
+"finished. Otherwise, an occurrence is considered 'past' as soon as it starts."
+msgstr ""
+"'Ei' valimisel on sündmus toimunud, kui ta lõpuaeg on möödas. Vastasel juhul "
+"on sündmus toimunud, kui algusaeg on möödas."
+
+#: ../event-organiser-settings.php:140
+msgid "Delete expired events:"
+msgstr "Kustuta aegunud sündmused:"
+
+#: ../event-organiser-settings.php:144
+msgid ""
+"If selected the event will be automatically trashed 24 hours after the last "
+"occurrence finishes."
+msgstr "Kui valitud, siis sündmus kustutatakse 24 tundi pärast toimumist."
+
+#: ../event-organiser-settings.php:147
+msgid "Enable events ICAL feed:"
+msgstr "Aktiveeri sündmuste ICAL voog:"
+
+#: ../event-organiser-settings.php:151
+#, php-format
+msgid "If selected, visitors can subscribe to your events with the url: %s"
+msgstr "Kui valitud, siis külastajad saavad sündmuste teavitusi aadressilt: %s"
+
+#: ../event-organiser-settings.php:154
+msgid "Exclude events from searches:"
+msgstr "Eemalda sündmused otsingutulemustest:"
+
+#: ../event-organiser-settings.php:160
+msgid "Enable templates:"
+msgstr "Aktiveeri mallid:"
+
+#: ../event-organiser-settings.php:164
+msgid ""
+"For each of the pages, the corresponding template is used. To use your own "
+"template simply give it the same name and store in your theme folder. By "
+"default, if Event Organiser cannot find a template in your theme directory, "
+"it will use its own default template. To prevent this, uncheck this option. "
+"WordPress will then decide which template from your theme's folder to use."
+msgstr ""
+"Iga lehe puhul kasutatakse vastavad malli. Et kasutada endaloodud malli "
+"tuleb anda sellele sama nimi ning paigutada kasutatava teema kausta. Kui "
+"Event Organiser ei leia malli teema kaustast, siis kasutatakse vaikimisi "
+"malli. Tühista antud valik, et seda ei juhtuks. Sel juhul otsustab "
+"WordPress, millist malli kasutatakse."
+
+#: ../event-organiser-settings.php:168
+msgid "Events archives:"
+msgstr "Sündmuste arhiiv:"
+
+#: ../event-organiser-settings.php:169
+msgid "Event page:"
+msgstr "Sündmuse lehekülg:"
+
+#: ../event-organiser-settings.php:170
+msgid "Venue page:"
+msgstr "Toimumispaiga lehekülg:"
+
+#: ../event-organiser-settings.php:171
+msgid "Events Category page:"
+msgstr "Sündmuste rubriigi leht:"
+
+#: ../event-organiser-settings.php:181
+msgid "Enable event pretty permalinks:"
+msgstr "Aktiveeri kohandatud sündmuste püsiviited:"
+
+#: ../event-organiser-settings.php:185
+msgid ""
+"If you have pretty permalinks enabled, select to have pretty premalinks for "
+"events."
+msgstr ""
+"Kui kohandatud püsiviited on aktiveeritud, siis aktiveeri need ka sündmuste "
+"jaoks."
+
+#: ../event-organiser-settings.php:189
+msgid "Event (single)"
+msgstr "Sündmuse (üksik)"
+
+#: ../event-organiser-settings.php:196
+msgid "Event (archive)"
+msgstr "Sündmus (arhiiv)"
+
+#: ../event-organiser-settings.php:203 ../event-organiser-venues.php:10
+#: ../event-organiser-venues.php:11 ../event-organiser-venues.php:144
+#: ../event-organiser-venues.php:211
+msgid "Venues"
+msgstr "Toimumispaigad"
+
+#: ../event-organiser-settings.php:210
+msgid "Event Categories"
+msgstr "Sündmuse rubriigid"
+
+#: ../event-organiser-settings.php:217 ../event-organiser-settings.php:468
+msgid "Event Tags"
+msgstr "Sündmuse sildid"
+
+#: ../event-organiser-settings.php:440 ../event-organiser-edit.php:27
+#: ../event-organiser-manage.php:22 ../includes/event-organiser-ajax.php:264
+msgid "Organiser"
+msgstr "Korraldaja"
+
+#: ../event-organiser-settings.php:440
+msgid "Author"
+msgstr "Autor"
+
+#: ../event-organiser-settings.php:441
+msgid "Thumbnail"
+msgstr "Pisipilt"
+
+#: ../event-organiser-settings.php:442
+msgid "Excerpt"
+msgstr "Väljavõte"
+
+#: ../event-organiser-settings.php:443
+msgid "Custom Fields"
+msgstr "Lisaväljad"
+
+#: ../event-organiser-settings.php:444
+msgid "Comments"
+msgstr "Kommentaarid"
+
+#: ../event-organiser-settings.php:445
+msgid "Revisions"
+msgstr "Versioonid"
+
+#: ../event-organiser-settings.php:477
+msgid "Set permissions for events and venue management"
+msgstr "Sätesta sündmuste ja toimumispaikade haldamise õigused"
+
+#: ../event-organiser-settings.php:482
+msgid "Role"
+msgstr "Roll"
+
+#: ../event-organiser-settings.php:493
+msgid "None"
+msgstr "Mitte ükski"
+
+#: ../event-organiser-settings.php:524
+msgid ""
+"Choose a custom permalink structure for events, venues, event categories and "
+"event tags."
+msgstr ""
+"Vali sündmustele, toimumispaikadele, sündmuste rubriikidele ja siltidele "
+"kohandatud püsiviite struktuur."
+
+#: ../event-organiser-settings.php:525
+msgid ""
+"Please note to enable these structures you must first have pretty permalinks "
+"enabled on WordPress in Settings > Permalinks."
+msgstr ""
+"Et aktiveerida kohandatud sündmuste püsiviiteid, tuleb need kõigepealt "
+"aktiveerida WordPressi jaoks: Sätted > Püsiviited."
+
+#: ../event-organiser-settings.php:526
+msgid ""
+"You may also need to go to WordPress Settings > Permalinks and click 'Save "
+"Changes' before any changes will take effect."
+msgstr ""
+"Võib olla, et tehtud muudatuste jõustamiseks, tuleb minna Sätted > "
+"Permalinks ning valida 'Salvesta muudatused'."
+
+#: ../event-organiser-settings.php:535
+msgid "Do not add to menu"
+msgstr "Ära lisa menüüsse"
+
+#: ../event-organiser-settings.php:539
+msgid "Page list (fallback)"
+msgstr "Lehekülgede nimekiri (varuvariant)"
+
+#: ../event-organiser-settings.php:545
+msgid "(This may not work with some themes)"
+msgstr "(See ei pruugi kõikide teemadega töötada)"
+
+#: ../event-organiser-edit.php:16 ../event-organiser-calendar.php:347
+msgid "Event Details"
+msgstr "Sündmuse detailid"
+
+#: ../event-organiser-edit.php:61
+msgid "This is a reoccurring event"
+msgstr "See on korduv sündmus"
+
+#: ../event-organiser-edit.php:63
+msgid "Check to edit this event and its reoccurrences"
+msgstr "Vali, et muuta sündmust ja selle kordumisi"
+
+#: ../event-organiser-edit.php:68
+#, php-format
+msgid ""
+"Ensure dates are entered in %1$s format and times in %2$s (24 hour) format"
+msgstr ""
+"Kontrollige, et kuupäevad oleks sisestatud kujul %1$s ja kellaajad kujul "
+"%2$s (24 tunni vorming)"
+
+#: ../event-organiser-edit.php:72 ../event-organiser-manage.php:26
+msgid "Start Date/Time"
+msgstr "Algab"
+
+#: ../event-organiser-edit.php:82 ../event-organiser-manage.php:27
+msgid "End Date/Time"
+msgstr "Lõpeb"
+
+#: ../event-organiser-edit.php:89
+msgid "All day"
+msgstr "Terve päev"
+
+#: ../event-organiser-edit.php:96
+msgid "Reoccurence:"
+msgstr "Kordumine:"
+
+#: ../event-organiser-edit.php:98
+msgid "once"
+msgstr "korra"
+
+#: ../event-organiser-edit.php:98
+msgid "daily"
+msgstr "päeviti"
+
+#: ../event-organiser-edit.php:98
+msgid "weekly"
+msgstr "nädalati"
+
+#: ../event-organiser-edit.php:99
+msgid "monthly"
+msgstr "kuuti"
+
+#: ../event-organiser-edit.php:99
+msgid "yearly"
+msgstr "aastati"
+
+#: ../event-organiser-edit.php:99
+msgid "custom"
+msgstr "kohandatud"
+
+#: ../event-organiser-edit.php:112
+msgid "Repeat every "
+msgstr "Korda iga"
+
+#: ../event-organiser-edit.php:118
+msgid "on"
+msgstr ""
+
+#: ../event-organiser-edit.php:133
+msgid "day of month"
+msgstr "valitud päeval"
+
+#: ../event-organiser-edit.php:137
+msgid "day of week"
+msgstr "valitud nädalapäeval"
+
+#: ../event-organiser-edit.php:142
+#: ../includes/event-organiser-register.php:180
+msgid "until"
+msgstr "kuni"
+
+#: ../event-organiser-edit.php:151
+msgid "Include/Exclude occurrences"
+msgstr "Lisa/eemalda toimumisi"
+
+#: ../event-organiser-edit.php:162
+msgid "Show dates"
+msgstr "Näita kuupäevi"
+
+#: ../event-organiser-edit.php:177 ../event-organiser-manage.php:24
+#: ../event-organiser-venues.php:393
+msgid "Venue"
+msgstr "Toimumispaik"
+
+#: ../event-organiser-edit.php:180
+msgid "Select a venue"
+msgstr "Vali toimumispaik"
+
+#: ../event-organiser-edit.php:188
+msgid "Venue Name"
+msgstr "Toimumispaiga nimi"
+
+#: ../event-organiser-edit.php:192 ../event-organiser-venues.php:340
+#: ../event-organiser-venues.php:394
+msgid "Address"
+msgstr "Aadress"
+
+#: ../event-organiser-edit.php:196 ../event-organiser-venues.php:344
+#: ../event-organiser-venues.php:395
+msgid "Post Code"
+msgstr "Postiindeks"
+
+#: ../event-organiser-edit.php:200 ../event-organiser-venues.php:348
+#: ../event-organiser-venues.php:396
+msgid "Country"
+msgstr "Riik"
+
+#: ../event-organiser-edit.php:206 ../event-organiser-calendar.php:321
+#: ../event-organiser-calendar.php:328
+msgid "Cancel"
+msgstr "Loobu"
+
+#: ../event-organiser-edit.php:332
+msgid "Event dates were not saved."
+msgstr "Sündmuse kuupäevi ei salvestatud."
+
+#: ../event-organiser-calendar.php:23 ../event-organiser-calendar.php:24
+msgid "Calendar View"
+msgstr "Kalendri vaade"
+
+#: ../event-organiser-calendar.php:59
+#: ../includes/event-organiser-register.php:42
+msgid "today"
+msgstr "täna"
+
+#: ../event-organiser-calendar.php:60
+#: ../includes/event-organiser-register.php:43
+#: ../includes/event-organiser-register.php:163
+msgid "day"
+msgstr "päev"
+
+#: ../event-organiser-calendar.php:61
+#: ../includes/event-organiser-register.php:44
+#: ../includes/event-organiser-register.php:165
+msgid "week"
+msgstr "nädal"
+
+#: ../event-organiser-calendar.php:62
+#: ../includes/event-organiser-register.php:45
+#: ../includes/event-organiser-register.php:167
+msgid "month"
+msgstr "kuu"
+
+#: ../event-organiser-calendar.php:63
+#: ../includes/event-organiser-register.php:46
+msgid "go to date"
+msgstr "mine kuupäevale"
+
+#: ../event-organiser-calendar.php:64 ../event-organiser-manage.php:109
+#: ../includes/event-organiser-register.php:47
+msgid "View all categories"
+msgstr "Vaata kõiki rubriike"
+
+#: ../event-organiser-calendar.php:65 ../event-organiser-manage.php:123
+#: ../includes/event-organiser-register.php:48
+msgid "View all venues"
+msgstr "Vaata kõiki toimumispaiku"
+
+#: ../event-organiser-calendar.php:104
+msgid "You do not have sufficient permissions to create events"
+msgstr "Sul pole sündmuse loomiseks piisavalt õigusi"
+
+#: ../event-organiser-calendar.php:162
+msgid "You do not have sufficient permissions to edit this event"
+msgstr "Sul pole sündmuse muutmiseks piisavalt õigusi"
+
+#: ../event-organiser-calendar.php:283
+msgid "Create an event"
+msgstr "Loo sündmus"
+
+#: ../event-organiser-calendar.php:230
+msgid "You do not have sufficient permissions to delete this event"
+msgstr "Sul pole sündmuse kustutamiseks piisavalt õigusi"
+
+#: ../event-organiser-calendar.php:240
+msgid "Occurrence deleted."
+msgstr "Sündmuse toimumine kustutatud."
+
+#: ../event-organiser-calendar.php:248
+msgid "Calendar options"
+msgstr "Kalendri sätted"
+
+#: ../event-organiser-calendar.php:254
+msgid "24 hour time"
+msgstr "24 tunni aeg"
+
+#: ../event-organiser-calendar.php:269
+msgid "Events Calendar"
+msgstr "Sündmuste kalender"
+
+#: ../event-organiser-calendar.php:272
+msgid "Loading&#8230;"
+msgstr "Laen&#8230;"
+
+#: ../event-organiser-calendar.php:273
+msgid "Day"
+msgstr "Päev"
+
+#: ../event-organiser-calendar.php:274
+msgid "Week"
+msgstr "Nädal"
+
+#: ../event-organiser-calendar.php:275
+msgid "Month"
+msgstr "Kuu"
+
+#: ../event-organiser-calendar.php:278
+msgid "Current date/time"
+msgstr "Hetke kuupäev/aeg"
+
+#: ../event-organiser-calendar.php:288
+msgid "When"
+msgstr "Millal"
+
+#: ../event-organiser-calendar.php:292
+msgid "Event Title"
+msgstr "Sündmuse pealkiri"
+
+#: ../event-organiser-calendar.php:296
+#: ../includes/event-organiser-ajax.php:276
+msgid "Where"
+msgstr "Kus"
+
+#: ../event-organiser-calendar.php:320
+msgid "Save Draft"
+msgstr "Salvesta mustand"
+
+#: ../event-organiser-calendar.php:324
+msgid "Publish Event"
+msgstr "Avalda"
+
+#: ../event-organiser-calendar.php:330
+msgid "Submit for Review"
+msgstr "Saada ülevaatamisele"
+
+#: ../event-organiser.php:102 ../event-organiser-venues.php:398
+#: ../templates/archive-event.php:33
+msgid "Events"
+msgstr "Sündmused"
+
+#: ../event-organiser-manage.php:18
+msgid "Event"
+msgstr "Sündmus"
+
+#: ../event-organiser-manage.php:25
+msgid "Categories"
+msgstr "Rubriigid"
+
+#: ../event-organiser-manage.php:28
+msgid "Reoccurrence"
+msgstr "Kordumine"
+
+#: ../event-organiser-manage.php:136
+msgid "View all events"
+msgstr "Vaata kõiki sündmusi"
+
+#: ../event-organiser-manage.php:137
+msgid "Future events"
+msgstr "Tulevased sündmused"
+
+#: ../event-organiser-manage.php:138
+msgid "Expired events"
+msgstr "Lõppenud sündmused"
+
+#: ../event-organiser-manage.php:139
+msgid "Events within 24 hours"
+msgstr "Sündmused 24 tunni jooksul"
+
+#: ../event-organiser-manage.php:140
+msgid "Events within 1 week"
+msgstr "Sündmused 1 nädala jooksul"
+
+#: ../event-organiser-manage.php:141
+#, php-format
+msgid "Events within %d weeks"
+msgstr "Sündmused %d nädala jooksul"
+
+#: ../event-organiser-manage.php:142
+msgid "Events within 1 month"
+msgstr "Sündmused 1 kuu jooksul"
+
+#: ../event-organiser-manage.php:143
+#, php-format
+msgid "Events within %d months"
+msgstr "Sündmused %d kuu jooksul"
+
+#: ../event-organiser-manage.php:144
+msgid "Events within 1 year"
+msgstr "Sündmused 1 aasta jooksul"
+
+#: ../event-organiser-manage.php:189
+msgid "&mdash; No Change &mdash;"
+msgstr "&mdash; Muutusi pole &mdash;"
+
+#: ../event-organiser-venues.php:34
+msgid "You do not have permission to manage venues"
+msgstr "Puudub õigus toimumispaikade haldamiseks"
+
+#: ../event-organiser-venues.php:39 ../event-organiser-venues.php:65
+msgid "You do not have permission to edit this venue."
+msgstr "Puudub õigus toimumispaiga muutmiseks."
+
+#: ../event-organiser-venues.php:46
+msgid "Venue <strong>was not</strong> updated"
+msgstr "Toimumispaika <strong>ei </strong> uuendatud"
+
+#: ../event-organiser-venues.php:73
+msgid "Venue <strong>was not</strong> created"
+msgstr "Toimumispaika <strong>ei</strong> loodud"
+
+#: ../event-organiser-venues.php:99
+msgid "You do not have permission to delete this venue"
+msgstr "Puudub õigus toimumispaiga kustutamiseks"
+
+#: ../event-organiser-venues.php:123
+msgid "Venue(s) <strong>were not </strong> deleted"
+msgstr "Toimumispaika <strong>e </strong> kustutatud"
+
+#: ../event-organiser-venues.php:135
+msgid "Save"
+msgstr "Salvesta"
+
+#: ../event-organiser-venues.php:152
+msgid "Venue <strong>created</strong>"
+msgstr "Toimumispaik <strong>loodud</strong>"
+
+#: ../event-organiser-venues.php:153
+msgid "Venue <strong>updated</strong>"
+msgstr "Toimumispaik <strong>uuendatud</strong>"
+
+#: ../event-organiser-venues.php:154
+msgid "Venue(s) <strong>deleted</strong>"
+msgstr "Toimumispaik <strong>kustutatud</strong>"
+
+#: ../event-organiser-venues.php:212 ../event-organiser-venues.php:250
+msgid "Add New"
+msgstr "Lisa uus"
+
+#: ../event-organiser-venues.php:215
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr "Otsingu - &#8220;%s&#8221; - tulemused"
+
+#: ../event-organiser-venues.php:225
+msgid "Search Venues"
+msgstr "Otsi toimumispaiku"
+
+#: ../event-organiser-venues.php:249
+msgid "Edit Venue"
+msgstr "Muuda toimumispaika"
+
+#: ../event-organiser-venues.php:254
+msgid "Add New Venue"
+msgstr "Lisa uus toimumispaik"
+
+#: ../event-organiser-venues.php:275
+msgid "Venue Location"
+msgstr "Toimumispaiga asukoht"
+
+#: ../event-organiser-venues.php:320
+msgid "Update Venue"
+msgstr "Uuenda toimumispaika"
+
+#: ../event-organiser-venues.php:320
+msgid "Add Venue"
+msgstr "Lisa toimumispaik"
+
+#: ../event-organiser-venues.php:374
+msgid "Permalink:"
+msgstr "Püsiviide:"
+
+#: ../event-organiser-venues.php:381
+msgid "Get Link"
+msgstr "Viide"
+
+#: ../event-organiser-venues.php:382
+msgid "View Venue"
+msgstr "Vaata toimumispaika"
+
+#: ../event-organiser-venues.php:397
+msgid "Slug"
+msgstr "Lühipealkiri"
+
+#: ../templates/taxonomy-event-category.php:31
+#, php-format
+msgid "Event Category Archives: %s"
+msgstr "Sündmuste rubriikide arhiiv: %s"
+
+#: ../templates/taxonomy-event-category.php:48
+#: ../templates/taxonomy-event-category.php:87
+#: ../templates/archive-event.php:43 ../templates/taxonomy-event-tag.php:48
+#: ../templates/taxonomy-event-tag.php:87
+#: ../templates/taxonomy-event-venue.php:54
+#: ../templates/taxonomy-event-venue.php:93
+msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Hilisemad sündmused <span class=\"meta-nav\">&rarr;</span>"
+
+#: ../templates/taxonomy-event-category.php:49
+#: ../templates/taxonomy-event-category.php:88
+#: ../templates/archive-event.php:44 ../templates/taxonomy-event-tag.php:49
+#: ../templates/taxonomy-event-tag.php:88
+#: ../templates/taxonomy-event-venue.php:55
+#: ../templates/taxonomy-event-venue.php:94
+msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
+msgstr " <span class=\"meta-nav\">&larr;</span> Varasemad sündmused"
+
+#: ../templates/taxonomy-event-category.php:73
+#: ../templates/archive-event.php:69 ../templates/taxonomy-event-tag.php:73
+#: ../templates/taxonomy-event-venue.php:78
+msgid "at"
+msgstr ""
+
+#: ../templates/taxonomy-event-category.php:97
+#: ../templates/archive-event.php:92 ../templates/taxonomy-event-tag.php:97
+#: ../templates/taxonomy-event-venue.php:102
+msgid "Nothing Found"
+msgstr "Midagi ei leitud"
+
+#: ../templates/taxonomy-event-category.php:101
+msgid "Apologies, but no events were found for the requested category. "
+msgstr "Vabandust, kuid antud rubriigist ei leitud ühtegi sündmust."
+
+#: ../templates/archive-event.php:83
+msgid "Later events <span class=\"meta-nav\">&larr;</span>"
+msgstr "Hilisemad sündmused <span class=\"meta-nav\">&larr;</span>"
+
+#: ../templates/archive-event.php:84
+msgid " <span class=\"meta-nav\">&rarr;</span> Newer events"
+msgstr " <span class=\"meta-nav\">&rarr;</span> Varasemad sündmused"
+
+#: ../templates/archive-event.php:96
+msgid "Apologies, but no results were found for the requested archive"
+msgstr "Vabandust, kuid antud arhiivist ei leitud ühtegi tulemust"
+
+#: ../templates/taxonomy-event-tag.php:31
+#, php-format
+msgid "Event Tag Archives: %s"
+msgstr "Sündmuste siltide arhiiv: %s"
+
+#: ../templates/taxonomy-event-tag.php:101
+msgid "Apologies, but no events were found for the requested tag. "
+msgstr "Vabandust, kuid antud sildiga ei leitud ühtegi sündmust."
+
+#: ../templates/single-event.php:49
+#, php-format
+msgid ""
+"This event is running from %1$s until %2$s. It is next occurring at %3$s"
+msgstr "See sündmus toimub alates %1$s kuni %2$s. Järgmine toimumine on %3$s"
+
+#: ../templates/single-event.php:53
+#, php-format
+msgid "This event finished on %s"
+msgstr "Sündmus on lõppenud %s"
+
+#: ../templates/single-event.php:58
+#, php-format
+msgid "This event is on %s"
+msgstr "Sündmus toimub %s"
+
+#: ../templates/single-event.php:67
+msgid "Pages:"
+msgstr "Lehed:"
+
+#: ../templates/single-event.php:76
+#, php-format
+msgid ""
+"This event was posted in %1$s by <a href=\"%5$s\">%4$s</a>. Bookmark the <a "
+"href=\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a>."
+msgstr ""
+"See sündmus postitati %1$s <a href=\"%5$s\">%4$s</a> poolt. Lisa <a href="
+"\"%2$s\" title=\"Püsiviide %3$s\" rel=\"bookmark\">püsiviide</a> "
+"järjehoidjaks."
+
+#: ../templates/single-event.php:78
+#, php-format
+msgid ""
+"This event was posted by <a href=\"%5$s\">%4$s</a>. Bookmark the <a href="
+"\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a>."
+msgstr ""
+"See sündmus postitati <a href=\"%5$s\">%4$s</a> poolt. Lisa <a href=\"%2$s\" "
+"title=\"Püsiviide %3$s\" rel=\"bookmark\">püsiviide</a> järjehoidjaks."
+
+#: ../templates/single-event.php:89
+msgid "Edit"
+msgstr "Muuda"
+
+#: ../templates/taxonomy-event-venue.php:31
+#, php-format
+msgid "Events at: %s"
+msgstr "Sündmused: %s"
+
+#: ../templates/taxonomy-event-venue.php:106
+msgid "Apologies, but no events were found for the requested venue. "
+msgstr "Vabandust, kuid antud toimumispaigas ei leitud ühtegi sündmust."
+
+#: ../includes/event-organiser-ajax.php:231
+msgid "Protected"
+msgstr "Kaitstud"
+
+#: ../includes/event-organiser-ajax.php:233
+msgid "Private"
+msgstr "Privaatne"
+
+#: ../includes/event-organiser-ajax.php:235
+msgid "Draft"
+msgstr "Mustand"
+
+#: ../includes/event-organiser-ajax.php:262
+msgid "Start"
+msgstr "Algus"
+
+#: ../includes/event-organiser-ajax.php:263
+msgid "End"
+msgstr "Lõpp"
+
+#: ../includes/event-organiser-ajax.php:288
+msgid "This event reoccurs"
+msgstr "See sündmus kordub"
+
+#: ../includes/event-organiser-ajax.php:294
+msgid "Edit Event"
+msgstr "Muuda sündmust"
+
+#: ../includes/event-organiser-ajax.php:313
+msgid "Delete this occurrence"
+msgstr "Kustuta toimumine"
+
+#: ../includes/event-organiser-ajax.php:327
+msgid "Break this series"
+msgstr "Katkesta seeria"
+
+#: ../includes/event-organiser-ajax.php:514
+msgid "All Day"
+msgstr "Terve päev"
+
+#: ../includes/event-organiser-ajax.php:517
+msgid "View"
+msgstr "Vaata"
+
+#: ../includes/event-organiser-ajax.php:518
+msgid "Add To Google Calendar"
+msgstr "Lisa Google Kalendrisse"
+
+#: ../includes/event-organiser-ajax.php:566
+msgid "No Venue"
+msgstr "Toimumiskoht puudub"
+
+#: ../includes/event-organiser-register.php:161
+msgid "Hour"
+msgstr "Tund"
+
+#: ../includes/event-organiser-register.php:162
+msgid "Minute"
+msgstr "Minut"
+
+#: ../includes/event-organiser-register.php:164
+msgid "days"
+msgstr "päevad"
+
+#: ../includes/event-organiser-register.php:166
+msgid "weeks"
+msgstr "nädalad"
+
+#: ../includes/event-organiser-register.php:168
+msgid "months"
+msgstr "kuud"
+
+#: ../includes/event-organiser-register.php:169
+msgid "year"
+msgstr "aasta"
+
+#: ../includes/event-organiser-register.php:170
+msgid "years"
+msgstr "aastad"
+
+#: ../includes/event-organiser-register.php:171
+msgid "every day"
+msgstr "iga päev"
+
+#: ../includes/event-organiser-register.php:172
+#, php-format
+msgid "every %d days"
+msgstr "iga %d. päev"
+
+#: ../includes/event-organiser-register.php:173
+msgid "every week on"
+msgstr "iga nädal"
+
+#: ../includes/event-organiser-register.php:174
+#, php-format
+msgid "every %d weeks on"
+msgstr "iga %d. nädal"
+
+#: ../includes/event-organiser-register.php:175
+msgid "every month on the"
+msgstr "iga kuu"
+
+#: ../includes/event-organiser-register.php:176
+#, php-format
+msgid "every %d months on the"
+msgstr "iga %d. kuu"
+
+#: ../includes/event-organiser-register.php:177
+msgid "every year on the"
+msgstr "iga aasta"
+
+#: ../includes/event-organiser-register.php:178
+#, php-format
+msgid "every %d years on the"
+msgstr "iga %d. aasta"
+
+#: ../includes/event-organiser-register.php:179
+msgid "This event will repeat"
+msgstr "See sündmus kordub"
+
+#: ../includes/event-organiser-register.php:181
+msgid "first"
+msgstr "esimene"
+
+#: ../includes/event-organiser-register.php:181
+msgid "second"
+msgstr "teine"
+
+#: ../includes/event-organiser-register.php:181
+msgid "third"
+msgstr "kolmas"
+
+#: ../includes/event-organiser-register.php:181
+msgid "fourth"
+msgstr "neljas"
+
+#: ../includes/event-organiser-register.php:181
+msgid "last"
+msgstr "viimane"
+
+#: ../includes/event-organiser-register.php:281
+msgid "Settings"
+msgstr "Sätted"
+
+#: ../includes/event-organiser-register.php:486
+msgid "New Feature: Add / Remove Dates"
+msgstr "Uus võimalus: lisa / eemalda kuupäevi"
+
+#: ../includes/event-organiser-register.php:487
+msgid ""
+"This link reveals a datepicker which highlights the dates on which the event "
+"occurs. Click a date to add or remove it from the event's schedule."
+msgstr ""
+"Viide kuvad kuupäeva valimise akna, milles on esile toodud kuupäevad, mil "
+"sündmus toimub. Kliki kuupäeval, et seda lisada või eemaldada sündmuse "
+"ajakavast."
+
+#: ../includes/event.php:190
+msgid "You are not allowed to delete events."
+msgstr "Sul pole luba sündmusi kustutada."
+
+#: ../includes/event.php:394
+msgid "Start date not provided."
+msgstr "Algusaeg puudub."
+
+#: ../includes/event.php:404
+msgid "Start date occurs after end date."
+msgstr "Algusaeg on hiljem kui lõppaeg."
+
+#: ../includes/event.php:407
+msgid "Schedule end date is before is before the start date."
+msgstr "Lõppaeg on enne algusaega."
+
+#: ../includes/event.php:419
+msgid "Schedule not recognised."
+msgstr "Tundmatu ajakava."
+
+#: ../includes/event.php:497
+msgid "Invalid monthly schedule (invalid ordinal)"
+msgstr "Vigane kuine graafik (vigane järgarg)"
+
+#: ../includes/event.php:684
+msgid "Occurrence note deleted. Occurrence not found"
+msgstr "Toimumise kirje kustutatud. Toimumist ei leitud"
+
+#: ../includes/event-organiser-event-functions.php:430
+msgid "one time only"
+msgstr "ainult üks kord"
+
+#: ../includes/event-organiser-event-functions.php:433
+msgid "custom reoccurrence"
+msgstr "kohandatud kordumine"
+
+#: ../includes/event-organiser-event-functions.php:493
+msgid "every year"
+msgstr "iga aasta"
+
+#: ../includes/event-organiser-event-functions.php:495
+#, php-format
+msgid "every %d years"
+msgstr "iga %d. aasta"
+
+#: ../includes/class-event-organiser-im-export.php:55
+#, php-format
+msgid "File Error encountered: %d"
+msgstr "Faili laadimise viga: %d"
+
+#: ../includes/class-event-organiser-im-export.php:62
+msgid "No file detected."
+msgstr "Ühtegi faili ei leitud."
+
+#: ../includes/class-event-organiser-im-export.php:65
+msgid ""
+"Invalid file uploaded. The file must be a ics calendar file of type 'text/"
+"calendar', no larger than 2MB."
+msgstr ""
+"Vigane üleslaaditud fail. Fail peab olema ICS kalendrifail ning suur kuni "
+"2MB."
+
+#: ../includes/class-event-organiser-im-export.php:68
+#, php-format
+msgid "File size: %01.2fkb. File type: %2$s"
+msgstr "Faili suurus: %01.2fkb. Faili tüüp: %2$s"
+
+#: ../includes/class-event-organiser-im-export.php:86
+msgid "Export Events"
+msgstr "Ekspordi sündmused"
+
+#: ../includes/class-event-organiser-im-export.php:87
+msgid ""
+"The export button below generates an ICS file of your events that can be "
+"imported in to other calendar applications such as Google Calendar."
+msgstr ""
+"Allolev ekspordi nupp genereerib ICS faili, mida saab importida teistesse "
+"kalendrirakendustesse nagu Google Calendar."
+
+#: ../includes/class-event-organiser-im-export.php:92
+msgid "Download Export File"
+msgstr "Expordi sündmused"
+
+#: ../includes/class-event-organiser-im-export.php:97
+msgid "Import Events"
+msgstr "Impordi sündmused"
+
+#: ../includes/class-event-organiser-im-export.php:99
+msgid "Import an ICS file."
+msgstr "Impordi ICS fail."
+
+#: ../includes/class-event-organiser-im-export.php:102
+msgid "Import venues"
+msgstr "Impordi toimumispaigad"
+
+#: ../includes/class-event-organiser-im-export.php:103
+msgid "Import categories"
+msgstr "Impordi rubriigid"
+
+#: ../includes/class-event-organiser-im-export.php:106
+msgid "Upload ICS file"
+msgstr "Lae ICS fail üles"
+
+#: ../includes/class-event-organiser-im-export.php:336
+msgid "You do not have sufficient permissions to import events."
+msgstr "Sul puuduvad õigused sündmuste importimiseks."
+
+#: ../includes/class-event-organiser-im-export.php:434
+#: ../includes/class-event-organiser-im-export.php:460
+#, php-format
+msgid "Line: %1$d"
+msgstr "Rida: %1$d"
+
+#: ../includes/class-event-organiser-im-export.php:475
+msgid "No events were imported."
+msgstr "Ühtegi sündmust ei imporditud."
+
+#: ../includes/class-event-organiser-im-export.php:477
+#, php-format
+msgid "There was an error with %1$d of %2$d events in the ical file"
+msgstr "%1$d / %2$d sündmustest esines viga."
+
+#: ../includes/class-event-organiser-im-export.php:481
+msgid "1 event was successfully imported"
+msgstr "1 sündmus edukalt imporditud"
+
+#: ../includes/class-event-organiser-im-export.php:483
+#, php-format
+msgid "%d events were successfully imported"
+msgstr "%d sündmust edukalt imporditud"
+
+#: ../includes/class-event-organiser-im-export.php:486
+msgid "1 venue was created"
+msgstr "1 toimumispaik loodud"
+
+#: ../includes/class-event-organiser-im-export.php:488
+#, php-format
+msgid "%d venues were created"
+msgstr "%d toimumispaika loodud"
+
+#: ../includes/class-event-organiser-im-export.php:492
+msgid "1 category was created"
+msgstr "1 rubriik loodud"
+
+#: ../includes/class-event-organiser-im-export.php:494
+#, php-format
+msgid "%d categories were created"
+msgstr "%d rubriiki loodud"
+
+#: ../includes/class-event-organiser-im-export.php:733
+msgid "Invalid date. Date expected in YYYYMMDD format."
+msgstr "Vigane kuupäev. Kuupäev peab olema vormingus YYYYMMDD."
+
+#: ../includes/class-event-organiser-im-export.php:765
+msgid ""
+"Invalid datetime. Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss "
+"format."
+msgstr ""
+"Vigane kuupäev. Kuupäev peab olema vormingus YYYYMMDDTHHiissZ või "
+"YYYYMMDDTHHiiss."
+
+#: ../includes/event-organiser-cpt.php:28
+msgid "Event Venues"
+msgstr "Sündmuse toimumispaigad"
+
+#: ../includes/event-organiser-cpt.php:31
+#: ../classes/class-eo-event-list-widget.php:47
+#: ../classes/class-eo-calendar-widget.php:63
+msgid "All Venues"
+msgstr "Kõik toimumispaigad"
+
+#: ../includes/event-organiser-cpt.php:35
+msgid "New Venue Name"
+msgstr "Uue toimumispaiga nimi"
+
+#: ../includes/event-organiser-cpt.php:36
+msgid "No venues found"
+msgstr "Ühtegi toimumispaiga ei leitud"
+
+#: ../includes/event-organiser-cpt.php:37
+msgid "Add or remove venues"
+msgstr "Lisa või eemalda toimumispaiku"
+
+#: ../includes/event-organiser-cpt.php:38
+msgid "Separate venues with commas"
+msgstr "Eralda toimumispaigad komaga"
+
+#: ../includes/event-organiser-cpt.php:60
+msgid "Search Categories"
+msgstr "Otsi rubriike"
+
+#: ../includes/event-organiser-cpt.php:61
+msgid "All Categories"
+msgstr "Kõik rubriigid"
+
+#: ../includes/event-organiser-cpt.php:62
+#: ../includes/event-organiser-cpt.php:63
+msgid "Parent Category"
+msgstr "Ülemrubriik"
+
+#: ../includes/event-organiser-cpt.php:64
+msgid "Edit Category"
+msgstr "Muuda rubriik"
+
+#: ../includes/event-organiser-cpt.php:65
+msgid "Update Category"
+msgstr "Uuenda rubriik"
+
+#: ../includes/event-organiser-cpt.php:66
+msgid "Add New Category"
+msgstr "Lisa uus rubriik"
+
+#: ../includes/event-organiser-cpt.php:67
+msgid "New Category Name"
+msgstr "Uus rubriigi nimi"
+
+#: ../includes/event-organiser-cpt.php:68
+msgid "No categories found"
+msgstr "Ühtegi rubriiki ei leitud"
+
+#: ../includes/event-organiser-cpt.php:92
+msgid "Search Tags"
+msgstr "Otsi silte"
+
+#: ../includes/event-organiser-cpt.php:93
+msgid "All Tags"
+msgstr "Kõik sildid"
+
+#: ../includes/event-organiser-cpt.php:94
+msgid "Popular Tags"
+msgstr "Populaarsed sildid"
+
+#: ../includes/event-organiser-cpt.php:97
+msgid "Edit Tag"
+msgstr "Muuda silti"
+
+#: ../includes/event-organiser-cpt.php:98
+msgid "Update Tag"
+msgstr "Uuenda silti"
+
+#: ../includes/event-organiser-cpt.php:99
+msgid "Add New Tag"
+msgstr "Lisa uus silt"
+
+#: ../includes/event-organiser-cpt.php:100
+msgid "New Tag Name"
+msgstr "Uus sildi nimi"
+
+#: ../includes/event-organiser-cpt.php:101
+msgid "No tags found"
+msgstr "Ühtegi silti ei leitud"
+
+#: ../includes/event-organiser-cpt.php:102
+msgid "Choose from the most used tags"
+msgstr "Vali enimkasutatud siltide hulgast"
+
+#: ../includes/event-organiser-cpt.php:103
+msgid "Tags"
+msgstr "Sildid"
+
+#: ../includes/event-organiser-cpt.php:104
+msgid "Add or remove tags"
+msgstr "Lisa või eemalda silte"
+
+#: ../includes/event-organiser-cpt.php:105
+msgid "Separate tags with commas"
+msgstr "Eralda sildid komaga"
+
+#: ../includes/event-organiser-cpt.php:141
+msgid "Add New Event"
+msgstr "Lisa uus sündmus"
+
+#: ../includes/event-organiser-cpt.php:143
+msgid "New Event"
+msgstr "Uus sündmus"
+
+#: ../includes/event-organiser-cpt.php:144
+msgid "All events"
+msgstr "Kõik sündmused"
+
+#: ../includes/event-organiser-cpt.php:145
+msgid "View Event"
+msgstr "Vaata sündmust"
+
+#: ../includes/event-organiser-cpt.php:146
+msgid "Search events"
+msgstr "Otsi sündmusi"
+
+#: ../includes/event-organiser-cpt.php:147
+msgid "No events found"
+msgstr "Ühtegi sündmust ei leitud"
+
+#: ../includes/event-organiser-cpt.php:148
+msgid "No events found in Trash"
+msgstr "Prügikastist ei leitud ühtegi sündmust"
+
+#: ../includes/event-organiser-cpt.php:210
+#, php-format
+msgid "Event updated. <a href=\"%s\">View event</a>"
+msgstr "Sündmus uuendatud. <a href=\"%s\">Vaata sündmust</a>"
+
+#: ../includes/event-organiser-cpt.php:211
+msgid "Custom field updated."
+msgstr "Lisaväli uuendatud."
+
+#: ../includes/event-organiser-cpt.php:212
+msgid "Custom field deleted."
+msgstr "Lisaväli kustutatud."
+
+#: ../includes/event-organiser-cpt.php:213
+msgid "Event updated."
+msgstr "Sündmus uuendatud."
+
+#: ../includes/event-organiser-cpt.php:215
+#, php-format
+msgid "Event restored to revision from %s"
+msgstr "Sündmus taastatud versioonist %s"
+
+#: ../includes/event-organiser-cpt.php:216
+#, php-format
+msgid "Event published. <a href=\"%s\">View event</a>"
+msgstr "Sündmus avaldatud. <a href=\"%s\">Vaata sündmust</a>"
+
+#: ../includes/event-organiser-cpt.php:217
+msgid "Event saved."
+msgstr "Sündmus salvestatud."
+
+#: ../includes/event-organiser-cpt.php:218
+#, php-format
+msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
+msgstr ""
+"Sündmus postitatud. <a target=\"_blank\" href=\"%s\">Sündmuse eelvaade</a>"
+
+#: ../includes/event-organiser-cpt.php:219
+#, php-format
+msgid ""
+"Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
+"\">Preview event</a>"
+msgstr ""
+"Sündmus planeeritud: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
+"\">Sündmuse eelvaade</a>"
+
+#: ../includes/event-organiser-cpt.php:221
+msgid "M j, Y @ G:i"
+msgstr "j. M Y H:i"
+
+#: ../includes/event-organiser-cpt.php:222
+#, php-format
+msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
+msgstr ""
+"Sündmuse mustand uuendatud. <a target=\"_blank\" href=\"%s\">Sündmuse "
+"eelvaade</a>"
+
+#: ../includes/event-organiser-cpt.php:415
+msgid "Creating events"
+msgstr "Sündmuste loomine"
+
+#: ../includes/event-organiser-cpt.php:416
+msgid "Creating events:"
+msgstr "Sündmuste loomine:"
+
+#: ../includes/event-organiser-cpt.php:418
+msgid ""
+"The start date is the date the event starts. If the event is a reoccuring "
+"event, this is the start date of the first occurrence."
+msgstr ""
+"Alguskuupäev on kuupäev, millal sündmus algab. Kui sündmus on korduv, siis "
+"see on esimese sündmuse kuupäev."
+
+#: ../includes/event-organiser-cpt.php:419
+msgid ""
+"The end date is the date the event finishes. If the event is a reoccuring "
+"event, this is the end date of the first occurrence."
+msgstr ""
+"Lõppkuupäev on kuupäev, millal sündmus lõpeb. Kui sündmus on korduv, siis "
+"see on viimase sündmuse kuupäev."
+
+#: ../includes/event-organiser-cpt.php:420
+msgid ""
+"All dates and times must be entered in the specified format. This format can "
+"changed in the settings page."
+msgstr ""
+"Kõik kuupäevad ja kellaajad peavad olema sisestatud antud vormingus. "
+"Vormingut on võimalik muuta sätete lehel."
+
+#: ../includes/event-organiser-cpt.php:425
+msgid "Repeating events"
+msgstr "Korduvad sündmused"
+
+#: ../includes/event-organiser-cpt.php:426
+msgid ""
+"To repeat an event according to some regular pattern, use the reocurrence "
+"dropdown menu to select how the event is to repeat. Further options then "
+"appear, "
+msgstr ""
+"Sündmuste kordamiseks regulaarse mustri järgi, kasuta kordumiste rippmenüüd, "
+"et määrata kuidas sündmused korduvad. Seejärel ilmuvad täpsustavad valikud,"
+
+#: ../includes/event-organiser-cpt.php:428
+msgid "Specify how regularly the event should repeat (default 1)"
+msgstr "Vali kui tihti sündmus peaks korduma (vaikimisi 1)"
+
+#: ../includes/event-organiser-cpt.php:429
+msgid ""
+"Choose the reoccurrence end date. No further occurrences are added after "
+"this date, but an occurrence that starts before may finish after this date."
+msgstr ""
+"Vali kordumise lõppkuupäev. Peale seda kuupäeva uusi toimumisi ei lisata, "
+"kuid toimumine, mis algab enne määratud kuupäeva võib lõppeda peale seda."
+
+#: ../includes/event-organiser-cpt.php:430
+msgid ""
+"If monthly reoccurrence is selected, select whether this should repeat on "
+"that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
+"on the third Tuesday) "
+msgstr ""
+"Kui kuine kordumine on valitud, siis vali, kas kordumine peaks toimuma "
+"mingil päeval kuus (näiteks 24.) või mingi nädalapäeval (näiteks 3. "
+"teisipäeval)"
+
+#: ../includes/event-organiser-cpt.php:431
+msgid ""
+"If weekly reoccurrence is selected, select which days of the week the event "
+"should be repeated. If no days are selected, the day of the start date is "
+"used"
+msgstr ""
+"Kui nädalane kordumine on valitud, siis täpsusta, millisel nädalapäeval "
+"tuleb sündmus korrata. Kui ühtegi päeva pole valitud, siis kasutatakse "
+"alguskuupäeva nädalapäeva"
+
+#: ../includes/event-organiser-cpt.php:436
+#: ../includes/event-organiser-cpt.php:437
+msgid "Selecting a venue"
+msgstr "Valin toimumispaika"
+
+#: ../includes/event-organiser-cpt.php:439
+msgid "Use the venues input field to search for existing venues"
+msgstr "Kasuta toimumispaiga sisendkasti, et otsida olemasolevate hulgast"
+
+#: ../includes/event-organiser-cpt.php:440
+msgid ""
+"Only pre-existing venues can be selected. To add a venue, go to the venues "
+"page."
+msgstr ""
+"Ainult olemasolevaid toimumispaiku saab valida. Uue lisamiseks, mine "
+"toimumispaikade lehele."
+
+#: ../includes/event-organiser-cpt.php:450
+#: ../includes/event-organiser-cpt.php:469
+msgid "Overview"
+msgstr "Ülevaade"
+
+#: ../includes/event-organiser-cpt.php:451
+msgid ""
+"This is the list of all saved events. Note that <strong> reoccurring events "
+"appear as a single row </strong> in the table and the start and end date "
+"refers to the first occurrence of that event."
+msgstr ""
+"See on nimekiri kõigist salvestatud sündmustest. Pane tähele, et "
+"<strong>korduvad sündmused kuvatakse ühe reana</strong>, ning alguskuupäeva "
+"ja lõppkuupäeva viitavad esimesele sündmusele."
+
+#: ../includes/event-organiser-cpt.php:457
+msgid ""
+"Hovering over a row in the venues list will display action links that allow "
+"you to manage that venue. You can perform the following actions:"
+msgstr ""
+"Minnes hiirega toimumispaikade tabeli rea kohale kuvatakse võimalikud "
+"haldamise toimingud. On võimalik sooritada järgmisi toiminguid:"
+
+#: ../includes/event-organiser-cpt.php:459
+msgid ""
+"Edit takes you to the editing screen for that venue. You can also reach that "
+"screen by clicking on the venue title."
+msgstr ""
+"Muuda viib sind antud toimumispaiga redigeerimislehele. Ka pealkirjal "
+"klikkides on võimalik sinna lehele saada."
+
+#: ../includes/event-organiser-cpt.php:460
+msgid "Delete will permanently remove the venue"
+msgstr "Kustuta eemaldab jäädavalt toimumispaiga."
+
+#: ../includes/event-organiser-cpt.php:461
+msgid "View will take you to the venue's page"
+msgstr "Vaata viib sind toimumispaiga lehele."
+
+#: ../includes/event-organiser-cpt.php:470
+msgid ""
+"This page shows all (occurrances of) events. You can view the summary of an "
+"event by clicking on it. If you have the necessary permissions, a link to "
+"the event's edit page will appear also."
+msgstr ""
+"See leht kuvab kõik sündmused (ka kõik kordumised). Sündmusel klikkides on "
+"võimalik näha kokkuvõtet. Kui on olemas vajalikud õigused, siis kuvatakse ka "
+"viide sündmuse muutmiseks."
+
+#: ../includes/event-organiser-cpt.php:471
+msgid ""
+"By clicking the relevant tab, you can view events in Month, Week or Day "
+"mode. You can also filter the events by events by category and venue. The "
+"'go to date' button allows you to quickly jump to a specific date."
+msgstr ""
+"Klikkides vastavale lipikule, on võimalik vaadata sündmuseid kuu, nädala või "
+"päeva vaates. Samuti on võimalik filtreerida sündmusi rubriikide ja "
+"toimumispaikade alusel. 'Mine kuupäevale' nupp võimaldab kiirelt liikuda "
+"kindlale kuupäevale."
+
+#: ../includes/event-organiser-cpt.php:475
+msgid "Add Event"
+msgstr "Lisa sündmus"
+
+#: ../includes/event-organiser-cpt.php:476
+msgid ""
+"You can create an event on this Calendar, by clicking on day or dragging "
+"over multiple days (in Month view) or multiple times (in Week and Day view). "
+"You can give the event a title, specify a venue and provide a descripton. "
+"The event can be immediately published or saved as a draft. In any case, the "
+"event is created and you are forwarded to that event's edit page."
+msgstr ""
+"Kalendris saab luua sündmusi, klikkides päeval või lohistades üle mitme "
+"päeva (kuu vaates) või lohistades üle mitme kellaaja (nädala ja päeva "
+"vaates). Sündmusele saab anda pealkirja, määrata toimumispaiga ja lisada "
+"kirjelduse. Sündmuse saab koheselt avaldada või salvestada mustandina. Igal "
+"juhul luuakse sündmus ning suunatakse edasi sündmuse muutmise lehele. "
+
+#: ../includes/event-organiser-cpt.php:481
+msgid "For more information"
+msgstr "Lisainformatsiooni jaoks"
+
+#: ../includes/event-organiser-cpt.php:481
+#, php-format
+msgid "See the <a %s> documentation</a>"
+msgstr "Uuri <a %s> dokumentatsiooni</a>"
+
+#: ../includes/event-organiser-cpt.php:597
+msgid "Color"
+msgstr "Värv"
+
+#: ../includes/event-organiser-cpt.php:603
+msgid "Assign the category a colour."
+msgstr "Määra rubriigile värv."
+
+#: ../classes/class-eo-venue-list-table.php:23
+msgid "venue"
+msgstr "toimumispaik"
+
+#: ../classes/class-eo-venue-list-table.php:24
+msgid "venues"
+msgstr "toimumispaigad"
+
+#: ../classes/class-eo-venue-list-table.php:70
+#: ../classes/class-eo-venue-list-table.php:125
+msgid "Delete"
+msgstr "Kustuta"
+
+#: ../classes/class-eo-event-list-widget.php:22
+msgid "Displays a list of events"
+msgstr "Kuvab sündmuste nimekirja"
+
+#: ../classes/class-eo-event-list-widget.php:31
+#: ../classes/class-eo-event-list-widget.php:58
+#: ../classes/class-eo-calendar-widget.php:30
+#: ../classes/class-eo-agenda-widget.php:25
+msgid "Title"
+msgstr "Pealkiri"
+
+#: ../classes/class-eo-event-list-widget.php:35
+msgid "Number of events"
+msgstr "Sündmuste arv"
+
+#: ../classes/class-eo-event-list-widget.php:39
+#: ../classes/class-eo-calendar-widget.php:51
+msgid "Event categories"
+msgstr "Sündmuse rubriigid"
+
+#: ../classes/class-eo-event-list-widget.php:41
+#: ../classes/class-eo-calendar-widget.php:54
+msgid "List category slug(s), seperate by comma. Leave blank for all"
+msgstr ""
+"Nimeta rubriikide kirjeldused, eralda komaga. Jäta tühjaks, et valida kõik"
+
+#: ../classes/class-eo-event-list-widget.php:55
+msgid "Order by"
+msgstr "Järjesta"
+
+#: ../classes/class-eo-event-list-widget.php:57
+msgid "Start date"
+msgstr "Algus kuupäev"
+
+#: ../classes/class-eo-event-list-widget.php:61
+msgid "ASC"
+msgstr "ASC"
+
+#: ../classes/class-eo-event-list-widget.php:62
+msgid "DESC"
+msgstr "DESC"
+
+#: ../classes/class-eo-event-list-widget.php:66
+#: ../classes/class-eo-calendar-widget.php:40
+msgid "Include past events"
+msgstr "Kaasa toimunud sündmused"
+
+#: ../classes/class-eo-event-list-widget.php:74
+msgid "Template (leave blank for default)"
+msgstr "Mall (jäta tühjaks, et valida vaikimisi)"
+
+#: ../classes/class-eo-event-list-widget.php:78
+msgid "'No events' message"
+msgstr "'Sündmused puuduvad' teade"
+
+#: ../classes/class-eo-calendar-widget.php:17
+msgid "Displays a calendar of your events"
+msgstr "Kuvab minu sündmuste kalendri"
+
+#: ../classes/class-eo-calendar-widget.php:62
+msgid "Event venue"
+msgstr "Sündmuse toimumispaik"
+
+#: ../classes/class-eo-calendar-widget.php:188
+msgid "Previous month"
+msgstr "Eelmine kuu"
+
+#: ../classes/class-eo-calendar-widget.php:191
+msgid "Next month"
+msgstr "Järgmine kuu"
+
+#: ../classes/class-eventorganiser-shortcodes.php:335
+msgid "There is no excerpt because this is a protected post."
+msgstr "Väljavõte puudub kuna see on kaitstud postitus."
+
+#: ../classes/class-eo-agenda-widget.php:16
+msgid "Displays a list of events, grouped by date"
+msgstr "Kuvab sündmuse nimekirja, grupeeritud kuupäeva järgi"
+
+#: ../classes/class-eo-agenda-widget.php:17
+msgid "Events Agenda"
+msgstr "Sündmuste eesmärk"
+
+#: ../classes/class-eo-agenda-widget.php:29
+msgid "Group by"
+msgstr "Grupeeri"
+
+#: ../classes/class-eo-agenda-widget.php:37
+msgid "Group date format"
+msgstr "Grupeeritud kuupäevavorming"
+
+#: ../classes/class-eo-agenda-widget.php:41
+msgid "Event date/time format"
+msgstr "Sündmuse kuupäevavorming"
+
+#, fuzzy
+#~ msgid "Year archive"
+#~ msgstr "Sündmuste arhiiv:"
+
+#, fuzzy
+#~ msgid "Month archive"
+#~ msgstr "Sündmuste arhiiv:"
+
+#~ msgid "Day archive"
+#~ msgstr "Päeva arhiiv"
+
+#~ msgid "What's this?"
+#~ msgstr "Mis see on?"
+
+#~ msgid "Found a bug?"
+#~ msgstr "Leidsin vea?"
+
+#~ msgid "Have a question?"
+#~ msgstr "Küsimusi?"
+
+#~ msgid "Show More"
+#~ msgstr "Näita rohkem"
+
+#~ msgid "Show Less"
+#~ msgstr "Näita vähem"
+
+#~ msgid "Hide dates"
+#~ msgstr "Peida kuupäevad"
+
+#~ msgid "City"
+#~ msgstr "Linn"
+
+#~ msgid "State / Province"
+#~ msgstr "Maakond"
+
+#, fuzzy
+#~ msgid "Events: "
+#~ msgstr "Sündmused"
+
+#~ msgid "Upcoming Dates"
+#~ msgstr "Tulevad kuupäevad"
+
+#~ msgid "Save Changes"
+#~ msgstr "Salvesta muudatused"
+
+#~ msgid "Search for a venue. To add a venues go to the venue page."
+#~ msgstr "Otsi toimumispaika. Toimumispikade lisamiseks mine nende lehele."
+
+#~ msgid "Inserting event error: Post or Event data must be supplied."
+#~ msgstr "Sündmuse sisestusviga: Postituse või sündmuse andmed tuleb määrata."
+
+#~ msgid ""
+#~ "Inserting event error: Event data and associated post id must be supplied."
+#~ msgstr ""
+#~ "Sündmuse sisestusviga: Sündmuse andmed ja seotud postituse id tuleb "
+#~ "määrata."
+
+#~ msgid "Event Organiser error: Invalid post"
+#~ msgstr "Event Organiser viga: Vigane postitus"
+
+#~ msgid "Venue name or slug is empty"
+#~ msgstr "Toimumispaiga nimi või kirjeldus on tühi."
+
+#~ msgid ""
+#~ "There was a problem with locating the latitude and longitude co-ordinates "
+#~ "of the venue."
+#~ msgstr "Toimumispaiga koordinaatide määramisega tekkis probleem."

@@ -64,6 +64,7 @@ A big thank you to those who have provided translations for Event Organiser
 * Polish - [Bartosz Arendt](http://digitalfactory.pl/)
 * Russian - [Sergei](www.vortexinter.ru)
 * Hungarian - Csaba Erdei 
+* Estonian - Kristjan Roosipuu
 
 == Installation ==
 
