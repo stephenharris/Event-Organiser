@@ -859,7 +859,7 @@ function eventorganiser_inline_help( $title, $content, $echo = false ){
 	
 	wp_localize_script( 'eo-inline-help', 'eoHelp', $help );
 	wp_enqueue_script( 'eo-inline-help' );
-	wp_enqueue_style( 'eventorganiser-admin-style' );
+	wp_enqueue_style( 'eventorganiser-style' );
 
 	$id = count($help)-1;
 	$src = EVENT_ORGANISER_URL.'css/images/help-14.png';
