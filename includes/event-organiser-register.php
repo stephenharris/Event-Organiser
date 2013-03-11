@@ -342,6 +342,29 @@ function eventorganiser_clear_cron_jobs(){
 	wp_clear_scheduled_hook('eventorganiser_delete_expired');
 }
 
+/**
+ * Returns the time in seconds until a specified cron job is scheduled.
+ *
+ *@since 1.8
+ *@see http://wordpress.stackexchange.com/questions/83270/when-does-next-cron-job-run-time-from-now/83279#83279
+ *
+ *@param string $cron_name The name of the cron job
+ *@return int|bool The time in seconds until the cron job is scheduled. False if
+ *it could not be found.
+*/
+function eventorganiser_get_next_cron_time( $cron_name ){
+
+    foreach( _get_cron_array() as $timestamp => $crons ){
+
+        if( in_array( $cron_name, array_keys( $crons ) ) ){
+            return $timestamp - time();
+        }
+
+    }
+
+    return false;
+}
+
 
 /**
  * Callback for the delete expired events cron job. Deletes events that finished at least 24 hours ago.

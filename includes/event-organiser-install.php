@@ -102,20 +102,18 @@
 
 	//Flush rewrite rules only on activation, and after CPT/CTs has been registered.
 	flush_rewrite_rules();
-
 }
 
 /**
  * Deactivate routine
  *
- * Clears cron jobs and flushes rewrite rules
+ * Flushes rewrite rules. Don't clear cron jobs, as these won't be re-added.
  *
  *@since 1.5
  *@access private
  *@ignore
 */
 function eventorganiser_deactivate(){
-	eventorganiser_clear_cron_jobs();
 	flush_rewrite_rules();
     }
 
