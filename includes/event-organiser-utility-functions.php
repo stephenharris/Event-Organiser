@@ -563,14 +563,16 @@ function eventorganiser_radio_field( $args ){
 function eventorganiser_select_field($args){
 
 	$args = wp_parse_args($args,array(
-			'selected'=>'', 'help' => '', 'options'=>'', 'name'=>'', 'echo'=>1,
+			'selected'=>'', 'help' => null, 'options'=>'', 'name'=>'', 'echo'=>1,
 			'label_for'=>'','class'=>'','disabled'=>false,'multiselect'=>false,
+			'inline_help' => false
 		));	
 
 	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$name = isset($args['name']) ?  $args['name'] : '';
 	$selected = $args['selected'];
-	$class = sanitize_html_class($args['class']);
+	$classes = array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) );
+	$class = implode( ' ', $classes );
 	$multiselect = ($args['multiselect'] ? 'multiple' : '' );
 	$disabled = ($args['disabled'] ? 'disabled="disabled"' : '' );
 
@@ -594,9 +596,9 @@ function eventorganiser_select_field($args){
 				$html .= sprintf('<option value="%s" %s> %s </option>',esc_attr($value),$_selected, esc_html($label));
 			}
 		}
-	$html .= '</select>';
+	$html .= '</select>'. $args['inline_help'];
 
-	if(!empty($args['help'])){
+	if( isset( $args['help'] ) ){
 		$html .= '<p class="description">'.esc_html($args['help']).'</p>';
 	}
 
@@ -627,10 +629,10 @@ function eventorganiser_select_field($args){
  */
 function eventorganiser_text_field($args){
 
-	$args = wp_parse_args($args,
+	$args = wp_parse_args( $args,
 		array(
-		 	'type' => 'text', 'value'=>'', 'placeholder' => '','label_for'=>'',
-			 'size'=>false, 'min' => false, 'max' => false, 'style'=>false, 'echo'=>true,
+		 	'type' => 'text', 'value'=>'', 'placeholder' => '','label_for'=>'', 'inline_help' => false,
+			 'size'=>false, 'min' => false, 'max' => false, 'style'=>false, 'echo'=>true, 'data'=>false
 			)
 		);		
 
@@ -638,7 +640,8 @@ function eventorganiser_text_field($args){
 	$name = isset($args['name']) ?  $args['name'] : '';
 	$value = $args['value'];
 	$type = $args['type'];
-	$class = isset($args['class']) ? esc_attr($args['class'])  : '';
+	$classes = array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) );
+	$class = implode( ' ', $classes );
 
 	$min = (  $args['min'] !== false ?  sprintf('min="%d"', $args['min']) : '' );
 	$max = (  $args['max'] !== false ?  sprintf('max="%d"', $args['max']) : '' );
@@ -646,15 +649,25 @@ function eventorganiser_text_field($args){
 	$style = (  !empty($args['style']) ?  sprintf('style="%s"', $args['style']) : '' );
 	$placeholder = ( !empty($args['placeholder']) ? sprintf('placeholder="%s"', $args['placeholder']) : '');
 	$disabled = ( !empty($args['disabled']) ? 'disabled="disabled"' : '' );
-	$attributes = array_filter(array($min,$max,$size,$placeholder,$disabled, $style));
 
-	$html = sprintf('<input type="%s" name="%s" class="%s regular-text ltr" id="%s" value="%s" autocomplete="off" %s />',
-		esc_attr($type),
-		esc_attr($name),
-		sanitize_html_class($class),
-		esc_attr($id),
-		esc_attr($value),
-		implode(' ', $attributes)
+	//Custom data-* attributes
+	$data = '';
+	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
+		foreach( $args['data'] as $key => $attr_value ){
+			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+		}
+	}
+
+	$attributes = array_filter( array($min,$max,$size,$placeholder,$disabled, $style, $data ) );
+
+	$html = sprintf('<input type="%s" name="%s" class="%s regular-text ltr" id="%s" value="%s" autocomplete="off" %s /> %s',
+		esc_attr( $type ), 
+		esc_attr( $name ),
+		$class,
+		esc_attr( $id ),
+		esc_attr( $value ),
+		implode(' ', $attributes),
+		 $args['inline_help']
 	);
 
 	if( isset($args['help']) ){
@@ -849,7 +862,7 @@ function eventorganiser_cache_set( $key, $value, $group, $expire = 0 ){
  * @param bool $echo Whether the link HTML should be printed as well as returned.
  * @return string
  */
-function eventorganiser_inline_help( $title, $content, $echo = false ){
+function eventorganiser_inline_help( $title, $content, $echo = false, $type = 'help' ){
 	static $help = array();
 	
 	$help[] = array(
@@ -858,18 +871,26 @@ function eventorganiser_inline_help( $title, $content, $echo = false ){
 	);
 	
 	wp_localize_script( 'eo-inline-help', 'eoHelp', $help );
-	wp_enqueue_script( 'eo-inline-help' );
-	wp_enqueue_style( 'eventorganiser-style' );
+
+	//Ensure style is called after  WP styles
+	add_action( 'admin_footer', '_eventorganiser_enqueue_inline_help_scripts', 100 );
 
 	$id = count($help)-1;
-	$src = EVENT_ORGANISER_URL.'css/images/help-14.png';
+	$src = EVENT_ORGANISER_URL."css/images/{$type}-14.png";
 	
-	$link = sprintf( '<a href="#" id="%s" class="eo-inline-help"><img src="%s" width="16" height="16"></a>', 'eo-inline-help-' . $id, $src );
+	$link = sprintf( '<a href="#" id="%s" class="eo-inline-help eo-%s-inline"><img src="%s" width="16" height="16"></a>', 
+				'eo-inline-help-' . $id, 
+				$type, 
+				$src 
+			);
 	
 	if( $echo )
 		echo $link;
 	
 	return $link;
 }
-	
+function _eventorganiser_enqueue_inline_help_scripts(){
+	wp_enqueue_script( 'eo-inline-help' );
+	wp_enqueue_style( 'eventorganiser-style' );
+}
 ?>
