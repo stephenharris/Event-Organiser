@@ -71,9 +71,20 @@ class EO_Event_List_Widget extends WP_Widget{
 	<input type="checkbox" id="<?php echo $this->get_field_id('group_events_by'); ?>" value="series" name="<?php echo $this->get_field_name('group_events_by'); ?>" <?php checked($instance['group_events_by'],'series');?> />
   </p>
   <p>
-    <label for="<?php echo $this->get_field_id('template'); ?>"><?php _e('Template (leave blank for default)', 'eventorganiser'); ?>  </label>
+    <label for="<?php echo $this->get_field_id('template'); ?>">
+	<?php 
+		_e('Template (leave blank for default)', 'eventorganiser'); 
+		echo eventorganiser_inline_help( 
+			__( 'Event list widget placeholders', 'eventorganiser' ),
+			sprintf(
+					__( 'You can use specified tags as placeholders for event information which you want to appear in the widget. <a href="%s" target="_blank"> Find out more</a>.', 'eventorganiser' ),
+					'http://wp-event-organiser.com/documentation/widgets/#whatistemplate'
+				)
+			);
+	 ?>
+	</label>
 	  <input  id="<?php echo $this->get_field_id('template'); ?>" class="widefat" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo esc_attr($instance['template']);?>" />
-	<small><a href="http://wp-event-organiser.com/documentation/widgets/#whatistemplate" target="_blank"><?php _e("What's this?","eventorganiser"); ?></a></small>
+
   </p>
   <p>
     <label for="<?php echo $this->get_field_id('no_events'); ?>"><?php _e("'No events' message", 'eventorganiser'); ?>  </label>
