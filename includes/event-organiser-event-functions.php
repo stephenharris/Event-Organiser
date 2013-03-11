@@ -1128,6 +1128,8 @@ function eo_break_occurrence( $post_id, $event_id ){
 	global $post;
 	$post = get_post( $post_id );
 	setup_postdata( $post_id );
+
+	do_action( 'eventorganiser_pre_break_occurrence', $post_id, $event_id );
 	
 	$tax_input = array();
 	foreach ( array( 'event-category', 'event-tag', 'event-venue' ) as $tax ):
@@ -1163,8 +1165,11 @@ function eo_break_occurrence( $post_id, $event_id ){
 
 		$post_custom = get_post_custom( $post_id );
 		foreach ( $post_custom as $meta_key => $meta_values ) {
+
 			//Don't copy these
-			if( in_array( $meta_key, array( '_edit_last', '_edit_last', '_edit_lock' ) ) )
+			$ignore_meta = array( '_eo_tickets', '_edit_last', '_edit_last', '_edit_lock' ) ;
+			$ignore_meta = apply_filters( 'eventorganiser_breaking_occurrence_exclude_meta', $ignore_meta );
+			if( in_array( $meta_key, $ignore_meta ) )
 				continue;
 		
 			//Don't copy event meta
@@ -1180,6 +1185,9 @@ function eo_break_occurrence( $post_id, $event_id ){
 		}
 	}
 	_eventorganiser_delete_calendar_cache();
+
+	do_action( 'eventorganiser_occurrence_broken', $post_id, $event_id, $new_event_id );
+
 	wp_reset_postdata();
 	return $new_event_id;
 }
