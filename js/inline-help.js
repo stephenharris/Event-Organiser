@@ -15,7 +15,10 @@ jQuery(document).ready(function($) {
 			},
 			hide: 'unfocus',
 			style: {
-				classes: 'qtip-wiki qtip-light qtip-shadow',
+				classes: 'qtip-wiki qtip-light qtip-shadow'
+			},
+			position : {
+				 viewport: $(window)
 			}
 		});
 	});
