@@ -70,6 +70,19 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .ui-combobox-input {margin: 0;padding: 0.3em;}
 .eo-venue-combobox-buttons{position: absolute;width:4.5em;}
 
+#eo_occurrence_datepicker .ui-datepicker .ui-state-default a,
+#eo_occurrence_datepicker .ui-datepicker .ui-state-active a{color:#FFF;
+background: #7eacbf; /* Old browsers */
+background: -moz-linear-gradient(top, #7eacbf 0%, #21759b 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7eacbf), color-stop(100%,#21759b)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #7eacbf 0%,#21759b 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #7eacbf 0%,#21759b 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #7eacbf 0%,#21759b 100%); /* IE10+ */
+background: linear-gradient(to bottom, #7eacbf 0%,#21759b 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7eacbf', endColorstr='#21759b',GradientType=0 ); /* IE6-9 */
+}
+
+
 /*
  * Timepicker stylesheet
  * Highly inspired from datepicker
@@ -108,6 +121,14 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
  * Plugins: svg ajax tips modal viewport imagemap ie6
  * Styles: basic css3
  */
+a.eo-inline-help img {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	text-decoration: none;
+	margin-left:3px;
+	margin-bottom:-3px;
+}
 
 /* Core qTip styles */
 .qtip, .qtip{
