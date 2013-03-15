@@ -240,9 +240,9 @@ RRULE:<?php echo $reoccurrence_rule;?>
 			$exclude_strings[] = $exclude->format('Ymd');
 		}
 	}?>
-EXDATE<?php echo $vdate;?>:<?php echo implode(',',$exclude_strings);
+EXDATE<?php echo $vdate;?>:<?php echo implode(',',$exclude_strings);?>
 
-endif; ?>
+<?php endif;?>
 <?php if( !empty($schedule_data['include']) ):
 	$include_strings = array();
 		foreach ( $schedule_data['include'] as $include ){
