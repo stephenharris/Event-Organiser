@@ -199,6 +199,8 @@ require_once(EVENT_ORGANISER_DIR.'includes/event.php');
 require_once(EVENT_ORGANISER_DIR.'classes/class-eo-agenda-widget.php');
 require_once(EVENT_ORGANISER_DIR.'classes/class-eo-event-list-widget.php');
 require_once(EVENT_ORGANISER_DIR.'classes/class-eo-calendar-widget.php');
+require_once(EVENT_ORGANISER_DIR.'classes/class-eo-widget-categories.php');
+require_once(EVENT_ORGANISER_DIR.'classes/class-eo-widget-venues.php');
 require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-shortcodes.php');
 
 add_action( 'widgets_init', 'eventorganiser_widgets_init' );
@@ -207,5 +209,7 @@ function eventorganiser_widgets_init(){
 	register_widget( 'EO_Event_List_Widget' );
 	register_widget( 'EO_Events_Agenda_Widget' );
 	register_widget( 'EO_Calendar_Widget' );
+	register_widget( 'EO_Widget_Categories' );
+	register_widget( 'EO_Widget_Venues' );
 }
 ?>
