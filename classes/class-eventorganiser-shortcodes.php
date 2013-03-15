@@ -62,7 +62,7 @@ class EventOrganiser_Shortcodes {
 		      'id' => '',
 		), $atts ) );
 
-		$url = add_query_arg('feed','eo-events',site_url());
+		$url = eo_get_events_feed();
 
 		$class = esc_attr($class);
 		$title = esc_attr($title);
