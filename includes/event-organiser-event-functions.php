@@ -811,7 +811,8 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 * @return bool True if an event category, tag or venue archive page is being displayed. False otherwise.
  */
 function eo_is_event_taxonomy(){
-	return (is_tax(array('event-category','event-tag','event-venue')));
+	$event_tax = get_object_taxonomies( 'event' );
+	return ( is_tax( $event_tax ) );
 }
 
 /**
