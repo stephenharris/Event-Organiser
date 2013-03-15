@@ -48,7 +48,7 @@ $classes = $eo_event_loop_args['class'];
 				$format = ( eo_is_all_day() ? $date_format : $date_format.' '.$time_format );
 			?>
 
-			<li class="<? echo esc_attr(implode(' ',$eo_event_classes)); ?>" >
+			<li class="<?php echo esc_attr(implode(' ',$eo_event_classes)); ?>" >
 				<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" ><?php the_title(); ?></a> <?php echo __('on','eventorganiser') . ' '.eo_get_the_start($format); ?>
 			</li>
 
