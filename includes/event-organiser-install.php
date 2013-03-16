@@ -7,7 +7,7 @@
  *@access private
  *@ignore
 */
- function eventorganiser_install( $is_networkwide ){
+ function eventorganiser_install( $is_networkwide = false ){
        global $wpdb;
 
     	// Is this multisite and did the user click network activate?
@@ -303,7 +303,7 @@ function eventorganiser_140_update(){
  *@access private
  *@ignore
 */
-function eventorganiser_uninstall( $is_networkwide ){
+function eventorganiser_uninstall( $is_networkwide = false ){
 	global $wpdb;
 
     	// Is this multisite and did the user click network activate?
