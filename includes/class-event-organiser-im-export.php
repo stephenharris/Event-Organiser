@@ -94,8 +94,8 @@ class Event_Organiser_Im_Export  {
 			<form method="post" action="" enctype="multipart/form-data">
 				<div class="inside">
 					<p><?php _e( 'Import an ICS file.', 'eventorganiser'); ?></p>
-					<input type="checkbox" name="eo_import_venue" value=1 /> <?php _e( 'Import venues', 'eventorganiser' ); ?>
-					<input type="checkbox" name="eo_import_cat" value=1 /> <?php _e( 'Import categories', 'eventorganiser' ); ?>
+					<label><input type="checkbox" name="eo_import_venue" value=1 /> <?php _e( 'Import venues', 'eventorganiser' ); ?></label>
+					<label><input type="checkbox" name="eo_import_cat" value=1 /> <?php _e( 'Import categories', 'eventorganiser' ); ?></label>
 					<p><input type="file" name="ics" /></p>
 					<?php wp_nonce_field('eventorganiser_import_events'); ?>
 					<input type="hidden" name="eventorganiser_import_events" value="true" />
@@ -376,7 +376,7 @@ function escape_icalText($text){
 		$error_count =0;
 		$event_count =0;
 
-    		$event_array = array();
+    	$event_array = array();
 		$event_array['event'] = array();
 		$event_array['event_post'] = array();
 		$event_array['event_meta'] = array();
@@ -420,6 +420,10 @@ function escape_icalText($text){
 					}else{
 						//Otherwise, parse event property
 						try{
+							while( isset( $lines[$n+1] ) && $lines[$n+1][0] == ' ' ){
+								$value .= $lines[$n+1];
+								$n++;	
+							}
 							$event_array = $this->parse_Event_Property($event_array,$property,$value,$modifiers,$blog_tz,$cal_tz);
 
 						}catch(Exception $e){
@@ -689,7 +693,16 @@ function escape_icalText($text){
  * @return string $text - the text, unescaped.
  */
 	function parse_icalText($text){
-		$text = str_replace("\\r\\n","</br>",$text);
+		//Get rid of carriage returns:
+		$text = str_replace("\r\n","\n",$text);
+		$text = str_replace("\r","\n",$text);
+		
+		//Some calendar apps break up text
+		$text = str_replace("\n ","",$text);
+		$text = str_replace("\r ","",$text);
+		
+		//Any intended carriage returns/new-lines converted to HTML
+		$text = str_replace("\\r\\n","",$text);
 		$text = str_replace("\\n","</br>",$text);
 		$text = stripslashes($text);
 		return $text;
