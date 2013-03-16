@@ -4,7 +4,7 @@
 **Tags:** events, event, event categories, event organiser, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
 **Tested up to:** 3.5  
-**Stable tag:** 1.7.5
+**Stable tag:** 1.8  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -64,6 +64,7 @@ A big thank you to those who have provided translations for Event Organiser
 * Polish - [Bartosz Arendt](http://digitalfactory.pl/)
 * Russian - [Sergei](www.vortexinter.ru)
 * Hungarian - Csaba Erdei 
+* Estonian - Kristjan Roosipuu
 
 ## Installation ##
 
@@ -147,7 +148,7 @@ Event Organiser provides the following shortcodes:
 * `[eo_calendar]`  - displays a widget-calendar of your events, similiar to WordPress' calendar, and navigated with AJAX.
 * `[eo_fullcalendar]`  - displays a calendar, similiar to the admin calendar, with optional month, week and day views and category and venue filters.
 * `[eo_venue_map]` - displays a Google map of the current venue, or of a particular venue given as an attribute.
-*** `[eo_subscribe]` - wraps the content in a link which allows visitors to subscribe to your events; there are two types:** 'Google' and 'Webcal'.  
+* `[eo_subscribe]` - wraps the content in a link which allows visitors to subscribe to your events; there are two types:** 'Google' and 'Webcal'.  
 
 More information on shortcodes is [available here](http://wp-event-organiser.com/documentation/shortcodes/)
 
@@ -173,6 +174,15 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 1.8 ###
+* Added venue & category widgets
+* Added multi-site support.
+* Improved event query handling (see [#58](https://github.com/stephenharris/Event-Organiser/issues/58)
+* Added %venue_city% and %venue_shortcode% tags (see [#42](https://github.com/stephenharris/Event-Organiser/issues/42)
+* Added fullCalendar title options
+* Fixes bug with deleting expired events
+* Fixes event importer truncating details with some ics files
 
 ### 1.7.4 ###
 * Adds venue state & city shortcode/widget tags See [#42](https://github.com/stephenharris/Event-Organiser/issues/42).
