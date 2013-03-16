@@ -897,4 +897,141 @@ class EO_Walker_TaxonomyDropdown extends Walker_CategoryDropdown{
 
 }
 
+/**
+ * For this to work you need to add the following to the custom field exceptions on the ThreeWP settings page:
+ *
+ * _eventorganiser_event_schedule
+ * _eventorganiser_schedule_start_start
+ * _eventorganiser_schedule_start_finish
+ *_eventorganiser_schedule_last_start
+ *_eventorganiser_schedule_last_finish
+ *
+ * @access private
+ * @ignore
+ *
+*/
+function eventorganiser_threeWP( $activity ){
+	
+
+	if( isset( $activity['activity_id'] ) && $activity['activity_id'] == '3broadcast_broadcasted' && 'event' == get_post_type( get_the_ID() ) ){
+
+		$details = $activity['activity_details'];
+  		$current_blog_id = get_current_blog_id();
+		$original_id = get_the_ID();
+		$original_cats = get_the_terms( $original_id, 'event-category' );
+		$original_venue_id = eo_get_venue( $original_id );
+
+		//Venue Meta &Thumbnail
+		$venue_meta =  eo_get_venue_meta( $original_venue_id, '', false );
+		if( $original_venue_id && $venue_thumbnail_id = eo_get_venue_meta( $original_venue_id, '_eventorganiser_thumbnail_id', true ) ){
+
+			$original_upload_dir = wp_upload_dir();
+			$metadata = wp_get_attachment_metadata( $venue_thumbnail_id );
+			$data = get_post( $venue_thumbnail_id );
+			$file = $metadata['file'];
+			$guid = $data->guid;
+			$post_title = $data->post_title;
+			$menu_order = $data->menu_order;
+			$post_excerpt = $data->post_excerpt;
+			$filename_base = basename( $metadata['file'] );
+			$filename_path = $original_upload_dir[ 'basedir' ] . '/' . $metadata[ 'file' ];
+
+			$venue_thumbnail = compact( 'filename_path' , 'file', 'filename_base', 'post_title', 'guid', 'menu_order', 'post_excerpt' );
+			unset( $venue_meta['_eventorganiser_thumbnail_id'] );
+		}
+	
+		foreach( $details as $broadcast ){
+			$blog_id = $broadcast['blog_id'];
+			$post_id = $broadcast['post_id'];
+			switch_to_blog( $blog_id );
+			
+			$event_data = array ( 'force_regenerate_dates' => true );
+			eo_update_event($post_id, $event_data );
+
+			$venue_id = eo_get_venue( $post_id );
+			//Delete old venue meta
+			if( $old_meta =  eo_get_venue_meta( $venue_id, '', false ) ){
+				$old_meta_keys = array_keys( $old_meta );
+				foreach( $old_meta_keys as $key ){
+					eo_delete_venue_meta( $venue_id, $key );
+				}
+			}
+			//Add new venue  meta
+			foreach( $venue_meta as $key => $values ){
+				foreach( $values as $value ){
+					eo_add_venue_meta( $venue_id, $key, $value );
+				}
+			}
+
+			//Sync cat colours
+			$cats = get_the_terms( $post_id, 'event-category' );
+			foreach( $cats as $cat ){
+				//Find original cat
+				foreach( $original_cats as $original_cat ){
+					if( $original_cat->slug == $cat->slug ){
+						$re = update_option( "eo-event-category_{$cat->term_id}", array( 'colour' => $original_cat->color ) );
+						break;
+					}
+				}
+			}
+
+			//Sync venue thumbnails
+			$upload_dir = wp_upload_dir();
+			if ( file_exists( $venue_thumbnail['filename_path'] ) ){
+				$file_path =  $upload_dir['path'] . '/' . $venue_thumbnail['filename_base'];
+
+				// Copy the file to the blog's upload directory
+				copy( $venue_thumbnail['filename_path'], $file_path );
+
+				if(  false == ( $attachment_id = eventorganiser_file_to_attachment( $venue_thumbnail['file'] ) ) ){
+
+					// And now create the attachment stuff.
+					// This is taken almost directly from http://codex.wordpress.org/Function_Reference/wp_insert_attachment
+					$wp_filetype = wp_check_filetype( $venue_thumbnail['filename_base'], null );
+					$attachment = array(
+						'guid' => $upload_dir['url'] . '/' . $venue_thumbnail['filename_base'],
+						'menu_order' => $venue_thumbnail['menu_order'],
+						'post_excerpt' =>$venue_thumbnail['post_excerpt'],
+						'post_mime_type' => $wp_filetype['type'],
+						'post_title' => $venue_thumbnail['post_title'],
+						'post_status' => 'inherit',
+					);
+					$attachment_id = wp_insert_attachment( $attachment, $file_path, 0 );
+		
+					// Now to handle the metadata.
+					require_once(ABSPATH . "wp-admin" . '/includes/image.php' );
+					$attach_data = wp_generate_attachment_metadata( $attachment_id, $file_path );
+					wp_update_attachment_metadata( $attachment_id,  $attach_data );
+				}//If attachment post doesn't exist
+
+				eo_update_venue_meta( $venue_id, '_eventorganiser_thumbnail_id', $attachment_id );
+			}//If original file exists
+			
+		}//Foreach blog
+		switch_to_blog( $current_blog_id );
+	}//If broadcasting
+
+}
+
+
+function eventorganiser_file_to_attachment( $file ){
+
+	$attachments = get_posts( array(
+		'numberposts' => 1,
+		'post_type'  => 'attachment',
+            	'fields'     => 'ids',
+            	'meta_query' => array(
+                	array(
+                    		'value'   => $file,
+                    		'key' => '_wp_attached_file',
+                	),
+            	)
+        ));
+    	if( $attachments )
+		return intval( $attachments[0] );
+	else
+		return false;
+}
+
+add_action( 'threewp_activity_monitor_new_activity', 'eventorganiser_threeWP' );
 ?>
