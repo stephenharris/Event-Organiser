@@ -328,24 +328,22 @@ function eventorganiser_join_tables( $join, $query ){
 
 
 function eventorganiser_is_event_query( $query, $exclusive = false ){
-	
+		
 	$post_types = $query->get( 'post_type' );
 	if( 'any' == $post_types )
 		$post_types = get_post_types( array('exclude_from_search' => false) );
 	
-	if( $post_types == 'event' ){
+	if( $post_types == 'event' || eo_is_event_taxonomy( $query ) ){
 		$bool = true;
 	}elseif( $exclusive ){
 		$bool = false;
 	}elseif( ( is_array( $post_types ) && in_array( 'event', $post_types ) ) ){
 		$bool = true;
-	}elseif( $post_types == '' ){ 
-		$bool = eo_is_event_taxonomy();
 	}else{
 		$bool = false;
 	}
 
-	return $bool;
+	return apply_filters( 'eventorganiser_is_event_query', $bool, $query, $exclusive );
 }
 
 /**
