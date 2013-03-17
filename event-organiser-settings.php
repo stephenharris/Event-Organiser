@@ -124,8 +124,9 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'selected' => eventorganiser_get_option( 'dateformat' ),
 						'name' => 'eventorganiser_options[dateformat]',
 						'options' => array(
-							'dd-mm' => __( 'dd-mm-yyyy', 'eventorganiser' ),
-							'mm-dd' => __( 'mm-dd-yyyy', 'eventorganiser' ),
+							'd-m-Y' => __( 'dd-mm-yyyy', 'eventorganiser' ),
+							'm-d-Y' => __( 'mm-dd-yyyy', 'eventorganiser' ),
+							'Y-m-d' => __( 'yyyy-mm-dd', 'eventorganiser' ),
 						),
 						'help' => __("This alters the default format for inputting dates.", 'eventorganiser' ),
 				) );

@@ -39,11 +39,12 @@ function _eventorganiser_details_metabox( $post ){
 	global $wp_locale;	
 
 	//Sets the format as php understands it, and textual.
-	if ( eventorganiser_get_option( 'dateformat' ) == 'dd-mm' ){
-		$phpFormat = 'd-m-Y';
+	$phpFormat = eventorganiser_get_option( 'dateformat' );
+	if ( 'd-m-Y' == $phpFormat ){
 		$format    = 'dd-mm-yyyy'; //Human form
-	} else {
-		$phpFormat = 'm-d-Y';
+	} elseif( 'Y-m-d' == $phpFormat ) {
+		$format = 'yyyy-mm-dd'; //Human form
+	}else{
 		$format = 'mm-dd-yyyy'; //Human form
 	}
 

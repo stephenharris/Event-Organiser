@@ -180,7 +180,7 @@ function eventorganiser_add_admin_scripts( $hook ) {
 			wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'startday'=>intval(get_option('start_of_week')),
-					'format'=> eventorganiser_get_option('dateformat').'-yy',
+					'format'=> eventorganiser_php2jquerydate( eventorganiser_get_option('dateformat') ),
 					'current_user_can' => array(
 						'manage_venues' => current_user_can( 'manage_venues' ),
 					),
