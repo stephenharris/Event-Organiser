@@ -99,17 +99,17 @@ function eo_is_event_archive( $type = false ){
 
 	switch( $type ){
 		case 'year':
-			if( _eventorganiser_check_datetime($ondate.'-01-01 00:00',true) )
+			if( _eventorganiser_check_datetime( $ondate.'-01-01 00:00', 'Y-m-d' ) )
 				return true;
 			return false;
 
 		case 'month':
-			if( _eventorganiser_check_datetime($ondate.'-01 00:00',true) )
+			if( _eventorganiser_check_datetime( $ondate.'-01 00:00', 'Y-m-d' ) )
 				return true;
 			return false;
 
 		case 'day':
-			if( _eventorganiser_check_datetime($ondate.' 00:00',true) )
+			if( _eventorganiser_check_datetime( $ondate.' 00:00', 'Y-m-d') )
 				return true;
 			return false;
 
@@ -148,7 +148,7 @@ function eo_get_event_archive_date( $format = DATETIMEOBJ ){
 		$ondate .= '-01';
 	}
 		
-	$ondate =  _eventorganiser_check_datetime($ondate.' 00:00',true);
+	$ondate =  _eventorganiser_check_datetime( $ondate.' 00:00', 'Y-m-d' );
 	return eo_format_datetime($ondate, $format);
 }
 

@@ -457,18 +457,28 @@ function eventorganiser_date_create($datetime_string){
  * @since 1.0.0
 
  * @param datetime_string - a datetime string 
- * @param (bool) $ymd_formated - whether the date is formated in the format YYYY-MM-DD or 
+ * @param string $format - Format of the datetime string. One of 'd-m-Y', 'm-d-Y' and 'Y-m-d'.
  * @return int DateTime| false - the parsed datetime string as a DateTime object or false on error (incorrectly formatted for example)
  */
-function _eventorganiser_check_datetime($datetime_string='',$ymd_formated=false){
+function _eventorganiser_check_datetime( $datetime_string = '', $format = null ){
 
-	$formatString = eventorganiser_get_option('dateformat');
-
-	//Get regulgar expression.
-	if( $ymd_formated ){
+	if( is_null( $format ) )
+		$format = eventorganiser_get_option('dateformat');
+	
+	//Backwards compatible - can probably remove 2.1+
+	if( is_bool( $format ) ){
+		_deprecated_argument('_eventorganiser_check_datetime', '1.8', 'This function no longer accepts a boolean, pass the format of the passed date-time string.');
+		if( true === $format )
+			$format = 'Y-m-d';
+		else
+			$format = eventorganiser_get_option('dateformat');
+	}
+	
+	//Get regular expression.
+	if( $format == 'Y-m-d' ){
 		$reg_exp = "/(?P<year>\d{4})[-.\/](?P<month>\d{1,})[-.\/](?P<day>\d{1,}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
 
-	}elseif($formatString =='dd-mm' ){
+	}elseif( $format == 'd-m-Y' ){
 		$reg_exp = "/(?P<day>\d{1,})[-.\/](?P<month>\d{1,})[-.\/](?P<year>\d{4}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
 
 	}else{
