@@ -37,12 +37,12 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'startday' => intval( get_option( 'start_of_week' ) ),
-			'format' => eventorganiser_get_option( 'dateformat' ).'-yy',
+			'format' => eventorganiser_php2jquerydate( eventorganiser_get_option('dateformat') ),
 			));
 		wp_localize_script( 'eo_calendar', 'EO_Ajax', array( 
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'startday' => intval( get_option( 'start_of_week' ) ),
-			'format' => eventorganiser_get_option( 'dateformat' ).'-yy',
+			'format' => eventorganiser_php2jquerydate( eventorganiser_get_option('dateformat') ),
 			'timeFormat' => ( get_current_screen()->get_option( 'eofc_time_format', 'value' ) ? 'h:mmtt' : 'HH:mm' ),
 			'perm_edit' => current_user_can( 'edit_events' ),
 			'categories' => get_terms( 'event-category', array( 'hide_empty' => 0 ) ),
