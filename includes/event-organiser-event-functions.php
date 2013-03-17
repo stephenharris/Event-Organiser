@@ -805,14 +805,23 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 
 
 /**
-* Checks if an event taxonomy archive page is being displayed. A simple wrapper for `is_tax()`.
+* Checks if the query is for an event taxonomy.
+*  
+* When no $query is passed, acts as a simple wrapper for `is_tax()`.
+* More generally acts as a wrapper for `$query->is_tax()`.
+* 
 * @since 1.6
 *
-* @return bool True if an event category, tag or venue archive page is being displayed. False otherwise.
+* @param $query - The query to check. If not passed, uses the global $wp_query;
+* @return bool True if query is for any event taxonomy (e.g. 'event-venue', 'event-category', 'event-tag').
  */
-function eo_is_event_taxonomy(){
+function eo_is_event_taxonomy( $query = false ){
 	$event_tax = get_object_taxonomies( 'event' );
-	return ( is_tax( $event_tax ) );
+	if( !$query ){
+		return is_tax( $event_tax );
+	}else{
+		return $query->is_tax( $event_tax );
+	}
 }
 
 /**
