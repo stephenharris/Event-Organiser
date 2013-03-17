@@ -632,7 +632,8 @@ function eventorganiser_text_field($args){
 	$args = wp_parse_args( $args,
 		array(
 		 	'type' => 'text', 'value'=>'', 'placeholder' => '','label_for'=>'', 'inline_help' => false,
-			 'size'=>false, 'min' => false, 'max' => false, 'style'=>false, 'echo'=>true, 'data'=>false
+			 'size'=>false, 'min' => false, 'max' => false, 'style'=>false, 'echo'=>true, 'data'=>false,
+			'class' => false,
 			)
 		);		
 
