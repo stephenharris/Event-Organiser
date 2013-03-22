@@ -130,19 +130,18 @@ class EO_Calendar_Widget extends WP_Widget
 *
 * param $month - DateTime object for first day of the month (in blog timezone)
 */
-function generate_output($month,$args=array()){
+function generate_output( $month, $args=array() ){
 
-	$key= $month->format('YM').serialize($args).get_locale();
+	//Translations
+	global $wp_locale;
+	
+	$today = new DateTime('now',eo_get_blog_timezone());
+
+	$key= $month->format('YM').serialize($args).get_locale().$today->format('Y-m-d');
 	$calendar = get_transient('eo_widget_calendar');
 	if( $calendar && is_array($calendar) && isset($calendar[$key]) ){
 		return $calendar[$key];
 	}
-	
-	//Translations
-	global $wp_locale;
-
-	//Month should be a DateTime object of the first day in that month		
-	$today = new DateTime('now',eo_get_blog_timezone());
 	
 	//Month details
 	$first_day_of_month= intval($month->format('N')); //0=sun,...,6=sat
