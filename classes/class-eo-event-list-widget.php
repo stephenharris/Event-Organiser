@@ -207,7 +207,7 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 		$html = sprintf($container, $html, esc_attr($args['class']) );
 	}
 
-	wp_reset_query();
+	wp_reset_postdata();
 
 	if( $echo )
 		echo $html;
