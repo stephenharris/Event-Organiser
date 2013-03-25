@@ -186,10 +186,7 @@ if ( is_admin() ):
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-settings.php');
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-venues.php');
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-calendar.php');
-	
-else:
-    /****** Templates ******/
-    require_once('includes/event-organiser-templates.php');    
+	       
 endif;
 
 if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
@@ -203,6 +200,9 @@ require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-venue-functions.php')
 require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-utility-functions.php');
 require_once(EVENT_ORGANISER_DIR.'includes/deprecated.php');
 require_once(EVENT_ORGANISER_DIR.'includes/event.php');
+
+/****** Templates - note some plug-ins will require this to included admin-side too ******/
+require_once('includes/event-organiser-templates.php');
 
 /****** Widgets and Shortcodes ******/
 require_once(EVENT_ORGANISER_DIR.'classes/class-eo-agenda-widget.php');
