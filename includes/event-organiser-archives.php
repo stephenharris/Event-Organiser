@@ -49,8 +49,13 @@ function eventorganiser_pre_get_posts( $query ) {
 		$venue = $query->get('venue');
 		$query->set('event-venue',$venue);
 		$query->set( 'post_type', 'event' );
-       }
+	}
 
+	//If the query is for eo-events feed, set post type
+	if( $query->is_feed( 'eo-events' ) ){
+		$query->set( 'post_type', 'event' );
+	}   
+	
 	//If querying for all events starting on given date, set the date parameters
 	if( !empty($query->query_vars['ondate']) ) {
 
@@ -335,6 +340,9 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 	
 	
 	if( $post_types == 'event' ){
+		$bool = true;
+	
+	}elseif( ( $query && $query->is_feed('eo-events') ) || is_feed( 'eo-events' ) ){
 		$bool = true;
 		
 	}elseif( empty( $post_types ) && eo_is_event_taxonomy( $query ) ){
