@@ -221,4 +221,3 @@ function eventorganiser_widgets_init(){
 	register_widget( 'EO_Widget_Categories' );
 	register_widget( 'EO_Widget_Venues' );
 }
-?>
