@@ -817,6 +817,19 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
  */
 function eo_is_event_taxonomy( $query = false ){
 	$event_tax = get_object_taxonomies( 'event' );
+	
+	//Handle post tags
+	if( in_array( 'post_tag', $event_tax ) ){
+		if( ( !$query && is_tag() ) || $query->is_tag() )
+			return true;
+	}
+	
+	//Handle categories
+	if( in_array( 'category', $event_tax ) ){
+		if( ( !$query && is_category() ) || $query->is_category() )
+			return true;
+	}
+	
 	if( !$query ){
 		return is_tax( $event_tax );
 	}else{
