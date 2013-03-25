@@ -786,13 +786,15 @@ function eventorganiser_textarea_field($args){
 
 	$args = wp_parse_args($args,array(
 	 	'type' => 'text', 'value'=>'', 'tinymce' => '', 'help' => '',
-		'class'=>'large-text', 'echo'=>true,'rows'=>5, 'cols'=>50
+		'class'=>'large-text', 'echo'=>true,'rows'=>5, 'cols'=>50,
+		'readonly'=> false,
 	));
 
 	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$name = isset($args['name']) ?  $args['name'] : '';
 	$value = $args['value'];
 	$class = $args['class'];
+	$readonly = $args['readonly'] ? 'readonly' : '';
 	$html ='';
 
 	if( $args['tinymce'] ){
@@ -801,12 +803,13 @@ function eventorganiser_textarea_field($args){
 				'media_buttons'=>false,
 			));
 	}else{
-		$html .= sprintf('<textarea cols="%s" rows="%d" name="%s" class="%s large-text" id="%s">%s</textarea>',
+		$html .= sprintf('<textarea cols="%s" rows="%d" name="%s" class="%s large-text" id="%s" %s >%s</textarea>',
 				intval($args['cols']),
 				intval($args['rows']),
 				esc_attr($name),
 				sanitize_html_class($class),
 				esc_attr($id),
+				$readonly,
 				esc_textarea($value)
 		);
 	}
