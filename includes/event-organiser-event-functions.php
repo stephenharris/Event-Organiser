@@ -181,7 +181,7 @@ function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_
 
 	$start = $occurrences[$occurrence_id]['start'];
 
-	return eo_format_datetime($start,$format);
+	return apply_filters('eventorganiser_get_the_start', eo_format_datetime( $start, $format ), $start, $format, $post_id, $occurrence_id );
 }
 
 /**
@@ -273,7 +273,7 @@ function eo_get_the_end($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id
 
 	$end = $occurrences[$occurrence_id]['end'];
 
-	return eo_format_datetime($end,$format);
+	return apply_filters('eventorganiser_get_the_end', eo_format_datetime( $end, $format ), $end, $format, $post_id, $occurrence_id );
 }
 
 /**
@@ -307,7 +307,8 @@ function eo_get_next_occurrence($format='d-m-Y',$post_id=0){
 	if( !$next_occurrence )
 		return false;
 
-	return eo_format_datetime($next_occurrence['start'],$format);
+	$next = $next_occurrence['start'];
+	return apply_filters('eventorganiser_get_next_occurrence', eo_format_datetime( $next, $format ), $next, $format, $post_id );
 }
 
 /**
@@ -441,7 +442,8 @@ function eo_is_all_day($post_id=0){
 function eo_get_schedule_start($format='d-m-Y',$post_id=0){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$schedule = eo_get_event_schedule($post_id);
-	return eo_format_datetime($schedule['schedule_start'],$format);
+	$schedule_start = $schedule['schedule_start'];
+	return apply_filters('eventorganiser_get_schedule_start', eo_format_datetime( $schedule_start, $format ), $schedule_start, $format, $post_id );
 }
 
 /**
@@ -470,7 +472,8 @@ function eo_schedule_start($format='d-m-Y',$post_id=0){
 function eo_get_schedule_last($format='d-m-Y',$post_id=0){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$schedule = eo_get_event_schedule($post_id);
-	return eo_format_datetime($schedule['schedule_last'],$format);
+	$schedule_last = $schedule['schedule_last'];
+	return apply_filters('eventorganiser_get_schedule_last', eo_format_datetime( $schedule_last, $format ), $schedule_last, $format, $post_id );
 }
 
 /**
