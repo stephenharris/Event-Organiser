@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organiser, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.8.2
+Stable tag: 1.8.3
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -163,6 +163,13 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 1.8.3 =
+* Fixes bugs relating to cross-post-type queries. (see [#65](https://github.com/stephenharris/Event-Organiser/issues/65)
+* Fixes bug with Event feed introduced in 1.8, (see [#69](https://github.com/stephenharris/Event-Organiser/issues/69)
+* Resolves conflict with WPML
+* Adds filters to event date functions (see [#67](https://github.com/stephenharris/Event-Organiser/issues/67)
+* Resolve conflicts with jQuery 1.9
 
 = 1.8.2 =
 * Fixes event taxonomy sorting bug introduced in 1.8
@@ -439,6 +446,9 @@ Minor bug fixes and readme update.
 Initial release
 
 == Upgrade Notice ==
+
+= 1.8.3 =
+Please note this is an important update, fixing problems related to cross-post-type queries and the event feed introduced in 1.8+.
 
 = 1.8.2 =
 If you have upgrade to 1.8 or 1.8.1 please upgrade to 1.8.2. This update includes fixes to bugs introduced in 1.8.
