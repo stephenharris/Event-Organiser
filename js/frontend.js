@@ -236,7 +236,7 @@ jQuery(document).ready(function () {
         if ($(".eo_widget_calendar").length > 0 ) {
 
 		$(".eo_widget_calendar tfoot").unbind("click");
-		$(".eo_widget_calendar tfoot a").off("click").on("click", function (a) {
+		$(".eo_widget_calendar").off("click").on("click", 'tfoot a', function (a) {
                 	a.preventDefault();
                 	var b = $(this).closest(".eo_widget_calendar").attr("id");
 	
