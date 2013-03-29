@@ -360,6 +360,10 @@ function eveorg_getParameterByName(a, b) {
 function eo_load_map() {
 	var maps = EOAjax.map;
 	for (var i = 0; i < maps.length; i++) {
+		
+		if ( null === document.getElementById( "eo_venue_map-" + (i + 1) ) )
+		    continue;
+		
 		var locations = maps[i].locations;
 		var b = {
               		zoom: maps[i].zoom,
