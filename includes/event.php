@@ -30,8 +30,8 @@
 * @uses wp_insert_post()
 *
 * @param int $post_id - the event (post) ID for the event you want to update
-* @param array $post_data - array of data to be used by wp_update_post.
 * @param array $event_data - array of event data
+* @param array $post_data - array of data to be used by wp_update_post.
 * @return int $post_id - the post ID of the updated event
 */
 	function eo_update_event($post_id, $event_data=array(), $post_data=array() ){
@@ -48,8 +48,8 @@
 			unset($event_data['category']);
 		}
 		
-		$event_data = apply_filters( 'eventorganiser_update_event_event_data', $event_data, $post_id, $post_data );
-		$post_data = apply_filters( 'eventorganiser_update_event_post_data', $post_data, $post_id, $event_data );
+		$event_data = apply_filters( 'eventorganiser_update_event_event_data', $event_data, $post_id, $post_data, $event_data );
+		$post_data = apply_filters( 'eventorganiser_update_event_post_data', $post_data, $post_id, $post_data, $event_data );
 
 		if( !empty($post_data) ){
 			$post_data['ID'] = $post_id;		
@@ -150,19 +150,19 @@
 			unset($event_data['category']);
 		}
 		
-		$event_data = apply_filters( 'eventorganiser_insert_event_event_data', $event_data, $post_data );
-		$post_data = apply_filters( 'eventorganiser_insert_event_post_data', $post_data, $event_data );
-
 		//If schedule is 'once' and dates are included - set to 'custom':
 		if( ( empty($event_data['schedule']) || 'once' == $event_data['schedule'] ) && !empty($event_data['include']) ){
 			$event_data['schedule'] = 'custom';
 		}
 
 		$event_data = _eventorganiser_generate_occurrences($event_data);
-
+		
 		if( is_wp_error($event_data) )
 			return $event_data;
 
+		$event_data = apply_filters( 'eventorganiser_insert_event_event_data', $event_data, $post_data, $event_data );
+		$post_data = apply_filters( 'eventorganiser_insert_event_post_data', $post_data, $post_data, $event_data );
+		
 		//Finally we create event (first create the post in WP)
 		$post_input = array_merge(array('post_title'=>'untitled event'), $post_data, array('post_type'=>'event'));			
 		$post_id = wp_insert_post($post_input, true);
