@@ -84,8 +84,7 @@ class EO_Calendar_Widget extends WP_Widget
 
 		//Set the month to display (DateTime must be 1st of that month)
 		$tz = eo_get_blog_timezone();
-		$date = (isset(get_query_var('eo_month'))) ? get_query_var('eo_month') : get_query_var('ondate');
- 		$date =  (isset($date)) ?  str_replace('/','-',$date) : 'now';
+		$date =  get_query_var('ondate') ?  str_replace('/','-',get_query_var('ondate')) : 'now';
 		try{
 			$month = new DateTime($date,$tz);
 		}catch( Exception $e){
@@ -194,10 +193,10 @@ function generate_output( $month, $args=array() ){
 							<td id='eo-widget-next-month' colspan='3'><a title='%s' href='%s'> %s &raquo; </a></td>
 						</tr></tfoot>",
 						esc_html__('Previous month','eventorganiser'),
-						add_query_arg('eo_month',$last_month->format('Y-m')),
+						add_query_arg('ondate',$last_month->format('Y-m')),
 						esc_html(eo_format_datetime($last_month, 'M')),
 						esc_html__('Next month','eventorganiser'),
-						add_query_arg('eo_month',$next_month->format('Y-m')),
+						add_query_arg('ondate',$next_month->format('Y-m')),
 						esc_html(eo_format_datetime($next_month, 'M'))
 					);							
 
