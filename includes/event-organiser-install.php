@@ -318,14 +318,14 @@ function eventorganiser_uninstall( $is_networkwide = false ){
 		if( $blog_ids ){
 			foreach ( $blog_ids as $blog_id ) {
 				switch_to_blog( $blog_id );
-	            		eventorganiser_uninstall_install();
+	            		eventorganiser_uninstall_site();
 	       		 }
 			switch_to_blog( $current_blog_id );
 		}else{
-			eventorganiser_uninstall_install();
+			eventorganiser_uninstall_site();
 		}
     	}else {
-    	    eventorganiser_uninstall_install();
+    	    eventorganiser_uninstall_site();
     	}
 
 }
