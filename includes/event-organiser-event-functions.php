@@ -8,19 +8,19 @@
 /**
 * Retrieve list of events matching criteria.
 *
-* This function is a wrapper for {@see `get_posts()`}. As such you can also use `get_posts()` or {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events. 
-* **All the arguments listed below can be used with them**. 
-* *Arguments from {@link http://codex.wordpress.org/Template_Tags/get_posts `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} can also be used. Their default values are as indicated by the relevant codex page.*
-*
+* This function is a wrapper for get_posts(). **As such parameters from {@see `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} can also be used**.
+* Their default values are as indicated by the relevant codex page unless specified below. 
+* You can also use {@see `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events.
+* 
 * The `$args` array can include the following.
 *
-* * **event_start_before** - default: null
-* * **event_end_before** - default: null
-* * **event_start_after** - default: null
-* * **event_end_after** - default: null. This argument, and those above can take a date in 'Y-m-d' format or {@link http://wp-event-organiser.com/documentation/relative-date-formats/ relative dates}. 
-* * **numberposts** - default is - 1 (all events)
-* * **orderby** - default is 'eventstart'
-* * **showpastevents** - default is true (it's recommended to use `event_start_after=today` or `event_end_after=today` instead) 
+* * **event_start_before** - default: `null`
+* * **event_end_before** - default: `null`
+* * **event_start_after** - default: `null`
+* * **event_end_after** - default: `null`. This argument, and those expect dates in **Y-m-d** format or {@link http://wp-event-organiser.com/documentation/relative-date-formats/ relative dates}. 
+* * **numberposts** - default is `-1` (all events)
+* * **orderby** - default is `eventstart`. You can also have `eventend`.
+* * **showpastevents** - default is `true` (it's recommended to use `event_start_after=today` or `event_end_after=today` instead) 
 *
 * If you use `get_posts()` or `WP_Query` instead then you should ensure the following:
 *
@@ -30,25 +30,28 @@
 *
 * ###Example
 *
+*     <?php 
 *     $events = eo_get_events(array(
 *            'numberposts'=>5,
 *            'event_start_after'=>'today',
 *            'showpastevents'=>true,//Will be deprecated, but set it to true to play it safe.
 *       ));
 *
-*     <?php if($events):
+*     if($events):
 *        echo '<ul>'; 
 *        foreach ($events as $event):
-*                //Check if all day, set format accordingly
-*                $format = ( eo_is_all_day($event->ID) ? get_option('date_format') : get_option('date_format').' '.get_option('time_format') );
-*                printf('<li><a href="%s"> %s </a> on %s </li>',
-*                                   get_permalink($event->ID),
-*                                   get_the_title($event->ID),
-*                                   eo_get_the_start($format, $event->ID,null,$event->occurrence_id)
-*                               );                           
+*             //Check if all day, set format accordingly
+*             $format = ( eo_is_all_day($event->ID) ? get_option('date_format') : get_option('date_format').' '.get_option('time_format') );
+*             printf(
+*                '<li><a href="%s"> %s </a> on %s </li>',
+*                get_permalink($event->ID),
+*                get_the_title($event->ID),
+*                eo_get_the_start($format, $event->ID,null,$event->occurrence_id)
+*             );                           
 *        endforeach; 
-*         echo '</ul>'; 
-*     endif; ?>
+*        echo '</ul>'; 
+*     endif; 
+*     ?>
 *
 * @since 1.0.0
 * @uses get_posts()
