@@ -349,7 +349,7 @@ function eo_get_event_schedule( $post_id=0 ){
 		$event_details['occurs_by'] ='';
 	}
 
-	return $event_details;
+	return apply_filters( 'eventorganiser_get_event_schedule', $event_details, $post_id );
 }
 
 
@@ -594,7 +594,7 @@ function eo_get_event_schedule( $post_id=0 ){
 		$schedule_start = clone $occurrences[0];
 		$schedule_last = clone end($occurrences);
 
-		return array(
+		$_event_data = array(
 			'start'=>$start,
 			'end'=>$end,
 			'all_day'=>$all_day,
@@ -607,6 +607,8 @@ function eo_get_event_schedule( $post_id=0 ){
 			'include'=>$include,
 			'occurrences'=>$occurrences
 		);
+		
+		return apply_filters( 'eventorganiser_generate_occurrences', $_event_data, $event_details );
 	}
 
 /**
