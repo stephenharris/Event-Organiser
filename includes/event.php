@@ -34,76 +34,76 @@
 * @param array $post_data - array of data to be used by wp_update_post.
 * @return int $post_id - the post ID of the updated event
 */
-	function eo_update_event($post_id, $event_data=array(), $post_data=array() ){
+function eo_update_event($post_id, $event_data=array(), $post_data=array() ){
 
-		$post_id = (int) $post_id;
+	$post_id = (int) $post_id;
 
-		if( empty($post_id) )
-			return new WP_Error('eo_error','Empty post ID.');
+	if( empty($post_id) )
+		return new WP_Error('eo_error','Empty post ID.');
 
-		if( !empty($event_data['venue']) || !empty($event_data['category']) ){
-			$post_data['taxonomy']['event-venue'] = isset($event_data['venue']) ? $event_data['venue'] : null;
-			$post_data['taxonomy']['event-category'] = isset($event_data['category']) ? $event_data['category'] : null;
-			unset($event_data['venue']);
-			unset($event_data['category']);
-		}
+	if( !empty($event_data['venue']) || !empty($event_data['category']) ){
+		$post_data['taxonomy']['event-venue'] = isset($event_data['venue']) ? $event_data['venue'] : null;
+		$post_data['taxonomy']['event-category'] = isset($event_data['category']) ? $event_data['category'] : null;
+		unset($event_data['venue']);
+		unset($event_data['category']);
+	}
 		
-		$event_data = apply_filters( 'eventorganiser_update_event_event_data', $event_data, $post_id, $post_data, $event_data );
-		$post_data = apply_filters( 'eventorganiser_update_event_post_data', $post_data, $post_id, $post_data, $event_data );
+	$event_data = apply_filters( 'eventorganiser_update_event_event_data', $event_data, $post_id, $post_data, $event_data );
+	$post_data = apply_filters( 'eventorganiser_update_event_post_data', $post_data, $post_id, $post_data, $event_data );
 
-		if( !empty($post_data) ){
-			$post_data['ID'] = $post_id;		
-			wp_update_post( $post_data );
-		}
+	if( !empty($post_data) ){
+		$post_data['ID'] = $post_id;		
+		wp_update_post( $post_data );
+	}
 
-		//Get previous data, parse with data to be updated
-		$prev = eo_get_event_schedule($post_id);
-		$event_data = wp_parse_args( $event_data, $prev );
+	//Get previous data, parse with data to be updated
+	$prev = eo_get_event_schedule($post_id);
+	$event_data = wp_parse_args( $event_data, $prev );
 
-		//If schedule is 'once' and dates are included - set to 'custom':
-		if( ( empty($event_data['schedule']) || 'once' == $event_data['schedule'] ) && !empty($event_data['include']) ){
-			$event_data['schedule'] = 'custom';
-		}
+	//If schedule is 'once' and dates are included - set to 'custom':
+	if( ( empty($event_data['schedule']) || 'once' == $event_data['schedule'] ) && !empty($event_data['include']) ){
+		$event_data['schedule'] = 'custom';
+	}
 		
-		//Do we need to delete existing dates from db?
-		$delete_existing = false;
-		$diff = array();
-		if( $prev ){
-			foreach ( $prev as $key => $prev_value ){
-				if( $event_data[$key] != $prev_value ){
-					if('monthly' == $event_data['schedule'] && $key =='schedule_meta'){
-						if( $event_data['occurs_by'] != $prev['occurs_by'] ){
-							$diff[]=$key;
-							$delete_existing = true;
-							break;
-						}
-					}else{
+	//Do we need to delete existing dates from db?
+	$delete_existing = false;
+	$diff = array();
+	if( $prev ){
+		foreach ( $prev as $key => $prev_value ){
+			if( $event_data[$key] != $prev_value ){
+				if('monthly' == $event_data['schedule'] && $key =='schedule_meta'){
+					if( $event_data['occurs_by'] != $prev['occurs_by'] ){
 						$diff[]=$key;
 						$delete_existing = true;
 						break;
 					}
+				}else{
+					$diff[]=$key;
+					$delete_existing = true;
+					break;
 				}
 			}
 		}
-
-		//Need to replace occurrences
-		if( $delete_existing || !empty( $event_data['force_regenerate_dates'] ) ){
-			//Generate occurrences
-			$event_data = _eventorganiser_generate_occurrences($event_data);
-
-			if( is_wp_error($event_data) )
-				return $event_data;
-
-			//Delete old dates
-			eo_delete_event_occurrences($post_id);
-
-			//Insert new ones and update meta
-			$re = _eventorganiser_insert_occurrences($post_id,$event_data);
-		}
-
-		do_action( 'eventorganiser_save_event', $post_id );
-		return $post_id;
 	}
+
+	//Need to replace occurrences
+	if( $delete_existing || !empty( $event_data['force_regenerate_dates'] ) ){
+		//Generate occurrences
+		$event_data = _eventorganiser_generate_occurrences($event_data);
+
+		if( is_wp_error($event_data) )
+			return $event_data;
+
+		//Delete old dates
+		eo_delete_event_occurrences($post_id);
+
+		//Insert new ones and update meta
+		$re = _eventorganiser_insert_occurrences($post_id,$event_data);
+	}
+
+	do_action( 'eventorganiser_save_event', $post_id );
+	return $post_id;
+}
 
 
 /**
@@ -138,45 +138,45 @@
 * @param array $event_data array of event data
 * @return int the post ID of the updated event
 */
-	function eo_insert_event($post_data=array(),$event_data=array()){
-		global $wpdb;
+function eo_insert_event($post_data=array(),$event_data=array()){
+	global $wpdb;
 
-		if( !empty($event_data['venue'] ) ){
-			$post_data['tax_input']['event-venue'] = $event_data['venue'];
-			unset($event_data['venue']);
-		}
-		if( !empty($event_data['category'] ) ){
-			$post_data['tax_input']['event-category'] = $event_data['category'];
-			unset($event_data['category']);
-		}
-		
-		//If schedule is 'once' and dates are included - set to 'custom':
-		if( ( empty($event_data['schedule']) || 'once' == $event_data['schedule'] ) && !empty($event_data['include']) ){
-			$event_data['schedule'] = 'custom';
-		}
-
-		$event_data = _eventorganiser_generate_occurrences($event_data);
-		
-		if( is_wp_error($event_data) )
-			return $event_data;
-
-		$event_data = apply_filters( 'eventorganiser_insert_event_event_data', $event_data, $post_data, $event_data );
-		$post_data = apply_filters( 'eventorganiser_insert_event_post_data', $post_data, $post_data, $event_data );
-		
-		//Finally we create event (first create the post in WP)
-		$post_input = array_merge(array('post_title'=>'untitled event'), $post_data, array('post_type'=>'event'));			
-		$post_id = wp_insert_post($post_input, true);
-
-		//Did the event insert correctly? 
-		if ( is_wp_error( $post_id) ) 
-				return $post_id;
-
-		 _eventorganiser_insert_occurrences($post_id, $event_data);
-			
-		//Action used to break cache & trigger Pro actions (& by other plug-ins?)
-		do_action( 'eventorganiser_save_event', $post_id );
-		return $post_id;
+	if( !empty($event_data['venue'] ) ){
+		$post_data['tax_input']['event-venue'] = $event_data['venue'];
+		unset($event_data['venue']);
 	}
+	if( !empty($event_data['category'] ) ){
+		$post_data['tax_input']['event-category'] = $event_data['category'];
+		unset($event_data['category']);
+	}
+		
+	//If schedule is 'once' and dates are included - set to 'custom':
+	if( ( empty($event_data['schedule']) || 'once' == $event_data['schedule'] ) && !empty($event_data['include']) ){
+		$event_data['schedule'] = 'custom';
+	}
+
+	$event_data = _eventorganiser_generate_occurrences($event_data);
+		
+	if( is_wp_error($event_data) )
+		return $event_data;
+
+	$event_data = apply_filters( 'eventorganiser_insert_event_event_data', $event_data, $post_data, $event_data );
+	$post_data = apply_filters( 'eventorganiser_insert_event_post_data', $post_data, $post_data, $event_data );
+		
+	//Finally we create event (first create the post in WP)
+	$post_input = array_merge(array('post_title'=>'untitled event'), $post_data, array('post_type'=>'event'));			
+	$post_id = wp_insert_post($post_input, true);
+
+	//Did the event insert correctly? 
+	if ( is_wp_error( $post_id) ) 
+			return $post_id;
+
+	_eventorganiser_insert_occurrences($post_id, $event_data);
+			
+	//Action used to break cache & trigger Pro actions (& by other plug-ins?)
+	do_action( 'eventorganiser_save_event', $post_id );
+	return $post_id;
+}
 
 /**
 * Deletes all occurrences for an event (removes them from the eo_events table).
@@ -303,54 +303,54 @@ add_action( 'delete_post', 'eo_delete_event_occurrences', 10 );
 * @param int $post_id -  The post ID of the event
 * @return array event schedule details
 */
-	function eo_get_event_schedule( $post_id=0 ){
+function eo_get_event_schedule( $post_id=0 ){
 
-		$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
+	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
-		if( empty($post_id) ) 
-			return false;
+	if( empty($post_id) ) 
+		return false;
 
-		$event_details = get_post_meta( $post_id,'_eventorganiser_event_schedule',true);
-		$event_details = wp_parse_args($event_details, array(
-			'schedule'=>'once',
-			'schedule_meta'=>'',
-			'frequency'=>1,
-			'all_day'=>0,
-			'duration_str'=>'',
-			'include'=>array(),
-			'exclude'=>array(),
-			'_occurrences'=>array(),
-		));
+	$event_details = get_post_meta( $post_id,'_eventorganiser_event_schedule',true);
+	$event_details = wp_parse_args($event_details, array(
+		'schedule'=>'once',
+		'schedule_meta'=>'',
+		'frequency'=>1,
+		'all_day'=>0,
+		'duration_str'=>'',
+		'include'=>array(),
+		'exclude'=>array(),
+		'_occurrences'=>array(),
+	));
 
-		$tz = eo_get_blog_timezone();
-		$event_details['start'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_start_start', true), $tz);
-		$event_details['end'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_start_finish', true), $tz);
-		$event_details['schedule_start'] = clone $event_details['start'];
-		$event_details['schedule_last'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_start', true), $tz);
-		$event_details['schedule_finish'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_finish', true), $tz);
+	$tz = eo_get_blog_timezone();
+	$event_details['start'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_start_start', true), $tz);
+	$event_details['end'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_start_finish', true), $tz);
+	$event_details['schedule_start'] = clone $event_details['start'];
+	$event_details['schedule_last'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_start', true), $tz);
+	$event_details['schedule_finish'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_finish', true), $tz);
 
-		if( !empty($event_details['_occurrences']) ){
-			$event_details['_occurrences'] = array_map('eventorganiser_date_create', $event_details['_occurrences']);
-		}
-
-		if( !empty($event_details['include']) ){
-			$event_details['include'] = array_map('eventorganiser_date_create', $event_details['include'] );
-		}
-		if( !empty($event_details['exclude']) ){
-			$event_details['exclude'] = array_map('eventorganiser_date_create',$event_details['exclude'] );
-		}
-
-		if($event_details['schedule'] == 'weekly'){
-			$event_details['occurs_by'] = '';
-		}elseif($event_details['schedule'] == 'monthly'){
-			$bymonthday = preg_match('/BYMONTHDAY=/',$event_details['schedule_meta']);
-			$event_details['occurs_by'] = ($bymonthday ? 'BYMONTHDAY' : 'BYDAY');
-		}else{
-			$event_details['occurs_by'] ='';
-		}
-
-		return $event_details;
+	if( !empty($event_details['_occurrences']) ){
+		$event_details['_occurrences'] = array_map('eventorganiser_date_create', $event_details['_occurrences']);
 	}
+
+	if( !empty($event_details['include']) ){
+		$event_details['include'] = array_map('eventorganiser_date_create', $event_details['include'] );
+	}
+	if( !empty($event_details['exclude']) ){
+		$event_details['exclude'] = array_map('eventorganiser_date_create',$event_details['exclude'] );
+	}
+
+	if($event_details['schedule'] == 'weekly'){
+		$event_details['occurs_by'] = '';
+	}elseif($event_details['schedule'] == 'monthly'){
+		$bymonthday = preg_match('/BYMONTHDAY=/',$event_details['schedule_meta']);
+		$event_details['occurs_by'] = ($bymonthday ? 'BYMONTHDAY' : 'BYDAY');
+	}else{
+		$event_details['occurs_by'] ='';
+	}
+
+	return $event_details;
+}
 
 
 /**
