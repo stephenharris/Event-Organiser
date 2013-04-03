@@ -132,7 +132,7 @@ function eo_get_venue_by($field,$value,$output = OBJECT, $filter = 'raw' ){
 
 /**
 * Returns the name of the venue of an event.
-* If used with any arguments uses the venue of the current event.
+* If used without any arguments uses the venue of the current event.
 *
 * Returns the name of a venue specified by it's slug or ID. If used inside the loop, it can return the name of the current post's venue. If specifying the venue by ID, **the ID must be an integer**.
 *
