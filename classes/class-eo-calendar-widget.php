@@ -139,7 +139,7 @@ function generate_output( $month, $args=array() ){
 
 	$key= $month->format('YM').serialize($args).get_locale().$today->format('Y-m-d');
 	$calendar = get_transient('eo_widget_calendar');
-	if( $calendar && is_array($calendar) && isset($calendar[$key]) ){
+	if( ( !defined( 'WP_DEBUG' ) || !WP_DEBUG ) && $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
 		return $calendar[$key];
 	}
 	
