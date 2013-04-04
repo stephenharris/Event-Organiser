@@ -352,9 +352,13 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 		$taxonomies = wp_list_pluck( $query->tax_query->queries, 'taxonomy' );
 		
 		foreach ( get_post_types( array( 'exclude_from_search' => false ) ) as $pt ) {
-			$object_taxonomies = $pt === 'attachment' ? get_taxonomies_for_attachments() : get_object_taxonomies( $pt );
-			if ( array_intersect( $taxonomies, $object_taxonomies ) )
-				$post_types[] = $pt;
+			
+			if( version_compare( '3.4', get_bloginfo( 'version' ) ) <= 0 ){
+				$object_taxonomies = $pt === 'attachment' ? get_taxonomies_for_attachments() : get_object_taxonomies( $pt );
+			}else{
+				//Backwards compat for 3.3
+				$object_taxonomies = $pt === 'attachment' ? array() : get_object_taxonomies( $pt );
+			}
 		}
 		
 		if( in_array( 'event', $post_types ) ){
