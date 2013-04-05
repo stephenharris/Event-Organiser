@@ -756,4 +756,12 @@ function _eventorganiser_autofill_city(){
 	wp_safe_redirect(admin_url('edit.php?post_type=event&page=venues'));
 }
 add_action('admin_post_eo-autofillcity','_eventorganiser_autofill_city');
+
+function _eventorganiser_theme_check_results(){
+	delete_option( 'eo_wp_footer_present' );
+}
+add_action('switch_theme', '_eventorganiser_theme_check_results');
+
+
+
  ?>

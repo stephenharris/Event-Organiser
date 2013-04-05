@@ -186,7 +186,13 @@ if ( is_admin() ):
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-settings.php');
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-venues.php');
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-calendar.php');
-	       
+	
+	require_once(EVENT_ORGANISER_DIR.'event-organiser-debug.php');
+else:
+	if( defined( 'WP_DEBUG' ) && WP_DEBUG ){
+		require_once(EVENT_ORGANISER_DIR.'includes/debug.php');
+	}
+
 endif;
 
 if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
