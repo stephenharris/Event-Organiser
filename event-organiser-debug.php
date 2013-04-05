@@ -137,7 +137,11 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				<tr>
 					<th><?php esc_html_e('Widget Sidebars');?></th>
 					<td><?php $eo_debugger->verbose_sidebar_check();?></td>
-				</tr>					
+				</tr>	
+				<tr>
+					<th><?php esc_html_e('Timezone');?></th>
+					<td><?php echo eo_get_blog_timezone()->getName(); printf( ' ( %s / %s ) ', get_option( 'gmt_offset' ), get_option( 'timezone_string' ) )?></td>
+				</tr>
 		</table>
 		<?php 
 			printf( 
