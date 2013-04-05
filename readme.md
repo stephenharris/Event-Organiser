@@ -4,7 +4,7 @@
 **Tags:** events, event, event categories, event organiser, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
 **Tested up to:** 3.5  
-**Stable tag:** 1.8.4
+**Stable tag:** 1.8.5
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -175,6 +175,13 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 1.8.5 ###
+* Fixes venue/category 'no events found' error when Events are excluded from search. Introduced in 1.8.
+* Fixes uninstall routine typo
+* Corrected documentation
+* Ensured backwards compatibility for 3.3
+* Added filters
 
 ### 1.8.4 ###
 * Fixes bug with the widget calendar (see [this post](http://wp-event-organiser.com/forums/topic/calendar-widget-nextprevious-links-bug/))
