@@ -131,8 +131,12 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				</tr>
 				
 				<tr>
-					<th><?php esc_html_e('WP_Footer present');?></th>
+					<th><?php printf( esc_html__( '%s present', 'eventorganiser' ), '<code>wp_footer()</code>' );?></th>
 					<td><?php $eo_debugger->verbose_footer_check();?></td>
+				</tr>	
+				<tr>
+					<th><?php esc_html_e('Widget Sidebars');?></th>
+					<td><?php $eo_debugger->verbose_sidebar_check();?></td>
 				</tr>					
 		</table>
 		<?php 
@@ -272,6 +276,36 @@ class EventOrganiser_Debugger{
 		}
 	}
 	
+	function verbose_sidebar_check(){
+		$footer_present = get_option( 'eo_sidebar_correct' );
+
+		if( $footer_present === false ){
+			printf(
+				'<span class="%s">%s</span><br/> %s',
+				esc_attr( $this->alert_class ),
+				__( 'Unknown', 'eventorganiser' ),
+				sprintf( __( 'Turn <a href="%s">WP_Debug mode</a> on and revisit the front-end to check' ), 'http://codex.wordpress.org/WP_DEBUG' )
+		);
+		}elseif( $footer_present == 1 ){
+			printf(
+				'<span class="%s">%s</span><br/> %s',
+				esc_attr( $this->ok_class ),
+				__( 'Correctly registered', 'eventorganiser' ),
+				sprintf( __( 'Turn <a href="%s">WP_Debug mode</a> on and revisit the front-end to check' ), 'http://codex.wordpress.org/WP_DEBUG' )
+			);
+		}else{
+			printf(
+				'<span class="%s">%s</span><br/> %s',
+				esc_attr( $this->warning_class ),
+				__( 'Incorrectly registered', 'eventorganiser' ),
+				sprintf(
+					__( "The widget sidebars are incorrectly registered. See the <a href='%s'>FAQ</a> or contact support to resolve this." ),
+					'http://wp-event-organiser.com/faq#i-cannot-navigate-between-months-on-the-widget-calendar'
+				)
+			);
+		}
+	}
+	
 	function verbose_footer_check(){
 		$footer_present = get_option( 'eo_wp_footer_present' );
 		
@@ -286,14 +320,14 @@ class EventOrganiser_Debugger{
 			printf(
 				'<span class="%s">%s</span><br/> %s',
 				esc_attr( $this->ok_class ),
-				__( 'Found', 'eventorganiser' ),
+				__( 'Yes', 'eventorganiser' ),
 				sprintf( __( 'Turn <a href="%s">WP_Debug mode</a> on and revisit the front-end to check' ), 'http://codex.wordpress.org/WP_DEBUG' )
 			);
 		}else{
 			printf(
 				'<span class="%s">%s</span><br/> %s',
 				esc_attr( $this->warning_class ),
-				__( 'Not found', 'eventorganiser' ),
+				__( 'No', 'eventorganiser' ),
 				sprintf( 
 					__( "The <a href='%s'>wp_footer hook</a> could be not be found. Without, for example, the calendar will not function" ), 
 					'http://codex.wordpress.org/Function_Reference/wp_footer' 

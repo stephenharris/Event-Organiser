@@ -200,6 +200,10 @@ if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
     require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-ajax.php');
 }
 
+if( defined( 'WP_DEBUG' ) && WP_DEBUG ){
+	add_action( 'register_sidebar', '_eventorganiser_check_sidebars' );
+}
+
 /****** Functions ******/
 require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-event-functions.php');
 require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-venue-functions.php');
