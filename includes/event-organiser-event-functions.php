@@ -666,7 +666,7 @@ function eo_get_the_future_occurrences_of( $post_id=0 ){
 		);
 	endforeach;
 	
-	return $occurrences;
+	return apply_filters( 'eventorganiser_get_the_future_occurrences_of', $occurrences, $post_id );
 }
 /** 
 * Returns an array of occurrences. Each occurrence is an array with 'start' and 'end' key. 
@@ -712,7 +712,7 @@ function eo_get_the_occurrences_of($post_id=0){
 		wp_cache_set( 'eventorganiser_occurrences_'.$post_id, $occurrences );
 	}
 
-	return $occurrences;
+	return apply_filters( 'eventorganiser_get_the_occurrences_of', $occurrences, $post_id );
 }
 
 /**
