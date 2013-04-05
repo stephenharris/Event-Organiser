@@ -338,7 +338,6 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 	if( 'any' == $post_types )
 		$post_types = get_post_types( array('exclude_from_search' => false) );
 	
-	
 	if( $post_types == 'event' ){
 		$bool = true;
 	
@@ -351,7 +350,7 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 		$post_types = array();
 		$taxonomies = wp_list_pluck( $query->tax_query->queries, 'taxonomy' );
 		
-		foreach ( get_post_types( array( 'exclude_from_search' => false ) ) as $pt ) {
+		foreach ( get_post_types() as $pt ) {
 			
 			if( version_compare( '3.4', get_bloginfo( 'version' ) ) <= 0 ){
 				$object_taxonomies = $pt === 'attachment' ? get_taxonomies_for_attachments() : get_object_taxonomies( $pt );
@@ -359,15 +358,20 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 				//Backwards compat for 3.3
 				$object_taxonomies = $pt === 'attachment' ? array() : get_object_taxonomies( $pt );
 			}
+			
+			if ( array_intersect( $taxonomies, $object_taxonomies ) )
+				$post_types[] = $pt;
 		}
-		
+
 		if( in_array( 'event', $post_types ) ){
-			if( $exclusive && 1 == count( $post_types ) )
+			if( $exclusive && 1 == count( $post_types ) ){
+				$query->set( 'post_type', 'event' );
 				$bool = true;
-			elseif( !$exclusive )
+			}elseif( !$exclusive ){
 				$bool = true;
-			else
+			}else{
 				$bool = false;
+			}
 		}else{
 			$bool = false;
 		}
