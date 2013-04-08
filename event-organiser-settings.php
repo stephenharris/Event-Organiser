@@ -401,6 +401,15 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 				'menu-item-status' => $status,
 				'menu-item-type' => 'post_type_archive',
 			);
+			
+			//If we're updating preserve parent and position
+			if( is_nav_menu_item( $menu_item_db_id ) ){
+				$menu_item = wp_setup_nav_menu_item( get_post( $menu_item_db_id ) );
+				$menu_item_data += array(
+					'menu-item-parent-id' => $menu_item->menu_item_parent,
+					'menu-item-position' => $menu_item->menu_order,
+				);
+			}
 
 			//Update menu item (post type) to have taxonom term $menu_id
 			$menu_item_db_id = wp_update_nav_menu_item( $menu_id, $menu_item_db_id,$menu_item_data );
