@@ -376,6 +376,9 @@ function eventorganiser_get_next_cron_time( $cron_name ){
 function eventorganiser_delete_expired_events(){
 	//Get expired events
 	$events = eo_get_events(array('showrepeats'=>0,'showpastevents'=>1,'eo_interval'=>'expired'));
+	
+	$time_until_expired = (int) apply_filters( 'eventorganiser_events_expire_time', 24*60*60 );
+	$time_until_expired = max( $time_until_expired, 0 );
 
 	if($events):
 		$now = new DateTime('now', eo_get_blog_timezone());
@@ -385,13 +388,13 @@ function eventorganiser_delete_expired_events(){
 			$start = eo_get_the_start( DATETIMEOBJ, $event->ID, null, $event->occurrence_id );
 			$end = eo_get_the_end( DATETIMEOBJ, $event->ID, null, $event->occurrence_id );
 			
-			$expired = round(abs($end->format('U')-$start->format('U'))) + 24*60*60; //Duration + 24 hours
+			$expired = round(abs($end->format('U')-$start->format('U'))) + $time_until_expired; //Duration + expire time
 			
 			$finished =  eo_get_schedule_last( DATETIMEOBJ, $event->ID );
-			$finished->modify("+$expired seconds");//24 horus after the last occurrence finishes
+			$finished->modify("+$expired seconds");//[Expired time] after the last occurrence finishes
 			
-			//Delete if 24 hours has passed
-			if($finished <= $now){
+			//Delete if [expired time] has passed
+			if( $finished <= $now ){
 				wp_trash_post((int) $event->ID);
 			}
 			
