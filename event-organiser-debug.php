@@ -46,6 +46,8 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 		<p>
 		<?php 
 		_e( "This page highlights useful information for debugging. If you're reporting a bug, please include this information.", 'eventorganiser' );
+		echo " ";
+		_e( "The 'system info' link in under the Events admin tab is only visible to admins and only when <code>WP_DEBUG</code> is set to <code>true</code>.", 'eventorganiser' );
 		?>
 		</p>
 		<p class="description">
