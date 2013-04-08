@@ -7,8 +7,8 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 {
 	function set_constants(){
 		$this->hook = 'edit.php?post_type=event';
-		$this->title = __( 'Debug', 'eventorganiser' );
-		$this->menu = __( 'Debug', 'eventorganiser' );
+		$this->title = __( 'System Info', 'eventorganiser' );
+		$this->menu = __( 'System Info', 'eventorganiser' );
 		$this->permissions = 'manage_options';
 		$this->slug = 'debug';
 	}
@@ -33,7 +33,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 	<div class="wrap">
 		<?php screen_icon( 'edit' );?>
 		
-		<h2><?php _e('Debug','eventorganiser');?> </h2>
+		<h2><?php _e('System Info','eventorganiser');?> </h2>
 		
 		<?php 
 		$eo_debugger = new EventOrganiser_Debugger();
@@ -41,7 +41,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 		//$eo_debugger->set_known_plugin_conflicts();
 		//$eo_debugger->set_known_theme_conflicts();
 		$eo_debugger->set_db_tables( 'eo_events', 'eo_venuemeta' );
-		
+		do_action_ref_array( 'eventorganiser_debugger_setup', array( &$eo_debugger ) );
 		?>
 		<p>
 		<?php 
@@ -93,10 +93,21 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 					<td> <?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
 				</tr>      
 				<tr>
-					<th><?php esc_html_e('PHP Memory Limit');?></th>
-					<td> <?php echo ini_get( 'memory_limit' ); ?></td>
+					<th><?php esc_html_e('PHP Memory Usage');?></th>
+					<th><?php echo $eo_debugger->verbose_memory_check(); ?>
+				</tr>   
+				<tr>
+					<th><?php esc_html_e('PHP Post Max Size');?></th>
+					<td><?php echo ini_get('post_max_size'); ?></td>
+				</tr>   
+				<tr>
+					<th><?php esc_html_e('PHP Upload Max Size');?></th>
+					<td><?php echo ini_get('upload_max_filesize'); ?></td>
+				</tr>
+				<tr>
+					<th><?php esc_html_e('PHP cURL Support');?></th>
+					<td>  <?php echo (function_exists('curl_init')) ? _e('Yes', 'eventorganiser') . "\n" : _e('No', 'eventorganiser') . "\n"; ?></td>
 				</tr>        
-
 				<tr>
 					<th><?php esc_html_e('Plug-ins');?></th>
 					<td>
@@ -308,6 +319,27 @@ class EventOrganiser_Debugger{
 				)
 			);
 		}
+	}
+	
+	function verbose_memory_check(){
+
+		if( function_exists( 'memory_get_usage' ) ){
+			$memory_usage =  round( memory_get_usage() / 1024 / 1024, 2);
+			$percentage = round( $memory_usage / ini_get( 'memory_limit' ) * 100, 0 );
+			printf( '%d / %d   <span class="%s">( %s )</span>',
+				ceil( $memory_usage ),
+				ini_get( 'memory_limit' ),
+				$percentage > 90 ? $this->alert_class : $this->ok_class,
+				$percentage . "%"
+			);
+		}else{
+			printf( ' ? / %d  <span class="%s">( %s )</span>',
+				ini_get( 'memory_limit' ),
+				$this->alert_class,
+				__( 'unknown', 'eventorganiser' )
+			);
+		}
+
 	}
 	
 	function verbose_footer_check(){
