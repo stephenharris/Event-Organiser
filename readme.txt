@@ -168,6 +168,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Fixes 'events' menu position becoming lost when updating settings
 * Configure the event expire option via the `eventorganiser_events_expire_time` filter
 * Corrected Spanish translation
+* Corrected potential duplication of ID in the event meta list. Props [@fusion2004](https://github.com/stephenharris/Event-Organiser/pull/73)
 
 = 1.8.5 =
 * Fixes venue/category 'no events found' error when Events are excluded from search. Introduced in 1.8.
