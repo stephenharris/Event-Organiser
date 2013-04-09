@@ -1069,7 +1069,7 @@ function eo_get_event_meta_list( $post_id=0 ){
 	if( empty($post_id) ) 
 		return false;
 
-	$html = '<ul id="eo-event-meta" style="margin:10px 0px;">';
+	$html = '<ul class="eo-event-meta" style="margin:10px 0px;">';
 
 	if( $venue_id = eo_get_venue($post_id) ){
 		$html .= sprintf('<li><strong>%s:</strong> <a href="%s">
