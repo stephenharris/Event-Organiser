@@ -51,7 +51,7 @@
 			<?php endif; ?>
 		<?php endif; ?>
 
-	<ul id="eo-event-meta" style="float:left;width:40%">
+	<ul class="eo-event-meta" style="float:left;width:40%">
 
 		<?php if( !eo_reoccurs() ){ ?>
 				<!-- Single event -->
