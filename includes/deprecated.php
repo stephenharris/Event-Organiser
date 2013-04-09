@@ -14,7 +14,9 @@
 function eo_get_the_occurrences($post_id=0){
 	//_deprecated_function( __FUNCTION__, '1.5', 'eo_get_the_occurrences_of()' );
 	$occurrences = eo_get_the_occurrences_of($post_id);
-	return wp_list_pluck($occurrences, 'start');
+	if( $occurrences )
+		return wp_list_pluck($occurrences, 'start');
+	return false;
 }
 
 /**
