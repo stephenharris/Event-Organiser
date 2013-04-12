@@ -132,6 +132,10 @@ function eventorganiser_public_fullcalendar() {
 			else
 				$event['className'][] = 'eo-future-event';
 				
+			//Add class if event is all day
+			if( eo_is_all_day() )
+				$event['className'][] = 'eo-all-day';
+			
 			//Include venue if this is set
 			$venue = eo_get_venue($post->ID);
 
