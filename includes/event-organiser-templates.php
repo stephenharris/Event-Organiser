@@ -248,6 +248,13 @@ function _eventorganiser_single_event_content( $content ){
 	if( !is_singular('event') )
 		return $content;
 
+	global $eo_event_parsed;
+	if( !empty( $eo_event_parsed[get_the_ID()] ) ){
+		return $content;
+	}else{
+		$eo_event_parsed[get_the_ID()] = 1;
+	}
+	
 	//Object buffering				
 	ob_start();
 	eo_get_template_part('event-meta','event-single');
