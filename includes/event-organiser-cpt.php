@@ -1034,4 +1034,24 @@ function eventorganiser_file_to_attachment( $file ){
 }
 
 add_action( 'threewp_activity_monitor_new_activity', 'eventorganiser_threeWP' );
+
+
+function eventorganiser_event_shortlink( $shortlink, $id, $context ) {
+
+	//Context can be post/blog/meta ID
+	$event_id = 0;
+	if( 'query' == $context && is_singular( 'event' ) ){
+		$event_id = get_queried_object_id();
+	}elseif( 'post' == $context ){
+		$event_id = $id;
+	}
+
+	//Only do something if of event post type
+	if( 'event' == get_post_type( $event_id )  ){
+		$shortlink = home_url( '?p=' . $event_id );
+	}
+	
+	return $shortlink;
+}
+add_filter( 'pre_get_shortlink', 'eventorganiser_event_shortlink', 10, 3 );
 ?>
