@@ -24,6 +24,7 @@ function eventorganiser_register_query_vars( $qvars ){
 	$qvars[] = 'event_start_after';
 	$qvars[] = 'event_end_before';
 	$qvars[] = 'event_after_after';
+	$qvars[] = 'event_series';
 	return $qvars;
 }
 add_filter('query_vars', 'eventorganiser_register_query_vars' );
