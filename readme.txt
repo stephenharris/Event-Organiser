@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organiser, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 2.0
+Stable tag: 2.0.1
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -161,6 +161,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.0.1 =
+* Fixed minor bugs related to templates
+* Add shortlink to events
+* Add 'start date' arguments to eo_get_event_fullcalendar() & fullCalendar shortcode
 
 = 2.0 =
 * Launch of [Event Organiser Pro](http://wp-event-organiser.com/pro-features/)
