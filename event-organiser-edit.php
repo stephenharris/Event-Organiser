@@ -57,7 +57,11 @@ function _eventorganiser_details_metabox( $post ){
 	$venues = eo_get_venues();
 	$venue_id = (int) eo_get_venue( $post->ID );
 
-	$sche_once = $schedule == 'once';
+	
+	//$sche_once is used to disable date editing unless the user specifically requests it.
+	//But a new event might be recurring (via filter), and we don't want to 'lock' new events.
+	//See http://wordpress.org/support/topic/wrong-default-in-input-element
+	$sche_once = ( $schedule == 'once' || !empty(get_current_screen()->action) );
 	 
 	if ( !$sche_once ){
 		$notices = '<strong>'. __( 'This is a reoccurring event', 'eventorganiser' ).'</strong>. '
