@@ -1005,6 +1005,9 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **columnformatmonth** (string) Dateformat for month columns. Default 'D'.
  * * **columnformatweek** (string) Dateformat for month columns. Default 'D n/j'.
  * * **columnformatday** (string) Dateformat for month columns. Default 'l n/j',
+ * * **year** The year the calendar should start on (e.g. 2013)
+ * * **month** The month the calendar should start on (1=Jan, 12=Dec)
+ * * **date** The calendar the date should start on
  *
  * @link http://arshaw.com/fullcalendar/ The fullCalendar (jQuery plug-in)
  * @link https://github.com/stephenharris/fullcalendar Event Organiser version of fullCalendar
@@ -1019,7 +1022,8 @@ function eo_get_event_fullcalendar( $args ){
 		'event_category'=>'', 'event_venue'=>'', 'timeformat'=>'G:i', 'axisformat'=>get_option('time_format'), 'key'=>false,
 		'tooltip'=>true, 'weekends'=>true, 'mintime'=>'0', 'maxtime'=>'24', 'alldayslot'=>true,
 		'alldaytext'=>__('All Day','eventorganiser'), 'columnformatmonth'=>'D', 'columnformatweek'=>'D n/j', 'columnformatday'=>'l n/j',
-		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j Y}", 'titleformatday' => 'l, M j, Y'
+		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j Y}", 'titleformatday' => 'l, M j, Y',
+		'year' => false, 'month' => false, 'date' => false,			
 	);
 	$args = shortcode_atts( $defaults, $args );
 	$key = $args['key'];
@@ -1035,6 +1039,9 @@ function eo_get_event_fullcalendar( $args ){
 		$args[$date_attribute.'php'] = $args[$date_attribute];
 		$args[$date_attribute] = eventorganiser_php2xdate( $args[$date_attribute] );
 	}
+	
+	//Month expects 0-11, we ask for 1-12.
+	$args['month'] = ( $args['month'] ? $args['month'] - 1 : false );
 
 	EventOrganiser_Shortcodes::$calendars[] = array_merge( $args );
 	EventOrganiser_Shortcodes::$add_script = true;
