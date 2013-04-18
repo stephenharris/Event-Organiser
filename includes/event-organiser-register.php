@@ -119,25 +119,6 @@ add_action( 'admin_init', 'eventorganiser_register_scripts', 5 );
 
 
  /**
- * The "Comprehensive Google Map Plugin" plug-in deregisters all other Google scripts registered
- * by other plug-ins causing these plug-ins not to function. This plug-in removes that behaviour.
- *
- * Of course if two google scripts are loaded there may be problems, but this is better than always having
- * experiencing a 'bug'. At time writing the function responsible `cgmp_google_map_deregister_scripts()` 
- * can be found here {@see https://github.com/azagniotov/Comprehensive-Google-Map-Plugin/blob/master/functions.php#L520 }
- *
- * @see https://github.com/stephenharris/Event-Organiser/issues/49
- * @see http://wordpress.org/support/topic/googlemap-doesnt-shown-on-event-detail-page
- * @since 1.7.4
- * @ignore
- * @access private
- */
-function eventorganiser_cgmp_workaround(){
-	remove_action( 'wp_head', 'cgmp_google_map_deregister_scripts', 200 );
-}
-add_action( 'wp_head', 'eventorganiser_cgmp_workaround', 1 );
-
- /**
  * Check the export and event creation (from Calendar view) actions. 
  * These cannot be called later. Most other actions are only called when
  * the appropriate page is loading.
