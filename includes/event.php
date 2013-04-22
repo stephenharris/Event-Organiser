@@ -1,4 +1,5 @@
 <?php
+
 /**
  *@package event-functions
  */
@@ -78,6 +79,11 @@ function eo_update_event($post_id, $event_data=array(), $post_data=array() ){
 						break;
 					}
 				}else{
+					
+					//If one off event / custom, don't worry about 'schedule_last'
+					if( $key == 'schedule_last' && in_array( $event_data['schedule'], array( 'once', 'custom' ) ) )
+						continue;
+					
 					$diff[]=$key;
 					$delete_existing = true;
 					break;
@@ -85,7 +91,7 @@ function eo_update_event($post_id, $event_data=array(), $post_data=array() ){
 			}
 		}
 	}
-
+	
 	//Need to replace occurrences
 	if( $delete_existing || !empty( $event_data['force_regenerate_dates'] ) ){
 		//Generate occurrences
