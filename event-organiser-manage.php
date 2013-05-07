@@ -86,7 +86,7 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
  			
 			if ( !empty( $terms) ) {
        	 		foreach ( $terms as $term )
-			            $post_terms[] = '<a href=""'.add_query_arg( 'event-category', $term->slug ).'">'.esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, 'event-category', 'display' ) ).'</a>';
+			            $post_terms[] = '<a href="'.add_query_arg( 'event-category', $term->slug ).'">'.esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, 'event-category', 'display' ) ).'</a>';
 			        echo join( ', ', $post_terms );
 			}
 			break;
