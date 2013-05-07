@@ -188,18 +188,11 @@ X-WR-CALDESC:<?php echo get_bloginfo('name');?> - Events
 				$status = 'TENTATIVE';
 
 			//Generate a globally unique UID:
-			$rand='';
-			$host = $_SERVER['SERVER_NAME'];
-			$base   = 'aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPrRsStTuUvVxXuUvVwWzZ1234567890';
-    			$start  = 0;
-    			$end = strlen( $base ) - 1;
-    			$length = 6;
-
-    			for( $p = 0; $p < $length; $p++ ):
-      				$rand .= $base{mt_rand( $start, $end )};
-			endfor;
-
-			  $uid  = $now->format('Ymd\THiT').microtime(true).'-'.$rand.'-EO'.$post->ID.'@'.$host;
+			$uid = get_post_meta( get_the_ID(), '_eventorganiser_uid', true );
+			if( empty( $uid ) ){
+				$uid = implode( '-', array( $now->format('Ymd\THi\Z'), microtime(true), 'EO', get_the_ID(), get_current_blog_id() ) ).'@'.$_SERVER['SERVER_ADDR'];
+				add_post_meta( get_the_ID(), '_eventorganiser_uid', $uid );
+			}
 
 			//Output event
 ?>
@@ -536,6 +529,9 @@ function escape_icalText($text){
 
 		switch($property):
 			//Date properties
+			case 'UID':
+				$event_meta['_eventorganiser_uid'] = $value;
+			break;
 			case 'CREATED':
 			case 'DTSTART':
 			case 'DTEND':
