@@ -173,8 +173,22 @@ function eo_venue_name($venue_slug_or_id=''){
 * Returns the description of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If specifying the 
 * venue by ID, **the ID must be an integer**.
 *
-* @since 1.0.0
+* ###Example
 *
+*     <?php 
+*     $event_id = 7;
+*     $venue_id = eo_get_venue( $event_id );
+*     echo eo_get_venue_description( $venue_id );
+*     
+*     //The following displays the description for the venue with **ID** '12'
+*     echo eo_get_venue_description( 12 );
+*     
+*     //The following displays the description for the venue with **slug** '12'
+*     echo eo_get_venue_description( '12' );
+*     ?>
+*
+* @since 1.0.0
+* @see `eo_venue_description()`
 * @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
 * @return string The description. of the corresponding venue
  */
