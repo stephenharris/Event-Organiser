@@ -28,12 +28,10 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		$this->slug = 'event-settings';
 	}
 
-	function  admin_init_actions(){
-		//Register options
+	function admin_init_actions(){
+		
 		register_setting( 'eventorganiser_options', 'eventorganiser_options', array( $this, 'validate' ) );
-
-		add_action( 'eventorganiser_event_settings_permalinks', 'flush_rewrite_rules' );
-
+		
 		//Initialise the tab array
 		$this->tabs = $this->setup_tabs();
 		
@@ -59,6 +57,15 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					break;
 			}
 			do_action("eventorganiser_register_tab_{$tab_id}", $tab_id );
+		}
+	}
+	
+	function page_actions(){
+		//Register options
+		add_action( 'eventorganiser_event_settings_permalinks', 'flush_rewrite_rules' );
+
+		foreach ( $this->tabs as $tab_id => $label ){
+			//Add sections to each tabbed page
 			$this->add_fields( $tab_id );
 		}
 
@@ -193,15 +200,21 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'name' => 'eventorganiser_options[templates]',
 						'options' => 1,
 						'checked' => eventorganiser_get_option( 'templates' ),
-						'help' => __("For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. To prevent this, uncheck this option. WordPress will then decide which template from your theme's folder to use.", 'eventorganiser' ). sprintf("<p><strong> %s </strong><code>archive-event.php</code></p>
+						'help' => __("For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. To prevent this, uncheck this option. WordPress will then decide which template from your theme's folder to use.", 'eventorganiser' )
+									. sprintf(
+											"<p><strong> %s </strong><code>archive-event.php</code></p>
 											<p><strong> %s </strong><code>single-event.php</code></p>
-											<p><strong> %s </strong><code>venue-template.php</code></p>
+											<p><strong> %s </strong><code>taxonomy-event-venue.php</code></p>
 											<p><strong> %s </strong><code>taxonomy-event-category.php</code></p>",
 												__("Events archives:", 'eventorganiser' ),
 												__("Event page:", 'eventorganiser' ),
 												 __("Venue page:", 'eventorganiser' ),
 												__("Events Category page:", 'eventorganiser' )
 										)
+									.sprintf( 
+										__( "For more information see documentation <a href='%s'>on editing the templates</a>", 'eventorganiser' ),
+										'http://wp-event-organiser/documentation/editing-templates'
+									)
 					) );
 				break;
 
