@@ -89,13 +89,24 @@ function eventorganiser_register_scripts(){
 	),$version,true);
 	
 	/*  Script for event edit page */
+	wp_register_script( 'eo-time-picker', EVENT_ORGANISER_URL."js/time-picker{$ext}.js",array(
+		'jquery',
+		'jquery-ui-datepicker',		
+	),$version,true);
+	
 	wp_register_script( 'eo_event', EVENT_ORGANISER_URL."js/event{$ext}.js",array(
 		'jquery',
 		'jquery-ui-datepicker',
+		'eo-time-picker',
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',
 		'jquery-ui-position'
-	),$version,true);	
+	),$version,true);
+	
+	wp_register_script( 'eo-edit-event-controller', EVENT_ORGANISER_URL."js/edit-event-controller{$ext}.js",array(
+			'jquery',
+			'eo_event',
+	),$version,true);
 
 	/*  Script for admin calendar */
 	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL."js/admin-calendar{$ext}.js",array(
@@ -178,7 +189,7 @@ function eventorganiser_add_admin_scripts( $hook ) {
 	if ( $hook == 'post-new.php' || $hook == 'post.php') {
 		if( $post->post_type == 'event' ) {     
 
-			wp_enqueue_script('eo_event');
+			wp_enqueue_script('eo-edit-event-controller');
 			wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'startday'=>intval(get_option('start_of_week')),
