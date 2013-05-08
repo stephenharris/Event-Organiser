@@ -64,17 +64,12 @@ get_header(); ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
 
-				<h1 class="entry-title" style="display: inline;">
-				<a href="<?php the_permalink(); ?>">
-					<?php 
-						//If it has one, display the thumbnail
-						if( has_post_thumbnail() )
-							the_post_thumbnail('thumbnail', array('style'=>'float:left;margin-right:20px;'));
-
-						//Display the title
-						the_title()
-					;?>
-				</a>
+				<h1 class="entry-title" style="display: inline;">			
+				<?php
+					//If it has one, display the thumbnail
+					the_post_thumbnail('thumbnail', array('style'=>'float:left;margin-right:20px;'));
+				?>
+				<a href="<?php the_permalink(); ?>"><?php the_title();?></a>
 				</h1>
 
 				<div class="event-entry-meta">
