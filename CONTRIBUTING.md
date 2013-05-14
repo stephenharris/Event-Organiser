@@ -8,7 +8,7 @@ But to help keep things organised, please review these guidelines.
 
 ## Am I in the right place?
  * If you've got a support question, please go to the [support forum](https://wp-event-organiser.com/forums/) 
- * If you've got a pre-sale question for the Pro add-on, please [ask it here](wp-event-organiser.com/forums/forum/pre-sales-questions-pro/)
+ * If you've got a pre-sale question for the Pro add-on, please [ask it here](http://wp-event-organiser.com/forums/forum/pre-sales-questions-pro/)
  * If you're reporting a bug for the Pro add-on, you can [do that here](https://bitbucket.org/stephenharris/event-organiser-pro/issues)
  
 ## Reporting bugs
