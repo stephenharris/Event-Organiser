@@ -64,6 +64,7 @@ A big thank you to those who have provided translations for Event Organiser
 * Hungarian - Csaba Erdei 
 * Estonian - Kristjan Roosipuu
 * Finnish - Kari Tolonen
+* Ukranian - Максим Кобєлєв
 
 == Installation ==
 
