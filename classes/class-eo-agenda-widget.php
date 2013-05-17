@@ -3,18 +3,19 @@
  * Class used to create the event calendar widget
  */
 class EO_Events_Agenda_Widget extends WP_Widget{
-	var $w_arg = array(
-		'title'=> '',
-		'mode'=> 'day',
-		'group_format'=>'l, jS F',
-		'item_format'=>'g:i a',
-		'add_to_google' => 1,
-		);
+	var $w_arg = array();
 
 	static $agendas=array();
 
 	function __construct() {
 		$widget_ops = array('classname' => 'widget_events', 'description' =>  __('Displays a list of events, grouped by date','eventorganiser'));
+		$this->w_arg = array(
+				'title'=> '',
+				'mode'=> 'day',
+				'group_format'=>'l, jS F',
+				'item_format'=> get_option( 'time_format' ),
+				'add_to_google' => 1,
+		);
 		parent::__construct('EO_Events_Agenda_Widget', __('Events Agenda','eventorganiser'), $widget_ops);
   	}
  

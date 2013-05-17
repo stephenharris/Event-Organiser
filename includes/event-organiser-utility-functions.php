@@ -928,4 +928,29 @@ function eo_color_luminance( $hex, $percent ) {
 
 	return $new_hex;
 }
+
+/**
+ * Whether the blog's time settings indicates it uses 12 or 24 hour time
+ * 
+ * If uses meridian (am/pm) it is 12 hour.
+ * If uses 'H' as the time format it is 24 hour.
+ * Otherwise assumed to be 12 hour.
+ */
+function eventorganiser_blog_is_24(){
+	
+	$time = get_option( 'time_format');
+	
+	//Check for meridian
+	if( preg_match( '~\b(A.)\b|([^\\\\]A)~i', $time, $matches ) ){
+		return false;
+	}
+
+	//Check for 24 hour format
+	if( preg_match( '~\b(H.)\b|([^\\\\]H)~i', $time ) ){
+		return true;
+	}
+	
+	//Assume it isn't
+	return false;
+}
 ?>
