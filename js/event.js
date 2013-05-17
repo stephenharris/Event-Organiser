@@ -322,13 +322,18 @@ window.eventOrganiserSchedulePicker = {
 	
 	set_up_timepickers: function(){
 		
-		var views = this.options.views;
 		
+		var options = this.options;
+		var views = this.options.views;
         //Time pickers
         $( views.start_time + ', ' +  views.end_time).timepicker({
-            showPeriodLabels: false,
-            hourText: this.options.locale.hour,
-            minuteText: this.options.locale.minute
+            showPeriodLabels: !options.is24hour,
+            showPeriod: !this.options.is24hour,
+            showLeadingZero: options.is24hour,
+            periodSeparator: '',
+            amPmText: options.locale.meridian,
+            hourText: options.locale.hour,
+            minuteText: options.locale.minute
         }).addClass('eo-time-picker');
 	},
 	

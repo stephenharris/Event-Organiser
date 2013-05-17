@@ -111,6 +111,9 @@ function eventorganiser_register_scripts(){
 	/*  Script for admin calendar */
 	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL."js/admin-calendar{$ext}.js",array(
 		'eo_fullcalendar',
+		'jquery-ui-datepicker',
+		'jquery-ui-autocomplete',
+		'jquery-ui-widget',
 		'jquery-ui-dialog',
 		'jquery-ui-tabs',
 		'jquery-ui-position'
@@ -197,6 +200,7 @@ function eventorganiser_add_admin_scripts( $hook ) {
 					'current_user_can' => array(
 						'manage_venues' => current_user_can( 'manage_venues' ),
 					),
+					'is24hour' => eventorganiser_blog_is_24(),
 					'location'=>get_option('timezone_string'),
 					'locale'=>array(
 						'monthNames'=>array_values($wp_locale->month),
@@ -205,6 +209,7 @@ function eventorganiser_add_admin_scripts( $hook ) {
 						'showDates' => __( 'Show dates', 'eventorganiser' ),
 						'hideDates' => __( 'Hide dates', 'eventorganiser' ),
 						'weekDay'=>$wp_locale->weekday,
+						'meridian' => array( $wp_locale->get_meridiem('am'), $wp_locale->get_meridiem('pm') ),
 						'hour'=>__('Hour','eventorganiser'),
 						'minute'=>__('Minute','eventorganiser'),
 						'day'=>__('day','eventorganiser'),

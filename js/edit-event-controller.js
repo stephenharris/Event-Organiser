@@ -22,6 +22,7 @@ eventOrganiserSchedulePicker.init({
     	summary: "#event_summary",
 	},
 	format: EO_Ajax_Event.format,
+	is24hour: Boolean(EO_Ajax_Event.is24hour),
 	startday: EO_Ajax_Event.startday,
 	schedule: window.eventOrganiserSchedule,
 	locale: EO_Ajax_Event.locale,

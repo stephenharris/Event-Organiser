@@ -47,6 +47,9 @@ function _eventorganiser_details_metabox( $post ){
 	}else{
 		$format = 'mm-dd-yyyy'; //Human form
 	}
+	
+	$is24 = eventorganiser_blog_is_24();
+	$time_format = $is24 ? 'H:i' : 'g:ia';
 
 	//Get the starting day of the week
 	$start_day = intval( get_option( 'start_of_week' ) );
@@ -84,8 +87,11 @@ function _eventorganiser_details_metabox( $post ){
 					<td class="eo-label"><?php echo __( 'Start Date/Time', 'eventorganiser' ).':'; ?> </td>
 					<td> 
 						<input class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" id="from_date" <?php disabled( !$sche_once );?> value="<?php echo $start->format( $phpFormat ); ?>"/>
-
-						<input name="eo_input[StartTime]" class="eo_time ui-widget-content ui-corner-all" size="4" maxlength="5" id="HWSEvent_time" <?php disabled( (!$sche_once) || $all_day );?> value="<?php echo $start->format( 'H:i' );?>"/>
+						<?php printf(
+								'<input name="eo_input[StartTime]" class="eo_time ui-widget-content ui-corner-all" size="4" maxlength="5" id="HWSEvent_time" %s value="%s"/>',
+								disabled( (!$sche_once) || $all_day, true, false ),
+								eo_format_datetime( $start, $time_format )
+						);?>						
 
 					</td>
 				</tr>
@@ -93,8 +99,13 @@ function _eventorganiser_details_metabox( $post ){
 				<tr valign="top"  class="event-date">
 					<td class="eo-label"><?php echo __( 'End Date/Time', 'eventorganiser' ).':';?> </td>
 					<td> 
-					<input class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" id="to_date" <?php disabled( !$sche_once );?>  value="<?php echo $end->format( $phpFormat ); ?>"/>
-					<input name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all " size="4" maxlength="5" id="HWSEvent_time2" <?php disabled( (!$sche_once) || $all_day );?> value="<?php echo $end->format( 'H:i' ); ?>"/>
+						<input class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" id="to_date" <?php disabled( !$sche_once );?>  value="<?php echo $end->format( $phpFormat ); ?>"/>
+					
+						<?php printf(
+								'<input name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all" size="4" maxlength="5" id="HWSEvent_time2" %s value="%s"/>',
+								disabled( (!$sche_once) || $all_day, true, false ),
+								eo_format_datetime( $end, $time_format )
+						);?>	
 
 					<label>
 					<input type="checkbox" id="eo_allday"  <?php checked( $all_day ); ?> name="eo_input[allday]"  <?php  disabled( !$sche_once );?> value="1"/>
@@ -299,6 +310,11 @@ function eventorganiser_details_save( $post_id ) {
 	if ( $all_day ){
 		$raw_data['StartTime'] = '00:00';
 		$raw_data['FinishTime'] = '23:59';
+	}elseif( !eventorganiser_blog_is_24() ){
+		//Potentially need to parse 24
+		//TODO incorproate into _eventorganiser_check_datetime
+		$raw_data['StartTime'] = date( "H:i", strtotime( $raw_data['StartTime'] ) );
+		$raw_data['FinishTime'] = date( "H:i", strtotime( $raw_data['FinishTime'] ) );
 	}
 
 	//Check dates
