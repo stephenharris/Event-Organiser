@@ -83,6 +83,9 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		//Add screen option
 		$user     = wp_get_current_user();
 		$is12hour = get_user_meta( $user->ID, 'eofc_time_format', true );
+		if( '' === $is12hour )
+			$is12hour = eventorganiser_blog_is_24() ? 0 : 1;
+		
 		add_screen_option( 'eofc_time_format', array( 'value' => $is12hour ) );
 		add_filter( 'screen_settings', array( $this, 'screen_options' ), 10, 2 );
 
