@@ -24,6 +24,8 @@
 #eo_venue_form #venue_address .inside{padding:0;margin:0;}
 
 /* Calendar View*/
+.fc-button-next,.fc-button-prev {margin-top:2px;}
+.fc-button-next .ui-button-text,.fc-button-prev .ui-button-text{line-height:1em;}
 .event.past-event{opacity:0.5;}
 form.eo_cal .ui-autocomplete-input{width:220px;}
 /* Table on event details calendar view*/
