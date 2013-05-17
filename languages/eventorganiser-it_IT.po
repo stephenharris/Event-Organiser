@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-23 18:32+0100\n"
-"PO-Revision-Date: 2012-11-23 18:32+0100\n"
+"PO-Revision-Date: 2013-05-17 18:27+0100\n"
 "Last-Translator: Stephen Harris <contact@stephenharris.info>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -212,7 +212,7 @@ msgstr "Archivio eventi:"
 #: ../event-organiser-venues.php:144
 #: ../event-organiser-venues.php:211
 msgid "Venues"
-msgstr "Loghi"
+msgstr "Luoghi"
 
 #: ../event-organiser-settings.php:210
 msgid "Event Categories"
