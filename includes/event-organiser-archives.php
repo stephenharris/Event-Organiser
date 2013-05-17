@@ -418,6 +418,11 @@ function eventorganiser_events_where( $where, $query ){
 			$occurrence_id =$query->query_vars['event_occurrence_id'];
 			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.event_id=%d ",$occurrence_id);
 		endif;
+		
+		if(isset($query->query_vars['event_occurrence__in'])):
+			$occurrence__in = implode(', ', array_map( 'intval', $query->query_vars['event_occurrence__in'] ) );
+			$where .= " AND {$wpdb->eo_events}.event_id IN({$occurrence__in}) ";
+		endif;
 
 		//Check date ranges were are interested in. 
 		$date_queries = array(
