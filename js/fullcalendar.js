@@ -1,12 +1,8 @@
 
-/**
+/*!
  * This is an edited version of FullCalendar for use in the Event Organsier plug-in: wordpress.org/extend/plugins/event-organiser/
-*/
-/**
- * @preserve
- * FullCalendar v@VERSION
  * http://arshaw.com/fullcalendar/
- *
+*/
 /*!
  * FullCalendar v1.6.1
  * Docs & License: http://arshaw.com/fullcalendar/
@@ -1108,7 +1104,7 @@ function EventManager(options, _sources) {
 				e.className = event.className;
 				e.editable = event.editable;
 				e.color = event.color;
-				e.backgroudColor = event.backgroudColor;
+				e.backgroundColor = event.backgroundColor;
 				e.borderColor = event.borderColor;
 				e.textColor = event.textColor;
 				normalizeEvent(e);
