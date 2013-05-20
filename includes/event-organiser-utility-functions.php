@@ -798,10 +798,16 @@ function eventorganiser_textarea_field($args){
 	$html ='';
 
 	if( $args['tinymce'] ){
+		
+		ob_start();
 		wp_editor( $value, esc_attr($id) ,array(
 				'textarea_name'=>$name,
 				'media_buttons'=>false,
+				'textarea_rows' => intval($args['rows']),
 			));
+		
+		$html .= ob_get_contents();
+		ob_end_clean();
 	}else{
 		$html .= sprintf('<textarea cols="%s" rows="%d" name="%s" class="%s large-text" id="%s" %s >%s</textarea>',
 				intval($args['cols']),
