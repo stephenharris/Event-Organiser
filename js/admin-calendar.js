@@ -187,6 +187,58 @@
             }
         });
         $('button.ui-datepicker-trigger').button();
+        
+    /* Venue drop-down in modal */
+        
+      //The venue combobox
+        $.widget("ui.combobox", {
+        	_create: function () {
+        	var c = this.element.hide(),d = c.children(":selected"),e = d.val() ? d.text() : "";
+        	var wrapper  = $("<span>").addClass("ui-combobox eo-venue-input").insertAfter(c);
+        	var options = {
+        			delay: 0,
+        			minLength: 0,
+        			source: function (a, callback) {
+        				$.getJSON(EO_Ajax.ajaxurl + "?callback=?&action=eo-search-venue", a, function (a) {
+        					var venues = $.map(a, function (a) {a.label = a.name;return a;});
+        					callback(venues);
+        				});
+        			},
+        			select: function (a, b) {
+        				$("#venue_select").removeAttr("selected");
+        				$("#venue_select").val(b.item.term_id);
+        			}
+        		};
+        		var input = $("<input>").appendTo(wrapper).val(e).addClass("ui-combobox-input").autocomplete(options).addClass("ui-widget-content ui-corner-left");
+                     
+        		//Apend venue address to drop-down
+        		input.data("autocomplete")._renderItem = function (a, b) {
+        			if (b.term_id == 0 ) {
+        				return $("<li></li>").data("item.autocomplete", b).append("<a>" + b.label + "</a>").appendTo(a);
+        			}
+        			//Clean address
+        			var address_array = [b.venue_address, b.venue_city, b.venue_state,b.venue_postcode,b.venue_country];
+        			var address = $.grep(address_array,function(n){return(n);}).join(', ');
+        		
+        			return $("<li></li>").data("item.autocomplete", b)
+        				.append("<a>" + b.label + "</br> <span style='font-size: 0.8em'><em>" +address+ "</span></em></a>").appendTo(a);
+        		};
+
+        		//Add new / selec buttons
+        		var button_wrappers = $("<span>").addClass("eo-venue-combobox-buttons").appendTo(wrapper);
+        		$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height: 21px;'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
+        			icons: { primary: "ui-icon-triangle-1-s"},
+        			text: false
+        		}).removeClass("ui-corner-all").addClass("ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
+        			if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return}
+        			$(this).blur();
+        			input.autocomplete("search", "").focus();
+        		});	
+        	}
+        });
+        $("#venue_select").combobox();
+
+    
 
 	/* Venue & Category Filters */
 	function eventorganiser_cat_dropdown(options){

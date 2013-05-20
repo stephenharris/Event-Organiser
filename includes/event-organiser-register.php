@@ -89,17 +89,31 @@ function eventorganiser_register_scripts(){
 	),$version,true);
 	
 	/*  Script for event edit page */
+	wp_register_script( 'eo-time-picker', EVENT_ORGANISER_URL."js/time-picker{$ext}.js",array(
+		'jquery',
+		'jquery-ui-datepicker',		
+	),$version,true);
+	
 	wp_register_script( 'eo_event', EVENT_ORGANISER_URL."js/event{$ext}.js",array(
 		'jquery',
 		'jquery-ui-datepicker',
+		'eo-time-picker',
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',
 		'jquery-ui-position'
-	),$version,true);	
+	),$version,true);
+	
+	wp_register_script( 'eo-edit-event-controller', EVENT_ORGANISER_URL."js/edit-event-controller{$ext}.js",array(
+			'jquery',
+			'eo_event',
+	),$version,true);
 
 	/*  Script for admin calendar */
 	wp_register_script( 'eo_calendar', EVENT_ORGANISER_URL."js/admin-calendar{$ext}.js",array(
 		'eo_fullcalendar',
+		'jquery-ui-datepicker',
+		'jquery-ui-autocomplete',
+		'jquery-ui-widget',
 		'jquery-ui-dialog',
 		'jquery-ui-tabs',
 		'jquery-ui-position'
@@ -178,7 +192,7 @@ function eventorganiser_add_admin_scripts( $hook ) {
 	if ( $hook == 'post-new.php' || $hook == 'post.php') {
 		if( $post->post_type == 'event' ) {     
 
-			wp_enqueue_script('eo_event');
+			wp_enqueue_script('eo-edit-event-controller');
 			wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
 					'startday'=>intval(get_option('start_of_week')),
@@ -186,6 +200,7 @@ function eventorganiser_add_admin_scripts( $hook ) {
 					'current_user_can' => array(
 						'manage_venues' => current_user_can( 'manage_venues' ),
 					),
+					'is24hour' => eventorganiser_blog_is_24(),
 					'location'=>get_option('timezone_string'),
 					'locale'=>array(
 						'monthNames'=>array_values($wp_locale->month),
@@ -194,6 +209,7 @@ function eventorganiser_add_admin_scripts( $hook ) {
 						'showDates' => __( 'Show dates', 'eventorganiser' ),
 						'hideDates' => __( 'Hide dates', 'eventorganiser' ),
 						'weekDay'=>$wp_locale->weekday,
+						'meridian' => array( $wp_locale->get_meridiem('am'), $wp_locale->get_meridiem('pm') ),
 						'hour'=>__('Hour','eventorganiser'),
 						'minute'=>__('Minute','eventorganiser'),
 						'day'=>__('day','eventorganiser'),

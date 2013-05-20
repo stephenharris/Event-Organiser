@@ -33,7 +33,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		global $wp_locale;
 		
 		wp_enqueue_script( 'eo_calendar' );
-		wp_enqueue_script( 'eo_event' );
+		//wp_enqueue_script( 'eo_event' );
 		wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'startday' => intval( get_option( 'start_of_week' ) ),
