@@ -116,6 +116,7 @@ class EventOrganiser_Shortcodes {
 				$atts['venue'] = eo_get_venue_slug(get_the_ID());
 			}
 		}
+	
 
 		$venue_slugs = explode(',',$atts['venue']);
 
@@ -365,8 +366,8 @@ class EventOrganiser_Shortcodes {
 			'venues' => get_terms( 'event-venue', array('hide_empty' => 0)),
 			'categories' => get_terms( 'event-category', array('hide_empty' => 0)),
 		));
-		wp_localize_script( 'eo_front', 'EOAjax', 
-		array(
+		
+		eo_localize_script( 'eo_front', array(
 			'ajaxurl' => admin_url( 'admin-ajax.php'),
 			'calendars' => self::$calendars,
 			'widget_calendars' => self::$widget_calendars,

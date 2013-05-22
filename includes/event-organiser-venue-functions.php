@@ -647,8 +647,15 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 				$tooltip_content .='</br>'.implode(', ',$address);
 			
 			$tooltip_content = apply_filters('eventorganiser_venue_tooltip',$tooltip_content,$venue_id);
+			
+			$icon = apply_filters('eventorganiser_venue_marker',null,$venue_id);
 	
-			$locations[] =array('lat'=>$latlng['lat'],'lng'=>$latlng['lng'], 'tooltipContent'=>$tooltip_content);
+			$locations[] =array( 
+					'venue_id' => $venue_id,
+					'lat'=>$latlng['lat'], 
+					'lng'=>$latlng['lng'], 
+					'tooltipContent'=>$tooltip_content, 
+					'icon' => $icon );
 		}
 
 		//This could be improved

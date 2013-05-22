@@ -473,7 +473,7 @@ function _eventorganiser_check_datetime( $datetime_string = '', $format = null )
 		else
 			$format = eventorganiser_get_option('dateformat');
 	}
-	
+
 	//Get regular expression.
 	if( $format == 'Y-m-d' ){
 		$reg_exp = "/(?P<year>\d{4})[-.\/](?P<month>\d{1,})[-.\/](?P<day>\d{1,}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
@@ -958,5 +958,13 @@ function eventorganiser_blog_is_24(){
 	
 	//Assume it isn't
 	return false;
+}
+
+function eo_localize_script( $handle, $obj ){
+	static $eventorganiser_localise_obj = array();
+	
+	$eventorganiser_localise_obj = array_merge( $eventorganiser_localise_obj, $obj );
+
+	wp_localize_script( $handle, 'eventorganiser', $eventorganiser_localise_obj );	
 }
 ?>

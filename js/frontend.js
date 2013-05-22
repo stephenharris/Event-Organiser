@@ -69,7 +69,7 @@ jQuery(document).ready(function () {
 	}
 
         if ($(".eo-fullcalendar").length > 0) {
-		var calendars = EOAjax.calendars;
+		var calendars = eventorganiser.calendars;
 		var loadingTimeOut;
             	for (var i = 0; i < calendars.length; i++) {
 			var calendar = "#eo_fullcalendar_" + (i + 1);
@@ -93,13 +93,13 @@ jQuery(document).ready(function () {
 					'goto': eventorganiser_mini_calendar
 				},
 				theme: true,
-				categories: EOAjax.fullcal.categories,
-				venues: EOAjax.fullcal.venues,
+				categories: eventorganiser.fullcal.categories,
+				venues: eventorganiser.fullcal.venues,
 				timeFormatphp: calendars[i].timeformatphp,
 				timeFormat: calendars[i].timeformat,
 				editable: false,
                     		tooltip: calendars[i].tooltip,
-                    		firstDay: parseInt(EOAjax.fullcal.firstDay),
+                    		firstDay: parseInt(eventorganiser.fullcal.firstDay),
 				weekends: calendars[i].weekends,
 				allDaySlot: calendars[i].alldayslot,
 				allDayText: calendars[i].alldaytext,
@@ -191,7 +191,7 @@ jQuery(document).ready(function () {
                 		            request.venue = d.venue
 					}
                 		        jQuery.ajax({
-                		            url: EOAjax.ajaxurl + "?action=eventorganiser-fullcal",
+                		            url: eventorganiser.ajaxurl + "?action=eventorganiser-fullcal",
                 		            dataType: "JSON",
                 		            data: request,
                 		            success: c
@@ -224,7 +224,7 @@ jQuery(document).ready(function () {
 			changeMonth: true,
 			changeYear: true,
 			dateFormat: 'DD, d MM, yy',
-			firstDay: parseInt(EOAjax.fullcal.firstDay),
+			firstDay: parseInt(eventorganiser.fullcal.firstDay),
 			buttonText: EOAjaxFront.locale.gotodate,
 			monthNamesShort: EOAjaxFront.locale.monthAbbrev,
 			dayNamesMin: EOAjaxFront.locale.dayAbbrev,
@@ -247,8 +247,8 @@ jQuery(document).ready(function () {
 			var cal = {showpastevents: 1};
 
 			//Shortcode widget calendar
-			if( typeof EOAjax !== "undefined" && typeof EOAjax.widget_calendars !== "undefined" ){
-				cal = EOAjax.widget_calendars[b];	
+			if( typeof EOAjax !== "undefined" && typeof eventorganiser.widget_calendars !== "undefined" ){
+				cal = eventorganiser.widget_calendars[b];	
 			}
 			//Widget calendar
                 	if (typeof eo_widget_cal !== "undefined") {
@@ -361,15 +361,18 @@ function eveorg_getParameterByName(a, b) {
 }
 
 function eo_load_map() {
-	var maps = EOAjax.map;
+	var maps = eventorganiser.map;
+	
 	for (var i = 0; i < maps.length; i++) {
 		
 		if ( null === document.getElementById( "eo_venue_map-" + (i + 1) ) )
 		    continue;
 		
+		//Store markers
+		eventorganiser.map[i].markers = {};
 		var locations = maps[i].locations;
 		var b = {
-              		zoom: maps[i].zoom,
+            zoom: maps[i].zoom,
 			scrollwheel: maps[i].scrollwheel,
 			zoomControl: maps[i].zoomcontrol,
 			rotateControl: maps[i].rotatecontrol,
@@ -380,6 +383,7 @@ function eo_load_map() {
 			mapTypeControl: maps[i].maptypecontrol,
 			mapTypeId: google.maps.MapTypeId[maps[i].maptypeid]
         	};
+		b = wp.hooks.applyFilter( 'eventorganiser.google_map_options', b );
 		var map = new google.maps.Map(document.getElementById("eo_venue_map-" + (i + 1)), b);
 
 		//  Create a new viewpoint bound
@@ -392,15 +396,24 @@ function eo_load_map() {
         		if (lat !== undefined && lng != undefined) {
 				LatLngList.push(new google.maps.LatLng(lat, lng));
 			  	bounds.extend (LatLngList[j]);
-				var c = new google.maps.Marker({
-					position: LatLngList[j],
-	                		map: map,
-					content:locations[j].tooltipContent
-	            		});
+			  	
+			  	var marker_options = {
+			  			venue_id: locations[j].venue_id,
+			  			position: LatLngList[j],
+			  			map: map,
+			  			content:locations[j].tooltipContent,
+			  			icon: locations[j].icon
+			  			//icon: 'http://localhost/dev/wp-content/gmapmarker/blue_MarkerB.png'
+	            	}
+			  	
+			  	marker_options = wp.hooks.applyFilter( 'eventorganiser.venue_marker_options', marker_options );
+				var c = new google.maps.Marker(marker_options);				
+				eventorganiser.map[i].markers[locations[j].venue_id] = c;
+
 				if( 'false' != maps[i].tooltip ){
 					google.maps.event.addListener(c, 'click',eventorganiser_venue_tooltip);
 				}
-        		}
+        	}
 		}
 
    		if( locations.length > 1 ){	
@@ -421,11 +434,13 @@ function eventorganiser_venue_tooltip() {
 	// Grab marker position: convert world point into pixel point
 	var map = this.getMap();
 	var pixel = this.getMap().getProjection().fromLatLngToPoint(this.position);
-         var topRight=map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast()); 
-         var bottomLeft=map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest()); 
-         var scale=Math.pow(2,map.getZoom()); 
+	var topRight=map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast()); 
+	var bottomLeft=map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest()); 
+    var scale=Math.pow(2,map.getZoom()); 
 	pixel=  new google.maps.Point((pixel.x- bottomLeft.x)*scale,(pixel.y-topRight.y)*scale);
 
+	wp.hooks.doAction( 'eventorganiser.venue_marker_clicked', this );
+	
 	//var pixel = LatLngToPixel.fromLatLngToContainerPixel(this.position);
 	var pos = [ pixel.x, pixel.y ];
 
