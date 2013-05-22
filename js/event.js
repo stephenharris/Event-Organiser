@@ -101,7 +101,7 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
         		return;
         	}
         	
-    		if ( matches = rule.schedule_meta.match(/BYMONTHDAY=(\d+)/) ) {
+    		if ( rule.schedule_meta.match(/BYMONTHDAY=(\d+)/) ) {
         		var day = rule.start.getDate();
         		var daysinmonth = month_end.getDate();
         		if ( day <= daysinmonth) {
@@ -110,7 +110,7 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
         		}
             } else {
         		//e.g. 3rd friday of month:
-            	matches = rule.schedule_meta.match(/BYDAY=(\d+)(MO|TU|WE|TH|FR|SA|SU)/);
+            	var matches = rule.schedule_meta.match(/BYDAY=(\d+)(MO|TU|WE|TH|FR|SA|SU)/);
             	var n = parseInt(matches[1]) -1;                	
         		var occurrence_day = rule.start.getDay();
         		if (n >= 5) {
@@ -177,7 +177,9 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
  * Schedule picker 'view'/'controller' object
  */
 window.eventOrganiserSchedulePicker = {
-		
+	/**
+	 * @this {Type}
+	 */
 	init: function( options ){
 		var self = this;
 	
@@ -337,22 +339,25 @@ window.eventOrganiserSchedulePicker = {
         }).addClass('eo-time-picker');
 	},
 	
+	/**
+	 * @this;
+	 */
 	update_schedule: function(){
 	    
 		var c = new Array("SU", "MO", "TU", "WE", "TH", "FR", "SA");
 	    var views = this.options.views;
 	    
-	    schedule ={
+	    var schedule ={
 	    	schedule: $(views.schedule).val(),
 	    	frequency: parseInt($(views.frequency).val()),
 	    	schedule_last: $(views.schedule_last_date).datepicker("getDate"),
 	    	start: $(views.start_date).datepicker("getDate"),
 	    	end: $(views.end_date).datepicker("getDate"),
 	    	is_all_day: $(views.is_all_day).attr("checked"),
-	    	include: $(views.include).val().split(","),
-	    	exclude: $(views.exclude).val().split(",")
+	    	include: $(views.include).length > 0 ? $(views.include).val().split(",") : [],
+	    	exclude: $(views.exclude).length > 0 ? $(views.exclude).val().split(",") : []
 	    }
-	    
+
 	    if( schedule.schedule == 'weekly' ){
 	    	schedule.schedule_meta = [];
 			if ( $(views.week_repeat+" :checkbox:checked").length == 0) {
@@ -394,7 +399,7 @@ window.eventOrganiserSchedulePicker = {
     	if( this.options.editable ){
     		$(view.start_time+', '+view.end_time).attr("disabled", schedule.is_all_day ).toggleClass("ui-state-disabled", schedule.is_all_day );
     	}
-        
+    	
         if( schedule.schedule == 'once' || schedule.schedule == 'custom' ){
         	$(view.recurrence_section+" :input").attr("disabled", true );
         	$(view.recurrence_section).hide();
@@ -463,16 +468,18 @@ window.eventOrganiserSchedulePicker = {
         }
             
         //Generate summary
-        $(view.summary).html( schedule.generate_summary() );
+        $(view.summary).html( schedule.generate_summary( locale ) );
 	}
 			
 }
 
-/**
- * Schedule picker 'model' object
- */
+
 eventOrganiserSchedule = {
 		self: this,
+		/**
+		 * Schedule picker 'model' object
+		 * @this element
+		 */
 	    init: function ( schedule ) {
 	    	
 	    	var self = this;
@@ -484,7 +491,7 @@ eventOrganiserSchedule = {
 		    	start: new Date(),
 		    	end: new Date(),
 		    	is_all_day: false,
-		    	dates_by_rule: [],
+		    	dates_by_rule: []
 		    };
 		    schedule = $.extend({}, defaults, schedule);
 		    
@@ -494,11 +501,14 @@ eventOrganiserSchedule = {
 		    return this;
 	    },
 
+	    /**
+	     * @this element
+	     */
 		generate_dates_by_rule: function(year,month,inst){
 		    
 	    	//month is 1-12.
-	        eo_occurrences_by_rule = new Array();
-	        eo_viewing_month = [year, month];
+	        var eo_occurrences_by_rule = new Array();
+	        var eo_viewing_month = [year, month];
 	        
 	        //Get month start/end dates. Date expects month 0-11.
 	        var month_start = new Date(year, month-1, 1);
@@ -516,22 +526,25 @@ eventOrganiserSchedule = {
 		 * Given an event schedule returns a string summary describing it.
 		 * Schedule is an object with similar properties as those accepted by
 		 * eo_insert_event() (in php). 
+		 * 
+		 * @this element
 		 */
-	    generate_summary: function(){
+	    generate_summary: function( locale ){
 	    	//Locale
-	    	var summary = EO_Ajax_Event.locale.summary + " ";
-	        var b = EO_Ajax_Event.locale.weekDay;
-	        var locale = EO_Ajax_Event.locale;
+	    	
+	        var b = locale.weekDay;
+	        var summary = locale.summary + " ";
 	        var options = {
-	            monthNamesShort: EO_Ajax_Event.locale.monthAbbrev,
-	            dayNamesMin: EO_Ajax_Event.locale.dayAbbrev,
-	            monthNames: EO_Ajax_Event.locale.monthNames
+	            monthNamesShort: locale.monthAbbrev,
+	            dayNamesMin: locale.dayAbbrev,
+	            monthNames: locale.monthNames
 	        };
-
+	        var schedule = this.schedule;
+	        	
 	        //Helper array
 	        var c = new Array("SU", "MO", "TU", "WE", "TH", "FR", "SA");
 	        
-	        switch ( this.schedule ) {
+	        switch ( schedule ) {
 	        
 	        	case "once":
 	        		return "This event will be a one-time event";
@@ -561,10 +574,10 @@ eventOrganiserSchedule = {
 	        		} else {
 	        			summary += locale.monthSingle;
 	        		}
-	        		if ( matches = this.schedule_meta.match(/BYMONTHDAY=(\d+)/) ) {
+	        		if ( this.schedule_meta.match(/BYMONTHDAY=(\d+)/) ) {
 	        			summary = summary + " " + schedule.start.getDate() + this.start.eoGetOrdinal();
 	                } else {
-	                	matches = this.schedule_meta.match(/BYDAY=(\d+)(MO|TU|WE|TH|FR|SA|SU)/);
+	                	var matches = this.schedule_meta.match(/BYDAY=(\d+)(MO|TU|WE|TH|FR|SA|SU)/);
 	                	var n = parseInt(matches[1]) -1;
 	                	summary = summary + " " + locale.occurrence[n] + " " + b[c.indexOf(matches[2])];
 	                }
