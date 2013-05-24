@@ -38,7 +38,6 @@ jQuery(document).ready(function () {
 		return element;
 	}
 
-
 	if( $('#eo-upcoming-dates').length>0 && $('#eo-upcoming-dates').find('li:gt(4)').length > 0 ){
 		var eobloc = 5;
 		var locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess};
@@ -71,16 +70,16 @@ jQuery(document).ready(function () {
         if ($(".eo-fullcalendar").length > 0) {
 		var calendars = eventorganiser.calendars;
 		var loadingTimeOut;
-            	for (var i = 0; i < calendars.length; i++) {
-			var calendar = "#eo_fullcalendar_" + (i + 1);
+            for (var i = 0; i < calendars.length; i++) {
+            	var calendar = "#eo_fullcalendar_" + (i + 1);
+            	if (typeof calendars[i].category === "undefined") {
+            		calendars[i].category ='';
+            	}
+            	if (typeof calendars[i].venue === "undefined") {
+            		calendars[i].venue ='';
+            	}
 
-                        if (typeof calendars[i].category === "undefined") {
-	                             calendars[i].category ='';
-                        }
-                        if (typeof calendars[i].venue === "undefined") {
-	                             calendars[i].venue ='';
-                        }
-                	$(calendar).fullCalendar({
+            	var args = {
 				id: calendar,
 				year: calendars[i].year ? calendars[i].year : undefined,
 				month: calendars[i].month ? calendars[i].month : undefined,
@@ -98,8 +97,8 @@ jQuery(document).ready(function () {
 				timeFormatphp: calendars[i].timeformatphp,
 				timeFormat: calendars[i].timeformat,
 				editable: false,
-                    		tooltip: calendars[i].tooltip,
-                    		firstDay: parseInt(eventorganiser.fullcal.firstDay),
+				tooltip: calendars[i].tooltip,
+				firstDay: parseInt(eventorganiser.fullcal.firstDay),
 				weekends: calendars[i].weekends,
 				allDaySlot: calendars[i].alldayslot,
 				allDayText: calendars[i].alldaytext,
@@ -121,98 +120,107 @@ jQuery(document).ready(function () {
 					center: calendars[i].headercenter,
 					right: calendars[i].headerright
 				},
-				eventRender: function (a, b, v) {
-                        		var c = $(v.calendar.options.id).find(".filter-category .eo-cal-filter").val();
-                        		var d = $(v.calendar.options.id).find(".filter-venue .eo-cal-filter").val();
+				eventRender: 
+					function (a, b, v) {
+						var c = $(v.calendar.options.id).find(".filter-category .eo-cal-filter").val();
+						var d = $(v.calendar.options.id).find(".filter-venue .eo-cal-filter").val();
 					
-                        		if (typeof c !== "undefined" && c != "" && $.inArray(c, a.category) < 0) {
-                            			return "<div></div>";
-                        		}
-                        		if (typeof d !== "undefined" && d != "" && d != a.venue) {
-                            			return "<div></div>";
-                        		}
-                        		if (! v.calendar.options.tooltip ) {
-                            			return
-                        		}
+						if (typeof c !== "undefined" && c != "" && $.inArray(c, a.category) < 0 ) {
+                            	return "<div></div>";
+                        }
+                        if (typeof d !== "undefined" && d != "" && d != a.venue) {
+                            	return "<div></div>";
+                        }
+                        
+                        if( !wp.hooks.applyFilter( 'eventorganiser.fullcalendar_render_event', true, a, b, v ) )
+                        	return "<div></div>";
+                        	
+                        if (! v.calendar.options.tooltip ) {
+                          	return
+                        }
 
-					$(b).qtip({
-                            			content: {
-							text:  a.description,
-							button: "x",
-							title: a.title
-						},
-						position: {
-							my: "top center",
-							at: "bottom center"
-						},
-						hide: {
-							fixed: true,
-							delay: 500,
-							effect: function (a) {
-								$(this).fadeOut("50")
-							}
-						},
-						border: {
-							radius: 4,
-							width: 3
-						},
-						style: {
-							classes: "ui-tooltip-shadow",
-							widget: true,
-							tip: "topMiddle"
-						}
-					})
-                    		},
-				buttonText: {
-		                        today: EOAjaxFront.locale.today,
-                		        month: EOAjaxFront.locale.month,
-                		        week: EOAjaxFront.locale.week,
-                		        day: EOAjaxFront.locale.day,
-                		        cat: EOAjaxFront.locale.cat,
-                		        venue: EOAjaxFront.locale.venue
-                		    },
-                		    monthNames: EOAjaxFront.locale.monthNames,
-                		    monthNamesShort: EOAjaxFront.locale.monthAbbrev,
-                		    dayNames: EOAjaxFront.locale.dayNames,
-                		    dayNamesShort: EOAjaxFront.locale.dayAbbrev,
-                		    eventColor: "#21759B",
-                		    defaultView: calendars[i].defaultview,
-                		    lazyFetching: "true",
-                		    events: function (a, b, c, d) {
-                		        var request = {
-						start: jQuery.fullCalendar.formatDate(a, "yyyy-MM-dd"),
-						end: jQuery.fullCalendar.formatDate(b, "yyyy-MM-dd"),
-						timeformat:d.timeFormatphp
-                		        };
-                		        if (typeof d.category !== "undefined" &&d.category != "") {
-                		            request.category = d.category
-                		        }
-                		        if (typeof d.venue !== "undefined" &&d.venue != "") {
-                		            request.venue = d.venue
-					}
-                		        jQuery.ajax({
-                		            url: eventorganiser.ajaxurl + "?action=eventorganiser-fullcal",
-                		            dataType: "JSON",
-                		            data: request,
-                		            success: c
-                		        })
-                		    },
-                		    selectable: false,
-                		    weekMode: "variable",
-                		    aspectRatio: 1.5,
-                		    loading: function (a) {
-                		        var loading = $("#" + $(this).attr("id") + "_loading");
-                		        if (a) {
-                		            window.clearTimeout(loadingTimeOut);
-                		            loadingTimeOut = window.setTimeout(function () {
-                		                loading.show()
-                		            }, 1e3)
-                		        } else {
-                		            window.clearTimeout(loadingTimeOut);
-                		            loading.hide()
-                		        }
-                		    }
-                		})
+                        $(b).qtip({
+                        	content: {
+                        		text:  a.description,
+                        		button: "x",
+                        		title: a.title
+                        	},
+                        	position: {
+                        		my: "top center",
+                        		at: "bottom center"
+                        	},
+                        	hide: {
+                        		fixed: true,
+                        		delay: 500,
+                        		effect: function (a) {$(this).fadeOut("50")}
+                        	},
+                        	border: {
+                        		radius: 4,
+                        		width: 3
+                        	},
+                        	style: {
+                        		classes: "ui-tooltip-shadow",
+                        		widget: true,
+                        		tip: "topMiddle"
+                        	}
+                        })
+                    },
+                    buttonText: {
+                    	today: EOAjaxFront.locale.today,
+                    	month: EOAjaxFront.locale.month,
+                		week: EOAjaxFront.locale.week,
+                		day: EOAjaxFront.locale.day,
+                		cat: EOAjaxFront.locale.cat,
+                		venue: EOAjaxFront.locale.venue
+                    },
+                    monthNames: EOAjaxFront.locale.monthNames,
+                    monthNamesShort: EOAjaxFront.locale.monthAbbrev,
+                	dayNames: EOAjaxFront.locale.dayNames,
+                	dayNamesShort: EOAjaxFront.locale.dayAbbrev,
+                	eventColor: "#21759B",
+                	defaultView: calendars[i].defaultview,
+                	lazyFetching: "true",
+                	events: 
+                		function (a, b, c, d) {
+                			var request = {
+                					start: jQuery.fullCalendar.formatDate(a, "yyyy-MM-dd"),
+                					end: jQuery.fullCalendar.formatDate(b, "yyyy-MM-dd"),
+                					timeformat:d.timeFormatphp,
+                					users_events: d.users_events
+                			};
+                			
+                			if (typeof d.category !== "undefined" &&d.category != "") {
+                				request.category = d.category
+                			}
+                			if (typeof d.venue !== "undefined" &&d.venue != "") {
+                				request.venue = d.venue
+                			}
+                			
+                			$.ajax({
+                				url: eventorganiser.ajaxurl + "?action=eventorganiser-fullcal",
+                				dataType: "JSON",
+                				data: request,
+                				success: c
+                			})
+                		},
+                	selectable: false,
+                	weekMode: "variable",
+                	aspectRatio: 1.5,
+                	loading: 
+                		function (a) {
+                			var loading = $("#" + $(this).attr("id") + "_loading");
+                			if (a) {
+                				window.clearTimeout(loadingTimeOut);
+                				loadingTimeOut = window.setTimeout(function () {loading.show()}, 1e3);
+                			} else {
+                				window.clearTimeout(loadingTimeOut);
+                				loading.hide();
+                			}
+                		}
+            	};
+            	args = wp.hooks.applyFilter( 'eventorganiser.fullcalendar_options', args, calendars[i] );
+            	
+            	$(calendar).fullCalendar(args)
 			}
 	
 		$(".eo-cal-filter").change(function () {
