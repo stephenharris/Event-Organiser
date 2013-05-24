@@ -1023,9 +1023,11 @@ function eo_get_event_fullcalendar( $args ){
 		'tooltip'=>true, 'weekends'=>true, 'mintime'=>'0', 'maxtime'=>'24', 'alldayslot'=>true,
 		'alldaytext'=>__('All Day','eventorganiser'), 'columnformatmonth'=>'D', 'columnformatweek'=>'D n/j', 'columnformatday'=>'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j Y}", 'titleformatday' => 'l, M j, Y',
-		'year' => false, 'month' => false, 'date' => false,			
+		'year' => false, 'month' => false, 'date' => false,	'users_events' => false,		
 	);
-	$args = shortcode_atts( $defaults, $args );
+	
+	$args = shortcode_atts( $defaults, $args, 'eo_fullcalendar' );
+	
 	$key = $args['key'];
 	unset($args['key']);
 	
@@ -1044,6 +1046,7 @@ function eo_get_event_fullcalendar( $args ){
 	$args['month'] = ( $args['month'] ? $args['month'] - 1 : false );
 
 	EventOrganiser_Shortcodes::$calendars[] = array_merge( $args );
+	
 	EventOrganiser_Shortcodes::$add_script = true;
 	$id = count( EventOrganiser_Shortcodes::$calendars );
 
