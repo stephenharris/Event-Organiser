@@ -960,6 +960,19 @@ function eventorganiser_blog_is_24(){
 	return false;
 }
 
+/**
+ * Wrapper for `wp_localize_script`. 
+ * 
+ * Allows additional arguments to added to a js variable before its printed. By contrast
+ * wp_localize_script() over-rides prevous calls to the same handle-object pair.
+ * 
+ * This allows (most) Event Organiser js-variables to live under the namespace 'eventorganiser'
+ *
+ * @since 2.1
+ * @access private
+ * @param string $handle
+ * @param array $obj
+ */
 function eo_localize_script( $handle, $obj ){
 	static $eventorganiser_localise_obj = array();
 	
@@ -967,4 +980,22 @@ function eo_localize_script( $handle, $obj ){
 
 	wp_localize_script( $handle, 'eventorganiser', $eventorganiser_localise_obj );	
 }
+
+/**
+ * Escapes a string so it safe for use in ICAL template
+ * 
+ * Commas, semicolons and backslashes are escaped.
+ * New lines are appended with a space (why?)
+ * @since 2.1
+ * @param string $text The string to be escaped
+ * @return string The escaped string.
+ */
+function eventorganiser_escape_ical_text( $text ){
+	$text = str_replace("\\", "\\\\", $text);
+	$text = str_replace(",", "\,", $text);
+	$text = str_replace(";", "\;", $text);
+	$text = str_replace("\n", "\n ", $text);
+	return $text;
+}
+	
 ?>

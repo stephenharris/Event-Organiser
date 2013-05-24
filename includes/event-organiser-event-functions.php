@@ -1236,6 +1236,7 @@ function eo_break_occurrence( $post_id, $event_id ){
  * 
  * If the UID is not found it generates one based on event (post) ID, a timestamp, blog ID and server address.
  * 
+ * @since 2.1
  * @param int $post_id The event (post) ID. If ommitted 'current event' is used
  * @return string The UID, or false if error.
  */
