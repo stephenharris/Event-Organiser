@@ -195,7 +195,7 @@ $args = array(
 	'supports' => eventorganiser_get_option('supports'),
   ); 
 
-  register_post_type('event',$args);
+	register_post_type( 'event', apply_filters( 'eventorganiser_event_properties', $args ) );
 }
 add_action('init', 'eventorganiser_cpt_register');
 
