@@ -174,6 +174,7 @@ require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-archives.php');
 
 /****** Deals with importing/exporting & subscriptions******/
 require_once(EVENT_ORGANISER_DIR.'includes/class-event-organiser-im-export.php');
+require_once(EVENT_ORGANISER_DIR.'includes/class-eo-ical-parser.php');
 
 if ( is_admin() ):
 	require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php');
