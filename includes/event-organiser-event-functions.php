@@ -1231,4 +1231,22 @@ function eo_break_occurrence( $post_id, $event_id ){
 	return $new_event_id;
 }
 
+
+function eo_get_event_uid( $post_id = 0 ){
+	
+	$post_id = (int) ( empty( $post_id ) ? get_the_ID() : $post_id );
+	
+	if( empty( $post_id ) )
+		return false;
+	
+	$uid = get_post_meta( get_the_ID(), '_eventorganiser_uid', true );
+	
+	if( empty( $uid ) ){
+		$now = new DateTime();
+		$uid = implode( '-', array( $now->format('Ymd\THi\Z'), microtime(true), 'EO', get_the_ID(), get_current_blog_id() ) ).'@'.$_SERVER['SERVER_ADDR'];
+		add_post_meta( get_the_ID(), '_eventorganiser_uid', $uid );
+	}
+	
+	return $uid;
+}
 ?>
