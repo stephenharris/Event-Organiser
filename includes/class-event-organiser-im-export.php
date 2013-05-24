@@ -6,6 +6,20 @@ if ( ! function_exists( 'add_action' ) ) {
 	echo "Hi there!  I'm just a part of plugin, not much I can do when called directly.";
 	exit;
 }
+
+
+/**
+ * Event Organiser Import/Export handler
+ * 
+ * This needs refactoring and should use the EO_ICAL_Parser();
+ *
+ * Known issue: recurrence is sometimes not translated properly across timezones.
+ *  - ICAL has event recurring every month on the 2nd at 02:00 (2am) UTC time.
+ *  - Importing blog has New York Time Zone (UTC -4/5).
+ *  - Then event recurres every month on the **1st** at 22:00 (10pm) New York Time
+ *  - The **2nd** is not corrected to **1st**.
+ *
+ */
 class Event_Organiser_Im_Export  {
 
 	static private $classobj = NULL;
@@ -132,180 +146,15 @@ class Event_Organiser_Im_Export  {
 		header('Content-type: text/calendar; charset=' . get_option('blog_charset').';');
 		header("Pragma: 0");
 		header("Expires: 0");
-?>
-BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//<?php  get_bloginfo('name'); ?>//NONSGML Events //EN
-CALSCALE:GREGORIAN
-X-WR-CALNAME:<?php echo get_bloginfo('name');?> - Events
-X-ORIGINAL-URL:<?php echo get_post_type_archive_link('event'); ?>
 
-X-WR-CALDESC:<?php echo get_bloginfo('name');?> - Events
-<?php
+		eo_locate_template( 'ical.php', true,false );
 
-	// Loop through events
-	if ( have_posts() ):
-		$now = new DateTime();
-		$dtstamp =$now->format('Ymd\THis\Z');
-		$UTC_tz = new DateTimeZone('UTC');
-
-		while( have_posts() ): the_post();
-			global $post;
-
-			//If event has no corresponding row in events table then skip it
-			if(!isset($post->event_id) || $post->event_id==-1)
-				continue;
-
-			$start = eo_get_the_start(DATETIMEOBJ);
-			$end = eo_get_the_end(DATETIMEOBJ);
-
-			$created_date = get_post_time('Ymd\THis\Z',true);
-			$modified_date = get_post_modified_time('Ymd\THis\Z',true);
-
-			$schedule_data = eo_get_event_schedule();
-
-			//Set up start and end date times
-			if( eo_is_all_day() ){
-				$format =	'Ymd';
-				$start_date = $start->format($format);
-				$end->modify('+1 minute');
-				$end_date = $end->format($format);				
-			}else{
-				$format =	'Ymd\THis\Z';
-				$start->setTimezone($UTC_tz);
-				$start_date =$start->format($format);
-				$end->setTimezone($UTC_tz);
-				$end_date = $end->format($format);
-			}
-
-			//Get the reoccurrence rule in ICS format
-			$reoccurrence_rule = eventorganiser_generate_ics_rrule();
-
-			//Generate Event status
-			if( get_post_status(get_the_ID()) == 'publish' )
-				$status = 'CONFIRMED';
-			else
-				$status = 'TENTATIVE';
-
-			//Generate a globally unique UID:
-			$uid = get_post_meta( get_the_ID(), '_eventorganiser_uid', true );
-			if( empty( $uid ) ){
-				$uid = implode( '-', array( $now->format('Ymd\THi\Z'), microtime(true), 'EO', get_the_ID(), get_current_blog_id() ) ).'@'.$_SERVER['SERVER_ADDR'];
-				add_post_meta( get_the_ID(), '_eventorganiser_uid', $uid );
-			}
-
-			//Output event
-?>
-BEGIN:VEVENT
-UID:<?php echo $uid;?>
-
-STATUS:<?php echo $status;?>
-
-DTSTAMP:<?php echo $dtstamp;?>
-
-CREATED:<?php echo $created_date;?>
-
-LAST-MODIFIED:<?php echo $modified_date;?>
-
-<?php if( eo_is_all_day() ): ?>
-DTSTART;VALUE=DATE:<?php echo $start_date ; ?>
-
-DTEND;VALUE=DATE:<?php echo $end_date; ?>
-<?php else: ?>
-DTSTART:<?php echo $start_date ; ?>
-
-DTEND:<?php echo $end_date; ?>
-<?php endif;?>
-
-<?php if ($reoccurrence_rule):?>
-RRULE:<?php echo $reoccurrence_rule;?>
-
-<?php endif;?>
-<?php if( !empty($schedule_data['exclude']) ):
-	$exclude_strings = array();
-	foreach ( $schedule_data['exclude'] as $exclude ){
-		if( !eo_is_all_day() ){
-			$vdate='';
-			$exclude->setTimezone($UTC_tz);
-			$exclude_strings[] = $exclude->format('Ymd\THis\Z');
-		}else{
-			$vdate=';VALUE=DATE';
-			$exclude_strings[] = $exclude->format('Ymd');
-		}
-	}?>
-EXDATE<?php echo $vdate;?>:<?php echo implode(',',$exclude_strings);?>
-
-<?php endif;?>
-<?php if( !empty($schedule_data['include']) ):
-	$include_strings = array();
-		foreach ( $schedule_data['include'] as $include ){
-			if( !eo_is_all_day() ){
-				$vdate='';
-				$include->setTimezone($UTC_tz);
-				$include_strings[] = $include->format('Ymd\THis\Z');
-			}else{
-				$vdate=';VALUE=DATE';
-				$include_strings[] = $include->format('Ymd');
-			}
-	}?>
-
-RDATE<?php echo $vdate;?>:<?php echo implode(',',$include_strings);?>
-
-<?php endif; ?>
-SUMMARY:<?php echo $this->escape_icalText(get_the_title_rss()); ?>
-
-<?php
-	$excerpt = get_the_excerpt();
-	$excerpt = apply_filters('the_excerpt_rss', $excerpt);
-	if(!empty($excerpt)):
-?>
-DESCRIPTION:<?php echo html_entity_decode($this->escape_icalText($excerpt));?>
-
-<?php endif;
-
-	$cats = get_the_terms( get_the_ID(), 'event-category' );
-if( $cats && !is_wp_error($cats) ):
-	$cat_names = wp_list_pluck($cats, 'name');
-	$cat_names = array_map(array($this,'parse_icalText'),$cat_names); ?>
-CATEGORIES:<?php echo implode(',',$cat_names); ?>
-
-<?php endif; ?>
-<?php
-if( eo_get_venue() ): 
-	$venue =eo_get_venue_name(eo_get_venue());
-?>
-LOCATION: <?php echo $this->escape_icalText($venue);;?>
-
-<?php endif; 
-	$author = get_the_author();
-?>
-ORGANIZER: <?php echo $this->escape_icalText($author);?>
-
-END:VEVENT
-<?php
-		endwhile;
-
-	endif;
-?>
-END:VCALENDAR
-<?php
-
-	//Collect output and echo 
-	$eventsical = ob_get_contents();
-	ob_end_clean();
-	echo $eventsical;
-	exit();
+		//Collect output and echo 
+		$eventsical = ob_get_contents();
+		ob_end_clean();
+		echo $eventsical;
+		exit();
 	}	
-
-
-function escape_icalText($text){
-	$text = str_replace("\\", "\\\\", $text);
-	$text = str_replace(",", "\,", $text);
-	$text = str_replace(";", "\;", $text);
-	$text = str_replace("\n", "\n ", $text);
-	
-	return $text;
-}
 
 
 /**
@@ -321,6 +170,7 @@ function escape_icalText($text){
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'edit_events' ))
 			wp_die( __('You do not have sufficient permissions to import events.','eventorganiser') );
 
+		
 		//Returns the file as an array of lines
 		$file_array =$this->parse_file($cal_file);
 
