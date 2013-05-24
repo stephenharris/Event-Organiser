@@ -1,5 +1,6 @@
 var eo_include_dates;
 var eo_exclude_dates;
+var eo_viewing_month;
 (function($) {
 	
 //Workaround for indexOf in IE 7&8
@@ -204,6 +205,7 @@ window.eventOrganiserSchedulePicker = {
         this.update_form();
         
         var now = new Date();
+        eo_viewing_month = [ now.getFullYear(), now.getMonth() + 1 ];
         this.schedule.generate_dates_by_rule(now.getFullYear(), now.getMonth() + 1, {});
 	},
 
@@ -508,7 +510,7 @@ eventOrganiserSchedule = {
 		    
 	    	//month is 1-12.
 	        var eo_occurrences_by_rule = new Array();
-	        var eo_viewing_month = [year, month];
+	        eo_viewing_month = [year, month];
 	        
 	        //Get month start/end dates. Date expects month 0-11.
 	        var month_start = new Date(year, month-1, 1);
