@@ -36,6 +36,7 @@ function eventorganiser_register_script() {
 		'jquery-ui-button',
 		'jquery-ui-datepicker',
 		'eo_fullcalendar',
+		'eo-wp-js-hooks'
 	),$version,true);
 	
 	/* Add js variables to frontend script */
@@ -56,6 +57,9 @@ function eventorganiser_register_script() {
 				'gotodate'=>__('go to date','eventorganiser'),
 				'cat'=>__('View all categories','eventorganiser'),
 				'venue'=>__('View all venues','eventorganiser'),
+				'country' => __('View all countries','eventorganiser'),
+				'state' => __('View all states','eventorganiser'),
+				'city' => __('View all cities','eventorganiser'),
 				)
 			));
 
