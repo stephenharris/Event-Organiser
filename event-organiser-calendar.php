@@ -154,11 +154,13 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				if ( !current_user_can( 'edit_event', $post_id ) || !current_user_can( 'delete_event', $post_id ) )
 					wp_die( __( 'You do not have sufficient permissions to edit this event', 'eventorganiser' ) );
 		
-				eo_break_occurrence( $post_id, $event_id );
-
+				$new_event_id = eo_break_occurrence( $post_id, $event_id );
+				
 				//Redirect to prevent resubmisson
-				$redirect = add_query_arg( array( 'post_type' => 'event', 'page' => 'calendar' ), admin_url( 'edit.php' ) );
+				$redirect = get_edit_post_link( $new_event_id, '' );
+				$redirect = add_query_arg( 'message', 20, $redirect );
 				wp_redirect( $redirect );
+				exit;
 
 			elseif( $action == 'delete_occurrence' ):
 				global $EO_Errors;

@@ -226,6 +226,7 @@ function eventorganiser_messages( $messages ) {
 		 // translators: Publish box date format, see http://php.net/date
       		date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
 		10 => sprintf( __('Event draft updated. <a target="_blank" href="%s">Preview event</a>','eventorganiser'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+		20 => __('This event has been broken from a recurring event.','eventorganiser')
   	);
 	return $messages;
 }
