@@ -88,7 +88,9 @@ class EventOrganiser_Shortcodes {
 			'tooltip'=>'true',
 			'weekends'=>'true',
 			'alldayslot'=>'true',
+			'users_events' => 'false'
 		);
+		
 		$atts = wp_parse_args( $atts, $bool_atts );
 
 		foreach( $bool_atts as $att => $value )
@@ -374,7 +376,7 @@ class EventOrganiser_Shortcodes {
 			'fullcal' => $fullcal,
 			'map' => self::$map,
 		));	
-
+		
 		if( !empty(self::$calendars) || !empty(self::$map) || !empty(self::$widget_calendars) ):				
 			wp_enqueue_script( 'eo_qtip2');	
 			wp_enqueue_style('eo_calendar-style');	
