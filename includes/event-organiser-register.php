@@ -57,9 +57,6 @@ function eventorganiser_register_script() {
 				'gotodate'=>__('go to date','eventorganiser'),
 				'cat'=>__('View all categories','eventorganiser'),
 				'venue'=>__('View all venues','eventorganiser'),
-				'country' => __('View all countries','eventorganiser'),
-				'state' => __('View all states','eventorganiser'),
-				'city' => __('View all cities','eventorganiser'),
 				)
 			));
 
