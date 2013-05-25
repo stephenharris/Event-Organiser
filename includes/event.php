@@ -618,7 +618,7 @@ function eo_get_event_schedule( $post_id=0 ){
 			'occurrences'=>$occurrences
 		);
 		
-		return apply_filters( 'eventorganiser_generate_occurrences', $_event_data, $event_details );
+		return apply_filters( 'eventorganiser_generate_occurrences', $_event_data, $event_data );
 	}
 
 /**
