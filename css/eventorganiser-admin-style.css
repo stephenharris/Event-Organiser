@@ -25,7 +25,7 @@
 
 /* Calendar View*/
 .fc-button-next,.fc-button-prev {margin-top:2px;}
-.fc-button-next .ui-button-text,.fc-button-prev .ui-button-text{line-height:1em;}
+.fc-button{line-height:1em;height: 2.2em;line-height: 2.2em;}
 .event.past-event{opacity:0.5;}
 form.eo_cal .ui-autocomplete-input{width:220px;}
 /* Table on event details calendar view*/

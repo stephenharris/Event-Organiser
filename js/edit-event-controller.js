@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-
+var eo_venue_obj;
 //Date fields must be wrapped inside event-date
 eventOrganiserSchedulePicker.init({
 	views: {
@@ -19,7 +19,7 @@ eventOrganiserSchedulePicker.init({
     	include: '#eo_occurrence_includes',
     	exclude: '#eo_occurrence_excludes',
     	schedule_span: '#recpan',//day(s)|week(s)|month(s)|year(s) - human readable span
-    	summary: "#event_summary",
+    	summary: "#event_summary"
 	},
 	format: EO_Ajax_Event.format,
 	is24hour: Boolean(EO_Ajax_Event.is24hour),

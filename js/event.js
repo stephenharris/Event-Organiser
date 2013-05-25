@@ -516,12 +516,12 @@ eventOrganiserSchedule = {
 	        var month_start = new Date(year, month-1, 1);
 	        var nxt_mon = new Date(year, month, 1);
 	        var month_end = new Date(nxt_mon - 1);
-	        
-	        if ( this.schedule_last < month_start || this.start > month_end) {
+	       
+	        if ( eventOrganiserSchedule.schedule_last < month_start || eventOrganiserSchedule.start > month_end) {
 	        	return;
 	        }
 	        
-	        this.dates_by_rule = eo_generate_dates_by_schedule_rule( this, month_start,month_end );
+	        eventOrganiserSchedule.dates_by_rule = eo_generate_dates_by_schedule_rule( eventOrganiserSchedule, month_start,month_end );
 		},
 		
 		/**

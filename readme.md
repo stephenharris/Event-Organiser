@@ -198,6 +198,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 2.1.1 ###
+* Compresses scripts (fixes bug)
+* Fixes styling errors
+
 ### 2.1 ###
 * Added ICAL parser API
 * Filter the venue map icon
@@ -519,6 +523,9 @@ Minor bug fixes and readme update.
 Initial release
 
 ## Upgrade Notice ##
+
+### 2.1.1 ###
+If you upgraded to 2.1, please upgrade immediately to 2.1.1. This updates includes the updated minified scripts.
 
 ### 2.0 ###
 Event Organiser Pro has [launched](http://wp-event-organiser.com/pro-features/)!

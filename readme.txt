@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 2.1
+Stable tag: 2.1.1
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -185,6 +185,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.1.1 =
+* Compresses scripts (fixes bug)
+* Fixes styling errors
 
 = 2.1 =
 * Added ICAL parser API
@@ -507,6 +511,9 @@ Minor bug fixes and readme update.
 Initial release
 
 == Upgrade Notice ==
+
+= 2.1.1 =
+If you upgraded to 2.1, please upgrade immediately to 2.1.1. This updates includes the updated minified scripts.
 
 = 2.0 =
 Event Organiser Pro has [launched](http://wp-event-organiser.com/pro-features/)!

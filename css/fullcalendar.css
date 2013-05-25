@@ -50,12 +50,12 @@ html .fc,.fc table{font-size:1em}
 .fc-widget-content{border:1px solid #ddd}
 .fc-state-highlight{background:#fcf8e3}
 .fc-cell-overlay{background:#bce8f1;opacity:.3;filter:alpha(opacity=30)}
-.fc-button{position:relative;display:inline-block;overflow:hidden;height:1.9em;line-height:1.9em;white-space:nowrap;cursor:pointer;padding:0 .6em}
+.fc-button{position:relative;display:inline-block;overflow:hidden;height:1.4em;line-height:1.4em;white-space:nowrap;cursor:pointer;padding:0 .6em;margin-top: 2px;}
 .fc-state-default{border:1px solid;background-color:#f5f5f5;background-image:linear-gradient(tobottom,#ffffff,#e6e6e6);background-repeat:repeat-x;color:#333;text-shadow:0 1px 1px rgba(255,255,255,0.75);box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25)}
 .fc-state-default.fc-corner-left{border-top-left-radius:4px;border-bottom-left-radius:4px}
 .fc-state-default.fc-corner-right{border-top-right-radius:4px;border-bottom-right-radius:4px}
 .fc-text-arrow{font-size:2em;font-family:"Courier New", Courier, monospace;vertical-align:baseline;margin:0 .1em}
-.fc-button .fc-icon-wrap{position:relative;float:left;top:50%}
+.fc-button .fc-icon-wrap{position:relative;float:left;top: 0.2em;}
 .fc-button .ui-icon{position:relative;float:left;margin-top:0;top:-50%}
 .fc-state-hover,.fc-state-down,.fc-state-active,.fc-state-disabled{color:#333;background-color:#e6e6e6}
 .fc-state-hover{color:#333;text-decoration:none;background-position:0 -15px;-webkit-transition:background-position .1s linear;-moz-transition:background-position .1s linear;-o-transition:background-position .1s linear;transition:background-position .1s linear}
