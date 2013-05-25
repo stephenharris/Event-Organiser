@@ -969,6 +969,7 @@ function eventorganiser_blog_is_24(){
  * This allows (most) Event Organiser js-variables to live under the namespace 'eventorganiser'
  *
  * @since 2.1
+ * @uses eventorganiser_array_merge_recursive_distinct()
  * @access private
  * @param string $handle
  * @param array $obj
@@ -976,10 +977,75 @@ function eventorganiser_blog_is_24(){
 function eo_localize_script( $handle, $obj ){
 	static $eventorganiser_localise_obj = array();
 	
-	$eventorganiser_localise_obj = array_merge( $eventorganiser_localise_obj, $obj );
+	$eventorganiser_localise_obj = eo_array_merge_recursive_distinct( $eventorganiser_localise_obj, $obj );
 
 	wp_localize_script( $handle, 'eventorganiser', $eventorganiser_localise_obj );	
 }
+
+/**
+ * Recursively merge two or more arrays. 
+ * 
+ * Unlike `array_merge_recursive()` the datatype is not altered. Values override existing values. If its an array,
+ * Matching keys' values in a latter array overwrite those in the earlier arrays.
+ * 
+ * @param array1 array Initial array to merge.
+ * @param array2 array Second array to merge  
+ *  
+ * @since 2.1
+ * @see http://www.php.net/manual/en/function.array-merge-recursive.php#91049
+ * @author Daniel <daniel (at) danielsmedegaardbuus (dot) dk>
+ * @author Gabriel Sobrinho <gabriel (dot) sobrinho (at) gmail (dot) com>
+ * @author Michiel <michiel (at) synetic (dot) nl
+ * @return array the resulting array.
+ */
+function &eo_array_merge_recursive_distinct ( array $array1, array $array2 /* array 3, array 4 */  ){
+	
+	$aArrays = func_get_args();
+	$aMerged = $aArrays[0];
+	
+	for($i = 1; $i < count($aArrays); $i++){
+		if ( is_array( $aArrays[$i] ) ){
+			foreach ($aArrays[$i] as $key => $val){
+				if ( is_array( $aArrays[$i][$key] ) ){
+					if( isset( $aMerged[$key] ) && is_array( $aMerged[$key] ) ){
+						$aMerged[$key] =  eo_array_merge_recursive_distinct( $aMerged[$key], $aArrays[$i][$key] );
+					}else{
+						$aMerged[$key] = $aArrays[$i][$key];
+					}
+				}else{
+					$aMerged[$key] = $val;
+				}
+			}
+		}
+	}
+	
+	return $aMerged;
+}
+
+
+/**
+ * Add $dep (script handle) to the array of dependencies for $handle
+ * 
+ * @since 2.1
+ * @access private
+ * @see http://wordpress.stackexchange.com/questions/100709/add-a-script-as-a-dependency-to-a-registered-script
+ * @param string $handle Script handle for which you want to add a dependency
+ * @param string $dep Script handle - the dependency you wish to add
+ */
+function eventorganiser_append_dependency( $handle, $dep ){
+	global $wp_scripts;
+	
+	$script = $wp_scripts->query( $handle, 'registered');
+	if( !$script )
+		return false;
+	
+	if( !in_array( $dep, $script->deps ) ){
+		$script->deps[] = $dep;
+	}
+	
+	return true;
+}
+
 
 /**
  * Escapes a string so it safe for use in ICAL template
