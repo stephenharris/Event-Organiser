@@ -90,7 +90,7 @@
 		 * Performs a filter if it exists. You should only ever pass 1 argument to be filtered. The only rule is that
 		 * the first argument must always be the filter.
 		 */
-		SELF.applyFilter = function( /* filter, filtered arg, arg2, ... */ ) {
+		SELF.applyFilters = function( /* filter, filtered arg, arg2, ... */ ) {
 			
 			var args = Array.prototype.slice.call( arguments );
 			var filter = args.shift();
@@ -102,6 +102,22 @@
 			return _runHook( 'filters', filter, args );
 		};
 
+		/**
+		* Backwards compatible
+		* @deprecated 2.1 wp.hooks.applyFilters
+		* Remove EOv2.3+
+		*/
+		SELF.applyFilter = function( /* filter, filtered arg, arg2, ... */ ) {
+			
+			var args = Array.prototype.slice.call( arguments );
+			var filter = args.shift();
+			
+			if( _validateNamespace( filter ) === false ) {
+				return SELF;
+			}
+
+			return _runHook( 'filters', filter, args );
+		};
 		/**
 		 * Removes the specified filter if it contains a namespace.identifier & exists.
 		 *
@@ -226,7 +242,7 @@
 			if( type === 'actions' ) {
 				return true;
 			}
-			
+
 			return args[0];
 		};
 
