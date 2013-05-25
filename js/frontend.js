@@ -132,7 +132,7 @@ jQuery(document).ready(function () {
                             	return "<div></div>";
                         }
                         
-                        if( !wp.hooks.applyFilter( 'eventorganiser.fullcalendar_render_event', true, a, b, v ) )
+                        if( !wp.hooks.applyFilters( 'eventorganiser.fullcalendar_render_event', true, a, b, v ) )
                         	return "<div></div>";
                         	
                         if (! v.calendar.options.tooltip ) {
@@ -196,6 +196,8 @@ jQuery(document).ready(function () {
                 				request.venue = d.venue
                 			}
                 			
+                			request = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_request', request, a, b, c, d );
+                			
                 			$.ajax({
                 				url: eventorganiser.ajaxurl + "?action=eventorganiser-fullcal",
                 				dataType: "JSON",
@@ -218,7 +220,7 @@ jQuery(document).ready(function () {
                 			}
                 		}
             	};
-            	args = wp.hooks.applyFilter( 'eventorganiser.fullcalendar_options', args, calendars[i] );
+            	args = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_options', args, calendars[i] );
             	
             	$(calendar).fullCalendar(args)
 			}
@@ -391,7 +393,7 @@ function eo_load_map() {
 			mapTypeControl: maps[i].maptypecontrol,
 			mapTypeId: google.maps.MapTypeId[maps[i].maptypeid]
         	};
-		b = wp.hooks.applyFilter( 'eventorganiser.google_map_options', b );
+		b = wp.hooks.applyFilters( 'eventorganiser.google_map_options', b );
 		var map = new google.maps.Map(document.getElementById("eo_venue_map-" + (i + 1)), b);
 
 		//  Create a new viewpoint bound
@@ -414,7 +416,7 @@ function eo_load_map() {
 			  			//icon: 'http://localhost/dev/wp-content/gmapmarker/blue_MarkerB.png'
 	            	}
 			  	
-			  	marker_options = wp.hooks.applyFilter( 'eventorganiser.venue_marker_options', marker_options );
+			  	marker_options = wp.hooks.applyFilters( 'eventorganiser.venue_marker_options', marker_options );
 				var c = new google.maps.Marker(marker_options);				
 				eventorganiser.map[i].markers[locations[j].venue_id] = c;
 
