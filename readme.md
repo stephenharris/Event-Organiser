@@ -1,10 +1,10 @@
 # Event Organiser #
 **Contributors:** stephenharris  
 **Donate link:** http://www.wp-event-organiser.com/donate  
-**Tags:** events, event, event categories, event organiser, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
+**Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
 **Tested up to:** 3.5  
-**Stable tag:** 2.0.2
+**Stable tag:** 2.1  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -19,27 +19,36 @@ Event Organiser adds event management that integrates well with your WordPress s
 | [Demo](http://wp-event-organiser.com/demo/) 
 | [Booking Add-on](http://wp-event-organiser.com/pro-features)
 
+### What's new ###
+* Venue map icons are now filtered - [allowing you to change the map icons](http://wp-event-organiser.com/blog/tutorial/changing-the-venue-map-icon/).
+* ICAL parser API now available for third-party plug-ins
+* Updated fullCalendar to latest version
+* Javascript actions and filters added
+
 ### Features ###
 
-* Adds an **event custom post type** that fits naturally into WordPress and allows for all the functionality of 'posts'.
+### For the user ###
+
 * Create one-time events or reoccuring events.
 * Allows complex reoccuring patterns for events. You can create events that last an arbirtary time, and repeat over a specified period. Supports complex schedules such as *On the third Tuesday of every fourth month* or *Every month on the 16th*.
 * Ability to add or remove specific dates to an event
-* **Venue admin page** to add and maintain the venues for your events, with Google maps support and a fully-featured content editor.
-* Custom metaboxes and meta data support for venues.
-* The **Calendar widget**  displays a calendar (identical to the standard WordPress Calendar) that highlights events with links to the events archive page, listing events occuring that day.
-* The **Event List widget**  outputs a list of events, and allows you to specify the number of events, restrict to event categories or venues and their order etc.
-* The **Event Agenda widget**.
-* Year, month and day archive pages
-* Relative date queries (for example, query events that finished in the last 24 hours, or events starting in the coming week).
-* The **Calendar and Event List shortcodes**, similiar to their respective widgets, for use in themes or in posts and pages.
-* Shortcode to dislay a public version of the admin **'full calendar'**.
-* The **Venue map shortcodes** to display a map of a venue.
-*  **Custom permissions** allow to specifiy which roles have the ability to create, edit and delete events or manage venues.
-* **Template** pages include in the plug-in for 'quick-start'. These can be over-ridden by including the appropriately named template files in your theme folder.
 * **Event functions** available which extend the post functions (e.g. `the_title()`,`get_the_author()`, `the_author()`) to ouput or return event data (the start date-time, the venue etc). For examples of their use see the [documentation](http://www.wp-event-organiser.com/documentation/function-reference/) or the included template files.
+* Create and maintain venues for your events, with **Google maps** support and a fully-featured content editor.
+* **Widgets**:
+  * Calendar widget - displays a calendar (identical to the standard WordPress Calendar)
+  * Event List widget - displays a list of events, with options to specify the number of events, restrict by categories or venues etc.
+  * Event Agenda widget
+* Year, month and day archive pages
+* **Shortcodes**:
+  * (full)Calendar, includes optional category & venue filters.
+  * (widget) Calendar
+  * Event List (similar to Event List widget)
+  * Event Agenda (similar to Event Agenda widget)
+  * Venue map
+* **Relative date queries** (for example, query events that finished in the last 24 hours, or events starting in the coming week).
 * Assign events to categories and tags, and view events by category or tag.
 * Color-coded event categories.
+* **Custom permissions** allow to specifiy which roles have the ability to create, edit and delete events or manage venues.
 * Venue pages, to view events by venue.
 * **Export/import** events to and from ICAL files.
 * Delete individual occurrences of events.
@@ -48,8 +57,22 @@ Event Organiser adds event management that integrates well with your WordPress s
 * (Optionally) automatically delete expired events.
 
 
+### For the developer ###
+
+* Adds an **event custom post type** that fits naturally into WordPress and allows for all the functionality of 'posts'.
+* Respects the template hierarchy. Default templates can be over-ridden by including the appropriately named template files in your theme folder.
+* Plug-in **actions and filters** are provided to modify the behaviour of the plug-in
+* Extensive function API & [documentation](http://www.wp-event-organiser.com/documentation/function-reference/)
+* **Javascript actions and filters** to modify interaction with the calendars and maps
+* Provide custom templates for shortcodes, widgets and ICAL export
+* Custom metaboxes and meta data support for venues (see [tutorial](http://wp-event-organiser.com/documentation/developers/venue-meta-data-and-metaboxes/)).
+* Minified javascript files are used, with the originals provided for ease of developing
+* [Booking add-on](http://wp-event-organiser.com/pro-features) available
+
+
 ### Localisation ###
-A big thank you to those who have provided translations for Event Organiser
+
+A big thank you to those who have provided translations for Event Organiser. If you wish to help out with translating the plug-in, you can do so [here](https://poeditor.com/join/project?hash=4a9aa3be3accb34eebe426dce46b4c72).
 
 * French - [Remy Perona](http://remyperona.fr/)
 * Spanish - Joseba Sanchez
@@ -64,6 +87,7 @@ A big thank you to those who have provided translations for Event Organiser
 * Hungarian - Csaba Erdei 
 * Estonian - Kristjan Roosipuu
 * Finnish - Kari Tolonen
+* Ukranian - Максим Кобєлєв
 
 ## Installation ##
 
@@ -105,7 +129,7 @@ Among others, the plug-in also provides the following shortcodes ([see shortcode
 * **Full calendar** - a calendar, similiar to the admin calendar, with optional month, week and day views and category and venue filters
 
 **Template Functions**
-Finally, the plug-in provides a function `eo_get_events()` which is similiar to WordPress' `get_posts()`. It returns an array of post objects (where the posts are events), and this can be used to display events through editing your theme. The usual WordPress functions for display associated information (author, title etc) are still available to you, and the plug-in provides a similar set of functions to display event related data (dates, venues etc). [See the documentation for mmore information](http://www.wp-event-organiser.com/documentation/function-reference/).
+Finally, the plug-in provides a function `eo_get_events()` which is similiar to WordPress' `get_posts()`. It returns an array of post objects (where the posts are events), and this can be used to display events through editing your theme. The usual WordPress functions for display associated information (author, title etc) are still available to you, and the plug-in provides a similar set of functions to display event related data (dates, venues etc). [See the documentation for more information](http://www.wp-event-organiser.com/documentation/function-reference/).
 
 
 ### The full calendar doesn't display any events ###
@@ -147,7 +171,7 @@ Event Organiser provides the following shortcodes:
 * `[eo_calendar]`  - displays a widget-calendar of your events, similiar to WordPress' calendar, and navigated with AJAX.
 * `[eo_fullcalendar]`  - displays a calendar, similiar to the admin calendar, with optional month, week and day views and category and venue filters.
 * `[eo_venue_map]` - displays a Google map of the current venue, or of a particular venue given as an attribute.
-* `[eo_subscribe]` - wraps the content in a link which allows visitors to subscribe to your events; there are two types: 'Google' and 'Webcal'.  
+*** `[eo_subscribe]` - wraps the content in a link which allows visitors to subscribe to your events; there are two types:** 'Google' and 'Webcal'.  
 
 More information on shortcodes is [available here](http://wp-event-organiser.com/documentation/shortcodes/)
 
@@ -173,6 +197,19 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 2.1 ###
+* Added ICAL parser API
+* Filter the venue map icon
+* Added javascript hooks for calendar and venue maps
+* Fixes default template heading & thumbnail display
+* Filters event post type properties
+* Can query events by specifying an array of occurrence IDs
+* Improved default time format handling (see [#61](https://github.com/stephenharris/Event-Organiser/issues/61)
+* Updated fullCalendar & WP JS Hooks
+* JS refactoring
+* Added Ukranian and fixed Italian translation
+* Breaking an occurrence now redirects to event edit page
 
 ### 2.0.2 ###
 * Prevent new row being created on single event save
