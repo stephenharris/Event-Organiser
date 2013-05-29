@@ -4,7 +4,7 @@
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
 **Tested up to:** 3.5  
-**Stable tag:** 2.1  
+**Stable tag:** 2.1.2  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -197,6 +197,12 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 2.1.2 ###
+* Fixes permissions not updating bug
+* Fixes max attribute on time input (effected input of 12 hour time in some browsers)
+* Fixes ICAL feed encoding HTML entities
+* Fixes calendar (event time) CSS
 
 ### 2.1.1 ###
 * Compresses scripts (fixes bug)
