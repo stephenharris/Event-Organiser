@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-08 14:15+0100\n"
-"PO-Revision-Date: 2013-04-08 14:15+0100\n"
+"PO-Revision-Date: 2013-05-27 15:43+0100\n"
 "Last-Translator: Stephen Harris <contact@stephenharris.info>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -49,6 +49,57 @@ msgstr ""
 msgid "Below any <strong>known</strong> plug-in and theme conflicts are highlighted in red."
 msgstr ""
 
+#: ../event-organiser-debug.php:61
+msgid "Site url"
+msgstr ""
+
+#: ../event-organiser-debug.php:65
+msgid "Home url"
+msgstr ""
+
+#: ../event-organiser-debug.php:69
+msgid "Multisite"
+msgstr ""
+
+#: ../event-organiser-debug.php:73
+#, fuzzy
+msgid "Event Organiser version"
+msgstr "Ajustes del Event Organiser"
+
+#: ../event-organiser-debug.php:77
+#, fuzzy
+msgid "WordPress"
+msgstr "Dirección"
+
+#: ../event-organiser-debug.php:83
+#, fuzzy
+msgid "PHP Version"
+msgstr "Privilegios"
+
+#: ../event-organiser-debug.php:87
+msgid "MySQL Version"
+msgstr ""
+
+#: ../event-organiser-debug.php:91
+msgid "Web Server"
+msgstr ""
+
+#: ../event-organiser-debug.php:95
+msgid "PHP Memory Usage"
+msgstr ""
+
+#: ../event-organiser-debug.php:99
+msgid "PHP Post Max Size"
+msgstr ""
+
+#: ../event-organiser-debug.php:103
+msgid "PHP Upload Max Size"
+msgstr ""
+
+#: ../event-organiser-debug.php:107
+msgid "PHP cURL Support"
+msgstr ""
+
 #: ../event-organiser-debug.php:108
 #: ../event-organiser-debug.php:358
 #: ../event-organiser-settings.php:159
@@ -60,6 +111,43 @@ msgstr "Sí"
 #: ../event-organiser-settings.php:158
 msgid "No"
 msgstr "No"
+
+#: ../event-organiser-debug.php:111
+msgid "Plug-ins"
+msgstr ""
+
+#: ../event-organiser-debug.php:117
+msgid "Theme"
+msgstr ""
+
+#: ../event-organiser-debug.php:123
+msgid "Databse Prefix:"
+msgstr ""
+
+#: ../event-organiser-debug.php:127
+msgid "Database tables"
+msgstr ""
+
+#: ../event-organiser-debug.php:133
+msgid "Database character set"
+msgstr ""
+
+#: ../event-organiser-debug.php:139
+msgid "Debug mode"
+msgstr ""
+
+#: ../event-organiser-debug.php:144
+#, php-format
+msgid "%s present"
+msgstr ""
+
+#: ../event-organiser-debug.php:148
+msgid "Widget Sidebars"
+msgstr ""
+
+#: ../event-organiser-debug.php:152
+msgid "Timezone"
+msgstr ""
 
 #: ../event-organiser-debug.php:159
 msgid "Known plug-in & theme conflicts, highlighted in red, may be minor or have a simple resolution. Please contact support."
@@ -376,6 +464,19 @@ msgstr "Rol"
 msgid "None"
 msgstr "Ninguno"
 
+#: ../event-organiser-settings.php:539
+msgid "Choose a custom permalink structure for events, venues, event categories and event tags."
+msgstr "Selecciona una estructura de enlace permanente personalizada para eventos, lugares, categorías de eventos y etiquetas de eventos."
+
+#: ../event-organiser-settings.php:540
+msgid "Please note to enable these structures you must first have pretty permalinks enabled on WordPress in Settings > Permalinks."
+msgstr "Por favor, ten en cuenta que para habilitar estas estructuras primero debes habilitar los enlaces permanetes en WordPress en Ajustes > Enlaces permanentes."
+
+#: ../event-organiser-settings.php:541
+#, fuzzy
+msgid "You may also need to go to WordPress Settings > Permalinks and click 'Save Changes' before any changes will take effect."
+msgstr "Por favor, ten en cuenta que necesitarás ir a WordPress Ajustes > enlaces permanentes y pinchar 'Guardar Cambios' antes de que los cambios sean efectivos."
+
 #: ../event-organiser-settings.php:550
 msgid "Do not add to menu"
 msgstr ""
@@ -468,6 +569,10 @@ msgstr "día de la semana"
 msgid "until"
 msgstr "hasta"
 
+#: ../event-organiser-edit.php:160
+msgid "Include/Exclude occurrences"
+msgstr ""
+
 #: ../event-organiser-edit.php:163
 #, fuzzy
 msgid "Show dates"
@@ -488,6 +593,12 @@ msgstr "Selecciona un lugar"
 #, fuzzy
 msgid "Venue Name"
 msgstr "Nombre de lugar\""
+
+#: ../event-organiser-edit.php:219
+#: ../event-organiser-calendar.php:265
+#: ../event-organiser-calendar.php:272
+msgid "Cancel"
+msgstr "Cancelar"
 
 #: ../event-organiser-edit.php:351
 #, fuzzy
@@ -579,6 +690,11 @@ msgstr "Cargando&#8230;"
 msgid "Current date/time"
 msgstr "Fecha/hora actual"
 
+#: ../event-organiser-calendar.php:227
+#, fuzzy
+msgid "Create an event"
+msgstr "Creando eventos"
+
 #: ../event-organiser-calendar.php:232
 msgid "When"
 msgstr "Cuando"
@@ -595,11 +711,6 @@ msgstr "Dónde"
 msgid "Save Draft"
 msgstr "Guardar borrador"
 
-#: ../event-organiser-calendar.php:265
-#: ../event-organiser-calendar.php:272
-msgid "Cancel"
-msgstr "Cancelar"
-
 #: ../event-organiser-calendar.php:268
 msgid "Publish Event"
 msgstr "Publicar evento"
@@ -607,6 +718,11 @@ msgstr "Publicar evento"
 #: ../event-organiser-calendar.php:274
 msgid "Submit for Review"
 msgstr "Enviar para revisión"
+
+#: ../event-organiser-calendar.php:293
+#, fuzzy
+msgid "Event Detail"
+msgstr "Detalles del evento"
 
 #: ../event-organiser.php:128
 #: ../event-organiser-venues.php:429
@@ -713,6 +829,12 @@ msgstr "Lugar <strong>actualizado</strong>"
 msgid "Venue(s) <strong>deleted</strong>"
 msgstr "Lugar(es) <strong>borrados</strong>"
 
+#: ../event-organiser-venues.php:227
+#: ../event-organiser-venues.php:265
+#, fuzzy
+msgid "Add New"
+msgstr "Añadir nueva etiqueta"
+
 #: ../event-organiser-venues.php:230
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
@@ -741,6 +863,11 @@ msgstr "Actualizar lugar"
 #: ../event-organiser-venues.php:342
 msgid "Add Venue"
 msgstr "Añadir lugar"
+
+#: ../event-organiser-venues.php:396
+#, fuzzy
+msgid "Venue name"
+msgstr "Nombre de lugar\""
 
 #: ../event-organiser-venues.php:402
 msgid "Permalink:"
@@ -1629,6 +1756,19 @@ msgstr ""
 msgid "Displays a calendar of your events"
 msgstr "Muestra un calendario de tus eventos"
 
+#: ../classes/class-eo-calendar-widget.php:62
+#, fuzzy
+msgid "Event venue"
+msgstr "Editar lugar"
+
+#: ../classes/class-eo-calendar-widget.php:195
+msgid "Previous month"
+msgstr "Mes anterior"
+
+#: ../classes/class-eo-calendar-widget.php:198
+msgid "Next month"
+msgstr "Siguiente mes"
+
 #: ../classes/class-eventorganiser-shortcodes.php:334
 msgid "There is no excerpt because this is a protected post."
 msgstr ""
@@ -1665,29 +1805,6 @@ msgstr ""
 #~ msgid "(This may not work with some themes):"
 #~ msgstr "(Esto puede no funcionar con algunos temas):"
 
-#~ msgid ""
-#~ "Choose a custom permalink structure for events, venues, event categories "
-#~ "and event tags."
-#~ msgstr ""
-#~ "Selecciona una estructura de enlace permanente personalizada para "
-#~ "eventos, lugares, categorías de eventos y etiquetas de eventos."
-
-#~ msgid ""
-#~ "Please note to enable these structures you must first have pretty "
-#~ "permalinks enabled on WordPress in Settings > Permalinks."
-#~ msgstr ""
-#~ "Por favor, ten en cuenta que para habilitar estas estructuras primero "
-#~ "debes habilitar los enlaces permanetes en WordPress en Ajustes > Enlaces "
-#~ "permanentes."
-
-#~ msgid ""
-#~ "Please note that you will need go to WordPress Settings > Permalinks and "
-#~ "click 'Save Changes' before any changes will take effect."
-#~ msgstr ""
-#~ "Por favor, ten en cuenta que necesitarás ir a WordPress Ajustes > enlaces "
-#~ "permanentes y pinchar 'Guardar Cambios' antes de que los cambios sean "
-#~ "efectivos."
-
 #~ msgid "Search for a venue. To add a venues go to the venue page."
 #~ msgstr "Buscar un lugar. Para añadir lugares ir a la página de lugar."
 
@@ -1707,12 +1824,6 @@ msgstr ""
 
 #~ msgid "Event Organiser error: Invalid post"
 #~ msgstr "Error Event Organises: Entrada inválida"
-
-#~ msgid "Previous month"
-#~ msgstr "Mes anterior"
-
-#~ msgid "Next month"
-#~ msgstr "Siguiente mes"
 
 #~ msgid ""
 #~ "There was a problem with locating the latitude and longitude co-ordinates "
