@@ -26,6 +26,17 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		$this->menu = __( 'Event Organiser', 'eventorganiser' );
 		$this->permissions = 'manage_options';
 		$this->slug = 'event-settings';
+		
+		self::$eventorganiser_roles = array(
+				'edit_events' => __( 'Edit Events', 'eventorganiser' ),
+				'publish_events' => __( 'Publish Events', 'eventorganiser' ),
+				'delete_events' => __( 'Delete Events', 'eventorganiser' ),
+				'edit_others_events' => __( 'Edit Others\' Events', 'eventorganiser' ),
+				'delete_others_events' => __( 'Delete Other\'s Events', 'eventorganiser' ),
+				'read_private_events' => __( 'Read Private Events', 'eventorganiser' ),
+				'manage_venues' => __( 'Manage Venues', 'eventorganiser' ),
+				'manage_event_categories' => __( 'Manage Event Categories & Tags', 'eventorganiser' ),
+		);
 	}
 
 	function admin_init_actions(){
@@ -68,17 +79,6 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			//Add sections to each tabbed page
 			$this->add_fields( $tab_id );
 		}
-
-		self::$eventorganiser_roles = array(
-			 'edit_events' => __( 'Edit Events', 'eventorganiser' ),
-			 'publish_events' => __( 'Publish Events', 'eventorganiser' ),
-			 'delete_events' => __( 'Delete Events', 'eventorganiser' ),
-			'edit_others_events' => __( 'Edit Others\' Events', 'eventorganiser' ),
-			 'delete_others_events' => __( 'Delete Other\'s Events', 'eventorganiser' ),
-			'read_private_events' => __( 'Read Private Events', 'eventorganiser' ),
-			 'manage_venues' => __( 'Manage Venues', 'eventorganiser' ),
-			 'manage_event_categories' => __( 'Manage Event Categories & Tags', 'eventorganiser' ),
-		);
 	}
 
 
