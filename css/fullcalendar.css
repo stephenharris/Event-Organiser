@@ -104,7 +104,7 @@ a.fc-event,.fc-event-draggable{cursor:pointer}
 .fc-event-vert .ui-resizable-s{bottom:0!important;width:100%!important;height:8px!important;overflow:hidden!important;line-height:8px!important;font-size:11px!important;font-family:monospace;text-align:center;cursor:s-resize}
 .fc-agenda .ui-resizable-resizing{_overflow:hidden}
 .fc-header-center,.fc-grid th,.fc-agenda-days th{text-align:center}
-.fc-button-prev .fc-text-arrow,.fc-button-next .fc-text-arrow,.fc-grid .fc-event-time,.fc-agenda .fc-week-number{font-weight:700}
+.fc-button-prev .fc-text-arrow,.fc-button-next .fc-text-arrow,.fc-grid .fc-event-time,.fc-agenda .fc-week-number{font-weight:700;display:inline-block;}
 table.fc-border-separate,.fc-agenda table{border-collapse:separate}
 .fc-border-separate th.fc-last,.fc-border-separate td.fc-last,.fc-agenda-days .fc-agenda-axis{border-right-width:1px}
 .fc-border-separate tbody tr.fc-first td,.fc-border-separate tbody tr.fc-first th,.fc-agenda-slots tr.fc-slot0 th,.fc-agenda-slots tr.fc-slot0 td{border-top-width:0}
