@@ -103,7 +103,7 @@ EXDATE<?php echo $vdate;?>:<?php echo implode(',',$exclude_strings);?>
 RDATE<?php echo $vdate;?>:<?php echo implode(',',$include_strings);?>
 
 <?php endif; ?>
-SUMMARY:<?php echo eventorganiser_escape_ical_text( get_the_title_rss() ); ?>
+SUMMARY:<?php echo eventorganiser_escape_ical_text( html_entity_decode( get_the_title_rss() ) ); ?>
 
 <?php
 	$excerpt = get_the_excerpt();
