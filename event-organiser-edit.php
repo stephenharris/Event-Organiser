@@ -88,7 +88,7 @@ function _eventorganiser_details_metabox( $post ){
 					<td> 
 						<input class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" id="from_date" <?php disabled( !$sche_once );?> value="<?php echo $start->format( $phpFormat ); ?>"/>
 						<?php printf(
-								'<input name="eo_input[StartTime]" class="eo_time ui-widget-content ui-corner-all" size="4" maxlength="5" id="HWSEvent_time" %s value="%s"/>',
+								'<input name="eo_input[StartTime]" class="eo_time ui-widget-content ui-corner-all" size="6" maxlength="8" id="HWSEvent_time" %s value="%s"/>',
 								disabled( (!$sche_once) || $all_day, true, false ),
 								eo_format_datetime( $start, $time_format )
 						);?>						
@@ -102,7 +102,7 @@ function _eventorganiser_details_metabox( $post ){
 						<input class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" id="to_date" <?php disabled( !$sche_once );?>  value="<?php echo $end->format( $phpFormat ); ?>"/>
 					
 						<?php printf(
-								'<input name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all" size="4" maxlength="5" id="HWSEvent_time2" %s value="%s"/>',
+								'<input name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all" size="6" maxlength="8" id="HWSEvent_time2" %s value="%s"/>',
 								disabled( (!$sche_once) || $all_day, true, false ),
 								eo_format_datetime( $end, $time_format )
 						);?>	
