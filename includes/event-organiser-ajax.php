@@ -52,6 +52,11 @@ function eventorganiser_public_fullcalendar() {
 	if( !empty( $_GET['users_events'] ) && 'false' != $_GET['users_events'] ){
 		$request['bookee_id'] = get_current_user_id();	
 	}
+	
+	if( !empty( $_GET['event_occurrence__in'] ) ){
+		$request['event_occurrence__in'] = $_GET['event_occurrence__in'];
+	}
+	
 
 	$presets = array('numberposts'=>-1, 'group_events_by'=>'','showpastevents'=>true);
 
