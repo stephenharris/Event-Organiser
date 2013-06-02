@@ -4,6 +4,8 @@
 .buildpath
 .metadata
 compiler.jar
+apigen
+documentation
 dist
 externs.js
 externs-venue.js
