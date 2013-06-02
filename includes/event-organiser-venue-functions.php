@@ -390,8 +390,24 @@ function eo_get_venue_address($venue_slug_or_id=''){
  *          endforeach; 
  *          echo '</ul>';
  *     }
+ *         
+ * The retreive all venues within 10 miles of Windsor Castle
+ * 
+ *      $meta_query = array(
+ *			'proximity' => array(
+ *					'center' => eo_remote_geocode( "Windsor [castle]" ),
+ *					'radius' => 10,
+ *					'unit' => 'miles',
+ *					'compare' => '<='
+ *			),	
+ *      );
+ *
+ *      $venues = eo_get_venues( array( 'meta_query' => $meta_query ) );
+ * 
+ * See [documentation on venue meta queries](http://wp-event-organiser.com/pro-features/event-venue-queries/).    
  *
  * @uses get_terms()
+ * @link http://wp-event-organiser.com/pro-features/event-venue-queries/ Documentation on event-venue meta queries
  * @link https://gist.github.com/3902494 Gist for creating an archive page of all the venues
  * @link http://codex.wordpress.org/Function_Reference/get_terms get_terms()
  * @since 1.0.0
@@ -773,7 +789,7 @@ function eo_delete_venue_meta($venue_id, $key, $value = '', $delete_all = false 
  * 
  * @since 1.4.0
  * @access private
- *
+ * @ignore
  * @param string The key of the meta data
  * @param mixed The meta data being validated.
  * @return mixed The validated value. False if the key is not recognised.

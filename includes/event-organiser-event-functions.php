@@ -1161,14 +1161,20 @@ function eo_get_event_archive_link( $year=false,$month=false, $day=false){
 	return $archive;
 }
 
-
-function eo_break_occurrence( $post_id, $event_id ){
+/**
+ * Break a specified occurrence from an event
+ * 
+ * @param int $post_id The event (post) ID
+ * @param int $occurrence_id The occurrence ID
+ * @return int|WP_Error The new event (post) ID or a WP_Error on error
+ */
+function eo_break_occurrence( $post_id, $occurrence_id ){
 
 	global $post;
 	$post = get_post( $post_id );
 	setup_postdata( $post_id );
 
-	do_action( 'eventorganiser_pre_break_occurrence', $post_id, $event_id );
+	do_action( 'eventorganiser_pre_break_occurrence', $post_id, $occurrence_id );
 	
 	$tax_input = array();
 	foreach ( array( 'event-category', 'event-tag', 'event-venue' ) as $tax ):
@@ -1188,8 +1194,8 @@ function eo_break_occurrence( $post_id, $event_id ){
 
 	//Event details
 	$event_array = array(
-		'start' => eo_get_the_start( DATETIMEOBJ, $post_id, null, $event_id ),
-		'end' => eo_get_the_end(DATETIMEOBJ, $post_id, null, $event_id ),
+		'start' => eo_get_the_start( DATETIMEOBJ, $post_id, null, $occurrence_id ),
+		'end' => eo_get_the_end(DATETIMEOBJ, $post_id, null, $occurrence_id ),
 		'all_day' => ( eo_is_all_day( $post_id )  ? 1 : 0 ),
 		'schedule' => 'once',
 		'frequency' => 1,
@@ -1200,7 +1206,7 @@ function eo_break_occurrence( $post_id, $event_id ){
 
 	//delete occurrence, and copy post meta
 	if ( $new_event_id && !is_wp_error( $new_event_id ) ){
-		$response = _eventorganiser_remove_occurrence( $post_id, $event_id );
+		$response = _eventorganiser_remove_occurrence( $post_id, $occurrence_id );
 
 		$post_custom = get_post_custom( $post_id );
 		foreach ( $post_custom as $meta_key => $meta_values ) {
@@ -1225,7 +1231,7 @@ function eo_break_occurrence( $post_id, $event_id ){
 	}
 	_eventorganiser_delete_calendar_cache();
 
-	do_action( 'eventorganiser_occurrence_broken', $post_id, $event_id, $new_event_id );
+	do_action( 'eventorganiser_occurrence_broken', $post_id, $occurrence_id, $new_event_id );
 
 	wp_reset_postdata();
 	return $new_event_id;

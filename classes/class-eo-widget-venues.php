@@ -3,6 +3,7 @@
  * Event venues widget class
  *
  * @since 1.8
+ * @ignore
  */
 class EO_Widget_Venues extends WP_Widget {
 

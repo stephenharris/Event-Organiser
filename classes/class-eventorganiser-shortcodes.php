@@ -2,7 +2,8 @@
 /**
  * Class used to create the event calendar shortcode
  *
- *@uses EO_Calendar Widget class to generate calendar html
+ * @uses EO_Calendar Widget class to generate calendar html
+ * @ignore
  */
 class EventOrganiser_Shortcodes {
 	static $add_script;
@@ -391,7 +392,10 @@ class EventOrganiser_Shortcodes {
  
 EventOrganiser_Shortcodes::init();
 
-	function eventorganiser_category_key($args=array(),$id=1){
+/**
+ * @ignore
+ */	
+function eventorganiser_category_key($args=array(),$id=1){
 		$args['taxonomy'] ='event-category';
 
 		$html ='<div class="eo-fullcalendar-key" id="eo_fullcalendar_key'.$id.'">';

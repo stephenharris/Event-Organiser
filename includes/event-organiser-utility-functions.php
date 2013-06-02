@@ -830,12 +830,23 @@ function eventorganiser_textarea_field($args){
 	return $html;
 }
 
-
+/**
+ * @ignore
+ * @private
+ * @param unknown_type $text
+ * @return mixed
+ */
 function eventorganiser_esc_printf($text){
 	return str_replace('%','%%',$text);
 }
 
-
+/**
+ * @ignore
+ * @private
+ * @param unknown_type $key
+ * @param unknown_type $group
+ * @return Ambigous <boolean, mixed>
+ */
 function eventorganiser_cache_get( $key, $group ){
 
 	$ns_key = wp_cache_get( 'eventorganiser_'.$group.'_key' );
@@ -847,7 +858,13 @@ function eventorganiser_cache_get( $key, $group ){
 	return wp_cache_get( "eo_".$ns_key."_".$key, $group );
 }
 
-
+/**
+ * @ignore
+ * @private
+ * @param unknown_type $group
+ * @param unknown_type $key
+ * @return Ambigous <false, number>|boolean
+ */
 function eventorganiser_clear_cache( $group, $key = false ){
 
 	if( $key == false ){
@@ -860,7 +877,15 @@ function eventorganiser_clear_cache( $group, $key = false ){
 	}
 }
 	
-
+/**
+ * @ignore
+ * @private
+ * @param unknown_type $key
+ * @param unknown_type $value
+ * @param unknown_type $group
+ * @param unknown_type $expire
+ * @return unknown
+ */
 function eventorganiser_cache_set( $key, $value, $group, $expire = 0 ){
 	$ns_key = wp_cache_get( 'eventorganiser_'.$group.'_key' );
 
@@ -877,6 +902,8 @@ function eventorganiser_cache_set( $key, $value, $group, $expire = 0 ){
  * The function handles the javascript/css loading and generates the link HTML which will trigger the tooltip. 
  * The HTML can be returned or printed using the fourth argument. 
  * 
+ * @private
+ * @ignore
  * @param string $title The title of the tooltip that will appear
  * @param string $content The content of the tooltip
  * @param bool $echo Whether the link HTML should be printed as well as returned.
@@ -909,15 +936,25 @@ function eventorganiser_inline_help( $title, $content, $echo = false, $type = 'h
 	
 	return $link;
 }
+
+/**
+ * @ignore
+ */
 function _eventorganiser_enqueue_inline_help_scripts(){
 	wp_enqueue_script( 'eo-inline-help' );
 	wp_enqueue_style( 'eventorganiser-style' );
 }
 
+/**
+ * Darken or lighten a colour (hex) by a given percent (as a decimal)
+ * 
+ * @param string $hex
+ * @param float $percent Percent as a decimal. E.g. 75% = 0.75
+ * @return string The generated colour as a hexedecimal
+ */
 function eo_color_luminance( $hex, $percent ) {
 
 	// validate hex string
-
 	$hex = preg_replace( '/[^0-9a-f]/i', '', $hex );
 	$new_hex = '#';
 
@@ -935,29 +972,41 @@ function eo_color_luminance( $hex, $percent ) {
 	return $new_hex;
 }
 
+
 /**
  * Whether the blog's time settings indicates it uses 12 or 24 hour time
- * 
- * If uses meridian (am/pm) it is 12 hour.
- * If uses 'H' as the time format it is 24 hour.
- * Otherwise assumed to be 12 hour.
+ * @deprecated 2.1.3 Use {@see `eo_blog_is_24()`} instead.
+ * @see eo_blog_is_24()
  */
 function eventorganiser_blog_is_24(){
-	
+	return eo_blog_is_24();
+}
+
+/**
+ * Whether the blog's time settings indicates it uses 12 or 24 hour time
+ *
+ * If uses meridian (am/pm) it is 12 hour. Otherwise if it uses 'H' as the 
+ * time format it is 24 hour. Otherwise assumed to be 12 hour.
+ * 
+ */
+function eo_blog_is_24(){
+
 	$time = get_option( 'time_format');
-	
+
 	//Check for meridian
 	if( preg_match( '~\b(A.)\b|([^\\\\]A)~i', $time, $matches ) ){
-		return false;
+		$is24 = false;
+		
+	//Check for 24 hour format
+	}elseif( preg_match( '~\b(H.)\b|([^\\\\]H)~i', $time ) ){
+		$is24 = true;
+		
+	}else{
+		//Assume it isn't
+		$is24 = false;
 	}
 
-	//Check for 24 hour format
-	if( preg_match( '~\b(H.)\b|([^\\\\]H)~i', $time ) ){
-		return true;
-	}
-	
-	//Assume it isn't
-	return false;
+	return $is24;
 }
 
 /**
@@ -969,6 +1018,7 @@ function eventorganiser_blog_is_24(){
  * This allows (most) Event Organiser js-variables to live under the namespace 'eventorganiser'
  *
  * @since 2.1
+ * @ignore
  * @uses eventorganiser_array_merge_recursive_distinct()
  * @access private
  * @param string $handle
@@ -992,6 +1042,7 @@ function eo_localize_script( $handle, $obj ){
  * @param array2 array Second array to merge  
  *  
  * @since 2.1
+ * @ignore
  * @see http://www.php.net/manual/en/function.array-merge-recursive.php#91049
  * @author Daniel <daniel (at) danielsmedegaardbuus (dot) dk>
  * @author Gabriel Sobrinho <gabriel (dot) sobrinho (at) gmail (dot) com>
@@ -1027,6 +1078,7 @@ function &eo_array_merge_recursive_distinct ( array $array1, array $array2 /* ar
  * Add $dep (script handle) to the array of dependencies for $handle
  * 
  * @since 2.1
+ * @ignore
  * @access private
  * @see http://wordpress.stackexchange.com/questions/100709/add-a-script-as-a-dependency-to-a-registered-script
  * @param string $handle Script handle for which you want to add a dependency
@@ -1052,6 +1104,7 @@ function eventorganiser_append_dependency( $handle, $dep ){
  * 
  * Commas, semicolons and backslashes are escaped.
  * New lines are appended with a space (why?)
+ * @ignore
  * @since 2.1
  * @param string $text The string to be escaped
  * @return string The escaped string.

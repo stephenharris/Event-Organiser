@@ -1,7 +1,5 @@
 <?php
-/**
- * Calendar Admin Page
- */
+
 if ( !class_exists( 'EventOrganiser_Admin_Page' ) ){
     require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
 }
@@ -12,6 +10,7 @@ if ( !class_exists( 'EventOrganiser_Admin_Page' ) ){
  * @version 1.0
  * @see EventOrganiser_Admin_Page
  * @package event organiser
+ * @ignore
  */
 class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 {

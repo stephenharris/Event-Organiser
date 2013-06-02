@@ -3,6 +3,9 @@
 if ( !class_exists( 'EventOrganiser_Admin_Page' ) ){
     require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
 }
+/**
+ * @ignore
+ */
 class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 {
 	function set_constants(){
