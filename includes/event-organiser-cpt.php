@@ -761,8 +761,13 @@ function eventorganiser_update_venue_meta_cache( $terms, $tax){
 		if( empty($terms) )
 		       return $terms;
 
-		//TODO Sort this out when $terms is an array of IDs not objects.
-		$term_ids = wp_list_pluck($terms,'term_id');
+		//Check if its array of terms or term IDs
+		$first_element = reset( $terms );
+		if ( is_object( $first_element ) ){
+			$term_ids = wp_list_pluck( $terms, 'term_id' );
+		} else {
+			$term_ids = $terms;
+		}
 
    		update_meta_cache('eo_venue',$term_ids);
 
