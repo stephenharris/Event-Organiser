@@ -333,7 +333,7 @@ function eventorganiser_join_tables( $join, $query ){
 
 /**
  * Checks whether a given query is for events
- * 
+ * @package event-query-functions
  * @param WP_Query $query The query to test
  * @param bool $exclusive Whether to test if the query is *exclusively* for events, or can include other post types
  * @return bool True if the query is an event query. False otherwise.

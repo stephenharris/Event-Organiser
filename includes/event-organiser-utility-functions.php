@@ -213,30 +213,29 @@ function eo_date_interval($_date1,$_date2, $format){
 * that it can b used in javascript (notably the fullCalendar).
 *
 * Doesn't support
-*L Whether it's a leap year
-* N ISO-8601 numeric representation of the day of the week (added in PHP 5.1.0)
-* w Numeric representation of the day of the week (0=sun,...)
-*  z The day of the year (starting from 0)
-*  t Number of days in the given month
-* B Swatch Internet time
-* u microseconds
+* 
+* * L Whether it's a leap year
+* * N ISO-8601 numeric representation of the day of the week (added in PHP 5.1.0)
+* * w Numeric representation of the day of the week (0=sun,...)
+* * z The day of the year (starting from 0)
+* * t Number of days in the given month
+* * B Swatch Internet time
+* * u microseconds
+* * e 	Timezone identifier (added in PHP 5.1.0) 	Examples: UTC, GMT, Atlantic/Azores
+* * I (capital i) 	Whether or not the date is in daylight saving time 	1 if Daylight Saving Time, 0 otherwise.
+* * O  Difference to Greenwich time (GMT) in hours 	Example: +0200
+* * T  Timezone abbreviation 	Examples: EST, MDT ...
+* * Z  Timezone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.
+* * c  ISO 8601 date (added in PHP 5) 	2004-02-12T15:19:21+00:00
+* * r  RFC 2822 formatted date 	Example: Thu, 21 Dec 2000 16:01:07 +0200
+* * U Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) 	See also time()
 *
-* e 	Timezone identifier (added in PHP 5.1.0) 	Examples: UTC, GMT, Atlantic/Azores
-*  I (capital i) 	Whether or not the date is in daylight saving time 	1 if Daylight Saving Time, 0 otherwise.
-*  O  Difference to Greenwich time (GMT) in hours 	Example: +0200
-*  T  Timezone abbreviation 	Examples: EST, MDT ...
-*  Z  Timezone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.
-
-*  c  ISO 8601 date (added in PHP 5) 	2004-02-12T15:19:21+00:00
-*  r  RFC 2822 formatted date 	Example: Thu, 21 Dec 2000 16:01:07 +0200
-*  U Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) 	See also time()
-*
-* @since 1.4
+* @since 2.1.3
 *
 *@param string $phpformat Format according to http://php.net/manual/en/function.date.php
 *@return string The format translated to xdate format: http://arshaw.com/xdate/#Formatting
 */
-function eventorganiser_php2xdate($phpformat=""){
+function eo_php2xdate($phpformat=""){
 	$php2xdate = array(
 		'Y'=>'yyyy','y'=>'yy','L'=>''/*Not Supported*/,'o'=>'I',
 		'j'=>'d','d'=>'dd','D'=>'ddd','l'=>'dddd','N'=>'', /*NS*/ 'S'=>'S',
@@ -269,22 +268,31 @@ function eventorganiser_php2xdate($phpformat=""){
 	return $xdateformat;
 }
 
+/**
+ * Very basic class to convert php date format into xdate date format used for javascript.
+ * @deprecated 2.1.3
+ * @ignore
+ * @since 1.4
+ */
+function eventorganiser_php2xdate( $phpformat="" ){
+	return eo_php2xdate( $phpformat="" );
+}
 
 /**
  * Very basic class to convert php date format into jQuery UI date format used for javascript.
  *
- * Similar to {@see `eventorganiser_php2xdate()`} - but the format is slightly different for jQuery UI  
+ * Similar to `{@see eventorganiser_php2xdate()}` - but the format is slightly different for jQuery UI  
  * Takes a php date format and converts it to {@link http://docs.jquery.com/UI/Datepicker/formatDate} so
  * that it can b used in javascript (notably by the datepicker).
  * 
  * **Please note that this function does not convert time formats**
  *
- * @since 1.7
+ * @since 2.1.3
  *
  *@param string $phpformat Format according to http://php.net/manual/en/function.date.php
  *@return string The format translated to xdate format: http://docs.jquery.com/UI/Datepicker/formatDate
  */
-function eventorganiser_php2jquerydate($phpformat=""){
+function eo_php2jquerydate($phpformat=""){
 	$php2jquerydate = array(
 			'Y'=>'yy','y'=>'y','L'=>''/*Not Supported*/,'o'=>'',/*Not Supported*/
 			'j'=>'d','d'=>'dd','D'=>'D','DD'=>'dddd','N'=>'',/*NS*/ 'S' => ''/*NS*/,
@@ -316,6 +324,15 @@ function eventorganiser_php2jquerydate($phpformat=""){
 	return $jqueryformat;
 }
 
+/**
+ * Very basic class to convert php date format into jQuery UI date format used for javascript.
+ * @ignore
+ * @deprecated 2.1.3 Use 
+ * @since 1.7
+ */
+function eventorganiser_php2jquerydate( $phpformat="" ){
+	return eo_php2jquerydate( $phpformat );
+}
 
 /**
 * A utilty function intended for removing duplicate DateTime objects from array
@@ -417,7 +434,8 @@ function _eventorganiser_php52_modify($date='',$modify=''){
 * Is very simliar to wp_trim_excerpt. Doesn't apply excerpt_more filter
  * Applies eventorganiser_trim_excerpt filter
  * Must be used inside the loop
- *
+ * @ignore
+ * @access private
  * @since 1.5
  * @param string $text Optional. The excerpt. If set to empty, an excerpt is generated.
  * @param int $excerpt_length The excerpt length if generated from content.

@@ -136,6 +136,28 @@ function eo_update_event($post_id, $event_data=array(), $post_data=array() ){
 * * `include` => array of datetime objects to include in the schedule
 * * `exclude` => array of datetime objects to exclude in the schedule
 *
+* ### Example
+* The following example creates an event which starts on the 3rd December 2012 15:00 and ends on the 4th December 15:00 and repeats every 4 days until the 25th December (So the last occurrence actually ends on the 23rd).
+* <code>
+*     $event_data = array(
+*	     'start'=> new DateTime('2012-12-03 15:00', eo_get_blog_timezone() ),
+*	     'end'=> new DateTime('2012-12-04 15:00', eo_get_blog_timezone() ),
+*	     'schedule_last'=> new DateTime('2012-12-25 15:00', eo_get_blog_timezone() ),
+*	     'frequency' => 4,
+*	     'all_day' => 0,
+*	     'schedule'=>'daily',
+*    );
+*     $post_data = array(
+*	     'post_title'=>'The Event Title',
+*	     'post_content'=>'My event content',
+*    );
+*
+*    $e = eo_insert_event($post_data,$event_data);
+* </code>
+* 
+* ### Tutorial
+* See this <a href="http://www.stephenharris.info/2012/front-end-event-posting/">tutorial</a> or <a href="https://gist.github.com/3867194">this Gist</a> on front-end event posting.
+*
 * @since 1.5
 * @link http://www.stephenharris.info/2012/front-end-event-posting/ Tutorial on front-end event posting
 * @uses wp_insert_post() 
@@ -626,6 +648,7 @@ function eo_get_event_schedule( $post_id=0 ){
  * @access private
  * @ignore
  * @since 1.0.0
+ * @package ical-functions
  *
  * @param int $post_id The event (post) ID. Uses current event if empty.
  * @return string The RRULE to be used in an ICS calendar

@@ -23,6 +23,7 @@
  *  *  **default_status** - Default status of posts (unless otherwise specified by STATUS). Default is 'draft'
  * 
  * @author stephen
+ * @package ical-functions
  *
  */
 class EO_ICAL_Parser{

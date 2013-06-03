@@ -43,7 +43,7 @@ function eo_get_template_part( $slug, $name = null ) {
  * Searches the child theme first, then the parent theme before checking the plug-in templates folder.
  * So parent themes can override the default plug-in templates, and child themes can over-ride both.
  *
- * Behaves almost identically to {@see locate_template()} 
+ * Behaves almost identically to `{@see locate_template()}` 
  *
  * @since 1.7
  *
@@ -125,6 +125,21 @@ function eo_is_event_archive( $type = false ){
  * for year archives returns 1st January of that year, for month archives 1st of that month.
  * The date is formatted according to `$format` via {@see `eo_format_datetime()`}
  *
+ * <code>
+ * 	<?php
+ *	 if( eo_is_event_archive('day') )
+ *      //Viewing date archive: "Events: 3rd June 2013"
+ *      echo __('Events: ','eventorganiser').' '.eo_get_event_archive_date('jS F Y');
+ *	 elseif( eo_is_event_archive('month') )
+ *      //Viewing month archive: "Events: June 2013"
+ *      echo __('Events: ','eventorganiser').' '.eo_get_event_archive_date('F Y');
+ *   elseif( eo_is_event_archive('year') )
+ *      //Viewing year archive: "Events: 2013"
+ *      echo __('Events: ','eventorganiser').' '.eo_get_event_archive_date('Y');
+ *   else
+ *      _e('Events','eventorganiser');
+ *   ?>
+ * </code>
  * @since 1.7
  * @uses is_post_type_archive()
  * @uses eo_format_datetime()
