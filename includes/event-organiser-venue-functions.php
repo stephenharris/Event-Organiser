@@ -404,10 +404,9 @@ function eo_get_venue_address($venue_slug_or_id=''){
  *
  * The list of arguments that `$args` can contain, which will overwrite the defaults:
  *
- * * **orderby** - Default is 'name'. Can be name, count, term_group, slug or nothing
- * (will use venue/term ID), Passing a custom value other than these will cause it to
- * order based on the custom value.
- * * **order** - Default is ASC. Can use DESC.
+ * * **orderby** - Default is 'name'. Can be name, count, slug, city, state, country, postcode, address 
+ * or distance (when used with a {@link http://wp-event-organiser.com/pro-features/event-venue-queries/ proximity-query})
+ * * **order** - ASC|DESC Default is ASC.
  * * **hide_empty** - Default is 0 (false)
  * * **exclude** - Default is an empty array. An array, comma- or space-delimited string
  * of term ids to exclude from the return array. If 'include' is non-empty,
@@ -440,7 +439,7 @@ function eo_get_venue_address($venue_slug_or_id=''){
  *      $meta_query = array(
  *			'proximity' => array(
  *					'center' => eo_remote_geocode( "Windsor [castle]" ),
- *					'radius' => 10,
+ *					'distance' => 10,
  *					'unit' => 'miles',
  *					'compare' => '<='
  *			),	
@@ -448,7 +447,7 @@ function eo_get_venue_address($venue_slug_or_id=''){
  *
  *      $venues = eo_get_venues( array( 'meta_query' => $meta_query ) );
  * </code>
- * See [documentation on venue meta queries](http://wp-event-organiser.com/pro-features/event-venue-queries/).    
+ * See {@link http://wp-event-organiser.com/pro-features/event-venue-queries/ documentation on venue meta queries}.    
  *
  * @uses get_terms()
  * @see eo_remote_geocode()
