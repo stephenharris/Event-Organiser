@@ -272,7 +272,7 @@ window.eventOrganiserSchedulePicker = {
                 firstDay: parseInt(this.options.startday),
                 onSelect: function( date ){
                 		eventOrganiserSchedule.add_or_remove_date( date );
-            	        $( eventOrganiserSchedulePicker.options.views.include ).val(eventOrganiserSchedule.exclude.join(',\r\n'));
+            	        $( eventOrganiserSchedulePicker.options.views.include ).val(eventOrganiserSchedule.include.join(',\r\n'));
             	        $( eventOrganiserSchedulePicker.options.views.exclude ).val(eventOrganiserSchedule.exclude.join(',\r\n'));	
                 },
                 beforeShowDay: function (date) {
