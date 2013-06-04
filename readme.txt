@@ -4,20 +4,20 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
 == Description ==
 
-Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows you to view your events in the familiar WordPress list or in a calendar page in the amin area.
+[**Documentation**](http://wp-event-organiser.com/documentation/) 
+| [**Function Reference**](http://wp-event-organiser.com/codex/) 
+| [**Forums**](http://wp-event-organiser.com/forums/) 
+| [**Demo**](http://wp-event-organiser.com/demo/) 
+| [**Booking Add-on**](http://wp-event-organiser.com/pro-features)
 
-[Documentation](http://wp-event-organiser.com/documentation/) 
-| [Function Reference](http://wp-event-organiser.com/documentation/function-reference/) 
-| [Forums](http://wp-event-organiser.com/forums/) 
-| [Demo](http://wp-event-organiser.com/demo/) 
-| [Booking Add-on](http://wp-event-organiser.com/pro-features)
+Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows you to view your events in the familiar WordPress list or in a calendar page in the amin area.
 
 = What's new =
 * Venue map icons are now filtered - [allowing you to change the map icons](http://wp-event-organiser.com/blog/tutorial/changing-the-venue-map-icon/).
@@ -185,6 +185,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.1.3 =
+* Fixes calendar css (ensures event links are white)
+* Fixes bug with include/exclude event dates introduced in 2.1
+* Updates in-source documentation for the [Codex](http://wp-event-organiser.com/codex).
 
 = 2.1.2 =
 * Fixes permissions not updating bug
