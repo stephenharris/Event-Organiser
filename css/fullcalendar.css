@@ -62,8 +62,8 @@ html .fc,.fc table{font-size:1em}
 .fc-state-down,.fc-state-active{background-color:#ccc;background-image:none;outline:0;box-shadow:inset 0 2px 4px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.05)}
 .fc-state-disabled{cursor:default;background-image:none;opacity:0.65;filter:alpha(opacity=65);box-shadow:none}
 .fc-event{border:1px solid #3a87ad;background-color:#3a87ad;color:#fff;font-size:.85em;cursor:default}
-a.fc-event{color:#fff;}
-a.fc-event{text-decoration:none}
+a.fc-event .fc-event-title {color: white;}
+a.fc-event{text-decoration:none;color:#fff;}
 a.fc-event,.fc-event-draggable{cursor:pointer}
 .fc-rtl .fc-event{text-align:right}
 .fc-event-inner{width:100%;height:100%;overflow:hidden}
