@@ -112,16 +112,18 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
             } else {
         		//e.g. 3rd friday of month:
             	var matches = rule.schedule_meta.match(/BYDAY=(\d+)(MO|TU|WE|TH|FR|SA|SU)/);
-            	var n = parseInt(matches[1]) -1;                	
+            	var n = parseInt(matches[1]) -1;    //0=>first,1=>second,...,4=>last            	
         		var occurrence_day = rule.start.getDay();
+
         		if (n >= 5) {
         			//Last day
         			var month_end_day = month_end.getDay();
         			var occurence_date = month_end.getDate() + (occurrence_day - month_end_day - 7) % 7;
         		} else {
-        			month_start_day = month_start.getDay();
-        			var offset = (occurrence_day - month_start_day + 7) % 7;
-        			occurence_date = offset + (n - 1) * 7 + 1;
+        			//Want date of (n+1)th X of month. 
+        			month_start_day = month_start.getDay();//0=sun,..
+        			var offset = (occurrence_day - month_start_day + 7) % 7;//How many days till first X of the month
+        			occurence_date = offset + n * 7 + 1;
         		}
         		var pointer = new Date(month_start);
         		pointer.setDate(occurence_date);
@@ -190,7 +192,7 @@ window.eventOrganiserSchedulePicker = {
 		this.set_up_timepickers();
 		        
         //On input, update form
-        $(".event-date :input").not('.eo-time-picker').change(function(o) {
+        $(".event-date :input").change(function(o) {
         	self.update_schedule();
         	self.update_form();
             if ( !$(this).hasClass('eo-all-day-toggle') ) {
@@ -255,6 +257,7 @@ window.eventOrganiserSchedulePicker = {
                 }
                 
                 //Replace with do_action
+                self.update_schedule();
                 self.update_occurrencepicker_rules();
                 self.update_form()
             }
@@ -577,7 +580,7 @@ eventOrganiserSchedule = {
 	        			summary += locale.monthSingle;
 	        		}
 	        		if ( this.schedule_meta.match(/BYMONTHDAY=(\d+)/) ) {
-	        			summary = summary + " " + schedule.start.getDate() + this.start.eoGetOrdinal();
+	        			summary = summary + " " + this.start.getDate() + this.start.eoGetOrdinal();
 	                } else {
 	                	var matches = this.schedule_meta.match(/BYDAY=(\d+)(MO|TU|WE|TH|FR|SA|SU)/);
 	                	var n = parseInt(matches[1]) -1;
@@ -630,10 +633,10 @@ eventOrganiserSchedule = {
 	    add_or_remove_date: function (date, inst) {
 
 	        var isEventful = eventOrganiserSchedule.is_date_eventful(date);
-	        if (isEventful[0]) {
+	        if ( isEventful[0] ) {
 	            //Date is eventful. Remove date
 	            var index = isEventful[1];
-	            if (index > -1) {
+	            if ( index > -1 ) {
 	                //Date was manually included
 	            	eventOrganiserSchedule.include.splice(index, 1);
 	   	    	 
@@ -658,6 +661,7 @@ eventOrganiserSchedule = {
 	        //Backwards compat:
 	        eo_exclude_dates = eventOrganiserSchedule.exclude;
 	        eo_include_dates = eventOrganiserSchedule.include;
+	        
 	        
 	    }
 }
