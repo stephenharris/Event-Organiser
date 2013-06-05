@@ -396,6 +396,7 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 	return apply_filters( 'eventorganiser_is_event_query', $bool, $query, $exclusive );
 }
 
+
 /**
  * Selects posts which satisfy custom WHERE statements
  * Hooked onto posts_where

@@ -11,13 +11,13 @@ Create and maintain events, including complex reoccurring patterns, venue manage
 
 == Description ==
 
+Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows you to view your events in the familiar WordPress list or in a calendar page in the amin area.
+
 [**Documentation**](http://wp-event-organiser.com/documentation/) 
 | [**Function Reference**](http://wp-event-organiser.com/codex/) 
 | [**Forums**](http://wp-event-organiser.com/forums/) 
 | [**Demo**](http://wp-event-organiser.com/demo/) 
 | [**Booking Add-on**](http://wp-event-organiser.com/pro-features)
-
-Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows you to view your events in the familiar WordPress list or in a calendar page in the amin area.
 
 = What's new =
 * Venue map icons are now filtered - [allowing you to change the map icons](http://wp-event-organiser.com/blog/tutorial/changing-the-venue-map-icon/).
