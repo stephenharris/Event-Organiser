@@ -341,10 +341,11 @@ function eventorganiser_join_tables( $join, $query ){
 function eventorganiser_is_event_query( $query, $exclusive = false ){
 		
 	$post_types = $query->get( 'post_type' );
+
 	if( 'any' == $post_types )
 		$post_types = get_post_types( array('exclude_from_search' => false) );
 	
-	if( $post_types == 'event' ){
+	if( $post_types == 'event' || array('event') == $post_types ){
 		$bool = true;
 	
 	}elseif( ( $query && $query->is_feed('eo-events') ) || is_feed( 'eo-events' ) ){
@@ -386,6 +387,7 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 		$bool = false;
 		
 	}elseif( ( is_array( $post_types ) && in_array( 'event', $post_types ) ) ){
+		
 		$bool = true;
 		
 	}else{
