@@ -190,6 +190,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Fixes bug with calendar introduced in 2.1.3
 * Fixed include/exclude event dates for monthly occurrences
 * Minor improvement to event query handling
+* Updated Italian translation. Thank you, Luca.
 
 = 2.1.3 =
 * Fixes calendar css (ensures event links are white)
