@@ -410,10 +410,9 @@ function eo_get_event_schedule( $post_id=0 ){
 		
 		$occurrences =array(); //occurrences array	
 
-		//Make sure the same doesn't appear in both $include/$exclude. Is this really needed?
 		$exclude = array_udiff($exclude, $include, '_eventorganiser_compare_dates');
 		$include = array_udiff($include, $exclude, '_eventorganiser_compare_dates');
-
+		
 		//Check dates are supplied and are valid
 		if( !($start instanceof DateTime) )
 			return new WP_Error('eo_error',__('Start date not provided.','eventorganiser'));
@@ -617,6 +616,10 @@ function eo_get_event_schedule( $post_id=0 ){
 		//Now schedule meta is set up and occurrences are generated.
 
 		//Add inclusions, removes exceptions and duplicates
+		if( defined( 'WP_DEBUG' ) && WP_DEBUG ){
+			//Make sure 'included' dates doesn't appear in generate date
+			$include = array_udiff( $include, $occurrences, '_eventorganiser_compare_dates' );
+		}
 		$occurrences = array_merge($occurrences, $include); 
 		$occurrences = array_udiff($occurrences, $exclude, '_eventorganiser_compare_dates');
 		$occurrences = _eventorganiser_remove_duplicates($occurrences);
