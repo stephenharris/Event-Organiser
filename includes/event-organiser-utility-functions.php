@@ -275,7 +275,7 @@ function eo_php2xdate($phpformat=""){
  * @since 1.4
  */
 function eventorganiser_php2xdate( $phpformat="" ){
-	return eo_php2xdate( $phpformat="" );
+	return eo_php2xdate( $phpformat );
 }
 
 
