@@ -64,7 +64,7 @@ function eventorganiser_public_fullcalendar() {
 	$query = array_merge($request,$presets,array($time_format));
 	$key = 'eo_fc_'.md5(serialize($query));
 	$calendar = get_transient('eo_full_calendar_public');
-	if( $calendar && is_array($calendar) && isset($calendar[$key]) ){
+	if( $calendar && is_array($calendar) && isset( $calendar[$key] ) ){
 		echo json_encode($calendar[$key]);
 		exit;
 	}
