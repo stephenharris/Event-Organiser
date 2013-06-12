@@ -160,6 +160,10 @@ class EventOrganiser_Shortcodes {
 				unset($atts['event-venue']);
 			}
 		}
+		
+		if( isset( $atts['users_events'] ) && strtolower( $atts['users_events'] ) == 'true' ){
+			$atts['bookee_id'] = get_current_user_id();
+		}
 
 		$args = array(
 			'class'=>'eo-events eo-events-shortcode',
