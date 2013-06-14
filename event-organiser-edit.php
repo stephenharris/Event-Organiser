@@ -199,7 +199,7 @@ function _eventorganiser_details_metabox( $post ){
 
 					</td>
 				</tr>
-				<tr valign="top"class="eo-venue-combobox-select">
+				<tr valign="top" class="eo-venue-combobox-select">
 					<td class="eo-label"> <?php _e( 'Venue', 'eventorganiser' );?>: </td>
 					<td> 	
 						<select size="50" id="venue_select" name="eo_input[event-venue]">
@@ -212,14 +212,14 @@ function _eventorganiser_details_metabox( $post ){
 				</tr>
 		
 				<!-- Add New Venue --> 
-				<tr valign="top"class="eo-add-new-venue">
+				<tr valign="top" class="eo-add-new-venue">
 					<td class="eo-label"><label><?php _e( 'Venue Name', 'eventorganiser' );?>:</label></td>
 					<td><input type="text" name="eo_venue[name]" id="eo_venue_name"  value=""/></td>
 				</tr>
 			<?php
 				$address_fields = _eventorganiser_get_venue_address_fields();
 				foreach ( $address_fields as $key => $label ){
-					printf( '<tr valign="top"class="eo-add-new-venue">
+					printf( '<tr valign="top" class="eo-add-new-venue">
 								<th><label>%1$s:</label></th>
 								<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo_venue_add"  value=""/></td>
 							</tr>',
