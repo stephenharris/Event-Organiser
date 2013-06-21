@@ -24,6 +24,7 @@
 * * **showpastevents** - default is `true` (it's recommended to use `event_start_after=today` or `event_end_after=today` instead)
 * * **event-category** - the slug of an event category. Get events for this category
 * * **event-venue** - the slug of an event venue. Get events for this venue 
+* * **bookee_id** - (int) ID of user to retrieve events for which the user is attending 
 * *
 *
 * Additional values are also permitted for 'orderby' parameter
@@ -1182,6 +1183,7 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **axisformat** (string) Axis time format (for day/week views). WP's time format option.
  * * **key** (bool) Whether to show a category key. Default false.
  * * **tooltip** (bool) Whether to show a tooltips. Default true. Content is filtered by [`eventorganiser_event_tooltip`](http://wp-event-organiser.com/documentation/hook/eventorganiser_event_tooltip/)
+ * * **users_events** - (bool) True to show only eents for which the current user is attending
  * * **weekends** (bool) Whether to include weekends in the calendar. Default true.
  * * **mintime** (string) Earliest time to show on week/day views. Default '0',
  * * **maxtime** (string) Latest time to show on week/day views. Default '24',
