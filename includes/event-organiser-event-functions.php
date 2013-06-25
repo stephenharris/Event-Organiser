@@ -1189,6 +1189,9 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **maxtime** (string) Latest time to show on week/day views. Default '24',
  * * **alldayslot** (bool) Whether to include an all day slot (week / day views) in the calendar. Default true.
  * * **alldaytext** (string) Text to display in all day slot. Default 'All Day'.
+ * * **titleformatmonth** (string) Date format (PHP) for title for month view. Default 'l, M j, Y'
+ * * **titleformatweek** (string) Date format (PHP) for title for week view. Default 'M j[ Y]{ '&#8212;'[ M] j Y}.
+ * * **titleformatday** (string) Date format (PHP) for title for day view. Default 'F Y'
  * * **columnformatmonth** (string) Dateformat for month columns. Default 'D'.
  * * **columnformatweek** (string) Dateformat for month columns. Default 'D n/j'.
  * * **columnformatday** (string) Dateformat for month columns. Default 'l n/j',
@@ -1197,6 +1200,7 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **date** The calendar the date should start on
  *
  * @link http://arshaw.com/fullcalendar/ The fullCalendar (jQuery plug-in)
+ * @link http://arshaw.com/fullcalendar/docs/utilities/formatDates/ (Range formats).
  * @link https://github.com/stephenharris/fullcalendar Event Organiser version of fullCalendar
  * @since 1.7
  * @param array $args An array of attributes for the calendar 
