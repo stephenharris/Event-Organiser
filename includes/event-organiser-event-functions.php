@@ -1213,7 +1213,7 @@ function eo_get_event_fullcalendar( $args ){
 		'event_category'=>'', 'event_venue'=>'', 'timeformat'=>get_option('time_format'), 'axisformat'=>get_option('time_format'), 'key'=>false,
 		'tooltip'=>true, 'weekends'=>true, 'mintime'=>'0', 'maxtime'=>'24', 'alldayslot'=>true,
 		'alldaytext'=>__('All Day','eventorganiser'), 'columnformatmonth'=>'D', 'columnformatweek'=>'D n/j', 'columnformatday'=>'l n/j',
-		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j Y}", 'titleformatday' => 'l, M j, Y',
+		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j, Y}", 'titleformatday' => 'l, M j, Y',
 		'year' => false, 'month' => false, 'date' => false,	'users_events' => false, 'event_occurrence__in' =>array(),	
 	);
 	
@@ -1242,7 +1242,7 @@ function eo_get_event_fullcalendar( $args ){
 	$id = count( EventOrganiser_Shortcodes::$calendars );
 
 	$html = '<div id="eo_fullcalendar_'.$id.'_loading" style="background:white;position:absolute;z-index:5" >';
-	$html .= '<img src="'.esc_url(EVENT_ORGANISER_URL.'/css/images/loading-image.gif').'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />' . __( 'Loading&#8230;', 'eventorganiser' );
+	$html .= '<img src="'.esc_url(EVENT_ORGANISER_URL.'css/images/loading-image.gif').'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />' . __( 'Loading&#8230;', 'eventorganiser' );
 	$html .= '</div>';
 	$html .= '<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
 
