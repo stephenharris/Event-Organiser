@@ -175,7 +175,7 @@ function _eventorganiser_details_metabox( $post ){
 						<?php esc_html_e( 'Include/Exclude occurrences', 'eventorganiser' );?>
 					</td>
 					<td>
-						<?php submit_button( __( 'Show dates', 'eventorganiser' ), 'hide-if-no-js eo_occurrence_toogle button small', 'eo_date_toggle', false ); ?>
+						<?php submit_button( __( 'Show dates', 'eventorganiser' ), 'hide-if-no-js eo_occurrence_toggle button small', 'eo_date_toggle', false ); ?>
 						
 						<div id="eo_occurrence_datepicker"></div>
 						<?php 	
