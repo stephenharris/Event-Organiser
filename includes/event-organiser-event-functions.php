@@ -24,6 +24,7 @@
 * * **showpastevents** - default is `true` (it's recommended to use `event_start_after=today` or `event_end_after=today` instead)
 * * **event-category** - the slug of an event category. Get events for this category
 * * **event-venue** - the slug of an event venue. Get events for this venue 
+* * **bookee_id** - (int) ID of user to retrieve events for which the user is attending 
 * *
 *
 * Additional values are also permitted for 'orderby' parameter
@@ -1181,12 +1182,16 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **timeformat** (string) Time format for calendar. Default 'G:i'.
  * * **axisformat** (string) Axis time format (for day/week views). WP's time format option.
  * * **key** (bool) Whether to show a category key. Default false.
- * * **tooltip** (bool) Whether to show a tooltips. Default true.
+ * * **tooltip** (bool) Whether to show a tooltips. Default true. Content is filtered by [`eventorganiser_event_tooltip`](http://wp-event-organiser.com/documentation/hook/eventorganiser_event_tooltip/)
+ * * **users_events** - (bool) True to show only eents for which the current user is attending
  * * **weekends** (bool) Whether to include weekends in the calendar. Default true.
  * * **mintime** (string) Earliest time to show on week/day views. Default '0',
  * * **maxtime** (string) Latest time to show on week/day views. Default '24',
  * * **alldayslot** (bool) Whether to include an all day slot (week / day views) in the calendar. Default true.
  * * **alldaytext** (string) Text to display in all day slot. Default 'All Day'.
+ * * **titleformatmonth** (string) Date format (PHP) for title for month view. Default 'l, M j, Y'
+ * * **titleformatweek** (string) Date format (PHP) for title for week view. Default 'M j[ Y]{ '&#8212;'[ M] j Y}.
+ * * **titleformatday** (string) Date format (PHP) for title for day view. Default 'F Y'
  * * **columnformatmonth** (string) Dateformat for month columns. Default 'D'.
  * * **columnformatweek** (string) Dateformat for month columns. Default 'D n/j'.
  * * **columnformatday** (string) Dateformat for month columns. Default 'l n/j',
@@ -1195,6 +1200,7 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **date** The calendar the date should start on
  *
  * @link http://arshaw.com/fullcalendar/ The fullCalendar (jQuery plug-in)
+ * @link http://arshaw.com/fullcalendar/docs/utilities/formatDates/ (Range formats).
  * @link https://github.com/stephenharris/fullcalendar Event Organiser version of fullCalendar
  * @since 1.7
  * @param array $args An array of attributes for the calendar 
@@ -1207,7 +1213,7 @@ function eo_get_event_fullcalendar( $args ){
 		'event_category'=>'', 'event_venue'=>'', 'timeformat'=>get_option('time_format'), 'axisformat'=>get_option('time_format'), 'key'=>false,
 		'tooltip'=>true, 'weekends'=>true, 'mintime'=>'0', 'maxtime'=>'24', 'alldayslot'=>true,
 		'alldaytext'=>__('All Day','eventorganiser'), 'columnformatmonth'=>'D', 'columnformatweek'=>'D n/j', 'columnformatday'=>'l n/j',
-		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j Y}", 'titleformatday' => 'l, M j, Y',
+		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j, Y}", 'titleformatday' => 'l, M j, Y',
 		'year' => false, 'month' => false, 'date' => false,	'users_events' => false, 'event_occurrence__in' =>array(),	
 	);
 	
@@ -1236,7 +1242,7 @@ function eo_get_event_fullcalendar( $args ){
 	$id = count( EventOrganiser_Shortcodes::$calendars );
 
 	$html = '<div id="eo_fullcalendar_'.$id.'_loading" style="background:white;position:absolute;z-index:5" >';
-	$html .= '<img src="'.esc_url(EVENT_ORGANISER_URL.'/css/images/loading-image.gif').'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />' . __( 'Loading&#8230;', 'eventorganiser' );
+	$html .= '<img src="'.esc_url(EVENT_ORGANISER_URL.'css/images/loading-image.gif').'" style="vertical-align:middle; padding: 0px 5px 5px 0px;" />' . __( 'Loading&#8230;', 'eventorganiser' );
 	$html .= '</div>';
 	$html .= '<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
 

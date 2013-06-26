@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 2.1.4
+Stable tag: 2.1.5
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -72,7 +72,7 @@ Event Organiser adds event management that integrates well with your WordPress s
 
 = Localisation =
 
-A big thank you to those who have provided translations for Event Organiser. If you wish to help out with translating the plug-in, you can do so [here](https://poeditor.com/join/project?hash=4a9aa3be3accb34eebe426dce46b4c72).
+A big thank you to those who have provided translations for Event Organiser. If you wish to help out with translating the plug-in, you can do so [here](http://wp-event-organiser.com/i18n).
 
 * French - [Remy Perona](http://remyperona.fr/)
 * Spanish - Joseba Sanchez
@@ -185,6 +185,12 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.1.5 =
+* [New translation editor launched](http://wp-event-organiser.com/i18n)
+* Support for 'users_events' (events user is booked to) attribute for event list and calendar
+* Fixed venue bug (description not appearing when there are no events)
+* Fixed calendar styling
 
 = 2.1.4 =
 * Fixes bug with calendar introduced in 2.1.3

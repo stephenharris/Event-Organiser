@@ -102,7 +102,7 @@ class EO_Event_List_Widget extends WP_Widget{
 	$validated['event-category'] = implode(',',$event_cats);
 	$validated['venue'] = sanitize_text_field( $new_instance['venue'] );
 	$validated['order'] = ($new_instance['order'] == 'asc' ? 'asc' : 'desc');
-	$validated['orderby'] = ($new_instance['order'] == 'title' ? 'title' : 'eventstart');
+	$validated['orderby'] = ( $new_instance['orderby'] == 'title' ? 'title' : 'eventstart' );
 	$validated['showpastevents'] = ( !empty($new_instance['showpastevents']) ? 1:  0);
 	$validated['group_events_by'] = ( isset($new_instance['group_events_by']) && $new_instance['group_events_by']=='series' ? 'series':  '');
 	$validated['template'] = $new_instance['template'];

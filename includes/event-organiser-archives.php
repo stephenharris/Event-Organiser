@@ -265,15 +265,17 @@ function wp17853_eventorganiser_workaround( $limit ){
 function eventorganiser_event_fields( $select, $query ){
 	global $wpdb;
 	
-	if( eventorganiser_is_event_query( $query, true ) ){
+	$q_fields = $query->get( 'fields' );
+	
+	if( eventorganiser_is_event_query( $query, true ) && 'ids' != $q_fields && 'id=>parent' != $q_fields ){
 		$et =$wpdb->eo_events;
 		/* Include 'event_occurrence' for backwards compatibility. Will eventually be removed. */
 		/* Renaming event_id as occurrence id. Keep event_id for backwards compatibility */
 		if( 'series'== $query->get('group_events_by') ) {
 			//Work-around for group_events_by series.
-			$select = "{$et}.event_id, {$et}.event_id AS occurrence_id, {$et}.StartTime, min({$et}.StartDate) as StartDate, min({$et}.EndDate) as EndDate, {$et}.FinishTime, {$et}.event_occurrence, ".$select;
+			$select .= ", {$et}.event_id, {$et}.event_id AS occurrence_id, {$et}.StartTime, min({$et}.StartDate) as StartDate, min({$et}.EndDate) as EndDate, {$et}.FinishTime, {$et}.event_occurrence ";
 		}else{
-			$select = "{$et}.event_id, {$et}.event_id AS occurrence_id, {$et}.StartDate, {$et}.StartTime, {$et}.EndDate, {$et}.FinishTime, {$et}.event_occurrence, ".$select;
+			$select .= ", {$et}.event_id, {$et}.event_id AS occurrence_id, {$et}.StartDate, {$et}.StartTime, {$et}.EndDate, {$et}.FinishTime, {$et}.event_occurrence ";
 		}
 	}
 	return $select;

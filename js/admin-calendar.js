@@ -1,4 +1,28 @@
 (function ($) {
+	 /**Parses string formatted as YYYY-MM-DD to a Date object.
+	  * If the supplied string does not match the format, an 
+	  * invalid Date (value NaN) is returned.
+	  * Used as a workaround for IE7/8 difficulities.
+	  * @link http://stackoverflow.com/questions/2182246/javascript-dates-in-ie-nan-firefox-chrome-ok
+	  * @param {string} dateStringInRange format YYYY-MM-DD, with year in
+	  * range of 0000-9999, inclusive.
+	  * @return {Date} Date object representing the string.
+	  */
+	  function eventorganiser_parseISO8601( dateStringInRange ) {
+	    var isoExp = /^\s*(\d{4})-(\d\d)-(\d\d)\s*$/,
+	        date = new Date(NaN), month,
+	        parts = isoExp.exec(dateStringInRange);
+
+	    if( parts ) {
+	      month = +parts[2];
+	      date.setFullYear( parts[1], month - 1, parts[3] );
+	      if( month != date.getMonth() + 1 ) {
+	        date.setTime( NaN );
+	      }
+	    }
+	    return date;
+	  }
+	  
     $(document).ready(function () {
 	
 	/* Calendar Dialogs */
@@ -12,17 +36,28 @@
 
 	/* Time Format from screen option */
 	var format = ($('#eofc_time_format').is(":checked") ? 'HH:mm' : 'h:mmtt');
-	if( $.cookie('eo_admin_cal_last_viewed_date') ){
-		var initial_date = new Date($.cookie('eo_admin_cal_last_viewed_date'));
-	}else{
-		var initial_date = new Date();
+    
+	var initial_date = eventorganiser_parseISO8601( $.cookie('eo_admin_cal_last_viewed_date') );
+	
+    //Invalid dates cause trouble in IE7&8 https://github.com/stephenharris/Event-Organiser/issues/96
+    //Check date is valid: http://stackoverflow.com/questions/1353684/
+	if ( Object.prototype.toString.call( initial_date  ) === "[object Date]" ) {
+		if ( isNaN( initial_date.getTime() ) ) {
+				//not valid
+				initial_date = new Date();
+		} else {
+				//Is valid date
+		}
+	} else {
+		//not valid;
+		initial_date = new Date();
 	}
 
 	/* Calendar */
         var calendar = jQuery('#eo_admin_calendar').fullCalendar({
 		firstDay: parseInt(EO_Ajax.startday),
-		date:initial_date.getDate(),
-		month:initial_date.getMonth(),
+		date: initial_date.getDate(),
+		month: initial_date.getMonth(),
 		year: initial_date.getFullYear(),
 		defaultView: ($.cookie('eo_admin_cal_last_view') ? $.cookie('eo_admin_cal_last_view') : 'month'),
 		editable: false,
