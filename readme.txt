@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 3.5
+Tested up to: 3.5.2
 Stable tag: 2.1.6
 License: GPLv3
 
@@ -86,8 +86,10 @@ A big thank you to those who have provided translations for Event Organiser. If 
 * Russian - [Sergei](www.vortexinter.ru)
 * Hungarian - Csaba Erdei 
 * Estonian - Kristjan Roosipuu
-* Finnish - Kari Tolonen
+* Finnish - Kari Tolonen 
 * Ukranian - Максим Кобєлєв
+* Thai - Nibhon, Wuttichai Songprapai
+* Turkish - Gökhan DAMGACI 
 
 == Installation ==
 
@@ -192,6 +194,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Fixes errors in ICAL parser API 
 * Fixes orderby setting not taking effect in Event list widget
 * Removed extra forward slash in line 1241 for the 'loading' gif. [Ticket #100](https://github.com/stephenharris/Event-Organiser/pull/100)
+* Updated translations. Added Norwegian, Thai and Turkish translations.
 
 = 2.1.5 =
 * [New translation editor launched](http://wp-event-organiser.com/i18n)
