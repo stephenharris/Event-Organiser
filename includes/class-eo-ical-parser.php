@@ -69,11 +69,13 @@ class EO_ICAL_Parser{
 			$this->ical_array = $this->url_to_array( $file );
 
 		}else{
-			$this->ical_array = false;
+			$this->ical_array =  WP_Error( 'invalid-ical-source', 
+				__( 'There was an error detecting ICAL source.', 'eventorgansier' )
+				);
 		}
 
-		if( !$this->ical_array )
-			return false;
+		if( is_wp_error( $this->ical_array ) )
+			return $this->ical_array;
 
 		//Go through array and parse events
 		$result = $this->parse_ical_array();
@@ -94,10 +96,21 @@ class EO_ICAL_Parser{
 	 * @return array|bool Array of line in ICAL feed, false on error 
 	 */
 	function url_to_array( $url ){
-		$contents = wp_remote_retrieve_body( wp_remote_get( $url ) );
+		$response =  wp_remote_get( $url, array( 'timeout' => $this->remote_timeout ) );
+		$contents = wp_remote_retrieve_body( $response );
+
 		if( $contents )
 			return explode( "\n", $contents );
-		return false;
+		
+		if( is_wp_error( $response ) )
+			return $response;
+		
+		$response_code = wp_remote_retrieve_response_code( $response );
+		return new WP_Error( 'unable-to-fetch', 
+				sprintf( 
+					__( 'There was an error fetching the feed. Response code: %s.', 'eventorgansier' ),
+					$response_code
+				));
 	}
 
 	/**
@@ -112,7 +125,10 @@ class EO_ICAL_Parser{
 		$lines = array();
 
 		if( !$file_handle )
-			return false;
+			return new WP_Error( 
+						'unable-to-open', 
+					__( 'There was an error opening the ICAL file.', 'eventorgansier' )
+					);
 
 		//Feed lines into array
 		while (!feof( $file_handle ) ):
