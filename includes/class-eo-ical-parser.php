@@ -243,7 +243,7 @@ class EO_ICAL_Parser{
 
 		switch( $property ):
 		case 'UID':
-			$this->current_event['UID'] = $value;
+			$this->current_event['uid'] = $value;
 		break;
 
 		case 'CREATED':
