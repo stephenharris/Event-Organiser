@@ -43,8 +43,8 @@ function eo_update_event($post_id, $event_data=array(), $post_data=array() ){
 		return new WP_Error('eo_error','Empty post ID.');
 
 	if( !empty($event_data['venue']) || !empty($event_data['category']) ){
-		$post_data['taxonomy']['event-venue'] = isset($event_data['venue']) ? $event_data['venue'] : null;
-		$post_data['taxonomy']['event-category'] = isset($event_data['category']) ? $event_data['category'] : null;
+		$post_data['tax_input']['event-venue'] = isset($event_data['venue']) ? $event_data['venue'] : null;
+		$post_data['tax_input']['event-category'] = isset($event_data['category']) ? $event_data['category'] : null;
 		unset($event_data['venue']);
 		unset($event_data['category']);
 	}
