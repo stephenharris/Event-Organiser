@@ -321,7 +321,7 @@ class EO_ICAL_Parser{
 			if( !isset( $this->venues[$venue_name] ) )
 				$this->venues[$venue_name] = $venue_name;
 				
-			$this->current_event['event_venue'] = $venue_name;
+			$this->current_event['event-venue'] = $venue_name;
 			endif;
 		break;
 
@@ -335,8 +335,8 @@ class EO_ICAL_Parser{
 			if( !isset( $this->categories[$cat_name] ) )
 				$this->categories[$cat_name] = $cat_name;
 				
-			if( isset($this->current_event['event_category']) && !in_array( $cat_name, $this->current_event['event_category']) )
-				$this->current_event['event_category'][] = $cat_name;
+			if( isset($this->current_event['event-category']) && !in_array( $cat_name, $this->current_event['event-category']) )
+				$this->current_event['event-category'][] = $cat_name;
 				
 			endforeach;
 
