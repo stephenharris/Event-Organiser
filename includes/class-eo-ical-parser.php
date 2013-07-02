@@ -22,12 +22,16 @@
  *  *  **status_map** - How to interpret the ICAL STATUS property.
  *  *  **default_status** - Default status of posts (unless otherwise specified by STATUS). Default is 'draft'
  * 
+ * @link http://www.ietf.org/rfc/rfc2445.txt ICAL Specification 
+ * @link http://www.kanzaki.com/docs/ical/ ICAL Specification excerpts
  * @author stephen
  * @package ical-functions
  *
  */
 class EO_ICAL_Parser{
 
+	var $remote_timeout = 10;
+	
 	var $events = array();
 	var $venues = array();
 	var $categories = array();
