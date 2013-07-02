@@ -270,7 +270,7 @@ class EventOrganiser_Debugger{
 
 	function table_exists( $table ){
 		global $wpdb;
-		return $wpdb->get_var("show tables like '".$wpdb->prefix.$table."'") == $wpdb->prefix.$table;
+		return $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix.$table ) ) == $wpdb->prefix.$table;
 	}
 
 	function verbose_database_charset_check(){
