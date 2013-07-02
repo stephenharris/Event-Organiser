@@ -52,14 +52,15 @@ function eo_get_template_part( $slug, $name = null ) {
  * @param bool $require_once Whether to require_once or require. Default true. Has no effect if $load is false.
  * @return string The template filename if one is located.
  */
-function eo_locate_template($template_names, $load = false, $require_once = true ) {
+function eo_locate_template( $template_names, $load = false, $require_once = true ) {
 	$located = '';
 
 	$template_dir = get_stylesheet_directory(); //child theme
 	$parent_template_dir = get_template_directory(); //parent theme
 
 	$stack = apply_filters( 'eventorganiser_template_stack', array( $template_dir, $parent_template_dir, EVENT_ORGANISER_DIR . 'templates' ) );
-
+	$stack = array_unique( $stack );
+	
 	foreach ( (array) $template_names as $template_name ) {
 		if ( !$template_name )
 			continue;
