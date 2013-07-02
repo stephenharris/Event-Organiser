@@ -83,10 +83,6 @@ class EO_ICAL_Parser{
 		$this->events_parsed = count( $this->events );
 		$this->venue_parsed = count( $this->venues );
 		$this->categories_parsed = count( $this->categories );
-			
-		echo '<pre>';
-		print_r( $this );
-		wp_die('');
 	}
 	
 	/**
