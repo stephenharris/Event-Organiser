@@ -8,7 +8,7 @@ eventOrganiserSchedulePicker.init({
 		end_date: '#eventorganiser_detail #to_date',
 		end_time: '#HWSEvent_time2',
 		occurrence_picker: '#eo_occurrence_datepicker',
-		occurrence_picker_toggle: '.eo_occurrence_toogle',
+		occurrence_picker_toggle: '.eo_occurrence_toggle',
 		schedule_last_date: '#recend',
     	schedule: "#HWSEventInput_Req",
     	is_all_day: "#eo_allday",
