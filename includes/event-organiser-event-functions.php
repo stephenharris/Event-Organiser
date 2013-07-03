@@ -1417,7 +1417,7 @@ function eo_break_occurrence( $post_id, $occurrence_id ){
 		foreach ( $post_custom as $meta_key => $meta_values ) {
 
 			//Don't copy these
-			$ignore_meta = array( '_eo_tickets', '_edit_last', '_edit_last', '_edit_lock' ) ;
+			$ignore_meta = array( '_eventorganiser_uid', '_eo_tickets', '_edit_last', '_edit_last', '_edit_lock' ) ;
 			$ignore_meta = apply_filters( 'eventorganiser_breaking_occurrence_exclude_meta', $ignore_meta );
 			if( in_array( $meta_key, $ignore_meta ) )
 				continue;
