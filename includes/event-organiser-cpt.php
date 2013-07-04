@@ -29,13 +29,14 @@ function eventorganiser_create_event_taxonomies() {
     		'singular_name' => _x( 'Venues', 'taxonomy singular name'),
     		'search_items' =>  __( 'Search Venues'),
     		'all_items' => __( 'All Venues'),
-		'edit_item' => __( 'Edit Venue'),
-		'update_item' => __( 'Update Venue'),
-		'add_new_item' => __( 'Add New Venue'),
-		'new_item_name' => __( 'New Venue Name'),
-		'not_found' =>  __('No venues found'),
-		'add_or_remove_items' => __( 'Add or remove venues' ),
-		'separate_items_with_commas' => __( 'Separate venues with commas' )
+		'view_item' => __( 'View Venue', 'eventorganiser' ),
+		'edit_item' => __( 'Edit Venue', 'eventorganiser' ),
+		'update_item' => __( 'Update Venue', 'eventorganiser' ),
+		'add_new_item' => __( 'Add New Venue', 'eventorganiser' ),
+		'new_item_name' => __( 'New Venue Name', 'eventorganiser' ),
+		'not_found' =>  __('No venues found', 'eventorganiser' ),
+		'add_or_remove_items' => __( 'Add or remove venues', 'eventorganiser' ),
+		'separate_items_with_commas' => __( 'Separate venues with commas', 'eventorganiser' )
   		); 		
 
 	register_taxonomy('event-venue',array('event'), array(
@@ -1060,4 +1061,41 @@ function eventorganiser_event_shortlink( $shortlink, $id, $context ) {
 	return $shortlink;
 }
 add_filter( 'pre_get_shortlink', 'eventorganiser_event_shortlink', 10, 3 );
+
+
+function _eventorganiser_add_venue_admin_bar_edit_menu( ){
+	global $wp_admin_bar;
+
+	if ( is_admin() ) {
+		$current_screen = get_current_screen();
+
+		if ( 'event_page_venues' == $current_screen->base
+				&& isset( $_GET['action'] ) && 'edit' == $_GET['action']
+				&& ( $tax = get_taxonomy( 'event-venue' ) )
+				&& $tax->public )
+		{
+			$wp_admin_bar->add_menu( array(
+					'id' => 'view',
+					'title' => $tax->labels->view_item,
+					'href' => eo_get_venue_link( $_GET['event-venue'] )
+			) );
+		}
+	} else {
+		$current_object = get_queried_object();
+
+		if ( !eo_is_venue() )
+			return;
+
+		if ( ( $tax = get_taxonomy( $current_object->taxonomy ) )
+				&& current_user_can( $tax->cap->edit_terms ) )
+		{
+			$wp_admin_bar->add_menu( array(
+					'id' => 'edit',
+					'title' => $tax->labels->edit_item,
+					'href' => get_edit_term_link( $current_object->term_id, $current_object->taxonomy )
+			) );
+		}
+	}
+}
+add_action( 'admin_bar_menu', '_eventorganiser_add_venue_admin_bar_edit_menu', 80 );
 ?>
