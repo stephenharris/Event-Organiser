@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-07-02 12:56:15+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-07-04 02:42:42+0000\n"
+"Last-Translator: Olof <olof.enstrom@gmail.com>\n"
 "Language-Team: \n"
 "Language: Swedish (Sweden)\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr " <span class=\"meta-nav\">&larr;</span> Nyare evenemang"
 
 #: ../templates/archive-event.php:116
 msgid " <span class=\"meta-nav\">&rarr;</span> Newer events"
-msgstr " <span class=\"meta-nav\">&larr;</span> Nyare evenemang"
+msgstr " <span class=\"meta-nav\">→</span> Nyare evenemang"
 
 #: ../includes/class-event-organiser-im-export.php:491
 msgid "%d categories were created"
@@ -965,7 +965,7 @@ msgstr "sista"
 
 #: ../templates/archive-event.php:115
 msgid "Later events <span class=\"meta-nav\">&larr;</span>"
-msgstr "Senare evenemang <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Senare evenemang <span class=\"meta-nav\">←</span>"
 
 #: ../templates/taxonomy-event-category.php:48
 #: ../templates/taxonomy-event-category.php:106
@@ -1106,7 +1106,7 @@ msgstr "Inga lokaler hittades"
 
 #: ../event-organiser-settings.php:510
 msgid "None"
-msgstr "INgen"
+msgstr "Ingen"
 
 #: ../templates/taxonomy-event-category.php:116
 #: ../templates/archive-event.php:124
@@ -1486,8 +1486,7 @@ msgstr "Detta evenemang slutade på %s"
 
 #: ../templates/event-meta-event-single.php:46
 msgid "This event is running from %1$s until %2$s. It is next occurring on %3$s"
-msgstr "Detta event håller på från %1$s till %2$s. Det förekommer härnäst på den "
-"%3$s"
+msgstr "Detta event håller på från %1$s till %2$s. Det förekommer härnäst den %3$s"
 
 #: ../includes/event-organiser-ajax.php:290
 msgid "This event reoccurs"

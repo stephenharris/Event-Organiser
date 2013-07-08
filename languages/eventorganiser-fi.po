@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-07-02 12:56:15+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-07-05 05:16:17+0000\n"
+"Last-Translator: Jussi <jussituoma@gmail.com>\n"
 "Language-Team: \n"
 "Language: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -1213,7 +1213,7 @@ msgstr "Huomaathan jotta kyseiset rakenteet ovat käytössä sinun on ensin vali
 
 #: ../event-organiser-debug.php:111
 msgid "Plug-ins"
-msgstr ""
+msgstr "Lisäosat"
 
 #: ../includes/event-organiser-cpt.php:95
 msgid "Popular Tags"
@@ -1461,7 +1461,7 @@ msgstr ""
 
 #: ../event-organiser-debug.php:117
 msgid "Theme"
-msgstr ""
+msgstr "Teema"
 
 #: ../classes/class-eventorganiser-shortcodes.php:334
 msgid "There is no excerpt because this is a protected post."
@@ -1542,7 +1542,7 @@ msgstr "Esikatselukuva"
 
 #: ../event-organiser-debug.php:152
 msgid "Timezone"
-msgstr ""
+msgstr "Aikavyöhyke"
 
 #: ../classes/class-eo-event-list-widget.php:31
 #: ../classes/class-eo-event-list-widget.php:58
@@ -1581,11 +1581,11 @@ msgstr ""
 #: ../event-organiser-debug.php:300
 #: ../event-organiser-debug.php:351
 msgid "Unknown"
-msgstr ""
+msgstr "Ei tietoa"
 
 #: ../event-organiser-debug.php:338
 msgid "unknown"
-msgstr ""
+msgstr "tuntematon"
 
 #: ../event-organiser-edit.php:150
 msgid "until"
@@ -1732,15 +1732,15 @@ msgstr "viikot"
 
 #: ../event-organiser-welcome.php:23
 msgid "Welcome"
-msgstr ""
+msgstr "Tervetuloa"
 
 #: ../event-organiser-welcome.php:51
 msgid "Welcome to Event Organiser %s"
-msgstr ""
+msgstr "Tervetuloa käyttämään Event Organiser -lisäosaa"
 
 #: ../event-organiser-welcome.php:24
 msgid "Welcome View"
-msgstr ""
+msgstr "Aloitunäkymä"
 
 #: ../event-organiser-calendar.php:232
 msgid "When"

@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-07-02 12:56:15+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-07-07 18:36:52+0000\n"
+"Last-Translator: Pierre Peronnet <tibia_pierre@hotmail.com>\n"
 "Language-Team: \n"
 "Language: French (France)\n"
 "MIME-Version: 1.0\n"
@@ -157,7 +157,7 @@ msgstr "Toutes les dates et heures doivent être entrées au format spécifié. 
 
 #: ../event-organiser-edit.php:97
 msgid "All day"
-msgstr "Chaque jour"
+msgstr "Toute la journée"
 
 #: ../includes/event-organiser-ajax.php:516
 #: ../includes/event-organiser-event-functions.php:1021
