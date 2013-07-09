@@ -61,14 +61,16 @@ class EventOrganiser_Shortcodes {
 			'type' => 'google',
 		      'class' => '',
 		      'id' => '',
+		      'style' => '',
 		), $atts ) );
 
 		$url = eo_get_events_feed();
 
-		$class = esc_attr($class);
-		$title = esc_attr($title);
-		$id = esc_attr($id);
-		
+		$class = $class ? 'class="'.esc_attr($class).'"' : false;
+		$title = $title ? 'title="'.esc_attr($title).'"' : false;
+		$style = $style ? 'style="'.esc_attr($style).'"' : false;
+		$id = $id ? 'id="'.esc_attr($id).'"' : false;
+
 		if(strtolower($type)=='webcal'):
 			$url = str_replace( 'http://', 'webcal://',$url);
 		elseif( strtolower($type)=='ical' ):
@@ -77,7 +79,7 @@ class EventOrganiser_Shortcodes {
 			$url = add_query_arg('cid',urlencode($url),'http://www.google.com/calendar/render');
 		endif;
 
-		$html = '<a href="'.$url.'" target="_blank" class="'.$class.'" title="'.$title.'" id="'.$id.'">'.$content.'</a>';
+		$html = '<a href="'.$url.'" target="_blank" '.$class.' '.$title.' '.$id.' '.$style.'>'.$content.'</a>';
 		return $html;
 	}
 
