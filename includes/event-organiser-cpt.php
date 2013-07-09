@@ -25,10 +25,10 @@ function eventorganiser_create_event_taxonomies() {
 	}
 
 	$venue_labels = array(
-		'name' => __('Event Venues','eventorganiser'),
-    		'singular_name' => _x( 'Venues', 'taxonomy singular name'),
-    		'search_items' =>  __( 'Search Venues'),
-    		'all_items' => __( 'All Venues'),
+		'name' => __( 'Event Venues','eventorganiser' ),
+    	'singular_name' => _x( 'Venues', 'taxonomy singular name' ),
+    	'search_items' =>  __( 'Search Venues', 'eventorganiser' ),
+    	'all_items' => __( 'All Venues', 'eventorganiser' ),
 		'view_item' => __( 'View Venue', 'eventorganiser' ),
 		'edit_item' => __( 'Edit Venue', 'eventorganiser' ),
 		'update_item' => __( 'Update Venue', 'eventorganiser' ),
@@ -489,7 +489,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 	$screen->set_help_sidebar( 
 		'<p> <strong>'. __('For more information','eventorganiser').'</strong></br>'
 			.sprintf(__('See the <a %s> documentation</a>','eventorganiser'),'target="_blank" href="http://wp-event-organiser.com/documentation/"').'</p>' 
-			.sprintf('<p><strong><a href="%s">%s</a></strong></p>', 'http://wordpress.org/support/plugin/event-organiser',__('Have a question?','eventorganiser'))
+			.sprintf('<p><strong><a href="%s">%s</a></strong></p>', admin_url('edit.php?post_type=event&page=debug'),__('Debugging Event Organiser','eventorganiser' ) )
 			.sprintf('<p><strong><a href="%s">%s</a></strong></p>', admin_url('index.php?page=eo-pro'),__('Go Pro!','eventorganiser'))
 	);
 
