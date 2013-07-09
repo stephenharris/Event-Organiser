@@ -117,7 +117,7 @@ register_deactivation_hook(  __FILE__, 'eventorganiser_deactivate' );
 register_uninstall_hook( __FILE__, 'eventorganiser_uninstall' );
 
 
-function eventorganiser_get_option( $option, $default = false ){
+function eventorganiser_get_option( $option = false, $default = false ){
 
       $defaults = array(
 		'url_event' => 'events/event',
@@ -142,6 +142,9 @@ function eventorganiser_get_option( $option, $default = false ){
       );
       $options = get_option( 'eventorganiser_options', $defaults );
       $options = wp_parse_args( $options, $defaults );
+      
+	if( false === $option )
+		return $options;
 
 	/* Backwards compatibility for 'eventag' option */
 	if( $option === 'eventtag' )
