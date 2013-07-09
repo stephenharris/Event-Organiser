@@ -35,10 +35,10 @@ class EventOrganiser_No_WP_Footer
 	/**
 	 * Hook the functions.
 	 * Check for wp_footer() only on admin pages (via shutdown).
-	 * Display notice only if the option 'sh_no_wp_footer' is present in the database, but is not set to 'suppress'.
 	 */
 	private function __construct() {
-		add_action( 'shutdown', array( __CLASS__, 'did_footer' ) );
+		if( !is_admin() )
+			add_action( 'shutdown', array( __CLASS__, 'did_footer' ) );
 	}
 
 	/**
