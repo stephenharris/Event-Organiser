@@ -28,7 +28,23 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 	}
 	
 	function page_actions(){
-		wp_enqueue_style('eventorganiser-style');
+		
+		
+		$eo_debugger = new EventOrganiser_Debugger();
+		$eo_debugger->set_prequiste( 'WordPress', '3.3', '3.5.1');
+		//$eo_debugger->set_known_plugin_conflicts();
+		//$eo_debugger->set_known_theme_conflicts();
+		$eo_debugger->set_db_tables( 'eo_events', 'eo_venuemeta' );
+		
+		do_action_ref_array( 'eventorganiser_debugger_setup', array( &$eo_debugger ) );
+		
+		$this->debugger = $eo_debugger;
+		
+		if( !empty( $_GET['eo-download-debug-file'] ) && current_user_can( 'manage_options' ) && wp_verify_nonce( $_GET['eo-download-debug-file'], 'eo-download-debug-file' ) ){
+			$this->debugger->download_debug_info();
+		}
+		
+		wp_enqueue_style('eventorganiser-style' );
 	}
 
 	function display(){
@@ -38,14 +54,8 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 		
 		<h2><?php _e('System Info','eventorganiser');?> </h2>
 		
-		<?php 
-		$eo_debugger = new EventOrganiser_Debugger();
-		$eo_debugger->set_prequiste( 'WordPress', '3.3', '3.5.1');
-		//$eo_debugger->set_known_plugin_conflicts();
-		//$eo_debugger->set_known_theme_conflicts();
-		$eo_debugger->set_db_tables( 'eo_events', 'eo_venuemeta' );
-		do_action_ref_array( 'eventorganiser_debugger_setup', array( &$eo_debugger ) );
-		?>
+		<?php  $eo_debugger = $this->debugger; ?>
+		
 		<p>
 		<?php 
 		_e( "This page highlights useful information for debugging. If you're reporting a bug, please include this information.", 'eventorganiser' );
@@ -62,6 +72,15 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 		_e( "Below any <strong>known</strong> plug-in and theme conflicts are highlighted in red.", 'eventorganiser' );
 		?>
 		</p>
+		
+		<?php 
+			printf( 
+				'<p><a href="%s" class="button secondary">%s</a></p>',
+				add_query_arg( 'eo-download-debug-file', wp_create_nonce( 'eo-download-debug-file' ) ),
+				__( "Download system information file", 'eventorganiser' )
+			);
+		?>
+				
 		<table class="widefat">
 				<tr>
 					<th><?php esc_html_e('Site url');?></th>
@@ -193,15 +212,24 @@ class EventOrganiser_Debugger{
 	}
 
 	function set_known_plugin_conflicts( ){
-		$this->plugins = array_merge( $this->plugins, array_map( 'strtolower', func_get_args() ) );
+		$args = func_get_args();
+		if( $args ){
+			$args = array_map( 'strtolower', $args );
+			$this->plugins = array_merge( $this->plugins, $args );
+		}
 	}
 
 	function set_known_theme_conflicts( ){
-		$this->themes = array_merge( $this->themes, func_get_args() );
+		$args = func_get_args();
+		if( $args ){
+			$args = array_map( 'strtolower', $args );
+			$this->themes = array_merge( $this->themes,  $args );
+		}
 	}
 
 	function set_db_tables( ){
-		$this->db_tables = array_merge( $this->db_tables, func_get_args() );
+		$args = func_get_args();
+		$this->db_tables = array_merge( $this->db_tables, $args );
 	}
 
 	function check_prequiste( $requirement, $v ){
@@ -273,10 +301,15 @@ class EventOrganiser_Debugger{
 		return $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix.$table ) ) == $wpdb->prefix.$table;
 	}
 
+	function database_charset_check(){
+		global $wpdb;
+		return $wpdb->query( $wpdb->prepare( 'SHOW CHARACTER SET WHERE LOWER( Charset ) = LOWER( %s )', DB_CHARSET ) );
+	}
+	
 	function verbose_database_charset_check(){
 		global $wpdb;
 
-		if( $wpdb->query( $wpdb->prepare( 'SHOW CHARACTER SET WHERE LOWER( Charset ) = LOWER( %s )', DB_CHARSET ) ) )
+		if( $this->database_charset_check()  )
 			$class = '';
 		else
 			$class = $this->warning_class;
@@ -386,5 +419,101 @@ class EventOrganiser_Debugger{
 				)
 			);
 		}
+	}
+	
+	public function download_debug_info(){
+	
+		global $wpdb;
+		$installed = get_plugins();
+		$active_plugins = array();
+		foreach( $installed as $plugin_slug => $plugin_data ){
+			if( ! is_plugin_active( $plugin_slug ) )
+				continue;
+	
+			$active_plugins[] = $plugin_slug;
+		};
+	
+		$theme = wp_get_theme();
+	
+		$db_tables = array();
+		if( $this->db_tables ){
+			foreach( $this->db_tables as $db_table ){
+	
+				if( $this->table_exists( $db_table ) ){
+					$db_table = "**".$db_table."**";
+				}
+				$db_tables[] = $db_table;
+			}
+		}
+		
+		$options = array();
+		$options['event-organiser'] = eventorganiser_get_option( false );
+		$options = apply_filters( 'eventorganiser_export_settings', $options );
+	
+		$filename = 'event-organiser-system-info-'.get_bloginfo( 'name' ).'.md';
+		$filename = sanitize_file_name( $filename );
+
+		header( "Content-type: text/plain" );
+		header('Content-disposition: attachment; filename=' . $filename );
+	
+		echo '## Event Organiser Sytem Informaton ##' . "\n";
+		echo "\n";
+		echo "\n";
+	
+		echo '### Site Information ###' . "\n";
+		echo "\n";
+		echo esc_html__('Site url')."\t\t\t".site_url()."\n";
+		echo esc_html__('Home url')."\t\t\t".home_url()."\n";
+		echo esc_html__('Multisite')."\t\t\t".( is_multisite() ? 'Yes' : 'No' )."\n";
+	
+		echo "\n";
+		echo "\n";
+		echo '### Versions ###' . "\n";
+		echo "\n";
+		global $eventorganiser_db_version;
+		echo esc_html__('Event Organiser')."\t\t" . $eventorganiser_db_version."\n";
+		echo esc_html__('WordPress')."\t\t\t" . get_bloginfo( 'version' ) ."\n";
+		echo esc_html__('PHP Version')."\t\t\t" . PHP_VERSION ."\n";
+		echo esc_html__('MySQL Version')."\t\t" . mysql_get_server_info() ."\n";
+	
+		echo "\n";
+		echo "\n";
+		echo '### Server Information ###' . "\n";
+		echo "\n";
+		echo esc_html__('Web Server')."\t\t\t" . $_SERVER['SERVER_SOFTWARE'] ."\n";
+		echo esc_html__('PHP Memory Limit')."\t" .ini_get( 'memory_limit' ) ."\n";
+	
+		echo "\n";
+		echo "\n";
+		echo '### Plug-ins & Themes ###' . "\n";
+		echo "\n";
+		echo esc_html__('Active Plug-ins')."\n\t-\t" . implode( "\n\t-\t", $active_plugins ) . "\n";
+		echo esc_html__('Theme')."\n\t-\t" . $theme->get('Name').' ('.$theme->get('Version').')' . "\n";
+	
+		echo "\n";
+		echo "\n";
+		echo '### Database ###' . "\n";
+		echo "\n";
+		echo esc_html__('Databse Prefix')."\t\t\t" . $wpdb->prefix . "\n";
+		echo esc_html__('Database tables')."\t\t\t" . implode( ', ', $db_tables ). "\n";
+		echo esc_html__('Database character set')."\t" . ( $this->database_charset_check() ? DB_CHARSET : "**".DB_CHARSET."**" ) . "\n";
+	
+		echo "\n";
+		echo "\n";
+		echo '### Settings ###' . "\n";
+		foreach( $options['event-organiser'] as $option => $value ){
+			if( is_array( $value ) )
+				$value = implode( ', ', $value );
+			echo "\n\t-\t**".esc_html( $option ).":**\t " . $value; 
+		}
+		
+		echo "\n";
+		echo "\n";
+		echo '### Debug Mode ###' . "\n";
+		echo "\n";
+		echo esc_html__('Debug mode')."\t\t\t" . ( defined( 'WP_DEBUG' ) && WP_DEBUG ? 'Enabled' : 'Disabled' ) . "\n";
+		echo esc_html__('Script mode')."\t\t\t" . ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'Enabled' : 'Disabled' ) . "\n";
+		
+		exit();
 	}
 }
