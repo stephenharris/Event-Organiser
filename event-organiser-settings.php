@@ -82,6 +82,10 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			//Add sections to each tabbed page
 			$this->add_fields( $tab_id );
 		}
+		
+		if( !empty( $_GET['export-settings'] ) && $_GET['export-settings'] == 1 && current_user_can( 'manage_options' ) ){
+			$this->export_settings();
+		}
 	}
 
 
@@ -558,6 +562,21 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		);
 	}
 	
+	function export_settings(){
+		
+		$options = array();
+		$options['event-organiser'] = eventorganiser_get_option( false );
+		
+		$options = apply_filters( 'eventorganiser_export_settings', $options );
+		
+		$filename = 'event-organiser-settings-'.get_bloginfo( 'name' ).'.json'; 
+		$filename = sanitize_file_name( $filename );
+		
+		header('Content-disposition: attachment; filename=' . $filename );
+		header('Content-type: application/json');
+		echo json_encode( $options );
+		exit();
+	}
 
 	function menu_option(){
 
