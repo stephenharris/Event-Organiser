@@ -98,14 +98,23 @@ class EO_ICAL_Parser{
 	function url_to_array( $url ){
 		$response =  wp_remote_get( $url, array( 'timeout' => $this->remote_timeout ) );
 		$contents = wp_remote_retrieve_body( $response );
-
+		$response_code = wp_remote_retrieve_response_code( $response );
+		
+		if( $response_code != 200 ){
+			return new WP_Error( 'unable-to-fetch',
+					sprintf(
+							'%s. Response code: %s.',
+							wp_remote_retrieve_response_message( $response ),
+							$response_code
+					));
+		}
+		
 		if( $contents )
 			return explode( "\n", $contents );
 		
 		if( is_wp_error( $response ) )
 			return $response;
 		
-		$response_code = wp_remote_retrieve_response_code( $response );
 		return new WP_Error( 'unable-to-fetch', 
 				sprintf( 
 					__( 'There was an error fetching the feed. Response code: %s.', 'eventorgansier' ),
