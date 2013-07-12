@@ -479,7 +479,7 @@ function eventorganiser_date_create($datetime_string){
  * @since 1.0.0
 
  * @param datetime_string - a datetime string 
- * @param string $format - Format of the datetime string. One of 'd-m-Y', 'm-d-Y' and 'Y-m-d'.
+ * @param string $format - Format of the datetime string. One of 'd-m-Y H:i', 'm-d-Y H:i' and 'Y-m-d H:i'.
  * @return int DateTime| false - the parsed datetime string as a DateTime object or false on error (incorrectly formatted for example)
  */
 function _eventorganiser_check_datetime( $datetime_string = '', $format = null ){
