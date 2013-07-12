@@ -95,7 +95,7 @@ function eventorganiser_load_textdomain() {
 	//We could use load_textdomain - but this avoids touching any more constants.
 	load_plugin_textdomain( 'eventorganiser', false, basename( dirname( __FILE__ ) ).'/languages' );
 }
-add_action( 'init', 'eventorganiser_load_textdomain' );
+add_action( 'plugins_loaded', 'eventorganiser_load_textdomain' );
 
 global $eventorganiser_roles;
 $eventorganiser_roles = array(
