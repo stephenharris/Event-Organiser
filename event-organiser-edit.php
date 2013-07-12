@@ -24,8 +24,13 @@ add_action( 'admin_init', 'eventorganiser_edit_init' );
  * @ignore
  */
 function _eventorganiser_author_meta_box_title() {
-    remove_meta_box( 'authordiv', 'event', 'core' );
-    add_meta_box( 'authordiv',  __( 'Organiser', 'eventorganiser' ), 'post_author_meta_box', 'event', 'core', 'high' );
+    $post_type_object = get_post_type_object( 'event' );
+    if ( post_type_supports('event', 'author') ) {
+        if ( is_super_admin() || current_user_can( $post_type_object->cap->edit_others_posts ) ){
+            remove_meta_box( 'authordiv', 'event', 'core' );
+            add_meta_box( 'authordiv',  __( 'Organiser', 'eventorganiser' ), 'post_author_meta_box', 'event', 'normal', 'core' );
+        }
+    }   
 }
 add_action( 'add_meta_boxes_event',  '_eventorganiser_author_meta_box_title' );
 
