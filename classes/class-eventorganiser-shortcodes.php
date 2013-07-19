@@ -59,18 +59,31 @@ class EventOrganiser_Shortcodes {
 		extract( shortcode_atts( array(
 			'title' => 'Subscribe to calendar',
 			'type' => 'google',
-		      'class' => '',
-		      'id' => '',
-		      'style' => '',
+			'class' => '',
+			'id' => '',
+			'style' => '',
+			'category' => false,
+			'venue' => false,
 		), $atts ) );
-
-		$url = eo_get_events_feed();
+		
+		if( $category ){
+			$url = eo_get_event_category_feed( $category );
+			
+		}elseif( $venue ){
+			$url = eo_get_event_venue_feed( $venue );
+		
+		}else{
+			$url = eo_get_events_feed();
+		
+		}
 
 		$class = $class ? 'class="'.esc_attr($class).'"' : false;
 		$title = $title ? 'title="'.esc_attr($title).'"' : false;
 		$style = $style ? 'style="'.esc_attr($style).'"' : false;
 		$id = $id ? 'id="'.esc_attr($id).'"' : false;
-
+		
+		echo $type;
+		
 		if(strtolower($type)=='webcal'):
 			$url = str_replace( 'http://', 'webcal://',$url);
 		elseif( strtolower($type)=='ical' ):
