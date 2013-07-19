@@ -423,6 +423,8 @@ function eventorganiser_widget_cal() {
 
 		//Options for the calendar
 		$args['showpastevents'] = (empty($_GET['showpastevents']) ? 0 : 1);
+		$args['link-to-single'] = (empty($_GET['link-to-single']) ? 0 : 1);
+		$args['show-long'] = (empty($_GET['show-long']) ? 0 : 1);
 
 		echo json_encode(EO_Calendar_Widget::generate_output($month,$args));
 		exit;

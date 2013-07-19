@@ -254,7 +254,7 @@ jQuery(document).ready(function () {
                 	var b = $(this).closest(".eo_widget_calendar").attr("id");
 	
 			//Defaults
-			var cal = {showpastevents: 1};
+			var cal = {showpastevents: 1, 'show-long': 0, 'link-to-single': 0 };
 
 			//Shortcode widget calendar
 			if( typeof EOAjax !== "undefined" && typeof eventorganiser.widget_calendars !== "undefined" ){
