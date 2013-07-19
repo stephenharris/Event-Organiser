@@ -940,13 +940,15 @@ function eo_get_event_color($post_id=0){
 }
 
 /**
-* Returns an array of classes associated with an event. 
-* Adds eo-event-venue-[venue slug] for the event's venue.
-* Adds eo-event-cat-[category slug] for each event category it bleongs to. 
-* Adds eo-event-[future|past|running].
-* Applies filter {@see `eventorganiser_event_classes`}
+* Returns an array of classes associated with an event. Adds the following classes
+* 
+*  * `eo-event-venue-[venue slug]` - if the event has a venue
+*  * `eo-event-cat-[category slug]` - for each event category the event belongs to. 
+*  * `eo-event-[future|past|running]` - depending on occurrence
+* 
+* Applies filter {@see `eventorganiser_event_classes`} so you can add/remove classes.
+* 
 * @since 1.6
-*
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @param int $occurrence_id The occurrence ID. Uses current event if empty.
 * @return array Array of classes
@@ -956,15 +958,15 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id );
 	$occurrence_id = (int) ( empty($occurrence_id) && isset($post->occurrence_id)  ? $post->occurrence_id : $occurrence_id );
-
+	
 	$event_classes = array();
 			
 	//Add venue class
-	if( eo_get_venue_slug() )
-		$event_classes[] = 'eo-event-venue-'.eo_get_venue_slug();
+	if( $venue_slug = eo_get_venue_slug( $post_id ) )
+		$event_classes[] = 'eo-event-venue-' . $venue_slug;
 
 	//Add category classes
-	$cats= get_the_terms(get_the_ID(), 'event-category');
+	$cats= get_the_terms( $post_id, 'event-category' );
 	if( $cats && !is_wp_error($cats) ){	
 		foreach ($cats as $cat)
 			$event_classes[] = 'eo-event-cat-'.$cat->slug;
@@ -972,7 +974,7 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 
 	//Add 'time' class
 	$start = eo_get_the_start(DATETIMEOBJ, $post_id, null, $occurrence_id);
-	$end= eo_get_the_end(DATETIMEOBJ, $post_id, null, $occurrence_id);
+	$end = eo_get_the_end(DATETIMEOBJ, $post_id, null, $occurrence_id);
 	$now = new DateTime('now',eo_get_blog_timezone());
 	if( $start > $now ){
 		$event_classes[] = 'eo-event-future';
@@ -981,9 +983,12 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 	}else{
 		$event_classes[] = 'eo-event-running';
 	}
-
-	$event_classes = array_unique($event_classes);
-	return  apply_filters('eventorganiser_event_classes', $event_classes, $post_id, $occurrence_id);
+	
+	$event_classes = apply_filters( 'eventorganiser_event_classes', $event_classes, $post_id, $occurrence_id );
+	$event_classes = array_unique( $event_classes );
+	$event_classes = array_map( 'sanitize_html_class', $event_classes );
+	$event_classes = array_filter( $event_classes );
+	return $event_classes;
 }
 
 
