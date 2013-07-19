@@ -1141,5 +1141,26 @@ function eventorganiser_escape_ical_text( $text ){
 	$text = str_replace("\n", "\n ", $text);
 	return $text;
 }
+
+/**
+ * Like wp_list_pluck() but plucks out key and value from each object in the list
+ * 
+ * @since 2.2
+ * @param array $list A list of objects or arrays
+ * @param int|string $field A field from the object to used as the key of the entire object
+ * @param int|string $field A field from the object to place instead of the entire object
+ * @return multitype:unknown NULL
+ */
+function eo_list_pluck_key_value( $list, $key_field, $value_field ){
 	
-?>
+	$new_list = array();
+	
+	foreach ( $list as $key => $value ) {
+		if ( is_object( $value ) )
+			$new_list[ $value->$key_field ] = $value->$value_field;
+		else
+			$new_list[ $value[ $key_field ] ] = $value[ $value_field ];
+	} 
+	
+	return $new_list;
+}
