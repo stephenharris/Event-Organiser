@@ -420,7 +420,7 @@ function eo_get_event_schedule( $post_id=0 ){
 		if( !($end instanceof DateTime) )
 			$end = clone $start;
 
-		if( !($schedule_last instanceof DateTime) )
+		if( 'once' == $schedule || !($schedule_last instanceof DateTime) )
 			$schedule_last = clone $start;
 
 		//Check dates are in chronological order
