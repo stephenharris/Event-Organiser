@@ -1040,6 +1040,48 @@ function eo_get_events_feed(){
 	return get_feed_link('eo-events');
 }
 
+/**
+ * Retrieves the permalink for the ICAL event feed for a category. A simple wrapper for `{@see get_term_feed_link()}`
+ * 
+ * If you pass an integer this is assumed to be the term ID of the category. If you pass a string it
+ * assumed to be the slug.
+ * 
+ * @since 2.2
+ * @param string|int $cat_slug_or_id Category ID as an **integer**, or slug as a **string** 
+ * @return string The link to the ICAL event category feed.
+ */
+function eo_get_event_category_feed( $cat_slug_or_id ){
+	
+	if( is_int( $cat_slug_or_id ) )
+		return get_term_feed_link( $cat_slug_or_id, 'event-category', 'eo-events' );
+	
+	$category = get_term_by( 'slug', $cat_slug_or_id, 'event-category' );
+	
+	if( !$category )
+		return false;
+	
+	return get_term_feed_link( $category->term_id, 'event-category', 'eo-events' );
+}
+
+/**
+ * Retrieves the permalink for the ICAL event feed for a venue. A simple wrapper for `{@see get_term_feed_link()}`.
+ *
+ * If you pass an integer this is assumed to be the term ID of the category. If you pass a string it
+ * assumed to be the slug.
+ *
+ * @since 2.2
+ * @param string|int $venue_slug_or_id Category ID as an **integer**, or slug as a **string**
+ * @return string The link to the ICAL event category feed.
+ */
+function eo_get_event_venue_feed( $venue_slug_or_id ){
+
+	$venue_id = eo_get_venue_id_by_slugorid( $venue_slug_or_id );
+	
+	if( !$venue_id )
+		return false;
+
+	return get_term_feed_link( $venue_id, 'event-venue', 'eo-events' );
+}
 
 /**
  * Returns a the url which adds a particular occurrence of an event to
