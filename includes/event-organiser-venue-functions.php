@@ -710,9 +710,9 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 			if( !empty($address) )
 				$tooltip_content .='</br>'.implode(', ',$address);
 			
-			$tooltip_content = apply_filters('eventorganiser_venue_tooltip',$tooltip_content,$venue_id);
+			$tooltip_content = apply_filters( 'eventorganiser_venue_tooltip', $tooltip_content, $venue_id, $args );
 			
-			$icon = apply_filters('eventorganiser_venue_marker',null,$venue_id);
+			$icon = apply_filters( 'eventorganiser_venue_marker', null, $venue_id, $args );
 	
 			$locations[] =array( 
 					'venue_id' => $venue_id,
