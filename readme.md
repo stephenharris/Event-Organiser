@@ -4,7 +4,7 @@
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
 **Tested up to:** 3.5.2  
-**Stable tag:** 2.1.6  
+**Stable tag:** 2.2  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -14,15 +14,15 @@ Create and maintain events, including complex reoccurring patterns, venue manage
 Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows you to view your events in the familiar WordPress list or in a calendar page in the amin area.
 
 [**Documentation**](http://wp-event-organiser.com/documentation/) 
-| [**Function Reference**](http://wp-event-organiser.com/codex/) 
+| [**Function Reference**](http://codex.wp-event-organiser.com/) 
 | [**Forums**](http://wp-event-organiser.com/forums/) 
 | [**Demo**](http://wp-event-organiser.com/demo/) 
-| [**Booking Add-on**](http://wp-event-organiser.com/pro-features)
+| [**Booking Add-on**](http://wp-event-organiser.com/pro-features?aid=7)
 
 ### What's new ###
+* Category & Venue subscribe functions added
 * Venue map icons are now filtered - [allowing you to change the map icons](http://wp-event-organiser.com/blog/tutorial/changing-the-venue-map-icon/).
 * ICAL parser API now available for third-party plug-ins
-* Updated fullCalendar to latest version
 * Javascript actions and filters added
 
 ### Features ###
@@ -45,6 +45,7 @@ Event Organiser adds event management that integrates well with your WordPress s
   * Event List (similar to Event List widget)
   * Event Agenda (similar to Event Agenda widget)
   * Venue map
+  * Subscribe to event feeds
 * **Relative date queries** (for example, query events that finished in the last 24 hours, or events starting in the coming week).
 * Assign events to categories and tags, and view events by category or tag.
 * Color-coded event categories.
@@ -52,7 +53,7 @@ Event Organiser adds event management that integrates well with your WordPress s
 * Venue pages, to view events by venue.
 * **Export/import** events to and from ICAL files.
 * Delete individual occurrences of events.
-* **Public events feed:** allow visitors to subscribe to your events.
+* **Public events feed:** allow visitors to subscribe to your events, or a particular venue / category.
 * Supports 'pretty permalinks' for event pages, event archives, event category and venue pages.
 * (Optionally) automatically delete expired events.
 
@@ -61,8 +62,8 @@ Event Organiser adds event management that integrates well with your WordPress s
 
 * Adds an **event custom post type** that fits naturally into WordPress and allows for all the functionality of 'posts'.
 * Respects the template hierarchy. Default templates can be over-ridden by including the appropriately named template files in your theme folder.
-* Plug-in **actions and filters** are provided to modify the behaviour of the plug-in
-* Extensive function API & [documentation](http://www.wp-event-organiser.com/documentation/function-reference/)
+* Plug-in **actions and filters** are provided to modify the behaviour of the plug-in ([hook reference](http://www.wp-event-organiser.com/documentation/function-reference/hooks)
+* Extensive function API & [documentation](http://codex.wp-event-organiser.com/)
 * **Javascript actions and filters** to modify interaction with the calendars and maps
 * Provide custom templates for shortcodes, widgets and ICAL export
 * Custom metaboxes and meta data support for venues (see [tutorial](http://wp-event-organiser.com/documentation/developers/venue-meta-data-and-metaboxes/)).
@@ -97,7 +98,7 @@ Installation is standard and straight forward.
 
 1. Upload `event-organiser` folder (and all it's contents!) to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Check the settings sub-page of the Events menu
+1. Check Settings > Event Organiser
 
 
 ## Frequently Asked Questions ##
@@ -199,6 +200,19 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 2.2
+* Adds 'style' attribute for the feed subscribe shortcode
+* Adds 'category' and 'venue' attributes for the feed subscribe shortcode (feed subscribe links for a particular vene/category)
+* Adds `eo_get_event_category_feed()` and `eo_get_event_venue_feed()` functions. See [docs](http://codex.wp-event-organiser.com).
+* Fixes errors with "Organiser" metabox.  [#106](https://github.com/stephenharris/Event-Organiser/pull/106)
+* Fixes bug with `eo_get_event_classes()` function
+*** Added 'show long events' otion for widget calendar:** Show all days of events spanning multiple days on the widget calendar, not just the first.  
+* Added 'link to single event' option for widget calendar. If a day has only one event, link directly to that event, not the day archive.
+###
+### 2.1.7 ###
+* Updates translations.
+* Fixes bug with untranslated strings.
 
 ### 2.1.6 ###
 * Fixes IE 7/8 error with admin calendar
