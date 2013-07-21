@@ -621,6 +621,34 @@ var farbtastic;(function($){var pickColor=function(a){farbtastic.setColor(a);$('
 <?php
 }
 
+
+/**
+ * Add a "Color" column to the Event Categories table.
+ */
+function eventorganiser_add_color_column_header( $columns ) {
+	// Insert the Color column before the Events ("posts") column.
+	$offset = array_search( 'posts', array_keys( $columns ) );
+	return array_merge (
+			array_slice( $columns, 0, $offset ),
+			array( 'color' => 'Color' ),
+			array_slice( $columns, $offset, null )
+		);
+}
+add_filter( 'manage_edit-event-category_columns', 'eventorganiser_add_color_column_header' );  
+
+
+/**
+ * Add a box with the color of the current row's event category.
+ */
+function eventorganiser_add_color_column_data( $dummy, $column, $post_id ) {
+	$term = get_term( $post_id, 'event-category' );
+	echo '<a style="background-color: ';
+	echo eo_get_category_meta( $term->slug, 'color' );
+	echo ';border: 1px solid #DFDFDF;border-radius: 4px 4px 4px 4px;margin: 0 7px 0 3px;padding: 4px 14px;"></a>';
+}
+add_action( 'manage_event-category_custom_column', 'eventorganiser_add_color_column_data', 10, 3 );
+
+
 /**
  * Add the colour of the category to the term object.
  * Hooked onto get_event-category
