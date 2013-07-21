@@ -1,5 +1,6 @@
 var map;
 var marker;
+var eo_venue = eo_venue || { marker: false };
 jQuery(document).ready(function () {
 	if (typeof EO_Venue != 'undefined') {
 		postboxes.add_postbox_toggles(pagenow);
@@ -55,7 +56,8 @@ function eo_initialize_map(Lat, Lng) {
         marker = new google.maps.Marker({
             position: latlng,
             map: map,
-            draggable: draggable
+            draggable: draggable,
+    		icon: ( eo_venue.marker ? eo_venue.marker : null )
         });
 
         if (typeof EO_Venue != 'undefined') {
@@ -70,6 +72,7 @@ function eo_initialize_map(Lat, Lng) {
 
 function eventorganiser_code_address(addrStr) {
     var geocoder = new google.maps.Geocoder();
+    
     geocoder.geocode({'address': addrStr}, function (results, status) {
 		if ( status == google.maps.GeocoderStatus.OK){
 
@@ -83,7 +86,8 @@ function eventorganiser_code_address(addrStr) {
 			marker = new google.maps.Marker({
                	 		map: map,
 		                position: results[0].geometry.location,
-                		draggable: draggable
+                		draggable: draggable,
+                		icon: ( eo_venue.marker ? eo_venue.marker : null )			
             		});
 			map.setZoom(15);
             	if (typeof EO_Venue != 'undefined') {
