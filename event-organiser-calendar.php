@@ -60,8 +60,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				'venue' => __( 'View all venues', 'eventorganiser' ),
 				)
 			));
-		wp_enqueue_style( 'eo_calendar-style' );
-		wp_enqueue_style( 'eventorganiser-style' );
+		
 	}
 
     /**
@@ -71,9 +70,18 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		if ( $terms = get_terms( 'event-category', array( 'hide_empty' => 0 ) ) ):
 			$css = '';
 			foreach ( $terms as $term ):
-				$css .= ".cat-slug-{$term->slug} span.ui-selectmenu-item-icon{ background: ".eo_get_category_color( $term ).";}\n"; 
+				$slug = sanitize_html_class( $term->slug );
+				$color = esc_attr( eo_get_category_color( $term ) ); 
+				$css .= ".cat-slug-{$slug} span.ui-selectmenu-item-icon{ background: {$color}; }\n"; 
 			endforeach;
+			wp_enqueue_style( 'eo_calendar-style' );
+			wp_enqueue_style( 'eventorganiser-style' );
+			//See trac ticket: http://core.trac.wordpress.org/ticket/24813
+			if( !defined( 'SCRIPT_DEBUG' ) || !SCRIPT_DEBUG ){
+				$css = "<style type='text/css'>\n" . $css . "</style>";
+			}
 			wp_add_inline_style( 'eo_calendar-style', $css );
+		
 		endif;
 	}
 
