@@ -611,7 +611,7 @@ function eventorganiser_tax_meta_form($colour){
 		</th>
 		<td> 
 			<input type="text" style="width:100px" name="eo_term_meta[colour]" class="color colour-input" id="color" value="<?php echo $colour; ?>" />
-			<a id="link-color-example" class="color  hide-if-no-js" style="border: 1px solid #DFDFDF;border-radius: 4px 4px 4px 4px;margin: 0 7px 0 3px;padding: 4px 14px;"></a>
+			<a id="link-color-example" class="color eo-event-category-color-sample hide-if-no-js"></a>
    			 <div style="z-index: 100; background: none repeat scroll 0% 0% rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); position: absolute;display: none;" id="colorpicker"></div>
 			<p><?php _e('Assign the category a colour.','eventorganiser')?></p>
 		</td>
@@ -621,6 +621,50 @@ var farbtastic;(function($){var pickColor=function(a){farbtastic.setColor(a);$('
 <?php
 }
 
+
+/**
+ * Add a "Color" column to the Event Categories table.
+ */
+function eventorganiser_add_color_column_header( $columns ) {
+	// Insert the Color column before the Events ("posts") column.
+	$offset = array_search( 'posts', array_keys( $columns ) );
+	return array_merge (
+			array_slice( $columns, 0, $offset ),
+			array( 'event-color' => esc_html__( 'Color', 'eventorganiser' ) ),
+			array_slice( $columns, $offset, null )
+		);
+}
+add_filter( 'manage_edit-event-category_columns', 'eventorganiser_add_color_column_header' );  
+
+
+/**
+ * Add a box with the color of the current row's event category.
+ */
+function eventorganiser_add_color_column_data( $html, $column, $term_id ) {
+	$term = get_term( $term_id, 'event-category' );
+	if( $column == 'event-color'){
+		$html = sprintf(
+					'<a class="eo-event-category-color-sample" style="background-color: %s;"></a>',
+					esc_attr( eo_get_category_meta( $term, 'color' ) )
+				);
+	}
+	return $html;
+}
+add_filter( 'manage_event-category_custom_column', 'eventorganiser_add_color_column_data', 10, 3 );
+
+/**
+ * Prints styling to event category admin pages
+ */
+function eventorganiser_print_event_cat_admin_styles(){
+	?>
+	<style>
+	/* Category amin page */
+	.eo-event-category-color-sample{ border: 1px solid #DFDFDF;border-radius: 4px;margin: 0 7px 0 3px;padding: 4px 14px;line-height: 25px;}
+	th.column-event-color{ width:10%}
+	</style>
+	<?php
+}
+add_action( 'admin_print_styles-edit-tags.php', 'eventorganiser_print_event_cat_admin_styles' );
 /**
  * Add the colour of the category to the term object.
  * Hooked onto get_event-category
