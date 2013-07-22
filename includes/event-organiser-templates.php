@@ -264,12 +264,16 @@ function _eventorganiser_single_event_content( $content ){
 	if( !is_singular('event') )
 		return $content;
 
+	/*
+	 * This was introduced to fix an obscure bug with including pages
+	 * in another page via shortcodes.
+	 * But it breaks yoast SEO.
 	global $eo_event_parsed;
 	if( !empty( $eo_event_parsed[get_the_ID()] ) ){
 		return $content;
 	}else{
 		$eo_event_parsed[get_the_ID()] = 1;
-	}
+	}*/
 	
 	//Object buffering				
 	ob_start();
