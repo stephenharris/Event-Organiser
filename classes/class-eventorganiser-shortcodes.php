@@ -82,8 +82,6 @@ class EventOrganiser_Shortcodes {
 		$style = $style ? 'style="'.esc_attr($style).'"' : false;
 		$id = $id ? 'id="'.esc_attr($id).'"' : false;
 		
-		echo $type;
-		
 		if(strtolower($type)=='webcal'):
 			$url = str_replace( 'http://', 'webcal://',$url);
 		elseif( strtolower($type)=='ical' ):
