@@ -91,6 +91,7 @@ A big thank you to those who have provided translations for Event Organiser. If 
 * Ukranian - Максим Кобєлєв
 * Thai - Nibhon, Wuttichai Songprapai
 * Turkish - Gökhan DAMGACI 
+* Croatian - Branimir
 
 == Installation ==
 
@@ -200,6 +201,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Fixes conflict with Yoast SEO plug-in ( http://wordpress.org/support/topic/events-are-missing-information?replies=6 )
 * Fixes colours not appearing on admin calendar drop-down [#109](https://github.com/stephenharris/Event-Organiser/pull/109)
 * Add category colour to the Event Categories table. Thanks to [@mperry2](https://github.com/stephenharris/Event-Organiser/pull/107)
+* Updated translations and added Croatian translation (thanks to Branimir)
 
 = 2.1.7 =
 * Updates translations.

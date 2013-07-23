@@ -69,7 +69,7 @@ class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
 			
 			self::print_feature( 
 				__( 'Flexible Booking Options', 'eventorganiser' ), 
-				__("Sell tickets for specific dates or sell tickets for all dates of an event – such as booking places on a course. You can offer multiple tickets, and customise the booking form to suit your needs.", 'eventorganiser'),
+				__('Sell tickets for specific dates or sell tickets for all dates of an event - such as booking places on a course. You can offer multiple tickets, and customise the booking form to suit your needs.', 'eventorganiser'),
 				'eo-pro-ticket-picker.png'
 			); 
 			self::print_feature( 
