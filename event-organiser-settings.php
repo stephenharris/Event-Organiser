@@ -107,7 +107,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'label_for' => 'supports',
 						'checked' => eventorganiser_get_option( 'supports' ),
 						'options' => array(
-							'author' => __( 'Organiser', 'eventorganiser' ).' ( '.__( 'Author' ).' )',
+							'author' => __( 'Organiser', 'eventorganiser' ).' ( '.__( 'Author', 'eventorganiser' ).' )',
 							'thumbnail' => __( 'Thumbnail' ),
 							'excerpt' => __( 'Excerpt' ),
 							'custom-fields' => __( 'Custom Fields' ),
