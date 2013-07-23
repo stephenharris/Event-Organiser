@@ -5,7 +5,7 @@
 
 
 /*styling for calendar view tabs */
-.view-button{float:right;background: #FFFFFF;height: 30px;line-height: 28px;margin-top: 3px;padding: 0 11px;}
+.view-button{float:right;height: 30px;line-height: 28px;margin-top: 3px;padding: 0 11px;}
 .view-button.active{border-color: #dfdfdf #dfdfdf #FFFFFF;border-style: solid;border-width: 1px;font-size: 120%;}
 
 /*calendar view conainer */
