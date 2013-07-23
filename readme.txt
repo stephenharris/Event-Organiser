@@ -197,6 +197,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Fixes bug with `eo_get_event_classes()` function
 * Added 'show long events' otion for widget calendar: Show all days of events spanning multiple days on the widget calendar, not just the first.
 * Added 'link to single event' option for widget calendar. If a day has only one event, link directly to that event, not the day archive.
+* Fixes conflict with Yoast SEO plug-in ( http://wordpress.org/support/topic/events-are-missing-information?replies=6 )
+* Fixes colours not appearing on admin calendar drop-down [#109](https://github.com/stephenharris/Event-Organiser/pull/109)
+* Add category colour to the Event Categories table. Thanks to [@mperry2](https://github.com/stephenharris/Event-Organiser/pull/107)
 
 = 2.1.7 =
 * Updates translations.
