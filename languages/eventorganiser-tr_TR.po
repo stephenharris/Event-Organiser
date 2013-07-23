@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-07-02 12:56:15+0000\n"
-"Last-Translator: Gökhan DAMGACI <sonsuzsanat@gmail.com>\n"
+"PO-Revision-Date: 2013-07-17 09:04:33+0000\n"
+"Last-Translator: kuncili <kuncili@gmail.com>\n"
 "Language-Team: \n"
 "Language: Turkish (Turkey)\n"
 "MIME-Version: 1.0\n"
@@ -242,7 +242,7 @@ msgstr ""
 #: ../event-organiser-manage.php:25
 #: ../templates/event-meta-event-single.php:68
 msgid "Categories"
-msgstr ""
+msgstr "Kategori"
 
 #: ../event-organiser-edit.php:64
 msgid "Check to edit this event and its reoccurrences"
@@ -264,11 +264,11 @@ msgstr ""
 
 #: ../includes/event-organiser-venue-functions.php:791
 msgid "City"
-msgstr ""
+msgstr "Şehir"
 
 #: ../includes/event-organiser-cpt.php:608
 msgid "Color"
-msgstr ""
+msgstr "Renk"
 
 #: ../event-organiser-settings.php:100
 msgid "Comments"
@@ -320,7 +320,7 @@ msgstr ""
 
 #: ../event-organiser-edit.php:106
 msgid "daily"
-msgstr ""
+msgstr "günlük"
 
 #: ../event-organiser-debug.php:133
 msgid "Database character set"
@@ -340,11 +340,11 @@ msgstr "Tarih formatı"
 
 #: ../event-organiser-calendar.php:56
 msgid "day"
-msgstr ""
+msgstr "gün"
 
 #: ../event-organiser-calendar.php:212
 msgid "Day"
-msgstr ""
+msgstr "Gün"
 
 #: ../event-organiser-settings.php:240
 msgid "Day archive"
@@ -352,15 +352,15 @@ msgstr "Gün arşivi"
 
 #: ../event-organiser-edit.php:141
 msgid "day of month"
-msgstr ""
+msgstr "ayın günü"
 
 #: ../event-organiser-edit.php:145
 msgid "day of week"
-msgstr ""
+msgstr "haftanın günü"
 
 #: ../includes/event-organiser-register.php:198
 msgid "days"
-msgstr ""
+msgstr "günler"
 
 #: ../event-organiser-settings.php:127
 msgid "dd-mm-yyyy"
@@ -373,7 +373,7 @@ msgstr "Debug modu"
 #: ../classes/class-eo-venue-list-table.php:70
 #: ../classes/class-eo-venue-list-table.php:127
 msgid "Delete"
-msgstr ""
+msgstr "sil"
 
 #: ../event-organiser-settings.php:68
 #: ../event-organiser.php:104
@@ -507,7 +507,7 @@ msgstr ""
 
 #: ../event-organiser-manage.php:18
 msgid "Event"
-msgstr ""
+msgstr "Etkinlik"
 
 #: ../event-organiser-settings.php:232
 msgid "Event (archive)"
@@ -539,13 +539,13 @@ msgstr ""
 
 #: ../event-organiser-calendar.php:293
 msgid "Event Detail"
-msgstr ""
+msgstr "Etkinlik Detayı"
 
 #: ../event-organiser-edit.php:14
 #: ../event-organiser-calendar.php:291
 #: ../templates/event-meta-event-single.php:37
 msgid "Event Details"
-msgstr ""
+msgstr "Etkinlik Detayları"
 
 #: ../includes/event-organiser-cpt.php:228
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
@@ -619,13 +619,13 @@ msgstr "Etkinlik mekanı"
 
 #: ../includes/event-organiser-cpt.php:28
 msgid "Event Venues"
-msgstr ""
+msgstr "Etkinlik Mekanları"
 
 #: ../event-organiser.php:128
 #: ../event-organiser-venues.php:429
 #: ../templates/archive-event.php:42
 msgid "Events"
-msgstr ""
+msgstr "Etkinlikler"
 
 #: ../classes/class-eo-agenda-widget.php:18
 msgid "Events Agenda"
@@ -637,11 +637,11 @@ msgstr "Etkinlik arşivleri:"
 
 #: ../templates/taxonomy-event-venue.php:31
 msgid "Events at: %s"
-msgstr ""
+msgstr "Buradaki Etkinlikler"
 
 #: ../event-organiser-calendar.php:208
 msgid "Events Calendar"
-msgstr ""
+msgstr "Etkinlik Takvimi"
 
 #: ../event-organiser-settings.php:203
 msgid "Events Category page:"
@@ -657,25 +657,25 @@ msgstr ""
 
 #: ../event-organiser-manage.php:142
 msgid "Events within 1 month"
-msgstr ""
+msgstr "Son 1 ay içindeki etkinlikler"
 
 #: ../event-organiser-manage.php:140
 msgid "Events within 1 week"
-msgstr ""
+msgstr "Son 1 hafta içindeki etkinlikler"
 
 #: ../event-organiser-manage.php:144
 msgid "Events within 1 year"
-msgstr ""
+msgstr "Son 1 yıl içinde etkinlikler"
 
 #: ../event-organiser-manage.php:139
 msgid "Events within 24 hours"
-msgstr ""
+msgstr "24 saat içindeki etkinlikler"
 
 #: ../templates/archive-event.php:34
 #: ../templates/archive-event.php:37
 #: ../templates/archive-event.php:40
 msgid "Events: "
-msgstr ""
+msgstr "Etkinlikler"
 
 #: ../includes/event-organiser-register.php:206
 #: ../includes/event-organiser-event-functions.php:552
@@ -935,7 +935,7 @@ msgstr "Kırmızıyla işaretlenen bilinen bileşen ve tema çatışmaları kü�
 #: ../includes/event-organiser-register.php:215
 #: ../includes/event-organiser-event-functions.php:530
 msgid "last"
-msgstr ""
+msgstr "son"
 
 #: ../templates/archive-event.php:115
 msgid "Later events <span class=\"meta-nav\">&larr;</span>"
@@ -962,7 +962,7 @@ msgstr "Kategorileri virgülle ayırın. Hepsi için boş bırakın."
 
 #: ../event-organiser-calendar.php:215
 msgid "Loading&#8230;"
-msgstr ""
+msgstr "Yükleniyor..."
 
 #: ../includes/event-organiser-cpt.php:227
 msgid "M j, Y @ G:i"
@@ -980,7 +980,7 @@ msgstr "Mekanları yönet"
 
 #: ../includes/event-organiser-register.php:196
 msgid "Minute"
-msgstr ""
+msgstr "Dakika"
 
 #: ../event-organiser-settings.php:128
 msgid "mm-dd-yyyy"
@@ -988,11 +988,11 @@ msgstr "aa-gg-yyyy"
 
 #: ../event-organiser-calendar.php:58
 msgid "month"
-msgstr ""
+msgstr "ay"
 
 #: ../event-organiser-calendar.php:212
 msgid "Month"
-msgstr ""
+msgstr "Ay"
 
 #: ../event-organiser-settings.php:239
 msgid "Month archive"
@@ -1000,7 +1000,7 @@ msgstr "Ay arşivi"
 
 #: ../event-organiser-edit.php:107
 msgid "monthly"
-msgstr ""
+msgstr "aylık"
 
 #: ../includes/event-organiser-register.php:202
 msgid "months"
@@ -1069,15 +1069,15 @@ msgstr ""
 
 #: ../includes/event-organiser-cpt.php:102
 msgid "No tags found"
-msgstr ""
+msgstr "Etiket bulunamadı"
 
 #: ../includes/event-organiser-ajax.php:570
 msgid "No Venue"
-msgstr ""
+msgstr "Etkinlik yok"
 
 #: ../includes/event-organiser-cpt.php:36
 msgid "No venues found"
-msgstr ""
+msgstr "Etkinlik bulunamadı"
 
 #: ../event-organiser-settings.php:510
 msgid "None"
@@ -1088,7 +1088,7 @@ msgstr "Hiç biri"
 #: ../templates/taxonomy-event-tag.php:116
 #: ../templates/taxonomy-event-venue.php:115
 msgid "Nothing Found"
-msgstr ""
+msgstr "Hiçbir Şey Bulunamadı"
 
 #: ../classes/class-eo-event-list-widget.php:35
 msgid "Number of events"
@@ -1246,7 +1246,7 @@ msgstr "Rol"
 
 #: ../event-organiser-venues.php:151
 msgid "Save"
-msgstr ""
+msgstr "Kaydet"
 
 #: ../event-organiser-calendar.php:264
 msgid "Save Draft"
@@ -1283,7 +1283,7 @@ msgstr ""
 #: ../includes/event-organiser-register.php:215
 #: ../includes/event-organiser-event-functions.php:530
 msgid "second"
-msgstr ""
+msgstr "ikinci"
 
 #: ../includes/event-organiser-cpt.php:489
 msgid "See the <a %s> documentation</a>"
@@ -1291,11 +1291,11 @@ msgstr ""
 
 #: ../event-organiser-edit.php:191
 msgid "Select a venue"
-msgstr ""
+msgstr "Mekan seç"
 
 #: ../classes/class-eo-widget-categories.php:45
 msgid "Select Category"
-msgstr ""
+msgstr "Kategori Seç"
 
 #: ../event-organiser-settings.php:91
 msgid "Select which features events should support"
@@ -1320,7 +1320,7 @@ msgstr "Etkinlik ve mekan yönetimi için izinleri belirleyin"
 
 #: ../includes/event-organiser-register.php:315
 msgid "Settings"
-msgstr ""
+msgstr "Ayarlar"
 
 #: ../event-organiser-edit.php:163
 msgid "Show dates"
@@ -1357,7 +1357,7 @@ msgstr ""
 
 #: ../templates/event-meta-event-single.php:58
 msgid "Start"
-msgstr ""
+msgstr "Başlangıç"
 
 #: ../classes/class-eo-event-list-widget.php:57
 msgid "Start date"
@@ -1392,7 +1392,7 @@ msgstr "Sistem bilgisi"
 
 #: ../templates/event-meta-event-single.php:73
 msgid "Tags"
-msgstr ""
+msgstr "Etiketler"
 
 #: ../classes/class-eo-event-list-widget.php:76
 msgid "Template (leave blank for default)"
@@ -1531,7 +1531,7 @@ msgstr ""
 
 #: ../event-organiser-calendar.php:55
 msgid "today"
-msgstr ""
+msgstr "bugün"
 
 #: ../event-organiser-debug.php:301
 #: ../event-organiser-debug.php:308
@@ -1548,7 +1548,7 @@ msgstr "Bilinmeyen"
 
 #: ../event-organiser-debug.php:338
 msgid "unknown"
-msgstr ""
+msgstr "bilinmeyen"
 
 #: ../event-organiser-edit.php:150
 msgid "until"
@@ -1583,11 +1583,11 @@ msgstr ""
 #: ../event-organiser-venues.php:421
 #: ../templates/event-meta-event-single.php:63
 msgid "Venue"
-msgstr ""
+msgstr "Mekan"
 
 #: ../classes/class-eo-venue-list-table.php:23
 msgid "venue"
-msgstr ""
+msgstr "mekan"
 
 #: ../event-organiser-venues.php:167
 msgid "Venue <strong>created</strong>"
@@ -1607,15 +1607,15 @@ msgstr ""
 
 #: ../event-organiser-venues.php:297
 msgid "Venue Location"
-msgstr ""
+msgstr "Mekan yeri"
 
 #: ../event-organiser-edit.php:201
 msgid "Venue Name"
-msgstr ""
+msgstr "Mekan Adı"
 
 #: ../event-organiser-venues.php:396
 msgid "Venue name"
-msgstr ""
+msgstr "mekan adı"
 
 #: ../event-organiser-settings.php:202
 msgid "Venue page:"
@@ -1639,7 +1639,7 @@ msgstr "Mekanlar"
 
 #: ../classes/class-eo-venue-list-table.php:24
 msgid "venues"
-msgstr ""
+msgstr "mekanlar"
 
 #: ../includes/event-organiser-ajax.php:520
 #: ../classes/class-eo-venue-list-table.php:71

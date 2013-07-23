@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-07-02 12:56:15+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-07-08 16:37:20+0000\n"
+"Last-Translator: kniebremser <kniebremser@fluchtsportler.de>\n"
 "Language-Team: \n"
 "Language: German (Germany)\n"
 "MIME-Version: 1.0\n"
@@ -216,7 +216,7 @@ msgstr "Der Kategorie eine Farbe zuweisen."
 
 #: ../event-organiser-settings.php:96
 msgid "Author"
-msgstr "Author"
+msgstr "Autor"
 
 #: ../event-organiser-debug.php:56
 msgid "Below any <strong>known</strong> plug-in and theme conflicts are highlighted "
@@ -928,7 +928,7 @@ msgstr "Abgelaufene Event einschließen"
 
 #: ../event-organiser-edit.php:160
 msgid "Include/Exclude occurrences"
-msgstr "Vorkommen ein- uns auschliessen"
+msgstr "Vorkommen ein- und auschliessen"
 
 #: ../event-organiser-debug.php:314
 msgid "Incorrectly registered"
@@ -1846,5 +1846,5 @@ msgstr "Möglicherweise müssen Sie gehen zu WordPress Einstellungen > Permalink
 
 #: ../event-organiser-settings.php:129
 msgid "yyyy-mm-dd"
-msgstr "JJJJ-MM-TT"
+msgstr "yyyy-mm-dd"
 

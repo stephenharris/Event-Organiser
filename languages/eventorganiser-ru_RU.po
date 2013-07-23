@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-07-06 18:54:38+0000\n"
+"PO-Revision-Date: 2013-07-10 06:12:10+0000\n"
 "Last-Translator: vladimir <vetego@gmail.com>\n"
 "Language-Team: \n"
 "Language: Russian (Russian Federation)\n"
@@ -47,7 +47,7 @@ msgstr ""
 
 #: ../event-organiser-debug.php:288
 msgid "%s requires %s version %s or higher"
-msgstr ""
+msgstr "Для %s требуется %s версии %s или выше"
 
 #: ../event-organiser-manage.php:189
 msgid "&mdash; No Change &mdash;"

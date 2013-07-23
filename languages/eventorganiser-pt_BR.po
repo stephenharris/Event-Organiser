@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-07-02 12:56:15+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-07-08 21:28:25+0000\n"
+"Last-Translator: Sigrid <sigrid.milano@gmail.com>\n"
 "Language-Team: \n"
 "Language: Portuguese (Brazil)\n"
 "MIME-Version: 1.0\n"
@@ -135,7 +135,7 @@ msgstr "Adicionar ou remover locais"
 
 #: ../includes/event-organiser-ajax.php:521
 msgid "Add To Google Calendar"
-msgstr ""
+msgstr "Adicionao ao Google Calendar"
 
 #: ../event-organiser-venues.php:342
 msgid "Add Venue"
@@ -212,7 +212,8 @@ msgstr "Autor"
 #: ../event-organiser-debug.php:56
 msgid "Below any <strong>known</strong> plug-in and theme conflicts are highlighted "
 "in red."
-msgstr ""
+msgstr "Abaixo, todo conflito <strong> já identificado</strong> complug-in e temas "
+"estão assinalados em vermelho."
 
 #: ../includes/event-organiser-ajax.php:329
 msgid "Break this series"
@@ -228,7 +229,7 @@ msgstr "Ao clicar na aba superior, você poderá visualizar os eventos por Mês,
 
 #: ../event-organiser-calendar.php:186
 msgid "Calendar options"
-msgstr ""
+msgstr "Opções de calendário"
 
 #: ../event-organiser-calendar.php:23
 #: ../event-organiser-calendar.php:24
@@ -289,7 +290,7 @@ msgstr "País"
 
 #: ../event-organiser-calendar.php:227
 msgid "Create an event"
-msgstr ""
+msgstr "Criar um evento"
 
 #: ../includes/event-organiser-cpt.php:421
 msgid "Creating events"
@@ -572,7 +573,7 @@ msgstr "Configurações do Event Organiser"
 
 #: ../event-organiser-debug.php:73
 msgid "Event Organiser version"
-msgstr ""
+msgstr "versão do Event Organiser"
 
 #: ../event-organiser-settings.php:201
 msgid "Event page:"
@@ -828,7 +829,7 @@ msgstr ""
 
 #: ../event-organiser-debug.php:65
 msgid "Home url"
-msgstr ""
+msgstr "url da página inicial"
 
 #: ../includes/event-organiser-register.php:195
 msgid "Hour"
@@ -1023,15 +1024,17 @@ msgstr "meses"
 #: ../event-organiser-debug.php:52
 msgid "Most bugs arise from theme or plug-in conflicts. You can check this by "
 "disabling all other plug-ins and switching to TwentyTweleve."
-msgstr ""
+msgstr "Muitos \"bugs\" ou erros são causados por conflitos entre o tema e o "
+"plug-in. Você pode verificar esta ocorrência ao trocar o tema atual pelo "
+"TwentyTwelve."
 
 #: ../event-organiser-debug.php:69
 msgid "Multisite"
-msgstr ""
+msgstr "multisite"
 
 #: ../event-organiser-debug.php:87
 msgid "MySQL Version"
-msgstr ""
+msgstr "versão do MYSQL"
 
 #: ../includes/event-organiser-cpt.php:68
 msgid "New Category Name"
@@ -1176,19 +1179,19 @@ msgstr ""
 
 #: ../event-organiser-debug.php:95
 msgid "PHP Memory Usage"
-msgstr ""
+msgstr "Uso de memório PHP"
 
 #: ../event-organiser-debug.php:99
 msgid "PHP Post Max Size"
-msgstr ""
+msgstr "tamanho máximo do post PHP"
 
 #: ../event-organiser-debug.php:103
 msgid "PHP Upload Max Size"
-msgstr ""
+msgstr "tamanho máximo para upload PHP"
 
 #: ../event-organiser-debug.php:83
 msgid "PHP Version"
-msgstr ""
+msgstr "versão do PHP"
 
 #: ../event-organiser-settings.php:540
 msgid "Please note to enable these structures you must first have pretty permalinks "
@@ -1198,7 +1201,7 @@ msgstr "Lembre-se que para habilitar estas estruturas, os Links Permanentes do "
 
 #: ../event-organiser-debug.php:111
 msgid "Plug-ins"
-msgstr ""
+msgstr "Plug-ins"
 
 #: ../includes/event-organiser-cpt.php:95
 msgid "Popular Tags"
@@ -1260,7 +1263,7 @@ msgstr "Função"
 
 #: ../event-organiser-venues.php:151
 msgid "Save"
-msgstr ""
+msgstr "Salvar"
 
 #: ../event-organiser-calendar.php:264
 msgid "Save Draft"
@@ -1346,11 +1349,11 @@ msgstr ""
 
 #: ../includes/event-organiser-register.php:51
 msgid "Show Less"
-msgstr ""
+msgstr "Menos"
 
 #: ../includes/event-organiser-register.php:50
 msgid "Show More"
-msgstr ""
+msgstr "Mais"
 
 #: ../event-organiser-settings.php:107
 #: ../event-organiser-settings.php:134
@@ -1359,7 +1362,7 @@ msgstr "Mostrar eventos passados:"
 
 #: ../event-organiser-debug.php:61
 msgid "Site url"
-msgstr ""
+msgstr "url do site"
 
 #: ../event-organiser-venues.php:428
 msgid "Slug"
@@ -1402,7 +1405,7 @@ msgstr "Enviar para Análise"
 #: ../event-organiser-debug.php:11
 #: ../event-organiser-debug.php:36
 msgid "System Info"
-msgstr ""
+msgstr "Informações de sistema"
 
 #: ../templates/event-meta-event-single.php:73
 msgid "Tags"
@@ -1446,7 +1449,7 @@ msgstr ""
 
 #: ../event-organiser-debug.php:117
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #: ../classes/class-eventorganiser-shortcodes.php:334
 msgid "There is no excerpt because this is a protected post."
@@ -1508,7 +1511,8 @@ msgstr "Esta é a lista de todos os eventos salvos. Lembre-se que <strong>evento
 #: ../event-organiser-debug.php:47
 msgid "This page highlights useful information for debugging. If you're reporting a "
 "bug, please include this information."
-msgstr ""
+msgstr "Esta página apresenta informações úteis para resoloçnao de conflito de "
+"plugins. Quando registrar um \"bug\", por favor, inclua esta informação."
 
 #: ../includes/event-organiser-cpt.php:476
 msgid "This page shows all (occurrances of) events. You can view the summary of an "
@@ -1692,7 +1696,7 @@ msgstr "Visualizar irá levá-lo para a página do local"
 
 #: ../event-organiser-debug.php:91
 msgid "Web Server"
-msgstr ""
+msgstr "servidos Web"
 
 #: ../event-organiser-calendar.php:57
 msgid "week"
@@ -1712,15 +1716,15 @@ msgstr "semanas"
 
 #: ../event-organiser-welcome.php:23
 msgid "Welcome"
-msgstr ""
+msgstr "Bem vindo"
 
 #: ../event-organiser-welcome.php:51
 msgid "Welcome to Event Organiser %s"
-msgstr ""
+msgstr "Bem vindo ao Event Organizer"
 
 #: ../event-organiser-welcome.php:24
 msgid "Welcome View"
-msgstr ""
+msgstr "Mensagem de boas vindas"
 
 #: ../event-organiser-calendar.php:232
 msgid "When"
@@ -1736,7 +1740,7 @@ msgstr ""
 
 #: ../event-organiser-debug.php:77
 msgid "WordPress"
-msgstr ""
+msgstr "WordPress"
 
 #: ../includes/event-organiser-register.php:203
 msgid "year"

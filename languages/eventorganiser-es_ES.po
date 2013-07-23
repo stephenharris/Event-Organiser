@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-07-02 12:56:15+0000\n"
+"PO-Revision-Date: 2013-07-23 05:24:21+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Spanish; Castilian (Spain)\n"
@@ -27,7 +27,7 @@ msgstr " <span class=\"meta-nav\">&larr;</span> Eventos anteriores"
 
 #: ../includes/class-event-organiser-im-export.php:491
 msgid "%d categories were created"
-msgstr ""
+msgstr "Han sido creadas %d categorías"
 
 #: ../includes/class-event-organiser-im-export.php:480
 msgid "%d events were successfully imported"
@@ -40,15 +40,15 @@ msgstr "Ningun evento importado."
 
 #: ../event-organiser-debug.php:281
 msgid "%s has only been tested up to %s %s"
-msgstr ""
+msgstr "%s sólo ha sido probado hasta %s %s"
 
 #: ../event-organiser-debug.php:144
 msgid "%s present"
-msgstr ""
+msgstr "%s presente"
 
 #: ../event-organiser-debug.php:288
 msgid "%s requires %s version %s or higher"
-msgstr ""
+msgstr "%s requiere %s versión %s o mayor"
 
 #: ../event-organiser-manage.php:189
 msgid "&mdash; No Change &mdash;"
@@ -60,7 +60,7 @@ msgstr "Mensaje 'No hay eventos'"
 
 #: ../includes/class-event-organiser-im-export.php:489
 msgid "1 category was created"
-msgstr ""
+msgstr "Ha sido creada 1 categoría"
 
 #: ../includes/class-event-organiser-im-export.php:478
 msgid "1 event was successfully imported"
@@ -90,7 +90,12 @@ msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up 
 "haven't and want the old templates back, <a "
 "href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see "
 "this post<a/>."
-msgstr ""
+msgstr "<h4>Las plantillas por defecto han cambiado</h4>No te preocupes, si has "
+"configurado tus propias plantillas en tu theme no advertirás ningín "
+"cambio.</br> Si no es el caso y quieres las antiguas plantillas de nuevo,  "
+"<a "
+"href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>lee "
+"esto<a/>."
 
 #: ../classes/class-eo-widget-categories.php:10
 msgid "A list or dropdown of event categories"
@@ -217,7 +222,8 @@ msgstr "Autor"
 #: ../event-organiser-debug.php:56
 msgid "Below any <strong>known</strong> plug-in and theme conflicts are highlighted "
 "in red."
-msgstr ""
+msgstr "Abajo se resalta en rojo cualquier conflicto <strong>conocido</strong> de "
+"plug-in o theme"
 
 #: ../includes/event-organiser-ajax.php:329
 msgid "Break this series"
@@ -517,7 +523,7 @@ msgstr "Fecha/hora de fin"
 
 #: ../event-organiser-edit.php:76
 msgid "Ensure dates are entered in %1$s format and times in %2$s (24 hour) format"
-msgstr "Asegurate de que las fechas introducidas estan en formato %1$s y las horas "
+msgstr "Asegúrate de que las fechas introducidas estan en formato %1$s y las horas "
 "en formato %2$s (24 horas)"
 
 #: ../event-organiser-manage.php:18
@@ -573,7 +579,7 @@ msgstr "Evento del borrador actualizado. <a target=\"_blank\" "
 
 #: ../classes/class-eo-event-list-widget.php:78
 msgid "Event list widget placeholders"
-msgstr ""
+msgstr "Marcadores de posición del widget de la lista de eventos"
 
 #: ../event-organiser-settings.php:26
 #, fuzzy
@@ -949,12 +955,12 @@ msgstr "Incorrectamente registrado"
 
 #: ../includes/class-event-organiser-im-export.php:739
 msgid "Invalid date. Date expected in YYYYMMDD format."
-msgstr ""
+msgstr "Fecha no válida. Se espera en el formato YYYYMMDD"
 
 #: ../includes/class-event-organiser-im-export.php:771
 msgid "Invalid datetime. Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss "
 "format."
-msgstr ""
+msgstr "Formato de la fecha no válido"
 
 #: ../includes/class-event-organiser-im-export.php:64
 #, fuzzy
@@ -970,7 +976,8 @@ msgstr "Horario mensual no válido (ordinal no válido)"
 #: ../event-organiser-debug.php:159
 msgid "Known plug-in & theme conflicts, highlighted in red, may be minor or have a "
 "simple resolution. Please contact support."
-msgstr ""
+msgstr "Los conflictos conocidos del plug-in y theme, resaltados en rojo, puedenser "
+"menores o tener una resolución simple."
 
 #: ../includes/event-organiser-register.php:215
 #: ../includes/event-organiser-event-functions.php:530
@@ -1051,7 +1058,9 @@ msgstr "meses"
 #: ../event-organiser-debug.php:52
 msgid "Most bugs arise from theme or plug-in conflicts. You can check this by "
 "disabling all other plug-ins and switching to TwentyTweleve."
-msgstr ""
+msgstr "La mayoría de los fallos provienen de conflictos del theme o del plug-in. "
+"Puedes revisarlo desactivando todos los demás plug-ins y cambiando a "
+"TwentyTwelve"
 
 #: ../event-organiser-debug.php:69
 msgid "Multisite"
@@ -1181,7 +1190,7 @@ msgstr "Descripción"
 
 #: ../event-organiser-settings.php:554
 msgid "Page list (fallback)"
-msgstr ""
+msgstr "Lista de páginas (recurso)"
 
 #: ../includes/event-organiser-cpt.php:63
 #: ../includes/event-organiser-cpt.php:64
@@ -1202,19 +1211,19 @@ msgstr "Privilegios"
 
 #: ../event-organiser-debug.php:107
 msgid "PHP cURL Support"
-msgstr ""
+msgstr "Soporte PHP cURL"
 
 #: ../event-organiser-debug.php:95
 msgid "PHP Memory Usage"
-msgstr ""
+msgstr "Uso de memoria PHP"
 
 #: ../event-organiser-debug.php:99
 msgid "PHP Post Max Size"
-msgstr ""
+msgstr "Tamaño máximo de post PHP"
 
 #: ../event-organiser-debug.php:103
 msgid "PHP Upload Max Size"
-msgstr ""
+msgstr "Tamaño máximo de Subida PHP"
 
 #: ../event-organiser-debug.php:83
 msgid "PHP Version"
@@ -1229,7 +1238,7 @@ msgstr "Atención: para habilitar estas estructuras debes haber habilitado prime
 
 #: ../event-organiser-debug.php:111
 msgid "Plug-ins"
-msgstr ""
+msgstr "Plug-ins"
 
 #: ../includes/event-organiser-cpt.php:95
 msgid "Popular Tags"
@@ -1456,7 +1465,8 @@ msgstr "Habilitar plantillas:"
 #: ../event-organiser-debug.php:367
 msgid "The <a href='%s'>wp_footer hook</a> could be not be found. Without, for "
 "example, the calendar will not function"
-msgstr ""
+msgstr "El <a href='%s'>wp_footer hook</a> no se ha encontrado. Sin él, por ejemplo "
+"el calendario no funcionará."
 
 #: ../includes/event-organiser-cpt.php:425
 msgid "The end date is the date the event finishes. If the event is a reoccuring "
@@ -1480,7 +1490,8 @@ msgstr "La fecha de comienzo es la fecha que el evento comienza. Si el evento es
 #: ../event-organiser-debug.php:316
 msgid "The widget sidebars are incorrectly registered. See the <a href='%s'>FAQ</a> "
 "or contact support to resolve this."
-msgstr ""
+msgstr "Las barras laterales del widget no se han registrado correctamente. Visita "
+"el <a href='%s'>FAQ</a> o contacta con soporte para solucionarlo."
 
 #: ../event-organiser-debug.php:117
 msgid "Theme"
@@ -1492,7 +1503,7 @@ msgstr "No hay resumen porque esta es una entrada protegida."
 
 #: ../includes/class-event-organiser-im-export.php:474
 msgid "There was an error with %1$d of %2$d events in the ical file"
-msgstr ""
+msgstr "Ha habido un error con %1$d de %2$d eventos en el archivo ical"
 
 #: ../includes/event-organiser-register.php:215
 #: ../includes/event-organiser-event-functions.php:530
@@ -1583,7 +1594,9 @@ msgstr "Título"
 msgid "To help speed things along, if you report a bug please indicate if you have "
 "done so. Once the plug-in or theme has been identified it is often easy to "
 "resolve the issue."
-msgstr ""
+msgstr "Para acelerar las cosas si informas de un fallo,  por favor indica que los "
+"has hecho. Una vez el plug-in o theme haya sido identificado es más fácil "
+"que se resuelva."
 
 #: ../includes/event-organiser-cpt.php:432
 msgid "To repeat an event according to some regular pattern, use the reocurrence "
@@ -1602,7 +1615,8 @@ msgstr "hoy"
 #: ../event-organiser-debug.php:352
 #: ../event-organiser-debug.php:359
 msgid "Turn <a href=\"%s\">WP_Debug mode</a> on and revisit the front-end to check"
-msgstr ""
+msgstr "Activa <a href=\"%s\">WP_Debug mode</a> y vuelve a visitar el front-end para "
+"revisar"
 
 #: ../event-organiser-debug.php:300
 #: ../event-organiser-debug.php:351
@@ -1781,7 +1795,7 @@ msgstr "Dónde"
 
 #: ../event-organiser-debug.php:148
 msgid "Widget Sidebars"
-msgstr ""
+msgstr "Barras laterales del Widget"
 
 #: ../event-organiser-debug.php:77
 msgid "WordPress"
@@ -1827,7 +1841,9 @@ msgstr "Puedes crear un evento en este calendario, pinchando en un día o arrast
 msgid "You can use specified tags as placeholders for event information which you "
 "want to appear in the widget. <a href=\"%s\" target=\"_blank\"> Find out "
 "more</a>."
-msgstr ""
+msgstr "Puedes especificar etiquetas especificadas como marcadores de posición para "
+"la información de un evento que quieras que aparezca en el widget. <a "
+"href=\"%s\" target=\"_blank\">Averigua más sobre el tema</a>."
 
 #: ../event-organiser-venues.php:112
 #, fuzzy
@@ -1869,5 +1885,5 @@ msgstr "Puede que también necesites ir a Ajustes de Wordpress > Enlaces permane
 
 #: ../event-organiser-settings.php:129
 msgid "yyyy-mm-dd"
-msgstr ""
+msgstr "yyyy-mm-dd"
 
