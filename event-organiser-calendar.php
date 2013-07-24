@@ -67,22 +67,22 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
      * Prints page styles
      */
 	function page_styles(){
+		$css = '';
 		if ( $terms = get_terms( 'event-category', array( 'hide_empty' => 0 ) ) ):
-			$css = '';
 			foreach ( $terms as $term ):
 				$slug = sanitize_html_class( $term->slug );
 				$color = esc_attr( eo_get_category_color( $term ) ); 
 				$css .= ".cat-slug-{$slug} span.ui-selectmenu-item-icon{ background: {$color}; }\n"; 
 			endforeach;
-			wp_enqueue_style( 'eo_calendar-style' );
-			wp_enqueue_style( 'eventorganiser-style' );
-			//See trac ticket: http://core.trac.wordpress.org/ticket/24813
-			if( !defined( 'SCRIPT_DEBUG' ) || !SCRIPT_DEBUG ){
-				$css = "<style type='text/css'>\n" . $css . "</style>";
-			}
-			wp_add_inline_style( 'eo_calendar-style', $css );
-		
 		endif;
+		
+		wp_enqueue_style( 'eo_calendar-style' );
+		wp_enqueue_style( 'eventorganiser-style' );
+		//See trac ticket: http://core.trac.wordpress.org/ticket/24813
+		if( !defined( 'SCRIPT_DEBUG' ) || !SCRIPT_DEBUG ){
+			$css = "<style type='text/css'>\n" . $css . "</style>";
+			wp_add_inline_style( 'eo_calendar-style', $css );
+		}
 	}
 
 	function page_actions(){
@@ -273,7 +273,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			<input type="hidden" name="eo_event[allday]">
 		  	<?php wp_nonce_field( 'eventorganiser_calendar_save' ); ?>
 			<?php if ( current_user_can( 'publish_events' ) ):?>
-				<input type="submit" class="button" tabindex="4" value="<?php _e( 'Save Draft', 'eventorganiser' );?>"" id="event-draft" name="save">
+				<input type="submit" class="button" tabindex="4" value="<?php _e( 'Save Draft', 'eventorganiser' );?>" id="event-draft" name="save">
 				<input type="reset" class="button" id="reset" value="<?php _e( 'Cancel', 'eventorganiser' );?>">
 
 				<span id="publishing-action">
