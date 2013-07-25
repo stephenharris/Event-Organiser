@@ -940,12 +940,12 @@ function eo_get_event_color($post_id=0){
 }
 
 /**
-* Accepts a color in RGB hex format and returns a string containing "black"
-* or "white" depending on which would be more readable when overlaid on top
-* of the supplied color.
+* Accepts a color in RGB hex format and returns a string containing "#000000"
+* (black) or "#ffffff" (white) depending on which would be more readable when
+* overlaid on top of the supplied color.
 *
 * @param string $color A color in RGB hex format with or without a leading hash
-* @return string A string containing either "black" or "white"
+* @return string A string containing either "#000000" or "#ffffff"
  */
 function eo_get_event_textcolor( $color ) {
 	// Remove the leading hash if present
@@ -954,12 +954,12 @@ function eo_get_event_textcolor( $color ) {
 	// Calculate the luma (Y) of the color using the formula provided at
 	// https://en.wikipedia.org/wiki/YIQ#Formulas. Full luma is 255000 when
 	// the RGB color is white (#ffffff). Luma above the mid point, 127500,
-	// should return "black", otherwise "white".
+	// should return "#000000", otherwise "#ffffff".
 	$r = hexdec( substr( $color, 0, 2 ) ); 
 	$g = hexdec( substr( $color, 2, 2 ) ); 
 	$b = hexdec( substr( $color, 4, 2 ) ); 
 	$y = ( $r * 299 ) + ( $g * 587 ) + ( $b * 114 );
-	return ( $y > 127500 ) ? 'black' : 'white';
+	return ( $y > 127500 ) ? '#000000' : '#ffffff';
 }
 
 /**
