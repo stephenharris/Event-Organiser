@@ -364,6 +364,7 @@ function eventorganiser_admin_calendar() {
 
 				//Filter the event array
 				$event = apply_filters('eventorganiser_admin_calendar',$event, $post);
+				$event = apply_filters('eventorganiser_admin_fullcalendar_event', $event, $post->ID, $post->occurrence_id );
 
 				//Add event to array
 				$eventsarray[]=$event;
