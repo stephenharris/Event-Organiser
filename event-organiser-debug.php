@@ -96,7 +96,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				</tr>
 				<tr>
 					<th><?php esc_html_e('Event Organiser version');?></th>
-					<td><?php global $eventorganiser_db_version; echo $eventorganiser_db_version; ?></td>
+					<td><?php echo EVENT_ORGANISER_VER; ?></td>
 				</tr>
 				<tr>
 					<th><?php esc_html_e('WordPress');?></th>
@@ -470,8 +470,8 @@ class EventOrganiser_Debugger{
 		echo "\n";
 		echo '### Versions ###' . "\n";
 		echo "\n";
-		global $eventorganiser_db_version;
-		echo esc_html__('Event Organiser')."\t\t" . $eventorganiser_db_version."\n";
+		
+		echo esc_html__('Event Organiser')."\t\t" . EVENT_ORGANISER_VER."\n";
 		echo esc_html__('WordPress')."\t\t\t" . get_bloginfo( 'version' ) ."\n";
 		echo esc_html__('PHP Version')."\t\t\t" . PHP_VERSION ."\n";
 		echo esc_html__('MySQL Version')."\t\t" . mysql_get_server_info() ."\n";

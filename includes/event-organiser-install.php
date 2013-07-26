@@ -34,7 +34,8 @@
 }
 
 function eventorganiser_site_install(){
-	global $wpdb, $eventorganiser_db_version;
+	global $wpdb; 
+	$eventorganiser_db_version = defined( 'EVENT_ORGANISER_VER' ) ? EVENT_ORGANISER_VER : false;
 
 	eventorganiser_wpdb_fix();
 
@@ -152,9 +153,9 @@ function eventorganiser_deactivate(){
  *@ignore
 */
 function eventorganiser_upgradecheck(){
-       global $eventorganiser_db_version, $wpdb;
-	global $EO_Errors;
-	
+	global $wpdb, $EO_Errors;
+	$eventorganiser_db_version = defined( 'EVENT_ORGANISER_VER' ) ? EVENT_ORGANISER_VER : false;
+		
 	$installed_ver = get_option('eventorganiser_version');
 
 	if( empty($installed_ver) ){
