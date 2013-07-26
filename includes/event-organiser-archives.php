@@ -298,7 +298,7 @@ function eventorganiser_event_groupby( $groupby, $query ){
 	global $wpdb;
 
 	if(!empty($query->query_vars['group_events_by']) && $query->query_vars['group_events_by'] == 'series'){
-		return "{$wpdb->eo_events}.post_id";
+		return "{$wpdb->posts}.ID";
 	}
 
 	if( eventorganiser_is_event_query( $query, true ) ):
