@@ -363,7 +363,20 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 				$permissions = (isset( $option['permissions'] ) ? $option['permissions'] : array() );
 				$this->update_roles( $permissions );
 			break;
+			
+			default:
+				$keys = array( 'hide_addon_page' );
+				foreach( $keys as $key ){
+					if( !isset( $option[$key] ) )
+						continue;
+					
+					$clean[$key] = (int) $option[$key];
+					
+				}
+			
+			break;
 		}
+		
 
 		$existing_options = get_option( 'eventorganiser_options', array() );
 		$clean = array_merge( $existing_options, $clean );
@@ -515,13 +528,14 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		global $wp_settings_fields;
 		$page = 'eventorganiser_general';
 		$section_id = 'general_licence';
+		$addon_link = esc_url( admin_url( 'edit.php?post_type=event&page=eo-addons' ) );
 		if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section_id] ) ){
 			?>
-			<p> You do not have any add-ons activated. </p>
+			<p> You do not have any add-ons activated. You can view the <a href="<?php echo $addon_link; ?>">available add-ons here</a>.</p>
 			<?php
 		}else{
 			?>
-			<p> Below are the add-ons you have activated. You can find a full list of available add-ons here.. </p>
+			<p> Below are the add-ons you have activated. You can find a full list of <a href="<?php echo $addon_link; ?>">available add-ons here</a>. </p>
 			<?php
 		}
 	}

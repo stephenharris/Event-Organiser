@@ -12,6 +12,8 @@ add_action( 'wp_ajax_nopriv_eo_widget_agenda', 'eventorganiser_widget_agenda' );
 add_action( 'wp_ajax_eo_widget_agenda', 'eventorganiser_widget_agenda' );
 add_action( 'wp_ajax_nopriv_eo_widget_cal', 'eventorganiser_widget_cal' );
 add_action( 'wp_ajax_eo_widget_cal', 'eventorganiser_widget_cal' );
+add_action( 'wp_ajax_eo_toggle_addon_page', 'eventorganiser_ajax_toggle_addon_page' );
+
 
 /**
  * Ajax response for the public full calendar. This returns events to be displayed on the front-end full calendar
@@ -604,5 +606,18 @@ function eventorganiser_admin_cal_time_format(){
 	$user =wp_get_current_user();
 	$is12hour = update_user_meta($user->ID,'eofc_time_format',$is24);
 	exit();
+}
+
+function eventorganiser_ajax_toggle_addon_page(){
+	
+	if( !isset( $_POST['hide_addon_page'] ) || !current_user_can( 'manage_options' ) )
+		exit();
+	
+	$hide = (int) ( strtolower( $_POST['hide_addon_page'] ) == 'true' );
+	$options = eventorganiser_get_option( false );
+	$options['hide_addon_page'] = $hide;
+
+	update_option( 'eventorganiser_options', $options );
+	exit(1);
 }
 ?>

@@ -48,6 +48,8 @@ function _eventorganiser_set_constants(){
  	* <code>url:http://mysite.com/wp-content/plugins/event-organiser</code>
 	*/
 	define( 'EVENT_ORGANISER_URL', plugin_dir_url( __FILE__ ) );
+	
+	require_once(EVENT_ORGANISER_DIR.'event-organiser-add-ons.php');
 }
 
 /*
@@ -136,6 +138,7 @@ function eventorganiser_get_option( $option = false, $default = false ){
 		'excludefromsearch' => 0,
 		'showpast' => 0,
 		'runningisnotpast' => 0,
+      	'hide_addon_page' => 0,
       );
       $options = get_option( 'eventorganiser_options', $defaults );
       $options = wp_parse_args( $options, $defaults );
@@ -189,6 +192,7 @@ if ( is_admin() ):
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-calendar.php');
 	
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-debug.php');
+	
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-go-pro.php');
 else:
 	if( defined( 'WP_DEBUG' ) && WP_DEBUG ){
