@@ -519,6 +519,10 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			?>
 			<p> You do not have any add-ons activated. </p>
 			<?php
+		}else{
+			?>
+			<p> Below are the add-ons you have activated. You can find a full list of available add-ons here.. </p>
+			<?php
 		}
 	}
 	
