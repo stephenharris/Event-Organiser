@@ -54,6 +54,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			switch ( $tab_id){
 				case 'general':
 					register_setting( 'eventorganiser_'.$tab_id, 'eventorganiser_options', array( $this, 'validate' ) );
+					add_settings_section( $tab_id.'_licence', __( 'Add-on Licence keys', 'eventorganiser' ), array( $this, 'display_licence_keys' ), 'eventorganiser_'.$tab_id );
 					add_settings_section( $tab_id,__( 'General', 'eventorganiser' ), '__return_false',  'eventorganiser_'.$tab_id);
 					add_settings_section( $tab_id.'_templates',__( 'Templates', 'eventorganiser' ), '__return_false',  'eventorganiser_'.$tab_id);
 					break;
@@ -101,6 +102,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 
 		switch( $tab_id){
 			case 'general':
+				
 				/* General - main */
 				add_settings_field( 'supports', __( 'Select which features events should support', 'eventorganiser' ), 'eventorganiser_checkbox_field', 'eventorganiser_'.$tab_id, $tab_id,
 					array(
@@ -508,6 +510,18 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	function display_imexport(){
 		do_action( 'eventorganiser_event_settings_imexport' ); 
 	}
+	
+	function display_licence_keys(){
+		global $wp_settings_fields;
+		$page = 'eventorganiser_general';
+		$section_id = 'general_licence';
+		if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section_id] ) ){
+			?>
+			<p> You do not have any add-ons activated. </p>
+			<?php
+		}
+	}
+	
 	
 	function display_permissions(){
 		global $wp_roles;
