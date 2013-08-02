@@ -12,7 +12,7 @@ class EventOrganiser_Shortcodes {
 	static $map = array();
 	static $event;
  
-	function init() {
+	static function init() {
 		add_shortcode('eo_calendar', array(__CLASS__, 'handle_calendar_shortcode'));
 		add_shortcode('eo_fullcalendar', array(__CLASS__, 'handle_fullcalendar_shortcode'));
 		add_shortcode('eo_venue_map', array(__CLASS__, 'handle_venuemap_shortcode'));

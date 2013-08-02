@@ -17,11 +17,11 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 	}
 
 	function add_page(){		
-		self::$page = add_submenu_page($this->hook,$this->title, $this->menu, $this->permissions,$this->slug,  array($this,'render_page'),10);
-		add_action('load-'.self::$page,  array($this,'page_actions'),9);
-		add_action('admin_print_scripts-'.self::$page,  array($this,'page_styles'),10);
-		add_action('admin_print_styles-'.self::$page,  array($this,'page_scripts'),10);
-		add_action("admin_footer-".self::$page,array($this,'footer_scripts'));
+		$this->page = add_submenu_page($this->hook,$this->title, $this->menu, $this->permissions,$this->slug,  array($this,'render_page'),10);
+		add_action('load-' . $this->page,  array($this,'page_actions'),9);
+		add_action('admin_print_scripts-' . $this->page,  array($this,'page_styles'),10);
+		add_action('admin_print_styles-' . $this->page,  array($this,'page_scripts'),10);
+		add_action("admin_footer-" . $this->page, array($this,'footer_scripts') );
 		if( !defined( "WP_DEBUG" ) || !WP_DEBUG ){
 			remove_submenu_page('edit.php?post_type=event',$this->slug);
 		}
