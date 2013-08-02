@@ -1,3 +1,4 @@
+var eventorganiser = eventorganiser || {};
 (function ($) {
 jQuery(document).ready(function () {
 
