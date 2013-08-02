@@ -3,8 +3,8 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 3.5.2
-Stable tag: 2.2
+Tested up to: 3.6
+Stable tag: 2.2.1
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -21,7 +21,6 @@ Event Organiser adds event management that integrates well with your WordPress s
 
 = What's new =
 * Category & Venue subscribe functions added
-* Venue map icons are now filtered - [allowing you to change the map icons](http://wp-event-organiser.com/blog/tutorial/changing-the-venue-map-icon/).
 * ICAL parser API now available for third-party plug-ins
 * Javascript actions and filters added
 
@@ -189,6 +188,16 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.2.1 =
+* Fixes bug introduced in 2.2 where styling is not loaded for admin calendar if there are no categories. [See #110](https://github.com/stephenharris/Event-Organiser/pull/110)
+* Fixes bug with sort order and grouping events. [See #115](https://github.com/stephenharris/Event-Organiser/issues/115)
+* Filter `eventorganiser_admin_fullcalendar_event` added for naming consistancy ( `eventorganiser_admin_fullcalendar_event` and `eventorganiser_fullcalendar_event` for admin/front-end fullCalendars)
+* Corrected inline documentation 
+* Fixed events with no event data becoming hidden. [#111](https://github.com/stephenharris/Event-Organiser/issues/111)
+* Fixes 3.6 strict errors
+* Fixes jQuery UI bugs (venue selection). Retains backwards compatibility for WP 3.3 & 3.4.
+
 
 = 2.2
 * Adds 'style' attribute for the feed subscribe shortcode
