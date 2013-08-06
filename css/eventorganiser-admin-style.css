@@ -34,7 +34,9 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .eo-cal-meta .form-table th {width:50px;}
 /*Drop down filters*/
 #eo_admin_calendar select { min-width:180px; width:auto}
-
+.ui-widget-overlay{z-index:1000;}
+.eo-admin-calendar-dialog{z-index:2000;}
+.eo-admin-calendar-dialog.ui-dialog .ui-dialog-titlebar-close span {margin: -8px;}
 #eo-dialog-tabs, #events-meta {border: none;padding: 0}
 
 /* Selectmenu
