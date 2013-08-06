@@ -406,7 +406,12 @@ $.widget("ui.selectmenu", {
 		var self = this, o = this.options;
 		
 		// make / set unique id
-		var selectmenuId = this.element.uniqueId().attr( "id" );
+		/* Backwards compat with WP 3.3-3.4 (jQuery UI 1.8.16-1.8.2)*/
+		var jquery_ui_version = $.ui ? $.ui.version || 0 : -1;
+		var selectmenuId = ( eventorganiser.versionCompare( jquery_ui_version, '1.9' ) >= 0 ) 
+				? this.element.uniqueId().attr( "id" )
+				: this.element.attr( 'id' ) || 'ui-selectmenu-' + Math.random().toString( 16 ).slice( 2, 10 );
+		
 
 		// quick array of button and menu id's
 		this.ids = [ selectmenuId, selectmenuId + '-button', selectmenuId + '-menu' ];
