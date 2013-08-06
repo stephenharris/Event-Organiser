@@ -81,8 +81,9 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		//See trac ticket: http://core.trac.wordpress.org/ticket/24813
 		if( !defined( 'SCRIPT_DEBUG' ) || !SCRIPT_DEBUG ){
 			$css = "<style type='text/css'>\n" . $css . "</style>";
-			wp_add_inline_style( 'eo_calendar-style', $css );
 		}
+		
+		wp_add_inline_style( 'eo_calendar-style', $css );
 	}
 
 	function page_actions(){
