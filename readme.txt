@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.6
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -189,13 +189,19 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 2.2.2 =
+* Fixes WP3.6 issues with dialogs and admin calendar 
+* Fixes js issues with WP3.3-3.4.
+* Fix WP3.6 strict error messages (in debug mode)
+* Ensures category colour CSS is printed in script debug mode
+
 = 2.2.1 =
 * Fixes bug introduced in 2.2 where styling is not loaded for admin calendar if there are no categories. [See #110](https://github.com/stephenharris/Event-Organiser/pull/110)
 * Fixes bug with sort order and grouping events. [See #115](https://github.com/stephenharris/Event-Organiser/issues/115)
 * Filter `eventorganiser_admin_fullcalendar_event` added for naming consistancy ( `eventorganiser_admin_fullcalendar_event` and `eventorganiser_fullcalendar_event` for admin/front-end fullCalendars)
 * Corrected inline documentation 
 * Fixed events with no event data becoming hidden. [#111](https://github.com/stephenharris/Event-Organiser/issues/111)
-* Fixes 3.6 strict errors
+* Fixes 3.6 strict errors (in debug mode)
 * Fixes jQuery UI bugs (venue selection). Retains backwards compatibility for WP 3.3 & 3.4.
 
 
