@@ -378,7 +378,7 @@ class EventOrganiser_Shortcodes {
 		return $input;
 	}
  
-	function print_script() {
+	static function print_script() {
 		global $wp_locale;
 		if ( ! self::$add_script ) return;
 		$fullcal = (empty(self::$calendars) ? array() : array(
