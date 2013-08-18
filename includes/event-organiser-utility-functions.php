@@ -595,10 +595,11 @@ function eventorganiser_radio_field( $args ){
 function eventorganiser_select_field($args){
 
 	$args = wp_parse_args($args,array(
-			'selected'=>'', 'help' => null, 'options'=>'', 'name'=>'', 'echo'=>1,
-			'label_for'=>'','class'=>'','disabled'=>false,'multiselect'=>false,
-			'inline_help' => false
-		));	
+		'selected'=>'', 'help' => null, 'options'=>'', 'name'=>'', 'echo'=>1,
+		'label_for'=>'','class'=>'','disabled'=>false,'multiselect'=>false,
+		'inline_help' => false, 'style' => false, 'data' => false,
+	));	
+	
 
 	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$name = isset($args['name']) ?  $args['name'] : '';
@@ -607,12 +608,21 @@ function eventorganiser_select_field($args){
 	$class = implode( ' ', $classes );
 	$multiselect = ($args['multiselect'] ? 'multiple' : '' );
 	$disabled = ($args['disabled'] ? 'disabled="disabled"' : '' );
-
+	$style = (  !empty($args['style']) ?  sprintf('style="%s"', $args['style']) : '' );
+	
+	//Custom data-* attributes
+	$data = '';
+	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
+		foreach( $args['data'] as $key => $attr_value ){
+			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+		}
+	}
+	
 	$html = sprintf('<select %s name="%s" id="%s" %s>',
 		!empty( $class ) ? 'class="'.$class.'"'  : '',
 			esc_attr($name),
 			esc_attr($id),
-			$multiselect.' '.$disabled
+			$multiselect.' '.$disabled.' '.$style. ' '.$data
 		);
 		if( !empty( $args['show_option_all'] ) ){
 			$html .= sprintf('<option value="" %s> %s </option>',selected( empty($selected), true, false ), esc_html( $args['show_option_all'] ) );
@@ -736,7 +746,7 @@ function eventorganiser_text_field($args){
 function eventorganiser_checkbox_field($args=array()){
 
 	$args = wp_parse_args($args,array(
-		 	 'help' => '','name'=>'', 'class'=>'',
+		 	 'help' => '','name'=>'', 'class'=>'', 'label_for' => '',
 			'checked'=>'', 'echo'=>true,'multiselect'=>false
 		));
 
