@@ -34,9 +34,9 @@ class EO_Widget_Categories extends WP_Widget {
 		
 		$cat_args = array(
 				'orderby' => 'name',
-				'hierarchical' => false,
+				'hierarchical' => $h,
 				'taxonomy' => $taxonomy,
-				'id' => 'eo-event-venue',
+				'id' => 'eo-event-cat',
 				'selected' => $selected
 		);
 		if ( $d ) {
@@ -51,7 +51,7 @@ class EO_Widget_Categories extends WP_Widget {
 	var event_dropdown = document.getElementById("eo-event-cat");
 	function eventorganiserDropdownChange() {
 		if ( event_dropdown.options[event_dropdown.selectedIndex].value != -1 ) {
-			location.href = "<?php echo home_url().'/'.$taxonomy.'=';?>"+event_dropdown.options[event_dropdown.selectedIndex].value;
+			location.href = "<?php echo home_url().'/?'.$taxonomy.'=';?>"+event_dropdown.options[event_dropdown.selectedIndex].value;
 		}
 	}
 	event_dropdown.onchange = eventorganiserDropdownChange;
