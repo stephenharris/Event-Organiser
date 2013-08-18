@@ -196,6 +196,7 @@ function eventorganiser_add_admin_scripts( $hook ) {
 			wp_enqueue_script('eo-edit-event-controller');
 			wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'wpversion' => get_bloginfo('version'),
 					'startday'=>intval(get_option('start_of_week')),
 					'format'=> eventorganiser_php2jquerydate( eventorganiser_get_option('dateformat') ),
 					'current_user_can' => array(

@@ -38,7 +38,7 @@ Domain Path: /languages
 /**
  * Set the plug-in database version
  */ 
-define( 'EVENT_ORGANISER_VER', '2.2.1' );
+define( 'EVENT_ORGANISER_VER', '2.2.2' );
 
 
 add_action( 'after_setup_theme', '_eventorganiser_set_constants' );

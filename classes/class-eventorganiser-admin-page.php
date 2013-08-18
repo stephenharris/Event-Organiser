@@ -4,12 +4,12 @@
  */
 class EventOrganiser_Admin_Page{
 
-	static $hook;
-	static $title;
-	static $menu;
-	static $permissions;
-	static $slug;
-	static $page;
+	var $hook;
+	var $title;
+	var $menu;
+	var $permissions;
+	var $slug;
+	var $page;
 
 	function __construct() {
 		add_action('admin_init', array($this,'admin_init_actions'));
@@ -21,11 +21,11 @@ class EventOrganiser_Admin_Page{
 	}
 
 	function add_page(){
-		self::$page = add_submenu_page($this->hook,$this->title, $this->menu, $this->permissions,$this->slug,  array($this,'render_page'),10);
-		add_action('load-'.self::$page,  array($this,'page_actions'),9);
-		add_action('admin_print_scripts-'.self::$page,  array($this,'page_styles'),10);
-		add_action('admin_print_styles-'.self::$page,  array($this,'page_scripts'),10);
-		add_action("admin_footer-".self::$page,array($this,'footer_scripts'));
+		$this->page = add_submenu_page($this->hook,$this->title, $this->menu, $this->permissions,$this->slug,  array($this,'render_page'),10);
+		add_action('load-'.$this->page,  array($this,'page_actions'),9);
+		add_action('admin_print_scripts-' . $this->page,  array($this,'page_styles'),10);
+		add_action('admin_print_styles-' . $this->page,  array($this,'page_scripts'),10);
+		add_action("admin_footer-" . $this->page, array($this,'footer_scripts'));
 	}
 	function footer_scripts(){
 	}

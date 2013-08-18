@@ -924,7 +924,7 @@ add_filter('get_edit_term_link','eventorganiser_edit_venue_link',10,3);
 
 class EO_Walker_TaxonomyDropdown extends Walker_CategoryDropdown{
 
-	function start_el(&$output, $category, $depth, $args) {
+	function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
 		$pad = str_repeat('&nbsp;', $depth * 3);
 		$cat_name = apply_filters('list_cats', $category->name, $category);
 

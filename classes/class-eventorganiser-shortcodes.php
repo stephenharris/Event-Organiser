@@ -12,16 +12,16 @@ class EventOrganiser_Shortcodes {
 	static $map = array();
 	static $event;
  
-	function init() {
+	static function init() {
 		add_shortcode('eo_calendar', array(__CLASS__, 'handle_calendar_shortcode'));
-		add_shortcode('eo_fullcalendar', array(__CLASS__, 'handle_fullcalendar_shortcode'));
+		add_shortcode('eo_fullcalendar', array( __CLASS__, 'handle_fullcalendar_shortcode'));
 		add_shortcode('eo_venue_map', array(__CLASS__, 'handle_venuemap_shortcode'));
 		add_shortcode('eo_events', array(__CLASS__, 'handle_eventlist_shortcode'));
 		add_shortcode('eo_subscribe', array(__CLASS__, 'handle_subscription_shortcode'));
 		add_action('wp_footer', array(__CLASS__, 'print_script'));
 	}
  
-	function handle_calendar_shortcode($atts=array()) {
+	static function handle_calendar_shortcode($atts=array()) {
 		global $post;
 
 		/* Shortcodes don't accept hyphens, so convert taxonomy names */
@@ -55,7 +55,7 @@ class EventOrganiser_Shortcodes {
 		return $html;
 	}
 
-	function handle_subscription_shortcode($atts, $content=null) {
+	static function handle_subscription_shortcode($atts, $content=null) {
 		extract( shortcode_atts( array(
 			'title' => 'Subscribe to calendar',
 			'type' => 'google',
@@ -94,7 +94,7 @@ class EventOrganiser_Shortcodes {
 		return $html;
 	}
 
-	function handle_fullcalendar_shortcode($atts=array()) {
+	static function handle_fullcalendar_shortcode($atts=array()) {
 
 		/* Handle Boolean attributes - this will be passed as strings, we want them as boolean */
 		$bool_atts = array(
@@ -118,7 +118,7 @@ class EventOrganiser_Shortcodes {
 		return eo_get_event_fullcalendar( $atts );
 	}
 
-	function handle_venuemap_shortcode($atts) {
+	static function handle_venuemap_shortcode($atts) {
 		global $post;
 
 		if( !empty($atts['event_venue']) )
@@ -156,7 +156,7 @@ class EventOrganiser_Shortcodes {
 
 
 
-	function handle_eventlist_shortcode($atts=array(),$content=null) {
+	static function handle_eventlist_shortcode($atts=array(),$content=null) {
 		$taxs = array('category','tag','venue');
 		foreach ($taxs as $tax){
 			if(isset($atts['event_'.$tax])){
@@ -378,7 +378,7 @@ class EventOrganiser_Shortcodes {
 		return $input;
 	}
  
-	function print_script() {
+	static function print_script() {
 		global $wp_locale;
 		if ( ! self::$add_script ) return;
 		$fullcal = (empty(self::$calendars) ? array() : array(

@@ -1,3 +1,46 @@
+var eventorganiser = eventorganiser || {};
+/**
+ * Simply compares two string version values.
+ * 
+ * Example:
+ * versionCompare('1.1', '1.2') => -1
+ * versionCompare('1.1', '1.1') =>  0
+ * versionCompare('1.2', '1.1') =>  1
+ * versionCompare('2.23.3', '2.22.3') => 1
+ * 
+ * Returns:
+ * -1 = left is LOWER than right
+ *  0 = they are equal
+ *  1 = left is GREATER = right is LOWER
+ *  And FALSE if one of input versions are not valid
+ *
+ * @function
+ * @param {String} left  Version #1
+ * @param {String} right Version #2
+ * @return {Integer|Boolean}
+ * @author Alexey Bass (albass)
+ * @since 2011-07-14
+ */
+eventorganiser.versionCompare = function(left, right) {
+    if (typeof left + typeof right != 'stringstring')
+        return false;
+    
+    var a = left.split('.')
+    ,   b = right.split('.')
+    ,   i = 0, len = Math.max(a.length, b.length);
+        
+    for (; i < len; i++) {
+        if ((a[i] && !b[i] && parseInt(a[i]) > 0) || (parseInt(a[i]) > parseInt(b[i]))) {
+            return 1;
+        } else if ((b[i] && !a[i] && parseInt(b[i]) > 0) || (parseInt(a[i]) < parseInt(b[i]))) {
+            return -1;
+        }
+    }
+    
+    return 0;
+}
+
+
 jQuery(document).ready(function($) {
 var eo_venue_obj;
 //Date fields must be wrapped inside event-date
@@ -69,17 +112,24 @@ $.widget("ui.combobox", {
 			}
 		};
 		var input = $("<input>").appendTo(wrapper).val(e).addClass("ui-combobox-input").autocomplete(options).addClass("ui-widget-content ui-corner-left");
-             
+       
+		/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
+		var jquery_ui_version = $.ui ? $.ui.version || 0 : -1;
+		var ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete' : 'autocomplete' );
+		
 		//Apend venue address to drop-down
-		input.data("autocomplete")._renderItem = function (a, b) {
+		input.data( ac_namespace )._renderItem = function (a, b) {
 			if (b.term_id == 0 ) {
-				return $("<li></li>").data("item.autocomplete", b).append("<a>" + b.label + "</a>").appendTo(a);
+				return $("<li></li>").data( ac_namespace + "-item", b ).append("<a>" + b.label + "</a>").appendTo(a);
 			}
 			//Clean address
 			var address_array = [b.venue_address, b.venue_city, b.venue_state,b.venue_postcode,b.venue_country];
 			var address = $.grep(address_array,function(n){return(n);}).join(', ');
-		
-			return $("<li></li>").data("item.autocomplete", b)
+			
+			/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
+			var li_ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete-item' : 'item.autocomplete' );
+
+			return $("<li></li>").data( li_ac_namespace, b)
 				.append("<a>" + b.label + "</br> <span style='font-size: 0.8em'><em>" +address+ "</span></em></a>").appendTo(a);
 		};
 

@@ -156,7 +156,7 @@ class EO_Calendar_Widget extends WP_Widget
 		echo $after_widget;
 	}
 
-	function add_options_to_script() {
+	static function add_options_to_script() {
 		wp_enqueue_script( 'eo_front' );
 		if( !empty( self::$widget_cal ) )
 			wp_localize_script( 'eo_front', 'eo_widget_cal', self::$widget_cal );	
@@ -167,7 +167,7 @@ class EO_Calendar_Widget extends WP_Widget
 	*
 	* @param $month - DateTime object for first day of the month (in blog timezone)
 	*/
-	function generate_output( $month, $args = array() ){
+	static function generate_output( $month, $args = array() ){
 
 		//Translations
 		global $wp_locale;

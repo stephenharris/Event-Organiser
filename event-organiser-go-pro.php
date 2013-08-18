@@ -28,11 +28,11 @@ class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
 	}
       
 	function add_page(){
-		self::$page = add_dashboard_page($this->title, $this->menu, $this->permissions,$this->slug,  array($this,'render_page'),10);
-		add_action('load-'.self::$page,  array($this,'page_actions'),9);
-		add_action('admin_print_scripts-'.self::$page,  array($this,'page_styles'),10);
-		add_action('admin_print_styles-'.self::$page,  array($this,'page_scripts'),10);
-		add_action("admin_footer-".self::$page,array($this,'footer_scripts'));
+		$this->page = add_dashboard_page($this->title, $this->menu, $this->permissions,$this->slug,  array($this,'render_page'),10);
+		add_action('load-' . $this->page,  array($this,'page_actions'),9);
+		add_action('admin_print_scripts-' . $this->page,  array($this,'page_styles'),10);
+		add_action('admin_print_styles-' . $this->page,  array($this,'page_scripts'),10);
+		add_action("admin_footer-" . $this->page, array($this,'footer_scripts'));
 		remove_submenu_page('index.php',$this->slug);
 	}
 

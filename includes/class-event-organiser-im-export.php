@@ -27,7 +27,7 @@ class Event_Organiser_Im_Export  {
 	/**
 	 * Handler for the action 'init'. Instantiates this class.
 	 */
-	public function get_object() {
+	static function get_object() {
 
 		if ( NULL === self :: $classobj ) {
 			self :: $classobj = new self;
