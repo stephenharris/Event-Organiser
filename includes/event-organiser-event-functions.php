@@ -419,7 +419,7 @@ function eo_the_end($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id=0){
 * </code>
 *
 * @since 1.0.0
-* @package event-date-functions
+* @package event-date-functions*
 * @param string $format The format to use, using PHP Date format
 * @param int $post_id The event (post) ID, 
 * @return string The formatted date or false if no date exists
@@ -456,7 +456,7 @@ function eo_get_next_occurrence_of($post_id=0){
 	$now_time =$blog_now->format('H:i:s');
 	
 	$nextoccurrence  = $wpdb->get_row($wpdb->prepare("
-		SELECT StartDate, StartTime, EndDate, FinishTime
+		SELECT event_id as occurrence_id, StartDate, StartTime, EndDate, FinishTime
 		FROM  {$wpdb->eo_events}
 		WHERE {$wpdb->eo_events}.post_id=%d
 		AND ( 
@@ -470,8 +470,9 @@ function eo_get_next_occurrence_of($post_id=0){
 
 	$start = new DateTime($nextoccurrence->StartDate.' '.$nextoccurrence->StartTime, $tz);
 	$end = new DateTime($nextoccurrence->EndDate.' '.$nextoccurrence->FinishTime, $tz);
+	$occurrence_id = $nextoccurrence->occurrence_id;
 
-	return compact('start','end');
+	return compact( 'start', 'end', 'occurrence_id');
 }
 
 
