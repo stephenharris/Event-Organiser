@@ -148,7 +148,11 @@ jQuery(document).ready(function () {
                         	},
                         	position: {
                         		my: "top center",
-                        		at: "bottom center"
+                        		at: "bottom center",
+                        		viewport: $(window),
+                        		adjust: {
+                                    method: 'shift none'
+                                }
                         	},
                         	hide: {
                         		fixed: true,
