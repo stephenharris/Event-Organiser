@@ -105,7 +105,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
     	echo $after_widget;
   }
 
-	function add_options_to_script() {
+	static function add_options_to_script() {
 		if(!empty(self::$agendas))
 			wp_localize_script( 'eo_front', 'eo_widget_agenda', self::$agendas);	
 	}
