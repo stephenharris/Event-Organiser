@@ -3,11 +3,8 @@
 .settings
 .buildpath
 .metadata
-compiler.jar
 apigen
 documentation
 dist
-externs.js
-externs-venue.js
-Makefile
-/wp-readme-2-github-readme.php
+node_modules
+Gruntfile.js
