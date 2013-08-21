@@ -49,9 +49,9 @@ Date.prototype.eoGetOrdinal = function () {
 function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
 	
 	//Helper array
-	var ical_weekdays = new Array("SU", "MO", "TU", "WE", "TH", "FR", "SA");
-	
-	var eo_occurrences_by_rule = [];
+	var ical_weekdays = new Array("SU", "MO", "TU", "WE", "TH", "FR", "SA"),
+	eo_occurrences_by_rule = [],
+	count_days, pointer;
 	
     //If event starts in previous month - how many days from start to first occurrence in current month?
     // Depends on occurrence (and 'stream' for weekly events.
@@ -61,17 +61,17 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
     		var formateddate = $.datepicker.formatDate('yy-mm-dd', rule.start);
     		eo_occurrences_by_rule.push(formateddate);
     		return eo_occurrences_by_rule;
-    		break;
-
+    	/*break;*/
+    		
     	case 'daily':
     		if ( rule.start < month_start ) {
-    			var count_days = Math.abs((month_start - rule.start) / (1000 * 60 * 60 * 24)) - 1;
+    			count_days = Math.abs((month_start - rule.start) / (1000 * 60 * 60 * 24)) - 1;
     			count_days = count_days % rule.frequency;
     		} else {
-    			var count_days = parseInt(rule.start.getDate());
+    			count_days = parseInt( rule.start.getDate(), 10 );
     		}
     		var skip = rule.frequency;
-    		var streams = new Array();
+    		var streams = [];
     		var start_stream = new Date(month_start);
     		start_stream.setDate(month_start.getDate() + (count_days - 1));
     		streams.push(start_stream);
@@ -80,7 +80,7 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
     	case 'weekly':
     		var month_start_day = month_start.getDay();
         
-    		streams = new Array();
+    		streams = [];
     		$.each(rule.schedule_meta, function(index, value ) {
     			index = ical_weekdays.indexOf(value);
     			start_stream = new Date(rule.start);
@@ -98,7 +98,7 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
         //These are easy
         case 'monthly':
         	var month_difference = (month_start.getFullYear() - rule.start.getFullYear()) * 12 + ( month_start.getMonth() - rule.start.getMonth() );
-        	if (month_difference % rule.frequency != 0) {
+        	if (month_difference % rule.frequency !== 0) {
         		return;
         	}
         	
@@ -107,25 +107,25 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
         		var daysinmonth = month_end.getDate();
         		if ( day <= daysinmonth) {
         			//If valid date
-        			var pointer = new Date( month_start.getFullYear(), month_start.getMonth(), day);
+        			pointer = new Date( month_start.getFullYear(), month_start.getMonth(), day);
         		}
             } else {
         		//e.g. 3rd friday of month:
             	var matches = rule.schedule_meta.match(/BYDAY=(\d+)(MO|TU|WE|TH|FR|SA|SU)/);
-            	var n = parseInt(matches[1]) -1;    //0=>first,1=>second,...,4=>last            	
-        		var occurrence_day = rule.start.getDay();
+            	var n = parseInt( matches[1], 10 ) -1;    //0=>first,1=>second,...,4=>last            	
+        		var occurrence_day = rule.start.getDay(), occurence_date;
 
         		if (n >= 5) {
         			//Last day
         			var month_end_day = month_end.getDay();
-        			var occurence_date = month_end.getDate() + (occurrence_day - month_end_day - 7) % 7;
+        			occurence_date = month_end.getDate() + (occurrence_day - month_end_day - 7) % 7;
         		} else {
         			//Want date of (n+1)th X of month. 
         			month_start_day = month_start.getDay();//0=sun,..
         			var offset = (occurrence_day - month_start_day + 7) % 7;//How many days till first X of the month
         			occurence_date = offset + n * 7 + 1;
         		}
-        		var pointer = new Date(month_start);
+        		pointer = new Date(month_start);
         		pointer.setDate(occurence_date);
             }
     		
@@ -135,11 +135,11 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
     			eo_occurrences_by_rule.push(formateddate);
     		}
     		return eo_occurrences_by_rule;
-        break;
+        /*break;*/
 
         case 'yearly':
         	var year_difference = (month_start.getFullYear() - rule.start.getFullYear());
-        	if (year_difference % rule.frequency != 0) {
+        	if (year_difference % rule.frequency !== 0) {
         		return eo_occurrences_by_rule;
         	}
 
@@ -155,11 +155,11 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
         		}
         	}
         	return eo_occurrences_by_rule;
-        break;
+        /*break;*/
 
         default:
         	return eo_occurrences_by_rule;
-        break;
+        /*break;*/
 
     }
     //End switch
@@ -199,7 +199,7 @@ window.eventOrganiserSchedulePicker = {
             	//When rule changes, wipe include/exclude dates clean
             	//TODO
                 self.update_occurrencepicker_rules();
-            };
+            }
         });
         
         //Initiate form
@@ -232,7 +232,7 @@ window.eventOrganiserSchedulePicker = {
 	                	changeYear: true,
 	                	monthNamesShort: locale.monthAbbrev,
 	                	dayNamesMin: locale.dayAbbrev,
-	                	firstDay: parseInt(this.options.startday)
+	                	firstDay: parseInt( this.options.startday, 10 )
 					})
 					.data('eo-datepicker','schedule_last');
 		}	
@@ -244,7 +244,7 @@ window.eventOrganiserSchedulePicker = {
             changeYear: true,
             monthNamesShort: locale.monthAbbrev,
             dayNamesMin: locale.dayAbbrev,
-            firstDay: parseInt(this.options.startday),
+            firstDay: parseInt( this.options.startday, 10 ),
             onSelect: function(selectedDate) {
             	//Ensure that start date comes before end date
                 var option = ( 'start' == $(this).data('eo-datepicker')? "minDate": "maxDate" ),
@@ -272,7 +272,7 @@ window.eventOrganiserSchedulePicker = {
                 changeYear: true,
                 monthNamesShort: locale.monthAbbrev,
                 dayNamesMin: locale.dayAbbrev,
-                firstDay: parseInt(this.options.startday),
+                firstDay: parseInt( this.options.startday, 10 ),
                 onSelect: function( date ){
                 		eventOrganiserSchedule.add_or_remove_date( date );
             	        $( eventOrganiserSchedulePicker.options.views.include ).val(eventOrganiserSchedule.include.join(',\r\n'));
@@ -320,8 +320,8 @@ window.eventOrganiserSchedulePicker = {
 		
     //When rule changes, wipe include/exclude dates clean
 	update_occurrencepicker_rules: function() {
-        eo_exclude_dates = new Array();
-        eo_include_dates = new Array();
+        eo_exclude_dates = [];
+        eo_include_dates = [];
         //eo_update_inc_ex_Input();
         this.schedule.generate_dates_by_rule(eo_viewing_month[0], eo_viewing_month[1], {});
         $(this.options.views.occurrence_picker).datepicker("refresh");
@@ -354,7 +354,7 @@ window.eventOrganiserSchedulePicker = {
 	    
 	    var schedule ={
 	    	schedule: $(views.schedule).val(),
-	    	frequency: parseInt($(views.frequency).val()),
+	    	frequency: parseInt( $(views.frequency).val(), 10 ),
 	    	schedule_last: $(views.schedule_last_date).datepicker("getDate"),
 	    	start: $(views.start_date).datepicker("getDate"),
 	    	end: $(views.end_date).datepicker("getDate"),
@@ -365,7 +365,7 @@ window.eventOrganiserSchedulePicker = {
 
 	    if( schedule.schedule == 'weekly' ){
 	    	schedule.schedule_meta = [];
-			if ( $(views.week_repeat+" :checkbox:checked").length == 0) {
+			if ( $(views.week_repeat+" :checkbox:checked").length === 0) {
 				var day = schedule.start.getDay();
 	        	$(views.week_repeat+" :checkbox[value='" + c[day] + "']").attr("checked", true);
 	        }
@@ -378,7 +378,7 @@ window.eventOrganiserSchedulePicker = {
 	    		schedule.schedule_meta = "BYMONTHDAY=" + schedule.start.getDate();
 	    	}else{
 	        	var dayInt = schedule.start.getDay() % 7;
-	        	var n = parseInt(Math.floor((schedule.start.getDate() - 1) / 7));
+	        	var n = parseInt( Math.floor((schedule.start.getDate() - 1) / 7), 10 );
 	        	schedule.schedule_meta = "BYDAY=" + (n+1) + c[dayInt];
 	    	}
 	    }
@@ -512,8 +512,7 @@ eventOrganiserSchedule = {
 		generate_dates_by_rule: function(year,month,inst){
 		    
 	    	//month is 1-12.
-	        var eo_occurrences_by_rule = new Array();
-	        eo_viewing_month = [year, month];
+	        var eo_occurrences_by_rule = [], eo_viewing_month = [year, month];
 	        
 	        //Get month start/end dates. Date expects month 0-11.
 	        var month_start = new Date(year, month-1, 1);
@@ -553,7 +552,8 @@ eventOrganiserSchedule = {
 	        
 	        	case "once":
 	        		return "This event will be a one-time event";
-	        	break;
+	        	/*break;*/
+	        	
 	        	case "custom":
 	        	case "daily":
 	        		if ( this.frequency > 1) {
@@ -583,7 +583,7 @@ eventOrganiserSchedule = {
 	        			summary = summary + " " + this.start.getDate() + this.start.eoGetOrdinal();
 	                } else {
 	                	var matches = this.schedule_meta.match(/BYDAY=(\d+)(MO|TU|WE|TH|FR|SA|SU)/);
-	                	var n = parseInt(matches[1]) -1;
+	                	var n = parseInt( matches[1], 10 ) -1;
 	                	summary = summary + " " + locale.occurrence[n] + " " + b[c.indexOf(matches[2])];
 	                }
 	            break;
@@ -598,7 +598,7 @@ eventOrganiserSchedule = {
 	        	break;
 	        }
 	        
-	        if ( this.schedule_last != null ) {
+	        if ( this.schedule_last !== null ) {
 	            summary = summary + " " + locale.until + " " + $.datepicker.formatDate("MM d'" + this.schedule_last.eoGetOrdinal() + "' yy", this.schedule_last, options);
 	        }
 	        
@@ -631,11 +631,10 @@ eventOrganiserSchedule = {
 
 	    //When a date is selected, add or remove it based on current state
 	    add_or_remove_date: function (date, inst) {
-
-	        var isEventful = eventOrganiserSchedule.is_date_eventful(date);
+	        var isEventful = eventOrganiserSchedule.is_date_eventful(date),index;
 	        if ( isEventful[0] ) {
 	            //Date is eventful. Remove date
-	            var index = isEventful[1];
+	            index = isEventful[1];
 	            if ( index > -1 ) {
 	                //Date was manually included
 	            	eventOrganiserSchedule.include.splice(index, 1);
