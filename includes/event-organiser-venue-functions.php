@@ -671,7 +671,7 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 			'pancontrol'=>true, 'overviewmapcontrol'=>true, 'streetviewcontrol'=>true,
 			'maptypecontrol'=>true, 'draggable'=>true,'maptypeid' => 'ROADMAP',
 			'width' => '100%','height' => '200px','class' => '',
-			'tooltip'=>false
+			'tooltip' => true
 			), $args );
 
 		//Cast zoom as integer
@@ -708,7 +708,7 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 			$tooltip_content = '<strong>'.eo_get_venue_name($venue_id).'</strong>';
 			$address = array_filter(eo_get_venue_address($venue_id));
 			if( !empty($address) )
-				$tooltip_content .='</br>'.implode(', ',$address);
+				$tooltip_content .='<br />'.implode(', ',$address);
 			
 			$tooltip_content = apply_filters( 'eventorganiser_venue_tooltip', $tooltip_content, $venue_id, $args );
 			
