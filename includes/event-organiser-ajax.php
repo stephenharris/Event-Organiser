@@ -164,8 +164,10 @@ function eventorganiser_public_fullcalendar() {
 			endif;
 
 			//Event colour
-			if( eo_get_event_color() )
+			if( eo_get_event_color() ) {
 				$event['color'] = eo_get_event_color();
+				$event['textColor'] = eo_get_event_textcolor( $event['color'] );
+			}
 
 			//Add event to array
 			$event = apply_filters('eventorganiser_fullcalendar_event',$event, $post->ID,$post->occurrence_id);
@@ -356,8 +358,10 @@ function eventorganiser_admin_calendar() {
 				endif;
 
 				//Event colour
-				if( eo_get_event_color() )
+				if( eo_get_event_color() ) {
 					$event['color'] = eo_get_event_color();
+					$event['textColor'] = eo_get_event_textcolor( $event['color'] );
+				}
 
 				//Event summary
 				$event['summary'] = '<div id="eo-cal-meta">'.$summary.'</div>';
