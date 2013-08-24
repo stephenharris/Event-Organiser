@@ -24,6 +24,7 @@
  * @param string|constant $format How to format the date, see http://php.net/manual/en/function.date.php  or DATETIMEOBJ constant to return the datetime object.
  * @return string|dateTime The formatted date
 */
+
 function eo_format_datetime($datetime,$format='d-m-Y'){
 	global  $wp_locale;
 
@@ -675,7 +676,7 @@ function eventorganiser_text_field($args){
 		array(
 		 	'type' => 'text', 'value'=>'', 'placeholder' => '','label_for'=>'', 'inline_help' => false,
 			 'size'=>false, 'min' => false, 'max' => false, 'style'=>false, 'echo'=>true, 'data'=>false,
-			'class' => false,
+			'class' => false, 'required' => false,
 			)
 		);		
 
@@ -692,6 +693,8 @@ function eventorganiser_text_field($args){
 	$style = (  !empty($args['style']) ?  sprintf('style="%s"', $args['style']) : '' );
 	$placeholder = ( !empty($args['placeholder']) ? sprintf('placeholder="%s"', $args['placeholder']) : '');
 	$disabled = ( !empty($args['disabled']) ? 'disabled="disabled"' : '' );
+	$required = ( !empty($args['required']) ? 'required="required"' : '' );
+	
 
 	//Custom data-* attributes
 	$data = '';
@@ -701,7 +704,7 @@ function eventorganiser_text_field($args){
 		}
 	}
 
-	$attributes = array_filter( array($min,$max,$size,$placeholder,$disabled, $style, $data ) );
+	$attributes = array_filter( array($min,$max,$size,$placeholder,$disabled, $disabled, $style, $data ) );
 
 	$html = sprintf('<input type="%s" name="%s" class="%s regular-text ltr" id="%s" value="%s" autocomplete="off" %s /> %s',
 		esc_attr( $type ), 
