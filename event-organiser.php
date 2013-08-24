@@ -190,10 +190,6 @@ if ( is_admin() ):
 	
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-debug.php');
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-go-pro.php');
-else:
-	if( defined( 'WP_DEBUG' ) && WP_DEBUG ){
-		require_once(EVENT_ORGANISER_DIR.'includes/debug.php');
-	}
 
 endif;
 

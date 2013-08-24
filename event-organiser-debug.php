@@ -31,7 +31,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 		
 		
 		$eo_debugger = new EventOrganiser_Debugger();
-		$eo_debugger->set_prequiste( 'WordPress', '3.3', '3.5.1');
+		$eo_debugger->set_prequiste( 'WordPress', '3.3', '3.6');
 		//$eo_debugger->set_known_plugin_conflicts();
 		//$eo_debugger->set_known_theme_conflicts();
 		$eo_debugger->set_db_tables( 'eo_events', 'eo_venuemeta' );
@@ -83,98 +83,89 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				
 		<table class="widefat">
 				<tr>
-					<th><?php esc_html_e('Site url');?></th>
+					<th> Site url </th>
 					<td><?php echo site_url(); ?></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('Home url');?></th>
+					<th> Home url </th>
 					<td><?php echo home_url(); ?></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('Multisite');?></th>
+					<th> Multisite </th>
 					<td><?php echo is_multisite() ? 'Yes' : 'No' ?></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('Event Organiser version');?></th>
+					<th> Event Organsier version </th>
 					<td><?php echo EVENT_ORGANISER_VER; ?></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('WordPress');?></th>
+					<th> WordPress </th>
 					<td>
 					<?php $eo_debugger->verbose_prequiste_check( 'WordPress', get_bloginfo( 'version' ) );?>
 					</td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('PHP Version');?></th>
+					<th> PHP Version </th>
 					<td> <?php echo PHP_VERSION; ?></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('MySQL Version');?></th>
+					<th> MySQL Version </th>
 					<td> <?php echo mysql_get_server_info(); ?></td>
 				</tr>    
 				<tr>
-					<th><?php esc_html_e('Web Server');?></th>
+					<th> Web Server </th>
 					<td> <?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
 				</tr>      
 				<tr>
-					<th><?php esc_html_e('PHP Memory Usage');?></th>
+					<th> PHP Memory Usage </th>
 					<th><?php echo $eo_debugger->verbose_memory_check(); ?>
 				</tr>   
 				<tr>
-					<th><?php esc_html_e('PHP Post Max Size');?></th>
+					<th> PHP Post Max Size </th>
 					<td><?php echo ini_get('post_max_size'); ?></td>
 				</tr>   
 				<tr>
-					<th><?php esc_html_e('PHP Upload Max Size');?></th>
+					<th> PHP Upload Max Size </th>
 					<td><?php echo ini_get('upload_max_filesize'); ?></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('PHP cURL Support');?></th>
+					<th> PHP cURL Support </th>
 					<td>  <?php echo (function_exists('curl_init')) ? _e('Yes', 'eventorganiser') . "\n" : _e('No', 'eventorganiser') . "\n"; ?></td>
 				</tr>        
 				<tr>
-					<th><?php esc_html_e('Plug-ins');?></th>
+					<th> Plug-ins </th>
 					<td>
 					<?php $eo_debugger->verbose_plugin_check();?>
 					</td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('Theme');?></th>
+					<th> Theme </th>
 					<td>
 					<?php $eo_debugger->verbose_theme_check();?>
 					</td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('Databse Prefix:');?></th>
+					<th> Databse Prefix: </th>
 					<td><?php global $wpdb; echo $wpdb->prefix; ?></td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('Database tables');?></th>
+					<th> Database tables </th>
 					<td>
 					<?php $eo_debugger->verbose_database_check();?>
 					</td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('Database character set');?></th>
+					<th> Database character set </th>
 					<td>
 					<?php $eo_debugger->verbose_database_charset_check();?>
 					</td>
 				</tr>
 				<tr>
-					<th><?php esc_html_e('Debug mode');?></th>
+					<th> Debug mode </th>
 					<td><?php echo defined( 'WP_DEBUG' ) && WP_DEBUG ? 'Enabled' : 'Disabled'; ?></td>
 				</tr>
-				
 				<tr>
-					<th><?php printf( esc_html__( '%s present', 'eventorganiser' ), '<code>wp_footer()</code>' );?></th>
-					<td><?php $eo_debugger->verbose_footer_check();?></td>
-				</tr>	
-				<tr>
-					<th><?php esc_html_e('Widget Sidebars');?></th>
-					<td><?php $eo_debugger->verbose_sidebar_check();?></td>
-				</tr>	
-				<tr>
-					<th><?php esc_html_e('Timezone');?></th>
+					<th> Timezone') </th>
 					<td><?php echo eo_get_blog_timezone()->getName(); printf( ' ( %s / %s ) ', get_option( 'gmt_offset' ), get_option( 'timezone_string' ) )?></td>
 				</tr>
 		</table>
@@ -339,36 +330,7 @@ class EventOrganiser_Debugger{
 			);
 		}
 	}
-	
-	function verbose_sidebar_check(){
-		$footer_present = get_option( 'eo_sidebar_correct' );
 
-		if( $footer_present === false ){
-			printf(
-				'<span class="%s">%s</span><br/> %s',
-				esc_attr( $this->alert_class ),
-				__( 'Unknown', 'eventorganiser' ),
-				sprintf( __( 'Turn <a href="%s">WP_Debug mode</a> on and revisit the front-end to check' ), 'http://codex.wordpress.org/WP_DEBUG' )
-		);
-		}elseif( $footer_present == 1 ){
-			printf(
-				'<span class="%s">%s</span><br/> %s',
-				esc_attr( $this->ok_class ),
-				__( 'Correctly registered', 'eventorganiser' ),
-				sprintf( __( 'Turn <a href="%s">WP_Debug mode</a> on and revisit the front-end to check' ), 'http://codex.wordpress.org/WP_DEBUG' )
-			);
-		}else{
-			printf(
-				'<span class="%s">%s</span><br/> %s',
-				esc_attr( $this->warning_class ),
-				__( 'Incorrectly registered', 'eventorganiser' ),
-				sprintf(
-					__( "The widget sidebars are incorrectly registered. See the <a href='%s'>FAQ</a> or contact support to resolve this." ),
-					'http://wp-event-organiser.com/faq#i-cannot-navigate-between-months-on-the-widget-calendar'
-				)
-			);
-		}
-	}
 	
 	function verbose_memory_check(){
 
@@ -389,36 +351,6 @@ class EventOrganiser_Debugger{
 			);
 		}
 
-	}
-	
-	function verbose_footer_check(){
-		$footer_present = get_option( 'eo_wp_footer_present' );
-		
-		if( $footer_present === false ){
-			printf(
-				'<span class="%s">%s</span><br/> %s',
-				esc_attr( $this->alert_class ),
-				__( 'Unknown', 'eventorganiser' ),
-				sprintf( __( 'Turn <a href="%s">WP_Debug mode</a> on and revisit the front-end to check' ), 'http://codex.wordpress.org/WP_DEBUG' )
-			);
-		}elseif( $footer_present == 1 ){
-			printf(
-				'<span class="%s">%s</span><br/> %s',
-				esc_attr( $this->ok_class ),
-				__( 'Yes', 'eventorganiser' ),
-				sprintf( __( 'Turn <a href="%s">WP_Debug mode</a> on and revisit the front-end to check' ), 'http://codex.wordpress.org/WP_DEBUG' )
-			);
-		}else{
-			printf(
-				'<span class="%s">%s</span><br/> %s',
-				esc_attr( $this->warning_class ),
-				__( 'No', 'eventorganiser' ),
-				sprintf( 
-					__( "The <a href='%s'>wp_footer hook</a> could be not be found. Without, for example, the calendar will not function" ), 
-					'http://codex.wordpress.org/Function_Reference/wp_footer' 
-				)
-			);
-		}
 	}
 	
 	public function download_debug_info(){
