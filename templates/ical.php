@@ -99,7 +99,6 @@ EXDATE<?php echo $vdate;?>:<?php echo implode(',',$exclude_strings);?>
 				$include_strings[] = $include->format('Ymd');
 			}
 	}?>
-
 RDATE<?php echo $vdate;?>:<?php echo implode(',',$include_strings);?>
 
 <?php endif; ?>
