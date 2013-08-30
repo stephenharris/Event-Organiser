@@ -225,6 +225,15 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 										'http://wp-event-organiser/documentation/editing-templates'
 									)
 					) );
+				
+				add_settings_field( 'disable_css',  __("Disable CSS:", 'eventorganiser' ), 'eventorganiser_checkbox_field' , 'eventorganiser_'.$tab_id, $tab_id.'_templates',
+					array(
+						'label_for' => 'disable_css',
+						'name' => 'eventorganiser_options[disable_css]',
+						'options' => 1,
+						'checked' => eventorganiser_get_option( 'disable_css' ),
+						'help' => __( 'Check this option to prevent any stylesheets from Event Organiser being loaded on the front-end', 'eventorganiserp' )
+				));
 				break;
 
 
@@ -305,7 +314,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		
 		switch ( $tab ){
 			case 'general':
-				$checkboxes  = array( 'showpast', 'templates', 'excludefromsearch', 'deleteexpired', 'feed', 'group_events' );
+				$checkboxes  = array( 'showpast', 'templates', 'excludefromsearch', 'deleteexpired', 'feed', 'group_events', 'disable_css' );
 				$text = array( 'navtitle', 'dateformat', 'runningisnotpast', 'addtomenu' );
 
 				foreach ( $checkboxes as $cb ){

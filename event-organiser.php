@@ -139,6 +139,7 @@ function eventorganiser_get_option( $option = false, $default = false ){
 		'showpast' => 0,
 		'runningisnotpast' => 0,
       	'hide_addon_page' => 0,
+      	'disable_css' => 0,
       );
       $options = get_option( 'eventorganiser_options', $defaults );
       $options = wp_parse_args( $options, $defaults );
