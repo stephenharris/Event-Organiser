@@ -123,7 +123,7 @@ function eventorganiser_create_event_taxonomies() {
   		));
 endif;
 }
-add_action( 'init', 'eventorganiser_create_event_taxonomies', 10 );
+add_action( 'init', 'eventorganiser_create_event_taxonomies', 1 );
 
 
 /**
