@@ -2,6 +2,23 @@
 /**
  *@package deprecated
  */
+
+/**
+ * Returns a the url which adds a particular occurrence of an event to
+ * a google calendar. Must be used inside the loop.
+ *
+ * @since 1.2.0
+ * @deprecated 2.3.0
+ * @see eo_get_add_to_google_link()
+ *
+ * @param int $post_id Optional, the event (post) ID,
+ * @return string Url which adds event to a google calendar
+ */
+function eo_get_the_GoogleLink(){
+	_deprecated_function( __FUNCTION__, '2.3', 'eo_get_add_to_google_link()' );
+	return eo_get_add_to_google_link();
+}
+
 /** 
 * Returns an array of DateTime objects for each start date of occurrence
 * @since 1.0.0

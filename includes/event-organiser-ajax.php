@@ -536,7 +536,7 @@ function eventorganiser_widget_agenda() {
 				'color'=>eo_get_event_color(),
 				'event_url'=>get_permalink(),
 				'link'=>'<a href="'.get_permalink().'">'.__('View','eventorganiser').'</a>',
-				'Glink'=>'<a href="'.eo_get_the_GoogleLink().'" target="_blank">'.__('Add To Google Calendar','eventorganiser').'</a>'
+				'Glink'=>'<a href="'.eo_get_add_to_google_link().'" target="_blank">'.__('Add To Google Calendar','eventorganiser').'</a>'
 			);
 		endforeach;
 
