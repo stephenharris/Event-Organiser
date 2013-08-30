@@ -1,0 +1,23 @@
+{
+  "name": "event-organiser",
+  "version": "2.3.0",
+  "description": "Event mangement plugin for WordPress",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stephenharris/Event-Organiser.git"
+  },
+  "author": "Stephen Harris",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/stephenharris/Event-Organiser/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-shell": "~0.3.1",
+    "grunt-contrib-compress": "~0.5.2",
+    "grunt-wp-readme-to-markdown": "~0.1.0"
+  }
+}

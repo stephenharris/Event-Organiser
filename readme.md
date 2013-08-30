@@ -1,11 +1,11 @@
 # Event Organiser #
-**Contributors:** stephenharris  
-**Donate link:** http://www.wp-event-organiser.com/donate  
-**Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
-**Requires at least:** 3.3  
-**Tested up to:** 3.6  
-**Stable tag:** 2.2.2  
-**License:** GPLv3  
+**Contributors:** stephenharris
+**Donate link:** http://www.wp-event-organiser.com/donate
+**Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
+**Requires at least:** 3.3
+**Tested up to:** 3.6
+**Stable tag:** 2.2.2
+**License:** GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
@@ -116,7 +116,7 @@ Unfortunately its impossible for the default templates to work with *every* them
 
 ### How do I display events? ###
 
-**Events are automatically displayed on the events page:** try `www.your-wordpress-site.com/?post_type=event` (If you have permalinks enabled these will have 'prettier' versions). Similarly there are venue and event category pages. Each of these pages have their own associated template which are present in the **template** sub-directory of the Event Organiser plug-in folder. To override the default templates, simply create the appropriately named files in your theme directory.  
+**Events are automatically displayed on the events page:** try `www.your-wordpress-site.com/?post_type=event` (If you have permalinks enabled these will have 'prettier' versions). Similarly there are venue and event category pages. Each of these pages have their own associated template which are present in the **template** sub-directory of the Event Organiser plug-in folder. To override the default templates, simply create the appropriately named files in your theme directory.
 
 **Widgets**
 The plug-in also provides the following widgets ([see widget documentation](http://wp-event-organiser.com/documentation/widgets/)):
@@ -174,28 +174,28 @@ Event Organiser provides the following shortcodes:
 * `[eo_calendar]`  - displays a widget-calendar of your events, similiar to WordPress' calendar, and navigated with AJAX.
 * `[eo_fullcalendar]`  - displays a calendar, similiar to the admin calendar, with optional month, week and day views and category and venue filters.
 * `[eo_venue_map]` - displays a Google map of the current venue, or of a particular venue given as an attribute.
-*** `[eo_subscribe]` - wraps the content in a link which allows visitors to subscribe to your events; there are two types:** 'Google' and 'Webcal'.  
+* `[eo_subscribe]` - wraps the content in a link which allows visitors to subscribe to your events; there are two types: 'Google' and 'Webcal'.
 
 More information on shortcodes is [available here](http://wp-event-organiser.com/documentation/shortcodes/)
 
 ## Screenshots ##
 
-###1. Event admin screen###
+### 1. Event admin screen ###
 ![Event admin screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-1.png)
 
-###2. Venue admin screen###
+### 2. Venue admin screen ###
 ![Venue admin screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-2.png)
 
-###3. Event details metabox, showing the full reoccurrence options and venue selection###
+### 3. Event details metabox, showing the full reoccurrence options and venue selection ###
 ![Event details metabox, showing the full reoccurrence options and venue selection](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-3.png)
 
-###4. Venue editing screen, with Google Maps###
+### 4. Venue editing screen, with Google Maps ###
 ![Venue editing screen, with Google Maps](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-4.png)
 
-###5. Calendar View screen###
+### 5. Calendar View screen ###
 ![Calendar View screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-5.png)
 
-###6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)###
+### 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven) ###
 ![View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-6.png)
 
 
@@ -223,7 +223,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Adds `eo_get_event_category_feed()` and `eo_get_event_venue_feed()` functions. See [docs](http://codex.wp-event-organiser.com).
 * Fixes errors with "Organiser" metabox.  [#106](https://github.com/stephenharris/Event-Organiser/pull/106)
 * Fixes bug with `eo_get_event_classes()` function
-*** Added 'show long events' otion for widget calendar:** Show all days of events spanning multiple days on the widget calendar, not just the first.  
+*** Added 'show long events' otion for widget calendar:** Show all days of events spanning multiple days on the widget calendar, not just the first.
 * Added 'link to single event' option for widget calendar. If a day has only one event, link directly to that event, not the day archive.###
 * Fixes conflict with Yoast SEO plug-in ( http://wordpress.org/support/topic/events-are-missing-information?replies=6 )
 * Fixes colours not appearing on admin calendar drop-down [#109](https://github.com/stephenharris/Event-Organiser/pull/109)
@@ -393,9 +393,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * 'Under the hood' improvements
 * Improved documentation & source-code comments
 * More tags for shortcode & event list widget template - [see this page](http://wp-event-organiser.com/documentation/shortcodes/event-list-shortcode/)
-*** Extra hooks available, see:** http://wp-event-organiser.com/documentation/developers/hooks/  
+*** Extra hooks available, see:** http://wp-event-organiser.com/documentation/developers/hooks/
 * Various bug fixes and major code refactoring (especially of javascript).
-*** Improved default location for venues:** https://github.com/stephenh1988/Event-Organiser/issues/3  
+*** Improved default location for venues:** https://github.com/stephenh1988/Event-Organiser/issues/3
 
 A special thanks to **kuemerle** and **csaba-erdei**.
 
@@ -460,7 +460,7 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 * Fixes a weekly schedule bug, occurs for some users.
 
 ### 1.4 ###
-*** A big update:** venue address data migrated to new venue meta table  
+*** A big update:** venue address data migrated to new venue meta table
 * Introduces support for venue meta data and custom metaboxes (see )
 * Improved venue admin page UI
 
@@ -481,7 +481,7 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 
 ### 1.3.3 ###
 * Added 'no events' option for event list widget
-*** Added template tags for widget/shortcode:** `%cat_color%` and `%event_excerpt%`  
+*** Added template tags for widget/shortcode:** `%cat_color%` and `%event_excerpt%`
 * Added hook `eventorganiser_calendar_event_link` to alter full calendar event link
 * Added `eo_has_event_started`, `eo_has_event_finished`, `eo_event_color`,`eo_get_blog_timezone` functions
 * Fixed the following bugs
@@ -560,7 +560,7 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 * Option to decide when event is past
 * Show all occurrences of an event or 'group occurrences'
 * Improved user-interface
-*** Added template functions:** `eo_get_the_occurrences`, `eo_get_the_venues`, `eo_event_venue_dropdown`, `eo_event_category_dropdown`, `eo_is_allday`, `eo_get_the_GoogleLink`, `eo_get_events_feed`. See [template functions documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/)  
+*** Added template functions:** `eo_get_the_occurrences`, `eo_get_the_venues`, `eo_event_venue_dropdown`, `eo_event_category_dropdown`, `eo_is_allday`, `eo_get_the_GoogleLink`, `eo_get_events_feed`. See [template functions documentation](http://www.harriswebsolutions.co.uk/event-organiser/documentation/function-reference/)
 * Localisation (currently translations for French and Portugese (Brazil) are included)
 * Improved default templates
 * Fixed bugs [reported here](http://www.harriswebsolutions.co.uk/event-organiser/forums/forum/bugs/)

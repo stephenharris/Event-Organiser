@@ -1,3 +1,5 @@
+if ( typeof EO_SCRIPT_DEBUG === 'undefined') { EO_SCRIPT_DEBUG = true;}
+
 var eventorganiser = eventorganiser || {};
 (function ($) {
 jQuery(document).ready(function () {
@@ -62,7 +64,7 @@ jQuery(document).ready(function () {
 			$('html, body').animate({
 				scrollTop: Math.max( offset.top + 40 - $(window).height(),$(window).scrollTop())
 			});
-			if( $('#eo-upcoming-dates li:hidden').length == 0 ){
+			if( $('#eo-upcoming-dates li:hidden').length === 0 ){
 				$('#eo-upcoming-dates-more,#eo-upcoming-dates-pipe').hide();
 			}
 		});
@@ -99,7 +101,7 @@ jQuery(document).ready(function () {
 				timeFormat: calendars[i].timeformat,
 				editable: false,
 				tooltip: calendars[i].tooltip,
-				firstDay: parseInt(eventorganiser.fullcal.firstDay),
+				firstDay: parseInt( eventorganiser.fullcal.firstDay, 10 ),
 				weekends: calendars[i].weekends,
 				allDaySlot: calendars[i].alldayslot,
 				allDayText: calendars[i].alldaytext,
@@ -126,10 +128,10 @@ jQuery(document).ready(function () {
 						var c = $(v.calendar.options.id).find(".filter-category .eo-cal-filter").val();
 						var d = $(v.calendar.options.id).find(".filter-venue .eo-cal-filter").val();
 					
-						if (typeof c !== "undefined" && c != "" && $.inArray(c, a.category) < 0 ) {
+						if (typeof c !== "undefined" && c !== "" && $.inArray(c, a.category) < 0 ) {
                             	return "<div></div>";
                         }
-                        if (typeof d !== "undefined" && d != "" && d != a.venue) {
+                        if (typeof d !== "undefined" && d !== "" && d != a.venue) {
                             	return "<div></div>";
                         }
                         
@@ -194,10 +196,10 @@ jQuery(document).ready(function () {
                 					users_events: d.users_events
                 			};
                 			
-                			if (typeof d.category !== "undefined" &&d.category != "") {
+                			if (typeof d.category !== "undefined" &&d.category !== "") {
                 				request.category = d.category
                 			}
-                			if (typeof d.venue !== "undefined" &&d.venue != "") {
+                			if (typeof d.venue !== "undefined" &&d.venue !== "") {
                 				request.venue = d.venue
                 			}
                 			
@@ -207,7 +209,20 @@ jQuery(document).ready(function () {
                 				url: eventorganiser.ajaxurl + "?action=eventorganiser-fullcal",
                 				dataType: "JSON",
                 				data: request,
-                				success: c
+                				success: c,
+                				complete: function( r, status ){
+                					if ( EO_SCRIPT_DEBUG ) {
+                						if( status == "error" ){
+                							 
+                						}else if( status == "parsererror" ){
+                							if( window.console ){
+                								console.log( "Response is not valid JSON. This is usually caused by error notices from WordPress or other plug-ins" ); 
+                								console.log( "Response reads: " + r.responseText );
+                							}
+                  							alert( "An error has occurred in parsing the response. Please inspect console log for details" );
+                						} 
+                					}
+                				}
                 			})
                 		},
                 	selectable: false,
@@ -238,8 +253,7 @@ jQuery(document).ready(function () {
 			dateFormat: 'DD, d MM, yy',
 			changeMonth: true,
 			changeYear: true,
-			dateFormat: 'DD, d MM, yy',
-			firstDay: parseInt(eventorganiser.fullcal.firstDay),
+			firstDay: parseInt( eventorganiser.fullcal.firstDay, 10 ),
 			buttonText: EOAjaxFront.locale.gotodate,
 			monthNamesShort: EOAjaxFront.locale.monthAbbrev,
 			dayNamesMin: EOAjaxFront.locale.dayAbbrev,
@@ -278,13 +292,13 @@ jQuery(document).ready(function () {
         }
 
         if ($('.eo-agenda-widget').length > 0) {
-            function getEvents(a, b) {
+            function eventorganiserGetEvents(a, b) {
                 $.ajax({
                     url: EOAjaxFront.adminajax,
                     dataType: "JSON",
                     data: {
                         action: "eo_widget_agenda",
-                        instance_number: b["number"],
+                        instance_number: b.number,
                         direction: a,
                         start: b.StartDate,
                         end: b.EndDate
@@ -293,8 +307,8 @@ jQuery(document).ready(function () {
                         if (!jQuery.isArray(a) || !a[0]) {
                             return false
                         } else {
-                            b["StartDate"] = a[0].StartDate;
-                            b["EndDate"] = a[a.length - 1].StartDate;
+                            b.StartDate = a[0].StartDate;
+                            b.EndDate = a[a.length - 1].StartDate;
                             populateAgenda(a, b)
                         }
                     }
@@ -305,25 +319,26 @@ jQuery(document).ready(function () {
                 var dateList = agendaWidget.find("ul.dates");
                 var dates = dateList.find("li");
                 $(dates).remove();
-                var current = "";
+                var current = false;
                 for (i = 0; i < a.length; i++) {
-                    var d = new Date(a[i].StartDate);
-                    if (current == "" || current != a[i].StartDate && b
-                        .mode == "day") {
+                    var d = new Date(a[i].StartDate),currentList,c;
+                    
+                    if ( current === false || current != a[i].StartDate && b.mode == "day" ) {
                         current = a[i].StartDate;
-                        var currentList = $('<li class="date" >' + a[i].display + '<ul class="a-date"></ul></li>');
+                        currentList = $('<li class="date" >' + a[i].display + '<ul class="a-date"></ul></li>');
                         dateList.append(currentList)
                     }
-		if( b.add_to_google ){
-                    var c = $('<li class="event"></li>').append('<span class="cat"></span><span><strong>' + a[i].time + ": </strong></span>" + a[i]
-                        .post_title)
-                        .append('<div class="meta" style="display:none;"><span>' + a[i].link + "</span><span>   </span><span>" + a[i]
-                        .Glink + "</span></div>");
-		}else{
-                    var c = $('<li class="event"></li>').append("<a class='eo-agenda-event-permalink' href='"+a[i].event_url+"'><span class='cat'></span><span><strong>" + a[i].time + ": </strong></span>" + a[i]
-                        .post_title+"</a>")
-		}
-                 c.find("span.cat")
+                    if( b.add_to_google ){
+                    	c = $('<li class="event"></li>').append('<span class="cat"></span><span><strong>' + a[i].time + ": </strong></span>" + a[i]
+                        	.post_title)
+                        	.append('<div class="meta" style="display:none;"><span>' + a[i].link + "</span><span>   </span><span>" + a[i]
+                        	.Glink + "</span></div>");
+                    }else{
+                    	c = $('<li class="event"></li>').append("<a class='eo-agenda-event-permalink' href='"+a[i].event_url+"'><span class='cat'></span><span><strong>" + a[i].time + ": </strong></span>" + a[i]
+                        	.post_title+"</a>")
+                    }
+                    
+                    c.find("span.cat")
                         .css({
                         background: a[i].color
                     });
@@ -338,28 +353,29 @@ jQuery(document).ready(function () {
             }
             for (var agenda in eo_widget_agenda) {
                 agenda = eo_widget_agenda[agenda];
-                var d = new Date;
+                var d = new Date();
                 agenda.StartDate = $.fullCalendar.formatDate(d, "yyyy-MM-dd");
                 agenda.EndDate = agenda.StartDate;
-                getEvents(1, agenda)
+                eventorganiserGetEvents( 1, agenda )
             }
             $(".eo-agenda-widget .agenda-nav span.button").click(function (a) {
                 var id = $(this).parents(".eo-agenda-widget").attr("id");
                 agenda = eo_widget_agenda[id];
                 a.preventDefault();
+                var dir = false;
                 if ($(this).hasClass("next")) {
-                    var dir = "+1"
+                	dir = "+1"
                 } else if ($(this).hasClass("prev")) {
-                    var dir = "-1"
+                    dir = "-1"
                 } else {
                     var par = $(this).parent();
                     if (par.hasClass("prev")) {
-                        var dir = "-1"
+                        dir = "-1"
                     } else {
-                        var dir = "+1"
+                        dir = "+1"
                     }
                 }
-                getEvents(dir, agenda)
+                eventorganiserGetEvents( dir, agenda )
             })
         }
     });
@@ -371,7 +387,7 @@ function eveorg_getParameterByName(a, b) {
     var c = "[\\?&]" + a + "=([^&#]*)";
     var d = new RegExp(c);
     var e = d.exec(b);
-    if (e == null) return "";
+    if (e === null) return "";
     else return decodeURIComponent(e[1].replace(/\+/g, " "))
 }
 
@@ -404,11 +420,11 @@ function eo_load_map() {
 		//  Create a new viewpoint bound
 		var bounds = new google.maps.LatLngBounds();
 
-		var LatLngList = new Array();
+		var LatLngList = [];
 		for( var j=0; j<locations.length; j++){
 			var lat = locations[j].lat;
         		var lng = locations[j].lng;
-        		if (lat !== undefined && lng != undefined) {
+        		if (lat !== undefined && lng !== undefined) {
 				LatLngList.push(new google.maps.LatLng(lat, lng));
 			  	bounds.extend (LatLngList[j]);
 			  	
@@ -425,7 +441,7 @@ function eo_load_map() {
 				var c = new google.maps.Marker(marker_options);				
 				eventorganiser.map[i].markers[locations[j].venue_id] = c;
 
-				if( 'false' != maps[i].tooltip ){
+				if( maps[i].tooltip ){
 					google.maps.event.addListener(c, 'click',eventorganiser_venue_tooltip);
 				}
         	}

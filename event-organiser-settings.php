@@ -54,6 +54,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			switch ( $tab_id){
 				case 'general':
 					register_setting( 'eventorganiser_'.$tab_id, 'eventorganiser_options', array( $this, 'validate' ) );
+					add_settings_section( $tab_id.'_licence', __( 'Add-on Licence keys', 'eventorganiser' ), array( $this, 'display_licence_keys' ), 'eventorganiser_'.$tab_id );
 					add_settings_section( $tab_id,__( 'General', 'eventorganiser' ), '__return_false',  'eventorganiser_'.$tab_id);
 					add_settings_section( $tab_id.'_templates',__( 'Templates', 'eventorganiser' ), '__return_false',  'eventorganiser_'.$tab_id);
 					break;
@@ -101,6 +102,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 
 		switch( $tab_id){
 			case 'general':
+				
 				/* General - main */
 				add_settings_field( 'supports', __( 'Select which features events should support', 'eventorganiser' ), 'eventorganiser_checkbox_field', 'eventorganiser_'.$tab_id, $tab_id,
 					array(
@@ -223,6 +225,15 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 										'http://wp-event-organiser/documentation/editing-templates'
 									)
 					) );
+				
+				add_settings_field( 'disable_css',  __("Disable CSS:", 'eventorganiser' ), 'eventorganiser_checkbox_field' , 'eventorganiser_'.$tab_id, $tab_id.'_templates',
+					array(
+						'label_for' => 'disable_css',
+						'name' => 'eventorganiser_options[disable_css]',
+						'options' => 1,
+						'checked' => eventorganiser_get_option( 'disable_css' ),
+						'help' => __( 'Check this option to prevent any stylesheets from Event Organiser being loaded on the front-end', 'eventorganiserp' )
+				));
 				break;
 
 
@@ -303,7 +314,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		
 		switch ( $tab ){
 			case 'general':
-				$checkboxes  = array( 'showpast', 'templates', 'excludefromsearch', 'deleteexpired', 'feed', 'group_events' );
+				$checkboxes  = array( 'showpast', 'templates', 'excludefromsearch', 'deleteexpired', 'feed', 'group_events', 'disable_css' );
 				$text = array( 'navtitle', 'dateformat', 'runningisnotpast', 'addtomenu' );
 
 				foreach ( $checkboxes as $cb ){
@@ -361,7 +372,20 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 				$permissions = (isset( $option['permissions'] ) ? $option['permissions'] : array() );
 				$this->update_roles( $permissions );
 			break;
+			
+			default:
+				$keys = array( 'hide_addon_page' );
+				foreach( $keys as $key ){
+					if( !isset( $option[$key] ) )
+						continue;
+					
+					$clean[$key] = (int) $option[$key];
+					
+				}
+			
+			break;
 		}
+		
 
 		$existing_options = get_option( 'eventorganiser_options', array() );
 		$clean = array_merge( $existing_options, $clean );
@@ -508,6 +532,23 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	function display_imexport(){
 		do_action( 'eventorganiser_event_settings_imexport' ); 
 	}
+	
+	function display_licence_keys(){
+		global $wp_settings_fields;
+		$page = 'eventorganiser_general';
+		$section_id = 'general_licence';
+		$addon_link = esc_url( admin_url( 'edit.php?post_type=event&page=eo-addons' ) );
+		if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section_id] ) ){
+			?>
+			<p> You do not have any add-ons activated. You can view the <a href="<?php echo $addon_link; ?>">available add-ons here</a>.</p>
+			<?php
+		}else{
+			?>
+			<p> Below are the add-ons you have activated. You can find a full list of <a href="<?php echo $addon_link; ?>">available add-ons here</a>. </p>
+			<?php
+		}
+	}
+	
 	
 	function display_permissions(){
 		global $wp_roles;
