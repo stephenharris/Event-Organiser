@@ -136,7 +136,7 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 			<div style="clear:both"></div>
 
 			<p>
-			<strong><a href="http://wp-event-organiser.com/pro-features?aid=7"><?php _e('Find out more &hellip;', 'eventorganiser')?></a></strong>
+			<strong><a href="http://wp-event-organiser.com/extensions?aid=7"><?php _e('Find out more &hellip;', 'eventorganiser')?></a></strong>
 			</p>
 			
 		</div><!-- .wrap -->
@@ -191,7 +191,7 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 			<span style="height:20px;display:block"></span>
 			<?php if( $addon['url'] ): ?>
 				<a href="<?php echo $addon['url'];?>" title="<?php echo $addon['title']; ?>" class="button-secondary">
-					Get this Add On
+					<?php echo ( 'available' == $addon['status'] ) ? 'Get this Add On' : 'Find out more &hellip;'; ?>
 				</a>
 			<?php endif; ?>
 		</div>
