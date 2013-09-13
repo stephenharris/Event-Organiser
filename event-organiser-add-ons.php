@@ -16,8 +16,8 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
      */
 	function set_constants(){
 		$this->hook = 'edit.php?post_type=event';
-		$this->title =  __('Event Organiser Add-Ons','eventorganiser');
-		$this->menu =__('Add-ons','eventorganiser');
+		$this->title =  __('Event Organiser Extensions','eventorganiser');
+		$this->menu =__('Extensions','eventorganiser');
 		$this->permissions ='manage_options';
 		$this->slug ='eo-addons';
 	}
@@ -73,23 +73,14 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 	function page_styles(){
 		?>
 		<style>
-		.eo-addon {
-			float: left;margin: 0 5% 5% 5%;background: #f0f0f0;border: 1px solid #ccc;width: 21%;padding: 8px;
-			height: 375px;position: relative;font-size: 13px;border-radius: 3px;
-		}
+		.eo-addon {float: left;margin: 0 5% 5% 5%;background: #f0f0f0;border: 1px solid #ccc;width: 21%;padding: 8px;height: 375px;position: relative;font-size: 13px;border-radius: 3px;}
 		.eo-addon .img-wrap{text-align:center;}
-		.eo-addon img{
-			text-align:center;width: 90%;margin:auto;border: 3px solid white;box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-			-webkit-box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.3 );box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.3 );border-radius: 3px;
-		}
+		.eo-addon img{text-align:center;width: 90%;margin:auto;border: 3px solid white;box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);-webkit-box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.3 );box-shadow: 0 1px 3px rgba( 0, 0, 0, 0.3 );border-radius: 3px;}
 		.eo-addon .button-secondary{bottom: 7px;position: absolute;}
 		.eo-addon h3 {margin: 0 0 8px;padding: 0px;font-size: 13px;}
 		#eo-addons-wrap{ margin-top: 30px; }
 		.eo-addon-text{ color: #777;margin: 1em 200px 1.4em 0;min-height: 60px;font-size: 15px; }
-		.eo-coming-soon-text{
-			text-align: center;font-weight: bold;display: block;font-size: 14px;text-transform: uppercase;
-			margin-top: 10px;color: #1E8CBE;text-shadow: 1px 1px #F9F9F9;letter-spacing: 1px;
-		}
+		.eo-coming-soon-text{text-align: center;font-weight: bold;display: block;font-size: 14px;text-transform: uppercase;margin-top: 10px;color: #1E8CBE;text-shadow: 1px 1px #F9F9F9;letter-spacing: 1px;}
 		</style>
 		<?php
 	}
@@ -101,11 +92,11 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 	?>
 		<div class="wrap">  
 			
-			<h2> <?php esc_html_e('Event Organiser Add-ons', 'eventorganiser'); ?></h2>
+			<h2> <?php esc_html_e('Event Organiser Extensions', 'eventorganiser'); ?></h2>
 
 			<div class="eo-addon-text">
 				<?php 
-					echo '<p>'.__( 'Event Organiser offers a range of add-ons which add additional features to the plug-in.', 'eventorganiser' ) . '</p>';
+					echo '<p>'.__( 'Event Organiser offers a range of extension which add additional features to the plug-in.', 'eventorganiser' ) . '</p>';
 					$settings_link = esc_url( admin_url( 'options-general.php?page=event-settings' ) );
 				?>
 				<label><input type="checkbox" id="eo-submenu-toggle" <?php checked( eventorganiser_get_option( 'hide_addon_page' ), 1 );?>/>
