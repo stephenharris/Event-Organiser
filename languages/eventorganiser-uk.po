@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-07-02 12:56:15+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-09-03 06:12:47+0000\n"
+"Last-Translator: Alexey Kislukhin <asd-dnepr@ukr.net>\n"
 "Language-Team: \n"
 "Language: Ukrainian\n"
 "MIME-Version: 1.0\n"
@@ -114,7 +114,7 @@ msgstr "Додати подію"
 #: ../event-organiser-venues.php:227
 #: ../event-organiser-venues.php:265
 msgid "Add New"
-msgstr ""
+msgstr "Додати нове"
 
 #: ../includes/event-organiser-cpt.php:67
 msgid "Add New Category"
@@ -334,7 +334,7 @@ msgstr "інша повторюваність"
 
 #: ../event-organiser-edit.php:106
 msgid "daily"
-msgstr "денно"
+msgstr "кожного дня"
 
 #: ../event-organiser-debug.php:133
 msgid "Database character set"
@@ -543,7 +543,7 @@ msgstr "Категорії подій"
 
 #: ../templates/taxonomy-event-category.php:31
 msgid "Event Category Archives: %s"
-msgstr "Архіви категорії подій: %s"
+msgstr "Архіви категорії подій: %"
 
 #: ../classes/class-eo-agenda-widget.php:42
 msgid "Event date/time format"
@@ -793,7 +793,7 @@ msgstr "Для отимання детальнішої інформації"
 
 #: ../includes/event-organiser-cpt.php:490
 msgid "Found a bug?"
-msgstr ""
+msgstr "Знайшли помилку?"
 
 #: ../includes/event-organiser-register.php:215
 #: ../includes/event-organiser-event-functions.php:530
@@ -1030,7 +1030,7 @@ msgstr "Місячний архів"
 
 #: ../event-organiser-edit.php:107
 msgid "monthly"
-msgstr "місячно"
+msgstr "щомісяця"
 
 #: ../includes/event-organiser-register.php:202
 msgid "months"
@@ -1303,7 +1303,7 @@ msgstr "Шукати події"
 
 #: ../event-organiser-venues.php:230
 msgid "Search results for &#8220;%s&#8221;"
-msgstr "Результати пошуку для &#8220;%s&#8221;"
+msgstr "Результати пошуку для &#8220;%&#8221;"
 
 #: ../includes/event-organiser-cpt.php:93
 msgid "Search Tags"
@@ -1518,7 +1518,7 @@ msgstr "Ця подія буде повторюватися"
 
 #: ../event-organiser-edit.php:63
 msgid "This is a reoccurring event"
-msgstr "Це - повторювана подія"
+msgstr "Це - подія що повторюється"
 
 #: ../includes/event-organiser-cpt.php:457
 msgid "This is the list of all saved events. Note that <strong> reoccurring events "
@@ -1740,15 +1740,15 @@ msgstr "тижні (тижнів)"
 
 #: ../event-organiser-welcome.php:23
 msgid "Welcome"
-msgstr ""
+msgstr "Ласкаво просимо"
 
 #: ../event-organiser-welcome.php:51
 msgid "Welcome to Event Organiser %s"
-msgstr ""
+msgstr "Ласкаво просимо до Органайзера подій  %s"
 
 #: ../event-organiser-welcome.php:24
 msgid "Welcome View"
-msgstr ""
+msgstr "Ласкаво просимо"
 
 #: ../event-organiser-calendar.php:232
 msgid "When"
@@ -1776,7 +1776,7 @@ msgstr "Річни архів"
 
 #: ../event-organiser-edit.php:107
 msgid "yearly"
-msgstr "річно"
+msgstr "раз на рік"
 
 #: ../includes/event-organiser-register.php:204
 msgid "years"

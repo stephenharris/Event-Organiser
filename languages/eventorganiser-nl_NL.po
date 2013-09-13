@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-07-02 12:56:15+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-09-04 07:48:09+0000\n"
+"Last-Translator: Nils <nils.marse@gmail.com>\n"
 "Language-Team: \n"
 "Language: Dutch; Flemish (Netherlands)\n"
 "MIME-Version: 1.0\n"
@@ -55,7 +55,7 @@ msgstr ""
 
 #: ../classes/class-eo-event-list-widget.php:90
 msgid "'No events' message"
-msgstr ""
+msgstr "\"Geen evenementen\" bericht"
 
 #: ../includes/class-event-organiser-im-export.php:489
 msgid "1 category was created"
@@ -90,7 +90,8 @@ msgstr ""
 
 #: ../classes/class-eo-widget-categories.php:10
 msgid "A list or dropdown of event categories"
-msgstr ""
+msgstr "Een lijst of dropdown van evenementen categorieen\n"
+""
 
 #: ../classes/class-eo-widget-venues.php:10
 msgid "A list or dropdown of event venues"
@@ -212,7 +213,8 @@ msgstr "Auteur"
 #: ../event-organiser-debug.php:56
 msgid "Below any <strong>known</strong> plug-in and theme conflicts are highlighted "
 "in red."
-msgstr ""
+msgstr "Hieronder staan de <strong>bekende>/strong> plugin en thema problemen "
+"gemarkeerd in rood."
 
 #: ../includes/event-organiser-ajax.php:329
 msgid "Break this series"
@@ -412,7 +414,7 @@ msgstr ""
 
 #: ../classes/class-eo-widget-categories.php:96
 msgid "Display as dropdown"
-msgstr ""
+msgstr "Geef weer als dropdown"
 
 #: ../event-organiser-settings.php:113
 #: ../event-organiser-settings.php:140
@@ -532,7 +534,7 @@ msgstr "Evenement categorie archief: %s"
 
 #: ../classes/class-eo-agenda-widget.php:42
 msgid "Event date/time format"
-msgstr ""
+msgstr "Evenement datum/tijd formaat"
 
 #: ../event-organiser-edit.php:351
 msgid "Event dates were not saved."
@@ -567,7 +569,7 @@ msgstr "Event Organiser instellingen"
 
 #: ../event-organiser-debug.php:73
 msgid "Event Organiser version"
-msgstr ""
+msgstr "Event Organiser versie"
 
 #: ../event-organiser-settings.php:201
 msgid "Event page:"
@@ -802,7 +804,7 @@ msgstr "Huidige datum"
 
 #: ../classes/class-eo-agenda-widget.php:30
 msgid "Group by"
-msgstr ""
+msgstr "Groepeer op"
 
 #: ../classes/class-eo-agenda-widget.php:38
 msgid "Group date format"
@@ -822,7 +824,7 @@ msgstr "Verberg datums"
 
 #: ../event-organiser-debug.php:65
 msgid "Home url"
-msgstr ""
+msgstr "Homepagina adres"
 
 #: ../includes/event-organiser-register.php:195
 msgid "Hour"
@@ -1014,7 +1016,9 @@ msgstr "maanden"
 #: ../event-organiser-debug.php:52
 msgid "Most bugs arise from theme or plug-in conflicts. You can check this by "
 "disabling all other plug-ins and switching to TwentyTweleve."
-msgstr ""
+msgstr "De meeste problemen komen door een thema of plugin conflict. Je kan dit "
+"controleren door alle plugins uit te schakelen en dan over te schakelen naar "
+"het standaard thema TwentyTwelve."
 
 #: ../event-organiser-debug.php:69
 msgid "Multisite"
@@ -1022,7 +1026,7 @@ msgstr ""
 
 #: ../event-organiser-debug.php:87
 msgid "MySQL Version"
-msgstr ""
+msgstr "MySQL versie"
 
 #: ../includes/event-organiser-cpt.php:68
 msgid "New Category Name"
@@ -1179,7 +1183,7 @@ msgstr ""
 
 #: ../event-organiser-debug.php:83
 msgid "PHP Version"
-msgstr ""
+msgstr "PHP versie"
 
 #: ../event-organiser-settings.php:540
 msgid "Please note to enable these structures you must first have pretty permalinks "
@@ -1350,7 +1354,7 @@ msgstr "Toon afgelopen evenementen"
 
 #: ../event-organiser-debug.php:61
 msgid "Site url"
-msgstr ""
+msgstr "website adres"
 
 #: ../event-organiser-venues.php:428
 msgid "Slug"
@@ -1501,7 +1505,8 @@ msgstr "Dit is de lijst van alle evenementen. Evenementen die herhalen staan bij
 #: ../event-organiser-debug.php:47
 msgid "This page highlights useful information for debugging. If you're reporting a "
 "bug, please include this information."
-msgstr ""
+msgstr "Deze pagina laat belangrijke informatie voor debuggen zien. Graag deze "
+"informatie bijsluiten als je een fout rapporteert."
 
 #: ../includes/event-organiser-cpt.php:476
 msgid "This page shows all (occurrances of) events. You can view the summary of an "
@@ -1684,7 +1689,7 @@ msgstr "'Door te klikken op bekijken komt u op de Lokatie-pagina."
 
 #: ../event-organiser-debug.php:91
 msgid "Web Server"
-msgstr ""
+msgstr "Webserver"
 
 #: ../event-organiser-calendar.php:57
 msgid "week"
@@ -1708,7 +1713,7 @@ msgstr "Welkom"
 
 #: ../event-organiser-welcome.php:51
 msgid "Welcome to Event Organiser %s"
-msgstr ""
+msgstr "Welkom bij Event organiser"
 
 #: ../event-organiser-welcome.php:24
 msgid "Welcome View"
@@ -1728,7 +1733,7 @@ msgstr ""
 
 #: ../event-organiser-debug.php:77
 msgid "WordPress"
-msgstr ""
+msgstr "Wordpress"
 
 #: ../includes/event-organiser-register.php:203
 msgid "year"

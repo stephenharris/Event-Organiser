@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-07-17 09:04:33+0000\n"
+"PO-Revision-Date: 2013-07-24 05:58:21+0000\n"
 "Last-Translator: kuncili <kuncili@gmail.com>\n"
 "Language-Team: \n"
 "Language: Turkish (Turkey)\n"
@@ -51,7 +51,7 @@ msgstr "%s, %s versiyon %s veya daha yükseğine ihtiyaç duyar."
 
 #: ../event-organiser-manage.php:189
 msgid "&mdash; No Change &mdash;"
-msgstr ""
+msgstr "- Değişik Yok -"
 
 #: ../classes/class-eo-event-list-widget.php:90
 msgid "'No events' message"
@@ -135,7 +135,7 @@ msgstr ""
 
 #: ../includes/event-organiser-ajax.php:521
 msgid "Add To Google Calendar"
-msgstr ""
+msgstr "Google Takvim'e Ekle"
 
 #: ../event-organiser-venues.php:342
 msgid "Add Venue"
@@ -147,7 +147,7 @@ msgstr ""
 
 #: ../includes/event-organiser-cpt.php:62
 msgid "All Categories"
-msgstr ""
+msgstr "Tüm Kategoriler"
 
 #: ../includes/event-organiser-cpt.php:426
 msgid "All dates and times must be entered in the specified format. This format can "
@@ -156,25 +156,25 @@ msgstr ""
 
 #: ../event-organiser-edit.php:97
 msgid "All day"
-msgstr ""
+msgstr "Tüm gün"
 
 #: ../includes/event-organiser-ajax.php:516
 #: ../includes/event-organiser-event-functions.php:1021
 msgid "All Day"
-msgstr ""
+msgstr "Tüm Gün"
 
 #: ../includes/event-organiser-cpt.php:145
 msgid "All events"
-msgstr ""
+msgstr "Tüm etkinlikler"
 
 #: ../includes/event-organiser-cpt.php:94
 msgid "All Tags"
-msgstr ""
+msgstr "Tüm Etiketler"
 
 #: ../includes/event-organiser-cpt.php:31
 #: ../classes/class-eo-event-list-widget.php:47
 msgid "All Venues"
-msgstr ""
+msgstr "Tüm Mekanlar"
 
 #: ../templates/taxonomy-event-category.php:120
 msgid "Apologies, but no events were found for the requested category. "
@@ -820,7 +820,7 @@ msgstr "Ana sayfa adresi"
 
 #: ../includes/event-organiser-register.php:195
 msgid "Hour"
-msgstr ""
+msgstr "Saat"
 
 #: ../includes/event-organiser-cpt.php:463
 msgid "Hovering over a row in the venues list will display action links that allow "
@@ -949,7 +949,7 @@ msgstr ""
 #: ../templates/taxonomy-event-venue.php:48
 #: ../templates/taxonomy-event-venue.php:105
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
-msgstr ""
+msgstr "Eski etkinlikler"
 
 #: ../includes/class-event-organiser-im-export.php:431
 #: ../includes/class-event-organiser-im-export.php:457
@@ -966,7 +966,7 @@ msgstr "Yükleniyor..."
 
 #: ../includes/event-organiser-cpt.php:227
 msgid "M j, Y @ G:i"
-msgstr ""
+msgstr "M j, Y @ G:i"
 
 #: ../event-organiser-settings.php:73
 #: ../event-organiser.php:109
@@ -1004,7 +1004,7 @@ msgstr "aylık"
 
 #: ../includes/event-organiser-register.php:202
 msgid "months"
-msgstr ""
+msgstr "aylar"
 
 #: ../event-organiser-debug.php:52
 msgid "Most bugs arise from theme or plug-in conflicts. You can check this by "
@@ -1049,11 +1049,11 @@ msgstr "Hayır"
 
 #: ../includes/event-organiser-cpt.php:69
 msgid "No categories found"
-msgstr ""
+msgstr "Herhangi bir kategori bulunamadı."
 
 #: ../includes/event-organiser-cpt.php:148
 msgid "No events found"
-msgstr ""
+msgstr "Herhangi bir etkinlik bulunamadı."
 
 #: ../includes/event-organiser-cpt.php:149
 msgid "No events found in Trash"
@@ -1106,7 +1106,7 @@ msgstr ""
 #: ../templates/shortcode-event-list.php:52
 #: ../templates/widget-event-list.php:49
 msgid "on"
-msgstr ""
+msgstr "@"
 
 #: ../event-organiser-edit.php:106
 msgid "once"
@@ -1134,7 +1134,7 @@ msgstr "Düzenleyici"
 #: ../includes/event-organiser-cpt.php:456
 #: ../includes/event-organiser-cpt.php:475
 msgid "Overview"
-msgstr ""
+msgstr "Önizleme"
 
 #: ../event-organiser-settings.php:554
 msgid "Page list (fallback)"
