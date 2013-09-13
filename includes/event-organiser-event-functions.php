@@ -419,7 +419,7 @@ function eo_the_end($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id=0){
 * </code>
 *
 * @since 1.0.0
-* @package event-date-functions*
+* @package event-date-functions
 * @param string $format The format to use, using PHP Date format
 * @param int $post_id The event (post) ID, 
 * @return string The formatted date or false if no date exists
@@ -1120,7 +1120,7 @@ function eo_get_event_venue_feed( $venue_slug_or_id ){
  * <code>
  *    <?php 
  *      //Inside the loop 
- *      $url = eo_get_add_to_google_link()();
+ *      $url = eo_get_add_to_google_link();
  *      echo '<a href="'.esc_url($url).'" title="Click to add this event to a Google calendar"> Add to Google </a>'; 
  *      ?>
  * </code>
