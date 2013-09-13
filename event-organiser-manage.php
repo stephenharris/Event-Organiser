@@ -172,8 +172,14 @@ function eventorganiser_quick_edit_box( $column_name, $post_type ) {
 	<?php wp_nonce_field( 'eventorganiser_event_quick_edit', '_eononce' );?>
 		<label class="">
 			<span class="title">Event Venue</span><?php
-			$args = array( 'show_option_all' => 'No venue', 'orderby' => 'name', 'hide_empty' => 0, 'name' => 'eo_input[event-venue]', 'id' => 'eventorganiser_venue', 'taxonomy' => 'event-venue' );
-			 wp_dropdown_categories( $args ); ?>
+			wp_dropdown_categories( array( 
+				'show_option_all' => 'No venue', 
+				'orderby' => 'name', 
+				'hide_empty' => 0, 
+				'name' => 'eo_input[event-venue]', 
+				'id' => 'eventorganiser_venue', 
+				'taxonomy' => 'event-venue' 
+			) ); ?>
 	</label>
 	</div></fieldset>
 	<?php
@@ -231,11 +237,11 @@ add_action( 'admin_head-edit.php', 'eventorganiser_quick_edit_script' );
 function eventorganiser_quick_edit_script() { ?>
     <script type="text/javascript">
     jQuery(document).ready(function() {
-        jQuery( 'a.editinline' ).live( 'click', function() {
-		jQuery( '#eventorganiser_venue option' ).attr("selected", false);
-		var id = inlineEditPost.getId(this);
-		var val = parseInt(jQuery( '#post-' + id + ' td.column-venue input' ).val() );
-		jQuery( '#eventorganiser_venue option[value="'+val+'"]' ).attr( 'selected', 'selected' );
+        jQuery( '#the-list' ).on( 'click', 'a.editinline', function() {
+			jQuery( '#eventorganiser_venue option' ).attr("selected", false);
+			var id = inlineEditPost.getId(this);
+			var val = parseInt(jQuery( '#post-' + id + ' td.column-venue input' ).val() );
+			jQuery( '#eventorganiser_venue option[value="'+val+'"]' ).attr( 'selected', 'selected' );
         });
     });
     </script>
