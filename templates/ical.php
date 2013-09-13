@@ -102,17 +102,15 @@ EXDATE<?php echo $vdate;?>:<?php echo implode(',',$exclude_strings);?>
 RDATE<?php echo $vdate;?>:<?php echo implode(',',$include_strings);?>
 
 <?php endif; ?>
-SUMMARY:<?php echo eventorganiser_escape_ical_text( html_entity_decode( get_the_title_rss() ) ); ?>
-
+<?php echo eventorganiser_escape_ical_text( html_entity_decode( "SUMMARY: " . get_the_title_rss() ) );?>
 <?php
 	$excerpt = get_the_excerpt();
 	$excerpt = apply_filters('the_excerpt_rss', $excerpt);
-	if(!empty($excerpt)):
-?>
-DESCRIPTION:<?php echo html_entity_decode(eventorganiser_escape_ical_text($excerpt));?>
+	if( !empty($excerpt) ):
+		echo eventorganiser_escape_ical_text( html_entity_decode( "DESCRIPTION: $excerpt" ) );
+	endif; ?>
 
-<?php endif;
-
+<?php 
 	$cats = get_the_terms( get_the_ID(), 'event-category' );
 if( $cats && !is_wp_error($cats) ):
 	$cat_names = wp_list_pluck($cats, 'name');

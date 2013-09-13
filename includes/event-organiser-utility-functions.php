@@ -1148,11 +1148,21 @@ function eventorganiser_append_dependency( $handle, $dep ){
  * @return string The escaped string.
  */
 function eventorganiser_escape_ical_text( $text ){
-	$text = str_replace("\\", "\\\\", $text);
-	$text = str_replace(",", "\,", $text);
-	$text = str_replace(";", "\;", $text);
-	$text = str_replace("\n", "\n ", $text);
-	return $text;
+	
+	$text = str_replace( "\\", "\\\\", $text );
+	$text = str_replace( ",", "\,", $text );
+	$text = str_replace( ";", "\;", $text );
+	$text = str_replace( "\n", "\n ", $text );
+	
+	$text_arr = array();
+	
+	$lines = ceil( strlen( $text ) / 75 );
+	
+	for( $i = 0; $i < $lines; $i++ ){
+		$text_arr[$i] = mb_substr( $text, $i * 75, 75 );
+	}
+
+	return join( $text_arr, "\r\n " );
 }
 
 /**
