@@ -274,6 +274,7 @@ class EO_Calendar_Widget extends WP_Widget
  			for( $cell = $w*7 +1; $cell <= ($w+1)*7;  $cell++ ): 
 
 				$formated_date = $current_date->format('Y-m-d');
+ 				$data = "data-eo-wc-date='{$formated_date}'";
 
 				if( $cell <= $offset ){
 					$body .= "<td class='pad eo-before-month' colspan='1'>&nbsp;</td>";
@@ -322,7 +323,7 @@ class EO_Calendar_Widget extends WP_Widget
 					$classes = implode( ' ', $class );
 					$titles = implode( ', ', wp_list_pluck( $events, 'post_title' ) );
 
-					$body .= sprintf("<td class='%s'> <a title='%s' href='%s'> %s </a></td>",
+					$body .= sprintf("<td $data class='%s'> <a title='%s' href='%s'> %s </a></td>",
 										esc_attr( $classes ),
 										esc_attr( $titles ),
 										$link,
@@ -330,7 +331,7 @@ class EO_Calendar_Widget extends WP_Widget
 								);
 				}else{
 					$classes = implode(' ',$class);
-					$body .= sprintf("<td class='%s'> %s </td>", esc_attr( $classes ), $cell-$offset );
+					$body .= sprintf("<td $data class='%s'> %s </td>", esc_attr( $classes ), $cell-$offset );
 				}
 
 				//Proceed to next day
