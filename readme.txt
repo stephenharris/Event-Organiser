@@ -3,8 +3,8 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 3.6
-Stable tag: 2.2.2
+Tested up to: 3.6.1
+Stable tag: 2.3
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -19,10 +19,10 @@ Event Organiser adds event management that integrates well with your WordPress s
 | [**Demo**](http://wp-event-organiser.com/demo/) 
 | [**Booking Add-on**](http://wp-event-organiser.com/pro-features?aid=7)
 
-= What's new =
-* Category & Venue subscribe functions added
-* ICAL parser API now available for third-party plug-ins
-* Javascript actions and filters added
+= Available Extensions =
+* [Event Organiser Pro](http://wp-event-organiser.com/pro-features?aid=7)
+* [iCal Sync](http://wp-event-organiser.com/extensions/event-organiser-ical-sync?aid=7)
+* [Venue Map Markers](http://wp-event-organiser.com/extensions/event-organiser-venue-markers?aid=7)
 
 = Features =
 
@@ -188,6 +188,20 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.3 =
+* iCal Sync & Venue Marker extensions released. 
+* Adds option to disable front-end stylesheets
+* Set event text colour (fullCalendar) according to event colour. Thanks to @mperry2. [See #108](https://github.com/stephenharris/Event-Organiser/pull/#108).
+* Adds data attributes to widget calendar
+* Checked compatability with 3.6.1
+* Deprecated `eo_get_the_GoogleLink()` in favour of `eo_get_add_to_google_link()`. Fixes bugs.
+* Fixes bug with quick edit (venue disappearing)
+* Fixes category widget not redirecting
+* Fixes tooltip appearing of viewport on fullCalendar
+* Update templates, check for element ID. Fixes #119. Thanks to @Visnetje
+* Register post types early
+* Added package.json for Grunt
 
 = 2.2.2 =
 * Fixes WP3.6 issues with dialogs and admin calendar 
