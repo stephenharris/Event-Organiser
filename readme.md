@@ -206,6 +206,8 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Adds option to disable front-end stylesheets
 * Set event text colour (fullCalendar) according to event colour. Thanks to @mperry2. [See #108](https://github.com/stephenharris/Event-Organiser/pull/#108).
 * Adds data attributes to widget calendar
+*** Added translations:** Arabic, Spanish (Peru), Persian, Slovakian, Slovenian
+*** Updated translations:** Czech, German, Dutch, Portuguese (Portugal), Turkish, Ukrainian, Chinese
 * Checked compatability with 3.6.1
 * Deprecated `eo_get_the_GoogleLink()` in favour of `eo_get_add_to_google_link()`. Fixes bugs.
 * Fixes bug with quick edit (venue disappearing)
