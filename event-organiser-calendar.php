@@ -189,6 +189,10 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 					$EO_Errors = $response;
 				} else {
 					$EO_Errors = new WP_Error( 'eo_notice', '<strong>'.__( 'Occurrence deleted.', 'eventorganiser' ).'</strong>' );
+					
+					//Allow plugins to be aware of successful deletions
+					do_action( 'eventorganiser_admin_calendar_occurence_deleted', $post_id, $event_id );
+
 				}
 			endif;
 		}
