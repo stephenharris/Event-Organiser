@@ -264,7 +264,8 @@ class Event_Organiser_Im_Export  {
 						//Otherwise, parse event property
 						try{
 							while( isset( $lines[$n+1] ) && $lines[$n+1][0] == ' ' ){
-								$value .= $lines[$n+1];
+								//Remove initial white space {@link http://www.ietf.org/rfc/rfc2445.txt Section 4.1}
+								$value .= substr( $lines[$n+1], 1 );
 								$n++;	
 							}
 							$event_array = $this->parse_Event_Property($event_array,$property,$value,$modifiers,$blog_tz,$cal_tz);

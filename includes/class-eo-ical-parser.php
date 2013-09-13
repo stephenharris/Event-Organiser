@@ -201,7 +201,8 @@ class EO_ICAL_Parser{
 					}else{
 						try{
 							while( isset( $this->ical_array[$n+1] ) && $this->ical_array[$n+1][0] == ' ' ){
-								$value .= $this->ical_array[$n+1];
+								//Remove initial white space {@link http://www.ietf.org/rfc/rfc2445.txt Section 4.1}
+								$value .= substr( $this->ical_array[$n+1], 1 );
 								$n++;
 							}
 						
