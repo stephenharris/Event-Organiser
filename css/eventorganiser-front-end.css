@@ -6,6 +6,7 @@
 
 /*Venue Map*/
 .eo-venue-map{z-index:1000;}
+.eo-venue-map img{max-width: none;}
 
 /* Agenda CSS */
 .eo-agenda-widget ul{list-style:none; margin:0}
