@@ -740,7 +740,7 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 			WHERE post_id=%d AND event_id=%d",$post_id,$event_id));
 
 		if( !$remove )
-			return new WP_Error('eo_notice', '<strong>'.__("Occurrence note deleted. Occurrence not found",'eventorganiser').'</strong>');
+			return new WP_Error('eo_notice', '<strong>'.__("Occurrence not deleted. Occurrence not found.",'eventorganiser').'</strong>');
 
 		$date = trim($remove->StartDate).' '.trim($remove->StartTime);
 
