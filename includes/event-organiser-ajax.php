@@ -166,6 +166,7 @@ function eventorganiser_public_fullcalendar() {
 			endif;
 
 			//Event colour
+			$event['textColor'] = '#ffffff'; //default text colour
 			if( eo_get_event_color() ) {
 				$event['color'] = eo_get_event_color();
 				$event['textColor'] = eo_get_event_textcolor( $event['color'] );
@@ -360,9 +361,10 @@ function eventorganiser_admin_calendar() {
 				endif;
 
 				//Event colour
+				$event['textColor'] = '#ffffff'; //default text colour
 				if( eo_get_event_color() ) {
 					$event['color'] = eo_get_event_color();
-					$event['textColor'] = eo_get_event_textcolor( $event['color'] );
+					$event['textColor'] = eo_get_event_textcolor( $event['color'] ) ? eo_get_event_textcolor( $event['color'] ) : '#ffffff';
 				}
 
 				//Event summary
