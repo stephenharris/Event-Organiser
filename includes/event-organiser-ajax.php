@@ -614,6 +614,13 @@ function eventorganiser_admin_cal_time_format(){
 	exit();
 }
 
+/**
+ * Toggle visibility of extensionpage.
+ *
+ *@since 2.3
+ *@access private
+ *@ignore
+*/
 function eventorganiser_ajax_toggle_addon_page(){
 	
 	if( !isset( $_POST['hide_addon_page'] ) || !current_user_can( 'manage_options' ) )
