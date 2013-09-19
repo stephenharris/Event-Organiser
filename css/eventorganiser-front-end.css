@@ -16,7 +16,7 @@
 .eo-agenda-widget ul.dates{border-bottom:1px solid #ececec; font-weight:bold}
 .eo-agenda-widget ul.a-date{margin:0}
 .eo-agenda-widget li.date{border-top:1px solid #ececec; padding:10px 0px}
-.eo-agenda-widget li.event{padding:5px 0px 5px 10px; ; font-weight:normal; background:#ececec; border-radius:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; opacity:0.75; color:#333; margin:1px 0px; position:relative}
+.eo-agenda-widget li.event{padding:5px 0px 5px 10px; font-weight:normal; background:#ececec; border-radius:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; opacity:0.75; color:#333; margin:1px 0px; position:relative}
 .eo-agenda-widget li.event:hover{opacity:1; background:#ececec}
 .eo-agenda-widget li.event .cat{padding:10px 3px; background:none; margin-right:5px; height:100%; position:absolute;  top:0; left:0}
 .eo-agenda-widget li.event .meta{font-size:0.9em}
