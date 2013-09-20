@@ -64,7 +64,7 @@ class EventOrganiser_Shortcodes {
 			'style' => '',
 			'category' => false,
 			'venue' => false,
-		), $atts ) );
+		), $atts, 'eo_subscribe' ) );
 		
 		if( $category ){
 			$url = eo_get_event_category_feed( $category );
