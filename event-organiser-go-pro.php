@@ -74,7 +74,7 @@ class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
 			); 
 			self::print_feature( 
 				__( 'Additional shortcodes & improved UI', 'eventorganiser' ), 
-				__( 'Give your users the ability to search and filter through your events with the event search shortcode. Event Organiser Pro also adds a text editor button to make inserting and configuring your shorcodes that bit easier. ', 'eventorganiser' ),
+				__( 'Give your users the ability to search and filter through your events with the event search shortcode. Event Organiser Pro also adds a text editor button to make inserting and configuring your shortcodes that bit easier. ', 'eventorganiser' ),
 				'eo-pro-event-search.png'
 			); 
 			self::print_feature(
