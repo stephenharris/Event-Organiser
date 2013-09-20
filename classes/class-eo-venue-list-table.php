@@ -20,8 +20,8 @@ class EO_Venue_List_Table extends WP_List_Table {
 		global $status, $page;
 		//Set parent defaults
 		parent::__construct( array(
-			'singular'  => __('venue','eventorganiser'),     //singular name of the listed records
-			'plural'    =>  __('venues','eventorganiser'),    //plural name of the listed records
+			'singular'  => 'venue',     //singular name of the listed records
+			'plural'    => 'venues',    //plural name of the listed records
 			'ajax'      => true        //does this table support ajax?
         	) );
 	    }
