@@ -94,7 +94,7 @@ jQuery(document).ready(function () {
 					venue:  eventorganiser_venue_dropdown,
 					'goto': eventorganiser_mini_calendar
 				},
-				theme: true,
+				theme: calendars[i].theme,
 				categories: eventorganiser.fullcal.categories,
 				venues: eventorganiser.fullcal.venues,
 				timeFormatphp: calendars[i].timeformatphp,
