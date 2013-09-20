@@ -528,7 +528,7 @@ class EventOrganiser_Debugger{
 		echo "\n";
 		echo '### Database ###' . "\n";
 		echo "\n";
-		echo esc_html__('Databse Prefix')."\t\t\t" . $wpdb->prefix . "\n";
+		echo esc_html__('Database Prefix')."\t\t\t" . $wpdb->prefix . "\n";
 		echo esc_html__('Database tables')."\t\t\t" . implode( ', ', $db_tables ). "\n";
 		echo esc_html__('Database character set')."\t" . ( $this->database_charset_check() ? DB_CHARSET : "**".DB_CHARSET."**" ) . "\n";
 	
