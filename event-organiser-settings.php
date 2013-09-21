@@ -232,7 +232,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'name' => 'eventorganiser_options[disable_css]',
 						'options' => 1,
 						'checked' => eventorganiser_get_option( 'disable_css' ),
-						'help' => __( 'Check this option to prevent any stylesheets from Event Organiser being loaded on the front-end', 'eventorganiserp' )
+						'help' => __( 'Check this option to prevent any stylesheets from Event Organiser being loaded on the front-end', 'eventorganiser' )
 				));
 				break;
 
