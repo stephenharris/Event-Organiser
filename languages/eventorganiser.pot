@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 22:47+0100\n"
-"PO-Revision-Date: 2013-09-21 22:47+0100\n"
+"POT-Creation-Date: 2013-09-21 23:02+0100\n"
+"PO-Revision-Date: 2013-09-21 23:02+0100\n"
 "Last-Translator: Stephen Harris <contact@stephenharris.info>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -74,18 +74,6 @@ msgstr ""
 
 #: ../event-organiser-debug.php:444
 msgid "unknown"
-msgstr ""
-
-#: ../event-organiser-debug.php:531
-msgid "Databse Prefix"
-msgstr ""
-
-#: ../event-organiser-debug.php:532
-msgid "Database tables"
-msgstr ""
-
-#: ../event-organiser-debug.php:533
-msgid "Database character set"
 msgstr ""
 
 #: ../event-organiser-debug.php:555
