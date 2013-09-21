@@ -158,7 +158,7 @@ a.eo-inline-help img {
 	
 	font-size: 10.5px;
 	line-height: 12px;
-
+	z-index:300005!important;
 	direction: ltr;
 }
 
