@@ -431,7 +431,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 			    $screen->add_help_tab( array(
 			        'id'      => 'repeating-events',
 			        'title'   => __('Repeating events','eventorganiser'),
-        			'content' => '<p>' . __('To repeat an event according to some regular pattern, use the reocurrence dropdown menu to select how the event is to repeat. Further options then appear, ','eventorganiser') . '</p>' .
+        			'content' => '<p>' . __('To repeat an event according to some regular pattern, use the reoccurrence dropdown menu to select how the event is to repeat. Further options then appear, ','eventorganiser') . '</p>' .
 			'<ul>' .
 				'<li>' . __('Specify how regularly the event should repeat (default 1)','eventorganiser') . '</li>' .
 				'<li>' . __('Choose the reoccurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date.','eventorganiser') . '</li>' .
