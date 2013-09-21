@@ -79,7 +79,7 @@ class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
 			); 
 			self::print_feature(
 				__( 'Venue custom fields & thumbnails', 'eventorganiser' ),
-				__( "Add action information on your venue pages with venue custom fields, or give your venues more attentioned with their own 'featured image'", 'eventorganiser' ),
+				__( "Add information on your venue pages with venue custom fields, or give your venues more attentioned with their own 'featured image'", 'eventorganiser' ),
 				'eo-pro-venue-cf.png'
 			);
 			?>
