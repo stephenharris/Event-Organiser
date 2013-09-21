@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-20 12:14+0100\n"
-"PO-Revision-Date: 2013-09-20 12:14+0100\n"
+"POT-Creation-Date: 2013-09-21 15:10+0100\n"
+"PO-Revision-Date: 2013-09-21 15:10+0100\n"
 "Last-Translator: Stephen Harris <contact@stephenharris.info>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -538,7 +538,7 @@ msgid "Additional shortcodes & improved UI"
 msgstr ""
 
 #: ../event-organiser-go-pro.php:77
-msgid "Give your users the ability to search and filter through your events with the event search shortcode. Event Organiser Pro also adds a text editor button to make inserting and configuring your shorcodes that bit easier. "
+msgid "Give your users the ability to search and filter through your events with the event search shortcode. Event Organiser Pro also adds a text editor button to make inserting and configuring your shortcodes that bit easier. "
 msgstr ""
 
 #: ../event-organiser-go-pro.php:81
@@ -594,15 +594,15 @@ msgid "View all venues"
 msgstr ""
 
 #: ../event-organiser-calendar.php:107
-msgid "You do not have sufficient permissions to create events"
+msgid "You do not have sufficient permissions to create events. "
 msgstr ""
 
 #: ../event-organiser-calendar.php:163
-msgid "You do not have sufficient permissions to edit this event"
+msgid "You do not have sufficient permissions to edit this event. "
 msgstr ""
 
 #: ../event-organiser-calendar.php:181
-msgid "You do not have sufficient permissions to delete this event"
+msgid "You do not have sufficient permissions to delete this event. "
 msgstr ""
 
 #: ../event-organiser-calendar.php:191
@@ -886,7 +886,7 @@ msgid "Events: "
 msgstr ""
 
 #: ../templates/archive-event.php:123
-msgid "Apologies, but no results were found for the requested archive"
+msgid "Apologies, but no results were found for the requested archive. "
 msgstr ""
 
 #: ../templates/taxonomy-event-tag.php:31
@@ -937,7 +937,7 @@ msgid "Start"
 msgstr ""
 
 #: ../templates/event-meta-event-single.php:73
-#: ../includes/event-organiser-event-functions.php:1387
+#: ../includes/event-organiser-event-functions.php:1388
 #: ../includes/event-organiser-cpt.php:105
 msgid "Tags"
 msgstr ""
@@ -1149,7 +1149,7 @@ msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr ""
 
 #: ../includes/event.php:744
-msgid "Occurrence note deleted. Occurrence not found"
+msgid "Occurrence not deleted. Occurrence not found."
 msgstr ""
 
 #: ../includes/event-organiser-venue-functions.php:882
@@ -1504,7 +1504,7 @@ msgid "Repeating events"
 msgstr ""
 
 #: ../includes/event-organiser-cpt.php:434
-msgid "To repeat an event according to some regular pattern, use the reocurrence dropdown menu to select how the event is to repeat. Further options then appear, "
+msgid "To repeat an event according to some regular pattern, use the reoccurrence dropdown menu to select how the event is to repeat. Further options then appear, "
 msgstr ""
 
 #: ../includes/event-organiser-cpt.php:436
@@ -1636,14 +1636,6 @@ msgstr ""
 msgid "Show hierarchy"
 msgstr ""
 
-#: ../classes/class-eo-venue-list-table.php:23
-msgid "venue"
-msgstr ""
-
-#: ../classes/class-eo-venue-list-table.php:24
-msgid "venues"
-msgstr ""
-
 #: ../classes/class-eo-venue-list-table.php:70
 #: ../classes/class-eo-venue-list-table.php:127
 msgid "Delete"
@@ -1740,7 +1732,7 @@ msgstr ""
 msgid "Next month"
 msgstr ""
 
-#: ../classes/class-eventorganiser-shortcodes.php:355
+#: ../classes/class-eventorganiser-shortcodes.php:356
 msgid "There is no excerpt because this is a protected post."
 msgstr ""
 
