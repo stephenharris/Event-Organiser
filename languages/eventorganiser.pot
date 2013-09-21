@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-21 15:10+0100\n"
-"PO-Revision-Date: 2013-09-21 15:10+0100\n"
+"POT-Creation-Date: 2013-09-21 22:47+0100\n"
+"PO-Revision-Date: 2013-09-21 22:47+0100\n"
 "Last-Translator: Stephen Harris <contact@stephenharris.info>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -546,7 +546,7 @@ msgid "Venue custom fields & thumbnails"
 msgstr ""
 
 #: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give your venues more attentioned with their own 'featured image'"
+msgid "Add information on your venue pages with venue custom fields, or give your venues more attentioned with their own 'featured image'"
 msgstr ""
 
 #: ../event-organiser-go-pro.php:90
