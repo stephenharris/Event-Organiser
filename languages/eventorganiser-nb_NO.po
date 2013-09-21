@@ -1005,7 +1005,7 @@ msgid "Repeating events"
 msgstr "Gjentar arrangementer"
 
 #: ../includes/event-organiser-cpt.php:288
-msgid "To repeat an event according to some regular pattern, use the reocurrence dropdown menu to select how the event is to repeat. Further options then appear, "
+msgid "To repeat an event according to some regular pattern, use the reoccurrence dropdown menu to select how the event is to repeat. Further options then appear, "
 msgstr "For å gjenta et arrangement etter et sett med regler, bruk gjentakelsesmenyen til å velge hvordan dette arrangementet skal gjentas. Flere valg vil synliggjøres."
 
 #: ../includes/event-organiser-cpt.php:290
