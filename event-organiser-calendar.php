@@ -104,7 +104,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 
 			//authentication checks
 			if ( !current_user_can( 'edit_events' ) ) 
-				wp_die( __( 'You do not have sufficient permissions to create events', 'eventorganiser' ) );
+				wp_die( __( 'You do not have sufficient permissions to create events. ', 'eventorganiser' ) );
 
 			$input = $_REQUEST['eo_event']; //Retrieve input from posted data
 			
@@ -160,7 +160,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 
 				//Check permissions
 				if ( !current_user_can( 'edit_event', $post_id ) || !current_user_can( 'delete_event', $post_id ) )
-					wp_die( __( 'You do not have sufficient permissions to edit this event', 'eventorganiser' ) );
+					wp_die( __( 'You do not have sufficient permissions to edit this event. ', 'eventorganiser' ) );
 		
 				$new_event_id = eo_break_occurrence( $post_id, $event_id );
 				
@@ -178,7 +178,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 
 				//Check permissions
 				if ( ! current_user_can( 'delete_event', $post_id ) )
-					wp_die( __( 'You do not have sufficient permissions to delete this event', 'eventorganiser' ) );
+					wp_die( __( 'You do not have sufficient permissions to delete this event. ', 'eventorganiser' ) );
 
 				$response = _eventorganiser_remove_occurrence( $post_id, $event_id );
 
