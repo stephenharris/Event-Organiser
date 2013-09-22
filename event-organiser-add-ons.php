@@ -100,7 +100,7 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 					$settings_link = esc_url( admin_url( 'options-general.php?page=event-settings' ) );
 				?>
 				<label><input type="checkbox" id="eo-submenu-toggle" <?php checked( eventorganiser_get_option( 'hide_addon_page' ), 1 );?>/>
-					<small>Hide this page from the admin menu. You can still access it from <a href="<?php echo $settings_link;?>"><em><small>Settings > Event Organiser</small></em></a>.</small> 
+					<small><?php esc_html_e('Hide this page from the admin menu. You can still access it from ', 'eventorganiser'); ?><a href="<?php echo $settings_link;?>"><em><small><?php esc_html_e('Settings > Event Organiser', 'eventorganiser'); ?></small></em></a>.</small> 
 				</label>
 			</div>
 
@@ -119,7 +119,7 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 				echo '</div>';
 			else:
 				?>
-				<div class="error"><p>There was an error retrieving the add-on list from the server. Please try again later.</p></div>
+				<div class="error"><p><?php esc_html_e('There was an error retrieving the add-on list from the server. Please try again later.', 'eventorganiser'); ?></p></div>
 				<?php 
 			endif;
 			?>
