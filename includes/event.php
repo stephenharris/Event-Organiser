@@ -41,12 +41,20 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 	
 	$input = array_merge( $post_data, $event_data );
 	
+	//Backwards compat:
+	if( !empty( $input['venue'] ) ){
+		$input['tax_input']['event-venue'] = $input['venue'];
+	}
+	if( !empty( $input['category'] ) ){
+		$input['tax_input']['event-category'] = $input['category'];
+	}
+	
 	$event_keys = array_flip( array( 'start', 'end', 'schedule', 'schedule_meta', 'frequency', 
 			'all_day', 'schedule_last', 'include', 'exclude', 'occurs_by') );
 	
 	$post_keys = array_flip( array(
 			'post_title','post_content','post_status', 'post_type','post_author','ping_status','post_parent','menu_order', 
-			'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id'
+			'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id', 'tax_input'
 	) );
 	
 	$event_data = array_intersect_key( $input, $event_keys );
@@ -54,13 +62,6 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 	 
 	if( empty($post_id) )
 		return new WP_Error('eo_error','Empty post ID.');
-
-	if( !empty($event_data['venue']) || !empty($event_data['category']) ){
-		$post_data['tax_input']['event-venue'] = isset($event_data['venue']) ? $event_data['venue'] : null;
-		$post_data['tax_input']['event-category'] = isset($event_data['category']) ? $event_data['category'] : null;
-		unset($event_data['venue']);
-		unset($event_data['category']);
-	}
 		
 	$event_data = apply_filters( 'eventorganiser_update_event_event_data', $event_data, $post_id, $post_data, $event_data );
 	$post_data = apply_filters( 'eventorganiser_update_event_post_data', $post_data, $post_id, $post_data, $event_data );
@@ -184,26 +185,24 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 
 	$input = array_merge( $post_data, $event_data );
 	
+	//Backwards compat:
+	if( !empty( $input['venue'] ) ){
+		$input['tax_input']['event-venue'] = $input['venue'];
+	}
+	if( !empty( $input['category'] ) ){
+		$input['tax_input']['event-category'] = $input['category'];
+	}
+	
 	$event_keys = array_flip( array( 'start', 'end', 'schedule', 'schedule_meta', 'frequency', 
 			'all_day', 'schedule_last', 'include', 'exclude', 'occurs_by') );
 	
 	$post_keys = array_flip( array(
 			'post_title','post_content','post_status', 'post_type','post_author','ping_status','post_parent','menu_order', 
-			'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id'
+			'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id', 'tax_input'
 	) );
-	
 	
 	$event_data = array_intersect_key( $input, $event_keys ) + $event_data;
 	$post_data = array_intersect_key( $input, $post_keys );
-	
-	if( !empty($event_data['venue'] ) ){
-		$post_data['tax_input']['event-venue'] = $event_data['venue'];
-		unset($event_data['venue']);
-	}
-	if( !empty($event_data['category'] ) ){
-		$post_data['tax_input']['event-category'] = $event_data['category'];
-		unset($event_data['category']);
-	}
 		
 	//If schedule is 'once' and dates are included - set to 'custom':
 	if( ( empty($event_data['schedule']) || 'once' == $event_data['schedule'] ) && !empty($event_data['include']) ){
