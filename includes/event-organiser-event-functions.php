@@ -1032,13 +1032,13 @@ function eo_is_event_taxonomy( $query = false ){
 	
 	//Handle post tags
 	if( in_array( 'post_tag', $event_tax ) ){
-		if( ( !$query && is_tag() ) || $query->is_tag() )
+		if( ( !$query && is_tag() ) || ( $query && $query->is_tag() ) )
 			return true;
 	}
 	
 	//Handle categories
 	if( in_array( 'category', $event_tax ) ){
-		if( ( !$query && is_category() ) || $query->is_category() )
+		if( ( !$query && is_category() ) || ( $query && $query->is_category() ) )
 			return true;
 	}
 	
