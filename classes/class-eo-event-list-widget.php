@@ -146,7 +146,7 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 	$query = wp_parse_args($query, array(		
 		'posts_per_page'=>-1,
 		'post_type'=>'event',
-		'supress_filters'=>false,
+		'suppress_filters'=>false,
 		'orderby'=> 'eventstart',
 		'order'=> 'ASC',
 		'showrepeats'=>1,
