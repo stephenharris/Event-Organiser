@@ -190,7 +190,7 @@ class EventOrganiser_Shortcodes {
 	}
 
 
-	function read_template($template){
+	static function read_template($template){
 		$patterns = array(
 			'/%(event_title)%/',
 			'/%(start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
@@ -222,7 +222,7 @@ class EventOrganiser_Shortcodes {
 		return $template;
 	}
 	
-	function parse_template($matches){
+	static function parse_template($matches){
 		global $post;
 		$replacement='';
 
