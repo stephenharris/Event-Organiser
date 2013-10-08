@@ -365,16 +365,17 @@ class EO_ICAL_Parser{
 
 		case 'CATEGORIES':
 			$cats = explode( ',', $value );
+			
 			if( !empty( $cats ) ):
 
 			foreach ($cats as $cat_name):
-			$cat_name = trim($cat_name);
+				$cat_name = trim($cat_name);
 
-			if( !isset( $this->categories[$cat_name] ) )
-				$this->categories[$cat_name] = $cat_name;
+				if( !isset( $this->categories[$cat_name] ) )
+					$this->categories[$cat_name] = $cat_name;
 				
-			if( isset($this->current_event['event-category']) && !in_array( $cat_name, $this->current_event['event-category']) )
-				$this->current_event['event-category'][] = $cat_name;
+				if( !isset($this->current_event['event-category']) || !in_array( $cat_name, $this->current_event['event-category']) )
+					$this->current_event['event-category'][] = $cat_name;
 				
 			endforeach;
 
