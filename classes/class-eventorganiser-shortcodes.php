@@ -182,9 +182,10 @@ class EventOrganiser_Shortcodes {
 		$args = array(
 			'class'=>'eo-events eo-events-shortcode',
 			'template'=>$content,
-			'no_events'=>'',
+			'no_events'=> isset( $atts['no_events'] ) ? $atts['no_events'] : '',
 			'type'=>'shortcode',
 		);
+		
 
 		return eventorganiser_list_events( $atts,$args, 0);
 	}
