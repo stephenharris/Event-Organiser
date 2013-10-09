@@ -33,9 +33,11 @@ class EventOrganiser_Shortcodes {
 			}
 		}
 
-		/* Backwards compatibility */
+		/* Parse defaults */
 		$atts = wp_parse_args($atts,array(
 			'showpastevents'=>1,
+			'show-long' => 0, //TODO provide shortcode support
+			'link-to-single' => 0,//TODO provide shortcode support
 		));
 	
 		self::$add_script = true;

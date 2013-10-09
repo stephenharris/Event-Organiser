@@ -179,7 +179,11 @@ class EO_Calendar_Widget extends WP_Widget
 		if( ( !defined( 'WP_DEBUG' ) || !WP_DEBUG ) && $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
 			return $calendar[$key];
 		}
-	
+		
+		//Parse defaults
+		$args['show-long']  = isset( $args['show-long'] ) ? $args['show-long']  : false;
+		$args['link-to-single']  = isset( $args['link-to-single'] ) ? $args['link-to-single']  : false;
+			
 		//Month details
 		$first_day_of_month= intval( $month->format('N') ); //0=sun,...,6=sat
 		$days_in_month= intval( $month->format('t') ); // 28-31
@@ -206,6 +210,7 @@ class EO_Calendar_Widget extends WP_Widget
 			'numberposts'=>-1, 
 			'showrepeats'=>1,  
 		);
+		
 		if( $args['show-long'] ){
 			$args['event_start_before'] = $end;
 			$args['event_end_after'] = $start;
