@@ -267,6 +267,7 @@ class EO_ICAL_Parser{
 		if( !empty( $modifiers ) ):
 			foreach( $modifiers as $modifier ):
 				if ( stristr( $modifier, 'TZID' ) ){
+			
 					$date_tz = $this->parse_timezone( substr( $modifier, 5 ) );
 
 				}elseif( stristr( $modifier, 'VALUE' ) ){
@@ -429,11 +430,57 @@ class EO_ICAL_Parser{
 	 * @return DateTimeZone - the timezone with the given identifier or false if it isn't recognised
 	 */
 	protected function parse_timezone( $tzid ){
+		
 		$tzid = str_replace( '-', '/', $tzid );
-		$tz = new DateTimeZone( $tzid );
+
+		//Try just using the passed timezone ID
+		try{
+			$tz = new DateTimeZone( $tzid );
+		}catch( exception $e ){
+			$tz = null;
+		}
+
+		//If we have something like (GMT+01.00) Amsterdam / Berlin / Bern / Rome / Stockholm / Vienna lets try the cities
+		if( is_null( $tz ) && preg_match( '/GMT(?P<offset>.+)\)(?P<cities>.+)/', $tzid, $matches ) ){
+			
+			$parts = explode( '/', $matches['cities'] );
+			$tz_cities = array_map( 'trim', $parts );
+			$identifiers = timezone_identifiers_list();
+			
+			foreach( $tz_cities as $tz_city ){
+			
+				$tz_city = ucfirst( strtolower( $tz_city ) );
+			
+				foreach( $identifiers as $identifier ){
+			
+					$parts = explode('/', $identifier );
+					$city = array_pop( $parts );
+						
+					if( $city != $tz_city )
+						continue;
+			
+					try{
+						$tz = new DateTimeZone( $identifier );
+						break 2;
+					}catch( exception $e ){
+						$tz = null;
+					}
+				}
+			}
+		}	
+
+		//Let plugins over-ride this
+		$tz = apply_filters( 'eventorganiser_ical_timezone', $tz, $tzid );
+		
+		if ( ! ($tz instanceof DateTimeZone ) ) {
+			$tz = eo_get_blog_timezone();
+		}
+		
 		return $tz;
 	}
 
+
+	
 	/**
 	 * Takes a date in ICAL and returns a datetime object
 	 * 
