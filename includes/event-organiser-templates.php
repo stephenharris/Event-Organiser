@@ -220,7 +220,7 @@ function eventorganiser_is_event_template($templatePath,$context=''){
 function eventorganiser_set_template( $template ){
 
 	//Has EO template handling been turned off?
-	if( !eventorganiser_get_option('templates') )
+	if( !eventorganiser_get_option('templates') || get_theme_support( 'event-organiser' ) )
 		return $template;
 
 	//If WordPress couldn't find an 'event' template use plug-in instead:
