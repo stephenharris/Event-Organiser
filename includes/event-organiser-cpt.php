@@ -191,7 +191,7 @@ $args = array(
 	),
 	'has_archive' => $events_slug, 
 	'hierarchical' => false,
-	'menu_icon' => EVENT_ORGANISER_URL.'css/images/eoicon-16.png',
+	'menu_icon' => ( defined( 'MP6' ) && MP6 ? false : EVENT_ORGANISER_URL.'css/images/eoicon-16.png' ),
 	'menu_position' => apply_filters('eventorganiser_menu_position',5),
 	'supports' => eventorganiser_get_option('supports'),
   ); 
