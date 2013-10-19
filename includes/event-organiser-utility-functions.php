@@ -1044,7 +1044,7 @@ function eo_blog_is_24(){
 		$is24 = false;
 	}
 
-	return $is24;
+	return apply_filters( 'eventorganiser_blog_is_24', $is24 );
 }
 
 /**
