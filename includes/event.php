@@ -652,6 +652,10 @@ function eo_get_event_schedule( $post_id=0 ){
 
 		//Sort occurrences
 		sort($occurrences);
+		
+		if( empty( $occurrences ) || !$occurrences[0] || !( $occurrences[0] instanceof DateTime ) ){
+			return new WP_Error('eo_error',__('Event does not contain any dates.','eventorganiser'));
+		}
 		$schedule_start = clone $occurrences[0];
 		$schedule_last = clone end($occurrences);
 
