@@ -43,7 +43,7 @@ function eventorganiser_create_event_taxonomies() {
 		'hierarchical' => false,
 		'labels' => $venue_labels,
 		'public'=> true,
-		'show_in_nav_menus'=>false,
+		'show_in_nav_menus'=>true,
 		'show_ui' => false,//Use custom UI
 		'update_count_callback' => '_update_post_term_count',
 		'query_var' => true,
