@@ -1,0 +1,23 @@
+{
+    "name": "stephenharris/event-organiser",
+    "description": "Event management plug-in for WordPress",
+    "keywords": ["events", "wordpress"],
+    "homepage": "http://wp-event-organiser.com",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Stephen Harris",
+            "email": "contact@stephenharris.info",
+            "homepage": "http://www.stephenharris.info"
+        }
+    ],
+    "support": {
+        "forum": "http://wp-event-organiser.com/forums",
+        "issues": "https://github.com/stephenharris/Event-Organiser/issues"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    }
+}
+
