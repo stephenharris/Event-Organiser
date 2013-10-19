@@ -432,15 +432,18 @@ function eventorganiser_screen_retina_icon(){
 
 	$screen_id = get_current_screen()->id;
 	
-	if ( 'mp6' === get_user_option( 'admin_color' ) ) {
+	if ( defined( 'MP6' ) && MP6 ) {
 		//MP6 tweaks - ongoing and limited.
-	?>
-	<style>
-		.icon16.icon-event:before, #adminmenu .menu-icon-event div.wp-menu-image:before {content: '\f145';}
-		body.event_page_calendar #calendar-view .view-button.active{ border-color: #dfdfdf #dfdfdf #eee }
-	</style>
-	<?php
+		?>
+		<style>
+			.icon16.icon-post:before, #adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
+			body.event_page_calendar #calendar-view .view-button.active{ border-color: #dfdfdf #dfdfdf #eee }
+			.ui-datepicker select {height: 2em;}
+			.form-table .ui-datepicker-calendar td, .form-table .ui-datepicker-calendar th {font-size: 12px;}
+		</style>
+		<?php
 	}
+	
 	if( !in_array($screen_id, array('event','edit-event','edit-event-tag','edit-event-category','event_page_venues','event_page_calendar')) )
 		return;
 
