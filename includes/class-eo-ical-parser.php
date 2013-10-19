@@ -557,55 +557,57 @@ class EO_ICAL_Parser{
 		$value = $prop_value[1];
 
 		switch($property):
-		case 'FREQ':
-			$rule_array['schedule'] =strtolower($value);
-		break;
-
-		case 'INTERVAL':
-			$rule_array['frequency'] =intval($value);
+			case 'FREQ':
+				$rule_array['schedule'] =strtolower($value);
 			break;
 
-		case 'UNTIL':
-			//Is the scheduled end a date-time or just a date?
-			if(preg_match('/^((\d{8}T\d{6})(Z)?)/', $value))
-				$date = $this->parse_ical_datetime( $value, new DateTimeZone('UTC') );
-			else
-				$date = $this->parse_ical_date( $value );
+			case 'INTERVAL':
+				$rule_array['frequency'] =intval($value);
+			break;
+
+			case 'UNTIL':
+				//Is the scheduled end a date-time or just a date?
+				if(preg_match('/^((\d{8}T\d{6})(Z)?)/', $value))
+					$date = $this->parse_ical_datetime( $value, new DateTimeZone('UTC') );
+				else
+					$date = $this->parse_ical_date( $value );
 			
-			$rule_array['schedule_last'] = $date;
+				$rule_array['schedule_last'] = $date;
 			break;
 
-		case 'BYDAY':
-			$byday = $value;
+			case 'BYDAY':
+				$byday = $value;
 			break;
 
-		case 'BYMONTHDAY':
-			$bymonthday = $value;
+			case 'BYMONTHDAY':
+				$bymonthday = $value;
 			break;
+			
 			endswitch;
 
-			endforeach;
+		endforeach;
 
-			//Meta-data for Weekly and Monthly schedules
-			if($rule_array['schedule']=='monthly'):
-			if(isset($byday)){
+		//Meta-data for Weekly and Monthly schedules
+		if( $rule_array['schedule']=='monthly' ):
+			if( isset( $byday ) ){
 				preg_match('/(\d+)([a-zA-Z]+)/', $byday, $matches);
 				$rule_array['schedule_meta'] ='BYDAY='.$matches[1].$matches[2];
 
-			}elseif(isset($bymonthday)){
+			}elseif( isset( $bymonthday ) ){
 				$rule_array['schedule_meta'] ='BYMONTHDAY='.$bymonthday;
 
 			}else{
 				throw new Exception('Incomplete scheduling information');
 			}
 
-			elseif($rule_array['schedule']=='weekly'):
-			preg_match('/([a-zA-Z,]+)/', $byday, $matches);
-			$rule_array['schedule_meta'] =explode(',',$matches[1]);
+		elseif( $rule_array['schedule'] == 'weekly' ):
+			preg_match( '/([a-zA-Z,]+)/', $byday, $matches );
+			$rule_array['schedule_meta'] = explode(',',$matches[1]);
 
-			endif;
+		endif;
 
-			return $rule_array;
+		
+		return $rule_array;
 	}
 
 }
