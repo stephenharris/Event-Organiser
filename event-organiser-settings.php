@@ -552,8 +552,11 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	
 	function display_permissions(){
 		global $wp_roles;
-		 echo '<p>'.__( 'Set permissions for events and venue management', 'eventorganiser' ).'</p>';
+		
 		?>
+		<h4> <?php _e( 'Event management permissions', 'eventorganiser' ); ?></h4>
+		<p> <?php _e( 'Set permissions for events and venue management', 'eventorganiser' ); ?> </p>
+		
 		<table class="widefat fixed posts">
 			<thead>
 			<tr>
