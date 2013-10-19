@@ -784,23 +784,4 @@ function _eventorganiser_autofill_city(){
 }
 add_action('admin_post_eo-autofillcity','_eventorganiser_autofill_city');
 
-function _eventorganiser_theme_check_results(){
-	delete_option( 'eo_wp_footer_present' );
-	delete_option( 'eo_sidebar_correct' );
-}
-add_action( 'switch_theme', '_eventorganiser_theme_check_results' );
-
-function _eventorganiser_check_sidebars( $sidebar ){
-	$before_widget = $sidebar['before_widget'];
-	
-	if( did_action( 'register_sidebar') > 1 && ( -1 == get_option( 'eo_sidebar_correct' ) ) )
-		return;
-	
-	if( strpos( $before_widget, '%1$s' ) == false || strpos( $before_widget, '%2$s' ) == false ){
-		update_option( 'eo_sidebar_correct', -1 );
-	}else{
-		update_option( 'eo_sidebar_correct', 1 );
-	}
-}
-
- ?>
+?>
