@@ -419,17 +419,22 @@ function eventorganiser_events_where( $where, $query ){
 	if( eventorganiser_is_event_query( $query, true ) ):
 
 		//If we only want events (or occurrences of events) that belong to a particular 'event'
-		if(isset($query->query_vars['event_series'])):
+		if( isset( $query->query_vars['event_series'] ) ):
 			$series_id =$query->query_vars['event_series'];
 			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.post_id =%d ",$series_id);
 		endif;
 
-		if(isset($query->query_vars['event_occurrence_id'])):
+		if( isset( $query->query_vars['event_occurrence_id'] ) ):
 			$occurrence_id =$query->query_vars['event_occurrence_id'];
 			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.event_id=%d ",$occurrence_id);
 		endif;
 		
-		if(isset($query->query_vars['event_occurrence__in'])):
+		if( isset( $query->query_vars['event_occurrence__not_in'] ) ):
+			$occurrence__not_in = implode(', ', array_map( 'intval', $query->query_vars['event_occurrence__not_in'] ) );
+			$where .= " AND {$wpdb->eo_events}.event_id NOT IN({$occurrence__not_in}) ";
+		endif;
+		
+		if( isset( $query->query_vars['event_occurrence__in'] ) ):
 			$occurrence__in = implode(', ', array_map( 'intval', $query->query_vars['event_occurrence__in'] ) );
 			$where .= " AND {$wpdb->eo_events}.event_id IN({$occurrence__in}) ";
 		endif;
