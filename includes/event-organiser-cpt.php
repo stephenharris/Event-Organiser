@@ -26,7 +26,7 @@ function eventorganiser_create_event_taxonomies() {
 
 	$venue_labels = array(
 		'name' => __( 'Event Venues','eventorganiser' ),
-    	'singular_name' => _x( 'Venues', 'taxonomy singular name' ),
+    	'singular_name' => _x( 'Venue', 'taxonomy singular name', 'eventorganiser' ),
     	'search_items' =>  __( 'Search Venues', 'eventorganiser' ),
     	'all_items' => __( 'All Venues', 'eventorganiser' ),
 		'view_item' => __( 'View Venue', 'eventorganiser' ),
