@@ -497,7 +497,8 @@ class EO_ICAL_Parser{
 			throw new Exception(__('Invalid date. Date expected in YYYYMMDD format.','eventorganiser'));
 		}
 
-		$datetime = new DateTime( $matches[1], $this->calendar_timezone );
+		//No time is given, so ignore timezone. (So use blog timezone).
+		$datetime = new DateTime( $matches[1], eo_get_blog_timezone() );
 
 		return $datetime;
 	}
