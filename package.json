@@ -18,6 +18,7 @@
     "grunt-contrib-jshint": "~0.6.3",
     "grunt-shell": "~0.3.1",
     "grunt-contrib-compress": "~0.5.2",
-    "grunt-wp-readme-to-markdown": "~0.1.0"
+    "grunt-wp-readme-to-markdown": "~0.1.0",
+    "grunt-phpunit": "~0.3.0"
   }
 }

@@ -82,7 +82,18 @@ module.exports = function(grunt) {
 			},
 		},
 	},
+	phpunit: {
+		classes: {
+			dir: 'tests'
+		},
+		options: {
+			bin: 'vendor/bin/phpunit',
+			bootstrap: 'tests/phpunit.php',
+			colors: true
+		}
+	}
 });
+
 
 
 
@@ -95,6 +106,8 @@ grunt.loadNpmTasks('grunt-contrib-compress');
 grunt.loadNpmTasks('grunt-contrib-jshint');
 
 grunt.loadNpmTasks('grunt-wp-readme-to-markdown');
+
+grunt.loadNpmTasks('grunt-phpunit');
 
  // Default task(s).
 grunt.registerTask('default', ['uglify']);
