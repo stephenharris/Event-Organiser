@@ -606,6 +606,11 @@ class EO_ICAL_Parser{
 
 		endif;
 
+		//If importing indefinately recurring, recurr up to some large point in time.
+		//TODO make a log of this somewhere.
+		if( empty( $rule_array['schedule_last'] ) ){
+			$rule_array['schedule_last'] = new DateTime( '2038-01-19 00:00:00' );
+		}
 		
 		return $rule_array;
 	}
