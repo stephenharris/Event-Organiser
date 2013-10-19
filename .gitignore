@@ -7,4 +7,6 @@ apigen
 documentation
 dist
 vendor
+tests
 node_modules
+/composer.phar
