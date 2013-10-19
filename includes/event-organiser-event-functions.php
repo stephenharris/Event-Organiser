@@ -1427,6 +1427,12 @@ function eo_get_event_meta_list( $post_id=0 ){
 function eo_get_event_archive_link( $year=false,$month=false, $day=false){
 	global $wp_rewrite;
 
+	if( $year instanceof DateTime ){
+		$day = (int) $year->format( 'd' );
+		$month = (int) $year->format( 'm' );
+		$year = (int) $year->format( 'Y' );
+	}
+	
 	$archive = get_post_type_archive_link('event');
 
 	if( $year == false && $month == false && $day == false )
