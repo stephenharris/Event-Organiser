@@ -10,6 +10,10 @@
  function eventorganiser_install( $is_networkwide = false ){
        global $wpdb;
 
+       if( !defined( 'EVENT_ORGANISER_URL' ) ){
+       		define( 'EVENT_ORGANISER_URL', plugin_dir_url( EVENT_ORGANISER_DIR.'event-organiser.php' ) );
+       }
+       
     	// Is this multisite and did the user click network activate?
     	$is_multisite = ( function_exists('is_multisite') && is_multisite() );
 
