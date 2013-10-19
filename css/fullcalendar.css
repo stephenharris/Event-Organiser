@@ -6,10 +6,10 @@
 
 /*styling for calendar view tabs */
 .view-button{float:right;height: 30px;line-height: 28px;margin-top: 3px;padding: 0 11px;}
-.view-button.active{border-color: #dfdfdf #dfdfdf #FFFFFF;border-style: solid;border-width: 1px;font-size: 120%;}
 
 /*calendar view conainer */
-div#calendar-view{clear: both;height: 34px;margin-bottom: 15px;border-bottom: 1px solid #dfdfdf;padding-right: 100px;position: relative;}
+#calendar-view{clear: both;height: 34px;margin-bottom: 15px;border-bottom: 1px solid #dfdfdf;padding-right: 100px;position: relative;}
+#calendar-view .nav-tab{ font-size: 15px }
 
 /* loading text */
 #loading{position:absolute;bottom:0;font-size: 16px;line-height: 16px;margin-bottom: 5px;}

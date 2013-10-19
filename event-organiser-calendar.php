@@ -231,7 +231,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		<div id="calendar-view">
 			<span id='loading' style='display:none'><?php _e( 'Loading&#8230;' );?></span>
 			<?php foreach( $views as $id => $label ) 
-				printf( '<a href="#" class="view-button %s" id="%s">%s</a>', ( $id == $current ? 'active' : '' ), $id, $label );
+				printf( '<a href="#" class="nav-tab view-button %s" id="%s">%s</a>', ( $id == $current ? 'nav-tab-active' : '' ), $id, $label );
 			?>
 		</div>
 

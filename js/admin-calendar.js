@@ -243,9 +243,9 @@ eventorganiser.versionCompare = function(left, right) {
 	/* View tabs */
         $('.view-button').click(function (event) {
         	event.preventDefault();
-        	$('.view-button').removeClass('active');
+        	$('.view-button').removeClass('nav-tab-active');
         	calendar.fullCalendar('changeView', $(this).attr('id'));
-        	$(this).addClass('active');
+        	$(this).addClass('nav-tab-active');
         });
 
 	/* GoTo 'mini calendar' */
