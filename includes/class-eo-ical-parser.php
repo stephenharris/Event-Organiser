@@ -38,6 +38,7 @@ class EO_ICAL_Parser{
 	var $venues = array();
 	var $categories = array();
 	var $errors = array();
+	var $warnings = array();
 
 	var $events_parsed = 0;
 	var $venue_parsed = 0;
@@ -596,6 +597,10 @@ class EO_ICAL_Parser{
 			
 				$rule_array['schedule_last'] = $date;
 			break;
+			
+			case 'COUNT':
+				$rule_array['number_occurrences'] = absint( $value );
+			break;
 
 			case 'BYDAY':
 				$byday = $value;
@@ -630,7 +635,7 @@ class EO_ICAL_Parser{
 
 		//If importing indefinately recurring, recurr up to some large point in time.
 		//TODO make a log of this somewhere.
-		if( empty( $rule_array['schedule_last'] ) ){
+		if( empty( $rule_array['schedule_last'] ) && empty( $rule_array['number_occurrences'] ) ){
 			$rule_array['schedule_last'] = new DateTime( '2038-01-19 00:00:00' );
 			
 			$this->report_warning(
