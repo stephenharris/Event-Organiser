@@ -12,6 +12,7 @@
  *      $ical->venues; //Array of venue names
  *      $ical->categories; //Array of category names
  *      $ical->errors; //Array of WP_Error errors
+ *      $ical->warnings; //Array of WP_Error 'warnings'. This are "non-fatal" errors (e.g. warnings about timezone 'guessing').
  * </code>
  * 
  * You can configire default settings by passing an array to the class constructor.
@@ -43,6 +44,8 @@ class EO_ICAL_Parser{
 	var $categories_parsed = 0;
 
 	var $current_event = array();
+	
+	var $line = 0; //Current line being parsed
 
 	/**
 	 * Constructor with settings passed as arguments
@@ -175,10 +178,11 @@ class EO_ICAL_Parser{
 	protected function parse_ical_array(){
 
 		$state = "NONE";//Initial state
+		$this->line = 0;
 
 		//Read through each line
-		for ( $n = 0; $n < count ( $this->ical_array ) && empty( $this->errors ); $n++ ):
-			$buff = trim(  $this->ical_array[$n] );
+		for ( $this->line = 0; $this->line < count ( $this->ical_array ) && empty( $this->errors ); $this->line++ ):
+			$buff = trim(  $this->ical_array[$this->line] );
 
 			if( !empty( $buff ) ):
 				$line = explode(':',$buff,2);
@@ -200,16 +204,16 @@ class EO_ICAL_Parser{
 					//Otherwise, parse event property
 					}else{
 						try{
-							while( isset( $this->ical_array[$n+1] ) && $this->ical_array[$n+1][0] == ' ' ){
+							while( isset( $this->ical_array[$this->line+1] ) && $this->ical_array[$this->line ][0] == ' ' ){
 								//Remove initial white space {@link http://www.ietf.org/rfc/rfc2445.txt Section 4.1}
-								$value .= substr( $this->ical_array[$n+1], 1 );
-								$n++;
+								$value .= substr( $this->ical_array[$this->line ], 1 );
+								$this->line++;
 							}
 						
 							$this->parse_event_property( $property, $value, $modifiers );
 
 						}catch( Exception $e ){
-							$this->report_error( $n+1, 'event-property-error', $e->getMessage() );
+							$this->report_error( $this->line, 'event-property-error', $e->getMessage() );
 							$state = "VCALENDAR";//Abort parsing event
 						}
 					}
@@ -226,12 +230,7 @@ class EO_ICAL_Parser{
 						$state = "NONE";
 		
 					}elseif($property=='X-WR-TIMEZONE'){
-						try{
-							$this->calendar_timezone = $this->parse_timezone($value);
-						}catch(Exception $e){
-							$this->report_error( $n+1, 'timezone-parser-error', $e->getMessage() );
-							break;
-						}
+						$this->calendar_timezone = $this->parse_timezone($value);
 					}
 
 				//Other
@@ -253,6 +252,21 @@ class EO_ICAL_Parser{
 	protected function report_error( $line, $type, $message ){
 
 		$this->errors[] = new WP_Error(
+				$type,
+				sprintf( __( 'Line: %1$d', 'eventorganiser' ), $line ).'   '.$message
+		);
+	}
+	
+	/**
+	 * Report an warnings with an iCal file
+	 * @ignore
+	 * @param int $line The line on which the error occurs.
+	 * @param string $type The type of error
+	 * @param string $message Verbose error message
+	 */
+	protected function report_warning( $line, $type, $message ){
+	
+		$this->warnings[] = new WP_Error(
 				$type,
 				sprintf( __( 'Line: %1$d', 'eventorganiser' ), $line ).'   '.$message
 		);
@@ -476,6 +490,14 @@ class EO_ICAL_Parser{
 			$tz = eo_get_blog_timezone();
 		}
 		
+		if( $tz->getName() != $tzid ){
+			$this->report_warning( 
+				$this->line, 
+				'timezone-parser-warning', 
+				sprintf( "Unknown timezone %s interpretted as %s.", $tzid, $tz->getName() )
+			);
+		}
+		
 		return $tz;
 	}
 
@@ -610,6 +632,12 @@ class EO_ICAL_Parser{
 		//TODO make a log of this somewhere.
 		if( empty( $rule_array['schedule_last'] ) ){
 			$rule_array['schedule_last'] = new DateTime( '2038-01-19 00:00:00' );
+			
+			$this->report_warning(
+				$this->line,
+				'indefinitely-recurring-event',
+				"Feed contained an indefinitely recurring event. This event will recurr until 2038-01-19."
+			);
 		}
 		
 		return $rule_array;
