@@ -179,11 +179,11 @@ class EO_ICAL_Parser{
 	protected function parse_ical_array(){
 
 		$state = "NONE";//Initial state
-		$this->line = 0;
+		$this->line = 1;
 
 		//Read through each line
-		for ( $this->line = 0; $this->line < count ( $this->ical_array ) && empty( $this->errors ); $this->line++ ):
-			$buff = trim(  $this->ical_array[$this->line] );
+		for ( $this->line = 1; $this->line <= count ( $this->ical_array ) && empty( $this->errors ); $this->line++ ):
+			$buff = trim(  $this->ical_array[$this->line-1] );
 
 			if( !empty( $buff ) ):
 				$line = explode(':',$buff,2);
@@ -205,9 +205,9 @@ class EO_ICAL_Parser{
 					//Otherwise, parse event property
 					}else{
 						try{
-							while( isset( $this->ical_array[$this->line+1] ) && $this->ical_array[$this->line ][0] == ' ' ){
+							while( isset( $this->ical_array[$this->line] ) && $this->ical_array[$this->line-1][0] == ' ' ){
 								//Remove initial white space {@link http://www.ietf.org/rfc/rfc2445.txt Section 4.1}
-								$value .= substr( $this->ical_array[$this->line ], 1 );
+								$value .= substr( $this->ical_array[$this->line-1], 1 );
 								$this->line++;
 							}
 						
@@ -254,7 +254,7 @@ class EO_ICAL_Parser{
 
 		$this->errors[] = new WP_Error(
 				$type,
-				sprintf( __( 'Line: %1$d', 'eventorganiser' ), $line ).'   '.$message
+				sprintf( __( '[Line %1$d]', 'eventorganiser' ), $line ).' '.$message
 		);
 	}
 	
@@ -269,7 +269,7 @@ class EO_ICAL_Parser{
 	
 		$this->warnings[] = new WP_Error(
 				$type,
-				sprintf( __( 'Line: %1$d', 'eventorganiser' ), $line ).'   '.$message
+				sprintf( __( '[Line %1$d]', 'eventorganiser' ), $line ).' '.$message
 		);
 	}
 
