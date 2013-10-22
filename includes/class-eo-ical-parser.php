@@ -254,7 +254,8 @@ class EO_ICAL_Parser{
 
 		$this->errors[] = new WP_Error(
 				$type,
-				sprintf( __( '[Line %1$d]', 'eventorganiser' ), $line ).' '.$message
+				sprintf( __( '[Line %1$d]', 'eventorganiser' ), $line ).' '.$message,
+				array( 'line' => $line )
 		);
 	}
 	
@@ -269,7 +270,8 @@ class EO_ICAL_Parser{
 	
 		$this->warnings[] = new WP_Error(
 				$type,
-				sprintf( __( '[Line %1$d]', 'eventorganiser' ), $line ).' '.$message
+				sprintf( __( '[Line %1$d]', 'eventorganiser' ), $line ).' '.$message,
+				array( 'line' => $line )
 		);
 	}
 
