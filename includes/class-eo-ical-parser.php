@@ -1,4 +1,7 @@
 <?php
+//TODO How does UNTIL=[DATE] as opposed to UNTIL=[DATE-TIME] affect "foreign" recurring events
+//TODO Resolve issue (1) below
+//TODO Detect issue (2) and issue error notices
 
 /**
  * Parses a local or remote ICAL file
@@ -90,9 +93,10 @@ class EO_ICAL_Parser{
 			$this->ical_array = $this->url_to_array( $file );
 
 		}else{
-			$this->ical_array =  WP_Error( 'invalid-ical-source', 
+			$this->ical_array =  new WP_Error( 
+				'invalid-ical-source', 
 				__( 'There was an error detecting ICAL source.', 'eventorgansier' )
-				);
+			);
 		}
 
 		if( is_wp_error( $this->ical_array ) )
@@ -659,3 +663,13 @@ class EO_ICAL_Parser{
 	}
 
 }
+
+/*
+ *  * Known issue (1): recurrence is sometimes not translated properly across timezones.
+ *  - ICAL has event recurring every month on the 2nd at 02:00 (2am) UTC time.
+ *  - Importing blog has New York Time Zone (UTC -4/5).
+ *  - Then event recurs every month on the **1st** at 22:00 (10pm) New York Time
+ *  - The **2nd** is not corrected to **1st**.
+ *  
+ *  * Known issue (2): cannot import events with a recurrence schedule EO doesn't understand.
+ */
