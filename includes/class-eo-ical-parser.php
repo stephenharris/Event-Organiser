@@ -39,7 +39,10 @@ class EO_ICAL_Parser{
 	
 	var $events = array();
 	var $venues = array();
+	var $venue_meta = array();
 	var $categories = array();
+	
+	
 	var $errors = array();
 	var $warnings = array();
 
@@ -203,6 +206,15 @@ class EO_ICAL_Parser{
 					//If END:VEVENT, add event to parsed events and clear $event
 					if( $property=='END' && $value=='VEVENT' ){
 						$state = "VCALENDAR";
+						
+						//Now we've finished passing the event, move venue data to $this->venue_meta
+						if( isset( $this->current_event['geo'] ) && !empty( $this->current_event['event-venue'] ) ){
+							$venue = $this->current_event['event-venue'];
+							$this->venue_meta[$venue]['latitude'] = $this->current_event['geo']['lat'];
+							$this->venue_meta[$venue]['longtitude'] = $this->current_event['geo']['lng'];
+							unset( $this->current_event['geo'] );
+						}
+						
 						$this->events[] = $this->current_event;
 						$this->current_event = array();
 
@@ -411,11 +423,20 @@ class EO_ICAL_Parser{
 			$this->current_event['post_status'] = isset( $map[$value] ) ? $map[$value] : $this->default_status;
 		break;
 
-			//An url associated with the event
+		case 'GEO':
+			$lat_lng = array_map( 'floatval', explode( ';', $value ) );
+			if( count( $lat_lng ) === 2 ){
+				$keys = array( 'lat', 'lng' );
+				$this->current_event['geo'] = array_combine( $keys, $lat_lng );
+			}
+		break;
+			
+		//An url associated with the event
 		case 'URL':
 			$this->current_event['url'] = $value;
 		break;
 
+		
 			endswitch;
 
 	}
