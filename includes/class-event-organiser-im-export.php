@@ -170,13 +170,19 @@ class Event_Organiser_Im_Export  {
 		$venues_imported = 0;
 		$categories_imported = 0;
 				
-		//TODO Handle warnings
-
 		if( $import_venues && $ical->venues ){
 
 			foreach( $ical->venues as $venue ){
 				if( !eo_get_venue_by( 'name', $venue ) ){
-					$new_venue = eo_insert_venue( $venue );
+					$args = array();
+					
+					//If lat/lng meta data is set, include that
+					if( isset( $ical->venue_meta[$venue]['latitude'] ) && isset( $ical->venue_meta[$venue]['longtitude'] ) ){
+						$args['latitude'] = $ical->venue_meta[$venue]['latitude'];
+						$args['longtitude'] = $ical->venue_meta[$venue]['longtitude'];
+					}
+						
+					$new_venue = eo_insert_venue( $venue, $args );
 					if( !is_wp_error( $new_venue ) && $new_venue ){
 						$venues_imported++;
 					}
