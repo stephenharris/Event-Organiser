@@ -497,7 +497,7 @@ class EO_ICAL_Parser{
 			$this->report_warning( 
 				$this->line, 
 				'timezone-parser-warning', 
-				sprintf( "Unknown timezone %s interpretted as %s.", $tzid, $tz->getName() )
+				sprintf( 'Unknown timezone "%s" interpreted as "%s".', $tzid, $tz->getName() )
 			);
 		}
 		
