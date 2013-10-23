@@ -210,7 +210,7 @@ class Event_Organiser_Im_Export  {
 			if( !empty( $event['event-venue'] ) ){
 				$venue = eo_get_venue_by( 'name', $event['event-venue'] );
 				if( $venue )
-					$event['tax_input']['event-venue'] =  intval( $venue->term_id );
+					$event['tax_input']['event-venue'][] =  intval( $venue->term_id );
 			}
 			
 			if( !empty( $event['event-category'] ) ){
