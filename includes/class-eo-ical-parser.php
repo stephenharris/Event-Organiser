@@ -519,7 +519,11 @@ class EO_ICAL_Parser{
 		preg_match('/^(\d{8})*/', $ical_date, $matches);
 
 		if( count( $matches ) !=2 ){
-			throw new Exception(__('Invalid date. Date expected in YYYYMMDD format.','eventorganiser'));
+			throw new Exception(
+				sprintf(
+					__( 'Invalid date "%s". Date expected in YYYYMMDD format.', 'eventorganiser' ),
+					$ical_date
+				));
 		}
 
 		//No time is given, so ignore timezone. (So use blog timezone).
@@ -553,7 +557,11 @@ class EO_ICAL_Parser{
 			$tz = new DateTimeZone('UTC');
 
 		}else{
-			throw new Exception(__('Invalid datetime. Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss format.','eventorganiser'));
+			throw new Exception(
+					sprintf(
+						__( 'Invalid datetime "%s". Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss format.', 'eventorganiser' ),
+						$ical_date
+					));
 			return false;
 		}
 
