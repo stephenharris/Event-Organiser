@@ -645,6 +645,26 @@ class EO_ICAL_Parser{
 				$bymonthday = $value;
 			break;
 			
+			//Not supported with warning
+			case 'BYSECOND':
+			case 'BYMINUTE':
+			case 'BYHOUR':
+			case 'BYYEARDAY':
+			case 'BYWEEKNO':
+			case 'BYSETPOS':
+				$this->report_warning(
+						$this->line,
+						'unsupported-recurrence-rule',
+						sprintf(
+							'Feed contains unrecognised recurrence rule: "%s" and may have not been imported correctly.',
+							 $property 
+						)
+				);
+			break;
+			
+			//Not supported without warning
+			case 'WKST':
+			break;
 			endswitch;
 
 		endforeach;
