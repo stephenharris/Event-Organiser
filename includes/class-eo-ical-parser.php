@@ -671,12 +671,39 @@ class EO_ICAL_Parser{
 
 		//Meta-data for Weekly and Monthly schedules
 		if( $rule_array['schedule']=='monthly' ):
+			
 			if( isset( $byday ) ){
-				preg_match('/(\d+)([a-zA-Z]+)/', $byday, $matches);
-				$rule_array['schedule_meta'] ='BYDAY='.$matches[1].$matches[2];
+				preg_match_all('/(-?\d+)([a-zA-Z]+)/', $byday, $matches);
+				
+				if ( count( $matches[0] ) > 1 ){
+					$this->report_warning(
+						$this->line,
+						'unsupported-recurrence-rule',
+						sprintf(
+							'Feed contains unsupported value for "%s" and may have not been imported correctly.',
+							 $property 
+						)
+					);
+				}
+				
+				$rule_array['schedule_meta'] ='BYDAY='.$matches[0][0];
 
 			}elseif( isset( $bymonthday ) ){
-				$rule_array['schedule_meta'] ='BYMONTHDAY='.$bymonthday;
+				
+				$days = explode( ',', $bymonthday );
+				
+				if ( count( $days ) > 1 ){
+					$this->report_warning(
+							$this->line,
+							'unsupported-recurrence-rule',
+							sprintf(
+									'Feed contains unsupported value for "%s" and may have not been imported correctly.',
+									$property
+							)
+					);
+				}
+				
+				$rule_array['schedule_meta'] ='BYMONTHDAY='.$days[0];
 
 			}else{
 				throw new Exception('Incomplete scheduling information');
