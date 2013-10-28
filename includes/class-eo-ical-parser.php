@@ -614,7 +614,7 @@ class EO_ICAL_Parser{
 		$property = $prop_value[0];
 		$value = $prop_value[1];
 
-		switch($property):
+		switch( $property ):
 			case 'FREQ':
 				$rule_array['schedule'] =strtolower($value);
 			break;
