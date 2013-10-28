@@ -251,18 +251,38 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 }
 
 /**
-* Deletes all occurrences for an event (removes them from the eo_events table).
-* Triggers {@see `eventorganiser_delete_event`} (this action is used to break the caches).
- * @since 1.5
+ * Deletes all occurrences for an event (removes them from the eo_events table).
+ * Triggers {@see `eventorganiser_delete_event`} (this action is used to break the caches).
  *
+ * **Don't call this unless you know what you're doing**.
+ * 
+ * @since 1.5
+ * @access private
  * @param int $post_id the event's (post) ID to be deleted
+ * @param int|array $occurrence_ids Occurrence ID (or array of IDs) for specificaly occurrences to delete. If empty/false, deletes all.
+ * 
  */
-function eo_delete_event_occurrences($post_id){
+function eo_delete_event_occurrences( $post_id, $occurrence_ids = false ){
 	global $wpdb;
+	//TODO use this in break/remove occurrence
 	
-	do_action( 'eventorganiser_delete_event', $post_id ); //Deprecated - do not use!
-	do_action( 'eventorganiser_delete_event_occurrences', $post_id );
-	$del = $wpdb->get_results($wpdb->prepare("DELETE FROM $wpdb->eo_events WHERE post_id=%d",$post_id));
+	//Let's just ensure empty is cast as false
+	$occurrence_ids = ( empty( $occurrence_ids ) ? false : $occurrence_ids );
+	
+	if( $occurrence_ids !== false ){
+		$occurrence_ids = (array) $occurrence_ids;
+		$occurrence_ids = array_map( 'absint', $occurrence_ids );
+		$occurrence_ids_in = implode( ', ', $occurrence_ids );
+		$raw_sql = "DELETE FROM $wpdb->eo_events WHERE post_id=%d AND event_id IN( $occurrence_id_in )";
+	}else{
+		$raw_sql = "DELETE FROM $wpdb->eo_events WHERE post_id=%d";
+	}
+	
+	do_action( 'eventorganiser_delete_event', $post_id, $occurrence_ids ); //Deprecated - do not use!
+	do_action( 'eventorganiser_delete_event_occurrences', $post_id, $occurrence_ids );
+	
+	$del = $wpdb->get_results( $wpdb->prepare(  $raw_sql, $post_id ) );
+	
 }
 add_action( 'delete_post', 'eo_delete_event_occurrences', 10 );
 
@@ -803,8 +823,8 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 		}
 
 		//Update post meta and delete date from events table
-		update_post_meta( $post_id,'_eventorganiser_event_schedule',$event_details);					
-		$del = $wpdb->get_results($wpdb->prepare("DELETE FROM {$wpdb->eo_events} WHERE post_id=%d AND event_id=%d",$post_id,$event_id));
+		update_post_meta( $post_id,'_eventorganiser_event_schedule',$event_details);		
+		eo_delete_event_occurrences( $post_id, $event_id );
 
 		//Clear cache
 		_eventorganiser_delete_calendar_cache();
