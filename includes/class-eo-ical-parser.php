@@ -471,9 +471,10 @@ class EO_ICAL_Parser{
 	 * @param string $tzid - the value of the ICAL TZID property
 	 * @return DateTimeZone - the timezone with the given identifier or false if it isn't recognised
 	 */
-	protected function parse_timezone( $tzid ){
+	public function parse_timezone( $tzid ){
 		
 		$tzid = str_replace( '-', '/', $tzid );
+		$tzid = trim( $tzid, '\'"' );
 
 		//Try just using the passed timezone ID
 		try{
