@@ -87,7 +87,7 @@ get_header(); ?>
 					<!-- Display event meta list -->
 					<?php echo eo_get_event_meta_list(); ?>
 
-					<!-- Show Event text as 'the_excerpt' or 'the_content -->
+					<!-- Show Event text as 'the_excerpt' or 'the_content' -->
 					<?php the_excerpt(); ?>
 			
 				</div><!-- .event-entry-meta -->
