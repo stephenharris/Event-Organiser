@@ -484,33 +484,69 @@ class EO_ICAL_Parser{
 		}
 
 		//If we have something like (GMT+01.00) Amsterdam / Berlin / Bern / Rome / Stockholm / Vienna lets try the cities
-		if( is_null( $tz ) && preg_match( '/GMT(?P<offset>.+)\)(?P<cities>.+)/', $tzid, $matches ) ){
+		if( is_null( $tz ) && preg_match( '/GMT(?P<offset>.+)\)(?P<cities>.+)?/', $tzid, $matches ) ){
 			
-			$parts = explode( '/', $matches['cities'] );
-			$tz_cities = array_map( 'trim', $parts );
-			$identifiers = timezone_identifiers_list();
+			if( $matches['cities'] ){
+				$parts = explode( '/', $matches['cities'] );
+				$tz_cities = array_map( 'trim', $parts );
+				$identifiers = timezone_identifiers_list();
 			
-			foreach( $tz_cities as $tz_city ){
+				foreach( $tz_cities as $tz_city ){
 			
-				$tz_city = ucfirst( strtolower( $tz_city ) );
+					$tz_city = ucfirst( strtolower( $tz_city ) );
 			
-				foreach( $identifiers as $identifier ){
+					foreach( $identifiers as $identifier ){
 			
-					$parts = explode('/', $identifier );
-					$city = array_pop( $parts );
-						
-					if( $city != $tz_city )
-						continue;
+						$parts = explode('/', $identifier );
+						$city = array_pop( $parts );
+							
+						if( $city != $tz_city )
+							continue;
 			
-					try{
-						$tz = new DateTimeZone( $identifier );
-						break 2;
-					}catch( exception $e ){
-						$tz = null;
+						try{
+							$tz = new DateTimeZone( $identifier );
+							break 2;
+						}catch( exception $e ){
+							$tz = null;
+						}
 					}
 				}
 			}
+			
+			if( $tz == null && $matches['offset'] ){
+				
+				$offset = (int) str_replace( '/', '-',  trim( $matches['offset'] ) );
+				
+				if( $offset == 0 ){
+					$tz = new DateTimeZone( 'UTC' );
+				}else{
+					$offset *= 3600; // convert hour offset to seconds
+					$allowed_zones = timezone_abbreviations_list();
+
+					foreach ( $allowed_zones as $abbr ):
+						foreach ( $abbr as $city ):
+							if ( $city['offset'] == $offset ){
+								try{
+									$tz = new DateTimeZone( $city['timezone_id'] );
+									break 2;
+								}catch( exception $e ){
+									$tz = null;
+								}
+							}
+						endforeach;
+					endforeach;
+				}
+			}
 		}	
+		
+		//If we have something like /mozilla.org/20070129_1/Europe/Berlin
+		if( is_null( $tz ) && preg_match( '#(/?)mozilla.org/([\d_]+)/(?P<tzid>.+)#', $tzid, $matches ) ){
+			try{
+				$tz = new DateTimeZone( $matches['tzid'] );
+			}catch( exception $e ){
+				$tz = null;
+			}
+		}
 
 		//Let plugins over-ride this
 		$tz = apply_filters( 'eventorganiser_ical_timezone', $tz, $tzid );
