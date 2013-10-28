@@ -526,7 +526,7 @@ function eo_get_event_schedule( $post_id=0 ){
 				break;	
 
 			case 'weekly':
-				$schedule_meta = array_filter($schedule_meta);
+				$schedule_meta = ( $schedule_meta ? array_filter($schedule_meta) : array() );
 				if( !empty($schedule_meta) && is_array($schedule_meta) ):
 					foreach ($schedule_meta as $day):
 						$start_day = clone $start;
