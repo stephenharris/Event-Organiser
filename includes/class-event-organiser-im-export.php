@@ -269,7 +269,7 @@ class Event_Organiser_Im_Export  {
 			$message[] = sprintf( __( "%d events were successfully imported",'eventorganiser'), count( $ical->events ) ).".";
 		
 		if( $venues_imported == 1 ){
-			$message[] = __("1 venue was created.",'eventorganiser');
+			$message[] = __("1 venue was created",'eventorganiser');
 			
 		}elseif( $venues_imported > 1 ){
 			$message[] = sprintf( __( "%d venues were created",'eventorganiser' ), $venues_imported );
