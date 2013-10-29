@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 17:17:40+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-10-03 10:54:25+0000\n"
+"Last-Translator: Thomas <seagreenlion@gmail.com>\n"
 "Language-Team: \n"
 "Language: German (Germany)\n"
 "MIME-Version: 1.0\n"
@@ -97,11 +97,6 @@ msgstr "Eine Liste der Event Kategorien"
 msgid "A list or dropdown of event venues"
 msgstr "Eine Liste oder Dropdown von Veranstaltungsstätten"
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr "Einen \"Termin\"-Link zum Navigationsmenü hinzufügen:"
@@ -109,6 +104,11 @@ msgstr "Einen \"Termin\"-Link zum Navigationsmenü hinzufügen:"
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "Termin hinzufügen"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr ""
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -149,7 +149,7 @@ msgstr "Veranstaltungsort hinzufügen"
 
 #: ../event-organiser-settings.php:57
 msgid "Add-on Licence keys"
-msgstr ""
+msgstr "Lizenz Schlüssel der Erweiterung"
 
 #: ../event-organiser-go-pro.php:76
 msgid "Additional shortcodes & improved UI"
@@ -169,14 +169,14 @@ msgid "All dates and times must be entered in the specified format. This format 
 msgstr "Alle Daten und Zeiten müssen in einem bestimmten Format eingegeben werden. "
 "Dieses Format kann unter \"Einstellungen\" geändert werden."
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "Ganztags"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
 msgstr "Ganztägig"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
+msgstr "Ganztags"
 
 #: ../includes/event-organiser-cpt.php:146
 msgid "All events"
@@ -338,7 +338,7 @@ msgstr "Benutzerdefiniertes Feld aktualisiert."
 
 #: ../event-organiser-settings.php:115
 msgid "Custom Fields"
-msgstr "Custom Fields"
+msgstr "Benutzerdefinierte Felder"
 
 #: ../includes/event-organiser-event-functions.php:706
 msgid "custom reoccurrence"
@@ -364,12 +364,12 @@ msgstr ""
 msgid "Date Format:"
 msgstr "Datumsformat:"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "Tag"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
+msgstr "Tag"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
 msgstr "Tag"
 
 #: ../event-organiser-settings.php:271
@@ -390,7 +390,7 @@ msgstr "Tage"
 
 #: ../event-organiser-settings.php:143
 msgid "dd-mm-yyyy"
-msgstr "dd-mm-yyyy"
+msgstr "tt-mm-jjjj"
 
 #: ../event-organiser-debug.php:555
 msgid "Debug mode"
@@ -433,7 +433,7 @@ msgstr "DESC"
 
 #: ../event-organiser-settings.php:229
 msgid "Disable CSS:"
-msgstr ""
+msgstr "CSS ausschalten"
 
 #: ../includes/event-organiser-register.php:648
 msgid "Dismiss"
@@ -476,7 +476,7 @@ msgstr "Exportdatei downloaden"
 
 #: ../event-organiser-debug.php:84
 msgid "Download system information file"
-msgstr ""
+msgstr "Herunterladen der Systeminfomationsdatei"
 
 #: ../includes/event-organiser-ajax.php:255
 msgid "Draft"
@@ -608,7 +608,8 @@ msgstr ""
 #: ../event-organiser-add-ons.php:99
 msgid "Event Organiser offers a range of extension which add additional features to "
 "the plug-in."
-msgstr ""
+msgstr "Event Organiser bietet eine Reihe von Erweiterungen an, welche zusätzliche "
+"Funktionen zum plug-in hinzu fügen."
 
 #: ../event-organiser-go-pro.php:55
 msgid "Event Organiser Pro is a premium add-on bringing advanced booking management "
@@ -798,7 +799,7 @@ msgstr "Termine exportieren"
 
 #: ../event-organiser-add-ons.php:20
 msgid "Extensions"
-msgstr ""
+msgstr "Erweiterung"
 
 #: ../includes/class-event-organiser-im-export.php:68
 msgid "File Error encountered: %d"
@@ -994,7 +995,7 @@ msgstr "Abgelaufene Termine einschließen"
 
 #: ../event-organiser-edit.php:180
 msgid "Include/Exclude occurrences"
-msgstr "Vorkommen ein- und auschliessen"
+msgstr "Vorkommen ein- und ausschliessen"
 
 #: ../includes/class-event-organiser-im-export.php:586
 #: ../includes/class-eo-ical-parser.php:449
@@ -1078,14 +1079,14 @@ msgstr "Minute"
 
 #: ../event-organiser-settings.php:144
 msgid "mm-dd-yyyy"
-msgstr "mm-dd-yyyy"
-
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "Monat"
+msgstr "mm-tt-jjjj"
 
 #: ../event-organiser-calendar.php:229
 msgid "Month"
+msgstr "Monat"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
 msgstr "Monat"
 
 #: ../event-organiser-settings.php:270
@@ -1187,7 +1188,7 @@ msgstr "Vorkommen gelöscht"
 
 #: ../includes/event.php:744
 msgid "Occurrence not deleted. Occurrence not found."
-msgstr ""
+msgstr "Ereignis nicht gelöscht bzw. nicht gefunden"
 
 #: ../event-organiser-edit.php:146
 #: ../templates/shortcode-event-list.php:52
@@ -1326,7 +1327,7 @@ msgstr "Zeitplan wurde nicht erkannt."
 
 #: ../event-organiser-debug.php:556
 msgid "Script mode"
-msgstr ""
+msgstr "Script Modus"
 
 #: ../includes/event-organiser-cpt.php:62
 msgid "Search Categories"
@@ -1690,13 +1691,13 @@ msgstr ""
 msgid "Venue Location"
 msgstr "Veranstaltungsort Location"
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr "Veranstatungsort"
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
 msgstr "Veranstaltungsort Name"
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
+msgstr "Veranstatungsort"
 
 #: ../event-organiser-settings.php:220
 msgid "Venue page:"
@@ -1748,12 +1749,12 @@ msgstr "Veranstaltungsort zeigen"
 msgid "View will take you to the venue's page"
 msgstr "'Ansehen' bringt Sie zur Seite des Veranstaltungsortes."
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "Woche"
-
 #: ../event-organiser-calendar.php:229
 msgid "Week"
+msgstr "Woche"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
 msgstr "Woche"
 
 #: ../event-organiser-edit.php:126
@@ -1855,5 +1856,5 @@ msgstr "Möglicherweise müssen Sie gehen zu WordPress Einstellungen > Permalink
 
 #: ../event-organiser-settings.php:145
 msgid "yyyy-mm-dd"
-msgstr "yyyy-mm-dd"
+msgstr "jjjj-mm-tt"
 

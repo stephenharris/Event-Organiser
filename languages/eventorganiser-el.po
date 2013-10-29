@@ -96,11 +96,6 @@ msgstr "Μιά λίστα ή αναπτυσσόμενη λίστα των κατ
 msgid "A list or dropdown of event venues"
 msgstr "Μιά λίστα ή αναπτυσσόμενη λίστα των τοποθεσιών."
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr "Πρόσθεσε Event σύνδεση στο μενού πλοήγησης"
@@ -108,6 +103,11 @@ msgstr "Πρόσθεσε Event σύνδεση στο μενού πλοήγηση
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "Προσθήκη Event"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr ""
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -168,13 +168,13 @@ msgid "All dates and times must be entered in the specified format. This format 
 msgstr "Όλες οι ημερομηνίες και οι ώρες πρέπει να αναγράφονται με συγκεκριμένο "
 "τρόπο. Αυτή η μορφή μπορεί να αλλάξει στην σελίδα ρυθμίσεων."
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "Ολοήμερο"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
+msgstr "Ολοήμερο"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
 msgstr "Ολοήμερο"
 
 #: ../includes/event-organiser-cpt.php:146
@@ -361,12 +361,12 @@ msgstr ""
 msgid "Date Format:"
 msgstr "Διαμόρφωση Ημερομηνίας"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "Ημέρα"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
+msgstr "Ημέρα"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
 msgstr "Ημέρα"
 
 #: ../event-organiser-settings.php:271
@@ -1084,12 +1084,12 @@ msgstr "Λεπτό"
 msgid "mm-dd-yyyy"
 msgstr "mm-dd-yyyy"
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "Μήνας"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
+msgstr "Μήνας"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
 msgstr "Μήνας"
 
 #: ../event-organiser-settings.php:270
@@ -1694,13 +1694,13 @@ msgstr ""
 msgid "Venue Location"
 msgstr "Τοποθεσία χώρου"
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr "Ονομα Τοποθεσίας"
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
 msgstr "Ονομασία χώρου"
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
+msgstr "Ονομα Τοποθεσίας"
 
 #: ../event-organiser-settings.php:220
 msgid "Venue page:"
@@ -1752,12 +1752,12 @@ msgstr "Εμφάνιση τοποθεσίας"
 msgid "View will take you to the venue's page"
 msgstr "Η Εμφάνιση θα οδηγήσει σην σελίδα με τις τοποθεσίες."
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "Εβδομάδα"
-
 #: ../event-organiser-calendar.php:229
 msgid "Week"
+msgstr "Εβδομάδα"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
 msgstr "Εβδομάδα"
 
 #: ../event-organiser-edit.php:126

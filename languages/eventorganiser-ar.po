@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 16:54:05+0000\n"
+"PO-Revision-Date: 2013-09-21 17:45:20+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Arabic\n"
@@ -89,17 +89,17 @@ msgstr ""
 msgid "A list or dropdown of event venues"
 msgstr ""
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr ""
 
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
+msgstr ""
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
 msgstr ""
 
 #: ../event-organiser-venues.php:230
@@ -160,14 +160,14 @@ msgid "All dates and times must be entered in the specified format. This format 
 "changed in the settings page."
 msgstr ""
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "طوال اليوم"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
 msgstr ""
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
+msgstr "طوال اليوم"
 
 #: ../includes/event-organiser-cpt.php:146
 msgid "All events"
@@ -347,12 +347,12 @@ msgstr ""
 msgid "Date Format:"
 msgstr "تنسيق التاريخ"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "يوم"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
+msgstr "يوم"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
 msgstr "يوم"
 
 #: ../event-organiser-settings.php:271
@@ -1043,12 +1043,12 @@ msgstr ""
 msgid "mm-dd-yyyy"
 msgstr ""
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "شهر"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
+msgstr "شهر"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
 msgstr "شهر"
 
 #: ../event-organiser-settings.php:270
@@ -1631,13 +1631,13 @@ msgstr ""
 msgid "Venue Location"
 msgstr ""
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr "اسم العنوان"
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
 msgstr ""
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
+msgstr "اسم العنوان"
 
 #: ../event-organiser-settings.php:220
 msgid "Venue page:"
@@ -1689,12 +1689,12 @@ msgstr ""
 msgid "View will take you to the venue's page"
 msgstr ""
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "أسبوع"
-
 #: ../event-organiser-calendar.php:229
 msgid "Week"
+msgstr "أسبوع"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
 msgstr "أسبوع"
 
 #: ../event-organiser-edit.php:126

@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 16:51:08+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-09-29 05:10:28+0000\n"
+"Last-Translator: chinestan <chinestan@mihanmail.ir>\n"
 "Language-Team: \n"
 "Language: Persian (Iran, Islamic Republic of)\n"
 "MIME-Version: 1.0\n"
@@ -89,11 +89,6 @@ msgstr ""
 msgid "A list or dropdown of event venues"
 msgstr ""
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr ""
@@ -101,6 +96,11 @@ msgstr ""
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "افزودن رویداد"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr ""
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -125,7 +125,7 @@ msgstr "افزودن مکان"
 
 #: ../includes/event-organiser-cpt.php:106
 msgid "Add or remove tags"
-msgstr ""
+msgstr " افزودن یا حذف کردن برچسب"
 
 #: ../includes/event-organiser-cpt.php:38
 msgid "Add or remove venues"
@@ -160,13 +160,13 @@ msgid "All dates and times must be entered in the specified format. This format 
 "changed in the settings page."
 msgstr ""
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "تمام روز"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
+msgstr "تمام روز"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
 msgstr "تمام روز"
 
 #: ../includes/event-organiser-cpt.php:146
@@ -267,7 +267,7 @@ msgstr ""
 
 #: ../includes/event-organiser-cpt.php:104
 msgid "Choose from the most used tags"
-msgstr ""
+msgstr "از میان برچسبهایی که بیشتر استفاده شده اند ، انتخاب کنید"
 
 #: ../includes/event-organiser-cpt.php:437
 msgid "Choose the reoccurrence end date. No further occurrences are added after "
@@ -347,12 +347,12 @@ msgstr ""
 msgid "Date Format:"
 msgstr "فرمت تاریخ"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "روز"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
+msgstr "روز"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
 msgstr "روز"
 
 #: ../event-organiser-settings.php:271
@@ -642,7 +642,7 @@ msgstr "رویداد به روز شد"
 
 #: ../includes/event-organiser-cpt.php:217
 msgid "Event updated. <a href=\"%s\">View event</a>"
-msgstr ""
+msgstr "رویداد بروز شد. <a href=\"%s\">مشاهده صفحه رویداد</a>"
 
 #: ../classes/class-eo-calendar-widget.php:88
 msgid "Event venue"
@@ -1043,12 +1043,12 @@ msgstr "دقیقه"
 msgid "mm-dd-yyyy"
 msgstr ""
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "ماه"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
+msgstr "ماه"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
 msgstr "ماه"
 
 #: ../event-organiser-settings.php:270
@@ -1105,7 +1105,7 @@ msgstr "رویدادی یافت نشد"
 
 #: ../includes/event-organiser-cpt.php:150
 msgid "No events found in Trash"
-msgstr ""
+msgstr "رویدادی در سطل زباله یافت نشد"
 
 #: ../includes/class-event-organiser-im-export.php:316
 msgid "No events were imported."
@@ -1341,7 +1341,7 @@ msgstr ""
 
 #: ../includes/event-organiser-cpt.php:107
 msgid "Separate tags with commas"
-msgstr ""
+msgstr "برچسب ها را با کاما جدا کنید"
 
 #: ../includes/event-organiser-cpt.php:39
 msgid "Separate venues with commas"
@@ -1631,12 +1631,12 @@ msgstr ""
 msgid "Venue Location"
 msgstr "آدرس مکان"
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr "نام مکان"
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
+msgstr "نام مکان"
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
 msgstr "نام مکان"
 
 #: ../event-organiser-settings.php:220
@@ -1689,12 +1689,12 @@ msgstr "نمایش مکان"
 msgid "View will take you to the venue's page"
 msgstr ""
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "هفته"
-
 #: ../event-organiser-calendar.php:229
 msgid "Week"
+msgstr "هفته"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
 msgstr "هفته"
 
 #: ../event-organiser-edit.php:126

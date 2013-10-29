@@ -89,11 +89,6 @@ msgstr "En liste eller drop-down memnu af begivenhedskategorier"
 msgid "A list or dropdown of event venues"
 msgstr "En liste eller drop-down af begivenhedssteder"
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr "Tilføj et link for 'begivenheder' til menuen:"
@@ -101,6 +96,11 @@ msgstr "Tilføj et link for 'begivenheder' til menuen:"
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "Tilføj begivenhed"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr ""
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -161,13 +161,13 @@ msgid "All dates and times must be entered in the specified format. This format 
 msgstr "Alle datoer og tider skal indtastes i det specificerede format. Dette format "
 "kan ændres på indstillingssiden."
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "Hele dagen"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
+msgstr "Hele dagen"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
 msgstr "Hele dagen"
 
 #: ../includes/event-organiser-cpt.php:146
@@ -353,13 +353,13 @@ msgstr ""
 msgid "Date Format:"
 msgstr "Dato-format:"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "dag"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
 msgstr "Dag"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
+msgstr "dag"
 
 #: ../event-organiser-settings.php:271
 msgid "Day archive"
@@ -1068,13 +1068,13 @@ msgstr "Minut"
 msgid "mm-dd-yyyy"
 msgstr "mm-dd-yyyy"
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "måned"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
 msgstr "Måned"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
+msgstr "måned"
 
 #: ../event-organiser-settings.php:270
 msgid "Month archive"
@@ -1670,13 +1670,13 @@ msgstr ""
 msgid "Venue Location"
 msgstr "Stedlokation"
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr ""
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
 msgstr "Stednavn"
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
+msgstr ""
 
 #: ../event-organiser-settings.php:220
 msgid "Venue page:"
@@ -1728,13 +1728,13 @@ msgstr "Vis sted"
 msgid "View will take you to the venue's page"
 msgstr "Vis vil føre dig til stedets side"
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "uge"
-
 #: ../event-organiser-calendar.php:229
 msgid "Week"
 msgstr "Uge"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
+msgstr "uge"
 
 #: ../event-organiser-edit.php:126
 msgid "weekly"

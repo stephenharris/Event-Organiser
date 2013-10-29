@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 17:38:06+0000\n"
+"PO-Revision-Date: 2013-09-21 17:45:20+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Czech (Czech Republic)\n"
@@ -89,11 +89,6 @@ msgstr ""
 msgid "A list or dropdown of event venues"
 msgstr ""
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr ""
@@ -101,6 +96,11 @@ msgstr ""
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "Přidat událost"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr ""
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -160,14 +160,14 @@ msgid "All dates and times must be entered in the specified format. This format 
 "changed in the settings page."
 msgstr ""
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr ""
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
 msgstr "Celodenní"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
+msgstr ""
 
 #: ../includes/event-organiser-cpt.php:146
 msgid "All events"
@@ -351,13 +351,13 @@ msgstr ""
 msgid "Date Format:"
 msgstr "Formát data:"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "den"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
 msgstr "Den"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
+msgstr "den"
 
 #: ../event-organiser-settings.php:271
 msgid "Day archive"
@@ -1053,13 +1053,13 @@ msgstr "Minuta"
 msgid "mm-dd-yyyy"
 msgstr "mm-dd-yyyy"
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "měsíc"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
 msgstr "Měsíc"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
+msgstr "měsíc"
 
 #: ../event-organiser-settings.php:270
 msgid "Month archive"
@@ -1660,12 +1660,12 @@ msgstr ""
 msgid "Venue Location"
 msgstr "Adresa místa"
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr "Název místa"
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
+msgstr "Název místa"
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
 msgstr "Název místa"
 
 #: ../event-organiser-settings.php:220
@@ -1718,13 +1718,13 @@ msgstr "Ukázat místo"
 msgid "View will take you to the venue's page"
 msgstr "'Zobrazit' vás přenese na stránku místa."
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "týden"
-
 #: ../event-organiser-calendar.php:229
 msgid "Week"
 msgstr "Týden"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
+msgstr "týden"
 
 #: ../event-organiser-edit.php:126
 msgid "weekly"
