@@ -205,6 +205,8 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Fixes venues not appearing in Appearance > Menus 
 * Fixes bug with importing events that have no dates
 * Fixes bug with importing all-day events across timezones
+* Fixes bug with occurrence picker
+* Fixes bug with modal overlay
 * Code refactoring (old iCal parser removed)
 * Updated translations: Arabic, Czech, Danish, German, Greek, Persian, 
 * Added translations: Indonesian
