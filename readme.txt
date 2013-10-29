@@ -206,6 +206,8 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Fixes bug with importing events that have no dates
 * Fixes bug with importing all-day events across timezones
 * Code refactoring (old iCal parser removed)
+* Updated translations: Arabic, Czech, Danish, German, Greek, Persian, 
+* Added translations: Indonesian
 
 = 2.3.2 =
 * Fixes bug (introduced in 2.3) with iCal export feed.

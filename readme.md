@@ -3,8 +3,8 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
-**Tested up to:** 3.6.1  
-**Stable tag:** 2.3.2  
+**Tested up to:** 3.7  
+**Stable tag:** 2.4  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -200,6 +200,26 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 2.4 ###
+* iCal parser updated. Specifically:
+ - Improved timezone handling
+ - Support for 'COUNT' property
+ - Improved error & warning feedback
+ - Handle GEO tag
+ - Import venue latitude/longtitude
+* Themes can switch off plug-in template handling from functions.php with `add_theme_support( 'event-organiser' )`
+* Added support for `event_occurrence__not_in` in `eo_get_events()` and `WP_Query()`
+* Improved MP6 compatability
+* Add filter `eventorganiser_blog_is_24` (determines whether time-input should be 12 hour or 24 hour).
+* Schedule meta for weekly schedule now optional (defaults to 'start' date)
+* Unit tests added (largely for date generation & iCal parsing/generation)
+* Fixes venues not appearing in Appearance > Menus 
+* Fixes bug with importing events that have no dates
+* Fixes bug with importing all-day events across timezones
+* Code refactoring (old iCal parser removed)
+*** Updated translations:** Arabic, Czech, Danish, German, Greek, Persian,   
+*** Added translations:** Indonesian  
 
 ### 2.3.2 ###
 * Fixes bug (introduced in 2.3) with iCal export feed.
