@@ -298,6 +298,7 @@ window.eventOrganiserSchedulePicker = {
             
             $('html').click(function() {
                 dp.hide();
+                $(views.occurrence_picker_toggle).val(locale.showDates);
             });
         }
 
