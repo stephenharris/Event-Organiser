@@ -228,11 +228,12 @@ class EO_Calendar_Widget extends WP_Widget
 		
 				$start = eo_get_the_start( DATETIMEOBJ, $event->ID, null, $event->occurrence_id );
 				$end = eo_get_the_end( DATETIMEOBJ, $event->ID, null, $event->occurrence_id );
-			
-				while( $start <= $end ){
-					$date = eo_format_datetime( $start, 'Y-m-d' );
+				$pointer = clone $start;
+				
+				while( $pointer <= $end ){
+					$date = eo_format_datetime( $pointer, 'Y-m-d' );
 					$calendar_events[ $date ][] = $event;
-					$start->modify( '+1 day' );
+					$pointer->modify( '+1 day' );
 				}
 		
 			}else{
