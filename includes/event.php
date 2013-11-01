@@ -554,6 +554,7 @@ function eo_get_event_schedule( $post_id=0 ){
 						$start_days[] = $start_day;
 					endforeach;
 				else:
+					$schedule_meta = array( $icaldays[ $start->format('w') ] );
 					$start_days[] = clone $start;
 				endif;
 
