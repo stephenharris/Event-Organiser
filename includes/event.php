@@ -476,6 +476,8 @@ function eo_get_event_schedule( $post_id=0 ){
 		
 		$occurrences =array(); //occurrences array	
 
+		$exclude = array_filter( (array) $exclude );
+		$include = array_filter( (array) $include );
 		$exclude = array_udiff($exclude, $include, '_eventorganiser_compare_dates');
 		$include = array_udiff($include, $exclude, '_eventorganiser_compare_dates');
 		
