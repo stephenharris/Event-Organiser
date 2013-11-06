@@ -47,34 +47,57 @@ module.exports = function(grunt) {
 			command: 'apigen --config /var/www/git/event-organiser/apigen/apigen.conf'
 		},
 	},
+
 	compress: {
+		//Compress build/event-organiser
 		main: {
 			options: {
-				archive: 'dist/<%= pkg.name %>.zip'
+				mode: 'zip',
+				archive: './dist/event-organiser.zip'
 			},
-		files: [{
-			src: [
-				'**',
-				'!*~', 
-				'!**/dist/**', '!**/.git/**', '!**/node_modules/**','!**/apigen/**', '!**/documentation/**',  
-				'!package.json', 
-				'!Gruntfile.js'] 
-			}]
-  		},
+			expand: true,
+			cwd: 'dist/event-organiser/',
+			src: ['**/*'],
+			dest: 'event-organiser/'
+		},
 		version: {
 			options: {
-				archive: 'dist/<%= pkg.name %>-<%= pkg.version %>.zip'
+				mode: 'zip',
+				archive: './dist/event-organiser-<%= pkg.version %>.zip'
 			},
-			files: [{
-				src: [
-					'**',
-					'!*~', 
-					'!**/dist/**', '!**/.git/**', '!**/node_modules/**','!**/apigen/**', '!**/documentation/**',  
-					'!package.json', 
-					'!Gruntfile.js'] 
-			}]
+			expand: true,
+			cwd: 'dist/event-organiser/',
+			src: ['**/*'],
+			dest: 'event-organiser/'
 		}	
-  	},
+	},
+
+	clean: {
+		//Clean up build folder
+		main: ['dist/event-organiser']
+	},
+
+	copy: {
+		// Copy the plugin to a versioned release directory
+		main: {
+			src:  [
+				'**',
+				'!node_modules/**',
+				'!dist/**',
+				'!.git/**',
+				'!apigen/**',
+				'!documentation/**',
+				'!tests/**',
+				'!vendor/**',
+				'!Gruntfile.js',
+				'!package.json',
+				'!.gitignore',
+				'!.gitmodules'
+			],
+			dest: 'dist/event-organiser/'
+		}		
+	},
+
 	wp_readme_to_markdown: {
 		convert:{
 			files: {
@@ -82,6 +105,7 @@ module.exports = function(grunt) {
 			},
 		},
 	},
+
 	phpunit: {
 		classes: {
 			dir: 'tests'
@@ -94,14 +118,15 @@ module.exports = function(grunt) {
 	}
 });
 
-
-
-
 grunt.loadNpmTasks('grunt-shell');
 
 grunt.loadNpmTasks('grunt-contrib-uglify');
 
 grunt.loadNpmTasks('grunt-contrib-compress');
+
+grunt.loadNpmTasks( 'grunt-contrib-clean' );
+
+grunt.loadNpmTasks( 'grunt-contrib-copy' );
 
 grunt.loadNpmTasks('grunt-contrib-jshint');
 
@@ -115,4 +140,6 @@ grunt.registerTask('default', ['uglify']);
 grunt.registerTask('docs', ['shell:makeDocs']);
 
 grunt.registerTask('readme', ['wp_readme_to_markdown']);
+
+grunt.registerTask( 'build', [ 'clean', 'copy', 'compress'] );
 };
