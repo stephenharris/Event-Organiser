@@ -440,6 +440,9 @@ function eventorganiser_screen_retina_icon(){
 			body.event_page_calendar #calendar-view .view-button.active{ border-color: #dfdfdf #dfdfdf #eee }
 			.ui-datepicker select {height: 2em;}
 			.form-table .ui-datepicker-calendar td, .form-table .ui-datepicker-calendar th {font-size: 12px;}
+			#eventorganiser_event_detail td{ border: none; }
+			#eventorganiser_event_detail .reocurrence_row td{ padding: 0px; }
+			#eventorganiser_event_detail .reocurrence_row p{ margin-bottom: 18px; }
 		</style>
 		<?php
 	}
