@@ -92,7 +92,11 @@ module.exports = function(grunt) {
 				'!Gruntfile.js',
 				'!package.json',
 				'!.gitignore',
-				'!.gitmodules'
+				'!.gitmodules',
+				'!*~',
+				'!composer.lock',
+				'!composer.phar',
+				'!composer.json',
 			],
 			dest: 'dist/event-organiser/'
 		}		
