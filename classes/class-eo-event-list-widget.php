@@ -56,6 +56,7 @@ class EO_Event_List_Widget extends WP_Widget{
 	<select id="<?php echo $this->get_field_id('orderby'); ?>" name="<?php echo $this->get_field_name('orderby'); ?>" type="text">
 		<option value="eventstart" <?php selected($instance['orderby'], 'eventstart'); ?>><?php _e('Start date', 'eventorganiser'); ?></option>
 		<option value="title" <?php selected($instance['orderby'], 'title');?>><?php _e('Title', 'eventorganiser'); ?> </option>
+		<option value="date" <?php selected($instance['orderby'], 'date');?>><?php _e('Publish date', 'eventorganiser'); ?> </option>
 	</select>
 	<select id="<?php echo $this->get_field_id('order'); ?>" name="<?php echo $this->get_field_name('order'); ?>" type="text">
 		<option value="asc" <?php selected($instance['order'], 'asc'); ?>><?php _e('ASC', 'eventorganiser'); ?> </option>
@@ -102,7 +103,7 @@ class EO_Event_List_Widget extends WP_Widget{
 	$validated['event-category'] = implode(',',$event_cats);
 	$validated['venue'] = sanitize_text_field( $new_instance['venue'] );
 	$validated['order'] = ($new_instance['order'] == 'asc' ? 'asc' : 'desc');
-	$validated['orderby'] = ( $new_instance['orderby'] == 'title' ? 'title' : 'eventstart' );
+	$validated['orderby'] = in_array( $new_instance['orderby'],  array( 'title', 'eventstart', 'date' ) ) ? $new_instance['orderby'] : 'eventstart';
 	$validated['showpastevents'] = ( !empty($new_instance['showpastevents']) ? 1:  0);
 	$validated['group_events_by'] = ( isset($new_instance['group_events_by']) && $new_instance['group_events_by']=='series' ? 'series':  '');
 	$validated['template'] = $new_instance['template'];
