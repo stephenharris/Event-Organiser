@@ -257,7 +257,18 @@ jQuery(document).ready(function () {
 			buttonText: EOAjaxFront.locale.gotodate,
 			monthNamesShort: EOAjaxFront.locale.monthAbbrev,
 			dayNamesMin: EOAjaxFront.locale.dayAbbrev,
+			nextText: EO_Pro_DP.locale.nextText,
+			prevText: EO_Pro_DP.locale.prevText,
 			showOn: 'button',
+			beforeShow: function(input, inst) {
+				if( inst.hasOwnProperty( 'dpDiv' ) ){
+					inst.dpDiv.addClass('eo-datepicker');
+				}else{
+					$('#ui-datepicker-div').addClass('eo-datepicker');
+				}
+			},
+			nextText: ">",
+			prevText: "<",
 			onSelect: function (dateText, dp) {
 				var cal_id = $(this).parents('div.eo-fullcalendar').attr('id');
 				$('#'+cal_id).fullCalendar('gotoDate', new Date(Date.parse(dateText)));
