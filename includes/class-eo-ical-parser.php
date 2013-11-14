@@ -217,9 +217,14 @@ class EO_ICAL_Parser{
 
 				//If we are in EVENT state
 				if ( $this->state == "VEVENT" ) {
-
+					
+					if( $property == "BEGIN" && $value == 'VALARM' ){
+						//In state VEVENT > VALARM
+						$this->state = "VEVENT:VALARM";
+						
+						
 					//If END:VEVENT, add event to parsed events and clear $event
-					if( $property == 'END' && $value =='VEVENT' ){
+					}elseif( $property == 'END' && $value =='VEVENT' ){
 						$this->state = "VCALENDAR";
 						
 						$this->current_event['_lines']['end'] = $this->line;
@@ -261,6 +266,15 @@ class EO_ICAL_Parser{
 						}
 					}
 
+					
+				//We are in a VEVENT > VALARM stte
+				}elseif( $this->state == "VEVENT:VALARM" ){
+					
+					//We ignore VALARMs...
+					if ( $property=='END' && $value=='VALARM')
+						$this->state = "VEVENT";
+					
+					
 				// If we are in CALENDAR state
 				}elseif ($this->state == "VCALENDAR") {
 
