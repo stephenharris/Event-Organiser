@@ -193,6 +193,35 @@ class EO_ICAL_Parser{
 		return $lines;
 	}
 
+	/**
+	 * Modifies the ical_array to unfold multi-line entries into a single line. 
+	 * Preserves the original line numbering so that line numbers in error messages
+	 * match up with the line numbers when viewing the (unfolded) iCal file in a 
+	 * text editor.  
+	 */
+	function unfold_lines( $lines ) {
+		
+		$unfolded_lines = array();
+		
+		$i = 0;
+		
+		while( $i < count ( $lines ) ) {
+			
+			$unfolded_lines[$i] = rtrim( $lines[$i] );
+			
+			$j = $i+1;
+			
+			while( isset( $lines[$j] ) && strlen( $lines[$j] ) > 0 && ( $lines[$j]{0} == ' ' || $lines[$j]{0} == "\t" )) {
+				$unfolded_lines[$i] .= rtrim( substr( $lines[$j], 1 ) );
+				$j++;
+			}
+			
+			$i = ($j-1) + 1;
+		}
+		
+		return $unfolded_lines;
+	}
+	
 
 	/**
 	 * Parses through an array of lines (of an ICAL file)
@@ -200,12 +229,19 @@ class EO_ICAL_Parser{
 	 */
 	protected function parse_ical_array(){
 
+		$this->ical_array = $this->unfold_lines( $this->ical_array );
+		
 		$this->state = "NONE";//Initial state
 		$this->line = 1;
 
 		//Read through each line
-		for ( $this->line = 1; $this->line <= count ( $this->ical_array ) && empty( $this->errors ); $this->line++ ):
-			$buff = trim(  $this->ical_array[$this->line-1] );
+		foreach ( $this->ical_array as $index => $line_content ):
+		
+			if( !empty( $this->errors ) )
+				break;
+		
+			$this->line = $index + 1;
+			$buff = trim( $line_content );
 
 			if( !empty( $buff ) ):
 				$line = explode(':',$buff,2);
@@ -295,7 +331,7 @@ class EO_ICAL_Parser{
 					$this->state = "VCALENDAR";
 				}
 			endif; //If line is not empty
-		endfor; //For each line
+		endforeach; //For each line
 	}
 
 
