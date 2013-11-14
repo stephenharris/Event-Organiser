@@ -202,17 +202,17 @@ class EO_ICAL_Parser{
 	function unfold_lines( $lines ) {
 		
 		$unfolded_lines = array();
-		
+
 		$i = 0;
 		
 		while( $i < count ( $lines ) ) {
 			
-			$unfolded_lines[$i] = rtrim( $lines[$i] );
+			$unfolded_lines[$i] = rtrim( $lines[$i], "\n\r" );
 			
 			$j = $i+1;
 			
 			while( isset( $lines[$j] ) && strlen( $lines[$j] ) > 0 && ( $lines[$j]{0} == ' ' || $lines[$j]{0} == "\t" )) {
-				$unfolded_lines[$i] .= rtrim( substr( $lines[$j], 1 ) );
+				$unfolded_lines[$i] .= rtrim( substr( $lines[$j], 1 ), "\n\r" );
 				$j++;
 			}
 			
