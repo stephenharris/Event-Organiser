@@ -76,6 +76,8 @@ class EO_ICAL_Parser{
 					'parse_html' => true,
 				), $args );
 		
+		$args = apply_filters_ref_array( 'eventorganiser_ical_parser_args', array( $args, &$this ) );
+		
 		$this->calendar_timezone = eo_get_blog_timezone();
 		
 		$this->default_status = $args['default_status'];
