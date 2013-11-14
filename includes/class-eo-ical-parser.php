@@ -487,7 +487,7 @@ class EO_ICAL_Parser{
 		
 			//Description, in alternative format
 		case 'X-ALT-DESC':
-			if( !empty( $modifiers[0] ) && in_array( $modifiers[0], array( "FMTTYPE=text/html", "ALTREP=text/html" ) ) ){
+			if( $this->parse_html && !empty( $modifiers[0] ) && in_array( $modifiers[0], array( "FMTTYPE=text/html", "ALTREP=text/html" ) ) ){
 				$this->current_event['post_content'] = $this->parse_ical_html( $value );
 			}
 		break;
