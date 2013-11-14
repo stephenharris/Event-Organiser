@@ -283,11 +283,20 @@ class EO_ICAL_Parser{
 	 */
 	protected function report_error( $line, $type, $message ){
 
-		$this->errors[] = new WP_Error(
+		if( is_array( $line ) ){
+			$this->errors[] = new WP_Error(
 				$type,
-				sprintf( __( '[Line %1$d]', 'eventorganiser' ), $line ).' '.$message,
+				sprintf( __( '[Lines %1$d-%2$d]', 'eventorganiser' ), $line['start'], $line['end'] ).' '.$message,
 				array( 'line' => $line )
-		);
+			);
+			
+		}else{
+			$this->errors[] = new WP_Error(
+					$type,
+					sprintf( __( '[Line %1$d]', 'eventorganiser' ), $line ).' '.$message,
+					array( 'line' => $line )
+			);
+		}
 	}
 	
 	/**
@@ -299,11 +308,20 @@ class EO_ICAL_Parser{
 	 */
 	protected function report_warning( $line, $type, $message ){
 	
-		$this->warnings[] = new WP_Error(
-				$type,
-				sprintf( __( '[Line %1$d]', 'eventorganiser' ), $line ).' '.$message,
-				array( 'line' => $line )
-		);
+		if( is_array( $line ) ){
+			$this->warnings[] = new WP_Error(
+					$type,
+					sprintf( __( '[Lines %1$d-%2$d]', 'eventorganiser' ), $line['start'], $line['end'] ).' '.$message,
+					array( 'line' => $line )
+			);
+				
+		}else{
+			$this->warnings[] = new WP_Error(
+					$type,
+					sprintf( __( '[Line %1$d]', 'eventorganiser' ), $line ).' '.$message,
+					array( 'line' => $line )
+			);
+		}
 	}
 
 
