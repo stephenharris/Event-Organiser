@@ -55,6 +55,8 @@ class EO_ICAL_Parser{
 	var $line = 0; //Current line being parsed
 	
 	var $state = "NONE";
+	
+	var $parse_html = true; //If description is given in HTML, try to use that.
 
 	/**
 	 * Constructor with settings passed as arguments
@@ -70,14 +72,16 @@ class EO_ICAL_Parser{
 						'CANCELLED' => 'trash',
 						'TENTATIVE' => 'draft',
 					),
-					'default_status' => 'draft',		
+					'default_status' => 'draft',
+					'parse_html' => true,
 				), $args );
 		
-
 		$this->calendar_timezone = eo_get_blog_timezone();
 		
 		$this->default_status = $args['default_status'];
 		$this->status_map = $args['status_map'];
+		$this->parse_html = $args['parse_html'];
+		
 	}
 
 
@@ -475,9 +479,17 @@ class EO_ICAL_Parser{
 
 			//The event's description (AKA post content)
 		case 'DESCRIPTION':
-			$this->current_event['post_content'] = $this->parse_ical_text( $value );
+			if( !isset( $this->current_event['post_content'] ) )
+				$this->current_event['post_content'] = $this->parse_ical_text( $value );
 		break;
-
+		
+			//Description, in alternative format
+		case 'X-ALT-DESC':
+			if( !empty( $modifiers[0] ) && in_array( $modifiers[0], array( "FMTTYPE=text/html", "ALTREP=text/html" ) ) ){
+				$this->current_event['post_content'] = $this->parse_ical_html( $value );
+			}
+		break;
+		
 			//Event venues, assign to existing venue - or if set, create new one
 		case 'LOCATION':
 			if( !empty( $value ) ):
@@ -535,6 +547,16 @@ class EO_ICAL_Parser{
 
 	}
 
+	protected function parse_ical_html( $text ){
+		
+		$text = $this->parse_ical_text( $text );
+		
+		if( preg_match( "/<body>(.+)<\/body>/i", $text, $matches ) ){
+			$text = $matches[1];
+		}
+		
+		return $text;
+	}
 
 	/**
 	 * Takes escaped text and returns the text unescaped.
