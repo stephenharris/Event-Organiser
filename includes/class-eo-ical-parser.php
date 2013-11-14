@@ -219,8 +219,10 @@ class EO_ICAL_Parser{
 				if ( $this->state == "VEVENT" ) {
 
 					//If END:VEVENT, add event to parsed events and clear $event
-					if( $property=='END' && $value=='VEVENT' ){
+					if( $property == 'END' && $value =='VEVENT' ){
 						$this->state = "VCALENDAR";
+						
+						$this->current_event['_lines']['end'] = $this->line;
 						
 						//Now we've finished passing the event, move venue data to $this->venue_meta
 						if( isset( $this->current_event['geo'] ) && !empty( $this->current_event['event-venue'] ) ){
@@ -228,6 +230,15 @@ class EO_ICAL_Parser{
 							$this->venue_meta[$venue]['latitude'] = $this->current_event['geo']['lat'];
 							$this->venue_meta[$venue]['longtitude'] = $this->current_event['geo']['lng'];
 							unset( $this->current_event['geo'] );
+						}
+						
+						if( empty( $this->current_event['uid'] ) ){
+							//var_dump( $this->current_event['_lines'] );
+							$this->report_warning( 
+									$this->current_event['_lines'], 
+									'event-no-uid',
+									"Event does not have a unique identifier (UID) property."
+							);
 						}
 						
 						$this->events[] = $this->current_event;
@@ -256,7 +267,7 @@ class EO_ICAL_Parser{
 					//Begin event
 					if( $property=='BEGIN' && $value=='VEVENT'){
 						$this->state = "VEVENT";
-						$this->current_event = array();
+						$this->current_event = array( '_lines' => array( 'start' => $this->line ) );
 
 					}elseif ( $property=='END' && $value=='VCALENDAR'){
 						$this->state = "ENDCALENDAR";
