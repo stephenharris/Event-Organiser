@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 16:53:23+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-11-05 07:35:56+0000\n"
+"Last-Translator: jagarre <jagarre@ymail.com>\n"
 "Language-Team: \n"
 "Language: Spanish; Castilian (Spain)\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr "Project-Id-Version: Event Organiser\n"
 #: ../templates/taxonomy-event-venue.php:49
 #: ../templates/taxonomy-event-venue.php:106
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
-msgstr " <span class=\"meta-nav\">&larr;</span> Eventos anteriores"
+msgstr " <span class=\"meta-nav\">&larr;</span> Últimos Eventos"
 
 #: ../includes/class-event-organiser-im-export.php:335
 msgid "%d categories were created"
@@ -33,7 +33,7 @@ msgstr "%d eventos importados correctamente"
 #: ../includes/class-event-organiser-im-export.php:329
 #, fuzzy
 msgid "%d venues were created"
-msgstr "Ningun evento importado."
+msgstr "%d lugar fue creado"
 
 #: ../event-organiser-debug.php:416
 msgid "%s has only been tested up to %s %s"
@@ -98,11 +98,6 @@ msgstr "Una lista o desplegable de categorías de eventos"
 msgid "A list or dropdown of event venues"
 msgstr "Una lista desplegable de lugares de eventos"
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr "Añadir un enlace 'eventos' al menú de navagación"
@@ -110,6 +105,13 @@ msgstr "Añadir un enlace 'eventos' al menú de navagación"
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "Añadir evento"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr "Añadir información en sus páginas de lugar de celebración con campos de "
+"Lugar de celebración personalizados, o dar a sus lugares de celebración más "
+"atención con su propia \"imagen destacada'"
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -139,7 +141,7 @@ msgstr "Añadir o quitar etiquetas"
 #: ../includes/event-organiser-cpt.php:38
 #, fuzzy
 msgid "Add or remove venues"
-msgstr "Añadir o quitar etiquetas"
+msgstr "Añadir o quitar lugares"
 
 #: ../includes/event-organiser-ajax.php:545
 msgid "Add To Google Calendar"
@@ -151,11 +153,11 @@ msgstr "Añadir lugar"
 
 #: ../event-organiser-settings.php:57
 msgid "Add-on Licence keys"
-msgstr ""
+msgstr "Add-on claves de licencia"
 
 #: ../event-organiser-go-pro.php:76
 msgid "Additional shortcodes & improved UI"
-msgstr ""
+msgstr "Códigos cortos adicionales y una mejor interfaz de usuario"
 
 #: ../includes/event-organiser-venue-functions.php:882
 msgid "Address"
@@ -171,13 +173,13 @@ msgid "All dates and times must be entered in the specified format. This format 
 msgstr "Todas las fechas y horas deben introducirse en el formato específico. Este "
 "formato puede cambiarse en la página de ajustes."
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "Todo el día"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
+msgstr "Todo el día"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
 msgstr "Todo el día"
 
 #: ../includes/event-organiser-cpt.php:146
@@ -236,7 +238,7 @@ msgstr "Romper esta serie"
 
 #: ../event-organiser-go-pro.php:56
 msgid "But that's not all &hellip;"
-msgstr ""
+msgstr "Pero esto no es todo ..."
 
 #: ../includes/event-organiser-cpt.php:479
 msgid "By clicking the relevant tab, you can view events in Month, Week or Day "
@@ -269,7 +271,8 @@ msgstr "Categorías"
 #: ../event-organiser-settings.php:235
 msgid "Check this option to prevent any stylesheets from Event Organiser being "
 "loaded on the front-end"
-msgstr ""
+msgstr "Marque esta opción para evitar que cualquier hoja de estilo del Organizador "
+"de eventos se cargue en el front-end"
 
 #: ../event-organiser-edit.php:76
 msgid "Check to edit this event and its reoccurrences"
@@ -344,7 +347,7 @@ msgstr "Campos personalizados"
 #: ../includes/event-organiser-event-functions.php:706
 #, fuzzy
 msgid "custom reoccurrence"
-msgstr "Recurrente"
+msgstr "Recurrencia personalizada"
 
 #: ../event-organiser-edit.php:126
 msgid "daily"
@@ -360,19 +363,19 @@ msgstr "Tablas de la base de datos"
 
 #: ../event-organiser-debug.php:531
 msgid "Databse Prefix"
-msgstr ""
+msgstr "Prefijo de la Base de datos"
 
 #: ../event-organiser-settings.php:137
 msgid "Date Format:"
 msgstr "Formato fecha:"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "día"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
 msgstr "Día"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
+msgstr "día"
 
 #: ../event-organiser-settings.php:271
 msgid "Day archive"
@@ -400,7 +403,7 @@ msgstr "Modo de depuración"
 
 #: ../includes/event-organiser-cpt.php:492
 msgid "Debugging Event Organiser"
-msgstr ""
+msgstr "Depuración Organizador de eventos"
 
 #: ../classes/class-eo-venue-list-table.php:70
 #: ../classes/class-eo-venue-list-table.php:127
@@ -435,7 +438,7 @@ msgstr "DESC"
 
 #: ../event-organiser-settings.php:229
 msgid "Disable CSS:"
-msgstr ""
+msgstr "Desabilita CSS"
 
 #: ../includes/event-organiser-register.php:648
 msgid "Dismiss"
@@ -479,7 +482,7 @@ msgstr "Descargar archivo de exportación"
 
 #: ../event-organiser-debug.php:84
 msgid "Download system information file"
-msgstr ""
+msgstr "Descargue el archivo de información del sistema"
 
 #: ../includes/event-organiser-ajax.php:255
 msgid "Draft"
@@ -555,12 +558,12 @@ msgstr "Evento"
 #: ../event-organiser-settings.php:263
 #, fuzzy
 msgid "Event (archive)"
-msgstr "Archivo de eventos:"
+msgstr "Evento (archivo)"
 
 #: ../event-organiser-settings.php:254
 #, fuzzy
 msgid "Event (single)"
-msgstr "Título del Evento"
+msgstr "Evento (singular)"
 
 #: ../event-organiser-settings.php:282
 msgid "Event Categories"
@@ -583,7 +586,7 @@ msgstr "Fecha/hora actual"
 #: ../event-organiser-edit.php:376
 #, fuzzy
 msgid "Event dates were not saved."
-msgstr "Ningun evento importado."
+msgstr "Las fechas del evento no se han guardado"
 
 #: ../event-organiser-calendar.php:310
 msgid "Event Detail"
@@ -606,7 +609,7 @@ msgstr "Marcadores de posición del widget de la lista de eventos"
 #: ../event-organiser-settings.php:29
 #, fuzzy
 msgid "Event Organiser"
-msgstr "Ajustes del Event Organiser"
+msgstr "Organizador de Eventos"
 
 #: ../event-organiser-add-ons.php:19
 #: ../event-organiser-add-ons.php:95
@@ -616,12 +619,14 @@ msgstr ""
 #: ../event-organiser-add-ons.php:99
 msgid "Event Organiser offers a range of extension which add additional features to "
 "the plug-in."
-msgstr ""
+msgstr "El Organizador de Eventos ofrece una gama de extensiones que añaden "
+"funciones adicionales para el plug-in."
 
 #: ../event-organiser-go-pro.php:55
 msgid "Event Organiser Pro is a premium add-on bringing advanced booking management "
 "to Event Organiser."
-msgstr ""
+msgstr "El Organizador de Eventos Pro es un add-on de pago para llevar la gestión "
+"avanzada de reserva del Organizador de Eventos."
 
 #: ../event-organiser-settings.php:28
 msgid "Event Organiser Settings"
@@ -681,7 +686,7 @@ msgstr "Lugar del evento"
 #: ../includes/event-organiser-cpt.php:28
 #, fuzzy
 msgid "Event Venues"
-msgstr "Editar lugar"
+msgstr "Lugar del Evento"
 
 #: ../event-organiser.php:127
 #: ../event-organiser-venues.php:432
@@ -738,7 +743,7 @@ msgstr "Eventos del día"
 #: ../templates/archive-event.php:40
 #, fuzzy
 msgid "Events: "
-msgstr "Eventos"
+msgstr "Eventos:"
 
 #: ../includes/event-organiser-register.php:226
 #: ../includes/event-organiser-event-functions.php:715
@@ -808,7 +813,7 @@ msgstr "Exportar eventos"
 
 #: ../event-organiser-add-ons.php:20
 msgid "Extensions"
-msgstr ""
+msgstr "Extensiones"
 
 #: ../includes/class-event-organiser-im-export.php:68
 msgid "File Error encountered: %d"
@@ -821,7 +826,7 @@ msgstr "Tamaño del archivo: %s. Tipo de archivo: %s"
 #: ../event-organiser-go-pro.php:90
 #: ../event-organiser-add-ons.php:130
 msgid "Find out more &hellip;"
-msgstr ""
+msgstr "Encontrar más ..."
 
 #: ../includes/event-organiser-register.php:235
 #: ../includes/event-organiser-event-functions.php:693
@@ -830,7 +835,7 @@ msgstr "primero"
 
 #: ../event-organiser-go-pro.php:71
 msgid "Flexible Booking Options"
-msgstr ""
+msgstr "Opciones de reserva flexibles"
 
 #: ../event-organiser-settings.php:212
 msgid "For each of the pages, the corresponding template is used. To use your own "
@@ -852,7 +857,7 @@ msgstr "Para más información"
 #: ../event-organiser-settings.php:224
 msgid "For more information see documentation <a href='%s'>on editing the "
 "templates</a>"
-msgstr ""
+msgstr "Para más información ver documentación "
 
 #: ../includes/event-organiser-register.php:235
 #: ../includes/event-organiser-event-functions.php:693
@@ -870,11 +875,11 @@ msgstr "General"
 
 #: ../event-organiser-go-pro.php:52
 msgid "Get Event Organiser Pro"
-msgstr ""
+msgstr "Consiga el Organizador de Eventos Pro"
 
 #: ../event-organiser-go-pro.php:24
 msgid "Get Event Organiser Pro Add-On"
-msgstr ""
+msgstr "Consiga el add-on Organizador de Eventos Pro"
 
 #: ../event-organiser-venues.php:412
 msgid "Get Link"
@@ -884,15 +889,18 @@ msgstr "Obtener enlace"
 msgid "Give your users the ability to search and filter through your events with "
 "the event search shortcode. Event Organiser Pro also adds a text editor "
 "button to make inserting and configuring your shortcodes that bit easier. "
-msgstr ""
+msgstr "Dé a sus usuarios la capacidad de buscar y filtrar a través de sus eventos "
+"con la búsqueda  de eventos por código-corto. El Organizador de Eventos Pro "
+"también añade un botón de editor de texto para realizar la inserción y la "
+"configuración de los códigos cortos un poco más fácil."
 
 #: ../event-organiser-go-pro.php:25
 msgid "Go Pro"
-msgstr ""
+msgstr "ir a Pro"
 
 #: ../includes/event-organiser-cpt.php:493
 msgid "Go Pro!"
-msgstr ""
+msgstr "ir a version Pro!"
 
 #: ../event-organiser-calendar.php:58
 msgid "go to date"
@@ -900,7 +908,7 @@ msgstr "ir a fecha"
 
 #: ../event-organiser-go-pro.php:96
 msgid "Go to Event Organiser settings"
-msgstr ""
+msgstr "Ir a la configuración del Organizador de eventos"
 
 #: ../classes/class-eo-agenda-widget.php:31
 msgid "Group by"
@@ -991,7 +999,7 @@ msgstr "Importar un fichero ICS"
 #: ../includes/class-event-organiser-im-export.php:112
 #, fuzzy
 msgid "Import categories"
-msgstr "Categorías de evento"
+msgstr "Importar Categorías"
 
 #: ../includes/class-event-organiser-im-export.php:107
 msgid "Import Events"
@@ -1000,7 +1008,7 @@ msgstr "Importar eventos"
 #: ../includes/class-event-organiser-im-export.php:111
 #, fuzzy
 msgid "Import venues"
-msgstr "Importar eventos"
+msgstr "Importar lugares"
 
 #: ../classes/class-eo-agenda-widget.php:47
 msgid "Include 'Add To Google' link"
@@ -1030,8 +1038,8 @@ msgstr "Formato de la fecha no válido"
 #, fuzzy
 msgid "Invalid file uploaded. The file must be a ics calendar file of type "
 "'text/calendar', no larger than 2MB."
-msgstr "Fichero subido inválido. El fichero de ser un fichero de calendario ics, no "
-"mayor de 2 MB"
+msgstr "Fichero subido inválido. El fichero debe ser un fichero de calendario ics "
+"del tipo'text/calendar', no mayor de 2MB."
 
 #: ../includes/event.php:548
 msgid "Invalid monthly schedule (invalid ordinal)"
@@ -1067,7 +1075,7 @@ msgstr "Línea: %1$d"
 
 #: ../classes/class-eo-calendar-widget.php:66
 msgid "Link directly to event for days with only one event"
-msgstr ""
+msgstr "Enlace directo al evento para los días con un solo evento"
 
 #: ../classes/class-eo-event-list-widget.php:41
 #: ../classes/class-eo-calendar-widget.php:80
@@ -1101,18 +1109,18 @@ msgstr "Minuto"
 msgid "mm-dd-yyyy"
 msgstr "mm-dd-yyyy"
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "mes"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
 msgstr "Mes"
 
+#: ../event-organiser-calendar.php:57
+msgid "month"
+msgstr "mes"
+
 #: ../event-organiser-settings.php:270
 #, fuzzy
 msgid "Month archive"
-msgstr "Archivo de eventos:"
+msgstr "Archivo mensual:"
 
 #: ../event-organiser-edit.php:127
 msgid "monthly"
@@ -1144,7 +1152,7 @@ msgstr "Nuevo nombre de etiqueta"
 #: ../includes/event-organiser-cpt.php:36
 #, fuzzy
 msgid "New Venue Name"
-msgstr "Nombre de lugar\""
+msgstr "Nuevo nombre de lugar"
 
 #: ../classes/class-eo-calendar-widget.php:260
 msgid "Next month"
@@ -1188,7 +1196,8 @@ msgstr "Sin lugar"
 #: ../includes/event-organiser-cpt.php:37
 #, fuzzy
 msgid "No venues found"
-msgstr "No se encontraron eventos"
+msgstr "No se encontraron lugares\n"
+""
 
 #: ../event-organiser-settings.php:571
 msgid "None"
@@ -1352,7 +1361,7 @@ msgstr "Horario no reconocido."
 
 #: ../event-organiser-debug.php:556
 msgid "Script mode"
-msgstr ""
+msgstr "modo de secuencia de comandos"
 
 #: ../includes/event-organiser-cpt.php:62
 msgid "Search Categories"
@@ -1390,7 +1399,7 @@ msgstr "Selecciona un lugar"
 #: ../classes/class-eo-widget-categories.php:45
 #, fuzzy
 msgid "Select Category"
-msgstr "Categoría padre"
+msgstr "Seleccionar categoría"
 
 #: ../event-organiser-settings.php:107
 msgid "Select which features events should support"
@@ -1405,7 +1414,10 @@ msgstr "Seleccionando un lugar"
 msgid "Sell tickets for specific dates or sell tickets for all dates of an event - "
 "such as booking places on a course. You can offer multiple tickets, and "
 "customise the booking form to suit your needs."
-msgstr ""
+msgstr "Venda entradas para fechas específicas o venda entradas para todas las "
+"fechas de un evento - como reserva de plazas en un curso. Usted puede "
+"ofrecer múltiples entradas, y personalizar el formulario de reserva para "
+"satisfacer sus necesidades."
 
 #: ../includes/event-organiser-cpt.php:107
 msgid "Separate tags with commas"
@@ -1414,7 +1426,7 @@ msgstr "Separar etiquetas con comas"
 #: ../includes/event-organiser-cpt.php:39
 #, fuzzy
 msgid "Separate venues with commas"
-msgstr "Separar etiquetas con comas"
+msgstr "Separar lugares con comas"
 
 #: ../event-organiser-settings.php:555
 msgid "Set permissions for events and venue management"
@@ -1423,12 +1435,13 @@ msgstr "Dar privilegios para administrar eventos y lugares"
 #: ../includes/event-organiser-register.php:335
 #, fuzzy
 msgid "Settings"
-msgstr "Ajustes del Evento"
+msgstr "Ajustes\n"
+""
 
 #: ../event-organiser-edit.php:183
 #, fuzzy
 msgid "Show dates"
-msgstr "Mostrar eventos pasados"
+msgstr "Mostrar fechas"
 
 #: ../classes/class-eo-widget-categories.php:99
 msgid "Show hierarchy"
@@ -1440,7 +1453,7 @@ msgstr "Mostrar menos"
 
 #: ../classes/class-eo-calendar-widget.php:56
 msgid "Show long events"
-msgstr ""
+msgstr "Mostrar eventos de larga duración"
 
 #: ../includes/event-organiser-register.php:51
 msgid "Show More"
@@ -1508,12 +1521,14 @@ msgstr "Plantilla (deja en blanco por defecto)"
 #: ../event-organiser-settings.php:59
 #, fuzzy
 msgid "Templates"
-msgstr "Habilitar plantillas:"
+msgstr "Plantillas"
 
 #: ../event-organiser-debug.php:67
 msgid "The 'system info' link in under the Events admin tab is only visible to "
 "admins and only when <code>WP_DEBUG</code> is set to <code>true</code>."
-msgstr ""
+msgstr "El enlace \"Información del sistema\" debajo de la pestaña Admin Eventos "
+"sólo es visible para los administradores y sólo cuando <code>WP_DEBUG</code> "
+"está en la posición <code>true</code>."
 
 #: ../includes/event-organiser-cpt.php:427
 msgid "The end date is the date the event finishes. If the event is a reoccuring "
@@ -1540,15 +1555,15 @@ msgstr "No hay resumen porque esta es una entrada protegida."
 
 #: ../includes/class-eo-ical-parser.php:90
 msgid "There was an error detecting ICAL source."
-msgstr ""
+msgstr "Hubo un error al detectar fuente ICAL."
 
 #: ../includes/class-eo-ical-parser.php:136
 msgid "There was an error fetching the feed. Response code: %s."
-msgstr ""
+msgstr "Hubo un error al ir a buscar la fuente. Código de respuesta: %s."
 
 #: ../includes/class-eo-ical-parser.php:156
 msgid "There was an error opening the ICAL file."
-msgstr ""
+msgstr "Hubo un error al abrir el archivo ICAl."
 
 #: ../includes/class-event-organiser-im-export.php:318
 msgid "There was an error with %1$d of %2$d events in the ical file"
@@ -1569,7 +1584,7 @@ msgstr "Este eventa acababa %s"
 
 #: ../includes/event-organiser-cpt.php:230
 msgid "This event has been broken from a recurring event."
-msgstr ""
+msgstr "Este evento ha sido roto por un evento recurrente"
 
 #: ../templates/event-meta-event-single.php:46
 #, fuzzy
@@ -1710,7 +1725,8 @@ msgstr "Lugar <strong>actualizado</strong>"
 #: ../event-organiser-venues.php:86
 #, fuzzy
 msgid "Venue <strong>was not</strong> created"
-msgstr "Lugar <strong>no </strong> creado"
+msgstr "Lugar <strong>no </strong> creado\n"
+""
 
 #: ../event-organiser-venues.php:49
 #, fuzzy
@@ -1719,20 +1735,20 @@ msgstr "Lugar <strong>no</strong> actualizado"
 
 #: ../event-organiser-go-pro.php:81
 msgid "Venue custom fields & thumbnails"
-msgstr ""
+msgstr "Campos y miniaturas personalizadas del Lugar de celebración"
 
 #: ../event-organiser-venues.php:300
 msgid "Venue Location"
 msgstr "Ubicación del lugar"
 
+#: ../event-organiser-venues.php:399
+msgid "Venue name"
+msgstr "Nombre del lugar"
+
 #: ../event-organiser-edit.php:221
 #, fuzzy
 msgid "Venue Name"
 msgstr "Nombre de lugar"
-
-#: ../event-organiser-venues.php:399
-msgid "Venue name"
-msgstr "Nombre del lugar"
 
 #: ../event-organiser-settings.php:220
 msgid "Venue page:"
@@ -1784,13 +1800,13 @@ msgstr "Ver lugar"
 msgid "View will take you to the venue's page"
 msgstr "Ver te llevara a la pagina del lugar"
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "semana"
-
 #: ../event-organiser-calendar.php:229
 msgid "Week"
 msgstr "Semana"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
+msgstr "semana"
 
 #: ../event-organiser-edit.php:126
 msgid "weekly"
@@ -1815,7 +1831,7 @@ msgstr "año"
 #: ../event-organiser-settings.php:269
 #, fuzzy
 msgid "Year archive"
-msgstr "Archivo de eventos:"
+msgstr "Archivo anual:"
 
 #: ../event-organiser-edit.php:127
 msgid "yearly"
@@ -1856,7 +1872,7 @@ msgstr "Puedes especificar etiquetas especificadas como marcadores de posición 
 #: ../event-organiser-venues.php:115
 #, fuzzy
 msgid "You do not have permission to delete this venue"
-msgstr "No tienes privilegios para editar este lugar"
+msgstr "No tienes privilegios para borrar este lugar"
 
 #: ../event-organiser-venues.php:42
 #: ../event-organiser-venues.php:71
@@ -1878,7 +1894,7 @@ msgstr "No tienes suficientes privilegios para borrar este evento."
 #: ../event-organiser-calendar.php:163
 #, fuzzy
 msgid "You do not have sufficient permissions to edit this event. "
-msgstr "No tienes suficientes privilegios para borrar este evento."
+msgstr "No tienes suficientes privilegios para editar este evento."
 
 #: ../includes/class-event-organiser-im-export.php:171
 msgid "You do not have sufficient permissions to import events."
