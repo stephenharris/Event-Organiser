@@ -456,15 +456,19 @@ function eventorganiser_screen_retina_icon(){
 			.fc-header-goto button,
 			.fc-button{
 				background:white!important;
-			}
-				
+			}	
 			.eo-addon{ background: white; }
-
 			#eo-event-venue-button:hover,
 			#eo-event-cat-button:hover,
 			.fc-header-goto button:hover,
 			.fc-button:hover{
 				color:#0074A2;
+			}
+			#eo-event-cat-menu .ui-widget-content .ui-state-hover,
+			#eo-event-cat-menu .ui-state-hover,
+			#eo-event-venue-menu .ui-widget-content .ui-state-hover,
+			#eo-event-venue-menu .ui-state-hover{
+				background: #EEE;
 			}
 			.fc-button-prev .ui-button-text, .fc-button-next .ui-button-text {padding-top: 0.5em!important;}
 		</style>
