@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+  require('load-grunt-tasks')(grunt);
+	
   // Project configuration.
   grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
@@ -14,34 +16,30 @@ module.exports = function(grunt) {
 			banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd HH:MM") %> */\n'
 		},
 		build: {
-      			files: {
-        			'js/frontend.min.js': ['js/frontend.js'],
-        			'js/fullcalendar.min.js': ['js/fullcalendar.js'],
-        			'js/event.min.js': ['js/event.js'],
-        			'js/venues.min.js': ['js/venues.js'],
-        			'js/admin-calendar.min.js': ['js/admin-calendar.js'],
-        			'js/time-picker.min.js': ['js/time-picker.js'],
-        			'js/edit-event-controller.min.js': ['js/edit-event-controller.js'],
-      			}
+			files: [{
+				expand: true,     // Enable dynamic expansion.
+				src: ['js/*.js', '!js/*.min.js', '!js/qtip2.js', '!js/inline-help.js', '!js/eventorganiser-pointer.js'], // Actual pattern(s) to match.
+				ext: '.min.js',   // Dest filepaths will have this extension.
+			}]
 		}
 	},
 	jshint: {
 		options: {
+			reporter: require('jshint-stylish'),
 			globals: {
 				"EO_SCRIPT_DEBUG": false,
 			},
-			 '-W014': true,
-			 '-W015': true,
-			 '-W099': true,
-			 '-W033': true,
-			'-W083': true,//functions within loop
-			'-W020': true, //Read only - error when assigning EO_SCRIPT_DEBUG a value.
+			 '-W099': true, //Mixed spaces and tabs
+			 '-W083': true,//TODO Fix functions within loop
+			 '-W082': true, //Todo Function declarations should not be placed in blocks
+			 '-W020': true, //Read only - error when assigning EO_SCRIPT_DEBUG a value.
 		},
 		all: [ 'js/*.js', '!js/*.min.js', '!*/time-picker.js',  '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
-	shell: {                                // Task
-        	makeDocs: {                      // Target
-			options: {                      // Options
+  	
+	shell: {
+		makeDocs: {
+			options: {
 				stdout: true
 			},
 			command: 'apigen --config /var/www/git/event-organiser/apigen/apigen.conf'
@@ -119,31 +117,53 @@ module.exports = function(grunt) {
 			bootstrap: 'tests/phpunit.php',
 			colors: true
 		}
-	}
+	},
+	
+    checkrepo: {
+    	deploy: {
+            tag: {
+                eq: '<%= pkg.version %>',    // Check if highest repo tag is equal to pkg.version
+            },
+            tagged: true, // Check if last repo commit (HEAD) is not tagged
+            clean: true,   // Check if the repo working directory is clean
+        }
+    },
+    
+    watch: {
+    	readme: {
+    	    files: ['readme.txt'],
+    	    tasks: ['wp_readme_to_markdown'],
+    	    options: {
+    	      spawn: false,
+    	    },
+    	  },
+      	scripts: {
+    	    files: ['js/*.js'],
+    	    tasks: ['newer:jshint','newer:uglify'],
+    	    options: {
+    	      spawn: false,
+    	    },
+    	  },
+    },
+    
+    wp_deploy: {
+    	deploy:{
+            options: {
+        		svn_user: 'stephenharris',
+        		plugin_slug: 'event-organiser',
+        		build_dir: 'dist/event-organiser/'
+            },
+    	}
+    }
 });
 
-grunt.loadNpmTasks('grunt-shell');
 
-grunt.loadNpmTasks('grunt-contrib-uglify');
+grunt.registerTask( 'docs', ['shell:makeDocs']);
 
-grunt.loadNpmTasks('grunt-contrib-compress');
+grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.loadNpmTasks( 'grunt-contrib-clean' );
+grunt.registerTask( 'build', [ 'test', 'newer:uglify', 'clean', 'copy' ] );
 
-grunt.loadNpmTasks( 'grunt-contrib-copy' );
+grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
 
-grunt.loadNpmTasks('grunt-contrib-jshint');
-
-grunt.loadNpmTasks('grunt-wp-readme-to-markdown');
-
-grunt.loadNpmTasks('grunt-phpunit');
-
- // Default task(s).
-grunt.registerTask('default', ['uglify']);
-
-grunt.registerTask('docs', ['shell:makeDocs']);
-
-grunt.registerTask('readme', ['wp_readme_to_markdown']);
-
-grunt.registerTask( 'build', [ 'clean', 'copy', 'compress'] );
 };
