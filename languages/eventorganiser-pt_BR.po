@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 17:31:55+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-11-04 15:36:45+0000\n"
+"Last-Translator: rafael <rafaelkvidal@gmail.com>\n"
 "Language-Team: \n"
 "Language: Portuguese (Brazil)\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,10 @@ msgid "<h4>City & State Fields Added</h4>City and state / province fields for "
 "venues have now been added. </br> If you'd like, Event Organiser can <a "
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
 "details aftewards."
-msgstr ""
+msgstr "<h4>Campos \"Cidade e Estado\" Adicionados</h4>Campos \"Cidade e estado / "
+"província\" foram adicionados em \"locais\". </br> Se você quiser, o Event "
+"Organiser pode <a href='%s'>tentar auto-preenchê-los</a>. Você pode também "
+"alterar manualmente os detalhes a qualquer momento."
 
 #: ../includes/event-organiser-register.php:611
 msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
@@ -79,7 +82,12 @@ msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up 
 "haven't and want the old templates back, <a "
 "href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see "
 "this post<a/>."
-msgstr ""
+msgstr "<h4>O Template Padrão Foi Alterado</h4>Não se preocupe! Se você tiver "
+"configurado seus próprios templates no seu tema você não vai notar nenhuma "
+"alteração. </br> Se você não tiver e quiser os templates antigos de volta, "
+"<a "
+"href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>veja "
+"este post<a/>."
 
 #: ../classes/class-eo-widget-categories.php:10
 msgid "A list or dropdown of event categories"
@@ -89,11 +97,6 @@ msgstr ""
 msgid "A list or dropdown of event venues"
 msgstr ""
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr "Adicionar link 'eventos' no menu de navegação"
@@ -101,6 +104,11 @@ msgstr "Adicionar link 'eventos' no menu de navegação"
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "Adicionar Evento"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr ""
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -161,13 +169,13 @@ msgid "All dates and times must be entered in the specified format. This format 
 msgstr "Todas as datas e horários precisam ser preenchidos no formato específicado. "
 "Este formato pode ser alterado na página de configurações."
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "Dia todo"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
+msgstr "Dia todo"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
 msgstr "Dia todo"
 
 #: ../includes/event-organiser-cpt.php:146
@@ -283,7 +291,7 @@ msgstr "Selecione a data final da recorrência. Nenhuma outra ocorrência será 
 
 #: ../includes/event-organiser-venue-functions.php:883
 msgid "City"
-msgstr ""
+msgstr "Cidade"
 
 #: ../includes/event-organiser-cpt.php:610
 #: ../includes/event-organiser-cpt.php:633
@@ -354,13 +362,13 @@ msgstr ""
 msgid "Date Format:"
 msgstr "Formato da data:"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "dia"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
 msgstr "Dia"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
+msgstr "dia"
 
 #: ../event-organiser-settings.php:271
 msgid "Day archive"
@@ -427,11 +435,11 @@ msgstr ""
 
 #: ../includes/event-organiser-register.php:648
 msgid "Dismiss"
-msgstr ""
+msgstr "Descartar"
 
 #: ../includes/event-organiser-register.php:647
 msgid "Dismiss this notice"
-msgstr ""
+msgstr "Descartar esta notícia"
 
 #: ../classes/class-eo-widget-categories.php:96
 msgid "Display as dropdown"
@@ -795,7 +803,7 @@ msgstr "Erro de Arquivo encontrado: %d"
 
 #: ../includes/class-event-organiser-im-export.php:80
 msgid "File size: %s. File type: %s"
-msgstr ""
+msgstr "Tamanho do arquivo: %s. Tipo de arquivo: %s"
 
 #: ../event-organiser-go-pro.php:90
 #: ../event-organiser-add-ons.php:130
@@ -1004,7 +1012,7 @@ msgstr ""
 
 #: ../includes/event.php:548
 msgid "Invalid monthly schedule (invalid ordinal)"
-msgstr ""
+msgstr "Horário mensal inválido (ordinal inválido)"
 
 #: ../event-organiser-debug.php:245
 msgid "Known plug-in & theme conflicts, highlighted in red, may be minor or have a "
@@ -1031,7 +1039,7 @@ msgstr "Próximos eventos<span class=\"meta-nav\">&rarr;</span>"
 #: ../includes/class-event-organiser-im-export.php:301
 #: ../includes/class-eo-ical-parser.php:257
 msgid "Line: %1$d"
-msgstr ""
+msgstr "Linha: %1$d"
 
 #: ../classes/class-eo-calendar-widget.php:66
 msgid "Link directly to event for days with only one event"
@@ -1068,13 +1076,13 @@ msgstr "Minuto"
 msgid "mm-dd-yyyy"
 msgstr "mm-dd-aaaa"
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "mês"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
 msgstr "Mês"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
+msgstr "mês"
 
 #: ../event-organiser-settings.php:270
 msgid "Month archive"
@@ -1175,7 +1183,7 @@ msgstr "Ocorrência excluída."
 
 #: ../includes/event.php:744
 msgid "Occurrence not deleted. Occurrence not found."
-msgstr ""
+msgstr "Ocorrência não deletada. Ocorrência não encontrada."
 
 #: ../event-organiser-edit.php:146
 #: ../templates/shortcode-event-list.php:52
@@ -1306,11 +1314,11 @@ msgstr "Salvar Rascunho"
 
 #: ../includes/event.php:458
 msgid "Schedule end date is before is before the start date."
-msgstr ""
+msgstr "Horário de término anterior ao início."
 
 #: ../includes/event.php:470
 msgid "Schedule not recognised."
-msgstr ""
+msgstr "Horário não reconhecido."
 
 #: ../event-organiser-debug.php:556
 msgid "Script mode"
@@ -1382,7 +1390,7 @@ msgstr "Definir permissões para administração de eventos e locais"
 
 #: ../includes/event-organiser-register.php:335
 msgid "Settings"
-msgstr ""
+msgstr "Configurações"
 
 #: ../event-organiser-edit.php:183
 msgid "Show dates"
@@ -1428,11 +1436,11 @@ msgstr "Data inicial"
 
 #: ../includes/event.php:445
 msgid "Start date not provided."
-msgstr ""
+msgstr "Data de início não informada."
 
 #: ../includes/event.php:455
 msgid "Start date occurs after end date."
-msgstr ""
+msgstr "Data de início é posterior ao término."
 
 #: ../event-organiser-edit.php:92
 #: ../event-organiser-manage.php:27
@@ -1441,7 +1449,7 @@ msgstr "Data/Horário Inicial"
 
 #: ../includes/event-organiser-venue-functions.php:884
 msgid "State / Province"
-msgstr ""
+msgstr "Estado / Província"
 
 #: ../event-organiser-calendar.php:291
 msgid "Submit for Review"
@@ -1671,13 +1679,13 @@ msgstr ""
 msgid "Venue Location"
 msgstr "Localização"
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr ""
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
 msgstr "Nome do local"
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
+msgstr ""
 
 #: ../event-organiser-settings.php:220
 msgid "Venue page:"
@@ -1729,13 +1737,13 @@ msgstr "Ver Local"
 msgid "View will take you to the venue's page"
 msgstr "Visualizar irá levá-lo para a página do local"
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "semana"
-
 #: ../event-organiser-calendar.php:229
 msgid "Week"
 msgstr "Semana"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
+msgstr "semana"
 
 #: ../event-organiser-edit.php:126
 msgid "weekly"
