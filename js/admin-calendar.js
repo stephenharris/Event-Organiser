@@ -150,11 +150,11 @@ eventorganiser.versionCompare = function(left, right) {
 		eventRender: function (event, element) {
 			var cat = jQuery(".filter-category .eo-cal-filter").val();
                 	var venue = jQuery(".filter-venue .eo-cal-filter").val();
-                	if (typeof cat !== "undefined" && cat != '' && (jQuery.inArray(cat, event.category) < 0)) {
-                    		return '<div></div>'
+                	if ( typeof cat !== "undefined" && cat !== '' && (jQuery.inArray(cat, event.category) < 0)) {
+                    		return '<div></div>';
                 	}
-                	if (typeof venue !== "undefined" && venue != '' && venue != event.venue) {
-                    		return '<div></div>'
+                	if ( typeof venue !== "undefined" && venue !== '' && venue != event.venue) {
+                    		return '<div></div>';
                 	}
 		},
 		viewDisplay: function (element) {
@@ -692,7 +692,7 @@ $.widget("ui.selectmenu", {
 					thisAAttr[ 'aria-disabled' ] = selectOptionData[ i ].disabled;
 				}
 				if ( selectOptionData[ i ].typeahead ) {
-					thisAAttr[ 'typeahead' ] = selectOptionData[ i ].typeahead;
+					thisAAttr.typeahead = selectOptionData[ i ].typeahead;
 				}
 				var thisA = $( '<a/>', thisAAttr )
 					.bind( 'focus.selectmenu', function() {
@@ -1034,7 +1034,11 @@ $.widget("ui.selectmenu", {
 
 			if ( this._optionLis.eq( newIndex ).hasClass( 'ui-state-disabled' ) ) {
 				// if option at newIndex is disabled, call _moveFocus, incrementing amt by one
-				( amt > 0 ) ? ++amt : --amt;
+				if( amt > 0 ){ 
+					++amt;
+				}else{
+					--amt;
+				}
 				this._moveSelection( amt, newIndex );
 			} else {
 				this._optionLis.eq( newIndex ).trigger( 'mouseover' ).trigger( 'mouseup' );
@@ -1043,11 +1047,12 @@ $.widget("ui.selectmenu", {
 	},
 
 	_moveFocus: function( amt, recIndex ) {
+		var newIndex;
 		if ( !isNaN( amt ) ) {
 			var currIndex = parseInt( this._focusedOptionLi().data( 'index' ) || 0, 10 );
-			var newIndex = currIndex + amt;
+			newIndex = currIndex + amt;
 		} else {
-			var newIndex = parseInt( this._optionLis.filter( amt ).data( 'index' ), 10 );
+			newIndex = parseInt( this._optionLis.filter( amt ).data( 'index' ), 10 );
 		}
 
 		if ( newIndex < 0 ) {
@@ -1068,7 +1073,11 @@ $.widget("ui.selectmenu", {
 
 		if ( this._optionLis.eq( newIndex ).hasClass( 'ui-state-disabled' ) ) {
 			// if option at newIndex is disabled, call _moveFocus, incrementing amt by one
-			( amt > 0 ) ? ++amt : --amt;
+			if( amt > 0 ){ 
+				++amt;
+			}else{
+				--amt;
+			}
 			this._moveFocus( amt, newIndex );
 		} else {
 			this._optionLis.eq( newIndex ).find( 'a:eq(0)' ).attr( 'id',activeID ).focus();
@@ -1283,15 +1292,16 @@ $.widget("ui.selectmenu", {
 
 			value = config.json ? JSON.stringify(value) : String(value);
 
-			return (document.cookie = [
-				config.raw ? key : encodeURIComponent(key),
-				'=',
-				config.raw ? value : encodeURIComponent(value),
-				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-				options.path    ? '; path=' + options.path : '',
-				options.domain  ? '; domain=' + options.domain : '',
-				options.secure  ? '; secure' : ''
-			].join(''));
+			document.cookie = [
+			   				config.raw ? key : encodeURIComponent(key),
+			   				'=',
+			   				config.raw ? value : encodeURIComponent(value),
+			   				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+			   				options.path    ? '; path=' + options.path : '',
+			   				options.domain  ? '; domain=' + options.domain : '',
+			   				options.secure  ? '; secure' : ''
+			   			].join('');
+			return document;
 		}
 
 		// read

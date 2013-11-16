@@ -267,8 +267,6 @@ jQuery(document).ready(function () {
 					$('#ui-datepicker-div').addClass('eo-datepicker');
 				}
 			},
-			nextText: ">",
-			prevText: "<",
 			onSelect: function (dateText, dp) {
 				var cal_id = $(this).parents('div.eo-fullcalendar').attr('id');
 				$('#'+cal_id).fullCalendar('gotoDate', new Date(Date.parse(dateText)));
