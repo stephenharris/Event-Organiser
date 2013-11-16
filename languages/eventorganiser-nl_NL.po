@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 17:25:05+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2013-11-04 15:37:54+0000\n"
+"Last-Translator: Roel <roel@nijsten.net>\n"
 "Language-Team: \n"
 "Language: Dutch; Flemish (Netherlands)\n"
 "MIME-Version: 1.0\n"
@@ -36,11 +36,11 @@ msgstr "%d locaties aangemaakt"
 
 #: ../event-organiser-debug.php:416
 msgid "%s has only been tested up to %s %s"
-msgstr ""
+msgstr "%s is alleen getest tot %s %s"
 
 #: ../event-organiser-debug.php:423
 msgid "%s requires %s version %s or higher"
-msgstr ""
+msgstr "%s benodigd %s versie %s of hoger"
 
 #: ../event-organiser-manage.php:200
 msgid "&mdash; No Change &mdash;"
@@ -88,12 +88,7 @@ msgstr "Een lijst of dropdown van evenementen categorieen\n"
 
 #: ../classes/class-eo-widget-venues.php:11
 msgid "A list or dropdown of event venues"
-msgstr ""
-
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
+msgstr "Een dropdown lijst van evenementenlocaties"
 
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
@@ -102,6 +97,11 @@ msgstr "Een 'Evenementen' Link toevoegen aan menu:"
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "Evenement toevoegen"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr ""
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -162,14 +162,14 @@ msgid "All dates and times must be entered in the specified format. This format 
 msgstr "Alle data en tijden moeten worden opgegeven in de juiste format. Deze kan "
 "worden aangepast op de instellingspagina."
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "De hele dag (van 0.00 - 24.00 uur)"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
 msgstr "Hele dag"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
+msgstr "De hele dag (van 0.00 - 24.00 uur)"
 
 #: ../includes/event-organiser-cpt.php:146
 msgid "All events"
@@ -258,7 +258,8 @@ msgstr "Categorie&#235;n"
 #: ../event-organiser-settings.php:235
 msgid "Check this option to prevent any stylesheets from Event Organiser being "
 "loaded on the front-end"
-msgstr ""
+msgstr "Vink deze optie aan om te voorkomen dat eventuele stylesheets van Event "
+"Organiser aan de front-end worden geladen"
 
 #: ../event-organiser-edit.php:76
 msgid "Check to edit this event and its reoccurrences"
@@ -351,13 +352,13 @@ msgstr ""
 msgid "Date Format:"
 msgstr "Datum instelling:"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "dag"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
 msgstr "Dag"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
+msgstr "dag"
 
 #: ../event-organiser-settings.php:271
 msgid "Day archive"
@@ -381,11 +382,11 @@ msgstr "dd-mm-jjj"
 
 #: ../event-organiser-debug.php:555
 msgid "Debug mode"
-msgstr ""
+msgstr "Debug modus"
 
 #: ../includes/event-organiser-cpt.php:492
 msgid "Debugging Event Organiser"
-msgstr ""
+msgstr "Debuggen Event Organiser"
 
 #: ../classes/class-eo-venue-list-table.php:70
 #: ../classes/class-eo-venue-list-table.php:127
@@ -420,7 +421,7 @@ msgstr "DESC"
 
 #: ../event-organiser-settings.php:229
 msgid "Disable CSS:"
-msgstr ""
+msgstr "Uitschakelen CSS:"
 
 #: ../includes/event-organiser-register.php:648
 msgid "Dismiss"
@@ -463,7 +464,7 @@ msgstr "Exportbestand downloaden"
 
 #: ../event-organiser-debug.php:84
 msgid "Download system information file"
-msgstr ""
+msgstr "Download systeem informatie bestand"
 
 #: ../includes/event-organiser-ajax.php:255
 msgid "Draft"
@@ -579,11 +580,11 @@ msgstr "Ontwerp evenement bijgewerkt. <a target=\"_blank\" href=\"%s\">Bekijk "
 
 #: ../classes/class-eo-event-list-widget.php:78
 msgid "Event list widget placeholders"
-msgstr ""
+msgstr "Plaatsaanduidingen evenementenlijst widget"
 
 #: ../event-organiser-settings.php:29
 msgid "Event Organiser"
-msgstr ""
+msgstr "Event Organiser"
 
 #: ../event-organiser-add-ons.php:19
 #: ../event-organiser-add-ons.php:95
@@ -653,7 +654,7 @@ msgstr "Evenement bijgewerkt. <a href=\"%s\">Bekijk evenement</a>"
 
 #: ../classes/class-eo-calendar-widget.php:88
 msgid "Event venue"
-msgstr ""
+msgstr "Evenementenlocatie"
 
 #: ../includes/event-organiser-cpt.php:28
 msgid "Event Venues"
@@ -825,7 +826,8 @@ msgstr "Voor meer informatie"
 #: ../event-organiser-settings.php:224
 msgid "For more information see documentation <a href='%s'>on editing the "
 "templates</a>"
-msgstr ""
+msgstr "Voor meer informatie zie documentatie <a href='%s'>on editing the "
+"templates</a>"
 
 #: ../includes/event-organiser-register.php:235
 #: ../includes/event-organiser-event-functions.php:693
@@ -865,7 +867,7 @@ msgstr ""
 
 #: ../includes/event-organiser-cpt.php:493
 msgid "Go Pro!"
-msgstr ""
+msgstr "Ga voor Pro!"
 
 #: ../event-organiser-calendar.php:58
 msgid "go to date"
@@ -881,7 +883,7 @@ msgstr "Groepeer op"
 
 #: ../classes/class-eo-agenda-widget.php:39
 msgid "Group date format"
-msgstr ""
+msgstr "Groep datumnotatie"
 
 #: ../event-organiser-settings.php:159
 msgid "Group occurrences"
@@ -967,7 +969,7 @@ msgstr "Importeer locaties"
 
 #: ../classes/class-eo-agenda-widget.php:47
 msgid "Include 'Add To Google' link"
-msgstr ""
+msgstr "Voeg de \"Add To Google\"link toe"
 
 #: ../classes/class-eo-event-list-widget.php:66
 #: ../classes/class-eo-calendar-widget.php:46
@@ -1001,7 +1003,8 @@ msgstr "Ongeldige maandaanduiding"
 #: ../event-organiser-debug.php:245
 msgid "Known plug-in & theme conflicts, highlighted in red, may be minor or have a "
 "simple resolution. Please contact support."
-msgstr ""
+msgstr "Bekende plug-in & thema conflicten, rood gemarkeerd, kunnen klein zijn of "
+"hebben een eenvoudige oplossing. Neem contact op met support."
 
 #: ../includes/event-organiser-register.php:235
 #: ../includes/event-organiser-event-functions.php:693
@@ -1027,7 +1030,7 @@ msgstr "Rij: %1$d"
 
 #: ../classes/class-eo-calendar-widget.php:66
 msgid "Link directly to event for days with only one event"
-msgstr ""
+msgstr "Link direct naar evenement voor dagen met slechts een evenement"
 
 #: ../classes/class-eo-event-list-widget.php:41
 #: ../classes/class-eo-calendar-widget.php:80
@@ -1060,13 +1063,13 @@ msgstr "minuut"
 msgid "mm-dd-yyyy"
 msgstr "dd-mm-jjj"
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "maand"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
 msgstr "Maand"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
+msgstr "maand"
 
 #: ../event-organiser-settings.php:270
 msgid "Month archive"
@@ -1306,7 +1309,7 @@ msgstr "Datumnotatie niet herkend"
 
 #: ../event-organiser-debug.php:556
 msgid "Script mode"
-msgstr ""
+msgstr "Script modus"
 
 #: ../includes/event-organiser-cpt.php:62
 msgid "Search Categories"
@@ -1390,7 +1393,7 @@ msgstr "Laat minder zien"
 
 #: ../classes/class-eo-calendar-widget.php:56
 msgid "Show long events"
-msgstr ""
+msgstr "Toon lange evenementen"
 
 #: ../includes/event-organiser-register.php:51
 msgid "Show More"
@@ -1462,7 +1465,9 @@ msgstr "Sjablonen"
 #: ../event-organiser-debug.php:67
 msgid "The 'system info' link in under the Events admin tab is only visible to "
 "admins and only when <code>WP_DEBUG</code> is set to <code>true</code>."
-msgstr ""
+msgstr "De 'systeem info' link onderaan het tabblad \"Events admin\" is alleen "
+"zichtbaar voor admins en alleen wanneer <code>WP_DEBUG</code> is gewijzigd "
+"in <code>true</code>."
 
 #: ../includes/event-organiser-cpt.php:427
 msgid "The end date is the date the event finishes. If the event is a reoccuring "
@@ -1484,19 +1489,19 @@ msgstr "De startdatum is de datum waarop het evenement begint. Bij evenementen d
 
 #: ../classes/class-eventorganiser-shortcodes.php:356
 msgid "There is no excerpt because this is a protected post."
-msgstr ""
+msgstr "Er is geen samenvatting omdat dit bericht is beveiligd."
 
 #: ../includes/class-eo-ical-parser.php:90
 msgid "There was an error detecting ICAL source."
-msgstr ""
+msgstr "Er is een fout bij het detecteren van de ICAL bron."
 
 #: ../includes/class-eo-ical-parser.php:136
 msgid "There was an error fetching the feed. Response code: %s."
-msgstr ""
+msgstr "Er is een fout opgetreden bij het ophalen van de feed. Response code:"
 
 #: ../includes/class-eo-ical-parser.php:156
 msgid "There was an error opening the ICAL file."
-msgstr ""
+msgstr "Er is een fout bij het openen van het ICAL bestand."
 
 #: ../includes/class-event-organiser-im-export.php:318
 msgid "There was an error with %1$d of %2$d events in the ical file"
@@ -1517,7 +1522,7 @@ msgstr "Afgelopen op %s"
 
 #: ../includes/event-organiser-cpt.php:230
 msgid "This event has been broken from a recurring event."
-msgstr ""
+msgstr "Dit evenement is onderdeel van een terugkerend evenement."
 
 #: ../templates/event-meta-event-single.php:46
 msgid "This event is running from %1$s until %2$s. It is next occurring on %3$s"
@@ -1589,7 +1594,9 @@ msgstr "Titel:"
 msgid "To help speed things along, if you report a bug please indicate if you have "
 "done so. Once the plug-in or theme has been identified it is often easy to "
 "resolve the issue."
-msgstr ""
+msgstr "Om problemen sneller te verhelpen, wanneer je een bug door geeft laat dit "
+"dan weten. Zodra de plug-in of thema is geïdentificeerd is het vaak "
+"eenvoudig om het probleem op te lossen."
 
 #: ../includes/event-organiser-cpt.php:434
 msgid "To repeat an event according to some regular pattern, use the reoccurrence "
@@ -1664,12 +1671,12 @@ msgstr ""
 msgid "Venue Location"
 msgstr "Locatie"
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr "Locatie naam"
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
+msgstr "Locatie naam"
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
 msgstr "Locatie naam"
 
 #: ../event-organiser-settings.php:220
@@ -1722,12 +1729,12 @@ msgstr "Locatie tonen"
 msgid "View will take you to the venue's page"
 msgstr "'Door te klikken op bekijken komt u op de Lokatie-pagina."
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "Week"
-
 #: ../event-organiser-calendar.php:229
 msgid "Week"
+msgstr "Week"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
 msgstr "Week"
 
 #: ../event-organiser-edit.php:126
@@ -1784,7 +1791,9 @@ msgstr "U kunt gebeurtenissen toevoegen door op de dag te klikken of meerdere da
 msgid "You can use specified tags as placeholders for event information which you "
 "want to appear in the widget. <a href=\"%s\" target=\"_blank\"> Find out "
 "more</a>."
-msgstr ""
+msgstr "Je kunt specifieke tags gebruiken als tijdelijke aanduidingen voor "
+"informatie over de gebeurtenis die je wilt weergeven in de widget. <a "
+"href=\"%s\" target=\"_blank\"> Meer informatie</a>."
 
 #: ../event-organiser-venues.php:115
 msgid "You do not have permission to delete this venue"
