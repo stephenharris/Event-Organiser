@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.7.1
-Stable tag: 2.4
+Stable tag: 2.5
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -75,13 +75,13 @@ Event Organiser adds event management that integrates well with your WordPress s
 A big thank you to those who have provided translations for Event Organiser. If you wish to help out with translating the plug-in, you can do so [here](http://wp-event-organiser.com/i18n).
 
 * French - [Remy Perona](http://remyperona.fr/)
-* Spanish - Joseba Sanchez
+* Spanish - Joseba Sanchez, jagarre
 * German - [Martin Grether](http://www.datema.de/) & [Henning Matthaei](http://www.partnerwerk.de/)
 * Italian - Emilio Frusciante, Pio Muto
 * Norwegian - Erlend Birkedal
 * Swedish - Sofia BrÃ¥vander
-* Portuguese (Brazilian) - [Rafael Wahasugui](http://www.twitter.com/rafawhs)
-* Dutch  - [Ingrid Ekkers](http://www.247design.nl)
+* Portuguese (Brazilian) - [Rafael Wahasugui](http://www.twitter.com/rafawhs), rafaelkvidal
+* Dutch  - [Ingrid Ekkers](http://www.247design.nl), Roel
 * Polish - [Bartosz Arendt](http://digitalfactory.pl/)
 * Russian - [Sergei](www.vortexinter.ru)
 * Hungarian - Csaba Erdei 
@@ -91,6 +91,8 @@ A big thank you to those who have provided translations for Event Organiser. If 
 * Thai - Nibhon, Wuttichai Songprapai
 * Turkish - Gökhan DAMGACI 
 * Croatian - Branimir
+* Catalan - jordioniric, marc.antje
+
 
 == Installation ==
 
@@ -188,6 +190,21 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.5 =
+* iCal import can now import HTML descriptions.
+* Fixes bug with iCal import where feed contained VALARM.
+* qTip updated to 2.1.1.
+* Event list widget can sort by publication dates.
+* Styling for MP6 compatability added.
+* Display warning if an event in an imported iCal feed does not contain a UID.
+* Added class `eo-datepicker` to all front-end jQuery UI datepickers.
+* Fixes bug with long events in the widget calendar. [See #159](https://github.com/stephenharris/Event-Organiser/issues/159).
+* Added Catalan translation, thanks to jordioniric, marc.antje.
+* Updated Dutch translation, thanks to roel. 
+* Updated Portugese (Brazil) translation, thanks to rafaelkvidal.
+* Updated Spanish translation, thanks to jagarre.
+
 
 = 2.4 =
 * iCal parser updated. Specifically:
