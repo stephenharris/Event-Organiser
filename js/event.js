@@ -40,7 +40,7 @@ Date.prototype.eoGetOrdinal = function () {
 	    default:
 	        return 'th';
 	 }
-}
+};
 
 /**
  * Given a month (start & end ) and event schedule, calculates
@@ -51,7 +51,7 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
 	//Helper array
 	var ical_weekdays = new Array("SU", "MO", "TU", "WE", "TH", "FR", "SA"),
 	eo_occurrences_by_rule = [],
-	count_days, pointer;
+	count_days, pointer = false;
 	
     //If event starts in previous month - how many days from start to first occurrence in current month?
     // Depends on occurrence (and 'stream' for weekly events.
@@ -105,6 +105,7 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
     		if ( rule.schedule_meta.match(/BYMONTHDAY=(\d+)/) ) {
         		var day = rule.start.getDate();
         		var daysinmonth = month_end.getDate();
+        		//Check for short months
         		if ( day <= daysinmonth) {
         			//If valid date
         			pointer = new Date( month_start.getFullYear(), month_start.getMonth(), day);
@@ -129,7 +130,7 @@ function eo_generate_dates_by_schedule_rule( rule, month_start,month_end ){
         		pointer.setDate(occurence_date);
             }
     		
-    		if (pointer <= rule.schedule_last ) {
+    		if ( pointer && pointer <= rule.schedule_last ) {
     			//If before end
     			formateddate = $.datepicker.formatDate('yy-mm-dd', pointer);
     			eo_occurrences_by_rule.push(formateddate);
@@ -259,7 +260,7 @@ window.eventOrganiserSchedulePicker = {
                 //Replace with do_action
                 self.update_schedule();
                 self.update_occurrencepicker_rules();
-                self.update_form()
+                self.update_form();
             }
         });
         
@@ -362,7 +363,7 @@ window.eventOrganiserSchedulePicker = {
 	    	is_all_day: $(views.is_all_day).attr("checked"),
 	    	include: $(views.include).length > 0 ? $(views.include).val().split(",") : [],
 	    	exclude: $(views.exclude).length > 0 ? $(views.exclude).val().split(",") : []
-	    }
+	    };
 
 	    if( schedule.schedule == 'weekly' ){
 	    	schedule.schedule_meta = [];
@@ -477,7 +478,7 @@ window.eventOrganiserSchedulePicker = {
         $(view.summary).html( schedule.generate_summary( locale ) );
 	}
 			
-}
+};
 
 
 eventOrganiserSchedule = {
@@ -595,7 +596,7 @@ eventOrganiserSchedule = {
 	                } else {
 	                	summary += locale.yearSingle;
 	                }
-	        		summary = summary + " " + $.datepicker.formatDate("MM d", this.start, options) + this.start.eoGetOrdinal()
+	        		summary = summary + " " + $.datepicker.formatDate("MM d", this.start, options) + this.start.eoGetOrdinal();
 	        	break;
 	        }
 	        
@@ -664,7 +665,7 @@ eventOrganiserSchedule = {
 	        
 	        
 	    }
-}
+};
 
 })(jQuery);
 

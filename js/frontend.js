@@ -139,7 +139,7 @@ jQuery(document).ready(function () {
                         	return "<div></div>";
                         	
                         if (! v.calendar.options.tooltip ) {
-                          	return
+                          	return;
                         }
 
                         $(b).qtip({
@@ -159,7 +159,7 @@ jQuery(document).ready(function () {
                         	hide: {
                         		fixed: true,
                         		delay: 500,
-                        		effect: function (a) {$(this).fadeOut("50")}
+                        		effect: function (a) {$(this).fadeOut("50");}
                         	},
                         	border: {
                         		radius: 4,
@@ -170,7 +170,7 @@ jQuery(document).ready(function () {
                         		widget: true,
                         		tip: "topMiddle"
                         	}
-                        })
+                        });
                     },
                     buttonText: {
                     	today: EOAjaxFront.locale.today,
@@ -197,10 +197,10 @@ jQuery(document).ready(function () {
                 			};
                 			
                 			if (typeof d.category !== "undefined" &&d.category !== "") {
-                				request.category = d.category
+                				request.category = d.category;
                 			}
                 			if (typeof d.venue !== "undefined" &&d.venue !== "") {
-                				request.venue = d.venue
+                				request.venue = d.venue;
                 			}
                 			
                 			request = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_request', request, a, b, c, d );
@@ -223,7 +223,7 @@ jQuery(document).ready(function () {
                 						} 
                 					}
                 				}
-                			})
+                			});
                 		},
                 	selectable: false,
                 	weekMode: "variable",
@@ -233,7 +233,7 @@ jQuery(document).ready(function () {
                 			var loading = $("#" + $(this).attr("id") + "_loading");
                 			if (a) {
                 				window.clearTimeout(loadingTimeOut);
-                				loadingTimeOut = window.setTimeout(function () {loading.show()}, 1e3);
+                				loadingTimeOut = window.setTimeout(function () {loading.show();}, 1e3);
                 			} else {
                 				window.clearTimeout(loadingTimeOut);
                 				loading.hide();
@@ -242,12 +242,12 @@ jQuery(document).ready(function () {
             	};
             	args = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_options', args, calendars[i] );
             	
-            	$(calendar).fullCalendar(args)
+            	$(calendar).fullCalendar(args);
 			}
 	
 		$(".eo-cal-filter").change(function () {
-			$(".eo-fullcalendar").fullCalendar("rerenderEvents")
-		})
+			$(".eo-fullcalendar").fullCalendar("rerenderEvents");
+		});
 
 		$('.eo-mini-calendar').datepicker({
 			dateFormat: 'DD, d MM, yy',
@@ -276,28 +276,28 @@ jQuery(document).ready(function () {
 
         if ($(".eo_widget_calendar").length > 0 ) {
 
-		$(".eo_widget_calendar tfoot").unbind("click");
-		$(".eo_widget_calendar").off("click").on("click", 'tfoot a', function (a) {
-                	a.preventDefault();
-                	var b = $(this).closest(".eo_widget_calendar").attr("id");
+        	$(".eo_widget_calendar tfoot").unbind("click");
+        	$(".eo_widget_calendar").off("click").on("click", 'tfoot a', function (a) {
+        		a.preventDefault();
+        		var b = $(this).closest(".eo_widget_calendar").attr("id");
 	
-			//Defaults
-			var cal = {showpastevents: 1, 'show-long': 0, 'link-to-single': 0 };
+        		//Defaults
+        		var cal = {showpastevents: 1, 'show-long': 0, 'link-to-single': 0 };
 
-			//Shortcode widget calendar
-			if( typeof EOAjax !== "undefined" && typeof eventorganiser.widget_calendars !== "undefined" ){
-				cal = eventorganiser.widget_calendars[b];	
-			}
-			//Widget calendar
-                	if (typeof eo_widget_cal !== "undefined") {
-                    		cal = eo_widget_cal[b];
-                	}
+        		//Shortcode widget calendar
+        		if( typeof EOAjax !== "undefined" && typeof eventorganiser.widget_calendars !== "undefined" ){
+        			cal = eventorganiser.widget_calendars[b];	
+        		}
+        		//Widget calendar
+                if (typeof eo_widget_cal !== "undefined") {
+                	cal = eo_widget_cal[b];
+                }
 
-			//Set month
-			cal.eo_month = eveorg_getParameterByName("eo_month", $(this).attr("href"));
+                //Set month
+                cal.eo_month = eveorg_getParameterByName("eo_month", $(this).attr("href"));
 
-			$.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal", cal,function (a) {$("#" + b + "_content").html(a)})
-            	})
+                $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal", cal,function (a) {$("#" + b + "_content").html(a);});
+        	});
         }
 
         if ($('.eo-agenda-widget').length > 0) {
@@ -314,14 +314,14 @@ jQuery(document).ready(function () {
                     },
                     success: function (a) {
                         if (!jQuery.isArray(a) || !a[0]) {
-                            return false
+                            return false;
                         } else {
                             b.StartDate = a[0].StartDate;
                             b.EndDate = a[a.length - 1].StartDate;
-                            populateAgenda(a, b)
+                            populateAgenda(a, b);
                         }
                     }
-                })
+                });
             }
             function populateAgenda(a, b) {
                 var agendaWidget = $("#" + b.id + "_container");
@@ -335,7 +335,7 @@ jQuery(document).ready(function () {
                     if ( current === false || current != a[i].StartDate && b.mode == "day" ) {
                         current = a[i].StartDate;
                         currentList = $('<li class="date" >' + a[i].display + '<ul class="a-date"></ul></li>');
-                        dateList.append(currentList)
+                        dateList.append(currentList);
                     }
                     if( b.add_to_google ){
                     	c = $('<li class="event"></li>').append('<span class="cat"></span><span><strong>' + a[i].time + ": </strong></span>" + a[i]
@@ -344,28 +344,27 @@ jQuery(document).ready(function () {
                         	.Glink + "</span></div>");
                     }else{
                     	c = $('<li class="event"></li>').append("<a class='eo-agenda-event-permalink' href='"+a[i].event_url+"'><span class='cat'></span><span><strong>" + a[i].time + ": </strong></span>" + a[i]
-                        	.post_title+"</a>")
+                        	.post_title+"</a>");
                     }
                     
                     c.find("span.cat")
                         .css({
                         background: a[i].color
                     });
-                    currentList.append(c)
+                    currentList.append(c);
                 }
                 dates = dateList.find("li");
                 var events_el = agendaWidget.find("ul li.event");
                 events_el.on("click", function () {
-                    $(this).find(".meta")
-                        .toggle("400")
-                })
+                    $(this).find(".meta").toggle("400");
+                });
             }
             for (var agenda in eo_widget_agenda) {
                 agenda = eo_widget_agenda[agenda];
                 var d = new Date();
                 agenda.StartDate = $.fullCalendar.formatDate(d, "yyyy-MM-dd");
                 agenda.EndDate = agenda.StartDate;
-                eventorganiserGetEvents( 1, agenda )
+                eventorganiserGetEvents( 1, agenda );
             }
             $(".eo-agenda-widget .agenda-nav span.button").click(function (a) {
                 var id = $(this).parents(".eo-agenda-widget").attr("id");
@@ -373,19 +372,19 @@ jQuery(document).ready(function () {
                 a.preventDefault();
                 var dir = false;
                 if ($(this).hasClass("next")) {
-                	dir = "+1"
+                	dir = "+1";
                 } else if ($(this).hasClass("prev")) {
-                    dir = "-1"
+                    dir = "-1";
                 } else {
                     var par = $(this).parent();
                     if (par.hasClass("prev")) {
-                        dir = "-1"
+                        dir = "-1";
                     } else {
-                        dir = "+1"
+                        dir = "+1";
                     }
                 }
-                eventorganiserGetEvents( dir, agenda )
-            })
+                eventorganiserGetEvents( dir, agenda );
+            });
         }
     });
 })(jQuery);
@@ -397,7 +396,7 @@ function eveorg_getParameterByName(a, b) {
     var d = new RegExp(c);
     var e = d.exec(b);
     if (e === null) return "";
-    else return decodeURIComponent(e[1].replace(/\+/g, " "))
+    else return decodeURIComponent(e[1].replace(/\+/g, " "));
 }
 
 function eo_load_map() {
@@ -438,13 +437,12 @@ function eo_load_map() {
 			  	bounds.extend (LatLngList[j]);
 			  	
 			  	var marker_options = {
-			  			venue_id: locations[j].venue_id,
-			  			position: LatLngList[j],
-			  			map: map,
-			  			content:locations[j].tooltipContent,
-			  			icon: locations[j].icon
-			  			//icon: 'http://localhost/dev/wp-content/gmapmarker/blue_MarkerB.png'
-	            	}
+			  		venue_id: locations[j].venue_id,
+			  		position: LatLngList[j],
+			  		map: map,
+			  		content:locations[j].tooltipContent,
+			  		icon: locations[j].icon
+	            };
 			  	
 			  	marker_options = wp.hooks.applyFilters( 'eventorganiser.venue_marker_options', marker_options );
 				var c = new google.maps.Marker(marker_options);				

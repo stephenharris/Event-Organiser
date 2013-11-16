@@ -137,7 +137,7 @@ $.widget("ui.combobox", {
 			icons: { primary: "ui-icon-triangle-1-s"},
 			text: false
 		}).removeClass("ui-corner-all").addClass("ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
-			if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return}
+			if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return;}
 			$(this).blur();
 			input.autocomplete("search", "").focus();
 		});
