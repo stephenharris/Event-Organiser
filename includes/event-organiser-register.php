@@ -446,6 +446,27 @@ function eventorganiser_screen_retina_icon(){
 			#eventorganiser_event_detail td{ border: none; }
 			#eventorganiser_event_detail .reocurrence_row td{ padding: 0px; }
 			#eventorganiser_event_detail .reocurrence_row p{ margin-bottom: 18px; }
+			#eo_admin_calendar tbody th,
+			#eo_admin_calendar thead th {
+				background: #DFDFDF!important;
+				padding: 5px 0px!important;
+			}
+			#eo-event-venue-button,
+			#eo-event-cat-button,
+			.fc-header-goto button,
+			.fc-button{
+				background:white!important;
+			}
+				
+			.eo-addon{ background: white; }
+
+			#eo-event-venue-button:hover,
+			#eo-event-cat-button:hover,
+			.fc-header-goto button:hover,
+			.fc-button:hover{
+				color:#0074A2;
+			}
+			.fc-button-prev .ui-button-text, .fc-button-next .ui-button-text {padding-top: 0.5em!important;}
 		</style>
 		<?php
 	}
