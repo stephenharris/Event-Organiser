@@ -95,6 +95,7 @@ module.exports = function(grunt) {
 				'!composer.lock',
 				'!composer.phar',
 				'!composer.json',
+				'!CONTRIBUTING.md'
 			],
 			dest: 'dist/event-organiser/'
 		}		
