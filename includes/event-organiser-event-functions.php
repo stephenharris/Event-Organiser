@@ -1290,6 +1290,7 @@ function eo_event_category_dropdown( $args = '' ) {
 */
 function eo_get_event_fullcalendar( $args ){
 
+	global $wp_locale;
 	$defaults = array(
 		'headerleft'=>'title', 'headercenter'=>'', 'headerright'=>'prev next today', 'defaultview'=>'month',
 		'event_category'=>'', 'event_venue'=>'', 'timeformat'=>get_option('time_format'), 'axisformat'=>get_option('time_format'), 'key'=>false,
@@ -1297,7 +1298,7 @@ function eo_get_event_fullcalendar( $args ){
 		'alldaytext'=>__('All Day','eventorganiser'), 'columnformatmonth'=>'D', 'columnformatweek'=>'D n/j', 'columnformatday'=>'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j, Y}", 'titleformatday' => 'l, M j, Y',
 		'year' => false, 'month' => false, 'date' => false,	'users_events' => false, 'event_occurrence__in' =>array(),
-		'theme' => true,	
+		'theme' => true, 'isrtl' => $wp_locale->is_rtl(),
 	);
 	
 	$args = shortcode_atts( $defaults, $args, 'eo_fullcalendar' );

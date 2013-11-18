@@ -99,6 +99,7 @@ jQuery(document).ready(function () {
 				venues: eventorganiser.fullcal.venues,
 				timeFormatphp: calendars[i].timeformatphp,
 				timeFormat: calendars[i].timeformat,
+				isRTL: calendars[i].isrtl,
 				editable: false,
 				tooltip: calendars[i].tooltip,
 				firstDay: parseInt( eventorganiser.fullcal.firstDay, 10 ),
