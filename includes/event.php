@@ -273,7 +273,9 @@ function eo_delete_event_occurrences( $post_id, $occurrence_ids = false ){
 		$occurrence_ids = (array) $occurrence_ids;
 		$occurrence_ids = array_map( 'absint', $occurrence_ids );
 		$occurrence_ids_in = implode( ', ', $occurrence_ids );
-		$raw_sql = "DELETE FROM $wpdb->eo_events WHERE post_id=%d AND event_id IN( $occurrence_id_in )";
+		
+		$raw_sql = "DELETE FROM $wpdb->eo_events WHERE post_id=%d AND event_id IN( $occurrence_ids_in )";
+
 	}else{
 		$raw_sql = "DELETE FROM $wpdb->eo_events WHERE post_id=%d";
 	}
