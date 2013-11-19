@@ -257,8 +257,8 @@ jQuery(document).ready(function () {
 			buttonText: EOAjaxFront.locale.gotodate,
 			monthNamesShort: EOAjaxFront.locale.monthAbbrev,
 			dayNamesMin: EOAjaxFront.locale.dayAbbrev,
-			nextText: EO_Pro_DP.locale.nextText,
-			prevText: EO_Pro_DP.locale.prevText,
+			nextText: EOAjaxFront.locale.nextText,
+			prevText: EOAjaxFront.locale.prevText,
 			showOn: 'button',
 			beforeShow: function(input, inst) {
 				if( inst.hasOwnProperty( 'dpDiv' ) ){
