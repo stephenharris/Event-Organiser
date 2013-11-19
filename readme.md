@@ -206,6 +206,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 ### 2.5.1 ###
 * Fix js error (variable not defined) introduced in 2.5.
 * Fix "delete occurrence" from admin calendar not working. 
+* Recompiled .po files (should fix some text not being translated).
 
 ### 2.5 ###
 * iCal import can now import HTML descriptions.
