@@ -4,7 +4,7 @@
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
 **Tested up to:** 3.7.1  
-**Stable tag:** 2.5  
+**Stable tag:** 2.5.1  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -202,6 +202,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 2.5.1 ###
+* Fix js error (variable not defined) introduced in 2.5.
+* Fix "delete occurrence" from admin calendar not working. 
 
 ### 2.5 ###
 * iCal import can now import HTML descriptions.
