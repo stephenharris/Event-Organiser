@@ -155,7 +155,14 @@ module.exports = function(grunt) {
         		build_dir: 'dist/event-organiser/'
             },
     	}
-    }
+    },
+    
+    po2mo: {
+    	files: {
+        	src: 'languages/*.po',
+          expand: true,
+        },
+    },
 });
 
 
