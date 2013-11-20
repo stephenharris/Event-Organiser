@@ -163,6 +163,28 @@ module.exports = function(grunt) {
           expand: true,
         },
     },
+
+    pot: {
+    	options:{
+        	text_domain: 'eventorganiser',
+        	dest: 'languages/',
+        	keywords: ['__','_e','esc_html__','esc_html_e','esc_attr__', 'esc_attr_e', 'esc_attr_x', 'esc_html_x', 'ngettext', '_n', '_ex', '_nx' ],
+    	},
+    	files:{
+		src:  [
+			'**/*.php',
+			'!node_modules/**',
+			'!dist/**',
+			'!apigen/**',
+			'!documentation/**',
+			'!tests/**',
+			'!vendor/**',
+			'!*~',
+		],
+		expand: true,
+    	}
+    },
+
 });
 
 
@@ -170,7 +192,7 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'build', [ 'test', 'newer:uglify', 'newer:po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
+grunt.registerTask( 'build', [ 'test', 'newer:uglify', 'pot', 'newer:po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
 
 grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
 
