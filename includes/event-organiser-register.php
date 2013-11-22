@@ -126,9 +126,14 @@ function eventorganiser_register_scripts(){
 	/*  Pick and register jQuery UI style */
 	$style = ( 'classic' == get_user_option( 'admin_color') ? 'classic' : 'fresh' );
 	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL."css/eventorganiser-admin-{$style}.css",array(),$version);
-
+	
 	/* Admin styling */
-	wp_register_style('eventorganiser-style',EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css',array('eventorganiser-jquery-ui-style'),$version );
+	wp_register_style( 'eventorganiser-3.8+', EVENT_ORGANISER_URL.'css/eventorganiser-admin-3.8+.css', array(), $version );
+	$deps = array( 'eventorganiser-jquery-ui-style' );
+	if ( ( defined( 'MP6' ) && MP6 ) || version_compare( '3.8-beta-1', get_bloginfo( 'version' ) ) <= 0 ) {
+		$deps[] = 'eventorganiser-3.8+';
+	}
+	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css', $deps, $version );
 
 	/* Inline Help */
 	wp_register_script( 'eo-inline-help', EVENT_ORGANISER_URL.'js/inline-help.js',array( 'jquery', 'eo_qtip2' ), $version, true );
@@ -435,49 +440,20 @@ function eventorganiser_screen_retina_icon(){
 
 	$screen_id = get_current_screen()->id;
 	
-	if ( defined( 'MP6' ) && MP6 ) {
-		//MP6 tweaks - ongoing and limited.
+	if ( ( defined( 'MP6' ) && MP6 ) || version_compare( '3.8-beta-1', get_bloginfo( 'version' ) ) <= 0 ):
 		?>
 		<style>
 			.icon16.icon-post:before, #adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
-			body.event_page_calendar #calendar-view .view-button.active{ border-color: #dfdfdf #dfdfdf #eee }
-			.ui-datepicker select {height: 2em;}
-			.form-table .ui-datepicker-calendar td, .form-table .ui-datepicker-calendar th {font-size: 12px;}
-			#eventorganiser_event_detail td{ border: none; }
-			#eventorganiser_event_detail .reocurrence_row td{ padding: 0px; }
-			#eventorganiser_event_detail .reocurrence_row p{ margin-bottom: 18px; }
-			#eo_admin_calendar tbody th,
-			#eo_admin_calendar thead th {
-				background: #DFDFDF!important;
-				padding: 5px 0px!important;
-			}
-			#eo-event-venue-button,
-			#eo-event-cat-button,
-			.fc-header-goto button,
-			.fc-button{
-				background:white!important;
-			}	
-			.eo-addon{ background: white; }
-			#eo-event-venue-button:hover,
-			#eo-event-cat-button:hover,
-			.fc-header-goto button:hover,
-			.fc-button:hover{
-				color:#0074A2;
-			}
-			#eo-event-cat-menu .ui-widget-content .ui-state-hover,
-			#eo-event-cat-menu .ui-state-hover,
-			#eo-event-venue-menu .ui-widget-content .ui-state-hover,
-			#eo-event-venue-menu .ui-state-hover{
-				background: #EEE;
-			}
-			.fc-button-prev .ui-button-text, .fc-button-next .ui-button-text {padding-top: 0.5em!important;}
+			.icon16.icon-post:before, #adminmenu #menu-posts-event div.wp-menu-image img { display:none; }
+			/**Add-ons page: for contrast**/
+			#eo-addons-wrap .eo-addon{ background: white; }
 		</style>
 		<?php
-	}
+	endif;
 	
 	if( !in_array($screen_id, array('event','edit-event','edit-event-tag','edit-event-category','event_page_venues','event_page_calendar')) )
 		return;
-
+		 
 	$icon_url = EVENT_ORGANISER_URL.'css/images/eoicon-64.png'
 	?>
 	<style>
