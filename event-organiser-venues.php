@@ -346,7 +346,9 @@ function eventorganiser_venue_submit( $venue ){
 
 	<div id="minor-publishing-actions">
 		<div id="save-action">
-			<input type="submit" class="button button-primary" id="save-venue" name="eo_venue[Submit]" value="<?php echo esc_attr( $value ); ?>" tabindex="10" />  
+			<p>
+				<input type="submit" class="button button-primary" id="save-venue" name="eo_venue[Submit]" value="<?php echo esc_attr( $value ); ?>" tabindex="10" />
+			</p>  
 		</div>
 		<div class="clear"></div>
 	</div>
