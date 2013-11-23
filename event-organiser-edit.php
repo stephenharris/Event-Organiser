@@ -225,7 +225,7 @@ function _eventorganiser_details_metabox( $post ){
 				$address_fields = _eventorganiser_get_venue_address_fields();
 				foreach ( $address_fields as $key => $label ){
 					printf( '<tr valign="top" class="eo-add-new-venue">
-								<th><label>%1$s:</label></th>
+								<td class="eo-label"><label>%1$s:</label></td>
 								<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo_venue_add"  value=""/></td>
 							</tr>',
 							$label,
