@@ -221,7 +221,7 @@ function eventorganiser_admin_calendar() {
 			'perm' => 'readable');
 
 		$calendar = get_transient('eo_full_calendar_admin');
-		$key = $_GET['start'].'--'.$_GET['end'];
+		$key = $_GET['start'].'--'.$_GET['end'] . 'u='.get_current_user_id();
 
 		if( ( !defined('WP_DEBUG') || !WP_DEBUG ) && $calendar && is_array($calendar) && isset($calendar[$key]) ){
 			echo json_encode($calendar[$key]);
