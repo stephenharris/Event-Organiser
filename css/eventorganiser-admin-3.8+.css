@@ -13,7 +13,7 @@
 /* Flatten header of admin calendar */
 #eo_admin_calendar tbody th,
 #eo_admin_calendar thead th {
-	background: #DFDFDF!important;
+	background: #E4E4E4;
 	padding: 5px 0px!important;
 }
 /* Flatten buttons */
