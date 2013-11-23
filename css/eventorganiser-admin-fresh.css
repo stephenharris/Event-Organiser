@@ -437,7 +437,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-dialog { position: fixed; padding: .2em; width: 300px; overflow: hidden; }
 .ui-dialog .ui-dialog-titlebar { padding: .4em 1em; position: relative;color: #333!important;  }
 .ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .1em 0; } 
-.ui-dialog .ui-dialog-titlebar-close { position: absolute!important; right: .3em!important; top: 50%!important; width: 19px!important; margin: -10px 0 0 0!important; padding: 1px!important; height: 18px!important; background:none!important; }
+.ui-dialog .ui-dialog-titlebar-close { position: absolute!important; right: .3em!important; top: 50%!important; width: 19px!important; margin: -10px 0 0 0!important; height: 18px!important; background:none!important; }
 .ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
 .ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0!important; }
 .ui-dialog .ui-dialog-content { position: relative; border: 0; padding: .5em 1em; background: none; overflow: auto; zoom: 1; }
