@@ -413,11 +413,20 @@ button.ui-button-icons-only { width: 3.7em; }
 input.ui-button { padding: .4em 1em; }
 
 /*button icon element(s) */
-.ui-button-icon-only .ui-icon, .ui-button-text-icon-primary .ui-icon, .ui-button-text-icon-secondary .ui-icon, .ui-button-text-icons .ui-icon, .ui-button-icons-only .ui-icon { position: absolute; top: 50%; margin-top: -8px; }
-.ui-button-icon-only .ui-icon { left: 50%; margin-left: -8px; }
-.ui-button-text-icon-primary .ui-button-icon-primary, .ui-button-text-icons .ui-button-icon-primary, .ui-button-icons-only .ui-button-icon-primary { left: .5em; }
-.ui-button-text-icon-secondary .ui-button-icon-secondary, .ui-button-text-icons .ui-button-icon-secondary, .ui-button-icons-only .ui-button-icon-secondary { right: .5em; }
-.ui-button-text-icons .ui-button-icon-secondary, .ui-button-icons-only .ui-button-icon-secondary { right: .5em; }
+.eo-ui-button.ui-button-icon-only .ui-icon, 
+.eo-ui-button.ui-button-text-icon-primary .ui-icon, 
+.eo-ui-button.ui-button-text-icon-secondary .ui-icon, 
+.eo-ui-button.ui-button-text-icons .ui-icon, 
+.eo-ui-button.ui-button-icons-only .ui-icon { position: absolute; top: 50%; margin-top: -8px; }
+.eo-ui-button.ui-button-icon-only .ui-icon { left: 50%; margin-left: -8px; }
+.eo-ui-button.ui-button-text-icon-primary .ui-button-icon-primary, 
+.eo-ui-button.ui-button-text-icons .ui-button-icon-primary, 
+.eo-ui-button.ui-button-icons-only .ui-button-icon-primary { left: .5em; }
+.eo-ui-button.ui-button-text-icon-secondary .ui-button-icon-secondary, 
+.eo-ui-button.ui-button-text-icons .ui-button-icon-secondary, 
+.eo-ui-button.ui-button-icons-only .ui-button-icon-secondary { right: .5em; }
+.eo-ui-button.ui-button-text-icons .ui-button-icon-secondary, 
+.eo-ui-button.ui-button-icons-only .ui-button-icon-secondary { right: .5em; }
 
 /*button sets*/
 .ui-buttonset { margin-right: 7px; }

@@ -74,6 +74,8 @@ eventorganiser.versionCompare = function(left, right) {
 		width: 527,
 		modal:true
 	});
+	//Add eo-ui-button to jQuery UI button
+	$('.eo-dialog').parent().find('.ui-dialog-titlebar-close').addClass('eo-ui-button')
 	$('#events-meta').parent().find('.ui-dialog-titlebar-close').appendTo('.ui-tabs-nav').closest('.ui-dialog').children('.ui-dialog-titlebar').remove();
 
 	/* Time Format from screen option */
