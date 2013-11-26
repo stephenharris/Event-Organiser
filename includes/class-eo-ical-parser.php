@@ -114,19 +114,14 @@ class EO_ICAL_Parser{
 			return $this->ical_array;
 		
 		if( empty( $this->ical_array ) ){
-			return new WP_Error( 'unable-to-fetch',
-					sprintf(
-							'%s. Response code: %s.',
-							wp_remote_retrieve_response_message( $response ),
-							$response_code
-					));
+			return new WP_Error( 'unable-to-read', __( 'Unable to read iCal file', 'eventorganiser' ) );
 		}
 
 		//Go through array and parse events
 		$result = $this->parse_ical_array();
 		
 		if( "NONE" == $this->state ){
-			return new WP_Error( 'unable-to-fetch', 'Feed not found' );
+			return new WP_Error( 'unable-to-fetch', __( 'Feed not found', 'eventorganiser' ) );
 		}
 		
 		$this->events_parsed = count( $this->events );
@@ -148,26 +143,27 @@ class EO_ICAL_Parser{
 		$contents = wp_remote_retrieve_body( $response );
 		$response_code = wp_remote_retrieve_response_code( $response );
 		
+		if( is_wp_error( $response ) )
+			return $response;
+		
 		if( $response_code != 200 ){
 			return new WP_Error( 'unable-to-fetch',
-					sprintf(
-							'%s. Response code: %s.',
-							wp_remote_retrieve_response_message( $response ),
-							$response_code
-					));
+				sprintf(
+					'%s. Response code: %s.',
+					wp_remote_retrieve_response_message( $response ),
+					$response_code
+			));
 		}
 		
 		if( $contents )
 			return explode( "\n", $contents );
 		
-		if( is_wp_error( $response ) )
-			return $response;
 		
 		return new WP_Error( 'unable-to-fetch', 
-				sprintf( 
-					__( 'There was an error fetching the feed. Response code: %s.', 'eventorgansier' ),
-					$response_code
-				));
+			sprintf( 
+				__( 'There was an error fetching the feed. Response code: %s.', 'eventorgansier' ),
+				$response_code
+			));
 	}
 
 	/**
