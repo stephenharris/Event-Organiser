@@ -106,7 +106,7 @@ class EO_ICAL_Parser{
 		}else{
 			$this->ical_array =  new WP_Error( 
 				'invalid-ical-source', 
-				__( 'There was an error detecting ICAL source.', 'eventorgansier' )
+				__( 'There was an error detecting iCal source.', 'eventorgansier' )
 			);
 		}
 
