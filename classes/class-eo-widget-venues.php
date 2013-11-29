@@ -42,7 +42,7 @@ class EO_Widget_Venues extends WP_Widget {
 		if ( $d ) {
 			$cat_args['walker'] = new EO_Walker_TaxonomyDropdown();
 			$cat_args['value'] = 'slug';
-			$cat_args['show_option_none'] = __('Select Category');
+			$cat_args['show_option_none'] = __('Select Venue');
 			wp_dropdown_categories(apply_filters('eventorganiser_widget_event_venues_dropdown_args', $cat_args));
 			?>
 
