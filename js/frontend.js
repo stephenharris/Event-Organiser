@@ -145,7 +145,7 @@ jQuery(document).ready(function () {
                         $(b).qtip({
                         	content: {
                         		text:  a.description,
-                        		button: "x",
+                        		button: false,
                         		title: a.title
                         	},
                         	position: {
@@ -166,7 +166,7 @@ jQuery(document).ready(function () {
                         		width: 3
                         	},
                         	style: {
-                        		classes: "ui-tooltip-shadow",
+                        		classes: "eo-event-toolip ui-tooltip-shadow",
                         		widget: true,
                         		tip: "topMiddle"
                         	}
