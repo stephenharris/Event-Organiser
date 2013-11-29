@@ -110,7 +110,7 @@ table.fc-border-separate,.fc-agenda table{border-collapse:separate}
 .fc-border-separate tbody tr.fc-first td,.fc-border-separate tbody tr.fc-first th,.fc-agenda-slots tr.fc-slot0 th,.fc-agenda-slots tr.fc-slot0 td{border-top-width:0}
 .fc-agenda-allday th,.fc-event-vert{border-width:0 1px}
 
-
+.eo-event-toolip .qtip-title{ line-height: 2em; }
 /*! qTip2 - Pretty powerful tooltips - v2.0.0 - 2012-08-14
 * http://craigsworks.com/projects/qtip2/
 * Copyright (c) 2012 Craig Michael Thompson; Licensed MIT, GPL */
