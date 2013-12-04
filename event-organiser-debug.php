@@ -242,7 +242,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 		<?php 
 			printf( 
 				'<p class="description"> <span class="eo-debug-warning">*</span> %s </p>',
-				__( 'Known plug-in & theme conflicts, highlighted in red, may be minor or have a simple resolution. Please contact support.' )
+				__( 'Known plug-in & theme conflicts, highlighted in red, may be minor or have a simple resolution. Please contact support.', 'eventorganiser' )
 			);
 		?>
 	</div><!--End .wrap -->

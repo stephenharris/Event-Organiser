@@ -106,7 +106,7 @@ class EO_ICAL_Parser{
 		}else{
 			$this->ical_array =  new WP_Error( 
 				'invalid-ical-source', 
-				__( 'There was an error detecting iCal source.', 'eventorgansier' )
+				__( 'There was an error detecting iCal source.', 'eventorganiser' )
 			);
 		}
 
@@ -161,7 +161,7 @@ class EO_ICAL_Parser{
 		
 		return new WP_Error( 'unable-to-fetch', 
 			sprintf( 
-				__( 'There was an error fetching the feed. Response code: %s.', 'eventorgansier' ),
+				__( 'There was an error fetching the feed. Response code: %s.', 'eventorganiser' ),
 				$response_code
 			));
 	}
@@ -181,7 +181,7 @@ class EO_ICAL_Parser{
 		if( !$file_handle )
 			return new WP_Error( 
 						'unable-to-open', 
-					__( 'There was an error opening the ICAL file.', 'eventorgansier' )
+					__( 'There was an error opening the ICAL file.', 'eventorganiser' )
 					);
 
 		//Feed lines into array
