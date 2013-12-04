@@ -64,13 +64,12 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 	
 	switch ( $column_name ) {
 		case 'venue':
-		    	$terms = get_the_terms( $post->ID, 'event-venue' );
- 			
-			if ( !empty( $terms) ) {
-       	 		foreach ( $terms as $term )
-			            $post_terms[] = '<a href="'. add_query_arg( 'event-venue', $term->slug ) .'">'.esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, 'event-venue', 'display' ) ) . '</a>';
-			        echo join( ', ', $post_terms );
-				echo '<input type="hidden" value="'.$term->term_id.'"/>';
+			$venue_id = eo_get_venue( $post->ID );
+			$venue_slug = eo_get_venue_slug( $post->ID );
+			
+			if( $venue_id ){
+				echo '<a href="'. add_query_arg( 'event-venue', $venue_slug ) .'">'.esc_html( eo_get_venue_name( $venue_id ) ) . '</a>';
+				echo '<input type="hidden" value="'.$venue_id.'"/>';
 			}
 			break;
 
