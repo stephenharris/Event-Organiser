@@ -7,7 +7,7 @@
 class EO_Widget_Categories extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'eo__event_categories', 'description' => __( "A list or dropdown of event categories" ) );
+		$widget_ops = array( 'classname' => 'eo__event_categories', 'description' => __( "A list or dropdown of event categories", 'eventorganiser' ) ) );
 		parent::__construct('eo-event-categories', __( 'Event Categories', 'eventorganiser' ), $widget_ops);
 	}
 
@@ -42,7 +42,7 @@ class EO_Widget_Categories extends WP_Widget {
 		if ( $d ) {
 			$cat_args['walker'] = new EO_Walker_TaxonomyDropdown();
 			$cat_args['value'] = 'slug';
-			$cat_args['show_option_none'] = __('Select Category');
+			$cat_args['show_option_none'] = __( 'Select Category' );
 			wp_dropdown_categories(apply_filters('eventorganiser_widget_event_categories_dropdown_args', $cat_args));
 			?>
 

@@ -8,7 +8,7 @@
 class EO_Widget_Venues extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'eo__event_venues', 'description' => __( "A list or dropdown of event venues" ) );
+		$widget_ops = array( 'classname' => 'eo__event_venues', 'description' => __( "A list or dropdown of event venues", 'eventorganiser' ) );
 		parent::__construct('eo-event-venues', __( 'Event Venues', 'eventorganiser' ), $widget_ops);
 	}
 
@@ -17,7 +17,7 @@ class EO_Widget_Venues extends WP_Widget {
 		
 		$taxonomy = 'event-venue';
 
-		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Venues' ) : $instance['title'], $instance, $this->id_base);
+		$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Venues', 'eventorganiser' ) : $instance['title'], $instance, $this->id_base);
 		$d = ! empty( $instance['dropdown'] ) ? '1' : '0';
 
 		echo $before_widget;
@@ -42,7 +42,7 @@ class EO_Widget_Venues extends WP_Widget {
 		if ( $d ) {
 			$cat_args['walker'] = new EO_Walker_TaxonomyDropdown();
 			$cat_args['value'] = 'slug';
-			$cat_args['show_option_none'] = __('Select Venue');
+			$cat_args['show_option_none'] = __( 'Select Venue', 'eventorganiser' );
 			wp_dropdown_categories(apply_filters('eventorganiser_widget_event_venues_dropdown_args', $cat_args));
 			?>
 
