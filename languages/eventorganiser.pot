@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: event-organiser 2.5.1\n"
+"Project-Id-Version: event-organiser 2.6.0a\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-20 18:07+0000\n"
+"POT-Creation-Date: 2013-12-04 23:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,7 @@ msgstr ""
 msgid "Displays a list of events"
 msgstr ""
 
-#: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:432
+#: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:434
 #: event-organiser.php:127 includes/event-organiser-cpt.php:140
 #: includes/event-organiser-cpt.php:152
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
@@ -125,7 +125,7 @@ msgid "Number of events"
 msgstr ""
 
 #: classes/class-eo-event-list-widget.php:44 event-organiser-edit.php:208
-#: event-organiser-manage.php:25 event-organiser-venues.php:424
+#: event-organiser-manage.php:25 event-organiser-venues.php:426
 #: includes/event-organiser-event-functions.php:1371
 #: templates/event-meta-event-single.php:63
 msgid "Venue"
@@ -206,7 +206,6 @@ msgid "Categories"
 msgstr ""
 
 #: classes/class-eo-widget-categories.php:45
-#: classes/class-eo-widget-venues.php:45
 msgid "Select Category"
 msgstr ""
 
@@ -236,6 +235,10 @@ msgstr ""
 #: event-organiser-venues.php:13 event-organiser-venues.php:14
 #: event-organiser-venues.php:162 event-organiser-venues.php:229
 msgid "Venues"
+msgstr ""
+
+#: classes/class-eo-widget-venues.php:45
+msgid "Select Venue"
 msgstr ""
 
 #: classes/class-eventorganiser-shortcodes.php:359
@@ -269,17 +272,17 @@ msgid "today"
 msgstr ""
 
 #: event-organiser-calendar.php:55 includes/event-organiser-register.php:54
-#: includes/event-organiser-register.php:220
+#: includes/event-organiser-register.php:225
 msgid "day"
 msgstr ""
 
 #: event-organiser-calendar.php:56 includes/event-organiser-register.php:55
-#: includes/event-organiser-register.php:222
+#: includes/event-organiser-register.php:227
 msgid "week"
 msgstr ""
 
 #: event-organiser-calendar.php:57 includes/event-organiser-register.php:56
-#: includes/event-organiser-register.php:224
+#: includes/event-organiser-register.php:229
 msgid "month"
 msgstr ""
 
@@ -287,12 +290,12 @@ msgstr ""
 msgid "go to date"
 msgstr ""
 
-#: event-organiser-calendar.php:59 event-organiser-manage.php:114
+#: event-organiser-calendar.php:59 event-organiser-manage.php:113
 #: includes/event-organiser-register.php:58
 msgid "View all categories"
 msgstr ""
 
-#: event-organiser-calendar.php:60 event-organiser-manage.php:128
+#: event-organiser-calendar.php:60 event-organiser-manage.php:127
 #: includes/event-organiser-register.php:59
 msgid "View all venues"
 msgstr ""
@@ -428,26 +431,20 @@ msgid ""
 "simple resolution. Please contact support."
 msgstr ""
 
-#: event-organiser-debug.php:416
+#. / TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
+#: event-organiser-debug.php:418
 #, php-format
 msgid "%s has only been tested up to %s %s"
 msgstr ""
 
-#: event-organiser-debug.php:423
+#. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
+#: event-organiser-debug.php:427
 #, php-format
 msgid "%s requires %s version %s or higher"
 msgstr ""
 
-#: event-organiser-debug.php:444
+#: event-organiser-debug.php:448
 msgid "unknown"
-msgstr ""
-
-#: event-organiser-debug.php:555
-msgid "Debug mode"
-msgstr ""
-
-#: event-organiser-debug.php:556
-msgid "Script mode"
 msgstr ""
 
 #: event-organiser-edit.php:31 event-organiser-manage.php:23
@@ -528,7 +525,7 @@ msgstr ""
 
 #: event-organiser-edit.php:170
 #: includes/event-organiser-event-functions.php:772
-#: includes/event-organiser-register.php:237
+#: includes/event-organiser-register.php:242
 msgid "until"
 msgstr ""
 
@@ -536,7 +533,7 @@ msgstr ""
 msgid "Include/Exclude occurrences"
 msgstr ""
 
-#: event-organiser-edit.php:183 includes/event-organiser-register.php:214
+#: event-organiser-edit.php:183 includes/event-organiser-register.php:219
 msgid "Show dates"
 msgstr ""
 
@@ -619,45 +616,45 @@ msgstr ""
 msgid "Reoccurrence"
 msgstr ""
 
-#: event-organiser-manage.php:141
+#: event-organiser-manage.php:140
 msgid "View all events"
 msgstr ""
 
-#: event-organiser-manage.php:142
+#: event-organiser-manage.php:141
 msgid "Future events"
 msgstr ""
 
-#: event-organiser-manage.php:143
+#: event-organiser-manage.php:142
 msgid "Expired events"
 msgstr ""
 
-#: event-organiser-manage.php:144
+#: event-organiser-manage.php:143
 msgid "Events within 24 hours"
 msgstr ""
 
-#: event-organiser-manage.php:145
+#: event-organiser-manage.php:144
 msgid "Events within 1 week"
 msgstr ""
 
-#: event-organiser-manage.php:146
+#: event-organiser-manage.php:145
 #, php-format
 msgid "Events within %d weeks"
 msgstr ""
 
-#: event-organiser-manage.php:147
+#: event-organiser-manage.php:146
 msgid "Events within 1 month"
 msgstr ""
 
-#: event-organiser-manage.php:148
+#: event-organiser-manage.php:147
 #, php-format
 msgid "Events within %d months"
 msgstr ""
 
-#: event-organiser-manage.php:149
+#: event-organiser-manage.php:148
 msgid "Events within 1 year"
 msgstr ""
 
-#: event-organiser-manage.php:200
+#: event-organiser-manage.php:199
 msgid "&mdash; No Change &mdash;"
 msgstr ""
 
@@ -1035,55 +1032,63 @@ msgstr ""
 msgid "Add Venue"
 msgstr ""
 
-#: event-organiser-venues.php:399
+#: event-organiser-venues.php:401
 msgid "Venue name"
 msgstr ""
 
-#: event-organiser-venues.php:405
+#: event-organiser-venues.php:407
 msgid "Permalink:"
 msgstr ""
 
-#: event-organiser-venues.php:412
+#: event-organiser-venues.php:414
 msgid "Get Link"
 msgstr ""
 
-#: event-organiser-venues.php:413 includes/event-organiser-cpt.php:32
+#: event-organiser-venues.php:415 includes/event-organiser-cpt.php:32
 msgid "View Venue"
 msgstr ""
 
-#: event-organiser-venues.php:431
+#: event-organiser-venues.php:433
 msgid "Slug"
 msgstr ""
 
 #: includes/class-eo-ical-parser.php:109
-msgid "There was an error detecting ICAL source."
+msgid "There was an error detecting iCal source."
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:168
+#: includes/class-eo-ical-parser.php:117
+msgid "Unable to read iCal file"
+msgstr ""
+
+#: includes/class-eo-ical-parser.php:124
+msgid "Feed not found"
+msgstr ""
+
+#: includes/class-eo-ical-parser.php:164
 #, php-format
 msgid "There was an error fetching the feed. Response code: %s."
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:188
+#: includes/class-eo-ical-parser.php:184
 msgid "There was an error opening the ICAL file."
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:356 includes/class-eo-ical-parser.php:381
+#: includes/class-eo-ical-parser.php:352 includes/class-eo-ical-parser.php:377
 #, php-format
 msgid "[Lines %1$d-%2$d]"
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:363 includes/class-eo-ical-parser.php:388
+#: includes/class-eo-ical-parser.php:359 includes/class-eo-ical-parser.php:384
 #, php-format
 msgid "[Line %1$d]"
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:704
+#: includes/class-eo-ical-parser.php:700
 #, php-format
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:742
+#: includes/class-eo-ical-parser.php:738
 #, php-format
 msgid ""
 "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
@@ -1578,27 +1583,27 @@ msgid "Assign the category a colour."
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:693
-#: includes/event-organiser-register.php:238
+#: includes/event-organiser-register.php:243
 msgid "last"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:693
-#: includes/event-organiser-register.php:238
+#: includes/event-organiser-register.php:243
 msgid "first"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:693
-#: includes/event-organiser-register.php:238
+#: includes/event-organiser-register.php:243
 msgid "second"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:693
-#: includes/event-organiser-register.php:238
+#: includes/event-organiser-register.php:243
 msgid "third"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:693
-#: includes/event-organiser-register.php:238
+#: includes/event-organiser-register.php:243
 msgid "fourth"
 msgstr ""
 
@@ -1611,34 +1616,34 @@ msgid "custom reoccurrence"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:713
-#: includes/event-organiser-register.php:228
+#: includes/event-organiser-register.php:233
 msgid "every day"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:715
-#: includes/event-organiser-register.php:229
+#: includes/event-organiser-register.php:234
 #, php-format
 msgid "every %d days"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:721
-#: includes/event-organiser-register.php:230
+#: includes/event-organiser-register.php:235
 msgid "every week on"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:723
-#: includes/event-organiser-register.php:231
+#: includes/event-organiser-register.php:236
 #, php-format
 msgid "every %d weeks on"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:734
-#: includes/event-organiser-register.php:232
+#: includes/event-organiser-register.php:237
 msgid "every month on the"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:736
-#: includes/event-organiser-register.php:233
+#: includes/event-organiser-register.php:238
 #, php-format
 msgid "every %d months on the"
 msgstr ""
@@ -1660,56 +1665,56 @@ msgstr ""
 msgid "Show Less"
 msgstr ""
 
-#: includes/event-organiser-register.php:215
+#: includes/event-organiser-register.php:220
 msgid "Hide dates"
 msgstr ""
 
-#: includes/event-organiser-register.php:218
+#: includes/event-organiser-register.php:223
 msgid "Hour"
 msgstr ""
 
-#: includes/event-organiser-register.php:219
+#: includes/event-organiser-register.php:224
 msgid "Minute"
 msgstr ""
 
-#: includes/event-organiser-register.php:221
+#: includes/event-organiser-register.php:226
 msgid "days"
 msgstr ""
 
-#: includes/event-organiser-register.php:223
+#: includes/event-organiser-register.php:228
 msgid "weeks"
 msgstr ""
 
-#: includes/event-organiser-register.php:225
+#: includes/event-organiser-register.php:230
 msgid "months"
 msgstr ""
 
-#: includes/event-organiser-register.php:226
+#: includes/event-organiser-register.php:231
 msgid "year"
 msgstr ""
 
-#: includes/event-organiser-register.php:227
+#: includes/event-organiser-register.php:232
 msgid "years"
 msgstr ""
 
-#: includes/event-organiser-register.php:234
+#: includes/event-organiser-register.php:239
 msgid "every year on the"
 msgstr ""
 
-#: includes/event-organiser-register.php:235
+#: includes/event-organiser-register.php:240
 #, php-format
 msgid "every %d years on the"
 msgstr ""
 
-#: includes/event-organiser-register.php:236
+#: includes/event-organiser-register.php:241
 msgid "This event will repeat"
 msgstr ""
 
-#: includes/event-organiser-register.php:338
+#: includes/event-organiser-register.php:343
 msgid "Settings"
 msgstr ""
 
-#: includes/event-organiser-register.php:638
+#: includes/event-organiser-register.php:631
 #, php-format
 msgid ""
 "<h4>City & State Fields Added</h4>City and state / province fields for "
@@ -1718,7 +1723,7 @@ msgid ""
 "details aftewards."
 msgstr ""
 
-#: includes/event-organiser-register.php:645
+#: includes/event-organiser-register.php:638
 msgid ""
 "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
@@ -1726,11 +1731,11 @@ msgid ""
 "com/blog/new-default-templates-in-1-7'>see this post<a/>."
 msgstr ""
 
-#: includes/event-organiser-register.php:681
+#: includes/event-organiser-register.php:674
 msgid "Dismiss this notice"
 msgstr ""
 
-#: includes/event-organiser-register.php:682
+#: includes/event-organiser-register.php:675
 msgid "Dismiss"
 msgstr ""
 
@@ -1778,7 +1783,7 @@ msgstr ""
 msgid "Event does not contain any dates."
 msgstr ""
 
-#: includes/event.php:811
+#: includes/event.php:841
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr ""
 
