@@ -773,12 +773,42 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 				return "FREQ=YEARLY;INTERVAL=".$frequency.";UNTIL=".$schedule_last;
 
 			case 'monthly':
+				//TODO Account for possible day shifts with timezone set to UTC
 				$reoccurrence_rule = "FREQ=MONTHLY;INTERVAL=".$frequency.";";
 				$reoccurrence_rule.=$schedule_meta.";";
 				$reoccurrence_rule.= "UNTIL=".$schedule_last;
 				return $reoccurrence_rule;
 	
 			case 'weekly':
+				
+				if( !eo_is_all_day( $post_id ) ){
+					//None all day event, setting event timezone to UTC may cause it to shift days.
+					//E.g. a 9pm Monday event in New York will a Tuesday event in UTC.
+					//We may need to correct the BYDAY attribute to be valid for UTC.
+					
+					$days_of_week = array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' );
+					$UTC = new DateTimeZone('UTC');
+					
+					//Get day shift upon timezone set to UTC
+					$start = eo_get_schedule_start( DATETIMEOBJ, $post_id );
+					$local_day = (int) $start->format( 'w' );
+					$start->setTimezone( $UTC );
+					$utc_day = (int) $start->format( 'w' );
+					$diff = $utc_day - $local_day + 7; //ensure difference is positive (should be 0, +1 or +6).
+					
+					//If there is a shift correct BYDAY
+					if( $diff ){
+						$utc_days = array();
+					
+						foreach( $schedule_meta as $day ){
+							$utc_day_index = ( array_search( $day, $days_of_week ) + $diff ) %7;
+							$utc_days[] = $days_of_week[$utc_day_index];
+						}
+						$schedule_meta = $utc_days;
+					}
+					
+				}
+				
 				return "FREQ=WEEKLY;INTERVAL=".$frequency.";BYDAY=".implode(',',$schedule_meta).";UNTIL=".$schedule_last;
 
 			case 'daily':
