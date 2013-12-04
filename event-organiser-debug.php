@@ -556,8 +556,8 @@ class EventOrganiser_Debugger{
 		echo "\n";
 		echo '### Debug Mode ###' . "\n";
 		echo "\n";
-		echo esc_html__('Debug mode')."\t\t\t" . ( defined( 'WP_DEBUG' ) && WP_DEBUG ? 'Enabled' : 'Disabled' ) . "\n";
-		echo esc_html__('Script mode')."\t\t\t" . ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'Enabled' : 'Disabled' ) . "\n";
+		echo 'Debug mode' . "\t\t\t" . ( defined( 'WP_DEBUG' ) && WP_DEBUG ? 'Enabled' : 'Disabled' ) . "\n";
+		echo 'Script mode' . "\t\t\t" . ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'Enabled' : 'Disabled' ) . "\n";
 		
 		exit();
 	}
