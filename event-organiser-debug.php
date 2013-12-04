@@ -413,14 +413,18 @@ class EventOrganiser_Debugger{
 			'<span class="%s">%s</span>. %s',
 			esc_attr( $this->alert_class ),
 			$v,
-			sprintf( __( '%s has only been tested up to %s %s' ), $this->plugin, $requirement, $versions['max'] )
+			sprintf(
+				/// TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
+				__( '%s has only been tested up to %s %s', 'eventorganiser' ), $this->plugin, $requirement, $versions['max'] )
 			);
 		}elseif( -1 == $this->check_prequiste( $requirement, $v ) ){
 			printf(
 			'<span class="%s">%s</span>. %s',
 			esc_attr( $this->warning_class ),
 			$v,
-			sprintf( __( '%s requires %s version %s or higher' ), $this->plugin, $requirement, $versions['min'] )
+			sprintf(
+				/// TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
+			 	__( '%s requires %s version %s or higher', 'eventorganiser' ), $this->plugin, $requirement, $versions['min'] )
 			);
 		}
 	}
