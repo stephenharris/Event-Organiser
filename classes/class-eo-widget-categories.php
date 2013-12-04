@@ -7,7 +7,7 @@
 class EO_Widget_Categories extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'eo__event_categories', 'description' => __( "A list or dropdown of event categories", 'eventorganiser' ) ) );
+		$widget_ops = array( 'classname' => 'eo__event_categories', 'description' => __( "A list or dropdown of event categories", 'eventorganiser' ) );
 		parent::__construct('eo-event-categories', __( 'Event Categories', 'eventorganiser' ), $widget_ops);
 	}
 
