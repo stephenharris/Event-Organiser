@@ -760,10 +760,8 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 
 		extract($rrule);
 		
-		$format = ( $all_day ? 'Ymd' : 'Ymd\THis\Z' );
-
-		$schedule_last->setTimezone(new DateTimeZone('UTC'));
-		$schedule_last = $schedule_last->format($format);
+		$schedule_last->setTimezone( new DateTimeZone('UTC') );
+		$schedule_last = $schedule_last->format( 'Ymd\THis\Z' );
 
 		switch($schedule):
 			case 'once':
