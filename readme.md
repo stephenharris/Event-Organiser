@@ -92,6 +92,7 @@ A big thank you to those who have provided translations for Event Organiser. If 
 * Turkish - Gökhan DAMGACI 
 * Croatian - Branimir
 * Catalan - jordioniric, marc.antje
+* Icelandic - HrHagedorn
 
 
 ## Installation ##
@@ -210,8 +211,8 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Corrected / added missing text domains
 * Fix label of venues widget
 * Set unique cache key per use in admin calendar
-* Bokmål (Norway), Catalan, French, Italian, Portugese (Brazil), Spanish translations updated,
-* Icelandic translation added 
+* Bokmål (Norway), Catalan, French, Italian, Portuguese (Brazil), Spanish translations updated,
+* Icelandic translation added, thanks to HrHagedorn.
 
 ### 2.5.1 ###
 * Fix js error (variable not defined) introduced in 2.5.
