@@ -98,6 +98,8 @@ class EventOrganiser_Shortcodes {
 
 	static function handle_fullcalendar_shortcode($atts=array()) {
 
+		global $wp_locale;
+		
 		/* Handle Boolean attributes - this will be passed as strings, we want them as boolean */
 		$bool_atts = array(
 			'key'=>'false',
@@ -105,7 +107,8 @@ class EventOrganiser_Shortcodes {
 			'weekends'=>'true',
 			'alldayslot'=>'true',
 			'users_events' => 'false',
-			'theme' => 'true'
+			'theme' => 'true',
+			'isrtl' => $wp_locale->is_rtl() ? 'true' : 'false'
 		);
 		
 		$atts = wp_parse_args( $atts, $bool_atts );
