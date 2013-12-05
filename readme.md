@@ -206,6 +206,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 ### 2.6 ###
 * WordPress 3.8 compatible (tested against RC1)
 * Fixes bug with iCal feed & weekly recurring events where the day is different in UTC timezone
+* Added support for RTL for admin & front-end calendars
 * Corrected / added missing text domains
 * Fix label of venues widget
 * Set unique cache key per use in admin calendar
