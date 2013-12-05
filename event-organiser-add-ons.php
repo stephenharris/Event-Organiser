@@ -3,42 +3,42 @@
  * Addon Admin Page
  * Inspired, and based on, Easy Digital Download's add-on page (by Pippin Williamson)
  */
-if(!class_exists('EventOrganiser_Admin_Page')){
-    require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+if ( ! class_exists( 'EventOrganiser_Admin_Page' ) ){
+	require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
 }
 /**
  * @ignore
  */
 class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 {
-    /**
+	/**
      * This sets the calendar page variables
      */
 	function set_constants(){
 		$this->hook = 'edit.php?post_type=event';
-		$this->title =  __('Event Organiser Extensions','eventorganiser');
-		$this->menu =__('Extensions','eventorganiser');
-		$this->permissions ='manage_options';
-		$this->slug ='eo-addons';
+		$this->title = __( 'Event Organiser Extensions', 'eventorganiser' );
+		$this->menu = __( 'Extensions','eventorganiser' );
+		$this->permissions = 'manage_options';
+		$this->slug = 'eo-addons';
 	}
-      
+	
 	function add_page(){
-		$this->page =  add_submenu_page( $this->hook, $this->title, $this->menu, $this->permissions, $this->slug, array( $this,'render_page' ),10 );
-		add_action('load-'.$this->page,  array($this,'page_actions'),9);
-		add_action('admin_print_scripts-'.$this->page,  array($this,'page_styles'),10);
-		add_action('admin_print_styles-'.$this->page,  array($this,'page_scripts'),10);
+		$this->page = add_submenu_page( $this->hook, $this->title, $this->menu, $this->permissions, $this->slug, array( $this, 'render_page' ), 10 );
+		add_action( 'load-'.$this->page, array( $this, 'page_actions' ), 9 );
+		add_action( 'admin_print_scripts-'.$this->page, array( $this, 'page_styles' ), 10 );
+		add_action( 'admin_print_styles-'.$this->page, array( $this, 'page_scripts' ), 10 );
 		
 		
-		if( eventorganiser_get_option( 'hide_addon_page' ) )
+		if ( eventorganiser_get_option( 'hide_addon_page' ) )
 			remove_submenu_page( 'edit.php?post_type=event', $this->slug );
 	}
 
 	function page_actions(){
 		//Fetch addons
-		add_action( "admin_footer", array($this,'footer_scripts') );		
+		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );		
 		$addons = self::get_addons();
 	}
-    /**
+	/**
      * Enqueues the page's scripts and styles, and localises them.
      */
 	function footer_scripts(){
@@ -89,10 +89,10 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 	function display(){
 		$plugins = get_plugins();
 		$plugin = $plugins['event-organiser/event-organiser.php'];
-	?>
+		?>
 		<div class="wrap">  
 			
-			<h2> <?php esc_html_e('Event Organiser Extensions', 'eventorganiser'); ?></h2>
+			<h2> <?php esc_html_e( 'Event Organiser Extensions', 'eventorganiser' ); ?></h2>
 
 			<div class="eo-addon-text">
 				<?php 
@@ -108,10 +108,10 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 			<?php 
 			$addons = self::get_addons();
 			
-			if( $addons && !is_wp_error( $addons ) ):
+			if ( $addons && ! is_wp_error( $addons ) ):
 				echo '<div id="eo-addons-wrap">';
-				foreach( $addons as $addon ):
-					if( !isset( $addon['status'] ) || !in_array( $addon['status'], array( 'available', 'coming-soon' ) ) ){
+				foreach ( $addons as $addon ):
+					if ( ! isset( $addon['status'] ) || ! in_array( $addon['status'], array( 'available', 'coming-soon' ) ) ){
 						continue;	
 					}
 					self::print_addon( $addon );
@@ -127,11 +127,11 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 			<div style="clear:both"></div>
 
 			<p>
-			<strong><a href="http://wp-event-organiser.com/extensions?aid=7"><?php _e('Find out more &hellip;', 'eventorganiser')?></a></strong>
+			<strong><a href="http://wp-event-organiser.com/extensions?aid=7"><?php _e( 'Find out more &hellip;', 'eventorganiser' )?></a></strong>
 			</p>
 			
 		</div><!-- .wrap -->
-<?php
+		<?php
 	}
 	
 	static function get_addons(){
@@ -143,15 +143,15 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 				if ( isset( $addons['body'] ) && strlen( $addons['body'] ) > 0 ) {
 					$addons = wp_remote_retrieve_body( $addons );
 					set_transient( 'eventorganiser_add_ons', $addons, 24 * 60 * 60 );
-				}else{
+				} else {
 					return new WP_Error( 'eo-addon-feed', 'Unknown error message' );
 				}
-			}else{
+			} else {
 				return $addons;//Returns WP_Error object
 			}
 		}
 
-		if( $addons )
+		if ( $addons )
 			$addons = json_decode( $addons, true );
 		
 		return $addons;
@@ -165,22 +165,22 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 
 			<h3 class="eo-addon-title"><?php echo $addon['title']; ?> </h3>
 			<div class="img-wrap">
-				<?php if( $addon['url'] ): ?>
+				<?php if ( $addon['url'] ): ?>
 				<a href="<?php echo $addon['url'];?>" title="<?php echo $addon['title']; ?>">
 				<?php endif; ?>
 					<img src="<?php echo $addon['thumbnail'];?>" class="attachment-addon wp-post-image" title="<?php echo $addon['title']; ?>">
-				<?php if( $addon['url'] ): ?>
+				<?php if ( $addon['url'] ): ?>
 				</a>
 				<?php endif; ?>
 			</div>
-			<?php if( 'coming-soon' == $addon['status'] ): ?>
+			<?php if ( 'coming-soon' == $addon['status'] ): ?>
 				<span class="eo-coming-soon-text">Coming Soon</span>
 			<?php endif; ?>
 			
 			<p><?php echo $addon['description'];?></p>
 			
 			<span style="height:20px;display:block"></span>
-			<?php if( $addon['url'] ): ?>
+			<?php if ( $addon['url'] ): ?>
 				<a href="<?php echo $addon['url'];?>" title="<?php echo $addon['title']; ?>" class="button-secondary">
 					<?php echo ( 'available' == $addon['status'] ) ? 'Get this Add On' : 'Find out more &hellip;'; ?>
 				</a>

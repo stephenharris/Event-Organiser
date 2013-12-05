@@ -86,7 +86,7 @@ function eventorganiser_load_textdomain() {
 	/* Check the global language folder */
 	$files = array( WP_LANG_DIR . '/event-organiser/' . $mofile, WP_LANG_DIR . '/' . $mofile );
 	foreach ( $files as $file ){
-		if( file_exists( $file ) )
+		if ( file_exists( $file ) )
 			return load_textdomain( $domain, $file );
 	}
 
@@ -98,14 +98,14 @@ add_action( 'plugins_loaded', 'eventorganiser_load_textdomain' );
 
 global $eventorganiser_roles;
 $eventorganiser_roles = array(
-		 'edit_events' => __( 'Edit Events', 'eventorganiser' ),
-		 'publish_events' => __( 'Publish Events', 'eventorganiser' ),
-		 'delete_events' => __( 'Delete Events', 'eventorganiser' ),
-		'edit_others_events' => __( 'Edit Others\' Events', 'eventorganiser' ),
-		 'delete_others_events' => __( 'Delete Other\'s Events', 'eventorganiser' ),
-		'read_private_events' => __( 'Read Private Events', 'eventorganiser' ),
-		 'manage_venues' => __( 'Manage Venues', 'eventorganiser' ),
-		 'manage_event_categories' => __( 'Manage Event Categories & Tags', 'eventorganiser' ),
+	'edit_events' => __( 'Edit Events', 'eventorganiser' ),
+	'publish_events' => __( 'Publish Events', 'eventorganiser' ),
+	'delete_events' => __( 'Delete Events', 'eventorganiser' ),
+	'edit_others_events' => __( 'Edit Others\' Events', 'eventorganiser' ),
+	'delete_others_events' => __( 'Delete Other\'s Events', 'eventorganiser' ),
+	'read_private_events' => __( 'Read Private Events', 'eventorganiser' ),
+	'manage_venues' => __( 'Manage Venues', 'eventorganiser' ),
+	'manage_event_categories' => __( 'Manage Event Categories & Tags', 'eventorganiser' ),
 );
 			
 /****** Install, activation & deactivation******/
@@ -118,7 +118,7 @@ register_uninstall_hook( __FILE__, 'eventorganiser_uninstall' );
 
 function eventorganiser_get_option( $option = false, $default = false ){
 
-      $defaults = array(
+	$defaults = array(
 		'url_event' => 'events/event',
 		'url_events' => 'events/event',
 		'url_venue' => 'events/venue',
@@ -138,30 +138,30 @@ function eventorganiser_get_option( $option = false, $default = false ){
 		'excludefromsearch' => 0,
 		'showpast' => 0,
 		'runningisnotpast' => 0,
-      	'hide_addon_page' => 0,
-      	'disable_css' => 0,
-      );
-      $options = get_option( 'eventorganiser_options', $defaults );
-      $options = wp_parse_args( $options, $defaults );
-      
-	if( false === $option )
+		'hide_addon_page' => 0,
+		'disable_css' => 0,
+	);
+	$options = get_option( 'eventorganiser_options', $defaults );
+	$options = wp_parse_args( $options, $defaults );
+	
+	if ( false === $option )
 		return $options;
 
 	/* Backwards compatibility for 'eventag' option */
-	if( $option === 'eventtag' )
+	if ( $option === 'eventtag' )
 		return in_array( 'eventtag', $options['supports'] );
 	
-	if( $option === 'dateformat' ){
+	if ( $option === 'dateformat' ){
 		//Backwards compatibility (migration from mm-dd/dd-mm to php format):
-		if( $options[$option] == 'mm-dd' ){
+		if ( $options[$option] == 'mm-dd' ){
 			$options[$option] = 'm-d-Y';
-		}elseif( $options[$option] == 'dd-mm' ){
+		} elseif ( $options[$option] == 'dd-mm' ){
 			$options[$option] = 'd-m-Y';
 		}
 	}
 
-     if( !isset($options[$option]) )
-          return $default;
+	if ( ! isset( $options[$option] ) )
+		return $default;
 
 	return $options[$option];
 }
@@ -186,7 +186,7 @@ if ( is_admin() ):
 	/****** event editing pages******/
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-edit.php');
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-manage.php');
-        	
+	
 	/****** settings, venue and calendar pages******/
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-settings.php');
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-venues.php');
@@ -199,8 +199,8 @@ if ( is_admin() ):
 endif;
 
 if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-    /****** Ajax actions ******/
-    require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-ajax.php');
+	/****** Ajax actions ******/
+	require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-ajax.php');
 }
 
 /****** Functions ******/
