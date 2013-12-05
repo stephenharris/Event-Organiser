@@ -233,6 +233,7 @@ window.eventOrganiserSchedulePicker = {
 	                	changeYear: true,
 	                	monthNamesShort: locale.monthAbbrev,
 	                	dayNamesMin: locale.dayAbbrev,
+	                	isRTL: locale.isrtl,
 	                	firstDay: parseInt( this.options.startday, 10 )
 					})
 					.data('eo-datepicker','schedule_last');
@@ -342,7 +343,8 @@ window.eventOrganiserSchedulePicker = {
             periodSeparator: '',
             amPmText: options.locale.meridian,
             hourText: options.locale.hour,
-            minuteText: options.locale.minute
+            minuteText: options.locale.minute,
+            isRTL: options.locale.isrtl
         }).addClass('eo-time-picker');
 	},
 	

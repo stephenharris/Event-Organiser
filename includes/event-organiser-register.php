@@ -44,6 +44,7 @@ function eventorganiser_register_script() {
 			'adminajax'=>admin_url( 'admin-ajax.php'),
 			'locale'=>array(
 				'locale' => substr(get_locale(),0,2),
+				'isrtl' => $wp_locale->is_rtl(),
 				'monthNames'=>array_values($wp_locale->month),
 				'monthAbbrev'=>array_values($wp_locale->month_abbrev),
 				'dayNames'=>array_values($wp_locale->weekday),
@@ -213,6 +214,7 @@ function eventorganiser_add_admin_scripts( $hook ) {
 					'is24hour' => eventorganiser_blog_is_24(),
 					'location'=>get_option('timezone_string'),
 					'locale'=>array(
+						'isrtl' => $wp_locale->is_rtl(),
 						'monthNames'=>array_values($wp_locale->month),
 						'monthAbbrev'=>array_values($wp_locale->month_abbrev),
 						'dayAbbrev'=>array_values($wp_locale->weekday_abbrev),

@@ -125,6 +125,7 @@ eventorganiser.versionCompare = function(left, right) {
 		monthNamesShort: EO_Ajax.locale.monthAbbrev,
 		dayNames: EO_Ajax.locale.dayNames,
 		dayNamesShort: EO_Ajax.locale.dayAbbrev,
+		isRTL: EO_Ajax.locale.isrtl,
 		header: {
 			left: 'title',
                 	center: 'category venue',

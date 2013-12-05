@@ -47,6 +47,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			'categories' => get_terms( 'event-category', array( 'hide_empty' => 0 ) ),
 			'venues' => get_terms( 'event-venue', array( 'hide_empty' => 0 ) ),
 			'locale' => array(
+				'isrtl' => $wp_locale->is_rtl(),
 				'monthNames' => array_values( $wp_locale->month ),
 				'monthAbbrev' => array_values( $wp_locale->month_abbrev ),
 				'dayNames' => array_values( $wp_locale->weekday ),
