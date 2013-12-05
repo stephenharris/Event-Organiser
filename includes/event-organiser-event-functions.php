@@ -1259,8 +1259,8 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **headercenter** (string) What appears on the left of the calendar header. Default ''.
  * * **headerright** (string) What appears on the left of the calendar header. Default 'prev next today'.
  * * **defaultview** (string) The view the calendar loads on. Default 'month',
- * * **event_category** (string) Restrict calendar to specified category. Default '' (all categories)
- * * **event_venue** (string) Restrict calendar to specified venue. Default '' (all venues)
+ * * **event-category** (string|array) Restrict calendar to specified category(ues) (by slug). Default all categories.
+ * * **event-venue** (string|array) Restrict calendar to specified venue(s) (by slug). Default all venues.
  * * **timeformat** (string) Time format for calendar. Default 'G:i'.
  * * **axisformat** (string) Axis time format (for day/week views). WP's time format option.
  * * **key** (bool) Whether to show a category key. Default false.
@@ -1288,12 +1288,13 @@ function eo_event_category_dropdown( $args = '' ) {
  * @param array $args An array of attributes for the calendar 
  * @return string HTML mark-up.
 */
-function eo_get_event_fullcalendar( $args ){
+function eo_get_event_fullcalendar( $args = array() ){
 
 	global $wp_locale;
 	$defaults = array(
 		'headerleft'=>'title', 'headercenter'=>'', 'headerright'=>'prev next today', 'defaultview'=>'month',
-		'event_category'=>'', 'event_venue'=>'', 'timeformat'=>get_option('time_format'), 'axisformat'=>get_option('time_format'), 'key'=>false,
+		'event-category'=>'','event_category'=>'', 'event-venue' => '', 'event_venue'=>'', 
+		'timeformat'=>get_option('time_format'), 'axisformat'=>get_option('time_format'), 'key'=>false,
 		'tooltip'=>true, 'weekends'=>true, 'mintime'=>'0', 'maxtime'=>'24', 'alldayslot'=>true,
 		'alldaytext'=>__('All Day','eventorganiser'), 'columnformatmonth'=>'D', 'columnformatweek'=>'D n/j', 'columnformatday'=>'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j, Y}", 'titleformatday' => 'l, M j, Y',
@@ -1305,6 +1306,14 @@ function eo_get_event_fullcalendar( $args ){
 	
 	$key = $args['key'];
 	unset($args['key']);
+	
+	//Support 'event-category' and 'event-venue'. Backwards compat with 'event_category'/'event_venue'
+	$args['event_category'] = empty( $args['event_category'] ) ? $args['event-category'] : $args['event_category'];
+	$args['event_venue'] = empty( $args['event_venue'] ) ? $args['event-venue'] : $args['event_venue'];
+	
+	//Convert event_category / event_venue to comma-delimitered strings
+	$args['event_category'] = is_array( $args['event_category'] ) ? implode( ',', $args['event_category'] ) : $args['event_category'];
+	$args['event_venue'] = is_array( $args['event_venue'] ) ? implode( ',', $args['event_venue'] ) : $args['event_venue'];
 	
 	//Convert php time format into xDate time format
 	$date_attributes = array( 'timeformat', 'axisformat', 'columnformatday', 'columnformatweek', 'columnformatmonth',
