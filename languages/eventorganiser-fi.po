@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 17:27:46+0000\n"
+"PO-Revision-Date: 2013-11-16 11:30:09+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Finnish\n"
@@ -22,15 +22,15 @@ msgstr "Project-Id-Version: Event Organiser\n"
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
 msgstr " <span class=\"meta-nav\">&larr;</span> Uudemmat tapahtumat"
 
-#: ../includes/class-event-organiser-im-export.php:335
+#: ../includes/class-event-organiser-im-export.php:282
 msgid "%d categories were created"
 msgstr "%d kategoriaa luotiin"
 
-#: ../includes/class-event-organiser-im-export.php:324
+#: ../includes/class-event-organiser-im-export.php:269
 msgid "%d events were successfully imported"
 msgstr "%d tapahtumaa tuotiin onnistuneesti"
 
-#: ../includes/class-event-organiser-im-export.php:329
+#: ../includes/class-event-organiser-im-export.php:275
 msgid "%d venues were created"
 msgstr "%d tapahtumapaikkaa luotiin"
 
@@ -50,15 +50,15 @@ msgstr "&mdash; Ei muutosta &mdash;"
 msgid "'No events' message"
 msgstr "'Ei tapahtumia' viesti"
 
-#: ../includes/class-event-organiser-im-export.php:333
+#: ../includes/class-event-organiser-im-export.php:279
 msgid "1 category was created"
 msgstr "1 kategoria luotiin"
 
-#: ../includes/class-event-organiser-im-export.php:322
+#: ../includes/class-event-organiser-im-export.php:266
 msgid "1 event was successfully imported"
 msgstr "1 tapahtuma tuotiin onnistuneesti"
 
-#: ../includes/class-event-organiser-im-export.php:327
+#: ../includes/class-event-organiser-im-export.php:272
 msgid "1 venue was created"
 msgstr "1 tapahtumapaikka luotiin"
 
@@ -66,7 +66,7 @@ msgstr "1 tapahtumapaikka luotiin"
 msgid "24 hour time"
 msgstr "24 tunnin aika"
 
-#: ../includes/event-organiser-register.php:604
+#: ../includes/event-organiser-register.php:607
 msgid "<h4>City & State Fields Added</h4>City and state / province fields for "
 "venues have now been added. </br> If you'd like, Event Organiser can <a "
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
@@ -76,7 +76,7 @@ msgstr "<h4>Kaupunki & osavaltio kentät lisätty</ h4>Kaupunki ja osavaltio / l
 "voi <a href='%s'> yrittää täyttää automaattisesti ne </ a>. Voit aina "
 "muuttaa manuaalisesti yksityiskohtia jälkikäteen."
 
-#: ../includes/event-organiser-register.php:611
+#: ../includes/event-organiser-register.php:614
 msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
 "haven't and want the old templates back, <a "
@@ -96,11 +96,6 @@ msgstr "Lista tai alasvetovalikko tapahtumakategorioista"
 msgid "A list or dropdown of event venues"
 msgstr "Lista tai alasvetovalikko tapahtumapaikoista"
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr "Lisää tapahtumat -linkki navigointivalikkoon:"
@@ -108,6 +103,11 @@ msgstr "Lisää tapahtumat -linkki navigointivalikkoon:"
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "Lisää tapahtuma"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr ""
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -168,13 +168,13 @@ msgid "All dates and times must be entered in the specified format. This format 
 msgstr "Kaikki päivämäärät ja ajat on syötettävä määrätyssä muodossa. Tätä muotoa "
 "voi muuttaa asetukset sivulta."
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "Koko päivä"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
+msgstr "Koko päivä"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
 msgstr "Koko päivä"
 
 #: ../includes/event-organiser-cpt.php:146
@@ -186,6 +186,7 @@ msgid "All Tags"
 msgstr "Kaikki avainsanat"
 
 #: ../includes/event-organiser-cpt.php:31
+#: ../classes/class-eo-event-list-widget.php:47
 msgid "All Venues"
 msgstr "Kaikki tapahtumapaikat"
 
@@ -271,7 +272,7 @@ msgstr ""
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Valitse muokataksesi tapahtumaa ja sen toistuvuutta"
 
-#: ../event-organiser-settings.php:600
+#: ../event-organiser-settings.php:603
 msgid "Choose a custom permalink structure for events, venues, event categories and "
 "event tags."
 msgstr "Valitse muokattujen kestolinkkien rakenne tapahtumille, tapahtumapaikoille, "
@@ -345,29 +346,17 @@ msgstr "muokattu toistuvuus"
 msgid "daily"
 msgstr "päivittäin"
 
-#: ../event-organiser-debug.php:533
-msgid "Database character set"
-msgstr ""
-
-#: ../event-organiser-debug.php:532
-msgid "Database tables"
-msgstr ""
-
-#: ../event-organiser-debug.php:531
-msgid "Databse Prefix"
-msgstr ""
-
 #: ../event-organiser-settings.php:137
 msgid "Date Format:"
 msgstr "Päivämäärän muoto:"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "päivä"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
 msgstr "Päivä"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
+msgstr "päivä"
 
 #: ../event-organiser-settings.php:271
 msgid "Day archive"
@@ -432,11 +421,11 @@ msgstr "DESC"
 msgid "Disable CSS:"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:648
+#: ../includes/event-organiser-register.php:651
 msgid "Dismiss"
 msgstr "Ohita"
 
-#: ../includes/event-organiser-register.php:647
+#: ../includes/event-organiser-register.php:650
 msgid "Dismiss this notice"
 msgstr "Ohita virheilmoitus"
 
@@ -464,11 +453,11 @@ msgstr "Näyttää tapahtumalistan"
 msgid "Displays a list of events, grouped by date"
 msgstr "Näyttää listan tapahtumista, ryhmitetty päivämäärän mukaan"
 
-#: ../event-organiser-settings.php:626
+#: ../event-organiser-settings.php:629
 msgid "Do not add to menu"
 msgstr "Älä lisää valikkoon"
 
-#: ../includes/class-event-organiser-im-export.php:104
+#: ../includes/class-event-organiser-im-export.php:97
 msgid "Download Export File"
 msgstr "Lataa vientitiedosto"
 
@@ -543,6 +532,10 @@ msgid "Ensure dates are entered in %1$s format and times in %2$s (24 hour) forma
 msgstr "Varmista että päivämäärä ovat syötetty %1$s muodossa ja ajat %2$s (24 "
 "tuntia) muodossa"
 
+#: ../includes/class-event-organiser-im-export.php:251
+msgid "Error:"
+msgstr ""
+
 #: ../event-organiser-manage.php:19
 msgid "Event"
 msgstr "Tapahtuma"
@@ -560,7 +553,6 @@ msgid "Event Categories"
 msgstr "Tapahtumakategoriat"
 
 #: ../classes/class-eo-event-list-widget.php:39
-#: ../classes/class-eo-calendar-widget.php:77
 msgid "Event categories"
 msgstr "Tapahtuma kategoriat"
 
@@ -585,6 +577,10 @@ msgstr "Tapahtuman tiedot"
 msgid "Event Details"
 msgstr "Tapahtuman tiedot"
 
+#: ../includes/event.php:716
+msgid "Event does not contain any dates."
+msgstr ""
+
 #: ../includes/event-organiser-cpt.php:229
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr "Tapahtuman luonnos päivitetty. <a target=\"_blank\" href=\"%s\">Esikatsele "
@@ -593,6 +589,10 @@ msgstr "Tapahtuman luonnos päivitetty. <a target=\"_blank\" href=\"%s\">Esikats
 #: ../classes/class-eo-event-list-widget.php:78
 msgid "Event list widget placeholders"
 msgstr "Tapahtumalista vimpaimen paikkamerkit"
+
+#: ../event-organiser-settings.php:557
+msgid "Event management permissions"
+msgstr ""
 
 #: ../event-organiser-settings.php:29
 msgid "Event Organiser"
@@ -675,7 +675,6 @@ msgstr "Tapahtumapaikat"
 
 #: ../event-organiser.php:127
 #: ../event-organiser-venues.php:432
-#: ../templates/archive-event.php:42
 msgid "Events"
 msgstr "Tapahtumat"
 
@@ -791,7 +790,7 @@ msgstr "Vanhentuneet tapahtumat"
 msgid "Export"
 msgstr "Vie"
 
-#: ../includes/class-event-organiser-im-export.php:98
+#: ../includes/class-event-organiser-im-export.php:91
 msgid "Export Events"
 msgstr "Vie tapahtumat"
 
@@ -799,11 +798,11 @@ msgstr "Vie tapahtumat"
 msgid "Extensions"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:68
+#: ../includes/class-event-organiser-im-export.php:61
 msgid "File Error encountered: %d"
 msgstr "Tiedostovirhe tapahtui: %d"
 
-#: ../includes/class-event-organiser-im-export.php:80
+#: ../includes/class-event-organiser-im-export.php:73
 msgid "File size: %s. File type: %s"
 msgstr "Tiedoston koko: %s. Tiedoston tyyppi: %s"
 
@@ -969,19 +968,19 @@ msgstr "Jos sinulla on kaunistellut kestolinkit käytössä, valitse käyttääk
 msgid "Import"
 msgstr "Tuo"
 
-#: ../includes/class-event-organiser-im-export.php:110
+#: ../includes/class-event-organiser-im-export.php:103
 msgid "Import an ICS file."
 msgstr "Tuo ICS-tiedosto."
 
-#: ../includes/class-event-organiser-im-export.php:112
+#: ../includes/class-event-organiser-im-export.php:105
 msgid "Import categories"
 msgstr "Tuo katgoriat"
 
-#: ../includes/class-event-organiser-im-export.php:107
+#: ../includes/class-event-organiser-im-export.php:100
 msgid "Import Events"
 msgstr "Tuo tapahtumat"
 
-#: ../includes/class-event-organiser-im-export.php:111
+#: ../includes/class-event-organiser-im-export.php:104
 msgid "Import venues"
 msgstr "Tuo tapahtumapaikat"
 
@@ -990,7 +989,6 @@ msgid "Include 'Add To Google' link"
 msgstr "Sisällytä 'Lisää Googleen' -linkki"
 
 #: ../classes/class-eo-event-list-widget.php:66
-#: ../classes/class-eo-calendar-widget.php:46
 msgid "Include past events"
 msgstr "Sisällytä menneet tapahtumat"
 
@@ -998,24 +996,22 @@ msgstr "Sisällytä menneet tapahtumat"
 msgid "Include/Exclude occurrences"
 msgstr "Lisää/poista esiintymisiä:"
 
-#: ../includes/class-event-organiser-im-export.php:586
-#: ../includes/class-eo-ical-parser.php:449
-msgid "Invalid date. Date expected in YYYYMMDD format."
-msgstr "Virheellinen päivämäärä. Päivämäärän formaatti YYYYMMDD."
+#: ../includes/class-eo-ical-parser.php:586
+msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
+msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:618
-#: ../includes/class-eo-ical-parser.php:482
-msgid "Invalid datetime. Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss "
-"format."
-msgstr "Virheellinen ajankohta. Ajan formaatti YYYYMMDDTHHiissZ tai YYYYMMDDTHHiiss."
+#: ../includes/class-eo-ical-parser.php:624
+msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
+"YYYYMMDDTHHiiss format."
+msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:78
+#: ../includes/class-event-organiser-im-export.php:71
 msgid "Invalid file uploaded. The file must be a ics calendar file of type "
 "'text/calendar', no larger than 2MB."
 msgstr "Virheellinen tiedosto siirretty. Tiedoston on oltava ICS-kalenteri tyyppinen "
 "'text/calendar', eikä se saa olla suurempi kuin 2 Mt."
 
-#: ../includes/event.php:548
+#: ../includes/event.php:596
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Virheellinen kuukausittainen aikataulu (virheellinen järjestysluku)"
 
@@ -1040,18 +1036,11 @@ msgstr "viimeinen"
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
 msgstr "Myöhemmät tapahtumat <span class=\"meta-nav\">&rarr;</span>"
 
-#: ../includes/class-event-organiser-im-export.php:275
-#: ../includes/class-event-organiser-im-export.php:301
-#: ../includes/class-eo-ical-parser.php:257
-msgid "Line: %1$d"
-msgstr "Rivi: %1$d"
-
 #: ../classes/class-eo-calendar-widget.php:66
 msgid "Link directly to event for days with only one event"
 msgstr ""
 
 #: ../classes/class-eo-event-list-widget.php:41
-#: ../classes/class-eo-calendar-widget.php:80
 msgid "List category slug(s), seperate by comma. Leave blank for all"
 msgstr "Listaa kategorioiden polkutunnukset, eroteltuna pilkulla. Jätä tyhjäksi "
 "kaikille"
@@ -1082,13 +1071,13 @@ msgstr "Minuutti"
 msgid "mm-dd-yyyy"
 msgstr "kk-pp-vvvv"
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "kuukausi"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
 msgstr "Kuukausi"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
+msgstr "kuukausi"
 
 #: ../event-organiser-settings.php:270
 msgid "Month archive"
@@ -1123,7 +1112,7 @@ msgstr "Uusi avainsanan nimi"
 msgid "New Venue Name"
 msgstr "Uusi tapahtumapaikan nimi"
 
-#: ../classes/class-eo-calendar-widget.php:260
+#: ../classes/class-eo-calendar-widget.php:265
 msgid "Next month"
 msgstr "Seuraava kuukausi"
 
@@ -1146,11 +1135,11 @@ msgstr "Tapahtumia ei löytynyt"
 msgid "No events found in Trash"
 msgstr "Tapahtumia ei löytynyt roskakorista"
 
-#: ../includes/class-event-organiser-im-export.php:316
+#: ../includes/class-event-organiser-im-export.php:242
 msgid "No events were imported."
 msgstr "Tapahtumia ei tuotu."
 
-#: ../includes/class-event-organiser-im-export.php:75
+#: ../includes/class-event-organiser-im-export.php:68
 msgid "No file detected."
 msgstr "Tiedostoa ei havaittu."
 
@@ -1166,7 +1155,7 @@ msgstr "Ei tapahtumapaikkaa"
 msgid "No venues found"
 msgstr "Tapahtumapaikkoja ei löytynyt"
 
-#: ../event-organiser-settings.php:571
+#: ../event-organiser-settings.php:574
 msgid "None"
 msgstr "Ei yhtään"
 
@@ -1185,12 +1174,11 @@ msgstr "Tapahtumien määrä"
 msgid "Occurrence deleted."
 msgstr "Esiintymä poistettu."
 
-#: ../includes/event.php:744
+#: ../includes/event.php:806
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr ""
 
 #: ../event-organiser-edit.php:146
-#: ../templates/shortcode-event-list.php:52
 msgid "on"
 msgstr ""
 
@@ -1223,7 +1211,7 @@ msgstr "Järjestäjä"
 msgid "Overview"
 msgstr "Yleiskatsaus"
 
-#: ../event-organiser-settings.php:630
+#: ../event-organiser-settings.php:633
 msgid "Page list (fallback)"
 msgstr "Sivulista (varmistus)"
 
@@ -1244,7 +1232,7 @@ msgstr "Kestolinkki"
 msgid "Permissions"
 msgstr "Käyttöoikeudet"
 
-#: ../event-organiser-settings.php:601
+#: ../event-organiser-settings.php:604
 msgid "Please note to enable these structures you must first have pretty permalinks "
 "enabled on WordPress in Settings > Permalinks."
 msgstr "Huomaathan jotta kyseiset rakenteet ovat käytössä sinun on ensin valittava "
@@ -1258,7 +1246,7 @@ msgstr "Suositut avainsanat"
 msgid "Post Code"
 msgstr "Postinumero"
 
-#: ../classes/class-eo-calendar-widget.php:257
+#: ../classes/class-eo-calendar-widget.php:262
 msgid "Previous month"
 msgstr "Edellinen kuukausi"
 
@@ -1304,7 +1292,7 @@ msgstr "Toistuvat tapahtumat"
 msgid "Revisions"
 msgstr "Versiot"
 
-#: ../event-organiser-settings.php:560
+#: ../event-organiser-settings.php:563
 msgid "Role"
 msgstr "Rooli"
 
@@ -1316,11 +1304,11 @@ msgstr "Tallenna"
 msgid "Save Draft"
 msgstr "Tallenna luonnos"
 
-#: ../includes/event.php:458
+#: ../includes/event.php:514
 msgid "Schedule end date is before is before the start date."
 msgstr "Aikataulutettu päättymispäivä on ennen alkamispäivää."
 
-#: ../includes/event.php:470
+#: ../includes/event.php:484
 msgid "Schedule not recognised."
 msgstr "Aikataulua ei tunnistettu."
 
@@ -1388,7 +1376,7 @@ msgstr "Erottele avainsanat pilkulla"
 msgid "Separate venues with commas"
 msgstr "Erottele tapahtumapaikat pilkulla"
 
-#: ../event-organiser-settings.php:555
+#: ../event-organiser-settings.php:558
 msgid "Set permissions for events and venue management"
 msgstr "Aseta käyttöoikeudet tapahtumien ja tapahtumapaikkojen hallinnalle"
 
@@ -1430,7 +1418,6 @@ msgid "Specify how regularly the event should repeat (default 1)"
 msgstr "Määritä, miten säännöllisesti tapahtumaa toistetaan (oletus 1)"
 
 #: ../templates/event-meta-event-single.php:58
-#: ../includes/event-organiser-ajax.php:282
 msgid "Start"
 msgstr "Alkaa"
 
@@ -1438,11 +1425,11 @@ msgstr "Alkaa"
 msgid "Start date"
 msgstr "Aloituspäivämäärä"
 
-#: ../includes/event.php:445
+#: ../includes/event.php:493
 msgid "Start date not provided."
 msgstr "Aloituspäivämäärää ei annettu."
 
-#: ../includes/event.php:455
+#: ../includes/event.php:511
 msgid "Start date occurs after end date."
 msgstr "Aloituspäivämäärä on päättymispäivän jälkeen."
 
@@ -1466,8 +1453,6 @@ msgid "System Info"
 msgstr ""
 
 #: ../templates/event-meta-event-single.php:73
-#: ../includes/event-organiser-event-functions.php:1388
-#: ../includes/event-organiser-cpt.php:105
 msgid "Tags"
 msgstr "Avainsanat"
 
@@ -1490,7 +1475,7 @@ msgid "The end date is the date the event finishes. If the event is a reoccuring
 msgstr "Päättymispäivä on päivämäärä jolloin tapahtuma päättyy. Jos tapahtuma on "
 "toistuvia tapahtuma, tämä on viimeisen esiintymän päättymispäivä."
 
-#: ../includes/class-event-organiser-im-export.php:101
+#: ../includes/class-event-organiser-im-export.php:94
 msgid "The export button below generates an ICS file of your events that can be "
 "imported in to other calendar applications such as Google Calendar."
 msgstr "Vienti nappia luo ICS-tiedoston tapahtumista, jotka voidaan tuoda muihin "
@@ -1502,25 +1487,21 @@ msgid "The start date is the date the event starts. If the event is a reoccuring
 msgstr "Aloituspäivä on se päivä jolloin tapahtuma alkaa. Jos tapahtuma on toistuvia "
 "tapahtuma, tämä on ensimmäisen esiintymän alkamispäivämäärä."
 
-#: ../classes/class-eventorganiser-shortcodes.php:356
+#: ../classes/class-eventorganiser-shortcodes.php:359
 msgid "There is no excerpt because this is a protected post."
 msgstr "Otetta ei näytetä, koska artikkeli on suojattu."
 
-#: ../includes/class-eo-ical-parser.php:90
+#: ../includes/class-eo-ical-parser.php:101
 msgid "There was an error detecting ICAL source."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:136
+#: ../includes/class-eo-ical-parser.php:147
 msgid "There was an error fetching the feed. Response code: %s."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:156
+#: ../includes/class-eo-ical-parser.php:167
 msgid "There was an error opening the ICAL file."
 msgstr ""
-
-#: ../includes/class-event-organiser-im-export.php:318
-msgid "There was an error with %1$d of %2$d events in the ical file"
-msgstr "Virhe %1$d / %2$d tapahtumassa ical-tiedostossa"
 
 #: ../includes/event-organiser-register.php:235
 #: ../includes/event-organiser-event-functions.php:693
@@ -1597,8 +1578,6 @@ msgstr "Esikatselukuva"
 
 #: ../classes/class-eo-event-list-widget.php:31
 #: ../classes/class-eo-event-list-widget.php:58
-#: ../classes/class-eo-calendar-widget.php:36
-#: ../classes/class-eo-agenda-widget.php:27
 msgid "Title"
 msgstr "Otsikko"
 
@@ -1648,7 +1627,7 @@ msgstr "Päivitä avainsana"
 msgid "Update Venue"
 msgstr "Päivitä tapahtumapaikkaa"
 
-#: ../includes/class-event-organiser-im-export.php:116
+#: ../includes/class-event-organiser-im-export.php:109
 msgid "Upload ICS file"
 msgstr "Siirrä ICS -tiedosto"
 
@@ -1687,12 +1666,12 @@ msgstr ""
 msgid "Venue Location"
 msgstr "Tapahtumapaikan sijainti"
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr "Tapahtumapaikan nimi"
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
+msgstr "Tapahtumapaikan nimi"
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
 msgstr "Tapahtumapaikan nimi"
 
 #: ../event-organiser-settings.php:220
@@ -1716,6 +1695,7 @@ msgid "Venues"
 msgstr "Tapahtumapaikat"
 
 #: ../includes/event-organiser-ajax.php:544
+#: ../classes/class-eo-venue-list-table.php:71
 msgid "View"
 msgstr "Katso"
 
@@ -1745,13 +1725,17 @@ msgstr "Katso tapahtumapaikka"
 msgid "View will take you to the venue's page"
 msgstr "Näkymä vie sinut tapahtumapaikan sivulle"
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "viikko"
+#: ../includes/class-event-organiser-im-export.php:261
+msgid "Warning:"
+msgstr ""
 
 #: ../event-organiser-calendar.php:229
 msgid "Week"
 msgstr "Viikko"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
+msgstr "viikko"
 
 #: ../event-organiser-edit.php:126
 msgid "weekly"
@@ -1838,11 +1822,11 @@ msgstr "Sinulla ei ole oikeuksia poistaa tätä tapahtumaa"
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Sinulla ei ole oikeuksia muokata tätä tapahtumaa"
 
-#: ../includes/class-event-organiser-im-export.php:171
+#: ../includes/class-event-organiser-im-export.php:160
 msgid "You do not have sufficient permissions to import events."
 msgstr "Sinulla ei ole oikeuksia tuoda tapahtumia."
 
-#: ../event-organiser-settings.php:602
+#: ../event-organiser-settings.php:605
 msgid "You may also need to go to WordPress Settings > Permalinks and click 'Save "
 "Changes' before any changes will take effect."
 msgstr "Sinun pitää myös mennä WordPress Asetukset> Kestolinkit ja klikkaa 'Tallenna "
@@ -1851,4 +1835,9 @@ msgstr "Sinun pitää myös mennä WordPress Asetukset> Kestolinkit ja klikkaa '
 #: ../event-organiser-settings.php:145
 msgid "yyyy-mm-dd"
 msgstr "vvvv-kk-pp"
+
+#: ../includes/class-eo-ical-parser.php:273
+#: ../includes/class-eo-ical-parser.php:289
+msgid "[Line %1$d]"
+msgstr ""
 

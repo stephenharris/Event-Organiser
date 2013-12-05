@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 16:51:40+0000\n"
+"PO-Revision-Date: 2013-11-16 11:30:09+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Swedish (Sweden)\n"
@@ -22,15 +22,15 @@ msgstr "Project-Id-Version: Event Organiser\n"
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
 msgstr " <span class=\"meta-nav\">&larr;</span> Nyare evenemang"
 
-#: ../includes/class-event-organiser-im-export.php:335
+#: ../includes/class-event-organiser-im-export.php:282
 msgid "%d categories were created"
 msgstr "%d kategorier importerades"
 
-#: ../includes/class-event-organiser-im-export.php:324
+#: ../includes/class-event-organiser-im-export.php:269
 msgid "%d events were successfully imported"
 msgstr "%d evenemang importerades"
 
-#: ../includes/class-event-organiser-im-export.php:329
+#: ../includes/class-event-organiser-im-export.php:275
 msgid "%d venues were created"
 msgstr "%d lokaler importerades"
 
@@ -50,15 +50,15 @@ msgstr "&mdash; Ingen ändring &mdash;"
 msgid "'No events' message"
 msgstr "'Inga evenemang'-meddelande"
 
-#: ../includes/class-event-organiser-im-export.php:333
+#: ../includes/class-event-organiser-im-export.php:279
 msgid "1 category was created"
 msgstr "1 kategori skapades"
 
-#: ../includes/class-event-organiser-im-export.php:322
+#: ../includes/class-event-organiser-im-export.php:266
 msgid "1 event was successfully imported"
 msgstr "1 evenemang importerades"
 
-#: ../includes/class-event-organiser-im-export.php:327
+#: ../includes/class-event-organiser-im-export.php:272
 msgid "1 venue was created"
 msgstr "1 lokal skapades"
 
@@ -66,7 +66,7 @@ msgstr "1 lokal skapades"
 msgid "24 hour time"
 msgstr "24-timmars tid"
 
-#: ../includes/event-organiser-register.php:604
+#: ../includes/event-organiser-register.php:607
 msgid "<h4>City & State Fields Added</h4>City and state / province fields for "
 "venues have now been added. </br> If you'd like, Event Organiser can <a "
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
@@ -76,7 +76,7 @@ msgstr "<h4>Stad & delstat/landskapsfält tillagt</h4>Stad och delstat/landskaps
 "href='%s'>försöka auto-fylla dem</a>. Du kan alltid ändra det manuellt "
 "efteråt."
 
-#: ../includes/event-organiser-register.php:611
+#: ../includes/event-organiser-register.php:614
 msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
 "haven't and want the old templates back, <a "
@@ -96,11 +96,6 @@ msgstr "En lista eller 'dropdown' "
 msgid "A list or dropdown of event venues"
 msgstr "En lista eller en 'dropdown' på evenemangplatser"
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr "Lägg till en 'evenemang'-länk till navigationsmenyn"
@@ -108,6 +103,11 @@ msgstr "Lägg till en 'evenemang'-länk till navigationsmenyn"
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "Skapa evenemang"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr ""
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -168,13 +168,13 @@ msgid "All dates and times must be entered in the specified format. This format 
 msgstr "Alla datum och tider måste skrivas in i det specifierade formatet. Detta "
 "format kan ändras på inställningssidan. "
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "Hela dagen"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
+msgstr "Hela dagen"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
 msgstr "Hela dagen"
 
 #: ../includes/event-organiser-cpt.php:146
@@ -186,6 +186,7 @@ msgid "All Tags"
 msgstr "Alla etiketter"
 
 #: ../includes/event-organiser-cpt.php:31
+#: ../classes/class-eo-event-list-widget.php:47
 msgid "All Venues"
 msgstr "Alla lokaler"
 
@@ -271,7 +272,7 @@ msgstr ""
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Bocka i för att ändra detta återkommande evenemang "
 
-#: ../event-organiser-settings.php:600
+#: ../event-organiser-settings.php:603
 msgid "Choose a custom permalink structure for events, venues, event categories and "
 "event tags."
 msgstr "Välj en specialanpassad permalänkstruktur för evenemang, lokaler, "
@@ -345,29 +346,17 @@ msgstr "Anpassad upprepning"
 msgid "daily"
 msgstr "dagligen"
 
-#: ../event-organiser-debug.php:533
-msgid "Database character set"
-msgstr "Databas-teckenuppsättning"
-
-#: ../event-organiser-debug.php:532
-msgid "Database tables"
-msgstr "Databastabeller"
-
-#: ../event-organiser-debug.php:531
-msgid "Databse Prefix"
-msgstr ""
-
 #: ../event-organiser-settings.php:137
 msgid "Date Format:"
 msgstr "Datumformat:"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "dag"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
 msgstr "Dag"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
+msgstr "dag"
 
 #: ../event-organiser-settings.php:271
 msgid "Day archive"
@@ -432,11 +421,11 @@ msgstr "DESC"
 msgid "Disable CSS:"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:648
+#: ../includes/event-organiser-register.php:651
 msgid "Dismiss"
 msgstr "Avfärda"
 
-#: ../includes/event-organiser-register.php:647
+#: ../includes/event-organiser-register.php:650
 msgid "Dismiss this notice"
 msgstr "Avfärda denna notis"
 
@@ -463,11 +452,11 @@ msgstr "Visar en lista med evenemang"
 msgid "Displays a list of events, grouped by date"
 msgstr "Visare en lista av alla evenemang, grupperade per datum"
 
-#: ../event-organiser-settings.php:626
+#: ../event-organiser-settings.php:629
 msgid "Do not add to menu"
 msgstr "Lägg inte till i meny"
 
-#: ../includes/class-event-organiser-im-export.php:104
+#: ../includes/class-event-organiser-im-export.php:97
 msgid "Download Export File"
 msgstr "Ladda ner exportfil"
 
@@ -542,6 +531,10 @@ msgid "Ensure dates are entered in %1$s format and times in %2$s (24 hour) forma
 msgstr "Kontrollera att datum är inskrivna i %1$sformat och tider i%2$s "
 "(24-timmarsformat)"
 
+#: ../includes/class-event-organiser-im-export.php:251
+msgid "Error:"
+msgstr ""
+
 #: ../event-organiser-manage.php:19
 msgid "Event"
 msgstr "Evenemang"
@@ -559,7 +552,6 @@ msgid "Event Categories"
 msgstr "Evenemangskategorier"
 
 #: ../classes/class-eo-event-list-widget.php:39
-#: ../classes/class-eo-calendar-widget.php:77
 msgid "Event categories"
 msgstr "Evenemangskategorier"
 
@@ -584,6 +576,10 @@ msgstr "Evenemangdetaljer"
 msgid "Event Details"
 msgstr "Evenemangsdetaljer"
 
+#: ../includes/event.php:716
+msgid "Event does not contain any dates."
+msgstr ""
+
 #: ../includes/event-organiser-cpt.php:229
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr "Evenemangsutkast uppdaterat. <a target=\"_blank\" "
@@ -592,6 +588,10 @@ msgstr "Evenemangsutkast uppdaterat. <a target=\"_blank\" "
 #: ../classes/class-eo-event-list-widget.php:78
 msgid "Event list widget placeholders"
 msgstr "Evenemangslista-widgetplatsmarkör"
+
+#: ../event-organiser-settings.php:557
+msgid "Event management permissions"
+msgstr ""
 
 #: ../event-organiser-settings.php:29
 msgid "Event Organiser"
@@ -674,7 +674,6 @@ msgstr "Evenemangslokaler"
 
 #: ../event-organiser.php:127
 #: ../event-organiser-venues.php:432
-#: ../templates/archive-event.php:42
 msgid "Events"
 msgstr "Evenemang"
 
@@ -790,7 +789,7 @@ msgstr "Genomförda evenemang"
 msgid "Export"
 msgstr "Exportera"
 
-#: ../includes/class-event-organiser-im-export.php:98
+#: ../includes/class-event-organiser-im-export.php:91
 msgid "Export Events"
 msgstr "Exportera evenemang"
 
@@ -798,11 +797,11 @@ msgstr "Exportera evenemang"
 msgid "Extensions"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:68
+#: ../includes/class-event-organiser-im-export.php:61
 msgid "File Error encountered: %d"
 msgstr "Fel i fil påträffat: %d"
 
-#: ../includes/class-event-organiser-im-export.php:80
+#: ../includes/class-event-organiser-im-export.php:73
 msgid "File size: %s. File type: %s"
 msgstr "Filstorlek: %s. Filtyp: %s"
 
@@ -966,19 +965,19 @@ msgstr "Om du har aktiverat anpassade permalänkar, välj detta för att anpassa
 msgid "Import"
 msgstr "Importera"
 
-#: ../includes/class-event-organiser-im-export.php:110
+#: ../includes/class-event-organiser-im-export.php:103
 msgid "Import an ICS file."
 msgstr "Importera en ICS-fil."
 
-#: ../includes/class-event-organiser-im-export.php:112
+#: ../includes/class-event-organiser-im-export.php:105
 msgid "Import categories"
 msgstr "Importera kategorier"
 
-#: ../includes/class-event-organiser-im-export.php:107
+#: ../includes/class-event-organiser-im-export.php:100
 msgid "Import Events"
 msgstr "Importera evenemang"
 
-#: ../includes/class-event-organiser-im-export.php:111
+#: ../includes/class-event-organiser-im-export.php:104
 msgid "Import venues"
 msgstr "Importera lokaler"
 
@@ -987,7 +986,6 @@ msgid "Include 'Add To Google' link"
 msgstr "Inkludera 'Add To Google'-länk"
 
 #: ../classes/class-eo-event-list-widget.php:66
-#: ../classes/class-eo-calendar-widget.php:46
 msgid "Include past events"
 msgstr "Inkludera genomförda evenemang"
 
@@ -995,25 +993,22 @@ msgstr "Inkludera genomförda evenemang"
 msgid "Include/Exclude occurrences"
 msgstr "Inkludera/Exkludera förkomster"
 
-#: ../includes/class-event-organiser-im-export.php:586
-#: ../includes/class-eo-ical-parser.php:449
-msgid "Invalid date. Date expected in YYYYMMDD format."
-msgstr "Ogiltigt datum. Datum förväntat i YYYYMMDD-format"
+#: ../includes/class-eo-ical-parser.php:586
+msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
+msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:618
-#: ../includes/class-eo-ical-parser.php:482
-msgid "Invalid datetime. Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss "
-"format."
-msgstr "Ogiltigt datum. Datum förväntat i YYYYMMDDTHHiissZ eller "
-"YYYYMMDDTHHiiss-format"
+#: ../includes/class-eo-ical-parser.php:624
+msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
+"YYYYMMDDTHHiiss format."
+msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:78
+#: ../includes/class-event-organiser-im-export.php:71
 msgid "Invalid file uploaded. The file must be a ics calendar file of type "
 "'text/calendar', no larger than 2MB."
 msgstr "Ogiltig fil upladdad. Filen måste vara en ics calendar-fil av typen "
 "'text/calendar', och inte större än 2MB"
 
-#: ../includes/event.php:548
+#: ../includes/event.php:596
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Ogiltigt månadsschema (ogiltigt ordningstal)"
 
@@ -1038,18 +1033,11 @@ msgstr "sista"
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
 msgstr "Senare evenemang <span class=\"meta-nav\">&rarr;</span>"
 
-#: ../includes/class-event-organiser-im-export.php:275
-#: ../includes/class-event-organiser-im-export.php:301
-#: ../includes/class-eo-ical-parser.php:257
-msgid "Line: %1$d"
-msgstr "Rad: %1$d"
-
 #: ../classes/class-eo-calendar-widget.php:66
 msgid "Link directly to event for days with only one event"
 msgstr ""
 
 #: ../classes/class-eo-event-list-widget.php:41
-#: ../classes/class-eo-calendar-widget.php:80
 msgid "List category slug(s), seperate by comma. Leave blank for all"
 msgstr "Lista slug(s) för kategorier, separera med komma. Lämna tom för alla. "
 
@@ -1079,13 +1067,13 @@ msgstr "Minut"
 msgid "mm-dd-yyyy"
 msgstr "mm-dd-åååå"
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "månad"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
 msgstr "Månad"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
+msgstr "månad"
 
 #: ../event-organiser-settings.php:270
 msgid "Month archive"
@@ -1121,7 +1109,7 @@ msgstr "Nytt etikettnamn"
 msgid "New Venue Name"
 msgstr "Ny Lokalnamn"
 
-#: ../classes/class-eo-calendar-widget.php:260
+#: ../classes/class-eo-calendar-widget.php:265
 msgid "Next month"
 msgstr "Nästa månad"
 
@@ -1144,11 +1132,11 @@ msgstr "Inga evenemang hittades "
 msgid "No events found in Trash"
 msgstr "Inga evenemang hittades i papperskorgen"
 
-#: ../includes/class-event-organiser-im-export.php:316
+#: ../includes/class-event-organiser-im-export.php:242
 msgid "No events were imported."
 msgstr "Inga evenemang importerades"
 
-#: ../includes/class-event-organiser-im-export.php:75
+#: ../includes/class-event-organiser-im-export.php:68
 msgid "No file detected."
 msgstr "Ingen fil hittades."
 
@@ -1164,7 +1152,7 @@ msgstr "Ingen lokal"
 msgid "No venues found"
 msgstr "Inga lokaler hittades"
 
-#: ../event-organiser-settings.php:571
+#: ../event-organiser-settings.php:574
 msgid "None"
 msgstr "Ingen"
 
@@ -1183,12 +1171,11 @@ msgstr "Antal evenemang"
 msgid "Occurrence deleted."
 msgstr "Evenemang borttaget"
 
-#: ../includes/event.php:744
+#: ../includes/event.php:806
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr ""
 
 #: ../event-organiser-edit.php:146
-#: ../templates/shortcode-event-list.php:52
 msgid "on"
 msgstr "-"
 
@@ -1221,7 +1208,7 @@ msgstr "Organisatör"
 msgid "Overview"
 msgstr "Översikt"
 
-#: ../event-organiser-settings.php:630
+#: ../event-organiser-settings.php:633
 msgid "Page list (fallback)"
 msgstr "Sidlista (reserv)"
 
@@ -1242,7 +1229,7 @@ msgstr "Permalänkar"
 msgid "Permissions"
 msgstr "Rättigheter"
 
-#: ../event-organiser-settings.php:601
+#: ../event-organiser-settings.php:604
 msgid "Please note to enable these structures you must first have pretty permalinks "
 "enabled on WordPress in Settings > Permalinks."
 msgstr "Observera att för att aktivera dessa strukturer måste du först ha aktiverat "
@@ -1256,7 +1243,7 @@ msgstr "Populära etiketter"
 msgid "Post Code"
 msgstr "Postnummer"
 
-#: ../classes/class-eo-calendar-widget.php:257
+#: ../classes/class-eo-calendar-widget.php:262
 msgid "Previous month"
 msgstr "Föregående månad"
 
@@ -1302,7 +1289,7 @@ msgstr "Återkommande evenemang"
 msgid "Revisions"
 msgstr "Versioner"
 
-#: ../event-organiser-settings.php:560
+#: ../event-organiser-settings.php:563
 msgid "Role"
 msgstr "Roll"
 
@@ -1314,11 +1301,11 @@ msgstr "Spara"
 msgid "Save Draft"
 msgstr "Spara utkast"
 
-#: ../includes/event.php:458
+#: ../includes/event.php:514
 msgid "Schedule end date is before is before the start date."
 msgstr "Slutdatum är innan startdatum"
 
-#: ../includes/event.php:470
+#: ../includes/event.php:484
 msgid "Schedule not recognised."
 msgstr "Schemat känns inte igen."
 
@@ -1386,7 +1373,7 @@ msgstr "Separera etiketter med ett komma"
 msgid "Separate venues with commas"
 msgstr "Separera lokaler med ett komma"
 
-#: ../event-organiser-settings.php:555
+#: ../event-organiser-settings.php:558
 msgid "Set permissions for events and venue management"
 msgstr "Ändra rättigheter för evenemang och lokalhantering"
 
@@ -1428,7 +1415,6 @@ msgid "Specify how regularly the event should repeat (default 1)"
 msgstr "Specificera hur evenemanget ska återkomma (förinställning 1)"
 
 #: ../templates/event-meta-event-single.php:58
-#: ../includes/event-organiser-ajax.php:282
 msgid "Start"
 msgstr "Start"
 
@@ -1436,11 +1422,11 @@ msgstr "Start"
 msgid "Start date"
 msgstr "Startdatum"
 
-#: ../includes/event.php:445
+#: ../includes/event.php:493
 msgid "Start date not provided."
 msgstr "Startdatum ej uppgivet."
 
-#: ../includes/event.php:455
+#: ../includes/event.php:511
 msgid "Start date occurs after end date."
 msgstr "Startdatum inträffar efter slutdatum"
 
@@ -1464,8 +1450,6 @@ msgid "System Info"
 msgstr "System Information"
 
 #: ../templates/event-meta-event-single.php:73
-#: ../includes/event-organiser-event-functions.php:1388
-#: ../includes/event-organiser-cpt.php:105
 msgid "Tags"
 msgstr "Etiketter"
 
@@ -1488,7 +1472,7 @@ msgid "The end date is the date the event finishes. If the event is a reoccuring
 msgstr "Slutdatument är det datum då evenemanget slutar. Om evenemanget är "
 "återkommande är detta slutdatumet för det sista tillfället. "
 
-#: ../includes/class-event-organiser-im-export.php:101
+#: ../includes/class-event-organiser-im-export.php:94
 msgid "The export button below generates an ICS file of your events that can be "
 "imported in to other calendar applications such as Google Calendar."
 msgstr "Exportknappen nedan genererar en ICS-fil med dina evenemang som kan "
@@ -1500,25 +1484,21 @@ msgid "The start date is the date the event starts. If the event is a reoccuring
 msgstr "Startdatument är det datum då evenemanget börjar. Om evenemanget är "
 "återkommande är detta startdatumet för det första tillfället. "
 
-#: ../classes/class-eventorganiser-shortcodes.php:356
+#: ../classes/class-eventorganiser-shortcodes.php:359
 msgid "There is no excerpt because this is a protected post."
 msgstr "Det finns inget utdrag eftersom detta är ett skyddat inlägg."
 
-#: ../includes/class-eo-ical-parser.php:90
+#: ../includes/class-eo-ical-parser.php:101
 msgid "There was an error detecting ICAL source."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:136
+#: ../includes/class-eo-ical-parser.php:147
 msgid "There was an error fetching the feed. Response code: %s."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:156
+#: ../includes/class-eo-ical-parser.php:167
 msgid "There was an error opening the ICAL file."
 msgstr ""
-
-#: ../includes/class-event-organiser-im-export.php:318
-msgid "There was an error with %1$d of %2$d events in the ical file"
-msgstr "Det uppstod ett fel med %1$d av %2$d evenemang i ical-filen"
 
 #: ../includes/event-organiser-register.php:235
 #: ../includes/event-organiser-event-functions.php:693
@@ -1596,8 +1576,6 @@ msgstr "Tumnagel"
 
 #: ../classes/class-eo-event-list-widget.php:31
 #: ../classes/class-eo-event-list-widget.php:58
-#: ../classes/class-eo-calendar-widget.php:36
-#: ../classes/class-eo-agenda-widget.php:27
 msgid "Title"
 msgstr "Titel"
 
@@ -1648,7 +1626,7 @@ msgstr "Updatera etikett"
 msgid "Update Venue"
 msgstr "Uppdatera lokal"
 
-#: ../includes/class-event-organiser-im-export.php:116
+#: ../includes/class-event-organiser-im-export.php:109
 msgid "Upload ICS file"
 msgstr "Ladda upp en ICS-fil"
 
@@ -1686,13 +1664,13 @@ msgstr ""
 msgid "Venue Location"
 msgstr "Lokaladress"
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr "Platsnamn"
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
 msgstr "Lokalnamn"
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
+msgstr "Platsnamn"
 
 #: ../event-organiser-settings.php:220
 msgid "Venue page:"
@@ -1715,6 +1693,7 @@ msgid "Venues"
 msgstr "Lokaler"
 
 #: ../includes/event-organiser-ajax.php:544
+#: ../classes/class-eo-venue-list-table.php:71
 msgid "View"
 msgstr "Visa"
 
@@ -1744,13 +1723,17 @@ msgstr "Visa lokal"
 msgid "View will take you to the venue's page"
 msgstr "Visa tar dig till lokalens sida"
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "vecka"
+#: ../includes/class-event-organiser-im-export.php:261
+msgid "Warning:"
+msgstr ""
 
 #: ../event-organiser-calendar.php:229
 msgid "Week"
 msgstr "Vecka"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
+msgstr "vecka"
 
 #: ../event-organiser-edit.php:126
 msgid "weekly"
@@ -1837,11 +1820,11 @@ msgstr "Du har inte rätt att ta bort detta evenemang"
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Du har inte tillräcklig behörighet att redigera denna evenemang"
 
-#: ../includes/class-event-organiser-im-export.php:171
+#: ../includes/class-event-organiser-im-export.php:160
 msgid "You do not have sufficient permissions to import events."
 msgstr "Du har inte rätt att importera evenemang"
 
-#: ../event-organiser-settings.php:602
+#: ../event-organiser-settings.php:605
 msgid "You may also need to go to WordPress Settings > Permalinks and click 'Save "
 "Changes' before any changes will take effect."
 msgstr "Du kan behöva gå till WordPress-inställningar > Permalänkar och klicka "
@@ -1850,4 +1833,9 @@ msgstr "Du kan behöva gå till WordPress-inställningar > Permalänkar och klic
 #: ../event-organiser-settings.php:145
 msgid "yyyy-mm-dd"
 msgstr "åååå-mm-dd"
+
+#: ../includes/class-eo-ical-parser.php:273
+#: ../includes/class-eo-ical-parser.php:289
+msgid "[Line %1$d]"
+msgstr ""
 

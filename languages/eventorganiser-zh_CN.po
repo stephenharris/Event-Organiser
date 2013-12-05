@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 17:33:42+0000\n"
+"PO-Revision-Date: 2013-11-16 11:30:09+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Chinese (China)\n"
@@ -22,15 +22,15 @@ msgstr "Project-Id-Version: Event Organiser\n"
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:335
+#: ../includes/class-event-organiser-im-export.php:282
 msgid "%d categories were created"
 msgstr "%d 个分类被创建"
 
-#: ../includes/class-event-organiser-im-export.php:324
+#: ../includes/class-event-organiser-im-export.php:269
 msgid "%d events were successfully imported"
 msgstr "%d 个事件被成功导入"
 
-#: ../includes/class-event-organiser-im-export.php:329
+#: ../includes/class-event-organiser-im-export.php:275
 msgid "%d venues were created"
 msgstr "%d 个地点被创建"
 
@@ -50,15 +50,15 @@ msgstr "— 没有改变 —"
 msgid "'No events' message"
 msgstr "“没有事件”消息"
 
-#: ../includes/class-event-organiser-im-export.php:333
+#: ../includes/class-event-organiser-im-export.php:279
 msgid "1 category was created"
 msgstr "1个分类被创建"
 
-#: ../includes/class-event-organiser-im-export.php:322
+#: ../includes/class-event-organiser-im-export.php:266
 msgid "1 event was successfully imported"
 msgstr "1个事件被成功导入"
 
-#: ../includes/class-event-organiser-im-export.php:327
+#: ../includes/class-event-organiser-im-export.php:272
 msgid "1 venue was created"
 msgstr "1个地点被创建"
 
@@ -66,14 +66,14 @@ msgstr "1个地点被创建"
 msgid "24 hour time"
 msgstr "24小时"
 
-#: ../includes/event-organiser-register.php:604
+#: ../includes/event-organiser-register.php:607
 msgid "<h4>City & State Fields Added</h4>City and state / province fields for "
 "venues have now been added. </br> If you'd like, Event Organiser can <a "
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
 "details aftewards."
 msgstr ""
 
-#: ../includes/event-organiser-register.php:611
+#: ../includes/event-organiser-register.php:614
 msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
 "haven't and want the old templates back, <a "
@@ -89,11 +89,6 @@ msgstr "事件分类列表或下拉菜单"
 msgid "A list or dropdown of event venues"
 msgstr "事件地点的列表或下拉菜单"
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr ""
@@ -101,6 +96,11 @@ msgstr ""
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "添加事件"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr ""
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -160,13 +160,13 @@ msgid "All dates and times must be entered in the specified format. This format 
 "changed in the settings page."
 msgstr "所有的日期和事件必须按指定格式输入。格式可以在设置页修改。"
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "全天"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
+msgstr "全天"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
 msgstr "全天"
 
 #: ../includes/event-organiser-cpt.php:146
@@ -178,6 +178,7 @@ msgid "All Tags"
 msgstr "所有标签"
 
 #: ../includes/event-organiser-cpt.php:31
+#: ../classes/class-eo-event-list-widget.php:47
 msgid "All Venues"
 msgstr "所有地点"
 
@@ -260,7 +261,7 @@ msgstr ""
 msgid "Check to edit this event and its reoccurrences"
 msgstr ""
 
-#: ../event-organiser-settings.php:600
+#: ../event-organiser-settings.php:603
 msgid "Choose a custom permalink structure for events, venues, event categories and "
 "event tags."
 msgstr ""
@@ -331,29 +332,17 @@ msgstr ""
 msgid "daily"
 msgstr "每天"
 
-#: ../event-organiser-debug.php:533
-msgid "Database character set"
-msgstr ""
-
-#: ../event-organiser-debug.php:532
-msgid "Database tables"
-msgstr ""
-
-#: ../event-organiser-debug.php:531
-msgid "Databse Prefix"
-msgstr ""
-
 #: ../event-organiser-settings.php:137
 msgid "Date Format:"
 msgstr "日期格式"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "日"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
 msgstr "天"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
+msgstr "日"
 
 #: ../event-organiser-settings.php:271
 msgid "Day archive"
@@ -418,11 +407,11 @@ msgstr "降序"
 msgid "Disable CSS:"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:648
+#: ../includes/event-organiser-register.php:651
 msgid "Dismiss"
 msgstr "关闭"
 
-#: ../includes/event-organiser-register.php:647
+#: ../includes/event-organiser-register.php:650
 msgid "Dismiss this notice"
 msgstr "关闭这个通知"
 
@@ -448,11 +437,11 @@ msgstr "显示事件列表"
 msgid "Displays a list of events, grouped by date"
 msgstr ""
 
-#: ../event-organiser-settings.php:626
+#: ../event-organiser-settings.php:629
 msgid "Do not add to menu"
 msgstr "不要增加到菜单"
 
-#: ../includes/class-event-organiser-im-export.php:104
+#: ../includes/class-event-organiser-im-export.php:97
 msgid "Download Export File"
 msgstr "下载导出的文件"
 
@@ -525,6 +514,10 @@ msgstr "结束日期/时间"
 msgid "Ensure dates are entered in %1$s format and times in %2$s (24 hour) format"
 msgstr ""
 
+#: ../includes/class-event-organiser-im-export.php:251
+msgid "Error:"
+msgstr ""
+
 #: ../event-organiser-manage.php:19
 msgid "Event"
 msgstr "事件"
@@ -542,7 +535,6 @@ msgid "Event Categories"
 msgstr "事件分类"
 
 #: ../classes/class-eo-event-list-widget.php:39
-#: ../classes/class-eo-calendar-widget.php:77
 msgid "Event categories"
 msgstr "事件分类"
 
@@ -567,12 +559,20 @@ msgstr "事件细节"
 msgid "Event Details"
 msgstr "事件细节"
 
+#: ../includes/event.php:716
+msgid "Event does not contain any dates."
+msgstr ""
+
 #: ../includes/event-organiser-cpt.php:229
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 
 #: ../classes/class-eo-event-list-widget.php:78
 msgid "Event list widget placeholders"
+msgstr ""
+
+#: ../event-organiser-settings.php:557
+msgid "Event management permissions"
 msgstr ""
 
 #: ../event-organiser-settings.php:29
@@ -654,7 +654,6 @@ msgstr "事件地点"
 
 #: ../event-organiser.php:127
 #: ../event-organiser-venues.php:432
-#: ../templates/archive-event.php:42
 msgid "Events"
 msgstr "事件"
 
@@ -770,7 +769,7 @@ msgstr "过期的事件"
 msgid "Export"
 msgstr "导出"
 
-#: ../includes/class-event-organiser-im-export.php:98
+#: ../includes/class-event-organiser-im-export.php:91
 msgid "Export Events"
 msgstr "导出事件"
 
@@ -778,11 +777,11 @@ msgstr "导出事件"
 msgid "Extensions"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:68
+#: ../includes/class-event-organiser-im-export.php:61
 msgid "File Error encountered: %d"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:80
+#: ../includes/class-event-organiser-im-export.php:73
 msgid "File size: %s. File type: %s"
 msgstr "文件大小: %s. 文件类型: %s"
 
@@ -932,19 +931,19 @@ msgstr ""
 msgid "Import"
 msgstr "导入"
 
-#: ../includes/class-event-organiser-im-export.php:110
+#: ../includes/class-event-organiser-im-export.php:103
 msgid "Import an ICS file."
 msgstr "导入一个ICS文件"
 
-#: ../includes/class-event-organiser-im-export.php:112
+#: ../includes/class-event-organiser-im-export.php:105
 msgid "Import categories"
 msgstr "导入分类"
 
-#: ../includes/class-event-organiser-im-export.php:107
+#: ../includes/class-event-organiser-im-export.php:100
 msgid "Import Events"
 msgstr "导入事件"
 
-#: ../includes/class-event-organiser-im-export.php:111
+#: ../includes/class-event-organiser-im-export.php:104
 msgid "Import venues"
 msgstr "导入地点"
 
@@ -953,7 +952,6 @@ msgid "Include 'Add To Google' link"
 msgstr "包含“添加到谷歌”链接"
 
 #: ../classes/class-eo-event-list-widget.php:66
-#: ../classes/class-eo-calendar-widget.php:46
 msgid "Include past events"
 msgstr "包含过去的事件"
 
@@ -961,23 +959,21 @@ msgstr "包含过去的事件"
 msgid "Include/Exclude occurrences"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:586
-#: ../includes/class-eo-ical-parser.php:449
-msgid "Invalid date. Date expected in YYYYMMDD format."
-msgstr "无效日期。日期格式为YYYYMMDD"
+#: ../includes/class-eo-ical-parser.php:586
+msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
+msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:618
-#: ../includes/class-eo-ical-parser.php:482
-msgid "Invalid datetime. Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss "
-"format."
-msgstr "无效日期时间。格式为YYYYMMDDTHHiissZ 或YYYYMMDDTHHiiss "
+#: ../includes/class-eo-ical-parser.php:624
+msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
+"YYYYMMDDTHHiiss format."
+msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:78
+#: ../includes/class-event-organiser-im-export.php:71
 msgid "Invalid file uploaded. The file must be a ics calendar file of type "
 "'text/calendar', no larger than 2MB."
 msgstr ""
 
-#: ../includes/event.php:548
+#: ../includes/event.php:596
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr ""
 
@@ -1002,18 +998,11 @@ msgstr "最后"
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:275
-#: ../includes/class-event-organiser-im-export.php:301
-#: ../includes/class-eo-ical-parser.php:257
-msgid "Line: %1$d"
-msgstr ""
-
 #: ../classes/class-eo-calendar-widget.php:66
 msgid "Link directly to event for days with only one event"
 msgstr ""
 
 #: ../classes/class-eo-event-list-widget.php:41
-#: ../classes/class-eo-calendar-widget.php:80
 msgid "List category slug(s), seperate by comma. Leave blank for all"
 msgstr ""
 
@@ -1043,12 +1032,12 @@ msgstr "分钟"
 msgid "mm-dd-yyyy"
 msgstr "mm-dd-yyyy"
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "月"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
+msgstr "月"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
 msgstr "月"
 
 #: ../event-organiser-settings.php:270
@@ -1084,7 +1073,7 @@ msgstr "新标签名称"
 msgid "New Venue Name"
 msgstr "新地点名称"
 
-#: ../classes/class-eo-calendar-widget.php:260
+#: ../classes/class-eo-calendar-widget.php:265
 msgid "Next month"
 msgstr "下月"
 
@@ -1107,11 +1096,11 @@ msgstr "没有发现事件"
 msgid "No events found in Trash"
 msgstr "回收站中没有发现事件"
 
-#: ../includes/class-event-organiser-im-export.php:316
+#: ../includes/class-event-organiser-im-export.php:242
 msgid "No events were imported."
 msgstr "没有事件被导入"
 
-#: ../includes/class-event-organiser-im-export.php:75
+#: ../includes/class-event-organiser-im-export.php:68
 msgid "No file detected."
 msgstr "没有检测到文件"
 
@@ -1127,7 +1116,7 @@ msgstr "没有地点"
 msgid "No venues found"
 msgstr "没有发现地点"
 
-#: ../event-organiser-settings.php:571
+#: ../event-organiser-settings.php:574
 msgid "None"
 msgstr "没有"
 
@@ -1146,12 +1135,11 @@ msgstr "事件数量"
 msgid "Occurrence deleted."
 msgstr ""
 
-#: ../includes/event.php:744
+#: ../includes/event.php:806
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr ""
 
 #: ../event-organiser-edit.php:146
-#: ../templates/shortcode-event-list.php:52
 msgid "on"
 msgstr "在"
 
@@ -1183,7 +1171,7 @@ msgstr "组织者"
 msgid "Overview"
 msgstr "概况"
 
-#: ../event-organiser-settings.php:630
+#: ../event-organiser-settings.php:633
 msgid "Page list (fallback)"
 msgstr ""
 
@@ -1204,7 +1192,7 @@ msgstr "永久链接"
 msgid "Permissions"
 msgstr "权限"
 
-#: ../event-organiser-settings.php:601
+#: ../event-organiser-settings.php:604
 msgid "Please note to enable these structures you must first have pretty permalinks "
 "enabled on WordPress in Settings > Permalinks."
 msgstr ""
@@ -1217,7 +1205,7 @@ msgstr "流行的标签"
 msgid "Post Code"
 msgstr "邮编"
 
-#: ../classes/class-eo-calendar-widget.php:257
+#: ../classes/class-eo-calendar-widget.php:262
 msgid "Previous month"
 msgstr "上月"
 
@@ -1263,7 +1251,7 @@ msgstr "重复事件"
 msgid "Revisions"
 msgstr "修订"
 
-#: ../event-organiser-settings.php:560
+#: ../event-organiser-settings.php:563
 msgid "Role"
 msgstr "角色"
 
@@ -1275,11 +1263,11 @@ msgstr "保存"
 msgid "Save Draft"
 msgstr "保存草稿"
 
-#: ../includes/event.php:458
+#: ../includes/event.php:514
 msgid "Schedule end date is before is before the start date."
 msgstr ""
 
-#: ../includes/event.php:470
+#: ../includes/event.php:484
 msgid "Schedule not recognised."
 msgstr ""
 
@@ -1347,7 +1335,7 @@ msgstr "用逗号分割标签"
 msgid "Separate venues with commas"
 msgstr "用逗号分割地点"
 
-#: ../event-organiser-settings.php:555
+#: ../event-organiser-settings.php:558
 msgid "Set permissions for events and venue management"
 msgstr ""
 
@@ -1389,7 +1377,6 @@ msgid "Specify how regularly the event should repeat (default 1)"
 msgstr ""
 
 #: ../templates/event-meta-event-single.php:58
-#: ../includes/event-organiser-ajax.php:282
 msgid "Start"
 msgstr "开始"
 
@@ -1397,11 +1384,11 @@ msgstr "开始"
 msgid "Start date"
 msgstr "开始日期"
 
-#: ../includes/event.php:445
+#: ../includes/event.php:493
 msgid "Start date not provided."
 msgstr "没有提供开始日期"
 
-#: ../includes/event.php:455
+#: ../includes/event.php:511
 msgid "Start date occurs after end date."
 msgstr "开始日期早于结束日期"
 
@@ -1425,8 +1412,6 @@ msgid "System Info"
 msgstr "系统信息"
 
 #: ../templates/event-meta-event-single.php:73
-#: ../includes/event-organiser-event-functions.php:1388
-#: ../includes/event-organiser-cpt.php:105
 msgid "Tags"
 msgstr "标签"
 
@@ -1448,7 +1433,7 @@ msgid "The end date is the date the event finishes. If the event is a reoccuring
 "event, this is the end date of the first occurrence."
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:101
+#: ../includes/class-event-organiser-im-export.php:94
 msgid "The export button below generates an ICS file of your events that can be "
 "imported in to other calendar applications such as Google Calendar."
 msgstr ""
@@ -1458,24 +1443,20 @@ msgid "The start date is the date the event starts. If the event is a reoccuring
 "event, this is the start date of the first occurrence."
 msgstr ""
 
-#: ../classes/class-eventorganiser-shortcodes.php:356
+#: ../classes/class-eventorganiser-shortcodes.php:359
 msgid "There is no excerpt because this is a protected post."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:90
+#: ../includes/class-eo-ical-parser.php:101
 msgid "There was an error detecting ICAL source."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:136
+#: ../includes/class-eo-ical-parser.php:147
 msgid "There was an error fetching the feed. Response code: %s."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:156
+#: ../includes/class-eo-ical-parser.php:167
 msgid "There was an error opening the ICAL file."
-msgstr ""
-
-#: ../includes/class-event-organiser-im-export.php:318
-msgid "There was an error with %1$d of %2$d events in the ical file"
 msgstr ""
 
 #: ../includes/event-organiser-register.php:235
@@ -1544,8 +1525,6 @@ msgstr "缩略图"
 
 #: ../classes/class-eo-event-list-widget.php:31
 #: ../classes/class-eo-event-list-widget.php:58
-#: ../classes/class-eo-calendar-widget.php:36
-#: ../classes/class-eo-agenda-widget.php:27
 msgid "Title"
 msgstr "标题"
 
@@ -1593,7 +1572,7 @@ msgstr "更新标签"
 msgid "Update Venue"
 msgstr "更新地点"
 
-#: ../includes/class-event-organiser-im-export.php:116
+#: ../includes/class-event-organiser-im-export.php:109
 msgid "Upload ICS file"
 msgstr "上载ICS文件"
 
@@ -1631,12 +1610,12 @@ msgstr ""
 msgid "Venue Location"
 msgstr "地点位置"
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr "地点名称"
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
+msgstr "地点名称"
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
 msgstr "地点名称"
 
 #: ../event-organiser-settings.php:220
@@ -1660,6 +1639,7 @@ msgid "Venues"
 msgstr "地点"
 
 #: ../includes/event-organiser-ajax.php:544
+#: ../classes/class-eo-venue-list-table.php:71
 msgid "View"
 msgstr "查看"
 
@@ -1689,12 +1669,16 @@ msgstr "查看地点"
 msgid "View will take you to the venue's page"
 msgstr ""
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "周"
+#: ../includes/class-event-organiser-im-export.php:261
+msgid "Warning:"
+msgstr ""
 
 #: ../event-organiser-calendar.php:229
 msgid "Week"
+msgstr "周"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
 msgstr "周"
 
 #: ../event-organiser-edit.php:126
@@ -1775,11 +1759,11 @@ msgstr "你没有足够的权限删除这个事件"
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "你没有足够的权限编辑这个事件"
 
-#: ../includes/class-event-organiser-im-export.php:171
+#: ../includes/class-event-organiser-im-export.php:160
 msgid "You do not have sufficient permissions to import events."
 msgstr "你没有足够的权限导入事件"
 
-#: ../event-organiser-settings.php:602
+#: ../event-organiser-settings.php:605
 msgid "You may also need to go to WordPress Settings > Permalinks and click 'Save "
 "Changes' before any changes will take effect."
 msgstr ""
@@ -1787,4 +1771,9 @@ msgstr ""
 #: ../event-organiser-settings.php:145
 msgid "yyyy-mm-dd"
 msgstr "yyyy-mm-dd"
+
+#: ../includes/class-eo-ical-parser.php:273
+#: ../includes/class-eo-ical-parser.php:289
+msgid "[Line %1$d]"
+msgstr ""
 

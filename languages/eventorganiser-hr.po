@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 17:36:29+0000\n"
+"PO-Revision-Date: 2013-11-16 11:30:09+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Croatian\n"
@@ -22,15 +22,15 @@ msgstr "Project-Id-Version: Event Organiser\n"
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
 msgstr "<span class=\"meta-nav\">←</span> Novija događanja"
 
-#: ../includes/class-event-organiser-im-export.php:335
+#: ../includes/class-event-organiser-im-export.php:282
 msgid "%d categories were created"
 msgstr "%d kategorija je kreirano"
 
-#: ../includes/class-event-organiser-im-export.php:324
+#: ../includes/class-event-organiser-im-export.php:269
 msgid "%d events were successfully imported"
 msgstr "%d događaja je uspješno uvezeno"
 
-#: ../includes/class-event-organiser-im-export.php:329
+#: ../includes/class-event-organiser-im-export.php:275
 msgid "%d venues were created"
 msgstr "%d sastajališta je kreirano"
 
@@ -50,15 +50,15 @@ msgstr "— Nema promjene —"
 msgid "'No events' message"
 msgstr "'Nema događanja' poruka"
 
-#: ../includes/class-event-organiser-im-export.php:333
+#: ../includes/class-event-organiser-im-export.php:279
 msgid "1 category was created"
 msgstr "1 kategorija je kreirana"
 
-#: ../includes/class-event-organiser-im-export.php:322
+#: ../includes/class-event-organiser-im-export.php:266
 msgid "1 event was successfully imported"
 msgstr "1 događaj je uspješno uvezen"
 
-#: ../includes/class-event-organiser-im-export.php:327
+#: ../includes/class-event-organiser-im-export.php:272
 msgid "1 venue was created"
 msgstr "1 sastajalište je kreirano"
 
@@ -66,7 +66,7 @@ msgstr "1 sastajalište je kreirano"
 msgid "24 hour time"
 msgstr "24 satno"
 
-#: ../includes/event-organiser-register.php:604
+#: ../includes/event-organiser-register.php:607
 msgid "<h4>City & State Fields Added</h4>City and state / province fields for "
 "venues have now been added. </br> If you'd like, Event Organiser can <a "
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
@@ -76,7 +76,7 @@ msgstr "<h4> Grad i Država polje Dodano </ h4> grad i država / pokrajina stavk
 "pokušati da se automatski popunjavaju</>. Uvijek možete ručno promijeniti "
 "podatke poslije."
 
-#: ../includes/event-organiser-register.php:611
+#: ../includes/event-organiser-register.php:614
 msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
 "haven't and want the old templates back, <a "
@@ -96,11 +96,6 @@ msgstr "Lista ili padajuća lista kategorija događanja."
 msgid "A list or dropdown of event venues"
 msgstr "LIsta ili padajući izbornik sastajlišta događanja"
 
-#: ../event-organiser-go-pro.php:82
-msgid "Add action information on your venue pages with venue custom fields, or give "
-"your venues more attentioned with their own 'featured image'"
-msgstr ""
-
 #: ../event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr "Dodaj 'listu događanja' u navigacijski izbornik"
@@ -108,6 +103,11 @@ msgstr "Dodaj 'listu događanja' u navigacijski izbornik"
 #: ../includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "dodaj događaj"
+
+#: ../event-organiser-go-pro.php:82
+msgid "Add information on your venue pages with venue custom fields, or give your "
+"venues more attentioned with their own 'featured image'"
+msgstr ""
 
 #: ../event-organiser-venues.php:230
 #: ../event-organiser-venues.php:268
@@ -168,13 +168,13 @@ msgid "All dates and times must be entered in the specified format. This format 
 msgstr "Svi datumi i vremena moraju biti upisani u zadanom formatu. ovaj format se "
 "može promijeniti u postavkama stranice."
 
-#: ../event-organiser-edit.php:117
-msgid "All day"
-msgstr "Cijeli dan"
-
 #: ../includes/event-organiser-ajax.php:540
 #: ../includes/event-organiser-event-functions.php:1297
 msgid "All Day"
+msgstr "Cijeli dan"
+
+#: ../event-organiser-edit.php:117
+msgid "All day"
 msgstr "Cijeli dan"
 
 #: ../includes/event-organiser-cpt.php:146
@@ -186,6 +186,7 @@ msgid "All Tags"
 msgstr "Sve oznake"
 
 #: ../includes/event-organiser-cpt.php:31
+#: ../classes/class-eo-event-list-widget.php:47
 msgid "All Venues"
 msgstr "Sva sastajališta"
 
@@ -272,7 +273,7 @@ msgstr ""
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Označi da bi ste uređivali ovaj događaj i njegova ponavljanja"
 
-#: ../event-organiser-settings.php:600
+#: ../event-organiser-settings.php:603
 msgid "Choose a custom permalink structure for events, venues, event categories and "
 "event tags."
 msgstr "Izaberi prilagođenu strukturu stalnih veza za događaje, sastajlišta, "
@@ -346,29 +347,17 @@ msgstr "prilagođeno sjedište"
 msgid "daily"
 msgstr "dnevno"
 
-#: ../event-organiser-debug.php:533
-msgid "Database character set"
-msgstr "Postavke skupa znakova"
-
-#: ../event-organiser-debug.php:532
-msgid "Database tables"
-msgstr "Tablice baze"
-
-#: ../event-organiser-debug.php:531
-msgid "Databse Prefix"
-msgstr ""
-
 #: ../event-organiser-settings.php:137
 msgid "Date Format:"
 msgstr "Format Datuma"
 
-#: ../event-organiser-calendar.php:55
-msgid "day"
-msgstr "dan"
-
 #: ../event-organiser-calendar.php:229
 msgid "Day"
 msgstr "Dan"
+
+#: ../event-organiser-calendar.php:55
+msgid "day"
+msgstr "dan"
 
 #: ../event-organiser-settings.php:271
 msgid "Day archive"
@@ -433,11 +422,11 @@ msgstr "DESC"
 msgid "Disable CSS:"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:648
+#: ../includes/event-organiser-register.php:651
 msgid "Dismiss"
 msgstr "Zanemari"
 
-#: ../includes/event-organiser-register.php:647
+#: ../includes/event-organiser-register.php:650
 msgid "Dismiss this notice"
 msgstr "Zanemari ovu obavijest"
 
@@ -464,11 +453,11 @@ msgstr "Prikaži listu događanja"
 msgid "Displays a list of events, grouped by date"
 msgstr "Prikaži listu događanja, grupiranu po datumima"
 
-#: ../event-organiser-settings.php:626
+#: ../event-organiser-settings.php:629
 msgid "Do not add to menu"
 msgstr "Ne dodavaj u navigaciju"
 
-#: ../includes/class-event-organiser-im-export.php:104
+#: ../includes/class-event-organiser-im-export.php:97
 msgid "Download Export File"
 msgstr "Preuzmi Izvezenu datoteku"
 
@@ -543,6 +532,10 @@ msgid "Ensure dates are entered in %1$s format and times in %2$s (24 hour) forma
 msgstr "Osigurava da su datumi upisani u% 1 $ S formatu i vrijeme u% 2 $ s (24 sata) "
 "formatu"
 
+#: ../includes/class-event-organiser-im-export.php:251
+msgid "Error:"
+msgstr ""
+
 #: ../event-organiser-manage.php:19
 msgid "Event"
 msgstr "Događaj"
@@ -560,7 +553,6 @@ msgid "Event Categories"
 msgstr "Kategorije događaja"
 
 #: ../classes/class-eo-event-list-widget.php:39
-#: ../classes/class-eo-calendar-widget.php:77
 msgid "Event categories"
 msgstr "Kategorije događaja"
 
@@ -585,6 +577,10 @@ msgstr "Detalji događaja"
 msgid "Event Details"
 msgstr "Detalji događaja"
 
+#: ../includes/event.php:716
+msgid "Event does not contain any dates."
+msgstr ""
+
 #: ../includes/event-organiser-cpt.php:229
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr "Skica događaj ažurirana<a target=\"_blank\" href=\"%s\">Pregledaj "
@@ -593,6 +589,10 @@ msgstr "Skica događaj ažurirana<a target=\"_blank\" href=\"%s\">Pregledaj "
 #: ../classes/class-eo-event-list-widget.php:78
 msgid "Event list widget placeholders"
 msgstr "LIsta događanja widget"
+
+#: ../event-organiser-settings.php:557
+msgid "Event management permissions"
+msgstr ""
 
 #: ../event-organiser-settings.php:29
 msgid "Event Organiser"
@@ -674,7 +674,6 @@ msgstr "Sastajališta događanja"
 
 #: ../event-organiser.php:127
 #: ../event-organiser-venues.php:432
-#: ../templates/archive-event.php:42
 msgid "Events"
 msgstr "Događaji"
 
@@ -790,7 +789,7 @@ msgstr "Istekli događaji"
 msgid "Export"
 msgstr "Izvezi"
 
-#: ../includes/class-event-organiser-im-export.php:98
+#: ../includes/class-event-organiser-im-export.php:91
 msgid "Export Events"
 msgstr "Izvezi događanja"
 
@@ -798,11 +797,11 @@ msgstr "Izvezi događanja"
 msgid "Extensions"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:68
+#: ../includes/class-event-organiser-im-export.php:61
 msgid "File Error encountered: %d"
 msgstr "Došlo je do pogreške datoteke: %d"
 
-#: ../includes/class-event-organiser-im-export.php:80
+#: ../includes/class-event-organiser-im-export.php:73
 msgid "File size: %s. File type: %s"
 msgstr "Veličina datoteke: %s. Tip datoteke:%s"
 
@@ -969,19 +968,19 @@ msgstr "Ako imate omogućene stalne veze, izaberi da imate stalne veze i za "
 msgid "Import"
 msgstr "Uvezi"
 
-#: ../includes/class-event-organiser-im-export.php:110
+#: ../includes/class-event-organiser-im-export.php:103
 msgid "Import an ICS file."
 msgstr "Uvezi ICS datoteku"
 
-#: ../includes/class-event-organiser-im-export.php:112
+#: ../includes/class-event-organiser-im-export.php:105
 msgid "Import categories"
 msgstr "Uvezi kategorije"
 
-#: ../includes/class-event-organiser-im-export.php:107
+#: ../includes/class-event-organiser-im-export.php:100
 msgid "Import Events"
 msgstr "Uvezi Događaje"
 
-#: ../includes/class-event-organiser-im-export.php:111
+#: ../includes/class-event-organiser-im-export.php:104
 msgid "Import venues"
 msgstr "Uvezi sastajališta"
 
@@ -990,7 +989,6 @@ msgid "Include 'Add To Google' link"
 msgstr "Uključi 'Add To google' poveznicu"
 
 #: ../classes/class-eo-event-list-widget.php:66
-#: ../classes/class-eo-calendar-widget.php:46
 msgid "Include past events"
 msgstr "Uključi prošle događaje"
 
@@ -998,25 +996,22 @@ msgstr "Uključi prošle događaje"
 msgid "Include/Exclude occurrences"
 msgstr "Uključi/isključi ponavljanja"
 
-#: ../includes/class-event-organiser-im-export.php:586
-#: ../includes/class-eo-ical-parser.php:449
-msgid "Invalid date. Date expected in YYYYMMDD format."
-msgstr "Krivi datum. Datum je očekivan u formatu YYYYMMDD."
+#: ../includes/class-eo-ical-parser.php:586
+msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
+msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:618
-#: ../includes/class-eo-ical-parser.php:482
-msgid "Invalid datetime. Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss "
-"format."
-msgstr "Krivi datum/vrijeme. Datum očekivan u YYYYMMDDTHHiissZ ili YYYYMMDDTHHiiss "
-"formatu"
+#: ../includes/class-eo-ical-parser.php:624
+msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
+"YYYYMMDDTHHiiss format."
+msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:78
+#: ../includes/class-event-organiser-im-export.php:71
 msgid "Invalid file uploaded. The file must be a ics calendar file of type "
 "'text/calendar', no larger than 2MB."
 msgstr "Kriva datoteka ažurirana. Datoteka mora biti tipa ics kalendata tipa "
 "'text/kalendar', ne veća od 2MB"
 
-#: ../includes/event.php:548
+#: ../includes/event.php:596
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Krivi mjesečni raspored"
 
@@ -1042,18 +1037,11 @@ msgstr "zadnji"
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
 msgstr "Kasnija događanja <span class=\"meta-nav\">→</span>"
 
-#: ../includes/class-event-organiser-im-export.php:275
-#: ../includes/class-event-organiser-im-export.php:301
-#: ../includes/class-eo-ical-parser.php:257
-msgid "Line: %1$d"
-msgstr "Linija: %1$d"
-
 #: ../classes/class-eo-calendar-widget.php:66
 msgid "Link directly to event for days with only one event"
 msgstr ""
 
 #: ../classes/class-eo-event-list-widget.php:41
-#: ../classes/class-eo-calendar-widget.php:80
 msgid "List category slug(s), seperate by comma. Leave blank for all"
 msgstr "Listanje kategorija slug, odvojiti zarezom. ostaviti prazno za sve"
 
@@ -1083,13 +1071,13 @@ msgstr "Minuta"
 msgid "mm-dd-yyyy"
 msgstr "mm-dd-yyyy"
 
-#: ../event-organiser-calendar.php:57
-msgid "month"
-msgstr "mjesec"
-
 #: ../event-organiser-calendar.php:229
 msgid "Month"
 msgstr "Mjesec"
+
+#: ../event-organiser-calendar.php:57
+msgid "month"
+msgstr "mjesec"
 
 #: ../event-organiser-settings.php:270
 msgid "Month archive"
@@ -1125,7 +1113,7 @@ msgstr "Novo ime oznake"
 msgid "New Venue Name"
 msgstr "Novo ime sastajališta"
 
-#: ../classes/class-eo-calendar-widget.php:260
+#: ../classes/class-eo-calendar-widget.php:265
 msgid "Next month"
 msgstr "Sljedeći mjesec"
 
@@ -1148,11 +1136,11 @@ msgstr "Nijedan događaj nije pronađen"
 msgid "No events found in Trash"
 msgstr "Nema događaja u smeću"
 
-#: ../includes/class-event-organiser-im-export.php:316
+#: ../includes/class-event-organiser-im-export.php:242
 msgid "No events were imported."
 msgstr "Nijedan događaj nije Uvezen."
 
-#: ../includes/class-event-organiser-im-export.php:75
+#: ../includes/class-event-organiser-im-export.php:68
 msgid "No file detected."
 msgstr "Datoteka nije detektirana"
 
@@ -1168,7 +1156,7 @@ msgstr "Nema sastajališta"
 msgid "No venues found"
 msgstr "Nijedno sastajlište nije pronađeno"
 
-#: ../event-organiser-settings.php:571
+#: ../event-organiser-settings.php:574
 msgid "None"
 msgstr "Nijedan"
 
@@ -1187,12 +1175,11 @@ msgstr "Broj događaja"
 msgid "Occurrence deleted."
 msgstr "Pojavljivanje obrisano."
 
-#: ../includes/event.php:744
+#: ../includes/event.php:806
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr ""
 
 #: ../event-organiser-edit.php:146
-#: ../templates/shortcode-event-list.php:52
 msgid "on"
 msgstr "na"
 
@@ -1225,7 +1212,7 @@ msgstr "Organizator"
 msgid "Overview"
 msgstr "pregled"
 
-#: ../event-organiser-settings.php:630
+#: ../event-organiser-settings.php:633
 msgid "Page list (fallback)"
 msgstr "Lista stranica(rezervna)"
 
@@ -1246,7 +1233,7 @@ msgstr "Stalne veze"
 msgid "Permissions"
 msgstr "Dopuštenja"
 
-#: ../event-organiser-settings.php:601
+#: ../event-organiser-settings.php:604
 msgid "Please note to enable these structures you must first have pretty permalinks "
 "enabled on WordPress in Settings > Permalinks."
 msgstr "Uzmite u obzir da sa omogućavanje ove strukture prvo morate imati omogućene "
@@ -1260,7 +1247,7 @@ msgstr "Popularne oznake"
 msgid "Post Code"
 msgstr "Poštanski broj"
 
-#: ../classes/class-eo-calendar-widget.php:257
+#: ../classes/class-eo-calendar-widget.php:262
 msgid "Previous month"
 msgstr "Prijašnji mjesec"
 
@@ -1306,7 +1293,7 @@ msgstr "Ponavljanje događaja:"
 msgid "Revisions"
 msgstr "Revizija"
 
-#: ../event-organiser-settings.php:560
+#: ../event-organiser-settings.php:563
 msgid "Role"
 msgstr "Uloge"
 
@@ -1318,11 +1305,11 @@ msgstr "Spremi"
 msgid "Save Draft"
 msgstr "Spremi skicu"
 
-#: ../includes/event.php:458
+#: ../includes/event.php:514
 msgid "Schedule end date is before is before the start date."
 msgstr "Planirani datum kraja je prije početnog datuma."
 
-#: ../includes/event.php:470
+#: ../includes/event.php:484
 msgid "Schedule not recognised."
 msgstr "Raspored nije prepoznat."
 
@@ -1390,7 +1377,7 @@ msgstr "Odvoji oznake sa zarezom"
 msgid "Separate venues with commas"
 msgstr "Odvoji sastajališta sa zarezom"
 
-#: ../event-organiser-settings.php:555
+#: ../event-organiser-settings.php:558
 msgid "Set permissions for events and venue management"
 msgstr "Postavljanje dozvola za upravljanje događajima i sastajalištima"
 
@@ -1432,7 +1419,6 @@ msgid "Specify how regularly the event should repeat (default 1)"
 msgstr "Odredi koliko bi se događaj trebao ponavljati (zadano 1)"
 
 #: ../templates/event-meta-event-single.php:58
-#: ../includes/event-organiser-ajax.php:282
 msgid "Start"
 msgstr "Početak"
 
@@ -1440,11 +1426,11 @@ msgstr "Početak"
 msgid "Start date"
 msgstr "Početni datum"
 
-#: ../includes/event.php:445
+#: ../includes/event.php:493
 msgid "Start date not provided."
 msgstr "Početni datum nije označen."
 
-#: ../includes/event.php:455
+#: ../includes/event.php:511
 msgid "Start date occurs after end date."
 msgstr "Početni datum se javlja nakon krajnjeg datuma"
 
@@ -1468,8 +1454,6 @@ msgid "System Info"
 msgstr "Sistem info"
 
 #: ../templates/event-meta-event-single.php:73
-#: ../includes/event-organiser-event-functions.php:1388
-#: ../includes/event-organiser-cpt.php:105
 msgid "Tags"
 msgstr "Oznake"
 
@@ -1492,7 +1476,7 @@ msgid "The end date is the date the event finishes. If the event is a reoccuring
 msgstr "Datum završetka događanja. Ako se događaj ponavlja, ovo je onda datum "
 "završetka prvog održavanja."
 
-#: ../includes/class-event-organiser-im-export.php:101
+#: ../includes/class-event-organiser-im-export.php:94
 msgid "The export button below generates an ICS file of your events that can be "
 "imported in to other calendar applications such as Google Calendar."
 msgstr "Dugme za izvoz generira ICS datoteku tvojih događaja koja može biti uvezene "
@@ -1504,25 +1488,21 @@ msgid "The start date is the date the event starts. If the event is a reoccuring
 msgstr "Datum početka događaja. Ako se događaj ponavlja , ovo je onda datum njegovog "
 "prvog održavanja."
 
-#: ../classes/class-eventorganiser-shortcodes.php:356
+#: ../classes/class-eventorganiser-shortcodes.php:359
 msgid "There is no excerpt because this is a protected post."
 msgstr "Nema izvadka jer je ovo zaštičen post"
 
-#: ../includes/class-eo-ical-parser.php:90
+#: ../includes/class-eo-ical-parser.php:101
 msgid "There was an error detecting ICAL source."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:136
+#: ../includes/class-eo-ical-parser.php:147
 msgid "There was an error fetching the feed. Response code: %s."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:156
+#: ../includes/class-eo-ical-parser.php:167
 msgid "There was an error opening the ICAL file."
 msgstr ""
-
-#: ../includes/class-event-organiser-im-export.php:318
-msgid "There was an error with %1$d of %2$d events in the ical file"
-msgstr "Došlo je do greške  %1$d od %2$d događaja u ical datoteci"
 
 #: ../includes/event-organiser-register.php:235
 #: ../includes/event-organiser-event-functions.php:693
@@ -1597,8 +1577,6 @@ msgstr "Minijature"
 
 #: ../classes/class-eo-event-list-widget.php:31
 #: ../classes/class-eo-event-list-widget.php:58
-#: ../classes/class-eo-calendar-widget.php:36
-#: ../classes/class-eo-agenda-widget.php:27
 msgid "Title"
 msgstr "Naslov"
 
@@ -1650,7 +1628,7 @@ msgstr "Ažuriraj oznaku"
 msgid "Update Venue"
 msgstr "Ažuriraj sastajalište"
 
-#: ../includes/class-event-organiser-im-export.php:116
+#: ../includes/class-event-organiser-im-export.php:109
 msgid "Upload ICS file"
 msgstr "Otpremi ICS datoteku"
 
@@ -1688,12 +1666,12 @@ msgstr ""
 msgid "Venue Location"
 msgstr "Lokacija sastajališta"
 
-#: ../event-organiser-edit.php:221
-msgid "Venue Name"
-msgstr "Naziv sastajališta"
-
 #: ../event-organiser-venues.php:399
 msgid "Venue name"
+msgstr "Naziv sastajališta"
+
+#: ../event-organiser-edit.php:221
+msgid "Venue Name"
 msgstr "Naziv sastajališta"
 
 #: ../event-organiser-settings.php:220
@@ -1717,6 +1695,7 @@ msgid "Venues"
 msgstr "Sastajlišta"
 
 #: ../includes/event-organiser-ajax.php:544
+#: ../classes/class-eo-venue-list-table.php:71
 msgid "View"
 msgstr "Pregled"
 
@@ -1746,13 +1725,17 @@ msgstr "Pregledaj sastajalište"
 msgid "View will take you to the venue's page"
 msgstr "Pregled će vas odvesti na stranicu sastajališta"
 
-#: ../event-organiser-calendar.php:56
-msgid "week"
-msgstr "tjedan"
+#: ../includes/class-event-organiser-im-export.php:261
+msgid "Warning:"
+msgstr ""
 
 #: ../event-organiser-calendar.php:229
 msgid "Week"
 msgstr "Tjedan"
+
+#: ../event-organiser-calendar.php:56
+msgid "week"
+msgstr "tjedan"
 
 #: ../event-organiser-edit.php:126
 msgid "weekly"
@@ -1838,11 +1821,11 @@ msgstr "Nemate potrebne ovlasti za brisanje ovog događaja"
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Nemate potrebne ovlasti za uređivanje ovog događaja"
 
-#: ../includes/class-event-organiser-im-export.php:171
+#: ../includes/class-event-organiser-im-export.php:160
 msgid "You do not have sufficient permissions to import events."
 msgstr "Nemate potreben ovlasti za uvoz događanja."
 
-#: ../event-organiser-settings.php:602
+#: ../event-organiser-settings.php:605
 msgid "You may also need to go to WordPress Settings > Permalinks and click 'Save "
 "Changes' before any changes will take effect."
 msgstr "Morate otići na Wordpress postavke>stalne veze i kliknut na 'Spremi "
@@ -1851,4 +1834,9 @@ msgstr "Morate otići na Wordpress postavke>stalne veze i kliknut na 'Spremi "
 #: ../event-organiser-settings.php:145
 msgid "yyyy-mm-dd"
 msgstr "yyyy-mm-dd"
+
+#: ../includes/class-eo-ical-parser.php:273
+#: ../includes/class-eo-ical-parser.php:289
+msgid "[Line %1$d]"
+msgstr ""
 

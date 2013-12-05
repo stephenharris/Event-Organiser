@@ -2,7 +2,7 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-09-21 17:45:20+0000\n"
+"PO-Revision-Date: 2013-11-16 11:30:09+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Czech (Czech Republic)\n"
@@ -22,15 +22,15 @@ msgstr "Project-Id-Version: Event Organiser\n"
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
 msgstr "<span class=\"meta-nav\">←</span> Novější události"
 
-#: ../includes/class-event-organiser-im-export.php:335
+#: ../includes/class-event-organiser-im-export.php:282
 msgid "%d categories were created"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:324
+#: ../includes/class-event-organiser-im-export.php:269
 msgid "%d events were successfully imported"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:329
+#: ../includes/class-event-organiser-im-export.php:275
 msgid "%d venues were created"
 msgstr ""
 
@@ -50,15 +50,15 @@ msgstr "— Beze změny —"
 msgid "'No events' message"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:333
+#: ../includes/class-event-organiser-im-export.php:279
 msgid "1 category was created"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:322
+#: ../includes/class-event-organiser-im-export.php:266
 msgid "1 event was successfully imported"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:327
+#: ../includes/class-event-organiser-im-export.php:272
 msgid "1 venue was created"
 msgstr ""
 
@@ -66,14 +66,14 @@ msgstr ""
 msgid "24 hour time"
 msgstr "24 hodinový čas"
 
-#: ../includes/event-organiser-register.php:604
+#: ../includes/event-organiser-register.php:607
 msgid "<h4>City & State Fields Added</h4>City and state / province fields for "
 "venues have now been added. </br> If you'd like, Event Organiser can <a "
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
 "details aftewards."
 msgstr ""
 
-#: ../includes/event-organiser-register.php:611
+#: ../includes/event-organiser-register.php:614
 msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
 "haven't and want the old templates back, <a "
@@ -178,6 +178,7 @@ msgid "All Tags"
 msgstr "Všechny štítky"
 
 #: ../includes/event-organiser-cpt.php:31
+#: ../classes/class-eo-event-list-widget.php:47
 msgid "All Venues"
 msgstr "Všechna místa"
 
@@ -260,7 +261,7 @@ msgstr ""
 msgid "Check to edit this event and its reoccurrences"
 msgstr ""
 
-#: ../event-organiser-settings.php:600
+#: ../event-organiser-settings.php:603
 msgid "Choose a custom permalink structure for events, venues, event categories and "
 "event tags."
 msgstr ""
@@ -334,18 +335,6 @@ msgstr "ručně nastavené opakování"
 #: ../event-organiser-edit.php:126
 msgid "daily"
 msgstr "denně"
-
-#: ../event-organiser-debug.php:533
-msgid "Database character set"
-msgstr ""
-
-#: ../event-organiser-debug.php:532
-msgid "Database tables"
-msgstr ""
-
-#: ../event-organiser-debug.php:531
-msgid "Databse Prefix"
-msgstr ""
 
 #: ../event-organiser-settings.php:137
 msgid "Date Format:"
@@ -426,11 +415,11 @@ msgstr "sest."
 msgid "Disable CSS:"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:648
+#: ../includes/event-organiser-register.php:651
 msgid "Dismiss"
 msgstr ""
 
-#: ../includes/event-organiser-register.php:647
+#: ../includes/event-organiser-register.php:650
 msgid "Dismiss this notice"
 msgstr ""
 
@@ -456,11 +445,11 @@ msgstr "Zobrazit seznam událostí"
 msgid "Displays a list of events, grouped by date"
 msgstr ""
 
-#: ../event-organiser-settings.php:626
+#: ../event-organiser-settings.php:629
 msgid "Do not add to menu"
 msgstr "Nepřidávat do menu"
 
-#: ../includes/class-event-organiser-im-export.php:104
+#: ../includes/class-event-organiser-im-export.php:97
 msgid "Download Export File"
 msgstr ""
 
@@ -534,6 +523,10 @@ msgid "Ensure dates are entered in %1$s format and times in %2$s (24 hour) forma
 msgstr "Ujistěte se, že datumy jsou zadána ve formátu %1$s a časy ve formátu %2$s "
 "(24 hodinový)"
 
+#: ../includes/class-event-organiser-im-export.php:251
+msgid "Error:"
+msgstr ""
+
 #: ../event-organiser-manage.php:19
 msgid "Event"
 msgstr "Událost"
@@ -551,7 +544,6 @@ msgid "Event Categories"
 msgstr "Kategorie události"
 
 #: ../classes/class-eo-event-list-widget.php:39
-#: ../classes/class-eo-calendar-widget.php:77
 msgid "Event categories"
 msgstr "Kategorie události"
 
@@ -576,12 +568,20 @@ msgstr "Detail události"
 msgid "Event Details"
 msgstr "Detaily události"
 
+#: ../includes/event.php:716
+msgid "Event does not contain any dates."
+msgstr ""
+
 #: ../includes/event-organiser-cpt.php:229
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 
 #: ../classes/class-eo-event-list-widget.php:78
 msgid "Event list widget placeholders"
+msgstr ""
+
+#: ../event-organiser-settings.php:557
+msgid "Event management permissions"
 msgstr ""
 
 #: ../event-organiser-settings.php:29
@@ -664,7 +664,6 @@ msgstr "Místa události"
 
 #: ../event-organiser.php:127
 #: ../event-organiser-venues.php:432
-#: ../templates/archive-event.php:42
 msgid "Events"
 msgstr "Události"
 
@@ -780,7 +779,7 @@ msgstr "Expirované události"
 msgid "Export"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:98
+#: ../includes/class-event-organiser-im-export.php:91
 msgid "Export Events"
 msgstr ""
 
@@ -788,11 +787,11 @@ msgstr ""
 msgid "Extensions"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:68
+#: ../includes/class-event-organiser-im-export.php:61
 msgid "File Error encountered: %d"
 msgstr "File Error encountered: %d"
 
-#: ../includes/class-event-organiser-im-export.php:80
+#: ../includes/class-event-organiser-im-export.php:73
 msgid "File size: %s. File type: %s"
 msgstr ""
 
@@ -942,19 +941,19 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:110
+#: ../includes/class-event-organiser-im-export.php:103
 msgid "Import an ICS file."
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:112
+#: ../includes/class-event-organiser-im-export.php:105
 msgid "Import categories"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:107
+#: ../includes/class-event-organiser-im-export.php:100
 msgid "Import Events"
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:111
+#: ../includes/class-event-organiser-im-export.php:104
 msgid "Import venues"
 msgstr ""
 
@@ -963,7 +962,6 @@ msgid "Include 'Add To Google' link"
 msgstr ""
 
 #: ../classes/class-eo-event-list-widget.php:66
-#: ../classes/class-eo-calendar-widget.php:46
 msgid "Include past events"
 msgstr "Včetně minulých událostí"
 
@@ -971,23 +969,21 @@ msgstr "Včetně minulých událostí"
 msgid "Include/Exclude occurrences"
 msgstr "Přidat/Ubrat opakování"
 
-#: ../includes/class-event-organiser-im-export.php:586
-#: ../includes/class-eo-ical-parser.php:449
-msgid "Invalid date. Date expected in YYYYMMDD format."
+#: ../includes/class-eo-ical-parser.php:586
+msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:618
-#: ../includes/class-eo-ical-parser.php:482
-msgid "Invalid datetime. Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss "
-"format."
+#: ../includes/class-eo-ical-parser.php:624
+msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
+"YYYYMMDDTHHiiss format."
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:78
+#: ../includes/class-event-organiser-im-export.php:71
 msgid "Invalid file uploaded. The file must be a ics calendar file of type "
 "'text/calendar', no larger than 2MB."
 msgstr ""
 
-#: ../includes/event.php:548
+#: ../includes/event.php:596
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr ""
 
@@ -1012,18 +1008,11 @@ msgstr "poslední"
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
 msgstr "Pozdější události <span class=\"meta-nav\">→</span>"
 
-#: ../includes/class-event-organiser-im-export.php:275
-#: ../includes/class-event-organiser-im-export.php:301
-#: ../includes/class-eo-ical-parser.php:257
-msgid "Line: %1$d"
-msgstr ""
-
 #: ../classes/class-eo-calendar-widget.php:66
 msgid "Link directly to event for days with only one event"
 msgstr ""
 
 #: ../classes/class-eo-event-list-widget.php:41
-#: ../classes/class-eo-calendar-widget.php:80
 msgid "List category slug(s), seperate by comma. Leave blank for all"
 msgstr ""
 
@@ -1094,7 +1083,7 @@ msgstr "Název nového štítku"
 msgid "New Venue Name"
 msgstr "Název nového místa"
 
-#: ../classes/class-eo-calendar-widget.php:260
+#: ../classes/class-eo-calendar-widget.php:265
 msgid "Next month"
 msgstr "Následující měsíc"
 
@@ -1117,11 +1106,11 @@ msgstr "Událost nenalezena"
 msgid "No events found in Trash"
 msgstr "V koši není žádná událost"
 
-#: ../includes/class-event-organiser-im-export.php:316
+#: ../includes/class-event-organiser-im-export.php:242
 msgid "No events were imported."
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:75
+#: ../includes/class-event-organiser-im-export.php:68
 msgid "No file detected."
 msgstr ""
 
@@ -1137,7 +1126,7 @@ msgstr "Žádné místo"
 msgid "No venues found"
 msgstr ""
 
-#: ../event-organiser-settings.php:571
+#: ../event-organiser-settings.php:574
 msgid "None"
 msgstr "Žádná"
 
@@ -1156,12 +1145,11 @@ msgstr "Počet událostí"
 msgid "Occurrence deleted."
 msgstr "Opakování smazáno."
 
-#: ../includes/event.php:744
+#: ../includes/event.php:806
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr ""
 
 #: ../event-organiser-edit.php:146
-#: ../templates/shortcode-event-list.php:52
 msgid "on"
 msgstr "v"
 
@@ -1194,7 +1182,7 @@ msgstr "Plánovač"
 msgid "Overview"
 msgstr "Přehled"
 
-#: ../event-organiser-settings.php:630
+#: ../event-organiser-settings.php:633
 msgid "Page list (fallback)"
 msgstr ""
 
@@ -1215,7 +1203,7 @@ msgstr "Trvalé odkazy"
 msgid "Permissions"
 msgstr "Oprávnění"
 
-#: ../event-organiser-settings.php:601
+#: ../event-organiser-settings.php:604
 msgid "Please note to enable these structures you must first have pretty permalinks "
 "enabled on WordPress in Settings > Permalinks."
 msgstr ""
@@ -1228,7 +1216,7 @@ msgstr "Populární štítky"
 msgid "Post Code"
 msgstr "PSČ"
 
-#: ../classes/class-eo-calendar-widget.php:257
+#: ../classes/class-eo-calendar-widget.php:262
 msgid "Previous month"
 msgstr "Předcházející měsíc"
 
@@ -1274,7 +1262,7 @@ msgstr "Opakující se události."
 msgid "Revisions"
 msgstr "Revize"
 
-#: ../event-organiser-settings.php:560
+#: ../event-organiser-settings.php:563
 msgid "Role"
 msgstr "Role"
 
@@ -1286,11 +1274,11 @@ msgstr "Uložit"
 msgid "Save Draft"
 msgstr "Uložit koncept"
 
-#: ../includes/event.php:458
+#: ../includes/event.php:514
 msgid "Schedule end date is before is before the start date."
 msgstr ""
 
-#: ../includes/event.php:470
+#: ../includes/event.php:484
 msgid "Schedule not recognised."
 msgstr ""
 
@@ -1358,7 +1346,7 @@ msgstr "Štítky od sebe oddělte čáskou"
 msgid "Separate venues with commas"
 msgstr "Místa od sebe oddělte čárkou"
 
-#: ../event-organiser-settings.php:555
+#: ../event-organiser-settings.php:558
 msgid "Set permissions for events and venue management"
 msgstr "Nastavit oprávnění pro správu událostí a míst"
 
@@ -1400,7 +1388,6 @@ msgid "Specify how regularly the event should repeat (default 1)"
 msgstr ""
 
 #: ../templates/event-meta-event-single.php:58
-#: ../includes/event-organiser-ajax.php:282
 msgid "Start"
 msgstr ""
 
@@ -1408,11 +1395,11 @@ msgstr ""
 msgid "Start date"
 msgstr "Datum začátku"
 
-#: ../includes/event.php:445
+#: ../includes/event.php:493
 msgid "Start date not provided."
 msgstr ""
 
-#: ../includes/event.php:455
+#: ../includes/event.php:511
 msgid "Start date occurs after end date."
 msgstr ""
 
@@ -1442,8 +1429,6 @@ msgid "System Info"
 msgstr "Systémové informace"
 
 #: ../templates/event-meta-event-single.php:73
-#: ../includes/event-organiser-event-functions.php:1388
-#: ../includes/event-organiser-cpt.php:105
 msgid "Tags"
 msgstr "Štítky"
 
@@ -1465,7 +1450,7 @@ msgid "The end date is the date the event finishes. If the event is a reoccuring
 "event, this is the end date of the first occurrence."
 msgstr ""
 
-#: ../includes/class-event-organiser-im-export.php:101
+#: ../includes/class-event-organiser-im-export.php:94
 msgid "The export button below generates an ICS file of your events that can be "
 "imported in to other calendar applications such as Google Calendar."
 msgstr ""
@@ -1475,24 +1460,20 @@ msgid "The start date is the date the event starts. If the event is a reoccuring
 "event, this is the start date of the first occurrence."
 msgstr ""
 
-#: ../classes/class-eventorganiser-shortcodes.php:356
+#: ../classes/class-eventorganiser-shortcodes.php:359
 msgid "There is no excerpt because this is a protected post."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:90
+#: ../includes/class-eo-ical-parser.php:101
 msgid "There was an error detecting ICAL source."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:136
+#: ../includes/class-eo-ical-parser.php:147
 msgid "There was an error fetching the feed. Response code: %s."
 msgstr ""
 
-#: ../includes/class-eo-ical-parser.php:156
+#: ../includes/class-eo-ical-parser.php:167
 msgid "There was an error opening the ICAL file."
-msgstr ""
-
-#: ../includes/class-event-organiser-im-export.php:318
-msgid "There was an error with %1$d of %2$d events in the ical file"
 msgstr ""
 
 #: ../includes/event-organiser-register.php:235
@@ -1573,8 +1554,6 @@ msgstr "Náhled"
 
 #: ../classes/class-eo-event-list-widget.php:31
 #: ../classes/class-eo-event-list-widget.php:58
-#: ../classes/class-eo-calendar-widget.php:36
-#: ../classes/class-eo-agenda-widget.php:27
 msgid "Title"
 msgstr "Název"
 
@@ -1622,7 +1601,7 @@ msgstr "Uložit štítek"
 msgid "Update Venue"
 msgstr "Upravit místo"
 
-#: ../includes/class-event-organiser-im-export.php:116
+#: ../includes/class-event-organiser-im-export.php:109
 msgid "Upload ICS file"
 msgstr "Nahrát ICS soubor"
 
@@ -1689,6 +1668,7 @@ msgid "Venues"
 msgstr "Místa"
 
 #: ../includes/event-organiser-ajax.php:544
+#: ../classes/class-eo-venue-list-table.php:71
 msgid "View"
 msgstr "Ukázat"
 
@@ -1717,6 +1697,10 @@ msgstr "Ukázat místo"
 #: ../includes/event-organiser-cpt.php:469
 msgid "View will take you to the venue's page"
 msgstr "'Zobrazit' vás přenese na stránku místa."
+
+#: ../includes/class-event-organiser-im-export.php:261
+msgid "Warning:"
+msgstr ""
 
 #: ../event-organiser-calendar.php:229
 msgid "Week"
@@ -1804,11 +1788,11 @@ msgstr "Pro smazání události nemáte dostatečná proprávnění"
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Pro upravení události nemáte dostatečná proprávnění"
 
-#: ../includes/class-event-organiser-im-export.php:171
+#: ../includes/class-event-organiser-im-export.php:160
 msgid "You do not have sufficient permissions to import events."
 msgstr "Nemáte dostatečné oprávnění k importování událostí."
 
-#: ../event-organiser-settings.php:602
+#: ../event-organiser-settings.php:605
 msgid "You may also need to go to WordPress Settings > Permalinks and click 'Save "
 "Changes' before any changes will take effect."
 msgstr "Možná budete muset také jít do Nastavení WordPressu > Trvalé odkazy a "
@@ -1817,4 +1801,9 @@ msgstr "Možná budete muset také jít do Nastavení WordPressu > Trvalé odkaz
 #: ../event-organiser-settings.php:145
 msgid "yyyy-mm-dd"
 msgstr "rrrr-mm-dd"
+
+#: ../includes/class-eo-ical-parser.php:273
+#: ../includes/class-eo-ical-parser.php:289
+msgid "[Line %1$d]"
+msgstr ""
 
