@@ -150,11 +150,11 @@ function eo_date_interval($_date1,$_date2, $format){
 	$r = ($_date1 <= $_date2 ? '' : '-');
 
 	//Make sure $date1 is ealier
-	$date1 = ($_date1 <= $_date2 ? $_date1 : $_date2);
-	$date2 = ($_date1 <= $_date2 ? $_date2 : $_date1);
+	$date1 = clone ($_date1 <= $_date2 ? $_date1 : $_date2);
+	$date2 = clone ($_date1 <= $_date2 ? $_date2 : $_date1);
 
 	//Calculate total days difference
-	$total_days = round(abs($date1->format('U') - $date2->format('U'))/86400);
+	$total_days = floor(abs($date1->format('U') - $date2->format('U'))/86400);
 
 	//A leap year work around - consistent with DateInterval
 	$leap_year = ( $date1->format('m-d') == '02-29' ? true : false);
