@@ -1142,6 +1142,7 @@ function eventorganiser_append_dependency( $handle, $dep ){
  * 
  * Commas, semicolons and backslashes are escaped.
  * New lines are appended with a space (why?)
+ * 
  * @ignore
  * @since 2.1
  * @param string $text The string to be escaped
@@ -1154,10 +1155,32 @@ function eventorganiser_escape_ical_text( $text ){
 	$text = str_replace( ";", "\;", $text );
 	$text = str_replace( "\n", "\n ", $text );
 	
+	return $text;
+}
+
+/**
+ * Fold text as per [iCal specifications](http://www.ietf.org/rfc/rfc2445.txt)
+ * 
+ * Lines of text SHOULD NOT be longer than 75 octets, excluding the line
+ * break. Long content lines SHOULD be split into a multiple line
+ * representations using a line "folding" technique. That is, a long
+ * line can be split between any two characters by inserting a CRLF 
+ * immediately followed by a single linear white space character (i.e.,
+ * SPACE, US-ASCII decimal 32 or HTAB, US-ASCII decimal 9). Any sequence
+ * of CRLF followed immediately by a single linear white space character
+ * is ignored (i.e., removed) when processing the content type.
+ *
+ * @ignore
+ * @since 2.7
+ * @param string $text The string to be escaped
+ * @return string The escaped string.
+ */
+function eventorganiser_fold_ical_text( $text ){
+
 	$text_arr = array();
-	
+
 	$lines = ceil( strlen( $text ) / 75 );
-	
+
 	for( $i = 0; $i < $lines; $i++ ){
 		$text_arr[$i] = mb_substr( $text, $i * 75, 75 );
 	}
