@@ -128,6 +128,28 @@ class EO_ICAL_Parser{
 		$this->venue_parsed = count( $this->venues );
 		$this->categories_parsed = count( $this->categories );
 		
+		/**
+		 * Filter the feed class by reference.
+		 * 
+		 * This filter allows you to view and modify all events, venues and categories from
+		 * a parsed iCal feed. The example below adds all events to the category 'imported'
+		 * 
+		 * <pre><code>
+		 * add_action( 'eventorganiser_ical_feed_parsed', 'my_auto_assign_event_cat_to_feed' );
+		 * function my_auto_assign_event_cat_to_feed( $ical_parser ){
+		 *      if( $ical_parser->events_parsed ){
+		 *          foreach( $ical_parser->events_parsed  as $index => $event ){
+		 *      		$this->events_parsed[$index]['event-category'][] = 'imported';
+		 *      	}
+		 *      }
+		 * }
+		 * </code></pre>
+		 * 
+		 * @since 2.7
+		 * @param EO_ICAL_Parser $EO_ICAL_Parser The feed parser object containg parsed events/venues/categories.
+		 */
+		do_action_ref_array( 'eventorganiser_ical_feed_parsed', array( &$this ) );
+		
 		return true;
 	}
 	
