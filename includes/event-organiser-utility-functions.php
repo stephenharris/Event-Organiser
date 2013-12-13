@@ -444,7 +444,7 @@ function _eventorganiser_compare_dates($date1,$date2){
 function _eventorganiser_php52_modify($date='',$modify=''){
 	
 	//Expect e.g. 'Second Monday of +2 month
-	$pattern = '/([a-zA-Z]+)\s([a-zA-Z]+) of \+(\d+) month/';
+	$pattern = '/([a-zA-Z]+)\s([a-zA-Z]+) of ([\+|-]?\d+) month/i';
 	preg_match($pattern, $modify, $matches);
 
 	$ordinal = array_search(strtolower($matches[1]), array('last','first','second','third','fourth') ); //0-4
