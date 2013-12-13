@@ -136,6 +136,12 @@ function eo_get_blog_timezone(){
 /**
  * Calculates and formats an interval between two days, passed in any order.
  * It's a PHP 5.2 workaround for {@link http://www.php.net/manual/en/dateinterval.format.php date interval format}
+ * 
+ * This does not correctly handle DST but instead mimics the same buggy behaviour exphibted by PHP's date interval. 
+ * See https://bugs.php.net/bug.php?id=63953
+ * 
+ * @see https://bugs.php.net/bug.php?id=63953
+ * 
  * @since 1.5
  *
  * @param dateTime $_date1 One date to compare
@@ -185,26 +191,61 @@ function eo_date_interval($_date1,$_date2, $format){
 	$seconds = round(abs($date1->format('U') - $date2->format('U')));
 	$minutes = floor($seconds/60);
 	$seconds = $seconds - $minutes*60;
-		
-	$replace = array(
-		'/%y/' => $years,
-		'/%Y/' => zeroise($years,2),
-		'/%m/' => $months,
-		'/%M/' => zeroise($months,2),
-		'/%d/' => $days,
-		'/%D/' => zeroise($days,2),
-		'/%a/' => zeroise($total_days,2),
-		'/%h/' => $hours,
-		'/%H/' => zeroise($hours,2),
-		'/%i/' => $minutes,
-		'/%I/' =>zeroise($minutes,2),
-		'/%s/' => $seconds,
-		'/%S/' => zeroise($seconds,2),
-		'/%r/' => $r,
-		'/%R/' => $R
-	);
 
-	return preg_replace(array_keys($replace), array_values($replace), $format);
+	$chars = str_split( $format );
+	$length = count( $chars );
+	
+	if( $length == 1 ){
+		return $format;
+	}
+	
+	$values = array(
+			'%' => "%",
+			'y' => $years,
+			'Y' => zeroise( $years, 2 ),
+			'm' => $months,
+			'M' => zeroise( $months, 2 ),
+			'd' => $days,
+			'D' => zeroise( $days, 2 ),
+			'a' => $total_days,
+			'h' => $hours,
+			'H' => zeroise( $hours, 2 ),
+			'i' => $minutes,
+			'I' => zeroise( $minutes, 2 ),
+			's' => $seconds,
+			'S' => zeroise( $seconds, 2 ),
+			'r' => $r,
+			'R' => $R,
+	);
+	
+	$result = "";
+	$previous_char_processed =  false;
+	
+	for( $i = 0; $i < $length; $i++ ){
+	
+		if( ( $i > 0 && $chars[$i-1] === '%' ) && !$previous_char_processed ){
+				
+			if( isset( $values[$chars[$i]] ) ){
+				$result .= $values[$chars[$i]];
+				$previous_char_processed = true;
+								
+			}else{
+				$result .= $chars[$i-1].$chars[$i];
+				$previous_char_processed = true;
+			}
+			
+					
+		}elseif( $chars[$i] == '%' ){
+			$previous_char_processed = false;
+			
+		}else{
+			$result .= $chars[$i];
+			$previous_char_processed = true;
+		}
+		//var_dump($result);
+	}
+	
+	return $result;
 }	 
 
 /**
