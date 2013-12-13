@@ -509,8 +509,7 @@ function eventorganiser_trim_excerpt($text = '', $excerpt_length=55) {
  *@return datetime The corresponding DateTime object.
 */
 function eventorganiser_date_create($datetime_string){
-	$tz = eo_get_blog_timezone();
-	return date_create($datetime_string,$tz);
+	return date_create( $datetime_string, eo_get_blog_timezone() );
 }
 
 
