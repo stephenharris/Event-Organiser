@@ -1500,11 +1500,11 @@ function eo_get_event_meta_list( $post_id=0 ){
 
 
 /**
- * Returns an the link for the event archive
+ * Returns an the link for the event archive.
  * 
  * Optionally provide the year , or month or day to get an year/month/day archive link. 
- * To get a month archive you should provide a year
- * To get a day archive you should provide a year and month.
+ * To get a month archive you should provide a year. To get a day archive you should 
+ * provide a year and month.
  * 
  * ### Example
  * On a year archive page, show  a link to the following year.
