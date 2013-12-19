@@ -217,11 +217,11 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
 * @since 1.0.0
 * @package event-date-functions
 *
-* @param string $format String of format as accepted by PHP date
+* @param string $format String of format as accepted by PHP date or the constant DATETIMEOBJ to return a DateTime object
 * @param int $post_id Post ID of the event
 * @param int $deprecated The occurrence number. Deprecated. Use $occurrence_id
 * @param int $occurrence_id  The occurrence ID
-* @return string the start date formated to given format, as accepted by PHP date
+* @return string|DateTime the start date formated to given format, as accepted by PHP date or a DateTime object if DATETIMEOBJ is given as format.
  */
 function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id=0){
 	global $post;
