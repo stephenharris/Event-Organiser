@@ -253,7 +253,17 @@ function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_
 
 	$start = $occurrences[$occurrence_id]['start'];
 
-	return apply_filters('eventorganiser_get_the_start', eo_format_datetime( $start, $format ), $start, $format, $post_id, $occurrence_id );
+	/**
+	 * Filters the value returned by `eo_get_the_start()`
+	 *
+	 * @param string|DateTime $formatted_start The DateTime object or formatted returned value (as determined by $format)
+	 * @param DateTime $start The start date as a DateTime object
+	 * @param string $format The format the start date should be returned in
+	 * @param int $post_id Post ID of the event
+	 * @param int $occurrence_id  The occurrence ID
+	 */
+	$formatted_date = apply_filters('eventorganiser_get_the_start', eo_format_datetime( $start, $format ), $start, $format, $post_id, $occurrence_id );
+	return $formatted_date;
 }
 
 /**
@@ -385,7 +395,17 @@ function eo_get_the_end($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id
 
 	$end = $occurrences[$occurrence_id]['end'];
 
-	return apply_filters('eventorganiser_get_the_end', eo_format_datetime( $end, $format ), $end, $format, $post_id, $occurrence_id );
+	/**
+	 * Filters the value returned by `eo_get_the_end()`
+	 *
+	 * @param string|DateTime $formatted_end The DateTime object or formatted returned value (as determined by $format)
+	 * @param DateTime $end The end date as a DateTime object
+	 * @param string $format The format the end date should be returned in
+	 * @param int $post_id Post ID of the event
+	 * @param int $occurrence_id  The occurrence ID
+	 */
+	$formatted_date = apply_filters('eventorganiser_get_the_end', eo_format_datetime( $end, $format ), $end, $format, $post_id, $occurrence_id );
+	return $formatted_date;
 }
 
 /**
@@ -431,7 +451,16 @@ function eo_get_next_occurrence($format='d-m-Y',$post_id=0){
 		return false;
 
 	$next = $next_occurrence['start'];
-	return apply_filters('eventorganiser_get_next_occurrence', eo_format_datetime( $next, $format ), $next, $format, $post_id );
+	/**
+	 * Filters the value returned by `eo_get_next_occurrence()`
+	 *
+	 * @param string|DateTime $formatted_date The DateTime object or formatted returned value (as determined by $format)
+	 * @param DateTime $next The next date of this event as a DateTime object
+	 * @param string $format The format the date should be returned in
+	 * @param int $post_id Post ID of the event
+	 */
+	$formatted_date = apply_filters('eventorganiser_get_next_occurrence', eo_format_datetime( $next, $format ), $next, $format, $post_id );
+	return $formatted_date;
 }
 
 /**
@@ -578,7 +607,17 @@ function eo_get_schedule_start($format='d-m-Y',$post_id=0){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$schedule = eo_get_event_schedule($post_id);
 	$schedule_start = $schedule['schedule_start'];
-	return apply_filters('eventorganiser_get_schedule_start', eo_format_datetime( $schedule_start, $format ), $schedule_start, $format, $post_id );
+	
+	/**
+	 * Filters the value returned by `eo_get_schedule_start()`
+	 *
+	 * @param string|DateTime $formatted_date The DateTime object or formatted returned value (as determined by $format)
+	 * @param DateTime $end The start date of the first occurrence of this event as a DateTime object
+	 * @param string $format The format the date should be returned in
+	 * @param int $post_id Post ID of the event
+	 */
+	$formatted_date = apply_filters('eventorganiser_get_schedule_start', eo_format_datetime( $schedule_start, $format ), $schedule_start, $format, $post_id );
+	return $formatted_date;
 }
 
 /**
@@ -620,7 +659,17 @@ function eo_get_schedule_last($format='d-m-Y',$post_id=0){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$schedule = eo_get_event_schedule($post_id);
 	$schedule_last = $schedule['schedule_last'];
-	return apply_filters('eventorganiser_get_schedule_last', eo_format_datetime( $schedule_last, $format ), $schedule_last, $format, $post_id );
+	
+	/**
+	 * Filters the value returned by `eo_get_schedule_last()`
+	 *
+	 * @param string|DateTime $formatted_date The DateTime object or formatted returned value (as determined by $format)
+	 * @param DateTime $end The **start** date of the last occurrence of this event as a DateTime object
+	 * @param string $format The format the date should be returned in
+	 * @param int $post_id Post ID of the event
+	 */
+	$formatted_date = apply_filters('eventorganiser_get_schedule_last', eo_format_datetime( $schedule_last, $format ), $schedule_last, $format, $post_id );
+	return $formatted_date;
 }
 
 /**
@@ -829,8 +878,19 @@ function eo_get_the_future_occurrences_of( $post_id=0 ){
 		);
 	endforeach;
 	
-	return apply_filters( 'eventorganiser_get_the_future_occurrences_of', $occurrences, $post_id );
+	/**
+	 * Filters the value returned by `eo_get_the_future_occurrences_of()`
+	 *
+	 * The filtered value is an array of occurrences. Each occurrence is an array with 'start' and 'end' key. 
+	 * Both of these hold a DateTime object (for the start and end of that occurrence respecitvely).
+	 *
+	 * @param array $occurrences Future occurrences of this event
+	 * @param int $post_id Post ID of the event
+	 */
+	$occurrences = apply_filters( 'eventorganiser_get_the_future_occurrences_of', $occurrences, $post_id );
+	return $occurrences;
 }
+
 /** 
 * Returns an array of occurrences. Each occurrence is an array with 'start' and 'end' key. 
 *  Both of these hold a DateTime object (for the start and end of that occurrence respecitvely).
@@ -890,7 +950,17 @@ function eo_get_the_occurrences_of($post_id=0){
 		wp_cache_set( 'eventorganiser_occurrences_'.$post_id, $occurrences );
 	}
 
-	return apply_filters( 'eventorganiser_get_the_occurrences_of', $occurrences, $post_id );
+	/**
+	 * Filters the value returned by `eo_get_the_occurrences_of()`
+	 *
+	 * The filtered value is an array of occurrences. Each occurrence is an array with 'start' and 'end' key.
+	 * Both of these hold a DateTime object (for the start and end of that occurrence respecitvely).
+	 *
+	 * @param array $occurrences All occurrences of this event
+	 * @param int $post_id Post ID of the event
+	 */
+	$occurrences = apply_filters( 'eventorganiser_get_the_occurrences_of', $occurrences, $post_id );
+	return $occurrences;
 }
 
 /**
@@ -933,11 +1003,14 @@ function eo_get_event_color($post_id=0){
 
 	/**
 	 * Filters the colour associated with an event
-	 *@link http://wordpress.org/support/topic/plugin-event-organiser-color-code-for-venues-instead-of-categories
-	 *@param string $color Event colour in HEX format
-	 *@param int $post_id The event (post) ID
+	 * 
+	 * @link http://wordpress.org/support/topic/plugin-event-organiser-color-code-for-venues-instead-of-categories
+	 * @param string $color Event colour in HEX format
+	 * @param int $post_id The event (post) ID
 	*/
-	return apply_filters('eventorganiser_event_color',$color,$post_id);
+	$color = apply_filters('eventorganiser_event_color',$color,$post_id);
+	
+	return $color;
 }
 
 /**
@@ -1008,6 +1081,13 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 		$event_classes[] = 'eo-event-running';
 	}
 	
+	/**
+	 * Filters an array of classes for specified event (occurrence) 
+	 *
+	 * @param array $event_classes An array of class pertaining to this occurrence
+	 * @param int $post_id The ID of the event
+	 * @param into $occurrence_id The ID of the occurrence
+	 */
 	$event_classes = apply_filters( 'eventorganiser_event_classes', $event_classes, $post_id, $occurrence_id );
 	$event_classes = array_unique( $event_classes );
 	$event_classes = array_map( 'sanitize_html_class', $event_classes );
@@ -1158,6 +1238,9 @@ function eo_get_add_to_google_link( $event_id = 0, $occurrence_id = 0 ){
 		$end->setTimezone( new DateTimeZone('UTC') );
 	endif;
 	
+	/**
+	 * @ignore
+	 */
 	$excerpt = apply_filters('the_excerpt_rss', get_the_excerpt());
 	
 	$url = add_query_arg( array(
@@ -1402,7 +1485,17 @@ function eo_get_event_meta_list( $post_id=0 ){
 
 	$html .='</ul>';
 
-	return apply_filters('eventorganiser_event_meta_list', $html, $post_id);
+	/**
+	 * Filters mark-up for the event details list.
+	 *
+	 * The event details list is just a simple list containig details pertaining
+	 * to the event (venue, categories, tags) etc.
+	 *
+	 * @param array $html The generated mark-up
+	 * @param int $post_id Post ID of the event
+	 */
+	$html = apply_filters('eventorganiser_event_meta_list', $html, $post_id);
+	return $html;
 }
 
 
@@ -1482,6 +1575,12 @@ function eo_break_occurrence( $post_id, $occurrence_id ){
 	$post = get_post( $post_id );
 	setup_postdata( $post_id );
 
+	/**
+	 * Triggered before an occurrence is broken from an event.
+	 *
+	 * @param int $post_id The ID of the original parent event
+	 * @param int $occurrence_id The ID of the occurrence being broken
+	 */
 	do_action( 'eventorganiser_pre_break_occurrence', $post_id, $occurrence_id );
 	
 	$tax_input = array();
@@ -1521,7 +1620,19 @@ function eo_break_occurrence( $post_id, $occurrence_id ){
 
 			//Don't copy these
 			$ignore_meta = array( '_eventorganiser_uid', '_eo_tickets', '_edit_last', '_edit_last', '_edit_lock' ) ;
+
+			/**
+			 * Filters an array of keys which should be ignored when breaking an 
+			 * occurrence.
+			 * 
+			 * When breaking an occurrence from an event a new event is made for 
+			 * that occurrence. Meta data from the original event is copied across, 
+			 * unless its meta key exists in the filtered array.  
+			 * 
+			 * @param array $ignore_meta Array of meta keys to be ignored
+			 */
 			$ignore_meta = apply_filters( 'eventorganiser_breaking_occurrence_exclude_meta', $ignore_meta );
+			
 			if( in_array( $meta_key, $ignore_meta ) )
 				continue;
 		
@@ -1539,6 +1650,13 @@ function eo_break_occurrence( $post_id, $occurrence_id ){
 	}
 	_eventorganiser_delete_calendar_cache();
 
+	/**
+	 * Triggered after an occurrence has been broken from an event.
+	 *
+	 * @param int $post_id The ID of the original parent event
+	 * @param int $occurrence_id The ID of the occurrence being broken
+	 * @param int $new_event_id The ID of the newly created event
+	 */
 	do_action( 'eventorganiser_occurrence_broken', $post_id, $occurrence_id, $new_event_id );
 
 	wp_reset_postdata();
