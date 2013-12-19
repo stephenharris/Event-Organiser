@@ -76,6 +76,25 @@ class EO_ICAL_Parser{
 					'parse_html' => true,
 				), $args );
 		
+		/**
+		 * Filters the options for the iCal parser class
+		 * 
+		 * `$args` is an array with keys:
+		 * 
+		 *  - `status_map` - mapping iCal status to WordPress status. By default
+		 *     <pre><code>
+		 *     array(
+		 *			'CONFIRMED' => 'publish',
+		 *			'CANCELLED' => 'trash',
+		 *			'TENTATIVE' => 'draft',
+				);
+		 *     </code></pre>
+		 *  - `default_status` - the status to use for the event if the iCal feed does not provide a status#
+		 *  - `parse_html` - whether to parse a HTML version of event descriptions if provided 
+		 *
+		 * @param array $args Options for the iCal Parser
+		 * @param EO_ICAL_Parser $ical_parser The iCal parser object
+		 */
 		$args = apply_filters_ref_array( 'eventorganiser_ical_parser_args', array( $args, &$this ) );
 		
 		$this->calendar_timezone = eo_get_blog_timezone();
@@ -685,6 +704,12 @@ class EO_ICAL_Parser{
 		}
 
 		//Let plugins over-ride this
+		/**
+		 * Filters the DateTimeZone object parsed from a timezone ID in an iCal feed.
+		 * 
+		 * @param DateTimeZone $tz The timezone interpreted from a given string ID
+		 * @param string $tzid The give timezone ID
+		 */
 		$tz = apply_filters( 'eventorganiser_ical_timezone', $tz, $tzid );
 		
 		if ( ! ($tz instanceof DateTimeZone ) ) {
