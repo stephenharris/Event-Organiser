@@ -191,7 +191,11 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				} else {
 					$EO_Errors = new WP_Error( 'eo_notice', '<strong>'.__( 'Occurrence deleted.', 'eventorganiser' ).'</strong>' );
 					
-					//Allow plugins to be aware of successful deletions
+					/**
+					 * Triggered when occurrence is delete via the admin calendar. 
+					 * If you use this, send a message here: wp-event-organiser.com/contact. It may be removed.
+					 * @ignore
+					 */
 					do_action( 'eventorganiser_admin_calendar_occurrence_deleted', $post_id, $event_id );
 
 				}
@@ -306,6 +310,10 @@ $calendar_page = new EventOrganiser_Calendar_Page();
 
 function eventorganiser_event_detail_dialog(){
 
+	/**
+	 * Allows tabs to the admin calendar modal to be added.
+	 * @ignore
+	 */
 	$tabs = apply_filters( 'eventorganiser_calendar_dialog_tabs', array( 'summary' => __( 'Event Details', 'eventorganiser' ) ) );
 	
 	printf( "<div id='events-meta' class='eo-dialog' style='display:none;' title='%s'>", esc_attr__( 'Event Detail', 'eventorganiser' ) );
