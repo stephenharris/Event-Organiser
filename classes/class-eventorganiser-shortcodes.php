@@ -379,7 +379,7 @@ class EventOrganiser_Shortcodes {
 		return $replacement;
 	}
 
-	function eo_clean_input($input){
+	static function eo_clean_input($input){
 		$input = trim($input,"{}"); //remove { }
 		$input = str_replace(array("'",'"',"&#8221;","&#8216;", "&#8217;"),'',$input); //remove quotations
 		return $input;
