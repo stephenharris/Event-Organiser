@@ -227,6 +227,11 @@ function eventorganiser_quick_edit_save( $post_id ) {
 		$r = wp_set_post_terms( $post_id, array( $venue_id ), 'event-venue', false );
 	}
 
+	/**
+	 * Triggered after an event has been updated.
+	 *
+	 * @param int $post_id The ID of the event
+	 */
 	do_action( 'eventorganiser_save_event', $post_id );
 	return;	
 }
