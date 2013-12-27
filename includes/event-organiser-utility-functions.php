@@ -52,7 +52,19 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 			$dateformatstring = substr( $dateformatstring, 1, strlen( $dateformatstring ) -1 );
 	 endif;	
 	$formatted_datetime = $datetime->format($dateformatstring);
-	return apply_filters('eventorganiser_format_datetime', $formatted_datetime , $format, $datetime);
+	
+	/**
+	 * Filters the formatted date (DateTime object).
+	 * 
+	 * Formats should be specified using [php date format standards](http://php.net/manual/en/function.date.php).
+	 *
+	 * @link http://php.net/manual/en/function.date.php PHP date formatting standard
+	 * @param string $formatted_datetime The formatted date.
+	 * @param string $format             The format in which the date should be returned.
+	 * @param string $datetime           The provided DateTime object
+	 */
+	$formatted_datetime = apply_filters('eventorganiser_format_datetime', $formatted_datetime , $format, $datetime);
+	return $formatted_datetime;
 }
 
 /**
@@ -492,11 +504,21 @@ function eventorganiser_trim_excerpt($text = '', $excerpt_length=55) {
 	if ( '' == $text ) {
 		$text = get_the_content('');
 		$text = strip_shortcodes( $text );
+		/**
+		 * @ignore
+		 */
 		$text = apply_filters('the_content', $text);
 		$text = str_replace(']]>', ']]&gt;', $text);
 		$text = wp_trim_words( $text, $excerpt_length, '...' );
 	}
-	return apply_filters('eventorganiser_trim_excerpt', $text, $raw_excerpt);
+	/**
+	 * Filter the event's trimmed excerpt string.
+	 *
+	 * @param string $text        The trimmed text.
+	 * @param string $raw_excerpt The text prior to trimming.
+	 */
+	$text = apply_filters('eventorganiser_trim_excerpt', $text, $raw_excerpt);
+	return $text;
 }
 
 
@@ -513,6 +535,51 @@ function eventorganiser_date_create($datetime_string){
 }
 
 
+function eo_check_datetime( $format, $datetime_string, $timezone = false ){
+	
+	$timezone = ( $timezone instanceof DateTimeZone ) ? $timezone : eo_get_blog_timezone();
+	
+	global $wp_locale;
+	
+	//Handle localised am/pm
+	$am = $wp_locale->get_meridiem('am');
+	$AM = $wp_locale->get_meridiem('AM');
+	$pm = $wp_locale->get_meridiem('pm');
+	$PM = $wp_locale->get_meridiem('PM');
+	$datetime_string = str_replace( compact( 'am', 'AM', 'pm', 'PM' ), array( 'am', 'AM', 'pm', 'PM' ), $datetime_string );
+	
+	if ( version_compare(PHP_VERSION, '5.3.0') >= 0 ){
+    	return date_create_from_format( $format, $datetime_string, $timezone );
+	}else{
+		
+		//Workaround for outdated php versions. Allowed date formats are 'Y-m-d', 'm-d-Y' and  'd-m-Y'
+		//allowed time formats are g:ia, G:ia or h:i, H:i (optionally also specifying seconds).
+		$strptime_format = str_replace(
+			array( 'Y', 'm', 'd', 'H', 'i','a'),
+			array( '%Y', '%m', '%d', '%I', '%M', '%p' ) ,
+			$format
+		);
+		
+		$strptime = strptime( $datetime_string, $strptime_format );
+		
+		if( false == $striptime )
+			return false;
+		
+		$ymdhis = sprintf(
+				'%04d-%02d-%02d %02d:%02d:%02d',
+				$ugly['tm_year'] + 1900, 
+				$ugly['tm_mon'] + 1,
+				$ugly['tm_mday'],
+				$ugly['tm_hour'],
+				$ugly['tm_min'],
+				$ugly['tm_sec']
+		);
+		
+		$date = new DateTime( $ymdhis, $timezone );
+		
+	}
+		
+}
 /**
  * (Private) Utility function checks a date-time string is formatted correctly (according to the options) 
  * @access private
@@ -1073,18 +1140,38 @@ function eo_blog_is_24(){
 
 	//Check for meridian
 	if( preg_match( '~\b(A.)\b|([^\\\\]A)~i', $time, $matches ) ){
-		$is24 = false;
+		$is_24 = false;
 		
 	//Check for 24 hour format
 	}elseif( preg_match( '~\b(H.)\b|([^\\\\]H)~i', $time ) ){
-		$is24 = true;
+		$is_24 = true;
 		
 	}else{
 		//Assume it isn't
-		$is24 = false;
+		$is_24 = false;
 	}
 
-	return apply_filters( 'eventorganiser_blog_is_24', $is24 );
+	/**
+	 * Filters whether your site's time format is 12 hour or 24 hour.
+	 * 
+	 * This does not affect anything on the front-end, but it is used to determine 
+	 * the format in which times are entered admin-side. If `true` then 24 hour time 
+	 * is used, otherwise 12 hour time is used.
+	 * 
+	 * By default this value is a 'best guess' based on your site's time format
+	 * option in *Settings > General*.
+	 * 
+	 * ### Example
+	 * 
+	 *     //If you want input time to be forced to 12 hour format
+	 *     add_filter( 'eventorganiser_blog_is_24', '__return_false' );
+	 *     //If you want input time to be forced to 24 hour format
+	 *     add_filter( 'eventorganiser_blog_is_24', '__return_true' );
+	 * 
+	 * @param bool $is_24 Is the site's time format option using 12 hour or 24 hour time. 
+	 */
+	$is_24 = apply_filters( 'eventorganiser_blog_is_24', $is_24 );
+	return $is_24;
 }
 
 /**
