@@ -43,7 +43,19 @@ class EO_Widget_Venues extends WP_Widget {
 			$cat_args['walker'] = new EO_Walker_TaxonomyDropdown();
 			$cat_args['value'] = 'slug';
 			$cat_args['show_option_none'] = __( 'Select Venue', 'eventorganiser' );
-			wp_dropdown_categories(apply_filters('eventorganiser_widget_event_venues_dropdown_args', $cat_args));
+			/**
+			 * Filters the settings for the event venue list drppdown.
+			 *
+			 * The filtered array is passed to `wp_dropdown_categories()`. See
+			 * the [WordPress codex](http://codex.wordpress.org/Function_Reference/wp_dropdown_categories Codex)
+			 * for details on its arguments.
+			 *
+			 * @package widgets
+			 * @link http://codex.wordpress.org/Function_Reference/wp_dropdown_categories Codex for `wp_dropdown_categories()`
+			 * @param array $cat_args Settings for the event venue dropdown.
+			 */
+			$cat_args = apply_filters( 'eventorganiser_widget_event_venues_dropdown_args', $cat_args );
+			wp_dropdown_categories( $cat_args );
 			?>
 
 <script type='text/javascript'>
@@ -65,7 +77,19 @@ class EO_Widget_Venues extends WP_Widget {
 		<ul>
 <?php
 		$cat_args['title_li'] = '';
-		wp_list_categories(apply_filters('eventorganiser_widget_event_venues_args', $cat_args));
+		/**
+		 * Filters the arguments for the event venue list.
+		 *
+		 * The filtered array is passed to `wp_list_categories()`. See
+		 * the [WordPress codex](http://codex.wordpress.org/Function_Reference/wp_list_categories Codex)
+		 * for details on its arguments.
+		 *
+		 * @package widgets
+		 * @link http://codex.wordpress.org/Function_Reference/wp_list_categories Codex for `wp_list_categories()`
+		 * @param array $cat_args Settings for the event venue list.
+		 */
+		$cat_args = apply_filters( 'eventorganiser_widget_event_venues_args', $cat_args );
+		wp_list_categories( $cat_args );
 ?>
 		</ul>
 <?php
