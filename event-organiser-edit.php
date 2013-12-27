@@ -92,7 +92,15 @@ function _eventorganiser_details_metabox( $post ){
 	}
 	?>
 	<div class="<?php echo ( $sche_once ? 'onetime': 'reoccurence' );?>">
-		<p><?php printf( __( 'Ensure dates are entered in %1$s format and times in %2$s (24 hour) format', 'eventorganiser' ), '<strong>'.$format.'</strong>', ' <strong>hh:mm</strong>' );?> </p>
+		<p>
+		<?php 
+		if( $is24 ){
+			printf( __( 'Ensure dates are entered in %1$s format and times in 24 hour format', 'eventorganiser' ), '<strong>'.$format.'</strong>' );
+		}else{
+			printf( __( 'Ensure dates are entered in %1$s format and times in 12 hour format', 'eventorganiser' ), '<strong>'.$format.'</strong>' );
+		}
+ 		?>
+ 		</p>
 
 		<table id="eventorganiser_event_detail" class="form-table">
 				<tr valign="top"  class="event-date">
@@ -330,14 +338,32 @@ function eventorganiser_details_save( $post_id ) {
 	}elseif( !eventorganiser_blog_is_24() ){
 		//Potentially need to parse 24
 		//TODO incorproate into _eventorganiser_check_datetime
-		$raw_data['StartTime'] = date( "H:i", strtotime( $raw_data['StartTime'] ) );
-		$raw_data['FinishTime'] = date( "H:i", strtotime( $raw_data['FinishTime'] ) );
+		
+		global $wp_locale;
+		$am = $wp_locale->get_meridiem('am');
+		$AM = $wp_locale->get_meridiem('AM');
+		$pm = $wp_locale->get_meridiem('pm');
+		$PM = $wp_locale->get_meridiem('PM');
+		
+		//Handle localised am/pm strings
+		//$raw_data['StartTime'] = str_replace( compact( 'am', 'AM', 'pm', 'PM' ), array( 'am', 'AM', 'pm', 'PM' ), $raw_data['StartTime'] );
+		//$raw_data['FinishTime'] = str_replace( compact( 'am', 'AM', 'pm', 'PM' ), array( 'am', 'AM', 'pm', 'PM' ), $raw_data['FinishTime'] );
+		
+		//$raw_data['StartTime'] = date( "H:i", strtotime( $raw_data['StartTime'] ) );
+		//$raw_data['FinishTime'] = date( "H:i", strtotime( $raw_data['FinishTime'] ) );
 	}
 
 	//Check dates
-	$start = _eventorganiser_check_datetime( trim( $raw_data['StartDate'] ) . ' ' . trim( $raw_data['StartTime'] ) );
-	$end = _eventorganiser_check_datetime( trim( $raw_data['EndDate'] ) . ' ' . trim( $raw_data['FinishTime'] ) );
-	$schedule_last = _eventorganiser_check_datetime( trim( $raw_data['schedule_end'] ) . ' ' . trim( $raw_data['StartTime'] ) );
+
+	$date_format = eventorganiser_get_option( 'dateformat' );
+	$is24 = eventorganiser_blog_is_24();
+	$time_format = $is24 ? 'H:i' : 'g:ia';
+	$datetime_format = $date_format . ' ' . $time_format;
+	
+	$start = eo_check_datetime( trim( $raw_data['StartDate'] ) . ' ' . trim( $raw_data['StartTime'] ), $datetime_format );
+	$end = eo_check_datetime( trim( $raw_data['EndDate'] ) . ' ' . trim( $raw_data['FinishTime'] ), $datetime_format );
+	$schedule_last = eo_check_datetime( trim( $raw_data['schedule_end'] ) . ' ' . trim( $raw_data['StartTime'] ), $datetime_format );
+	
 
 	//Collect schedule meta
 	$schedule = $raw_data['schedule'];
