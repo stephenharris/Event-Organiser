@@ -478,6 +478,19 @@ class EventOrganiser_Debugger{
 		
 		$options = array();
 		$options['event-organiser'] = eventorganiser_get_option( false );
+		
+		/**
+		 * Settings to include in an export.
+		 * 
+		 * These options are included in both the settings export on the settings
+		 * page and the also printed in the system information file. By default
+		 * they inlude Event Organiser's options, but others can be added.
+		 * 
+		 * The filtered value should be a (2+ dimensional) array, indexed by plugin/
+		 * extension name.
+		 * 
+		 * @param array $options Array of user settings, indexed by plug-in/extension.
+		 */
 		$options = apply_filters( 'eventorganiser_export_settings', $options );
 	
 		$filename = 'event-organiser-system-info-'.get_bloginfo( 'name' ).'.md';
