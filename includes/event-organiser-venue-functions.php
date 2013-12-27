@@ -533,6 +533,11 @@ function eo_get_venues($args=array()){
 
 			update_metadata('eo_venue', $venue_id, $meta_key, $validated_value);		
 		}
+		/**
+		 * Triggered when a venue is created / updated.
+		 * 
+		 * @param int $venue_id The (term) ID of the venue.
+		 */
 		do_action('eventorganiser_save_venue',$venue_id);
 
 		return array('term_id' => $venue_id, 'term_taxonomy_id' => $resp['term_taxonomy_id']);
@@ -599,7 +604,18 @@ function eo_get_venues($args=array()){
 				add_metadata('eo_venue', $venue_id, $meta_key, $validated_value, true);		
 		}
 	
+		/**
+		 * Triggered when a venue is created.
+		 *
+		 * @param int $venue_id The (term) ID of the venue.
+		 */
 		do_action('eventorganiser_insert_venue',$venue_id);
+		
+		/**
+		 * Triggered when a venue is created / updated.
+		 *
+		 * @param int $venue_id The (term) ID of the venue.
+		 */
 		do_action('eventorganiser_save_venue',$venue_id);
 
 		return array('term_id' => $venue_id, 'term_taxonomy_id' => $resp['term_taxonomy_id']);
@@ -631,7 +647,19 @@ function eo_get_venues($args=array()){
 			$in_venue_meta_ids = "'" . implode("', '", $venue_meta_ids) . "'";
 			$wpdb->query( "DELETE FROM $wpdb->eo_venuemeta WHERE meta_id IN($in_venue_meta_ids)" );
 		}
+		
+		/**
+		 * @ignore 
+		 * This should probably be triggered *before* venue is deleted.
+		 */
 		do_action('eventorganiser_delete_venue',$venue_id);
+		
+		/**
+		 * Triggered when a venue is deleted
+		 *
+		 * @param int $venue_id The (term) ID of the venue.
+		 */
+		do_action('eventorganiser_venue_deleted',$venue_id);
 
 		return true;
 	}
@@ -710,8 +738,33 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 			if( !empty($address) )
 				$tooltip_content .='<br />'.implode(', ',$address);
 			
+			/**
+			 * Filters the tooltip content for a venue.
+			 * 
+			 * ### Example
+			 * 
+			 *    //Adds a link to the venue page to the tooltip
+			 *    add_filter( 'eventorganiser_venue_tooltip', 'my_venue_tooltip_content_link_to_venue', 10, 2 );
+			 *    function my_venue_tooltip_content_link_to_venue( $description, $venue_id ){
+    		 *        $description .= sprintf('<p><a href="%s"> Visit the venue page! </a> </p>', eo_get_venue_link($venue_id));
+			 *        return $description;
+			 *    }
+			 * 
+			 * @link https://gist.github.com/stephenharris/4988307 Add upcoming events to the the tooltip 
+			 * @param string $tooltip_content The HTML content for the venue tooltip.
+			 * @param int $venue_id The ID of the venue.
+			 * @param array $args An array of map options. See documentation for `eo_get_venue_map()`.
+			 */
 			$tooltip_content = apply_filters( 'eventorganiser_venue_tooltip', $tooltip_content, $venue_id, $args );
 			
+			/**
+			 * Filters the url of the venue map marker. Set to `null` for default.
+			 *
+			 * @link http://wp-event-organiser.com/extensions/event-organiser-venue-markers Custom venue markers
+			 * @param string|null $icon Url to the icon image. Null to use default.
+			 * @param int $venue_id The ID of the venue.
+			 * @param array $args An array of map options. See documentation for `eo_get_venue_map()`.
+			 */
 			$icon = apply_filters( 'eventorganiser_venue_marker', null, $venue_id, $args );
 	
 			$locations[] =array( 
@@ -886,7 +939,19 @@ function _eventorganiser_get_venue_address_fields(){
 		'_country'=>  __('Country','eventorganiser'),
 	);
 
-	return apply_filters('eventorganiser_venue_address_fields', $address_fields);
+	/**
+	 * Filters fields used for the address of a venue.
+	 * 
+	 * This filter allows you to remove address components you don't need or add-ones
+	 * you do. The array is indexed by meta-key which **must** be prefixed by an
+	 * underscore (`_`), The value is the label of the address component.
+	 * 
+	 * Added fields will appear in the address metabox on the admin venue screen.
+	 *
+	 * @param array $address_fields An array of address components
+	 */
+	$address_fields = apply_filters('eventorganiser_venue_address_fields', $address_fields);
+	return $address_fields;
 }
 
 
