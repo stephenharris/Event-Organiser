@@ -152,8 +152,19 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 
 			//Venued edit page	
 			add_meta_box( 'submitdiv', __( 'Save', 'eventorganiser' ), 'eventorganiser_venue_submit', 'event_page_venues', 'side', 'high' );
+			
+			/**
+ 			 * Fires after all built-in meta boxes for venues have been added.
+ 			 *
+ 			 * @param Object $venue Venue (term object)
+ 			 */
 			do_action( 'add_meta_boxes_event_page_venues', $venue );
+			
+			/**
+			 * @ignore
+			 */
 		 	do_action( 'add_meta_boxes', 'event_page_venues', $venue );
+		 	
 			add_screen_option( 'layout_columns', array( 'max' => 2, 'default' => 2 ) );
 		} else{
 			//Venue admin list
