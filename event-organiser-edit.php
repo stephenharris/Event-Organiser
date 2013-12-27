@@ -80,7 +80,14 @@ function _eventorganiser_details_metabox( $post ){
 	}
 	
 	//Start of meta box
-	if( $notices = apply_filters('eventorganiser_event_metabox_notice', $notices, $post ) ){
+	/**
+	 * Filters the notice at the top of the event details metabox.
+	 * 
+	 * @param string  $notices The message text.
+	 * @param WP_Post $post    The corresponding event (post).
+	 */
+	$notices = apply_filters('eventorganiser_event_metabox_notice', $notices, $post );
+	if( $notices ){
 		echo '<div class="updated below-h2"><p>'.$notices.'</p></div>';		
 	}
 	?>
@@ -306,6 +313,11 @@ function eventorganiser_details_save( $post_id ) {
 
 	//If reocurring, but not editing occurrences, can abort here, but trigger hook.
 	if ( eo_reoccurs( $post_id ) && ( !isset( $raw_data['AlterRe'] ) || 'yes' != $raw_data['AlterRe'] ) ){
+	   /**
+ 		* Triggered after an event has been updated.
+ 		*
+ 		* @param int $post_id The ID of the event
+ 		*/
 		do_action( 'eventorganiser_save_event', $post_id );//Need this to update cache
 		return;
 	}
