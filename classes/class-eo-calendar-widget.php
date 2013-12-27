@@ -317,6 +317,8 @@ class EO_Calendar_Widget extends WP_Widget
 
 					/**
 					 * Filters the the link of a date on the events widget calendar
+					 * 
+					 * @package widgets
 					 * @param string $link The link
 					 * @param datetime $current_date The date being filtered
 					 * @param array $events Array of events starting on this day
