@@ -397,6 +397,18 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 		
 	}
 
+	/**
+	 * Filters whether the query is an event query.
+	 * 
+	 * This should be `true` if the query is for events, `false` otherwise. The 
+	 * third parameter, `$exclusive` qualifies if this means 'query exclusively 
+	 * for events' or not. If `true` then this filter should return `true` only 
+	 * if the query is exclusively for events.
+	 * 
+	 * @param bool     $bool      Whether the query is an event query.
+	 * @param WP_Query $query     The WP_Query instance to check.
+	 * @param bool     $exclusive Whether the check if for queries exclusively for events. 
+	 */
 	return apply_filters( 'eventorganiser_is_event_query', $bool, $query, $exclusive );
 }
 
