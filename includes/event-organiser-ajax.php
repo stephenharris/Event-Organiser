@@ -88,8 +88,34 @@ function eventorganiser_public_fullcalendar() {
 			//Title and url
 			$event['title']=html_entity_decode(get_the_title($post->ID),ENT_QUOTES,'UTF-8');
 			$link = esc_js(get_permalink( $post->ID));
-			$event['url'] = apply_filters('eventorganiser_calendar_event_link',$link,$post->ID,$post->occurrence_id);
-
+			
+			/**
+			 * Filters the link to the event's page on the admin calendar.
+			 * 
+			 * **Note:** As the calendar is cached, changes made using this filter
+			 * will not take effect immediately. You can clear the cache by 
+			 * updating an event.
+			 * 
+			 * ### Example
+			 * 
+			 *    //Remove link if from calendar if event has no content
+			 *    add_filter('eventorganiser_calendar_event_link','myprefix_maybe_no_calendar_link',10,3);
+ 			 *    function myprefix_maybe_no_calendar_link( $link, $event_id, $occurrence_id ){
+ 			 *        $the_post = get_post($post_id);
+ 			 *        if( empty($the_post->post_content) ){
+ 			 *            return false;
+ 			 *        }
+ 			 *        return $link;
+ 			 *    }
+			 *
+			 * @package fullCalendar
+			 * @param string $link          The url the event points to on the calendar.
+			 * @param int    $event_id      The event's post ID.
+			 * @param int    $occurrence_id The event's occurrence ID.
+			 */
+			$link = apply_filters('eventorganiser_calendar_event_link',$link,$post->ID,$post->occurrence_id);
+			$event['url'] = $link;
+			
 			//All day or not?
 			$event['allDay'] = eo_is_all_day();
 	
@@ -134,8 +160,24 @@ function eventorganiser_public_fullcalendar() {
 			}
 			$description = $date.'</br></br>'.$description;
 			
-			$event['description']  = apply_filters('eventorganiser_event_tooltip', $description, $post->ID,$post->occurrence_id,$post);
-
+			/**
+			 * Filters the description of the event as it appears on the calendar tooltip.
+			 * 
+			 * **Note:** As the calendar is cached, changes made using this filter
+			 * will not take effect immediately. You can clear the cache by 
+			 * updating an event.
+			 *
+			 * @link https://gist.github.com/stephenh1988/4040699 Including venue name in tooltip.
+			 * 
+			 * @package fullCalendar
+			 * @param string  $description   The event's tooltip description.
+			 * @param int     $event_id      The event's post ID.
+			 * @param int     $occurrence_id The event's occurrence ID.
+			 * @param WP_Post $post          The event (post) object.
+			 */
+			$description = apply_filters('eventorganiser_event_tooltip', $description, $post->ID,$post->occurrence_id,$post);
+			$event['description'] = $description;
+			
 			//Colour past events
 			$now = new DateTime(null,$tz);
 			if($event_start <= $now)
@@ -173,6 +215,21 @@ function eventorganiser_public_fullcalendar() {
 			}
 
 			//Add event to array
+			/**
+			 * Filters the event before it is sent to the calendar. 
+			 *
+			 * The event is an array with various key/values, which is seralised and sent
+			 * to the calendar.
+			 *
+			 * **Note:** As the calendar is cached, changes made using this filter
+			 * will not take effect immediately. You can clear the cache by
+			 * updating an event.
+			 *
+			 * @package fullCalendar
+			 * @param array  $event         The event (array)
+			 * @param int    $event_id      The event's post ID.
+			 * @param int    $occurrence_id The event's occurrence ID.
+			 */
 			$event = apply_filters('eventorganiser_fullcalendar_event',$event, $post->ID,$post->occurrence_id);
 			if( $event )
 				$eventsarray[]=$event;
@@ -297,7 +354,21 @@ function eventorganiser_admin_calendar() {
 					$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);
 					$event['venue']=$venue;
 				}
-						
+
+				/**
+				 * Filters the summary of the event as it appears in the admin 
+				 * calendar's modal.
+				 *
+				 * **Note:** As the calendar is cached, changes made using this filter
+				 * will not take effect immediately. You can clear the cache by
+				 * updating an event.
+				 *
+				 * @package admin-calendar
+				 * @param string  $summary       The event (admin) summary,
+				 * @param int     $event_id      The event's post ID.
+				 * @param int     $occurrence_id The event's occurrence ID.
+				 * @param WP_Post $post          The event (post) object.
+				 */
 				$summary = apply_filters('eventorganiser_admin_cal_summary',$summary,$post->ID,$post->occurrence_id,$post);
 	
 				$summary .= "</table><p>";
@@ -371,7 +442,22 @@ function eventorganiser_admin_calendar() {
 				$event['summary'] = '<div id="eo-cal-meta">'.$summary.'</div>';
 
 				//Filter the event array
+				/**
+				 * @ignore
+				 */
 				$event = apply_filters('eventorganiser_admin_calendar',$event, $post);
+				/**
+				 * Filters the event before its sent to the admin calendar.
+				 *
+				 * **Note:** As the calendar is cached, changes made using this filter
+				 * will not take effect immediately. You can clear the cache by
+				 * updating an event.
+				 * 
+				 * @package admin-calendar
+				 * @param array $event         The event array.
+				 * @param int   $event_id      The event's post ID.
+				 * @param int   $occurrence_id The event's occurrence ID.
+				 */
 				$event = apply_filters('eventorganiser_admin_fullcalendar_event', $event, $post->ID, $post->occurrence_id );
 
 				//Add event to array
