@@ -14,13 +14,25 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	 * Initialises the tabs.
 	 */
 	function setup_tabs(){
-		return apply_filters( 'eventorganiser_settings_tabs', array(
-						'general' => __( 'General', 'eventorganiser' ),
-						'permissions' => __( 'Permissions', 'eventorganiser' ),
-						'permalinks' => __( 'Permalinks', 'eventorganiser' ),
-						'imexport' => __( 'Import', 'eventorganiser' ).'/'.__( 'Export', 'eventorganiser' ),
-					)
-				);
+		
+		/**
+		 * Filters an array of tabs that appear in *Settings > Event Organiser*
+		 *
+		 * Allows extensions to add additional tabs. The array is indexed by a 
+		 * unique tab identifier, with the tab label as the value.
+		 *
+		 * @param array $tabs Array of tabs to display on the settings page.
+		 */
+		$tabs = apply_filters( 
+			'eventorganiser_settings_tabs', 
+			array(
+				'general' => __( 'General', 'eventorganiser' ),
+				'permissions' => __( 'Permissions', 'eventorganiser' ),
+				'permalinks' => __( 'Permalinks', 'eventorganiser' ),
+				'imexport' => __( 'Import', 'eventorganiser' ).'/'.__( 'Export', 'eventorganiser' ),
+			)
+		);
+		return $tabs;
 	}
 
 	function set_constants(){
@@ -71,6 +83,20 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					add_settings_section( $tab_id, '',array( $this, 'display_imexport' ),  'eventorganiser_'.$tab_id );
 					break;
 			}
+			
+			/**
+			 * Triggered after a settings tab has been registered.
+			 * 
+			 * The `$tab_id` in the hook name is the tab identifier 
+			 * corresponding to the appropriate tabl.
+			 * 
+			 * Use this hook to register settings on a particular tab
+			 * using `'eventorganiser_'.$tab_id` as the fourth argument
+			 * of `add_settings_section()`.
+			 * 
+			 * @link http://codex.wordpress.org/Function_Reference/add_settings_section `add_settings_section()` codex
+			 * @param string $tab_id Tab identifier.
+			 */
 			do_action("eventorganiser_register_tab_{$tab_id}", $tab_id );
 		}
 	}
@@ -514,12 +540,21 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					echo '<form method="post" action="options.php">';
 						settings_fields( 'eventorganiser_'.$active_tab );
 						do_settings_sections( 'eventorganiser_'.$active_tab ); 
+	
+						/**
+						 * @ignore
+						 */
+						do_action( 'eventorganiser_event_settings_'.$active_tab );
 						//Tab identifier - so we know which tab we are validating. See $this->validate().
-						do_action( 'eventorganiser_event_settings_'.$active_tab ); 
 						printf( '<input type="hidden" name="eventorganiser_options[tab]" value="%s" />', esc_attr( $active_tab ) );
 						submit_button(); 
 				        echo '</form>';
 				} else {
+					/**
+					 * @ignore
+					 * The import/export tab is handled differently not using `add_settings_section()`.
+					 * This tab may be move too Tools.
+					 */
 					do_action( 'eventorganiser_event_settings_imexport' ); 
 				}
 				?>
@@ -527,10 +562,6 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		</div><!-- /.wrap -->  
 
 	<?php
-	}
-
-	function display_imexport(){
-		do_action( 'eventorganiser_event_settings_imexport' ); 
 	}
 	
 	function display_licence_keys(){
@@ -611,6 +642,18 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		$options = array();
 		$options['event-organiser'] = eventorganiser_get_option( false );
 		
+		/**
+		 * Settings to include in an export.
+		 *
+		 * These options are included in both the settings export on the settings
+		 * page and the also printed in the system information file. By default
+		 * they inlude Event Organiser's options, but others can be added.
+		 *
+		 * The filtered value should be a (2+ dimensional) array, indexed by plugin/
+		 * extension name.
+		 *
+		 * @param array $options Array of user settings, indexed by plug-in/extension.
+		 */
 		$options = apply_filters( 'eventorganiser_export_settings', $options );
 		
 		$filename = 'event-organiser-settings-'.get_bloginfo( 'name' ).'.json'; 
