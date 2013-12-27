@@ -170,8 +170,12 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 	$eo_event_loop_args = $args;
 	$eo_event_loop = new WP_Query($query);
 
-	/* Try to find template - backwards compat. Don't use this filter. Will be removed! */
-	$template_file = locate_template(apply_filters('eventorganiser_event_list_loop',false));
+	/**
+	 * @ignore
+	 * Try to find template - backwards compat. Don't use this filter. Will be removed!
+	 */
+	$template = apply_filters('eventorganiser_event_list_loop',false);
+	$template_file = locate_template( $template );
 	if( $template_file || empty($template) ){
 		ob_start();
 		if( empty($template_file) )
