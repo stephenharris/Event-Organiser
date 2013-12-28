@@ -335,26 +335,9 @@ function eventorganiser_details_save( $post_id ) {
 	if ( $all_day ){
 		$raw_data['StartTime'] = '00:00';
 		$raw_data['FinishTime'] = '23:59';
-	}elseif( !eventorganiser_blog_is_24() ){
-		//Potentially need to parse 24
-		//TODO incorproate into _eventorganiser_check_datetime
-		
-		global $wp_locale;
-		$am = $wp_locale->get_meridiem('am');
-		$AM = $wp_locale->get_meridiem('AM');
-		$pm = $wp_locale->get_meridiem('pm');
-		$PM = $wp_locale->get_meridiem('PM');
-		
-		//Handle localised am/pm strings
-		//$raw_data['StartTime'] = str_replace( compact( 'am', 'AM', 'pm', 'PM' ), array( 'am', 'AM', 'pm', 'PM' ), $raw_data['StartTime'] );
-		//$raw_data['FinishTime'] = str_replace( compact( 'am', 'AM', 'pm', 'PM' ), array( 'am', 'AM', 'pm', 'PM' ), $raw_data['FinishTime'] );
-		
-		//$raw_data['StartTime'] = date( "H:i", strtotime( $raw_data['StartTime'] ) );
-		//$raw_data['FinishTime'] = date( "H:i", strtotime( $raw_data['FinishTime'] ) );
 	}
 
 	//Check dates
-
 	$date_format = eventorganiser_get_option( 'dateformat' );
 	$is24 = eventorganiser_blog_is_24();
 	$time_format = $is24 ? 'H:i' : 'g:ia';
