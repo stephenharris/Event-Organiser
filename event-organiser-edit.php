@@ -360,11 +360,10 @@ function eventorganiser_details_save( $post_id ) {
 	$time_format = $is24 ? 'H:i' : 'g:ia';
 	$datetime_format = $date_format . ' ' . $time_format;
 	
-	$start = eo_check_datetime( trim( $raw_data['StartDate'] ) . ' ' . trim( $raw_data['StartTime'] ), $datetime_format );
-	$end = eo_check_datetime( trim( $raw_data['EndDate'] ) . ' ' . trim( $raw_data['FinishTime'] ), $datetime_format );
-	$schedule_last = eo_check_datetime( trim( $raw_data['schedule_end'] ) . ' ' . trim( $raw_data['StartTime'] ), $datetime_format );
+	$start         = eo_check_datetime( $datetime_format, trim( $raw_data['StartDate'] ) . ' ' . trim( $raw_data['StartTime'] ) );
+	$end           = eo_check_datetime( $datetime_format, trim( $raw_data['EndDate'] ) . ' ' . trim( $raw_data['FinishTime'] ) );
+	$schedule_last = eo_check_datetime( $datetime_format, trim( $raw_data['schedule_end'] ) . ' ' . trim( $raw_data['StartTime'] ) );
 	
-
 	//Collect schedule meta
 	$schedule = $raw_data['schedule'];
 	if ( 'weekly' == $schedule ){
