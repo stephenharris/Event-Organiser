@@ -329,19 +329,19 @@ function eventorganiser_details_save( $post_id ) {
 		do_action( 'eventorganiser_save_event', $post_id );//Need this to update cache
 		return;
 	}
-	
-	//Set times for all day events
-	$all_day = intval($raw_data['allday']);
-	if ( $all_day ){
-		$raw_data['StartTime'] = '00:00';
-		$raw_data['FinishTime'] = '23:59';
-	}
 
 	//Check dates
 	$date_format = eventorganiser_get_option( 'dateformat' );
 	$is24 = eventorganiser_blog_is_24();
 	$time_format = $is24 ? 'H:i' : 'g:ia';
 	$datetime_format = $date_format . ' ' . $time_format;
+	
+	//Set times for all day events
+	$all_day = intval($raw_data['allday']);
+	if ( $all_day ){
+		$raw_data['StartTime'] = $is24 ? '00:00' : '12:00am';
+		$raw_data['FinishTime'] = $is24 ? '23:59' : '11:59pm';
+	}
 	
 	$start         = eo_check_datetime( $datetime_format, trim( $raw_data['StartDate'] ) . ' ' . trim( $raw_data['StartTime'] ) );
 	$end           = eo_check_datetime( $datetime_format, trim( $raw_data['EndDate'] ) . ' ' . trim( $raw_data['FinishTime'] ) );
