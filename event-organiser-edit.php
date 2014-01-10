@@ -365,9 +365,12 @@ function eventorganiser_details_save( $post_id ) {
 	foreach ( array( 'include', 'exclude' ) as $key ):
 		$in_ex[$key] = array();
 		$arr = explode( ',', sanitize_text_field( $raw_data[$key] ) ); 
+		
 		if ( !empty( $arr ) ){
+			
 			foreach ( $arr as $date ):
-				$date_obj = _eventorganiser_check_datetime( $date . ' ' . $raw_data['StartTime'], 'Y-m-d' );
+				$date_obj = eo_check_datetime( 'Y-m-d', trim( $date ) );
+			
 				if( $date_obj )
 					$in_ex[$key][] = $date_obj;
 			endforeach;
