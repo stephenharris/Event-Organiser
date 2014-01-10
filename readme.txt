@@ -192,6 +192,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 2.7 =
+* Added hook `eventorganiser_ical_feed_parsed`. See [http://codex.wp-event-organiser.com/hook-eventorganiser_ical_feed_parsed.html](http://codex.wp-event-organiser.com/hook-eventorganiser_ical_feed_parsed.html).
+* (Backwards compatible) change in `eo_get_event_fullcalendar()` arguments. The arguments 'event_category' and 'event_venue' have been replaced by 'event-category' and 'event-venue'. Also they accept an array of term slugs or a comma-delimited string of term slugs. See [http://wp-event-organiser.com/forums/topic/eo_get_event_fullcalendar-exclude/](http://wp-event-organiser.com/forums/topic/eo_get_event_fullcalendar-exclude/).
+* When restricting a calendar by category(ies). Only those categories appear in the category drop-down, if this is added.
+
 = 2.6 =
 * WordPress 3.8 compatible (tested against RC1)
 * Fixes bug with iCal feed & weekly recurring events where the day is different in UTC timezone
