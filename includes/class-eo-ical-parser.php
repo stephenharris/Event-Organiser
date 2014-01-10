@@ -119,7 +119,7 @@ class EO_ICAL_Parser{
 			$this->ical_array = $this->file_to_array( $file );
 
 		//Remote file
-		}elseif( preg_match('!^(http|https|ftp)://!i', $file) ){
+		}elseif( preg_match('!^(http|https|ftp|webcal)://!i', $file) ){
 			$this->ical_array = $this->url_to_array( $file );
 
 		}else{
@@ -180,6 +180,10 @@ class EO_ICAL_Parser{
 	 * @return array|bool Array of line in ICAL feed, false on error 
 	 */
 	protected function url_to_array( $url ){
+		
+		//Handle webcal:// protocol: change to http://
+		$url = preg_replace('#^(webcal://)#', 'http://', $url );
+		
 		$response =  wp_remote_get( $url, array( 'timeout' => $this->remote_timeout ) );
 		$contents = wp_remote_retrieve_body( $response );
 		$response_code = wp_remote_retrieve_response_code( $response );
