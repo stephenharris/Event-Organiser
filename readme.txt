@@ -13,16 +13,22 @@ Create and maintain events, including complex reoccurring patterns, venue manage
 
 Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows you to view your events in the familiar WordPress list or in a calendar page in the amin area.
 
-[**Documentation**](http://wp-event-organiser.com/documentation/) 
-| [**Function Reference**](http://codex.wp-event-organiser.com/) 
-| [**Forums**](http://wp-event-organiser.com/forums/) 
+[**User Docs**](http://docs.wp-event-organiser.com/) 
+| [**Function Reference**](http://codex.wp-event-organiser.com/)  
+| [**Forums**](http://wp-event-organiser.com/forums/)
 | [**Demo**](http://wp-event-organiser.com/demo/) 
 | [**Booking Add-on**](http://wp-event-organiser.com/pro-features?aid=7)
 
 = Available Extensions =
 * [Event Organiser Pro](http://wp-event-organiser.com/pro-features?aid=7)
+* [Discount Codes](http://wp-event-organiser.com/extensions/event-organiser-discount-codes?aid=7)
+* [Stripe Gateway](http://wp-event-organiser.com/extensions/event-organiser-stripe?aid=7)
+* [Posterboard](http://wordpress.org/plugins/event-organiser-posterboard) (free)
+* [VAT](http://wordpress.org/plugins/event-organiser-vat) (free)
+* [CSV export](http://wordpress.org/plugins/event-organiser-csv) (free)
 * [iCal Sync](http://wp-event-organiser.com/extensions/event-organiser-ical-sync?aid=7)
-* [Venue Map Markers](http://wp-event-organiser.com/extensions/event-organiser-venue-markers?aid=7)
+
+A full list of available extensions can be found [here](http://wp-event-organiser.com/extensions/).
 
 = Features =
 
