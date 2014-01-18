@@ -54,6 +54,23 @@ jQuery(document).ready(function () {
 		return element;
 	}
 
+	function eventorganiser_tag_dropdown(options){
+
+		
+		var terms = options.tags;
+		
+		var html="<select class='eo-cal-filter' data-filter-type='event-tag'>";
+		html+="<option value=''>"+options.buttonText.tag+"</option>";
+		for (var i=0; i < terms.length; i++){
+			html+= "<option value='"+terms[i].slug+"'>"+terms[i].name+"</option>";	
+		}
+		html+="</select>";
+
+		var element = $("<span class='fc-header-dropdown filter-tag'></span>");
+		element.append(html);
+		return element;
+	}
+	
 	function eventorganiser_venue_dropdown(options){
 
 		var venues = options.venues;
@@ -129,13 +146,15 @@ jQuery(document).ready(function () {
 				category: calendars[i].event_category,
 				venue: calendars[i].event_venue,
 				customButtons:{
-					category:  eventorganiser_cat_dropdown,
-					venue:  eventorganiser_venue_dropdown,
-					'goto': eventorganiser_mini_calendar
+					tag:		eventorganiser_tag_dropdown,
+					category:  	eventorganiser_cat_dropdown,
+					venue:  	eventorganiser_venue_dropdown,
+					'goto': 	eventorganiser_mini_calendar
 				},
 				theme: calendars[i].theme,
 				categories: eventorganiser.fullcal.categories,
 				venues: eventorganiser.fullcal.venues,
+				tags: eventorganiser.fullcal.tags,
 				timeFormatphp: calendars[i].timeformatphp,
 				timeFormat: calendars[i].timeformat,
 				isRTL: calendars[i].isrtl,
@@ -167,6 +186,7 @@ jQuery(document).ready(function () {
 					function (a, b, v) {
 						var c = $(v.calendar.options.id).find(".filter-category .eo-cal-filter").val();
 						var d = $(v.calendar.options.id).find(".filter-venue .eo-cal-filter").val();
+						var tag = $(v.calendar.options.id).find(".filter-tag .eo-cal-filter").val();
 					
 						if (typeof c !== "undefined" && c !== "" && $.inArray(c, a.category) < 0 ) {
                             	return "<div></div>";
@@ -174,6 +194,10 @@ jQuery(document).ready(function () {
                         if (typeof d !== "undefined" && d !== "" && d != a.venue) {
                             	return "<div></div>";
                         }
+                        
+						if (typeof tag !== "undefined" && tag !== "" && $.inArray(tag, a.tags) < 0 ) {
+                        	return "<div></div>";
+						}
                         
                         if( !wp.hooks.applyFilters( 'eventorganiser.fullcalendar_render_event', true, a, b, v ) )
                         	return "<div></div>";
@@ -213,12 +237,13 @@ jQuery(document).ready(function () {
                         });
                     },
                     buttonText: {
-                    	today: EOAjaxFront.locale.today,
-                    	month: EOAjaxFront.locale.month,
-                		week: EOAjaxFront.locale.week,
-                		day: EOAjaxFront.locale.day,
-                		cat: EOAjaxFront.locale.cat,
-                		venue: EOAjaxFront.locale.venue
+                    	today: 	EOAjaxFront.locale.today,
+                    	month: 	EOAjaxFront.locale.month,
+                		week: 	EOAjaxFront.locale.week,
+                		day: 	EOAjaxFront.locale.day,
+                		cat: 	EOAjaxFront.locale.cat,
+                		venue: 	EOAjaxFront.locale.venue,
+                		tag: 	EOAjaxFront.locale.tag
                     },
                     monthNames: EOAjaxFront.locale.monthNames,
                     monthNamesShort: EOAjaxFront.locale.monthAbbrev,

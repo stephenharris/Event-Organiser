@@ -398,7 +398,8 @@ class EventOrganiser_Shortcodes {
 		$fullcal = (empty(self::$calendars) ? array() : array(
 			'firstDay'=>intval(get_option('start_of_week')),
 			'venues' => get_terms( 'event-venue', array('hide_empty' => 0)),
-			'categories' => $terms, 
+			'categories' => $terms,
+			'tags' => get_terms( 'event-tag', array('hide_empty' => 1)),
 		));
 		
 		eo_localize_script( 'eo_front', array(

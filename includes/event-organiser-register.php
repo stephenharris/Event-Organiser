@@ -58,6 +58,7 @@ function eventorganiser_register_script() {
 				'gotodate'=>__('go to date','eventorganiser'),
 				'cat'=>__('View all categories','eventorganiser'),
 				'venue'=>__('View all venues','eventorganiser'),
+				'tag'=>__('View all tags','eventorganiser'),
 				//Allow themes to over-ride juqery ui styling and not use images
 				'nextText' => '>',
 				'prevText' => '<'
