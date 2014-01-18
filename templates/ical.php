@@ -110,6 +110,11 @@ RDATE<?php echo $vdate;?>:<?php echo implode(',',$include_strings);?>
 		echo eventorganiser_fold_ical_text( html_entity_decode( "DESCRIPTION: $excerpt" ) ) . "\n";
 	endif; ?>
 <?php 
+	$description = eventorganiser_fold_ical_text( get_the_content() );
+	$description = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN"><HTML><BODY><strong>This</strong> is<em>a</em> description.</BODY></HTM>';
+	echo eventorganiser_fold_ical_text( html_entity_decode( "X-ALT-DESC;FMTTYPE=text/html: $description" ) ) . "\n";
+?>
+<?php 
 	$cats = get_the_terms( get_the_ID(), 'event-category' );
 if( $cats && !is_wp_error($cats) ):
 	$cat_names = wp_list_pluck($cats, 'name');
