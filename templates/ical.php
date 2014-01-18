@@ -126,8 +126,8 @@ CATEGORIES:<?php echo implode(',',$cat_names); ?>
 if( eo_get_venue() ): 
 	$venue = eo_get_venue_name( eo_get_venue() );
 ?>
-LOCATION:<?php echo eventorganiser_fold_ical_text( eventorganiser_escape_ical_text( $venue ) );?>
-
+LOCATION:<?php echo eventorganiser_fold_ical_text( eventorganiser_escape_ical_text( $venue ) ) . "\n";?>
+GEO:<?php echo implode( ';', eo_get_venue_latlng( $venue ) ) . "\n";?>
 <?php endif; ?>
 ORGANIZER:<?php echo eventorganiser_fold_ical_text( eventorganiser_escape_ical_text( get_the_author() ) );?>
 
