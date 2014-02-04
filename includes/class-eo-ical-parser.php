@@ -645,7 +645,7 @@ class EO_ICAL_Parser{
 		//If we have something like (GMT+01.00) Amsterdam / Berlin / Bern / Rome / Stockholm / Vienna lets try the cities
 		if( is_null( $tz ) && preg_match( '/GMT(?P<offset>.+)\)(?P<cities>.+)?/', $tzid, $matches ) ){
 			
-			if( $matches['cities'] ){
+			if( !empty( $matches['cities'] ) ){
 				$parts = explode( '/', $matches['cities'] );
 				$tz_cities = array_map( 'trim', $parts );
 				$identifiers = timezone_identifiers_list();
