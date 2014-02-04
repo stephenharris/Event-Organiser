@@ -798,7 +798,7 @@ function eventorganiser_text_field($args){
 	$max = (  $args['max'] !== false ?  sprintf('max="%d"', $args['max']) : '' );
 	$size = (  !empty($args['size']) ?  sprintf('size="%d"', $args['size']) : '' );
 	$style = (  !empty($args['style']) ?  sprintf('style="%s"', $args['style']) : '' );
-	$placeholder = ( !empty($args['placeholder']) ? sprintf('placeholder="%s"', $args['placeholder']) : '');
+	$placeholder = ( !empty( $args['placeholder'] ) || is_numeric( $args['placeholder'] ) ) ? sprintf('placeholder="%s"', $args['placeholder']) : '';
 	$disabled = ( !empty($args['disabled']) ? 'disabled="disabled"' : '' );
 	$required = ( !empty($args['required']) ? 'required="required"' : '' );
 	
