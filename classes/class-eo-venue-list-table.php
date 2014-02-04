@@ -62,22 +62,22 @@ class EO_Venue_List_Table extends WP_List_Table {
      * @return string Text to be placed inside the column <td>
      */
     function column_name($item){
-	$term_id = (int) $item->term_id;
+		$term_id = (int) $item->term_id;
+		
+		$delete_url = add_query_arg( 'action', 'delete', get_edit_term_link( $term_id, 'event-venue', 'event' ) );
 
         //Build row actions
         $actions = array(
-            'edit'      => sprintf('<a href="?post_type=event&page=%s&action=%s&event-venue=%s">'.__('Edit').'</a>',$_REQUEST['page'],'edit',$item->slug),
-            'delete'    => '<a href="'.wp_nonce_url(sprintf('?post_type=event&page=%s&action=%s&event-venue=%s',$_REQUEST['page'],'delete',$item->slug), 'eventorganiser_delete_venue_'.$item->slug).'">'.__('Delete').' </a>',
-            'view'    => sprintf('<a href="%s">'.__('View').'</a>',  eo_get_venue_link($term_id)),
+            'edit'		=> sprintf( '<a href="%s">'.__('Edit').'</a>', get_edit_term_link( $term_id, 'event-venue', 'event' ) ),
+            'delete'    => sprintf( '<a href="%s">'.__('Delete').'</a>', wp_nonce_url( $delete_url, 'eventorganiser_delete_venue_'.$item->slug ) ),
+            'view'		=> sprintf( '<a href="%s">'.__('View').'</a>',  eo_get_venue_link($term_id) )
         );
         
         //Return the title contents
-        return sprintf('<a href="?post_type=event&page=%1$s&action=%2$s&event-venue=%3$s" class="row-title">%4$s</a>%5$s',
-            /*$1%s*/ $_REQUEST['page'],
-            /*$2%s*/ 'edit',
-            /*$3%s*/ $item->slug,
-            /*$4%s*/ $item->name,
-            /*$5%s*/ $this->row_actions($actions)
+        return sprintf('<a href="%1$s" class="row-title">%2$s</a>%3$s',
+            /*$1%s*/ get_edit_term_link( $term_id, 'event-venue', 'event' ),
+            /*$2%s*/ esc_html( $item->name ),
+            /*$3%s*/ $this->row_actions( $actions )
         );
     }
     
