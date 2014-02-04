@@ -193,7 +193,7 @@ window.eventOrganiserSchedulePicker = {
 		this.set_up_timepickers();
 		        
         //On input, update form
-        $(".event-date :input").change(function(o) {
+        $(".event-date :input, .eo-all-day-toggle").change(function(o) {
         	self.update_schedule();
         	self.update_form();
             if ( !$(this).hasClass('eo-all-day-toggle') ) {
