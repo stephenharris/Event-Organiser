@@ -810,6 +810,10 @@ class EO_ICAL_Parser{
 		$rule_parts = explode(';',$RRule);
 
 		foreach ($rule_parts as $rule_part):
+		
+		if( empty( $rule_part ) ){
+			continue;
+		}
 
 		//Each rule part is of the form PROPERTY=VALUE
 		$prop_value =  explode('=',$rule_part, 2);
