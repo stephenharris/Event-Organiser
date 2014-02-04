@@ -270,6 +270,7 @@ window.eventOrganiserSchedulePicker = {
         if (dp.length > 0) {
             dp.datepicker({
                 dateFormat: "yy-mm-dd",
+                numberOfMonths: 2,
                 changeMonth: true,
                 changeYear: true,
                 monthNamesShort: locale.monthAbbrev,
