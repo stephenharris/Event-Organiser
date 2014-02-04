@@ -811,66 +811,67 @@ class EO_ICAL_Parser{
 
 		foreach ($rule_parts as $rule_part):
 		
-		if( empty( $rule_part ) ){
-			continue;
-		}
+			if( empty( $rule_part ) ){
+				continue;
+			}
 
-		//Each rule part is of the form PROPERTY=VALUE
-		$prop_value =  explode('=',$rule_part, 2);
-		$property = $prop_value[0];
-		$value = $prop_value[1];
+			//Each rule part is of the form PROPERTY=VALUE
+			$prop_value =  explode('=',$rule_part, 2);
+			$property = $prop_value[0];
+			$value = $prop_value[1];
 
-		switch( $property ):
-			case 'FREQ':
-				$rule_array['schedule'] =strtolower($value);
-			break;
+			switch( $property ):
+				case 'FREQ':
+					$rule_array['schedule'] =strtolower($value);
+				break;
 
-			case 'INTERVAL':
-				$rule_array['frequency'] =intval($value);
-			break;
+				case 'INTERVAL':
+					$rule_array['frequency'] =intval($value);
+				break;
 
-			case 'UNTIL':
-				//Is the scheduled end a date-time or just a date?
-				if(preg_match('/^((\d{8}T\d{6})(Z)?)/', $value))
-					$date = $this->parse_ical_datetime( $value, new DateTimeZone('UTC') );
-				else
-					$date = $this->parse_ical_date( $value );
+				case 'UNTIL':
+					//Is the scheduled end a date-time or just a date?
+					if( preg_match( '/^((\d{8}T\d{6})(Z)?)/', $value ) )
+						$date = $this->parse_ical_datetime( $value, new DateTimeZone('UTC') );
+					else
+						$date = $this->parse_ical_date( $value );
 			
-				$rule_array['schedule_last'] = $date;
-			break;
+					$rule_array['schedule_last'] = $date;
+				break;
 			
-			case 'COUNT':
-				$rule_array['number_occurrences'] = absint( $value );
-			break;
+				case 'COUNT':
+					$rule_array['number_occurrences'] = absint( $value );
+				break;
 
-			case 'BYDAY':
-				$byday = $value;
-			break;
+				case 'BYDAY':
+					$byday = $value;
+				break;
 
-			case 'BYMONTHDAY':
-				$bymonthday = $value;
-			break;
+				case 'BYMONTHDAY':
+					$bymonthday = $value;
+				break;
 			
-			//Not supported with warning
-			case 'BYSECOND':
-			case 'BYMINUTE':
-			case 'BYHOUR':
-			case 'BYYEARDAY':
-			case 'BYWEEKNO':
-			case 'BYSETPOS':
-				$this->report_warning(
-						$this->line,
-						'unsupported-recurrence-rule',
-						sprintf(
-							'Feed contains unrecognised recurrence rule: "%s" and may have not been imported correctly.',
-							 $property 
-						)
-				);
-			break;
+				//Not supported with warning
+				case 'BYSECOND':
+				case 'BYMINUTE':
+				case 'BYHOUR':
+				case 'BYYEARDAY':
+				case 'BYWEEKNO':
+				case 'BYSETPOS':
+					$this->report_warning(
+							$this->line,
+							'unsupported-recurrence-rule',
+							sprintf(
+								'Feed contains unrecognised recurrence rule: "%s" and may have not been imported correctly.',
+								 $property 
+							)
+					);
+				break;
 			
-			//Not supported without warning
-			case 'WKST':
-			break;
+				//Not supported without warning
+				case 'WKST':
+				break;
+				
 			endswitch;
 
 		endforeach;
