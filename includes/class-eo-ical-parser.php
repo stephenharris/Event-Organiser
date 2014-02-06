@@ -104,6 +104,12 @@ class EO_ICAL_Parser{
 	var $current_event = array();
 	
 	/**
+	 * Stores the parsed UIDs to ensure they are unique.
+	 * @var array
+	 */
+	var $parsed_uids = array();
+	
+	/**
 	 * Indicates which line in the feed we are at
 	 * @var int
 	 */
@@ -521,7 +527,16 @@ class EO_ICAL_Parser{
 
 		switch( $property ):
 		case 'UID':
+			//TODO accept first event and ignore subsequent events with same UID?
+			if( in_array( $value, $this->parsed_uids ) ){
+				throw new Exception(
+					sprintf(
+						__( 'Duplicate UID (%s) found in feed. UIDs must be unique.', 'eventorganiser' ),
+						esc_html( $value )
+					));
+			}
 			$this->current_event['uid'] = $value;
+			$this->parsed_uids[] = $value;
 		break;
 
 		case 'CREATED':
