@@ -35,29 +35,94 @@
  */
 class EO_ICAL_Parser{
 
-	var $remote_timeout = 10;
-	
+	/**
+	 * Array of events present in the feed
+	 * @var array
+	 */
 	var $events = array();
+	
+	/**
+	 * Array of venues present in the feed
+	 * @var array
+	*/
 	var $venues = array();
+	
+	/**
+	 * Array of venue metadata present in the feed
+	 * @var array
+	*/
 	var $venue_meta = array();
+	
+	/**
+	 * Array of categories present in the feed
+	 * @var array
+	*/
 	var $categories = array();
 	
+	/**
+	 * Number of events parsed.
+	 * @var int
+	 */
+	var $events_parsed = 0;
 	
+	/**
+	 * Number of venues parsed.
+	 * @var int
+	 */
+	var $venue_parsed = 0;
+	
+	/**
+	 * Number of categories parsed.
+	 * @var int
+	 */
+	var $categories_parsed = 0;
+	
+	/**
+	 * Timeout for remote fetching (in seconds)
+	 * @var int 
+	 */
+	var $remote_timeout = 10;
+	
+
+	/**
+	 * Array of WP_Error objects. These are errors which abort the parsing.
+	 * @var array
+	 */
 	var $errors = array();
+	
+	/**
+	 * Array of WP_Error objects. These are soft-errors which the parser tries to deal with
+	 * @var array
+	 */
 	var $warnings = array();
 
-	var $events_parsed = 0;
-	var $venue_parsed = 0;
-	var $categories_parsed = 0;
-
+	
+	/**
+	 * The current event being parsed. Stores data retrieved so far in the parsing.
+	 * @var array
+	 */
 	var $current_event = array();
 	
+	/**
+	 * Indicates which line in the feed we are at
+	 * @var int
+	 */
 	var $line = 0; //Current line being parsed
 	
+	/**
+	 * Keeps track of where we are in the feed.
+	 * @var string
+	 */
 	var $state = "NONE";
 	
+	
+	/**
+	 * Option to toggle whether a HTML description should be used (if present).
+	 * @var bool
+	 */
 	var $parse_html = true; //If description is given in HTML, try to use that.
 
+	
 	/**
 	 * Constructor with settings passed as arguments
 	 * Available options include 'status_map' and 'default_status'.
