@@ -1683,7 +1683,8 @@ function eo_get_event_uid( $post_id = 0 ){
 	
 	if( empty( $uid ) ){
 		$now = new DateTime();
-		$uid = implode( '-', array( $now->format('Ymd\THi\Z'), microtime(true), 'EO', get_the_ID(), get_current_blog_id() ) ).'@'.$_SERVER['SERVER_ADDR'];
+		$address = isset( $_SERVER['SERVER_ADDR'] ) ? $_SERVER['SERVER_ADDR'] : 'unknown';
+		$uid = implode( '-', array( $now->format('Ymd\THi\Z'), microtime(true), 'EO', get_the_ID(), get_current_blog_id() ) ).'@'.$address;
 		add_post_meta( get_the_ID(), '_eventorganiser_uid', $uid );
 	}
 	
