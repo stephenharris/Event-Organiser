@@ -612,8 +612,8 @@ function eo_get_event_schedule( $post_id=0 ){
 				$start_days[] = clone $start;
 				$rule_value = explode('=',$schedule_meta,2);
 				$rule =$rule_value[0];
-				$values = explode(',',$rule_value[1]);//Should only be one value, but may support more in future
-				$values =  array_filter($values);
+				$values = !empty( $rule_value[1] ) ? explode(',',$rule_value[1]) : array();//Should only be one value, but may support more in future
+				$values =  array_filter( $values );
 				
 				if( $rule=='BYMONTHDAY' ):
 					$date = (int) $start_days[0]->format('d');
