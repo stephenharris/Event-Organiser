@@ -208,14 +208,16 @@ function eventorganiser_public_fullcalendar() {
 			endif;
 			
 			//Event tags
-			$terms = get_the_terms( $post->ID, 'event-tag' );
-			$event['tags'] = array();
-			if( $terms && !is_wp_error( $terms ) ):
-				foreach ($terms as $term):
-					$event['tags'][]= $term->slug;
-					$event['className'][]='tag-'.$term->slug;
-				endforeach;
-			endif;
+			if( eventorganiser_get_option('eventtag') ){
+				$terms = get_the_terms( $post->ID, 'event-tag' );
+				$event['tags'] = array();
+				if( $terms && !is_wp_error( $terms ) ):
+					foreach ($terms as $term):
+						$event['tags'][]= $term->slug;
+						$event['className'][]='tag-'.$term->slug;
+					endforeach;
+				endif;
+			}
 
 			//Event colour
 			$event['textColor'] = '#ffffff'; //default text colour
