@@ -8,6 +8,23 @@
 .eo-venue-map{z-index:1000;}
 .eo-venue-map img{max-width: none;}
 
+/* Event meta data */
+.eo-event-venue-map,
+.eo-event-meta{
+	float:none;
+	width: 100%;
+ } 
+@media ( min-width:600px ){
+	.eo-event-meta{
+		width: 40%;
+		float: left;
+	}
+	.eo-event-venue-map{
+		width: 40%;
+		float:right;
+	}
+}
+
 /* Agenda CSS */
 .eo-agenda-widget ul{list-style:none; margin:0}
 .eo-agenda-widget .agenda-nav{overflow:hidden}

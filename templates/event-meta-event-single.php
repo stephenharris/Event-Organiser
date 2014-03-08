@@ -51,7 +51,7 @@
 			<?php endif; ?>
 		<?php endif; ?>
 
-	<ul class="eo-event-meta" style="float:left;width:40%">
+	<ul class="eo-event-meta">
 
 		<?php if( !eo_reoccurs() ){ ?>
 				<!-- Single event -->
@@ -106,8 +106,8 @@
 	<!-- Does the event have a venue? -->
 	<?php if( eo_get_venue() ): ?>
 		<!-- Display map -->
-		<div id="test" style="width:45%;float:right;">
-		<?php echo eo_get_venue_map(eo_get_venue(),array('width'=>'100%')); ?>
+		<div class="eo-event-venue-map">
+			<?php echo eo_get_venue_map(eo_get_venue(),array('width'=>'100%')); ?>
 		</div>
 	<?php endif; ?>
 
