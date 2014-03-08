@@ -286,8 +286,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'help' => "<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_event' )."</strong>/[event_slug]</code>"
 				) );
 
-				$now = new DateTime();
-				add_settings_field( 'url_events', __("Event (archive)", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
+				add_settings_field( 'url_events', __("Events page", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
 					array(
 						'label_for' => 'url_events',
 						'name' => 'eventorganiser_options[url_events]',
