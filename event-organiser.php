@@ -128,6 +128,7 @@ function eventorganiser_get_option( $option = false, $default = false ){
 		'url_venue' => 'events/venue',
 		'url_cat' => 'events/category',
 		'url_tag' => 'events/tag',
+		'url_on' => 'on',
 		'navtitle' => __( 'Events', 'eventorganiser' ),
 		'group_events' => '',
 		'feed' => 1,

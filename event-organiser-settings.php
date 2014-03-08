@@ -290,12 +290,25 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					array(
 						'label_for' => 'url_events',
 						'name' => 'eventorganiser_options[url_events]',
+						'class' => 'regular-text',
 						'value' => eventorganiser_get_option( 'url_events' ),
-						'help' => "<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_events' )."</strong></code>".'<br>'
-								  ."<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_events' )."</strong>/on/{$now->format('Y')}</code> ".__('Year archive', 'eventorganiser').'<br>'
-								  ."<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_events' )."</strong>/on/{$now->format('Y/m')}</code>".__('Month archive', 'eventorganiser').'<br>'
-								  ."<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_events' )."</strong>/on/{$now->format('Y/m/d')}</code>".__('Day archive', 'eventorganiser')
+						'help' => "<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_events' )."</strong></code>"
 				) );
+				
+				$now = new DateTime();
+
+				$base_url = eventorganiser_get_option( 'url_events' )."/<strong>".eventorganiser_get_option( 'url_on' )."</strong>";
+				
+				add_settings_field( 'url_on', __("Event (date archive)", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
+					array(
+						'label_for' => 	'url_on',
+						'name' 		=> 	'eventorganiser_options[url_on]',
+						'class' => 'regular-text',
+						'value' 	=> 	eventorganiser_get_option( 'url_on' ),
+						'help' 		=> 	"<code>{$home_url}/{$base_url}/{$now->format('Y')}</code> ".__('Year archive', 'eventorganiser').'<br>'
+										."<code>{$home_url}/{$base_url}/{$now->format('Y/m')}</code>".__('Month archive', 'eventorganiser').'<br>'
+										."<code>{$home_url}/{$base_url}/{$now->format('Y/m/d')}</code>".__('Day archive', 'eventorganiser')
+					) );
 	
 				add_settings_field( 'url_venue', __("Venues", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
 					array(
@@ -380,7 +393,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 
 
 			case 'permalinks':
-				$permalinks = array( 'url_event', 'url_events', 'url_venue', 'url_cat', 'url_tag' );
+				$permalinks = array( 'url_event', 'url_events', 'url_venue', 'url_cat', 'url_tag', 'url_on' );
 				
 				foreach ( $permalinks as $permalink ){
 					if ( !isset( $option[$permalink] ) )
