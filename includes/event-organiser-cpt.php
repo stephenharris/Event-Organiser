@@ -504,7 +504,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 	//Add a link to Event Organiser documentation on every EO page
 	$screen->set_help_sidebar( 
 		'<p> <strong>'. __('For more information','eventorganiser').'</strong></br>'
-			.sprintf(__('See the <a %s> documentation</a>','eventorganiser'),'target="_blank" href="http://wp-event-organiser.com/documentation/"').'</p>' 
+			.sprintf(__('See the <a %s> documentation</a>','eventorganiser'),'target="_blank" href="http://docs.wp-event-organiser.com/"').'</p>' 
 			.sprintf('<p><strong><a href="%s">%s</a></strong></p>', admin_url('edit.php?post_type=event&page=debug'),__('Debugging Event Organiser','eventorganiser' ) )
 			.sprintf('<p><strong><a href="%s">%s</a></strong></p>', admin_url('index.php?page=eo-pro'),__('Go Pro!','eventorganiser'))
 	);

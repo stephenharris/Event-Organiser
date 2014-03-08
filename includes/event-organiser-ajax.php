@@ -671,7 +671,7 @@ function eventorganiser_search_venues() {
 			$venue_id = (int) $venue->term_id;
 
 			if( !isset($term->venue_address) ){
-				/* This is all deprecated - use the API {@link http://wp-event-organiser.com/documentation/function/eo_get_venue_address/} */
+				/* This is all deprecated - use the API {@link http://codex.wp-event-organiser.com/function-eo_get_venue_address.html} */
 				$address = eo_get_venue_address($venue_id);
 				$venue->venue_address =  isset($address['address']) ? $address['address'] : '';
 				$venue->venue_postal =  isset($address['postcode']) ? $address['postcode'] : ''; 

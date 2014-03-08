@@ -79,7 +79,7 @@ class EO_Event_List_Widget extends WP_Widget{
 			__( 'Event list widget placeholders', 'eventorganiser' ),
 			sprintf(
 					__( 'You can use specified tags as placeholders for event information which you want to appear in the widget. <a href="%s" target="_blank"> Find out more</a>.', 'eventorganiser' ),
-					'http://wp-event-organiser.com/documentation/widgets/#whatistemplate'
+					'http://docs.wp-event-organiser.com/Widgets/Event_List'
 				)
 			);
 	 ?>

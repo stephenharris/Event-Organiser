@@ -7,7 +7,7 @@
  * will be overwritten if the plug-in is updated.
  *
  * To overwrite this template with your own, make a copy of it (with the same name)
- * in your theme directory. See http://wp-event-organiser.com/documentation/editing-the-templates/ for more information
+ * in your theme directory. See http://docs.wp-event-organiser.com/Theme_Integration/Overview for more information
  *
  * WordPress will automatically prioritise the template in your theme directory.
  ***************** NOTICE: *****************

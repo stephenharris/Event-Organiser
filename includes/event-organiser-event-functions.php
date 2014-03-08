@@ -17,8 +17,8 @@
 * * **event_start_before** - default: `null` Events that start before the given date
 * * **event_end_before** - default: `null` Events that end before the given date
 * * **event_start_after** - default: `null` Events that start before the given date
-* * **event_end_after** - default: `null`. Events that end after the given date. This argument, and those above expect dates in **Y-m-d** format or {@link http://wp-event-organiser.com/documentation/relative-date-formats/ relative dates}.
-* * **ondate** - Events that start on this specific date given as a string in YYYY-MM-DD format or {@link http://wp-event-organiser.com/documentation/relative-date-formats/ relative format}. default: `null` 
+* * **event_end_after** - default: `null`. Events that end after the given date. This argument, and those above expect dates in **Y-m-d** format or {@link http://docs.wp-event-organiser.com/Querying_Events/Date_Formats relative dates}.
+* * **ondate** - Events that start on this specific date given as a string in YYYY-MM-DD format or {@link http://docs.wp-event-organiser.com/Querying_Events/Date_Formats relative format}. default: `null` 
 * * **numberposts** - default is `-1` (all events)
 * * **orderby** - default is `eventstart`. You can also have `eventend`.
 * * **showpastevents** - default is `true` (it's recommended to use `event_start_after=today` or `event_end_after=today` instead)
@@ -85,7 +85,7 @@
 * @package event-query-functions
 * @link https://gist.github.com/4165380 List up-coming events
  * @link https://gist.github.com/4190351 Adds up-coming events in the venue tooltip
- * @link http://wp-event-organiser.com/documentation/relative-date-formats/ Using relative dates in event queries
+ * @link http://docs.wp-event-organiser.com/Querying_Events/Date_Formats Using relative dates in event queries
  * @link http://wp-event-organiser.com/forums/topic/retrieving-events-using-wp_query/ Retrieving events with `WP_Query`
  * @link http://wp-event-organiser.com/pro-features/event-venue-queries/ Event-Venue queries
 * @param array $args Event query arguments.
@@ -1347,7 +1347,7 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **timeformat** (string) Time format for calendar. Default 'G:i'.
  * * **axisformat** (string) Axis time format (for day/week views). WP's time format option.
  * * **key** (bool) Whether to show a category key. Default false.
- * * **tooltip** (bool) Whether to show a tooltips. Default true. Content is filtered by [`eventorganiser_event_tooltip`](http://wp-event-organiser.com/documentation/hook/eventorganiser_event_tooltip/)
+ * * **tooltip** (bool) Whether to show a tooltips. Default true. Content is filtered by [`eventorganiser_event_tooltip`](http://codex.wp-event-organiser.com/hook-eventorganiser_event_tooltip.html)
  * * **users_events** - (bool) True to show only eents for which the current user is attending
  * * **weekends** (bool) Whether to include weekends in the calendar. Default true.
  * * **mintime** (string) Earliest time to show on week/day views. Default '0',

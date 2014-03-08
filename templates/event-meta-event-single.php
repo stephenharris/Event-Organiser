@@ -7,14 +7,14 @@
  * Or you can edit the entire single event template by creating a single-event.php template
  * in your theme.
  *
- * For a list of available functions (outputting dates, venue details etc) see http://wp-event-organiser.com/documentation/function-reference/
+ * For a list of available functions (outputting dates, venue details etc) see http://codex.wp-event-organiser.com
  *
  ***************** NOTICE: *****************
  *  Do not make changes to this file. Any changes made to this file
  * will be overwritten if the plug-in is updated.
  *
  * To overwrite this template with your own, make a copy of it (with the same name)
- * in your theme directory. See http://wp-event-organiser.com/documentation/editing-the-templates/ for more information
+ * in your theme directory. See http://docs.wp-event-organiser.com/Theme_Integration/Overview for more information
  *
  * WordPress will automatically prioritise the template in your theme directory.
  ***************** NOTICE: *****************
