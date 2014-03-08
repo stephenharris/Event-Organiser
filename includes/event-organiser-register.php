@@ -691,9 +691,8 @@ class EO_Admin_Notice_Handler{
 						__('Dismiss this notice','eventorganiser'),
 						__('Dismiss','eventorganiser')
 					);
+			add_action( 'admin_print_footer_scripts', array( __CLASS__, 'print_footer_scripts' ), 11 );
 		}
-        	add_action( 'admin_print_footer_scripts', array( __CLASS__, 'print_footer_scripts' ), 11 );
-
 	}
 
 	/**
