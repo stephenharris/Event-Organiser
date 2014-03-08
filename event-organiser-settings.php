@@ -281,6 +281,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					array(
 						'label_for' => 'url_event',
 						'name' => 'eventorganiser_options[url_event]',
+						'class' => 'regular-text',
 						'value' => eventorganiser_get_option( 'url_event' ),
 						'help' => "<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_event' )."</strong>/[event_slug]</code>"
 				) );
@@ -301,6 +302,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					array(
 						'label_for' => 'url_venue',
 						'name' => 'eventorganiser_options[url_venue]',
+						'class' => 'regular-text',
 						'value' => eventorganiser_get_option( 'url_venue' ),
 						'help' => "<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_venue' )."</strong>/[venue_slug]</code>"
 				) );
@@ -309,6 +311,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					array(
 						'label_for' => 'url_cat',
 						'name' => 'eventorganiser_options[url_cat]',
+						'class' => 'regular-text',
 						'value' => eventorganiser_get_option( 'url_cat' ),
 						'help' => "<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_cat' )."</strong>/[event_cat_slug]</code>"
 				) );
@@ -317,6 +320,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					array(
 						'label_for' => 'url_tag',
 						'name' => 'eventorganiser_options[url_tag]',
+						'class' => 'regular-text',
 						'value' => eventorganiser_get_option( 'url_tag' ),
 						'help' => "<label><code>{$home_url}/<strong>".eventorganiser_get_option( 'url_tag' )."</strong>/[event_tag_slug]</code></label>"
 				) );

@@ -810,10 +810,12 @@ function eventorganiser_text_field($args){
 			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
 		}
 	}
+	
+	
 
 	$attributes = array_filter( array($min,$max,$size,$placeholder,$disabled, $disabled, $style, $data ) );
 
-	$html = sprintf('<input type="%s" name="%s" class="%s regular-text ltr" id="%s" value="%s" autocomplete="off" %s /> %s',
+	$html = sprintf('<input type="%s" name="%s" class="%s" id="%s" value="%s" autocomplete="off" %s /> %s',
 		esc_attr( $type ), 
 		esc_attr( $name ),
 		$class,
