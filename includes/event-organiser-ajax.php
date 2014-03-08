@@ -210,7 +210,7 @@ function eventorganiser_public_fullcalendar() {
 			//Event tags
 			$terms = get_the_terms( $post->ID, 'event-tag' );
 			$event['tags'] = array();
-			if($terms):
+			if( $terms && !is_wp_error( $terms ) ):
 				foreach ($terms as $term):
 					$event['tags'][]= $term->slug;
 					$event['className'][]='tag-'.$term->slug;
