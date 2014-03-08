@@ -214,6 +214,7 @@ require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-venue-functions.php')
 require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-utility-functions.php');
 require_once(EVENT_ORGANISER_DIR.'includes/deprecated.php');
 require_once(EVENT_ORGANISER_DIR.'includes/event.php');
+require_once(EVENT_ORGANISER_DIR.'includes/class-eo-extension.php');
 
 /****** Templates - note some plug-ins will require this to included admin-side too ******/
 require_once('includes/event-organiser-templates.php');
