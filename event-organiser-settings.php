@@ -248,7 +248,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 										)
 									.sprintf( 
 										__( "For more information see documentation <a href='%s'>on editing the templates</a>", 'eventorganiser' ),
-										'http://docs.wp-event-organiser.com/Theme_Integration/Overview'
+										'http://docs.wp-event-organiser.com/theme-integration'
 									)
 					) );
 				

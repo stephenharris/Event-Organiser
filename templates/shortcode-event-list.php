@@ -4,7 +4,7 @@
  *
  * The template is used for displaying the [eo_event] shortcode *unless* it is wrapped around a placeholder: e.g. [eo_event] {placeholder} [/eo_event].
  * 
- * You can use this to edit how the output of the eo_event shortcode. See http://docs.wp-event-organiser.com/Shortcodes/Event_List
+ * You can use this to edit how the output of the eo_event shortcode. See http://docs.wp-event-organiser.com/shortcodes/events-list
  * For the event list widget see widget-event-list.php
  *
  * For a list of available functions (outputting dates, venue details etc) see http://codex.wp-event-organiser.com/
@@ -14,7 +14,7 @@
  * will be overwritten if the plug-in is updated.
  *
  * To overwrite this template with your own, make a copy of it (with the same name)
- * in your theme directory. See http://docs.wp-event-organiser.com/Theme_Integration/Overview for more information
+ * in your theme directory. See http://docs.wp-event-organiser.com/theme-integration for more information
  *
  * WordPress will automatically prioritise the template in your theme directory.
  ***************** NOTICE: *****************
