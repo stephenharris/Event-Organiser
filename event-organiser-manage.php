@@ -168,7 +168,7 @@ function eventorganiser_quick_edit_box( $column_name, $post_type ) {
 	if ( $column_name != 'venue' || $post_type != 'event' ) return;?>
 
 	<fieldset class="inline-edit-col-left"><div class="inline-edit-col">
-	<?php wp_nonce_field( 'eventorganiser_event_quick_edit', '_eononce' );?>
+	<?php wp_nonce_field( 'eventorganiser_event_quick_edit_'.get_current_blog_id(), '_eononce' );?>
 		<label class="">
 			<span class="title">Event Venue</span><?php
 			wp_dropdown_categories( array( 
@@ -193,7 +193,7 @@ function eventorganiser_bulk_edit_box( $column_name, $post_type ) {
 	if ( $column_name != 'venue' || $post_type != 'event' ) return;?>
 
 	<fieldset class="inline-edit-col-left"><div class="inline-edit-col">
-	<?php wp_nonce_field( 'eventorganiser_event_quick_edit', '_eononce' );?>
+	<?php wp_nonce_field( 'eventorganiser_event_quick_edit_'.get_current_blog_id(), '_eononce' );?>
 		<label class="">
 			<span class="title">Event Venue</span><?php
 			$args = array( 'show_option_none' => __( '&mdash; No Change &mdash;' ), 'orderby' => 'name', 'hide_empty' => 0, 'name' => 'eo_input[event-venue]', 'id' => 'eventorganiser_venue_bulk', 'taxonomy' => 'event-venue' );
@@ -211,15 +211,17 @@ add_action( 'save_post', 'eventorganiser_quick_edit_save' );
 function eventorganiser_quick_edit_save( $post_id ) {
 	global $wpdb;
 
-	// verify this is not an auto save routine. 
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return $post_id;
-
 	//make sure data came from our quick/bulk box
-	if ( !isset( $_REQUEST['_eononce'] ) || !wp_verify_nonce( $_REQUEST['_eononce'], 'eventorganiser_event_quick_edit' ) )
-		return;
+	if ( !isset( $_REQUEST['_eononce'] ) || !wp_verify_nonce( $_REQUEST['_eononce'], 'eventorganiser_event_quick_edit_'.get_current_blog_id() ) ) return;
+	
+	// verify this is not an auto save routine. 
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+	
+	//verify this is not a cron job
+	if ( defined( 'DOING_CRON' ) && DOING_CRON ) return;
 
 	//authentication checks
-	if ( !current_user_can( 'edit_event', $post_id ) ) return $post_id;
+	if ( !current_user_can( 'edit_event', $post_id ) ) return;
 
 	$venue_id = ( isset( $_REQUEST['eo_input']['event-venue'] ) ? (int) $_REQUEST['eo_input']['event-venue'] : - 1 );
 

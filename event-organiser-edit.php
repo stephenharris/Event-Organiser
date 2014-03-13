@@ -272,7 +272,7 @@ function _eventorganiser_details_metabox( $post ){
 	<?php 
 
 	// create a custom nonce for submit verification later
-	wp_nonce_field( 'eventorganiser_event_update_'.get_the_ID(), '_eononce' );	
+	wp_nonce_field( 'eventorganiser_event_update_'.get_the_ID().'_'.get_current_blog_id(), '_eononce' );	
 }	
 
 
@@ -288,13 +288,16 @@ function _eventorganiser_details_metabox( $post ){
 function eventorganiser_details_save( $post_id ) {
 
 	//make sure data came from our meta box
-	if ( !isset( $_POST['_eononce'] ) || !wp_verify_nonce( $_POST['_eononce'], 'eventorganiser_event_update_'.$post_id ) ) return;
+	if ( !isset( $_POST['_eononce'] ) || !wp_verify_nonce( $_POST['_eononce'], 'eventorganiser_event_update_'.$post_id.'_'.get_current_blog_id() ) ) return;
 
-	// verify this is not an auto save routine. 
+	//verify this is not an auto save routine. 
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-
+	
+	//verify this is not a cron job
+	if ( defined( 'DOING_CRON' ) && DOING_CRON ) return;
+	
 	//authentication checks
-	if (!current_user_can( 'edit_event', $post_id ) ) return;
+	if ( !current_user_can( 'edit_event', $post_id ) ) return;
 
 	//Collect raw data
 	$raw_data = ( isset( $_POST['eo_input'] ) ? $_POST['eo_input'] : array() );
