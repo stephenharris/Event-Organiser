@@ -552,30 +552,48 @@ function eo_check_datetime( $format, $datetime_string, $timezone = false ){
     	return date_create_from_format( $format, $datetime_string, $timezone );
 	}else{
 		
-		//Workaround for outdated php versions. Allowed date formats are 'Y-m-d', 'm-d-Y' and  'd-m-Y'
-		//allowed time formats are g:ia, G:ia or h:i, H:i (optionally also specifying seconds).
+		//Workaround for outdated php versions. Limited support, see conversion array below.
+		
+		//Format conversion
+		$format_conversion = array(
+			'Y' => '%Y', 
+			'm'	=> '%m', 'F' => '%B', 
+			'd'	=> '%d', 'j' => '%e',
+			'S' => '%0',
+			'H' => '%H', 'G' => '%k', 'h'=> '%I', 'g' => '%l', 
+			'i' => '%M', 
+			's' => '%S', 
+			'a' => '%p', 'A' => '%P'
+		);
+		
 		$strptime_format = str_replace(
-			array( 'Y', 'm', 'd', 'H', 'i','a'),
-			array( '%Y', '%m', '%d', '%I', '%M', '%p' ) ,
+			array_keys( $format_conversion ),
+			array_values( $format_conversion ),
 			$format
 		);
 		
 		$strptime = strptime( $datetime_string, $strptime_format );
-		
-		if( false == $striptime )
+
+		if( false == $strptime ){
 			return false;
+		}
 		
 		$ymdhis = sprintf(
 				'%04d-%02d-%02d %02d:%02d:%02d',
-				$ugly['tm_year'] + 1900, 
-				$ugly['tm_mon'] + 1,
-				$ugly['tm_mday'],
-				$ugly['tm_hour'],
-				$ugly['tm_min'],
-				$ugly['tm_sec']
+				$strptime['tm_year'] + 1900, 
+				$strptime['tm_mon'] + 1,
+				$strptime['tm_mday'],
+				$strptime['tm_hour'],
+				$strptime['tm_min'],
+				$strptime['tm_sec']
 		);
-		
-		$date = new DateTime( $ymdhis, $timezone );
+
+		try {
+			$date = new DateTime( $ymdhis, $timezone );
+			return $date;
+		} catch (Exception $e) {			
+			return false;
+		}
 		
 	}
 		
