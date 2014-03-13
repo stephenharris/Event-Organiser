@@ -114,21 +114,21 @@ function eo_is_event_archive( $type = false ){
 	if( !is_post_type_archive('event') )
 		return false;
 	
-	$ondate = str_replace('/','-',get_query_var('ondate'));
+	$ondate = str_replace('/','-', trim( get_query_var('ondate') ) );
 
 	switch( $type ){
 		case 'year':
-			if( _eventorganiser_check_datetime( $ondate.'-01-01 00:00', 'Y-m-d' ) )
+			if( preg_match( '/\d{4}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate.'-01-01' ) )
 				return true;
 			return false;
 
 		case 'month':
-			if( _eventorganiser_check_datetime( $ondate.'-01 00:00', 'Y-m-d' ) )
+			if( preg_match( '/^\d{4}-\d{2}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate.'-01' ) )
 				return true;
 			return false;
 
 		case 'day':
-			if( _eventorganiser_check_datetime( $ondate.' 00:00', 'Y-m-d') )
+			if( preg_match( '/^\d{4}-\d{2}-\d{2}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate ) )
 				return true;
 			return false;
 
@@ -172,6 +172,11 @@ function eo_get_event_archive_date( $format = DATETIMEOBJ ){
 		return false;
 	
 	$ondate = str_replace('/','-',get_query_var('ondate'));
+	
+	if( empty( $ondate) ){
+		return false;
+	}
+	
 	$parts = count(explode('-',$ondate));
 
 	if( $parts == 1 && is_numeric($ondate) ){
@@ -182,8 +187,8 @@ function eo_get_event_archive_date( $format = DATETIMEOBJ ){
 		$ondate .= '-01';
 	}
 		
-	$ondate =  _eventorganiser_check_datetime( $ondate.' 00:00', 'Y-m-d' );
-	return eo_format_datetime($ondate, $format);
+	$ondate = eo_check_datetime( 'Y-m-d', $ondate );
+	return eo_format_datetime( $ondate, $format );
 }
 
 /**
