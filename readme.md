@@ -212,6 +212,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 2.7.1 ###
+* Fixes bug (2.7) where shortcode tags are ignored
+* Adds blog ID checks on multisites
+* Update "tested up to" version
+
 ### 2.7 ###
 * Alteration to default single event page to adapt layout on small screens.
 * Added option to change "on" in the year/month/date event page urls
@@ -481,7 +486,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 ### 1.6.3 ###
  * Fixes 'EOAjax is not defined' error (see [https://github.com/stephenh1988/Event-Organiser/issues/20](https://github.com/stephenh1988/Event-Organiser/issues/27))
 
-### 1.6. 2 ###
+### 1.6.2 ###
 * Fixes 'zoom' bug for venue maps (see [https://github.com/stephenh1988/Event-Organiser/issues/20](https://github.com/stephenh1988/Event-Organiser/issues/20))
 * Fixes yes/no label error for 'are current events past?' (see [https://github.com/stephenh1988/Event-Organiser/issues/23](https://github.com/stephenh1988/Event-Organiser/issues/23))
 * Adds a condensed jQuery UI for frontend css (see [https://github.com/stephenh1988/Event-Organiser/issues/22](https://github.com/stephenh1988/Event-Organiser/issues/22))
