@@ -99,6 +99,8 @@ A big thank you to those who have provided translations for Event Organiser. If 
 * Croatian - Branimir
 * Catalan - jordioniric, marc.antje
 * Icelandic - HrHagedorn
+* Bulgarian - Parvan Voynov
+* Romanian - raduanastasedev
 
 
 == Installation ==
@@ -214,6 +216,8 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * iCal parser returns error if duplicate UIDs are detected'.
 * iCal parser accepts webcal protocal.
 * Updated links to point to new [user documentation site](http://docs.wp-event-organiser.com).
+* Added Bulgarian (thanks to Parvan Voynov) & Romanian translation (thanks to raduanastasedev)
+* Updated Czech, Danish, German, Spanish, Estonian, French, Hebrew, Italian, Dutch, Polish, Portuguese, Portuguese (Brazil), Slovak, and Slovenian translations.
 
 = 2.6 =
 * WordPress 3.8 compatible (tested against RC1)
