@@ -98,7 +98,24 @@ module.exports = function(grunt) {
 				'!CONTRIBUTING.md'
 			],
 			dest: 'dist/event-organiser/'
-		}		
+		},
+		
+		beta: {
+			src:  [
+				'**',
+				'!dist/**', //build directory
+				'!.git/**','!.gitignore','!.gitmodules', //git
+				'!node_modules/**','!Gruntfile.js','!package.json', //grunt
+				'!apigen/**','!documentation/**', //documentation
+				'!tests/**', //unit tests
+				'!vendor/**',
+				'!*~',
+				'!composer.lock','!composer.phar','!composer.json',//composer
+				'!CONTRIBUTING.md'
+			],
+			dest: process.env.EO_BETA_PLUGIN_DIR + '/<%= pkg.name %>/'
+		}	
+	
 	},
 
 	wp_readme_to_markdown: {
