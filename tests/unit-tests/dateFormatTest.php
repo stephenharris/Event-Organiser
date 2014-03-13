@@ -216,12 +216,14 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 		
 		//Run tests
 		$parsed_est_date = eo_check_datetime( 'Y-m-d H:i:s', '2013-12-05 22:00:00', $est );
+		
 		$this->assertTrue( $utc_date == $parsed_est_date );
 		
 		$parsed_wrong_timezone = eo_check_datetime( 'Y-m-d H:i:s', '2013-12-05 22:00:00', $utc );
 		$this->assertTrue( $utc_date != $parsed_wrong_timezone );
 		
 		//$est should be ignored as format contains timezone reference 
+		//TODO eo_check_datetime doesn't support \T or \Z in php5.2
 		$parsed_as_utc = eo_check_datetime( 'Y-m-d\TH:i:s\Z', '2013-12-05T22:00:00Z', $est );
 		$this->assertTrue( $utc_date == $parsed_est_date );
 	}
@@ -238,6 +240,7 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 		//Run test
 		$this->assertEquals( $date1, eo_check_datetime( 'Y-m-d g:ia', '2013-12-31 4:30пп' ) );
 
+		//TODO eo_check_datetime doesn't support S in php5.2
 		$this->assertEquals( $date1, eo_check_datetime( 'jS F Y g:ia', '31st December 2013 4:30пп' ) );
 		
 	
