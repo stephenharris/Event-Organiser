@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-11-16 11:30:09+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2014-02-25 08:08:55+0000\n"
+"Last-Translator: Malthe <malthe@milthers.dk>\n"
 "Language-Team: \n"
 "Language: Danish (Denmark)\n"
 "MIME-Version: 1.0\n"
@@ -11,224 +11,232 @@ msgstr "Project-Id-Version: Event Organiser\n"
 "Content-Transfer-Encoding: 8bit\n"
 ""
 
-#: ../templates/taxonomy-event-category.php:49
-#: ../templates/taxonomy-event-category.php:107
-#: ../templates/archive-event.php:56
-#: ../templates/archive-event.php:111
-#: ../templates/taxonomy-event-tag.php:49
-#: ../templates/taxonomy-event-tag.php:107
-#: ../templates/taxonomy-event-venue.php:49
-#: ../templates/taxonomy-event-venue.php:106
+#: templates/archive-event.php:56 templates/archive-event.php:111
+#: templates/taxonomy-event-category.php:49
+#: templates/taxonomy-event-category.php:107
+#: templates/taxonomy-event-tag.php:49 templates/taxonomy-event-tag.php:107
+#: templates/taxonomy-event-venue.php:49
+#: templates/taxonomy-event-venue.php:106
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
 msgstr " <span class=\"meta-nav\">&larr;</span> Nyere begivenheder"
 
-#: ../includes/class-event-organiser-im-export.php:282
+#: includes/class-event-organiser-im-export.php:282
 msgid "%d categories were created"
 msgstr "%d kategorier blev oprettet"
 
-#: ../includes/class-event-organiser-im-export.php:269
+#: includes/class-event-organiser-im-export.php:269
 msgid "%d events were successfully imported"
 msgstr "%d begivenheder blev importeret"
 
-#: ../includes/class-event-organiser-im-export.php:275
+#: includes/class-event-organiser-im-export.php:275
 msgid "%d venues were created"
 msgstr "%d steder blev oprettet"
 
-#: ../event-organiser-debug.php:416
+# / TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
+#: event-organiser-debug.php:418
 msgid "%s has only been tested up to %s %s"
-msgstr ""
+msgstr "%s er kun testet op til %s %s"
 
-#: ../event-organiser-debug.php:423
+# / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
+#: event-organiser-debug.php:427
 msgid "%s requires %s version %s or higher"
-msgstr ""
+msgstr "%s kræver %s version %s eller højere"
 
-#: ../event-organiser-manage.php:200
+#: event-organiser-manage.php:199
 msgid "&mdash; No Change &mdash;"
 msgstr "&mdash; Ingen ændringer &mdash;"
 
-#: ../classes/class-eo-event-list-widget.php:90
+#: classes/class-eo-event-list-widget.php:91
 msgid "'No events' message"
 msgstr "\"Ingen begivenheder\"-besked "
 
-#: ../includes/class-event-organiser-im-export.php:279
+#: includes/class-event-organiser-im-export.php:279
 msgid "1 category was created"
 msgstr "1 kategori blev oprettet"
 
-#: ../includes/class-event-organiser-im-export.php:266
+#: includes/class-event-organiser-im-export.php:266
 msgid "1 event was successfully imported"
 msgstr "1 begivenhed blev importeret"
 
-#: ../includes/class-event-organiser-im-export.php:272
+#: includes/class-event-organiser-im-export.php:272
 msgid "1 venue was created"
 msgstr "1 sted blev oprettet"
 
-#: ../event-organiser-calendar.php:210
+#: event-organiser-calendar.php:211
 msgid "24 hour time"
 msgstr "24 timers klokkeslæt"
 
-#: ../includes/event-organiser-register.php:607
+#: includes/event-organiser-register.php:633
 msgid "<h4>City & State Fields Added</h4>City and state / province fields for "
 "venues have now been added. </br> If you'd like, Event Organiser can <a "
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
 "details aftewards."
-msgstr ""
+msgstr "<h4>By & Stat Felter Tilføjet</h4>By og stat / provins felter for venues er "
+"nu tilføjet. </br> Hvis du symes, kan Event Organiser <a href='%s'>forsøge "
+"at udfylde dem automatisk</a>. Du kan altid ændre detaljerne efterfølgende"
 
-#: ../includes/event-organiser-register.php:614
+#: includes/event-organiser-register.php:640
 msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
 "haven't and want the old templates back, <a "
 "href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see "
 "this post<a/>."
-msgstr ""
+msgstr "<h4>Standartskabelonen er ændret</h4>Ingen panik! Hvis du har sat din egen "
+"skabelon op i dit tema vil du ikke se nogen ændring. </br> Hvis du ikke har, "
+"og gerne vil have skabelonen tilbage,  <a "
+"href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>se "
+"der her post<a/>."
 
-#: ../classes/class-eo-widget-categories.php:10
+#: classes/class-eo-widget-categories.php:10
 msgid "A list or dropdown of event categories"
 msgstr "En liste eller drop-down memnu af begivenhedskategorier"
 
-#: ../classes/class-eo-widget-venues.php:11
+#: classes/class-eo-widget-venues.php:11
 msgid "A list or dropdown of event venues"
 msgstr "En liste eller drop-down af begivenhedssteder"
 
-#: ../event-organiser-settings.php:132
+#: event-organiser-settings.php:132
 msgid "Add an 'events' link to the navigation menu:"
 msgstr "Tilføj et link for 'begivenheder' til menuen:"
 
-#: ../includes/event-organiser-cpt.php:483
+#: includes/event-organiser-cpt.php:483
 msgid "Add Event"
 msgstr "Tilføj begivenhed"
 
-#: ../event-organiser-go-pro.php:82
+#: event-organiser-go-pro.php:82
 msgid "Add information on your venue pages with venue custom fields, or give your "
 "venues more attentioned with their own 'featured image'"
-msgstr ""
+msgstr "Tilføj information til venuesider med venue brugerfelter og giv dine venues "
+"mere opmærksomhed med deres eget 'featured billede'"
 
-#: ../event-organiser-venues.php:230
-#: ../event-organiser-venues.php:268
+#: event-organiser-venues.php:230 event-organiser-venues.php:268
 msgid "Add New"
 msgstr "Tilføj ny"
 
-#: ../includes/event-organiser-cpt.php:68
+#: includes/event-organiser-cpt.php:68
 msgid "Add New Category"
 msgstr "Tilføj ny kategori"
 
-#: ../includes/event-organiser-cpt.php:143
+#: includes/event-organiser-cpt.php:143
 msgid "Add New Event"
 msgstr "Tilføj ny begivenhed"
 
-#: ../includes/event-organiser-cpt.php:101
+#: includes/event-organiser-cpt.php:101
 msgid "Add New Tag"
 msgstr "Tilføj nyt tag"
 
-#: ../event-organiser-venues.php:272
+#: event-organiser-venues.php:272 includes/event-organiser-cpt.php:35
 msgid "Add New Venue"
 msgstr "Tilføj nyt sted"
 
-#: ../includes/event-organiser-cpt.php:106
+#: includes/event-organiser-cpt.php:106
 msgid "Add or remove tags"
 msgstr "Tilføj eller fjern tags"
 
-#: ../includes/event-organiser-cpt.php:38
+#: includes/event-organiser-cpt.php:38
 msgid "Add or remove venues"
 msgstr "Tilføj eller fjern steder"
 
-#: ../includes/event-organiser-ajax.php:545
+#: includes/event-organiser-ajax.php:545
 msgid "Add To Google Calendar"
 msgstr "Tilføj til Google Calendar"
 
-#: ../event-organiser-venues.php:345
+#: event-organiser-venues.php:345
 msgid "Add Venue"
 msgstr "Tilføj sted"
 
-#: ../event-organiser-settings.php:57
+#: event-organiser-settings.php:57
 msgid "Add-on Licence keys"
-msgstr ""
+msgstr "Add-on Licensnøgle"
 
-#: ../event-organiser-go-pro.php:76
+#: event-organiser-go-pro.php:76
 msgid "Additional shortcodes & improved UI"
-msgstr ""
+msgstr "Flere shortcodes og forbedret UI"
 
-#: ../includes/event-organiser-venue-functions.php:882
+#: includes/event-organiser-venue-functions.php:882
 msgid "Address"
 msgstr "Adresse"
 
-#: ../includes/event-organiser-cpt.php:63
+#: includes/event-organiser-cpt.php:63
 msgid "All Categories"
 msgstr "Alle kategorier"
 
-#: ../includes/event-organiser-cpt.php:428
+#: includes/event-organiser-cpt.php:428
 msgid "All dates and times must be entered in the specified format. This format can "
 "changed in the settings page."
 msgstr "Alle datoer og tider skal indtastes i det specificerede format. Dette format "
 "kan ændres på indstillingssiden."
 
-#: ../includes/event-organiser-ajax.php:540
-#: ../includes/event-organiser-event-functions.php:1297
+#: includes/event-organiser-ajax.php:540
+#: includes/event-organiser-event-functions.php:1298
 msgid "All Day"
 msgstr "Hele dagen"
 
-#: ../event-organiser-edit.php:117
+#: event-organiser-edit.php:117
 msgid "All day"
 msgstr "Hele dagen"
 
-#: ../includes/event-organiser-cpt.php:146
+#: includes/event-organiser-cpt.php:146
 msgid "All events"
 msgstr "Alle begivenheder"
 
-#: ../includes/event-organiser-cpt.php:95
+#: includes/event-organiser-cpt.php:95
 msgid "All Tags"
 msgstr "Alle tags"
 
-#: ../includes/event-organiser-cpt.php:31
-#: ../classes/class-eo-event-list-widget.php:47
+#: classes/class-eo-calendar-widget.php:91
+#: classes/class-eo-event-list-widget.php:47
+#: includes/event-organiser-cpt.php:31
 msgid "All Venues"
 msgstr "Alle steder"
 
-#: ../templates/taxonomy-event-category.php:120
+#: templates/taxonomy-event-category.php:120
 msgid "Apologies, but no events were found for the requested category. "
 msgstr "Beklager, men ingen begivenheder blev fundet for den forespurgte kategori."
 
-#: ../templates/taxonomy-event-tag.php:120
+#: templates/taxonomy-event-tag.php:120
 msgid "Apologies, but no events were found for the requested tag. "
 msgstr "Beklager, men ingen begivenheder blev fundet for det forespurgte tag."
 
-#: ../templates/taxonomy-event-venue.php:118
+#: templates/taxonomy-event-venue.php:118
 msgid "Apologies, but no events were found for the requested venue. "
 msgstr "Beklager, men ingen begivenheder blev fundet på det forespurgte sted."
 
-#: ../templates/archive-event.php:123
+#: templates/archive-event.php:123
 msgid "Apologies, but no results were found for the requested archive. "
 msgstr "Beklager, men ingen resultater blev fundet for det forespurgte arkiv."
 
-#: ../event-organiser-settings.php:168
+#: event-organiser-settings.php:168
 msgid "Are current events past?"
 msgstr "Er igangværende begivenheder overståede?"
 
-#: ../classes/class-eo-event-list-widget.php:61
+#: classes/class-eo-event-list-widget.php:62
 msgid "ASC"
 msgstr "ASC"
 
-#: ../includes/event-organiser-cpt.php:616
+#: includes/event-organiser-cpt.php:616
 msgid "Assign the category a colour."
 msgstr "Tilføj farve til denne kategori"
 
-#: ../event-organiser-settings.php:112
+#: event-organiser-settings.php:112
 msgid "Author"
 msgstr "Forfatter"
 
-#: ../event-organiser-debug.php:76
+#: event-organiser-debug.php:76
 msgid "Below any <strong>known</strong> plug-in and theme conflicts are highlighted "
 "in red."
-msgstr ""
+msgstr "Herunder  er alle <strong>kendte</strong> plug-in og tema konflikter "
+"fremhævet med rødt."
 
-#: ../includes/event-organiser-ajax.php:347
+#: includes/event-organiser-ajax.php:347
 msgid "Break this series"
 msgstr "Bryd denne serie"
 
-#: ../event-organiser-go-pro.php:56
+#: event-organiser-go-pro.php:56
 msgid "But that's not all &hellip;"
-msgstr ""
+msgstr "Men det er ikke det hele ..."
 
-#: ../includes/event-organiser-cpt.php:479
+#: includes/event-organiser-cpt.php:479
 msgid "By clicking the relevant tab, you can view events in Month, Week or Day "
 "mode. You can also filter the events by events by category and venue. The "
 "'go to date' button allows you to quickly jump to a specific date."
@@ -237,580 +245,583 @@ msgstr "Ved at klikke på den relevante fane kan du se begivenheder vist i måne
 "'gå til dato'-knappen giver dig mulighed for hurtigt at hoppe til en "
 "specifik dato."
 
-#: ../event-organiser-calendar.php:203
+#: event-organiser-calendar.php:204
 msgid "Calendar options"
 msgstr "Kalender valgmuligheder"
 
-#: ../event-organiser-calendar.php:22
-#: ../event-organiser-calendar.php:23
+#: event-organiser-calendar.php:22 event-organiser-calendar.php:23
 msgid "Calendar View"
 msgstr "Kalendervisning"
 
-#: ../event-organiser-edit.php:239
-#: ../event-organiser-calendar.php:282
-#: ../event-organiser-calendar.php:289
+#: event-organiser-calendar.php:283 event-organiser-calendar.php:290
+#: event-organiser-edit.php:239
 msgid "Cancel"
 msgstr "Annuller"
 
-#: ../event-organiser-manage.php:26
+#: classes/class-eo-widget-categories.php:19 event-organiser-manage.php:26
+#: includes/event-organiser-cpt.php:71
+#: includes/event-organiser-event-functions.php:1382
+#: templates/event-meta-event-single.php:68
 msgid "Categories"
 msgstr "Kategorier"
 
-#: ../event-organiser-settings.php:235
+#: event-organiser-settings.php:235
 msgid "Check this option to prevent any stylesheets from Event Organiser being "
 "loaded on the front-end"
-msgstr ""
+msgstr "Sæt et flueben her for at deaktivere front-end stylesheets fra Event "
+"Organiser."
 
-#: ../event-organiser-edit.php:76
+#: event-organiser-edit.php:76
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Marker for at redigere denne begivenhed og dens gentagelser"
 
-#: ../event-organiser-settings.php:603
+#: event-organiser-settings.php:603
 msgid "Choose a custom permalink structure for events, venues, event categories and "
 "event tags."
 msgstr "Vælg en brugerdefineret struktur til permalinks for begivenheder, steder, "
 "begivenhedskategorier og -tags."
 
-#: ../includes/event-organiser-cpt.php:104
+#: includes/event-organiser-cpt.php:104
 msgid "Choose from the most used tags"
 msgstr "Vælg fra de mest brugte tags"
 
-#: ../includes/event-organiser-cpt.php:437
+#: includes/event-organiser-cpt.php:437
 msgid "Choose the reoccurrence end date. No further occurrences are added after "
 "this date, but an occurrence that starts before may finish after this date."
 msgstr "Vælg gentagelsens slutdato. Ingen gentagelser bliver tilføjet efter denne "
 "dato, men en gentagelse, der starter før, kan slutte efter datoen."
 
-#: ../includes/event-organiser-venue-functions.php:883
+#: includes/event-organiser-venue-functions.php:883
 msgid "City"
 msgstr "By"
 
-#: ../includes/event-organiser-cpt.php:610
-#: ../includes/event-organiser-cpt.php:633
+#: includes/event-organiser-cpt.php:610 includes/event-organiser-cpt.php:633
 msgid "Color"
 msgstr "Farve"
 
-#: ../event-organiser-settings.php:116
+#: event-organiser-settings.php:116
 msgid "Comments"
 msgstr "Kommentarer"
 
-#: ../includes/event-organiser-venue-functions.php:886
+#: includes/event-organiser-venue-functions.php:886
 msgid "Country"
 msgstr "Land"
 
-#: ../event-organiser-calendar.php:244
+#: event-organiser-calendar.php:245
 msgid "Create an event"
-msgstr ""
+msgstr "Opret en event"
 
-#: ../includes/event-organiser-cpt.php:423
+#: includes/event-organiser-cpt.php:423
 msgid "Creating events"
 msgstr "Oprettelse af begivenheder"
 
-#: ../includes/event-organiser-cpt.php:424
+#: includes/event-organiser-cpt.php:424
 msgid "Creating events:"
 msgstr "Oprettelse af begivenheder:"
 
-#: ../event-organiser-calendar.php:239
+#: event-organiser-calendar.php:240
 msgid "Current date/time"
 msgstr "Nuværende dato/tidspunkt"
 
-#: ../event-organiser-edit.php:127
+#: event-organiser-edit.php:127
 msgid "custom"
-msgstr ""
+msgstr "Brugerindstillet"
 
-#: ../includes/event-organiser-cpt.php:219
+#: includes/event-organiser-cpt.php:219
 msgid "Custom field deleted."
 msgstr "Felt slettet."
 
-#: ../includes/event-organiser-cpt.php:218
+#: includes/event-organiser-cpt.php:218
 msgid "Custom field updated."
 msgstr "Felt opdateret."
 
-#: ../event-organiser-settings.php:115
+#: event-organiser-settings.php:115
 msgid "Custom Fields"
 msgstr "Egne felter"
 
-#: ../includes/event-organiser-event-functions.php:706
+#: includes/event-organiser-event-functions.php:706
 msgid "custom reoccurrence"
-msgstr ""
+msgstr "Brugerindstillet gentagelse"
 
-#: ../event-organiser-edit.php:126
+#: event-organiser-edit.php:126
 msgid "daily"
 msgstr "dagligt"
 
-#: ../event-organiser-settings.php:137
+#: event-organiser-settings.php:137
 msgid "Date Format:"
 msgstr "Dato-format:"
 
-#: ../event-organiser-calendar.php:229
-msgid "Day"
-msgstr "Dag"
-
-#: ../event-organiser-calendar.php:55
+#: event-organiser-calendar.php:56 includes/event-organiser-register.php:55
+#: includes/event-organiser-register.php:227
 msgid "day"
 msgstr "dag"
 
-#: ../event-organiser-settings.php:271
-msgid "Day archive"
-msgstr ""
+#: classes/class-eo-agenda-widget.php:33 event-organiser-calendar.php:230
+msgid "Day"
+msgstr "Dag"
 
-#: ../event-organiser-edit.php:161
+#: event-organiser-settings.php:271
+msgid "Day archive"
+msgstr "Dag arkiv"
+
+#: event-organiser-edit.php:161
 msgid "day of month"
 msgstr "dag i måneden"
 
-#: ../event-organiser-edit.php:165
+#: event-organiser-edit.php:165
 msgid "day of week"
 msgstr "dag i ugen"
 
-#: ../includes/event-organiser-register.php:218
+#: includes/event-organiser-register.php:228
 msgid "days"
 msgstr "dage"
 
-#: ../event-organiser-settings.php:143
+#: event-organiser-settings.php:143
 msgid "dd-mm-yyyy"
 msgstr "dd-mm-yyyy"
 
-#: ../event-organiser-debug.php:555
-msgid "Debug mode"
-msgstr ""
-
-#: ../includes/event-organiser-cpt.php:492
+#: includes/event-organiser-cpt.php:492
 msgid "Debugging Event Organiser"
-msgstr ""
+msgstr "Debugging Event Organiser"
 
-#: ../classes/class-eo-venue-list-table.php:70
-#: ../classes/class-eo-venue-list-table.php:127
+#: classes/class-eo-venue-list-table.php:70
+#: classes/class-eo-venue-list-table.php:127
 msgid "Delete"
 msgstr "Slet"
 
-#: ../event-organiser-settings.php:36
-#: ../event-organiser.php:103
+#: event-organiser-settings.php:36 event-organiser.php:103
+#: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Slet begivenheder"
 
-#: ../event-organiser-settings.php:180
+#: event-organiser-settings.php:180
 msgid "Delete expired events:"
 msgstr "Slet udløbne begivenheder:"
 
-#: ../event-organiser-settings.php:38
-#: ../event-organiser.php:105
+#: event-organiser-settings.php:38 event-organiser.php:105
+#: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Slet andres begivenheder"
 
-#: ../includes/event-organiser-ajax.php:333
+#: includes/event-organiser-ajax.php:333
 msgid "Delete this occurrence"
 msgstr "Slet denne forekomst"
 
-#: ../includes/event-organiser-cpt.php:468
+#: includes/event-organiser-cpt.php:468
 msgid "Delete will permanently remove the venue"
 msgstr "Slet vil fjerne stedet permanent"
 
-#: ../classes/class-eo-event-list-widget.php:62
+#: classes/class-eo-event-list-widget.php:63
 msgid "DESC"
 msgstr "DESC"
 
-#: ../event-organiser-settings.php:229
+#: event-organiser-settings.php:229
 msgid "Disable CSS:"
-msgstr ""
+msgstr "Deaktiver CSS:"
 
-#: ../includes/event-organiser-register.php:651
+#: includes/event-organiser-register.php:677
 msgid "Dismiss"
 msgstr "Afvis"
 
-#: ../includes/event-organiser-register.php:650
+#: includes/event-organiser-register.php:676
 msgid "Dismiss this notice"
 msgstr "Afvis denne besked"
 
-#: ../classes/class-eo-widget-categories.php:96
+#: classes/class-eo-widget-categories.php:96
+#: classes/class-eo-widget-venues.php:95
 msgid "Display as dropdown"
 msgstr "Vis som drop-down"
 
-#: ../event-organiser-settings.php:129
-#: ../event-organiser-settings.php:156
+#: event-organiser-settings.php:129 event-organiser-settings.php:156
 msgid "Display past events on calendars, event lists and archives (this can be "
 "over-ridden by shortcode attributes and widget options)."
 msgstr "Vis overståede begivenheder i kalendere, lister og arkiver (dette kan "
 "tilsidesættes af shortcode-attributter og widget-indstillinger)."
 
-#: ../classes/class-eo-calendar-widget.php:22
+#: classes/class-eo-calendar-widget.php:22
 msgid "Displays a calendar of your events"
 msgstr "Viser en kalender af dine begivenheder"
 
-#: ../classes/class-eo-event-list-widget.php:22
+#: classes/class-eo-event-list-widget.php:22
 msgid "Displays a list of events"
 msgstr "Viser en liste af begivenheder"
 
-#: ../classes/class-eo-agenda-widget.php:11
+#: classes/class-eo-agenda-widget.php:11
 msgid "Displays a list of events, grouped by date"
 msgstr "Viser en liste af begivenheder, grupperet efter dato"
 
-#: ../event-organiser-settings.php:629
+#: event-organiser-settings.php:629
 msgid "Do not add to menu"
 msgstr "Tilføj ikke til menu"
 
-#: ../includes/class-event-organiser-im-export.php:97
+#: includes/class-event-organiser-im-export.php:97
 msgid "Download Export File"
 msgstr "Download eksportfil"
 
-#: ../event-organiser-debug.php:84
+#: event-organiser-debug.php:84
 msgid "Download system information file"
-msgstr ""
+msgstr "Download system informationsfil"
 
-#: ../includes/event-organiser-ajax.php:255
+#: includes/event-organiser-ajax.php:255
 msgid "Draft"
 msgstr "Kladde"
 
-#: ../templates/single-event.php:71
+#: classes/class-eo-venue-list-table.php:69 templates/single-event.php:71
 msgid "Edit"
 msgstr "Rediger"
 
-#: ../includes/event-organiser-cpt.php:66
+#: includes/event-organiser-cpt.php:66
 msgid "Edit Category"
 msgstr "Rediger kategori"
 
-#: ../includes/event-organiser-ajax.php:314
-#: ../includes/event-organiser-cpt.php:144
+#: includes/event-organiser-ajax.php:314 includes/event-organiser-cpt.php:144
 msgid "Edit Event"
 msgstr "Rediger begivenhed"
 
-#: ../event-organiser-settings.php:34
-#: ../event-organiser.php:101
+#: event-organiser-settings.php:34 event-organiser.php:101
+#: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Rediger begivenheder"
 
-#: ../event-organiser-settings.php:37
-#: ../event-organiser.php:104
+#: event-organiser-settings.php:37 event-organiser.php:104
+#: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Rediger andres begivenheder"
 
-#: ../includes/event-organiser-cpt.php:99
+#: includes/event-organiser-cpt.php:99
 msgid "Edit Tag"
 msgstr "Rediger tag"
 
-#: ../includes/event-organiser-cpt.php:467
+#: includes/event-organiser-cpt.php:467
 msgid "Edit takes you to the editing screen for that venue. You can also reach that "
 "screen by clicking on the venue title."
 msgstr "Rediger tager dig til redigeringsvinduet for stedet. Du kan også komme til "
 "det vindue ved at klikke på stedets titel."
 
-#: ../event-organiser-venues.php:267
+#: event-organiser-venues.php:267 includes/event-organiser-cpt.php:33
 msgid "Edit Venue"
 msgstr "Rediger sted"
 
-#: ../event-organiser-settings.php:244
+#: event-organiser-settings.php:244
 msgid "Enable event pretty permalinks:"
 msgstr "Aktiver pæne permalinks til begivenheder"
 
-#: ../event-organiser-settings.php:189
+#: event-organiser-settings.php:189
 msgid "Enable events ICAL feed:"
 msgstr "Aktiver ICAL-feed for begivenheder:"
 
-#: ../event-organiser-settings.php:206
+#: event-organiser-settings.php:206
 msgid "Enable templates:"
 msgstr "Aktiver skabeloner:"
 
-#: ../includes/event-organiser-ajax.php:283
+#: includes/event-organiser-ajax.php:283
 msgid "End"
 msgstr "Slut"
 
-#: ../event-organiser-edit.php:105
-#: ../event-organiser-manage.php:28
+#: event-organiser-edit.php:105 event-organiser-manage.php:28
 msgid "End Date/Time"
 msgstr "Slutdato/-tid"
 
-#: ../event-organiser-edit.php:88
+#: event-organiser-edit.php:88
 msgid "Ensure dates are entered in %1$s format and times in %2$s (24 hour) format"
 msgstr "Dobbelttjek at datoer er indtastet i formatet %1$s og tider i formatet %2$s "
 "(24 timer)"
 
-#: ../includes/class-event-organiser-im-export.php:251
+#: includes/class-event-organiser-im-export.php:251
 msgid "Error:"
-msgstr ""
+msgstr "Fejl:"
 
-#: ../event-organiser-manage.php:19
+#: event-organiser-manage.php:19 includes/event-organiser-cpt.php:141
 msgid "Event"
 msgstr "Begivenhed"
 
-#: ../event-organiser-settings.php:263
+#: event-organiser-settings.php:263
 msgid "Event (archive)"
-msgstr ""
+msgstr "Event"
 
-#: ../event-organiser-settings.php:254
+#: event-organiser-settings.php:254
 msgid "Event (single)"
-msgstr ""
+msgstr "Event (single)"
 
-#: ../event-organiser-settings.php:282
+#: classes/class-eo-widget-categories.php:11 event-organiser-settings.php:282
+#: includes/event-organiser-cpt.php:60
 msgid "Event Categories"
 msgstr "Begivenhedskategorier"
 
-#: ../classes/class-eo-event-list-widget.php:39
+#: classes/class-eo-calendar-widget.php:77
+#: classes/class-eo-event-list-widget.php:39
 msgid "Event categories"
 msgstr "Begivenhedskategorier"
 
-#: ../templates/taxonomy-event-category.php:31
+#: templates/taxonomy-event-category.php:31
 msgid "Event Category Archives: %s"
 msgstr "Arkiver for begivenhedskategori: %s"
 
-#: ../classes/class-eo-agenda-widget.php:43
+#: classes/class-eo-agenda-widget.php:43
 msgid "Event date/time format"
 msgstr "Begivenhed dato/tidspunkt-format"
 
-#: ../event-organiser-edit.php:376
+#: event-organiser-edit.php:376
 msgid "Event dates were not saved."
-msgstr ""
+msgstr "Eventdatoer blev ikke gemt"
 
-#: ../event-organiser-calendar.php:310
+#: event-organiser-calendar.php:311
 msgid "Event Detail"
-msgstr ""
+msgstr "Event detaljer"
 
-#: ../event-organiser-edit.php:14
-#: ../event-organiser-calendar.php:308
+#: event-organiser-calendar.php:309 event-organiser-edit.php:14
+#: templates/event-meta-event-single.php:37
 msgid "Event Details"
 msgstr "Begivenhedsdetaljer"
 
-#: ../includes/event.php:716
+#: includes/event.php:721
 msgid "Event does not contain any dates."
-msgstr ""
+msgstr "Eventet har ikke nogle datoer"
 
-#: ../includes/event-organiser-cpt.php:229
+#: includes/event-organiser-cpt.php:229
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr "Begivenhedskladde opdateret. <a target=\"_blank\" href=\"%s\">Preview "
 "begivenhed</a>"
 
-#: ../classes/class-eo-event-list-widget.php:78
+#: classes/class-eo-event-list-widget.php:79
 msgid "Event list widget placeholders"
-msgstr ""
+msgstr "Event liste widget placeholders"
 
-#: ../event-organiser-settings.php:557
+#: event-organiser-settings.php:557
 msgid "Event management permissions"
-msgstr ""
+msgstr "Event management rettigheder"
 
-#: ../event-organiser-settings.php:29
+#: event-organiser-settings.php:29
 msgid "Event Organiser"
-msgstr ""
+msgstr "Event Organiser"
 
-#: ../event-organiser-add-ons.php:19
-#: ../event-organiser-add-ons.php:95
+#: event-organiser-add-ons.php:19 event-organiser-add-ons.php:95
 msgid "Event Organiser Extensions"
-msgstr ""
+msgstr "Event Organiser udvidelser"
 
-#: ../event-organiser-add-ons.php:99
+#: event-organiser-add-ons.php:99
 msgid "Event Organiser offers a range of extension which add additional features to "
 "the plug-in."
-msgstr ""
+msgstr "Event Organiser tilbyder en række af udvidelser, hvilket tilføjer flere "
+"features til plug-in'et."
 
-#: ../event-organiser-go-pro.php:55
+#: event-organiser-go-pro.php:55
 msgid "Event Organiser Pro is a premium add-on bringing advanced booking management "
 "to Event Organiser."
-msgstr ""
+msgstr "Event Organiser Pro er et premium add-on som tilføjer advanceret "
+"bookingkontrol til Event Organiser"
 
-#: ../event-organiser-settings.php:28
+#: event-organiser-settings.php:28
 msgid "Event Organiser Settings"
 msgstr "Indstillinger for begivenhedsarrangør"
 
-#: ../event-organiser-settings.php:219
+#: event-organiser-settings.php:219
 msgid "Event page:"
 msgstr "Side til begivenhed:"
 
-#: ../includes/event-organiser-cpt.php:223
+#: includes/event-organiser-cpt.php:223
 msgid "Event published. <a href=\"%s\">View event</a>"
 msgstr "Begivenhed udgivet. <a href=\"%s\">Vis begivenhed</a>"
 
-#: ../includes/event-organiser-cpt.php:222
+#: includes/event-organiser-cpt.php:222
 msgid "Event restored to revision from %s"
 msgstr "Begivenhed genskabt til revision fra %s"
 
-#: ../includes/event-organiser-cpt.php:224
+#: includes/event-organiser-cpt.php:224
 msgid "Event saved."
 msgstr "Begivenhed gemt."
 
-#: ../includes/event-organiser-cpt.php:226
+#: includes/event-organiser-cpt.php:226
 msgid "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" "
 "href=\"%2$s\">Preview event</a>"
 msgstr "Begivenhed planlagt til: <strong>%1$s</strong>. <a target=\"_blank\" "
 "href=\"%2$s\">Preview begivenhed</a>"
 
-#: ../includes/event-organiser-cpt.php:225
+#: includes/event-organiser-cpt.php:225
 msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr "Begivenhed indsendt. <a target=\"_blank\" href=\"%s\">Preview begivenhed</a>"
 
-#: ../templates/taxonomy-event-tag.php:31
+#: templates/taxonomy-event-tag.php:31
 msgid "Event Tag Archives: %s"
 msgstr "Arkiver for begivenhedstag: %s"
 
-#: ../event-organiser-settings.php:118
-#: ../event-organiser-settings.php:290
+#: event-organiser-settings.php:118 event-organiser-settings.php:290
+#: includes/event-organiser-cpt.php:92
 msgid "Event Tags"
 msgstr "Begivenhedstags"
 
-#: ../event-organiser-calendar.php:253
+#: event-organiser-calendar.php:254
 msgid "Event Title"
 msgstr "Begivenhedens titel"
 
-#: ../includes/event-organiser-cpt.php:220
+#: includes/event-organiser-cpt.php:220
 msgid "Event updated."
 msgstr "Begivenhed opdateret."
 
-#: ../includes/event-organiser-cpt.php:217
+#: includes/event-organiser-cpt.php:217
 msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Begivenhed opdateret. <a href=\"%s\">Vis begivenhed</a>"
 
-#: ../classes/class-eo-calendar-widget.php:88
+#: classes/class-eo-calendar-widget.php:88
 msgid "Event venue"
 msgstr "Begivenhedens afholdelsested"
 
-#: ../includes/event-organiser-cpt.php:28
+#: classes/class-eo-widget-venues.php:12 includes/event-organiser-cpt.php:28
 msgid "Event Venues"
 msgstr "Begivenhedssteder"
 
-#: ../event-organiser.php:127
-#: ../event-organiser-venues.php:432
+#: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:434
+#: event-organiser.php:127 includes/event-organiser-cpt.php:140
+#: includes/event-organiser-cpt.php:152
+#: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
 msgstr "Begivenheder"
 
-#: ../classes/class-eo-agenda-widget.php:19
+#: classes/class-eo-agenda-widget.php:19
 msgid "Events Agenda"
 msgstr "Begivenhedsdagsorden"
 
-#: ../event-organiser-settings.php:218
+#: event-organiser-settings.php:218
 msgid "Events archives:"
 msgstr "Side til begivenhedsarkiver:"
 
-#: ../templates/taxonomy-event-venue.php:31
+#: templates/taxonomy-event-venue.php:31
 msgid "Events at: %s"
 msgstr "Begivenheder den: %s"
 
-#: ../event-organiser-calendar.php:225
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:226
 msgid "Events Calendar"
 msgstr "Begivenhedskalender"
 
-#: ../event-organiser-settings.php:221
+#: event-organiser-settings.php:221
 msgid "Events Category page:"
 msgstr "Side til begivenhedskategori:"
 
-#: ../event-organiser-manage.php:148
+#: event-organiser-manage.php:147
 msgid "Events within %d months"
 msgstr "Begivenheder inden for %d måneder"
 
-#: ../event-organiser-manage.php:146
+#: event-organiser-manage.php:145
 msgid "Events within %d weeks"
 msgstr "Begivenheder inden for %d uger"
 
-#: ../event-organiser-manage.php:147
+#: event-organiser-manage.php:146
 msgid "Events within 1 month"
 msgstr "Begivenheder inden for 1 måned"
 
-#: ../event-organiser-manage.php:145
+#: event-organiser-manage.php:144
 msgid "Events within 1 week"
 msgstr "Begivenheder inden for 1 uge"
 
-#: ../event-organiser-manage.php:149
+#: event-organiser-manage.php:148
 msgid "Events within 1 year"
 msgstr "Begivenheder inden for 1 år"
 
-#: ../event-organiser-manage.php:144
+#: event-organiser-manage.php:143
 msgid "Events within 24 hours"
 msgstr "Begivenheder inden for 24 timer"
 
-#: ../templates/archive-event.php:34
-#: ../templates/archive-event.php:37
-#: ../templates/archive-event.php:40
+#: templates/archive-event.php:34 templates/archive-event.php:37
+#: templates/archive-event.php:40
 msgid "Events: "
-msgstr ""
+msgstr "Events;"
 
-#: ../includes/event-organiser-register.php:226
-#: ../includes/event-organiser-event-functions.php:715
+#: includes/event-organiser-event-functions.php:715
+#: includes/event-organiser-register.php:236
 msgid "every %d days"
 msgstr "hver %d. dag"
 
-#: ../includes/event-organiser-register.php:230
-#: ../includes/event-organiser-event-functions.php:736
+#: includes/event-organiser-event-functions.php:736
+#: includes/event-organiser-register.php:240
 msgid "every %d months on the"
 msgstr "hver %d. måned på den"
 
-#: ../includes/event-organiser-register.php:228
-#: ../includes/event-organiser-event-functions.php:723
+#: includes/event-organiser-event-functions.php:723
+#: includes/event-organiser-register.php:238
 msgid "every %d weeks on"
 msgstr "hver %d. uge på en"
 
-#: ../includes/event-organiser-event-functions.php:767
+#: includes/event-organiser-event-functions.php:767
 msgid "every %d years"
 msgstr "hvert %d. år"
 
-#: ../includes/event-organiser-register.php:232
+#: includes/event-organiser-register.php:242
 msgid "every %d years on the"
 msgstr "hvert %d. år på den"
 
-#: ../includes/event-organiser-register.php:225
-#: ../includes/event-organiser-event-functions.php:713
+#: includes/event-organiser-event-functions.php:713
+#: includes/event-organiser-register.php:235
 msgid "every day"
 msgstr "hver dag"
 
-#: ../includes/event-organiser-register.php:229
-#: ../includes/event-organiser-event-functions.php:734
+#: includes/event-organiser-event-functions.php:734
+#: includes/event-organiser-register.php:239
 msgid "every month on the"
 msgstr "hver måned på den"
 
-#: ../includes/event-organiser-register.php:227
-#: ../includes/event-organiser-event-functions.php:721
+#: includes/event-organiser-event-functions.php:721
+#: includes/event-organiser-register.php:237
 msgid "every week on"
 msgstr "hver uge på en"
 
-#: ../includes/event-organiser-event-functions.php:765
+#: includes/event-organiser-event-functions.php:765
 msgid "every year"
 msgstr "hvert år"
 
-#: ../includes/event-organiser-register.php:231
+#: includes/event-organiser-register.php:241
 msgid "every year on the"
 msgstr "hvert år på den"
 
-#: ../event-organiser-settings.php:114
+#: event-organiser-settings.php:114
 msgid "Excerpt"
 msgstr "Uddrag"
 
-#: ../event-organiser-settings.php:198
+#: event-organiser-settings.php:198
 msgid "Exclude events from searches:"
 msgstr "Ekskluder begivenheder fra søgninger:"
 
-#: ../event-organiser-manage.php:143
+#: event-organiser-manage.php:142
 msgid "Expired events"
 msgstr "Overståede begivenheder"
 
-#: ../event-organiser-settings.php:21
+#: event-organiser-settings.php:21
 msgid "Export"
 msgstr "Eksporter"
 
-#: ../includes/class-event-organiser-im-export.php:91
+#: includes/class-event-organiser-im-export.php:91
 msgid "Export Events"
 msgstr "Eksporter begivenheder"
 
-#: ../event-organiser-add-ons.php:20
+#: event-organiser-add-ons.php:20
 msgid "Extensions"
-msgstr ""
+msgstr "Udvidelser"
 
-#: ../includes/class-event-organiser-im-export.php:61
+#: includes/class-eo-ical-parser.php:124
+msgid "Feed not found"
+msgstr "Feed blev ikke fundet"
+
+#: includes/class-event-organiser-im-export.php:61
 msgid "File Error encountered: %d"
 msgstr "Fejl i filupload: %d"
 
-#: ../includes/class-event-organiser-im-export.php:73
+#: includes/class-event-organiser-im-export.php:73
 msgid "File size: %s. File type: %s"
-msgstr ""
+msgstr "Fil størrelse size: %s. Fil type: %s"
 
-#: ../event-organiser-go-pro.php:90
-#: ../event-organiser-add-ons.php:130
+#: event-organiser-add-ons.php:130 event-organiser-go-pro.php:90
 msgid "Find out more &hellip;"
-msgstr ""
+msgstr "Find mere"
 
-#: ../includes/event-organiser-register.php:235
-#: ../includes/event-organiser-event-functions.php:693
+#: includes/event-organiser-event-functions.php:693
+#: includes/event-organiser-register.php:245
 msgid "first"
 msgstr "første"
 
-#: ../event-organiser-go-pro.php:71
+#: event-organiser-go-pro.php:71
 msgid "Flexible Booking Options"
-msgstr ""
+msgstr "Fleksible booking muligheder"
 
-#: ../event-organiser-settings.php:212
+#: event-organiser-settings.php:212
 msgid "For each of the pages, the corresponding template is used. To use your own "
 "template simply give it the same name and store in your theme folder. By "
 "default, if Event Organiser cannot find a template in your theme directory, "
@@ -823,90 +834,93 @@ msgstr "For hver side benyttes den tilsvarende skabelon. For at benytte din egen
 "fjernes fra denne indstilling. WordPress vil herefter afgøre hvilken "
 "skabelon der skal benyttes fra din tema-mappe."
 
-#: ../includes/event-organiser-cpt.php:490
+#: includes/event-organiser-cpt.php:490
 msgid "For more information"
 msgstr "For mere information"
 
-#: ../event-organiser-settings.php:224
+#: event-organiser-settings.php:224
 msgid "For more information see documentation <a href='%s'>on editing the "
 "templates</a>"
-msgstr ""
+msgstr "For mere information, se dokumentationen <a href='%s'>For ændring af "
+"skabeloner</a>"
 
-#: ../includes/event-organiser-register.php:235
-#: ../includes/event-organiser-event-functions.php:693
+#: includes/event-organiser-event-functions.php:693
+#: includes/event-organiser-register.php:245
 msgid "fourth"
 msgstr "fjerde"
 
-#: ../event-organiser-manage.php:142
+#: event-organiser-manage.php:141
 msgid "Future events"
 msgstr "Fremtidige begivenheder"
 
-#: ../event-organiser-settings.php:18
-#: ../event-organiser-settings.php:58
+#: event-organiser-settings.php:18 event-organiser-settings.php:58
 msgid "General"
 msgstr "Generelt"
 
-#: ../event-organiser-go-pro.php:52
+#: event-organiser-go-pro.php:52
 msgid "Get Event Organiser Pro"
-msgstr ""
+msgstr "Køb Event Organiser Pro"
 
-#: ../event-organiser-go-pro.php:24
+#: event-organiser-go-pro.php:24
 msgid "Get Event Organiser Pro Add-On"
-msgstr ""
+msgstr "Få Event Organiser Pro Add-On"
 
-#: ../event-organiser-venues.php:412
+#: event-organiser-venues.php:414
 msgid "Get Link"
 msgstr "Vis link"
 
-#: ../event-organiser-go-pro.php:77
+#: event-organiser-go-pro.php:77
 msgid "Give your users the ability to search and filter through your events with "
 "the event search shortcode. Event Organiser Pro also adds a text editor "
 "button to make inserting and configuring your shortcodes that bit easier. "
-msgstr ""
+msgstr "Giv dine brugere mulighed for at søge og filtrere igennem dine events med "
+"event søgning shortcode. Event Organiser Pro tilføjer også en tekst editor "
+"kanp, hvilket gør indsætning og konfigurering af dine shortcodes en smule "
+"nemmere"
 
-#: ../event-organiser-go-pro.php:25
+#: event-organiser-go-pro.php:25
 msgid "Go Pro"
-msgstr ""
+msgstr "Go Pro"
 
-#: ../includes/event-organiser-cpt.php:493
+#: includes/event-organiser-cpt.php:493
 msgid "Go Pro!"
-msgstr ""
+msgstr "Go Pro!"
 
-#: ../event-organiser-calendar.php:58
+#: event-organiser-calendar.php:59 includes/event-organiser-register.php:58
 msgid "go to date"
 msgstr "gå til dato"
 
-#: ../event-organiser-go-pro.php:96
+#: event-organiser-go-pro.php:96
 msgid "Go to Event Organiser settings"
-msgstr ""
+msgstr "Gå til Event Orginiser instillinger"
 
-#: ../classes/class-eo-agenda-widget.php:31
+#: classes/class-eo-agenda-widget.php:31
 msgid "Group by"
 msgstr "Sorter efter"
 
-#: ../classes/class-eo-agenda-widget.php:39
+#: classes/class-eo-agenda-widget.php:39
 msgid "Group date format"
 msgstr "Sorter dato-format"
 
-#: ../event-organiser-settings.php:159
+#: classes/class-eo-event-list-widget.php:71 event-organiser-settings.php:159
 msgid "Group occurrences"
 msgstr "Gruppér gentagelser"
 
-#: ../includes/event-organiser-register.php:212
+#: includes/event-organiser-register.php:222
 msgid "Hide dates"
 msgstr "Gem datoer"
 
-#: ../includes/event-organiser-register.php:215
+#: includes/event-organiser-register.php:225
 msgid "Hour"
 msgstr "Time"
 
-#: ../includes/event-organiser-cpt.php:465
+#: includes/event-organiser-cpt.php:465
 msgid "Hovering over a row in the venues list will display action links that allow "
 "you to manage that venue. You can perform the following actions:"
 msgstr "Hvis du holder markøren over en række i listen af steder, kan du se links "
 "til at håndtere dit sted. Du kan udføre følgende handlinger:"
 
-#: ../event-organiser-settings.php:177
+#: event-organiser-settings.php:177
 msgid "If 'no' is selected, an occurrence of an event is only past when it has "
 "finished. Otherwise, an occurrence is considered 'past' as soon as it "
 "starts."
@@ -914,7 +928,7 @@ msgstr "Hvis 'nej' er valgt, er en forekomst af en begivenhed først overstået,
 "den er slut. Ellers vil en begivenhed betragtes som 'overstået', så snart "
 "den starter."
 
-#: ../includes/event-organiser-cpt.php:438
+#: includes/event-organiser-cpt.php:438
 msgid "If monthly reoccurrence is selected, select whether this should repeat on "
 "that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
 "on the third Tuesday) "
@@ -922,23 +936,25 @@ msgstr "Hvis månedlig gentagelse er valgt, vælg da om der skal gentages på da
 "måneden (f.eks. den 24.), eller på dagen i måneden (f.eks. den tredje "
 "torsdag)"
 
-#: ../event-organiser-settings.php:165
+#: event-organiser-settings.php:165
 msgid "If selected only one occurrence of an event will be displayed on event lists "
 "and archives (this can be over-ridden by shortcode attributes and widget "
 "options."
-msgstr ""
+msgstr "Hvis valgt, kun et tilfælde af et event vil blive vist på eventlister of "
+"arkiver (dette kan blive overskrevet af shortcode værdier og widget "
+"instillinger)"
 
-#: ../event-organiser-settings.php:186
+#: event-organiser-settings.php:186
 msgid "If selected the event will be automatically trashed 24 hours after the last "
 "occurrence finishes."
 msgstr "Hvis valgt, vil begivenheden automatisk blive lagt i papirkurven 24 timer "
 "efter den sidste gentagelse slutter."
 
-#: ../event-organiser-settings.php:195
+#: event-organiser-settings.php:195
 msgid "If selected, visitors can subscribe to your events with the url: %s"
 msgstr "Hvis valgt, kan besøgende abonnere på dine begivenheder med url'en: %s"
 
-#: ../includes/event-organiser-cpt.php:439
+#: includes/event-organiser-cpt.php:439
 msgid "If weekly reoccurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
 "used"
@@ -946,596 +962,606 @@ msgstr "Hvis ugentlig gentagelse er valgt, vælg da hvilke dage i ugen begivenhe
 "skal gentages på. Hvis ingen dag er valgt, benyttes dagen for startdatoen i "
 "stedet."
 
-#: ../event-organiser-settings.php:250
+#: event-organiser-settings.php:250
 msgid "If you have pretty permalinks enabled, select to have pretty premalinks for "
 "events."
 msgstr "Hvis du har aktiveret pæne permalinks, vælg dette for også at aktivere det "
 "til begivenheder."
 
-#: ../event-organiser-settings.php:21
+#: event-organiser-settings.php:21
 msgid "Import"
 msgstr "Importer"
 
-#: ../includes/class-event-organiser-im-export.php:103
+#: includes/class-event-organiser-im-export.php:103
 msgid "Import an ICS file."
 msgstr "Importer en ICS-fil."
 
-#: ../includes/class-event-organiser-im-export.php:105
+#: includes/class-event-organiser-im-export.php:105
 msgid "Import categories"
 msgstr "Importer kategorier"
 
-#: ../includes/class-event-organiser-im-export.php:100
+#: includes/class-event-organiser-im-export.php:100
 msgid "Import Events"
 msgstr "Importer begivenheder"
 
-#: ../includes/class-event-organiser-im-export.php:104
+#: includes/class-event-organiser-im-export.php:104
 msgid "Import venues"
 msgstr "Importer steder"
 
-#: ../classes/class-eo-agenda-widget.php:47
+#: classes/class-eo-agenda-widget.php:47
 msgid "Include 'Add To Google' link"
-msgstr ""
+msgstr "Inkluder 'Add To Google' link\n"
+""
 
-#: ../classes/class-eo-event-list-widget.php:66
+#: classes/class-eo-calendar-widget.php:46
+#: classes/class-eo-event-list-widget.php:67
 msgid "Include past events"
 msgstr "Inkluder overståede begivenheder"
 
-#: ../event-organiser-edit.php:180
+#: event-organiser-edit.php:180
 msgid "Include/Exclude occurrences"
-msgstr ""
+msgstr "Inkluder/exkluder begivenheder "
 
-#: ../includes/class-eo-ical-parser.php:586
+#: includes/class-eo-ical-parser.php:700
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
-msgstr ""
+msgstr "Ugyldig dato \"%s\". Dato forventes i formatet YYYYMMDD"
 
-#: ../includes/class-eo-ical-parser.php:624
+#: includes/class-eo-ical-parser.php:738
 msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
 "YYYYMMDDTHHiiss format."
-msgstr ""
+msgstr "Ugyldig datetime \"%s\". Dato forventes i formatet YYYYMMDDTHHiissZ eller "
+"YYYYMMDDTHHiiss."
 
-#: ../includes/class-event-organiser-im-export.php:71
+#: includes/class-event-organiser-im-export.php:71
 msgid "Invalid file uploaded. The file must be a ics calendar file of type "
 "'text/calendar', no larger than 2MB."
-msgstr ""
+msgstr "Ugyldig fil er oploadet. Filen skal være en ics kalender a filtypen "
+"'text/calender', og ikke større end 2MB"
 
-#: ../includes/event.php:596
+#: includes/event.php:601
 msgid "Invalid monthly schedule (invalid ordinal)"
-msgstr ""
+msgstr "Ugyldig månedlig indtastning (ugyldig ordinal)"
 
-#: ../event-organiser-debug.php:245
+#: event-organiser-debug.php:245
 msgid "Known plug-in & theme conflicts, highlighted in red, may be minor or have a "
 "simple resolution. Please contact support."
-msgstr ""
+msgstr "Kendte plug-in og tema konflikter, fremhævet med rødt, kan være små og have "
+"simple løsninger. Kontakt venligst support. "
 
-#: ../includes/event-organiser-register.php:235
-#: ../includes/event-organiser-event-functions.php:693
+#: includes/event-organiser-event-functions.php:693
+#: includes/event-organiser-register.php:245
 msgid "last"
 msgstr "sidste"
 
-#: ../templates/taxonomy-event-category.php:48
-#: ../templates/taxonomy-event-category.php:106
-#: ../templates/archive-event.php:55
-#: ../templates/archive-event.php:110
-#: ../templates/taxonomy-event-tag.php:48
-#: ../templates/taxonomy-event-tag.php:106
-#: ../templates/taxonomy-event-venue.php:48
-#: ../templates/taxonomy-event-venue.php:105
+#: templates/archive-event.php:55 templates/archive-event.php:110
+#: templates/taxonomy-event-category.php:48
+#: templates/taxonomy-event-category.php:106
+#: templates/taxonomy-event-tag.php:48 templates/taxonomy-event-tag.php:106
+#: templates/taxonomy-event-venue.php:48
+#: templates/taxonomy-event-venue.php:105
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
 msgstr "Senere begivenheder <span class=\"meta-nav\">&rarr;</span>"
 
-#: ../classes/class-eo-calendar-widget.php:66
+#: classes/class-eo-calendar-widget.php:66
 msgid "Link directly to event for days with only one event"
-msgstr ""
+msgstr "Link direkte til begivenged for dage med kun et event"
 
-#: ../classes/class-eo-event-list-widget.php:41
+#: classes/class-eo-calendar-widget.php:80
+#: classes/class-eo-event-list-widget.php:41
 msgid "List category slug(s), seperate by comma. Leave blank for all"
 msgstr "Angiv korttitel af kategori(er), separeret med komma. Efterlad tom for alle."
 
-#: ../event-organiser-calendar.php:232
+#: event-organiser-calendar.php:233
+#: includes/event-organiser-event-functions.php:1332
 msgid "Loading&#8230;"
 msgstr "Indlæser&#8230;"
 
-#: ../includes/event-organiser-cpt.php:228
+#: includes/event-organiser-cpt.php:228
 msgid "M j, Y @ G:i"
 msgstr "j. M Y H:i"
 
-#: ../event-organiser-settings.php:41
-#: ../event-organiser.php:108
+#: event-organiser-settings.php:41 event-organiser.php:108
+#: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Håndter begivenhedskategorier og -tags"
 
-#: ../event-organiser-settings.php:40
-#: ../event-organiser.php:107
+#: event-organiser-settings.php:40 event-organiser.php:107
+#: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Håndter steder"
 
-#: ../includes/event-organiser-register.php:216
+#: includes/event-organiser-register.php:226
 msgid "Minute"
 msgstr "Minut"
 
-#: ../event-organiser-settings.php:144
+#: event-organiser-settings.php:144
 msgid "mm-dd-yyyy"
 msgstr "mm-dd-yyyy"
 
-#: ../event-organiser-calendar.php:229
-msgid "Month"
-msgstr "Måned"
-
-#: ../event-organiser-calendar.php:57
+#: event-organiser-calendar.php:58 includes/event-organiser-register.php:57
+#: includes/event-organiser-register.php:231
 msgid "month"
 msgstr "måned"
 
-#: ../event-organiser-settings.php:270
-msgid "Month archive"
-msgstr ""
+#: classes/class-eo-agenda-widget.php:35 event-organiser-calendar.php:230
+msgid "Month"
+msgstr "Måned"
 
-#: ../event-organiser-edit.php:127
+#: event-organiser-settings.php:270
+msgid "Month archive"
+msgstr "Måned arkiv"
+
+#: event-organiser-edit.php:127
 msgid "monthly"
 msgstr "månedligt"
 
-#: ../includes/event-organiser-register.php:222
+#: includes/event-organiser-register.php:232
 msgid "months"
 msgstr "måneder"
 
-#: ../event-organiser-debug.php:72
+#: event-organiser-debug.php:72
 msgid "Most bugs arise from theme or plug-in conflicts. You can check this by "
 "disabling all other plug-ins and switching to TwentyTweleve."
-msgstr ""
+msgstr "De fleste fejl opstår pågrund af konflikter med temaer. Du kan undersøge "
+"dette ved at deaktivere alle plug-ins og skifte tema til TwentyTwelve"
 
-#: ../includes/event-organiser-cpt.php:69
+#: includes/event-organiser-cpt.php:69
 msgid "New Category Name"
 msgstr "Nyt kategorinavn"
 
-#: ../includes/event-organiser-cpt.php:145
+#: includes/event-organiser-cpt.php:145
 msgid "New Event"
 msgstr "Ny begivenhed"
 
-#: ../includes/event-organiser-cpt.php:102
+#: includes/event-organiser-cpt.php:102
 msgid "New Tag Name"
 msgstr "Nyt tagnavn"
 
-#: ../includes/event-organiser-cpt.php:36
+#: includes/event-organiser-cpt.php:36
 msgid "New Venue Name"
 msgstr "Nyt stednavn"
 
-#: ../classes/class-eo-calendar-widget.php:265
+#: classes/class-eo-calendar-widget.php:266
 msgid "Next month"
 msgstr "Næste måned"
 
-#: ../event-organiser-debug.php:178
-#: ../event-organiser-debug.php:182
-#: ../event-organiser-debug.php:186
-#: ../event-organiser-settings.php:174
+#: event-organiser-debug.php:178 event-organiser-debug.php:182
+#: event-organiser-debug.php:186 event-organiser-settings.php:174
 msgid "No"
 msgstr "Nej"
 
-#: ../includes/event-organiser-cpt.php:70
+#: includes/event-organiser-cpt.php:70
 msgid "No categories found"
 msgstr "Ingen kategorier fundet"
 
-#: ../includes/event-organiser-cpt.php:149
+#: includes/event-organiser-cpt.php:149
 msgid "No events found"
 msgstr "Ingen begivenheder fundet"
 
-#: ../includes/event-organiser-cpt.php:150
+#: includes/event-organiser-cpt.php:150
 msgid "No events found in Trash"
 msgstr "Ingen begivenheder fundet i papirkurven"
 
-#: ../includes/class-event-organiser-im-export.php:242
+#: includes/class-event-organiser-im-export.php:242
 msgid "No events were imported."
 msgstr "Ingen begivenheder blev importeret."
 
-#: ../includes/class-event-organiser-im-export.php:68
+#: includes/class-event-organiser-im-export.php:68
 msgid "No file detected."
 msgstr "Ingen fil registreret."
 
-#: ../includes/event-organiser-cpt.php:103
+#: includes/event-organiser-cpt.php:103
 msgid "No tags found"
 msgstr "Ingen tags fundet"
 
-#: ../includes/event-organiser-ajax.php:594
+#: includes/event-organiser-ajax.php:594
 msgid "No Venue"
 msgstr "Intet sted"
 
-#: ../includes/event-organiser-cpt.php:37
+#: includes/event-organiser-cpt.php:37
 msgid "No venues found"
 msgstr "Ingen steder fundet"
 
-#: ../event-organiser-settings.php:574
+#: event-organiser-settings.php:574
 msgid "None"
 msgstr "Ingen"
 
-#: ../templates/taxonomy-event-category.php:116
-#: ../templates/archive-event.php:119
-#: ../templates/taxonomy-event-tag.php:116
-#: ../templates/taxonomy-event-venue.php:115
+#: templates/archive-event.php:119 templates/taxonomy-event-category.php:116
+#: templates/taxonomy-event-tag.php:116 templates/taxonomy-event-venue.php:115
 msgid "Nothing Found"
 msgstr "Intet fundet"
 
-#: ../classes/class-eo-event-list-widget.php:35
+#: classes/class-eo-event-list-widget.php:35
 msgid "Number of events"
 msgstr "Antal begivenheder"
 
-#: ../event-organiser-calendar.php:191
+#: event-organiser-calendar.php:192
 msgid "Occurrence deleted."
 msgstr "Gentagelse slettet."
 
-#: ../includes/event.php:806
+#: includes/event.php:841
 msgid "Occurrence not deleted. Occurrence not found."
-msgstr ""
+msgstr "Begivenhed blev ikke slettet. Begivenhed blev ikke fundet."
 
-#: ../event-organiser-edit.php:146
+#: event-organiser-edit.php:146 templates/shortcode-event-list.php:52
+#: templates/widget-event-list.php:49
 msgid "on"
-msgstr ""
+msgstr "På"
 
-#: ../event-organiser-edit.php:126
+#: event-organiser-edit.php:126
 msgid "once"
 msgstr "en enkelt gang"
 
-#: ../includes/event-organiser-event-functions.php:703
+#: includes/event-organiser-event-functions.php:703
 msgid "one time only"
 msgstr "kun en gang"
 
-#: ../includes/event-organiser-cpt.php:448
+#: includes/event-organiser-cpt.php:448
 msgid "Only pre-existing venues can be selected. To add a venue, go to the venues "
 "page."
 msgstr "Kun allerede eksisterende steder kan vælges. For at tilføje et sted, gå til "
 "Steder-vinduet."
 
-#: ../classes/class-eo-event-list-widget.php:55
+#: classes/class-eo-event-list-widget.php:55
 msgid "Order by"
 msgstr "Sorter efter"
 
-#: ../event-organiser-settings.php:112
-#: ../event-organiser-edit.php:31
-#: ../event-organiser-manage.php:23
+#: event-organiser-edit.php:31 event-organiser-manage.php:23
+#: event-organiser-settings.php:112 includes/event-organiser-ajax.php:284
 msgid "Organiser"
 msgstr "Arrangør"
 
-#: ../includes/event-organiser-cpt.php:458
-#: ../includes/event-organiser-cpt.php:477
+#: includes/event-organiser-cpt.php:458 includes/event-organiser-cpt.php:477
 msgid "Overview"
 msgstr "Overblik"
 
-#: ../event-organiser-settings.php:633
+#: event-organiser-settings.php:633
 msgid "Page list (fallback)"
 msgstr "Sideliste (tilbagefald)"
 
-#: ../includes/event-organiser-cpt.php:64
-#: ../includes/event-organiser-cpt.php:65
+#: includes/event-organiser-cpt.php:64 includes/event-organiser-cpt.php:65
 msgid "Parent Category"
 msgstr "Forælderkategori"
 
-#: ../event-organiser-venues.php:405
+#: event-organiser-venues.php:407
 msgid "Permalink:"
 msgstr "Permanent link:"
 
-#: ../event-organiser-settings.php:20
+#: event-organiser-settings.php:20
 msgid "Permalinks"
 msgstr "Permanente links"
 
-#: ../event-organiser-settings.php:19
+#: event-organiser-settings.php:19
 msgid "Permissions"
 msgstr "Rettigheder"
 
-#: ../event-organiser-settings.php:604
+#: event-organiser-settings.php:604
 msgid "Please note to enable these structures you must first have pretty permalinks "
 "enabled on WordPress in Settings > Permalinks."
 msgstr "Bemærk at dette kræver, at du har aktiveret pæne permalinks for WordPress "
 "under Indstillinger > Permanente links."
 
-#: ../includes/event-organiser-cpt.php:96
+#: includes/event-organiser-cpt.php:96
 msgid "Popular Tags"
 msgstr "Populære tags"
 
-#: ../includes/event-organiser-venue-functions.php:885
+#: includes/event-organiser-venue-functions.php:885
 msgid "Post Code"
 msgstr "Postnummer"
 
-#: ../classes/class-eo-calendar-widget.php:262
+#: classes/class-eo-calendar-widget.php:263
 msgid "Previous month"
 msgstr "Forrige måned"
 
-#: ../includes/event-organiser-ajax.php:253
+#: includes/event-organiser-ajax.php:253
 msgid "Private"
 msgstr "Privat"
 
-#: ../includes/event-organiser-ajax.php:251
+#: includes/event-organiser-ajax.php:251
 msgid "Protected"
 msgstr "Beskyttet"
 
-#: ../event-organiser-calendar.php:285
+#: classes/class-eo-event-list-widget.php:59
+msgid "Publish date"
+msgstr "Publiseringsdato"
+
+#: event-organiser-calendar.php:286
 msgid "Publish Event"
 msgstr "Udgiv begivenhed"
 
-#: ../event-organiser-settings.php:35
-#: ../event-organiser.php:102
+#: event-organiser-settings.php:35 event-organiser.php:102
+#: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Udgiv begivenheder"
 
-#: ../event-organiser-settings.php:39
-#: ../event-organiser.php:106
+#: event-organiser-settings.php:39 event-organiser.php:106
+#: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Læs private begivenheder"
 
-#: ../event-organiser-edit.php:124
+#: event-organiser-edit.php:124
 msgid "Reoccurence:"
 msgstr "Gentagelse:"
 
-#: ../event-organiser-manage.php:29
+#: event-organiser-manage.php:29
 msgid "Reoccurrence"
 msgstr "Gentagelse"
 
-#: ../event-organiser-edit.php:140
+#: event-organiser-edit.php:140
 msgid "Repeat every"
 msgstr "Gentag hver"
 
-#: ../includes/event-organiser-cpt.php:433
+#: includes/event-organiser-cpt.php:433
 msgid "Repeating events"
 msgstr "Tilbagevendende begivenheder"
 
-#: ../event-organiser-settings.php:117
+#: event-organiser-settings.php:117
 msgid "Revisions"
 msgstr "Ændringer"
 
-#: ../event-organiser-settings.php:563
+#: event-organiser-settings.php:563
 msgid "Role"
 msgstr "Rolle"
 
-#: ../event-organiser-venues.php:154
+#: event-organiser-venues.php:154
 msgid "Save"
-msgstr ""
+msgstr "Gem"
 
-#: ../event-organiser-calendar.php:281
+#: event-organiser-calendar.php:282
 msgid "Save Draft"
 msgstr "Gem kladde"
 
-#: ../includes/event.php:514
+#: includes/event.php:518
 msgid "Schedule end date is before is before the start date."
-msgstr ""
+msgstr "Slutdato er sat til før startdato"
 
-#: ../includes/event.php:484
+#: includes/event.php:488
 msgid "Schedule not recognised."
-msgstr ""
+msgstr "Dato er ikke genkendt"
 
-#: ../event-organiser-debug.php:556
-msgid "Script mode"
-msgstr ""
-
-#: ../includes/event-organiser-cpt.php:62
+#: includes/event-organiser-cpt.php:62
 msgid "Search Categories"
 msgstr "Søg kategorier"
 
-#: ../includes/event-organiser-cpt.php:148
+#: includes/event-organiser-cpt.php:148
 msgid "Search events"
 msgstr "Søg begivenheder"
 
-#: ../event-organiser-venues.php:233
+#: event-organiser-venues.php:233
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Søgeresultater for &#8220;%s&#8221;"
 
-#: ../includes/event-organiser-cpt.php:94
+#: includes/event-organiser-cpt.php:94
 msgid "Search Tags"
 msgstr "Søg tags"
 
-#: ../event-organiser-venues.php:243
+#: event-organiser-venues.php:243 includes/event-organiser-cpt.php:30
 msgid "Search Venues"
 msgstr "Søg Steder"
 
-#: ../includes/event-organiser-register.php:235
-#: ../includes/event-organiser-event-functions.php:693
+#: includes/event-organiser-event-functions.php:693
+#: includes/event-organiser-register.php:245
 msgid "second"
 msgstr "anden"
 
-#: ../includes/event-organiser-cpt.php:491
+#: includes/event-organiser-cpt.php:491
 msgid "See the <a %s> documentation</a>"
 msgstr "Læs <a %s> dokumentationen</a>"
 
-#: ../event-organiser-edit.php:211
+#: event-organiser-edit.php:211
+#: includes/event-organiser-venue-functions.php:905
 msgid "Select a venue"
 msgstr "Vælg et sted"
 
-#: ../classes/class-eo-widget-categories.php:45
+#: classes/class-eo-widget-categories.php:45
 msgid "Select Category"
 msgstr "Vælg en kategori"
 
-#: ../event-organiser-settings.php:107
+#: classes/class-eo-widget-venues.php:45
+msgid "Select Venue"
+msgstr "Vælg venue"
+
+#: event-organiser-settings.php:107
 msgid "Select which features events should support"
 msgstr "Vælg hvilke egenskaber begivenheder skal understøtte"
 
-#: ../includes/event-organiser-cpt.php:444
-#: ../includes/event-organiser-cpt.php:445
+#: includes/event-organiser-cpt.php:444 includes/event-organiser-cpt.php:445
 msgid "Selecting a venue"
 msgstr "Valg af sted"
 
-#: ../event-organiser-go-pro.php:72
+#: event-organiser-go-pro.php:72
 msgid "Sell tickets for specific dates or sell tickets for all dates of an event - "
 "such as booking places on a course. You can offer multiple tickets, and "
 "customise the booking form to suit your needs."
-msgstr ""
+msgstr "Sælg billetter til specifikke datoer eller sælg billetter til alle datoer "
+"tilhørende et event - såsom bookingpladser på et kursus. Du kan tilbyde "
+"flere billetter, og ændre bookingformularen til dine behov."
 
-#: ../includes/event-organiser-cpt.php:107
+#: includes/event-organiser-cpt.php:107
 msgid "Separate tags with commas"
 msgstr "Separer tags med kommaer"
 
-#: ../includes/event-organiser-cpt.php:39
+#: includes/event-organiser-cpt.php:39
 msgid "Separate venues with commas"
 msgstr "Separer steder med kommaer"
 
-#: ../event-organiser-settings.php:558
+#: event-organiser-settings.php:558
 msgid "Set permissions for events and venue management"
 msgstr "Opsæt rettigheder for håndtering af begivenheder og steder"
 
-#: ../includes/event-organiser-register.php:335
+#: includes/event-organiser-register.php:345
 msgid "Settings"
 msgstr "Indstillinger"
 
-#: ../event-organiser-edit.php:183
+#: event-organiser-edit.php:183 includes/event-organiser-register.php:221
 msgid "Show dates"
 msgstr "Vis datoer"
 
-#: ../classes/class-eo-widget-categories.php:99
+#: classes/class-eo-widget-categories.php:99
 msgid "Show hierarchy"
 msgstr "Vis hierarki"
 
-#: ../includes/event-organiser-register.php:52
+#: includes/event-organiser-register.php:53
 msgid "Show Less"
 msgstr "Vis mindre"
 
-#: ../classes/class-eo-calendar-widget.php:56
+#: classes/class-eo-calendar-widget.php:56
 msgid "Show long events"
-msgstr ""
+msgstr "Vis lange events"
 
-#: ../includes/event-organiser-register.php:51
+#: includes/event-organiser-register.php:52
 msgid "Show More"
 msgstr "Vis mere"
 
-#: ../event-organiser-settings.php:123
-#: ../event-organiser-settings.php:150
+#: event-organiser-settings.php:123 event-organiser-settings.php:150
 msgid "Show past events:"
 msgstr "Vis tidligere begivenheder:"
 
-#: ../event-organiser-venues.php:431
+#: event-organiser-venues.php:433
 msgid "Slug"
 msgstr "Kort titel"
 
-#: ../includes/event-organiser-cpt.php:436
+#: includes/event-organiser-cpt.php:436
 msgid "Specify how regularly the event should repeat (default 1)"
 msgstr "Indstil hvor ofte begivenheden skal gentages (standard er 1)"
 
-#: ../templates/event-meta-event-single.php:58
+#: includes/event-organiser-ajax.php:282
+#: templates/event-meta-event-single.php:58
 msgid "Start"
 msgstr "Start"
 
-#: ../classes/class-eo-event-list-widget.php:57
+#: classes/class-eo-event-list-widget.php:57
 msgid "Start date"
 msgstr "Startdato"
 
-#: ../includes/event.php:493
+#: includes/event.php:497
 msgid "Start date not provided."
-msgstr ""
+msgstr "Start dato er ikke sat."
 
-#: ../includes/event.php:511
+#: includes/event.php:515
 msgid "Start date occurs after end date."
-msgstr ""
+msgstr "Start dato er efter slut dato."
 
-#: ../event-organiser-edit.php:92
-#: ../event-organiser-manage.php:27
+#: event-organiser-edit.php:92 event-organiser-manage.php:27
 msgid "Start Date/Time"
 msgstr "Startdato/-tid"
 
-#: ../includes/event-organiser-venue-functions.php:884
+#: includes/event-organiser-venue-functions.php:884
 msgid "State / Province"
-msgstr ""
+msgstr "Stat / Provins"
 
-#: ../event-organiser-calendar.php:291
+#: event-organiser-calendar.php:292
 msgid "Submit for Review"
 msgstr "Indsend til gennemgang"
 
-#: ../event-organiser-debug.php:13
-#: ../event-organiser-debug.php:14
-#: ../event-organiser-debug.php:59
+#: event-organiser-debug.php:13 event-organiser-debug.php:14
+#: event-organiser-debug.php:59
 msgid "System Info"
-msgstr ""
+msgstr "System info"
 
-#: ../templates/event-meta-event-single.php:73
+#: includes/event-organiser-cpt.php:105
+#: includes/event-organiser-event-functions.php:1389
+#: templates/event-meta-event-single.php:73
 msgid "Tags"
 msgstr "Tags"
 
-#: ../classes/class-eo-event-list-widget.php:76
+#: classes/class-eo-event-list-widget.php:77
 msgid "Template (leave blank for default)"
 msgstr "Skabelon (efterlad tom for standard)"
 
-#: ../event-organiser-settings.php:59
+#: event-organiser-settings.php:59
 msgid "Templates"
-msgstr ""
+msgstr "Templates"
 
-#: ../event-organiser-debug.php:67
+#: event-organiser-debug.php:67
 msgid "The 'system info' link in under the Events admin tab is only visible to "
 "admins and only when <code>WP_DEBUG</code> is set to <code>true</code>."
-msgstr ""
+msgstr "'Systeminformation' linket under Event admin tab'en er kun synlig for "
+"administratorer og kun når <code>WP_DEBUG</code> er sat til "
+"<code>true</code>."
 
-#: ../includes/event-organiser-cpt.php:427
+#: includes/event-organiser-cpt.php:427
 msgid "The end date is the date the event finishes. If the event is a reoccuring "
 "event, this is the end date of the first occurrence."
 msgstr "Slutdatoen er tidspunktet, hvor begivenheden slutter. Hvis begivenheden "
 "gentages, er dette slutdatoen for den første begivenhed i serien."
 
-#: ../includes/class-event-organiser-im-export.php:94
+#: includes/class-event-organiser-im-export.php:94
 msgid "The export button below generates an ICS file of your events that can be "
 "imported in to other calendar applications such as Google Calendar."
 msgstr "Eksport-knappen nedenfor genererer en ICS-fil af dine begivenheder, som kan "
 "importeres af andre kalender-applikationer såsom Google Calendar."
 
-#: ../includes/event-organiser-cpt.php:426
+#: includes/event-organiser-cpt.php:426
 msgid "The start date is the date the event starts. If the event is a reoccuring "
 "event, this is the start date of the first occurrence."
 msgstr "Startdatoen er tidspunktet, hvor begivenheden starter. Hvis begivenheden er "
 "tilbagevendende, er dette startdatoen for den første begivenhed i serien."
 
-#: ../classes/class-eventorganiser-shortcodes.php:359
+#: classes/class-eventorganiser-shortcodes.php:362
 msgid "There is no excerpt because this is a protected post."
-msgstr ""
+msgstr "Der er ikke nogle kort udgave, fordi dette er en beskyttet post."
 
-#: ../includes/class-eo-ical-parser.php:101
-msgid "There was an error detecting ICAL source."
-msgstr ""
+#: includes/class-eo-ical-parser.php:109
+msgid "There was an error detecting iCal source."
+msgstr "Der var en fejl ved undersøgelse af iCal kilden"
 
-#: ../includes/class-eo-ical-parser.php:147
+#: includes/class-eo-ical-parser.php:164
 msgid "There was an error fetching the feed. Response code: %s."
-msgstr ""
+msgstr "Der var en fejl ved hentning af feed. Fejlkode: %s."
 
-#: ../includes/class-eo-ical-parser.php:167
+#: includes/class-eo-ical-parser.php:184
 msgid "There was an error opening the ICAL file."
-msgstr ""
+msgstr "Der var en fejl ved åbning af ICAL filen"
 
-#: ../includes/event-organiser-register.php:235
-#: ../includes/event-organiser-event-functions.php:693
+#: includes/event-organiser-event-functions.php:693
+#: includes/event-organiser-register.php:245
 msgid "third"
 msgstr "tredje"
 
-#: ../event-organiser-settings.php:147
+#: event-organiser-settings.php:147
 msgid "This alters the default format for inputting dates."
 msgstr "Dette ændrer standardformatet for at indtaste datoer."
 
-#: ../templates/event-meta-event-single.php:50
+#: templates/event-meta-event-single.php:50
 msgid "This event finished on %s"
 msgstr "Denne begivenhed sluttede den %s"
 
-#: ../includes/event-organiser-cpt.php:230
+#: includes/event-organiser-cpt.php:230
 msgid "This event has been broken from a recurring event."
-msgstr ""
+msgstr "Dette event er i stykker pga. et gentagende event"
 
-#: ../templates/event-meta-event-single.php:46
+#: templates/event-meta-event-single.php:46
 msgid "This event is running from %1$s until %2$s. It is next occurring on %3$s"
-msgstr ""
+msgstr "Denne begivenhed varer fra %1$s indtil %2$s. Det optræder næste gang den "
+"%3$s"
 
-#: ../includes/event-organiser-ajax.php:308
+#: includes/event-organiser-ajax.php:308
 msgid "This event reoccurs"
 msgstr "Denne begivenhed er tilbagevendende"
 
-#: ../templates/single-event.php:60
+#: templates/single-event.php:60
 msgid "This event was posted by <a href=\"%5$s\">%4$s</a>. Bookmark the <a "
 "href=\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a>."
 msgstr "Denne begivenhed blev udgivet af <a href=\"%5$s\">%4$s</a>. Bogmærk <a "
 "href=\"%2$s\" title=\"Permalink til %3$s\" rel=\"bookmark\">permalinket</a>."
 
-#: ../templates/single-event.php:58
+#: templates/single-event.php:58
 msgid "This event was posted in %1$s by <a href=\"%5$s\">%4$s</a>. Bookmark the <a "
 "href=\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a>."
 msgstr "Denne begivenhed blev udgivet i %1$s af <a href=\"%5$s\">%4$s</a>. Bogmærk "
 "<a href=\"%2$s\" title=\"Permalink til %3$s\" "
 "rel=\"bookmark\">permalinket</a>."
 
-#: ../includes/event-organiser-register.php:233
+#: includes/event-organiser-register.php:243
 msgid "This event will repeat"
 msgstr "Denne begivenhed gentages"
 
-#: ../event-organiser-edit.php:75
+#: event-organiser-edit.php:75
 msgid "This is a reoccurring event"
 msgstr "Dette er en tilbagevendende begivenhed"
 
-#: ../includes/event-organiser-cpt.php:459
+#: includes/event-organiser-cpt.php:459
 msgid "This is the list of all saved events. Note that <strong> reoccurring events "
 "appear as a single row </strong> in the table and the start and end date "
 "refers to the first occurrence of that event."
@@ -1543,12 +1569,13 @@ msgstr "Dette er en liste af alle gemte begivenheder. Bemærk at <strong>gentage
 "begivenheder vises som en enkelt række </strong> i tabellen, og at start- og "
 "slutdatoen refererer til den første begivenhed."
 
-#: ../event-organiser-debug.php:65
+#: event-organiser-debug.php:65
 msgid "This page highlights useful information for debugging. If you're reporting a "
 "bug, please include this information."
-msgstr ""
+msgstr "Denne side fremhæver brugbar information til fejlsøgning. Hvis du reporterer "
+"en fejl, inkluder venligst denne information."
 
-#: ../includes/event-organiser-cpt.php:478
+#: includes/event-organiser-cpt.php:478
 msgid "This page shows all (occurrances of) events. You can view the summary of an "
 "event by clicking on it. If you have the necessary permissions, a link to "
 "the event's edit page will appear also."
@@ -1557,209 +1584,218 @@ msgstr "Denne side viser alle (forekomster af tilbagevendende) begivenheder. Du 
 "påkrævede rettigheder, vil du også få vist et link til begivenhedens "
 "redigeringsvindue."
 
-#: ../event-organiser-settings.php:113
+#: event-organiser-settings.php:113
 msgid "Thumbnail"
 msgstr "Thumbnail"
 
-#: ../classes/class-eo-event-list-widget.php:31
-#: ../classes/class-eo-event-list-widget.php:58
+#: classes/class-eo-agenda-widget.php:27
+#: classes/class-eo-calendar-widget.php:36
+#: classes/class-eo-event-list-widget.php:31
+#: classes/class-eo-event-list-widget.php:58
 msgid "Title"
 msgstr "Titel"
 
-#: ../classes/class-eo-widget-categories.php:92
+#: classes/class-eo-widget-categories.php:92
+#: classes/class-eo-widget-venues.php:91
 msgid "Title:"
 msgstr "Titel:"
 
-#: ../event-organiser-debug.php:74
+#: event-organiser-debug.php:74
 msgid "To help speed things along, if you report a bug please indicate if you have "
 "done so. Once the plug-in or theme has been identified it is often easy to "
 "resolve the issue."
-msgstr ""
+msgstr "For at gøre tingene hurtigere, hvis du reportere en fejl, inddiker venligst "
+"at du har gjort det. Så snart pluginet eller temaet er identificeret, er det "
+"ofte nemt at løse problemet."
 
-#: ../includes/event-organiser-cpt.php:434
+#: includes/event-organiser-cpt.php:434
 msgid "To repeat an event according to some regular pattern, use the reoccurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
 "appear, "
 msgstr "Gentag en begivenhed i et givent mønster ved at vælge et i dropdown-menuen "
 "for gentagelser. Flere muligheder vil da vises,"
 
-#: ../event-organiser-calendar.php:54
+#: event-organiser-calendar.php:55 includes/event-organiser-register.php:54
 msgid "today"
 msgstr "i dag"
 
-#: ../event-organiser-debug.php:444
-msgid "unknown"
-msgstr ""
+#: includes/class-eo-ical-parser.php:117
+msgid "Unable to read iCal file"
+msgstr "Det var ikke muligt at læse iCal filen"
 
-#: ../event-organiser-edit.php:170
+#: event-organiser-debug.php:448
+msgid "unknown"
+msgstr "Ukendt"
+
+#: event-organiser-edit.php:170
+#: includes/event-organiser-event-functions.php:772
+#: includes/event-organiser-register.php:244
 msgid "until"
 msgstr "indtil"
 
-#: ../templates/event-meta-event-single.php:88
+#: templates/event-meta-event-single.php:88
 msgid "Upcoming Dates"
-msgstr ""
+msgstr "Kommende datoer"
 
-#: ../includes/event-organiser-cpt.php:67
+#: includes/event-organiser-cpt.php:67
 msgid "Update Category"
 msgstr "Opdater kategori"
 
-#: ../includes/event-organiser-cpt.php:100
+#: includes/event-organiser-cpt.php:100
 msgid "Update Tag"
 msgstr "Opdater tag"
 
-#: ../event-organiser-venues.php:345
+#: event-organiser-venues.php:345 includes/event-organiser-cpt.php:34
 msgid "Update Venue"
 msgstr "Opdater sted"
 
-#: ../includes/class-event-organiser-im-export.php:109
+#: includes/class-event-organiser-im-export.php:109
 msgid "Upload ICS file"
 msgstr "Upload ICS-fil"
 
-#: ../includes/event-organiser-cpt.php:447
+#: includes/event-organiser-cpt.php:447
 msgid "Use the venues input field to search for existing venues"
 msgstr "Benyt sted-indtastningsfeltet til at søge efter eksisterende steder"
 
-#: ../event-organiser-edit.php:208
-#: ../event-organiser-manage.php:25
-#: ../event-organiser-venues.php:424
+#: classes/class-eo-event-list-widget.php:44 event-organiser-edit.php:208
+#: event-organiser-manage.php:25 event-organiser-venues.php:426
+#: includes/event-organiser-event-functions.php:1372
+#: templates/event-meta-event-single.php:63
 msgid "Venue"
 msgstr "Sted"
 
-#: ../event-organiser-venues.php:170
+#: event-organiser-venues.php:170
 msgid "Venue <strong>created</strong>"
 msgstr "Sted <strong>oprettet</strong>"
 
-#: ../event-organiser-venues.php:171
+#: event-organiser-venues.php:171
 msgid "Venue <strong>updated</strong>"
 msgstr "Sted <strong>opdateret</strong>"
 
-#: ../event-organiser-venues.php:86
+#: event-organiser-venues.php:86
 msgid "Venue <strong>was not</strong> created"
 msgstr "Sted <strong>blev ikke</strong> oprettet"
 
-#: ../event-organiser-venues.php:49
+#: event-organiser-venues.php:49
 msgid "Venue <strong>was not</strong> updated"
-msgstr ""
+msgstr "Venue <strong>var ikke</strong> opdateret"
 
-#: ../event-organiser-go-pro.php:81
+#: event-organiser-go-pro.php:81
 msgid "Venue custom fields & thumbnails"
-msgstr ""
+msgstr "Venue brugerfelter og thumbnails "
 
-#: ../event-organiser-venues.php:300
+#: event-organiser-venues.php:300
 msgid "Venue Location"
 msgstr "Stedlokation"
 
-#: ../event-organiser-venues.php:399
+#: event-organiser-venues.php:401
 msgid "Venue name"
 msgstr "Stednavn"
 
-#: ../event-organiser-edit.php:221
+#: event-organiser-edit.php:221
 msgid "Venue Name"
-msgstr ""
+msgstr "Venuets Navn"
 
-#: ../event-organiser-settings.php:220
+#: event-organiser-settings.php:220
 msgid "Venue page:"
 msgstr "Side til sted:"
 
-#: ../event-organiser-venues.php:172
+#: event-organiser-venues.php:172
 msgid "Venue(s) <strong>deleted</strong>"
 msgstr "Sted(er) <strong>slettet</strong>"
 
-#: ../event-organiser-venues.php:142
+#: event-organiser-venues.php:142
 msgid "Venue(s) <strong>were not </strong> deleted"
 msgstr "Sted(er) <strong>blev ikke </strong> slettet"
 
-#: ../event-organiser-settings.php:274
-#: ../event-organiser-venues.php:13
-#: ../event-organiser-venues.php:14
-#: ../event-organiser-venues.php:162
-#: ../event-organiser-venues.php:229
+#: classes/class-eo-widget-venues.php:20 event-organiser-settings.php:274
+#: event-organiser-venues.php:13 event-organiser-venues.php:14
+#: event-organiser-venues.php:162 event-organiser-venues.php:229
 msgid "Venues"
 msgstr "Steder"
 
-#: ../includes/event-organiser-ajax.php:544
-#: ../classes/class-eo-venue-list-table.php:71
+#: classes/class-eo-venue-list-table.php:71
+#: includes/event-organiser-ajax.php:544
 msgid "View"
 msgstr "Vis"
 
-#: ../event-organiser-calendar.php:59
-#: ../event-organiser-manage.php:114
+#: event-organiser-calendar.php:60 event-organiser-manage.php:113
+#: includes/event-organiser-register.php:59
 msgid "View all categories"
 msgstr "Vis alle kategorier"
 
-#: ../event-organiser-manage.php:141
+#: event-organiser-manage.php:140
 msgid "View all events"
 msgstr "Vis alle begivenheder"
 
-#: ../event-organiser-calendar.php:60
-#: ../event-organiser-manage.php:128
+#: event-organiser-calendar.php:61 event-organiser-manage.php:127
+#: includes/event-organiser-register.php:60
 msgid "View all venues"
 msgstr "Vis alle steder"
 
-#: ../includes/event-organiser-cpt.php:147
+#: includes/event-organiser-cpt.php:147
 msgid "View Event"
 msgstr "Vis begivenhed"
 
-#: ../event-organiser-venues.php:413
+#: event-organiser-venues.php:415 includes/event-organiser-cpt.php:32
 msgid "View Venue"
 msgstr "Vis sted"
 
-#: ../includes/event-organiser-cpt.php:469
+#: includes/event-organiser-cpt.php:469
 msgid "View will take you to the venue's page"
 msgstr "Vis vil føre dig til stedets side"
 
-#: ../includes/class-event-organiser-im-export.php:261
+#: includes/class-event-organiser-im-export.php:261
 msgid "Warning:"
-msgstr ""
+msgstr "Advarsel:"
 
-#: ../event-organiser-calendar.php:229
-msgid "Week"
-msgstr "Uge"
-
-#: ../event-organiser-calendar.php:56
+#: event-organiser-calendar.php:57 includes/event-organiser-register.php:56
+#: includes/event-organiser-register.php:229
 msgid "week"
 msgstr "uge"
 
-#: ../event-organiser-edit.php:126
+#: classes/class-eo-agenda-widget.php:34 event-organiser-calendar.php:230
+msgid "Week"
+msgstr "Uge"
+
+#: event-organiser-edit.php:126
 msgid "weekly"
 msgstr "ugentligt"
 
-#: ../includes/event-organiser-register.php:220
+#: includes/event-organiser-register.php:230
 msgid "weeks"
 msgstr "uger"
 
-#: ../event-organiser-calendar.php:249
+#: event-organiser-calendar.php:250
 msgid "When"
 msgstr "Hvornår"
 
-#: ../event-organiser-calendar.php:257
+#: event-organiser-calendar.php:258 includes/event-organiser-ajax.php:296
 msgid "Where"
 msgstr "Hvor"
 
-#: ../includes/event-organiser-register.php:223
+#: includes/event-organiser-register.php:233
 msgid "year"
 msgstr "år"
 
-#: ../event-organiser-settings.php:269
+#: event-organiser-settings.php:269
 msgid "Year archive"
-msgstr ""
+msgstr "År arkiv"
 
-#: ../event-organiser-edit.php:127
+#: event-organiser-edit.php:127
 msgid "yearly"
 msgstr "årligt"
 
-#: ../includes/event-organiser-register.php:224
+#: includes/event-organiser-register.php:234
 msgid "years"
 msgstr "år"
 
-#: ../event-organiser-debug.php:178
-#: ../event-organiser-debug.php:182
-#: ../event-organiser-debug.php:186
-#: ../event-organiser-settings.php:175
+#: event-organiser-debug.php:178 event-organiser-debug.php:182
+#: event-organiser-debug.php:186 event-organiser-settings.php:175
 msgid "Yes"
 msgstr "Ja"
 
-#: ../includes/event-organiser-cpt.php:484
+#: includes/event-organiser-cpt.php:484
 msgid "You can create an event on this Calendar, by clicking on day or dragging "
 "over multiple days (in Month view) or multiple times (in Week and Day view). "
 "You can give the event a title, specify a venue and provide a descripton. "
@@ -1772,52 +1808,57 @@ msgstr "Du kan oprette en begivenhed i denne kalender ved at klikke på en dag e
 "kladde. Uanset hvad vil begivenheden blive oprettet, og du føres til dens "
 "redigeringsvindue."
 
-#: ../classes/class-eo-event-list-widget.php:80
+#: classes/class-eo-event-list-widget.php:81
 msgid "You can use specified tags as placeholders for event information which you "
 "want to appear in the widget. <a href=\"%s\" target=\"_blank\"> Find out "
 "more</a>."
-msgstr ""
+msgstr "Du kan bruge specifikke tags som placeholders for information som du gerne "
+"vil have til at optræde i widget'et. <a href=\"%s\" target=\"_blank\"> Læs "
+"mere</a>."
 
-#: ../event-organiser-venues.php:115
+#: event-organiser-venues.php:115
 msgid "You do not have permission to delete this venue"
 msgstr "Du har ikke rettigheder til at slette dette sted"
 
-#: ../event-organiser-venues.php:42
-#: ../event-organiser-venues.php:71
+#: event-organiser-venues.php:42 event-organiser-venues.php:71
 msgid "You do not have permission to edit this venue."
 msgstr "Du har ikke rettigheder til at redigere dette sted."
 
-#: ../event-organiser-venues.php:37
+#: event-organiser-venues.php:37
 msgid "You do not have permission to manage venues"
 msgstr "Du har ikke rettigheder til at håndtere steder"
 
-#: ../event-organiser-calendar.php:107
+#: event-organiser-calendar.php:108
 msgid "You do not have sufficient permissions to create events. "
 msgstr "Du har ikke rettigheder til at oprette begivenheder"
 
-#: ../event-organiser-calendar.php:181
+#: event-organiser-calendar.php:182
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr "Du har ikke rettigheder til at slette denne begivenhed"
 
-#: ../event-organiser-calendar.php:163
+#: event-organiser-calendar.php:164
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Du har ikke rettigheder til at redigere denne begivenhed"
 
-#: ../includes/class-event-organiser-im-export.php:160
+#: includes/class-event-organiser-im-export.php:160
 msgid "You do not have sufficient permissions to import events."
 msgstr "Du har ikke rettigheder til at importere begivenheder."
 
-#: ../event-organiser-settings.php:605
+#: event-organiser-settings.php:605
 msgid "You may also need to go to WordPress Settings > Permalinks and click 'Save "
 "Changes' before any changes will take effect."
-msgstr ""
+msgstr "Du er måske også nødt til at gå til Wordpress instillinger > Permanente "
+"links og trykke 'Gem ændringer' før ændringer virker."
 
-#: ../event-organiser-settings.php:145
+#: event-organiser-settings.php:145
 msgid "yyyy-mm-dd"
-msgstr ""
+msgstr "yyyy-mm-dd"
 
-#: ../includes/class-eo-ical-parser.php:273
-#: ../includes/class-eo-ical-parser.php:289
+#: includes/class-eo-ical-parser.php:359 includes/class-eo-ical-parser.php:384
 msgid "[Line %1$d]"
-msgstr ""
+msgstr "[Linje %1$d]"
+
+#: includes/class-eo-ical-parser.php:352 includes/class-eo-ical-parser.php:377
+msgid "[Lines %1$d-%2$d]"
+msgstr "[Linjer %1$d-%2$d]"
 
