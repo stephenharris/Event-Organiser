@@ -199,9 +199,21 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 == Changelog ==
 
 = 2.7 =
+* Alteration to default single event page to adapt layout on small screens.
+* Added option to change "on" in the year/month/date event page urls
 * Added hook `eventorganiser_ical_feed_parsed`. See [http://codex.wp-event-organiser.com/hook-eventorganiser_ical_feed_parsed.html](http://codex.wp-event-organiser.com/hook-eventorganiser_ical_feed_parsed.html).
 * (Backwards compatible) change in `eo_get_event_fullcalendar()` arguments. The arguments 'event_category' and 'event_venue' have been replaced by 'event-category' and 'event-venue'. Also they accept an array of term slugs or a comma-delimited string of term slugs. See [http://wp-event-organiser.com/forums/topic/eo_get_event_fullcalendar-exclude/](http://wp-event-organiser.com/forums/topic/eo_get_event_fullcalendar-exclude/).
 * When restricting a calendar by category(ies). Only those categories appear in the category drop-down, if this is added.
+* Added event tag to fullCalendar filters (`[eo_fullcalendar headerRight="tag"]`).
+* Included HTML description in iCal feed. ("alternative text representation" tag).
+* Included latitude/longtitude co-ordinates in iCal feed.
+* Fix bugs with line wrapping in iCal feed.
+* Fixes bug where "am"/"pm" are translated in time input.
+* Fixes bug with `eo_date_interval()`.
+* Fixes conflixt with Ozh' Admin Drop Down Menu
+* iCal parser returns error if duplicate UIDs are detected'.
+* iCal parser accepts webcal protocal.
+* Updated links to point to new [user documentation site](http://docs.wp-event-organiser.com).
 
 = 2.6 =
 * WordPress 3.8 compatible (tested against RC1)
