@@ -174,8 +174,8 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 	 * @ignore
 	 * Try to find template - backwards compat. Don't use this filter. Will be removed!
 	 */
-	$template = apply_filters('eventorganiser_event_list_loop',false);
-	$template_file = locate_template( $template );
+	$template_file = apply_filters('eventorganiser_event_list_loop',false);
+	$template_file = locate_template( $template_file );
 	if( $template_file || empty($template) ){
 		ob_start();
 		if( empty($template_file) )
