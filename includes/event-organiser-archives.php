@@ -76,7 +76,6 @@ function eventorganiser_pre_get_posts( $query ) {
 				$ondate_end = $end->format('Y-m-t');
 			}catch( Exception $e){
 				$query->set('ondate',false);
-				break;
 			}
 		}
 	
