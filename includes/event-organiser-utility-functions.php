@@ -546,8 +546,13 @@ function eo_check_datetime( $format, $datetime_string, $timezone = false ){
 	$AM = $wp_locale->get_meridiem('AM');
 	$pm = $wp_locale->get_meridiem('pm');
 	$PM = $wp_locale->get_meridiem('PM');
-	$datetime_string = str_replace( compact( 'am', 'AM', 'pm', 'PM' ), array( 'am', 'AM', 'pm', 'PM' ), $datetime_string );
 	
+	$meridan = array_filter( compact( 'am', 'AM', 'pm', 'PM' ), 'trim' );
+	$meridan = array_filter( $meridan );
+	if( $meridan ){
+		$datetime_string = str_replace( array_values( $meridan ), array_keys( $meridan ), $datetime_string );
+	}
+
 	if ( version_compare(PHP_VERSION, '5.3.0') >= 0 ){
     	return date_create_from_format( $format, $datetime_string, $timezone );
 	}else{

@@ -243,9 +243,26 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 		//TODO eo_check_datetime doesn't support S in php5.2
 		$this->assertEquals( $date1, eo_check_datetime( 'jS F Y g:ia', '31st December 2013 4:30пп' ) );
 		
-	
 		//Reset locale
 		$this->setLocale( $original );		
+	}
+	
+	public function testCheckDatetimeLocaleWithoutMeridian(){
+
+		$date = new DateTime( '2013-12-31 4:30pm' );
+	
+		//Set locale
+		$original = $this->setLocale();
+		$this->setLocale( 'fr_FR' );
+			
+		//Run test
+		$this->assertEquals( $date, eo_check_datetime( 'Y-m-d g:ia', '2013-12-31 4:30pm' ) );
+	
+		//TODO eo_check_datetime doesn't support S in php5.2
+		$this->assertEquals( $date, eo_check_datetime( 'jS F Y g:ia', '31st December 2013 4:30pm' ) );
+	
+		//Reset locale
+		$this->setLocale( $original );
 	}
 	
 	
