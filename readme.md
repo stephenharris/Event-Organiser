@@ -4,7 +4,7 @@
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
 **Tested up to:** 3.9-b-1  
-**Stable tag:** 2.7.1  
+**Stable tag:** 2.7.2  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -211,6 +211,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 2.7.2 ###
+* Fixes bug (2.7) where some translations cannot update events: [http://wordpress.org/support/topic/event-not-updating-dates](http://wordpress.org/support/topic/event-not-updating-dates).
 
 ### 2.7.1 ###
 * Fixes bug (2.7) where shortcode tags are ignored
