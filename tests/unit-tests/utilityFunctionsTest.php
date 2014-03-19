@@ -1,6 +1,6 @@
 <?php
 
-class utilityFunctionsTest extends PHPUnit_Framework_TestCase
+class utilityFunctionsTest extends WP_UnitTestCase
 {
 	
 	public function testPHP2Xdate()
@@ -84,6 +84,37 @@ class utilityFunctionsTest extends PHPUnit_Framework_TestCase
 	
 		$this->assertEquals( $date->modify( $modify ), $date3 );
 	
+	}
+	
+	public function testIsBlog24Hour()
+	{
+		//24 hour time formats
+		update_option( 'time_format', 'G:i' );
+		$this->assertTrue( eo_blog_is_24() );
+		
+		update_option( 'time_format', 'H:i' );
+		$this->assertTrue( eo_blog_is_24() );
+		
+		//12 hour time formats
+		update_option( 'time_format', 'g:i' );
+		$this->assertFalse( eo_blog_is_24() );
+		
+		update_option( 'time_format', 'h:i' );
+		$this->assertFalse( eo_blog_is_24() );
+		
+		update_option( 'time_format', 'ia' );
+		$this->assertFalse( eo_blog_is_24() );
+		
+		//Filters
+		add_filter( 'eventorganiser_blog_is_24', '__return_true' );
+		$this->assertTrue( eo_blog_is_24() );
+		remove_filter( 'eventorganiser_blog_is_24', '__return_true' );
+		
+		update_option( 'time_format', 'G:i' );
+		add_filter( 'eventorganiser_blog_is_24', '__return_false' );
+		$this->assertFalse( eo_blog_is_24() );
+		remove_filter( 'eventorganiser_blog_is_24', '__return_false' );
+			
 	}
 
 }
