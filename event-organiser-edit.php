@@ -373,8 +373,8 @@ function eventorganiser_details_save( $post_id ) {
 			
 			foreach ( $arr as $date ):
 				$date_obj = eo_check_datetime( 'Y-m-d', trim( $date ) );
-				$date_obj->setTime( $start->format('H'), $start->format('i') );
 				if( $date_obj ){
+					$date_obj->setTime( $start->format('H'), $start->format('i') );
 					$in_ex[$key][] = $date_obj;
 				}
 			endforeach;
