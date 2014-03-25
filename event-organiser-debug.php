@@ -31,7 +31,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 		
 		
 		$eo_debugger = new EventOrganiser_Debugger();
-		$eo_debugger->set_prequiste( 'WordPress', '3.3', '3.6.1');
+		$eo_debugger->set_prequiste( 'WordPress', '3.3', '3.9.1');
 		//$eo_debugger->set_known_plugin_conflicts();
 		//$eo_debugger->set_known_theme_conflicts();
 		$eo_debugger->set_db_tables( 'eo_events', 'eo_venuemeta' );
