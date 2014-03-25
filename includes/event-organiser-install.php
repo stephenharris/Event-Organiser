@@ -203,14 +203,16 @@ function eventorganiser_upgradecheck(){
 				update_option('eventorganiser_options', $options);
 			}
 		}
-		if( $installed_ver < '1.7.1' ){
-			//Forgot to remove event_allday in 1.6 upgrade. This causes problems no Windows servers.
+		if( $installed_ver < '2.7.3' ){
+			//Ensure event_allday columns is removed. This causes problems on Windows servers.
 			$columns = $wpdb->get_col("DESC {$wpdb->eo_events}", 0);
 			$remove_columns = array('event_allday');
+			$delete_columns = array_intersect( $remove_columns, $columns );
 			if( !empty($delete_columns) )
 				$sql = $wpdb->query("ALTER TABLE {$wpdb->eo_events} DROP COLUMN ".implode(', DROP COLUMN ',$delete_columns).';');
 			flush_rewrite_rules();
 		}
+		
 		update_option('eventorganiser_version', $eventorganiser_db_version);
 
 		//Run upgrade checks
