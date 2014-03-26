@@ -238,6 +238,14 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 					<th> Language </th>
 					<td><?php echo defined( 'WP_LANG' ) && WP_LANG ? WP_LANG : 'en_us'; ?></td>
 				</tr>
+				<tr>
+					<th> Date Format </th>
+					<td><?php echo get_option( 'date_format' ); ?></td>
+				</tr>
+				<tr>
+					<th> Time Format </th>
+					<td><?php echo get_option( 'time_format' ); ?></td>
+				</tr>
 		</table>
 		<?php 
 			printf( 
@@ -554,7 +562,9 @@ class EventOrganiser_Debugger{
 		echo '### Site Settings ###' . "\n";
 		echo 'Timezone' . "\t\t\t" . eo_get_blog_timezone()->getName() . sprintf( ' ( %s / %s ) ', get_option( 'gmt_offset' ), get_option( 'timezone_string' ) ) . "\n";
 		echo 'WP Cron' . "\t\t\t" . ( $this->get_cron_status() == 0 ? 'Disabled' :  ( $this->get_cron_status() == 1 ? 'Enabled' : 'Alternative ') ) . "\n";
-		echo 'WP Lang' . "\t\t\t" . ( defined( 'WP_LANG' ) && WP_LANG ? WP_LANG : 'en_us' );
+		echo 'WP Lang' . "\t\t\t" . ( defined( 'WP_LANG' ) && WP_LANG ? WP_LANG : 'en_us' ) . "\n";
+		echo 'Date format' . "\t\t" . get_option( 'date_format' ) . "\n";
+		echo 'Time format' . "\t\t" . get_option( 'time_format' );
 							
 		echo "\n";
 		echo "\n";
