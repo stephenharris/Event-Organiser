@@ -265,6 +265,17 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 		$this->setLocale( $original );
 	}
 	
+	public function testCheckDatetimeNoSpacesPHP52(){
+	
+		$date_pm = new DateTime( '2013-12-31 15:20' );
+		$date_am = new DateTime( '2013-12-31 03:20' );
+				
+		//Check times (am/pm) are interpretted correctly
+		$this->assertEquals( $date_pm, eo_check_datetime( 'Y-m-d g:ia', '2013-12-31 3:20pm' ) );
+		$this->assertEquals( $date_am, eo_check_datetime( 'Y-m-d g:ia', '2013-12-31 3:20am' ) );
+		$this->assertEquals( $date_pm, eo_check_datetime( 'Y-m-d G:i', '2013-12-31 15:20' ) );
+		$this->assertEquals( $date_am, eo_check_datetime( 'Y-m-d G:i', '2013-12-31 3:20' ) );	
+	}	
 	
 	public function setLocale( $locale = false ){
 		static $current_locale;

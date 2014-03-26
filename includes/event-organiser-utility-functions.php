@@ -565,7 +565,7 @@ function eo_check_datetime( $format, $datetime_string, $timezone = false ){
 			'm'	=> '%m', 'F' => '%B', 
 			'd'	=> '%d', 'j' => '%e',
 			'S' => '%0',
-			'H' => '%H', 'G' => '%k', 'h'=> '%I', 'g' => '%l', 
+			'H' => '%H', 'G' => '%H', 'h'=> '%I', 'g' => '%I', 
 			'i' => '%M', 
 			's' => '%S', 
 			'a' => '%p', 'A' => '%P'
