@@ -200,6 +200,12 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 2.7.3 =
+* Fixes bug experienced under some environments with PHP5.2 where event dates cannot save
+* Ensures obsolete event table column is removed (can cause errors on Microsft servers)
+* Set time of included date to the time of the event. [Fixes #175](https://github.com/stephenharris/Event-Organiser/issues/175)
+* Correct eo_blog_is_24(). ('G' is 12 hour, 'h' is 24 hour). 
+
 = 2.7.2 =
 * Fixes bug (2.7) where some translations cannot update events: [http://wordpress.org/support/topic/event-not-updating-dates](http://wordpress.org/support/topic/event-not-updating-dates).
 
