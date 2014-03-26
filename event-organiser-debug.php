@@ -517,7 +517,7 @@ class EventOrganiser_Debugger{
 		
 		echo 'Event Organiser' . "\t\t" . EVENT_ORGANISER_VER . "\n";
 		if( $this->jquery_version )
-			echo 'jQuery Version' . "\t\t" . EVENT_ORGANISER_VER . "\n";
+			echo 'jQuery Version' . "\t\t" . $this->jquery_version . "\n";
 		echo 'WordPress' . "\t\t\t" . get_bloginfo( 'version' ) ."\n";
 		echo 'PHP Version' . "\t\t\t" . PHP_VERSION ."\n";
 		echo 'MySQL Version' . "\t\t" . mysql_get_server_info() ."\n";
