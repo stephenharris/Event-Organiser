@@ -827,4 +827,22 @@ function _eventorganiser_autofill_city(){
 }
 add_action('admin_post_eo-autofillcity','_eventorganiser_autofill_city');
 
+
+/**
+ * Adds post-type-event class to the <body> tag of event admin pages.
+ * 
+ * This was added by WP 3.7+, this function serves for backwards compatability
+ * with 3.3 through to 3.6. It's used to fix a bug with EO & EO Pro:
+ * @see https://github.com/stephenharris/Event-Organiser/issues/176
+ */
+function _eventorganiser_add_event_class( $admin_body_class ){
+	$screen = get_current_screen();
+
+	if( $screen && 'event' == $screen->post_type && version_compare( '3.7', get_bloginfo( 'version' ) ) == 1 ){
+		$admin_body_class .= ' post-type-event ';
+	}
+	return $admin_body_class;
+}
+add_filter( 'admin_body_class', '_eventorganiser_add_event_class', 99999 );
+
 ?>

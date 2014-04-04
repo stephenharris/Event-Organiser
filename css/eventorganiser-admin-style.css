@@ -2,7 +2,7 @@
 #venuemap{height:300px; width:100%;float:right;margin: 10px 0 10px -300px}
 
 /*Hide post date filter*/
-.tablenav.top .alignleft.actions select[name="m"]{display: none; }
+.post-type-event .tablenav.top .alignleft.actions select[name="m"]{display: none; }
 
 #eventorganiser_event_detail tr.eo-add-new-venue{
 	display: none;
