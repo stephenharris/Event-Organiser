@@ -976,7 +976,7 @@ function eventorganiser_textarea_field($args){
 		$html .= ob_get_contents();
 		ob_end_clean();
 	}else{
-		$html .= sprintf('<textarea cols="%s" rows="%d" name="%s" class="%s large-text" id="%s" %s >%s</textarea>',
+		$html .= sprintf('<textarea cols="%s" rows="%d" name="%s" class="%s" id="%s" %s >%s</textarea>',
 				intval($args['cols']),
 				intval($args['rows']),
 				esc_attr($name),
