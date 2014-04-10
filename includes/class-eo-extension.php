@@ -239,12 +239,53 @@ if( !class_exists('EO_Extension') ){
 				);
 			}
 		}
+
+		public function add_multisite_field(){
+				
+			register_setting( 'settings-network', $this->id.'_license' );
+
+			add_settings_section( 'eo-ntw-settings', "Event Organiser Extension Licenses", '__return_false', 'settings-network' );
+				
+			add_settings_field(
+				$this->id.'_license',
+				$this->label,
+				array( $this, 'field_callback'),
+				'settings-network',
+				'eo-ntw-settings'
+			);
+		}
+
+		static function do_ntw_settings(){
+			wp_nonce_field("eo-ntw-settings-options", '_eontwnonce');			
+			do_settings_sections( 'settings-network' );
+		}
+
+		static function save_ntw_settings(){
+			
+			if( !current_user_can( 'manage_network_options' ) ){
+				return false;
+			}
 	
-	
+			if( !isset( $_POST['_eontwnonce'] ) || !wp_verify_nonce( $_POST['_eontwnonce'], 'eo-ntw-settings-options' ) ){
+				return false;
+			}
+
+			$whitelist_options = apply_filters( 'whitelist_options', array());
+			if( isset( $whitelist_options['settings-network'] ) ){
+				foreach( $whitelist_options['settings-network'] as $option_name ){
+					if ( ! isset($_POST[$option_name]) )
+						continue;
+					$value = wp_unslash( $_POST[$option_name] );
+					update_site_option( $option_name, $value );
+				}
+			}
+
+		}
+
 		public function add_field(){
-	
+
 			register_setting( 'eventorganiser_general', $this->id.'_license' );
-	
+
 			if( self::eo_is_after( '2.3' ) ){
 				$section_id = 'general_licence';
 			}else{
