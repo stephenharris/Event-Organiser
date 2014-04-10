@@ -230,7 +230,7 @@ if( !class_exists('EO_Extension') ){
 
 		public function plugin_update_message( $plugin_data, $r  ){
 
-			if( !$this->is_valid( get_site_option( $this->id.'_license' ) ) ){
+			if( is_wp_error( $this->is_valid( get_site_option( $this->id.'_license' ) ) ) ){
 				printf(
 				'<br> The license key you have entered is invalid.
 				<a href="%s"> Purchase a license key </a> or enter a valid license key <a href="%s">here</a>',
