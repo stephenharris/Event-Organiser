@@ -110,7 +110,7 @@ RDATE<?php echo $vdate;?>:<?php echo implode(',',$include_strings);?>
 		echo eventorganiser_fold_ical_text( html_entity_decode( "DESCRIPTION: $excerpt" ) ) . "\n";
 	endif; ?>
 <?php 
-	$description = eventorganiser_fold_ical_text( get_the_content() );
+	$description = eventorganiser_escape_ical_text( get_the_content() );
 	echo eventorganiser_fold_ical_text( html_entity_decode( "X-ALT-DESC;FMTTYPE=text/html: $description" ) ) . "\n";
 ?>
 <?php 
