@@ -121,42 +121,50 @@ if( !class_exists('EO_Extension') ){
 					);
 				}
 			}
-	
+
 			echo '</div>';
 		}
-	
-	
+
+
 		public function hooks(){
-	
+
 			add_action( 'admin_init', array( $this, 'check_dependencies' ) );
-	
+
 			add_action( 'in_plugin_update_message-' . $this->slug, array( $this, 'plugin_update_message' ), 10, 2 );
-	
-			add_action( 'eventorganiser_register_tab_general', array( $this, 'add_field' ) );
-	
+
+				
+			if( is_multisite() ){
+				//add_action( 'network_admin_menu', array( 'EO_Extension', 'setup_ntw_settings' ) );
+				add_action( 'network_admin_menu', array( $this, 'add_multisite_field' ) );
+				add_action( 'wpmu_options', array( 'EO_Extension', 'do_ntw_settings' ) );
+				add_action( 'update_wpmu_options', array( 'EO_Extension', 'save_ntw_settings' ) );
+			}else{
+				add_action( 'eventorganiser_register_tab_general', array( $this, 'add_field' ) );
+			}
+
 			add_filter( 'pre_set_site_transient_update_plugins', array($this,'check_update'));
-	
+
 			add_filter( 'plugins_api', array( $this, 'plugin_info' ), 9999, 3 );
 		}
-	
-	
+
+
 		public function is_valid( $key ){
-	
+
 			$key = strtoupper( str_replace( '-', '', $key ) );
-	
-			$local_key = get_option($this->id.'_plm_local_key');
-	
+
+			$local_key = get_site_option($this->id.'_plm_local_key');
+
 			//Token depends on key being checked to instantly invalidate the local period when key is changed.
 			$token = wp_hash($key.'|'.$_SERVER['SERVER_NAME'].'|'.$_SERVER['SERVER_ADDR'].'|'.$this->slug);
-	
+
 			if( $local_key ){
 				$response = maybe_unserialize( $local_key['response'] );
-	
+
 				if( $token == $response['token'] ){
-	
+
 					$last_checked = isset($response['date_checked']) ?  intval($response['date_checked'] ) : 0;
 					$expires = $last_checked + 24 * 24 * 60 * 60;
-	
+
 					if( $response['valid'] == 'TRUE' &&  ( time() < $expires ) ){
 						//Local key is still valid
 						return true;
@@ -167,15 +175,15 @@ if( !class_exists('EO_Extension') ){
 			//Check license format
 			if( empty( $key ) )
 				return new WP_Error( 'no-key-given' );
-	
+
 			if( preg_match('/[^A-Z234567]/i', $key) )
 				return new WP_Error( 'invalid-license-format' );
-	
+
 			if( $is_valid = get_transient( $this->id . '_check' ) && false !== get_transient( $this->id . '_check_lock' ) ){
-				if( true === $is_valid )
-					return $is_valid;
+				if( $token === $is_valid )
+					return true;
 			}
-	
+
 			//Check license remotely
 			$resp = wp_remote_post($this->api_url, array(
 					'method' => 'POST',
@@ -212,17 +220,17 @@ if( !class_exists('EO_Extension') ){
 				$is_valid = true;
 			else
 				$is_valid = new WP_Error( $response['reason'] );
-	
+
 			set_transient( $this->id . '_check_lock', $key, 15*20 );
-			set_transient( $this->id . '_check', $is_valid, 15*20 );
-	
+			set_transient( $this->id . '_check', $token, 15*20 );
+
 			return $is_valid;
 		}
-	
-	
+
+
 		public function plugin_update_message( $plugin_data, $r  ){
-	
-			if( !$this->is_valid( get_option( $this->id.'_license' ) ) ){
+
+			if( !$this->is_valid( get_site_option( $this->id.'_license' ) ) ){
 				printf(
 				'<br> The license key you have entered is invalid.
 				<a href="%s"> Purchase a license key </a> or enter a valid license key <a href="%s">here</a>',
@@ -251,14 +259,14 @@ if( !class_exists('EO_Extension') ){
 				$section_id
 			);
 		}
-	
-	
+
+
 		public function field_callback(){
-	
-			$key = get_option( $this->id.'_license'  );
+
+			$key = get_site_option( $this->id.'_license'  );
 			$check = $this->is_valid( $key );
 			$valid = !is_wp_error( $check );
-	
+
 			$message =  sprintf(
 					'The license key you have entered is invalid. <a href="%s">Purchase a license key</a>.',
 					$this->public_url
@@ -350,7 +358,7 @@ if( !class_exists('EO_Extension') ){
 					'timeout' => 45,
 					'body' => array(
 							'plm-action' => $action,
-							'license'    => get_option( $this->id.'_license' ),
+							'license'    => get_site_option( $this->id.'_license' ),
 							'product'    => $this->slug,
 							'domain'     => $_SERVER['SERVER_NAME'],
 					)
