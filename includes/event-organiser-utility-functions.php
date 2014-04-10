@@ -960,7 +960,7 @@ function eventorganiser_textarea_field($args){
 	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$name = isset($args['name']) ?  $args['name'] : '';
 	$value = $args['value'];
-	$class = $args['class'];
+	$class = implode( ' ', array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) ) );
 	$readonly = $args['readonly'] ? 'readonly' : '';
 	$html ='';
 
@@ -980,7 +980,7 @@ function eventorganiser_textarea_field($args){
 				intval($args['cols']),
 				intval($args['rows']),
 				esc_attr($name),
-				sanitize_html_class($class),
+				$class,
 				esc_attr($id),
 				$readonly,
 				esc_textarea($value)
