@@ -585,15 +585,16 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		$page = 'eventorganiser_general';
 		$section_id = 'general_licence';
 		$addon_link = esc_url( admin_url( 'edit.php?post_type=event&page=eo-addons' ) );
-		if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section_id] ) ){
-			?>
-			<p> You do not have any add-ons activated. You can view the <a href="<?php echo $addon_link; ?>">available add-ons here</a>.</p>
-			<?php
+
+		if( is_multisite() ){
+			printf( "<p>For multisites, license keys should be entered on the <a href='%s'>Network Settings</a> page.</p>", network_admin_url( 'settings.php' ) );
 		}else{
-			?>
-			<p> Below are the add-ons you have activated. You can find a full list of <a href="<?php echo $addon_link; ?>">available add-ons here</a>. </p>
-			<?php
-		}
+			if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section_id] ) ){
+				echo "<p> You do not have any add-ons activated. You can view the <a href='".$addon_link."'>available add-ons here</a>.</p>";
+			}else{ 
+				echo "<p> Below are the add-ons you have activated. You can find a full list of <a href='".$addon_link."'>available add-ons here</a>. </p>";
+			}	
+		} 
 	}
 	
 	
