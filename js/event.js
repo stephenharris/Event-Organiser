@@ -336,7 +336,7 @@ window.eventOrganiserSchedulePicker = {
 		var options = this.options;
 		var views = this.options.views;
         //Time pickers
-        $( views.start_time + ', ' +  views.end_time).timepicker({
+        $( views.start_time + ', ' +  views.end_time).eotimepicker({
             showPeriodLabels: !options.is24hour,
             showPeriod: !this.options.is24hour,
             showLeadingZero: options.is24hour,

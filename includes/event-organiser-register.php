@@ -94,15 +94,22 @@ function eventorganiser_register_scripts(){
 		'eo_GoogleMap'
 	),$version,true);
 	
-	/*  Script for event edit page */
+	/*  Script for event edit page. (Legacy version) */
 	wp_register_script( 'eo-time-picker', EVENT_ORGANISER_URL."js/time-picker{$ext}.js",array(
 		'jquery',
 		'jquery-ui-datepicker',		
 	),$version,true);
 	
+	/* New version - prefixed timepicker */
+	wp_register_script( 'eo-timepicker', EVENT_ORGANISER_URL."js/jquery-ui-eo-timepicker{$ext}.js",array(
+			'jquery',
+			'jquery-ui-datepicker',
+	),$version,true);
+	
 	wp_register_script( 'eo_event', EVENT_ORGANISER_URL."js/event{$ext}.js",array(
 		'jquery',
 		'jquery-ui-datepicker',
+		'eo-timepicker',
 		'eo-time-picker',
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',

@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 			 '-W082': true, //Todo Function declarations should not be placed in blocks
 			 '-W020': true, //Read only - error when assigning EO_SCRIPT_DEBUG a value.
 		},
-		all: [ 'js/*.js', '!js/*.min.js', '!*/time-picker.js',  '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
+		all: [ 'js/*.js', '!js/*.min.js', '!*/time-picker.js', '!*/jquery-ui-eo-timepicker.js', '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
   	
 	shell: {
