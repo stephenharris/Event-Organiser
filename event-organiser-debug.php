@@ -155,7 +155,11 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				</tr>
 				<tr>
 					<th> MySQL Version </th>
-					<td> <?php echo mysql_get_server_info(); ?></td>
+					<td> 
+					<?php
+						global $wpdb;
+						echo empty( $wpdb->use_mysqli ) ? mysql_get_server_info() : mysqli_get_server_info( $wpdb->dbh );
+					?></td>
 				</tr>    
 				<tr>
 					<th> Web Server </th>
@@ -528,7 +532,9 @@ class EventOrganiser_Debugger{
 			echo 'jQuery Version' . "\t\t" . $this->jquery_version . "\n";
 		echo 'WordPress' . "\t\t\t" . get_bloginfo( 'version' ) ."\n";
 		echo 'PHP Version' . "\t\t\t" . PHP_VERSION ."\n";
-		echo 'MySQL Version' . "\t\t" . mysql_get_server_info() ."\n";
+		global $wpdb;
+		$ver = empty( $wpdb->use_mysqli ) ? mysql_get_server_info() : mysqli_get_server_info( $wpdb->dbh );
+		echo 'MySQL Version' . "\t\t" . $ver ."\n";
 	
 		echo "\n";
 		echo "\n";
