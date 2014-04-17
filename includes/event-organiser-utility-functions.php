@@ -1362,3 +1362,15 @@ function eo_list_pluck_key_value( $list, $key_field, $value_field ){
 	
 	return $new_list;
 }
+
+/**
+ * Given an array, it returns only the values whose key exists in 
+ * a given key whitelist.
+ * 
+ * @param array $array The array for which we wish to weed out non whitelisted values.
+ * @param array $whitelist An array of permissable keys.
+ * @return array The original array with non-permissable keys removed
+ */
+function eo_array_key_whitelist( $array, $whitelist = array() ){
+	return array_intersect_key( $array, array_flip( $whitelist ) );
+}

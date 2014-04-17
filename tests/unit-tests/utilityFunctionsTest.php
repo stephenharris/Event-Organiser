@@ -117,5 +117,13 @@ class utilityFunctionsTest extends WP_UnitTestCase
 			
 	}
 
+	public function testWhiteListArrayKey(){
+		
+		$array = array( 'a' => 1, 'b' => 2, 'c' => 3 );
+		$whitelist = array( 'a', 'c' );
+		$expected = array( 'a' => 1, 'c' => 3 );
+		
+		$this->assertEquals( $expected, eo_array_key_whitelist( $array, $whitelist ) );
+	}
 }
 
