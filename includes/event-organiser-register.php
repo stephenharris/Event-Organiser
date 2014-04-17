@@ -106,6 +106,7 @@ function eventorganiser_register_scripts(){
 		'eo-time-picker',
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',
+		'jquery-ui-button',
 		'jquery-ui-position'
 	),$version,true);
 	
@@ -120,6 +121,7 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-datepicker',
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',
+		'jquery-ui-button',
 		'jquery-ui-dialog',
 		'jquery-ui-tabs',
 		'jquery-ui-position'
