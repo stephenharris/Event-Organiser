@@ -3,8 +3,8 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 3.9-b-1
-Stable tag: 2.7.3
+Tested up to: 3.9
+Stable tag: 2.7.4
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -199,6 +199,15 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.7.4 =
+* Compatible with WordPress 3.9
+* Fixes issue with `eo_check_datetime()` on Windows servers running PHP 5.2
+* Added prefix to jQuery UI time picker plug-in to prevent conflicts with other plug-ins
+* Fixes X-ALT-DESC (HTML) tag in iCal feed
+* Add prefix to ensure the (post) date filter is removed *only* on the event admin screen
+* Remove 'large-text' class added to textarea with the textarea utility function
+* Fixes bug in textarea utility function where multiple class attributes are merged. 
 
 = 2.7.3 =
 * Fixes bug experienced under some environments with PHP5.2 where event dates cannot save
