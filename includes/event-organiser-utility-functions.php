@@ -555,7 +555,7 @@ function eo_check_datetime( $format, $datetime_string, $timezone = false ){
 
 	if ( version_compare(PHP_VERSION, '5.3.0') >= 0 ){
     	return date_create_from_format( $format, $datetime_string, $timezone );
-	}else{
+	}elseif( function_exists( 'strptime' ) ){
 		
 		//Workaround for outdated php versions. Limited support, see conversion array below.
 		
@@ -600,6 +600,52 @@ function eo_check_datetime( $format, $datetime_string, $timezone = false ){
 			return false;
 		}
 		
+	}else{
+
+		//Workaround for outdated php versions without strptime. Limited support, see conversion array below.
+		
+		//Format conversion
+		$format_conversion = array(
+				'Y' => '(?P<year>\d{4})',
+				'm'	=> '(?P<month>\d{1,})', 
+				'd'	=> '(?P<day>\d{1,})', 
+				'H' => '(?P<hour>\d{2})', 
+				'G' => '(?P<hour>\d{1,2})',
+				'h' => '(?P<hour>\d{2})', 
+				'g' => '(?P<hour>\d{1,2})',
+				'i' => '(?P<minute>\d{1,2})',
+				's' => '(?P<second>\d{1,2})',
+				'a' => '(?P<meridan>(am|pm))',
+				'A' => '(?P<meridan>(AM|PM))'
+		);
+		
+		$reg_exp = "/^" . strtr( $format, $format_conversion ) . "$/";
+		
+		if( !preg_match( $reg_exp, $datetime_string, $matches ) ){
+			return false;
+		}
+		
+		$meridan    = isset( $matches['meridan'] ) ? strtolower( $matches['meridan'] ) : false;
+		$components = eo_array_key_whitelist( $matches, array( 'year', 'month', 'day', 'hour', 'minute', 'second' ) );
+		extract( array_map( 'intval', $components ) );
+		
+		if ( !checkdate( $month, $day, $year ) ){
+			return false;
+		}
+		
+		$datetime = new DateTime( null, $timezone );
+		$datetime->setDate( $year, $month, $day );
+		
+		if( isset( $hour ) && isset( $minute ) ){
+			if( $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 ){
+				return false;
+			}
+			$hour = ( $meridan === 'pm' && $hour < 12 ) ? $hour + 12 : $hour; //acount for 12 hour time
+			$datetime->setTime( $hour, $minute );
+		}
+		
+		return $datetime;
+	
 	}
 		
 }
