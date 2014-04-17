@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: event-organiser 2.7.3\n"
+"Project-Id-Version: event-organiser 2.7.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-26 23:38+0000\n"
+"POT-Creation-Date: 2014-04-17 15:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -272,17 +272,17 @@ msgid "today"
 msgstr ""
 
 #: event-organiser-calendar.php:56 includes/event-organiser-register.php:55
-#: includes/event-organiser-register.php:228
+#: includes/event-organiser-register.php:235
 msgid "day"
 msgstr ""
 
 #: event-organiser-calendar.php:57 includes/event-organiser-register.php:56
-#: includes/event-organiser-register.php:230
+#: includes/event-organiser-register.php:237
 msgid "week"
 msgstr ""
 
 #: event-organiser-calendar.php:58 includes/event-organiser-register.php:57
-#: includes/event-organiser-register.php:232
+#: includes/event-organiser-register.php:239
 msgid "month"
 msgstr ""
 
@@ -415,35 +415,35 @@ msgstr ""
 msgid "Download system information file"
 msgstr ""
 
-#: event-organiser-debug.php:178 event-organiser-debug.php:182
-#: event-organiser-debug.php:186 event-organiser-settings.php:201
+#: event-organiser-debug.php:182 event-organiser-debug.php:186
+#: event-organiser-debug.php:190 event-organiser-settings.php:201
 msgid "Yes"
 msgstr ""
 
-#: event-organiser-debug.php:178 event-organiser-debug.php:182
-#: event-organiser-debug.php:186 event-organiser-settings.php:200
+#: event-organiser-debug.php:182 event-organiser-debug.php:186
+#: event-organiser-debug.php:190 event-organiser-settings.php:200
 msgid "No"
 msgstr ""
 
-#: event-organiser-debug.php:253
+#: event-organiser-debug.php:257
 msgid ""
 "Known plug-in & theme conflicts, highlighted in red, may be minor or have a "
 "simple resolution. Please contact support."
 msgstr ""
 
 #. / TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
-#: event-organiser-debug.php:426
+#: event-organiser-debug.php:430
 #, php-format
 msgid "%s has only been tested up to %s %s"
 msgstr ""
 
 #. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
-#: event-organiser-debug.php:435
+#: event-organiser-debug.php:439
 #, php-format
 msgid "%s requires %s version %s or higher"
 msgstr ""
 
-#: event-organiser-debug.php:456
+#: event-organiser-debug.php:460
 msgid "unknown"
 msgstr ""
 
@@ -529,7 +529,7 @@ msgstr ""
 
 #: event-organiser-edit.php:185
 #: includes/event-organiser-event-functions.php:821
-#: includes/event-organiser-register.php:245
+#: includes/event-organiser-register.php:252
 msgid "until"
 msgstr ""
 
@@ -537,7 +537,7 @@ msgstr ""
 msgid "Include/Exclude occurrences"
 msgstr ""
 
-#: event-organiser-edit.php:198 includes/event-organiser-register.php:222
+#: event-organiser-edit.php:198 includes/event-organiser-register.php:229
 msgid "Show dates"
 msgstr ""
 
@@ -925,45 +925,45 @@ msgstr ""
 msgid "Day archive"
 msgstr ""
 
-#: event-organiser-settings.php:604
+#: event-organiser-settings.php:605
 msgid "Event management permissions"
 msgstr ""
 
-#: event-organiser-settings.php:605
+#: event-organiser-settings.php:606
 msgid "Set permissions for events and venue management"
 msgstr ""
 
-#: event-organiser-settings.php:610
+#: event-organiser-settings.php:611
 msgid "Role"
 msgstr ""
 
-#: event-organiser-settings.php:621
+#: event-organiser-settings.php:622
 msgid "None"
 msgstr ""
 
-#: event-organiser-settings.php:650
+#: event-organiser-settings.php:651
 msgid ""
 "Choose a custom permalink structure for events, venues, event categories and "
 "event tags."
 msgstr ""
 
-#: event-organiser-settings.php:651
+#: event-organiser-settings.php:652
 msgid ""
 "Please note to enable these structures you must first have pretty permalinks "
 "enabled on WordPress in Settings > Permalinks."
 msgstr ""
 
-#: event-organiser-settings.php:652
+#: event-organiser-settings.php:653
 msgid ""
 "You may also need to go to WordPress Settings > Permalinks and click 'Save "
 "Changes' before any changes will take effect."
 msgstr ""
 
-#: event-organiser-settings.php:688
+#: event-organiser-settings.php:689
 msgid "Do not add to menu"
 msgstr ""
 
-#: event-organiser-settings.php:692
+#: event-organiser-settings.php:693
 msgid "Page list (fallback)"
 msgstr ""
 
@@ -1596,27 +1596,27 @@ msgid "Assign the category a colour."
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:742
-#: includes/event-organiser-register.php:246
+#: includes/event-organiser-register.php:253
 msgid "last"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:742
-#: includes/event-organiser-register.php:246
+#: includes/event-organiser-register.php:253
 msgid "first"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:742
-#: includes/event-organiser-register.php:246
+#: includes/event-organiser-register.php:253
 msgid "second"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:742
-#: includes/event-organiser-register.php:246
+#: includes/event-organiser-register.php:253
 msgid "third"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:742
-#: includes/event-organiser-register.php:246
+#: includes/event-organiser-register.php:253
 msgid "fourth"
 msgstr ""
 
@@ -1629,34 +1629,34 @@ msgid "custom reoccurrence"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:762
-#: includes/event-organiser-register.php:236
+#: includes/event-organiser-register.php:243
 msgid "every day"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:764
-#: includes/event-organiser-register.php:237
+#: includes/event-organiser-register.php:244
 #, php-format
 msgid "every %d days"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:770
-#: includes/event-organiser-register.php:238
+#: includes/event-organiser-register.php:245
 msgid "every week on"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:772
-#: includes/event-organiser-register.php:239
+#: includes/event-organiser-register.php:246
 #, php-format
 msgid "every %d weeks on"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:783
-#: includes/event-organiser-register.php:240
+#: includes/event-organiser-register.php:247
 msgid "every month on the"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:785
-#: includes/event-organiser-register.php:241
+#: includes/event-organiser-register.php:248
 #, php-format
 msgid "every %d months on the"
 msgstr ""
@@ -1682,56 +1682,56 @@ msgstr ""
 msgid "View all tags"
 msgstr ""
 
-#: includes/event-organiser-register.php:223
+#: includes/event-organiser-register.php:230
 msgid "Hide dates"
 msgstr ""
 
-#: includes/event-organiser-register.php:226
+#: includes/event-organiser-register.php:233
 msgid "Hour"
 msgstr ""
 
-#: includes/event-organiser-register.php:227
+#: includes/event-organiser-register.php:234
 msgid "Minute"
 msgstr ""
 
-#: includes/event-organiser-register.php:229
+#: includes/event-organiser-register.php:236
 msgid "days"
 msgstr ""
 
-#: includes/event-organiser-register.php:231
+#: includes/event-organiser-register.php:238
 msgid "weeks"
 msgstr ""
 
-#: includes/event-organiser-register.php:233
+#: includes/event-organiser-register.php:240
 msgid "months"
 msgstr ""
 
-#: includes/event-organiser-register.php:234
+#: includes/event-organiser-register.php:241
 msgid "year"
 msgstr ""
 
-#: includes/event-organiser-register.php:235
+#: includes/event-organiser-register.php:242
 msgid "years"
 msgstr ""
 
-#: includes/event-organiser-register.php:242
+#: includes/event-organiser-register.php:249
 msgid "every year on the"
 msgstr ""
 
-#: includes/event-organiser-register.php:243
+#: includes/event-organiser-register.php:250
 #, php-format
 msgid "every %d years on the"
 msgstr ""
 
-#: includes/event-organiser-register.php:244
+#: includes/event-organiser-register.php:251
 msgid "This event will repeat"
 msgstr ""
 
-#: includes/event-organiser-register.php:346
+#: includes/event-organiser-register.php:353
 msgid "Settings"
 msgstr ""
 
-#: includes/event-organiser-register.php:648
+#: includes/event-organiser-register.php:655
 #, php-format
 msgid ""
 "<h4>City & State Fields Added</h4>City and state / province fields for "
@@ -1740,7 +1740,7 @@ msgid ""
 "details aftewards."
 msgstr ""
 
-#: includes/event-organiser-register.php:655
+#: includes/event-organiser-register.php:662
 msgid ""
 "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
@@ -1748,11 +1748,11 @@ msgid ""
 "com/blog/new-default-templates-in-1-7'>see this post<a/>."
 msgstr ""
 
-#: includes/event-organiser-register.php:691
+#: includes/event-organiser-register.php:698
 msgid "Dismiss this notice"
 msgstr ""
 
-#: includes/event-organiser-register.php:692
+#: includes/event-organiser-register.php:699
 msgid "Dismiss"
 msgstr ""
 
