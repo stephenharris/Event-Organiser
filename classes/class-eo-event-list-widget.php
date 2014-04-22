@@ -22,6 +22,15 @@ class EO_Event_List_Widget extends WP_Widget{
 		$widget_ops = array('classname' => 'EO_Event_List_Widget', 'description' => __('Displays a list of events','eventorganiser') );
 		parent::__construct('EO_Event_List_Widget', __('Events','eventorganiser'), $widget_ops);
 	}
+	
+	/**
+	 * Registers the widget with the WordPress Widget API.
+	 *
+	 * @return void.
+	 */
+	public static function register() {
+		register_widget( __CLASS__ );
+	}
 
  
   function form($instance){	
@@ -40,17 +49,20 @@ class EO_Event_List_Widget extends WP_Widget{
   <input  id="<?php echo $this->get_field_id('event-category'); ?>" class="widefat" name="<?php echo $this->get_field_name('event-category'); ?>" type="text" value="<?php echo esc_attr($instance['event-category']);?>" />
    <em><?php _e('List category slug(s), seperate by comma. Leave blank for all', 'eventorganiser'); ?> </em>
 </p>
-  <p>
-	  <label for="<?php echo $this->get_field_id('venue'); ?>"><?php _e('Venue', 'eventorganiser'); ?>:   </label>
-	<?php 	$venues = get_terms('event-venue', array('hide_empty'=>false));?>
-	<select id="<?php echo $this->get_field_id('venue'); ?>" name="<?php echo $this->get_field_name('venue'); ?>" type="text">
-		<option value="" <?php selected($instance['venue'], ''); ?>><?php _e('All Venues','eventorganiser'); ?> </option>
-		<?php foreach ($venues as $venue):?>
-			<option <?php  selected($instance['venue'],$venue->slug);?> value="<?php echo esc_attr($venue->slug);?>"><?php echo esc_html($venue->name); ?></option>
-		<?php endforeach;?>
-	</select>
-</p>
-
+<?php 
+	$supports = eventorganiser_get_option( 'supports' );
+	if( in_array( 'event-venue', $supports ) ): ?>
+  		<p>
+	  		<label for="<?php echo $this->get_field_id('venue'); ?>"><?php _e('Venue', 'eventorganiser'); ?>:   </label>
+			<?php 	$venues = get_terms('event-venue', array('hide_empty'=>false));?>
+			<select id="<?php echo $this->get_field_id('venue'); ?>" name="<?php echo $this->get_field_name('venue'); ?>" type="text">
+				<option value="" <?php selected($instance['venue'], ''); ?>><?php _e('All Venues','eventorganiser'); ?> </option>
+				<?php foreach ($venues as $venue):?>
+					<option <?php  selected($instance['venue'],$venue->slug);?> value="<?php echo esc_attr($venue->slug);?>"><?php echo esc_html($venue->name); ?></option>
+				<?php endforeach;?>
+			</select>
+		</p>
+	<?php endif; ?>
   <p>
   <label for="<?php echo $this->get_field_id('orderby'); ?>"><?php _e('Order by', 'eventorganiser'); ?></label>
 	<select id="<?php echo $this->get_field_id('orderby'); ?>" name="<?php echo $this->get_field_name('orderby'); ?>" type="text">
@@ -219,4 +231,5 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 
 	return $html;
 }
+add_action( 'widgets_init', array( 'EO_Event_List_Widget', 'register' ) );
 ?>

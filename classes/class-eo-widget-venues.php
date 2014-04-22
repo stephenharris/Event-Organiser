@@ -11,6 +11,18 @@ class EO_Widget_Venues extends WP_Widget {
 		$widget_ops = array( 'classname' => 'eo__event_venues', 'description' => __( "A list or dropdown of event venues", 'eventorganiser' ) );
 		parent::__construct('eo-event-venues', __( 'Event Venues', 'eventorganiser' ), $widget_ops);
 	}
+	
+	/**
+	 * Registers the widget with the WordPress Widget API.
+	 *
+	 * @return void.
+	 */
+	public static function register() {
+		$supports = eventorganiser_get_option( 'supports' );
+		if( in_array( 'event-venue', $supports ) ){
+			register_widget( __CLASS__ );
+		}
+	}
 
 	function widget( $args, $instance ) {
 		extract( $args );
@@ -121,3 +133,4 @@ class EO_Widget_Venues extends WP_Widget {
 	}
 
 }
+add_action( 'widgets_init', array( 'EO_Widget_Venues', 'register' ) );
