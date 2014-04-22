@@ -133,7 +133,7 @@ function eventorganiser_get_option( $option = false, $default = false ){
 		'group_events' => '',
 		'feed' => 1,
 		'deleteexpired' => 0,
-		'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments', 'eventtag' ),
+		'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments', 'eventtag', 'event-venue' ),
 		'event_redirect' => 'events',
 		'dateformat' => 'd-m-Y',
 		'prettyurl' => 1,
@@ -148,6 +148,10 @@ function eventorganiser_get_option( $option = false, $default = false ){
 	);
 	$options = get_option( 'eventorganiser_options', $defaults );
 	$options = wp_parse_args( $options, $defaults );
+	
+	$options['supports'][] = 'event-venue';
+	
+	$options = apply_filters( 'eventorganiser_options', $options );
 	
 	if ( false === $option )
 		return $options;
