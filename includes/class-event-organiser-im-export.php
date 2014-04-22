@@ -101,7 +101,11 @@ class Event_Organiser_Im_Export  {
 			<form method="post" action="" enctype="multipart/form-data">
 				<div class="inside">
 					<p><?php _e( 'Import an ICS file.', 'eventorganiser'); ?></p>
-					<label><input type="checkbox" name="eo_import_venue" value=1 /> <?php _e( 'Import venues', 'eventorganiser' ); ?></label>
+					<?php 				
+						$supports = eventorganiser_get_option( 'supports' );
+						if( in_array( 'event-venue', $supports ) ): ?>
+							<label><input type="checkbox" name="eo_import_venue" value=1 /> <?php _e( 'Import venues', 'eventorganiser' ); ?></label>
+					<?php endif; ?>
 					<label><input type="checkbox" name="eo_import_cat" value=1 /> <?php _e( 'Import categories', 'eventorganiser' ); ?></label>
 					<p><input type="file" name="ics" /></p>
 					<?php wp_nonce_field('eventorganiser_import_events'); ?>
