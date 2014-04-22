@@ -854,4 +854,17 @@ function _eventorganiser_add_event_class( $admin_body_class ){
 }
 add_filter( 'admin_body_class', '_eventorganiser_add_event_class', 99999 );
 
+
+
+/**
+ * Helper function to clear the cache for number of authors.
+ *
+ * @private
+ */
+function _eventorganiser_clear_multi_organiser_cache( $new_status, $old_status, $post ) {
+	if( $new_status !== $old_status && 'event' == get_post_type( $post ) ){
+		delete_transient( 'eo_is_multi_event_organiser' );
+	}
+}
+add_action('transition_post_status', '_eventorganiser_clear_multi_organiser_cache', 10, 3 );
 ?>
