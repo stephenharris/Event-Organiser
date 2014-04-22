@@ -461,7 +461,7 @@ function eo_get_venue_address($venue_slug_or_id=''){
 function eo_get_venues($args=array()){
 	$args = wp_parse_args( $args, array('hide_empty'=>0, 'fields'=>'all') );
 	$venues = get_terms('event-venue',$args);
-	if( $venues ){
+	if( $venues && !is_wp_error( $venues ) ){
 		//Ensure IDs are cast as integers {@link https://github.com/stephenh1988/Event-Organiser/issues/21}
 		if( $args['fields'] == 'ids' ){
 			$venues = array_map('intval', $venues);
