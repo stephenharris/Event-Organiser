@@ -103,7 +103,7 @@ function _eventorganiser_details_metabox( $post ){
  		</p>
 
 		<table id="eventorganiser_event_detail" class="form-table">
-				<tr valign="top"  class="event-date">
+				<tr valign="top" class="event-date">
 					<td class="eo-label"><?php echo __( 'Start Date/Time', 'eventorganiser' ).':'; ?> </td>
 					<td> 
 						<input class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" id="from_date" <?php disabled( !$sche_once );?> value="<?php echo $start->format( $phpFormat ); ?>"/>
@@ -116,7 +116,7 @@ function _eventorganiser_details_metabox( $post ){
 					</td>
 				</tr>
 
-				<tr valign="top"  class="event-date">
+				<tr valign="top" class="event-date">
 					<td class="eo-label"><?php echo __( 'End Date/Time', 'eventorganiser' ).':';?> </td>
 					<td> 
 						<input class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" id="to_date" <?php disabled( !$sche_once );?>  value="<?php echo $end->format( $phpFormat ); ?>"/>
@@ -219,54 +219,59 @@ function _eventorganiser_details_metabox( $post ){
 
 					</td>
 				</tr>
-				<tr valign="top" class="eo-venue-combobox-select">
-					<td class="eo-label"> <?php _e( 'Venue', 'eventorganiser' );?>: </td>
-					<td> 	
-						<select size="50" id="venue_select" name="eo_input[event-venue]">
-							<option><?php _e( 'Select a venue', 'eventorganiser' );?></option>
-							<?php foreach ( $venues as $venue ):?>
-								<option <?php  selected( $venue->term_id, $venue_id );?> value="<?php echo intval( $venue->term_id );?>"><?php echo esc_html( $venue->name ); ?></option>
-							<?php endforeach;?>
-						</select>
-					</td>
-				</tr>
+				<?php 
+					$supports = eventorganiser_get_option( 'supports' );
+					if( in_array( 'event-venue', $supports ) ):	?>		
+					
+						<tr valign="top" class="eo-venue-combobox-select">
+							<td class="eo-label"> <?php _e( 'Venue', 'eventorganiser' );?>: </td>
+							<td> 	
+								<select size="50" id="venue_select" name="eo_input[event-venue]">
+									<option><?php _e( 'Select a venue', 'eventorganiser' );?></option>
+									<?php foreach ( $venues as $venue ):?>
+										<option <?php  selected( $venue->term_id, $venue_id );?> value="<?php echo intval( $venue->term_id );?>"><?php echo esc_html( $venue->name ); ?></option>
+									<?php endforeach;?>
+								</select>
+							</td>
+						</tr>
 		
-				<!-- Add New Venue --> 
-				<tr valign="top" class="eo-add-new-venue">
-					<td class="eo-label"><label><?php _e( 'Venue Name', 'eventorganiser' );?>:</label></td>
-					<td><input type="text" name="eo_venue[name]" id="eo_venue_name"  value=""/></td>
-				</tr>
-			<?php
-				$address_fields = _eventorganiser_get_venue_address_fields();
-				foreach ( $address_fields as $key => $label ){
-					printf( '<tr valign="top" class="eo-add-new-venue">
-								<td class="eo-label"><label>%1$s:</label></td>
-								<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo_venue_add"  value=""/></td>
-							</tr>',
-							$label,
-							esc_attr( trim( $key, '_' ) )/* Keys are prefixed by '_' */
-					);
-				}
-			?>
-				<tr valign="top" class="eo-add-new-venue" >
-					<td class="eo-label"></td>
-					<td>
-						<a class="button eo-add-new-venue-cancel" href="#"><?php esc_html_e( 'Cancel','eventorganiser' );?> </a>
-					</td>
-				</tr>
+						<!-- Add New Venue --> 
+						<tr valign="top" class="eo-add-new-venue">
+							<td class="eo-label"><label><?php _e( 'Venue Name', 'eventorganiser' );?>:</label></td>
+							<td><input type="text" name="eo_venue[name]" id="eo_venue_name"  value=""/></td>
+						</tr>
+						<?php
+							$address_fields = _eventorganiser_get_venue_address_fields();
+							foreach ( $address_fields as $key => $label ){
+								printf( '<tr valign="top" class="eo-add-new-venue">
+									<td class="eo-label"><label>%1$s:</label></td>
+									<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo_venue_add"  value=""/></td>
+								</tr>',
+								$label,
+								esc_attr( trim( $key, '_' ) )/* Keys are prefixed by '_' */
+								);
+							}
+						?>
+						<tr valign="top" class="eo-add-new-venue" >
+							<td class="eo-label"></td>
+							<td>
+								<a class="button eo-add-new-venue-cancel" href="#"><?php esc_html_e( 'Cancel','eventorganiser' );?> </a>
+							</td>
+						</tr>
 
-				<!-- Venue Map --> 
-				<tr valign="top"  class="venue_row <?php if ( !$venue_id ) echo 'novenue';?>" >
-					<td class="eo-label"></td>
-					<td>
-						<div id="eventorganiser_venue_meta" style="display:none;">
-							<input type="hidden" id="eo_venue_Lat" name="eo_venue[latitude]" value="<?php eo_venue_lat( $venue_id );?>" />
-							<input type="hidden" id="eo_venue_Lng" name="eo_venue[longtitude]" value="<?php eo_venue_lng( $venue_id ); ?>" />
-						</div>
-						<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
-						<div class="clear"></div>
-					</td>
-				</tr>
+						<!-- Venue Map --> 
+						<tr valign="top"  class="venue_row <?php if ( !$venue_id ) echo 'novenue';?>" >
+							<td class="eo-label"></td>
+							<td>
+								<div id="eventorganiser_venue_meta" style="display:none;">
+									<input type="hidden" id="eo_venue_Lat" name="eo_venue[latitude]" value="<?php eo_venue_lat( $venue_id );?>" />
+									<input type="hidden" id="eo_venue_Lng" name="eo_venue[longtitude]" value="<?php eo_venue_lng( $venue_id ); ?>" />
+								</div>
+								<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
+								<div class="clear"></div>
+							</td>
+						</tr>
+				<?php endif; //endif venue's supported ?>
 			</table>
 		</div>
 	<?php 
