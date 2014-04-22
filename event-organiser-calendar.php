@@ -38,6 +38,10 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			'startday' => intval( get_option( 'start_of_week' ) ),
 			'format' => eventorganiser_php2jquerydate( eventorganiser_get_option('dateformat') ),
 			));
+		
+		$supports = eventorganiser_get_option( 'supports' );
+		$venues = ( in_array( 'event-venue', $supports ) ? get_terms( 'event-venue', array( 'hide_empty' => 0 ) ) : false );
+		
 		wp_localize_script( 'eo_calendar', 'EO_Ajax', array( 
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'startday' => intval( get_option( 'start_of_week' ) ),
@@ -45,7 +49,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			'timeFormat' => ( get_current_screen()->get_option( 'eofc_time_format', 'value' ) ? 'h:mmtt' : 'HH:mm' ),
 			'perm_edit' => current_user_can( 'edit_events' ),
 			'categories' => get_terms( 'event-category', array( 'hide_empty' => 0 ) ),
-			'venues' => get_terms( 'event-venue', array( 'hide_empty' => 0 ) ),
+			'venues' => $venues,
 			'locale' => array(
 				'isrtl' => $wp_locale->is_rtl(),
 				'monthNames' => array_values( $wp_locale->month ),
@@ -258,18 +262,23 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 					<th><?php _e( 'Event Title', 'eventorganiser' );?>: </th>
 					<td><input name="eo_event[event_title]" class="eo-event-title ui-autocomplete-input ui-widget-content ui-corner-all" ></td>
 				</tr>
-				<tr>
-					<th><?php _e( 'Where', 'eventorganiser' );?>: </th>
-					<td><!-- If javascript is disabed, a simple drop down menu box is displayed to choose venue.
-				Otherwise, the user is able to search the venues by typing in the input box.-->		
-					<select size="30" id="venue_select" name="eo_event[venue_id]">
-					<option>Select a venue </option>
-					<?php foreach ( $venues as $venue ):?>
-						<option value="<?php echo intval( $venue->term_id );?>"><?php echo esc_html( $venue->name ); ?></option>
-					<?php endforeach;?>
-					</select>
-					</td>
-				</tr>
+				
+				<?php 
+					$supports = eventorganiser_get_option( 'supports' );
+					if( in_array( 'event-venue', $supports ) ):?>
+						<tr>
+							<th><?php _e( 'Where', 'eventorganiser' );?>: </th>
+							<td><!-- If javascript is disabed, a simple drop down menu box is displayed to choose venue.
+									Otherwise, the user is able to search the venues by typing in the input box.-->		
+								<select size="30" id="venue_select" name="eo_event[venue_id]">
+									<option>Select a venue </option>
+									<?php foreach ( $venues as $venue ):?>
+										<option value="<?php echo intval( $venue->term_id );?>"><?php echo esc_html( $venue->name ); ?></option>
+									<?php endforeach;?>
+								</select>
+							</td>
+						</tr>
+					<?php endif; ?>
 				<tr>
 					<th></th>
 					<td><textarea rows="4" name="eo_event[event_content]" style="width: 220px;"></textarea></td>

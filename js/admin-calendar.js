@@ -110,7 +110,7 @@ eventorganiser.versionCompare = function(left, right) {
 		theme: true,
 		customButtons:{
 			category:  eventorganiser_cat_dropdown,
-			venue:  eventorganiser_venue_dropdown,
+			venue:  ( EO_Ajax.venues !== '' ? eventorganiser_venue_dropdown : null ),
 			'goto': eventorganiser_mini_calendar
 		},
 		buttonText: {

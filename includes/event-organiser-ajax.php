@@ -348,9 +348,11 @@ function eventorganiser_admin_calendar() {
 	
 				//Produce summary of event
 				$summary= "<table class='form-table' >"
-								."<tr><th> ".__('Start','eventorganiser').": </th><td> ".eo_format_datetime($event_start,$format)."</td></tr>"
-								."<tr><th> ".__('End','eventorganiser').": </th><td> ".eo_format_datetime($event_end, $format)."</td></tr>"
-								."<tr><th> ".__('Organiser','eventorganiser').": </th><td>".$organiser."</td></tr>";
+							."<tr><th> ".__('Start','eventorganiser').": </th><td> ".eo_format_datetime($event_start,$format)."</td></tr>"
+							."<tr><th> ".__('End','eventorganiser').": </th><td> ".eo_format_datetime($event_end, $format)."</td></tr>";
+				if( eo_is_multi_event_organiser() ){
+					$summary .= "<tr><th> ".__('Organiser','eventorganiser').": </th><td>".$organiser."</td></tr>";
+				}
 	
 				$event['className']=array('event');
 
