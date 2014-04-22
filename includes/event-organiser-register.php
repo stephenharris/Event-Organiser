@@ -462,8 +462,8 @@ function eventorganiser_screen_retina_icon(){
 	if ( ( defined( 'MP6' ) && MP6 ) || version_compare( '3.8-beta-1', get_bloginfo( 'version' ) ) <= 0 ):
 		?>
 		<style>
-			.icon16.icon-post:before, #adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
-			.icon16.icon-post:before, #adminmenu #menu-posts-event div.wp-menu-image img { display:none; }
+			#adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
+			#adminmenu #menu-posts-event div.wp-menu-image img { display:none; }
 			/**Add-ons page: for contrast**/
 			#eo-addons-wrap .eo-addon{ background: white; }
 		</style>
