@@ -125,5 +125,28 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		
 		$this->assertEquals( $expected, eo_array_key_whitelist( $array, $whitelist ) );
 	}
+	/**
+	 * TODO eo_get_blog_timezone(): Why does +10 give Asia/Choibalsan timezone.
+	public function testEoGetBlogTimezone()
+	{
+		$tz = ini_get('date.timezone');
+		$original_tz = get_option( 'timezone_string' );
+		$original_offset = get_option( 'gmt_offset' );
+		
+		update_option( 'timezone_string', '' );
+		update_option( 'gmt_offset', 10 );
+		$tz = eo_get_blog_timezone();
+		var_dump( $tz );
+		$now = new DateTime( 'now', eo_get_blog_timezone() );
+		var_dump($now->format('Y-m-d H:i:s'));
+		
+		update_option( 'timezone_string', $original_tz );
+		update_option( 'gmt_offset', $original_offset );
+		
+		$this->assertTrue(false);
+		wp_die('xx');
+		
+	}
+		 */
 }
 
