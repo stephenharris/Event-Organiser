@@ -362,7 +362,7 @@ class EO_ICAL_Parser{
 			$buff = trim( $line_content );
 
 			if( !empty( $buff ) ):
-				$line = explode(':',$buff,2);
+				$line = $this->_split_line( $buff );
 
 				//On the right side of the line we may have DTSTART;TZID= or DTSTART;VALUE=
 				$modifiers = explode( ';', $line[0] );
@@ -1017,6 +1017,30 @@ class EO_ICAL_Parser{
 		return $rule_array;
 	}
 
+	/**
+	 * Responsible for splitting an iCal line into Property and Value
+	 * 
+	 * E.g. `BEGIN:VEVENT` to `BEGIN` and `VEVENT`. Special care needs to be taken
+	 * when dealing with values such as `DTSTART;TZID="(GMT +01:00)":20140712T100000`
+	 * 
+	 * @see http://wp-event-organiser.com/forums/topic/error-while-sync-ical-feed/#post-11087
+	 * @param string $line A line in an iCal feed
+	 * @return array Array containing the property part and value part of $line
+	 */
+	function _split_line( $line ){
+		
+    	//"Escape" colons in quotation marks
+    	$escaped_line = preg_replace( "/\"([^\"]+)(:)([^\"]+)\"/", "\"$1{{colon}}$3\"", $line );
+    	$line_parts = explode( ":", $escaped_line );
+    	
+    	//Property (potentially with modifiers)
+    	$property = str_replace( "{{colon}}", ":", $line_parts[0] );
+    	
+    	//value
+    	$value = isset( $line_parts[1] ) ? str_replace( "{{colon}}", ":", $line_parts[1] ) : "";
+
+		return array( $property, $value );
+	}
 }
 
 /*

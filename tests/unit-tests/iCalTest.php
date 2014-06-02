@@ -241,6 +241,43 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $event['end']->getTimezone(), $tz );
     }
     
+    
+    public function testLineSplit()
+    {
+    	$ical = new EO_ICAL_Parser();
+		$this->assertEquals( array( 'PROPERTY', 'VALUE' ),  $ical->_split_line( "PROPERTY:VALUE" ) );
+    }
+    
+    public function testLineSplitWithQuotedColon()
+    {
+    	$ical = new EO_ICAL_Parser();
+		$this->assertEquals( 
+			array( 'DTSTART;TZID="(GMT +01:00)"', '20140712T100000' ), 
+			$ical->_split_line( 'DTSTART;TZID="(GMT +01:00)":20140712T100000' )
+		);
+    }
+
+    public function testTimezoneWithColon()
+    {
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/timeZoneWithColon.ics' );
+
+		//Check the warning is reported:
+		$code = $ical->warnings[0]->get_error_code();
+		$message = $ical->warnings[0]->get_error_message( $code );
+		$this->assertEquals( 'timezone-parser-warning', $code );
+		$this->assertEquals( '[Line 8] Unknown timezone "(GMT +01:00)" interpreted as "Europe/London".', $message );
+		
+		$event = $ical->events[0];
+		
+		//Check that the timezone has be interpreted as intended
+		$tz = new DateTimeZone( "Europe/London" );
+		$this->assertEquals( $tz, $event['start']->getTimezone() );
+		
+		//Check that the date/time has been interpeted correctly
+		$this->assertEquals( "2014-07-12 10:00:00", $event['start']->format( 'Y-m-d H:i:s' ) );
+    }
+    
     public function testUnknownTimeFormat()
     {
     	$ical = new EO_ICAL_Parser();
