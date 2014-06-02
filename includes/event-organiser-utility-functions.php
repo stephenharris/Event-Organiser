@@ -1448,3 +1448,28 @@ function eo_is_multi_event_organiser() {
 	 */
 	return apply_filters( 'eventorganiser_is_multi_event_organiser', (bool) $is_multi_event_organiser );
 }
+
+/**
+ * Combines two arrays by joining them by their key. 
+ * 
+ * This is similar to array_combine, but rather than combining
+ * by index, the array is combined by key. Any keys not found 
+ * in both are ignored.
+ * 
+ * @param array $key_array   Array whose values form the keys of the returned array 
+ * @param array $value_array Array whose values form the values of the returned array
+ * @return array The combined array
+ */
+function eo_array_combine_assoc( $key_array, $value_array ) {
+	
+	$output = array();
+	$keys = array_keys( array_intersect_key( $key_array, $value_array ) );
+	
+	if( $keys ){
+		foreach( $keys as $key ){
+			$output[$key_array[$key]] = $value_array[$key]; 
+		}
+	}
+	
+	return $output;
+}

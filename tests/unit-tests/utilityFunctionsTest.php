@@ -125,6 +125,47 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		
 		$this->assertEquals( $expected, eo_array_key_whitelist( $array, $whitelist ) );
 	}
+	
+	public function testPluckKeyValue(){
+		
+		$list = array(
+			array( 'id' => 1, 'value' => 'foo' ),
+			array( 'id' => 2, 'value' => 'bar' ),
+			array( 'id' => 3, 'value' => 'hello' ),
+			array( 'id' => 4, 'value' => 'world' ),
+		);
+		
+		$expected = array( 1 => 'foo', 2 => 'bar', 3 => 'hello', 4 => 'world' );
+		$this->assertEquals( $expected, eo_list_pluck_key_value( $list, 'id', 'value' ) );
+	}
+	
+	
+	public function testCombineArraysAssoc(){
+		
+		$key_array = array(
+			'colour_1' => 'Green',
+			'colour_2' => 'Red',
+			'colour_3' => 'Purple',
+			'colour_4' => 'Blue',
+		);
+		
+		$value_array = array(
+			'colour_1' => 'Grass',
+			'colour_2' => 'Bus',
+			'colour_4' => 'Sky',
+			'colour_5' => 'Cloud',
+		);
+		
+		$expected = array(
+			'Green' => 'Grass',
+			'Red'   => 'Bus',
+			'Blue'  => 'Sky',
+		);
+		
+		$this->assertEquals( $expected, eo_array_combine_assoc( $key_array, $value_array ) );
+	}
+	
+	
 	/**
 	 * TODO eo_get_blog_timezone(): Why does +10 give Asia/Choibalsan timezone.
 	public function testEoGetBlogTimezone()
