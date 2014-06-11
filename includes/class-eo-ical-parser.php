@@ -102,13 +102,7 @@ class EO_ICAL_Parser{
 	 * @var array
 	 */
 	var $current_event = array();
-	
-	/**
-	 * Stores the parsed UIDs to ensure they are unique.
-	 * @var array
-	 */
-	var $parsed_uids = array();
-	
+		
 	/**
 	 * Indicates which line in the feed we are at
 	 * @var int
@@ -400,7 +394,32 @@ class EO_ICAL_Parser{
 							);
 						}
 						
-						$this->events[] = $this->current_event;
+						if( empty( $this->current_event['sequence'] ) ){
+							$this->current_event['sequence'] = 0;
+						}
+						
+						//Check to see if an event has already been parsed with this UID 
+						$index = isset( $this->current_event['uid'] ) ? 'uid:'.$this->current_event['uid'] : count( $this->events );
+						if( isset( $this->events[$index] ) ){
+			
+							if( $this->current_event['sequence'] > $this->events[$index]['sequence'] ){
+								$this->events[$index] = $this->current_event;
+								
+							}elseif( $this->current_event['sequence'] == $this->events[$index]['sequence'] ){
+								$this->report_warning( 
+									$this->current_event['_lines'], 
+									'duplicate-id',
+									sprintf( 
+										"Duplicate UID (%s) found in feed. UIDs must be unique.",
+										$this->current_event['uid']
+									)
+								);
+							}
+				
+						}else{
+							$this->events[$index] = $this->current_event;
+						}
+						
 						$this->current_event = array();
 
 					//Otherwise, parse event property
@@ -450,6 +469,8 @@ class EO_ICAL_Parser{
 				}
 			endif; //If line is not empty
 		endforeach; //For each line
+		
+		$this->events = array_values( $this->events );
 	}
 
 
@@ -527,17 +548,12 @@ class EO_ICAL_Parser{
 
 		switch( $property ):
 		case 'UID':
-			//TODO accept first event and ignore subsequent events with same UID?
-			if( in_array( $value, $this->parsed_uids ) ){
-				throw new Exception(
-					sprintf(
-						__( 'Duplicate UID (%s) found in feed. UIDs must be unique.', 'eventorganiser' ),
-						esc_html( $value )
-					));
-			}
 			$this->current_event['uid'] = $value;
-			$this->parsed_uids[] = $value;
 		break;
+		
+		case 'SEQUENCE':
+			$this->current_event['sequence'] = $value; 
+			break;
 
 		case 'CREATED':
 		case 'DTSTART':

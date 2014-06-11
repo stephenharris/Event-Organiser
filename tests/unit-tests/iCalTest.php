@@ -541,21 +541,38 @@ class iCalTest extends PHPUnit_Framework_TestCase
     }
     
     
+    public function testDuplicateUIDandSequence(){
+    	$ical = new EO_ICAL_Parser();
+    	$ical->parse( EO_DIR_TESTDATA . '/ical/duplicateUIDNoSequence.ics' );
+    
+    	//var_dump( $ical );
+    	$this->assertEquals( 1, count( $ical->warnings ) );
+    	$this->assertEquals( 0, count( $ical->errors ) );
+
+    	$code = $ical->warnings[0]->get_error_code();
+    	$message = $ical->warnings[0]->get_error_message();
+    	
+    	$this->assertEquals( 'duplicate-id', $code );
+    	$this->assertEquals( '[Lines 18-27] Duplicate UID (none-unique-id) found in feed. UIDs must be unique.', $message );
+    }
+    
+    
+        
     public function testDuplicateUID(){
     	$ical = new EO_ICAL_Parser();
     	$ical->parse( EO_DIR_TESTDATA . '/ical/duplicateUID.ics' );
     
-    	$this->assertEquals( 0, count( $ical->warnings ) );
-    	$this->assertEquals( 1, count( $ical->errors ) );
+		//Check the number of events have imported correctly
+    	$this->assertEquals( 1, count( $ical->events ) );
 
-    	$code = $ical->errors[0]->get_error_code();
-    	$message = $ical->errors[0]->get_error_message();
-    	
-    	$this->assertEquals( 'event-property-error', $code );
-    	$this->assertEquals( '[Line 19] Duplicate UID (none-unique-id) found in feed. UIDs must be unique.', $message );
+    	//No errors/warnings
+    	$this->assertEquals( 0, count( $ical->warnings ) );
+    	$this->assertEquals( 0, count( $ical->errors ) );
+
+    	$event = $ical->events[0];
+    	$this->assertEquals( 3, $event['sequence'] );  	
     }
     
-
 
 	//@TODO
     public function testPartDayForeignRecurringEvent()
