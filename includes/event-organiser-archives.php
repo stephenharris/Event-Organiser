@@ -88,6 +88,14 @@ function eventorganiser_pre_get_posts( $query ) {
 	if( ! eventorganiser_is_event_query( $query, true ) )
 		return $query;
 
+
+	//@see https://github.com/stephenharris/Event-Organiser/issues/30
+	if( $query->is_main_query() ){
+		if( eo_is_event_archive( 'day' ) || eo_is_event_archive( 'month' ) || eo_is_event_archive( 'year' ) ){
+			$query->set( 'showpastevents', true );  
+		}
+	}   
+		
 	$blog_now = new DateTime(null, eo_get_blog_timezone());
 
 	//Determine whether or not to show past events and each occurrence. //If not set, use options
