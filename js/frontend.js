@@ -1,6 +1,7 @@
 if ( typeof EO_SCRIPT_DEBUG === 'undefined') { EO_SCRIPT_DEBUG = true;}
 
 var eventorganiser = eventorganiser || {};
+
 (function ($) {
 jQuery(document).ready(function () {
 
@@ -345,17 +346,17 @@ jQuery(document).ready(function () {
         	$(".eo_widget_calendar").off("click").on("click", 'tfoot a', function (a) {
         		a.preventDefault();
         		var b = $(this).closest(".eo_widget_calendar").attr("id");
-	
+        		
         		//Defaults
         		var cal = {showpastevents: 1, 'show-long': 0, 'link-to-single': 0 };
 
         		//Shortcode widget calendar
-        		if( typeof EOAjax !== "undefined" && typeof eventorganiser.widget_calendars !== "undefined" ){
+        		if( typeof eventorganiser.widget_calendars !== "undefined" && typeof eventorganiser.widget_calendars[b] !== "undefined" ){
         			cal = eventorganiser.widget_calendars[b];	
         		}
         		//Widget calendar
-                if (typeof eo_widget_cal !== "undefined") {
-                	cal = eo_widget_cal[b];
+        		if( typeof eo_widget_cal !== "undefined" && typeof eo_widget_cal[b] !== "undefined" ){
+        			cal = eo_widget_cal[b];
                 }
 
                 //Set month
