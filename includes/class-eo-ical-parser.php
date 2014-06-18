@@ -386,7 +386,6 @@ class EO_ICAL_Parser{
 						}
 						
 						if( empty( $this->current_event['uid'] ) ){
-							//var_dump( $this->current_event['_lines'] );
 							$this->report_warning( 
 									$this->current_event['_lines'], 
 									'event-no-uid',
