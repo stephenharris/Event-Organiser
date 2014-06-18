@@ -1053,7 +1053,9 @@ class EO_ICAL_Parser{
     	$property = str_replace( "{{colon}}", ":", $line_parts[0] );
     	
     	//value
-    	$value = isset( $line_parts[1] ) ? str_replace( "{{colon}}", ":", $line_parts[1] ) : "";
+    	array_shift( $line_parts );
+    	$value = ( $line_parts ? implode( ":", $line_parts ) : false );
+    	$value = str_replace( "{{ colon}}", ":", $value );
 
 		return array( $property, $value );
 	}

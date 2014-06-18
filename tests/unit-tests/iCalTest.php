@@ -257,6 +257,15 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		);
     }
 
+    public function testLineSplitWithUrl()
+    {
+    	$ical = new EO_ICAL_Parser();
+		$this->assertEquals( 
+			array( 'URL', 'http://wp-event-organiser.com' ), 
+			$ical->_split_line( 'URL:http://wp-event-organiser.com' )
+		);
+    }
+    
     public function testTimezoneWithColon()
     {
 		$ical = new EO_ICAL_Parser();
