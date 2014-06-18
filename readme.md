@@ -101,6 +101,7 @@ A big thank you to those who have provided translations for Event Organiser. If 
 * Icelandic - HrHagedorn
 * Bulgarian - Parvan Voynov
 * Romanian - raduanastasedev
+* Japanese - ogawa, tkj, takeshi terai, haya.
 
 
 ## Installation ##
@@ -211,6 +212,19 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 2.8 ###
+* Support `show_long` and `link_to_single` attributes for the (widget) calendar shortcode.
+* Improved handling of updating event schedules (common dates are not deleted / re-inserted)
+* Hide 'author' column if on a single-organiser install, and hide venue columns if venues are not supported.
+* Added Japanese translation. Thanks to ogawa, tkj, takeshi terai, haya.
+* Support quoted timezones in iCal feeds. [Fixes #191](https://github.com/stephenharris/Event-Organiser/issues/191)
+* Fixes bug regarding to 'no events found' for past day links on widget calendar. [See #30](https://github.com/stephenharris/Event-Organiser/issues/30)
+* iCal feeds: When encountering duplicate UIDs use sequence attribute to choose the correct one.
+* Fixes errors in Czech translation, thanks to coubeatczech. [Fixes #188](https://github.com/stephenharris/Event-Organiser/issues/188)
+* Fixes bug where relative queries with `eo_get_events()` return uintended results. The function previously ignored the time part.
+* Fix datepicker css (particuarly on firefox).
+ 
 
 ### 2.7.5 ###
 * Ensure jquery-dialog is loaded (thanks to PunchRockgroin).
