@@ -358,7 +358,10 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 	
 	$delete   = array_udiff( $current_occurrences, $occurrences, '_eventorganiser_compare_dates' );
 	$insert   = array_udiff( $occurrences, $current_occurrences, '_eventorganiser_compare_dates' );
-	$existing = array_uintersect( $current_occurrences, $occurrences, '_eventorganiser_compare_dates' );
+	$update   = array_uintersect( $occurrences, $current_occurrences, '_eventorganiser_compare_dates' );
+	$update_2 = array_uintersect( $current_occurrences, $update, '_eventorganiser_compare_dates' );
+	$keys     = array_keys( $update_2 );
+	$update   = array_combine( $keys, $update );
 	
 	if( $delete ){
 		$delete_occurrence_ids = array_keys( $delete );
@@ -368,8 +371,8 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 	$occurrence_cache = array();
 	$occurrence_array = array();
 	
-	if( $existing ){
-		foreach( $existing as $occurrence_id => $occurrence ){
+	if( $update ){
+		foreach( $update as $occurrence_id => $occurrence ){
 
 			$occurrence_end = clone $occurrence;
 			if( $duration ){
@@ -377,9 +380,22 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 			}else{
 				$occurrence_end->modify($duration_str);
 			}
-		
-			$occurrence_array[$occurrence_id] = $occurrence->format('Y-m-d H:i:s');
+			
+			$occurrence_input = array(
+				'StartDate'        => $occurrence->format('Y-m-d'),
+				'StartTime'        => $occurrence->format('H:i:s'),
+				'EndDate'          => $occurrence_end->format('Y-m-d'),
+				'FinishTime'       => $end->format('H:i:s'),
+			);
+
+			$wpdb->update(
+				$wpdb->eo_events, 
+				$occurrence_input,				
+				array( 'event_id' => $occurrence_id )
+			);
+
 			//Add to occurrence cache: TODO use post meta
+			$occurrence_array[$occurrence_id] = $occurrence->format('Y-m-d H:i:s');
 			$occurrence_cache[$occurrence_id] = array(
 				'start' => $occurrence,
 				'end'   => new DateTime($occurrence_end->format('Y-m-d').' '.$end->format('H:i:s'), eo_get_blog_timezone())

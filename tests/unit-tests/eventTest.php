@@ -74,6 +74,119 @@ class eventTest extends EO_UnitTestCase
 		$this->assertEquals( array( '2013-10-19 15:30:00', '2013-10-26 15:30:00' ), $kept );
     }
     
+
+    /**
+     * Tests that updating the time(s) of an event keeps the occurrence IDs
+     * 
+     * @see http://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
+     * @see https://github.com/stephenharris/Event-Organiser/issues/195
+     */
+    public function testUpdateTimeOnly()
+    {
+
+    	$tz = eo_get_blog_timezone();
+
+		$event = array(
+			'start'              => new DateTime( '2013-10-19 15:30:00', $tz ),
+			'end'                => new DateTime( '2013-10-19 15:45:00', $tz ),
+			'frequeny'           => 1,
+			'schedule'           => 'weekly',
+			'number_occurrences' => 4,
+		);
+		
+		//Create event and store occurrences
+		$event_id = eo_insert_event( $event );
+		$original_occurrences    = eo_get_the_occurrences( $event_id );
+		
+		//Update event
+		$new_event_data = $event;
+		$new_event_data['start'] = new DateTime( '2013-10-19 14:30:00', $tz );
+		eo_update_event( $event_id, $new_event_data );
+		
+		//Get new occurrences
+		$new_occurrences    = eo_get_the_occurrences( $event_id );
+				
+		
+		//Compare
+		$added     = array_udiff( $new_occurrences, $original_occurrences, '_eventorganiser_compare_dates' );
+		$removed   = array_udiff( $original_occurrences, $new_occurrences, '_eventorganiser_compare_dates' );
+		$updated   = array_intersect_key( $new_occurrences, $original_occurrences );
+		$updated_2 = array_intersect_key( $original_occurrences, $new_occurrences );
+		
+		$updated   = $this->array_map_assoc( 'eo_format_datetime', $updated, array_fill(0, count($updated), 'Y-m-d H:i:s' ) );
+		$updated_2 = $this->array_map_assoc( 'eo_format_datetime', $updated_2, array_fill(0, count($updated_2), 'Y-m-d H:i:s' ) );
+
+		
+		//Check added/removed/update dates are as expected: all dates should just be updated
+		$this->assertEquals( array(), $added );
+		$this->assertEquals( array(), $removed );
+		$this->assertEquals( array( 
+			'2013-10-19 14:30:00',
+			'2013-10-26 14:30:00',
+			'2013-11-02 14:30:00', 
+			'2013-11-09 14:30:00',  
+		), array_values( $updated ) );
+		
+		
+		//Now check that dates have been updated as expected (i.e. there have been no 'swapping' of IDs). 		
+		//First: Sanity check, make sure IDs agree.
+    	$diff = array_diff_key( $updated, $updated_2 );
+    	$this->assertTrue(  empty( $diff ) && count( $updated ) == count( $updated_2 ) );
+		ksort( $updated );
+    	ksort( $updated_2 );
+		$updated_map = array_combine( $updated_2, $updated );
+
+		//Now check that the dates have been updated as expected: original => new 
+		$this->assertEquals( array( 
+			'2013-10-19 15:30:00' => '2013-10-19 14:30:00',
+			'2013-10-26 15:30:00' => '2013-10-26 14:30:00',
+			'2013-11-02 15:30:00' => '2013-11-02 14:30:00', 
+			'2013-11-09 15:30:00' => '2013-11-09 14:30:00',  
+		), $updated_map );
+			
+    }
+    
+    
+    /**
+     * Tests that updating the end time of an event keeps the occurrence IDs
+     * 
+     * @see http://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
+     * @see https://github.com/stephenharris/Event-Organiser/issues/195
+     */
+    public function testUpdateEndTimeOnly()
+    {
+
+    	$tz = eo_get_blog_timezone();
+
+		$event = array(
+			'start'   => new DateTime( '2013-10-19 15:30:00', $tz ),
+			'end'     => new DateTime( '2013-10-19 15:45:00', $tz ),
+			'all_day' => false,
+		);
+		
+		//Create event and store occurrences
+		$event_id = eo_insert_event( $event );
+		$original_occurrences    = eo_get_the_occurrences( $event_id );
+		$original_occurrence_ids = array_keys( $original_occurrences );
+		$original_occurrence_id  = array_shift( $original_occurrence_ids );
+		
+		//Update event
+		$new_event_data = $event;
+		$new_event_data['end'] = new DateTime( '2013-10-19 16:45:00', $tz );
+		eo_update_event( $event_id, $new_event_data );
+		
+		//Get new occurrences
+		$new_occurrences    = eo_get_the_occurrences( $event_id );
+		$new_occurrence_ids = array_keys( $new_occurrences );
+		$new_occurrence_id  = array_shift( $new_occurrence_ids );  
+		
+		
+		$this->assertTrue( $original_occurrence_id == $new_occurrence_id );
+
+		$this->assertEquals( '2013-10-19 16:45:00', eo_get_the_end( 'Y-m-d H:i:s', $event_id, null, $new_occurrence_id ) );
+		
+    }
+    
     function testEventSchedule(){
     	
     	$tz    = eo_get_blog_timezone();
@@ -135,5 +248,27 @@ class eventTest extends EO_UnitTestCase
 		
 		$this->assertEquals( $occurrences, array_values( $schedule['_occurrences'] ) );	
     }
+
+    
+    
+	function array_map_assoc( $callback, $arr1 ) { 
+
+		$results = array(); 
+		$args    = array();
+		 
+		if( func_num_args() > 2 ){
+			$args = func_get_args();
+			$args = array_slice( $args, 2 );
+			$args = (array) array_shift( $args );
+		}
+
+		foreach( $arr1 as $key => $value ) { 
+			$arg = array_shift( $args );
+			$callback_args = array( $value, $arg );
+			$results[$key] = call_user_func_array( $callback, $callback_args );
+		} 
+
+		return $results; 
+	}
 }
 
