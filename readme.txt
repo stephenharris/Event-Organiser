@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.9
-Stable tag: 2.8.0
+Stable tag: 2.8.1
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -200,6 +200,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.8.1 =
+* Fixes bug with 2.8.0 where updating only the time of an event, is not reflected. 
 
 = 2.8 =
 * Support `show_long` and `link_to_single` attributes for the (widget) calendar shortcode.
