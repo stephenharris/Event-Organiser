@@ -23,6 +23,15 @@ class EO_Calendar_Widget extends WP_Widget
 		);
 		parent::__construct( 'EO_Calendar_Widget', __( 'Events Calendar','eventorganiser' ), $widget_ops );
   	}
+  	
+  	/**
+  	 * Registers the widget with the WordPress Widget API.
+  	 *
+  	 * @return void.
+  	 */
+  	public static function register() {
+  		register_widget( __CLASS__ );
+  	}
  
 	function form( $instance )  {
 	
@@ -135,6 +144,7 @@ class EO_Calendar_Widget extends WP_Widget
 			'event-venue'=> ( !empty( $instance['event-venue'] ) ? $instance['event-venue'] : 0 ),
 			'event-category'=> ( !empty( $instance['event-category'] ) ? $instance['event-category'] : 0 ),
 		);
+		$title = !empty( $instance['title'] ) ? $instance['title'] : false;
 
 		add_action( 'wp_footer', array( __CLASS__, 'add_options_to_script' ) );
 
@@ -144,7 +154,7 @@ class EO_Calendar_Widget extends WP_Widget
 		//Echo widget
 		echo $before_widget;
 
-		$widget_title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
+		$widget_title = apply_filters('widget_title', $title, $instance, $this->id_base);
 
 		if ( $widget_title )
 			echo $before_title . esc_html( $widget_title ) . $after_title;
@@ -363,5 +373,5 @@ class EO_Calendar_Widget extends WP_Widget
 	return $calendar[$key];
 	}
 }
-
+add_action( 'widgets_init', array( 'EO_Calendar_Widget', 'register' ) );
 ?>

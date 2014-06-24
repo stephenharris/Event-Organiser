@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2014-03-25 09:24:22+0000\n"
+"Last-Translator: josepiera <josepiera@gmail.com>\n"
 "Language-Team: \n"
 "Language: Spanish; Castilian (Spain)\n"
 "MIME-Version: 1.0\n"
@@ -1560,7 +1560,7 @@ msgstr "Esto altera el formato por defecto para introducir fechas."
 
 #: templates/event-meta-event-single.php:50
 msgid "This event finished on %s"
-msgstr "Este eventa acababa %s"
+msgstr "Este evento termina el %s"
 
 #: includes/event-organiser-cpt.php:230
 msgid "This event has been broken from a recurring event."

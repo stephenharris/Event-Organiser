@@ -3,6 +3,12 @@
 if ( !class_exists( 'EventOrganiser_Admin_Page' ) ){
     require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
 }
+
+$supports = eventorganiser_get_option( 'supports' );
+if( !in_array( 'event-venue', $supports ) ){
+	return;
+}
+
 /**
  * @ignore
  */

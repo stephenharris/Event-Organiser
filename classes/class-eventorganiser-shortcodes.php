@@ -33,11 +33,21 @@ class EventOrganiser_Shortcodes {
 			}
 		}
 
+		if( isset( $atts['show_long'] ) ){
+			$atts['show-long'] = $atts['show_long'];
+			unset( $atts['show_long'] ); 			
+		}
+		
+		if( isset( $atts['link_to_single'] ) ){
+			$atts['link-to-single'] = $atts['link_to_single'];
+			unset( $atts['link_to_single'] ); 			
+		}
+
 		/* Parse defaults */
 		$atts = wp_parse_args($atts,array(
-			'showpastevents'=>1,
-			'show-long' => 0, //TODO provide shortcode support
-			'link-to-single' => 0,//TODO provide shortcode support
+			'showpastevents' => 1,
+			'show-long'      => 0,
+			'link-to-single' => 0,
 		));
 	
 		self::$add_script = true;

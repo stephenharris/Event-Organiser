@@ -102,13 +102,7 @@ class EO_ICAL_Parser{
 	 * @var array
 	 */
 	var $current_event = array();
-	
-	/**
-	 * Stores the parsed UIDs to ensure they are unique.
-	 * @var array
-	 */
-	var $parsed_uids = array();
-	
+		
 	/**
 	 * Indicates which line in the feed we are at
 	 * @var int
@@ -362,7 +356,7 @@ class EO_ICAL_Parser{
 			$buff = trim( $line_content );
 
 			if( !empty( $buff ) ):
-				$line = explode(':',$buff,2);
+				$line = $this->_split_line( $buff );
 
 				//On the right side of the line we may have DTSTART;TZID= or DTSTART;VALUE=
 				$modifiers = explode( ';', $line[0] );
@@ -392,7 +386,6 @@ class EO_ICAL_Parser{
 						}
 						
 						if( empty( $this->current_event['uid'] ) ){
-							//var_dump( $this->current_event['_lines'] );
 							$this->report_warning( 
 									$this->current_event['_lines'], 
 									'event-no-uid',
@@ -400,7 +393,32 @@ class EO_ICAL_Parser{
 							);
 						}
 						
-						$this->events[] = $this->current_event;
+						if( empty( $this->current_event['sequence'] ) ){
+							$this->current_event['sequence'] = 0;
+						}
+						
+						//Check to see if an event has already been parsed with this UID 
+						$index = isset( $this->current_event['uid'] ) ? 'uid:'.$this->current_event['uid'] : count( $this->events );
+						if( isset( $this->events[$index] ) ){
+			
+							if( $this->current_event['sequence'] > $this->events[$index]['sequence'] ){
+								$this->events[$index] = $this->current_event;
+								
+							}elseif( $this->current_event['sequence'] == $this->events[$index]['sequence'] ){
+								$this->report_warning( 
+									$this->current_event['_lines'], 
+									'duplicate-id',
+									sprintf( 
+										"Duplicate UID (%s) found in feed. UIDs must be unique.",
+										$this->current_event['uid']
+									)
+								);
+							}
+				
+						}else{
+							$this->events[$index] = $this->current_event;
+						}
+						
 						$this->current_event = array();
 
 					//Otherwise, parse event property
@@ -450,6 +468,8 @@ class EO_ICAL_Parser{
 				}
 			endif; //If line is not empty
 		endforeach; //For each line
+		
+		$this->events = array_values( $this->events );
 	}
 
 
@@ -527,17 +547,12 @@ class EO_ICAL_Parser{
 
 		switch( $property ):
 		case 'UID':
-			//TODO accept first event and ignore subsequent events with same UID?
-			if( in_array( $value, $this->parsed_uids ) ){
-				throw new Exception(
-					sprintf(
-						__( 'Duplicate UID (%s) found in feed. UIDs must be unique.', 'eventorganiser' ),
-						esc_html( $value )
-					));
-			}
 			$this->current_event['uid'] = $value;
-			$this->parsed_uids[] = $value;
 		break;
+		
+		case 'SEQUENCE':
+			$this->current_event['sequence'] = $value; 
+			break;
 
 		case 'CREATED':
 		case 'DTSTART':
@@ -1017,6 +1032,32 @@ class EO_ICAL_Parser{
 		return $rule_array;
 	}
 
+	/**
+	 * Responsible for splitting an iCal line into Property and Value
+	 * 
+	 * E.g. `BEGIN:VEVENT` to `BEGIN` and `VEVENT`. Special care needs to be taken
+	 * when dealing with values such as `DTSTART;TZID="(GMT +01:00)":20140712T100000`
+	 * 
+	 * @see http://wp-event-organiser.com/forums/topic/error-while-sync-ical-feed/#post-11087
+	 * @param string $line A line in an iCal feed
+	 * @return array Array containing the property part and value part of $line
+	 */
+	function _split_line( $line ){
+		
+    	//"Escape" colons in quotation marks
+    	$escaped_line = preg_replace( "/\"([^\"]+)(:)([^\"]+)\"/", "\"$1{{colon}}$3\"", $line );
+    	$line_parts = explode( ":", $escaped_line );
+    	
+    	//Property (potentially with modifiers)
+    	$property = str_replace( "{{colon}}", ":", $line_parts[0] );
+    	
+    	//value
+    	array_shift( $line_parts );
+    	$value = ( $line_parts ? implode( ":", $line_parts ) : false );
+    	$value = str_replace( "{{ colon}}", ":", $value );
+
+		return array( $property, $value );
+	}
 }
 
 /*

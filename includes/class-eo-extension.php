@@ -361,7 +361,7 @@ if( !class_exists('EO_Extension') ){
 			$plugin_info = $this->get_remote_plugin_info('plugin_info');
 	
 			// If a newer version is available, add the update
-			if (version_compare($this->get_current_version(), $plugin_info->new_version, '<') ){
+			if ( $plugin_info && version_compare($this->get_current_version(), $plugin_info->new_version, '<' ) ){
 	
 				$obj = new stdClass();
 				$obj->slug = $this->slug;

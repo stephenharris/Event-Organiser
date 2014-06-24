@@ -169,6 +169,8 @@ function eventorganiser_upgradecheck(){
 		//But a bug in 1.5 means that it could be that they first installed in 1.5 (as no db version was added)
 		//So set to 1.5.  Fresh installs will have to go through the 1.6 (and above) update, but this is ok.
 		$installed_ver = '1.5';
+		
+		eventorganiser_install();
 	}
 
 	//If this is an old version, perform some updates.

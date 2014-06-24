@@ -52,6 +52,10 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 				'manage_venues' => __( 'Manage Venues', 'eventorganiser' ),
 				'manage_event_categories' => __( 'Manage Event Categories & Tags', 'eventorganiser' ),
 		);
+		$supports = eventorganiser_get_option( 'supports' );
+		if( !in_array( 'event-venue', $supports ) ){
+			unset( self::$eventorganiser_roles['manage_venues'] );
+		}
 	}
 
 	function admin_init_actions(){
@@ -310,14 +314,17 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 										."<code>{$home_url}/{$base_url}/{$now->format('Y/m/d')}</code>".__('Day archive', 'eventorganiser')
 					) );
 	
-				add_settings_field( 'url_venue', __("Venues", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
-					array(
-						'label_for' => 'url_venue',
-						'name' => 'eventorganiser_options[url_venue]',
-						'class' => 'regular-text',
-						'value' => eventorganiser_get_option( 'url_venue' ),
-						'help' => "<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_venue' )."</strong>/[venue_slug]</code>"
-				) );
+				$supports = eventorganiser_get_option( 'supports' );
+				if( in_array( 'event-venue', $supports ) ){
+					add_settings_field( 'url_venue', __("Venues", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
+						array(
+							'label_for' => 'url_venue',
+							'name' => 'eventorganiser_options[url_venue]',
+							'class' => 'regular-text',
+							'value' => eventorganiser_get_option( 'url_venue' ),
+							'help' => "<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_venue' )."</strong>/[venue_slug]</code>"
+					) );
+				}
 
 				add_settings_field( 'url_cat', __("Event Categories", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
 					array(

@@ -24,37 +24,39 @@ function eventorganiser_create_event_taxonomies() {
 		$venue_rewrite = array( 'slug' => $venue_slug, 'with_front' => false );
 	}
 
-	$venue_labels = array(
-		'name' => __( 'Event Venues','eventorganiser' ),
-    	'singular_name' => _x( 'Venue', 'taxonomy singular name', 'eventorganiser' ),
-    	'search_items' =>  __( 'Search Venues', 'eventorganiser' ),
-    	'all_items' => __( 'All Venues', 'eventorganiser' ),
-		'view_item' => __( 'View Venue', 'eventorganiser' ),
-		'edit_item' => __( 'Edit Venue', 'eventorganiser' ),
-		'update_item' => __( 'Update Venue', 'eventorganiser' ),
-		'add_new_item' => __( 'Add New Venue', 'eventorganiser' ),
-		'new_item_name' => __( 'New Venue Name', 'eventorganiser' ),
-		'not_found' =>  __('No venues found', 'eventorganiser' ),
-		'add_or_remove_items' => __( 'Add or remove venues', 'eventorganiser' ),
-		'separate_items_with_commas' => __( 'Separate venues with commas', 'eventorganiser' )
+	$supports = eventorganiser_get_option( 'supports' );
+	if( in_array( 'event-venue', $supports ) ){
+		$venue_labels = array(
+			'name' => __( 'Event Venues','eventorganiser' ),
+    		'singular_name' => _x( 'Venue', 'taxonomy singular name', 'eventorganiser' ),
+    		'search_items' =>  __( 'Search Venues', 'eventorganiser' ),
+	    	'all_items' => __( 'All Venues', 'eventorganiser' ),
+			'view_item' => __( 'View Venue', 'eventorganiser' ),
+			'edit_item' => __( 'Edit Venue', 'eventorganiser' ),
+			'update_item' => __( 'Update Venue', 'eventorganiser' ),
+			'add_new_item' => __( 'Add New Venue', 'eventorganiser' ),
+			'new_item_name' => __( 'New Venue Name', 'eventorganiser' ),
+			'not_found' =>  __('No venues found', 'eventorganiser' ),
+			'add_or_remove_items' => __( 'Add or remove venues', 'eventorganiser' ),
+			'separate_items_with_commas' => __( 'Separate venues with commas', 'eventorganiser' )
   		); 		
 
-	register_taxonomy('event-venue',array('event'), array(
-		'hierarchical' => false,
-		'labels' => $venue_labels,
-		'public'=> true,
-		'show_in_nav_menus'=>true,
-		'show_ui' => false,//Use custom UI
-		'update_count_callback' => '_update_post_term_count',
-		'query_var' => true,
-		'capabilities'=>array(
+		register_taxonomy('event-venue',array('event'), array(
+			'hierarchical' => false,
+			'labels' => $venue_labels,
+			'public'=> true,
+			'show_in_nav_menus'=>true,
+			'show_ui' => false,//Use custom UI
+			'update_count_callback' => '_update_post_term_count',
+			'query_var' => true,
+			'capabilities'=>array(
 			'manage_terms' => 'manage_venues',
 			'edit_terms' => 'manage_venues',
 			'delete_terms' => 'manage_venues',
 			'assign_terms' =>'edit_events'),
-		'rewrite' => $venue_rewrite
+			'rewrite' => $venue_rewrite
   		));
-
+	}
 	 // Add new taxonomy, make it hierarchical (like categories)
 	$category_labels = array(
 		'name' => __('Event Categories', 'eventorganiser'),

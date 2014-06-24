@@ -125,5 +125,69 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		
 		$this->assertEquals( $expected, eo_array_key_whitelist( $array, $whitelist ) );
 	}
+	
+	public function testPluckKeyValue(){
+		
+		$list = array(
+			array( 'id' => 1, 'value' => 'foo' ),
+			array( 'id' => 2, 'value' => 'bar' ),
+			array( 'id' => 3, 'value' => 'hello' ),
+			array( 'id' => 4, 'value' => 'world' ),
+		);
+		
+		$expected = array( 1 => 'foo', 2 => 'bar', 3 => 'hello', 4 => 'world' );
+		$this->assertEquals( $expected, eo_list_pluck_key_value( $list, 'id', 'value' ) );
+	}
+	
+	
+	public function testCombineArraysAssoc(){
+		
+		$key_array = array(
+			'colour_1' => 'Green',
+			'colour_2' => 'Red',
+			'colour_3' => 'Purple',
+			'colour_4' => 'Blue',
+		);
+		
+		$value_array = array(
+			'colour_1' => 'Grass',
+			'colour_2' => 'Bus',
+			'colour_4' => 'Sky',
+			'colour_5' => 'Cloud',
+		);
+		
+		$expected = array(
+			'Green' => 'Grass',
+			'Red'   => 'Bus',
+			'Blue'  => 'Sky',
+		);
+		
+		$this->assertEquals( $expected, eo_array_combine_assoc( $key_array, $value_array ) );
+	}
+	
+	
+	/**
+	 * TODO eo_get_blog_timezone(): Why does +10 give Asia/Choibalsan timezone.
+	public function testEoGetBlogTimezone()
+	{
+		$tz = ini_get('date.timezone');
+		$original_tz = get_option( 'timezone_string' );
+		$original_offset = get_option( 'gmt_offset' );
+		
+		update_option( 'timezone_string', '' );
+		update_option( 'gmt_offset', 10 );
+		$tz = eo_get_blog_timezone();
+		var_dump( $tz );
+		$now = new DateTime( 'now', eo_get_blog_timezone() );
+		var_dump($now->format('Y-m-d H:i:s'));
+		
+		update_option( 'timezone_string', $original_tz );
+		update_option( 'gmt_offset', $original_offset );
+		
+		$this->assertTrue(false);
+		wp_die('xx');
+		
+	}
+		 */
 }
 

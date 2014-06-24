@@ -241,6 +241,52 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $event['end']->getTimezone(), $tz );
     }
     
+    
+    public function testLineSplit()
+    {
+    	$ical = new EO_ICAL_Parser();
+		$this->assertEquals( array( 'PROPERTY', 'VALUE' ),  $ical->_split_line( "PROPERTY:VALUE" ) );
+    }
+    
+    public function testLineSplitWithQuotedColon()
+    {
+    	$ical = new EO_ICAL_Parser();
+		$this->assertEquals( 
+			array( 'DTSTART;TZID="(GMT +01:00)"', '20140712T100000' ), 
+			$ical->_split_line( 'DTSTART;TZID="(GMT +01:00)":20140712T100000' )
+		);
+    }
+
+    public function testLineSplitWithUrl()
+    {
+    	$ical = new EO_ICAL_Parser();
+		$this->assertEquals( 
+			array( 'URL', 'http://wp-event-organiser.com' ), 
+			$ical->_split_line( 'URL:http://wp-event-organiser.com' )
+		);
+    }
+    
+    public function testTimezoneWithColon()
+    {
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/timeZoneWithColon.ics' );
+
+		//Check the warning is reported:
+		$code = $ical->warnings[0]->get_error_code();
+		$message = $ical->warnings[0]->get_error_message( $code );
+		$this->assertEquals( 'timezone-parser-warning', $code );
+		$this->assertEquals( '[Line 8] Unknown timezone "(GMT +01:00)" interpreted as "Europe/London".', $message );
+		
+		$event = $ical->events[0];
+		
+		//Check that the timezone has be interpreted as intended
+		$tz = new DateTimeZone( "Europe/London" );
+		$this->assertEquals( $tz, $event['start']->getTimezone() );
+		
+		//Check that the date/time has been interpeted correctly
+		$this->assertEquals( "2014-07-12 10:00:00", $event['start']->format( 'Y-m-d H:i:s' ) );
+    }
+    
     public function testUnknownTimeFormat()
     {
     	$ical = new EO_ICAL_Parser();
@@ -504,21 +550,38 @@ class iCalTest extends PHPUnit_Framework_TestCase
     }
     
     
+    public function testDuplicateUIDandSequence(){
+    	$ical = new EO_ICAL_Parser();
+    	$ical->parse( EO_DIR_TESTDATA . '/ical/duplicateUIDNoSequence.ics' );
+    
+    	//var_dump( $ical );
+    	$this->assertEquals( 1, count( $ical->warnings ) );
+    	$this->assertEquals( 0, count( $ical->errors ) );
+
+    	$code = $ical->warnings[0]->get_error_code();
+    	$message = $ical->warnings[0]->get_error_message();
+    	
+    	$this->assertEquals( 'duplicate-id', $code );
+    	$this->assertEquals( '[Lines 18-27] Duplicate UID (none-unique-id) found in feed. UIDs must be unique.', $message );
+    }
+    
+    
+        
     public function testDuplicateUID(){
     	$ical = new EO_ICAL_Parser();
     	$ical->parse( EO_DIR_TESTDATA . '/ical/duplicateUID.ics' );
     
-    	$this->assertEquals( 0, count( $ical->warnings ) );
-    	$this->assertEquals( 1, count( $ical->errors ) );
+		//Check the number of events have imported correctly
+    	$this->assertEquals( 1, count( $ical->events ) );
 
-    	$code = $ical->errors[0]->get_error_code();
-    	$message = $ical->errors[0]->get_error_message();
-    	
-    	$this->assertEquals( 'event-property-error', $code );
-    	$this->assertEquals( '[Line 19] Duplicate UID (none-unique-id) found in feed. UIDs must be unique.', $message );
+    	//No errors/warnings
+    	$this->assertEquals( 0, count( $ical->warnings ) );
+    	$this->assertEquals( 0, count( $ical->errors ) );
+
+    	$event = $ical->events[0];
+    	$this->assertEquals( 3, $event['sequence'] );  	
     }
     
-
 
 	//@TODO
     public function testPartDayForeignRecurringEvent()

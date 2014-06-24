@@ -18,7 +18,15 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 		);
 		parent::__construct('EO_Events_Agenda_Widget', __('Events Agenda','eventorganiser'), $widget_ops);
   	}
- 
+
+  	/**
+  	 * Registers the widget with the WordPress Widget API.
+  	 *
+  	 * @return void.
+  	 */
+  	public static function register() {
+  		register_widget( __CLASS__ );
+  	}
 
 	function form($instance)  {
 		$instance = wp_parse_args( (array) $instance, $this->w_arg );
@@ -112,3 +120,4 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 	}
 
 }
+add_action( 'widgets_init', array( 'EO_Events_Agenda_Widget', 'register' ) );

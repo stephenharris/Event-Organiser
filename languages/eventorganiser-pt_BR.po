@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-12-04 20:53:47+0000\n"
-"Last-Translator: Otávio <otaviot@gmail.com>\n"
+"PO-Revision-Date: 2014-03-27 08:14:45+0000\n"
+"Last-Translator: Ryan Smallman <ryansmallman@hotmail.com>\n"
 "Language-Team: \n"
 "Language: Portuguese (Brazil)\n"
 "MIME-Version: 1.0\n"
@@ -880,7 +880,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:493
 msgid "Go Pro!"
-msgstr ""
+msgstr "Compre o Pro!"
 
 #: event-organiser-calendar.php:59 includes/event-organiser-register.php:58
 msgid "go to date"
@@ -1003,7 +1003,7 @@ msgstr ""
 #: includes/class-eo-ical-parser.php:738
 msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
 "YYYYMMDDTHHiiss format."
-msgstr ""
+msgstr "datetime Invalido \"%s\". Data esperado em "
 
 #: includes/class-event-organiser-im-export.php:71
 msgid "Invalid file uploaded. The file must be a ics calendar file of type "

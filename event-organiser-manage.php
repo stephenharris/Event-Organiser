@@ -19,10 +19,19 @@ function eventorganiser_event_add_columns( $columns ) {
 	$columns['title'] = __( 'Event', 'eventorganiser' );
 
 	//If displaying 'author', change title
-	if ( isset( $columns['author'] ) )
+	if ( isset( $columns['author'] ) ){
 		$columns['author'] = __( 'Organiser', 'eventorganiser' );
+	}
+	
+	if( isset( $columns['author'] ) && !eo_is_multi_event_organiser() ){
+		unset( $columns['author'] );
+	}
 
-	$columns['venue'] = __( 'Venue', 'eventorganiser' );
+	$supports = eventorganiser_get_option( 'supports' );
+	if( in_array( 'event-venue', $supports ) ){
+		$columns['venue'] = __( 'Venue', 'eventorganiser' );
+	}
+	
 	$columns['eventcategories'] = __( 'Categories' );
 	$columns['datestart'] = __( 'Start Date/Time', 'eventorganiser' );
 	$columns['dateend'] = __( 'End Date/Time', 'eventorganiser' );
@@ -122,10 +131,15 @@ add_action( 'restrict_manage_posts', 'eventorganiser_restrict_events_by_venue' )
 function eventorganiser_restrict_events_by_venue() {
 	global $typenow;
 
+	$supports = eventorganiser_get_option( 'supports' );
+	
 	//Only add if CPT is event
-	if ( $typenow == 'event' ) :	
-		 eo_event_venue_dropdown( array( 'hide_empty' => false, 'show_option_all' => __( 'View all venues', 'eventorganiser' ) ) );
-	endif;
+	if ( $typenow == 'event' && in_array( 'event-venue', $supports ) ) {	
+		 eo_event_venue_dropdown( array( 
+		 	'hide_empty' => false, 
+		 	'show_option_all' => __( 'View all venues', 'eventorganiser' ) 
+		 ));
+	}
 }
 
 /**

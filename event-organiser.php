@@ -2,7 +2,7 @@
 /*
 Plugin Name: Event Organiser
 Plugin URI: http://www.wp-event-organiser.com
-Version: 2.7.4
+Version: 2.8.0
 Description: Creates a custom post type 'events' with features such as reoccurring events, venues, Google Maps, calendar views and events and venue pages
 Author: Stephen Harris
 Author URI: http://www.stephenharris.info
@@ -38,7 +38,7 @@ Domain Path: /languages
 /**
  * Set the plug-in database version
  */ 
-define( 'EVENT_ORGANISER_VER', '2.7.4' );
+define( 'EVENT_ORGANISER_VER', '2.8.0' );
 
 
 add_action( 'after_setup_theme', '_eventorganiser_set_constants' );
@@ -133,7 +133,7 @@ function eventorganiser_get_option( $option = false, $default = false ){
 		'group_events' => '',
 		'feed' => 1,
 		'deleteexpired' => 0,
-		'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments', 'eventtag' ),
+		'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments', 'eventtag', 'event-venue' ),
 		'event_redirect' => 'events',
 		'dateformat' => 'd-m-Y',
 		'prettyurl' => 1,
@@ -148,6 +148,10 @@ function eventorganiser_get_option( $option = false, $default = false ){
 	);
 	$options = get_option( 'eventorganiser_options', $defaults );
 	$options = wp_parse_args( $options, $defaults );
+	
+	$options['supports'][] = 'event-venue';
+	
+	$options = apply_filters( 'eventorganiser_options', $options );
 	
 	if ( false === $option )
 		return $options;
@@ -226,13 +230,3 @@ require_once(EVENT_ORGANISER_DIR.'classes/class-eo-calendar-widget.php');
 require_once(EVENT_ORGANISER_DIR.'classes/class-eo-widget-categories.php');
 require_once(EVENT_ORGANISER_DIR.'classes/class-eo-widget-venues.php');
 require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-shortcodes.php');
-
-add_action( 'widgets_init', 'eventorganiser_widgets_init' );
-function eventorganiser_widgets_init(){
-	eventorganiser_load_textdomain();
-	register_widget( 'EO_Event_List_Widget' );
-	register_widget( 'EO_Events_Agenda_Widget' );
-	register_widget( 'EO_Calendar_Widget' );
-	register_widget( 'EO_Widget_Categories' );
-	register_widget( 'EO_Widget_Venues' );
-}

@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2014-01-19 19:05:19+0000\n"
-"Last-Translator: Ruben <bf_2825@yahoo.com.br>\n"
+"PO-Revision-Date: 2014-04-17 08:41:10+0000\n"
+"Last-Translator: Emanuel Teixeira <emanuel@teixeiradacunha.com>\n"
 "Language-Team: \n"
 "Language: Portuguese (Portugal)\n"
 "MIME-Version: 1.0\n"
@@ -376,7 +376,7 @@ msgstr "dias"
 
 #: event-organiser-settings.php:143
 msgid "dd-mm-yyyy"
-msgstr "dd-mm-yyyy"
+msgstr "dd-mm-aaaa"
 
 #: includes/event-organiser-cpt.php:492
 msgid "Debugging Event Organiser"
@@ -789,7 +789,7 @@ msgstr "Exportar eventos "
 
 #: event-organiser-add-ons.php:20
 msgid "Extensions"
-msgstr ""
+msgstr "Extenções"
 
 #: includes/class-eo-ical-parser.php:124
 msgid "Feed not found"
@@ -871,7 +871,7 @@ msgstr ""
 
 #: event-organiser-go-pro.php:25
 msgid "Go Pro"
-msgstr ""
+msgstr "ir para a Versão Profissional"
 
 #: includes/event-organiser-cpt.php:493
 msgid "Go Pro!"
@@ -993,7 +993,7 @@ msgstr "Incluir/Excluir ocorrências"
 
 #: includes/class-eo-ical-parser.php:700
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
-msgstr ""
+msgstr "Data inválida \"%s\". Deverá ter o formato AAAAMMDD."
 
 #: includes/class-eo-ical-parser.php:738
 msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
@@ -1493,15 +1493,15 @@ msgstr "Por uma questão de permissões não é possivél mostrar o excerto. "
 
 #: includes/class-eo-ical-parser.php:109
 msgid "There was an error detecting iCal source."
-msgstr ""
+msgstr "Erro ao detectar a fonte do iCal."
 
 #: includes/class-eo-ical-parser.php:164
 msgid "There was an error fetching the feed. Response code: %s."
-msgstr ""
+msgstr "Erro ao aceder ao feed. Código de erro: %s."
 
 #: includes/class-eo-ical-parser.php:184
 msgid "There was an error opening the ICAL file."
-msgstr ""
+msgstr "Erro ao abrir o ficheiro ICAL."
 
 #: includes/event-organiser-event-functions.php:693
 #: includes/event-organiser-register.php:245
@@ -1842,13 +1842,13 @@ msgstr "Poderás também precisar de ir ao WordPress Settings > Permalinks e cli
 
 #: event-organiser-settings.php:145
 msgid "yyyy-mm-dd"
-msgstr "yyyy-mm-dd"
+msgstr "aaaa-mm-dd"
 
 #: includes/class-eo-ical-parser.php:359 includes/class-eo-ical-parser.php:384
 msgid "[Line %1$d]"
-msgstr ""
+msgstr "[Line %1$d]"
 
 #: includes/class-eo-ical-parser.php:352 includes/class-eo-ical-parser.php:377
 msgid "[Lines %1$d-%2$d]"
-msgstr ""
+msgstr "[Lines %1$d-%2$d]"
 

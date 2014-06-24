@@ -462,8 +462,8 @@ function eventorganiser_screen_retina_icon(){
 	if ( ( defined( 'MP6' ) && MP6 ) || version_compare( '3.8-beta-1', get_bloginfo( 'version' ) ) <= 0 ):
 		?>
 		<style>
-			.icon16.icon-post:before, #adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
-			.icon16.icon-post:before, #adminmenu #menu-posts-event div.wp-menu-image img { display:none; }
+			#adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
+			#adminmenu #menu-posts-event div.wp-menu-image img { display:none; }
 			/**Add-ons page: for contrast**/
 			#eo-addons-wrap .eo-addon{ background: white; }
 		</style>
@@ -854,4 +854,17 @@ function _eventorganiser_add_event_class( $admin_body_class ){
 }
 add_filter( 'admin_body_class', '_eventorganiser_add_event_class', 99999 );
 
+
+
+/**
+ * Helper function to clear the cache for number of authors.
+ *
+ * @private
+ */
+function _eventorganiser_clear_multi_organiser_cache( $new_status, $old_status, $post ) {
+	if( $new_status !== $old_status && 'event' == get_post_type( $post ) ){
+		delete_transient( 'eo_is_multi_event_organiser' );
+	}
+}
+add_action('transition_post_status', '_eventorganiser_clear_multi_organiser_cache', 10, 3 );
 ?>

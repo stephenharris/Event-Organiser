@@ -1420,3 +1420,56 @@ function eo_list_pluck_key_value( $list, $key_field, $value_field ){
 function eo_array_key_whitelist( $array, $whitelist = array() ){
 	return array_intersect_key( $array, array_flip( $whitelist ) );
 }
+
+
+
+/**
+ * Does this site have more than one event organiser.
+ *
+ * Checks to see if more than one user has published an event.
+ *
+ * @since 2.7.5
+ * @return bool Whether or not we have more than one author (of an event)
+ */
+function eo_is_multi_event_organiser() {
+	global $wpdb;
+
+	if ( false === ( $is_multi_event_organiser = get_transient( 'eo_is_multi_event_organiser' ) ) ) {
+		$rows = (array) $wpdb->get_col("SELECT DISTINCT post_author FROM $wpdb->posts WHERE post_type = 'event' AND post_status = 'publish' LIMIT 2");
+		$is_multi_event_organiser = 1 < count( $rows ) ? 1 : 0;
+		set_transient( 'eo_is_multi_event_organiser', $is_multi_event_organiser );
+	}
+
+	/**
+	 * Filter whether the site has more than one user with published events.
+	 *
+	 * @since 2.7.5
+	 * @param bool $is_multi_event_organiser Whether $is_multi_event_organiser should evaluate as true.
+	 */
+	return apply_filters( 'eventorganiser_is_multi_event_organiser', (bool) $is_multi_event_organiser );
+}
+
+/**
+ * Combines two arrays by joining them by their key. 
+ * 
+ * This is similar to array_combine, but rather than combining
+ * by index, the array is combined by key. Any keys not found 
+ * in both are ignored.
+ * 
+ * @param array $key_array   Array whose values form the keys of the returned array 
+ * @param array $value_array Array whose values form the values of the returned array
+ * @return array The combined array
+ */
+function eo_array_combine_assoc( $key_array, $value_array ) {
+	
+	$output = array();
+	$keys = array_keys( array_intersect_key( $key_array, $value_array ) );
+	
+	if( $keys ){
+		foreach( $keys as $key ){
+			$output[$key_array[$key]] = $value_array[$key]; 
+		}
+	}
+	
+	return $output;
+}

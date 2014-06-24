@@ -10,6 +10,15 @@ class EO_Widget_Categories extends WP_Widget {
 		$widget_ops = array( 'classname' => 'eo__event_categories', 'description' => __( "A list or dropdown of event categories", 'eventorganiser' ) );
 		parent::__construct('eo-event-categories', __( 'Event Categories', 'eventorganiser' ), $widget_ops);
 	}
+	
+	/**
+	 * Registers the widget with the WordPress Widget API.
+	 *
+	 * @return void.
+	 */
+	public static function register() {
+		register_widget( __CLASS__ );
+	}
 
 	function widget( $args, $instance ) {
 		extract( $args );
@@ -125,3 +134,4 @@ class EO_Widget_Categories extends WP_Widget {
 	}
 
 }
+add_action( 'widgets_init', array( 'EO_Widget_Categories', 'register' ) );

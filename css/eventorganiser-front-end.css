@@ -84,7 +84,7 @@
 
 /* workarounds */
 * html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
-.ui-datepicker { width: 17em; padding: .2em .2em 0; display: none; }
+.ui-datepicker { width: 17em; padding: .2em .2em 0; display: none; box-sizing: content-box; -moz-box-sizing: content-box; -webkit-box-sizing:content-box;}
 .ui-datepicker .ui-datepicker-header { position:relative; padding:.2em 0; }
 .ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { position:absolute; top: 2px; width: 1.8em; height: 1.8em; }
 .ui-datepicker .ui-datepicker-prev-hover, .ui-datepicker .ui-datepicker-next-hover { top: 1px; }
@@ -163,7 +163,7 @@
 
 /* Component containers
 ----------------------------------*/
-.ui-widget { font-family: sans-serif; font-size: 12px; }
+.ui-widget { font-family: helvetica, sans-serif; font-size: 12px; }
 .ui-widget .ui-widget { font-size: 1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: sans-serif; font-size: 1em; }
 .ui-widget-content { border: 1px solid #dfdfdf; background: #ffffff; color: #333333; }

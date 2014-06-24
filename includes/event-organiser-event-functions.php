@@ -117,12 +117,10 @@ function eo_get_events($args=array()){
 		unset($query_array['venue']);
 	}
 	
-	//Ensure all date queries are yyyy-mm-dd format. Process relative strings ('today','tomorrow','+1 week')
-	$dates = array('ondate','event_start_after','event_start_before','event_end_before','event_end_after');
-	foreach($dates as $prop):
-		if(!empty($query_array[$prop]))
-			$query_array[$prop] = eo_format_date($query_array[$prop],'Y-m-d');
-	endforeach;
+	//Ensure ondate query is yyyy-mm-dd format. Process relative strings ('today','tomorrow','+1 week')
+	if( !empty( $query_array['ondate'] ) ){
+		$query_array['ondate'] = eo_format_date( $query_array['ondate'], 'Y-m-d' );
+	}
 	
 	//Make sure 'false' is passed as integer 0
 	if(strtolower($query_array['showpastevents'])==='false') $query_array['showpastevents']=0;
