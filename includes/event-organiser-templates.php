@@ -90,8 +90,9 @@ function eo_locate_template( $template_names, $load = false, $require_once = tru
 		} 
 	}
 
-	if ( $load && '' != $located )
+	if ( $load && '' != $located ){
 		load_template( $located, $require_once );
+	}
 
 	return $located;
 }
