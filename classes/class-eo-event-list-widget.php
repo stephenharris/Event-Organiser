@@ -125,23 +125,29 @@ class EO_Event_List_Widget extends WP_Widget{
 
  
   function widget($args, $instance){
-	extract($args, EXTR_SKIP);
+	
+  	$args = array_merge( array(
+  		'no_events' => '',
+  		'template'  => '',
+  	), $args );
+  	
+  	extract($args, EXTR_SKIP);
 
-	$template = $instance['template'];
-	$no_events = isset($instance['no_events']) ? $instance['no_events'] :'';
-	unset($instance['template']);
-	unset($instance['no_events']);
+	unset( $instance['template'] );
+	unset( $instance['no_events'] );
 
-    	echo $before_widget;
+    echo $before_widget;
 
 	$widget_title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
 
-    	if ( $widget_title )
+    if ( $widget_title ){
    		echo $before_title.esc_html($widget_title).$after_title;
+    }
 
-	eventorganiser_list_events($instance, array('type'=>'widget','class'=>'eo-events eo-events-widget','template'=>$template, 'no_events'=>$no_events));
+	eventorganiser_list_events( $instance, array( 'type'=>'widget','class'=>'eo-events eo-events-widget','template'=>$template, 'no_events'=>$no_events ) );
 
-     	echo $after_widget;
+	echo $after_widget;
+     
   }
  
 }
