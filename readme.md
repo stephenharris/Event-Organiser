@@ -3,8 +3,8 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
-**Tested up to:** 3.9  
-**Stable tag:** 2.8.1  
+**Tested up to:** 3.9.1  
+**Stable tag:** 2.8.2  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -213,10 +213,14 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
-### 2.8.1 ###
+### 2.8.2 - 26th June 2014 ###
+* Fixes widget template option ignored (bug introduced in 2.8.1)
+* Check if array is empty before using array_combine (throws error on PHP 5.3 and older).
+
+### 2.8.1 - 24th June 2014 ###
 * Fixes bug with 2.8.0 where updating only the time of an event, is not reflected. 
 
-### 2.8 ###
+### 2.8 - 18th June 2014 ###
 * Support `show_long` and `link_to_single` attributes for the (widget) calendar shortcode.
 * Improved handling of updating event schedules (common dates are not deleted / re-inserted)
 * Hide 'author' column if on a single-organiser install, and hide venue columns if venues are not supported.
