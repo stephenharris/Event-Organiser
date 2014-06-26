@@ -361,7 +361,6 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 	$update   = array_uintersect( $occurrences, $current_occurrences, '_eventorganiser_compare_dates' );
 	$update_2 = array_uintersect( $current_occurrences, $update, '_eventorganiser_compare_dates' );
 	$keys     = array_keys( $update_2 );
-	$update   = array_combine( $keys, $update );
 	
 	if( $delete ){
 		$delete_occurrence_ids = array_keys( $delete );
@@ -372,6 +371,8 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 	$occurrence_array = array();
 	
 	if( $update ){
+		$update   = array_combine( $keys, $update );
+		
 		foreach( $update as $occurrence_id => $occurrence ){
 
 			$occurrence_end = clone $occurrence;
