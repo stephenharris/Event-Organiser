@@ -126,13 +126,15 @@ class EO_Event_List_Widget extends WP_Widget{
  
   function widget($args, $instance){
 	
-  	$args = array_merge( array(
+  	$instance = array_merge( array(
   		'no_events' => '',
   		'template'  => '',
-  	), $args );
+  	), $instance );
   	
   	extract($args, EXTR_SKIP);
-
+  	
+  	$template = $instance['template'];
+  	$no_events = $instance['no_events'];
 	unset( $instance['template'] );
 	unset( $instance['no_events'] );
 
