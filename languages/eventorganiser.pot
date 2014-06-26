@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: event-organiser 2.8.1\n"
+"Project-Id-Version: event-organiser 2.8.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-24 23:40+0100\n"
+"POT-Creation-Date: 2014-06-26 23:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1771,31 +1771,31 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-#: includes/event.php:588
+#: includes/event.php:589
 msgid "Schedule not recognised."
 msgstr ""
 
-#: includes/event.php:597
+#: includes/event.php:598
 msgid "Start date not provided."
 msgstr ""
 
-#: includes/event.php:615
+#: includes/event.php:616
 msgid "Start date occurs after end date."
 msgstr ""
 
-#: includes/event.php:618
+#: includes/event.php:619
 msgid "Schedule end date is before is before the start date."
 msgstr ""
 
-#: includes/event.php:701
+#: includes/event.php:702
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr ""
 
-#: includes/event.php:821
+#: includes/event.php:822
 msgid "Event does not contain any dates."
 msgstr ""
 
-#: includes/event.php:962
+#: includes/event.php:963
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr ""
 
