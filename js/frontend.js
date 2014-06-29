@@ -495,7 +495,9 @@ function eo_load_map() {
 
 		var map = new google.maps.Map(document.getElementById("eo_venue_map-" + (i + 1)), map_options);
 
-		if( locations.length > 1 ){
+		if (maps[i].centerlng && maps[i].centerlat) {
+			map.setCenter(new google.maps.LatLng(maps[i].centerlat, maps[i].centerlng));
+		} else if( locations.length > 1 ) {
 			var bounds = new google.maps.LatLngBounds();
 			for(var k = 0; k < locations.length; k++) {
 				var locationLatLng = new google.maps.LatLng(locations[k].lat, locations[k].lng);

@@ -673,7 +673,7 @@ function eo_venue_map_defaults() {
 		'pancontrol' => true, 'overviewmapcontrol' => true, 'streetviewcontrol' => true,
 		'maptypecontrol' => true, 'draggable' => true, 'maptypeid' => 'ROADMAP',
 		'width' => '100%', 'height' => '200px', 'class' => '',
-		'tooltip' => true
+		'tooltip' => true, 'centerlat' => "", 'centerlng' => ""
 	);
 }
 
@@ -711,6 +711,15 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 
 		//Cast zoom as integer
 		$args['zoom'] = (int) $args['zoom']; 
+
+		// remove center lat and lng if they are not filled both
+		if(is_numeric($args['centerlat']) && is_numeric($args['centerlng'])) {
+			$args['centerlat'] = (double) $args['centerlat'];
+			$args['centerlng'] = (double) $args['centerlng'];
+		} else {
+			unset($args['centerlng']);
+			unset($args['centerlat']);
+		}
 		
 		//Escape attributes
 		$width = esc_attr($args['width']);
