@@ -488,7 +488,8 @@ function eo_load_map() {
 			streetViewControl: maps[i].streetviewcontrol,
 			draggable: maps[i].draggable,
 			mapTypeControl: maps[i].maptypecontrol,
-			mapTypeId: google.maps.MapTypeId[maps[i].maptypeid]
+			mapTypeId: google.maps.MapTypeId[maps[i].maptypeid],
+			disableAutoPan: maps[i].disableautopan
 		};
 
 		map_options = wp.hooks.applyFilters( 'eventorganiser.google_map_options', map_options);
@@ -534,6 +535,7 @@ function eo_load_map() {
 						var infoWindow = new google.maps.InfoWindow({
 							content: locations[j].tooltipContent
 							, maxWidth: 200
+							, disableAutoPan: map_options.disableAutoPan
 						});
 						google.maps.event.addListener(marker, 'click',function(){
 							infoWindow.open(map, marker); 

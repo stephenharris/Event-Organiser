@@ -673,7 +673,7 @@ function eo_venue_map_defaults() {
 		'pancontrol' => true, 'overviewmapcontrol' => true, 'streetviewcontrol' => true,
 		'maptypecontrol' => true, 'draggable' => true, 'maptypeid' => 'ROADMAP',
 		'width' => '100%', 'height' => '200px', 'class' => '',
-		'tooltip' => true, 'centerlat' => "", 'centerlng' => ""
+		'tooltip' => true, 'centerlat' => "", 'centerlng' => "", "disableautopan" => false
 	);
 }
 
