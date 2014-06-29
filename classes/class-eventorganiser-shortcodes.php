@@ -152,8 +152,8 @@ class EventOrganiser_Shortcodes {
 
 		$venue_slugs = explode(',',$atts['venue']);
 
-		//Cast options as boolean:
-		$boolean_keys = array_flip(array('tooltip','scrollwheel','zoomcontrol','rotatecontrol','pancontrol','overviewmapcontrol','streetviewcontrol','draggable','maptypecontrol'));
+		// Cast options as boolean:
+		$boolean_keys = array_filter(eo_venue_map_defaults(), "is_bool");
 		if (!function_exists("cast_to_boolean_if_possible")) {
 			function cast_to_boolean_if_possible($attribute) {
 				return ("false" === $attribute ? false : true);
