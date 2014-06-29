@@ -299,7 +299,7 @@ function edit_form( $venue = false ){
 		</h2>
 	<?php endif; ?>
 
-	<form name="venuedetails" id="eo_venue_form" method="post" action="<?php echo admin_url( 'edit.php?post_type=event&page=venues' ); ?>">  
+	<form name="venuedetails" id="eo_venue_form" method="post" action="<?php echo admin_url( 'edit.php?post_type=event&page=venues' ); ?>" <?php do_action( 'eo_venue_post_edit_form_tag', $venue ); ?> >
 		<input type="hidden" name="action" value="<?php echo $do; ?>"> 
 		<input type="hidden" id="eo_venue_id" name="eo_venue[venue_id]" value="<?php echo $term_id;?>">  
 		<input type="hidden" name="event-venue" value="<?php echo ( isset( $venue->slug ) ? $venue->slug : '' ) ;?>">  
