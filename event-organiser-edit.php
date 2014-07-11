@@ -318,8 +318,13 @@ function eventorganiser_details_save( $post_id ) {
 		$venue = $_POST['eo_venue'];
 		if ( !empty( $venue['name'] ) ){
 			$new_venue = eo_insert_venue( $venue['name'], $venue );
-			if ( !is_wp_error( $new_venue ) )
+			if ( !is_wp_error( $new_venue ) ){
 				$venue_id = $new_venue['term_id'];
+			}else{
+				if( $new_venue->get_error_code() == 'term_exists' ){
+					$venue_id = eo_get_venue( $event_id );
+				}
+			}
 		}
 	}
 
