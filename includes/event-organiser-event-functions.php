@@ -1224,8 +1224,8 @@ function eo_get_add_to_google_link( $event_id = 0, $occurrence_id = 0 ){
 	
 	setup_postdata( $post );	
 	
-	$start = eo_get_the_start( DATETIMEOBJ, $event_id, null, $occurrence_id );
-	$end = eo_get_the_end( DATETIMEOBJ, $event_id, null, $occurrence_id );
+	$start = clone eo_get_the_start( DATETIMEOBJ, $event_id, null, $occurrence_id );
+	$end   = clone eo_get_the_end( DATETIMEOBJ, $event_id, null, $occurrence_id );
 	
 	if( eo_is_all_day() ):
 		$end->modify('+1 second');
