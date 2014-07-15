@@ -244,6 +244,24 @@ function eo_venue_description($venue_slug_or_id=''){
 }
 
 
+function eo_get_venue_excerpt( $venue_slug_or_id='', $excerpt_length = 55 ){
+
+	$venue_id =  eo_get_venue_id_by_slugorid( $venue_slug_or_id );
+
+	$text  = eo_get_venue_meta($venue_id,'_description');
+	$text = strip_shortcodes( $text );
+	$text = str_replace(']]>', ']]&gt;', $text);
+
+	$excerpt_length = apply_filters( 'excerpt_length', $excerpt_length );
+	$excerpt_more   = apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
+		
+	$text = wp_trim_words( $text, $excerpt_length, $excerpt_more );
+
+	return apply_filters( 'eventorganiser_venue_excerpt', $text, $venue_id );
+}
+
+
+
 
 /**
 * Returns an latitude-longtitude array (keys 'lat', 'lng')
