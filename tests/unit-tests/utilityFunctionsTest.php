@@ -165,6 +165,53 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		$this->assertEquals( $expected, eo_array_combine_assoc( $key_array, $value_array ) );
 	}
 	
+	/**
+	 * date_diff can cause some unexpected behaviour. This is a simple workaround. 
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/205
+	 */
+	public function testDateDiffFallback()
+	{
+		
+		$timezone = new DateTimeZone( 'Europe/London' );
+		$date1 = new DateTime( '2014-07-01 00:00:00', $timezone );
+		$date2 = new DateTime( '2014-07-31 23:59:00', $timezone );
+		
+		//Work around for PHP < 5.3. Also see 
+		$seconds      = round( abs( $date1->format('U') - $date2->format('U') ) );
+		$days         = floor( $seconds/86400 );// 86400 = 60*60*24 seconds in a normal day
+		$sec_diff     = $seconds - $days*86400;
+		
+		$this->assertEquals( 30, $days );
+		$this->assertEquals( 86340, $sec_diff);
+		
+	}	
+	
+	public function testDateDiffFallbackDST()
+	{
+		
+		$timezone = new DateTimeZone( 'Europe/London' );
+		$date1 = new DateTime( '2014-03-30 00:00:00', $timezone );
+		$date2 = new DateTime( '2014-03-30 04:00:00', $timezone );
+		
+		//Work around for PHP < 5.3. Also see 
+		$seconds      = round( abs( $date1->format('U') - $date2->format('U') ) );
+		$days         = floor( $seconds/86400 );// 86400 = 60*60*24 seconds in a normal day
+		$sec_diff     = $seconds - $days*86400;
+		
+		//$this->assertEquals( 3, $days );
+		$this->assertEquals( 10800, $sec_diff);
+		
+		$date1 = new DateTime( '2014-10-26 00:00:00', $timezone );
+		$date2 = new DateTime( '2014-10-26 04:00:00', $timezone );
+		 
+		$seconds      = round( abs( $date1->format('U') - $date2->format('U') ) );
+		$days         = floor( $seconds/86400 );// 86400 = 60*60*24 seconds in a normal day
+		$sec_diff     = $seconds - $days*86400;
+		
+		$this->assertEquals( 18000, $sec_diff);
+		
+	}	
+	
 	
 	/**
 	 * TODO eo_get_blog_timezone(): Why does +10 give Asia/Choibalsan timezone.

@@ -270,5 +270,40 @@ class eventTest extends EO_UnitTestCase
 
 		return $results; 
 	}
+	
+	
+	/**
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/205
+	 * Tests event end date is created successfully. 
+	 */
+	public function testEventAtEndOfMonth()
+    {
+		
+		$original_tz     = get_option( 'timezone_string' );
+		$original_offset = get_option( 'gmt_offset' );
+		
+		update_option( 'timezone_string', '' );
+		update_option( 'gmt_offset', 10 );
+		
+		$tz = eo_get_blog_timezone();
+		
+		$event = array(
+			'post_title' => 'Test event',
+			'start'      => new DateTime( '2014-07-01 00:00:00', $tz ),
+			'end'        => new DateTime( '2014-07-31 23:59:00', $tz ),
+			'all_day'    => 1, 
+		);
+		
+		$event_id = eo_insert_event( $event );
+		$occurrences    = eo_get_the_occurrences( $event_id );
+		$occurrence_ids = array_keys( $occurrences );
+		$occurrence_id  = array_shift( $occurrence_ids );
+
+		$this->assertEquals( '2014-07-31',  eo_get_the_end( 'Y-m-d', $event_id, null, $occurrence_id ) );
+		
+		update_option( 'timezone_string', $original_tz );
+		update_option( 'gmt_offset', $original_offset );
+    }
+	
 }
 

@@ -334,17 +334,8 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 	extract( $event_data );
 	$tz = eo_get_blog_timezone();
 
-	//Get duration
-	$duration = false;
-	if( function_exists('date_diff') ){
-		$duration = date_diff( $start,$end );
-
-		/* Storing a DateInterval object can cause errors. Serialize it.
-		 Thanks to Mathieu Parisot, Mathias & Dave Page */
-		$event_data['duration'] = maybe_serialize( $duration );
-	}
-
-	//Work around for PHP < 5.3
+	//Don't use date_diff (requires php 5.3+)
+	//Also see https://github.com/stephenharris/Event-Organiser/issues/205
 	$seconds      = round( abs( $start->format('U') - $end->format('U') ) );
 	$days         = floor( $seconds/86400 );// 86400 = 60*60*24 seconds in a normal day
 	$sec_diff     = $seconds - $days*86400;
@@ -376,11 +367,7 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 		foreach( $update as $occurrence_id => $occurrence ){
 
 			$occurrence_end = clone $occurrence;
-			if( $duration ){
-				$occurrence_end->add($duration);
-			}else{
-				$occurrence_end->modify($duration_str);
-			}
+			$occurrence_end->modify($duration_str);
 			
 			$occurrence_input = array(
 				'StartDate'        => $occurrence->format('Y-m-d'),
@@ -407,11 +394,7 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 	if( $insert ){
 		foreach( $insert as $counter => $occurrence ):
 			$occurrence_end = clone $occurrence;
-			if( $duration ){
-				$occurrence_end->add($duration);
-			}else{
-				$occurrence_end->modify($duration_str);
-			}
+			$occurrence_end->modify($duration_str);
 
 			$occurrence_input =array(
 				'post_id'          => $post_id,
