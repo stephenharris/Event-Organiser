@@ -118,7 +118,7 @@ function eventorganiser_restrict_events_by_category() {
 
     // only display these taxonomy filters on desired custom post_type listings
     global $typenow, $wp_query;
-    if ( $typenow == 'event' ) {
+    if ( $typenow == 'event' && !is_wp_error( wp_count_terms( 'event-category' ) ) && wp_count_terms( 'event-category' ) > 0 ) {
 	eo_event_category_dropdown( array( 'hide_empty' => false, 'show_option_all' => __( 'View all categories' ) ) );
     }
 }
@@ -134,7 +134,7 @@ function eventorganiser_restrict_events_by_venue() {
 	$supports = eventorganiser_get_option( 'supports' );
 	
 	//Only add if CPT is event
-	if ( $typenow == 'event' && in_array( 'event-venue', $supports ) ) {	
+	if ( $typenow == 'event' && in_array( 'event-venue', $supports ) && !is_wp_error( wp_count_terms( 'event-category' ) ) && wp_count_terms( 'event-venue' ) > 0  ) {	
 		 eo_event_venue_dropdown( array( 
 		 	'hide_empty' => false, 
 		 	'show_option_all' => __( 'View all venues', 'eventorganiser' ) 
