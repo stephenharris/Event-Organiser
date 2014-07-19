@@ -430,8 +430,10 @@ class EventOrganiser_Shortcodes {
 			}
 		endif;
 
-		if( !empty( self::$map ) )
+		if( !empty( self::$map ) ){
 			wp_enqueue_script( 'eo_GoogleMap' );
+		}
+			
 	}
 }
  
