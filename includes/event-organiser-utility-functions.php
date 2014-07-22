@@ -576,10 +576,10 @@ function eo_check_datetime( $format, $datetime_string, $timezone = false ){
 			array_values( $format_conversion ),
 			$format
 		);
-		
+
 		$strptime = strptime( $datetime_string, $strptime_format );
 
-		if( false == $strptime ){
+		if( false == $strptime || !array_filter( $strptime ) ){
 			return false;
 		}
 		
