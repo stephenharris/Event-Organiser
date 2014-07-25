@@ -683,6 +683,19 @@ function eo_get_venues($args=array()){
 	}
 
 /**
+ * Defaults for the venue map
+ */
+function eo_venue_map_defaults() {
+	return array(
+		'zoom' => 15, 'scrollwheel' => true, 'zoomcontrol' => true, 'rotatecontrol' => true,
+		'pancontrol' => true, 'overviewmapcontrol' => true, 'streetviewcontrol' => true,
+		'maptypecontrol' => true, 'draggable' => true, 'maptypeid' => 'ROADMAP',
+		'width' => '100%', 'height' => '200px', 'class' => '',
+		'tooltip' => true, 'centerlat' => "", 'centerlng' => "", "disableautopan" => false
+	);
+}
+
+/**
  * Returns the mark-up for a Google map of the venue (and enqueues scripts).
  * Accepts an arguments array corresponding to the attributes supported by the shortcode.
  * 
@@ -712,16 +725,19 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 		$venue_ids = array_map('eo_get_venue_id_by_slugorid',$venue_slug_or_id);
 
 		//Map properties
-		$args = shortcode_atts( array(
-			'zoom' => 15, 'scrollwheel'=>true, 'zoomcontrol'=>true, 'rotatecontrol'=>true,
-			'pancontrol'=>true, 'overviewmapcontrol'=>true, 'streetviewcontrol'=>true,
-			'maptypecontrol'=>true, 'draggable'=>true,'maptypeid' => 'ROADMAP',
-			'width' => '100%','height' => '200px','class' => '',
-			'tooltip' => true
-			), $args );
+		$args = shortcode_atts(eo_venue_map_defaults(), $args);
 
 		//Cast zoom as integer
 		$args['zoom'] = (int) $args['zoom']; 
+
+		// remove center lat and lng if they are not filled both
+		if(is_numeric($args['centerlat']) && is_numeric($args['centerlng'])) {
+			$args['centerlat'] = (double) $args['centerlat'];
+			$args['centerlng'] = (double) $args['centerlng'];
+		} else {
+			unset($args['centerlng']);
+			unset($args['centerlat']);
+		}
 		
 		//Escape attributes
 		$width = esc_attr($args['width']);

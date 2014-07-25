@@ -152,22 +152,19 @@ class EventOrganiser_Shortcodes {
 
 		$venue_slugs = explode(',',$atts['venue']);
 
-		$args = shortcode_atts( array(
-			'zoom' => 15, 'scrollwheel'=>'true','zoomcontrol'=>'true',
-			'rotatecontrol'=>'true','pancontrol'=>'true','overviewmapcontrol'=>'true',
-			'streetviewcontrol'=>'true','maptypecontrol'=>'true','draggable'=>'true',
-			'maptypeid' => 'ROADMAP',
-			'width' => '100%','height' => '200px','class' => '',
-			'tooltip'=>'false'
-			), $atts );
-
-		//Cast options as boolean:
-		$bool_options = array('tooltip','scrollwheel','zoomcontrol','rotatecontrol','pancontrol','overviewmapcontrol','streetviewcontrol','draggable','maptypecontrol');
-		foreach( $bool_options as $option  ){
-			$args[$option] = ( $args[$option] == 'false' ? false : true );
+		// Cast options as boolean:
+		$boolean_keys = array_filter(eo_venue_map_defaults(), "is_bool");
+		if (!function_exists("cast_to_boolean_if_possible")) {
+			function cast_to_boolean_if_possible($attribute) {
+				return ("false" === $attribute ? false : true);
+			}
 		}
+		$booleans = array_intersect_key($atts, $boolean_keys);
+		$booleans_cast = array_map("cast_to_boolean_if_possible", $booleans);
+		$non_booleans = array_diff_key($atts, $boolean_keys);
+		$all_atts = array_merge($booleans_cast, $non_booleans);
 
-		return eo_get_venue_map($venue_slugs, $args);
+		return eo_get_venue_map($venue_slugs, $all_atts);
 	}
 
 
@@ -421,7 +418,6 @@ class EventOrganiser_Shortcodes {
 		));	
 		
 		if( !empty(self::$calendars) || !empty(self::$map) || !empty(self::$widget_calendars) ):				
-			wp_enqueue_script( 'eo_qtip2');		
 			wp_enqueue_script( 'eo_front');
 
 			if( !eventorganiser_get_option( 'disable_css' ) ){
@@ -430,8 +426,11 @@ class EventOrganiser_Shortcodes {
 			}
 		endif;
 
-		if( !empty( self::$map ) )
+		if( !empty( self::$map ) ) {
 			wp_enqueue_script( 'eo_GoogleMap' );
+		} else {
+			wp_enqueue_script( 'eo_qtip2');		
+		}
 	}
 }
  

@@ -467,17 +467,19 @@ function eveorg_getParameterByName(a, b) {
 
 function eo_load_map() {
 	var maps = eventorganiser.map;
-	
+
 	for (var i = 0; i < maps.length; i++) {
-		
-		if ( null === document.getElementById( "eo_venue_map-" + (i + 1) ) )
-		    continue;
-		
+
+		if ( null === document.getElementById( "eo_venue_map-" + (i + 1))) {
+			continue;
+		}
+
 		//Store markers
 		eventorganiser.map[i].markers = {};
 		var locations = maps[i].locations;
-		var b = {
-            zoom: maps[i].zoom,
+
+		var map_options = {
+			zoom: maps[i].zoom,
 			scrollwheel: maps[i].scrollwheel,
 			zoomControl: maps[i].zoomcontrol,
 			rotateControl: maps[i].rotatecontrol,
@@ -486,101 +488,62 @@ function eo_load_map() {
 			streetViewControl: maps[i].streetviewcontrol,
 			draggable: maps[i].draggable,
 			mapTypeControl: maps[i].maptypecontrol,
-			mapTypeId: google.maps.MapTypeId[maps[i].maptypeid]
-        	};
-		b = wp.hooks.applyFilters( 'eventorganiser.google_map_options', b );
-		var map = new google.maps.Map(document.getElementById("eo_venue_map-" + (i + 1)), b);
+			mapTypeId: google.maps.MapTypeId[maps[i].maptypeid],
+			disableAutoPan: maps[i].disableautopan
+		};
 
-		//  Create a new viewpoint bound
-		var bounds = new google.maps.LatLngBounds();
+		map_options = wp.hooks.applyFilters( 'eventorganiser.google_map_options', map_options);
 
-		var LatLngList = [];
-		for( var j=0; j<locations.length; j++){
+		var map = new google.maps.Map(document.getElementById("eo_venue_map-" + (i + 1)), map_options);
+
+		if (maps[i].centerlng && maps[i].centerlat) {
+			map.setCenter(new google.maps.LatLng(maps[i].centerlat, maps[i].centerlng));
+		} else if( locations.length > 1 ) {
+			var bounds = new google.maps.LatLngBounds();
+			for(var k = 0; k < locations.length; k++) {
+				var locationLatLng = new google.maps.LatLng(locations[k].lat, locations[k].lng);
+				bounds = bounds.extend(locationLatLng);
+			}
+			map.fitBounds(bounds);
+		} else {
+			map.setCenter(new google.maps.LatLng(locations[0].lat, locations[0].lng));
+		}
+
+		// place the markers on the map
+		for(var j = 0; j < locations.length; j++) {
 			var lat = locations[j].lat;
-        		var lng = locations[j].lng;
-        		if (lat !== undefined && lng !== undefined) {
-				LatLngList.push(new google.maps.LatLng(lat, lng));
-			  	bounds.extend (LatLngList[j]);
-			  	
-			  	var marker_options = {
-			  		venue_id: locations[j].venue_id,
-			  		position: LatLngList[j],
-			  		map: map,
-			  		content:locations[j].tooltipContent,
-			  		icon: locations[j].icon
-	            };
-			  	
-			  	marker_options = wp.hooks.applyFilters( 'eventorganiser.venue_marker_options', marker_options );
-				var c = new google.maps.Marker(marker_options);				
-				eventorganiser.map[i].markers[locations[j].venue_id] = c;
+			var lng = locations[j].lng;
+			if (lat !== undefined && lng !== undefined) {
+				var locationLatLng = new google.maps.LatLng(lat, lng);
 
-				if( maps[i].tooltip ){
-					google.maps.event.addListener(c, 'click',eventorganiser_venue_tooltip);
-				}
-        	}
+				var marker_options = {
+					venue_id: locations[j].venue_id,
+					position: locationLatLng,
+					map: map,
+					content:locations[j].tooltipContent,
+					icon: locations[j].icon
+				};
+
+				marker_options = wp.hooks.applyFilters( 'eventorganiser.venue_marker_options', marker_options );
+
+				// create closure to capture marker variable
+				(function() {
+					var marker = new google.maps.Marker(marker_options);				
+
+					eventorganiser.map[i].markers[locations[j].venue_id] = marker;
+					if( maps[i].tooltip ){
+						var infoWindow = new google.maps.InfoWindow({
+							content: locations[j].tooltipContent
+							, maxWidth: 200
+							, disableAutoPan: map_options.disableAutoPan
+						});
+						google.maps.event.addListener(marker, 'click',function(){
+							infoWindow.open(map, marker); 
+						});
+					}
+				})();
+			}
 		}
-
-   		if( locations.length > 1 ){	
-			//  Fit these bounds to the map
-			map.fitBounds (bounds);
-			//google.maps.event.addListenerOnce(map, 'zoom_changed', function() {map.setZoom(zoom);});
-		}else{
-			map.setCenter ( LatLngList[0]);
-		}
-
-	}//Foreach map
-}
-/**
-* @constructor
-*/
-function eventorganiser_venue_tooltip() {
-
-	// Grab marker position: convert world point into pixel point
-	var map = this.getMap();
-	var pixel = this.getMap().getProjection().fromLatLngToPoint(this.position);
-	var topRight=map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast()); 
-	var bottomLeft=map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest()); 
-    var scale=Math.pow(2,map.getZoom()); 
-	pixel=  new google.maps.Point((pixel.x- bottomLeft.x)*scale,(pixel.y-topRight.y)*scale);
-
-	wp.hooks.doAction( 'eventorganiser.venue_marker_clicked', this );
-	
-	//var pixel = LatLngToPixel.fromLatLngToContainerPixel(this.position);
-	var pos = [ pixel.x, pixel.y ];
-
-	if(this.tooltip){
-		this.tooltip.qtip('api').set('position.target', pos);
-		this.tooltip.qtip('show');
-		return;
 	}
-	jQuery(this.getMap().getDiv()).css({overflow: 'visible'});
+}
 
-	// Create the tooltip on a dummy div and store it on the marker
-	 this.tooltip =jQuery('<div />').qtip({
-        	content: {
-			text: this.content
-		},
-		border: {
-			radius: 4,
-			width: 3
-		},
-		style: {
-			classes: "ui-tooltip-shadow",
-			widget: true
-		},
-        	position: {
-        	    at: "right center",
-        	    my: "top center",
-        	    target: pos,
-        	    container: jQuery(this.getMap().getDiv())
-        	},
-        	show: {
-        	    ready: true,
-        	    event: false,
-        	    solo: true
-        	},
-        	hide: {
-        	   event: 'mouseleave unfocus'
-        	}
-	    });
-  }
