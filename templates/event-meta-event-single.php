@@ -25,12 +25,9 @@
 ?>
 
 <div class="entry-meta eventorganiser-event-meta">
-	<!-- Choose a different date format depending on whether we want to include time -->
-	<?php if( eo_is_all_day() ){
-		$date_format = 'j F Y'; 
-	}else{
-		$date_format = 'j F Y ' . get_option('time_format'); 
-	} ?>
+	
+	<?php $date_format = eo_get_event_datetime_format(); ?>
+	
 	<hr>
 
 	<!-- Event details -->

@@ -1688,4 +1688,28 @@ function eo_get_event_uid( $post_id = 0 ){
 	
 	return $uid;
 }
+
+
+/**
+ * Helper function to generate a datetime format for an event's date.
+ * 
+ * If the event is not an all-day event, the time format is used.
+ * If date/time format are not provided, the site's settings are used.
+ * Can be used inside the loop.
+ *  
+ * @param int    $event_id
+ * @param string $date_format
+ * @param string $time_format
+ */
+function eo_get_event_datetime_format( $event_id = false, $date_format = false, $time_format = false ){
+	
+	$event_id    = (int) ( empty( $event_id ) ? get_the_ID() : $event_id );
+	
+	$date_format = trim( get_option( 'date_format' ) );
+	$time_format = trim( get_option( 'time_format' ) );
+	
+	$format = ( eo_is_all_day( $event_id ) ? $date_format :  $date_format . ' ' . $time_format );
+	
+	return $format;
+}
 ?>
