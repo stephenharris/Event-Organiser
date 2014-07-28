@@ -102,6 +102,8 @@ function eo_format_date($dateString='',$format='d-m-Y'){
 */
 function eo_get_blog_timezone(){
 	$tzstring = wp_cache_get( 'eventorganiser_timezone' );
+	
+	$tzstring = apply_filters( 'eventorganiser_timezone', $tzstring );
 
 	if ( false === $tzstring ) {
 
