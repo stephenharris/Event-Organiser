@@ -105,26 +105,12 @@ function eo_get_blog_timezone(){
 
 	if ( false === $tzstring ) {
 
-		$tzstring =get_option('timezone_string');
-		$offset = get_option('gmt_offset');
-
-		// Remove old Etc mappings.  Fallback to gmt_offset.
-		if ( !empty($tz_string) && false !== strpos($tzstring,'Etc/GMT') )
-			$tzstring = '';
-
+		$tzstring = get_option('timezone_string');
+		$offset   = get_option('gmt_offset');
+		
 		if( empty($tzstring) && $offset!=0 ):
-			//use offset		
-			$offset *= 3600; // convert hour offset to seconds
-			$allowed_zones = timezone_abbreviations_list();
-
-			foreach ($allowed_zones as $abbr):
-				foreach ($abbr as $city):
-					if ($city['offset'] == $offset){
-						$tzstring=$city['timezone_id'];
-						break 2;
-					}
-				endforeach;
-			endforeach;
+			$offset_st = $offset > 0 ? "+$offset" : "$offset";
+			$tzstring  = 'Etc/GMT'.$offset_st;
 		endif;
 
 		//Issue with the timezone selected, set to 'UTC'
@@ -140,7 +126,7 @@ function eo_get_blog_timezone(){
 	if( $tzstring instanceof DateTimeZone)
 		return $tzstring;
 
-	$timezone = new DateTimeZone($tzstring);
+	$timezone = new DateTimeZone( $tzstring );
 	return $timezone; 
 }
 
