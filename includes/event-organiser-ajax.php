@@ -188,6 +188,10 @@ function eventorganiser_public_fullcalendar() {
 			//Add class if event is all day
 			if( eo_is_all_day() )
 				$event['className'][] = 'eo-all-day';
+				
+			//Add class if event starts and ends on different days
+			if( $event_start->format('Y-m-d') != $event_end->format('Y-m-d') )
+				$event['className'][] = 'eo-multi-day';
 			
 			//Include venue if this is set
 			$venue = eo_get_venue($post->ID);
