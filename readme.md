@@ -21,10 +21,10 @@ Event Organiser adds event management that integrates well with your WordPress s
 
 ### Available Extensions ###
 * [Event Organiser Pro](http://wp-event-organiser.com/pro-features?aid=7)
+* [Event Organiser Frontend Submissinos](http://wp-event-organiser.com/extensions/event-organiser-frontend-submissions/?aid=7)
 * [Discount Codes](http://wp-event-organiser.com/extensions/event-organiser-discount-codes?aid=7)
 * [Stripe Gateway](http://wp-event-organiser.com/extensions/event-organiser-stripe?aid=7)
 * [Posterboard](http://wordpress.org/plugins/event-organiser-posterboard) (free)
-* [VAT](http://wordpress.org/plugins/event-organiser-vat) (free)
 * [CSV export](http://wordpress.org/plugins/event-organiser-csv) (free)
 * [iCal Sync](http://wp-event-organiser.com/extensions/event-organiser-ical-sync?aid=7)
 
