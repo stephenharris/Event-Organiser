@@ -131,14 +131,15 @@ function eventorganiser_pre_get_posts( $query ) {
 	$date_objs = array('event_start_after'=>'','event_start_before'=>'','event_end_after'=>'','event_end_before'=>'');
 	foreach($date_objs as $prop => $value):
 		$date = $query->get($prop);
-		try{
-			$date = ( empty($date) ? false : new DateTime($date, eo_get_blog_timezone()) );
-		}catch( Exception $e){
-			$date = false;
+		if ( !( $date instanceof DateTime ) ){
+			try{
+				$date = ( empty($date) ? false : new DateTime($date, eo_get_blog_timezone()) );
+			}catch( Exception $e){
+				$date = false;
+			}
 		}
 		$date_objs[$prop] = $date;
 		$query->set($prop, $date);
-		
 	endforeach;
 
 	//If eo_interval is set, determine date ranges
