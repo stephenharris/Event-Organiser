@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: event-organiser 2.8.2\n"
+"Project-Id-Version: event-organiser 2.8.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-26 23:42+0100\n"
+"POT-Creation-Date: 2014-08-05 12:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -542,7 +542,7 @@ msgid "Show dates"
 msgstr ""
 
 #: event-organiser-edit.php:230
-#: includes/event-organiser-venue-functions.php:970
+#: includes/event-organiser-venue-functions.php:988
 msgid "Select a venue"
 msgstr ""
 
@@ -550,7 +550,7 @@ msgstr ""
 msgid "Venue Name"
 msgstr ""
 
-#: event-organiser-edit.php:408
+#: event-organiser-edit.php:413
 msgid "Event dates were not saved."
 msgstr ""
 
@@ -1751,51 +1751,51 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: includes/event-organiser-venue-functions.php:935
+#: includes/event-organiser-venue-functions.php:953
 msgid "Address"
 msgstr ""
 
-#: includes/event-organiser-venue-functions.php:936
+#: includes/event-organiser-venue-functions.php:954
 msgid "City"
 msgstr ""
 
-#: includes/event-organiser-venue-functions.php:937
+#: includes/event-organiser-venue-functions.php:955
 msgid "State / Province"
 msgstr ""
 
-#: includes/event-organiser-venue-functions.php:938
+#: includes/event-organiser-venue-functions.php:956
 msgid "Post Code"
 msgstr ""
 
-#: includes/event-organiser-venue-functions.php:939
+#: includes/event-organiser-venue-functions.php:957
 msgid "Country"
 msgstr ""
 
-#: includes/event.php:589
+#: includes/event.php:572
 msgid "Schedule not recognised."
 msgstr ""
 
-#: includes/event.php:598
+#: includes/event.php:581
 msgid "Start date not provided."
 msgstr ""
 
-#: includes/event.php:616
+#: includes/event.php:599
 msgid "Start date occurs after end date."
 msgstr ""
 
-#: includes/event.php:619
+#: includes/event.php:602
 msgid "Schedule end date is before is before the start date."
 msgstr ""
 
-#: includes/event.php:702
+#: includes/event.php:685
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr ""
 
-#: includes/event.php:822
+#: includes/event.php:805
 msgid "Event does not contain any dates."
 msgstr ""
 
-#: includes/event.php:963
+#: includes/event.php:946
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr ""
 
