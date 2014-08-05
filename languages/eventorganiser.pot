@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: event-organiser 2.8.2\n"
+"Project-Id-Version: event-organiser 2.8.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-26 23:42+0100\n"
+"POT-Creation-Date: 2014-08-05 12:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,8 +114,8 @@ msgid "Displays a list of events"
 msgstr ""
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:451
-#: event-organiser.php:132 includes/event-organiser-cpt.php:142
-#: includes/event-organiser-cpt.php:154
+#: event-organiser.php:132 includes/class-eo-theme-compatability.php:76
+#: includes/event-organiser-cpt.php:142 includes/event-organiser-cpt.php:154
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
 msgstr ""
@@ -542,7 +542,7 @@ msgid "Show dates"
 msgstr ""
 
 #: event-organiser-edit.php:230
-#: includes/event-organiser-venue-functions.php:970
+#: includes/event-organiser-venue-functions.php:988
 msgid "Select a venue"
 msgstr ""
 
@@ -550,7 +550,7 @@ msgstr ""
 msgid "Venue Name"
 msgstr ""
 
-#: event-organiser-edit.php:408
+#: event-organiser-edit.php:413
 msgid "Event dates were not saved."
 msgstr ""
 
@@ -1101,6 +1101,13 @@ msgstr ""
 msgid ""
 "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
 "YYYYMMDDTHHiiss format."
+msgstr ""
+
+#: includes/class-eo-theme-compatability.php:68
+#: includes/class-eo-theme-compatability.php:71
+#: includes/class-eo-theme-compatability.php:74 templates/archive-event.php:34
+#: templates/archive-event.php:37 templates/archive-event.php:40
+msgid "Events: "
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:61
@@ -1751,57 +1758,52 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: includes/event-organiser-venue-functions.php:935
+#: includes/event-organiser-venue-functions.php:953
 msgid "Address"
 msgstr ""
 
-#: includes/event-organiser-venue-functions.php:936
+#: includes/event-organiser-venue-functions.php:954
 msgid "City"
 msgstr ""
 
-#: includes/event-organiser-venue-functions.php:937
+#: includes/event-organiser-venue-functions.php:955
 msgid "State / Province"
 msgstr ""
 
-#: includes/event-organiser-venue-functions.php:938
+#: includes/event-organiser-venue-functions.php:956
 msgid "Post Code"
 msgstr ""
 
-#: includes/event-organiser-venue-functions.php:939
+#: includes/event-organiser-venue-functions.php:957
 msgid "Country"
 msgstr ""
 
-#: includes/event.php:589
+#: includes/event.php:572
 msgid "Schedule not recognised."
 msgstr ""
 
-#: includes/event.php:598
+#: includes/event.php:581
 msgid "Start date not provided."
 msgstr ""
 
-#: includes/event.php:616
+#: includes/event.php:599
 msgid "Start date occurs after end date."
 msgstr ""
 
-#: includes/event.php:619
+#: includes/event.php:602
 msgid "Schedule end date is before is before the start date."
 msgstr ""
 
-#: includes/event.php:702
+#: includes/event.php:685
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr ""
 
-#: includes/event.php:822
+#: includes/event.php:805
 msgid "Event does not contain any dates."
 msgstr ""
 
-#: includes/event.php:963
+#: includes/event.php:946
 msgid "Occurrence not deleted. Occurrence not found."
-msgstr ""
-
-#: templates/archive-event.php:34 templates/archive-event.php:37
-#: templates/archive-event.php:40
-msgid "Events: "
 msgstr ""
 
 #: templates/archive-event.php:55 templates/archive-event.php:110
@@ -1810,6 +1812,8 @@ msgstr ""
 #: templates/taxonomy-event-tag.php:48 templates/taxonomy-event-tag.php:106
 #: templates/taxonomy-event-venue.php:48
 #: templates/taxonomy-event-venue.php:105
+#: templates/theme-compatability/loop.php:7
+#: templates/theme-compatability/loop.php:23
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
 msgstr ""
 
@@ -1819,15 +1823,18 @@ msgstr ""
 #: templates/taxonomy-event-tag.php:49 templates/taxonomy-event-tag.php:107
 #: templates/taxonomy-event-venue.php:49
 #: templates/taxonomy-event-venue.php:106
+#: templates/theme-compatability/loop.php:8
+#: templates/theme-compatability/loop.php:24
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
 msgstr ""
 
 #: templates/archive-event.php:119 templates/taxonomy-event-category.php:116
 #: templates/taxonomy-event-tag.php:116 templates/taxonomy-event-venue.php:115
+#: templates/theme-compatability/loop.php:31
 msgid "Nothing Found"
 msgstr ""
 
-#: templates/archive-event.php:123
+#: templates/archive-event.php:123 templates/theme-compatability/loop.php:34
 msgid "Apologies, but no results were found for the requested archive. "
 msgstr ""
 
