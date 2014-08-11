@@ -159,6 +159,7 @@ if( !class_exists('EO_Extension') ){
 
 			if( $local_key ){
 				$response = maybe_unserialize( $local_key['response'] );
+				$this->key_data = $response;
 
 				if( $token == $response['token'] ){
 
@@ -307,23 +308,44 @@ if( !class_exists('EO_Extension') ){
 			$key = get_site_option( $this->id.'_license'  );
 			$check = $this->is_valid( $key );
 			$valid = !is_wp_error( $check );
+	
+			$message = false;
 
-			$message =  sprintf(
+			if( !$valid ){
+				$message =  sprintf(
 					'The license key you have entered is invalid. <a href="%s">Purchase a license key</a>.',
 					$this->public_url
-			);
-	
-			if( !$valid ){
+				);
+						
 				$message .= eventorganiser_inline_help(
 						sprintf( 'Invalid license key (%s)', $check->get_error_code() ),
-						sprintf(
-								'<p> Without a valid license key you will not be eligable for updates or support. You can purchase a
+						sprintf( 
+								'<p>%s</p><p> Without a valid license key you will not be eligable for updates or support. You can purchase a
 					license key <a href="%s">here</a>.</p> <p> If you have entered a valid license which does not seem to work, please
 					<a href="%s">contact suppport</a>.',
+								$this->_get_verbose_reason( $check->get_error_code() ),
 								$this->public_url,
 								'http://wp-event-organiser.com/contact/'
 						)
 				);
+			}elseif( isset( $this->key_data) && !empty( $this->key_data['expires'] ) ){
+				
+				$now     = new DateTime( 'now' );
+				$expires = new DateTime( $this->key_data['expires'] );
+				 
+				$time_diff = abs( $expires->format('U') - $now->format('U') );
+				$days     = floor( $time_diff/86400 );
+
+				if( $days <= 21 ){
+				
+					$message =  sprintf( 
+						'This key expires on %s. <a href="%s">Renew within the next %d days</a> for a 50%% discount',
+						$expires->format( get_option( 'date_format' ) ),
+						'http://wp-event-organiser.com/my-account',
+						$days
+					);
+					
+				}
 			}
 	
 			eventorganiser_text_field( array(
@@ -332,12 +354,35 @@ if( !class_exists('EO_Extension') ){
 				'name' => $this->id.'_license',
 				'style' => $valid ? 'background:#D7FFD7' : 'background:#FFEBE8',
 				'class' => 'regular-text',
-				'help' => $valid ? '' : $message
+				'help' => $message
 			) );
 	
 		}
 	
 	
+		private function _get_verbose_reason( $code ){
+			
+			$reasons = array(
+				'no-key-given'           => 'No key has been provided.',
+				'invalid-license-format' => 'The entered key is incorrect.',
+				'invalid-response'       => 'There was an error in authenticating the license key status.',
+				'invalid-token'          => 'There was an error in authenticating the license key status.',
+				'key-not-found'          => 'No key has been provided.',
+				'license-not-found'      => 'The provided license could not be found.',
+				'license-suspended'      => 'The license key is no longer valid.',
+				'incorrect-product'      => 'The key is not valid for this product.',
+				'license-expired'        => 'Your license key has expired.',
+				'site-limit-reached'     => 'The key has met the site limit.',
+				'unknown'                => 'An unknown error has occurred'
+			);
+			
+			if( isset( $reasons[$code] ) ){
+				return $reasons[$code];
+			}else{
+				return $code;	
+			}
+		}
+		
 		public function plugin_info( $check, $action, $args ){
 	
 			if ( $args->slug == $this->slug ) {
