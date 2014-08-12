@@ -343,6 +343,9 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 	
 	$event_data['duration_str'] = $duration_str;
 
+	$schedule_last_end = clone $schedule_last;
+	$schedule_last_end->modify( $duration_str );
+
 	//Get dates to be deleted / added
 	$current_occurrences = eo_get_the_occurrences( $post_id );
 	$current_occurrences = $current_occurrences ? $current_occurrences : array();
@@ -440,8 +443,8 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 	update_post_meta( $post_id, '_eventorganiser_event_schedule', $event_data );
 	update_post_meta( $post_id, '_eventorganiser_schedule_start_start', $start->format('Y-m-d H:i:s') );
 	update_post_meta( $post_id, '_eventorganiser_schedule_start_finish', $end->format('Y-m-d H:i:s') );
-	update_post_meta( $post_id, '_eventorganiser_schedule_last_start', $occurrence->format('Y-m-d H:i:s') );
-	update_post_meta( $post_id, '_eventorganiser_schedule_last_finish', $occurrence_end->format('Y-m-d H:i:s') );
+	update_post_meta( $post_id, '_eventorganiser_schedule_last_start', $schedule_last->format('Y-m-d H:i:s') );
+	update_post_meta( $post_id, '_eventorganiser_schedule_last_finish', $schedule_last_end->format('Y-m-d H:i:s') );
 		
 	return $post_id;
 }
