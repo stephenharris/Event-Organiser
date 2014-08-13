@@ -374,23 +374,28 @@ function eventorganiser_details_save( $post_id ) {
 	}
 
 	//Collect include/exclude 
-	$in_ex = array();
+	$in_ex         = array();
+	$orig_schedule = eo_get_event_schedule( $post_id );
 	foreach ( array( 'include', 'exclude' ) as $key ):
+		
 		$in_ex[$key] = array();
-		$arr = explode( ',', sanitize_text_field( $raw_data[$key] ) ); 
+		$arr         = explode( ',', sanitize_text_field( $raw_data[$key] ) );
 		
 		if ( !empty( $arr ) ){
-			
-			foreach ( $arr as $date ):
-				$date_obj = eo_check_datetime( 'Y-m-d', trim( $date ) );
-				if( $date_obj ){
+			foreach ( $arr as $date ){
+				if( $date_obj = eo_check_datetime( 'Y-m-d', trim( $date ) ) ){
 					$date_obj->setTime( $start->format('H'), $start->format('i') );
 					$in_ex[$key][] = $date_obj;
 				}
-			endforeach;
+			}
+
+			if( $orig = array_uintersect( $orig_schedule[$key], $in_ex[$key], '_eventorganiser_compare_dates' ) ){
+				$in_ex[$key] = array_merge( $orig, $in_ex[$key] );
+				$in_ex[$key] = _eventorganiser_remove_duplicates( $in_ex[$key] );
+			}
 		}
 	endforeach;
-
+	
 	$event_data = array(
 		'start' => $start,
 		'end' => $end,
