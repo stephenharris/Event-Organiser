@@ -5,7 +5,8 @@
 
 add_action( 'wp_ajax_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' ); 
 add_action( 'wp_ajax_nopriv_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' ); 
-add_action( 'wp_ajax_event-admin-cal', 'eventorganiser_admin_calendar' ); 
+add_action( 'wp_ajax_event-admin-cal', 'eventorganiser_admin_calendar' );
+add_action( 'wp_ajax_eofc-edit-date', 'eventorganiser_admin_calendar_edit_date' ); 
 add_action( 'wp_ajax_eofc-format-time', 'eventorganiser_admin_cal_time_format' ); 
 add_action( 'wp_ajax_eo-search-venue', 'eventorganiser_search_venues' ); 
 add_action( 'wp_ajax_nopriv_eo_widget_agenda', 'eventorganiser_widget_agenda' );
@@ -735,5 +736,44 @@ function eventorganiser_ajax_toggle_addon_page(){
 
 	update_option( 'eventorganiser_options', $options );
 	exit(1);
+}
+
+/**
+ * Ajax response to event occurrence being moved.
+ * 
+ * TODO Prevent two occurrences from the same event 
+ * occuring on the same *date*. 
+ * 
+ * @ignore
+ */
+function eventorganiser_admin_calendar_edit_date(){
+	
+	$event_id      = (int) $_POST['event_id'];
+	$occurrence_id = (int) $_POST['occurrence_id'];
+	$all_day       = eo_is_all_day( $event_id );
+
+	if( 'event' != get_post_type( $event_id ) ){
+		wp_die( -1 );
+	}
+	
+	check_ajax_referer( 'edit_events' );
+	
+	if( !current_user_can( 'edit_event' ) ){
+		wp_die( -1 );
+	}
+		
+	$tz        = eo_get_blog_timezone();
+	$new_start = new DateTime( $_POST['start'], $tz );
+	$new_end   = new DateTime( $_POST['end'], $tz );  
+
+	$re = eventorganiser_update_occurrence( $event_id, $occurrence_id, $new_start, $new_end );
+	
+	if( $re ){
+		wp_die( 1 );	
+	}else{
+		wp_die( -1 );
+	}
+	
+	
 }
 ?>
