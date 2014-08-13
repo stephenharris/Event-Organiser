@@ -439,6 +439,31 @@ function _eventorganiser_compare_dates($date1,$date2){
 	 return ($date1 > $date2)? 1:-1;
 }
 
+/**
+ * Utility function Compares two DateTime object. 
+ *
+ * Returns +1 if the first date is after, -1 if its before or 0 if they're the same
+ *
+ * @access private
+ * @ignore
+ *
+ * @param dateTime $date1 The first datetime to compare
+ * @param dateTime $date2 The second datetime to compare
+ * @return int 1 | 0 | -1
+ */
+function _eventorganiser_compare_datetime( $date1, $date2 ){
+	
+	if ( $date1 == $date2 ) {
+		return 0;
+	} elseif ( $date1 > $date2 ) {
+		return 1;
+	} else {
+		return -1;
+	}
+	
+}
+
+
 
 
 /**
