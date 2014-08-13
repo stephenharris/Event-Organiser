@@ -9,17 +9,17 @@
 .eo-venue-map img{max-width: none;}
 
 /* Event meta data */
-.eo-event-venue-map,
-.eo-event-meta{
+body.single-event .eo-event-venue-map,
+body.single-event .eo-event-meta{
 	float:none;
 	width: 100%;
  } 
 @media ( min-width:600px ){
-	.eo-event-meta{
+	body.single-event .eo-event-meta{
 		width: 40%;
 		float: left;
 	}
-	.eo-event-venue-map{
+	body.single-event .eo-event-venue-map{
 		width: 40%;
 		float:right;
 	}
