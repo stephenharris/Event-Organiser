@@ -324,6 +324,9 @@ function eventorganiser_admin_calendar() {
 					$title.=' - '.__('Draft');
 				}
 				$event['title']= html_entity_decode ($title,ENT_QUOTES,'UTF-8');
+				
+				$event['event_id']      = $post->ID;
+				$event['occurrence_id'] = $post->occurrence_id;  
 
 				$schedule = eo_get_event_schedule($post->ID);
 
