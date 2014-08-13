@@ -417,6 +417,31 @@ class recurrenceTest extends EO_UnitTestCase
     		new DateTime( '2013-10-26 19:19:00', eo_get_blog_timezone() ), 
     		$schedule['schedule_last'] 
     	);
+
+    }
+    	
+    public function testChangeDates()
+    {
+    	$_event_data = array(
+    		'start'         => new DateTime( '2014-08-11 18:48:00', eo_get_blog_timezone() ),
+    		'end'           => new DateTime( '2014-08-11 19:48:00', eo_get_blog_timezone() ),
+    		'schedule'      => 'weekly',
+    		'schedule_last' => new DateTime( '2014-09-01 18:48:00', eo_get_blog_timezone() ),
+    		'include'       => array( new DateTime( '2014-08-25 22:48:00', eo_get_blog_timezone() ) ),
+    		'exclude'       => array( new DateTime( '2014-08-25 18:48:00', eo_get_blog_timezone() ) ),
+    	);
+    	
+    	$event_data = _eventorganiser_generate_occurrences( $_event_data );
+    	
+    	//echo print_r( $event_data );
+    	$expected = array(
+    			new DateTime( '2014-08-11 18:48:00', eo_get_blog_timezone() ),
+    			new DateTime( '2014-08-18 18:48:00', eo_get_blog_timezone() ),
+    			new DateTime( '2014-08-25 22:48:00', eo_get_blog_timezone() ),
+    			new DateTime( '2014-09-01 18:48:00', eo_get_blog_timezone() ),
+    	);
+    	
+    	$this->assertEquals( $expected, $event_data['occurrences'] );
 		
     }
     
