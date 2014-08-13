@@ -212,6 +212,44 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		
 	}	
 	
+	public function testCompareDates(){
+		
+		
+		$date1 = new DateTime( '2014-08-13' );
+		$date2 = new DateTime( '2014-08-14' );
+		$date3 = new DateTime( '2014-08-13' );
+		
+		$this->assertEquals( 1, _eventorganiser_compare_dates( $date2, $date1 ) );
+		$this->assertEquals( -1, _eventorganiser_compare_dates( $date1, $date2 ) );
+		$this->assertEquals( 0, _eventorganiser_compare_dates( $date1, $date3 ) );
+		
+	}
+	
+	public function testCompareDateTimess(){
+		
+		
+		$date1 = new DateTime( '2014-08-13 14:09:00' );
+		$date2 = new DateTime( '2014-08-13 15:09:00' );
+		$date3 = new DateTime( '2014-08-13 14:09:00' );
+		
+		$this->assertEquals( 1, _eventorganiser_compare_datetime( $date2, $date1 ) );
+		$this->assertEquals( -1, _eventorganiser_compare_datetime( $date1, $date2 ) );
+		$this->assertEquals( 0, _eventorganiser_compare_datetime( $date1, $date3 ) );
+		
+		
+		//Lets check whenthe timezones differ
+		$tz = new DateTimeZone( 'Etc/GMT-11' );
+		
+		$date1 = new DateTime( '2014-08-14 01:09:00', $tz );
+		$date2 = new DateTime( '2014-08-13 15:09:00' );
+		$date3 = new DateTime( '2014-08-13 14:09:00' );//same as $date1
+		
+		$this->assertEquals( 1, _eventorganiser_compare_datetime( $date2, $date1 ) );
+		$this->assertEquals( -1, _eventorganiser_compare_datetime( $date1, $date2 ) );
+		$this->assertEquals( 0, _eventorganiser_compare_datetime( $date1, $date3 ) );
+		
+	}
+	
 	
 	/**
 	 * TODO eo_get_blog_timezone(): Why does +10 give Asia/Choibalsan timezone.
