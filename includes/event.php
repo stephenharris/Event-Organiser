@@ -376,7 +376,7 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 				'StartDate'        => $occurrence->format('Y-m-d'),
 				'StartTime'        => $occurrence->format('H:i:s'),
 				'EndDate'          => $occurrence_end->format('Y-m-d'),
-				'FinishTime'       => $end->format('H:i:s'),
+				'FinishTime'       => $occurrence_end->format('H:i:s'),
 			);
 
 			$wpdb->update(
