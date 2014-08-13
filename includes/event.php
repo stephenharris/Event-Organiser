@@ -567,8 +567,9 @@ function eo_get_event_schedule( $post_id=0 ){
 
 		$exclude = array_filter( (array) $exclude );
 		$include = array_filter( (array) $include );
-		$exclude = array_udiff($exclude, $include, '_eventorganiser_compare_dates');
-		$include = array_udiff($include, $exclude, '_eventorganiser_compare_dates');
+		
+		$exclude = array_udiff($exclude, $include, '_eventorganiser_compare_datetime');
+		$include = array_udiff($include, $exclude, '_eventorganiser_compare_datetime');
 		
 		//White list schedule
 		if( !in_array($schedule, array('once','daily','weekly','monthly','yearly','custom')) )
@@ -795,10 +796,10 @@ function eo_get_event_schedule( $post_id=0 ){
 		//Add inclusions, removes exceptions and duplicates
 		if( defined( 'WP_DEBUG' ) && WP_DEBUG ){
 			//Make sure 'included' dates doesn't appear in generate date
-			$include = array_udiff( $include, $occurrences, '_eventorganiser_compare_dates' );
+			$include = array_udiff( $include, $occurrences, '_eventorganiser_compare_datetime' );
 		}
 		$occurrences = array_merge($occurrences, $include); 
-		$occurrences = array_udiff($occurrences, $exclude, '_eventorganiser_compare_dates');
+		$occurrences = array_udiff( $occurrences, $exclude, '_eventorganiser_compare_datetime') ;
 		$occurrences = _eventorganiser_remove_duplicates($occurrences);
 
 		//Sort occurrences
