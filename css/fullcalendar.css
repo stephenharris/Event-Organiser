@@ -23,6 +23,16 @@
 /*For the blocks of colour*/
 .cat .ui-selectmenu-item-icon { height: 14px; width: 14px; border:1px solid #dfdfdf;border-radius: 4px;}
 .cat .ui-selectmenu-item-icon{ background-image:none!important; }
+
+/* Fix for themes which are over-zealouse with transitions */
+.eo-fullcalendar a{
+   -webkit-transition:none;
+   -moz-transition:none; 
+   -o-transition:none; 
+   -ms-transition: none; 
+   transition: none;
+}
+
 /*!
  * FullCalendar v1.6.1 Stylesheet
  * Docs & License: http://arshaw.com/fullcalendar/
