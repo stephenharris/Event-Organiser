@@ -975,4 +975,66 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 
 		return true;
 	}
+
+	
+/**
+ * Updates a specific occurrence, and presevers the occurrence ID.
+ * 
+ * **Note:** Duration of updated occurrence should be the same as the rest of the 
+ * occurrences in the event. TODO Allow occurrences to have abitrary durations. 
+ * 
+ * @ignore
+ * @access private
+ * 
+ * @param int $event_id
+ * @param int $occurrence_id
+ * @param DateTime $start
+ * @param DateTime $end
+ */
+function eventorganiser_update_occurrence( $event_id, $occurrence_id, $start, $end ){
+
+	global $wpdb;
+		
+	$old_start = eo_get_the_start( DATETIMEOBJ, $event_id, null, $occurrence_id );
+	$schedule  = eo_get_event_schedule( $event_id );
+	
+	if( $start == $old_start ){
+		return true;
+	}
+	
+	//We update the date directly in the DB first so the occurrence is not deleted and recreated,
+	//but simply updated. 
+	
+	$wpdb->update(
+		$wpdb->eo_events, 
+		array(
+			'StartDate'  => $start->format('Y-m-d'),
+			'StartTime'  => $start->format('H:i:s'),
+			'EndDate'    => $end->format('Y-m-d'),
+			'FinishTime' => $end->format('H:i:s'),
+		),				
+		array( 'event_id' => $occurrence_id )
+	);
+	
+	wp_cache_delete( 'eventorganiser_occurrences_'.$event_id );//Important: update DB clear cache
+
+	//Now update event schedule...
+	
+	//If date being removed was manually included remove it, 
+	//otherwise add it to exclude. Then add new date as include.
+	if( ($index = array_search( $old_start, $schedule['include'] ) ) === false){
+		$schedule['exclude'][] = $old_start;
+	}else{
+		unset( $schedule['include'][$index] );
+	}
+	$schedule['include'][] = $start;
+
+	$re = eo_update_event( $event_id, $schedule );
+	
+	if( $re && !is_wp_error( $re ) ){
+		return true;
+	}
+	
+	return false;
+}
 ?>
