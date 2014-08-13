@@ -426,12 +426,13 @@ function _eventorganiser_remove_duplicates( $array=array() ){
  * @access private
 *  @ignore
  * @since 1.0.0
+ * @see _eventorganiser_compare_datetime
  *
  * @param dateTime $date1 The first date to compare
  * @param dateTime $date2 The second date to compare
  * @return int 1 | 0 | -1
  */
-function _eventorganiser_compare_dates($date1,$date2){
+function _eventorganiser_compare_dates( $date1, $date2 ){
 	//Don't wish to compare times
 	if($date1->format('Ymd') == $date2->format('Ymd'))
 		return 0;
