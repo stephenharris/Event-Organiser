@@ -3,8 +3,8 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 3.9.1
-Stable tag: 2.8.3
+Tested up to: 3.9.2
+Stable tag: 2.8.4
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -201,6 +201,15 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 2.8.4 - 14th August 2014 =
+* Adds fix for themes which apply transitions to anchor tags
+* Fixes bug where event's "schedule_last" is incorrectly set to the last event date update/inserted
+* Ensure next/prev links in widget calendar use home url as a base
+* Do not use `<style>` tags with `wp_add_inline_style()` on WP 3.7+
+* Fix styling being applied to event venue pages 
+* Updated CONTRIBUTING.md, please make PRs on develop branch
+* Fixes bug with "timeformat" included in event query which can affect results returned to fullCalendar. [See thread](http://wordpress.org/support/topic/full-calendar-shortcode-doesnt-show-events).
+
 = 2.8.3 - 5th August 2014 =
 * Fixes bug with using DateTime object in `eo_get_events()` queries
 * Don't use `date_diff`, can result in buggy behaviour. Fixes [Fixes #205](https://github.com/stephenharris/Event-Organiser/issues/205).
@@ -208,7 +217,6 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Clone DateTime objects before altering them (e.g. timezone). [Fixes #203)(https://github.com/stephenharris/Event-Organiser/issues/203).
 * Don't display category/venue filters if there are no terms. 
 * Check if `$strptime` is an empty array (suggests incorrect/empty date). Fixes bug with PHP5.2 installs. See [forum post](http://wordpress.org/support/topic/strange-date-repeat).
-
 
 = 2.8.2 - 26th June 2014 =
 * Fixes widget template option ignored (bug introduced in 2.8.1)
@@ -229,7 +237,6 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Fixes bug where relative queries with `eo_get_events()` return uintended results. The function previously ignored the time part.
 * Fix datepicker css (particuarly on firefox).
  
-
 = 2.7.5 =
 * Ensure jquery-dialog is loaded (thanks to PunchRockgroin).
 

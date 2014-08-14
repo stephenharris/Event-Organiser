@@ -1,6 +1,6 @@
 <?php
 
-class recurrenceTest extends PHPUnit_Framework_TestCase
+class recurrenceTest extends EO_UnitTestCase
 {
 	
     public function testOneOff()
@@ -394,6 +394,31 @@ class recurrenceTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals( $expected, $event_data['occurrences'] );
     }
   
+    
+	
+    public function testScheduleLastUpdate()
+    {
+    	$event_data = array(
+    		'start'         => new DateTime( '2013-10-22 19:19:00', eo_get_blog_timezone() ),
+    		'end'           => new DateTime( '2013-10-22 20:19:00', eo_get_blog_timezone() ),
+    	    'schedule'      => 'daily',
+            'frequency'     => 2,
+    		'schedule_last' => new DateTime( '2013-10-26 19:19:00', eo_get_blog_timezone() ),
+    	);
+    	$event = eo_insert_event( $event_data );
+    	
+    	eo_update_event( $event, array(
+    		'include' => array( new DateTime( '2013-10-25 19:19:00', eo_get_blog_timezone() ) )
+    	));
+    	
+    	$schedule = eo_get_event_schedule( $event );
+    	
+    	$this->assertEquals( 
+    		new DateTime( '2013-10-26 19:19:00', eo_get_blog_timezone() ), 
+    		$schedule['schedule_last'] 
+    	);
+		
+    }
     
 }
 
