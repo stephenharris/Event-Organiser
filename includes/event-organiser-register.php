@@ -630,6 +630,20 @@ function _eventorganiser_upgrade_admin_notice(){
  	$message = __("<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post<a/>.",'eventorganiser');
  	$notice_handler->add_notice( 'changedtemplate17', '', $message , 'alert');
 
+ 	if( !get_option('timezone_string') && current_user_can( 'manage_options' ) ){
+ 		$offset    = get_option('gmt_offset');
+ 		$offset_st = $offset > 0 ? "+$offset" : "$offset";
+		$tzstring  = 'UTC'.$offset_st;
+			
+		$message = sprintf(
+			"<h4>" . sprintf( esc_html__("Your site timezone is %s","e"), "<em>{$tzstring}</em>" ). "</h4>"
+			."<p>" . __( "Is this correct? Using a fixed offset from UTC may cause unexpected behaviour if you observe Daylight Savings Time so it's recommended you select a city instead.","e") . "</p>"
+			."<p>" . __( "You can <a href='%s'>change your timezone settings here</a>.",'eventorganiser') . "</p>",
+			admin_url( 'options-general.php' ).'#default_role'
+		);
+ 		$notice_handler->add_notice( 'timezone', '', $message , 'alert');	
+	}
+		
 }
 add_action( 'admin_notices', '_eventorganiser_upgrade_admin_notice', 1 );
 
