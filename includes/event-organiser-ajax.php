@@ -63,15 +63,15 @@ function eventorganiser_public_fullcalendar() {
 	$presets = array('numberposts'=>-1, 'group_events_by'=>'','showpastevents'=>true);
 
 	//Retrieve events		
-	$query = array_merge($request,$presets,array($time_format));
-	$key = 'eo_fc_'.md5(serialize($query));
+	$query    = array_merge( $request, $presets );
+	$key      = 'eo_fc_'.md5( serialize( $query ). $time_format );
 	$calendar = get_transient('eo_full_calendar_public');
-	if( $calendar && is_array($calendar) && isset( $calendar[$key] ) ){
-		echo json_encode($calendar[$key]);
+	if( $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
+		echo json_encode( $calendar[$key] );
 		exit;
 	}
 
-	$events = eo_get_events($query);
+	$events = eo_get_events( $query );
 	$eventsarray = array();
 
 	//Blog timezone
