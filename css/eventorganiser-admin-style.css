@@ -24,6 +24,13 @@
 	}
 }
 
+@media only screen and (max-width: 1024px) {
+	#post-body.columns-2 #venuemap{
+		width: 100%;
+		clear: both;
+	}
+}
+
 /* Venue address table in metabox*/
 #eo_venue_form table.address {float:left;text-align:left;margin: 10px;}
 
