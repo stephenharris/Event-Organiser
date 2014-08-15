@@ -32,9 +32,9 @@
 
 /* Calendar View*/
 .fc-button-next,.fc-button-prev {margin-top:2px;}
-.fc-text-arrow{line-height:0em;}
+.fc-text-arrow{line-height:0;}
 .fc-button-prev .ui-button-text, .fc-button-next .ui-button-text {padding-top: 0.5em;}
-.fc-button{line-height:1em;height: 2.2em;line-height: 2.2em;}
+.fc-button{height: 2.2em;line-height: 2.2em;}
 .event.past-event{opacity:0.5;}
 form.eo_cal .ui-autocomplete-input{width:220px;}
 /* Table on event details calendar view*/
@@ -79,7 +79,7 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .ui-autocomplete .ui-menu-item{border-top: 1px solid #cbc7bd;}
 .ui-autocomplete .ui-menu-item:first-child {border-top: none;}
 .ui-combobox {position: relative;display: inline-block;margin-right:30px;}
-.ui-combobox-toggle {top: 0;bottom: 0;margin-left: -1px;padding: 0;/* adjust styles for IE 6/7 */*height: 1.7em;*top: 0.1em;}
+.ui-combobox-toggle {top: 0;bottom: 0;margin-left: -1px;padding: 0;*height: 1.7em;*top: 0.1em;}
 .ui-combobox-input {margin: 0;padding: 0.3em;}
 .eo-venue-combobox-buttons{position: absolute;width:4.5em;}
 
@@ -183,9 +183,7 @@ a.eo-inline-help img {
 		position: relative;
 		padding: 5px 35px 5px 10px;
 		overflow: hidden;
-
 		border-width: 0 0 1px;
-		font-weight: bold;
 		font-weight: bold;
 		font-size: 14px;
 		color: #21759B;
@@ -239,14 +237,6 @@ a.eo-inline-help img {
 				color: inherit;
 				background: transparent none no-repeat -100em -100em;
 			}
-
-
-/* Applied to 'focused' tooltips e.g. most recently displayed/interacted with */
-.qtip-focus{}
-
-/* Applied on hover of tooltips i.e. added/removed on mouseenter/mouseleave respectively */
-.qtip-hover{}
-
 
 
 /* Default tooltip style */
@@ -337,12 +327,6 @@ a.eo-inline-help img {
 .ui-tooltip-icon, .ui-tooltip-icon .ui-icon{-moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; text-decoration:none}
 .ui-tooltip-icon .ui-icon{width:18px; height:14px; text-align:center; text-indent:0; font:normal bold 10px/13px Tahoma,sans-serif; color:inherit; background:transparent none no-repeat -100em -100em}
 
-/* Applied to 'focused' tooltips e.g. most recently displayed/interacted with */
-.ui-tooltip-focus{}
-
-/* Applied on hover of tooltips i.e. added/removed on mouseenter/mouseleave respectively */
-.ui-tooltip-hover{}
-
 /* Add shadows to your tooltips in:FF3+, Chrome 2+, Opera 10.6+, IE9+, Safari 2+*/
 .ui-tooltip-shadow{-webkit-box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15); -moz-box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15); box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15)}
 
@@ -378,5 +362,3 @@ a.eo-inline-help img {
 .ui-tooltip .ui-tooltip-tip, 
 .ui-tooltip .ui-tooltip-tip *{position:absolute; line-height:0.1px !important; font-size:0.1px !important; color:#123456; background:transparent; border:0 dashed transparent}
 .ui-tooltip .ui-tooltip-tip canvas{top:0; left:0}
-
-
