@@ -14,7 +14,7 @@ eovenue = {
 	init_map: function( id, options ){
 		
 	    if (typeof google === "undefined") {
-	    	return
+	    	return;
 	    }
 	
 	    var fieldID   = ( options.hasOwnProperty( 'fieldID' ) ? options.fieldID : id );
@@ -32,7 +32,7 @@ eovenue = {
 	    };
 
 	    var map    = new google.maps.Map( document.getElementById( fieldID ), map_options );
-	    var marker = marker = new google.maps.Marker({
+	    var marker = new google.maps.Marker({
             position:  latlng,
             map:       map,
             draggable: draggable,
@@ -62,7 +62,7 @@ eovenue = {
 	geocode: function( address, callback ){
 	    
 		if (typeof google === "undefined") {
-	    	return
+	    	return;
 	    }		
 		
 		var geocoder = new google.maps.Geocoder();
