@@ -198,8 +198,8 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 		$screen = get_current_screen();
 
 		if ( in_array( $action,array( 'create', 'edit', 'add', 'update' ) ) ):
-			wp_enqueue_script( 'eo_venue' );
-			wp_localize_script( 'eo_venue', 'EO_Venue', array( 'location' => get_option( 'timezone_string' ), 'draggable' => true, 'screen_id' => $screen->id) );
+			wp_enqueue_script( 'eo-venue-admin' );
+			wp_localize_script( 'eo-venue-admin', 'EO_Venue', array( 'location' => get_option( 'timezone_string' ), 'draggable' => true, 'screen_id' => $screen->id) );
 			wp_enqueue_style( 'eventorganiser-style' );
 			wp_enqueue_script( 'media-upload' );
 			wp_enqueue_script( 'postbox' ); 

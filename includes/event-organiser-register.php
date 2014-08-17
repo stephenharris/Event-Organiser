@@ -88,10 +88,16 @@ function eventorganiser_register_scripts(){
 	$version = defined( 'EVENT_ORGANISER_VER' ) ? EVENT_ORGANISER_VER : false;
 	$ext = (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG) ? '' : '.min';
 
-	/*  Venue scripts for venue & event edit */
-	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL."js/venues{$ext}.js",array(
+	/*  Venue (map) utility script */
+	wp_register_script( 'eo-venue-util', EVENT_ORGANISER_URL."js/venue-util{$ext}.js",array(
 		'jquery',
 		'eo_GoogleMap'
+	),$version,true);
+	
+	/*  Venue script for venue edit */
+	wp_register_script( 'eo-venue-admin', EVENT_ORGANISER_URL."js/venue-admin{$ext}.js",array(
+		'jquery',
+		'eo-venue-util'
 	),$version,true);
 	
 	/*  Script for event edit page. (Legacy version) */
@@ -110,7 +116,8 @@ function eventorganiser_register_scripts(){
 		'jquery',
 		'jquery-ui-datepicker',
 		'eo-timepicker',
-		'eo-time-picker',
+		'eo-time-picker',//Deprecated remove in 3.0?
+		'eo-venue-util',
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',
 		'jquery-ui-button',
@@ -255,7 +262,6 @@ function eventorganiser_add_admin_scripts( $hook ) {
 						'occurrence'=>array(__('first','eventorganiser'),__('second','eventorganiser'),__('third','eventorganiser'),__('fourth','eventorganiser'),__('last','eventorganiser'))
 					)
 					));
-			wp_enqueue_script('eo_venue');
 			wp_enqueue_style('eventorganiser-style');
 		}
 	}elseif($current_screen->id=='edit-event'){
