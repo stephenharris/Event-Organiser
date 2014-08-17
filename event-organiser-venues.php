@@ -15,11 +15,11 @@ if( !in_array( 'event-venue', $supports ) ){
 class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 {
 	function set_constants(){
-		$this->hook = 'edit.php?post_type=event';
-		$this->title = __( 'Venues', 'eventorganiser' );
-		$this->menu = __( 'Venues', 'eventorganiser' );
+		$this->hook        = 'edit.php?post_type=event';
+		$this->title       = __( 'Venues', 'eventorganiser' );
+		$this->menu        = __( 'Venues', 'eventorganiser' );
 		$this->permissions = 'manage_venues';
-		$this->slug = 'venues';
+		$this->slug        = 'venues';
 
 		//Workaround for bug http://core.trac.wordpress.org/ticket/18958
 		add_filter( 'set-screen-option', array( $this, 'set_per_page' ),10,3 );
@@ -56,14 +56,14 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 					} else{
 						$term_id = (int) $return['term_id'];
 						$venue = get_term( $term_id, 'event-venue' );
-						$url = add_query_arg(
-								array(
-									'page' => 'venues',
-									'action' => 'edit',
-									'event-venue' => $venue->slug,
-									'message' => 2,
-						    		), 
-								admin_url( 'edit.php?post_type=event' ) 
+						$url = add_query_arg( 
+							array(
+								'page'        => 'venues',
+								'action'      => 'edit',
+								'event-venue' => $venue->slug,
+								'message'     => 2,
+						    ), 
+							admin_url( 'edit.php?post_type=event' ) 
 						);
 
 						wp_redirect( $url );
@@ -96,12 +96,12 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 						$venue = get_term( $term_id, 'event-venue' );
 
 						$url = add_query_arg(
-								array(
-									'page' => 'venues',
-									'action' => 'edit',
-									'event-venue' => $venue->slug,
-									'message' => 1,
-							    ), 
+							array(
+								'page'        => 'venues',
+								'action'      => 'edit',
+								'event-venue' => $venue->slug,
+								'message'     => 1,
+							), 
 							admin_url( 'edit.php?post_type=event' ) 
 						);
 
