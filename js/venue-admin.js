@@ -21,19 +21,23 @@ jQuery(document).ready(function ($) {
         lng: eo_venue_Lng,
         zoom: zoom,
         draggable: true,
-        onDrag: function (evt) {
+        onDrag: function( evt ) {
         	this.dragging = true;
+        	var latlng = evt.latLng.lat().toFixed(6) + ',' + evt.latLng.lng().toFixed(6);
+        	$("#eo-venue-latllng-text").text( latlng );
         },
-        onDragend: function ( evt ) {
+        onDragend: function( evt ) {
         	this.dragging = false;
         	this.setPosition( this.position );
         },
         onPositionchanged: function (){
         	if( !this.dragging ){
-        		var latLng = this.getPosition();
-
+        		var latLng    = this.getPosition();
+        		var latlngStr = latLng.lat().toFixed(6) + ',' + latLng.lng().toFixed(6);
+        		
         		$("#eo_venue_Lat").val( latLng.lat().toFixed(6) );
         		$("#eo_venue_Lng").val( latLng.lng().toFixed(6) );
+        		$("#eo-venue-latllng-text").text( latlngStr );
         		                
         		this.getMap().setCenter( latLng );
         		this.getMap().setZoom( 15 );
@@ -52,6 +56,35 @@ jQuery(document).ready(function ($) {
 				eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
 			}
 		});
+	});
+	
+	$('#eo-venue-latllng-text').blur(function() {
+		var text    = $(this).text().trim().replace(/ /g,'');
+		var match   = text.match(/^(-?[0-9]{1,3}\.[0-9]+),(-?[0-9]{1,3}\.[0-9]+)$/);
+		var old_lat = $(this).data('eo-lat');
+		var old_lng = $(this).data('eo-lng');
+		
+		if( match ){
+			var lat = match[1];
+			var lng = match[2];
+			
+			if( lat != old_lat || lng != old_lng ){
+				$(this).data( 'eo-lat', lat );
+				$(this).data( 'eo-lng', lng );
+				var latlng = new google.maps.LatLng( lat, lng );
+					eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
+				}
+		}else{
+			//Not valid...
+			$(this).text( old_lat + "," + old_lng );
+		}
+	});
+	
+	$('#eo-venue-latllng-text').keydown( function( evt ){
+		//On enter leave the latitude/longtitude
+		if( 13 === evt.which ){
+			$(this).blur();	
+		}
 	});
 			
 });

@@ -15,7 +15,7 @@
 #venue_address table tr{line-height: 4em;}
 
 /* Venue map on venue page*/
-#venue_address.postbox #venuemap{height: 312px;margin: 0 0 0 -60%;width: 60%;}
+#venue_address.postbox #venuemap{height: 335px;margin: 0 0 0 -60%;width: 60%;}
 
 @media only screen and (max-width: 860px) {
 	#venue_address.postbox #venuemap{
@@ -32,7 +32,16 @@
 }
 
 /* Venue address table in metabox*/
-#eo_venue_form table.address {float:left;text-align:left;margin: 10px;}
+#eo_venue_form .address-fields {float:left;text-align:left;margin: 10px;}
+#eo-venue-latllng-text{
+	border-bottom: 1px dotted #aaa;
+	cursor:pointer;
+}
+#eo-venue-latllng-text:hover{
+	border-bottom: 1px dotted #000;
+}
+
+
 
 /* Venue address metabox fix */
 #eo_venue_form #venue_address .inside{padding:0;margin:0;}

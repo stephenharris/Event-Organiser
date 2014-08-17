@@ -378,28 +378,44 @@ function eventorganiser_venue_location( $venue ){
 	$term_id = isset( $venue->term_id ) ? (int) $venue->term_id : 0;
 	$address = eo_get_venue_address( $term_id );?>
 
-	<table class ="address">
-		<tbody>
-		<?php
-		$address_fields = _eventorganiser_get_venue_address_fields();
-		foreach ( $address_fields as $key => $label ){
-			//Keys are prefixed by '_'.
-			$key = trim( $key, '_'  );
-			printf(
-				'<tr>
-					<th><label for="eo-venue-%2$s">%1$s:</label></th>
-					<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo-venue-%2$s"  value="%3$s" /></td>
-				</tr>',
-				$label,
-				esc_attr( $key ),
-				esc_attr( $address[$key] )
-			);
-		}
-		?>
-		</tbody>
-	</table>
-
-	<div id="venuemap" class="gmap3"></div>
+	<div class="address-fields">
+	
+		<table>
+			<tbody>
+			<?php
+			$address_fields = _eventorganiser_get_venue_address_fields();
+			foreach ( $address_fields as $key => $label ){
+				//Keys are prefixed by '_'.
+				$key = trim( $key, '_'  );
+				printf(
+					'<tr>
+						<th><label for="eo-venue-%2$s">%1$s:</label></th>
+						<td><input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo-venue-%2$s"  value="%3$s" /></td>
+					</tr>',
+					$label,
+					esc_attr( $key ),
+					esc_attr( $address[$key] )
+				);
+			}
+			?>
+			</tbody>
+		</table>
+	
+		<?php $latlng = eo_get_venue_latlng( $term_id ); ?>
+		<small>
+			<?php esc_html_e( 'Latitude/Longitude:', 'eventorganiser' ); ?>
+			<span id="eo-venue-latllng-text" 
+				data-eo-lat="<?php echo esc_attr( $latlng['lat'] );?>" 
+				data-eo-lng="<?php echo esc_attr( $latlng['lng'] );?>" 
+				contenteditable="true">
+				<?php echo esc_html( implode( ',', $latlng ) );?>
+			</span>
+		</small>
+		
+	</div>
+	
+	<div id="venuemap"></div>
+	
 	<div class="clear"></div>
 
 	<input type="hidden" name="eo_venue[latitude]" id="eo_venue_Lat"  value="<?php echo esc_attr( eo_get_venue_lat( $term_id ) ); ?>"/>
