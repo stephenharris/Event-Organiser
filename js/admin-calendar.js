@@ -321,7 +321,7 @@ eventorganiser.versionCompare = function(left, right) {
     			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height:"+button_height+";'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
     				icons: { primary: "ui-icon-triangle-1-s"},
     				text: false
-    			}).removeClass("ui-corner-all").addClass("ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
+    			}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
     				if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return;}
     				$(this).blur();
     				input.autocomplete("search", "").focus();
