@@ -337,6 +337,10 @@ eventorganiser.versionCompare = function(left, right) {
 	function eventorganiser_cat_dropdown(options){
 
 		var terms = options.categories;
+		
+		if( !terms ){
+			return;
+		}
 
 		var html="<select class='eo-cal-filter' id='eo-event-cat'>";
 		html+="<option value=''>"+options.buttonText.cat+"</option>";
@@ -351,6 +355,10 @@ eventorganiser.versionCompare = function(left, right) {
 	function eventorganiser_venue_dropdown(options){
 
 		var venues = options.venues;
+		
+		if( !venues ){
+			return;
+		}
 
 		var html="<select class='eo-cal-filter' id='eo-event-venue'>";
 		html+="<option value=''>"+options.buttonText.venue+"</option>";
