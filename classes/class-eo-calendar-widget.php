@@ -6,19 +6,19 @@ class EO_Calendar_Widget extends WP_Widget
 {
 
 	var $w_arg = array(
-		'title' => '',
+		'title'          => '',
 		'showpastevents' => 1,
 		'event-category' => '',
-		'event-venue' => '',
-		'show-long' => false,
+		'event-venue'    => '',
+		'show-long'      => false,
 		'link-to-single' => false,
-		);
+	);
 	
 	static $widget_cal = array();
 
 	function __construct() {
 		$widget_ops = array(
-			'classname' => 'widget_calendar eo_widget_calendar', 
+			'classname'   => 'widget_calendar eo_widget_calendar', 
 			'description' => __('Displays a calendar of your events','eventorganiser' ) 
 		);
 		parent::__construct( 'EO_Calendar_Widget', __( 'Events Calendar','eventorganiser' ), $widget_ops );
@@ -37,72 +37,78 @@ class EO_Calendar_Widget extends WP_Widget
 	
 		$instance = wp_parse_args( (array) $instance, $this->w_arg ); 	
 
-		printf('<p>
-					<label for="%1$s"> %2$s: </label>
-					<input type="text" id="%1$s" name="%3$s" value="%4$s">
-				</p>',
-				esc_attr( $this->get_field_id('title' ) ),
-				esc_html__( 'Title', 'eventorganiser' ),
-				esc_attr( $this->get_field_name('title') ),
-				esc_attr( $instance['title'] )
+		printf(
+			'<p>
+				<label for="%1$s"> %2$s: </label>
+				<input type="text" id="%1$s" name="%3$s" value="%4$s">
+			</p>',
+			esc_attr( $this->get_field_id('title' ) ),
+			esc_html__( 'Title', 'eventorganiser' ),
+			esc_attr( $this->get_field_name('title') ),
+			esc_attr( $instance['title'] )
 		);
 
-		printf('<p>
-					<label for="%1$s"> %2$s: </label>
-					<input type="checkbox" id="%1$s" name="%3$s" value="1" %4$s>
-				</p>',
-				esc_attr( $this->get_field_id('showpastevents') ),
-				esc_html__('Include past events', 'eventorganiser' ),
-				esc_attr( $this->get_field_name( 'showpastevents' ) ),
-				checked( $instance['showpastevents'], 1, false )
+		printf(
+			'<p>
+				<label for="%1$s"> %2$s: </label>
+				<input type="checkbox" id="%1$s" name="%3$s" value="1" %4$s>
+			</p>',
+			esc_attr( $this->get_field_id('showpastevents') ),
+			esc_html__('Include past events', 'eventorganiser' ),
+			esc_attr( $this->get_field_name( 'showpastevents' ) ),
+			checked( $instance['showpastevents'], 1, false )
 		);
 		
-		printf('<p>
-					<label for="%1$s"> %2$s: </label>
-					<input type="checkbox" id="%1$s" name="%3$s" value="1" %4$s>
-				</p>',
-						esc_attr( $this->get_field_id('show-long') ),
-						esc_html__('Show long events', 'eventorganiser' ),
-						esc_attr( $this->get_field_name( 'show-long' ) ),
-						checked( $instance['show-long'], 1, false )
+		printf(
+			'<p>
+				<label for="%1$s"> %2$s: </label>
+				<input type="checkbox" id="%1$s" name="%3$s" value="1" %4$s>
+			</p>',
+			esc_attr( $this->get_field_id('show-long') ),
+			esc_html__('Show long events', 'eventorganiser' ),
+			esc_attr( $this->get_field_name( 'show-long' ) ),
+			checked( $instance['show-long'], 1, false )
 		);
 		
-		printf('<p>
-					<label for="%1$s"> %2$s: </label>
-					<input type="checkbox" id="%1$s" name="%3$s" value="1" %4$s>
-				</p>',
-						esc_attr( $this->get_field_id('link-to-single') ),
-						esc_html__('Link directly to event for days with only one event', 'eventorganiser' ),
-						esc_attr( $this->get_field_name( 'link-to-single' ) ),
-						checked( $instance['link-to-single'], 1, false )
+		printf(
+			'<p>
+				<label for="%1$s"> %2$s: </label>
+				<input type="checkbox" id="%1$s" name="%3$s" value="1" %4$s>
+			</p>',
+			esc_attr( $this->get_field_id('link-to-single') ),
+			esc_html__('Link directly to event for days with only one event', 'eventorganiser' ),
+			esc_attr( $this->get_field_name( 'link-to-single' ) ),
+			checked( $instance['link-to-single'], 1, false )
 		);
 
-		printf('<p>
-					<label for="%1$s"> %2$s: </label>
-					<input type="text" id="%1$s" name="%3$s" value="%4$s" class="widefat">
-					<em> %5$s </em>
-				</p>',
-				esc_attr( $this->get_field_id('event-category') ),
-				esc_html__( 'Event categories', 'eventorganiser' ),
-				esc_attr( $this->get_field_name('event-category') ),
-				esc_attr( $instance['event-category'] ),
-				esc_html__( 'List category slug(s), seperate by comma. Leave blank for all', 'eventorganiser' )
+		printf(
+			'<p>
+				<label for="%1$s"> %2$s: </label>
+				<input type="text" id="%1$s" name="%3$s" value="%4$s" class="widefat">
+				<em> %5$s </em>
+			</p>',
+			esc_attr( $this->get_field_id('event-category') ),
+			esc_html__( 'Event categories', 'eventorganiser' ),
+			esc_attr( $this->get_field_name('event-category') ),
+			esc_attr( $instance['event-category'] ),
+			esc_html__( 'List category slug(s), seperate by comma. Leave blank for all', 'eventorganiser' )
 		);
 
-		printf('<p>
-					<label for="%1$s"> %2$s: </label>
-					%3$s
-				</p>',
-				esc_attr( $this->get_field_id('event-venue') ),
-				esc_html__( 'Event venue', 'eventorganiser' ),
-				eo_event_venue_dropdown( array( 
-					'echo' => 0,
-					'show_option_all' => esc_html__( 'All Venues','eventorganiser' ),
-					'id' => $this->get_field_id( 'event-venue' ),
-					'selected' => $instance['event-venue'], 
-					'name' => $this->get_field_name( 'event-venue' ),
-					'hide_empty' => false
-				) )
+		printf(
+			'<p>
+				<label for="%1$s"> %2$s: </label>
+				%3$s
+			</p>',
+			esc_attr( $this->get_field_id('event-venue') ),
+			esc_html__( 'Event venue', 'eventorganiser' ),
+			eo_event_venue_dropdown( array( 
+				'echo'            => 0,
+				'show_option_all' => esc_html__( 'All Venues','eventorganiser' ),
+				'id'              => $this->get_field_id( 'event-venue' ),
+				'selected'        => $instance['event-venue'], 
+				'name'            => $this->get_field_name( 'event-venue' ),
+				'hide_empty'      => false
+			) )
 		);
 
 	}
