@@ -165,7 +165,7 @@ class EO_Calendar_Widget extends WP_Widget
 		if ( $widget_title )
 			echo $before_title . esc_html( $widget_title ) . $after_title;
 
-		echo "<div id='{$id}_content' >";
+		echo "<div id='{$id}_content' class='eo-widget-cal-wrap' data-eo-widget-cal-id='{$id}' >";
 			echo $this->generate_output( $month, $calendar );
 		echo "</div>";
 
