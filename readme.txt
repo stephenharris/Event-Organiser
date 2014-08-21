@@ -201,6 +201,13 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 2.8.5 - 22nd August 2014 =
+* Hide venue/category filter on admin calendar when there are no events/categories.
+* Fix bug where the last date of long, non-all-day events do not appear on the widget calendar when the start time is after the end time. [See thread](http://wordpress.org/support/topic/calendar-widget-not-showing-last-day-of-event).
+* Fixes UI bug with venue selection on the calendar view
+* Added Latvian translation
+* Updated translations: Arabic, Czech, Danish, Spanish, Finnish & French. 
+
 = 2.8.4 - 14th August 2014 =
 * Adds fix for themes which apply transitions to anchor tags
 * Fixes bug where event's "schedule_last" is incorrectly set to the last event date update/inserted
