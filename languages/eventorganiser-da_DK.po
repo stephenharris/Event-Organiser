@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2014-02-25 08:08:55+0000\n"
-"Last-Translator: Malthe <malthe@milthers.dk>\n"
+"PO-Revision-Date: 2014-04-17 12:58:08+0000\n"
+"Last-Translator: Morten Lyng <mortenahti@gmail.com>\n"
 "Language-Team: \n"
 "Language: Danish (Denmark)\n"
 "MIME-Version: 1.0\n"
@@ -1186,7 +1186,7 @@ msgstr "Begivenhed blev ikke slettet. Begivenhed blev ikke fundet."
 #: event-organiser-edit.php:146 templates/shortcode-event-list.php:52
 #: templates/widget-event-list.php:49
 msgid "on"
-msgstr "På"
+msgstr "d."
 
 #: event-organiser-edit.php:126
 msgid "once"
