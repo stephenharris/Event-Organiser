@@ -304,6 +304,10 @@ msgstr "Barva"
 msgid "Comments"
 msgstr "Komentáře"
 
+#: event-organiser-settings.php:116
+msgid "Comments"
+msgstr "Komentáře"
+
 #: includes/event-organiser-venue-functions.php:886
 msgid "Country"
 msgstr "Země"
@@ -376,6 +380,10 @@ msgstr "den v týdnu"
 #: includes/event-organiser-register.php:228
 msgid "days"
 msgstr "dny"
+
+#: event-organiser-settings.php:143
+msgid "dd-mm-yyyy"
+msgstr "dd.mm.yyyy"
 
 #: event-organiser-settings.php:143
 msgid "dd-mm-yyyy"
@@ -1459,6 +1467,11 @@ msgstr "Poslat k revizi"
 msgid "System Info"
 msgstr "Systémové informace"
 
+#: event-organiser-debug.php:13 event-organiser-debug.php:14
+#: event-organiser-debug.php:59
+msgid "System Info"
+msgstr "Systémové informace"
+
 #: includes/event-organiser-cpt.php:105
 #: includes/event-organiser-event-functions.php:1389
 #: templates/event-meta-event-single.php:73
@@ -1581,6 +1594,18 @@ msgid "This page shows all (occurrances of) events. You can view the summary of 
 msgstr "Tato stránka ukazuje všechny (výskyty) událostí. Můžete vidět souhrn "
 "události, pokud na ní kliknete. Pokud máte potřebná oprávnění, zobrazí se i "
 "odkaz na editační stránku události."
+
+#: event-organiser-settings.php:113
+msgid "Thumbnail"
+msgstr "Náhled"
+
+#: event-organiser-settings.php:113
+msgid "Thumbnail"
+msgstr "Náhled"
+
+#: event-organiser-settings.php:113
+msgid "Thumbnail"
+msgstr "Náhled"
 
 #: event-organiser-settings.php:113
 msgid "Thumbnail"
