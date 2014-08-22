@@ -86,7 +86,7 @@
 				if( $upcoming->have_posts() ): ?>
 
 					<li><strong><?php _e('Upcoming Dates','eventorganiser'); ?>:</strong>
-						<ul id="eo-upcoming-dates">
+						<ul class="eo-upcoming-dates">
 							<?php while( $upcoming->have_posts() ): $upcoming->the_post(); ?>
 									<li> <?php eo_the_start($date_format) ?></li>
 							<?php endwhile; ?>
@@ -95,7 +95,7 @@
  
 					<?php 
 					wp_reset_postdata(); 
-					//With the ID 'eo-upcoming-dates', JS will hide all but the next 5 dates, with options to show more.
+					//With the class 'eo-upcoming-dates', JS will hide all but the next 5 dates, with options to show more.
 					wp_enqueue_script('eo_front');
 					?>
 				<?php endif; ?>
