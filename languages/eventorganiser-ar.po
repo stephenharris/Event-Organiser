@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2014-08-12 00:58:53+0000\n"
+"Last-Translator: Mohamed Nazir <Nazir@smartit-sol.com>\n"
 "Language-Team: \n"
 "Language: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -148,7 +148,7 @@ msgstr ""
 
 #: includes/event-organiser-venue-functions.php:882
 msgid "Address"
-msgstr ""
+msgstr "العنوان"
 
 #: includes/event-organiser-cpt.php:63
 msgid "All Categories"
@@ -278,7 +278,7 @@ msgstr ""
 
 #: includes/event-organiser-venue-functions.php:883
 msgid "City"
-msgstr ""
+msgstr "المدينة"
 
 #: includes/event-organiser-cpt.php:610 includes/event-organiser-cpt.php:633
 msgid "Color"
@@ -290,7 +290,7 @@ msgstr "التعليقات"
 
 #: includes/event-organiser-venue-functions.php:886
 msgid "Country"
-msgstr ""
+msgstr "البلد"
 
 #: event-organiser-calendar.php:245
 msgid "Create an event"
@@ -406,11 +406,11 @@ msgstr ""
 
 #: includes/event-organiser-register.php:677
 msgid "Dismiss"
-msgstr ""
+msgstr "تجاهل"
 
 #: includes/event-organiser-register.php:676
 msgid "Dismiss this notice"
-msgstr ""
+msgstr "تجاهل هذا الانذار "
 
 #: classes/class-eo-widget-categories.php:96
 #: classes/class-eo-widget-venues.php:95
@@ -748,7 +748,7 @@ msgstr ""
 
 #: includes/event-organiser-register.php:241
 msgid "every year on the"
-msgstr ""
+msgstr "كل عام في"
 
 #: event-organiser-settings.php:114
 msgid "Excerpt"
@@ -1051,7 +1051,7 @@ msgstr "شهرياً"
 
 #: includes/event-organiser-register.php:232
 msgid "months"
-msgstr ""
+msgstr "شهر"
 
 #: event-organiser-debug.php:72
 msgid "Most bugs arise from theme or plug-in conflicts. You can check this by "
@@ -1198,7 +1198,7 @@ msgstr ""
 
 #: includes/event-organiser-venue-functions.php:885
 msgid "Post Code"
-msgstr ""
+msgstr "الرمز البريدي"
 
 #: classes/class-eo-calendar-widget.php:263
 msgid "Previous month"
@@ -1264,11 +1264,11 @@ msgstr "حفظ كمسودة"
 
 #: includes/event.php:518
 msgid "Schedule end date is before is before the start date."
-msgstr ""
+msgstr "الجدول سينتهي قبل يوم البدأ"
 
 #: includes/event.php:488
 msgid "Schedule not recognised."
-msgstr ""
+msgstr "الجدول غير متعرف عليه"
 
 #: includes/event-organiser-cpt.php:62
 msgid "Search Categories"
@@ -1340,7 +1340,7 @@ msgstr ""
 
 #: includes/event-organiser-register.php:345
 msgid "Settings"
-msgstr ""
+msgstr "الإعدادات "
 
 #: event-organiser-edit.php:183 includes/event-organiser-register.php:221
 msgid "Show dates"
@@ -1385,11 +1385,11 @@ msgstr ""
 
 #: includes/event.php:497
 msgid "Start date not provided."
-msgstr ""
+msgstr "بداية الحدث غير متوفرة"
 
 #: includes/event.php:515
 msgid "Start date occurs after end date."
-msgstr ""
+msgstr "المحافظة أو الولاية أو المقاطعة"
 
 #: event-organiser-edit.php:92 event-organiser-manage.php:27
 msgid "Start Date/Time"
@@ -1397,7 +1397,7 @@ msgstr ""
 
 #: includes/event-organiser-venue-functions.php:884
 msgid "State / Province"
-msgstr ""
+msgstr "مقاطعة"
 
 #: event-organiser-calendar.php:292
 msgid "Submit for Review"
@@ -1495,7 +1495,7 @@ msgstr ""
 
 #: includes/event-organiser-register.php:243
 msgid "This event will repeat"
-msgstr ""
+msgstr "هذا الحدث سوف يتكرر "
 
 #: event-organiser-edit.php:75
 msgid "This is a reoccurring event"
@@ -1707,7 +1707,7 @@ msgstr "المكان"
 
 #: includes/event-organiser-register.php:233
 msgid "year"
-msgstr ""
+msgstr "سنة"
 
 #: event-organiser-settings.php:269
 msgid "Year archive"
@@ -1719,7 +1719,7 @@ msgstr "سنوياً"
 
 #: includes/event-organiser-register.php:234
 msgid "years"
-msgstr ""
+msgstr "سنوات"
 
 #: event-organiser-debug.php:178 event-organiser-debug.php:182
 #: event-organiser-debug.php:186 event-organiser-settings.php:175

@@ -2,8 +2,8 @@ msgid ""
 msgstr "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: stephenh1988@gmail.com\n"
 "POT-Creation-Date: 2008-09-01 09:37+0000\n"
-"PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"PO-Revision-Date: 2014-07-03 09:00:44+0000\n"
+"Last-Translator: Juhani Marttila <juhani@mart.fi>\n"
 "Language-Team: \n"
 "Language: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -416,7 +416,7 @@ msgstr "DESC"
 
 #: event-organiser-settings.php:229
 msgid "Disable CSS:"
-msgstr ""
+msgstr "Kytke CSS pois:"
 
 #: includes/event-organiser-register.php:677
 msgid "Dismiss"
@@ -529,7 +529,7 @@ msgstr "Varmista että päivämäärä ovat syötetty %1$s muodossa ja ajat %2$s
 
 #: includes/class-event-organiser-im-export.php:251
 msgid "Error:"
-msgstr ""
+msgstr "Virhe:"
 
 #: event-organiser-manage.php:19 includes/event-organiser-cpt.php:141
 msgid "Event"
@@ -797,7 +797,7 @@ msgstr ""
 
 #: includes/class-eo-ical-parser.php:124
 msgid "Feed not found"
-msgstr ""
+msgstr "Syötettä ei löytynyt"
 
 #: includes/class-event-organiser-im-export.php:61
 msgid "File Error encountered: %d"
@@ -887,7 +887,7 @@ msgstr "mene päivämäärään"
 
 #: event-organiser-go-pro.php:96
 msgid "Go to Event Organiser settings"
-msgstr ""
+msgstr "Mene Event Organiserin asetuksiin"
 
 #: classes/class-eo-agenda-widget.php:31
 msgid "Group by"
@@ -1500,7 +1500,7 @@ msgstr ""
 
 #: includes/class-eo-ical-parser.php:184
 msgid "There was an error opening the ICAL file."
-msgstr ""
+msgstr "Virhe ICAL-tiedoston avaamisessa"
 
 #: includes/event-organiser-event-functions.php:693
 #: includes/event-organiser-register.php:245
@@ -1734,7 +1734,7 @@ msgstr "Näkymä vie sinut tapahtumapaikan sivulle"
 
 #: includes/class-event-organiser-im-export.php:261
 msgid "Warning:"
-msgstr ""
+msgstr "Varoitus:"
 
 #: event-organiser-calendar.php:57 includes/event-organiser-register.php:56
 #: includes/event-organiser-register.php:229
