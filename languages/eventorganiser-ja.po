@@ -621,7 +621,7 @@ msgstr "イベントを投稿しました。 <a target=\"_blank\" href=\"%s\">�
 
 #: templates/taxonomy-event-tag.php:31
 msgid "Event Tag Archives: %s"
-msgstr "イベントタグアーカイブ:"
+msgstr "イベントタグアーカイブ: %s"
 
 #: event-organiser-settings.php:118 event-organiser-settings.php:290
 #: includes/event-organiser-cpt.php:92
