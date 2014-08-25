@@ -287,6 +287,11 @@ function _eventorganiser_single_event_content( $content ){
 	//Sanity check!
 	if( !is_singular('event') )
 		return $content;
+		
+	//Check we are an event!
+	if( get_post_type( get_the_ID() ) !== 'event' ){
+		return $content;
+	}
 
 	/*
 	 * This was introduced to fix an obscure bug with including pages
