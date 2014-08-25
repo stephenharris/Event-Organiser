@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 3.9.2
-Stable tag: 2.8.4
+Stable tag: 2.8.5
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -80,28 +80,45 @@ A full list of available extensions can be found [here](http://wp-event-organise
 
 A big thank you to those who have provided translations for Event Organiser. If you wish to help out with translating the plug-in, you can do so [here](http://wp-event-organiser.com/i18n).
 
-* French - [Remy Perona](http://remyperona.fr/)
-* Spanish - Joseba Sanchez, jagarre
-* German - [Martin Grether](http://www.datema.de/) & [Henning Matthaei](http://www.partnerwerk.de/)
-* Italian - Emilio Frusciante, Pio Muto
-* Norwegian - Erlend Birkedal
-* Swedish - Sofia BrÃ¥vander
-* Portuguese (Brazilian) - [Rafael Wahasugui](http://www.twitter.com/rafawhs), rafaelkvidal
+* Arabic - Layla, Mohamed Nazir
+* Bulgarian - Parvan Voynov
+* Catalan - jordioniric, marc.antje
+* Chinese - sdsunqian 
+* Czech - Jan Kupsa
+* Croatian - Branimir
+* Danish - Intox Studio, Malthe, Morten Lyng
 * Dutch  - [Ingrid Ekkers](http://www.247design.nl), Roel
-* Polish - [Bartosz Arendt](http://digitalfactory.pl/)
-* Russian - [Sergei](www.vortexinter.ru)
-* Hungarian - Csaba Erdei 
+* English (Canada) - GhostToast
 * Estonian - Kristjan Roosipuu
-* Finnish - Kari Tolonen 
-* Ukranian - Максим Кобєлєв
+* Finnish - Kari Tolonen, Juhani Marttila
+* French - [Remy Perona](http://remyperona.fr/), Arnaud
+* German - [Martin Grether](http://www.datema.de/) & [Henning Matthaei](http://www.partnerwerk.de/)
+* Greek - Vasilis, Panagiotis
+* Hebrew (Israel) - heli
+* Hungarian - Csaba Erdei
+* Icelandic - HrHagedorn
+* Indonesian - Daniel Tampubolon
+* Italian - Emilio Frusciante, Pio Muto, Daniele Piccoli
+* Japanese - ogawa, tkj, takeshi terai, haya.
+* Latvian - Kristaps
+* Norwegian - Erlend Birkedal
+* Norweign (Bokmål) - DagC
+* Persian (Iran, Islamic Republic of) -
+* Polish - [Bartosz Arendt](http://digitalfactory.pl/)
+* Portuguese (Brazil) - [Rafael Wahasugui](http://www.twitter.com/rafawhs), rafaelkvidal
+* Portuguese (Portugal) - Emanuel Teixeira
+* Romanian - raduanastasedev
+* Russian - [Sergei](www.vortexinter.ru)
+* Slovak - ViRPo
+* Slovenian - Matej
+* Spanish (Spain)- Joseba Sanchez, jagarre, jelena kovacevic
+* Spanish (Peru) - Pedro Valverde
+* Swedish - Sofia BrÃ¥vander, Urban Norlander
 * Thai - Nibhon, Wuttichai Songprapai
 * Turkish - Gökhan DAMGACI 
-* Croatian - Branimir
-* Catalan - jordioniric, marc.antje
-* Icelandic - HrHagedorn
-* Bulgarian - Parvan Voynov
-* Romanian - raduanastasedev
-* Japanese - ogawa, tkj, takeshi terai, haya.
+* Ukranian - Максим Кобєлєв
+
+
 
 
 == Installation ==
@@ -200,6 +217,13 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.8.5 - 22nd August 2014 =
+* Hide venue/category filter on admin calendar when there are no events/categories.
+* Fix bug where the last date of long, non-all-day events do not appear on the widget calendar when the start time is after the end time. [See thread](http://wordpress.org/support/topic/calendar-widget-not-showing-last-day-of-event).
+* Fixes UI bug with venue selection on the calendar view
+* Added Latvian translation
+* Updated translations: Arabic, Czech, Danish, Spanish, Finnish & French. 
 
 = 2.8.4 - 14th August 2014 =
 * Adds fix for themes which apply transitions to anchor tags
