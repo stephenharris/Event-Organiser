@@ -111,7 +111,7 @@ A big thank you to those who have provided translations for Event Organiser. If 
 * Russian - [Sergei](www.vortexinter.ru)
 * Slovak - ViRPo
 * Slovenian - Matej
-* Spanish (Spain)- Joseba Sanchez, jagarre, jelena kovacevic
+* Spanish (Spain)- Joseba Sanchez, jagarre, jelena kovacevic, courtesy of [WebHostingHub](http://www.webhostinghub.com/)
 * Spanish (Peru) - Pedro Valverde
 * Swedish - Sofia BrÃ¥vander, Urban Norlander
 * Thai - Nibhon, Wuttichai Songprapai
