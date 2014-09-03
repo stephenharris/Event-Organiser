@@ -343,26 +343,27 @@ jQuery(document).ready(function () {
         if ($(".eo_widget_calendar").length > 0 ) {
 
         	$(".eo_widget_calendar tfoot").unbind("click");
-        	$(".eo_widget_calendar").off("click").on("click", 'tfoot a', function (a) {
+        	$(".eo-widget-cal-wrap").on("click", 'tfoot a', function (a) {
         		a.preventDefault();
-        		var b = $(this).closest(".eo_widget_calendar").attr("id");
+        		
+        		var calID = $(this).closest(".eo-widget-cal-wrap").data("eo-widget-cal-id");
         		
         		//Defaults
         		var cal = {showpastevents: 1, 'show-long': 0, 'link-to-single': 0 };
 
         		//Shortcode widget calendar
-        		if( typeof eventorganiser.widget_calendars !== "undefined" && typeof eventorganiser.widget_calendars[b] !== "undefined" ){
-        			cal = eventorganiser.widget_calendars[b];	
+        		if( typeof eventorganiser.widget_calendars !== "undefined" && typeof eventorganiser.widget_calendars[calID] !== "undefined" ){
+        			cal = eventorganiser.widget_calendars[calID];	
         		}
         		//Widget calendar
-        		if( typeof eo_widget_cal !== "undefined" && typeof eo_widget_cal[b] !== "undefined" ){
-        			cal = eo_widget_cal[b];
+        		if( typeof eo_widget_cal !== "undefined" && typeof eo_widget_cal[calID] !== "undefined" ){
+        			cal = eo_widget_cal[calID];
                 }
 
                 //Set month
                 cal.eo_month = eveorg_getParameterByName("eo_month", $(this).attr("href"));
 
-                $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal", cal,function (a) {$("#" + b + "_content").html(a);});
+                $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal", cal,function (a) {$("#" + calID + "_content").html(a);});
         	});
         }
 
