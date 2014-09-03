@@ -218,6 +218,15 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 2.8.6 - 4th September 2014 =
+* Adds workaround to avoid potential conflicts with the theme & widget calendar
+* Makes plug-in description translable
+* Adds plug-in icon & updates plug-in header image
+* Fixes bug where private events did not appear on the calendar (even though the user had permission to see them).
+* Update German, Spanish, Japanese translation
+* Ensure ical feed validates. Thanks to @christianwach. [Fixes #218](https://github.com/stephenharris/Event-Organiser/issues/218).
+* Default template handling: adds check that current content is for event. Fixes bug where `the_content` is used on single event pages for content other than the event.
+
 = 2.8.5 - 22nd August 2014 =
 * Hide venue/category filter on admin calendar when there are no events/categories.
 * Fix bug where the last date of long, non-all-day events do not appear on the widget calendar when the start time is after the end time. [See thread](http://wordpress.org/support/topic/calendar-widget-not-showing-last-day-of-event).
