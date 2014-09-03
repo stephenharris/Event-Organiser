@@ -98,7 +98,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			 * using `'eventorganiser_'.$tab_id` as the fourth argument
 			 * of `add_settings_section()`.
 			 * 
-			 * @link http://codex.wordpress.org/Function_Reference/add_settings_section `add_settings_section()` codex
+			 * @link https://codex.wordpress.org/Function_Reference/add_settings_section `add_settings_section()` codex
 			 * @param string $tab_id Tab identifier.
 			 */
 			do_action("eventorganiser_register_tab_{$tab_id}", $tab_id );

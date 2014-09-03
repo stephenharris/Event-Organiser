@@ -21,7 +21,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 		$this->permissions = 'manage_venues';
 		$this->slug = 'venues';
 
-		//Workaround for bug http://core.trac.wordpress.org/ticket/18958
+		//Workaround for bug https://core.trac.wordpress.org/ticket/18958
 		add_filter( 'set-screen-option', array( $this, 'set_per_page' ),10,3 );
 	}
 
@@ -208,7 +208,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 	}
 
 	function set_per_page( $validated_value, $option, $value ){
-		//Workaround for bug http://core.trac.wordpress.org/ticket/18958
+		//Workaround for bug https://core.trac.wordpress.org/ticket/18958
 
 		if ( 'edit_event_venue_per_page' != $option )
 			return $validated_value;

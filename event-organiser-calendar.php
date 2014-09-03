@@ -83,7 +83,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		
 		wp_enqueue_style( 'eo_calendar-style' );
 		wp_enqueue_style( 'eventorganiser-style' );
-		//See trac ticket: http://core.trac.wordpress.org/ticket/24813
+		//See trac ticket: https://core.trac.wordpress.org/ticket/24813
 		if( ( !defined( 'SCRIPT_DEBUG' ) || !SCRIPT_DEBUG ) && version_compare( get_bloginfo( 'version' ), '3.7', '<' ) ){
 			$css = "<style type='text/css'>\n" . $css . "</style>";
 		}

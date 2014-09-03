@@ -165,7 +165,7 @@ function eventorganiser_cpt_register() {
 		$on = trim(eventorganiser_get_option('url_on','on'), "/");
 		$event_rewrite = array( 'slug' => $event_slug, 'with_front' => false,'feeds'=> true,'pages'=> true );
 
-		/* Workaround for http://core.trac.wordpress.org/ticket/19871 */
+		/* Workaround for https://core.trac.wordpress.org/ticket/19871 */
 		global $wp_rewrite;  
 		$wp_rewrite->add_rewrite_tag('%event_ondate%','([0-9]{4}(?:/[0-9]{2}(?:/[0-9]{2})?)?)','post_type=event&ondate='); 
 		add_permastruct('event_archive', $events_slug.'/'.$on.'/%event_ondate%', array( 'with_front' => false ) );
@@ -176,7 +176,7 @@ function eventorganiser_cpt_register() {
  * 
  * This allows you to change where "Events" appears in the admin menu.
  * 
- * @link http://codex.wordpress.org/Function_Reference/register_post_type register_post_type codex. 
+ * @link https://codex.wordpress.org/Function_Reference/register_post_type register_post_type codex. 
  * @param int $menu_position Menu position. Defaults to 5.
  */
 $menu_position = apply_filters('eventorganiser_menu_position',5);
@@ -242,7 +242,7 @@ function eventorganiser_messages( $messages ) {
 		7 => __('Event saved.'),
 		8 => sprintf( __('Event submitted. <a target="_blank" href="%s">Preview event</a>','eventorganiser'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
 		9 => sprintf( __('Event scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview event</a>','eventorganiser'),
-		 // translators: Publish box date format, see http://php.net/date
+		 // translators: Publish box date format, see https://php.net/date
       		date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
 		10 => sprintf( __('Event draft updated. <a target="_blank" href="%s">Preview event</a>','eventorganiser'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
 		20 => __('This event has been broken from a recurring event.','eventorganiser')
@@ -928,7 +928,7 @@ add_filter('get_edit_term_link','eventorganiser_edit_venue_link',10,3);
 /*
  * A walker class to use that extends wp_dropdown_categories and allows it to use the term's slug as a value rather than ID.
 *
-* See http://core.trac.wordpress.org/ticket/13258
+* See https://core.trac.wordpress.org/ticket/13258
 *
 * Usage, as normal:
 * wp_dropdown_categories($args);
@@ -1058,7 +1058,7 @@ function eventorganiser_threeWP( $activity ){
 				if(  false == ( $attachment_id = eventorganiser_file_to_attachment( $venue_thumbnail['file'] ) ) ){
 
 					// And now create the attachment stuff.
-					// This is taken almost directly from http://codex.wordpress.org/Function_Reference/wp_insert_attachment
+					// This is taken almost directly from https://codex.wordpress.org/Function_Reference/wp_insert_attachment
 					$wp_filetype = wp_check_filetype( $venue_thumbnail['filename_base'], null );
 					$attachment = array(
 						'guid' => $upload_dir['url'] . '/' . $venue_thumbnail['filename_base'],

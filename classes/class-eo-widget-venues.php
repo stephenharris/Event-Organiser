@@ -59,11 +59,11 @@ class EO_Widget_Venues extends WP_Widget {
 			 * Filters the settings for the event venue list drppdown.
 			 *
 			 * The filtered array is passed to `wp_dropdown_categories()`. See
-			 * the [WordPress codex](http://codex.wordpress.org/Function_Reference/wp_dropdown_categories Codex)
+			 * the [WordPress codex](https://codex.wordpress.org/Function_Reference/wp_dropdown_categories Codex)
 			 * for details on its arguments.
 			 *
 			 * @package widgets
-			 * @link http://codex.wordpress.org/Function_Reference/wp_dropdown_categories Codex for `wp_dropdown_categories()`
+			 * @link https://codex.wordpress.org/Function_Reference/wp_dropdown_categories Codex for `wp_dropdown_categories()`
 			 * @param array $cat_args Settings for the event venue dropdown.
 			 */
 			$cat_args = apply_filters( 'eventorganiser_widget_event_venues_dropdown_args', $cat_args );
@@ -93,11 +93,11 @@ class EO_Widget_Venues extends WP_Widget {
 		 * Filters the arguments for the event venue list.
 		 *
 		 * The filtered array is passed to `wp_list_categories()`. See
-		 * the [WordPress codex](http://codex.wordpress.org/Function_Reference/wp_list_categories Codex)
+		 * the [WordPress codex](https://codex.wordpress.org/Function_Reference/wp_list_categories Codex)
 		 * for details on its arguments.
 		 *
 		 * @package widgets
-		 * @link http://codex.wordpress.org/Function_Reference/wp_list_categories Codex for `wp_list_categories()`
+		 * @link https://codex.wordpress.org/Function_Reference/wp_list_categories Codex for `wp_list_categories()`
 		 * @param array $cat_args Settings for the event venue list.
 		 */
 		$cat_args = apply_filters( 'eventorganiser_widget_event_venues_args', $cat_args );
