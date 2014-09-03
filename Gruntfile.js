@@ -81,6 +81,7 @@ module.exports = function(grunt) {
 			src:  [
 				'**',
 				'!node_modules/**',
+				'!assets/**',
 				'!dist/**',
 				'!.git/**',
 				'!apigen/**',
@@ -104,6 +105,7 @@ module.exports = function(grunt) {
 			src:  [
 				'**',
 				'!dist/**', //build directory
+				'!assets/**',
 				'!.git/**','!.gitignore','!.gitmodules', //git
 				'!node_modules/**','!Gruntfile.js','!package.json', //grunt
 				'!apigen/**','!documentation/**', //documentation
@@ -169,7 +171,8 @@ module.exports = function(grunt) {
             options: {
         		svn_user: 'stephenharris',
         		plugin_slug: 'event-organiser',
-        		build_dir: 'dist/event-organiser/'
+        		build_dir: 'dist/event-organiser/',
+        		assets_dir: 'assets'
             },
     	}
     },
