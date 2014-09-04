@@ -92,7 +92,7 @@ module.exports = function(grunt) {
 				'!package.json',
 				'!.gitignore',
 				'!.gitmodules',
-				'!*~',
+				'!**/*~',
 				'!composer.lock',
 				'!composer.phar',
 				'!composer.json',
@@ -111,7 +111,7 @@ module.exports = function(grunt) {
 				'!apigen/**','!documentation/**', //documentation
 				'!tests/**', //unit tests
 				'!vendor/**',
-				'!*~',
+				'!**/*~',
 				'!composer.lock','!composer.phar','!composer.json',//composer
 				'!CONTRIBUTING.md'
 			],

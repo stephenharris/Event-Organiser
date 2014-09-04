@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 4.0.0
-Stable tag: 2.8.5
+Stable tag: 2.8.6
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -217,6 +217,15 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.8.6 - 4th September 2014 =
+* Adds workaround to avoid potential conflicts with the theme & widget calendar
+* Makes plug-in description translable
+* Adds plug-in icon & updates plug-in header image
+* Fixes bug where private events did not appear on the calendar (even though the user had permission to see them).
+* Update German, Spanish, Japanese translation
+* Ensure ical feed validates. Thanks to @christianwach. [Fixes #218](https://github.com/stephenharris/Event-Organiser/issues/218).
+* Default template handling: adds check that current content is for event. Fixes bug where `the_content` is used on single event pages for content other than the event.
 
 = 2.8.5 - 22nd August 2014 =
 * Hide venue/category filter on admin calendar when there are no events/categories.
