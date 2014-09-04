@@ -61,16 +61,26 @@ function eventorganiser_public_fullcalendar() {
 	
 
 	$presets = array('numberposts'=>-1, 'group_events_by'=>'','showpastevents'=>true);
+	
+	if( current_user_can( 'read_private_events' ) ){
+		$priv = '_priv';
+		$post_status = array( 'publish', 'private' );
+	}else{
+		$priv = false;
+		$post_status = array( 'publish' );
+	}
 
 	//Retrieve events		
 	$query    = array_merge( $request, $presets );
-	$key      = 'eo_fc_'.md5( serialize( $query ). $time_format );
-	$calendar = get_transient('eo_full_calendar_public');
+	$key      = "eo_fc_".md5( serialize( $query ). $time_format );
+	$calendar = get_transient( "eo_full_calendar_public{$priv}");
 	if( $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
 		echo json_encode( $calendar[$key] );
 		exit;
 	}
 
+	$query['post_status'] = $post_status;
+	
 	$events = eo_get_events( $query );
 	$eventsarray = array();
 
@@ -255,7 +265,7 @@ function eventorganiser_public_fullcalendar() {
 	
 	$calendar[$key] = $eventsarray;
 
-	set_transient('eo_full_calendar_public',$calendar, 60*60*24);
+	set_transient( "eo_full_calendar_public{$priv}",$calendar, 60*60*24);
 
 	//Echo result and exit
 	echo json_encode($eventsarray);
