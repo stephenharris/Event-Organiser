@@ -172,7 +172,8 @@ module.exports = function(grunt) {
         		svn_user: 'stephenharris',
         		plugin_slug: 'event-organiser',
         		build_dir: 'dist/event-organiser/',
-        		assets_dir: 'assets'
+        		assets_dir: 'assets',
+        		max_buffer: 1024*1024
             },
     	}
     },
