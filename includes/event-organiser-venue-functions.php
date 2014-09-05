@@ -418,7 +418,7 @@ function eo_get_venue_address($venue_slug_or_id=''){
 
 
 /**
- * Retrieve array of venues. Acts as a wrapper for {@link http://codex.wordpress.org/Function_Reference/get_terms get_terms()}, except hide_empty defaults to false.
+ * Retrieve array of venues. Acts as a wrapper for {@link https://codex.wordpress.org/Function_Reference/get_terms get_terms()}, except hide_empty defaults to false.
  *
  * The list of arguments that `$args` can contain, which will overwrite the defaults:
  *
@@ -471,7 +471,7 @@ function eo_get_venue_address($venue_slug_or_id=''){
  * @see eo_remote_geocode()
  * @link http://wp-event-organiser.com/pro-features/event-venue-queries/ Documentation on event-venue meta queries
  * @link https://gist.github.com/3902494 Gist for creating an archive page of all the venues
- * @link http://codex.wordpress.org/Function_Reference/get_terms get_terms()
+ * @link https://codex.wordpress.org/Function_Reference/get_terms get_terms()
  * @since 1.0.0
  * @param string|array $args The values of what to search for when returning venues
  * @return array List of Term (venue) Objects
@@ -497,7 +497,7 @@ function eo_get_venues($args=array()){
  *
  * Calls {@see `wp_insert_term()`} to update the taxonomy term
  * Updates venue meta data to database (for 'core' meta keys)
- * The $args is an array - the same as that accepted by {@link http://codex.wordpress.org/Function_Reference/wp_update_term wp_update_term()}
+ * The $args is an array - the same as that accepted by {@link https://codex.wordpress.org/Function_Reference/wp_update_term wp_update_term()}
  * The $args array can also accept the following keys: 
  *
  * * description
@@ -568,7 +568,7 @@ function eo_get_venues($args=array()){
  * Calls {@see `wp_insert_term()`} to create the taxonomy term
  * Adds venue meta data to database (for 'core' meta keys)
  *
- * The $args is an array - the same as that accepted by {@link http://codex.wordpress.org/Function_Reference/wp_update_term wp_update_term()}
+ * The $args is an array - the same as that accepted by {@link https://codex.wordpresss.org/Function_Reference/wp_update_term wp_update_term()}
  * The $args array can also accept the following keys: 
  *
  * * description
@@ -585,7 +585,7 @@ function eo_get_venues($args=array()){
  * @uses `wp_insert_term()` to create venue (taxonomy) term
  * @uses do_action() Calls 'eventorganiser_insert_venue' hook with the venue id
  * @uses do_action() Calls 'eventorganiser_save_venue' hook with the venue id
- * @link http://codex.wordpress.org/Function_Reference/wp_insert_term wp_insert_term()
+ * @link https://codex.wordpress.org/Function_Reference/wp_insert_term wp_insert_term()
  *
  * @param string $name the venue to insert
  * @param array $args Array as accepted by wp_update_term and including the 'core' metadata

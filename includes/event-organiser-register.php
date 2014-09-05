@@ -160,7 +160,7 @@ add_action( 'admin_init', 'eventorganiser_register_scripts', 5 );
  * can be found here {@see https://github.com/azagniotov/Comprehensive-Google-Map-Plugin/blob/master/functions.php#L520 }
  *
  * @see https://github.com/stephenharris/Event-Organiser/issues/49
- * @see http://wordpress.org/support/topic/googlemap-doesnt-shown-on-event-detail-page
+ * @see https://wordpress.org/support/topic/googlemap-doesnt-shown-on-event-detail-page
  * @since 1.7.4
  * @ignore
  * @access private
@@ -386,7 +386,7 @@ function eventorganiser_clear_cron_jobs(){
  * Returns the time in seconds until a specified cron job is scheduled.
  *
  *@since 1.8
- *@see http://wordpress.stackexchange.com/questions/83270/when-does-next-cron-job-run-time-from-now/83279#83279
+ *@see https://wordpress.stackexchange.com/questions/83270/when-does-next-cron-job-run-time-from-now/83279#83279
  *
  *@param string $cron_name The name of the cron job
  *@return int|bool The time in seconds until the cron job is scheduled. False if

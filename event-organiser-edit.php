@@ -68,7 +68,7 @@ function _eventorganiser_details_metabox( $post ){
 	
 	//$sche_once is used to disable date editing unless the user specifically requests it.
 	//But a new event might be recurring (via filter), and we don't want to 'lock' new events.
-	//See http://wordpress.org/support/topic/wrong-default-in-input-element
+	//See https://wordpress.org/support/topic/wrong-default-in-input-element
 	$sche_once = ( $schedule == 'once' || !empty(get_current_screen()->action) );
 	 
 	if ( !$sche_once ){

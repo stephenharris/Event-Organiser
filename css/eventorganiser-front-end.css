@@ -42,11 +42,11 @@ body.single-event .eo-event-meta{
 /*
   * jQuery UI CSS Framework 1.8.16
   *
-  * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+  * Copyright 2011, AUTHORS.txt (https://jqueryui.com/about)
   * Dual licensed under the MIT or GPL Version 2 licenses.
-  * http://jquery.org/license
+  * https://jquery.org/license
   * Includes: jquery.ui.core.css, jquery.ui.autocomplete.css, jquery.ui.menu.css, jquery.ui.button.css
-  * @see http://jqueryui.com/themeroller/?ffDefault=sans-serif&fwDefault=normal&fsDefault=12px&cornerRadius=4px&bgColorHeader=ececec&bgTextureHeader=04_highlight_hard.png&bgImgOpacityHeader=75&borderColorHeader=dfdfdf&fcHeader=333333&iconColorHeader=999999&bgColorContent=ffffff&bgTextureContent=01_flat.png&bgImgOpacityContent=75&borderColorContent=dfdfdf&fcContent=333333&iconColorContent=333333&bgColorDefault=ececec&bgTextureDefault=04_highlight_hard.png&bgImgOpacityDefault=75&borderColorDefault=dfdfdf&fcDefault=333333&iconColorDefault=333333&bgColorHover=ececec&bgTextureHover=06_inset_hard.png&bgImgOpacityHover=75&borderColorHover=ccc&fcHover=000000&iconColorHover=333333&bgColorActive=ffffff&bgTextureActive=01_flat.png&bgImgOpacityActive=65&borderColorActive=dfdfdf&fcActive=333333&iconColorActive=333333&bgColorHighlight=ffffe0&bgTextureHighlight=01_flat.png&bgImgOpacityHighlight=55&borderColorHighlight=e6db55&fcHighlight=333333&iconColorHighlight=21759b&bgColorError=ffebe8&bgTextureError=01_flat.png&bgImgOpacityError=95&borderColorError=cc0000&fcError=cc0000&iconColorError=cc0000&bgColorOverlay=aaaaaa&bgTextureOverlay=01_flat.png&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=30&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=3px
+  * @see https://jqueryui.com/themeroller/?ffDefault=sans-serif&fwDefault=normal&fsDefault=12px&cornerRadius=4px&bgColorHeader=ececec&bgTextureHeader=04_highlight_hard.png&bgImgOpacityHeader=75&borderColorHeader=dfdfdf&fcHeader=333333&iconColorHeader=999999&bgColorContent=ffffff&bgTextureContent=01_flat.png&bgImgOpacityContent=75&borderColorContent=dfdfdf&fcContent=333333&iconColorContent=333333&bgColorDefault=ececec&bgTextureDefault=04_highlight_hard.png&bgImgOpacityDefault=75&borderColorDefault=dfdfdf&fcDefault=333333&iconColorDefault=333333&bgColorHover=ececec&bgTextureHover=06_inset_hard.png&bgImgOpacityHover=75&borderColorHover=ccc&fcHover=000000&iconColorHover=333333&bgColorActive=ffffff&bgTextureActive=01_flat.png&bgImgOpacityActive=65&borderColorActive=dfdfdf&fcActive=333333&iconColorActive=333333&bgColorHighlight=ffffe0&bgTextureHighlight=01_flat.png&bgImgOpacityHighlight=55&borderColorHighlight=e6db55&fcHighlight=333333&iconColorHighlight=21759b&bgColorError=ffebe8&bgTextureError=01_flat.png&bgImgOpacityError=95&borderColorError=cc0000&fcError=cc0000&iconColorError=cc0000&bgColorOverlay=aaaaaa&bgTextureOverlay=01_flat.png&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=30&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=3px
   */
 
 /* Layout helpers
@@ -232,9 +232,9 @@ body.single-event .eo-event-meta{
 /*
  * jQuery UI Button 1.8.16
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+ * Copyright 2011, AUTHORS.txt (https://jqueryui.com/about)
  * Dual licensed under the MIT or GPL Version 2 licenses.
- * http://jquery.org/license
+ * https://jquery.org/license
  *
  * http://docs.jquery.com/UI/Button#theming
  */

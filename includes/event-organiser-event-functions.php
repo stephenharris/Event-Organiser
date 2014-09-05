@@ -8,9 +8,9 @@
 /**
 * Retrieve list of events matching criteria.
 *
-* This function is a wrapper for get_posts(). **As such parameters from {@see `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} can also be used**.
+* This function is a wrapper for get_posts(). **As such parameters from {@see `get_posts()`} and {@link https://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} can also be used**.
 * Their default values are as indicated by the relevant codex page unless specified below. 
-* You can also use {@see `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events.
+* You can also use {@see `get_posts()`} and {@link https://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events.
 * 
 * The `$args` array can include the following.
 *
@@ -922,7 +922,7 @@ function eo_get_the_occurrences_of($post_id=0){
 		return false;
 
 	 //Can't cache datetime objects before 5.3
-	 //@see{http://wordpress.org/support/topic/warning-datetimeformat-functiondatetime-format?replies=7#post-3940247}
+	 //@see{https://wordpress.org/support/topic/warning-datetimeformat-functiondatetime-format?replies=7#post-3940247}
 	if( version_compare(PHP_VERSION, '5.3.0') >= 0 ){
 		$occurrences = wp_cache_get( 'eventorganiser_occurrences_'.$post_id );
 	}else{
@@ -1002,7 +1002,7 @@ function eo_get_event_color($post_id=0){
 	/**
 	 * Filters the colour associated with an event
 	 * 
-	 * @link http://wordpress.org/support/topic/plugin-event-organiser-color-code-for-venues-instead-of-categories
+	 * @link https://wordpress.org/support/topic/plugin-event-organiser-color-code-for-venues-instead-of-categories
 	 * @param string $color Event colour in HEX format
 	 * @param int $post_id The event (post) ID
 	*/
