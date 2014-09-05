@@ -78,7 +78,7 @@ class eventTest extends EO_UnitTestCase
     /**
      * Tests that updating the time(s) of an event keeps the occurrence IDs
      * 
-     * @see http://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
+     * @see https://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
      * @see https://github.com/stephenharris/Event-Organiser/issues/195
      */
     public function testUpdateTimeOnly()
@@ -150,7 +150,7 @@ class eventTest extends EO_UnitTestCase
     /**
      * Tests that updating the end time of an event keeps the occurrence IDs
      * 
-     * @see http://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
+     * @see https://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
      * @see https://github.com/stephenharris/Event-Organiser/issues/195
      */
     public function testUpdateEndTimeOnly()

@@ -74,7 +74,7 @@ get_header(); ?>
 					<!-- Output the date of the occurrence-->
 					<?php
 					//Format date/time according to whether its an all day event.
-					//Use microdata http://support.google.com/webmasters/bin/answer.py?hl=en&answer=176035
+					//Use microdata https://support.google.com/webmasters/bin/answer.py?hl=en&answer=176035
  					if( eo_is_all_day() ){
 						$format = 'd F Y';
 						$microformat = 'Y-m-d';

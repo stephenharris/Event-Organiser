@@ -39,7 +39,7 @@ Contributions are always welcome, but please follow these simple guidelines to h
  * Fork the repository on GitHub using the **develop**.
  * Please use a **seperate branch**, and **seperate pull** request for each **unrelated feature**. 
  * Make the changes to your forked repository.
- * Please comment your code, (and generally adhere to the [WordPress Coding Standards](http://codex.wordpress.org/WordPress_Coding_Standards)).
+ * Please comment your code, (and generally adhere to the [WordPress Coding Standards](https://codex.wordpress.org/WordPress_Coding_Standards)).
  * If you're unsure of something, just [ask](http://wp-event-organiser.com/contact)!
  * Commit little and often, in logical chunks.
  * When committing, reference your issue (if applicable) and give a brief description of the changes made.
@@ -48,5 +48,5 @@ Contributions are always welcome, but please follow these simple guidelines to h
 
 ## Additional Resources
 
-* [General GitHub Documentation](http://help.github.com/)
-* [GitHub Pull Request documentation](http://help.github.com/send-pull-requests/)
+* [General GitHub Documentation](https://help.github.com/)
+* [GitHub Pull Request documentation](https://help.github.com/send-pull-requests/)

@@ -44,7 +44,7 @@ eventorganiser.versionCompare = function(left, right) {
 	  * If the supplied string does not match the format, an 
 	  * invalid Date (value NaN) is returned.
 	  * Used as a workaround for IE7/8 difficulities.
-	  * @link http://stackoverflow.com/questions/2182246/javascript-dates-in-ie-nan-firefox-chrome-ok
+	  * @link https://stackoverflow.com/questions/2182246/javascript-dates-in-ie-nan-firefox-chrome-ok
 	  * @param {string} dateStringInRange format YYYY-MM-DD, with year in
 	  * range of 0000-9999, inclusive.
 	  * @return {Date} Date object representing the string.
@@ -84,7 +84,7 @@ eventorganiser.versionCompare = function(left, right) {
 	var initial_date = eventorganiser_parseISO8601( jQuery.cookie('eo_admin_cal_last_viewed_date') );
 	
     //Invalid dates cause trouble in IE7&8 https://github.com/stephenharris/Event-Organiser/issues/96
-    //Check date is valid: http://stackoverflow.com/questions/1353684/
+    //Check date is valid: https://stackoverflow.com/questions/1353684/
 	if ( Object.prototype.toString.call( initial_date  ) === "[object Date]" ) {
 		if ( isNaN( initial_date.getTime() ) ) {
 				//not valid
