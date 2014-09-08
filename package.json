@@ -31,6 +31,6 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-wp-deploy": "~1.0.3",
     "grunt-po2mo": "~0.1.0",
-    "grunt-pot": "~0.1.0"
+    "grunt-pot": "~0.2.0"
   }
 }
