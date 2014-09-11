@@ -83,7 +83,6 @@ function eventorganiser_public_fullcalendar() {
 		foreach  ($events as $post) :
 			setup_postdata( $post );
 			$event=array();
-			$event['className']=array('eo-event');
 
 			//Title and url
 			$event['title']=html_entity_decode(get_the_title($post->ID),ENT_QUOTES,'UTF-8');
@@ -178,26 +177,21 @@ function eventorganiser_public_fullcalendar() {
 			$description = apply_filters('eventorganiser_event_tooltip', $description, $post->ID,$post->occurrence_id,$post);
 			$event['description'] = $description;
 			
+			$event['className']   = eo_get_event_classes();
+			$event['className'][] = 'eo-event';
+			
 			//Colour past events
 			$now = new DateTime(null,$tz);
 			if($event_start <= $now)
-				$event['className'][] = 'eo-past-event';
+				$event['className'][] = 'eo-past-event'; //deprecated. use eo-event-past or eo-event-running
 			else
-				$event['className'][] = 'eo-future-event';
+				$event['className'][] = 'eo-future-event'; //deprecated. use eo-event-future
 				
-			//Add class if event is all day
-			if( eo_is_all_day() )
-				$event['className'][] = 'eo-all-day';
-				
-			//Add class if event starts and ends on different days
-			if( $event_start->format('Y-m-d') != $event_end->format('Y-m-d') )
-				$event['className'][] = 'eo-multi-day';
-			
 			//Include venue if this is set
 			$venue = eo_get_venue($post->ID);
 
 			if($venue && !is_wp_error($venue)){
-				$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);
+				$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);//deprecated. use eo-event-venue-{slug}
 				$event['venue']=$venue;
 			}
 				
@@ -207,7 +201,7 @@ function eventorganiser_public_fullcalendar() {
 			if($terms):
 				foreach ($terms as $term):
 					$event['category'][]= $term->slug;
-					$event['className'][]='category-'.$term->slug;
+					$event['className'][]='category-'.$term->slug;//deprecated. use eo-event-cat-{slug}
 				endforeach;
 			endif;
 			
@@ -218,7 +212,7 @@ function eventorganiser_public_fullcalendar() {
 				if( $terms && !is_wp_error( $terms ) ):
 					foreach ($terms as $term):
 						$event['tags'][]= $term->slug;
-						$event['className'][]='tag-'.$term->slug;
+						$event['className'][]='tag-'.$term->slug;//deprecated. use eo-event-tag-{slug}
 					endforeach;
 				endif;
 			}
