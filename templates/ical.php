@@ -103,10 +103,18 @@ if ( have_posts() ) :
 			"SUMMARY: " . eventorganiser_escape_ical_text( get_the_title_rss() ) ) 
 		) . "\r\n";
 		
-		$excerpt = get_the_excerpt();
-		$excerpt = eventorganiser_escape_ical_text( apply_filters('the_excerpt_rss', $excerpt) );
-		if ( !empty($excerpt) ) :
-			echo eventorganiser_fold_ical_text( html_entity_decode( "DESCRIPTION: $excerpt" ) ) . "\r\n";
+		$description = wp_strip_all_tags( get_the_excerpt() );
+		$description = ent2ncr( convert_chars( $description ) );
+		/**
+	 	* Filters the description of the event as it appears in the iCal feed.
+	 	*
+	 	* @param string $description The event description
+	 	*/
+		$description = apply_filters( 'eventorganiser_ical_description', $description );
+		$description = eventorganiser_escape_ical_text( $description );
+		
+		if ( !empty( $description ) ) :
+			echo eventorganiser_fold_ical_text( "DESCRIPTION: $description" ) . "\r\n";
 		endif;
 		
 		$description = eventorganiser_escape_ical_text( get_the_content() );
