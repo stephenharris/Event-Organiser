@@ -1336,12 +1336,12 @@ function eventorganiser_append_dependency( $handle, $dep ){
 
 
 /**
- * Escapes a string so it safe for use in ICAL template
+ * Escapes a string so it safe for use in ICAL template. 
  * 
- * Commas, semicolons and backslashes are escaped.
- * New lines are appended with a space (why?)
+ * Commas, semicolons, newlines and backslashes are escaped.
  * 
  * @ignore
+ * @see http://www.ietf.org/rfc/rfc2445.txt
  * @since 2.1
  * @param string $text The string to be escaped
  * @return string The escaped string.
@@ -1351,7 +1351,15 @@ function eventorganiser_escape_ical_text( $text ){
 	$text = str_replace( "\\", "\\\\", $text );
 	$text = str_replace( ",", "\,", $text );
 	$text = str_replace( ";", "\;", $text );
-	$text = str_replace( "\n", "\n ", $text );
+	/*
+	 * An intentional formatted text line break MUST only be included in a
+   	 * "TEXT" property value by representing the line break with the
+   	 * character sequence of BACKSLASH (US-ASCII decimal 92), followed by a
+   	 * LATIN SMALL LETTER N (US-ASCII decimal 110) or a LATIN CAPITAL LETTER
+   	 * N (US-ASCII decimal 78), that is "\n" or "\N".
+	 */
+	$text = str_replace( "\r\n", "\n", $text );
+	$text = str_replace( "\n", "\\n", $text );
 	
 	return $text;
 }
@@ -1377,8 +1385,8 @@ function eventorganiser_fold_ical_text( $text ){
 
 	$text_arr = array();
 
-	$lines = ceil( strlen( $text ) / 75 );
-
+	$lines = ceil( mb_strlen( $text ) / 75 );
+	
 	for( $i = 0; $i < $lines; $i++ ){
 		$text_arr[$i] = mb_substr( $text, $i * 75, 75 );
 	}

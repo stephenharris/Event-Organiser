@@ -82,7 +82,7 @@ class iCalFeedTest extends EO_UnitTestCase
 			'schedule_meta' => array( 'MO' ),
 			'post_title'=>'The Event Title',
 			'post_content'=>'My event content',
-		) );;
+		) );
 		
 		$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;UNTIL=20131231T020000Z", eventorganiser_generate_ics_rrule( $event_id ) );
 
@@ -134,5 +134,62 @@ class iCalFeedTest extends EO_UnitTestCase
     	 
     	wp_cache_delete( 'eventorganiser_timezone' );
     }
-    
+
+	public function testIcalFolding(){
+		
+		$str_75 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ012346789abcdefghijklmnopqrstuvwxyz012346789'%CDE";
+		
+		$string = $str_75.$str_75;
+		
+		//var_dump( eventorganiser_fold_ical_text( $string ) );
+		$this->assertEquals( "$str_75\r\n $str_75", eventorganiser_fold_ical_text( $string ) );
+		
+		
+	}
+
+	public function testMultibyteFolding(){
+		
+		$str_75 = "This string ends in 6 multibyte characters. It has a mb_strlen of 75 žšč£££";
+		//but strlen of 81
+
+		//We expect no folding
+		$this->assertEquals( $str_75, eventorganiser_fold_ical_text( $str_75 ) );
+		
+		
+	}
+	
+	public function testFoldingWithNewLines(){
+		
+		$str_75 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ012346789abcdefghijklmnopqrstuvwxyz012346789^%CDE";
+		
+		
+		//New lines with \r\n
+		$string = 'ABCDEF\n abcdef\n'. $str_75.$str_75.'\nHello world';
+		$expected = 'ABCDEF\n abcdef\nABCDEFGHIJKLMNOPQRSTUVWXYZ012346789abcdefghijklmnopqrstuvw'
+			."\r\n " . 'xyz012346789^%CDEABCDEFGHIJKLMNOPQRSTUVWXYZ012346789abcdefghijklmnopqrstuvw'
+			."\r\n " . 'xyz012346789^%CDE\nHello world';
+		
+		$this->assertEquals( $expected, eventorganiser_fold_ical_text( $string ) );
+		
+	}
+	
+	public function testIcalNewLineEscape(){
+		
+		//Test with \n
+		$intentional_newline = "Foo\nBar";
+		$this->assertEquals( 'Foo\nBar', eventorganiser_escape_ical_text( $intentional_newline ) );
+
+		//Test with \r\n
+		$intentional_newline = "Foo\r\nBar";
+		$this->assertEquals( 'Foo\nBar', eventorganiser_escape_ical_text( $intentional_newline ) );
+		
+	}
+	
+	public function testIcalEscape(){
+		
+		$escape   = 'Backslash \ Semicolon ; Colon : Comma ,';
+		$expected = 'Backslash \\\ Semicolon \; Colon : Comma \,'; //colons are safe!
+		$this->assertEquals( $expected, eventorganiser_escape_ical_text( $escape ) );
+		
+	}
 }
