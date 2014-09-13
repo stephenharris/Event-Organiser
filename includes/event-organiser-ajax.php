@@ -75,14 +75,27 @@ function eventorganiser_public_fullcalendar() {
 	$key      = "eo_fc_".md5( serialize( $query ). $time_format );
 	$calendar = get_transient( "eo_full_calendar_public{$priv}");
 	if( $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
-		echo json_encode( $calendar[$key] );
+		$events_array = $calendar[$key];
+		/**
+	 	* Filters the event before it is sent to the calendar. 
+	 	*
+	 	* **Note:** This filters the response immediately before sending, and after 
+	 	* the cache is saved/retrieved. Changes made on this filter are not cached.
+	 	*
+	 	* @package fullCalendar
+	 	* @param array  $events_array An array of events (array).
+	 	* @param array  $query        The query as given to eo_get_events() 
+	 	*/
+		$events_array = apply_filters( 'eventorganiser_fullcalendar', $events_array, $query );
+	
+		echo json_encode( $events_array );
 		exit;
 	}
 
 	$query['post_status'] = $post_status;
 	
 	$events = eo_get_events( $query );
-	$eventsarray = array();
+	$events_array = array();
 
 	//Blog timezone
 	$tz = eo_get_blog_timezone();
@@ -251,8 +264,9 @@ function eventorganiser_public_fullcalendar() {
 			 * @param int    $occurrence_id The event's occurrence ID.
 			 */
 			$event = apply_filters('eventorganiser_fullcalendar_event',$event, $post->ID,$post->occurrence_id);
-			if( $event )
-				$eventsarray[]=$event;
+			if( $event ){
+				$events_array[] = $event;
+			}
 
 		endforeach;
 		wp_reset_postdata();
@@ -261,12 +275,14 @@ function eventorganiser_public_fullcalendar() {
 	if( !$calendar || !is_array($calendar) )
 		$calendar = array();
 	
-	$calendar[$key] = $eventsarray;
+	$calendar[$key] = $events_array;
 
 	set_transient( "eo_full_calendar_public{$priv}",$calendar, 60*60*24);
+	
+	$events_array = apply_filters( 'eventorganiser_fullcalendar', $events_array, $query );
 
 	//Echo result and exit
-	echo json_encode($eventsarray);
+	echo json_encode( $events_array );
 	exit;
 }
 
