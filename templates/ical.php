@@ -136,6 +136,7 @@ if ( have_posts() ) :
 		$author_name = eventorganiser_escape_ical_text( get_the_author() );
 		$author_email = eventorganiser_escape_ical_text( get_the_author_meta( 'user_email' ) );
 		echo eventorganiser_fold_ical_text( 'ORGANIZER;CN="' . $author_name . '":MAILTO:' . $author_email ) . "\r\n";
+		echo eventorganiser_fold_ical_text( 'URL;VALUE=URI:' . get_the_permalink() ) . "\r\n";
 		
 		echo "END:VEVENT\r\n";
 
