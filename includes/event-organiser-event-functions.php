@@ -1452,9 +1452,9 @@ function eo_get_event_meta_list( $post_id=0 ){
 
 	if( $venue_id = eo_get_venue($post_id) ){
 		$html .= sprintf('<li><strong>%s:</strong> <a href="%s">
-								<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/​Organization">
+								<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/Organization">
 									<span itemprop="name">%s</span>
-									<span itemprop="geo" itemscope itemtype="http://data-vocabulary.org/​Geo">
+									<span itemprop="geo" itemscope itemtype="http://data-vocabulary.org/Geo">
 										<meta itemprop="latitude" content="%f" />
 										<meta itemprop="longitude" content="%f" />
      									</span>
