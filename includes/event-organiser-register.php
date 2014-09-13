@@ -72,8 +72,8 @@ function eventorganiser_register_script() {
 	wp_register_script( 'eo_qtip2', EVENT_ORGANISER_URL.'js/qtip2.js',array('jquery'),$version,true);
 
 	/* Styles */
-	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),$version);
-	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array(),$version);
+	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL."css/fullcalendar{$ext}.css",array(),$version);
+	wp_register_style('eo_front',EVENT_ORGANISER_URL."css/eventorganiser-front-end{$ext}.css",array(),$version);
 }   
 add_action('init', 'eventorganiser_register_script');
 
@@ -136,15 +136,15 @@ function eventorganiser_register_scripts(){
 
 	/*  Pick and register jQuery UI style */
 	$style = ( 'classic' == get_user_option( 'admin_color') ? 'classic' : 'fresh' );
-	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL."css/eventorganiser-admin-{$style}.css",array(),$version);
+	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL."css/eventorganiser-admin-{$style}{$ext}.css",array(),$version);
 	
 	/* Admin styling */
-	wp_register_style( 'eventorganiser-3.8+', EVENT_ORGANISER_URL.'css/eventorganiser-admin-3.8+.css', array(), $version );
+	wp_register_style( 'eventorganiser-3.8+', EVENT_ORGANISER_URL."css/eventorganiser-admin-3.8+{$ext}.css", array(), $version );
 	$deps = array( 'eventorganiser-jquery-ui-style' );
 	if ( ( defined( 'MP6' ) && MP6 ) || version_compare( '3.8-beta-1', get_bloginfo( 'version' ) ) <= 0 ) {
 		$deps[] = 'eventorganiser-3.8+';
 	}
-	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css', $deps, $version );
+	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL."css/eventorganiser-admin-style{$ext}.css", $deps, $version );
 
 	/* Inline Help */
 	wp_register_script( 'eo-inline-help', EVENT_ORGANISER_URL.'js/inline-help.js',array( 'jquery', 'eo_qtip2' ), $version, true );

@@ -37,6 +37,15 @@ module.exports = function(grunt) {
 		all: [ 'js/*.js', '!js/*.min.js', '!*/time-picker.js', '!*/jquery-ui-eo-timepicker.js', '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
   	
+	cssmin: {
+		minify: {
+			expand: true,
+			src: [ 'css/*.css', '!**/*.min.css' ],
+		    ext: '.min.css',
+		    extDot: 'last'
+		}
+	},
+  	
 	shell: {
 		makeDocs: {
 			options: {
@@ -249,7 +258,7 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'build', [ 'test', 'uglify', 'pot', 'po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
+grunt.registerTask( 'build', [ 'test', 'uglify', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
 
 grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
 
