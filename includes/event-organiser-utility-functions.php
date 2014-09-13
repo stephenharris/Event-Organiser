@@ -1377,8 +1377,8 @@ function eventorganiser_fold_ical_text( $text ){
 
 	$text_arr = array();
 
-	$lines = ceil( strlen( $text ) / 75 );
-
+	$lines = ceil( mb_strlen( $text ) / 75 );
+	
 	for( $i = 0; $i < $lines; $i++ ){
 		$text_arr[$i] = mb_substr( $text, $i * 75, 75 );
 	}
