@@ -354,7 +354,7 @@ window.eventOrganiserSchedulePicker = {
             hourText: options.locale.hour,
             minuteText: options.locale.minute,
             isRTL: options.locale.isrtl,
-    		onSelect: function( time, endTimePickerInst ){
+    		onSelect: function( timeString, endTimePickerInst ){
     			var startDate = $( views.start_date ).datepicker( 'getDate' );
     			var endDate   = $( views.end_date ).datepicker( 'getDate' );
 
