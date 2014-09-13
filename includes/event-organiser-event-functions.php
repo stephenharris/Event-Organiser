@@ -1066,6 +1066,16 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 		foreach ($cats as $cat)
 			$event_classes[] = 'eo-event-cat-'.$cat->slug;
 	}
+	
+	//Event tags
+	if( eventorganiser_get_option('eventtag') ){
+		$terms = get_the_terms( $post_id, 'event-tag' );
+		if( $terms && !is_wp_error( $terms ) ){
+			foreach ( $terms as $term ){
+				$event_classes[] = 'eo-event-tag-'.$term->slug;
+			}
+		}
+	}
 
 	//Add 'time' class
 	$start = eo_get_the_start(DATETIMEOBJ, $post_id, null, $occurrence_id);
@@ -1077,6 +1087,15 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 		$event_classes[] = 'eo-event-past';
 	}else{
 		$event_classes[] = 'eo-event-running';
+	}
+	
+	//Add class if event starts and ends on different days
+	if( $start->format('Y-m-d') != $end->format('Y-m-d') ){
+		$event_classes[] = 'eo-multi-day';
+	}
+	
+	if( eo_is_all_day( $post_id ) ){
+		$event_classes[] = 'eo-all-day';
 	}
 	
 	/**
