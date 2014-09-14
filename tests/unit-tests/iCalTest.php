@@ -527,7 +527,17 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	$ical = new EO_ICAL_Parser();
     	$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithLongDescription.ics' );
     	
-    	$description = "This event has a really long description and goes over the prescribed limit for iCal feeds. Notice the space at the beginning of this line This is a mid-word break; However this line has a space at the end of the line, and it shouldn't be stripped!";
+    	$description = "This event has a really long description and goes over the prescribed limit for iCal feeds. Notice the space at the beginning of this line This is a mid-word break; However this line has a space at the end of the line, and it shouldn\'t be stripped!";
+    	 
+    	$event = $ical->events[0];
+    	$this->assertEquals( $description, $event['post_content'] );
+    }
+    
+    function testEventWithEscapedCharacters(){
+    	$ical = new EO_ICAL_Parser();
+    	$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithEscapedCharacters.ics' );
+    	
+    	$description = 'Event with escaped characters semi-colon ; comma , and then a new line/paragraph.'."\n\n".'Start of new paragraph. Note: colons are not escaped. This new line should be escaped \\\\n - is it?';
     	 
     	$event = $ical->events[0];
     	$this->assertEquals( $description, $event['post_content'] );
