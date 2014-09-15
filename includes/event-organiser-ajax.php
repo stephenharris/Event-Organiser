@@ -72,7 +72,15 @@ function eventorganiser_public_fullcalendar() {
 
 	//Retrieve events		
 	$query    = array_merge( $request, $presets );
-	$key      = "eo_fc_".md5( serialize( $query ). $time_format );
+	
+	//In case polylang is enabled with events as translatable. Include locale in cache key.
+	$options = get_option( 'polylang' );
+	if( defined( 'POLYLANG_VERSION' ) && !empty( $options['post_types']  ) && in_array( 'event', $options['post_types'] ) ){
+		$key = "eo_fc_".md5( serialize( $query ). $time_format . get_locale() );
+	}else{
+		$key = "eo_fc_".md5( serialize( $query ). $time_format );
+	}
+	
 	$calendar = get_transient( "eo_full_calendar_public{$priv}");
 	if( $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
 		$events_array = $calendar[$key];
