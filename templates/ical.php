@@ -117,7 +117,10 @@ if ( have_posts() ) :
 			echo eventorganiser_fold_ical_text( "DESCRIPTION: $description" ) . "\r\n";
 		endif;
 		
-		$description = eventorganiser_escape_ical_text( get_the_content() );
+		$description = wpautop( get_the_content() );	
+		$description = str_replace( "\r\n", "", $description ); //Remove new lines
+		$description = str_replace( "\n", "", $description );
+		$description = eventorganiser_escape_ical_text( $description );
 		echo eventorganiser_fold_ical_text( html_entity_decode( "X-ALT-DESC;FMTTYPE=text/html: $description" ) ) . "\r\n";
 		
 		$cats = get_the_terms( get_the_ID(), 'event-category' );
