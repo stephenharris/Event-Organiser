@@ -27,8 +27,7 @@ function eventorganiser_event_add_columns( $columns ) {
 		unset( $columns['author'] );
 	}
 
-	$supports = eventorganiser_get_option( 'supports' );
-	if( in_array( 'event-venue', $supports ) ){
+	if( taxonomy_exists( 'event-venue' ) ){
 		$tax = get_taxonomy( 'event-venue' );
 		$columns['venue'] = $tax->labels->singular_name;
 	}
@@ -131,11 +130,9 @@ function eventorganiser_restrict_events_by_category() {
 add_action( 'restrict_manage_posts', 'eventorganiser_restrict_events_by_venue' );
 function eventorganiser_restrict_events_by_venue() {
 	global $typenow;
-
-	$supports = eventorganiser_get_option( 'supports' );
 	
 	//Only add if CPT is event
-	if ( $typenow == 'event' && in_array( 'event-venue', $supports ) && !is_wp_error( wp_count_terms( 'event-category' ) ) && wp_count_terms( 'event-venue' ) > 0  ) {
+	if ( $typenow == 'event' && taxonomy_exists( 'event-venue' ) && !is_wp_error( wp_count_terms( 'event-category' ) ) && wp_count_terms( 'event-venue' ) > 0  ) {
 		$tax = get_taxonomy( 'event-venue' );	
 		 eo_event_venue_dropdown( array( 
 		 	'hide_empty'      => false, 

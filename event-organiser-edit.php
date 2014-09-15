@@ -220,9 +220,8 @@ function _eventorganiser_details_metabox( $post ){
 					</td>
 				</tr>
 				<?php 
-					$supports = eventorganiser_get_option( 'supports' );
 					$tax = get_taxonomy( 'event-venue' );
-					if( in_array( 'event-venue', $supports ) ):	?>		
+					if( taxonomy_exists( 'event-venue' ) ):	?>		
 					
 						<tr valign="top" class="eo-venue-combobox-select">
 							<td class="eo-label"> <?php echo esc_html( $tax->labels->singular_name_colon ); ?> </td>
