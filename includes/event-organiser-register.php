@@ -40,30 +40,33 @@ function eventorganiser_register_script() {
 	),$version,true);
 	
 	/* Add js variables to frontend script */
+	$category = get_taxonomy( 'event-category' );
+	$venue    = get_taxonomy( 'event-venue' );
+	$tag      = get_taxonomy( 'event-tag' );
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
-			'adminajax'=>admin_url( 'admin-ajax.php'),
-			'locale'=>array(
-				'locale' => substr(get_locale(),0,2),
-				'isrtl' => $wp_locale->is_rtl(),
-				'monthNames'=>array_values($wp_locale->month),
-				'monthAbbrev'=>array_values($wp_locale->month_abbrev),
-				'dayNames'=>array_values($wp_locale->weekday),
-				'dayAbbrev'=>array_values($wp_locale->weekday_abbrev),
-				'ShowMore'=>__('Show More','eventorganiser'),
-				'ShowLess'=>__('Show Less','eventorganiser'),
-				'today'=>__('today','eventorganiser'),
-				'day'=>__('day','eventorganiser'),
-				'week'=>__('week','eventorganiser'),
-				'month'=>__('month','eventorganiser'),
-				'gotodate'=>__('go to date','eventorganiser'),
-				'cat'=>__('View all categories','eventorganiser'),
-				'venue'=>__('View all venues','eventorganiser'),
-				'tag'=>__('View all tags','eventorganiser'),
-				//Allow themes to over-ride juqery ui styling and not use images
-				'nextText' => '>',
-				'prevText' => '<'
-				)
-			));
+		'adminajax' => admin_url( 'admin-ajax.php'),
+		'locale'    => array(
+			'locale'      => substr(get_locale(),0,2),
+			'isrtl'       => $wp_locale->is_rtl(),
+			'monthNames'  => array_values( $wp_locale->month ),
+			'monthAbbrev' => array_values( $wp_locale->month_abbrev ),
+			'dayNames'    => array_values( $wp_locale->weekday ),
+			'dayAbbrev'   => array_values( $wp_locale->weekday_abbrev ),
+			'ShowMore'    => __( 'Show More', 'eventorganiser '),
+			'ShowLess'    => __( 'Show Less', 'eventorganiser' ),
+			'today'       => __( 'today', 'eventorganiser' ),
+			'day'         => __('day','eventorganiser'),
+			'week'        => __('week','eventorganiser'),
+			'month'       => __('month','eventorganiser'),
+			'gotodate'    => __('go to date','eventorganiser'),
+			'cat'         => $category ? $category->labels->view_all_items : false,
+			'venue'       => $venue    ? $venue->labels->view_all_items    : false,
+			'tag'         => $tag      ? $tag->labels->view_all_items      : false,
+			//Allow themes to over-ride juqery ui styling and not use images
+			'nextText' => '>',
+			'prevText' => '<'
+		)
+	));
 
 	/* WP-JS-Hooks */
 	wp_register_script( 'eo-wp-js-hooks', EVENT_ORGANISER_URL."js/event-manager{$ext}.js",array('jquery'),$version,true);
