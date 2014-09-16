@@ -10,8 +10,8 @@
  */
 function eventorganiser_create_event_taxonomies() {
 
-	if( !eventorganiser_get_option('prettyurl') ){
-		$cat_rewrite =$tag_rewrite=$venue_rewrite= false;
+	if( !eventorganiser_get_option( 'prettyurl' ) ){
+		$cat_rewrite = $tag_rewrite = $venue_rewrite = false;
 
 	}else{
 		$cat_slug = trim(eventorganiser_get_option('url_cat','events/category'), "/");
@@ -23,107 +23,182 @@ function eventorganiser_create_event_taxonomies() {
 		$venue_slug = trim(eventorganiser_get_option('url_venue','events/venue'), "/");
 		$venue_rewrite = array( 'slug' => $venue_slug, 'with_front' => false );
 	}
-
+	
+	//Register event venue taxonomy
 	$supports = eventorganiser_get_option( 'supports' );
 	if( in_array( 'event-venue', $supports ) ){
 		$venue_labels = array(
-			'name' => __( 'Event Venues','eventorganiser' ),
-    		'singular_name' => _x( 'Venue', 'taxonomy singular name', 'eventorganiser' ),
-    		'search_items' =>  __( 'Search Venues', 'eventorganiser' ),
-	    	'all_items' => __( 'All Venues', 'eventorganiser' ),
-			'view_item' => __( 'View Venue', 'eventorganiser' ),
-			'edit_item' => __( 'Edit Venue', 'eventorganiser' ),
-			'update_item' => __( 'Update Venue', 'eventorganiser' ),
-			'add_new_item' => __( 'Add New Venue', 'eventorganiser' ),
-			'new_item_name' => __( 'New Venue Name', 'eventorganiser' ),
-			'not_found' =>  __('No venues found', 'eventorganiser' ),
-			'add_or_remove_items' => __( 'Add or remove venues', 'eventorganiser' ),
-			'separate_items_with_commas' => __( 'Separate venues with commas', 'eventorganiser' )
+			'name'                       => __( 'Venues','eventorganiser' ),
+    		'singular_name'              => _x( 'Venue', 'taxonomy singular name', 'eventorganiser' ),
+    		'search_items'               => __( 'Search Venues', 'eventorganiser' ),
+	    	'all_items'                  => __( 'All Venues', 'eventorganiser' ),
+			'view_item'                  => __( 'View Venue', 'eventorganiser' ),
+			'edit_item'                  => __( 'Edit Venue', 'eventorganiser' ),
+			'update_item'                => __( 'Update Venue', 'eventorganiser' ),
+			'add_new_item'               => __( 'Add New Venue', 'eventorganiser' ),
+			'new_item_name'              => __( 'New Venue Name', 'eventorganiser' ),
+			'not_found'                  => __( 'No venues found', 'eventorganiser' ),
+			'add_or_remove_items'        => __( 'Add or remove venues', 'eventorganiser' ),
+			'separate_items_with_commas' => __( 'Separate venues with commas', 'eventorganiser' ),
+			//non-default wp labels
+			'venue_location'             => __( 'Venue Location', 'eventorganiser' ),
+			'view_all_items'             => __( 'View all venues', 'eventorganiser' ),
+			'singular_name_colon'        => __( 'Venue:', 'eventorganiser' ),
+			'no_item'                    => __( 'No Venue', 'eventorganiser' ),
   		); 		
 
-		register_taxonomy('event-venue',array('event'), array(
-			'hierarchical' => false,
-			'labels' => $venue_labels,
-			'public'=> true,
-			'show_in_nav_menus'=>true,
-			'show_ui' => false,//Use custom UI
+  		$event_venue_args = array(
+			'hierarchical'          => false,
+			'labels'                => $venue_labels,
+			'public'                => true,
+			'show_in_nav_menus'     => true,
+			'show_ui'               => false,//Use custom UI
 			'update_count_callback' => '_update_post_term_count',
-			'query_var' => true,
-			'capabilities'=>array(
-			'manage_terms' => 'manage_venues',
-			'edit_terms' => 'manage_venues',
-			'delete_terms' => 'manage_venues',
-			'assign_terms' =>'edit_events'),
-			'rewrite' => $venue_rewrite
-  		));
+			'query_var'             => true,
+  			'rewrite'               => $venue_rewrite,
+			'capabilities'          => array(
+				'manage_terms' => 'manage_venues',
+				'edit_terms'   => 'manage_venues',
+				'delete_terms' => 'manage_venues',
+				'assign_terms' => 'edit_events'
+  			),
+  		);
+		
+	}else{
+		$event_venue_args = false;		
 	}
-	 // Add new taxonomy, make it hierarchical (like categories)
+	/**
+	 * Filters the event venue taxonomy properties.
+	 * 
+	 * Allows you to change the properties and labels of the event venue taxonomy. You can 
+	 * return `false` to prevent the taxonomy from registering. All labels include those
+	 * supported by `register_taxonomy()`, as well as additional strings:
+	 * 
+	 * * venue_location - Venue location metabox title
+	 * * view_all_items - Used in drop-down filters for venues 
+	 * * singular_name_colon - Same as singular_name but with a colon.
+	 * * no_item - Venue selection, when opting no to select a venue for the event.
+	 *
+	 * @param array|bool $event_venue_args Settings passed to `register_taxonomy()` in the third argument.
+	 *                                     Does not register the taxonomy if set to false.
+	 */
+	$event_venue_args = apply_filters( 'eventorganiser_register_taxonomy_event-venue', $event_venue_args );
+	if( $event_venue_args ){
+		register_taxonomy( 'event-venue',array('event'), $event_venue_args );	
+	}
+	
+	//Register event category taxonomy
 	$category_labels = array(
-		'name' => __('Event Categories', 'eventorganiser'),
-		'singular_name' => _x( 'Category', 'taxonomy singular name'),
-		'search_items' =>  __( 'Search Categories' ),
-		'all_items' => __( 'All Categories' ),
-		'parent_item' => __( 'Parent Category' ),
-		'parent_item_colon' => __( 'Parent Category' ).':',
-		'edit_item' => __( 'Edit Category' ), 
-		'update_item' => __( 'Update Category' ),
-		'add_new_item' => __( 'Add New Category' ),
-		'new_item_name' => __( 'New Category Name' ),
-		'not_found' =>  __('No categories found'),
-		'menu_name' => __( 'Categories' ),
+		'name'              => __( 'Event Categories', 'eventorganiser' ),
+		'singular_name'     => _x( 'Category', 'taxonomy singular name' ),
+		'search_items'      => __( 'Search Categories' ),
+		'all_items'         => __( 'All Categories' ),
+		'parent_item'       => __( 'Parent Category' ),
+		'parent_item_colon' => __( 'Parent Category:' ),
+		'edit_item'         => __( 'Edit Category' ), 
+		'update_item'       => __( 'Update Category' ),
+		'add_new_item'      => __( 'Add New Category' ),
+		'new_item_name'     => __( 'New Category Name' ),
+		'not_found'         => __( 'No categories found' ),
+		'menu_name'         => __( 'Categories' ),
+		//Non-wp default labels
+		'view_all_items'             => __( 'View all categories', 'eventorganiser' ),
   	); 	
+  	
+  	$event_category_args = array(
+		'hierarchical'          => true,
+		'labels'                => $category_labels,
+		'show_ui'               => true,
+    	'update_count_callback' => '_update_post_term_count',
+		'query_var'             => true,
+  		'rewrite'               => $cat_rewrite,
+  		'public'                => true,
+		'capabilities' => array(
+			'manage_terms' => 'manage_event_categories',
+			'edit_terms'   => 'manage_event_categories',
+			'delete_terms' => 'manage_event_categories',
+			'assign_terms' => 'edit_events'
+  		),
+  	);
+  	
+  	/**
+	 * Filters the event category taxonomy properties.
+	 * 
+	 * Allows you to change the properties and labels of the event venue taxonomy. You can 
+	 * return `false` to prevent the taxonomy from registering. All labels include those
+	 * supported by `register_taxonomy()`, as well as additional strings:
+	 * 
+	 * * view_all_items - Used in drop-down filters for venues 
+	 *
+	 * @param array|bool $event_category_args Settings passed to `register_taxonomy()` in the third argument.
+	 *                                        Does not register the taxonomy if set to false.
+	 */
+	$event_category_args = apply_filters( 'eventorganiser_register_taxonomy_event-category', $event_category_args );
+	
+	if( $event_category_args ){
+		register_taxonomy( 'event-category',array('event'), $event_category_args );	
+	}
 
-	register_taxonomy('event-category',array('event'), array(
-		'hierarchical' => true,
-		'labels' => $category_labels,
-		'show_ui' => true,
-    		'update_count_callback' => '_update_post_term_count',
-		'query_var' => true,
-		'capabilities'=>array(
-		'manage_terms' => 'manage_event_categories',
-		'edit_terms' => 'manage_event_categories',
-		'delete_terms' => 'manage_event_categories',
-		'assign_terms' =>'edit_events'),
-		'public'=> true,
-		'rewrite' => $cat_rewrite
-  	));
+	//Register event tag taxonomy
+	if( eventorganiser_get_option('eventtag') ){
 
-	if( eventorganiser_get_option('eventtag') ):
-	  // Add new taxonomy, make it non-hierarchical (like tags)
 		$tag_labels = array(
-			'name' => __('Event Tags','eventorganiser'),
-			'singular_name' => _x( 'Tag', 'taxonomy singular name'),
-			'search_items' =>  __( 'Search Tags'),
-			'all_items' => __( 'All Tags'),
-			'popular_items' => __( 'Popular Tags'),
-			'parent_item' => null,
-			'parent_item_colon' => null,
-			'edit_item' => __( 'Edit Tag'),
-			'update_item' => __( 'Update Tag'),
-			'add_new_item' => __( 'Add New Tag'),
-			'new_item_name' => __( 'New Tag Name'),
-			'not_found' =>  __('No tags found'),
-			'choose_from_most_used' => __( 'Choose from the most used tags' ),
-			'menu_name' => __( 'Tags' ),
-			'add_or_remove_items' => __( 'Add or remove tags' ),
-			'separate_items_with_commas' => __( 'Separate tags with commas' )
+			'name'                       => __( 'Event Tags','eventorganiser' ),
+			'singular_name'              => _x( 'Tag', 'taxonomy singular name' ),
+			'search_items'               => __( 'Search Tags' ),
+			'all_items'                  => __( 'All Tags' ),
+			'popular_items'              => __( 'Popular Tags' ),
+			'edit_item'                  => __( 'Edit Tag' ),
+			'update_item'                => __( 'Update Tag' ),
+			'add_new_item'               => __( 'Add New Tag' ),
+			'new_item_name'              => __( 'New Tag Name' ),
+			'not_found'                  => __( 'No tags found' ),
+			'choose_from_most_used'      => __( 'Choose from the most used tags' ),
+			'menu_name'                  => __( 'Tags' ),
+			'add_or_remove_items'        => __( 'Add or remove tags' ),
+			'separate_items_with_commas' => __( 'Separate tags with commas' ),
+			//Non-wp default labels
+			'view_all_items'             => __( 'View all tags', 'eventorganiser' ),
   		); 	
 
-		register_taxonomy('event-tag',array('event'), array(
-			'hierarchical' => false,
-			'labels' => $tag_labels,
-			'show_ui' => true,
+  		$event_tag_args = array(
+			'hierarchical'          => false,
+			'labels'                => $tag_labels,
+			'show_ui'               => true,
 			'update_count_callback' => '_update_post_term_count',
-			'query_var' => true,
-			'capabilities'=>array(
-			'manage_terms' => 'manage_event_categories',
-			'edit_terms' => 'manage_event_categories',
-			'delete_terms' => 'manage_event_categories',
-			'assign_terms' =>'edit_events'),
-			'public'=> true,
-			'rewrite' => $tag_rewrite
-  		));
-endif;
+			'query_var'             => true,
+  			'public'                => true,
+			'rewrite'               => $tag_rewrite,
+			'capabilities' => array(
+				'manage_terms' => 'manage_event_categories',
+				'edit_terms'   => 'manage_event_categories',
+				'delete_terms' => 'manage_event_categories',
+				'assign_terms' =>'edit_events'
+  			),
+  		);
+  		
+	}else{
+		$event_tag_args = false;
+	}
+		
+	/**
+	 * Filters the event tag taxonomy properties.
+	 * 
+	 * Allows you to change the properties and labels of the event venue taxonomy. You can 
+	 * return `false` to prevent the taxonomy from registering. All labels include those
+	 * supported by `register_taxonomy()`, as well as additional strings:
+	 * 
+	 * * view_all_items - Used in drop-down filters for venues 
+	 *
+	 * @param array|bool $event_tag_args Settings passed to `register_taxonomy()` in the third argument.
+	 *                                   Does not register the taxonomy if set to false.
+	 */
+	$event_tag_args = apply_filters( 'eventorganiser_register_taxonomy_event-tag', $event_tag_args );
+	
+	if( $event_tag_args ){
+		register_taxonomy( 'event-tag',array( 'event' ), $event_tag_args );	
+	}
+  		
 }
 add_action( 'init', 'eventorganiser_create_event_taxonomies', 1 );
 

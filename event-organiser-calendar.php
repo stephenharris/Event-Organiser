@@ -39,8 +39,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			'format' => eventorganiser_php2jquerydate( eventorganiser_get_option('dateformat') ),
 			));
 		
-		$supports = eventorganiser_get_option( 'supports' );
-		$venues = ( in_array( 'event-venue', $supports ) ? get_terms( 'event-venue', array( 'hide_empty' => 0 ) ) : false );
+		$venues = ( get_taxonomy( 'event-venue' ) ? get_terms( 'event-venue', array( 'hide_empty' => 0 ) ) : false );
 		
 		wp_localize_script( 'eo_calendar', 'EO_Ajax', array( 
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -264,8 +263,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				</tr>
 				
 				<?php 
-					$supports = eventorganiser_get_option( 'supports' );
-					if( in_array( 'event-venue', $supports ) ):?>
+					if( taxonomy_exists( 'event-venue' ) ):?>
 						<tr>
 							<th><?php _e( 'Where', 'eventorganiser' );?>: </th>
 							<td><!-- If javascript is disabed, a simple drop down menu box is displayed to choose venue.

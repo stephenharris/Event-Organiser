@@ -1467,23 +1467,26 @@ function eo_get_event_meta_list( $post_id=0 ){
 	if( empty($post_id) ) 
 		return false;
 
-	$html = '<ul class="eo-event-meta" style="margin:10px 0px;">';
+	$html  = '<ul class="eo-event-meta" style="margin:10px 0px;">';
+	$venue = get_taxonomy( 'event-venue' );
 
-	if( $venue_id = eo_get_venue($post_id) ){
-		$html .= sprintf('<li><strong>%s:</strong> <a href="%s">
-								<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/Organization">
-									<span itemprop="name">%s</span>
-									<span itemprop="geo" itemscope itemtype="http://data-vocabulary.org/Geo">
-										<meta itemprop="latitude" content="%f" />
-										<meta itemprop="longitude" content="%f" />
-     									</span>
-								</span></a></li>',
-							__('Venue','eventorganiser'),
-							eo_get_venue_link($venue_id), 
-							eo_get_venue_name($venue_id),
-							eo_get_venue_lat($venue_id),
-							eo_get_venue_lng($venue_id)
-						);
+	if( ( $venue_id = eo_get_venue( $post_id ) ) && $venue ){
+		$html .= sprintf(
+			'<li><strong>%s:</strong> <a href="%s">
+				<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/Organization">
+					<span itemprop="name">%s</span>
+					<span itemprop="geo" itemscope itemtype="http://data-vocabulary.org/Geo">
+						<meta itemprop="latitude" content="%f" />
+						<meta itemprop="longitude" content="%f" />
+     				</span>
+				</span>
+			</a></li>',
+			$venue->labels->singular_name,
+			eo_get_venue_link( $venue_id ), 
+			eo_get_venue_name( $venue_id ),
+			eo_get_venue_lat( $venue_id ),
+			eo_get_venue_lng( $venue_id )
+		);
 	}
 
 	if( get_the_terms(get_the_ID(),'event-category') ){

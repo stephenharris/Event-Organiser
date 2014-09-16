@@ -723,7 +723,8 @@ function eventorganiser_search_venues() {
 			}
 		}
 		
-		$novenue = array('term_id'=>0,'name'=>__('No Venue','eventorganiser'));
+		$tax = get_taxonomy( 'event-venue' );
+		$novenue = array( 'term_id' => 0,'name' => $tax->labels->no_item );
 		$venues =array_merge (array($novenue),$venues);
 
 		//echo JSON to page  

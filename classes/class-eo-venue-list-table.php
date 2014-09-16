@@ -18,6 +18,7 @@ class EO_Venue_List_Table extends WP_List_Table {
      */
 	function __construct(){
 		global $status, $page;
+		
 		//Set parent defaults
 		parent::__construct( array(
 			'singular'  => 'venue',     //singular name of the listed records
@@ -104,14 +105,14 @@ class EO_Venue_List_Table extends WP_List_Table {
      */
     function get_sortable_columns() {
         $sortable_columns = array(
-            'name'		=> array('name',true),   //true means its sorted by default  
-            'venue_address'     => array('address',false),  
-            'venue_city'	=> array('city',false), 
-            'venue_state'	=> array('state',false),
-            'venue_postcode'	=> array('postcode',false),
-            'venue_country'	=> array('country',false),
-            'venue_slug'	=> array('slug',false),
-            'posts'		=> array('count',false),
+            'name'		     => array( 'name', true ),   //true means its sorted by default  
+            'venue_address'  => array( 'address', false ),  
+            'venue_city'	 => array( 'city', false ), 
+            'venue_state'	 => array( 'state', false ),
+            'venue_postcode' => array( 'postcode', false ),
+            'venue_country'	 => array( 'country', false ),
+            'venue_slug'	 => array( 'slug', false ),
+            'posts'		     => array( 'count', false ),
         );
         return $sortable_columns;
     }
@@ -189,5 +190,10 @@ class EO_Venue_List_Table extends WP_List_Table {
 	) );     
 
     }
+    
+	function no_items() {
+		$tax = get_taxonomy( 'event-venue' );
+		echo esc_html( $tax->labels->not_found );
+	}
     
 }?>
