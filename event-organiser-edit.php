@@ -68,7 +68,7 @@ function _eventorganiser_details_metabox( $post ){
 	
 	//$sche_once is used to disable date editing unless the user specifically requests it.
 	//But a new event might be recurring (via filter), and we don't want to 'lock' new events.
-	//See http://wordpress.org/support/topic/wrong-default-in-input-element
+	//See https://wordpress.org/support/topic/wrong-default-in-input-element
 	$sche_once = ( $schedule == 'once' || !empty(get_current_screen()->action) );
 	 
 	if ( !$sche_once ){
@@ -220,11 +220,11 @@ function _eventorganiser_details_metabox( $post ){
 					</td>
 				</tr>
 				<?php 
-					$supports = eventorganiser_get_option( 'supports' );
-					if( in_array( 'event-venue', $supports ) ):	?>		
+					$tax = get_taxonomy( 'event-venue' );
+					if( taxonomy_exists( 'event-venue' ) ):	?>		
 					
 						<tr valign="top" class="eo-venue-combobox-select">
-							<td class="eo-label"> <?php _e( 'Venue', 'eventorganiser' );?>: </td>
+							<td class="eo-label"> <?php echo esc_html( $tax->labels->singular_name_colon ); ?> </td>
 							<td> 	
 								<select size="50" id="venue_select" name="eo_input[event-venue]">
 									<option><?php _e( 'Select a venue', 'eventorganiser' );?></option>

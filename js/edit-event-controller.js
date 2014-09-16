@@ -77,6 +77,21 @@ $("#HWSEvent_rec").click(function() {
 	window.eventOrganiserSchedulePicker.update_form();
 });
 
+//Map
+eovenue.init_map( 'venuemap', {
+	lat: $("#eo_venue_Lat").val(),
+	lng: $("#eo_venue_Lng").val(),
+	draggable: false,
+	onPositionchanged: function (){
+		var latLng = this.getPosition();
+		
+		jQuery("#eo_venue_Lat").val( latLng.lat().toFixed(6) );
+		jQuery("#eo_venue_Lng").val( latLng.lng().toFixed(6) );
+        
+		this.getMap().setCenter( latLng );
+		this.getMap().setZoom( 15 );
+	},
+});
 
 //The venue combobox
 $.widget("ui.combobox", {
@@ -101,9 +116,9 @@ $.widget("ui.combobox", {
 						$("tr.venue_row").show();
 						$("#eventorganiser_event_detail tr.eo-add-new-venue").hide();
 					}
-					eo_initialize_map( b.item.venue_lat, b.item.venue_lng );
-					$("#eo_venue_Lat").val( b.item.venue_lat );
-					$("#eo_venue_Lng").val( b.item.venue_lng );
+					
+					var latlng = new google.maps.LatLng( b.item.venue_lat, b.item.venue_lng );
+					eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
 				}
 				$("#venue_select").removeAttr( "selected" );
 				$("#venue_select").val( b.item.term_id );
@@ -143,7 +158,7 @@ $.widget("ui.combobox", {
 			input.autocomplete("search", "").focus();
 		});
 
-		if( 'event' == pagenow && EO_Ajax_Event.current_user_can.manage_venues ){
+		if( EO_Ajax_Event.current_user_can.manage_venues ){
 			//Only add this on event edit page - i.e. not on calendar page.
 			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height:"+button_height+";'>").attr("title", "Create New Venue").appendTo(button_wrappers).button({
 				icons: {primary: "ui-icon-plus"},
@@ -151,7 +166,8 @@ $.widget("ui.combobox", {
 			}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right add-new-venue ui-combobox-button").click(function () {
 				$("#eventorganiser_event_detail tr.eo-add-new-venue").show();			
 				$("tr.venue_row").show();
-				//Store existing venue details in case the user cancels creating a new on
+				
+				//Store existing venue details in case the user cancels creating a new one
 				eo_venue_obj={
 						id: $("#venue_select").val(),
 						label: $(".eo-venue-input input").val(),
@@ -161,14 +177,20 @@ $.widget("ui.combobox", {
 				$("#venue_select").removeAttr("selected").val(0);
 				$('.eo-venue-combobox-select').hide();
 				$('.eo-venue-input input').val('');
-				eo_initialize_map(0,0);
+
+				//Use selected timezone to 'guess' a new address, so we don't get a blank map instead.
 				var address = EO_Ajax_Event.location;
 				if( address ){
-					address =address.split("/");
-					address = address[address.length-1];
-					eventorganiser_code_address(address);
+					address = address.split("/");					
+		            eovenue.geocode( address[address.length-1], function( latlng ){
+		            	if( latlng ){
+		                	eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
+		                }
+		            });
 				}else{
-					map.setZoom(1);
+					var latlng = new google.maps.LatLng( 0, 0 );
+					eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
+					eovenue.get_map( 'venuemap' ).map.setZoom( 1 );
 				}
 				$(this).blur();
 			});
@@ -178,6 +200,19 @@ $.widget("ui.combobox", {
 
 $("#venue_select").combobox();
 
+$(".eo_addressInput").change(function () {
+    var address = [];
+    $(".eo_addressInput").each(function () {
+    	address.push(jQuery(this).val());
+    });
+    
+    eovenue.geocode( address.join(', '), function( latlng ){
+    	if( latlng ){
+        	eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
+        }
+    });
+});
+
 //When cancelling venue input, restore defaults
 $('.eo-add-new-venue-cancel').click(function(e){
 	e.preventDefault();
@@ -185,9 +220,10 @@ $('.eo-add-new-venue-cancel').click(function(e){
 	$('.eo-add-new-venue input').val('');
 
 	//Restore old venue details
-	eo_initialize_map(eo_venue_obj.lat,eo_venue_obj.lng);
-	$("#venue_select").val(eo_venue_obj.id);
-	$(".eo-venue-input input").val(eo_venue_obj.label);
+	var latlng = new google.maps.LatLng( eo_venue_obj.lat, eo_venue_obj.lng );
+	eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
+	$("#venue_select").val( eo_venue_obj.id );
+	$(".eo-venue-input input").val( eo_venue_obj.label );
 	$("#eventorganiser_event_detail tr.eo-add-new-venue").hide();	
 });
 });

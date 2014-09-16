@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Test Blog//NONSGML Events//EN
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Test Blog - Events
+X-ORIGINAL-URL:http://example.org/?post_type=event
+X-WR-CALDESC:Test Blog - Events
+BEGIN:VEVENT
+UID:unit-test
+STATUS:CONFIRMED
+DTSTAMP:%%now%%
+CREATED:%%now%%
+LAST-MODIFIED:%%now%%
+DTSTART:20131202T210000Z
+DTEND:20131202T230000Z
+SUMMARY: The\; Event: Title\, contains some \\n characters which need escap
+ ing
+DESCRIPTION: The content contains semi colon\; and colons: which are fine. 
+ A comma\, and new line \\n which is not a new line And then \\ a backslash.
+X-ALT-DESC;FMTTYPE=text/html: <p>The content contains semi colon\; and colo
+ ns: which are fine. A comma\, and new line \\n which is not a new line And 
+ then \\ a backslash.</p>
+URL;VALUE=URI:http://example.org/?event=the-event-title-contains-some-n-cha
+ racters-which-need-escaping
+END:VEVENT
+END:VCALENDAR

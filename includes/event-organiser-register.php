@@ -40,30 +40,33 @@ function eventorganiser_register_script() {
 	),$version,true);
 	
 	/* Add js variables to frontend script */
+	$category = get_taxonomy( 'event-category' );
+	$venue    = get_taxonomy( 'event-venue' );
+	$tag      = get_taxonomy( 'event-tag' );
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
-			'adminajax'=>admin_url( 'admin-ajax.php'),
-			'locale'=>array(
-				'locale' => substr(get_locale(),0,2),
-				'isrtl' => $wp_locale->is_rtl(),
-				'monthNames'=>array_values($wp_locale->month),
-				'monthAbbrev'=>array_values($wp_locale->month_abbrev),
-				'dayNames'=>array_values($wp_locale->weekday),
-				'dayAbbrev'=>array_values($wp_locale->weekday_abbrev),
-				'ShowMore'=>__('Show More','eventorganiser'),
-				'ShowLess'=>__('Show Less','eventorganiser'),
-				'today'=>__('today','eventorganiser'),
-				'day'=>__('day','eventorganiser'),
-				'week'=>__('week','eventorganiser'),
-				'month'=>__('month','eventorganiser'),
-				'gotodate'=>__('go to date','eventorganiser'),
-				'cat'=>__('View all categories','eventorganiser'),
-				'venue'=>__('View all venues','eventorganiser'),
-				'tag'=>__('View all tags','eventorganiser'),
-				//Allow themes to over-ride juqery ui styling and not use images
-				'nextText' => '>',
-				'prevText' => '<'
-				)
-			));
+		'adminajax' => admin_url( 'admin-ajax.php'),
+		'locale'    => array(
+			'locale'      => substr(get_locale(),0,2),
+			'isrtl'       => $wp_locale->is_rtl(),
+			'monthNames'  => array_values( $wp_locale->month ),
+			'monthAbbrev' => array_values( $wp_locale->month_abbrev ),
+			'dayNames'    => array_values( $wp_locale->weekday ),
+			'dayAbbrev'   => array_values( $wp_locale->weekday_abbrev ),
+			'ShowMore'    => __( 'Show More', 'eventorganiser '),
+			'ShowLess'    => __( 'Show Less', 'eventorganiser' ),
+			'today'       => __( 'today', 'eventorganiser' ),
+			'day'         => __('day','eventorganiser'),
+			'week'        => __('week','eventorganiser'),
+			'month'       => __('month','eventorganiser'),
+			'gotodate'    => __('go to date','eventorganiser'),
+			'cat'         => $category ? $category->labels->view_all_items : false,
+			'venue'       => $venue    ? $venue->labels->view_all_items    : false,
+			'tag'         => $tag      ? $tag->labels->view_all_items      : false,
+			//Allow themes to over-ride juqery ui styling and not use images
+			'nextText' => '>',
+			'prevText' => '<'
+		)
+	));
 
 	/* WP-JS-Hooks */
 	wp_register_script( 'eo-wp-js-hooks', EVENT_ORGANISER_URL."js/event-manager{$ext}.js",array('jquery'),$version,true);
@@ -72,8 +75,8 @@ function eventorganiser_register_script() {
 	wp_register_script( 'eo_qtip2', EVENT_ORGANISER_URL.'js/qtip2.js',array('jquery'),$version,true);
 
 	/* Styles */
-	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL.'css/fullcalendar.css',array(),$version);
-	wp_register_style('eo_front',EVENT_ORGANISER_URL.'css/eventorganiser-front-end.css',array(),$version);
+	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL."css/fullcalendar{$ext}.css",array(),$version);
+	wp_register_style('eo_front',EVENT_ORGANISER_URL."css/eventorganiser-front-end{$ext}.css",array(),$version);
 }   
 add_action('init', 'eventorganiser_register_script');
 
@@ -88,10 +91,16 @@ function eventorganiser_register_scripts(){
 	$version = defined( 'EVENT_ORGANISER_VER' ) ? EVENT_ORGANISER_VER : false;
 	$ext = (defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG) ? '' : '.min';
 
-	/*  Venue scripts for venue & event edit */
-	wp_register_script( 'eo_venue', EVENT_ORGANISER_URL."js/venues{$ext}.js",array(
+	/*  Venue (map) utility script */
+	wp_register_script( 'eo-venue-util', EVENT_ORGANISER_URL."js/venue-util{$ext}.js",array(
 		'jquery',
 		'eo_GoogleMap'
+	),$version,true);
+	
+	/*  Venue script for venue edit */
+	wp_register_script( 'eo-venue-admin', EVENT_ORGANISER_URL."js/venue-admin{$ext}.js",array(
+		'jquery',
+		'eo-venue-util'
 	),$version,true);
 	
 	/*  Script for event edit page. (Legacy version) */
@@ -110,7 +119,8 @@ function eventorganiser_register_scripts(){
 		'jquery',
 		'jquery-ui-datepicker',
 		'eo-timepicker',
-		'eo-time-picker',
+		'eo-time-picker',//Deprecated remove in 3.0?
+		'eo-venue-util',
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',
 		'jquery-ui-button',
@@ -136,15 +146,15 @@ function eventorganiser_register_scripts(){
 
 	/*  Pick and register jQuery UI style */
 	$style = ( 'classic' == get_user_option( 'admin_color') ? 'classic' : 'fresh' );
-	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL."css/eventorganiser-admin-{$style}.css",array(),$version);
+	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL."css/eventorganiser-admin-{$style}{$ext}.css",array(),$version);
 	
 	/* Admin styling */
-	wp_register_style( 'eventorganiser-3.8+', EVENT_ORGANISER_URL.'css/eventorganiser-admin-3.8+.css', array(), $version );
+	wp_register_style( 'eventorganiser-3.8+', EVENT_ORGANISER_URL."css/eventorganiser-admin-3.8+{$ext}.css", array(), $version );
 	$deps = array( 'eventorganiser-jquery-ui-style' );
 	if ( ( defined( 'MP6' ) && MP6 ) || version_compare( '3.8-beta-1', get_bloginfo( 'version' ) ) <= 0 ) {
 		$deps[] = 'eventorganiser-3.8+';
 	}
-	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL.'css/eventorganiser-admin-style.css', $deps, $version );
+	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL."css/eventorganiser-admin-style{$ext}.css", $deps, $version );
 
 	/* Inline Help */
 	wp_register_script( 'eo-inline-help', EVENT_ORGANISER_URL.'js/inline-help.js',array( 'jquery', 'eo_qtip2' ), $version, true );
@@ -160,7 +170,7 @@ add_action( 'admin_init', 'eventorganiser_register_scripts', 5 );
  * can be found here {@see https://github.com/azagniotov/Comprehensive-Google-Map-Plugin/blob/master/functions.php#L520 }
  *
  * @see https://github.com/stephenharris/Event-Organiser/issues/49
- * @see http://wordpress.org/support/topic/googlemap-doesnt-shown-on-event-detail-page
+ * @see https://wordpress.org/support/topic/googlemap-doesnt-shown-on-event-detail-page
  * @since 1.7.4
  * @ignore
  * @access private
@@ -255,7 +265,6 @@ function eventorganiser_add_admin_scripts( $hook ) {
 						'occurrence'=>array(__('first','eventorganiser'),__('second','eventorganiser'),__('third','eventorganiser'),__('fourth','eventorganiser'),__('last','eventorganiser'))
 					)
 					));
-			wp_enqueue_script('eo_venue');
 			wp_enqueue_style('eventorganiser-style');
 		}
 	}elseif($current_screen->id=='edit-event'){
@@ -386,7 +395,7 @@ function eventorganiser_clear_cron_jobs(){
  * Returns the time in seconds until a specified cron job is scheduled.
  *
  *@since 1.8
- *@see http://wordpress.stackexchange.com/questions/83270/when-does-next-cron-job-run-time-from-now/83279#83279
+ *@see https://wordpress.stackexchange.com/questions/83270/when-does-next-cron-job-run-time-from-now/83279#83279
  *
  *@param string $cron_name The name of the cron job
  *@return int|bool The time in seconds until the cron job is scheduled. False if

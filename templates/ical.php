@@ -103,13 +103,24 @@ if ( have_posts() ) :
 			"SUMMARY: " . eventorganiser_escape_ical_text( get_the_title_rss() ) ) 
 		) . "\r\n";
 		
-		$excerpt = get_the_excerpt();
-		$excerpt = eventorganiser_escape_ical_text( apply_filters('the_excerpt_rss', $excerpt) );
-		if ( !empty($excerpt) ) :
-			echo eventorganiser_fold_ical_text( html_entity_decode( "DESCRIPTION: $excerpt" ) ) . "\r\n";
+		$description = wp_strip_all_tags( get_the_excerpt() );
+		$description = ent2ncr( convert_chars( $description ) );
+		/**
+	 	* Filters the description of the event as it appears in the iCal feed.
+	 	*
+	 	* @param string $description The event description
+	 	*/
+		$description = apply_filters( 'eventorganiser_ical_description', $description );
+		$description = eventorganiser_escape_ical_text( $description );
+		
+		if ( !empty( $description ) ) :
+			echo eventorganiser_fold_ical_text( "DESCRIPTION: $description" ) . "\r\n";
 		endif;
 		
-		$description = eventorganiser_escape_ical_text( get_the_content() );
+		$description = wpautop( get_the_content() );	
+		$description = str_replace( "\r\n", "", $description ); //Remove new lines
+		$description = str_replace( "\n", "", $description );
+		$description = eventorganiser_escape_ical_text( $description );
 		echo eventorganiser_fold_ical_text( html_entity_decode( "X-ALT-DESC;FMTTYPE=text/html: $description" ) ) . "\r\n";
 		
 		$cats = get_the_terms( get_the_ID(), 'event-category' );
@@ -125,9 +136,13 @@ if ( have_posts() ) :
 			echo "GEO:" . implode( ';', eo_get_venue_latlng( $venue ) ) . "\r\n";
 		endif;
 		
-		$author_name = eventorganiser_escape_ical_text( get_the_author() );
-		$author_email = eventorganiser_escape_ical_text( get_the_author_meta( 'user_email' ) );
-		echo eventorganiser_fold_ical_text( 'ORGANIZER;CN="' . $author_name . '":MAILTO:' . $author_email ) . "\r\n";
+		if( get_the_author_meta( 'ID' ) ){
+			$author_name = eventorganiser_escape_ical_text( get_the_author() );
+			$author_email = eventorganiser_escape_ical_text( get_the_author_meta( 'user_email' ) );
+			echo eventorganiser_fold_ical_text( 'ORGANIZER;CN="' . $author_name . '":MAILTO:' . $author_email ) . "\r\n";
+		}
+		
+		echo eventorganiser_fold_ical_text( 'URL;VALUE=URI:' . get_the_permalink() ) . "\r\n";
 		
 		echo "END:VEVENT\r\n";
 

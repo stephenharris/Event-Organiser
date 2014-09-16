@@ -617,14 +617,15 @@ class EO_ICAL_Parser{
 
 			//The event's description (AKA post content)
 		case 'DESCRIPTION':
-			if( !isset( $this->current_event['post_content'] ) )
+			if( !isset( $this->current_event['post_content'] ) ){
 				$this->current_event['post_content'] = $this->parse_ical_text( $value );
+			}
 		break;
 		
 			//Description, in alternative format
 		case 'X-ALT-DESC':
 			if( $this->parse_html && !empty( $modifiers[0] ) && in_array( $modifiers[0], array( "FMTTYPE=text/html", "ALTREP=text/html" ) ) ){
-				$this->current_event['post_content'] = $this->parse_ical_html( $value );
+				$this->current_event['post_content'] = $this->parse_ical_html( $value );	
 			}
 		break;
 		
@@ -699,24 +700,51 @@ class EO_ICAL_Parser{
 	/**
 	 * Takes escaped text and returns the text unescaped.
 	 * 
+	 * @see https://github.com/fruux/sabre-vobject/blob/219935b414c24ce89acd32d509966d44f04f4012/lib/Parser/MimeDir.php#L469:L513
 	 * @ignore
 	 * @param string $text - the escaped test
 	 * @return string $text - the text, unescaped.
 	 */
 	protected function parse_ical_text($text){
-		//Get rid of carriage returns:
-		$text = str_replace("\r\n","\n",$text);
-		$text = str_replace("\r","\n",$text);
 
-		//Some calendar apps break up text
-		$text = str_replace("\n ","",$text);
-		$text = str_replace("\r ","",$text);
+		//Unfold
+		$text = str_replace( "\n ","", $text );
+		$text = str_replace( "\r\n ", "", $text );
 
-		//Any intended carriage returns/new-lines converted to HTML
-		$text = str_replace("\\r\\n","",$text);
-		$text = str_replace("\\n","</br>",$text);
-		$text = stripslashes($text);
-		return $text;
+		//Repalce any intended new lines with PHP_EOL
+		//$text = str_replace( '\n', "<br>", $text );
+		$text = nl2br( $text );
+				
+		$regex = '#  (?: (\\\\ (?: \\\\ | N | n | ; | , ) ) ) #x';
+        $matches = preg_split( $regex, $text, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
+
+        $result = '';
+        
+        foreach( $matches as $match ) {
+
+            switch ( $match ) {
+                case '\\\\' :
+                    $result .='\\';
+                    break;
+                case '\N' :
+                case '\n' :
+                    $result .="\n";
+                    break;
+                case '\;' :
+                    $result .=';';
+                    break;
+                case '\,' :
+                    $result .=',';
+                    break;
+                default :
+                    $result .= $match;
+                    break;
+
+            }
+
+        }
+
+		return addslashes( $result );
 	}
 
 	/**
@@ -1054,7 +1082,7 @@ class EO_ICAL_Parser{
     	//value
     	array_shift( $line_parts );
     	$value = ( $line_parts ? implode( ":", $line_parts ) : false );
-    	$value = str_replace( "{{ colon}}", ":", $value );
+    	$value = str_replace( "{{colon}}", ":", $value );
 
 		return array( $property, $value );
 	}

@@ -37,6 +37,15 @@ module.exports = function(grunt) {
 		all: [ 'js/*.js', '!js/*.min.js', '!*/time-picker.js', '!*/jquery-ui-eo-timepicker.js', '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
   	
+	cssmin: {
+		minify: {
+			expand: true,
+			src: [ 'css/*.css', '!**/*.min.css' ],
+		    ext: '.min.css',
+		    extDot: 'last'
+		}
+	},
+  	
 	shell: {
 		makeDocs: {
 			options: {
@@ -172,7 +181,8 @@ module.exports = function(grunt) {
         		svn_user: 'stephenharris',
         		plugin_slug: 'event-organiser',
         		build_dir: 'dist/event-organiser/',
-        		assets_dir: 'assets'
+        		assets_dir: 'assets/',
+        		max_buffer: 1024*1024
             },
     	}
     },
@@ -188,20 +198,21 @@ module.exports = function(grunt) {
     	options:{
         	text_domain: 'eventorganiser',
         	dest: 'languages/',
+        	msgmerge: true,
         	keywords: ['__','_e','esc_html__','esc_html_e','esc_attr__', 'esc_attr_e', 'esc_attr_x', 'esc_html_x', 'ngettext', '_n', '_ex', '_nx' ],
     	},
     	files:{
-		src:  [
-			'**/*.php',
-			'!node_modules/**',
-			'!dist/**',
-			'!apigen/**',
-			'!documentation/**',
-			'!tests/**',
-			'!vendor/**',
-			'!*~',
-		],
-		expand: true,
+    		src:  [
+    		  '**/*.php',
+    		  '!node_modules/**',
+    		  '!dist/**',
+    		  '!apigen/**',
+    		  '!documentation/**',
+    		  '!tests/**',
+    		  '!vendor/**',
+    		  '!*~',
+    		],
+    		expand: true,
     	}
     },
 
@@ -247,7 +258,7 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'build', [ 'test', 'uglify', 'pot', 'po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
+grunt.registerTask( 'build', [ 'test', 'uglify', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
 
 grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
 

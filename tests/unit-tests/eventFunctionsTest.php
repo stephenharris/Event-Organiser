@@ -6,7 +6,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 	/**
 	 * Test that using eo_get_add_to_google_link() does not reset timezone of
 	 * start/end date of event
-	 * @see http://wordpress.org/support/topic/eo_get_add_to_google_link?replies=1
+	 * @see https://wordpress.org/support/topic/eo_get_add_to_google_link?replies=1
 	 */
 	public function testAddToGoogleLink()
 	{

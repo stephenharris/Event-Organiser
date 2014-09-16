@@ -163,8 +163,8 @@ function eo_is_event_archive( $type = false ){
  * @since 1.7
  * @uses is_post_type_archive()
  * @uses eo_format_datetime()
- * @link http://php.net/manual/en/function.date.php Formatting dates
- * @param string|constant $format How to format the date, see http://php.net/manual/en/function.date.php  or DATETIMEOBJ constant to return the datetime object.
+ * @link https://php.net/manual/en/function.date.php Formatting dates
+ * @param string|constant $format How to format the date, see https://php.net/manual/en/function.date.php  or DATETIMEOBJ constant to return the datetime object.
  * @return string|dateTime The formatted date
 */
 function eo_get_event_archive_date( $format = DATETIMEOBJ ){

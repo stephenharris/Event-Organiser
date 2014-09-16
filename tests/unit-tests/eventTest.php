@@ -78,7 +78,7 @@ class eventTest extends EO_UnitTestCase
     /**
      * Tests that updating the time(s) of an event keeps the occurrence IDs
      * 
-     * @see http://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
+     * @see https://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
      * @see https://github.com/stephenharris/Event-Organiser/issues/195
      */
     public function testUpdateTimeOnly()
@@ -150,7 +150,7 @@ class eventTest extends EO_UnitTestCase
     /**
      * Tests that updating the end time of an event keeps the occurrence IDs
      * 
-     * @see http://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
+     * @see https://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
      * @see https://github.com/stephenharris/Event-Organiser/issues/195
      */
     public function testUpdateEndTimeOnly()
@@ -294,7 +294,7 @@ class eventTest extends EO_UnitTestCase
 			'all_day'    => 1, 
 		);
 		
-		$event_id = eo_insert_event( $event );
+		$event_id       = eo_insert_event( $event );
 		$occurrences    = eo_get_the_occurrences( $event_id );
 		$occurrence_ids = array_keys( $occurrences );
 		$occurrence_id  = array_shift( $occurrence_ids );
@@ -304,6 +304,40 @@ class eventTest extends EO_UnitTestCase
 		update_option( 'timezone_string', $original_tz );
 		update_option( 'gmt_offset', $original_offset );
     }
-	
+
+    /**
+     * @see https://github.com/stephenharris/Event-Organiser/issues/224
+     */
+    public function testEventSpanningDSTBoundary(){
+    	
+    	$original_tz = get_option( 'timezone_string' );
+		
+		update_option( 'timezone_string', 'Europe/Berlin' );
+		$tz = eo_get_blog_timezone();
+		
+    	$event = array(
+			'start'         => new DateTime( '2013-10-25 00:00:00', $tz ),
+			'end'           => new DateTime( '2013-10-28 23:59:00', $tz ),
+			'frequency'     => 1,
+    		'all_day'       => true,
+    	    'schedule'      => 'weekly',
+    	    'schedule_last' => new DateTime( '2013-11-01 00:00:00', $tz ),
+		);
+		
+		//Create event and store occurrences
+		$event_id = eo_insert_event( $event );
+		
+		$occurrences = eo_get_the_occurrences_of( $event_id );
+		$occurrence  = array_shift( $occurrences );
+		$this->assertEquals( $event['end'], $occurrence['end'] );
+		
+		//The second occurrence doesn't across DST boundary 
+		$occurrence  = array_shift( $occurrences );
+		$expected    = new DateTime( '2013-11-04 23:59:00', $tz );
+		$this->assertEquals( $expected, $occurrence['end'] );
+
+		update_option( 'timezone_string', $original_tz );
+    	
+    }
 }
 

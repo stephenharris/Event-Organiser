@@ -8,9 +8,9 @@
 /**
 * Retrieve list of events matching criteria.
 *
-* This function is a wrapper for get_posts(). **As such parameters from {@see `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} can also be used**.
+* This function is a wrapper for get_posts(). **As such parameters from {@see `get_posts()`} and {@link https://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} can also be used**.
 * Their default values are as indicated by the relevant codex page unless specified below. 
-* You can also use {@see `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events.
+* You can also use {@see `get_posts()`} and {@link https://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events.
 * 
 * The `$args` array can include the following.
 *
@@ -922,7 +922,7 @@ function eo_get_the_occurrences_of($post_id=0){
 		return false;
 
 	 //Can't cache datetime objects before 5.3
-	 //@see{http://wordpress.org/support/topic/warning-datetimeformat-functiondatetime-format?replies=7#post-3940247}
+	 //@see{https://wordpress.org/support/topic/warning-datetimeformat-functiondatetime-format?replies=7#post-3940247}
 	if( version_compare(PHP_VERSION, '5.3.0') >= 0 ){
 		$occurrences = wp_cache_get( 'eventorganiser_occurrences_'.$post_id );
 	}else{
@@ -1002,7 +1002,7 @@ function eo_get_event_color($post_id=0){
 	/**
 	 * Filters the colour associated with an event
 	 * 
-	 * @link http://wordpress.org/support/topic/plugin-event-organiser-color-code-for-venues-instead-of-categories
+	 * @link https://wordpress.org/support/topic/plugin-event-organiser-color-code-for-venues-instead-of-categories
 	 * @param string $color Event colour in HEX format
 	 * @param int $post_id The event (post) ID
 	*/
@@ -1066,6 +1066,16 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 		foreach ($cats as $cat)
 			$event_classes[] = 'eo-event-cat-'.$cat->slug;
 	}
+	
+	//Event tags
+	if( eventorganiser_get_option('eventtag') ){
+		$terms = get_the_terms( $post_id, 'event-tag' );
+		if( $terms && !is_wp_error( $terms ) ){
+			foreach ( $terms as $term ){
+				$event_classes[] = 'eo-event-tag-'.$term->slug;
+			}
+		}
+	}
 
 	//Add 'time' class
 	$start = eo_get_the_start(DATETIMEOBJ, $post_id, null, $occurrence_id);
@@ -1077,6 +1087,15 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 		$event_classes[] = 'eo-event-past';
 	}else{
 		$event_classes[] = 'eo-event-running';
+	}
+	
+	//Add class if event starts and ends on different days
+	if( $start->format('Y-m-d') != $end->format('Y-m-d') ){
+		$event_classes[] = 'eo-multi-day';
+	}
+	
+	if( eo_is_all_day( $post_id ) ){
+		$event_classes[] = 'eo-all-day';
 	}
 	
 	/**
@@ -1448,23 +1467,26 @@ function eo_get_event_meta_list( $post_id=0 ){
 	if( empty($post_id) ) 
 		return false;
 
-	$html = '<ul class="eo-event-meta" style="margin:10px 0px;">';
+	$html  = '<ul class="eo-event-meta" style="margin:10px 0px;">';
+	$venue = get_taxonomy( 'event-venue' );
 
-	if( $venue_id = eo_get_venue($post_id) ){
-		$html .= sprintf('<li><strong>%s:</strong> <a href="%s">
-								<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/​Organization">
-									<span itemprop="name">%s</span>
-									<span itemprop="geo" itemscope itemtype="http://data-vocabulary.org/​Geo">
-										<meta itemprop="latitude" content="%f" />
-										<meta itemprop="longitude" content="%f" />
-     									</span>
-								</span></a></li>',
-							__('Venue','eventorganiser'),
-							eo_get_venue_link($venue_id), 
-							eo_get_venue_name($venue_id),
-							eo_get_venue_lat($venue_id),
-							eo_get_venue_lng($venue_id)
-						);
+	if( ( $venue_id = eo_get_venue( $post_id ) ) && $venue ){
+		$html .= sprintf(
+			'<li><strong>%s:</strong> <a href="%s">
+				<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/Organization">
+					<span itemprop="name">%s</span>
+					<span itemprop="geo" itemscope itemtype="http://data-vocabulary.org/Geo">
+						<meta itemprop="latitude" content="%f" />
+						<meta itemprop="longitude" content="%f" />
+     				</span>
+				</span>
+			</a></li>',
+			$venue->labels->singular_name,
+			eo_get_venue_link( $venue_id ), 
+			eo_get_venue_name( $venue_id ),
+			eo_get_venue_lat( $venue_id ),
+			eo_get_venue_lng( $venue_id )
+		);
 	}
 
 	if( get_the_terms(get_the_ID(),'event-category') ){

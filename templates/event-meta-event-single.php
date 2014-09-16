@@ -59,8 +59,9 @@
 				<?php
 		 } ?>
 
-		<?php if( eo_get_venue() ){ ?>
-			<li><strong><?php _e('Venue','eventorganiser'); ?>:</strong> <a href="<?php eo_venue_link(); ?>"> <?php eo_venue_name(); ?></a></li>
+		<?php if( eo_get_venue() ){ 
+			$tax = get_taxonomy( 'event-venue' ); ?>
+			<li><strong><?php echo esc_html( $tax->labels->singular_name ) ?>:</strong> <a href="<?php eo_venue_link(); ?>"> <?php eo_venue_name(); ?></a></li>
 		<?php } ?>
 
 

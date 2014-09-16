@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 4.0.0
-Stable tag: 2.8.6
+Stable tag: 2.9.0
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -24,8 +24,8 @@ Event Organiser adds event management that integrates well with your WordPress s
 * [Event Organiser Frontend Submissinos](http://wp-event-organiser.com/extensions/event-organiser-frontend-submissions/?aid=7)
 * [Discount Codes](http://wp-event-organiser.com/extensions/event-organiser-discount-codes?aid=7)
 * [Stripe Gateway](http://wp-event-organiser.com/extensions/event-organiser-stripe?aid=7)
-* [Posterboard](http://wordpress.org/plugins/event-organiser-posterboard) (free)
-* [CSV export](http://wordpress.org/plugins/event-organiser-csv) (free)
+* [Posterboard](https://wordpress.org/plugins/event-organiser-posterboard) (free)
+* [CSV export](https://wordpress.org/plugins/event-organiser-csv) (free)
 * [iCal Sync](http://wp-event-organiser.com/extensions/event-organiser-ical-sync?aid=7)
 
 A full list of available extensions can be found [here](http://wp-event-organiser.com/extensions/).
@@ -169,14 +169,14 @@ Finally, the plug-in provides a function `eo_get_events()` which is similiar to 
 The calendar should display all published events. If you find the calendar doesn't appear this is usually caused by the theme you are using, and is verifiable by temporarily switching to the TwentyEleven theme. If the theme is the cause this is normally because:
 
 * The theme de-registers the jQuery / jQuery UI shipped with WordPress and registers an outdated version
-* The theme does not call [`wp_footer`](http://codex.wordpress.org/Function_Reference/wp_footer) in the footer
+* The theme does not call [`wp_footer`](https://codex.wordpress.org/Function_Reference/wp_footer) in the footer
 
 If the calendar *does* appear, but gets stuck loading, the cause is usually the AJAX response. If your site is in 'debug' mode - this can be due to error messages from other plug-ins being printed. You can view the AJAX response in your browsers console (E.g. Firefox's firebug or Chrome's dev tools). If you are still unable to determine the cause of the problem, or how to fix, please use the plug-in forums with a link to your site and I'll take a look.
 
 
 = I cannot navigate between months on the widget calendar =
 
-If clicking on the 'next' month causes the page to reload - the javascript has not been loaded. This is usually because the theme does not call [`wp_footer`](http://codex.wordpress.org/Function_Reference/wp_footer) in the footer. 
+If clicking on the 'next' month causes the page to reload - the javascript has not been loaded. This is usually because the theme does not call [`wp_footer`](https://codex.wordpress.org/Function_Reference/wp_footer) in the footer. 
 
 If the calendar simply does not respond this is usually because your theme does not allow widgets to add their own ID and classes. Somewhere in the theme folder your theme will make use of `register_sidebar()` (probably in `functions.php`. It should look something like:
 
@@ -218,6 +218,20 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 2.9.0 - 16th September 2014 =
+* Allow latitdue/longtitude co-ordinates of venue to be edited.
+* Update timepicker and prevent invalid date/time selection for event start/end dates.
+* Add filters for event taxonomy properties: `eventorganiser_register_taxonomy_{taxonomy}`
+* Filter response to fullCalendar: `eventorganiser_fullcalendar` 
+* Minify css and use minified resources when not in debug mode.
+* Adds eo-multi-day class if an event starts and ends on different days (fullCalendar)
+* Fix bug with rich snippet item type (Geo/Organisation)
+* Add URL to iCal feed
+* Fixes issue calculation of events across DST boundary. See [#224](https://github.com/stephenharris/Event-Organiser/issues/224)
+* Fixes iCal feed errors, adds additional unit tests
+* Include locale in cache key if polylang is enabled for events.
+* Updated French & Japense translations
+
 = 2.8.6 - 4th September 2014 =
 * Adds workaround to avoid potential conflicts with the theme & widget calendar
 * Makes plug-in description translable
@@ -229,7 +243,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 = 2.8.5 - 22nd August 2014 =
 * Hide venue/category filter on admin calendar when there are no events/categories.
-* Fix bug where the last date of long, non-all-day events do not appear on the widget calendar when the start time is after the end time. [See thread](http://wordpress.org/support/topic/calendar-widget-not-showing-last-day-of-event).
+* Fix bug where the last date of long, non-all-day events do not appear on the widget calendar when the start time is after the end time. [See thread](https://wordpress.org/support/topic/calendar-widget-not-showing-last-day-of-event).
 * Fixes UI bug with venue selection on the calendar view
 * Added Latvian translation
 * Updated translations: Arabic, Czech, Danish, Spanish, Finnish & French. 
@@ -241,7 +255,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Do not use `<style>` tags with `wp_add_inline_style()` on WP 3.7+
 * Fix styling being applied to event venue pages 
 * Updated CONTRIBUTING.md, please make PRs on develop branch
-* Fixes bug with "timeformat" included in event query which can affect results returned to fullCalendar. [See thread](http://wordpress.org/support/topic/full-calendar-shortcode-doesnt-show-events).
+* Fixes bug with "timeformat" included in event query which can affect results returned to fullCalendar. [See thread](https://wordpress.org/support/topic/full-calendar-shortcode-doesnt-show-events).
 
 = 2.8.3 - 5th August 2014 =
 * Fixes bug with using DateTime object in `eo_get_events()` queries
@@ -249,7 +263,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * If 'new' venue already exists, use pre-existing venue's ID. [Fixes #202](https://github.com/stephenharris/Event-Organiser/issues/202).
 * Clone DateTime objects before altering them (e.g. timezone). [Fixes #203)(https://github.com/stephenharris/Event-Organiser/issues/203).
 * Don't display category/venue filters if there are no terms. 
-* Check if `$strptime` is an empty array (suggests incorrect/empty date). Fixes bug with PHP5.2 installs. See [forum post](http://wordpress.org/support/topic/strange-date-repeat).
+* Check if `$strptime` is an empty array (suggests incorrect/empty date). Fixes bug with PHP5.2 installs. See [forum post](https://wordpress.org/support/topic/strange-date-repeat).
 
 = 2.8.2 - 26th June 2014 =
 * Fixes widget template option ignored (bug introduced in 2.8.1)
@@ -289,7 +303,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Correct eo_blog_is_24(). ('G' is 12 hour, 'h' is 24 hour). 
 
 = 2.7.2 =
-* Fixes bug (2.7) where some translations cannot update events: [http://wordpress.org/support/topic/event-not-updating-dates](http://wordpress.org/support/topic/event-not-updating-dates).
+* Fixes bug (2.7) where some translations cannot update events: [https://wordpress.org/support/topic/event-not-updating-dates](https://wordpress.org/support/topic/event-not-updating-dates).
 
 = 2.7.1 =
 * Fixes bug (2.7) where shortcode tags are ignored
@@ -420,7 +434,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * Fixes bug with `eo_get_event_classes()` function
 * Added 'show long events' otion for widget calendar: Show all days of events spanning multiple days on the widget calendar, not just the first.
 * Added 'link to single event' option for widget calendar. If a day has only one event, link directly to that event, not the day archive.
-* Fixes conflict with Yoast SEO plug-in ( http://wordpress.org/support/topic/events-are-missing-information?replies=6 )
+* Fixes conflict with Yoast SEO plug-in ( https://wordpress.org/support/topic/events-are-missing-information?replies=6 )
 * Fixes colours not appearing on admin calendar drop-down [#109](https://github.com/stephenharris/Event-Organiser/pull/109)
 * Add category colour to the Event Categories table. Thanks to [@mperry2](https://github.com/stephenharris/Event-Organiser/pull/107)
 * Updated translations and added Croatian translation (thanks to Branimir)
@@ -431,7 +445,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 = 2.1.6 =
 * Fixes IE 7/8 error with admin calendar
-* Now compatible with Scribu's [Posts 2 Posts](http://wordpress.org/plugins/posts-to-posts/) plug-in. Thanks to Simon Wheatley. [Ticket #99](https://github.com/stephenharris/Event-Organiser/issues/99)
+* Now compatible with Scribu's [Posts 2 Posts](https://wordpress.org/plugins/posts-to-posts/) plug-in. Thanks to Simon Wheatley. [Ticket #99](https://github.com/stephenharris/Event-Organiser/issues/99)
 * Fixes errors in ICAL parser API 
 * Fixes orderby setting not taking effect in Event list widget
 * Removed extra forward slash in line 1241 for the 'loading' gif. [Ticket #100](https://github.com/stephenharris/Event-Organiser/pull/100)
@@ -638,7 +652,7 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 * Options added for event agenda
 * Adds classes to event list
 * Separate event and archive permalink structure
-* Improved UI see http://core.trac.wordpress.org/ticket/18909
+* Improved UI see https://core.trac.wordpress.org/ticket/18909
 * Improved fullCalendar look
 * Adds support for hiding/minimizing venue post boxes
 * Adds retina support for screen icons (thanks to numeeja (http://cubecolour.co.uk/))
@@ -712,7 +726,7 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 * Set zoom level on venue map shortcode
 * Full calendar shortcode attribute to restrict events to a specific venue / category
 * Fixed 'daylight saving' bug for php5.2
-* Fixed IE7 Widget calendar bug (thanks to [Fej](http://wordpress.org/support/profile/fej) )
+* Fixed IE7 Widget calendar bug (thanks to [Fej](https://wordpress.org/support/profile/fej) )
 
 = 1.2.4 =
 * Fixed bugs concerning

@@ -50,8 +50,7 @@ class EO_Event_List_Widget extends WP_Widget{
    <em><?php _e('List category slug(s), seperate by comma. Leave blank for all', 'eventorganiser'); ?> </em>
 </p>
 <?php 
-	$supports = eventorganiser_get_option( 'supports' );
-	if( in_array( 'event-venue', $supports ) ): ?>
+	if( taxonomy_exists( 'event-venue' ) ): ?>
   		<p>
 	  		<label for="<?php echo $this->get_field_id('venue'); ?>"><?php _e('Venue', 'eventorganiser'); ?>:   </label>
 			<?php 	$venues = get_terms('event-venue', array('hide_empty'=>false));?>
