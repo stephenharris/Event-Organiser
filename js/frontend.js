@@ -340,9 +340,8 @@ jQuery(document).ready(function () {
         	});
 	}
 
-        if ($(".eo_widget_calendar").length > 0 ) {
+        if ($(".eo-widget-cal-wrap").length > 0 ) {
 
-        	$(".eo_widget_calendar tfoot").unbind("click");
         	$(".eo-widget-cal-wrap").on("click", 'tfoot a', function (a) {
         		a.preventDefault();
         		
