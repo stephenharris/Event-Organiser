@@ -29,7 +29,7 @@ function eventorganiser_create_event_taxonomies() {
 	if( in_array( 'event-venue', $supports ) ){
 		$venue_labels = array(
 			'name'                       => __( 'Venues','eventorganiser' ),
-    		'singular_name'              => _x( 'Venue', 'taxonomy singular name', 'eventorganiser' ),
+    		'singular_name'              => __( 'Venue', 'eventorganiser' ),
     		'search_items'               => __( 'Search Venues', 'eventorganiser' ),
 	    	'all_items'                  => __( 'All Venues', 'eventorganiser' ),
 			'view_item'                  => __( 'View Venue', 'eventorganiser' ),
@@ -143,7 +143,7 @@ function eventorganiser_create_event_taxonomies() {
 	if( eventorganiser_get_option('eventtag') ){
 
 		$tag_labels = array(
-			'name'                       => __( 'Event Tags','eventorganiser' ),
+			'name'                       => __( 'Event Tags', 'eventorganiser' ),
 			'singular_name'              => _x( 'Tag', 'taxonomy singular name' ),
 			'search_items'               => __( 'Search Tags' ),
 			'all_items'                  => __( 'All Tags' ),
