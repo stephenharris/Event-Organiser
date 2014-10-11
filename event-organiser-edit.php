@@ -298,9 +298,6 @@ function eventorganiser_details_save( $post_id ) {
 	//verify this is not an auto save routine. 
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
 	
-	//verify this is not a cron job
-	if ( defined( 'DOING_CRON' ) && DOING_CRON ) return;
-	
 	//authentication checks
 	if ( !current_user_can( 'edit_event', $post_id ) ) return;
 
