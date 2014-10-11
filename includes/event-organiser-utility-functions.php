@@ -174,28 +174,23 @@ function eo_date_interval($_date1,$_date2, $format){
 	//Calculate total days difference
 	$total_days = floor(abs($date1->format('U') - $date2->format('U'))/86400);
 
-	//A leap year work around - consistent with DateInterval
-	$leap_year = ( $date1->format('m-d') == '02-29' ? true : false);
-	if( $leap_year ){
-		//This will only effect counting the number of days - and is corrected later.
-		//Otherwise incrementing $date1 by a year will overflow to March
-		$date1->modify('-1 day');
-	}
-
 	$periods = array( 'years'=>-1,'months'=>-1,'days'=>-1,'hours'=>-1);
 
 	foreach ($periods as $period => &$i ){
 
-		if($period == 'days' && $leap_year )
-			$date1->modify('+1 day');//Corrects earlier adjustment
-
-		while( $date1 <= $date2 ){
-			$date1->modify('+1 '.$period);
+		$temp_pointer = clone $date1;
+		
+		while( $temp_pointer <= $date2 ){
+			$temp_pointer->modify( "+1 $period" );
 			$i++;
 		}
-
-		//Reset date and record increments
-		$date1->modify('-1 '.$period);
+		
+		if ( $i > -1 ){
+			$date1->modify( "+$i $period" );
+		}else{
+			$date1->modify( "$i $period" );
+		}
+		
 	}
 	extract($periods);
 
