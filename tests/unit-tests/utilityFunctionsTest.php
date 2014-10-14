@@ -234,6 +234,17 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		
 	}
 	
+	function testDateIntervalMonthOverflow(){
+
+		$timezone = new DateTimeZone( 'Europe/Berlin' );
+		$date1 = new DateTime( '2015-01-30 13:00:00', $timezone );
+		$date2 = new DateTime( '2015-01-30 16:30:10', $timezone );
+
+		//Check mod is correctly calculated
+		$mod = eo_date_interval( $date1, $date2, '+%d days +%h hours +%i minutes +%s seconds' );
+		$this->assertEquals( "+0 days +3 hours +30 minutes +10 seconds", $mod );
+	}
+	
 	
 	/**
 	 * TODO eo_get_blog_timezone(): Why does +10 give Asia/Choibalsan timezone.

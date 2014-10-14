@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 4.0.0
-Stable tag: 2.9.0
+Stable tag: 2.9.1
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -217,6 +217,15 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.9.1 - 14th October 2014 =
+* Updates translations including Portugese (Brazil), Hebrew and French.
+* Handles duplicate UID errors (in iCal feeds) arising from edited occurrences.
+* Fixes conflict with themes where the .eo_widget_calendar class is not added to widget calendar widgets.
+* Add data attribute support for checkbox/textarea functions
+* Adds missing i18n functions from Grunt task
+* Fixes bug with eo_date_interval() and month overflows.
+* Fixes event updated failing on cron jobs. (Fixes conflict with wp-cron-control https://wordpress.org/support/topic/clashes-with-events-plug-in)
 
 = 2.9.0 - 16th September 2014 =
 * Allow latitdue/longtitude co-ordinates of venue to be edited.

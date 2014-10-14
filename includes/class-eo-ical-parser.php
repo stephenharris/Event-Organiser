@@ -404,6 +404,13 @@ class EO_ICAL_Parser{
 							if( $this->current_event['sequence'] > $this->events[$index]['sequence'] ){
 								$this->events[$index] = $this->current_event;
 								
+							}elseif( isset( $this->events[$index]['recurrence-id'] ) ){
+								//This event has recurrence ID - replace it.
+								$this->events[$index] = $this->current_event;
+								
+							}elseif( isset( $this->current_event['recurrence-id'] ) ){
+								//Ignore this event - keep existing
+								
 							}elseif( $this->current_event['sequence'] == $this->events[$index]['sequence'] ){
 								$this->report_warning( 
 									$this->current_event['_lines'], 
@@ -553,7 +560,11 @@ class EO_ICAL_Parser{
 		case 'SEQUENCE':
 			$this->current_event['sequence'] = $value; 
 			break;
-
+		case 'RECURRENCE-ID':
+			//This is not properly implemented yet but is used to detect
+			//when feed entries may share a UID.
+			$this->current_event['recurrence-id'] = $value;
+			break;
 		case 'CREATED':
 		case 'DTSTART':
 		case 'DTEND':

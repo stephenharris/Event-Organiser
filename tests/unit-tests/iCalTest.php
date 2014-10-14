@@ -591,7 +591,22 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	$event = $ical->events[0];
     	$this->assertEquals( 3, $event['sequence'] );  	
     }
-    
+
+    public function testEventWithRecurrenceID()
+    {
+    	
+    	$ical = new EO_ICAL_Parser();
+    	$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithRecurrenceID.ics' );
+
+    	//Check the number of events have imported correctly
+    	$this->assertEquals( 0, count( $ical->warnings ) );
+    	$this->assertEquals( 0, count( $ical->errors ) );
+    	
+    	//Check event
+    	$event = $ical->events[0];
+    	$this->assertEquals( 'weekly', $event['schedule'] );
+    	$this->assertEquals( array( 'SU' ), $event['schedule_meta'] );    
+    }
 
 	//@TODO
     public function testPartDayForeignRecurringEvent()

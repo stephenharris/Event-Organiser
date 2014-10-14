@@ -174,28 +174,23 @@ function eo_date_interval($_date1,$_date2, $format){
 	//Calculate total days difference
 	$total_days = floor(abs($date1->format('U') - $date2->format('U'))/86400);
 
-	//A leap year work around - consistent with DateInterval
-	$leap_year = ( $date1->format('m-d') == '02-29' ? true : false);
-	if( $leap_year ){
-		//This will only effect counting the number of days - and is corrected later.
-		//Otherwise incrementing $date1 by a year will overflow to March
-		$date1->modify('-1 day');
-	}
-
 	$periods = array( 'years'=>-1,'months'=>-1,'days'=>-1,'hours'=>-1);
 
 	foreach ($periods as $period => &$i ){
 
-		if($period == 'days' && $leap_year )
-			$date1->modify('+1 day');//Corrects earlier adjustment
-
-		while( $date1 <= $date2 ){
-			$date1->modify('+1 '.$period);
+		$temp_pointer = clone $date1;
+		
+		while( $temp_pointer <= $date2 ){
+			$temp_pointer->modify( "+1 $period" );
 			$i++;
 		}
-
-		//Reset date and record increments
-		$date1->modify('-1 '.$period);
+		
+		if ( $i > -1 ){
+			$date1->modify( "+$i $period" );
+		}else{
+			$date1->modify( "$i $period" );
+		}
+		
 	}
 	extract($periods);
 
@@ -938,21 +933,30 @@ function eventorganiser_checkbox_field($args=array()){
 	/* $options and $checked are either both arrays or they are both strings. */
 	$options =  isset($args['options']) ? $args['options'] : false;
 	$checked =  isset($args['checked']) ? $args['checked'] : 1;
+	
+	//Custom data-* attributes
+	$data = '';
+	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
+		foreach( $args['data'] as $key => $attr_value ){
+			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+		}
+	}
 
 	$html ='';
 	if( is_array($options) ){
 		foreach( $options as $value => $opt_label ){
-			$html .= sprintf('<label for="%1$s">
-								<input type="checkbox" name="%2$s" id="%1$s" value="%3$s" %4$s %5$s> 
-								%6$s </br>
-							</label>',
-							esc_attr($id.'_'.$value),
-							esc_attr(trim($name).'[]'),
-							esc_attr($value),
-							checked( in_array($value, $checked), true, false ),
-							$class,
-							 esc_attr($opt_label)
-							);
+			$html .= sprintf(
+				'<label for="%1$s">
+					<input type="checkbox" name="%2$s" id="%1$s" value="%3$s" %4$s %5$s> 
+					%6$s </br>
+				</label>',
+				esc_attr( $id.'_'.$value ),
+				esc_attr( trim( $name ) . '[]' ),
+				esc_attr( $value ),
+				checked( in_array( $value, $checked ), true, false ),
+				$class,
+				esc_attr( $opt_label )
+			);
 		}
 	}else{
 		$html .= sprintf('<input type="checkbox" id="%1$s" name="%2$s" %3$s %4$s value="%5$s">',
@@ -1003,33 +1007,54 @@ function eventorganiser_textarea_field($args){
 		'readonly'=> false,
 	));
 
-	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
-	$name = isset($args['name']) ?  $args['name'] : '';
-	$value = $args['value'];
+	$id    = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$class = implode( ' ', array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) ) );
-	$readonly = $args['readonly'] ? 'readonly' : '';
-	$html ='';
+	$name  = isset($args['name']) ?  $args['name'] : '';
 
+	//Custom data-* attributes
+	$data = '';
+	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
+		foreach( $args['data'] as $key => $attr_value ){
+			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+		}
+	}
+	$rows       = !empty( $args['rows'] ) ? sprintf( 'rows="%d"', $args['rows'] ) : '';
+	$cols       = !empty( $args['cols'] ) ? sprintf( 'cols="%d"', $args['cols'] ) : '';
+	$readonly   = $args['readonly'] ? 'readonly' : '';
+	$attributes = array_filter( array( $rows, $cols, $readonly, $data ) );
+
+	$html = '';
+	
 	if( $args['tinymce'] ){
-		
 		ob_start();
-		wp_editor( $value, esc_attr($id) ,array(
-				'textarea_name'=>$name,
-				'media_buttons'=>false,
-				'textarea_rows' => intval($args['rows']),
-			));
+
+		$tinymce_args = is_array( $args['tinymce'] ) ? $args['tinymce'] : array();
+		$tinymce_args = array_merge( array(
+				'textarea_name' => $name,
+				'media_buttons' => false,
+				'textarea_rows' => intval( $args['rows'] ),
+		), $tinymce_args );
+		
+		wp_editor( $value, esc_attr( $id ) ,$tinymce_args );
 		
 		$html .= ob_get_contents();
+		
+		if( $data ){
+			$html = str_replace( 
+				'<div id="wp-' . $id . '-editor-container"',
+				'<div id="wp-' . $id . '-editor-container" '.$data.' ',
+				$html
+			);
+		}
+		
 		ob_end_clean();
 	}else{
-		$html .= sprintf('<textarea cols="%s" rows="%d" name="%s" class="%s" id="%s" %s >%s</textarea>',
-				intval($args['cols']),
-				intval($args['rows']),
-				esc_attr($name),
+		$html .= sprintf('<textarea %s name="%s" class="%s" id="%s">%s</textarea>',
+				implode( ' ', $attributes ),
+				esc_attr( $name ),
 				$class,
-				esc_attr($id),
-				$readonly,
-				esc_textarea($value)
+				esc_attr( $id ),
+				esc_textarea( $value )
 		);
 	}
 
