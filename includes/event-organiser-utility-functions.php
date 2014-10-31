@@ -1009,7 +1009,8 @@ function eventorganiser_textarea_field($args){
 
 	$id    = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$class = implode( ' ', array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) ) );
-	$name  = isset($args['name']) ?  $args['name'] : '';
+	$name  = isset( $args['name'] ) ?  $args['name'] : '';
+	$value = isset( $args['value'] ) ?  $args['value'] : '';
 
 	//Custom data-* attributes
 	$data = '';
