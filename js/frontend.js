@@ -41,7 +41,7 @@ jQuery(document).ready(function () {
 				}
 			}
 			
-			html+= "<option class='cat-colour-"+term.colour+" cat' value='"+term.slug+"'>"+term.name+"</option>";
+			html+= "<option class='cat-colour-"+term.color+" cat' value='"+term.slug+"'>"+term.name+"</option>";
 		}
 		html+="</select>";
 
