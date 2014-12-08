@@ -132,14 +132,14 @@ class EO_ICAL_Parser{
 	function __construct( $args = array() ){
 
 		$args = array_merge( array(
-					'status_map' => array(
-						'CONFIRMED' => 'publish',
-						'CANCELLED' => 'trash',
-						'TENTATIVE' => 'draft',
-					),
-					'default_status' => 'draft',
-					'parse_html' => true,
-				), $args );
+			'status_map' => array(
+				'CONFIRMED' => 'publish',
+				'CANCELLED' => 'trash',
+				'TENTATIVE' => 'draft',
+			),
+			'default_status' => 'draft',
+			'parse_html'     => true,
+		), $args );
 		
 		/**
 		 * Filters the options for the iCal parser class
@@ -206,6 +206,10 @@ class EO_ICAL_Parser{
 		
 		if( "NONE" == $this->state ){
 			return new WP_Error( 'unable-to-fetch', __( 'Feed not found', 'eventorganiser' ) );
+		}
+		
+		if( !empty( $this->errors ) ){
+			return $this->errors[0];
 		}
 		
 		$this->events_parsed = count( $this->events );
