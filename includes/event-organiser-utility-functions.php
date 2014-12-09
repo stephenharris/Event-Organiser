@@ -926,24 +926,27 @@ function eventorganiser_checkbox_field($args=array()){
 			'checked'=>'', 'echo'=>true,'multiselect'=>false
 		));
 
-	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
-	$name = isset($args['name']) ?  $args['name'] : '';
+	$id    = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
+	$name  = isset($args['name']) ?  $args['name'] : '';
 	$class = ( $args['class'] ? "class='".sanitize_html_class($args['class'])."'"  :"" );
-
+	$attr  = array( $class );
+	
 	/* $options and $checked are either both arrays or they are both strings. */
 	$options =  isset($args['options']) ? $args['options'] : false;
 	$checked =  isset($args['checked']) ? $args['checked'] : 1;
 	
 	//Custom data-* attributes
-	$data = '';
 	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
-		foreach( $args['data'] as $key => $attr_value ){
-			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+		foreach( $args['data'] as $key => $data_value ){
+			$attr[] = sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $data_value ) );
 		}
 	}
+	
+	$attr = implode( " ", array_filter( $attr ) );
 
 	$html ='';
 	if( is_array($options) ){
+		
 		foreach( $options as $value => $opt_label ){
 			$html .= sprintf(
 				'<label for="%1$s">
@@ -953,19 +956,19 @@ function eventorganiser_checkbox_field($args=array()){
 				esc_attr( $id.'_'.$value ),
 				esc_attr( trim( $name ) . '[]' ),
 				esc_attr( $value ),
+				$attr,
 				checked( in_array( $value, $checked ), true, false ),
-				$class,
 				esc_attr( $opt_label )
 			);
 		}
 	}else{
 		$html .= sprintf('<input type="checkbox" id="%1$s" name="%2$s" %3$s %4$s value="%5$s">',
-							esc_attr($id),
-							esc_attr($name),
-							checked( $checked, $options, false ),
-							$class,
-							esc_attr($options)
-							);
+			esc_attr( $id ),
+			esc_attr( $name ),
+			$attr,
+			checked( $checked, $options, false ),
+			esc_attr( $options )
+		);
 	}
 	
 	if(!empty($args['help'])){
