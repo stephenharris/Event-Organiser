@@ -717,7 +717,7 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 			'pancontrol'=>true, 'overviewmapcontrol'=>true, 'streetviewcontrol'=>true,
 			'maptypecontrol'=>true, 'draggable'=>true,'maptypeid' => 'ROADMAP',
 			'width' => '100%','height' => '200px','class' => '',
-			'tooltip' => true
+			'tooltip' => true, 'styles' => array(),
 			), $args );
 
 		//Cast zoom as integer
@@ -793,8 +793,12 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 					'icon' => $icon );
 		}
 
+		$map = array_merge($args, array('locations'=>$locations) );
+		
+		$map = apply_filters( 'eventorganiser_venue_map_options', $map );
+		
 		//This could be improved
-		EventOrganiser_Shortcodes::$map[] = array_merge($args, array('locations'=>$locations) );
+		EventOrganiser_Shortcodes::$map[] = $map;
 		EventOrganiser_Shortcodes::$add_script = true;
 		$id = count(EventOrganiser_Shortcodes::$map);
 
