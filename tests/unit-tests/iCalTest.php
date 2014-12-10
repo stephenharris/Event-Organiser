@@ -607,6 +607,29 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals( 'weekly', $event['schedule'] );
     	$this->assertEquals( array( 'SU' ), $event['schedule_meta'] );    
     }
+    
+	public function testPropertyParseAction(){
+		
+		add_action( 'eventorganiser_ical_property_summary', array( $this, '_modifySummary' ), 10, 2 );
+			
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/singleEvent.ics' );
+	
+		remove_action( 'eventorganiser_ical_property_summary', array( $this, '_modifySummary' ) );
+		
+		$expected_start = new DateTime( '2013-10-28 19:26:00' );
+		$expected_end = new DateTime( '2013-10-28 20:26:00' );
+		$expected_until = new DateTime( '2013-10-31 00:00:00' );
+	
+		$event = $ical->events[0];
+		$this->assertArrayNotHasKey( 'schedule', $event );
+		$this->assertEquals( "imported: UT Single Event", $event['post_title'] );
+	
+	}
+			
+	public function _modifySummary( $title, $ical_parser ){ 
+		$ical_parser->current_event['post_title'] = "imported: " . $ical_parser->parse_ical_text( $title );
+	}
 
 	//@TODO
     public function testPartDayForeignRecurringEvent()

@@ -234,7 +234,7 @@ class EO_ICAL_Parser{
 		 * </code></pre>
 		 * 
 		 * @since 2.7
-		 * @param EO_ICAL_Parser $EO_ICAL_Parser The feed parser object containg parsed events/venues/categories.
+		 * @param EO_ICAL_Parser $EO_ICAL_Parser The feed parser object containing parsed events/venues/categories.
 		 */
 		do_action_ref_array( 'eventorganiser_ical_feed_parsed', array( &$this ) );
 		
@@ -695,9 +695,42 @@ class EO_ICAL_Parser{
 		case 'URL':
 			$this->current_event['url'] = $value;
 		break;
-
 		
-			endswitch;
+		endswitch;
+		
+		$property_lowercase = strtolower( $property );
+		
+		/**
+		 * Action after property has been parsed.
+		 * 
+		 * This hook is of the form `eventorganiser_ical_property_{property}`, where 
+		 * `{property}` should be replaced by the lower-cased property name being
+		 * targed. For example. after "DTSTART" for an event is parsed, 
+		 * `eventorganiser_ical_property_dtstart` is triggered.  
+		 * 
+		 * This action passes two values to the callback. You will generally require BOTH.
+		 * The first is the value of the targetted as parsed from the ical feed. The second is
+		 * the EO_ICAL_Parser instance. You can access the the current event being populated via 
+		 * `EO_ICAL_Parser::current_event`.
+		 * 
+		 * Note that the value is 'raw' in that it is exactly as it appears in the feed. You may 
+		 * need to 'unescape' and 'unfold' the text. {@see EO_ICAL_Parser::parse_ical_text}
+		 * 
+		 * <pre><code>
+		 * add_action( 'eventorganiser_ical_property_summary', 'my_alter_parsed_title', 10, 2 );
+		 * function my_alter_parsed_title( $title, $ical_parser ){
+		 *     
+		 *     //Prepend "imported: " to title
+		 *     $ical_parser->current_event['post_title'] = "imported: " . $ical_parser->parse_ical_text( $title );
+		 *     
+		 * }
+		 * </code></pre>
+		 * 
+		 * @since 2.10
+		 * @param string $value The raw value parsed from the iCal feed
+		 * @param EO_ICAL_Parser $EO_ICAL_Parser The feed parser object referencing the current event being parsed.
+		 */
+		do_action( 'eventorganiser_ical_property_'. $property_lowercase, $value, $this );
 
 	}
 
@@ -720,13 +753,13 @@ class EO_ICAL_Parser{
 	 * @param string $text - the escaped test
 	 * @return string $text - the text, unescaped.
 	 */
-	protected function parse_ical_text($text){
+	public function parse_ical_text($text){
 
 		//Unfold
 		$text = str_replace( "\n ","", $text );
 		$text = str_replace( "\r\n ", "", $text );
 
-		//Repalce any intended new lines with PHP_EOL
+		//Replace any intended new lines with PHP_EOL
 		//$text = str_replace( '\n', "<br>", $text );
 		$text = nl2br( $text );
 				
