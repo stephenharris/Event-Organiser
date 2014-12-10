@@ -367,7 +367,12 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 		
 		foreach( $update as $occurrence_id => $occurrence ){
 
-			$occurrence_end = clone $occurrence;
+			// if cloning is not available
+                        if(function_exists('__clone')) {
+                            $occurrence_end = clone $occurrence;
+                        } else {
+                            $occurrence_end = &$occurrence;
+                        }
 			$occurrence_end->modify($duration_str);
 			
 			$occurrence_input = array(
