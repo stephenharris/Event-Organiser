@@ -486,9 +486,11 @@ function eo_load_map() {
 			streetViewControl: maps[i].streetviewcontrol,
 			draggable: maps[i].draggable,
 			mapTypeControl: maps[i].maptypecontrol,
-			mapTypeId: google.maps.MapTypeId[maps[i].maptypeid]
+			mapTypeId: google.maps.MapTypeId[maps[i].maptypeid],
+			styles: maps[i].styles,
         	};
-		b = wp.hooks.applyFilters( 'eventorganiser.google_map_options', b );
+		
+		b = wp.hooks.applyFilters( 'eventorganiser.google_map_options', b, maps[i] );
 		var map = new google.maps.Map(document.getElementById("eo_venue_map-" + (i + 1)), b);
 
 		//  Create a new viewpoint bound
