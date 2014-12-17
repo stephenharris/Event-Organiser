@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Unit Test Calendar
+X-WR-CALDESC:Unit Test Calendar
+BEGIN:VEVENT
+UID:unit-test-event-invalid-date-time
+SUMMARY:Unit Test Event with invalid date-time
+DTSTART:20150201
+DTEND;VALUE=DATE:20150301
+DESCRIPTION:Unit Test Event with invalid date-time
+END:VEVENT
+END:VCALENDAR

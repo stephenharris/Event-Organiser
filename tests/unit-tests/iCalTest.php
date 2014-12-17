@@ -610,7 +610,7 @@ class iCalTest extends PHPUnit_Framework_TestCase
     
 	public function testPropertyParseAction(){
 		
-		add_action( 'eventorganiser_ical_property_summary', array( $this, '_modifySummary' ), 10, 2 );
+		add_action( 'eventorganiser_ical_property_summary', array( $this, '_modifySummary' ), 10, 3);
 			
 		$ical = new EO_ICAL_Parser();
 		$ical->parse( EO_DIR_TESTDATA . '/ical/singleEvent.ics' );
@@ -626,10 +626,66 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( "imported: UT Single Event", $event['post_title'] );
 	
 	}
-			
-	public function _modifySummary( $title, $ical_parser ){ 
+	
+	public function _modifySummary( $title, $modifiers, $ical_parser ){ 
 		$ical_parser->current_event['post_title'] = "imported: " . $ical_parser->parse_ical_text( $title );
 	}
+	
+	public function testPrePropertyParseAction(){
+		
+		add_filter( 'eventorganiser_pre_ical_property_dtstart', array( $this, '_modifyDtstart' ), 10, 5 );
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithInvalidDateTime.ics' );
+		remove_filter( 'eventorganiser_pre_ical_property_dtstart', array( $this, '_modifyDtstart' ) );
+		
+		$exp_start = new DateTime( '2015-02-01', eo_get_blog_timezone() );
+		$event     = $ical->events[0];
+		
+		$this->assertEquals( $exp_start, $event['start'] );
+	
+	}
+			
+	public function _modifyDtstart( $skip, $value, $modifier, $ical_parser, $prperty ){ 
+
+		$meta    = false;
+		$date_tz = false;
+	
+		//Parse any modifiers
+		if( !empty( $modifiers ) ):
+			foreach( $modifiers as $modifier ):
+				if ( stristr( $modifier, 'TZID' ) ){			
+					$date_tz = $ical_parser->parse_timezone( substr( $modifier, 5 ) );
+				}elseif( stristr( $modifier, 'VALUE' ) ){
+					$meta = substr( $modifier, 6 );
+				}
+			endforeach;
+		endif;
+	
+		//Set timezone
+		if( empty( $date_tz ) )
+			$date_tz = $ical_parser->calendar_timezone;
+			
+		//Parse date / date-time of property
+		if(  $meta === 'DATE' ):
+			$date = $ical_parser->parse_ical_date( $value );
+			$allday = 1;
+		else:
+			try{			
+				$date = $ical_parser->parse_ical_datetime( $value, $date_tz );
+				$allday = 0;
+			}catch( Exception $e ){
+				$date = $ical_parser->parse_ical_date( $value );
+				$allday = 1;
+			}				
+		endif;
+
+		$ical_parser->current_event['start']   = $date;
+		$ical_parser->current_event['all_day'] = $allday;
+	
+		return true;	
+	}
+	
+
 
 	//@TODO
     public function testPartDayForeignRecurringEvent()
