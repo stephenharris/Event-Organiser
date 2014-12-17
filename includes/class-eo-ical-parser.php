@@ -912,7 +912,7 @@ class EO_ICAL_Parser{
 	 * @param string $ical_date - date in ICAL format
 	 * @return DateTime - the $ical_date as DateTime object
 	 */
-	protected function parse_ical_date( $ical_date ){
+	public function parse_ical_date( $ical_date ){
 
 		preg_match('/^(\d{8})*/', $ical_date, $matches);
 
@@ -944,7 +944,7 @@ class EO_ICAL_Parser{
 	 * @param DateTimeZone $tz - Timezone 'local' is interpreted as
 	 * @return DateTime - the $ical_date as DateTime object
 	 */
-	protected function parse_ical_datetime( $ical_date, $tz ){
+	public function parse_ical_datetime( $ical_date, $tz ){
 		
 		preg_match('/^((\d{8}T\d{6})(Z)?)/', $ical_date, $matches);
 
@@ -976,7 +976,7 @@ class EO_ICAL_Parser{
 	 * @param string $RRule - the value of the ICAL RRule property
 	 * @return array - a reoccurrence rule array as understood by Event Organiser
 	 */
-	protected function parse_RRule($RRule){
+	public function parse_RRule($RRule){
 		//RRule is a sequence of rule parts seperated by ';'
 		$rule_parts = explode(';',$RRule);
 
