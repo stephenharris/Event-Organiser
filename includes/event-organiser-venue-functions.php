@@ -795,6 +795,22 @@ function eo_get_venue_map($venue_slug_or_id='', $args=array()){
 
 		$map = array_merge($args, array('locations'=>$locations) );
 		
+		/**
+		 * Filters the tooltip content for a venue.
+		 * 
+		 * ### Example
+		 * 
+		 *    //Styles your google map
+		 *    add_filter( 'eventorganiser_venue_map_options', 'style_my_google_map', 10 );
+		 *    function style_my_google_map( $map_args ){
+    	 *        $map_args['styles'] = {set styles};;
+		 *        return $map_args;
+		 *    }
+		 *    
+		 * @link https://developers.google.com/maps/documentation/javascript/styling#styling_the_default_map
+		 * @param array $map Array of map properties, including the key 'location' (array of locations) 
+		 *                   height, width, zoom and styles.
+		 */
 		$map = apply_filters( 'eventorganiser_venue_map_options', $map );
 		
 		//This could be improved
