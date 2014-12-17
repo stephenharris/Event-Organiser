@@ -559,6 +559,31 @@ class EO_ICAL_Parser{
 		$property_lowercase = strtolower( $property );
 
 		$skip = false;
+		/**
+		 * Action before iCal property has been parsed. It also allows you to prevent
+		 * the default parsing of the property value.
+		 * 
+		 * More details can bee found on the docs for `eventorganiser_ical_property_{property}` hook
+		 * 
+		 * <pre><code>
+		 * add_filter( 'eventorganiser_pre_ical_property_summary', 'my_alter_parsed_title', 10, 5 );
+		 * function my_alter_parsed_title( $skip, $title, $modifiers, $ical_parser, $property ){
+		 *     
+		 *     //Prepend "imported: " to title
+		 *     $ical_parser->current_event['post_title'] = "imported: " . $ical_parser->parse_ical_text( $title );
+		 *  
+		 *     //Stop default behaviour
+		 *     return true;
+		 * }
+		 * </code></pre>
+		 * 
+		 * @since 2.10
+		 * @param bool   $skip      Whether to skip default parsing of property.
+		 * @param string $value     The raw value parsed from the iCal feed
+		 * @param string $modifiers Array of modifiers of the property (e.g. VALUE or TZID)
+		 * @param EO_ICAL_Parser $EO_ICAL_Parser The feed parser object referencing the current event being parsed.
+		 * @param string $propery   The property name
+		 */
 		$skip = apply_filters( 'eventorganiser_pre_ical_property_'. $property_lowercase, $skip, $value, $modifiers, $this, $property );
 			
 		if( !$skip ){
@@ -701,17 +726,12 @@ class EO_ICAL_Parser{
 			endswitch;
 		}
 		/**
-		 * Action after property has been parsed.
+		 * Action after iCal property has been parsed.
 		 * 
 		 * This hook is of the form `eventorganiser_ical_property_{property}`, where 
 		 * `{property}` should be replaced by the lower-cased property name being
 		 * targed. For example. after "DTSTART" for an event is parsed, 
 		 * `eventorganiser_ical_property_dtstart` is triggered.  
-		 * 
-		 * This action passes two values to the callback. You will generally require BOTH.
-		 * The first is the value of the targetted as parsed from the ical feed. The second is
-		 * the EO_ICAL_Parser instance. You can access the the current event being populated via 
-		 * `EO_ICAL_Parser::current_event`.
 		 * 
 		 * Note that the value is 'raw' in that it is exactly as it appears in the feed. You may 
 		 * need to 'unescape' and 'unfold' the text. {@see EO_ICAL_Parser::parse_ical_text}
@@ -727,7 +747,8 @@ class EO_ICAL_Parser{
 		 * </code></pre>
 		 * 
 		 * @since 2.10
-		 * @param string $value The raw value parsed from the iCal feed
+		 * @param string $value     The raw value parsed from the iCal feed
+		 * @param string $modifiers Array of modifiers of the property (e.g. VALUE or TZID)
 		 * @param EO_ICAL_Parser $EO_ICAL_Parser The feed parser object referencing the current event being parsed.
 		 */
 		do_action( 'eventorganiser_ical_property_'. $property_lowercase, $value, $modifiers, $this );
