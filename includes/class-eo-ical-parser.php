@@ -234,7 +234,7 @@ class EO_ICAL_Parser{
 		 * </code></pre>
 		 * 
 		 * @since 2.7
-		 * @param EO_ICAL_Parser $EO_ICAL_Parser The feed parser object containg parsed events/venues/categories.
+		 * @param EO_ICAL_Parser $EO_ICAL_Parser The feed parser object containing parsed events/venues/categories.
 		 */
 		do_action_ref_array( 'eventorganiser_ical_feed_parsed', array( &$this ) );
 		
@@ -556,148 +556,181 @@ class EO_ICAL_Parser{
 		if( empty( $date_tz ) )
 			$date_tz = $this->calendar_timezone;
 
-		switch( $property ):
-		case 'UID':
-			$this->current_event['uid'] = $value;
-		break;
-		
-		case 'SEQUENCE':
-			$this->current_event['sequence'] = $value; 
-			break;
-		case 'RECURRENCE-ID':
-			//This is not properly implemented yet but is used to detect
-			//when feed entries may share a UID.
-			$this->current_event['recurrence-id'] = $value;
-			break;
-		case 'CREATED':
-		case 'DTSTART':
-		case 'DTEND':
-			if( isset( $meta ) && $meta == 'DATE' ):
-				$date = $this->parse_ical_date( $value );
-				$allday = 1;
-			else:
-				$date = $this->parse_ical_datetime( $value, $date_tz );
-				$allday = 0;
-			endif;
+		$property_lowercase = strtolower( $property );
 
-			if( empty( $date ) )
-				break;
-
+		$skip = false;
+		$skip = apply_filters( 'eventorganiser_pre_ical_property_'. $property_lowercase, $skip, $value, $modifiers, $this, $property );
+			
+		if( !$skip ){
 			switch( $property ):
-				case'DTSTART':
+				case 'UID':
+				$this->current_event['uid'] = $value;
+				break;
+		
+				case 'SEQUENCE':
+				$this->current_event['sequence'] = $value; 
+				break;
+				
+				case 'RECURRENCE-ID':
+				//This is not properly implemented yet but is used to detect
+				//when feed entries may share a UID.
+				$this->current_event['recurrence-id'] = $value;
+				break;
+		
+				case 'CREATED':
+				case 'DTSTART':
+				case 'DTEND':
+				if( isset( $meta ) && $meta == 'DATE' ):
+					$date = $this->parse_ical_date( $value );
+					$allday = 1;
+				else:
+					$date = $this->parse_ical_datetime( $value, $date_tz );
+					$allday = 0;
+				endif;
+
+				if( empty( $date ) )
+					break;
+
+				switch( $property ):
+					case'DTSTART':
 					$this->current_event['start'] = $date;
 					$this->current_event['all_day'] = $allday;
-				break;
+					break;
 
-				case 'DTEND':
+					case 'DTEND':
 					if( $allday == 1 )
 						$date->modify('-1 second');
 					$this->current_event['end'] = $date;
-				break;
+					break;
 
-				case 'CREATED':
+					case 'CREATED':
 					$date->setTimezone( new DateTimeZone('utc') );
 					$this->current_event['post_date_gmt'] = $date->format('Y-m-d H:i:s');
+					break;
+
+				endswitch;
 				break;
 
-			endswitch;
-		break;
+				case 'EXDATE':
+				case 'RDATE':
+				//The modifiers have been dealt with above. We do similiar to above, except for an array of dates...
+				$value_array = explode( ',', $value );
 
-		case 'EXDATE':
-		case 'RDATE':
-			//The modifiers have been dealt with above. We do similiar to above, except for an array of dates...
-			$value_array = explode( ',', $value );
-
-			//Note, we only consider the Date part and ignore the time
-			foreach( $value_array as $val ):
-				$date = $this->parse_ical_date( $val );
+				//Note, we only consider the Date part and ignore the time
+				foreach( $value_array as $val ):
+					$date = $this->parse_ical_date( $val );
 				
-				if( $property == 'EXDATE' ){
-					$this->current_event['exclude'][] = $date;
-				}else{
-					$this->current_event['include'][] = $date;
+					if( $property == 'EXDATE' ){
+						$this->current_event['exclude'][] = $date;
+					}else{
+						$this->current_event['include'][] = $date;
+					}
+				endforeach;
+				break;
+
+				//Reoccurrence rule properties
+				case 'RRULE':
+				$this->current_event += $this->parse_RRule($value);
+				break;
+
+				//The event's summary (AKA post title)
+				case 'SUMMARY':
+				$this->current_event['post_title'] = $this->parse_ical_text( $value );
+				break;
+
+				//The event's description (AKA post content)
+				case 'DESCRIPTION':
+				if( !isset( $this->current_event['post_content'] ) ){
+					$this->current_event['post_content'] = $this->parse_ical_text( $value );
 				}
-			endforeach;
-		break;
-
-			//Reoccurrence rule properties
-		case 'RRULE':
-			$this->current_event += $this->parse_RRule($value);
-		break;
-
-			//The event's summary (AKA post title)
-		case 'SUMMARY':
-			$this->current_event['post_title'] = $this->parse_ical_text( $value );
-		break;
-
-			//The event's description (AKA post content)
-		case 'DESCRIPTION':
-			if( !isset( $this->current_event['post_content'] ) ){
-				$this->current_event['post_content'] = $this->parse_ical_text( $value );
-			}
-		break;
+				break;
 		
-			//Description, in alternative format
-		case 'X-ALT-DESC':
-			if( $this->parse_html && !empty( $modifiers[0] ) && in_array( $modifiers[0], array( "FMTTYPE=text/html", "ALTREP=text/html" ) ) ){
-				$this->current_event['post_content'] = $this->parse_ical_html( $value );	
-			}
-		break;
+				//Description, in alternative format
+				case 'X-ALT-DESC':
+				if( $this->parse_html && !empty( $modifiers[0] ) && in_array( $modifiers[0], array( "FMTTYPE=text/html", "ALTREP=text/html" ) ) ){
+					$this->current_event['post_content'] = $this->parse_ical_html( $value );	
+				}	
+				break;
 		
-			//Event venues, assign to existing venue - or if set, create new one
-		case 'LOCATION':
-			if( !empty( $value ) ):
+				//Event venues, assign to existing venue - or if set, create new one
+				case 'LOCATION':
+				if( !empty( $value ) ):
+					$venue_name = trim($value);
+					if( !isset( $this->venues[$venue_name] ) )
+						$this->venues[$venue_name] = $venue_name;
+					$this->current_event['event-venue'] = $venue_name;
+				endif;
+				break;
 
-			$venue_name = trim($value);
-				
-			if( !isset( $this->venues[$venue_name] ) )
-				$this->venues[$venue_name] = $venue_name;
-				
-			$this->current_event['event-venue'] = $venue_name;
-			endif;
-		break;
-
-		case 'CATEGORIES':
-			$cats = explode( ',', $value );
+				case 'CATEGORIES':
+				$cats = explode( ',', $value );
 			
-			if( !empty( $cats ) ):
+				if( !empty( $cats ) ):
+					foreach ($cats as $cat_name):
+						$cat_name = trim($cat_name);
 
-			foreach ($cats as $cat_name):
-				$cat_name = trim($cat_name);
-
-				if( !isset( $this->categories[$cat_name] ) )
-					$this->categories[$cat_name] = $cat_name;
+						if( !isset( $this->categories[$cat_name] ) )
+							$this->categories[$cat_name] = $cat_name;
 				
-				if( !isset($this->current_event['event-category']) || !in_array( $cat_name, $this->current_event['event-category']) )
-					$this->current_event['event-category'][] = $cat_name;
+						if( !isset($this->current_event['event-category']) || !in_array( $cat_name, $this->current_event['event-category']) )
+							$this->current_event['event-category'][] = $cat_name;
 				
-			endforeach;
+					endforeach;
+				endif;
+				break;
 
-			endif;
-		break;
+				//The event's status
+				case 'STATUS':
+				$map = $this->status_map;
+				$this->current_event['post_status'] = isset( $map[$value] ) ? $map[$value] : $this->default_status;
+				break;
 
-			//The event's status
-		case 'STATUS':
-			$map = $this->status_map;
-
-			$this->current_event['post_status'] = isset( $map[$value] ) ? $map[$value] : $this->default_status;
-		break;
-
-		case 'GEO':
-			$lat_lng = array_map( 'floatval', explode( ';', $value ) );
-			if( count( $lat_lng ) === 2 ){
-				$keys = array( 'lat', 'lng' );
-				$this->current_event['geo'] = array_combine( $keys, $lat_lng );
-			}
-		break;
+				case 'GEO':
+				$lat_lng = array_map( 'floatval', explode( ';', $value ) );
+				if( count( $lat_lng ) === 2 ){
+					$keys = array( 'lat', 'lng' );
+					$this->current_event['geo'] = array_combine( $keys, $lat_lng );
+				}
+				break;
 			
-		//An url associated with the event
-		case 'URL':
-			$this->current_event['url'] = $value;
-		break;
-
-		
+				//An url associated with the event
+				case 'URL':
+				$this->current_event['url'] = $value;
+				break;
+			
 			endswitch;
+		}
+		/**
+		 * Action after property has been parsed.
+		 * 
+		 * This hook is of the form `eventorganiser_ical_property_{property}`, where 
+		 * `{property}` should be replaced by the lower-cased property name being
+		 * targed. For example. after "DTSTART" for an event is parsed, 
+		 * `eventorganiser_ical_property_dtstart` is triggered.  
+		 * 
+		 * This action passes two values to the callback. You will generally require BOTH.
+		 * The first is the value of the targetted as parsed from the ical feed. The second is
+		 * the EO_ICAL_Parser instance. You can access the the current event being populated via 
+		 * `EO_ICAL_Parser::current_event`.
+		 * 
+		 * Note that the value is 'raw' in that it is exactly as it appears in the feed. You may 
+		 * need to 'unescape' and 'unfold' the text. {@see EO_ICAL_Parser::parse_ical_text}
+		 * 
+		 * <pre><code>
+		 * add_action( 'eventorganiser_ical_property_summary', 'my_alter_parsed_title', 10, 3 );
+		 * function my_alter_parsed_title( $title, $modifiers, $ical_parser ){
+		 *     
+		 *     //Prepend "imported: " to title
+		 *     $ical_parser->current_event['post_title'] = "imported: " . $ical_parser->parse_ical_text( $title );
+		 *     
+		 * }
+		 * </code></pre>
+		 * 
+		 * @since 2.10
+		 * @param string $value The raw value parsed from the iCal feed
+		 * @param EO_ICAL_Parser $EO_ICAL_Parser The feed parser object referencing the current event being parsed.
+		 */
+		do_action( 'eventorganiser_ical_property_'. $property_lowercase, $value, $modifiers, $this );
 
 	}
 
@@ -720,13 +753,13 @@ class EO_ICAL_Parser{
 	 * @param string $text - the escaped test
 	 * @return string $text - the text, unescaped.
 	 */
-	protected function parse_ical_text($text){
+	public function parse_ical_text($text){
 
 		//Unfold
 		$text = str_replace( "\n ","", $text );
 		$text = str_replace( "\r\n ", "", $text );
 
-		//Repalce any intended new lines with PHP_EOL
+		//Replace any intended new lines with PHP_EOL
 		//$text = str_replace( '\n', "<br>", $text );
 		$text = nl2br( $text );
 				
@@ -879,7 +912,7 @@ class EO_ICAL_Parser{
 	 * @param string $ical_date - date in ICAL format
 	 * @return DateTime - the $ical_date as DateTime object
 	 */
-	protected function parse_ical_date( $ical_date ){
+	public function parse_ical_date( $ical_date ){
 
 		preg_match('/^(\d{8})*/', $ical_date, $matches);
 
@@ -911,7 +944,7 @@ class EO_ICAL_Parser{
 	 * @param DateTimeZone $tz - Timezone 'local' is interpreted as
 	 * @return DateTime - the $ical_date as DateTime object
 	 */
-	protected function parse_ical_datetime( $ical_date, $tz ){
+	public function parse_ical_datetime( $ical_date, $tz ){
 		
 		preg_match('/^((\d{8}T\d{6})(Z)?)/', $ical_date, $matches);
 
@@ -943,7 +976,7 @@ class EO_ICAL_Parser{
 	 * @param string $RRule - the value of the ICAL RRule property
 	 * @return array - a reoccurrence rule array as understood by Event Organiser
 	 */
-	protected function parse_RRule($RRule){
+	public function parse_RRule($RRule){
 		//RRule is a sequence of rule parts seperated by ';'
 		$rule_parts = explode(';',$RRule);
 
