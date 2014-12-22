@@ -3,8 +3,8 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 4.0.0
-Stable tag: 2.9.2
+Tested up to: 4.1.0
+Stable tag: 2.10.0
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -218,7 +218,18 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
-= 2.9.2 - 31st October 2014
+= 2.10.0 - 22nd December 2014 =
+* Tested against WordPress 4.1
+* Allow google map styles to be set via API 
+* Added `eventorganiser_venue_map_options` filter
+* Support RTL languages (added stylesheet)
+* Added `eventorganiser_ical_property_{property_lowercased}` action
+* Added `eventorganiser_pre_ical_property_{property_lowercased}` filter
+* Added venue admin page hook for `<form>` tag.
+* Fixed incorrect text domain.
+* Fixed 'color' property name typo on frontend.js fullCalendar
+
+= 2.9.2 - 31st October 2014 =
 * Fixes plug-in textarea options, where saved value does not appear.
 
 = 2.9.1 - 14th October 2014 =

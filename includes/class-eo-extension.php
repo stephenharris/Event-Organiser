@@ -151,7 +151,6 @@ if( !class_exists('EO_Extension') ){
 		public function is_valid( $key ){
 
 			$key = strtoupper( str_replace( '-', '', $key ) );
-
 			$local_key = get_site_option($this->id.'_plm_local_key');
 
 			//Token depends on key being checked to instantly invalidate the local period when key is changed.
@@ -169,9 +168,22 @@ if( !class_exists('EO_Extension') ){
 					if( $response['valid'] == 'TRUE' &&  ( time() < $expires ) ){
 						//Local key is still valid
 						return true;
+					}elseif( $response['reason'] == 'license-expired' ){
+						return new WP_Error( 'license-expired' );
+					}
+				}
+				
+				if( isset( $this->key_data) && !empty( $this->key_data['expires'] ) ){
+					
+					$now         = new DateTime( 'now' );
+					$key_expires = new DateTime( $this->key_data['expires'] );
+
+					if( $now > $key_expires ){
+						return new WP_Error( 'license-expired' );
 					}
 				}
 			}
+		
 	
 			//Check license format
 			if( empty( $key ) )
@@ -199,7 +211,7 @@ if( !class_exists('EO_Extension') ){
 			));
 	
 			$body = (array) json_decode( wp_remote_retrieve_body( $resp ) );
-	
+			
 			if( !$body || !isset($body['response']) ){
 				//No response or error
 				$grace =  $last_checked + 1 * 24 * 60 * 60;
@@ -213,7 +225,7 @@ if( !class_exists('EO_Extension') ){
 			$response =  maybe_unserialize( $body['response'] );
 	
 			update_option( $this->id . '_plm_local_key', $body );
-	
+
 			if( $token != $response['token'] )
 				return new WP_Error( 'invalid-token' );
 	

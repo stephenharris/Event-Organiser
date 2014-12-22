@@ -37,6 +37,20 @@ module.exports = function(grunt) {
 		all: [ 'js/*.js', '!js/*.min.js', '!*/time-picker.js', '!*/jquery-ui-eo-timepicker.js', '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
   	
+	cssjanus: {
+		core: {
+			options: {
+				swapLtrRtlInUrl: false,
+				processContent: function( src ) {
+					return src.replace( /url\((.+?)\.css\)/g, 'url($1-rtl.css)' );
+				}
+			},
+			expand: true,
+			ext: '-rtl.css',
+			src: [ 'css/*.css', '!**/*.min.css', '!**/*-rtl.css', '!**/fullcalendar.css' ]
+		}
+	},
+  	
 	cssmin: {
 		minify: {
 			expand: true,
@@ -274,7 +288,7 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'build', [ 'test', 'uglify', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
+grunt.registerTask( 'build', [ 'test', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
 
 grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
 

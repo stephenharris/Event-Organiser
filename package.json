@@ -1,6 +1,6 @@
 {
   "name": "event-organiser",
-  "version": "2.9.2",
+  "version": "2.10.0",
   "description": "Event mangement plugin for WordPress",
   "main": "Gruntfile.js",
   "repository": {
@@ -22,6 +22,7 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-compress": "~0.5.2",
 	"grunt-contrib-cssmin": "~0.7.0",
+	"grunt-cssjanus": "~0.2.2",
     "grunt-wp-readme-to-markdown": "~0.4.0",
     "grunt-phpunit": "~0.3.0",
     "grunt-newer": "~0.5.4",

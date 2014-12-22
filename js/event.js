@@ -354,21 +354,48 @@ window.eventOrganiserSchedulePicker = {
             hourText: options.locale.hour,
             minuteText: options.locale.minute,
             isRTL: options.locale.isrtl,
-    		onSelect: function( timeString, endTimePickerInst ){
+    		onSelect: function( timeString, timePickerInst ){
     			var startDate = $( views.start_date ).datepicker( 'getDate' );
     			var endDate   = $( views.end_date ).datepicker( 'getDate' );
 
+    			//If dates are the same update timepicker...
     			if( startDate.getTime() == endDate.getTime() ){
     	            	
     				var time = {
-    					hour: endTimePickerInst.hours,
-    					minute: endTimePickerInst.minutes,
+    					hour:   timePickerInst.hours,
+    					minute: timePickerInst.minutes,
     				};
     					
-    				if( 'start-time' == $( endTimePickerInst.input ).data( 'eo-event-data' ) ){
+    				if( 'start-time' == $( timePickerInst.input ).data( 'eo-event-data' ) ){
+    					//We have selected start time, update end time
     					$( views.end_time ).eotimepicker('option', { minTime: time });
+    					
+    					/*
+    					var endTime = {
+    						hour:   $( views.end_time ).eotimepicker( 'getHour' ),
+    						minute: $( views.end_time ).eotimepicker( 'getMinute' ),
+    					};
+    					if( time.hour > endTime.hour || ( ( time.hour = endTime.hour ) && time.minute > endTime.minute ) ){
+    						//Correct end:
+    						var newEndTime = new Date('2012-11-24 ' + endTime.hour +":"+endTime.minute );
+    						$( views.end_time ).eotimepicker( 'setTime', newEndTime );
+    					}*/
+    					
     				}else{
     					$( views.start_time ).eotimepicker('option', { maxTime: time });
+    					/*
+    					var startTime = {
+        					hour:   $( views.end_time ).eotimepicker( 'getHour' ),
+        					minute: $( views.end_time ).eotimepicker( 'getMinute' ),
+        				};
+        					
+        				if( time.hour < startTime.hour || ( ( time.hour = startTime.hour ) && time.minute < startTime.minute ) ){
+        					console.log( 'end before start!');
+    						//Correct start:
+    						var newStartTime = new Date('2012-11-24 ' + startTime.hour +":"+startTime.minute );
+    						$( views.end_time ).eotimepicker( 'setTime', newStartTime );
+        				}
+        				*/
     				}
     	            		
     			}

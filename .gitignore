@@ -11,6 +11,7 @@ node_modules
 /composer.phar
 *.min.js
 *.min.css
+*-rtl.css
 readme.md
 *.mo
 *.pot
