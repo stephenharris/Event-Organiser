@@ -65,7 +65,7 @@ module.exports = function(grunt) {
 			options: {
 				stdout: true
 			},
-			command: 'apigen --config /var/www/git/event-organiser/apigen/apigen.conf'
+			command: 'apigen --config apigen/apigen.conf'
 		},
 	},
 
