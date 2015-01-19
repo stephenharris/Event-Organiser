@@ -1090,8 +1090,10 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 	}
 	
 	//Add class if event starts and ends on different days
-	if( $start->format('Y-m-d') != $end->format('Y-m-d') ){
-		$event_classes[] = 'eo-multi-day';
+	if( ( $start instanceof DateTime ) && ( $end instanceof DateTime ) ){
+		if( $start->format('Y-m-d') != $end->format('Y-m-d') ){
+			$event_classes[] = 'eo-multi-day';
+		} 
 	}
 	
 	if( eo_is_all_day( $post_id ) ){
