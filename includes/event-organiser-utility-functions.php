@@ -397,15 +397,6 @@ function eventorganiser_php2xdate( $phpformat="" ){
 
 
 
-/**
- * Very basic class to convert php date format into jQuery UI date format used for javascript.
- * @ignore
- * @deprecated 2.1.3 Use 
- * @since 1.7
- */
-function eventorganiser_php2jquerydate( $phpformat="" ){
-	return eo_php2jquerydate( $phpformat );
-}
 
 
 /**

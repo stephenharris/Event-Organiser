@@ -165,4 +165,15 @@ function eventorganiser_event_delete($post_id){
 	eo_delete_event_occurrences($post_id);
 }
 
+/**
+ * Very basic class to convert php date format into jQuery UI date format used for javascript.
+ * @ignore
+ * @deprecated 2.1.3 Use eo_php2jquerydate
+ * @since 1.7
+ */
+function eventorganiser_php2jquerydate( $phpformat="" ){
+	_deprecated_function( __FUNCTION__, '2.1.3', 'eo_php2jquerydate()' );
+	return eo_php2jquerydate( $phpformat );
+}
+
 ?>
