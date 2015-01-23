@@ -7762,9 +7762,7 @@ function Header(calendar, options) {
 						isOnlyButtons = false;
 					}
 					else if($.isFunction(options.customButtons[buttonName])){
-						var element = $("<span class='fc-header-dropdown eo-filter'></span>");
-						var html = options.customButtons[buttonName](options);
-						element.append(html);
+						var element = $(options.customButtons[buttonName](options));
 						groupChildren = groupChildren.add(element);
 					}
 					else {
