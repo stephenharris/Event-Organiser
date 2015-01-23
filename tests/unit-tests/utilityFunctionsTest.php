@@ -39,6 +39,25 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		$this->assertEquals( "u", eo_php2xdate( "c" ) );
 		
 	}
+	
+	public function testPHP2jQuerydate()
+	{
+
+		//1 January 2015
+		$this->assertEquals( "d MM yy", eo_php2jquerydate( "j F Y" ) );
+		
+		//01-01-2015
+		$this->assertEquals( "dd-mm-yy", eo_php2jquerydate( "d-m-Y" ) );
+		
+		//Thur 1 15
+		$this->assertEquals( "D m y", eo_php2jquerydate( "D n y" ) );
+		
+		//Thursday Jan 15
+		$this->assertEquals( "DD M y", eo_php2jquerydate( "l M y" ) );
+		
+		$this->assertEquals( "@", eo_php2jquerydate( "U" ) );
+	
+	}
 
 	public function testRemoveDuplicates()
 	{

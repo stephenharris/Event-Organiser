@@ -328,15 +328,11 @@ function eventorganiser_php2xdate( $phpformat="" ){
 }
 
 
-
-
-
 /**
- * Very basic class to convert php date format into jQuery UI date format used for javascript.
+ * Converts php date format into jQuery UI date format.
  *
- * Similar to `{@see eventorganiser_php2xdate()}` - but the format is slightly different for jQuery UI  
  * Takes a php date format and converts it to {@link http://docs.jquery.com/UI/Datepicker/formatDate} so
- * that it can b used in javascript (notably by the datepicker).
+ * that it can b used in javascript (i.e. by the datepicker).
  * 
  * **Please note that this function does not convert time formats**
  *
@@ -345,36 +341,43 @@ function eventorganiser_php2xdate( $phpformat="" ){
  *@param string $phpformat Format according to https://php.net/manual/en/function.date.php
  *@return string The format translated to xdate format: http://docs.jquery.com/UI/Datepicker/formatDate
  */
-function eo_php2jquerydate($phpformat=""){
-	$php2jquerydate = array(
-			'Y'=>'yy','y'=>'y','L'=>''/*Not Supported*/,'o'=>'',/*Not Supported*/
-			'j'=>'d','d'=>'dd','D'=>'D','DD'=>'dddd','N'=>'',/*NS*/ 'S' => ''/*NS*/,
-			'w'=>'', /*NS*/ 'z'=>'o',/*NS*/ 'W'=>'w',
-			'F'=>'MM','m'=>'mm','M'=>'M','n'=>'m','t'=>'',/*NS*/
-			'a'=>''/*NS*/,'A'=>''/*NS*/,
-			'B'=>'',/*NS*/'g'=>''/*NS*/,'G'=>''/*NS*/,'h'=>''/*NS*/,'H'=>''/*NS*/,'u'=>'fff',
-			'i'=>''/*NS*/,'s'=>''/*NS*/,
-			'O'=>''/*NS*/, 'P'=>''/*NS*/,
+function eo_php2jquerydate( $phpformat ){
+
+	$map = array(
+		//Day
+		'j' => 'd', 'd' => 'dd', 'D' => 'D', 'l' => 'DD', 'z' => 'o',
+		//Month
+		'F' => 'MM', 'm' => 'mm', 'M' => 'M', 'n' => 'm',
+		//Year
+		'Y' => 'yy', 'y' => 'y', 'o' => 'gggg',
+		//Full date
+		'U' => '@',
 	);
-
-	$jqueryformat="";
-
-	for($i=0;  $i< strlen($phpformat); $i++){
-
-		//Handle backslash excape
-		if($phpformat[$i]=="\\"){
-			$jqueryformat .= "\\".$phpformat[$i+1];
-			$i++;
-			continue;
-		}
-
-		if(isset($php2jquerydate[$phpformat[$i]])){
-			$jqueryformat .= $php2jquerydate[$phpformat[$i]];
-		}else{
-			$jqueryformat .= $phpformat[$i];
-		}
+	
+	$regexp  = '/(j|d|D|l|z|F|m|M|n|Y|y|o|U|.)/';
+	$matches = array();
+	
+	preg_match_all( $regexp, $phpformat, $matches );
+	
+	if ( !$matches || false === is_array( $matches ) ){
+		return $format;
 	}
-	return $jqueryformat;
+	
+	$php_tokens = array_keys( $map );
+	$jquery_format = '';
+	
+	foreach ( $matches[0] as $id => $match ){
+		// if there is a matching php token in token list
+		if ( in_array( $match, $php_tokens ) ){
+			// use the php token instead
+			$string = $map[ $match ];
+		}else{
+			$string = $match;
+		}
+		$jquery_format .= $string;
+	}
+	
+	return $jquery_format;
 }
 
 
