@@ -14,9 +14,13 @@ function eventorganiser_register_script() {
 	$ext = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 	$rtl = is_rtl() ? '-rtl' : '';
 
+	/* Moment.js */
+	wp_register_script( 'eo_momentjs', EVENT_ORGANISER_URL."js/moment{$ext}.js", '2.9.0', true );
+	
 	/* FullCalendar */
 	wp_register_script( 'eo_fullcalendar', EVENT_ORGANISER_URL."js/fullcalendar{$ext}.js",array(
 		'jquery',
+		'eo_momentjs',
 		'jquery-ui-core',
 		'jquery-ui-widget',
 		'jquery-ui-button',
@@ -126,7 +130,7 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',
 		'jquery-ui-button',
-		'jquery-ui-position'
+		'jquery-ui-position',
 	),$version,true);
 	
 	wp_register_script( 'eo-edit-event-controller', EVENT_ORGANISER_URL."js/edit-event-controller{$ext}.js",array(
@@ -224,53 +228,59 @@ function eventorganiser_add_admin_scripts( $hook ) {
 	if ( $hook == 'post-new.php' || $hook == 'post.php') {
 		if( $post->post_type == 'event' ) {     
 
-			wp_enqueue_script('eo-edit-event-controller');
+			wp_enqueue_script( 'eo-edit-event-controller' );
 			wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
-					'ajaxurl' => admin_url( 'admin-ajax.php' ),
-					'wpversion' => get_bloginfo('version'),
-					'startday'=>intval(get_option('start_of_week')),
-					'format'=> eventorganiser_php2jquerydate( eventorganiser_get_option('dateformat') ),
+					'ajaxurl'   => admin_url( 'admin-ajax.php' ),
+					'wpversion' => get_bloginfo( 'version' ),
+					'startday'  => intval( get_option( 'start_of_week' ) ),
+					'format'    => eo_php2jquerydate( eventorganiser_get_option( 'dateformat' ) ),
 					'current_user_can' => array(
 						'manage_venues' => current_user_can( 'manage_venues' ),
 					),
 					'is24hour' => eventorganiser_blog_is_24(),
-					'location'=>get_option('timezone_string'),
-					'locale'=>array(
-						'isrtl' => $wp_locale->is_rtl(),
-						'monthNames'=>array_values($wp_locale->month),
-						'monthAbbrev'=>array_values($wp_locale->month_abbrev),
-						'dayAbbrev'=>array_values($wp_locale->weekday_abbrev),
-						'showDates' => __( 'Show dates', 'eventorganiser' ),
-						'hideDates' => __( 'Hide dates', 'eventorganiser' ),
-						'weekDay'=>$wp_locale->weekday,
-						'meridian' => array( $wp_locale->get_meridiem('am'), $wp_locale->get_meridiem('pm') ),
-						'hour'=>__('Hour','eventorganiser'),
-						'minute'=>__('Minute','eventorganiser'),
-						'day'=>__('day','eventorganiser'),
-						'days'=>__('days','eventorganiser'),
-						'week'=>__('week','eventorganiser'),
-						'weeks'=>__('weeks','eventorganiser'),
-						'month'=>__('month','eventorganiser'),
-						'months'=>__('months','eventorganiser'),
-						'year'=>__('year','eventorganiser'),
-						'years'=>__('years','eventorganiser'),
-						'daySingle'=>__('every day','eventorganiser'),
-						'dayPlural'=>__('every %d days','eventorganiser'),
-						'weekSingle'=>__('every week on','eventorganiser'),
-						'weekPlural'=>__('every %d weeks on','eventorganiser'),
-						'monthSingle'=>__('every month on the','eventorganiser'),
-						'monthPlural'=>__('every %d months on the','eventorganiser'),
-						'yearSingle'=>__('every year on the','eventorganiser'),
-						'yearPlural'=>__('every %d years on the','eventorganiser'),
-						'summary'=>__('This event will repeat','eventorganiser'),
-						'until'=>__('until','eventorganiser'),
-						'occurrence'=>array(__('first','eventorganiser'),__('second','eventorganiser'),__('third','eventorganiser'),__('fourth','eventorganiser'),__('last','eventorganiser'))
+					'location' => get_option( 'timezone_string' ),
+					'locale'   => array(
+						'isrtl'       => $wp_locale->is_rtl(),
+						'monthNames'  => array_values( $wp_locale->month ),
+						'monthAbbrev' => array_values( $wp_locale->month_abbrev ),
+						'dayAbbrev'   => array_values( $wp_locale->weekday_abbrev ),
+						'showDates'   => __( 'Show dates', 'eventorganiser' ),
+						'hideDates'   => __( 'Hide dates', 'eventorganiser' ),
+						'weekDay'     => $wp_locale->weekday,
+						'meridian'    => array( $wp_locale->get_meridiem( 'am' ), $wp_locale->get_meridiem( 'pm' ) ),
+						'hour'        => __( 'Hour', 'eventorganiser' ),
+						'minute'      => __( 'Minute', 'eventorganiser' ),
+						'day'         => __( 'day', 'eventorganiser' ),
+						'days'        => __( 'days', 'eventorganiser' ),
+						'week'        => __( 'week', 'eventorganiser' ),
+						'weeks'       => __( 'weeks', 'eventorganiser' ),
+						'month'       => __( 'month', 'eventorganiser' ),
+						'months'      => __( 'months', 'eventorganiser' ),
+						'year'        => __( 'year', 'eventorganiser' ),
+						'years'       => __( 'years', 'eventorganiser' ),
+						'daySingle'   => __( 'every day', 'eventorganiser' ),
+						'dayPlural'   => __( 'every %d days', 'eventorganiser' ),
+						'weekSingle'  => __( 'every week on', 'eventorganiser' ),
+						'weekPlural'  => __( 'every %d weeks on', 'eventorganiser' ),
+						'monthSingle' => __( 'every month on the', 'eventorganiser' ),
+						'monthPlural' => __( 'every %d months on the', 'eventorganiser' ),
+						'yearSingle'  => __( 'every year on the', 'eventorganiser' ),
+						'yearPlural'  => __( 'every %d years on the', 'eventorganiser' ),
+						'summary'     => __( 'This event will repeat', 'eventorganiser' ),
+						'until'       => __( 'until', 'eventorganiser' ),
+						'occurrence'  => array(
+							__( 'first', 'eventorganiser' ),
+							__( 'second', 'eventorganiser' ),
+							__( 'third', 'eventorganiser' ),
+							__( 'fourth', 'eventorganiser' ),
+							__( 'last', 'eventorganiser' ),
+						),
 					)
-					));
-			wp_enqueue_style('eventorganiser-style');
+				));
+			wp_enqueue_style( 'eventorganiser-style' );
 		}
-	}elseif($current_screen->id=='edit-event'){
-			wp_enqueue_style('eventorganiser-style');
+	}elseif( $current_screen->id == 'edit-event' ){
+			wp_enqueue_style( 'eventorganiser-style' );
 	}
 }
 add_action( 'admin_enqueue_scripts', 'eventorganiser_add_admin_scripts', 998, 1 );

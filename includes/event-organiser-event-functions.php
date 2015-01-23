@@ -1374,7 +1374,7 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **alldayslot** (bool) Whether to include an all day slot (week / day views) in the calendar. Default true.
  * * **alldaytext** (string) Text to display in all day slot. Default 'All Day'.
  * * **titleformatmonth** (string) Date format (PHP) for title for month view. Default 'l, M j, Y'
- * * **titleformatweek** (string) Date format (PHP) for title for week view. Default 'M j[ Y]{ '&#8212;'[ M] j Y}.
+ * * **titleformatweek** (string) Date format (PHP) for title for week view. Default 'M j Y'.
  * * **titleformatday** (string) Date format (PHP) for title for day view. Default 'F Y'
  * * **columnformatmonth** (string) Dateformat for month columns. Default 'D'.
  * * **columnformatweek** (string) Dateformat for month columns. Default 'D n/j'.
@@ -1384,7 +1384,6 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **date** The calendar the date should start on
  *
  * @link http://arshaw.com/fullcalendar/ The fullCalendar (jQuery plug-in)
- * @link http://arshaw.com/fullcalendar/docs/utilities/formatDates/ (Range formats).
  * @link https://github.com/stephenharris/fullcalendar Event Organiser version of fullCalendar
  * @since 1.7
  * @param array $args An array of attributes for the calendar 
@@ -1394,14 +1393,17 @@ function eo_get_event_fullcalendar( $args = array() ){
 
 	global $wp_locale;
 	$defaults = array(
-		'headerleft'=>'title', 'headercenter'=>'', 'headerright'=>'prev next today', 'defaultview'=>'month',
-		'event-category'=>'','event_category'=>'', 'event-venue' => '', 'event_venue'=>'', 
-		'timeformat'=>get_option('time_format'), 'axisformat'=>get_option('time_format'), 'key'=>false,
-		'tooltip'=>true, 'weekends'=>true, 'mintime'=>'0', 'maxtime'=>'24', 'alldayslot'=>true,
-		'alldaytext'=>__('All Day','eventorganiser'), 'columnformatmonth'=>'D', 'columnformatweek'=>'D n/j', 'columnformatday'=>'l n/j',
-		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j, Y}", 'titleformatday' => 'l, M j, Y',
+		'headerleft' => 'title', 'headercenter' => '', 'headerright' => 'prev next today', 
+		'defaultview' => 'month',
+		'event-category' => '', 'event_category' => '', 'event-venue' => '', 'event_venue' => '', 
+		'timeformat' => get_option( 'time_format' ), 'axisformat' => get_option( 'time_format' ), 
+		'key' => false, 'tooltip' => true, 
+		'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 
+		'alldayslot' => true, 'alldaytext' => __( 'All Day', 'eventorganiser' ), 
+		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
+		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
 		'year' => false, 'month' => false, 'date' => false,	'users_events' => false, 'event_occurrence__in' =>array(),
-		'theme' => true, 'isrtl' => $wp_locale->is_rtl(),
+		'theme' => false, 'isrtl' => $wp_locale->is_rtl(),
 	);
 	
 	$args = shortcode_atts( $defaults, $args, 'eo_fullcalendar' );
@@ -1417,15 +1419,18 @@ function eo_get_event_fullcalendar( $args = array() ){
 	$args['event_category'] = is_array( $args['event_category'] ) ? implode( ',', $args['event_category'] ) : $args['event_category'];
 	$args['event_venue'] = is_array( $args['event_venue'] ) ? implode( ',', $args['event_venue'] ) : $args['event_venue'];
 	
-	//Convert php time format into xDate time format
-	$date_attributes = array( 'timeformat', 'axisformat', 'columnformatday', 'columnformatweek', 'columnformatmonth',
-	'titleformatmonth', 'titleformatday', 'titleformatweek' );
+	//Convert php time format into moment time format
+	$date_attributes = array( 
+		'timeformat', 'axisformat', 
+		'columnformatday', 'columnformatweek', 'columnformatmonth',
+		'titleformatmonth', 'titleformatday', 'titleformatweek',
+	);
 	$args['timeformatphp'] = $args['timeformat'];
 	foreach ( $date_attributes as $date_attribute ){
 		$args[$date_attribute] = str_replace( '((', '[', $args[$date_attribute] );
 		$args[$date_attribute] = str_replace( '))', ']', $args[$date_attribute] );
 		$args[$date_attribute.'php'] = $args[$date_attribute];
-		$args[$date_attribute] = eventorganiser_php2xdate( $args[$date_attribute] );
+		$args[$date_attribute] = eo_php_to_moment( $args[$date_attribute] );
 	}
 	
 	//Month expects 0-11, we ask for 1-12.

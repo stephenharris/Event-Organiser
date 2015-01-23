@@ -127,19 +127,20 @@ jQuery(document).ready(function () {
 		});
 	}
 
-        if ($(".eo-fullcalendar").length > 0) {
-		var calendars = eventorganiser.calendars;
+	
+	if ($(".eo-fullcalendar").length > 0) {
 		var loadingTimeOut;
-            for (var i = 0; i < calendars.length; i++) {
-            	var calendar = "#eo_fullcalendar_" + (i + 1);
-            	if (typeof calendars[i].category === "undefined") {
-            		calendars[i].category ='';
-            	}
-            	if (typeof calendars[i].venue === "undefined") {
-            		calendars[i].venue ='';
-            	}
-
-            	var args = {
+		var calendars = eventorganiser.calendars;
+		for (var i = 0; i < calendars.length; i++) {
+			var calendar = "#eo_fullcalendar_" + (i + 1);
+			if (typeof calendars[i].category === "undefined") {
+				calendars[i].category ='';
+			}
+			if (typeof calendars[i].venue === "undefined") {
+				calendars[i].venue ='';
+			}
+			
+			var args = {
 				id: calendar,
 				year: calendars[i].year ? calendars[i].year : undefined,
 				month: calendars[i].month ? calendars[i].month : undefined,
@@ -184,34 +185,36 @@ jQuery(document).ready(function () {
 					right: calendars[i].headerright
 				},
 				eventRender: 
-					function (a, b, v) {
-						var c = $(v.calendar.options.id).find(".filter-category .eo-cal-filter").val();
-						var d = $(v.calendar.options.id).find(".filter-venue .eo-cal-filter").val();
-						var tag = $(v.calendar.options.id).find(".filter-tag .eo-cal-filter").val();
+					function ( event, element, view ) {
+						
+						var category = $(view.calendar.options.id).find(".filter-category .eo-cal-filter").val();
+						var venue    = $(view.calendar.options.id).find(".filter-venue .eo-cal-filter").val();
+						var tag      = $(view.calendar.options.id).find(".filter-tag .eo-cal-filter").val();
 					
-						if (typeof c !== "undefined" && c !== "" && $.inArray(c, a.category) < 0 ) {
-                            	return "<div></div>";
+						if (typeof category !== "undefined" && category !== "" && $.inArray( category, event.category) < 0 ) {
+							return "<div></div>";
                         }
-                        if (typeof d !== "undefined" && d !== "" && d != a.venue) {
-                            	return "<div></div>";
+                        if (typeof venue != "undefined" && venue !== "" && d != event.venue) {
+                            return "<div></div>";
                         }
                         
-						if (typeof tag !== "undefined" && tag !== "" && $.inArray(tag, a.tags) < 0 ) {
-                        	return "<div></div>";
+						if (typeof tag !== "undefined" && tag !== "" && $.inArray(tag, event.tags) < 0 ) {
+							return "<div></div>";
 						}
                         
-                        if( !wp.hooks.applyFilters( 'eventorganiser.fullcalendar_render_event', true, a, b, v ) )
+                        if( !wp.hooks.applyFilters( 'eventorganiser.fullcalendar_render_event', true, event, element, view ) ){
                         	return "<div></div>";
+                        }
                         	
-                        if (! v.calendar.options.tooltip ) {
+                        if ( !view.calendar.options.tooltip ) {
                           	return;
                         }
 
-                        $(b).qtip({
+                        $(element).qtip({
                         	content: {
-                        		text:  a.description,
+                        		text:  event.description,
                         		button: false,
-                        		title: a.title
+                        		title: event.title
                         	},
                         	position: {
                         		my: "top center",
@@ -231,8 +234,8 @@ jQuery(document).ready(function () {
                         		width: 3
                         	},
                         	style: {
-                        		classes: "eo-event-toolip ui-tooltip-shadow",
-                        		widget: true,
+                        		classes: "eo-event-toolip qtip-eo",
+                        		///widget: true,
                         		tip: "topMiddle"
                         	}
                         });
@@ -254,28 +257,28 @@ jQuery(document).ready(function () {
                 	defaultView: calendars[i].defaultview,
                 	lazyFetching: "true",
                 	events: 
-                		function (a, b, c, d) {
+                		function (start, end, timezone, callback) {
+                			var options = this.options;
                 			var request = {
-                					start: jQuery.fullCalendar.formatDate(a, "yyyy-MM-dd"),
-                					end: jQuery.fullCalendar.formatDate(b, "yyyy-MM-dd"),
-                					timeformat:d.timeFormatphp,
-                					users_events: d.users_events
+                					start: start.format( "YYYY-MM-DD" ),
+                					end: end.format( "YYYY-MM-DD" ),
+                					timeformat: options.timeFormatphp,
+                					users_events: 0,
                 			};
                 			
-                			if (typeof d.category !== "undefined" &&d.category !== "") {
-                				request.category = d.category;
+                			if (typeof options.category !== "undefined" && options.category !== "") {
+                				request.category = options.category;
                 			}
-                			if (typeof d.venue !== "undefined" &&d.venue !== "") {
-                				request.venue = d.venue;
+                			if (typeof options.venue !== "undefined" && options.venue !== "") {
+                				request.venue = options.venue;
                 			}
                 			
-                			request = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_request', request, a, b, c, d );
+                			request = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_request', request, start, end, timezone, options );
                 			
                 			$.ajax({
                 				url: eventorganiser.ajaxurl + "?action=eventorganiser-fullcal",
                 				dataType: "JSON",
                 				data: request,
-                				success: c,
                 				complete: function( r, status ){
                 					if ( EO_SCRIPT_DEBUG ) {
                 						if( status == "error" ){
@@ -288,23 +291,23 @@ jQuery(document).ready(function () {
                   							alert( "An error has occurred in parsing the response. Please inspect console log for details" );
                 						} 
                 					}
-                				}
+                				},
+                				success: callback,
                 			});
                 		},
                 	selectable: false,
                 	weekMode: "variable",
                 	aspectRatio: 1.5,
-                	loading: 
-                		function (a) {
-                			var loading = $("#" + $(this).attr("id") + "_loading");
-                			if (a) {
-                				window.clearTimeout(loadingTimeOut);
-                				loadingTimeOut = window.setTimeout(function () {loading.show();}, 1e3);
-                			} else {
-                				window.clearTimeout(loadingTimeOut);
-                				loading.hide();
-                			}
+                	loading: function ( is_loading ) {
+                		var loading = $("#" + $(this).attr("id") + "_loading");
+                		if ( is_loading ) {
+                			window.clearTimeout(loadingTimeOut);
+                			loadingTimeOut = window.setTimeout(function () {loading.show();}, 1e3);
+                		} else {
+                			window.clearTimeout(loadingTimeOut);
+                			loading.hide();
                 		}
+                	},
             	};
             	args = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_options', args, calendars[i] );
             	
@@ -312,7 +315,7 @@ jQuery(document).ready(function () {
 			}
 	
 		$(".eo-cal-filter").change(function () {
-			$(".eo-fullcalendar").fullCalendar("rerenderEvents");
+			$(".eo-fullcalendar").fullCalendar( 'rerenderEvents' );
 		});
 
 		$('.eo-mini-calendar').datepicker({
@@ -328,9 +331,9 @@ jQuery(document).ready(function () {
 			showOn: 'button',
 			beforeShow: function(input, inst) {
 				if( inst.hasOwnProperty( 'dpDiv' ) ){
-					inst.dpDiv.addClass('eo-datepicker');
+					inst.dpDiv.addClass('eo-datepicker eo-fc-datepicker');
 				}else{
-					$('#ui-datepicker-div').addClass('eo-datepicker');
+					$('#ui-datepicker-div').addClass('eo-datepicker eo-fc-datepicker');
 				}
 			},
 			onSelect: function (dateText, dp) {
@@ -567,7 +570,7 @@ function eventorganiser_venue_tooltip() {
 			width: 3
 		},
 		style: {
-			classes: "ui-tooltip-shadow",
+			classes: "qtip-eo ui-tooltip-shadow",
 			widget: true
 		},
         	position: {
