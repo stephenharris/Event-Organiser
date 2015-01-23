@@ -563,7 +563,7 @@ be a descendant of the grid when it is being dragged.
 	border-bottom-right-radius: 0;
 }
 
-.fc-day-grid-event > .fc-content { /* force events to be one-line tall */
+.fc-oneline .fc-day-grid-event > .fc-content { /* force events to be one-line tall */
 	white-space: nowrap;
 	overflow: hidden;
 }
