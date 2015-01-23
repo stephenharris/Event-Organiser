@@ -297,7 +297,6 @@ jQuery(document).ready(function () {
                 		},
                 	selectable: false,
                 	weekMode: "variable",
-                	aspectRatio: 1.5,
                 	loading: function ( is_loading ) {
                 		var loading = $("#" + $(this).attr("id") + "_loading");
                 		if ( is_loading ) {
