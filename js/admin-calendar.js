@@ -56,7 +56,7 @@ eventorganiser.versionCompare = function(left, right) {
 	$('#events-meta').parent().find('.ui-dialog-titlebar-close').appendTo('.ui-tabs-nav').closest('.ui-dialog').children('.ui-dialog-titlebar').remove();
 
 	/* Time Format from screen option */
-	var format = ($('#eofc_time_format').is(":checked") ? 'HH:mm' : 'h:mmtt');
+	var format = ($('#eofc_time_format').is(":checked") ? 'HH:mm' : 'h:mma');
     
 	/* Calendar */
 	var calendar = jQuery('#eo_admin_calendar').fullCalendar({
@@ -128,12 +128,11 @@ eventorganiser.versionCompare = function(left, right) {
 			$.cookie('eo_admin_cal_last_view', view.name,{ expires: expires_date });
 		},
 		weekMode: 'variable',
-		aspectRatio: 0.5,
 		loading: function (bool) {
 			if (bool) jQuery('#loading').show();
 			else jQuery('#loading').hide();
 		},
-		timeFormat:format,
+		timeFormat: format,
 		axisFormat: format,
 		eventClick: function (event, jsevent, view) {
 			jsevent.preventDefault();
