@@ -256,14 +256,14 @@ function eo_date_interval($_date1,$_date2, $format){
 }	 
 
 /**
- * Converts php date format into momentjs date format used for javascript.
+ * Converts php date format into Moment.js date format used for javascript.
  *
- * **Please note that this function does not convert time formats**
+ * **Please note that this function does not conver all tokens**
  *
  * @since 3.0.0
  * @link http://momentjs.com/docs/#/displaying/format/
  * @param string $phpformat Format according to https://php.net/manual/en/function.date.php
- * @return string The format translated to xdate format: http://docs.jquery.com/UI/Datepicker/formatDate
+ * @return string The format translated to Moment.js format: momentjs.com/docs/#/displaying/format/
  */
 function eo_php_to_moment( $phpformat ){
 
