@@ -66,7 +66,7 @@ eventorganiser.versionCompare = function(left, right) {
 		editable: false,
 		lazyFetching: 'true',
 		eventColor: '#21759B',
-		theme: true,
+		theme: false,
 		customButtons:{
 			category:  eventorganiser_cat_dropdown,
 			venue:  ( EO_Ajax.venues !== '' ? eventorganiser_venue_dropdown : null ),
@@ -78,7 +78,9 @@ eventorganiser.versionCompare = function(left, right) {
 			week: EO_Ajax.locale.week,
 			day: EO_Ajax.locale.day,
 			cat: EO_Ajax.locale.cat,
-			venue: EO_Ajax.locale.venue
+			venue: EO_Ajax.locale.venue,
+			prev: '<',
+			next: '>'
 		},
 		monthNames: EO_Ajax.locale.monthNames,
 		monthNamesShort: EO_Ajax.locale.monthAbbrev,

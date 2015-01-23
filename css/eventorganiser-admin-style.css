@@ -47,12 +47,11 @@
 #eo_venue_form #venue_address .inside{padding:0;margin:0;}
 
 /* Calendar View*/
-.fc-button-next,.fc-button-prev {margin-top:2px;}
-.fc-text-arrow{line-height:0;}
-.fc-button-prev .ui-button-text, .fc-button-next .ui-button-text {padding-top: 0.5em;}
-.fc-button{height: 2.2em;line-height: 2.2em;}
+.fc-basic-view tbody .fc-row { min-height: 7em; }
 .event.past-event{opacity:0.5;}
 form.eo_cal .ui-autocomplete-input{width:220px;}
+#eo_admin_calendar .fc-bg{ background: white; }
+
 /* Table on event details calendar view*/
 .eo-cal-meta .form-table th {width:50px;}
 /*Drop down filters*/
