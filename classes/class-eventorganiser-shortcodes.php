@@ -121,7 +121,7 @@ class EventOrganiser_Shortcodes {
 			'weekends'=>'true',
 			'alldayslot'=>'true',
 			'users_events' => 'false',
-			'theme' => 'true',
+			'theme' => 'false',
 			'isrtl' => $wp_locale->is_rtl() ? 'true' : 'false'
 		);
 		
@@ -425,13 +425,14 @@ class EventOrganiser_Shortcodes {
 		));	
 		
 		if( !empty(self::$calendars) || !empty(self::$map) || !empty(self::$widget_calendars) ):				
-			wp_enqueue_script( 'eo_qtip2');		
-			wp_enqueue_script( 'eo_front');
-
+			wp_enqueue_script( 'eo_qtip2' );		
+			wp_enqueue_script( 'eo_front' );
+		
 			if( !eventorganiser_get_option( 'disable_css' ) ){
-				wp_enqueue_style( 'eo_front');
-				wp_enqueue_style('eo_calendar-style');
+				wp_enqueue_style( 'eo_front' );
+				wp_enqueue_style( 'eo_calendar-style' );
 			}
+
 		endif;
 
 		if( !empty( self::$map ) ){
