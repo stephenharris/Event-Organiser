@@ -124,7 +124,7 @@ eventorganiser.versionCompare = function(left, right) {
 			expires_date = new Date(expires_date.getTime() + (10 * 60 * 1000));			
 			$.cookie('eo_admin_cal_last_viewed_date', date,{ expires: expires_date });
 			$.cookie('eo_admin_cal_last_view', view.name,{ expires: expires_date });
-    	},
+		},
 		weekMode: 'variable',
 		aspectRatio: 0.5,
 		loading: function (bool) {
@@ -204,80 +204,76 @@ eventorganiser.versionCompare = function(left, right) {
 		var element = $("<span class='fc-header-goto'><input type='hidden' id='miniCalendar'/></span>");
 		return element;
 	}
-        $('#miniCalendar').datepicker({
-            dateFormat: 'DD, d MM, yy',
-            firstDay: parseInt( EO_Ajax.startday, 10 ),
-            changeMonth: true,
-            monthNamesShort: EO_Ajax.locale.monthAbbrev,
-            dayNamesMin: EO_Ajax.locale.dayAbbrev,
-            changeYear: true,
-            showOn: 'button',
-            buttonText: EO_Ajax.locale.gotodate,
-            onSelect: function (dateText, dp) {
-                calendar.fullCalendar('gotoDate', new Date(Date.parse(dateText)));
-            }
-        });
-        $('button.ui-datepicker-trigger').button();
+	$('#miniCalendar').datepicker({
+		dateFormat: 'DD, d MM, yy',
+		firstDay: parseInt( EO_Ajax.startday, 10 ),
+		changeMonth: true,
+		monthNamesShort: EO_Ajax.locale.monthAbbrev,
+		dayNamesMin: EO_Ajax.locale.dayAbbrev,
+		changeYear: true,
+		showOn: 'button',
+		buttonText: EO_Ajax.locale.gotodate,
+		onSelect: function (dateText, dp) {
+			calendar.fullCalendar('gotoDate', new Date(Date.parse(dateText)));
+		}
+	});
+	$('button.ui-datepicker-trigger').button();
         
     /* Venue drop-down in modal */
-        
-      //The venue combobox
-        $.widget("ui.combobox", {
-        	_create: function () {
-        	var c = this.element.hide(),d = c.children(":selected"),e = d.val() ? d.text() : "";
-        	var wrapper  = $("<span>").addClass("ui-combobox eo-venue-input").insertAfter(c);
-        	var options = {
-        			delay: 0,
-        			minLength: 0,
-        			source: function (a, callback) {
-        				$.getJSON(EO_Ajax.ajaxurl + "?callback=?&action=eo-search-venue", a, function (a) {
-        					var venues = $.map(a, function (a) {a.label = a.name;return a;});
-        					callback(venues);
-        				});
-        			},
-        			select: function (a, b) {
-        				$("#venue_select").removeAttr("selected");
-        				$("#venue_select").val(b.item.term_id);
-        			}
-        		};
-        		var input = $("<input>").appendTo(wrapper).val(e).addClass("ui-combobox-input").autocomplete(options).addClass("ui-widget-content ui-corner-left");
+	$.widget("ui.combobox", {
+		_create: function () {
+			var c = this.element.hide(),d = c.children(":selected"),e = d.val() ? d.text() : "";
+			var wrapper  = $("<span>").addClass("ui-combobox eo-venue-input").insertAfter(c);
+			var options = {
+				delay: 0,
+				minLength: 0,
+				source: function (a, callback) {
+					$.getJSON(EO_Ajax.ajaxurl + "?callback=?&action=eo-search-venue", a, function (a) {
+						var venues = $.map(a, function (a) {a.label = a.name;return a;});
+						callback(venues);
+					});
+				},
+				select: function (a, b) {
+					$("#venue_select").removeAttr("selected");
+					$("#venue_select").val(b.item.term_id);
+				}
+			};
+			var input = $("<input>").appendTo(wrapper).val(e).addClass("ui-combobox-input").autocomplete(options).addClass("ui-widget-content ui-corner-left");
                      
-        		/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
-        		var jquery_ui_version = $.ui ? $.ui.version || 0 : -1;
-        		var ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete' : 'autocomplete' );
-        		
-        		
-        		//Apend venue address to drop-down
-        		input.data( ac_namespace )._renderItem = function (a, b) {
-        			if (b.term_id === 0 ) {
-        				return $("<li></li>").data( ac_namespace + "-item", b).append("<a>" + b.label + "</a>").appendTo(a);
-        			}
-        			//Clean address
-        			var address_array = [b.venue_address, b.venue_city, b.venue_state,b.venue_postcode,b.venue_country];
-        			var address = $.grep(address_array,function(n){return(n);}).join(', ');
-        		
-        			/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
-        			var li_ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete-item' : 'item.autocomplete' );
+			/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
+			var jquery_ui_version = $.ui ? $.ui.version || 0 : -1;
+			var ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete' : 'autocomplete' );
 
-        			return $("<li></li>").data( li_ac_namespace, b)
-        				.append("<a>" + b.label + "</br> <span style='font-size: 0.8em'><em>" +address+ "</span></em></a>").appendTo(a);
-        		};
+			//Apend venue address to drop-down
+			input.data( ac_namespace )._renderItem = function (a, b) {
+				if (b.term_id === 0 ) {
+					return $("<li></li>").data( ac_namespace + "-item", b).append("<a>" + b.label + "</a>").appendTo(a);
+				}
+				//Clean address
+				var address_array = [b.venue_address, b.venue_city, b.venue_state,b.venue_postcode,b.venue_country];
+				var address = $.grep(address_array,function(n){return(n);}).join(', ');
 
-        		//Add new / selec buttons
-    			var button_height = eventorganiser.is_mp6 ? '25px' : '21px';
-    			var button_wrappers = $("<span>").addClass("eo-venue-combobox-buttons").appendTo(wrapper);
-    			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height:"+button_height+";'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
-    				icons: { primary: "ui-icon-triangle-1-s"},
-    				text: false
-    			}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
-    				if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return;}
-    				$(this).blur();
-    				input.autocomplete("search", "").focus();
-    			});
-    			
-        	}
-        });
-        $("#venue_select").combobox();
+				/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
+				var li_ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete-item' : 'item.autocomplete' );
+
+				return $("<li></li>").data( li_ac_namespace, b)
+					.append("<a>" + b.label + "</br> <span style='font-size: 0.8em'><em>" +address+ "</span></em></a>").appendTo(a);
+			};
+
+			//Add new / selec buttons
+			var button_height = eventorganiser.is_mp6 ? '25px' : '21px';
+			var button_wrappers = $("<span>").addClass("eo-venue-combobox-buttons").appendTo(wrapper);
+			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height:"+button_height+";'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
+				icons: { primary: "ui-icon-triangle-1-s"},
+				text: false
+			}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
+				if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return;}
+				$(this).blur();
+				input.autocomplete("search", "").focus();
+			});
+		}
+	});
+	$("#venue_select").combobox();
 
     
 
