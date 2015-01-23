@@ -1,5 +1,5 @@
 <?php
- /**
+/**
  * Register jQuery scripts and CSS files
  * Hooked on to init
  *
@@ -28,11 +28,8 @@ function eventorganiser_register_script() {
 	
 	/* Google Maps */
 	$protocal = is_ssl() ? 'https://' : 'http://';
-	if( is_admin() )
-		wp_register_script( 'eo_GoogleMap', $protocal.'maps.googleapis.com/maps/api/js?sensor=false&language='.substr(get_locale(),0,2));
-	else
-		wp_register_script( 'eo_GoogleMap', $protocal.'maps.googleapis.com/maps/api/js?sensor=false&callback=eo_load_map&language='.substr(get_locale(),0,2));
-
+	wp_register_script( 'eo_GoogleMap', $protocal.'maps.googleapis.com/maps/api/js?sensor=false&language='.substr( get_locale(), 0, 2 ) );
+	
 	/* Front-end script */
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",array(
 		'jquery','eo_qtip2',
@@ -41,7 +38,7 @@ function eventorganiser_register_script() {
 		'jquery-ui-button',
 		'jquery-ui-datepicker',
 		'eo_fullcalendar',
-		'eo-wp-js-hooks'
+		'eo-wp-js-hooks',
 	),$version,true);
 	
 	/* Add js variables to frontend script */
@@ -49,28 +46,28 @@ function eventorganiser_register_script() {
 	$venue    = get_taxonomy( 'event-venue' );
 	$tag      = get_taxonomy( 'event-tag' );
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
-		'adminajax' => admin_url( 'admin-ajax.php'),
+		'adminajax' => admin_url( 'admin-ajax.php' ),
 		'locale'    => array(
-			'locale'      => substr(get_locale(),0,2),
+			'locale'      => substr( get_locale(), 0, 2 ),
 			'isrtl'       => $wp_locale->is_rtl(),
 			'monthNames'  => array_values( $wp_locale->month ),
 			'monthAbbrev' => array_values( $wp_locale->month_abbrev ),
 			'dayNames'    => array_values( $wp_locale->weekday ),
 			'dayAbbrev'   => array_values( $wp_locale->weekday_abbrev ),
-			'ShowMore'    => __( 'Show More', 'eventorganiser'),
+			'ShowMore'    => __( 'Show More', 'eventorganiser' ),
 			'ShowLess'    => __( 'Show Less', 'eventorganiser' ),
 			'today'       => __( 'today', 'eventorganiser' ),
-			'day'         => __('day','eventorganiser'),
-			'week'        => __('week','eventorganiser'),
-			'month'       => __('month','eventorganiser'),
-			'gotodate'    => __('go to date','eventorganiser'),
+			'day'         => __( 'day', 'eventorganiser' ),
+			'week'        => __( 'week', 'eventorganiser' ),
+			'month'       => __( 'month', 'eventorganiser' ),
+			'gotodate'    => __( 'go to date', 'eventorganiser' ),
 			'cat'         => $category ? $category->labels->view_all_items : false,
 			'venue'       => $venue    ? $venue->labels->view_all_items    : false,
 			'tag'         => $tag      ? $tag->labels->view_all_items      : false,
 			//Allow themes to over-ride juqery ui styling and not use images
 			'nextText' => '>',
-			'prevText' => '<'
-		)
+			'prevText' => '<',
+		),
 	));
 
 	/* WP-JS-Hooks */
