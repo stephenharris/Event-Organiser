@@ -14,9 +14,9 @@ if ( !class_exists( 'EventOrganiser_Admin_Page' ) ){
  */
 class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 {
-    /**
-     * This sets the calendar page variables
-     */
+	/**
+	 * This sets the calendar page variables
+	*/
 	function set_constants(){
 		$this->hook = 'edit.php?post_type=event';
 		$this->title = __( 'Calendar View', 'eventorganiser' );
@@ -36,7 +36,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'startday' => intval( get_option( 'start_of_week' ) ),
-			'format' => eventorganiser_php2jquerydate( eventorganiser_get_option('dateformat') ),
+			'format' => eo_php2jquerydate( eventorganiser_get_option( 'dateformat' ) ),
 			));
 		
 		$venues = ( get_taxonomy( 'event-venue' ) ? get_terms( 'event-venue', array( 'hide_empty' => 0 ) ) : false );
