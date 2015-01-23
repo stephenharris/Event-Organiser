@@ -430,8 +430,7 @@ jQuery(document).ready(function () {
             }
             for (var agenda in eo_widget_agenda) {
                 agenda = eo_widget_agenda[agenda];
-                var d = new Date();
-                agenda.StartDate = $.fullCalendar.formatDate(d, "yyyy-MM-dd");
+                agenda.StartDate = moment().format("YYYY-MM-DD");
                 agenda.EndDate = agenda.StartDate;
                 eventorganiserGetEvents( 1, agenda );
             }
