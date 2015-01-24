@@ -12,6 +12,5 @@ node_modules
 *.min.js
 *.min.css
 *-rtl.css
-readme.md
 *.mo
 *.pot

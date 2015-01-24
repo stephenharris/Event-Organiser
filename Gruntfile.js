@@ -119,7 +119,8 @@ module.exports = function(grunt) {
 				'!composer.lock',
 				'!composer.phar',
 				'!composer.json',
-				'!CONTRIBUTING.md'
+				'!CONTRIBUTING.md',
+				'!readme.md'
 			],
 			dest: 'dist/event-organiser/'
 		},
@@ -136,7 +137,8 @@ module.exports = function(grunt) {
 				'!vendor/**',
 				'!**/*~',
 				'!composer.lock','!composer.phar','!composer.json',//composer
-				'!CONTRIBUTING.md'
+				'!CONTRIBUTING.md',
+				'!readme.md'
 			],
 			dest: process.env.EO_BETA_PLUGIN_DIR + '/<%= pkg.name %>/'
 		}	
