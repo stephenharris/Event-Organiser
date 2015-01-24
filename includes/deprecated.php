@@ -172,7 +172,7 @@ function eventorganiser_event_delete($post_id){
  * @since 1.7
  */
 function eventorganiser_php2jquerydate( $phpformat="" ){
-	_deprecated_function( __FUNCTION__, '2.1.3', 'eo_php2jquerydate()' );
+	//_deprecated_function( __FUNCTION__, '2.1.3', 'eo_php2jquerydate()' );
 	return eo_php2jquerydate( $phpformat );
 }
 
