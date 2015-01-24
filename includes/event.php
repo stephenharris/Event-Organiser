@@ -56,7 +56,8 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 	
 	$post_keys = array_flip( array(
 			'post_title','post_content','post_status', 'post_type','post_author','ping_status','post_parent','menu_order', 
-			'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id', 'tax_input'
+			'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id', 'tax_input',
+			'comment_status', 'context'
 	) );
 	
 	$event_data = array_intersect_key( $input, $event_keys );
@@ -224,7 +225,8 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 	
 	$post_keys = array_flip( array(
 			'post_title','post_content','post_status', 'post_type','post_author','ping_status','post_parent','menu_order', 
-			'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id', 'tax_input'
+			'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id', 'tax_input',
+			'comment_status', 'context'
 	) );
 	
 	$event_data = array_intersect_key( $input, $event_keys ) + $event_data;

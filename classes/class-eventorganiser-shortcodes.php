@@ -22,7 +22,6 @@ class EventOrganiser_Shortcodes {
 	}
  
 	static function handle_calendar_shortcode($atts=array()) {
-		global $post;
 
 		/* Shortcodes don't accept hyphens, so convert taxonomy names */
 		$taxs = array('category','tag','venue');

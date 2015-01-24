@@ -143,12 +143,11 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-button',
 		'jquery-ui-dialog',
 		'jquery-ui-tabs',
-		'jquery-ui-position'
+		'jquery-ui-position',
 	),$version,true);
 
 	/*  Pick and register jQuery UI style */
-	$style = ( 'classic' == get_user_option( 'admin_color') ? 'classic' : 'fresh' );
-	wp_register_style('eventorganiser-jquery-ui-style',EVENT_ORGANISER_URL."css/eventorganiser-admin-{$style}{$rtl}{$ext}.css",array(),$version);
+	wp_register_style( 'eventorganiser-jquery-ui-style', EVENT_ORGANISER_URL."css/eventorganiser-jquery-ui{$rtl}{$ext}.css", array(), $version );
 	
 	/* Admin styling */
 	wp_register_style( 'eventorganiser-3.8+', EVENT_ORGANISER_URL."css/eventorganiser-admin-3.8+{$ext}.css", array(), $version );

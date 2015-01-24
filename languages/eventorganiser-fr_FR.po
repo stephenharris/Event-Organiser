@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-22 12:03+0000\n"
-"PO-Revision-Date: 2014-09-25 12:05:01+0000\n"
-"Last-Translator: egrefin <egrefin@wanadoo.fr>\n"
+"POT-Creation-Date: 2015-01-24 16:38+0000\n"
+"PO-Revision-Date: 2015-01-22 11:50:50+0000\n"
+"Last-Translator: Régis <regis.enguehard@gmail.com>\n"
 "Language-Team: \n"
 "Language: French (France)\n"
 "MIME-Version: 1.0\n"
@@ -199,7 +199,7 @@ msgstr "Catégories des événements"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1494
+#: includes/event-organiser-event-functions.php:1496
 #: templates/event-meta-event-single.php:69
 msgid "Categories"
 msgstr "Catégories"
@@ -239,7 +239,7 @@ msgstr "Lieux"
 msgid "Select Venue"
 msgstr "Choisir le lieu"
 
-#: classes/class-eventorganiser-shortcodes.php:377
+#: classes/class-eventorganiser-shortcodes.php:376
 msgid "There is no excerpt because this is a protected post."
 msgstr "Il n'y a aucun extrait parce qu'il s'agit d'un post protégé."
 
@@ -272,17 +272,17 @@ msgid "today"
 msgstr "Aujourd'hui"
 
 #: event-organiser-calendar.php:59 includes/event-organiser-register.php:59
-#: includes/event-organiser-register.php:249
+#: includes/event-organiser-register.php:248
 msgid "day"
 msgstr "jour"
 
 #: event-organiser-calendar.php:60 includes/event-organiser-register.php:60
-#: includes/event-organiser-register.php:251
+#: includes/event-organiser-register.php:250
 msgid "week"
 msgstr "semaine"
 
 #: event-organiser-calendar.php:61 includes/event-organiser-register.php:61
-#: includes/event-organiser-register.php:253
+#: includes/event-organiser-register.php:252
 msgid "month"
 msgstr "mois"
 
@@ -325,7 +325,7 @@ msgid "24 hour time"
 msgstr "heure au format 24h"
 
 #: event-organiser-calendar.php:240
-#: includes/event-organiser-event-functions.php:1441
+#: includes/event-organiser-event-functions.php:1443
 msgid "Loading&#8230;"
 msgstr "Chargement&#8230;"
 
@@ -548,7 +548,7 @@ msgstr "jour de la semaine"
 
 #: event-organiser-edit.php:185
 #: includes/event-organiser-event-functions.php:819
-#: includes/event-organiser-register.php:266
+#: includes/event-organiser-register.php:265
 msgid "until"
 msgstr "jusqu'au"
 
@@ -556,7 +556,7 @@ msgstr "jusqu'au"
 msgid "Include/Exclude occurrences"
 msgstr "Inclure/Exclure des occurrences"
 
-#: event-organiser-edit.php:198 includes/event-organiser-register.php:243
+#: event-organiser-edit.php:198 includes/event-organiser-register.php:242
 msgid "Show dates"
 msgstr "Afficher les dates"
 
@@ -1289,7 +1289,7 @@ msgid "Break this series"
 msgstr "Casser cette série"
 
 #: includes/event-organiser-ajax.php:672
-#: includes/event-organiser-event-functions.php:1399
+#: includes/event-organiser-event-functions.php:1401
 msgid "All Day"
 msgstr "Toute la journée"
 
@@ -1348,7 +1348,7 @@ msgstr "Aucun lieu"
 #: includes/event-organiser-cpt.php:93
 msgctxt "taxonomy singular name"
 msgid "Category"
-msgstr ""
+msgstr "Catégorie"
 
 #: includes/event-organiser-cpt.php:94
 msgid "Search Categories"
@@ -1364,7 +1364,7 @@ msgstr "Catégorie parente"
 
 #: includes/event-organiser-cpt.php:97
 msgid "Parent Category:"
-msgstr ""
+msgstr "Catégorie parente"
 
 #: includes/event-organiser-cpt.php:98
 msgid "Edit Category"
@@ -1389,7 +1389,7 @@ msgstr "Aucune catégorie trouvée"
 #: includes/event-organiser-cpt.php:147
 msgctxt "taxonomy singular name"
 msgid "Tag"
-msgstr ""
+msgstr "Tag"
 
 #: includes/event-organiser-cpt.php:148
 msgid "Search Tags"
@@ -1428,7 +1428,7 @@ msgid "Choose from the most used tags"
 msgstr "Choisir parmi les mots-clefs les plus utilisés"
 
 #: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1501
+#: includes/event-organiser-event-functions.php:1503
 #: templates/event-meta-event-single.php:74
 msgid "Tags"
 msgstr "Mots-clefs"
@@ -1737,27 +1737,27 @@ msgid "Assign the category a colour."
 msgstr "Assigner une couleur à la catégorie."
 
 #: includes/event-organiser-event-functions.php:740
-#: includes/event-organiser-register.php:267
+#: includes/event-organiser-register.php:266
 msgid "last"
 msgstr "dernier"
 
 #: includes/event-organiser-event-functions.php:740
-#: includes/event-organiser-register.php:267
+#: includes/event-organiser-register.php:266
 msgid "first"
 msgstr "premier"
 
 #: includes/event-organiser-event-functions.php:740
-#: includes/event-organiser-register.php:267
+#: includes/event-organiser-register.php:266
 msgid "second"
 msgstr "second"
 
 #: includes/event-organiser-event-functions.php:740
-#: includes/event-organiser-register.php:267
+#: includes/event-organiser-register.php:266
 msgid "third"
 msgstr "troisième"
 
 #: includes/event-organiser-event-functions.php:740
-#: includes/event-organiser-register.php:267
+#: includes/event-organiser-register.php:266
 msgid "fourth"
 msgstr "quatrième"
 
@@ -1770,34 +1770,34 @@ msgid "custom reoccurrence"
 msgstr "réoccurence personnalisée"
 
 #: includes/event-organiser-event-functions.php:760
-#: includes/event-organiser-register.php:257
+#: includes/event-organiser-register.php:256
 msgid "every day"
 msgstr "chaque jour"
 
 #: includes/event-organiser-event-functions.php:762
-#: includes/event-organiser-register.php:258
+#: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d days"
 msgstr "tous les %d jours"
 
 #: includes/event-organiser-event-functions.php:768
-#: includes/event-organiser-register.php:259
+#: includes/event-organiser-register.php:258
 msgid "every week on"
 msgstr "chaque semaine le"
 
 #: includes/event-organiser-event-functions.php:770
-#: includes/event-organiser-register.php:260
+#: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d weeks on"
 msgstr "Toutes les %d semaines le"
 
 #: includes/event-organiser-event-functions.php:781
-#: includes/event-organiser-register.php:261
+#: includes/event-organiser-register.php:260
 msgid "every month on the"
 msgstr "chaque mois le"
 
 #: includes/event-organiser-event-functions.php:783
-#: includes/event-organiser-register.php:262
+#: includes/event-organiser-register.php:261
 #, php-format
 msgid "every %d months on the"
 msgstr "Tous les %d mois le"
@@ -1819,56 +1819,56 @@ msgstr "Afficher plus"
 msgid "Show Less"
 msgstr "Afficher moins"
 
-#: includes/event-organiser-register.php:244
+#: includes/event-organiser-register.php:243
 msgid "Hide dates"
 msgstr "Masquer les dates"
 
-#: includes/event-organiser-register.php:247
+#: includes/event-organiser-register.php:246
 msgid "Hour"
 msgstr "Heure"
 
-#: includes/event-organiser-register.php:248
+#: includes/event-organiser-register.php:247
 msgid "Minute"
 msgstr "Minute"
 
-#: includes/event-organiser-register.php:250
+#: includes/event-organiser-register.php:249
 msgid "days"
 msgstr "jours"
 
-#: includes/event-organiser-register.php:252
+#: includes/event-organiser-register.php:251
 msgid "weeks"
 msgstr "semaines"
 
-#: includes/event-organiser-register.php:254
+#: includes/event-organiser-register.php:253
 msgid "months"
 msgstr "mois"
 
-#: includes/event-organiser-register.php:255
+#: includes/event-organiser-register.php:254
 msgid "year"
 msgstr "année"
 
-#: includes/event-organiser-register.php:256
+#: includes/event-organiser-register.php:255
 msgid "years"
 msgstr "années"
 
-#: includes/event-organiser-register.php:263
+#: includes/event-organiser-register.php:262
 msgid "every year on the"
 msgstr "chaque année le"
 
-#: includes/event-organiser-register.php:264
+#: includes/event-organiser-register.php:263
 #, php-format
 msgid "every %d years on the"
 msgstr "Toutes les %d années le"
 
-#: includes/event-organiser-register.php:265
+#: includes/event-organiser-register.php:264
 msgid "This event will repeat"
 msgstr "Cet événement se répétera"
 
-#: includes/event-organiser-register.php:366
+#: includes/event-organiser-register.php:365
 msgid "Settings"
 msgstr "Réglages"
 
-#: includes/event-organiser-register.php:669
+#: includes/event-organiser-register.php:668
 #, php-format
 msgid ""
 "<h4>City & State Fields Added</h4>City and state / province fields for "
@@ -1881,7 +1881,7 @@ msgstr ""
 "<a href='%s'>essayer de les remplir automatiquement</a>. Vous pourrez "
 "toujours en changer les détails manuellement après."
 
-#: includes/event-organiser-register.php:676
+#: includes/event-organiser-register.php:675
 msgid ""
 "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
@@ -1894,11 +1894,11 @@ msgstr ""
 "aux anciens templates, <a href='http://wp-event-organiser.com/blog/new-"
 "default-templates-in-1-7'>consultez cet article<a/>."
 
-#: includes/event-organiser-register.php:712
+#: includes/event-organiser-register.php:711
 msgid "Dismiss this notice"
 msgstr "Rejeter cet avis"
 
-#: includes/event-organiser-register.php:713
+#: includes/event-organiser-register.php:712
 msgid "Dismiss"
 msgstr "Rejeter"
 
@@ -1922,31 +1922,31 @@ msgstr "Code postal"
 msgid "Country"
 msgstr "Pays"
 
-#: includes/event.php:573
+#: includes/event.php:575
 msgid "Schedule not recognised."
 msgstr "Programme non reconnu"
 
-#: includes/event.php:582
+#: includes/event.php:584
 msgid "Start date not provided."
 msgstr "Date de début non fournie"
 
-#: includes/event.php:600
+#: includes/event.php:602
 msgid "Start date occurs after end date."
 msgstr "La date de début est postérieure à la date de fin."
 
-#: includes/event.php:603
+#: includes/event.php:605
 msgid "Schedule end date is before is before the start date."
 msgstr "La date de fin est antérieure à la date de début."
 
-#: includes/event.php:686
+#: includes/event.php:688
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Programme mensuel invalide (ordinal invalide)"
 
-#: includes/event.php:806
+#: includes/event.php:808
 msgid "Event does not contain any dates."
 msgstr "L'événement n'est associé à aucune date."
 
-#: includes/event.php:947
+#: includes/event.php:949
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr "L'occurence n'est pas supprimée, elle n'a pu être trouvée."
 

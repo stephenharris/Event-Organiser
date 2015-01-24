@@ -65,7 +65,7 @@ module.exports = function(grunt) {
 			options: {
 				stdout: true
 			},
-			command: 'apigen --config /var/www/git/event-organiser/apigen/apigen.conf'
+			command: 'apigen --config apigen/apigen.conf'
 		},
 	},
 
@@ -119,7 +119,9 @@ module.exports = function(grunt) {
 				'!composer.lock',
 				'!composer.phar',
 				'!composer.json',
-				'!CONTRIBUTING.md'
+				'!CONTRIBUTING.md',
+				'!readme.md',
+				'!ruleset.xml'
 			],
 			dest: 'dist/event-organiser/'
 		},
@@ -136,7 +138,9 @@ module.exports = function(grunt) {
 				'!vendor/**',
 				'!**/*~',
 				'!composer.lock','!composer.phar','!composer.json',//composer
-				'!CONTRIBUTING.md'
+				'!CONTRIBUTING.md',
+				'!readme.md',
+				'!ruleset.xml'
 			],
 			dest: process.env.EO_BETA_PLUGIN_DIR + '/<%= pkg.name %>/'
 		}	
