@@ -94,8 +94,10 @@ module.exports = function(grunt) {
 	},
 
 	clean: {
-		//Clean up build folder
-		main: ['dist/event-organiser']
+		main: ['dist/event-organiser'],//Clean up build folder
+		css: [ 'css/*.min.css', 'css/*-rtl.css' ],
+		js: [ 'js/*.min.js' ],
+		i18n: [ 'languages/*.mo', 'languages/*.pot' ] 
 	},
 
 	copy: {
@@ -292,7 +294,7 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'build', [ 'test', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
+grunt.registerTask( 'build', [ 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
 
 grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
 
