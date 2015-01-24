@@ -56,18 +56,7 @@
 .eo-admin-calendar-dialog .ui-dialog-titlebar-close:focus,
 .eo-admin-calendar-dialog .ui-dialog-titlebar-close{
 	border:none;
-}
-.eo-admin-calendar-dialog .ui-icon-closethick{
 	background: none;
-}
-.eo-admin-calendar-dialog .ui-dialog-titlebar-close:before{
-	content: '\f158';
-	font: normal 20px/1 'dashicons';
-	speak: none;
-	vertical-align: middle;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	color: #666;
 }
 
 /* Calendar dialog tabs*/
