@@ -6,7 +6,7 @@
 
 /*** Datepickers ***/
 /*Correct font size of datepicker inside .form-table */
-.form-table .ui-datepicker-calendar td, .form-table .ui-datepicker-calendar th {font-size: 12px;}
+.form-table .ui-datepicker-calendar td, .form-table .ui-datepicker-calendar th {font-size: inherit;line-height:1.5em}
 .form-table .ui-datepicker select {height: 2em;}
 
 /*** Admin Calendar Page ***/
