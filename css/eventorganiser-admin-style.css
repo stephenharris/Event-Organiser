@@ -47,7 +47,7 @@
 #eo_venue_form #venue_address .inside{padding:0;margin:0;}
 
 /* Calendar View*/
-.fc-button-next,.fc-button-prev {margin-top:2px;}
+.fc-header-dropdown{margin-top: 2px;display: inline-block;}
 .fc-text-arrow{line-height:0;}
 .fc-button-prev .ui-button-text, .fc-button-next .ui-button-text {padding-top: 0.5em;}
 .fc-button{height: 2.2em;line-height: 2.2em;}
