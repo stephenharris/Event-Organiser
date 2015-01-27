@@ -22,7 +22,8 @@
 .fc-header-goto button,
 .fc-button{
 	background:white;
-}	
+	max-width: 300px;
+}
 /* Hover colour of buttons */
 #eo-event-venue-button:hover,
 #eo-event-cat-button:hover,
