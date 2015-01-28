@@ -291,9 +291,9 @@ window.eventOrganiserSchedulePicker = {
                     var date_str = $.datepicker.formatDate('yy-mm-dd', date);
                     var isEventful = eventOrganiserSchedule.is_date_eventful(date_str);
                      if (isEventful[0]) {
-                         return [true, "ui-state-active", ""];
+                         return [true, "eo-op-date-selected", ""];
                      }
-                     return [true, "ui-state-disabled", ''];
+                     return [true, "eo-op-date-not-selected", ''];
                  },
                 onChangeMonthYear: eventOrganiserSchedule.generate_dates_by_rule
             })

@@ -47,7 +47,7 @@
 #eo_venue_form #venue_address .inside{padding:0;margin:0;}
 
 /* Calendar View*/
-.fc-button-next,.fc-button-prev {margin-top:2px;}
+.fc-header-dropdown{margin-top: 2px;display: inline-block;}
 .fc-text-arrow{line-height:0;}
 .fc-button-prev .ui-button-text, .fc-button-next .ui-button-text {padding-top: 0.5em;}
 .fc-button{height: 2.2em;line-height: 2.2em;}
@@ -99,16 +99,13 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .ui-combobox-input {margin: 0;padding: 0.3em;}
 .eo-venue-combobox-buttons{position: absolute;width:4.5em;}
 
-#eo_occurrence_datepicker .ui-datepicker .ui-state-default a,
-#eo_occurrence_datepicker .ui-datepicker .ui-state-active a{color:#FFF;
-background: #7eacbf; /* Old browsers */
-background: -moz-linear-gradient(top, #7eacbf 0%, #21759b 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7eacbf), color-stop(100%,#21759b)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, #7eacbf 0%,#21759b 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, #7eacbf 0%,#21759b 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, #7eacbf 0%,#21759b 100%); /* IE10+ */
-background: linear-gradient(to bottom, #7eacbf 0%,#21759b 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7eacbf', endColorstr='#21759b',GradientType=0 ); /* IE6-9 */
+#eo_occurrence_datepicker .ui-datepicker .eo-op-date-not-selected a,
+#eo_occurrence_datepicker .ui-widget-content .ui-datepicker-current-day a{
+	background: #ececec;
+}
+#eo_occurrence_datepicker .ui-datepicker .eo-op-date-selected a{
+color:#FFF;
+background: #1e8cbe;
 }
 
 
