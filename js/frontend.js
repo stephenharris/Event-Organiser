@@ -5,25 +5,30 @@ var eventorganiser = eventorganiser || {};
 (function ($) {
 jQuery(document).ready(function () {
 
-	function eventorganiser_cat_dropdown(options){
-
-		var terms = options.categories;
+	/**
+	 * options.type
+	 * options.terms
+	 * options.select_none
+	 * options.whitelist
+	 */
+	function eventorganiser_filter_markup( options ){
 		
 		//Are we whitelisting categories 
-		var included_cats = ( typeof options.category !== "undefined" && options.category ? options.category.split(',') : false );   
+		var whitelist = ( typeof options.whitelist !== "undefined" && options.whitelist ? options.whitelist.split(',') : false );   
 		
-		var html="<select class='eo-cal-filter' id='eo-event-cat'>";
-		html+="<option value=''>"+options.buttonText.cat+"</option>";
+		var html="<select class='eo-cal-filter eo-fc-filter-"+options.type+"' data-filter-type='"+options.type+"'>";
+		html+="<option value=''>"+options.select_none+"</option>";
+		
 		var term;
-		for ( var term_id in terms ){
+		for ( var term_id in options.terms ){
 			
-			term = terms[term_id];
+			term = options.terms[term_id];
 			
 			//If whitelist check term (or ancestor of) belongs to white list.
-			if( included_cats ){
+			if( whitelist ){
 				var include_in_dropdown = false;
 				
-				if( $.inArray( term.slug, included_cats ) !== -1 ){
+				if( $.inArray( term.slug, whitelist ) !== -1 ){
 					include_in_dropdown = true;
 				}
 				
@@ -31,7 +36,7 @@ jQuery(document).ready(function () {
 				var parent = term;
 				while( !include_in_dropdown && parent.parent > 0 ){
 					parent = terms[parent.parent];
-					if( $.inArray( parent.slug, included_cats ) !== -1 ){
+					if( $.inArray( parent.slug, whitelist ) !== -1 ){
 						include_in_dropdown = true;
 					}
 				}
@@ -41,63 +46,20 @@ jQuery(document).ready(function () {
 				}
 			}
 			
-			html+= "<option class='cat-colour-"+term.color+" cat' value='"+term.slug+"'>"+term.name+"</option>";
+			html+= "<option value='"+term.slug+"'>"+term.name+"</option>";
 		}
 		html+="</select>";
 
-		var element = $("<span class='fc-header-dropdown filter-category'></span>");
+		var element = $("<span class='fc-header-dropdown filter-'"+options.type+"></span>");
 		element.append(html);
-		return element;
+		return element;	
 	}
-
+	
 	function eventorganiser_mini_calendar(){
 		var element = $("<span class='fc-header-goto'><input type='hidden' class='eo-mini-calendar'/></span>");
 		return element;
 	}
-
-	function eventorganiser_tag_dropdown(options){
-
-		
-		var terms = options.tags;
-		
-		var html="<select class='eo-cal-filter' data-filter-type='event-tag'>";
-		html+="<option value=''>"+options.buttonText.tag+"</option>";
-		for (var i=0; i < terms.length; i++){
-			html+= "<option value='"+terms[i].slug+"'>"+terms[i].name+"</option>";	
-		}
-		html+="</select>";
-
-		var element = $("<span class='fc-header-dropdown filter-tag'></span>");
-		element.append(html);
-		return element;
-	}
 	
-	function eventorganiser_venue_dropdown(options){
-
-		var venues = options.venues;
-
-		var html="<select class='eo-cal-filter' id='eo-event-venue'>";
-		html+="<option value=''>"+options.buttonText.venue+"</option>";
-		
-		//Are we whitelisting venues 
-		var included_venues = ( typeof options.venue !== "undefined" && options.venue ? options.venue.split(',') : false );
-
-		for (var i=0; i<venues.length; i++){
-			
-			//If whitelist check term (or ancestor of) belongs to white list.
-			if( included_venues && $.inArray( venues[i].slug, included_venues ) === -1 ){
-				continue;
-			}
-				
-			html+= "<option value='"+venues[i].term_id+"'>"+venues[i].name+"</option>";	
-		}
-		
-		html+="</select>";
-		var element = $("<span class='fc-header-dropdown filter-venue'></span>");
-		element.append(html);
-		return element;
-	}
-
 	if( $('#eo-upcoming-dates').length>0 && $('#eo-upcoming-dates').find('li:gt(4)').length > 0 ){
 		var eobloc = 5;
 		var locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess};
@@ -148,15 +110,33 @@ jQuery(document).ready(function () {
 				category: calendars[i].event_category,
 				venue: calendars[i].event_venue,
 				customButtons:{
-					tag:		eventorganiser_tag_dropdown,
-					category:  	eventorganiser_cat_dropdown,
-					venue:  	eventorganiser_venue_dropdown,
+					category: function(){
+						return eventorganiser_filter_markup( {
+							terms: eventorganiser.fullcal.categories,
+							select_none: EOAjaxFront.locale.cat,
+							whitelist: calendars[i].event_category,
+							type: 'category'
+						})
+					},
+					venue: function(){
+						return eventorganiser_filter_markup( {
+							terms: eventorganiser.fullcal.venues,
+							select_none: EOAjaxFront.locale.venue,
+							whitelist: calendars[i].event_venue,
+							type: 'venue'
+						})
+					},
+					tag: function(){
+						return eventorganiser_filter_markup( {
+							terms: eventorganiser.fullcal.tags,
+							select_none: EOAjaxFront.locale.tag,
+							whitelist: '',
+							type: 'tag'
+						})
+					},
 					'goto': 	eventorganiser_mini_calendar
 				},
 				theme: calendars[i].theme,
-				categories: eventorganiser.fullcal.categories,
-				venues: eventorganiser.fullcal.venues,
-				tags: eventorganiser.fullcal.tags,
 				timeFormatphp: calendars[i].timeformatphp,
 				timeFormat: calendars[i].timeformat,
 				isRTL: calendars[i].isrtl,
@@ -187,9 +167,9 @@ jQuery(document).ready(function () {
 				eventRender: 
 					function ( event, element, view ) {
 						
-						var category = $(view.calendar.options.id).find(".filter-category .eo-cal-filter").val();
-						var venue    = $(view.calendar.options.id).find(".filter-venue .eo-cal-filter").val();
-						var tag      = $(view.calendar.options.id).find(".filter-tag .eo-cal-filter").val();
+						var category = $(view.calendar.options.id).find(".eo-fc-filter-category").val();
+						var venue    = $(view.calendar.options.id).find(".eo-fc-filter-venue").val();
+						var tag      = $(view.calendar.options.id).find(".eo-fc-filter-tag").val();
 					
 						if (typeof category !== "undefined" && category !== "" && $.inArray( category, event.category) < 0 ) {
 							return "<div></div>";
@@ -244,10 +224,7 @@ jQuery(document).ready(function () {
                     	today: 	EOAjaxFront.locale.today,
                     	month: 	EOAjaxFront.locale.month,
                 		week: 	EOAjaxFront.locale.week,
-                		day: 	EOAjaxFront.locale.day,
-                		cat: 	EOAjaxFront.locale.cat,
-                		venue: 	EOAjaxFront.locale.venue,
-                		tag: 	EOAjaxFront.locale.tag
+                		day: 	EOAjaxFront.locale.day
                     },
                     monthNames: EOAjaxFront.locale.monthNames,
                     monthNamesShort: EOAjaxFront.locale.monthAbbrev,
