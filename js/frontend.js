@@ -531,7 +531,8 @@ eventorganiser.google_map.prototype.load = function(){
 	}else{
 		this.map.setCenter( LatLngList[0] );
 	}
-
+	
+	wp.hooks.doAction( 'eventorganiser.google_map_loaded', this );
 };
 
 eventorganiser.google_map.prototype.tooltip = function(){
