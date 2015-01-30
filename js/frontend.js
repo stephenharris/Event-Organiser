@@ -475,7 +475,6 @@ eventorganiser.google_map = function( param ){
 	this.map = null;
 }
 eventorganiser.google_map.prototype.load = function(){    
-
 	var args = {
         zoom: this.param.zoom,
 		scrollwheel: this.param.scrollwheel,
@@ -488,6 +487,8 @@ eventorganiser.google_map.prototype.load = function(){
 		mapTypeControl: this.param.maptypecontrol,
 		mapTypeId: google.maps.MapTypeId[this.param.maptypeid],
 		styles: this.param.styles,
+		minZoom: this.param.minzoom,
+		maxZoom: this.param.maxzoom,
     };
 	
 	args = wp.hooks.applyFilters( 'eventorganiser.google_map_options', args, this.param );
