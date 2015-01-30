@@ -50,7 +50,7 @@ jQuery(document).ready(function () {
 		return element;	
 	}
 	
-	$(".eo-fc-filter").change(function () {
+	$(".eo-fullcalendar").on( 'change', '.eo-fc-filter', function () {
 		$(".eo-fullcalendar").fullCalendar( 'rerenderEvents' );
 	});
 	
