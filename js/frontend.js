@@ -174,7 +174,7 @@ jQuery(document).ready(function () {
 						if (typeof category !== "undefined" && category !== "" && $.inArray( category, event.category) < 0 ) {
 							return "<div></div>";
                         }
-                        if (typeof venue != "undefined" && venue !== "" && d != event.venue) {
+                        if (typeof venue != "undefined" && venue !== "" && venue != event.venue) {
                             return "<div></div>";
                         }
                         
