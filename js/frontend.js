@@ -254,7 +254,17 @@ jQuery(document).ready(function () {
                 	dayNames: EOAjaxFront.locale.dayNames,
                 	dayNamesShort: EOAjaxFront.locale.dayAbbrev,
                 	eventColor: "#21759B",
-                	defaultView: calendars[i].defaultview,
+                	
+                	responsive: calendars[i].responsive,
+                	defaultView: ( $(window).width() < 514 && calendars[i].responsive )  ? 'listMonth' : calendars[i].defaultview,
+                	windowResize: function(view) {
+                		if( view.calendar.options.responsive && $(window).width() < 514 ){
+                			$(this).fullCalendar( 'changeView', 'listMonth' );
+                		} else {
+                			$(this).fullCalendar( 'changeView', view.calendar.options.defaultView );
+                		}
+                	},
+                	
                 	lazyFetching: "true",
                 	events: 
                 		function (start, end, timezone, callback) {

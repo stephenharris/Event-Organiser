@@ -122,7 +122,8 @@ class EventOrganiser_Shortcodes {
 			'alldayslot'=>'true',
 			'users_events' => 'false',
 			'theme' => 'false',
-			'isrtl' => $wp_locale->is_rtl() ? 'true' : 'false'
+			'isrtl' => $wp_locale->is_rtl() ? 'true' : 'false',
+			'responsive' => 'false',
 		);
 		
 		$atts = wp_parse_args( $atts, $bool_atts );
