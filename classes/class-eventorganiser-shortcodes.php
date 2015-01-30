@@ -141,37 +141,40 @@ class EventOrganiser_Shortcodes {
 	static function handle_venuemap_shortcode($atts) {
 		global $post;
 
-		if( !empty($atts['event_venue']) )
+		if( !empty( $atts['event_venue'] ) ){
 			$atts['venue'] = $atts['event_venue'];
+		}
 
 		//If venue is not set get from the venue being quiered or the post being viewed
 		if( empty($atts['venue']) ){
 			if( eo_is_venue() ){
-				$atts['venue']= esc_attr(get_query_var('term'));
+				$atts['venue'] = esc_attr( get_query_var( 'term' ) );
 			}else{
-				$atts['venue'] = eo_get_venue_slug(get_the_ID());
+				$atts['venue'] = eo_get_venue_slug( get_the_ID() );
 			}
 		}
-	
 
-		$venue_slugs = explode(',',$atts['venue']);
+		$venue_slugs = explode( ',', $atts['venue'] );
 
+		var_dump( $atts );
 		$args = shortcode_atts( array(
-			'zoom' => 15, 'scrollwheel'=>'true','zoomcontrol'=>'true',
-			'rotatecontrol'=>'true','pancontrol'=>'true','overviewmapcontrol'=>'true',
-			'streetviewcontrol'=>'true','maptypecontrol'=>'true','draggable'=>'true',
-			'maptypeid' => 'ROADMAP',
-			'width' => '100%','height' => '200px','class' => '',
-			'tooltip'=>'false'
+			'zoom' => 15, 'zoomcontrol' => 'true', 'minzoom' => 0, 'maxzoom' => null,
+			'scrollwheel' => 'true', 'rotatecontrol' => 'true', 'pancontrol' => 'true',
+			'overviewmapcontrol' => 'true', 'streetviewcontrol' => 'true',
+			'maptypecontrol' => 'true', 'draggable' => 'true', 'maptypeid' => 'ROADMAP',
+			'width' => '100%','height' => '200px','class' => '', 'tooltip' => 'false',
 			), $atts );
 
 		//Cast options as boolean:
-		$bool_options = array('tooltip','scrollwheel','zoomcontrol','rotatecontrol','pancontrol','overviewmapcontrol','streetviewcontrol','draggable','maptypecontrol');
+		$bool_options = array( 
+			'tooltip', 'scrollwheel', 'zoomcontrol', 'rotatecontrol', 'pancontrol',
+			'overviewmapcontrol', 'streetviewcontrol', 'draggable', 'maptypecontrol',
+		);
 		foreach( $bool_options as $option  ){
 			$args[$option] = ( $args[$option] == 'false' ? false : true );
 		}
 
-		return eo_get_venue_map($venue_slugs, $args);
+		return eo_get_venue_map( $venue_slugs, $args );
 	}
 
 
