@@ -5,6 +5,7 @@ var eventorganiser = eventorganiser || {};
 (function ($) {
 jQuery(document).ready(function () {
 
+	/* Fullcalendar */
 	function eventorganiser_filter_markup( options ){
 		
 		//Are we whitelisting categories 
@@ -80,39 +81,8 @@ jQuery(document).ready(function () {
 			var cal_id = $(this).parents('div.eo-fullcalendar').attr('id');
 			$('#'+cal_id).fullCalendar('gotoDate', new Date(Date.parse(dateText)));
         		}
-    	});
-	
-	
-	if( $('#eo-upcoming-dates').length>0 && $('#eo-upcoming-dates').find('li:gt(4)').length > 0 ){
-		var eobloc = 5;
-		var locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess};
-		$('#eo-upcoming-dates').find('li:gt('+(eobloc-1)+')').hide().end().after(
-	    		$('<a href="#" id="eo-upcoming-dates-less">'+locale.less+'</a> <span id="eo-upcoming-dates-pipe">|</span> <a href="#" id="eo-upcoming-dates-more">'+locale.more+'</a>')
-		);
-		$('#eo-upcoming-dates-pipe').hide();
-		$('#eo-upcoming-dates-less').hide().click(function(e){
-			e.preventDefault();
-			var index = Math.floor( ($('#eo-upcoming-dates li:visible').length -1) / eobloc)*eobloc -1;
-			$('#eo-upcoming-dates li:gt('+index+')').hide();
-			$('#eo-upcoming-dates-more,#eo-upcoming-dates-pipe').show();
-			if( $('#eo-upcoming-dates li:visible').length <= eobloc ){
-					$('#eo-upcoming-dates-less,#eo-upcoming-dates-pipe').hide();
-			}
-		});
-		$('#eo-upcoming-dates-more').click(function(e){
-			e.preventDefault();
-			$('#eo-upcoming-dates-less,#eo-upcoming-dates-pipe, #eo-upcoming-dates li:hidden:lt('+eobloc+')').show();
-			var offset = $('#eo-upcoming-dates-pipe').offset();
-			$('html, body').animate({
-				scrollTop: Math.max( offset.top + 40 - $(window).height(),$(window).scrollTop())
-			});
-			if( $('#eo-upcoming-dates li:hidden').length === 0 ){
-				$('#eo-upcoming-dates-more,#eo-upcoming-dates-pipe').hide();
-			}
-		});
-	}
-
-	
+    });
+		
 	if ($(".eo-fullcalendar").length > 0) {
 		var loadingTimeOut;
 		var calendars = eventorganiser.calendars;
@@ -331,11 +301,38 @@ jQuery(document).ready(function () {
             	
             	$(calendar).fullCalendar(args);
 			}
-	
-
-
 	}
 
+	/* Upcoming dates */
+	if( $('#eo-upcoming-dates').length>0 && $('#eo-upcoming-dates').find('li:gt(4)').length > 0 ){
+		var eobloc = 5;
+		var locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess};
+		$('#eo-upcoming-dates').find('li:gt('+(eobloc-1)+')').hide().end().after(
+	    		$('<a href="#" id="eo-upcoming-dates-less">'+locale.less+'</a> <span id="eo-upcoming-dates-pipe">|</span> <a href="#" id="eo-upcoming-dates-more">'+locale.more+'</a>')
+		);
+		$('#eo-upcoming-dates-pipe').hide();
+		$('#eo-upcoming-dates-less').hide().click(function(e){
+			e.preventDefault();
+			var index = Math.floor( ($('#eo-upcoming-dates li:visible').length -1) / eobloc)*eobloc -1;
+			$('#eo-upcoming-dates li:gt('+index+')').hide();
+			$('#eo-upcoming-dates-more,#eo-upcoming-dates-pipe').show();
+			if( $('#eo-upcoming-dates li:visible').length <= eobloc ){
+					$('#eo-upcoming-dates-less,#eo-upcoming-dates-pipe').hide();
+			}
+		});
+		$('#eo-upcoming-dates-more').click(function(e){
+			e.preventDefault();
+			$('#eo-upcoming-dates-less,#eo-upcoming-dates-pipe, #eo-upcoming-dates li:hidden:lt('+eobloc+')').show();
+			var offset = $('#eo-upcoming-dates-pipe').offset();
+			$('html, body').animate({
+				scrollTop: Math.max( offset.top + 40 - $(window).height(),$(window).scrollTop())
+			});
+			if( $('#eo-upcoming-dates li:hidden').length === 0 ){
+				$('#eo-upcoming-dates-more,#eo-upcoming-dates-pipe').hide();
+			}
+		});
+	}
+	
         if ($(".eo-widget-cal-wrap").length > 0 ) {
 
         	$(".eo-widget-cal-wrap").on("click", 'tfoot a', function (a) {
