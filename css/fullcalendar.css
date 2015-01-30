@@ -71,6 +71,7 @@
 .fc {
 	direction: ltr;
 	text-align: left;
+	-ms-touch-action: none;
 }
 
 .fc-rtl {
@@ -182,6 +183,13 @@ body .fc { /* extra precedence to overcome jqui */
 	font-size: 1em; /* normalize */
 	white-space: nowrap;
 	cursor: pointer;
+}
+
+@media print, all and (max-width: 400px) {
+	/* make some room on skinny screens */
+	.fc button {
+		padding: 0 .4em;
+	}
 }
 
 /* Firefox has an annoying inner border */
@@ -653,6 +661,23 @@ a.fc-more:hover {
 	margin-left: .75em;
 }
 
+@media print, all and (max-width: 601px) {
+	.fc-toolbar {
+		margin-bottom: 0;
+	}
+	.fc-toolbar .fc-left,
+	.fc-toolbar .fc-center {
+		float: inherit;
+		display: block;
+	}
+	.fc .fc-toolbar > * > * {
+		float: inherit;
+	}
+	.fc-toolbar .fc-right {
+		float: inherit;
+	}
+}
+
 /* the first thing within each left/center/right section */
 .fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */
 	margin-left: 0;
@@ -1032,16 +1057,52 @@ be a descendant of the grid when it is being dragged.
 .fc-time-grid-event .fc-resizer:after {
 	content: "=";
 }
-
-/* =Default
------------------------------------------------ */
-.fc-unthemed .fc-widget-header{
-	background: #ddd;
-}
-.fc-unthemed .fc-view-container{
-	margin-top: 10px;
+.fc-listMonth-view .fc-week-number {
+	padding: 0 2px;
+	vertical-align: middle;
 }
 
+.fc-listMonth-view tbody .fc-row {
+	min-height: 2em;
+}
+
+.fc-listMonth-view .fc-week-number span {
+	line-height: 2em;
+}
+
+.fc-listMonth-view .fc-day-grid-event {
+	margin: 0 2px 1px;
+}
+
+.fc-listMonth-view .fc-row .fc-content-skeleton {
+	padding-bottom: 0;
+}
+
+.fc-listMonth-view .fc-row .fc-content-skeleton .fc-day-number {
+	text-align: left;
+	line-height: 2em;
+	border-bottom: 1px solid #DBDADA;
+	font-weight: bold;
+}
+
+.fc-listMonth-view .fc-row .fc-content-skeleton .fc-day-number .fc-list-header-left {
+	float: left;
+	padding-left: 5px;
+}
+
+.fc-listMonth-view .fc-row .fc-content-skeleton .fc-day-number .fc-list-header-right {
+	float: right;
+	padding-right: 5px;
+	color: #666;
+}
+
+.fc-listMonth-view.fc-display-date-above .fc-row .fc-content-skeleton  tbody:before,
+.fc-listMonth-view.fc-display-date-above .fc-row .fc-content-skeleton  tbody:after {
+	line-height: .5em;
+	content: "-";
+	color: white;
+	display: block;
+}
 /* =Go to datepicker
 ----------------------------------------------- */
 .eo-fc-datepicker {

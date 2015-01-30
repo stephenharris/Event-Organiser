@@ -5,7 +5,6 @@
  * Edits made by Stephen Harris for Event Organiser
  * http://wp-event-organiser.com/
  */
-
 (function(factory) {
 	if (typeof define === 'function' && define.amd) {
 		define([ 'jquery', 'moment' ], factory);
@@ -411,6 +410,78 @@ function enableCursor() {
 	$('body').removeClass('fc-not-allowed');
 }
 
+function isTouchEvent(e) {
+	if (e.type == 'pointerdown' || e.type == 'pointerup' || e.type == 'pointermove') {
+		if (e.originalEvent.pointerType === 'touch') {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else if (e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel') {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+function pointerEventToXY(e) {
+	var out = { x: 0, y: 0 };
+	if (e.type == 'pointerdown' || e.type == 'pointerup' || e.type == 'pointermove' || e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover'|| e.type=='mouseout' || e.type=='mouseenter' || e.type=='mouseleave') {
+		out.x = e.pageX;
+		out.y = e.pageY;
+	}
+	else if (isTouchEvent(e)) {
+		var touch = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+		out.x = touch.pageX;
+		out.y = touch.pageY;
+	}
+	return out;
+}
+
+var isPhantomJS = navigator.userAgent.toLowerCase().indexOf('phantom') !== -1;
+var dragOnTouchDevices = false; // do a drag when we are on touch devices, *experimental*, has some issues with scrolling and dragging 
+
+function getMouseDownEvent() {
+	if (window.navigator.msPointerEnabled) {
+		return 'pointerdown';
+	}
+	else if (!isPhantomJS && 'ontouchstart' in document.documentElement) {
+		// touch events are supported
+		return 'touchstart';
+	}
+	else {
+		return 'mousedown';
+	}
+}
+
+function getMouseUpEvent() {
+	if (window.navigator.msPointerEnabled) {
+		return 'pointerup';
+	}
+	else if (!isPhantomJS && 'ontouchstart' in document.documentElement) {
+		// touch events are supported
+		return 'touchend';
+	}
+	else {
+		return 'mouseup';
+	}
+}
+
+function getMouseMoveEvent() {
+	if (window.navigator.msPointerEnabled) {
+		return 'pointermove';
+	}
+	else if (!isPhantomJS && 'ontouchstart' in document.documentElement) {
+		// touch events are supported
+		return 'touchmove';
+	}
+	else {
+		return 'mousemove';
+	}
+}
 
 // Given a total available height to fill, have `els` (essentially child rows) expand to accomodate.
 // By default, all elements that are shorter than the recommended height are expanded uniformly, not considering
@@ -554,7 +625,12 @@ function getScrollbarWidths(container) {
 
 // Returns a boolean whether this was a left mouse click and no ctrl key (which means right click on Mac)
 function isPrimaryMouseButton(ev) {
-	return ev.which == 1 && !ev.ctrlKey;
+	if (isTouchEvent(ev)) {
+		return true;
+	}
+	else {
+		return ev.which == 1 && !ev.ctrlKey;
+	}
 }
 
 
@@ -1639,7 +1715,7 @@ var Popover = Class.extend({
 		});
 
 		if (options.autoHide) {
-			$(document).on('mousedown', this.documentMousedownProxy = $.proxy(this, 'documentMousedown'));
+			$(document).on(getMouseDownEvent(), this.documentMousedownProxy = $.proxy(this, 'documentMousedown'));
 		}
 	},
 
@@ -1649,6 +1725,7 @@ var Popover = Class.extend({
 		// only hide the popover if the click happened outside the popover
 		if (this.el && !$(ev.target).closest(this.el).length) {
 			this.hide();
+			ev.stopPropagation();
 		}
 	},
 
@@ -1662,7 +1739,7 @@ var Popover = Class.extend({
 			this.el = null;
 		}
 
-		$(document).off('mousedown', this.documentMousedownProxy);
+		$(document).off(getMouseDownEvent(), this.documentMousedownProxy);
 	},
 
 
@@ -1944,8 +2021,10 @@ var DragListener = Class.extend({
 	// Call this when the user does a mousedown. Will probably lead to startListening
 	mousedown: function(ev) {
 		if (isPrimaryMouseButton(ev)) {
-
-			ev.preventDefault(); // prevents native selection in most browsers
+			
+			if (!isTouchEvent(ev)) {
+				ev.preventDefault(); // prevents native selection in most browsers but we still want to scroll on touch devices
+			}
 
 			this.startListening(ev);
 
@@ -1983,13 +2062,13 @@ var DragListener = Class.extend({
 				cell = this.getCell(ev);
 				this.origCell = cell;
 
-				this.mouseX0 = ev.pageX;
-				this.mouseY0 = ev.pageY;
+				this.mouseX0 = pointerEventToXY(ev).x;
+				this.mouseY0 = pointerEventToXY(ev).y;
 			}
 
 			$(document)
-				.on('mousemove', this.mousemoveProxy = $.proxy(this, 'mousemove'))
-				.on('mouseup', this.mouseupProxy = $.proxy(this, 'mouseup'))
+				.on(getMouseMoveEvent(), this.mousemoveProxy = $.proxy(this, 'mousemove'))
+				.on(getMouseUpEvent(), this.mouseupProxy = $.proxy(this, 'mouseup'))
 				.on('selectstart', this.preventDefault); // prevents native selection in IE<=8
 
 			this.isListening = true;
@@ -2013,8 +2092,8 @@ var DragListener = Class.extend({
 		if (!this.isDragging) { // if not already dragging...
 			// then start the drag if the minimum distance criteria is met
 			minDistance = this.options.distance || 1;
-			distanceSq = Math.pow(ev.pageX - this.mouseX0, 2) + Math.pow(ev.pageY - this.mouseY0, 2);
-			if (distanceSq >= minDistance * minDistance) { // use pythagorean theorem
+			distanceSq = Math.pow(pointerEventToXY(ev).x - this.mouseX0, 2) + Math.pow(pointerEventToXY(ev).y - this.mouseY0, 2);
+			if (distanceSq >= minDistance * minDistance) { // use Pythagorean theorem
 				this.startDrag(ev);
 			}
 		}
@@ -2059,7 +2138,7 @@ var DragListener = Class.extend({
 				if (this.cell) {
 					this.cellOut();
 				}
-				if (cell) {
+				if (cell && (!isTouchEvent(ev) || dragOnTouchDevices)) {
 					this.cellOver(cell);
 				}
 			}
@@ -2114,8 +2193,8 @@ var DragListener = Class.extend({
 			}
 
 			$(document)
-				.off('mousemove', this.mousemoveProxy)
-				.off('mouseup', this.mouseupProxy)
+				.off(getMouseMoveEvent(), this.mousemoveProxy)
+				.off(getMouseUpEvent(), this.mouseupProxy)
 				.off('selectstart', this.preventDefault);
 
 			this.mousemoveProxy = null;
@@ -2132,7 +2211,7 @@ var DragListener = Class.extend({
 
 	// Gets the cell underneath the coordinates for the given mouse event
 	getCell: function(ev) {
-		return this.coordMap.getCell(ev.pageX, ev.pageY);
+		return this.coordMap.getCell(pointerEventToXY(ev).x, pointerEventToXY(ev).y);
 	},
 
 
@@ -2184,10 +2263,10 @@ var DragListener = Class.extend({
 		if (bounds) { // only scroll if scrollEl exists
 
 			// compute closeness to edges. valid range is from 0.0 - 1.0
-			topCloseness = (sensitivity - (ev.pageY - bounds.top)) / sensitivity;
-			bottomCloseness = (sensitivity - (bounds.bottom - ev.pageY)) / sensitivity;
-			leftCloseness = (sensitivity - (ev.pageX - bounds.left)) / sensitivity;
-			rightCloseness = (sensitivity - (bounds.right - ev.pageX)) / sensitivity;
+			topCloseness = (sensitivity - (pointerEventToXY(ev).y - bounds.top)) / sensitivity;
+			bottomCloseness = (sensitivity - (bounds.bottom - pointerEventToXY(ev).y)) / sensitivity;
+			leftCloseness = (sensitivity - (pointerEventToXY(ev).x - bounds.left)) / sensitivity;
+			rightCloseness = (sensitivity - (bounds.right - pointerEventToXY(ev).x)) / sensitivity;
 
 			// translate vertical closeness into velocity.
 			// mouse must be completely in bounds for velocity to happen.
@@ -2363,8 +2442,8 @@ var MouseFollower = Class.extend({
 		if (!this.isFollowing) {
 			this.isFollowing = true;
 
-			this.mouseY0 = ev.pageY;
-			this.mouseX0 = ev.pageX;
+			this.mouseY0 = pointerEventToXY(ev).y;
+			this.mouseX0 = pointerEventToXY(ev).x;
 			this.topDelta = 0;
 			this.leftDelta = 0;
 
@@ -2372,7 +2451,7 @@ var MouseFollower = Class.extend({
 				this.updatePosition();
 			}
 
-			$(document).on('mousemove', this.mousemoveProxy = $.proxy(this, 'mousemove'));
+			$(document).on(getMouseMoveEvent(), this.mousemoveProxy = $.proxy(this, 'mousemove'));
 		}
 	},
 
@@ -2397,7 +2476,7 @@ var MouseFollower = Class.extend({
 		if (this.isFollowing && !this.isAnimating) { // disallow more than one stop animation at a time
 			this.isFollowing = false;
 
-			$(document).off('mousemove', this.mousemoveProxy);
+			$(document).off(getMouseMoveEvent(), this.mousemoveProxy);
 
 			if (shouldRevert && revertDuration && !this.isHidden) { // do a revert animation?
 				this.isAnimating = true;
@@ -2476,8 +2555,8 @@ var MouseFollower = Class.extend({
 
 	// Gets called when the user moves the mouse
 	mousemove: function(ev) {
-		this.topDelta = ev.pageY - this.mouseY0;
-		this.leftDelta = ev.pageX - this.mouseX0;
+		this.topDelta = pointerEventToXY(ev).y - this.mouseY0;
+		this.leftDelta = pointerEventToXY(ev).x - this.mouseX0;
 
 		if (!this.isHidden) {
 			this.updatePosition();
@@ -2847,9 +2926,10 @@ var Grid = fc.Grid = RowRenderer.extend({
 		// attach a handler to the grid's root element.
 		// we don't need to clean up in unbindHandlers or destroy, because when jQuery removes the element from the
 		// DOM it automatically unregisters the handlers.
-		this.el.on('mousedown', function(ev) {
+		this.el.on(getMouseDownEvent(), function(ev) {
 			if (
 				!$(ev.target).is('.fc-event-container *, .fc-more') && // not an an event element, or "more.." link
+				!_this.view.el.find('.fc-popover').length && //make sure a popover is not open
 				!$(ev.target).closest('.fc-popover').length // not on a popover (like the "more.." events one)
 			) {
 				_this.dayMousedown(ev);
@@ -2910,6 +2990,7 @@ var Grid = fc.Grid = RowRenderer.extend({
 			},
 			listenStop: function(ev) {
 				if (dayClickCell) {
+					ev.preventDefault(); //fixes double click on Android
 					view.trigger('dayClick', _this.getCellDayEl(dayClickCell), dayClickCell.start, ev);
 				}
 				if (selectionRange) {
@@ -3381,26 +3462,30 @@ Grid.mixin({
 		var _this = this;
 		var view = this.view;
 
-		$.each(
-			{
-				mouseenter: function(seg, ev) {
-					_this.triggerSegMouseover(seg, ev);
-				},
-				mouseleave: function(seg, ev) {
-					_this.triggerSegMouseout(seg, ev);
-				},
-				click: function(seg, ev) {
-					return view.trigger('eventClick', this, seg.event, ev); // can return `false` to cancel
-				},
-				mousedown: function(seg, ev) {
-					if ($(ev.target).is('.fc-resizer') && view.isEventResizable(seg.event)) {
-						_this.segResizeMousedown(seg, ev);
-					}
-					else if (view.isEventDraggable(seg.event)) {
-						_this.segDragMousedown(seg, ev);
-					}
-				}
-			},
+		var events = {};
+		
+		events.mouseenter = function(seg, ev) {
+			_this.triggerSegMouseover(seg, ev);
+		};
+
+		events.mouseleave = function(seg, ev) {
+			_this.triggerSegMouseout(seg, ev);
+		};
+
+		events.click = function(seg, ev) {
+			return view.trigger('eventClick', this, seg.event, ev); // can return `false` to cancel
+		};
+
+		events[getMouseDownEvent()] = function(seg, ev) {
+			if ($(ev.target).is('.fc-resizer') && view.isEventResizable(seg.event)) {
+				_this.segResizeMousedown(seg, ev);
+			}
+			else if (view.isEventDraggable(seg.event) && (!isTouchEvent(ev) || dragOnTouchDevices)) {
+				_this.segDragMousedown(seg, ev);
+			}
+		};
+
+		$.each(events,
 			function(name, func) {
 				// attach the handler to the container element and only listen for real event elements via bubbling
 				_this.el.on(name, '.fc-event-container > *', function(ev) {
@@ -6390,7 +6475,7 @@ var View = fc.View = Class.extend({
 		this.trigger('viewRender', this, this, this.el);
 
 		// attach handlers to document. do it here to allow for destroy/rerender
-		$(document).on('mousedown', this.documentMousedownProxy);
+		$(document).on(getMouseDownEvent(), this.documentMousedownProxy);
 	},
 
 
@@ -6407,7 +6492,7 @@ var View = fc.View = Class.extend({
 		this.destroy();
 		this.trigger('viewDestroy', this, this, this.el);
 
-		$(document).off('mousedown', this.documentMousedownProxy);
+		$(document).off(getMouseDownEvent(), this.documentMousedownProxy);
 	},
 
 
@@ -7423,8 +7508,11 @@ function Calendar(element, instanceOptions) {
 		else if (typeof options.height === 'number') { // exists and not 'auto'
 			suggestedViewHeight = options.height - (headerElement ? headerElement.outerHeight(true) : 0);
 		}
+		else if (typeof options.height !== 'undefined' && options.height === 'parent') { // take the parent height
+			suggestedViewHeight = $(_element).parent().height() - (headerElement ? headerElement.outerHeight(true) : 0);
+		}
 		else {
-			suggestedViewHeight = Math.round(content.width() / Math.max(options.aspectRatio, .5));
+			suggestedViewHeight = Math.round(content.width() / Math.max(options.aspectRatio, 0.5));
 		}
 	}
 	
@@ -7866,7 +7954,7 @@ function Header(calendar, options) {
 						.last().addClass(tm + '-corner-right').end();
 				}
 
-				if (groupChildren.length > 1) {
+				if (groupChildren.length > 1 || isOnlyButtons) {
 					groupEl = $('<div/>');
 					if (isOnlyButtons) {
 						groupEl.addClass('fc-button-group');
@@ -9814,6 +9902,333 @@ fcViews.agendaDay = {
 	type: 'agenda',
 	duration: { days: 1 }
 };
+;;
+
+/* An abstract class for the "list" views. Renders one or more rows of day cells.
+----------------------------------------------------------------------------------------------------------------------*/
+// It is a manager for a DayGrid subcomponent, which does most of the heavy lifting.
+// It is responsible for managing width/height.
+
+var ListView = fcViews.list = View.extend({
+	dayGrid: null, // the main subcomponent that does most of the heavy lifting
+	weekNumberWidth: null, // width of all the week-number cells running down the side
+	headRowEl: null, // the fake row element of the day-of-week header
+	defultEventLimit: 5, //we need to show some events in each cell 
+	viewDateOnLeft: false, //true to display date on left, false to display above the day
+
+	initialize: function() {
+		this.dayGrid = new DayGrid(this);
+		this.coordMap = this.dayGrid.coordMap; // the view's date-to-cell mapping is identical to the subcomponent's
+	},
+
+	// Sets the display range and computes all necessary dates
+	setRange: function(range) {
+		View.prototype.setRange.call(this, range); // call the super-method
+
+		this.dayGrid.breakOnWeeks = /year|month|week/.test(this.intervalUnit); // do before setRange
+		this.dayGrid.setRange(range);
+	},
+
+	// Renders the view into `this.el`, which should already be assigned.
+	render: function() {
+		this.dayGrid.colCnt = 1;
+		this.dayGrid.rowCnt = this.dayGrid.cellDates.length;
+		this.dayGrid.numbersVisible = true;
+
+		if (this.opt('viewDateOnLeft')) {
+			this.viewDateOnLeft = this.opt('viewDateOnLeft');
+			this.el.removeClass('fc-display-date-above');
+		}
+		else {
+			this.el.addClass('fc-display-date-above');
+		}
+
+		this.el.addClass('fc-basic-view').html(this.renderHtml());
+
+		this.headRowEl = this.el.find('thead .fc-row');
+
+		this.scrollerEl = this.el.find('.fc-day-grid-container');
+		this.dayGrid.coordMap.containerEl = this.scrollerEl; // constrain clicks/etc to the dimensions of the scroller
+
+		this.dayGrid.el = this.el.find('.fc-day-grid');
+		this.dayGrid.render(this.hasRigidRows());
+
+		View.prototype.render.call(this); // call the super-method
+	},
+
+
+	// Make subcomponents ready for cleanup
+	destroy: function() {
+		this.dayGrid.destroy();
+		View.prototype.destroy.call(this); // call the super-method
+	},
+
+
+	// Builds the HTML skeleton for the view.
+	// The day-grid component will render inside of a container defined by this HTML.
+	renderHtml: function() {
+		return '' +
+			'<table>' +
+				'<tbody>' +
+					'<tr>' +
+						'<td class="' + this.widgetContentClass + '">' +
+							'<div class="fc-day-grid-container">' +
+								'<div class="fc-day-grid"/>' +
+							'</div>' +
+						'</td>' +
+					'</tr>' +
+				'</tbody>' +
+			'</table>';
+	},
+
+
+	// Generates the HTML that will go before the day-of week header cells.
+	// Queried by the DayGrid subcomponent when generating rows. Ordering depends on isRTL.
+	headIntroHtml: function() {
+		if (this.viewDateOnLeft === true) {
+			return '' +
+				'<th class="fc-week-number ' + this.widgetHeaderClass + '" ' + this.weekNumberStyleAttr() + '>' +
+					'<span>' +
+					'</span>' +
+				'</th>';
+		}
+		else {
+			return '';
+		}
+	},
+
+
+	// Generates the HTML that will go before content-skeleton cells that display the day/week numbers.
+	// Queried by the DayGrid subcomponent. Ordering depends on isRTL.
+	numberIntroHtml: function(row) {
+		if (this.viewDateOnLeft === true) {
+			return '' +
+				'<td class="fc-week-number" ' + this.weekNumberStyleAttr() + '>' +
+					'<span>' + // needed for matchCellWidths
+						this.dayGrid.getCell(row, 0).start.format('ddd MMM D, YYYY') +
+					'</span>' +
+				'</td>';
+		}
+		else {
+			return '';
+		}
+	},
+
+
+	// Generates the HTML that goes before the day bg cells for each day-row.
+	// Queried by the DayGrid subcomponent. Ordering depends on isRTL.
+	dayIntroHtml: function() {
+		if (this.viewDateOnLeft === true) {
+			return '<td class="fc-week-number ' + this.widgetContentClass + '" ' +
+				this.weekNumberStyleAttr() + '></td>';
+		}
+		else {
+			return '';
+		}
+	},
+
+
+	// Generates the HTML that goes before every other type of row generated by DayGrid. Ordering depends on isRTL.
+	// Affects helper-skeleton and highlight-skeleton rows.
+	introHtml: function() {
+		if (this.viewDateOnLeft === true) {
+			return '<td class="fc-week-number" ' + this.weekNumberStyleAttr() + '></td>';
+		}
+		else {
+			return '';
+		}
+	},
+
+
+	// Generates the HTML for the <td>s of the "number" row in the DayGrid's content skeleton.
+	// The number row will only exist if either day numbers or week numbers are turned on.
+	numberCellHtml: function(cell) {
+		if (this.viewDateOnLeft === true) {
+			return '<td/>';
+		}
+		else {
+			var date = cell.start;
+			var classes;
+
+			classes = this.dayGrid.getDayClasses(date);
+			classes.unshift('fc-day-number');
+
+			return '' +
+				'<td class="' + classes.join(' ') + '" data-date="' + date.format() + '">' +
+					'<span class="fc-list-header-left">' +
+						date.format('dddd') +
+					'</span>' +
+					'<span class="fc-list-header-right">' +
+						date.format('MMM D, YYYY') +
+					'</span>' +
+				'</td>';
+		}
+	},
+
+
+	// Generates an HTML attribute string for setting the width of the week number column, if it is known
+	weekNumberStyleAttr: function() {
+		if (this.weekNumberWidth !== null) {
+			return 'style="width:' + this.weekNumberWidth + 'px"';
+		}
+		return '';
+	},
+
+
+	// Determines whether each row should have a constant height
+	hasRigidRows: function() {
+		var eventLimit = this.opt('eventLimit');
+		if (eventLimit === true) {
+			eventLimit = this.defultEventLimit;
+		}
+
+		return eventLimit && typeof eventLimit !== 'number';
+	},
+
+
+	/* Dimensions
+	------------------------------------------------------------------------------------------------------------------*/
+
+
+	// Refreshes the horizontal dimensions of the view
+	updateWidth: function() {
+		// Make sure all week number cells running down the side have the same width.
+		// Record the width for cells created later.
+		this.weekNumberWidth = matchCellWidths(
+			this.el.find('.fc-week-number')
+		);
+	},
+
+
+	// Adjusts the vertical dimensions of the view to the specified values
+	setHeight: function(totalHeight, isAuto) {
+		var eventLimit = this.opt('eventLimit');
+		if (eventLimit === true) {
+			eventLimit = this.defultEventLimit;
+		}
+		var scrollerHeight;
+
+		// reset all heights to be natural
+		unsetScroller(this.scrollerEl);
+		uncompensateScroll(this.headRowEl);
+
+		this.dayGrid.destroySegPopover(); // kill the "more" popover if displayed
+
+		// is the event limit a constant level number?
+		if (eventLimit && typeof eventLimit === 'number') {
+			this.dayGrid.limitRows(eventLimit); // limit the levels first so the height can redistribute after
+		}
+
+		scrollerHeight = this.computeScrollerHeight(totalHeight);
+		this.setGridHeight(scrollerHeight, isAuto);
+
+		// is the event limit dynamically calculated?
+		if (eventLimit && typeof eventLimit !== 'number') {
+			this.dayGrid.limitRows(eventLimit); // limit the levels after the grid's row heights have been set
+		}
+
+		if (!isAuto && setPotentialScroller(this.scrollerEl, scrollerHeight)) { // using scrollbars?
+
+			compensateScroll(this.headRowEl, getScrollbarWidths(this.scrollerEl));
+
+			// doing the scrollbar compensation might have created text overflow which created more height. redo
+			scrollerHeight = this.computeScrollerHeight(totalHeight);
+			this.scrollerEl.height(scrollerHeight);
+
+			this.restoreScroll();
+		}
+	},
+
+
+	// Sets the height of just the DayGrid component in this view
+	setGridHeight: function(height, isAuto) {
+		if (isAuto) {
+			undistributeHeight(this.dayGrid.rowEls); // let the rows be their natural height with no expanding
+		}
+		else {
+			distributeHeight(this.dayGrid.rowEls, height, true); // true = compensate for height-hogging rows
+		}
+	},
+
+
+	/* Events
+	------------------------------------------------------------------------------------------------------------------*/
+
+
+	// Renders the given events onto the view and populates the segments array
+	renderEvents: function(events) {
+		this.dayGrid.renderEvents(events);
+
+		this.updateHeight(); // must compensate for events that overflow the row
+
+		View.prototype.renderEvents.call(this, events); // call the super-method
+	},
+
+
+	// Retrieves all segment objects that are rendered in the view
+	getSegs: function() {
+		return this.dayGrid.getSegs();
+	},
+
+
+	// Unrenders all event elements and clears internal segment data
+	destroyEvents: function() {
+		View.prototype.destroyEvents.call(this); // do this before dayGrid's segs have been cleared
+
+		this.recordScroll(); // removing events will reduce height and mess with the scroll, so record beforehand
+		this.dayGrid.destroyEvents();
+
+		// we DON'T need to call updateHeight() because:
+		// A) a renderEvents() call always happens after this, which will eventually call updateHeight()
+		// B) in IE8, this causes a flash whenever events are rerendered
+	},
+
+
+	/* Event Dragging
+	------------------------------------------------------------------------------------------------------------------*/
+
+
+	// Renders a visual indication of an event being dragged over the view.
+	// A returned value of `true` signals that a mock "helper" event has been rendered.
+	renderDrag: function(start, end, seg) {
+		return this.dayGrid.renderDrag(start, end, seg);
+	},
+
+
+	// Unrenders the visual indication of an event being dragged over the view
+	destroyDrag: function() {
+		this.dayGrid.destroyDrag();
+	},
+
+
+	/* Selection
+	------------------------------------------------------------------------------------------------------------------*/
+
+
+	// Renders a visual indication of a selection
+	renderSelection: function(start, end) {
+		this.dayGrid.renderSelection(start, end);
+	},
+
+
+	// Unrenders a visual indications of a selection
+	destroySelection: function() {
+		this.dayGrid.destroySelection();
+	}
+
+});
+ListView.duration = { months: 1 };
+
+;;
+
+/* A list view with simple day cells
+----------------------------------------------------------------------------------------------------------------------*/
+
+fcViews.listMonth = {
+	type: 'list',
+	duration: { weeks: 4 }
+};
+
 ;;
 
 });
