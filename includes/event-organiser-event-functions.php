@@ -59,7 +59,7 @@
 *                   '<li><a href="%s"> %s </a> on %s </li>',
 *                   get_permalink($event->ID),
 *                   get_the_title($event->ID),
-*                   eo_get_the_start($format, $event->ID,null,$event->occurrence_id)
+*                   eo_get_the_start( $format, $event->ID, $event->occurrence_id )
 *                );                           
 *           endforeach; 
 *           echo '</ul>'; 
@@ -173,37 +173,37 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
 * If used inside the loop, with no id no set, returns start date of
 * current event occurrence.
 * 
-* **Please note:** This function used to accept 3 arguments, it now accepts 4, but with the third deprecated. 
-* The third argument specified the occurrence (are 3 for the 3rd occurrence of an event). 
-* Instead now use the fourth argument - which specifies the occurrence by ID.
+* **3.0.0 Update:** This function used to accept 4 arguments (versions 1.5.6 - 2.11.1), with 
+* the third (null) argument deprecated. While the old behaviour shall still work, it is recommended 
+* that pass a maximum of three arguments, as shown below, with the third argument (not the fourth)
+* specifying the occurrence ID.
 * 
 * ### Examples
 * Inside the loop, you can output the start date of event (occurrence)
 * <code>
-*       <php echo eo_get_the_start('jS M YY'); ?>
+*       <php echo eo_get_the_start( 'jS M Y' ); ?>
 * </code> 
 * Get the start date of the event with id 7 and occurrence ID 3
 * <code>
-*       <?php $date = eo_get_the_start('jS M YY',7,null, 3); ?>
+*       <?php $date = eo_get_the_start ( 'jS M Y', 7, 3 ); ?>
 * </code>
 * Print a list of upcoming events with their start and end date
 * <code>
 *     //Get upcoming events
 *     $events = eo_get_events(array(
-*          'numberposts'=>5,
-*          'events_start_after'=>'today',
-*          'showpastevents'=>true,//Will be deprecated, but set it to true to play it safe.
+*          'numberposts'        => 5,
+*          'events_start_after' => 'today',
+*          'showpastevents'     => true,
 *       ));
-*
 *
 *     if( $events ){
 *         echo '<ul>';
 *         foreach( $events as $event ){
 *           printf("<li><a href='%s' >%s</a> from %s to %s </li>",
-*                get_the_permalink($post->ID),
-*                get_the_title($post->ID),
-*                eo_get_the_start('jS F Y', $post->ID,null,$post->occurrence_id),
-*                eo_get_the_end('jS F Y', $post->ID,null,$post->occurrence_id)
+*                get_the_permalink( $post->ID ),
+*                get_the_title( $post->ID ),
+*                eo_get_the_start( 'jS F Y', $post->ID, $post->occurrence_id ),
+*                eo_get_the_end( 'jS F Y', $post->ID, $post->occurrence_id )
 *           );
 *          }
 *         echo '</ul>';
@@ -217,29 +217,17 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
 *
 * @param string $format String of format as accepted by PHP date or the constant DATETIMEOBJ to return a DateTime object
 * @param int $post_id Post ID of the event
-* @param int $deprecated The occurrence number. Deprecated. Use $occurrence_id
 * @param int $occurrence_id  The occurrence ID
+* @param int $deprecated (Was) the occurrence id, supply this as the third argument
 * @return string|DateTime the start date formated to given format, as accepted by PHP date or a DateTime object if DATETIMEOBJ is given as format.
  */
-function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occurrence_id = 0 ){
+function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
 	global $post;
 	$event = $post;
 
-	if( !empty($deprecated) ){
-		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->occurrence_id' );
-
-		//Backwards compatiblity
-		if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$deprecated, $occurrence_id);	
-	
-		if(empty($event)) 
-			return false;
-	
-		$date = trim($event->StartDate).' '.trim($event->StartTime);
-
-		if(empty($date)||$date==" ")
-			return false;
-
-		return eo_format_date($date,$format);
+	if( !empty( $deprecated ) && empty( $occurrence_id ) ){
+		//_deprecated_argument( __FUNCTION__, '3.0.0', 'Fourth argument is depreciated. Please use the third argument, the occurrence ID, available from $post->occurrence_id' );
+		$occurrence_id = $deprecated;
 	}
 
 	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
@@ -298,18 +286,18 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
 }
 
 /**
-* Echos the start date of occurence of event
+ * Echos the start date of occurence of event
  * @since 1.0.0
  * @uses eo_get_the_start()
  * @package event-date-functions
  *
-* @param string $format String of format as accepted by PHP date
-* @param int $post_id Post ID of the event
-* @param int $deprecated The occurrence number. Deprecated. Use $occurrence_id instead
-* @param int $occurrence_id  The occurrence ID
+ * @param string $format String of format as accepted by PHP date
+ * @param int $post_id Post ID of the event
+ * @param int $occurrence_id The occurrence ID
+ * @param int $deprecated Deprecated, use the third argument.
  */
-function eo_the_start($format='d-m-Y',$post_id=0,$deprecated=0,$occurrence_id=0){
-	echo eo_get_the_start($format,$post_id,$deprecated, $occurrence_id);
+function eo_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
+	echo eo_get_the_start( $format, $post_id, $occurrence_id, $deprecated );
 }
 
 
@@ -319,37 +307,37 @@ function eo_the_start($format='d-m-Y',$post_id=0,$deprecated=0,$occurrence_id=0)
 * If used inside the loop, with no id no set, returns end date of
 * current event occurrence.
 * 
-* **Please note:** This function used to accept 3 arguments, it now accepts 4, but with the third deprecated. 
-* The third argument specified the occurrence (are 3 for the 3rd occurrence of an event). 
-* Instead now use the fourth argument - which specifies the occurrence by ID.
+* **3.0.0 Update:** This function used to accept 4 arguments (versions 1.5.6 - 2.11.1), with 
+* the third (null) argument deprecated. While the old behaviour shall still work, it is deprecated 
+* so you you should now pass a maximum of three arguments, as shown below, with the third argument
+* specifying the occurrence ID.
 * 
 * ### Examples
 * Inside the loop, you can output the end date of event (occurrence)
 * <code>
-*       <php echo eo_get_the_end('jS M YY'); ?>
+*       <php echo eo_get_the_end( 'jS M Y' ); ?>
 * </code> 
 * Get the end date of the event with id 7 and occurrence ID 3
 * <code>
-*       <?php $date = eo_get_the_end('jS M YY',7,null, 3); ?>
+*       <?php $date = eo_get_the_end( 'jS M Y', 7, 3 ); ?>
 * </code>
 * Print a list of upcoming events with their start and end date
 * <code>
 *     //Get upcoming events
 *     $events = eo_get_events(array(
-*          'numberposts'=>5,
-*          'events_start_after'=>'today',
-*          'showpastevents'=>true,//Will be deprecated, but set it to true to play it safe.
+*          'numberposts'        => 5,
+*          'events_start_after' => 'today',
+*          'showpastevents'     => true,
 *       ));
-*
 *
 *     if( $events ){
 *         echo '<ul>';
 *         foreach( $events as $event ){
 *           printf("<li><a href='%s' >%s</a> from %s to %s </li>",
-*                get_the_permalink($post->ID),
-*                get_the_title($post->ID),
-*                eo_get_the_start('jS F Y', $post->ID,null,$post->occurrence_id),
-*                eo_get_the_end('jS F Y', $post->ID,null,$post->occurrence_id)
+*                get_the_permalink( $post->ID ),
+*                get_the_title( $post->ID ),
+*                eo_get_the_start( 'jS F Y', $post->ID, $post->occurrence_id ),
+*                eo_get_the_end( 'jS F Y', $post->ID, $post->occurrence_id )
 *           );
 *          }
 *         echo '</ul>';
@@ -362,29 +350,17 @@ function eo_the_start($format='d-m-Y',$post_id=0,$deprecated=0,$occurrence_id=0)
 * @package event-date-functions
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id The event (post) ID. Uses current event if empty.
-* @param int $deprecated The occurrence number. Deprecated. Use $occurrence_id instead
 * @param int $occurrence_id  The occurrence ID
+* @param int $deprecated (Was) the occurrence id, supply this as the third argument
 * @return string the end date formated to given format, as accepted by PHP date
  */
-function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occurrence_id = 0 ){
+function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0  ){
 	global $post;
 	$event = $post;
 
-	if( !empty($deprecated) ){
-		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->occurrence_id' );
-
-		//Backwards compatiblity
-		if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$deprecated, $occurrence_id);	
-	
-		if(empty($event)) 
-			return false;
-	
-		$date = trim($event->EndDate).' '.trim($event->FinishTime);
-
-		if(empty($date)||$date==" ")
-			return false;
-
-		return eo_format_date($date,$format);
+	if( !empty( $deprecated ) && empty( $occurrence_id ) ){
+		//_deprecated_argument( __FUNCTION__, '3.0.0', 'Fourth argument is depreciated. Please use the third argument, the occurrence ID, available from $post->occurrence_id' );
+		$occurrence_id = $deprecated;
 	}
 	
 	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
@@ -419,11 +395,11 @@ function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occu
  * 
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id Post ID of the event
-* @param int $occurrence The occurrence number. Deprecated. Use $occurrence_id instead
-* @param int $occurrence_id  The occurrence ID
+* @param int $occurrence_id The occurrence ID
+* @param int $occurrence_id Deprecated, use the third argument.
  */
-function eo_the_end($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id=0){
-	echo eo_get_the_end($format,$post_id,$occurrence, $occurrence_id);
+function eo_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
+	echo eo_get_the_end( $format, $post_id, $occurrence_id, $deprecated );
 }
 
 
@@ -433,12 +409,12 @@ function eo_the_end($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id=0){
 * ### Examples
 * Inside the loop, you can output the start date of the next occurrence of the current event.
 * <code>
-* <?php $next = eo_get_next_occurrence( 'jS M YY' ); ?>
+* <?php $next = eo_get_next_occurrence( 'jS M Y' ); ?>
 * </code> 
 * 
 * Print the start date of the next occurrence of event with id 7
 * <code>
-* <?php echo eo_get_next_occurrence( 'jS M YY', 7 ); ?>
+* <?php echo eo_get_next_occurrence( 'jS M Y', 7 ); ?>
 * </code>
 *
 * @since 1.0.0
@@ -592,12 +568,12 @@ function eo_is_all_day($post_id=0){
 * ### Examples
 * Inside the loop, you can output the first start date of event
 * <code>
-* <?php echo 'This event will first start on ' . eo_get_schedule_start( 'jS M YY' ); ?>
+* <?php echo 'This event will first start on ' . eo_get_schedule_start( 'jS M Y' ); ?>
 * </code> 
 * 
 * Print the first start date of the event with id 7
 * <code>
-* <?php echo eo_get_schedule_start( 'jS M YY', 7 ); ?>
+* <?php echo eo_get_schedule_start( 'jS M Y', 7 ); ?>
 * </code>
 * 
 * @since 1.0.0
@@ -643,12 +619,12 @@ function eo_schedule_start($format='d-m-Y',$post_id=0){
 * ### Examples
 * Inside the loop, you can output the last start date of event
 * <code>
-* <?php echo 'This event will run or the last time on ' . eo_get_schedule_last( 'jS M YY' ); ?>
+* <?php echo 'This event will run or the last time on ' . eo_get_schedule_last( 'jS M Y' ); ?>
 * </code> 
 * 
 * Print the last start date of the event with id 7
 * <code>
-* <?php echo eo_get_schedule_last( 'jS M YY', 7 ); ?>
+* <?php echo eo_get_schedule_last( 'jS M Y', 7 ); ?>
 * </code>
 * 
 * @since 1.4.0
@@ -1083,9 +1059,9 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 	}
 
 	//Add 'time' class
-	$start = eo_get_the_start(DATETIMEOBJ, $post_id, null, $occurrence_id);
-	$end = eo_get_the_end(DATETIMEOBJ, $post_id, null, $occurrence_id);
-	$now = new DateTime('now',eo_get_blog_timezone());
+	$start = eo_get_the_start( DATETIMEOBJ, $post_id, $occurrence_id );
+	$end = eo_get_the_end( DATETIMEOBJ, $post_id, $occurrence_id );
+	$now = new DateTime( 'now', eo_get_blog_timezone() );
 	if( $start > $now ){
 		$event_classes[] = 'eo-event-future';
 	}elseif( $end < $now ){
@@ -1250,16 +1226,16 @@ function eo_get_add_to_google_link( $event_id = 0, $occurrence_id = 0 ){
 	
 	setup_postdata( $post );	
 	
-	$start = clone eo_get_the_start( DATETIMEOBJ, $event_id, null, $occurrence_id );
-	$end   = clone eo_get_the_end( DATETIMEOBJ, $event_id, null, $occurrence_id );
+	$start = clone eo_get_the_start( DATETIMEOBJ, $event_id, $occurrence_id );
+	$end   = clone eo_get_the_end( DATETIMEOBJ, $event_id, $occurrence_id );
 	
 	if( eo_is_all_day() ):
-		$end->modify('+1 second');
+		$end->modify( '+1 second' );
 		$format = 'Ymd';
 	else:
 		$format = 'Ymd\THis\Z';
-		$start->setTimezone( new DateTimeZone('UTC') );
-		$end->setTimezone( new DateTimeZone('UTC') );
+		$start->setTimezone( new DateTimeZone( 'UTC' ) );
+		$end->setTimezone( new DateTimeZone( 'UTC' ) );
 	endif;
 	
 	/**
@@ -1290,22 +1266,18 @@ function eo_get_add_to_google_link( $event_id = 0, $occurrence_id = 0 ){
 /**
  * @ignore
 */
-function eo_has_event_started($id='',$occurrence){
-	$tz = eo_get_blog_timezone();
-	$start = new DateTime(eo_get_the_start('d-m-Y H:i',$id,$occurrence), $tz);
-	$now = new DateTime('now', $tz);
-
+function eo_has_event_started( $event_id = false, $occurrence_id = false ){
+	$start = eo_get_the_start( DATETIMEOBJ, $event_id, $occurrence_id );
+	$now   = new DateTime( 'now', $tz );
 	return ($start <= $now );
 }
 
 /**
  * @ignore
 */
-function eo_has_event_finished($id='',$occurrence=0){
-	$tz = eo_get_blog_timezone();
-	$end = new DateTime(eo_get_the_end('d-m-Y H:i',$id,$occurrence), $tz);
-	$now = new DateTime('now', $tz);
-
+function eo_has_event_finished( $event_id = false, $occurrence_id = false ){
+	$end = eo_get_the_end( DATETIMEOBJ, $event_id, $occurrence_id );
+	$now   = new DateTime( 'now', $tz );
 	return ($end <= $now );
 }
 
@@ -1613,7 +1585,7 @@ function eo_break_occurrence( $post_id, $occurrence_id ){
 	$tax_input = array();
 	foreach ( array( 'event-category', 'event-tag', 'event-venue' ) as $tax ):
 		$terms = get_the_terms( $post->ID, $tax );
-		if ( $terms &&  !is_wp_error( $terms ) ){
+		if ( $terms && !is_wp_error( $terms ) ){
 			$tax_input[$tax] = array_map( 'intval', wp_list_pluck( $terms, 'term_id' ) );
 		}
 	endforeach;
@@ -1628,10 +1600,10 @@ function eo_break_occurrence( $post_id, $occurrence_id ){
 
 	//Event details
 	$event_array = array(
-		'start' => eo_get_the_start( DATETIMEOBJ, $post_id, null, $occurrence_id ),
-		'end' => eo_get_the_end(DATETIMEOBJ, $post_id, null, $occurrence_id ),
-		'all_day' => ( eo_is_all_day( $post_id )  ? 1 : 0 ),
-		'schedule' => 'once',
+		'start'     => eo_get_the_start( DATETIMEOBJ, $post_id, $occurrence_id ),
+		'end'       => eo_get_the_end( DATETIMEOBJ, $post_id, $occurrence_id ),
+		'all_day'   => ( eo_is_all_day( $post_id )  ? 1 : 0 ),
+		'schedule'  => 'once',
 		'frequency' => 1,
 	);
 
