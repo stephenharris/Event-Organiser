@@ -359,93 +359,192 @@ jQuery(document).ready(function () {
         	});
         }
 
-        if ($('.eo-agenda-widget').length > 0) {
-            function eventorganiserGetEvents(a, b) {
-                $.ajax({
-                    url: EOAjaxFront.adminajax,
-                    dataType: "JSON",
-                    data: {
-                        action: "eo_widget_agenda",
-                        instance_number: b.number,
-                        direction: a,
-                        start: b.StartDate,
-                        end: b.EndDate
-                    },
-                    success: function (a) {
-                        if (!jQuery.isArray(a) || !a[0]) {
-                            return false;
-                        } else {
-                            b.StartDate = a[0].StartDate;
-                            b.EndDate = a[a.length - 1].StartDate;
-                            populateAgenda(a, b);
-                        }
-                    }
-                });
-            }
-            function populateAgenda(a, b) {
-                var agendaWidget = $("#" + b.id + "_container");
-                var dateList = agendaWidget.find("ul.dates");
-                var dates = dateList.find("li");
-                $(dates).remove();
-                var current = false;
-                for (i = 0; i < a.length; i++) {
-                    var d = new Date(a[i].StartDate),currentList,c;
-                    
-                    if ( current === false || current != a[i].StartDate && b.mode == "day" ) {
-                        current = a[i].StartDate;
-                        currentList = $('<li class="date" >' + a[i].display + '<ul class="a-date"></ul></li>');
-                        dateList.append(currentList);
-                    }
-                    if( b.add_to_google ){
-                    	c = $('<li class="event"></li>').append('<span class="cat"></span><span><strong>' + a[i].time + ": </strong></span>" + a[i]
-                        	.post_title)
-                        	.append('<div class="meta" style="display:none;"><span>' + a[i].link + "</span><span>   </span><span>" + a[i]
-                        	.Glink + "</span></div>");
-                    }else{
-                    	c = $('<li class="event"></li>').append("<a class='eo-agenda-event-permalink' href='"+a[i].event_url+"'><span class='cat'></span><span><strong>" + a[i].time + ": </strong></span>" + a[i]
-                        	.post_title+"</a>");
-                    }
-                    
-                    c.find("span.cat")
-                        .css({
-                        background: a[i].color
-                    });
-                    currentList.append(c);
+});
+
+    	eventorganiser.template = function( text, data, settings ){
+
+    		var escaper = /\\|'|\r|\n|\t|\u2028|\u2029/g;
+    		
+    		settings = typeof settings !== 'undefined' ? settings : {};
+    				
+    		settings = $.extend( true, {
+				evaluate    : /<%([\s\S]+?)%>/g,
+				interpolate : /<%=([\s\S]+?)%>/g,
+				escape      : /<%-([\s\S]+?)%>/g
+    		}, settings );
+    		
+    		var escapes = {
+    				"'":      "'",
+    				'\\':     '\\',
+    				'\r':     'r',
+    				'\n':     'n',
+    				'\t':     't',
+    				'\u2028': 'u2028',
+    				'\u2029': 'u2029'
+    		};
+    		
+    		var render;
+
+    		//Combine delimiters into one regular expression via alternation.
+    		var matcher = new RegExp([
+                  (settings.escape ).source,
+                  (settings.interpolate ).source,
+                  (settings.evaluate ).source
+                  ].join('|') + '|$', 'g');
+    		
+    		//Compile the template source, escaping string literals appropriately.
+    		var index = 0;
+    		var source = "__p+='";
+    		text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
+    			source += text.slice(index, offset).replace(escaper, function(match) { return '\\' + escapes[match]; });
+
+    			if (escape) {
+    				source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
+    			}
+    			if (interpolate) {
+    				source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
+    			}
+    			if (evaluate) {
+    				source += "';\n" + evaluate + "\n__p+='";
+    			}
+    			index = offset + match.length;
+    			return match;
+    		});
+    		source += "';\n";
+
+    		//If a variable is not specified, place data values in local scope.
+    		if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
+    		 
+    		source = "var __t,__p='',__j=Array.prototype.join," +
+    			"print=function(){__p+=__j.call(arguments,'');};\n" +
+    			source + "return __p;\n";
+
+    		try {
+    			render = new Function(settings.variable || 'obj', '_', source);
+    		} catch (e) {
+    			e.source = source;
+    			throw e;
+    		}
+
+    		if ( data ) return render( data );
+
+    		var template = function( data ) {
+    			return render.call( this, data );
+    		};
+    		
+    		return template;
+    	};
+
+    	eventorganiser.agenda_widget = function( param ){ 
+    		this.param = param;
+    		this.start = moment();
+    		this.end   = moment();
+    		this.$el   = $( '#' + this.param.id + '_container' );
+    		this.direction = 1;
+    		
+    		this.eventTemplate = eventorganiser.template( $('#eo-tmpl-agenda-widget-item').html(), null, {variable: 'event'} );
+    		this.groupTemplate = eventorganiser.template( $('#eo-tmpl-agenda-widget-group').html(), null, {variable: 'group'} );
+    	};
+    	
+    	eventorganiser.agenda_widget.prototype.group_change = function( previous, current ){
+    		
+    		if( previous == false ){
+    			return true;
+    		}
+    		
+    		if( this.param.mode !== 'day' ){
+    			return false;
+    		}
+    		
+    		return previous.format( 'YYYY-MM-DD' ) !== current.format( 'YYYY-MM-DD' );
+    	};
+    	
+    	eventorganiser.agenda_widget.prototype.init = function(){
+    		
+    		this.$el.html( eventorganiser.template( $('#eo-tmpl-agenda-widget').html(), {}, {variable: 'data'} ) );
+    		this.$datesEl = this.$el.find( '.dates' );
+    		this.load_events();
+    		
+    		//Actions 
+    		if( this.param.add_to_google ){
+    			this.$el.on( "click", '.event', function(){
+    				$(this).find(".meta").toggle("400");
+    			});
+    		}
+    		
+    		var self = this;
+			this.$el.on( "click", '.eo-agenda-widget-nav-prev,.eo-agenda-widget-nav-next', function(){
+				if( $(this).hasClass( 'eo-agenda-widget-nav-prev' ) ){
+					self.direction = -1;
+				}else{
+					self.direction = 1;
+				}
+				self.load_events();
+			});
+    		    
+    	};
+
+    	eventorganiser.agenda_widget.prototype.load_events = function(){
+    		var self = this;
+            $.ajax({
+                url: EOAjaxFront.adminajax,
+                dataType: "JSON",
+                data: {
+                    action: "eo_widget_agenda",
+                    instance_number: this.param.number,
+                    direction: this.direction,
+                    start: this.start.format("YYYY-MM-DD"),
+                    end: this.end.format("YYYY-MM-DD")
+                },
+                success: function( events ) {
+                	var numberEvents = events.length;
+            		for( var i=0; i< numberEvents; i++ ){
+            			events[i].start = moment( events[i].start );
+            			events[i].end = moment( events[i].end );
+            		}
+            		self.start = events[0].start;
+            		self.end = events[numberEvents-1].start;
+            		self.insert_events( events );
                 }
-                dates = dateList.find("li");
-                var events_el = agendaWidget.find("ul li.event");
-                events_el.on("click", function () {
-                    $(this).find(".meta").toggle("400");
-                });
-            }
-            for (var agenda in eo_widget_agenda) {
-                agenda = eo_widget_agenda[agenda];
-                agenda.StartDate = moment().format("YYYY-MM-DD");
-                agenda.EndDate = agenda.StartDate;
-                eventorganiserGetEvents( 1, agenda );
-            }
-            $(".eo-agenda-widget .agenda-nav span.button").click(function (a) {
-                var id = $(this).parents(".eo-agenda-widget").attr("id");
-                agenda = eo_widget_agenda[id];
-                a.preventDefault();
-                var dir = false;
-                if ($(this).hasClass("next")) {
-                	dir = "+1";
-                } else if ($(this).hasClass("prev")) {
-                    dir = "-1";
-                } else {
-                    var par = $(this).parent();
-                    if (par.hasClass("prev")) {
-                        dir = "-1";
-                    } else {
-                        dir = "+1";
-                    }
-                }
-                eventorganiserGetEvents( dir, agenda );
             });
-        }
-    });
+    	};
+    	
+    	eventorganiser.agenda_widget.prototype.insert_events = function( events ){
+    		this.$datesEl.html( "" );
+    		
+    		var numberEvents = events.length;
+    		var previous = false, $group = false, $events = false;
+    		
+    		for( var i=0; i< numberEvents; i++ ){
+    		
+    			if( this.group_change( previous, events[i].start ) ){
+    				this.$datesEl.append( $group );
+    				var group = { 
+    					start: events[i].start,
+    				};
+    				$group = $( this.groupTemplate( group ) );
+    				$events = $group.find( '.a-date' );
+    			}
+    			
+    			$events.append( this.eventTemplate( events[i] ) );
+    			
+    			previous = events[i].start;
+    		}
+    		
+    		this.$datesEl.append( $group );
+    	};
+    	
+    	jQuery(document).ready(function($){
+    		if( $('.eo-agenda-widget').length > 0 ) {
+    			for (var agenda in eo_widget_agenda) {
+    				agendaWidget = new eventorganiser.agenda_widget( eo_widget_agenda[agenda] );
+    				agendaWidget.init();
+    			}
+    		}
+    	});
+    	
 })(jQuery);
+
 
 function eveorg_getParameterByName(a, b) {
     a = a.replace(/[\[]/, "\\[")
