@@ -1,3 +1,4 @@
+/*jshint -W054 */
 if ( typeof EO_SCRIPT_DEBUG === 'undefined') { EO_SCRIPT_DEBUG = true;}
 
 var eventorganiser = eventorganiser || {};
@@ -113,7 +114,7 @@ jQuery(document).ready(function () {
 							select_none: EOAjaxFront.locale.cat,
 							whitelist: calendars[i].event_category,
 							type: 'category'
-						})
+						});
 					},
 					venue: function(){
 						return eventorganiser_filter_markup( {
@@ -121,7 +122,7 @@ jQuery(document).ready(function () {
 							select_none: EOAjaxFront.locale.venue,
 							whitelist: calendars[i].event_venue,
 							type: 'venue'
-						})
+						});
 					},
 					tag: function(){
 						return eventorganiser_filter_markup( {
@@ -129,7 +130,7 @@ jQuery(document).ready(function () {
 							select_none: EOAjaxFront.locale.tag,
 							whitelist: '',
 							type: 'tag'
-						})
+						});
 					},
 					'goto': 	eventorganiser_mini_calendar
 				},
@@ -361,6 +362,11 @@ jQuery(document).ready(function () {
 
 });
 
+		/**
+		 * Lifted from underscore.js 
+		 * @see http://underscorejs.org/
+		 * @license MIT
+		 */
     	eventorganiser.template = function( text, data, settings ){
 
     		var escaper = /\\|'|\r|\n|\t|\u2028|\u2029/g;
