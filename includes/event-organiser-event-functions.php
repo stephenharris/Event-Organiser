@@ -221,7 +221,7 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
 * @param int $occurrence_id  The occurrence ID
 * @return string|DateTime the start date formated to given format, as accepted by PHP date or a DateTime object if DATETIMEOBJ is given as format.
  */
-function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id=0){
+function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occurrence_id = 0 ){
 	global $post;
 	$event = $post;
 
@@ -242,12 +242,14 @@ function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_
 		return eo_format_date($date,$format);
 	}
 
+	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
 
-	$occurrences = eo_get_the_occurrences_of($post_id);
+	$occurrences = eo_get_the_occurrences_of( $post_id );
 
-	if( !$occurrences || !isset($occurrences[$occurrence_id]) )
+	if( !$occurrences || !isset( $occurrences[$occurrence_id] ) ){
 		return false;
+	}
 
 	$start = $occurrences[$occurrence_id]['start'];
 
@@ -260,7 +262,7 @@ function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_
 	 * @param int $post_id Post ID of the event
 	 * @param int $occurrence_id  The occurrence ID
 	 */
-	$formatted_date = apply_filters('eventorganiser_get_the_start', eo_format_datetime( $start, $format ), $start, $format, $post_id, $occurrence_id );
+	$formatted_date = apply_filters( 'eventorganiser_get_the_start', eo_format_datetime( $start, $format ), $start, $format, $post_id, $occurrence_id );
 	return $formatted_date;
 }
 
