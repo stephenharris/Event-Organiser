@@ -327,7 +327,7 @@ function edit_form( $venue = false ){
 						<div class="inside"><?php eventorganiser_venue_location( $venue ); ?></div>
 					</div><!-- .postbox -->
 					<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="venue_description postarea">
-						<?php wp_editor(eo_get_venue_meta($term_id,'_description'), 'content', array( 'textarea_name' => 'eo_venue[description]', 'dfw' => false, 'tabindex' => 7 ) ); ?>
+						<?php wp_editor(eo_get_venue_meta($term_id,'_description'), 'content', array( 'textarea_name' => 'eo_venue[description]', 'dfw' => false ) ); ?>
 					</div>
 		 		</div><!-- #post-body-content -->
 
@@ -375,7 +375,7 @@ function eventorganiser_venue_submit( $venue ){
 	<div id="minor-publishing-actions">
 		<div id="save-action">
 			<p>
-				<input type="submit" class="button button-primary" id="save-venue" name="eo_venue[Submit]" value="<?php echo esc_attr( $value ); ?>" tabindex="10" />
+				<input type="submit" class="button button-primary" id="save-venue" name="eo_venue[Submit]" value="<?php echo esc_attr( $value ); ?>" />
 			</p>  
 		</div>
 		<div class="clear"></div>
@@ -442,7 +442,7 @@ function eventorganiser_venue_title( $venue ){
 	$name    = isset( $venue->name ) ? $venue->name : ''; ?>
 
 	<div id="titlewrap">
-		<input type="text" placeholder="<?php esc_attr_e( 'Venue name', 'eventorganiser' );?>" autocomplete="off" id="title" value="<?php echo esc_attr( $name );?>" tabindex="1" size="30" name="eo_venue[name]">
+		<input type="text" placeholder="<?php esc_attr_e( 'Venue name', 'eventorganiser' );?>" autocomplete="off" id="title" value="<?php echo esc_attr( $name );?>" size="30" name="eo_venue[name]">
 	</div>
 
 	<div class="inside">
