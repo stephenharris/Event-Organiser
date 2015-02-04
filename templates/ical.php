@@ -142,7 +142,7 @@ if ( have_posts() ) :
 			echo eventorganiser_fold_ical_text( 'ORGANIZER;CN="' . $author_name . '":MAILTO:' . $author_email ) . "\r\n";
 		}
 		
-		echo eventorganiser_fold_ical_text( 'URL;VALUE=URI:' . get_the_permalink() ) . "\r\n";
+		echo eventorganiser_fold_ical_text( 'URL;VALUE=URI:' . get_permalink() ) . "\r\n";
 		
 		echo "END:VEVENT\r\n";
 
