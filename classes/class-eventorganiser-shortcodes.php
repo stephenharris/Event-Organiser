@@ -128,15 +128,53 @@ class EventOrganiser_Shortcodes {
 		
 		$atts = wp_parse_args( $atts, $bool_atts );
 
-		foreach( $bool_atts as $att => $value )
+		foreach( $bool_atts as $att => $value ){
 			$atts[$att] = ( strtolower( $atts[$att] ) == 'true' ? true : false );
+		}
 
-		if( isset($atts['venue']) && !isset( $atts['event_venue'] ) )
+		if( isset($atts['venue']) && !isset( $atts['event_venue'] ) ){
 			$atts['event_venue'] = $atts['venue'];
-		if( isset($atts['category']) && !isset( $atts['event_category'] ) )
+		}
+		if( isset($atts['category']) && !isset( $atts['event_category'] ) ){
 			$atts['event_category'] = $atts['category'];
+		}
+		
+		$date_attributes = array( 
+			'timeformat', 'axisformat', 'titleformatday', 'titleformatweek', 'titleformatmonth',
+			'columnformatmonth', 'columnformatweek', 'columnformatday',
+		);
+		
+		foreach( $date_attributes as $attribute ){
+			if( isset( $atts[$attribute] ) ){
+				$atts[$attribute] = self::_cleanup_format( $atts[$attribute] );
+			}			
+		}
 
+		
 		return eo_get_event_fullcalendar( $atts );
+	}
+	
+	/**
+	 * Prior to 3.0.0, formats could accept operators to deal with ranges.
+	 * Specifically {...} switches to formatting the 2nd date and ((...)) only displays 
+	 * the enclosed format if the current date is different from the alternate date in 
+	 * the same regards.E.g.  M j(( Y)){ '—'(( M)) j Y} produces the following dates: 
+	 * Dec 30 2013 — Jan 5 2014, Jan 6 — 12 2014
+	 * 
+	 * This was removed in 3.0.0, fullCalendar.js will now automatically split the date where
+	 * appropriate. This function removes {...} and all enclosed content and replaces ((...))
+	 * by the content contained within to help prevent an users upgrading from the old version.
+	 * 
+	 * @ignore
+	 */
+	static function _cleanup_format( $format ){
+		$format = preg_replace( '/({.*})/', '', $format );
+		$format = preg_replace_callback( '/\(\((.*)\)\)/', array( __CLASS__ ,'_replace_open_bracket' ), $format );			
+		return $format;
+	}
+	
+	static function _replace_open_bracket( $matches ){
+		return $matches[1];
 	}
 
 	static function handle_venuemap_shortcode($atts) {
