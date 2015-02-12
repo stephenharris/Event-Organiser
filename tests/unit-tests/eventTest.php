@@ -339,5 +339,115 @@ class eventTest extends EO_UnitTestCase
 		update_option( 'timezone_string', $original_tz );
     	
     }
+
+    /**
+     * @see https://github.com/stephenharris/Event-Organiser/issues/242 
+     */
+    function testDuplicatePostCompatability(){
+    	
+    	$tz    = eo_get_blog_timezone();
+    	$start = new DateTime( '2015-02-12 14:45:00', $tz );
+    	$end   = new DateTime( '2015-02-12 15:45:00', $tz );
+    	
+    	$event = array(
+    		'start'         => $start,
+    		'end'           => $end,
+    		'frequency'     => 1,
+    		'schedule'      => 'weekly',
+    		'schedule_meta' => array( 'TH' ),
+    		'schedule_last' => new DateTime( '2015-02-26 14:45:00', $tz ),
+    	);
+    	
+    	$event_id   = $this->factory->event->create( $event );
+    	$event_post = get_post( $event_id );
+    	
+    	$duplicated_event_id = $this->duplicate( $event_post );
+    	$this->duplicate_metadata( $duplicated_event_id, $event_post );
+    	eo_update_event( $duplicated_event_id );
+    	
+    	//Check occurrences of duplicate event exist
+    	$expected = array(
+    		new DateTime( '2015-02-12 14:45:00', $tz ),
+    		new DateTime( '2015-02-19 14:45:00', $tz ),
+    		new DateTime( '2015-02-26 14:45:00', $tz ),
+    	);
+    	
+    	$actual = eo_get_the_occurrences( $duplicated_event_id );
+    	$actual = array_values( $actual );
+    	
+    	$this->assertEquals( $expected, $actual );
+    	
+    }
+    
+    /**
+     * Create a duplicate from a post
+     * @see https://wordpress.org/plugins/duplicate-post/
+     */
+    function duplicate($post, $status = 'draft', $parent_id = '') {
+
+    	// We don't want to clone revisions
+    	if ( $post->post_type == 'revision' ){
+    		return;
+    	}
+
+    	$new_post = array(
+    		'menu_order'     => $post->menu_order,
+    		'comment_status' => $post->comment_status,
+    		'ping_status'    => $post->ping_status,
+    		'post_author'    => $post->ID,
+    		'post_content'   => $post->post_content,
+    		'post_excerpt'   => (get_option('duplicate_post_copyexcerpt') == '1') ? $post->post_excerpt : "",
+    		'post_mime_type' => $post->post_mime_type,
+    		'post_parent'    => $new_post_parent = empty($parent_id)? $post->post_parent : $parent_id,
+    		'post_password'  => $post->post_password,
+    		'post_status'    => $new_post_status = (empty($status))? $post->post_status: $status,
+    		'post_title'     => $post->post_title,
+    		'post_type'      => $post->post_type,
+    	);
+    	
+    	$new_post_id = wp_insert_post( $new_post );
+    	
+    	// If the copy is published or scheduled, we have to set a proper slug.
+    	if( $new_post_status == 'publish' || $new_post_status == 'future' ){
+    		$post_name = wp_unique_post_slug( $post->post_name, $new_post_id, $new_post_status, $post->post_type, $new_post_parent );
+    		$new_post = array(
+    			'ID'        => $new_post_id,
+    			'post_name' => $post_name,
+    		);
+
+    		// Update the post into the database
+    		wp_update_post( $new_post );
+    	}
+
+    	// If you have written a plugin which uses non-WP database tables to save
+    	// information about a post you can hook this action to dupe that data.
+    	if( $post->post_type == 'page' || is_post_type_hierarchical( $post->post_type ) ){
+    		do_action( 'dp_duplicate_page', $new_post_id, $post );
+    	}else{
+    		do_action( 'dp_duplicate_post', $new_post_id, $post );
+    	}
+    	
+    	delete_post_meta( $new_post_id, '_dp_original' );
+    	add_post_meta( $new_post_id, '_dp_original', $post->ID );
+    	
+    	return $new_post_id;
+    }
+    
+    function duplicate_metadata( $new_id, $post ) {
+    	$post_meta_keys = get_post_custom_keys( $post->ID );
+    	if ( empty( $post_meta_keys ) ){
+    		return;
+    	}
+    	$meta_blacklist = array();
+    	$meta_keys      = array_diff( $post_meta_keys, $meta_blacklist );
+    	
+    	foreach( $meta_keys as $meta_key ) {
+    		$meta_values = get_post_custom_values( $meta_key, $post->ID );
+    		foreach ( $meta_values as $meta_value ) {
+    			$meta_value = maybe_unserialize($meta_value);
+    			add_post_meta( $new_id, $meta_key, $meta_value );
+    		}
+    	}
+    }
 }
 

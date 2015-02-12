@@ -272,6 +272,16 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 	return $post_id;
 }
 
+
+function _eventorganiser_maybe_duplicate_post( $new_post_id, $old_post ){
+
+	if( 'event' == get_post_type( $new_post_id ) ){
+		eo_update_event( $new_post_id, eo_get_event_schedule( $old_post->ID ) );
+	}
+
+}
+add_action( 'dp_duplicate_post', '_eventorganiser_maybe_duplicate_post', 50, 2 );
+
 /**
  * Deletes all occurrences for an event (removes them from the eo_events table).
  * Triggers {@see `eventorganiser_delete_event`} (this action is used to break the caches).
