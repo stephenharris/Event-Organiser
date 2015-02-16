@@ -164,6 +164,7 @@ module.exports = function(grunt) {
 		options: {
 			bin: 'vendor/bin/phpunit',
 			bootstrap: 'tests/bootstrap.php',
+			noGlobalsBackup: true,
 			colors: true
 		}
 	},
