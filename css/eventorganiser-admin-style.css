@@ -111,6 +111,14 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .ui-combobox-input {margin: 0;padding: 0.3em;}
 .eo-venue-combobox-buttons{position: absolute;width:4.5em;}
 
+.eo-admin-calendar-dialog .ui-autocomplete {
+	max-height: 100px;
+	max-width:220px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+}
+
 #eo_occurrence_datepicker .ui-datepicker .eo-op-date-not-selected a,
 #eo_occurrence_datepicker .ui-widget-content .ui-datepicker-current-day a{
 	background: #ececec;
