@@ -88,58 +88,15 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 	if( ( empty($event_data['schedule']) || 'once' == $event_data['schedule'] ) && !empty($event_data['include']) ){
 		$event_data['schedule'] = 'custom';
 	}
-		
-	//Do we need to delete existing dates from db?
-	$delete_existing = false;
-	$diff = array();
-	if( $prev ){
-		foreach ( $prev as $key => $prev_value ){
-			if( $event_data[$key] != $prev_value ){
-				if('monthly' == $event_data['schedule'] && $key =='schedule_meta'){
-					if( $event_data['occurs_by'] != $prev['occurs_by'] ){
-						$diff[]=$key;
-						$delete_existing = true;
-						break;
-					}
-				}else{
-					
-					//If one off event / custom, don't worry about 'schedule_last'
-					if( $key == 'schedule_last' && in_array( $event_data['schedule'], array( 'once', 'custom' ) ) )
-						continue;
-					
-					if( $key == 'schedule_last' && empty( $event_data['schedule_last'] ) && !empty( $event_data['number_occurrences'] ) ){
-						//Schedule_last is not used. Ignore this if number_occurrences match
-						if( $event_data['number_occurrences']  == $prev['number_occurrences'] ){
-							continue;
-						}
-					}
-					
-					if( $key == 'number_occurrences' && !empty( $event_data['schedule_last'] ) ){
-						//schedule_last is being used.  Ignore number_occurrences.
-						if( $event_data['schedule_last']  == $prev['schedule_last'] ){
-							continue;
-						}
-					}
-					
-					$diff[]=$key;
-					$delete_existing = true;
-					break;
-				}
-			}
-		}
-	}
-	
-	//Need to replace occurrences
-	if( $delete_existing || !empty( $event_data['force_regenerate_dates'] ) ){
-		//Generate occurrences
-		$event_data = _eventorganiser_generate_occurrences($event_data);
 
-		if( is_wp_error($event_data) )
-			return $event_data;
+	$event_data = _eventorganiser_generate_occurrences( $event_data );
 
-		//Insert new dates, remove old dates and update meta
-		$re = _eventorganiser_insert_occurrences( $post_id, $event_data );
+	if( is_wp_error( $event_data ) ){
+		return $event_data;
 	}
+
+	//Insert new dates, remove old dates and update meta
+	$re = _eventorganiser_insert_occurrences( $post_id, $event_data );
 
 	/**
 	 * Triggered after an event has been updated.

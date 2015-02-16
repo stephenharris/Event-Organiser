@@ -76,7 +76,9 @@ class eventTest extends EO_UnitTestCase
     
 
     /**
-     * Tests that updating the time(s) of an event keeps the occurrence IDs
+     * Tests that updating the start time of an event keeps the occurrence IDs.
+     * This *may* change as occurrences may be able to share the same date
+     * @see https://github.com/stephenharris/Event-Organiser/issues/240 
      * 
      * @see https://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
      * @see https://github.com/stephenharris/Event-Organiser/issues/195
@@ -148,12 +150,12 @@ class eventTest extends EO_UnitTestCase
     
     
     /**
-     * Tests that updating the end time of an event keeps the occurrence IDs
+     * Tests that updating the end date/time of an event keeps the occurrence IDs
      * 
      * @see https://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
      * @see https://github.com/stephenharris/Event-Organiser/issues/195
      */
-    public function testUpdateEndTimeOnly()
+    public function testUpdateEndDateTime()
     {
 
     	$tz = eo_get_blog_timezone();
@@ -172,7 +174,7 @@ class eventTest extends EO_UnitTestCase
 		
 		//Update event
 		$new_event_data = $event;
-		$new_event_data['end'] = new DateTime( '2013-10-19 16:45:00', $tz );
+		$new_event_data['end'] = new DateTime( '2013-10-20 16:45:00', $tz );
 		eo_update_event( $event_id, $new_event_data );
 		
 		//Get new occurrences
@@ -183,7 +185,7 @@ class eventTest extends EO_UnitTestCase
 		
 		$this->assertTrue( $original_occurrence_id == $new_occurrence_id );
 
-		$this->assertEquals( '2013-10-19 16:45:00', eo_get_the_end( 'Y-m-d H:i:s', $event_id, null, $new_occurrence_id ) );
+		$this->assertEquals( '2013-10-20 16:45:00', eo_get_the_end( 'Y-m-d H:i:s', $event_id, null, $new_occurrence_id ) );
 		
     }
     
@@ -339,7 +341,80 @@ class eventTest extends EO_UnitTestCase
 		update_option( 'timezone_string', $original_tz );
     	
     }
+    
+    /**
+     * This check is here to ensure that updating an event without
+     * changing any details does not cause the events to be deleted
+     * and recreated.
+     */
+    function testUpdatingExistingEvent(){
+    	 
+    	$tz    = eo_get_blog_timezone();
+    	$start = new DateTime( '2015-02-13 14:45:00', $tz );
+    	$end   = new DateTime( '2015-02-13 15:45:00', $tz );
+    	 
+    	$event = array(
+    		'start'         => $start,
+    		'end'           => $end,
+    		'frequency'     => 1,
+    		'schedule'      => 'weekly',
+    		'schedule_meta' => array( 'FR' ),
+    		'schedule_last' => new DateTime( '2015-02-27 14:45:00', $tz ),
+    	);
+    	 
+    	$event_id   = $this->factory->event->create( $event );
+  
+    	$expected = eo_get_the_occurrences( $event_id );
+   	
+    	eo_update_event( $event_id );
 
+    	$actual = eo_get_the_occurrences( $event_id );
+
+    	//$actual and $expected contain the occurrence IDs as keys.
+    	$this->assertEquals( $expected, $actual );
+    	 
+    }
+    
+    /**
+     * This check is here to ensure that updating an event when
+     * changing details in an irrelevant way
+     */
+    function testUpdatingExistingEventIrrelevantDetails(){
+    
+    	$tz    = eo_get_blog_timezone();
+    	$start = new DateTime( '2015-02-13 14:45:00', $tz );
+    	$end   = new DateTime( '2015-02-13 15:45:00', $tz );
+    
+    	$event = array(
+    		'start'         => $start,
+    		'end'           => $end,
+    		'frequency'     => 1,
+    		'schedule'      => 'weekly',
+    		'schedule_last' => new DateTime( '2015-02-27 14:45:00', $tz ),
+    	);
+    
+    	$event_id   = $this->factory->event->create( $event );
+    
+    	$expected = eo_get_the_occurrences( $event_id );
+    
+    	eo_update_event( $event_id, array(
+    		'post_title'    => "Title of event", //Doesn't affect dates
+    		'start'         => $start,
+    		'end'           => $end,
+    		//'frequency'     => 1, //Implicitly set to 1
+    		'schedule'      => 'weekly',
+    		'schedule_meta' => array( 'FR' ), //Not required. 
+    		'schedule_last' => new DateTime( '2015-02-27 14:45:00', $tz ),
+    	));
+    
+    	$actual = eo_get_the_occurrences( $event_id );
+
+    	//$actual and $expected contain the occurrence IDs as keys.    
+    	$this->assertEquals( $expected, $actual );
+    
+    }
+    
+    
     /**
      * @see https://github.com/stephenharris/Event-Organiser/issues/242 
      */
