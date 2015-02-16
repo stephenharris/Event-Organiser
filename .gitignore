@@ -9,3 +9,9 @@ dist
 vendor
 node_modules
 /composer.phar
+*.min.js
+*.min.css
+*-rtl.css
+*.mo
+*.pot
+!tests/data/languages/*.mo
