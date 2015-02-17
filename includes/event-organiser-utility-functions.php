@@ -90,6 +90,119 @@ function eo_format_date($dateString='',$format='d-m-Y'){
 }
 
 /**
+ * Formats two DateTime objects according to a specified format by "spliting" 
+ * 
+ * The function uses a single formatting string to generate a range string like
+ * 16th-17th February by intelligtently inserting a seperator where the DateTimes
+ * differ according to the specified format.
+ *
+ * If the formatted dates are identical then no seperator is added the behaviour is
+ * is the same as eo_format_datetime().
+ *
+ * @since 3.0.0
+ * @link http://php.net/manual/en/function.date.php PHP Date
+ *
+ * @param dateTime $datetime1 The first datetime object
+ * @param dateTime $datetime2 The second datetime object
+ * @param string $format How to format the date range, see http://php.net/manual/en/function.date.php
+ * @param string $seperator A string used to seperate differing parts of the formatted DateTimes
+ * @param bool $is_rtl Whether the formatted date should be written right-to-left. Defaults to is_rtl().
+ * @return string|dateTime The formatted date range
+ */
+function eo_format_datetime_range( $datetime1, $datetime2, $format, $seperator = '&ndash;', $is_rtl = null ){
+	
+	if( is_null( $is_rtl ) ){
+		$is_rtl = is_rtl();
+	}
+
+	$formatted1 = eo_format_datetime( $datetime1, $format );
+	$formatted2 = eo_format_datetime( $datetime2, $format );
+	
+	if( $formatted1 === $formatted2 ){
+		return $formatted1;
+	}
+	
+	//we include jS as a token to ensure correct positioning of suffix: 4th-5th not 4-5th
+	$date = array(
+		'jS', 'j', 'd', 'D', 'l', 'S', 'w', 'N', 'z',//Day
+		'W', //Week
+		'F', 'm', 'M', 'n', 't', //Month
+		'Y', 'y', 'o', 'L', //Year
+		'e', 'P', 'O', 'T', 'Z', 'I', //Timezone
+		'c', 'R', 'U', 'u', 'e','r', //Full date time
+	);
+	$time = array(
+		'g', 'G', 'h', 'H', //Hour 
+		'a', 'A', //Meridan
+		'i', //Minute
+		's', 'B', //Second
+	);
+
+	//Include time with (:?) to ensure we don't split at : in time fragment.
+	$regexp  = '/(\\\\\S|' . implode( '(:?)|', $time ) . '(:?)|' . implode( '|', $date ) . '|.)/';
+
+	preg_match_all( $regexp, $format, $matches );
+	$tokens = $matches[0];
+	
+	$left_counter = 0;
+	$right_counter = count( $tokens ) -1;
+	$left    = false;
+	$middle  = false;
+	$middle1 = false;
+	$middle2 = false;
+	$right   = false;
+	
+	while( $left_counter < count( $tokens ) ){
+		
+		$parsed_token_1 = eo_format_datetime( $datetime1, $tokens[$left_counter] );
+		$parsed_token_2 = eo_format_datetime( $datetime2, $tokens[$left_counter] );
+		
+		//We don't want to place a seperator within anyting time related
+		if( $parsed_token_1 != $parsed_token_2 || in_array( trim( $tokens[$left_counter], ':' ), $time ) ){
+			break;
+		}
+		
+		$left .= $parsed_token_1;
+		
+		$left_counter++;
+		
+	}
+	
+	while( $right_counter >= 0 ){
+		
+		$parsed_token_1 = eo_format_datetime( $datetime1, $tokens[$right_counter] );
+		$parsed_token_2 = eo_format_datetime( $datetime2, $tokens[$right_counter] );
+
+		//We don't want to place a seperator within anyting time related
+		if( $parsed_token_1 != $parsed_token_2 ||  in_array( trim( $tokens[$right_counter], ':' ), $time ) ){
+			break;
+		}
+		
+		$right = $parsed_token_1 . $right;
+		
+		$right_counter--;
+	}
+	
+	for( $i = $left_counter; $i <= $right_counter;  $i++ ){
+		
+		$middle1 .= eo_format_datetime( $datetime1, $tokens[$i] );
+		$middle2 .= eo_format_datetime( $datetime2, $tokens[$i] );
+		
+	}
+	
+	if( false !== $middle1 ){
+		if( !$is_rtl ){
+			$middle = $middle1 . $seperator . $middle2;
+		}else{
+			$middle = $middle2 . $seperator . $middle1;
+		}
+	}
+
+	return $left . $middle . $right;
+
+}
+
+/*
  *  Returns the blog timezone
  *
  * Gets timezone settings from the db. If a timezone identifier is used just turns
