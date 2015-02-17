@@ -338,12 +338,26 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( '16th-17th February 2015', eo_format_datetime_range( $datetime1, $datetime2, 'jS F Y', '-' ) );
 	}
 	
-	public function testDateRnageFormatTime(){
+	public function testDateRangeFormatTime(){
 		
 		$datetime1 = new DateTime( '2015-02-16 13:30:00' );
 		$datetime2 = new DateTime( '2015-02-16 14:30:00' );
 		//1:30pm-2:30pm not 1-2:30pm
 		$this->assertEquals( '16th February 1:30pm-2:30pm', eo_format_datetime_range( $datetime1, $datetime2, 'jS F g:ia', '-' ) );
+	}
+	
+	public function testDateRangeFormatLocale(){
+	
+		//Set locale
+		$original = $this->setLocale();
+		$this->setLocale( 'he_IL' );
+
+		$datetime1 = new DateTime( '2015-02-16' );
+		$datetime2 = new DateTime( '2015-02-17' );
+		$this->assertEquals( '2015 ' . __( 'February', 'default' ) . ' 17-16', eo_format_datetime_range( $datetime1, $datetime2, 'Y F j', '-' ) );
+			
+		//Reset locale
+		$this->setLocale( $original );
 	}
 }
 
