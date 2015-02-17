@@ -290,6 +290,7 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 		
 		global $wp_locale;
 		$location = EO_DIR_TESTDATA . '/languages/'.$locale.'.mo';
+		unload_textdomain( 'default' );
 		load_textdomain( 'default', $location );
 		$wp_locale->init();
 		
