@@ -293,6 +293,8 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 		unload_textdomain( 'default' );
 		load_textdomain( 'default', $location );
 		$wp_locale->init();
+		//Explicilty set text_decoration as -src versions are set to ltr, see WP_Locale::init().
+		$wp_locale->text_direction = _x( 'ltr', 'text direction' );
 		
 		$current_locale = $locale;
 		
