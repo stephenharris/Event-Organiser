@@ -756,6 +756,12 @@ function eventorganiser_admin_calendar_edit_date(){
 		wp_die( -1 );
 	}
 	
+	$edittime = ( defined( 'EVENT_ORGANISER_PRO_FEATURES' ) && EVENT_ORGANISER_PRO_FEATURES );
+	
+	if( !$edittime ){
+		wp_die( -1 );
+	}
+	
 	check_ajax_referer( 'edit_events' );
 	
 	if( !current_user_can( 'edit_event', $event_id ) ){
