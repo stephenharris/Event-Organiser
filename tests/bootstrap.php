@@ -6,24 +6,24 @@ echo "Welcome to the Event Organiser Test Suite" . PHP_EOL;
 echo "Version: 1.0" . PHP_EOL;
 echo "Authors: Stephen Harris" . PHP_EOL;
 
-// If the develop repo location is defined (as WP_DEVELOP_DIR), use that
-// location. Otherwise, we'll just assume that this plugin is installed in a
-// WordPress developer repo under wp-content/plugins/
-$_wp_dev_dir = getenv('WP_DEVELOP_DIR');
-if ( !$_wp_dev_dir ) $_wp_dev_dir = '../../../..';
+$_tests_dir = getenv('WP_TESTS_DIR');
+if ( !$_tests_dir ) $_tests_dir = '/tmp/wordpress-tests-lib';
 
-echo "Using WordPress installation at ". $_wp_dev_dir . PHP_EOL;
+require_once $_tests_dir . '/includes/functions.php';
+
+function _manually_load_plugin() {
+	require dirname( __FILE__ ) . '/../event-organiser.php';
+}
+tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+
+echo "Using WordPress test library at ". $_tests_dir . PHP_EOL;
 
 //Defines the data location for unit-tests
 define( 'EO_DIR_TESTDATA', dirname( __FILE__ ) . '/data' );
 
-// Activates this plugin in WordPress so it can be tested.
-$GLOBALS['wp_tests_options'] = array(
-	'active_plugins' => array( 'event-organiser/event-organiser.php' ),
-);
+require $_tests_dir . '/includes/bootstrap.php';
 
-require_once $_wp_dev_dir . '/tests/phpunit/includes/functions.php';
-require_once $_wp_dev_dir . '/tests/phpunit/includes/bootstrap.php';
+activate_plugin( 'event-organiser/event-organiser.php' );
 
 // Install Event Organiser
 echo "Installing Event Organiser...\n";
