@@ -772,7 +772,7 @@ function eventorganiser_admin_calendar_edit_date(){
 	$new_start = new DateTime( $_POST['start'], $tz );
 	$new_end   = new DateTime( $_POST['end'], $tz );  
 
-	$re = eventorganiser_update_occurrence( $event_id, $occurrence_id, $new_start, $new_end );
+	$re = eventorganiser_move_occurrence( $event_id, $occurrence_id, $new_start, $new_end );
 	
 	if( $re ){
 		wp_die( 1 );	

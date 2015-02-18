@@ -991,7 +991,7 @@ function eventorganiser_generate_ics_rrule($post_id=0){
  * @param DateTime $start
  * @param DateTime $end
  */
-function eventorganiser_update_occurrence( $event_id, $occurrence_id, $start, $end ){
+function eventorganiser_move_occurrence( $event_id, $occurrence_id, $start, $end ){
 
 	global $wpdb;
 		
@@ -1008,10 +1008,10 @@ function eventorganiser_update_occurrence( $event_id, $occurrence_id, $start, $e
 	$wpdb->update(
 		$wpdb->eo_events, 
 		array(
-			'StartDate'  => $start->format('Y-m-d'),
-			'StartTime'  => $start->format('H:i:s'),
-			'EndDate'    => $end->format('Y-m-d'),
-			'FinishTime' => $end->format('H:i:s'),
+			'StartDate'  => $start->format( 'Y-m-d' ),
+			'StartTime'  => $start->format( 'H:i:s' ),
+			'EndDate'    => $end->format( 'Y-m-d' ),
+			'FinishTime' => $end->format( 'H:i:s' ),
 		),				
 		array( 'event_id' => $occurrence_id )
 	);
@@ -1022,7 +1022,7 @@ function eventorganiser_update_occurrence( $event_id, $occurrence_id, $start, $e
 	
 	//If date being removed was manually included remove it, 
 	//otherwise add it to exclude. Then add new date as include.
-	if( ($index = array_search( $old_start, $schedule['include'] ) ) === false){
+	if( false === ( $index = array_search( $old_start, $schedule['include'] ) ) ){
 		$schedule['exclude'][] = $old_start;
 	}else{
 		unset( $schedule['include'][$index] );
