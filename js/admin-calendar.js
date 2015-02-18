@@ -104,7 +104,7 @@ eventorganiser.versionCompare = function(left, right) {
 		month: initial_date.getMonth(),
 		year: initial_date.getFullYear(),
 		defaultView: ($.cookie('eo_admin_cal_last_view') ? $.cookie('eo_admin_cal_last_view') : 'month'),
-		editable: true,
+		editable: EO_Ajax.perm_edit,
 		eventDurationEditable: false,
 		durationEditable: false,
 		eventDrop: function( event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) { 
