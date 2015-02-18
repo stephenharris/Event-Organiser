@@ -758,7 +758,7 @@ function eventorganiser_admin_calendar_edit_date(){
 	
 	check_ajax_referer( 'edit_events' );
 	
-	if( !current_user_can( 'edit_event' ) ){
+	if( !current_user_can( 'edit_event', $event_id ) ){
 		wp_die( -1 );
 	}
 		
