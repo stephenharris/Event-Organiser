@@ -117,7 +117,7 @@ eventorganiser.versionCompare = function(left, right) {
                 _wpnonce: EO_Ajax.edit_nonce
             })
             .done( function( response ){
-            	if( response !== 1 ){
+            	if( response != 1 ){
             		revertFunc();		
             	}
             })
