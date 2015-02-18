@@ -774,7 +774,7 @@ function eventorganiser_admin_calendar_edit_date(){
 
 	$re = eventorganiser_move_occurrence( $event_id, $occurrence_id, $new_start, $new_end );
 	
-	if( $re ){
+	if( !is_wp_error( $re ) ){
 		wp_die( 1 );	
 	}else{
 		wp_die( -1 );

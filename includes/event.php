@@ -978,18 +978,19 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 
 	
 /**
- * Updates a specific occurrence, and presevers the occurrence ID.
+ * Updates a specific occurrence, and preserves the occurrence ID. 
  * 
- * **Note:** Duration of updated occurrence should be the same as the rest of the 
- * occurrences in the event. TODO Allow occurrences to have abitrary durations. 
+ * Currently two occurrences cannot occupy the same date.
  * 
  * @ignore
  * @access private
+ * @since 2.12.0
  * 
- * @param int $event_id
- * @param int $occurrence_id
- * @param DateTime $start
- * @param DateTime $end
+ * @param int $event_id      ID of the event whose occurrence we're moving
+ * @param int $occurrence_id ID of the occurrence we're moving
+ * @param DateTime $start    New start DateTime of the occurrence
+ * @param DateTime $end      New end DateTime of the occurrence
+ * @return bool|WP_Error True on success. WP_Error on failure.
  */
 function eventorganiser_move_occurrence( $event_id, $occurrence_id, $start, $end ){
 
@@ -1000,6 +1001,14 @@ function eventorganiser_move_occurrence( $event_id, $occurrence_id, $start, $end
 	
 	if( $start == $old_start ){
 		return true;
+	}
+	
+	$current_occurrences = eo_get_the_occurrences( $event_id );
+	unset( $current_occurrences[$occurrence_id] );
+	$current_occurrences = array_map( 'eo_format_datetime', $current_occurrences );
+	
+	if( in_array( $start->format( 'd-m-Y' ), $current_occurrences ) ){
+		return new WP_Error( 'events-cannot-share-date', __( 'There is already an occurrence on this date', 'eventorganiser' ) );		
 	}
 	
 	//We update the date directly in the DB first so the occurrence is not deleted and recreated,
@@ -1035,6 +1044,6 @@ function eventorganiser_move_occurrence( $event_id, $occurrence_id, $start, $end
 		return true;
 	}
 	
-	return false;
+	return $re;
 }
 ?>
