@@ -753,19 +753,45 @@ function eventorganiser_admin_calendar_edit_date(){
 	$all_day       = eo_is_all_day( $event_id );
 
 	if( 'event' != get_post_type( $event_id ) ){
-		wp_die( -1 );
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'Event not found', 'eventorganiser' )	
+			),	
+		));
+		exit;
 	}
 	
 	$edittime = ( defined( 'EVENT_ORGANISER_PRO_FEATURES' ) && EVENT_ORGANISER_PRO_FEATURES );
 	
 	if( !$edittime ){
-		wp_die( -1 );
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'Events are not editable via the admin calendar', 'eventorganiser' )
+			),
+		));
+		exit;
 	}
 	
-	check_ajax_referer( 'edit_events' );
+	if( !check_ajax_referer( 'edit_events', false, false ) ){
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'Are you sure you want to do this?', 'eventorganiser' )
+			),
+		));
+		exit;
+	}
 	
 	if( !current_user_can( 'edit_event', $event_id ) ){
-		wp_die( -1 );
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'You do not have permission to edit this event', 'eventorganiser' )
+			),
+		));
+		exit;
 	}
 		
 	$tz        = eo_get_blog_timezone();
@@ -775,11 +801,22 @@ function eventorganiser_admin_calendar_edit_date(){
 	$re = eventorganiser_move_occurrence( $event_id, $occurrence_id, $new_start, $new_end );
 	
 	if( !is_wp_error( $re ) ){
-		wp_die( 1 );	
+		echo json_encode( array(
+			'success' => true,
+		));
+		exit;
 	}else{
-		wp_die( -1 );
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => sprintf(
+					__( 'Event not created: %s', 'eventorganiser' ),
+					$re->get_error_message()		
+				)
+			),
+		));
+		exit;
 	}
-	
 	
 }
 ?>

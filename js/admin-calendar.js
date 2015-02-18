@@ -108,20 +108,27 @@ eventorganiser.versionCompare = function(left, right) {
 		eventDurationEditable: false,
 		durationEditable: false,
 		eventDrop: function( event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) { 
-            $.post( EO_Ajax.ajaxurl, {
-                action: 'eofc-edit-date',
-                start:  $.fullCalendar.formatDate( event.start, 'yyyy-MM-dd HH:mm:ss'),
-                end:  $.fullCalendar.formatDate( event.end, 'yyyy-MM-dd HH:mm:ss'),
-                event_id: event.event_id,
-                occurrence_id: event.occurrence_id,
-                _wpnonce: EO_Ajax.edit_nonce
+            $.ajax({
+            	type: "POST",
+            	url: EO_Ajax.ajaxurl,
+            	data:{
+            		action: 'eofc-edit-date',
+            		start:  $.fullCalendar.formatDate( event.start, 'yyyy-MM-dd HH:mm:ss'),
+            		end:  $.fullCalendar.formatDate( event.end, 'yyyy-MM-dd HH:mm:ss'),
+            		event_id: event.event_id,
+            		occurrence_id: event.occurrence_id,
+            		_wpnonce: EO_Ajax.edit_nonce,
+            	}, 
+            	dataType: 'json' 
             })
             .done( function( response ){
-            	if( response != 1 ){
-            		revertFunc();		
+            	if( response.success !== true ){
+            		alert( response.data.message );
+            		revertFunc();
             	}
             })
-            .fail( function( response ) {
+            .fail( function( jqXHR, textStatus, errorMessage ) {
+            	alert( 'Error: ' + errorMessage );
             	revertFunc();		
             });
 		},
