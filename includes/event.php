@@ -59,7 +59,7 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 	$post_keys = array_flip( array(
 		'post_title','post_content','post_status', 'post_type','post_author','ping_status','post_parent','menu_order', 
 		'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id', 'tax_input',
-		'comment_status', 'context',
+		'comment_status', 'context', 'post_date', 'post_date_gmt',
 	) );
 	
 	$event_data = array_intersect_key( $input, $event_keys );
@@ -180,13 +180,15 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 		$input['tax_input']['event-category'] = $input['category'];
 	}
 	
-	$event_keys = array_flip( array( 'start', 'end', 'schedule', 'schedule_meta', 'frequency', 
-			'all_day', 'schedule_last', 'include', 'exclude', 'occurs_by', 'number_occurrences' ) );
+	$event_keys = array_flip( array(
+		'start', 'end', 'schedule', 'schedule_meta', 'frequency', 'all_day', 
+		'schedule_last', 'include', 'exclude', 'occurs_by', 'number_occurrences', 
+	) );
 	
 	$post_keys = array_flip( array(
-			'post_title','post_content','post_status', 'post_type','post_author','ping_status','post_parent','menu_order', 
-			'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id', 'tax_input',
-			'comment_status', 'context'
+		'post_title','post_content','post_status', 'post_type','post_author','ping_status','post_parent','menu_order', 
+		'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id', 'tax_input',
+		'comment_status', 'context',  'post_date', 'post_date_gmt',
 	) );
 	
 	$event_data = array_intersect_key( $input, $event_keys ) + $event_data;
@@ -197,10 +199,11 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 		$event_data['schedule'] = 'custom';
 	}
 
-	$event_data = _eventorganiser_generate_occurrences($event_data);
+	$event_data = _eventorganiser_generate_occurrences( $event_data );
 		
-	if( is_wp_error($event_data) )
+	if( is_wp_error( $event_data ) ){
 		return $event_data;
+	}
 
 	/**
 	 *@ignore
