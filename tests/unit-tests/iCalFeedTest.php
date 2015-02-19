@@ -37,6 +37,7 @@ class iCalFeedTest extends EO_UnitTestCase
 			'post_content'=>'My event content',
 			'post_author' => 1,
 			'post_status' => 'publish',
+			'post_date'   => '2015-02-18 17:30:00',
 		) );
 		$now = new DateTime();
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
@@ -72,6 +73,7 @@ class iCalFeedTest extends EO_UnitTestCase
 								. "<p style='color:#0000ff;text-align:right;'>Aligned right and blue</p>",
 			'post_excerpt' => false,
 			'post_status'  => 'publish',
+			'post_date'    => '2015-02-18 17:30:00',
 		) );
 		$now = new DateTime();
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
@@ -104,6 +106,7 @@ class iCalFeedTest extends EO_UnitTestCase
 			'post_content' => 'The content contains semi colon; and colons: which are fine. A comma, and new line \\\n which is not a new line And then \\\ a backslash.',
 			'post_excerpt' => false,
 			'post_status'  => 'publish',
+			'post_date'    => '2015-02-18 17:30:00',
 		) );
 		$now = new DateTime();
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
