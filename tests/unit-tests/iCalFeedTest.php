@@ -129,6 +129,43 @@ class iCalFeedTest extends EO_UnitTestCase
 		$this->assertEquals( $expected, $actual );
 	}
 	
+	/**
+	 * If the excerpt contains HTML entities these should be encoded,
+	 * @see http://wp-event-organiser.com/forums/topic/ical-feed-and-html-encoding/
+	 */
+	public function testHTMLEntities(){
+	
+		//Event recurrs every Monday evening in New York (event recurs very Tuesday in UTC)
+		$event_id = $this->factory->event->create( array(
+			'start'        => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
+			'end'          => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
+			'post_title'   => 'A quotation mark &#8216; and an ellipses &#8230;',
+			'post_content' => 'A quotation mark &#8216; and an ellipses &#8230;',
+			'post_excerpt' => false,
+			'post_status'  => 'publish',
+			'post_date'    => '2015-02-18 17:30:00',
+		) );
+		$now = new DateTime();
+		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
+	
+		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
+	
+		//Get actual feed output
+		ob_start();
+		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
+		$actual = ob_get_contents();
+		ob_end_clean();
+	
+		//Get expected feed output
+		ob_start();
+		include(  EO_DIR_TESTDATA .'/ical-feed-expected/htmlentities.ical' );
+		$expected = ob_get_contents();
+		ob_end_clean();
+		$expected = str_replace( '%%now%%', $now->format( 'Ymd\THis\Z' ), $expected );
+	
+		$this->assertEquals( $expected, $actual );
+	}
+	
 	
 	public function testRRULE_all_day(){
 		global $wpdb;
@@ -138,15 +175,16 @@ class iCalFeedTest extends EO_UnitTestCase
 	
 		//Event recurrs every Monday evening in New York but is all day, so day should remain on Monday in UTC
     	$event_id = eo_insert_event( array(
-			'start'=> new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
-			'end'=> new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
-			'schedule_last'=> new DateTime('2013-12-30 21:00', eo_get_blog_timezone() ),
-			'frequency' => 1,
-			'all_day' => 1,
-			'schedule'=>'weekly',
+			'start'         => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2013-12-30 21:00', eo_get_blog_timezone() ),
+			'frequency'     => 1,
+			'all_day'       => 1,
+			'schedule'      => 'weekly',
 			'schedule_meta' => array( 'MO' ),
-			'post_title'=>'The Event Title',
-			'post_content'=>'My event content',
+			'post_title'    => 'The Event Title',
+			'post_content'  => 'My event content',
+    		'post_date'     => '2015-02-18 17:30:00',
 		) );
 		
 		$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;UNTIL=20131231T020000Z", eventorganiser_generate_ics_rrule( $event_id ) );
@@ -183,16 +221,16 @@ class iCalFeedTest extends EO_UnitTestCase
     	wp_cache_set( 'eventorganiser_timezone', 'Europe/Moscow' );
 
     	//Event recurrs every Monday morning in Moscow (event recurs very Sunday in UTC)
-	$event_id = $this->factory->event->create( array(
-    			'start'=> new DateTime('2013-12-02 01:00', eo_get_blog_timezone() ),
-    			'end'=> new DateTime('2013-12-02 02:00', eo_get_blog_timezone() ),
-    			'schedule_last'=> new DateTime('2013-12-30 01:00', eo_get_blog_timezone() ),
-    			'frequency' => 1,
-    			'all_day' => 0,
-    			'schedule'=>'weekly',
-    			'schedule_meta' => array( 'MO' ),
-    			'post_title'=>'The Event Title',
-    			'post_content'=>'My event content',
+		$event_id = $this->factory->event->create( array(
+    		'start'         => new DateTime('2013-12-02 01:00', eo_get_blog_timezone() ),
+    		'end'           => new DateTime('2013-12-02 02:00', eo_get_blog_timezone() ),
+    		'schedule_last' => new DateTime('2013-12-30 01:00', eo_get_blog_timezone() ),
+    		'frequency'     => 1,
+    		'all_day'       => 0,
+    		'schedule'      =>'weekly',
+    		'schedule_meta' => array( 'MO' ),
+    		'post_title'    =>'The Event Title',
+    		'post_content'  =>'My event content',
     	) );
     	 
     	$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=SU;UNTIL=20131229T210000Z", eventorganiser_generate_ics_rrule( $event_id ) );
