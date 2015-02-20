@@ -41,7 +41,7 @@ class venueTest extends EO_UnitTestCase
 		
 		if( version_compare( get_bloginfo( 'version' ), '4.2-alpha-31007-src', '<' ) ){
 			$this->markTestSkipped(
-				sprintf( 'This test applies only to 44.2-alpha-31007-src+, running %s', get_bloginfo( 'version' ) )
+				sprintf( 'This test applies only to 4.2-alpha-31007-src+, running %s', get_bloginfo( 'version' ) )
 			);
 			return;
 		}
