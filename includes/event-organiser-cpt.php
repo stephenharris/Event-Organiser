@@ -1238,4 +1238,40 @@ function _eventorganiser_add_venue_admin_bar_edit_menu( ){
 	}
 }
 add_action( 'admin_bar_menu', '_eventorganiser_add_venue_admin_bar_edit_menu', 80 );
+
+
+
+/**
+ * Update venue and category meta data when a term gets split.
+ * @since 2.12.0
+ * @access private
+ * @param int $term_id ID of the formerly shared term.
+ * @param int $new_term_id ID of the new term created for the $term_taxonomy_id.
+ * @param int $term_taxonomy_id ID for the term_taxonomy row affected by the split.
+ * @param string $taxonomy Taxonomy for the split term.
+ */
+function _eventorganiser_handle_split_shared_terms( $term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
+	
+	switch( $taxonomy ){
+		
+		case 'event-venue':
+			global $wpdb;
+			 
+			$wpdb->update( 
+				$wpdb->eo_venuemeta, 
+				array( 'eo_venue_id' => $new_term_id ), 
+				array( 'eo_venue_id' => $term_id )
+			);
+			break;
+			
+		case 'event-category':
+			$value = get_option( "eo-event-category_{$term_id}" );
+			update_option( "eo-event-category_{$new_term_id}", $value );
+			delete_option( "eo-event-category_{$term_id}" );
+			break;
+	}
+
+}
+add_action( 'split_shared_term', '_eventorganiser_handle_split_shared_terms', 10, 4 );
+
 ?>
