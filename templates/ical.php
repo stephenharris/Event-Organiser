@@ -100,10 +100,10 @@ if ( have_posts() ) :
 		endif;
 		
 		echo eventorganiser_fold_ical_text(  
-			'SUMMARY: ' . eventorganiser_escape_ical_text( html_entity_decode( get_the_title_rss() ) ) 
+			'SUMMARY: ' . eventorganiser_escape_ical_text( html_entity_decode( get_the_title_rss(), ENT_COMPAT, 'UTF-8' ) ) 
 		) . "\r\n";
 		
-		$description = wp_strip_all_tags( html_entity_decode( get_the_excerpt() ) );
+		$description = wp_strip_all_tags( html_entity_decode( get_the_excerpt(), ENT_COMPAT, 'UTF-8' ) );
 		$description = ent2ncr( convert_chars( $description ) );
 		/**
 	 	* Filters the description of the event as it appears in the iCal feed.
@@ -121,7 +121,7 @@ if ( have_posts() ) :
 		$description = str_replace( "\r\n", '', $description ); //Remove new lines
 		$description = str_replace( "\n", '', $description );
 		$description = eventorganiser_escape_ical_text( $description );
-		echo eventorganiser_fold_ical_text( html_entity_decode( "X-ALT-DESC;FMTTYPE=text/html: $description" ) ) . "\r\n";
+		echo eventorganiser_fold_ical_text( html_entity_decode( "X-ALT-DESC;FMTTYPE=text/html: $description" ), ENT_COMPAT, 'UTF-8' ) . "\r\n";
 		
 		$cats = get_the_terms( get_the_ID(), 'event-category' );
 		if ( $cats && !is_wp_error($cats) ) :
