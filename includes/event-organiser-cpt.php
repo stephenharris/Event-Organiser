@@ -29,8 +29,8 @@ function eventorganiser_create_event_taxonomies() {
 	if( in_array( 'event-venue', $supports ) ){
 		$venue_labels = array(
 			'name'                       => __( 'Venues','eventorganiser' ),
-    		'singular_name'              => __( 'Venue', 'eventorganiser' ),
-    		'search_items'               => __( 'Search Venues', 'eventorganiser' ),
+			'singular_name'              => __( 'Venue', 'eventorganiser' ),
+			'search_items'               => __( 'Search Venues', 'eventorganiser' ),
 	    	'all_items'                  => __( 'All Venues', 'eventorganiser' ),
 			'view_item'                  => __( 'View Venue', 'eventorganiser' ),
 			'edit_item'                  => __( 'Edit Venue', 'eventorganiser' ),
@@ -45,7 +45,7 @@ function eventorganiser_create_event_taxonomies() {
 			'view_all_items'             => __( 'View all venues', 'eventorganiser' ),
 			'singular_name_colon'        => __( 'Venue:', 'eventorganiser' ),
 			'no_item'                    => __( 'No Venue', 'eventorganiser' ),
-  		); 		
+  		);
 
   		$event_venue_args = array(
 			'hierarchical'          => false,
@@ -213,75 +213,75 @@ add_action( 'init', 'eventorganiser_create_event_taxonomies', 1 );
  */
 function eventorganiser_cpt_register() {
 
-  	$labels = array(
-		'name' => __('Events','eventorganiser'),
-		'singular_name' => __('Event','eventorganiser'),
-		'add_new' => _x('Add New','post'),
-		'add_new_item' => __('Add New Event','eventorganiser'),
-		'edit_item' =>  __('Edit Event','eventorganiser'),
-		'new_item' => __('New Event','eventorganiser'),
-		'all_items' =>__('All events','eventorganiser'),
-		'view_item' =>__('View Event','eventorganiser'),
-		'search_items' =>__('Search events','eventorganiser'),
-		'not_found' =>  __('No events found','eventorganiser'),
-		'not_found_in_trash' =>  __('No events found in Trash','eventorganiser'),
-		'parent_item_colon' => '',
-		'menu_name' => __('Events','eventorganiser'),
-  );
+	$labels = array(
+		'name'               => __( 'Events', 'eventorganiser' ),
+		'singular_name'      => __( 'Event', 'eventorganiser' ),
+		'add_new'            => _x( 'Add New', 'post', 'eventorganiser' ),
+		'add_new_item'       => __( 'Add New Event', 'eventorganiser' ),
+		'edit_item'          => __( 'Edit Event', 'eventorganiser' ),
+		'new_item'           => __( 'New Event', 'eventorganiser' ),
+		'all_items'          => __( 'All events', 'eventorganiser' ),
+		'view_item'          => __( 'View Event', 'eventorganiser' ),
+		'search_items'       => __( 'Search events', 'eventorganiser' ),
+		'not_found'          => __( 'No events found', 'eventorganiser' ),
+		'not_found_in_trash' => __( 'No events found in Trash', 'eventorganiser' ),
+		'parent_item_colon'  => '',
+		'menu_name'          => __( 'Events', 'eventorganiser' ),
+	);
 
-	$exclude_from_search = (eventorganiser_get_option('excludefromsearch')==0) ? false : true;
+	$exclude_from_search = ( 0 == eventorganiser_get_option( 'excludefromsearch' ) ) ? false : true;
 
-	if( !eventorganiser_get_option('prettyurl') ){
+	if( !eventorganiser_get_option( 'prettyurl' ) ){
 		$event_rewrite = false;
 		$events_slug = true;
 	}else{
-		$event_slug = trim(eventorganiser_get_option('url_event','events/event'), "/");
-		$events_slug = trim(eventorganiser_get_option('url_events','events/event'), "/");
-		$on = trim(eventorganiser_get_option('url_on','on'), "/");
-		$event_rewrite = array( 'slug' => $event_slug, 'with_front' => false,'feeds'=> true,'pages'=> true );
+		$event_slug = trim( eventorganiser_get_option( 'url_event', 'events/event' ), '/' );
+		$events_slug = trim( eventorganiser_get_option( 'url_events', 'events/event' ), '/' );
+		$on = trim( eventorganiser_get_option( 'url_on', 'on' ), '/' );
+		$event_rewrite = array( 'slug' => $event_slug, 'with_front' => false, 'feeds' => true, 'pages' => true );
 
 		/* Workaround for https://core.trac.wordpress.org/ticket/19871 */
 		global $wp_rewrite;  
-		$wp_rewrite->add_rewrite_tag('%event_ondate%','([0-9]{4}(?:/[0-9]{2}(?:/[0-9]{2})?)?)','post_type=event&ondate='); 
-		add_permastruct('event_archive', $events_slug.'/'.$on.'/%event_ondate%', array( 'with_front' => false ) );
+		$wp_rewrite->add_rewrite_tag( '%event_ondate%', '([0-9]{4}(?:/[0-9]{2}(?:/[0-9]{2})?)?)','post_type=event&ondate=' ); 
+		add_permastruct( 'event_archive', $events_slug.'/'.$on.'/%event_ondate%', array( 'with_front' => false ) );
 	}
 
-/**
- * Filters the menu position.
- * 
- * This allows you to change where "Events" appears in the admin menu.
- * 
- * @link https://codex.wordpress.org/Function_Reference/register_post_type register_post_type codex. 
- * @param int $menu_position Menu position. Defaults to 5.
- */
-$menu_position = apply_filters('eventorganiser_menu_position',5);
-$args = array(
-	'labels' => $labels,
-	'public' => true,
-	'publicly_queryable' => true,
-	'exclude_from_search'=>$exclude_from_search,
-	'show_ui' => true, 
-	'show_in_menu' => true, 
-	'query_var' => true,
-	'capability_type' => 'event',
-	'rewrite' => $event_rewrite,
-	'capabilities' => array(
-		'publish_posts' => 'publish_events',
-		'edit_posts' => 'edit_events',
-		'edit_others_posts' => 'edit_others_events',
-		'delete_posts' => 'delete_events',
-		'delete_others_posts' => 'delete_others_events',
-		'read_private_posts' => 'read_private_events',
-		'edit_post' => 'edit_event',
-		'delete_post' => 'delete_event',
-		'read_post' => 'read_event',
-	),
-	'has_archive' => $events_slug, 
-	'hierarchical' => false,
-	'menu_icon' => ( defined( 'MP6' ) && MP6 ? false : EVENT_ORGANISER_URL.'css/images/eoicon-16.png' ),
-	'menu_position' => $menu_position,
-	'supports' => eventorganiser_get_option('supports'),
-  ); 
+	/**
+	 * Filters the menu position.
+	 * 
+	 * This allows you to change where "Events" appears in the admin menu.
+	 * 
+	 * @link https://codex.wordpress.org/Function_Reference/register_post_type register_post_type codex. 
+	 * @param int $menu_position Menu position. Defaults to 5.
+	 */
+	$menu_position = apply_filters( 'eventorganiser_menu_position', 5 );
+	$args = array(
+		'labels'              => $labels,
+		'public'              => true,
+		'publicly_queryable'  => true,
+		'exclude_from_search' => $exclude_from_search,
+		'show_ui'             => true, 
+		'show_in_menu'        => true, 
+		'query_var'           => true,
+		'capability_type'     => 'event',
+		'rewrite'             => $event_rewrite,
+		'capabilities'        => array(
+			'publish_posts'       => 'publish_events',
+			'edit_posts'          => 'edit_events',
+			'edit_others_posts'   => 'edit_others_events',
+			'delete_posts'        => 'delete_events',
+			'delete_others_posts' => 'delete_others_events',
+			'read_private_posts'  => 'read_private_events',
+			'edit_post'           => 'edit_event',
+			'delete_post'         => 'delete_event',
+			'read_post'           => 'read_event',
+		),
+		'has_archive'   => $events_slug, 
+		'hierarchical'  => false,
+		'menu_icon'     => ( defined( 'MP6' ) && MP6 ? false : EVENT_ORGANISER_URL.'css/images/eoicon-16.png' ),
+		'menu_position' => $menu_position,
+		'supports'      => eventorganiser_get_option( 'supports' ),
+	);
 
 	/**
 	 * Filters the settings used in `register_post_type()` for event post type.
@@ -291,7 +291,7 @@ $args = array(
 	$args = apply_filters( 'eventorganiser_event_properties', $args );
 	register_post_type( 'event', $args );
 }
-add_action('init', 'eventorganiser_cpt_register');
+add_action( 'init', 'eventorganiser_cpt_register' );
 
 
 /**
