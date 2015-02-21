@@ -3,8 +3,8 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 4.1.0
-Stable tag: 2.11.1
+Tested up to: 4.1.1
+Stable tag: 2.12.0
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -218,6 +218,25 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.12.0 - 20th February 2015 =
+*You are strongly recommended to udating to 2.12.0 before updating to **WordPress 4.2** (to be released). 
+Please see this [post](http://wp-event-organiser.com/blog/announcements/event-organiser-wordpress-4-2)*
+
+* Includes fix for WordPress 4.2 "term splitting".
+* Removes obsolete event update checks. Fixes [#241](https://github.com/stephenharris/Event-Organiser/issues/241).
+* Adds support for "author" and "author_name" attributes for fullCalendar to display a user's events.
+* Adds support for "event_tag" attribute for fullCalendar to display a events with particular tag(s).
+* Fixes bug with iCal feed not converting HTML entities for summary/description.
+* Improve resonsiveness of venue admin page. Fixes [#236](https://github.com/stephenharris/Event-Organiser/issues/236).
+* Fixes bug with event ID not always set for eventorganiser_get_the_start/end filters.
+* Remove tabindex attribute from venue admin page.
+* Replaces `get_the_permalink()` with `get_permalink()` in iCal feed.
+* Adds fix for themes adding CSS transition to fullCalendar.
+* Ensures dates are populated when duplicating events with Duplicate Post plug-in. Fixes [#242](https://github.com/stephenharris/Event-Organiser/issues/242).
+* Fixes bug with long list of (unscrollable) venues overflowing modal on admin calendar page.
+* Allows post_date and post_date_gmt keys in eo_update/insert_event.
+
 
 = 2.11.1 - 28th January 2015 =
 * Fixes UI issue with adding/removing occurences
