@@ -42,6 +42,10 @@ function eventorganiser_public_fullcalendar() {
 			);
 		}	
 	}
+	
+	if( !empty( $_GET['organiser'] ) ){
+		$request['author'] = (int) $_GET['organiser'];
+	}
 
 	if( !empty( $_GET['users_events'] ) && 'false' != $_GET['users_events'] ){
 		$request['bookee_id'] = get_current_user_id();	

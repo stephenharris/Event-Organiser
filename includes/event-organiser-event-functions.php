@@ -1401,6 +1401,7 @@ function eo_get_event_fullcalendar( $args = array() ){
 	$defaults = array(
 		'headerleft' => 'title', 'headercenter' => '', 'headerright' => 'prev next today', 'defaultview' => 'month',
 		'event-category' => '', 'event_category' => '', 'event-venue' => '', 'event_venue' => '', 'event-tag' => '', 
+		'author' => false, 'author_name' => false,
 		'timeformat' => get_option( 'time_format' ), 'axisformat' => get_option( 'time_format' ), 'key' => false,
 		'tooltip' => true, 'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 'alldayslot' => true,
 		'alldaytext' => __( 'All Day', 'eventorganiser' ), 'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
@@ -1422,6 +1423,9 @@ function eo_get_event_fullcalendar( $args = array() ){
 	$args['event_category'] = is_array( $args['event-category'] ) ? implode( ',', $args['event-category'] ) : $args['event-category'];
 	$args['event_venue']    = is_array( $args['event-venue'] )    ? implode( ',', $args['event-venue'] )    : $args['event-venue'];
 	$args['event_tag']      = is_array( $args['event-tag'] )      ? implode( ',', $args['event-tag'] )      : $args['event-tag'];
+	
+	//Get author ID from author/author_name
+	$args['event_organiser'] = ( $args['author'] ? (int) $args['author'] : eo_get_user_id_by( 'slug', $args['author_name'] ) );
 	
 	//Convert php time format into xDate time format
 	$date_attributes = array( 
