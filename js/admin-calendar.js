@@ -104,7 +104,34 @@ eventorganiser.versionCompare = function(left, right) {
 		month: initial_date.getMonth(),
 		year: initial_date.getFullYear(),
 		defaultView: ($.cookie('eo_admin_cal_last_view') ? $.cookie('eo_admin_cal_last_view') : 'month'),
-		editable: false,
+		editable: EO_Ajax.perm_edit,
+		eventDurationEditable: false,
+		durationEditable: false,
+		eventDrop: function( event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) { 
+            $.ajax({
+            	type: "POST",
+            	url: EO_Ajax.ajaxurl,
+            	data:{
+            		action: 'eofc-edit-date',
+            		start:  $.fullCalendar.formatDate( event.start, 'yyyy-MM-dd HH:mm:ss'),
+            		end:  $.fullCalendar.formatDate( event.end, 'yyyy-MM-dd HH:mm:ss'),
+            		event_id: event.event_id,
+            		occurrence_id: event.occurrence_id,
+            		_wpnonce: EO_Ajax.edit_nonce,
+            	}, 
+            	dataType: 'json' 
+            })
+            .done( function( response ){
+            	if( response.success !== true ){
+            		alert( response.data.message );
+            		revertFunc();
+            	}
+            })
+            .fail( function( jqXHR, textStatus, errorMessage ) {
+            	alert( 'Error: ' + errorMessage );
+            	revertFunc();		
+            });
+		},
 		lazyFetching: 'true',
 		eventColor: '#21759B',
 		theme: true,

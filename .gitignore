@@ -14,3 +14,4 @@ node_modules
 *-rtl.css
 *.mo
 *.pot
+!tests/data/languages/*.mo

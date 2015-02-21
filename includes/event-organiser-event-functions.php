@@ -221,7 +221,7 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
 * @param int $occurrence_id  The occurrence ID
 * @return string|DateTime the start date formated to given format, as accepted by PHP date or a DateTime object if DATETIMEOBJ is given as format.
  */
-function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id=0){
+function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occurrence_id = 0 ){
 	global $post;
 	$event = $post;
 
@@ -242,12 +242,14 @@ function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_
 		return eo_format_date($date,$format);
 	}
 
+	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
 
-	$occurrences = eo_get_the_occurrences_of($post_id);
+	$occurrences = eo_get_the_occurrences_of( $post_id );
 
-	if( !$occurrences || !isset($occurrences[$occurrence_id]) )
+	if( !$occurrences || !isset( $occurrences[$occurrence_id] ) ){
 		return false;
+	}
 
 	$start = $occurrences[$occurrence_id]['start'];
 
@@ -260,7 +262,7 @@ function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_
 	 * @param int $post_id Post ID of the event
 	 * @param int $occurrence_id  The occurrence ID
 	 */
-	$formatted_date = apply_filters('eventorganiser_get_the_start', eo_format_datetime( $start, $format ), $start, $format, $post_id, $occurrence_id );
+	$formatted_date = apply_filters( 'eventorganiser_get_the_start', eo_format_datetime( $start, $format ), $start, $format, $post_id, $occurrence_id );
 	return $formatted_date;
 }
 
@@ -364,7 +366,7 @@ function eo_the_start($format='d-m-Y',$post_id=0,$deprecated=0,$occurrence_id=0)
 * @param int $occurrence_id  The occurrence ID
 * @return string the end date formated to given format, as accepted by PHP date
  */
-function eo_get_the_end($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id=0){
+function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occurrence_id = 0 ){
 	global $post;
 	$event = $post;
 
@@ -384,12 +386,15 @@ function eo_get_the_end($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id
 
 		return eo_format_date($date,$format);
 	}
+	
+	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
 
-	$occurrences = eo_get_the_occurrences_of($post_id);
+	$occurrences = eo_get_the_occurrences_of( $post_id );
 
-	if( !$occurrences || !isset($occurrences[$occurrence_id]) )
+	if( !$occurrences || !isset( $occurrences[$occurrence_id] ) ){
 		return false;
+	}
 
 	$end = $occurrences[$occurrence_id]['end'];
 
@@ -402,7 +407,7 @@ function eo_get_the_end($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id
 	 * @param int $post_id Post ID of the event
 	 * @param int $occurrence_id  The occurrence ID
 	 */
-	$formatted_date = apply_filters('eventorganiser_get_the_end', eo_format_datetime( $end, $format ), $end, $format, $post_id, $occurrence_id );
+	$formatted_date = apply_filters( 'eventorganiser_get_the_end', eo_format_datetime( $end, $format ), $end, $format, $post_id, $occurrence_id );
 	return $formatted_date;
 }
 
@@ -1394,11 +1399,12 @@ function eo_get_event_fullcalendar( $args = array() ){
 
 	global $wp_locale;
 	$defaults = array(
-		'headerleft'=>'title', 'headercenter'=>'', 'headerright'=>'prev next today', 'defaultview'=>'month',
-		'event-category'=>'','event_category'=>'', 'event-venue' => '', 'event_venue'=>'', 
-		'timeformat'=>get_option('time_format'), 'axisformat'=>get_option('time_format'), 'key'=>false,
-		'tooltip'=>true, 'weekends'=>true, 'mintime'=>'0', 'maxtime'=>'24', 'alldayslot'=>true,
-		'alldaytext'=>__('All Day','eventorganiser'), 'columnformatmonth'=>'D', 'columnformatweek'=>'D n/j', 'columnformatday'=>'l n/j',
+		'headerleft' => 'title', 'headercenter' => '', 'headerright' => 'prev next today', 'defaultview' => 'month',
+		'event-category' => '', 'event_category' => '', 'event-venue' => '', 'event_venue' => '', 'event-tag' => '', 
+		'author' => false, 'author_name' => false,
+		'timeformat' => get_option( 'time_format' ), 'axisformat' => get_option( 'time_format' ), 'key' => false,
+		'tooltip' => true, 'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 'alldayslot' => true,
+		'alldaytext' => __( 'All Day', 'eventorganiser' ), 'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j, Y}", 'titleformatday' => 'l, M j, Y',
 		'year' => false, 'month' => false, 'date' => false,	'users_events' => false, 'event_occurrence__in' =>array(),
 		'theme' => true, 'isrtl' => $wp_locale->is_rtl(),
@@ -1410,16 +1416,22 @@ function eo_get_event_fullcalendar( $args = array() ){
 	unset($args['key']);
 	
 	//Support 'event-category' and 'event-venue'. Backwards compat with 'event_category'/'event_venue'
-	$args['event_category'] = empty( $args['event_category'] ) ? $args['event-category'] : $args['event_category'];
-	$args['event_venue'] = empty( $args['event_venue'] ) ? $args['event-venue'] : $args['event_venue'];
+	$args['event-category'] = empty( $args['event_category'] ) ? $args['event-category'] : $args['event_category'];
+	$args['event-venue'] = empty( $args['event_venue'] ) ? $args['event-venue'] : $args['event_venue'];
 	
 	//Convert event_category / event_venue to comma-delimitered strings
-	$args['event_category'] = is_array( $args['event_category'] ) ? implode( ',', $args['event_category'] ) : $args['event_category'];
-	$args['event_venue'] = is_array( $args['event_venue'] ) ? implode( ',', $args['event_venue'] ) : $args['event_venue'];
+	$args['event_category'] = is_array( $args['event-category'] ) ? implode( ',', $args['event-category'] ) : $args['event-category'];
+	$args['event_venue']    = is_array( $args['event-venue'] )    ? implode( ',', $args['event-venue'] )    : $args['event-venue'];
+	$args['event_tag']      = is_array( $args['event-tag'] )      ? implode( ',', $args['event-tag'] )      : $args['event-tag'];
+	
+	//Get author ID from author/author_name
+	$args['event_organiser'] = ( $args['author'] ? (int) $args['author'] : eo_get_user_id_by( 'slug', $args['author_name'] ) );
 	
 	//Convert php time format into xDate time format
-	$date_attributes = array( 'timeformat', 'axisformat', 'columnformatday', 'columnformatweek', 'columnformatmonth',
-	'titleformatmonth', 'titleformatday', 'titleformatweek' );
+	$date_attributes = array( 
+		'timeformat', 'axisformat', 'columnformatday', 'columnformatweek', 'columnformatmonth',
+		'titleformatmonth', 'titleformatday', 'titleformatweek',
+	);
 	$args['timeformatphp'] = $args['timeformat'];
 	foreach ( $date_attributes as $date_attribute ){
 		$args[$date_attribute] = str_replace( '((', '[', $args[$date_attribute] );
@@ -1438,10 +1450,10 @@ function eo_get_event_fullcalendar( $args = array() ){
 
 	$html = '<div id="eo_fullcalendar_'.$id.'_loading" style="background:white;position:absolute;z-index:5" >';
 	$html .= sprintf(
-				'<img src="%1$s" style="vertical-align:middle; padding: 0px 5px 5px 0px;" alt="%2$s" /> %2$s',
-				esc_url( EVENT_ORGANISER_URL . 'css/images/loading-image.gif' ),
-				esc_html__( 'Loading&#8230;', 'eventorganiser' )
-			);
+		'<img src="%1$s" style="vertical-align:middle; padding: 0px 5px 5px 0px;" alt="%2$s" /> %2$s',
+		esc_url( EVENT_ORGANISER_URL . 'css/images/loading-image.gif' ),
+		esc_html__( 'Loading&#8230;', 'eventorganiser' )
+	);
 	$html .= '</div>';
 	$html .= '<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
 
@@ -1449,7 +1461,7 @@ function eo_get_event_fullcalendar( $args = array() ){
 		$args = array( 'orderby' => 'name', 'show_count' => 0, 'hide_empty' => 0 );
 		$html .= eventorganiser_category_key( $args,$id );
 	}
- 	return $html;
+	return $html;
 }
 
 

@@ -415,18 +415,44 @@ function _eventorganiser_remove_duplicates( $array=array() ){
  * @access private
 *  @ignore
  * @since 1.0.0
+ * @see _eventorganiser_compare_datetime
  *
  * @param dateTime $date1 The first date to compare
  * @param dateTime $date2 The second date to compare
  * @return int 1 | 0 | -1
  */
-function _eventorganiser_compare_dates($date1,$date2){
+function _eventorganiser_compare_dates( $date1, $date2 ){
 	//Don't wish to compare times
 	if($date1->format('Ymd') == $date2->format('Ymd'))
 		return 0;
 
 	 return ($date1 > $date2)? 1:-1;
 }
+
+/**
+ * Utility function Compares two DateTime object. 
+ *
+ * Returns +1 if the first date is after, -1 if its before or 0 if they're the same
+ *
+ * @access private
+ * @ignore
+ *
+ * @param dateTime $date1 The first datetime to compare
+ * @param dateTime $date2 The second datetime to compare
+ * @return int 1 | 0 | -1
+ */
+function _eventorganiser_compare_datetime( $date1, $date2 ){
+	
+	if ( $date1 == $date2 ) {
+		return 0;
+	} elseif ( $date1 > $date2 ) {
+		return 1;
+	} else {
+		return -1;
+	}
+	
+}
+
 
 
 
@@ -1503,4 +1529,18 @@ function eo_array_combine_assoc( $key_array, $value_array ) {
 	}
 	
 	return $output;
+}
+
+/**
+ * Wrapper for {@see get_user_by()}. Returns the user ID instead of the object.
+ * 
+ * @since 2.12.0
+ * @uses get_user_by();
+ * @param string $field The field to retrieve the user with. id | slug | email | login
+ * @param int|string $value A value for $field. A user ID, slug, email address, or login name.
+ * @return int The ID of the user. 0 on failure.
+ */
+function eo_get_user_id_by( $field, $value ){
+	$user = get_user_by( $field, $value );
+	return $user ? $user->ID : 0;
 }

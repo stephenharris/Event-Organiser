@@ -76,7 +76,9 @@ class eventTest extends EO_UnitTestCase
     
 
     /**
-     * Tests that updating the time(s) of an event keeps the occurrence IDs
+     * Tests that updating the start time of an event keeps the occurrence IDs.
+     * This *may* change as occurrences may be able to share the same date
+     * @see https://github.com/stephenharris/Event-Organiser/issues/240 
      * 
      * @see https://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
      * @see https://github.com/stephenharris/Event-Organiser/issues/195
@@ -148,12 +150,12 @@ class eventTest extends EO_UnitTestCase
     
     
     /**
-     * Tests that updating the end time of an event keeps the occurrence IDs
+     * Tests that updating the end date/time of an event keeps the occurrence IDs
      * 
      * @see https://wordpress.org/support/topic/all-events-showing-1200-am-as-start-and-end-time
      * @see https://github.com/stephenharris/Event-Organiser/issues/195
      */
-    public function testUpdateEndTimeOnly()
+    public function testUpdateEndDateTime()
     {
 
     	$tz = eo_get_blog_timezone();
@@ -172,7 +174,7 @@ class eventTest extends EO_UnitTestCase
 		
 		//Update event
 		$new_event_data = $event;
-		$new_event_data['end'] = new DateTime( '2013-10-19 16:45:00', $tz );
+		$new_event_data['end'] = new DateTime( '2013-10-20 16:45:00', $tz );
 		eo_update_event( $event_id, $new_event_data );
 		
 		//Get new occurrences
@@ -183,7 +185,7 @@ class eventTest extends EO_UnitTestCase
 		
 		$this->assertTrue( $original_occurrence_id == $new_occurrence_id );
 
-		$this->assertEquals( '2013-10-19 16:45:00', eo_get_the_end( 'Y-m-d H:i:s', $event_id, null, $new_occurrence_id ) );
+		$this->assertEquals( '2013-10-20 16:45:00', eo_get_the_end( 'Y-m-d H:i:s', $event_id, null, $new_occurrence_id ) );
 		
     }
     
@@ -338,6 +340,189 @@ class eventTest extends EO_UnitTestCase
 
 		update_option( 'timezone_string', $original_tz );
     	
+    }
+    
+    /**
+     * This check is here to ensure that updating an event without
+     * changing any details does not cause the events to be deleted
+     * and recreated.
+     */
+    function testUpdatingExistingEvent(){
+    	 
+    	$tz    = eo_get_blog_timezone();
+    	$start = new DateTime( '2015-02-13 14:45:00', $tz );
+    	$end   = new DateTime( '2015-02-13 15:45:00', $tz );
+    	 
+    	$event = array(
+    		'start'         => $start,
+    		'end'           => $end,
+    		'frequency'     => 1,
+    		'schedule'      => 'weekly',
+    		'schedule_meta' => array( 'FR' ),
+    		'schedule_last' => new DateTime( '2015-02-27 14:45:00', $tz ),
+    	);
+    	 
+    	$event_id   = $this->factory->event->create( $event );
+  
+    	$expected = eo_get_the_occurrences( $event_id );
+   	
+    	eo_update_event( $event_id );
+
+    	$actual = eo_get_the_occurrences( $event_id );
+
+    	//$actual and $expected contain the occurrence IDs as keys.
+    	$this->assertEquals( $expected, $actual );
+    	 
+    }
+    
+    /**
+     * This check is here to ensure that updating an event when
+     * changing details in an irrelevant way
+     */
+    function testUpdatingExistingEventIrrelevantDetails(){
+    
+    	$tz    = eo_get_blog_timezone();
+    	$start = new DateTime( '2015-02-13 14:45:00', $tz );
+    	$end   = new DateTime( '2015-02-13 15:45:00', $tz );
+    
+    	$event = array(
+    		'start'         => $start,
+    		'end'           => $end,
+    		'frequency'     => 1,
+    		'schedule'      => 'weekly',
+    		'schedule_last' => new DateTime( '2015-02-27 14:45:00', $tz ),
+    	);
+    
+    	$event_id   = $this->factory->event->create( $event );
+    
+    	$expected = eo_get_the_occurrences( $event_id );
+    
+    	eo_update_event( $event_id, array(
+    		'post_title'    => "Title of event", //Doesn't affect dates
+    		'start'         => $start,
+    		'end'           => $end,
+    		//'frequency'     => 1, //Implicitly set to 1
+    		'schedule'      => 'weekly',
+    		'schedule_meta' => array( 'FR' ), //Not required. 
+    		'schedule_last' => new DateTime( '2015-02-27 14:45:00', $tz ),
+    	));
+    
+    	$actual = eo_get_the_occurrences( $event_id );
+
+    	//$actual and $expected contain the occurrence IDs as keys.    
+    	$this->assertEquals( $expected, $actual );
+    
+    }
+    
+    
+    /**
+     * @see https://github.com/stephenharris/Event-Organiser/issues/242 
+     */
+    function testDuplicatePostCompatability(){
+    	
+    	$tz    = eo_get_blog_timezone();
+    	$start = new DateTime( '2015-02-12 14:45:00', $tz );
+    	$end   = new DateTime( '2015-02-12 15:45:00', $tz );
+    	
+    	$event = array(
+    		'start'         => $start,
+    		'end'           => $end,
+    		'frequency'     => 1,
+    		'schedule'      => 'weekly',
+    		'schedule_meta' => array( 'TH' ),
+    		'schedule_last' => new DateTime( '2015-02-26 14:45:00', $tz ),
+    	);
+    	
+    	$event_id   = $this->factory->event->create( $event );
+    	$event_post = get_post( $event_id );
+    	
+    	$duplicated_event_id = $this->duplicate( $event_post );
+    	$this->duplicate_metadata( $duplicated_event_id, $event_post );
+    	eo_update_event( $duplicated_event_id );
+    	
+    	//Check occurrences of duplicate event exist
+    	$expected = array(
+    		new DateTime( '2015-02-12 14:45:00', $tz ),
+    		new DateTime( '2015-02-19 14:45:00', $tz ),
+    		new DateTime( '2015-02-26 14:45:00', $tz ),
+    	);
+    	
+    	$actual = eo_get_the_occurrences( $duplicated_event_id );
+    	$actual = array_values( $actual );
+    	
+    	$this->assertEquals( $expected, $actual );
+    	
+    }
+    
+    /**
+     * Create a duplicate from a post
+     * @see https://wordpress.org/plugins/duplicate-post/
+     */
+    function duplicate($post, $status = 'draft', $parent_id = '') {
+
+    	// We don't want to clone revisions
+    	if ( $post->post_type == 'revision' ){
+    		return;
+    	}
+
+    	$new_post = array(
+    		'menu_order'     => $post->menu_order,
+    		'comment_status' => $post->comment_status,
+    		'ping_status'    => $post->ping_status,
+    		'post_author'    => $post->ID,
+    		'post_content'   => $post->post_content,
+    		'post_excerpt'   => (get_option('duplicate_post_copyexcerpt') == '1') ? $post->post_excerpt : "",
+    		'post_mime_type' => $post->post_mime_type,
+    		'post_parent'    => $new_post_parent = empty($parent_id)? $post->post_parent : $parent_id,
+    		'post_password'  => $post->post_password,
+    		'post_status'    => $new_post_status = (empty($status))? $post->post_status: $status,
+    		'post_title'     => $post->post_title,
+    		'post_type'      => $post->post_type,
+    	);
+    	
+    	$new_post_id = wp_insert_post( $new_post );
+    	
+    	// If the copy is published or scheduled, we have to set a proper slug.
+    	if( $new_post_status == 'publish' || $new_post_status == 'future' ){
+    		$post_name = wp_unique_post_slug( $post->post_name, $new_post_id, $new_post_status, $post->post_type, $new_post_parent );
+    		$new_post = array(
+    			'ID'        => $new_post_id,
+    			'post_name' => $post_name,
+    		);
+
+    		// Update the post into the database
+    		wp_update_post( $new_post );
+    	}
+
+    	// If you have written a plugin which uses non-WP database tables to save
+    	// information about a post you can hook this action to dupe that data.
+    	if( $post->post_type == 'page' || is_post_type_hierarchical( $post->post_type ) ){
+    		do_action( 'dp_duplicate_page', $new_post_id, $post );
+    	}else{
+    		do_action( 'dp_duplicate_post', $new_post_id, $post );
+    	}
+    	
+    	delete_post_meta( $new_post_id, '_dp_original' );
+    	add_post_meta( $new_post_id, '_dp_original', $post->ID );
+    	
+    	return $new_post_id;
+    }
+    
+    function duplicate_metadata( $new_id, $post ) {
+    	$post_meta_keys = get_post_custom_keys( $post->ID );
+    	if ( empty( $post_meta_keys ) ){
+    		return;
+    	}
+    	$meta_blacklist = array();
+    	$meta_keys      = array_diff( $post_meta_keys, $meta_blacklist );
+    	
+    	foreach( $meta_keys as $meta_key ) {
+    		$meta_values = get_post_custom_values( $meta_key, $post->ID );
+    		foreach ( $meta_values as $meta_value ) {
+    			$meta_value = maybe_unserialize($meta_value);
+    			add_post_meta( $new_id, $meta_key, $meta_value );
+    		}
+    	}
     }
 }
 

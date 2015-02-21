@@ -24,46 +24,43 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		$this->permissions = 'edit_events';
 		$this->slug = 'calendar';
 	}
-        
-    /**
-     * Enqueues the page's scripts and styles, and localises them.
-     */
+
+	/**
+	 * Enqueues the page's scripts and styles, and localises them.
+	 */
 	function page_scripts(){
 		global $wp_locale;
 		
 		wp_enqueue_script( 'eo_calendar' );
-		//wp_enqueue_script( 'eo_event' );
-		wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'startday' => intval( get_option( 'start_of_week' ) ),
-			'format' => eventorganiser_php2jquerydate( eventorganiser_get_option('dateformat') ),
-			));
 		
+		$supports = eventorganiser_get_option( 'supports' );
 		$venues = ( get_taxonomy( 'event-venue' ) ? get_terms( 'event-venue', array( 'hide_empty' => 0 ) ) : false );
+		$edittime = ( defined( 'EVENT_ORGANISER_PRO_FEATURES' ) && EVENT_ORGANISER_PRO_FEATURES );
 		
 		wp_localize_script( 'eo_calendar', 'EO_Ajax', array( 
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
-			'startday' => intval( get_option( 'start_of_week' ) ),
-			'format' => eventorganiser_php2jquerydate( eventorganiser_get_option('dateformat') ),
+			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+			'startday'   => intval( get_option( 'start_of_week' ) ),
+			'format'     => eventorganiser_php2jquerydate( eventorganiser_get_option( 'dateformat' ) ),
 			'timeFormat' => ( get_current_screen()->get_option( 'eofc_time_format', 'value' ) ? 'h:mmtt' : 'HH:mm' ),
-			'perm_edit' => current_user_can( 'edit_events' ),
+			'perm_edit'  => $edittime ? current_user_can( 'edit_events' ) : false,
+			'edit_nonce' => wp_create_nonce( 'edit_events' ),
 			'categories' => get_terms( 'event-category', array( 'hide_empty' => 0 ) ),
-			'venues' => $venues,
-			'locale' => array(
-				'isrtl' => $wp_locale->is_rtl(),
-				'monthNames' => array_values( $wp_locale->month ),
+			'venues'     => $venues,
+			'locale'     => array(
+				'isrtl'       => $wp_locale->is_rtl(),
+				'monthNames'  => array_values( $wp_locale->month ),
 				'monthAbbrev' => array_values( $wp_locale->month_abbrev ),
-				'dayNames' => array_values( $wp_locale->weekday ),
-				'dayAbbrev' => array_values( $wp_locale->weekday_abbrev ),
-				'today' => __( 'today', 'eventorganiser' ),
-				'day' => __( 'day', 'eventorganiser' ),
-				'week' => __( 'week', 'eventorganiser' ),
-				'month' => __( 'month', 'eventorganiser' ),
-				'gotodate' => __( 'go to date', 'eventorganiser' ),
-				'cat' => __( 'View all categories', 'eventorganiser' ),
-				'venue' => __( 'View all venues', 'eventorganiser' ),
-				)
-			));
+				'dayNames'    => array_values( $wp_locale->weekday ),
+				'dayAbbrev'   => array_values( $wp_locale->weekday_abbrev ),
+				'today'       => __( 'today', 'eventorganiser' ),
+				'day'         => __( 'day', 'eventorganiser' ),
+				'week'        => __( 'week', 'eventorganiser' ),
+				'month'       => __( 'month', 'eventorganiser' ),
+				'gotodate'    => __( 'go to date', 'eventorganiser' ),
+				'cat'         => __( 'View all categories', 'eventorganiser' ),
+				'venue'       => __( 'View all venues', 'eventorganiser' ),
+			)
+		));
 		
 	}
 

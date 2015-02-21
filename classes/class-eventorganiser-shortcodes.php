@@ -127,14 +127,29 @@ class EventOrganiser_Shortcodes {
 		
 		$atts = wp_parse_args( $atts, $bool_atts );
 
-		foreach( $bool_atts as $att => $value )
+		foreach( $bool_atts as $att => $value ){
 			$atts[$att] = ( strtolower( $atts[$att] ) == 'true' ? true : false );
+		}
 
-		if( isset($atts['venue']) && !isset( $atts['event_venue'] ) )
+		if( isset($atts['venue']) && !isset( $atts['event_venue'] ) ){
 			$atts['event_venue'] = $atts['venue'];
-		if( isset($atts['category']) && !isset( $atts['event_category'] ) )
+			unset( $atts['venue'] );
+		}
+		if( isset($atts['category']) && !isset( $atts['event_category'] ) ){
 			$atts['event_category'] = $atts['category'];
-
+			unset( $atts['category'] );
+		}
+		
+		$taxonomies = get_object_taxonomies( 'event' );
+		foreach( $taxonomies as $tax ){
+			//Shortcode attributes can't contain hyphens
+			$shortcode_attr = str_replace( '-', '_', $tax );
+			if( isset( $atts[$shortcode_attr] ) ){
+				$atts[$tax] = $atts[$shortcode_attr];
+				unset( $atts[$shortcode_attr] ); 
+			}
+		}
+				
 		return eo_get_event_fullcalendar( $atts );
 	}
 

@@ -24,8 +24,20 @@
 	}
 }
 
-@media only screen and (max-width: 1024px) {
+
+@media only screen and (max-width: 1320px) {
 	#post-body.columns-2 #venuemap{
+		width: 100%;
+		clear: both;
+	}
+	.folded #post-body.columns-2 #venuemap{
+		width: 60%;
+		clear:none;
+	}
+}
+
+@media only screen and (max-width: 1190px) {
+	.folded #post-body.columns-2 #venuemap{
 		width: 100%;
 		clear: both;
 	}
@@ -98,6 +110,14 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .ui-combobox-toggle {top: 0;bottom: 0;margin-left: -1px;padding: 0;*height: 1.7em;*top: 0.1em;}
 .ui-combobox-input {margin: 0;padding: 0.3em;}
 .eo-venue-combobox-buttons{position: absolute;width:4.5em;}
+
+.eo-admin-calendar-dialog .ui-autocomplete {
+	max-height: 100px;
+	max-width:220px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+}
 
 #eo_occurrence_datepicker .ui-datepicker .eo-op-date-not-selected a,
 #eo_occurrence_datepicker .ui-widget-content .ui-datepicker-current-day a{

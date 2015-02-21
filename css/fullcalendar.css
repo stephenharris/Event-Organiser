@@ -25,7 +25,7 @@
 .cat .ui-selectmenu-item-icon{ background-image:none!important; }
 
 /* Fix for themes which are over-zealouse with transitions */
-.eo-fullcalendar a{
+.eo-fullcalendar div, .eo-fullcalendar a{
    -webkit-transition:none;
    -moz-transition:none; 
    -o-transition:none; 

@@ -13,11 +13,10 @@ CREATED:20150218T173000Z
 LAST-MODIFIED:20150218T173000Z
 DTSTART:20131202T210000Z
 DTEND:20131202T230000Z
-RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;UNTIL=20131230T210000Z
-SUMMARY: The Event Title
-DESCRIPTION: Post excerpt 1
-X-ALT-DESC;FMTTYPE=text/html: <p>My event content</p>
-ORGANIZER;CN="admin":MAILTO:admin@example.org
-URL;VALUE=URI:http://example.org/?event=the-event-title
+SUMMARY: A quotation mark ‘ and an ellipses …
+DESCRIPTION: A quotation mark ‘ and an ellipses …
+X-ALT-DESC;FMTTYPE=text/html: <p>A quotation mark &#8216\; and an ellipses 
+ &#8230\;</p>
+URL;VALUE=URI:http://example.org/?event=a-quotation-mark-and-an-ellipses
 END:VEVENT
 END:VCALENDAR

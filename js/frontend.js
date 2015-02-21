@@ -146,6 +146,8 @@ jQuery(document).ready(function () {
 				date: calendars[i].date ? calendars[i].date : undefined,
 				category: calendars[i].event_category,
 				venue: calendars[i].event_venue,
+				tag: calendars[i].event_tag,
+				organiser: calendars[i].event_organiser,
 				customButtons:{
 					tag:		eventorganiser_tag_dropdown,
 					category:  	eventorganiser_cat_dropdown,
@@ -267,6 +269,12 @@ jQuery(document).ready(function () {
                 			}
                 			if (typeof d.venue !== "undefined" &&d.venue !== "") {
                 				request.venue = d.venue;
+                			}
+                			if (typeof d.tag !== "undefined" &&d.tag !== "") {
+                				request.tag = d.tag;
+                			}
+                			if (typeof d.organiser !== "undefined" &&d.organiser !== 0 ) {
+                				request.organiser = d.organiser;
                 			}
                 			
                 			request = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_request', request, a, b, c, d );
