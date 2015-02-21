@@ -8,9 +8,9 @@
 /**
 * Retrieve list of events matching criteria.
 *
-* This function is a wrapper for get_posts(). **As such parameters from {@see `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} can also be used**.
+* This function is a wrapper for get_posts(). **As such parameters from {@see `get_posts()`} and {@link https://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} can also be used**.
 * Their default values are as indicated by the relevant codex page unless specified below. 
-* You can also use {@see `get_posts()`} and {@link http://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events.
+* You can also use {@see `get_posts()`} and {@link https://codex.wordpress.org/Class_Reference/WP_Query `WP_Query`} instead to retrieve events.
 * 
 * The `$args` array can include the following.
 *
@@ -221,7 +221,7 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
 * @param int $occurrence_id  The occurrence ID
 * @return string|DateTime the start date formated to given format, as accepted by PHP date or a DateTime object if DATETIMEOBJ is given as format.
  */
-function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id=0){
+function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occurrence_id = 0 ){
 	global $post;
 	$event = $post;
 
@@ -242,12 +242,14 @@ function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_
 		return eo_format_date($date,$format);
 	}
 
+	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
 
-	$occurrences = eo_get_the_occurrences_of($post_id);
+	$occurrences = eo_get_the_occurrences_of( $post_id );
 
-	if( !$occurrences || !isset($occurrences[$occurrence_id]) )
+	if( !$occurrences || !isset( $occurrences[$occurrence_id] ) ){
 		return false;
+	}
 
 	$start = $occurrences[$occurrence_id]['start'];
 
@@ -260,7 +262,7 @@ function eo_get_the_start($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_
 	 * @param int $post_id Post ID of the event
 	 * @param int $occurrence_id  The occurrence ID
 	 */
-	$formatted_date = apply_filters('eventorganiser_get_the_start', eo_format_datetime( $start, $format ), $start, $format, $post_id, $occurrence_id );
+	$formatted_date = apply_filters( 'eventorganiser_get_the_start', eo_format_datetime( $start, $format ), $start, $format, $post_id, $occurrence_id );
 	return $formatted_date;
 }
 
@@ -364,7 +366,7 @@ function eo_the_start($format='d-m-Y',$post_id=0,$deprecated=0,$occurrence_id=0)
 * @param int $occurrence_id  The occurrence ID
 * @return string the end date formated to given format, as accepted by PHP date
  */
-function eo_get_the_end($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id=0){
+function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occurrence_id = 0 ){
 	global $post;
 	$event = $post;
 
@@ -384,12 +386,15 @@ function eo_get_the_end($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id
 
 		return eo_format_date($date,$format);
 	}
+	
+	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
 
-	$occurrences = eo_get_the_occurrences_of($post_id);
+	$occurrences = eo_get_the_occurrences_of( $post_id );
 
-	if( !$occurrences || !isset($occurrences[$occurrence_id]) )
+	if( !$occurrences || !isset( $occurrences[$occurrence_id] ) ){
 		return false;
+	}
 
 	$end = $occurrences[$occurrence_id]['end'];
 
@@ -402,7 +407,7 @@ function eo_get_the_end($format='d-m-Y',$post_id=0,$deprecated=0, $occurrence_id
 	 * @param int $post_id Post ID of the event
 	 * @param int $occurrence_id  The occurrence ID
 	 */
-	$formatted_date = apply_filters('eventorganiser_get_the_end', eo_format_datetime( $end, $format ), $end, $format, $post_id, $occurrence_id );
+	$formatted_date = apply_filters( 'eventorganiser_get_the_end', eo_format_datetime( $end, $format ), $end, $format, $post_id, $occurrence_id );
 	return $formatted_date;
 }
 
@@ -922,7 +927,7 @@ function eo_get_the_occurrences_of($post_id=0){
 		return false;
 
 	 //Can't cache datetime objects before 5.3
-	 //@see{http://wordpress.org/support/topic/warning-datetimeformat-functiondatetime-format?replies=7#post-3940247}
+	 //@see{https://wordpress.org/support/topic/warning-datetimeformat-functiondatetime-format?replies=7#post-3940247}
 	if( version_compare(PHP_VERSION, '5.3.0') >= 0 ){
 		$occurrences = wp_cache_get( 'eventorganiser_occurrences_'.$post_id );
 	}else{
@@ -1002,7 +1007,7 @@ function eo_get_event_color($post_id=0){
 	/**
 	 * Filters the colour associated with an event
 	 * 
-	 * @link http://wordpress.org/support/topic/plugin-event-organiser-color-code-for-venues-instead-of-categories
+	 * @link https://wordpress.org/support/topic/plugin-event-organiser-color-code-for-venues-instead-of-categories
 	 * @param string $color Event colour in HEX format
 	 * @param int $post_id The event (post) ID
 	*/
@@ -1066,6 +1071,16 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 		foreach ($cats as $cat)
 			$event_classes[] = 'eo-event-cat-'.$cat->slug;
 	}
+	
+	//Event tags
+	if( eventorganiser_get_option('eventtag') ){
+		$terms = get_the_terms( $post_id, 'event-tag' );
+		if( $terms && !is_wp_error( $terms ) ){
+			foreach ( $terms as $term ){
+				$event_classes[] = 'eo-event-tag-'.$term->slug;
+			}
+		}
+	}
 
 	//Add 'time' class
 	$start = eo_get_the_start(DATETIMEOBJ, $post_id, null, $occurrence_id);
@@ -1077,6 +1092,17 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 		$event_classes[] = 'eo-event-past';
 	}else{
 		$event_classes[] = 'eo-event-running';
+	}
+	
+	//Add class if event starts and ends on different days
+	if( ( $start instanceof DateTime ) && ( $end instanceof DateTime ) ){
+		if( $start->format('Y-m-d') != $end->format('Y-m-d') ){
+			$event_classes[] = 'eo-multi-day';
+		} 
+	}
+	
+	if( eo_is_all_day( $post_id ) ){
+		$event_classes[] = 'eo-all-day';
 	}
 	
 	/**
@@ -1448,23 +1474,26 @@ function eo_get_event_meta_list( $post_id=0 ){
 	if( empty($post_id) ) 
 		return false;
 
-	$html = '<ul class="eo-event-meta" style="margin:10px 0px;">';
+	$html  = '<ul class="eo-event-meta" style="margin:10px 0px;">';
+	$venue = get_taxonomy( 'event-venue' );
 
-	if( $venue_id = eo_get_venue($post_id) ){
-		$html .= sprintf('<li><strong>%s:</strong> <a href="%s">
-								<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/​Organization">
-									<span itemprop="name">%s</span>
-									<span itemprop="geo" itemscope itemtype="http://data-vocabulary.org/​Geo">
-										<meta itemprop="latitude" content="%f" />
-										<meta itemprop="longitude" content="%f" />
-     									</span>
-								</span></a></li>',
-							__('Venue','eventorganiser'),
-							eo_get_venue_link($venue_id), 
-							eo_get_venue_name($venue_id),
-							eo_get_venue_lat($venue_id),
-							eo_get_venue_lng($venue_id)
-						);
+	if( ( $venue_id = eo_get_venue( $post_id ) ) && $venue ){
+		$html .= sprintf(
+			'<li><strong>%s:</strong> <a href="%s">
+				<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/Organization">
+					<span itemprop="name">%s</span>
+					<span itemprop="geo" itemscope itemtype="http://data-vocabulary.org/Geo">
+						<meta itemprop="latitude" content="%f" />
+						<meta itemprop="longitude" content="%f" />
+     				</span>
+				</span>
+			</a></li>',
+			$venue->labels->singular_name,
+			eo_get_venue_link( $venue_id ), 
+			eo_get_venue_name( $venue_id ),
+			eo_get_venue_lat( $venue_id ),
+			eo_get_venue_lng( $venue_id )
+		);
 	}
 
 	if( get_the_terms(get_the_ID(),'event-category') ){

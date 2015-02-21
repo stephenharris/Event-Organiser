@@ -23,6 +23,17 @@
 /*For the blocks of colour*/
 .cat .ui-selectmenu-item-icon { height: 14px; width: 14px; border:1px solid #dfdfdf;border-radius: 4px;}
 .cat .ui-selectmenu-item-icon{ background-image:none!important; }
+
+/* Fix for themes which are over-zealouse with transitions */
+.eo-fullcalendar div, .eo-fullcalendar a{
+   -webkit-transition:none;
+   -moz-transition:none; 
+   -o-transition:none; 
+   -ms-transition: none; 
+   transition: none;
+   max-width: none;
+}
+
 /*!
  * FullCalendar v1.6.1 Stylesheet
  * Docs & License: http://arshaw.com/fullcalendar/
@@ -99,6 +110,7 @@ a.fc-event,.fc-event-draggable{cursor:pointer}
 .fc-event-vert .fc-event-time{white-space:nowrap;font-size:10px}
 .fc-event-vert .fc-event-inner{position:relative;z-index:2}
 .fc-event-vert .fc-event-bg{position:absolute;z-index:1;top:0;left:0;width:100%;height:100%;background:#fff;opacity:.25;filter:alpha(opacity=25)}
+/* for IE6/7/8. nested opacity filters while dragging don't work */
 .fc .ui-draggable-dragging .fc-event-bg,/* TODO: something nicer like .fc-opacity */
 .fc-select-helper .fc-event-bg{display:none\9}
 .fc-event-vert .ui-resizable-s{bottom:0!important;width:100%!important;height:8px!important;overflow:hidden!important;line-height:8px!important;font-size:11px!important;font-family:monospace;text-align:center;cursor:s-resize}
@@ -130,12 +142,6 @@ table.fc-border-separate,.fc-agenda table{border-collapse:separate}
 .ui-tooltip-icon .ui-icon{display:block; text-indent:-1000em; direction:ltr}
 .ui-tooltip-icon, .ui-tooltip-icon .ui-icon{-moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; text-decoration:none}
 .ui-tooltip-icon .ui-icon{width:18px; height:14px; text-align:center; text-indent:0; font:normal bold 10px/13px Tahoma,sans-serif; color:inherit; background:transparent none no-repeat -100em -100em}
-
-/* Applied to 'focused' tooltips e.g. most recently displayed/interacted with */
-.ui-tooltip-focus{}
-
-/* Applied on hover of tooltips i.e. added/removed on mouseenter/mouseleave respectively */
-.ui-tooltip-hover{}
 
 /* Add shadows to your tooltips in:FF3+, Chrome 2+, Opera 10.6+, IE9+, Safari 2+*/
 .ui-tooltip-shadow{-webkit-box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15); -moz-box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15); box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15)}

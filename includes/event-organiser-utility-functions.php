@@ -18,10 +18,10 @@
  * Applies {@see `eventorganiser_format_datetime`} filter
  *
  * @since 1.2.0
- * @link http://php.net/manual/en/function.date.php PHP Date
+ * @link https://php.net/manual/en/function.date.php PHP Date
  *
  * @param dateTime $datetime The datetime to format
- * @param string|constant $format How to format the date, see http://php.net/manual/en/function.date.php  or DATETIMEOBJ constant to return the datetime object.
+ * @param string|constant $format How to format the date, see https://php.net/manual/en/function.date.php  or DATETIMEOBJ constant to return the datetime object.
  * @return string|dateTime The formatted date
 */
 
@@ -56,9 +56,9 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 	/**
 	 * Filters the formatted date (DateTime object).
 	 * 
-	 * Formats should be specified using [php date format standards](http://php.net/manual/en/function.date.php).
+	 * Formats should be specified using [php date format standards](https://php.net/manual/en/function.date.php).
 	 *
-	 * @link http://php.net/manual/en/function.date.php PHP date formatting standard
+	 * @link https://php.net/manual/en/function.date.php PHP date formatting standard
 	 * @param string $formatted_datetime The formatted date.
 	 * @param string $format             The format in which the date should be returned.
 	 * @param string $datetime           The provided DateTime object
@@ -73,7 +73,7 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
  *
  * @uses eo_format_datetime()
  * @since 1.2.0
- * @link http://php.net/manual/en/function.date.php PHP Date
+ * @link https://php.net/manual/en/function.date.php PHP Date
  *
  * @param string $dateString The date as a string
  * @param string $format How to format the date. DATETIMEOBJ for datetime object.
@@ -133,7 +133,7 @@ function eo_get_blog_timezone(){
 		endif;
 
 		//Cache timezone string not timezone object
-		//Thanks to Ben Huson http://wordpress.org/support/topic/plugin-event-organiser-getting-500-is-error-when-w3-total-cache-is-on
+		//Thanks to Ben Huson https://wordpress.org/support/topic/plugin-event-organiser-getting-500-is-error-when-w3-total-cache-is-on
 		wp_cache_set( 'eventorganiser_timezone', $tzstring );
 	} 
 
@@ -147,7 +147,7 @@ function eo_get_blog_timezone(){
 
 /**
  * Calculates and formats an interval between two days, passed in any order.
- * It's a PHP 5.2 workaround for {@link http://www.php.net/manual/en/dateinterval.format.php date interval format}
+ * It's a PHP 5.2 workaround for {@link https://www.php.net/manual/en/dateinterval.format.php date interval format}
  * 
  * This does not correctly handle DST but instead mimics the same buggy behaviour exphibted by PHP's date interval. 
  * See https://bugs.php.net/bug.php?id=63953
@@ -158,7 +158,7 @@ function eo_get_blog_timezone(){
  *
  * @param dateTime $_date1 One date to compare
  * @param dateTime $_date2 Second date to compare
- * @param string $format Used to format the interval. See http://www.php.net/manual/en/dateinterval.format.php
+ * @param string $format Used to format the interval. See https://www.php.net/manual/en/dateinterval.format.php
  * @return string Formatted interval.
 */
 function eo_date_interval($_date1,$_date2, $format){
@@ -174,28 +174,23 @@ function eo_date_interval($_date1,$_date2, $format){
 	//Calculate total days difference
 	$total_days = floor(abs($date1->format('U') - $date2->format('U'))/86400);
 
-	//A leap year work around - consistent with DateInterval
-	$leap_year = ( $date1->format('m-d') == '02-29' ? true : false);
-	if( $leap_year ){
-		//This will only effect counting the number of days - and is corrected later.
-		//Otherwise incrementing $date1 by a year will overflow to March
-		$date1->modify('-1 day');
-	}
-
 	$periods = array( 'years'=>-1,'months'=>-1,'days'=>-1,'hours'=>-1);
 
 	foreach ($periods as $period => &$i ){
 
-		if($period == 'days' && $leap_year )
-			$date1->modify('+1 day');//Corrects earlier adjustment
-
-		while( $date1 <= $date2 ){
-			$date1->modify('+1 '.$period);
+		$temp_pointer = clone $date1;
+		
+		while( $temp_pointer <= $date2 ){
+			$temp_pointer->modify( "+1 $period" );
 			$i++;
 		}
-
-		//Reset date and record increments
-		$date1->modify('-1 '.$period);
+		
+		if ( $i > -1 ){
+			$date1->modify( "+$i $period" );
+		}else{
+			$date1->modify( "$i $period" );
+		}
+		
 	}
 	extract($periods);
 
@@ -286,7 +281,7 @@ function eo_date_interval($_date1,$_date2, $format){
 *
 * @since 2.1.3
 *
-*@param string $phpformat Format according to http://php.net/manual/en/function.date.php
+*@param string $phpformat Format according to https://php.net/manual/en/function.date.php
 *@return string The format translated to xdate format: http://arshaw.com/xdate/#Formatting
 */
 function eo_php2xdate($phpformat=""){
@@ -333,62 +328,56 @@ function eventorganiser_php2xdate( $phpformat="" ){
 }
 
 
-
 /**
- * Very basic class to convert php date format into jQuery UI date format used for javascript.
- * @ignore
- * @deprecated 2.1.3 Use 
- * @since 1.7
- */
-function eventorganiser_php2jquerydate( $phpformat="" ){
-	return eo_php2jquerydate( $phpformat );
-}
-
-
-/**
- * Very basic class to convert php date format into jQuery UI date format used for javascript.
+ * Converts php date format into jQuery UI date format.
  *
- * Similar to `{@see eventorganiser_php2xdate()}` - but the format is slightly different for jQuery UI  
  * Takes a php date format and converts it to {@link http://docs.jquery.com/UI/Datepicker/formatDate} so
- * that it can b used in javascript (notably by the datepicker).
+ * that it can b used in javascript (i.e. by the datepicker).
  * 
  * **Please note that this function does not convert time formats**
  *
  * @since 2.1.3
  *
- *@param string $phpformat Format according to http://php.net/manual/en/function.date.php
+ *@param string $phpformat Format according to https://php.net/manual/en/function.date.php
  *@return string The format translated to xdate format: http://docs.jquery.com/UI/Datepicker/formatDate
  */
-function eo_php2jquerydate($phpformat=""){
-	$php2jquerydate = array(
-			'Y'=>'yy','y'=>'y','L'=>''/*Not Supported*/,'o'=>'',/*Not Supported*/
-			'j'=>'d','d'=>'dd','D'=>'D','DD'=>'dddd','N'=>'',/*NS*/ 'S' => ''/*NS*/,
-			'w'=>'', /*NS*/ 'z'=>'o',/*NS*/ 'W'=>'w',
-			'F'=>'MM','m'=>'mm','M'=>'M','n'=>'m','t'=>'',/*NS*/
-			'a'=>''/*NS*/,'A'=>''/*NS*/,
-			'B'=>'',/*NS*/'g'=>''/*NS*/,'G'=>''/*NS*/,'h'=>''/*NS*/,'H'=>''/*NS*/,'u'=>'fff',
-			'i'=>''/*NS*/,'s'=>''/*NS*/,
-			'O'=>''/*NS*/, 'P'=>''/*NS*/,
+function eo_php2jquerydate( $phpformat ){
+
+	$map = array(
+		//Day
+		'j' => 'd', 'd' => 'dd', 'D' => 'D', 'l' => 'DD', 'z' => 'o',
+		//Month
+		'F' => 'MM', 'm' => 'mm', 'M' => 'M', 'n' => 'm',
+		//Year
+		'Y' => 'yy', 'y' => 'y', 'o' => 'gggg',
+		//Full date
+		'U' => '@',
 	);
-
-	$jqueryformat="";
-
-	for($i=0;  $i< strlen($phpformat); $i++){
-
-		//Handle backslash excape
-		if($phpformat[$i]=="\\"){
-			$jqueryformat .= "\\".$phpformat[$i+1];
-			$i++;
-			continue;
-		}
-
-		if(isset($php2jquerydate[$phpformat[$i]])){
-			$jqueryformat .= $php2jquerydate[$phpformat[$i]];
-		}else{
-			$jqueryformat .= $phpformat[$i];
-		}
+	
+	$regexp  = '/(j|d|D|l|z|F|m|M|n|Y|y|o|U|.)/';
+	$matches = array();
+	
+	preg_match_all( $regexp, $phpformat, $matches );
+	
+	if ( !$matches || false === is_array( $matches ) ){
+		return $format;
 	}
-	return $jqueryformat;
+	
+	$php_tokens = array_keys( $map );
+	$jquery_format = '';
+	
+	foreach ( $matches[0] as $id => $match ){
+		// if there is a matching php token in token list
+		if ( in_array( $match, $php_tokens ) ){
+			// use the php token instead
+			$string = $map[ $match ];
+		}else{
+			$string = $match;
+		}
+		$jquery_format .= $string;
+	}
+	
+	return $jquery_format;
 }
 
 
@@ -957,37 +946,49 @@ function eventorganiser_checkbox_field($args=array()){
 			'checked'=>'', 'echo'=>true,'multiselect'=>false
 		));
 
-	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
-	$name = isset($args['name']) ?  $args['name'] : '';
+	$id    = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
+	$name  = isset($args['name']) ?  $args['name'] : '';
 	$class = ( $args['class'] ? "class='".sanitize_html_class($args['class'])."'"  :"" );
-
+	$attr  = array( $class );
+	
 	/* $options and $checked are either both arrays or they are both strings. */
 	$options =  isset($args['options']) ? $args['options'] : false;
 	$checked =  isset($args['checked']) ? $args['checked'] : 1;
+	
+	//Custom data-* attributes
+	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
+		foreach( $args['data'] as $key => $data_value ){
+			$attr[] = sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $data_value ) );
+		}
+	}
+	
+	$attr = implode( " ", array_filter( $attr ) );
 
 	$html ='';
 	if( is_array($options) ){
+		
 		foreach( $options as $value => $opt_label ){
-			$html .= sprintf('<label for="%1$s">
-								<input type="checkbox" name="%2$s" id="%1$s" value="%3$s" %4$s %5$s> 
-								%6$s </br>
-							</label>',
-							esc_attr($id.'_'.$value),
-							esc_attr(trim($name).'[]'),
-							esc_attr($value),
-							checked( in_array($value, $checked), true, false ),
-							$class,
-							 esc_attr($opt_label)
-							);
+			$html .= sprintf(
+				'<label for="%1$s">
+					<input type="checkbox" name="%2$s" id="%1$s" value="%3$s" %4$s %5$s> 
+					%6$s </br>
+				</label>',
+				esc_attr( $id.'_'.$value ),
+				esc_attr( trim( $name ) . '[]' ),
+				esc_attr( $value ),
+				$attr,
+				checked( in_array( $value, $checked ), true, false ),
+				esc_attr( $opt_label )
+			);
 		}
 	}else{
 		$html .= sprintf('<input type="checkbox" id="%1$s" name="%2$s" %3$s %4$s value="%5$s">',
-							esc_attr($id),
-							esc_attr($name),
-							checked( $checked, $options, false ),
-							$class,
-							esc_attr($options)
-							);
+			esc_attr( $id ),
+			esc_attr( $name ),
+			$attr,
+			checked( $checked, $options, false ),
+			esc_attr( $options )
+		);
 	}
 	
 	if(!empty($args['help'])){
@@ -1029,33 +1030,55 @@ function eventorganiser_textarea_field($args){
 		'readonly'=> false,
 	));
 
-	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
-	$name = isset($args['name']) ?  $args['name'] : '';
-	$value = $args['value'];
+	$id    = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$class = implode( ' ', array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) ) );
-	$readonly = $args['readonly'] ? 'readonly' : '';
-	$html ='';
+	$name  = isset( $args['name'] ) ?  $args['name'] : '';
+	$value = isset( $args['value'] ) ?  $args['value'] : '';
 
+	//Custom data-* attributes
+	$data = '';
+	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
+		foreach( $args['data'] as $key => $attr_value ){
+			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+		}
+	}
+	$rows       = !empty( $args['rows'] ) ? sprintf( 'rows="%d"', $args['rows'] ) : '';
+	$cols       = !empty( $args['cols'] ) ? sprintf( 'cols="%d"', $args['cols'] ) : '';
+	$readonly   = $args['readonly'] ? 'readonly' : '';
+	$attributes = array_filter( array( $rows, $cols, $readonly, $data ) );
+
+	$html = '';
+	
 	if( $args['tinymce'] ){
-		
 		ob_start();
-		wp_editor( $value, esc_attr($id) ,array(
-				'textarea_name'=>$name,
-				'media_buttons'=>false,
-				'textarea_rows' => intval($args['rows']),
-			));
+
+		$tinymce_args = is_array( $args['tinymce'] ) ? $args['tinymce'] : array();
+		$tinymce_args = array_merge( array(
+				'textarea_name' => $name,
+				'media_buttons' => false,
+				'textarea_rows' => intval( $args['rows'] ),
+		), $tinymce_args );
+		
+		wp_editor( $value, esc_attr( $id ) ,$tinymce_args );
 		
 		$html .= ob_get_contents();
+		
+		if( $data ){
+			$html = str_replace( 
+				'<div id="wp-' . $id . '-editor-container"',
+				'<div id="wp-' . $id . '-editor-container" '.$data.' ',
+				$html
+			);
+		}
+		
 		ob_end_clean();
 	}else{
-		$html .= sprintf('<textarea cols="%s" rows="%d" name="%s" class="%s" id="%s" %s >%s</textarea>',
-				intval($args['cols']),
-				intval($args['rows']),
-				esc_attr($name),
+		$html .= sprintf('<textarea %s name="%s" class="%s" id="%s">%s</textarea>',
+				implode( ' ', $attributes ),
+				esc_attr( $name ),
 				$class,
-				esc_attr($id),
-				$readonly,
-				esc_textarea($value)
+				esc_attr( $id ),
+				esc_textarea( $value )
 		);
 	}
 
@@ -1305,7 +1328,7 @@ function eo_localize_script( $handle, $obj ){
  *  
  * @since 2.1
  * @ignore
- * @see http://www.php.net/manual/en/function.array-merge-recursive.php#91049
+ * @see https://www.php.net/manual/en/function.array-merge-recursive.php#91049
  * @author Daniel <daniel (at) danielsmedegaardbuus (dot) dk>
  * @author Gabriel Sobrinho <gabriel (dot) sobrinho (at) gmail (dot) com>
  * @author Michiel <michiel (at) synetic (dot) nl
@@ -1342,7 +1365,7 @@ function &eo_array_merge_recursive_distinct ( array $array1, array $array2 /* ar
  * @since 2.1
  * @ignore
  * @access private
- * @see http://wordpress.stackexchange.com/questions/100709/add-a-script-as-a-dependency-to-a-registered-script
+ * @see https://wordpress.stackexchange.com/questions/100709/add-a-script-as-a-dependency-to-a-registered-script
  * @param string $handle Script handle for which you want to add a dependency
  * @param string $dep Script handle - the dependency you wish to add
  */
@@ -1362,12 +1385,12 @@ function eventorganiser_append_dependency( $handle, $dep ){
 
 
 /**
- * Escapes a string so it safe for use in ICAL template
+ * Escapes a string so it safe for use in ICAL template. 
  * 
- * Commas, semicolons and backslashes are escaped.
- * New lines are appended with a space (why?)
+ * Commas, semicolons, newlines and backslashes are escaped.
  * 
  * @ignore
+ * @see http://www.ietf.org/rfc/rfc2445.txt
  * @since 2.1
  * @param string $text The string to be escaped
  * @return string The escaped string.
@@ -1377,7 +1400,15 @@ function eventorganiser_escape_ical_text( $text ){
 	$text = str_replace( "\\", "\\\\", $text );
 	$text = str_replace( ",", "\,", $text );
 	$text = str_replace( ";", "\;", $text );
-	$text = str_replace( "\n", "\n ", $text );
+	/*
+	 * An intentional formatted text line break MUST only be included in a
+   	 * "TEXT" property value by representing the line break with the
+   	 * character sequence of BACKSLASH (US-ASCII decimal 92), followed by a
+   	 * LATIN SMALL LETTER N (US-ASCII decimal 110) or a LATIN CAPITAL LETTER
+   	 * N (US-ASCII decimal 78), that is "\n" or "\N".
+	 */
+	$text = str_replace( "\r\n", "\n", $text );
+	$text = str_replace( "\n", "\\n", $text );
 	
 	return $text;
 }
@@ -1403,8 +1434,8 @@ function eventorganiser_fold_ical_text( $text ){
 
 	$text_arr = array();
 
-	$lines = ceil( strlen( $text ) / 75 );
-
+	$lines = ceil( mb_strlen( $text ) / 75 );
+	
 	for( $i = 0; $i < $lines; $i++ ){
 		$text_arr[$i] = mb_substr( $text, $i * 75, 75 );
 	}

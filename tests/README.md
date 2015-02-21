@@ -1,6 +1,6 @@
 # Event Organiser Unit Tests
 
-Author: [Stephen Harris](http://www.github.com/stephenharris)
+Author: [Stephen Harris](https://www.github.com/stephenharris)
 
 
 ## Setup

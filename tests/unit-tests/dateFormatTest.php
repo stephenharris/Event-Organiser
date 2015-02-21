@@ -102,7 +102,7 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 	
 		//Wrong! (But agrees with php's native DateTime Interval which is what is being attempted).
 		//@see https://bugs.php.net/bug.php?id=63953
-		//@see http://stackoverflow.com/questions/2532729/daylight-saving-time-and-time-zone-best-practices
+		//@see https://stackoverflow.com/questions/2532729/daylight-saving-time-and-time-zone-best-practices
 		//@see https://bugs.php.net/bug.php?id=51051
 		$this->assertEquals( '3', eo_date_interval( $date_1, $date_2, '%h' ) );
 	}
@@ -289,7 +289,7 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 		}
 		
 		global $wp_locale;
-		$location = WP_LANG_DIR . '/'.$locale.'.mo';
+		$location = EO_DIR_TESTDATA . '/languages/'.$locale.'.mo';
 		load_textdomain( 'default', $location );
 		$wp_locale->init();
 		

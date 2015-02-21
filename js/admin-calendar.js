@@ -44,7 +44,7 @@ eventorganiser.versionCompare = function(left, right) {
 	  * If the supplied string does not match the format, an 
 	  * invalid Date (value NaN) is returned.
 	  * Used as a workaround for IE7/8 difficulities.
-	  * @link http://stackoverflow.com/questions/2182246/javascript-dates-in-ie-nan-firefox-chrome-ok
+	  * @link https://stackoverflow.com/questions/2182246/javascript-dates-in-ie-nan-firefox-chrome-ok
 	  * @param {string} dateStringInRange format YYYY-MM-DD, with year in
 	  * range of 0000-9999, inclusive.
 	  * @return {Date} Date object representing the string.
@@ -84,7 +84,7 @@ eventorganiser.versionCompare = function(left, right) {
 	var initial_date = eventorganiser_parseISO8601( jQuery.cookie('eo_admin_cal_last_viewed_date') );
 	
     //Invalid dates cause trouble in IE7&8 https://github.com/stephenharris/Event-Organiser/issues/96
-    //Check date is valid: http://stackoverflow.com/questions/1353684/
+    //Check date is valid: https://stackoverflow.com/questions/1353684/
 	if ( Object.prototype.toString.call( initial_date  ) === "[object Date]" ) {
 		if ( isNaN( initial_date.getTime() ) ) {
 				//not valid
@@ -296,7 +296,7 @@ eventorganiser.versionCompare = function(left, right) {
                 calendar.fullCalendar('gotoDate', new Date(Date.parse(dateText)));
             }
         });
-        $('button.ui-datepicker-trigger').button();
+        $('button.ui-datepicker-trigger').button().addClass('fc-button');
         
     /* Venue drop-down in modal */
         
@@ -348,7 +348,7 @@ eventorganiser.versionCompare = function(left, right) {
     			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height:"+button_height+";'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
     				icons: { primary: "ui-icon-triangle-1-s"},
     				text: false
-    			}).removeClass("ui-corner-all").addClass("ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
+    			}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
     				if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return;}
     				$(this).blur();
     				input.autocomplete("search", "").focus();
@@ -364,6 +364,10 @@ eventorganiser.versionCompare = function(left, right) {
 	function eventorganiser_cat_dropdown(options){
 
 		var terms = options.categories;
+		
+		if( !terms ){
+			return;
+		}
 
 		var html="<select class='eo-cal-filter' id='eo-event-cat'>";
 		html+="<option value=''>"+options.buttonText.cat+"</option>";
@@ -378,6 +382,10 @@ eventorganiser.versionCompare = function(left, right) {
 	function eventorganiser_venue_dropdown(options){
 
 		var venues = options.venues;
+		
+		if( !venues ){
+			return;
+		}
 
 		var html="<select class='eo-cal-filter' id='eo-event-venue'>";
 		html+="<option value=''>"+options.buttonText.venue+"</option>";

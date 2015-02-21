@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Test Blog//NONSGML Events//EN
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Test Blog - Events
+X-ORIGINAL-URL:http://example.org/?post_type=event
+X-WR-CALDESC:Test Blog - Events
+BEGIN:VEVENT
+UID:unit-test
+STATUS:CONFIRMED
+DTSTAMP:%%now%%
+CREATED:20150218T173000Z
+LAST-MODIFIED:20150218T173000Z
+DTSTART:20131202T210000Z
+DTEND:20131202T230000Z
+SUMMARY: The Event Title
+DESCRIPTION: This is a bold line. This is a underlined line This is red. Th
+ is is a new line in italics Aligned right and blue
+X-ALT-DESC;FMTTYPE=text/html: <p>This is a <strong>bold line.</strong> </p>
+ <p> This is a <span style='text-decoration: underline'> underlined line </s
+ pan><span style='color: #ff0000'>This is red.</span><br /><em>This is a new
+  line in italics</em><p style='color:#0000ff\;text-align:right'>Aligned rig
+ ht and blue</p>
+URL;VALUE=URI:http://example.org/?event=the-event-title
+END:VEVENT
+END:VCALENDAR

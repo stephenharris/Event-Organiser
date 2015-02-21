@@ -39,6 +39,25 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		$this->assertEquals( "u", eo_php2xdate( "c" ) );
 		
 	}
+	
+	public function testPHP2jQuerydate()
+	{
+
+		//1 January 2015
+		$this->assertEquals( "d MM yy", eo_php2jquerydate( "j F Y" ) );
+		
+		//01-01-2015
+		$this->assertEquals( "dd-mm-yy", eo_php2jquerydate( "d-m-Y" ) );
+		
+		//Thur 1 15
+		$this->assertEquals( "D m y", eo_php2jquerydate( "D n y" ) );
+		
+		//Thursday Jan 15
+		$this->assertEquals( "DD M y", eo_php2jquerydate( "l M y" ) );
+		
+		$this->assertEquals( "@", eo_php2jquerydate( "U" ) );
+	
+	}
 
 	public function testRemoveDuplicates()
 	{
@@ -248,6 +267,39 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		$this->assertEquals( -1, _eventorganiser_compare_datetime( $date1, $date2 ) );
 		$this->assertEquals( 0, _eventorganiser_compare_datetime( $date1, $date3 ) );
 		
+	}
+	
+	function testDateIntervalDST(){
+
+		$timezone = new DateTimeZone( 'Europe/Berlin' );
+		$date1 = new DateTime( '2014-10-21 00:00:00', $timezone );
+		$date2 = new DateTime( '2014-10-26 23:59:00', $timezone );
+
+		//Check mod is correctly calculated
+		$mod = eo_date_interval( $date1, $date2, '+%d days +%h hours +%i minutes +%s seconds' );
+		$this->assertEquals( "+5 days +23 hours +59 minutes +0 seconds", $mod );
+		
+		//Check date modification by mod is as expected (over DST boundary)
+		$date3 = clone $date1;
+		$date3->modify( $mod );
+		$this->assertEquals( "2014-10-26 23:59:00", $date3->format( 'Y-m-d H:i:s' ) );
+
+		//Again with a new date (inside DST period)
+		$date4 = new DateTime( '2014-09-21 00:00:00', $timezone );
+		$date4->modify( $mod );
+		$this->assertEquals( "2014-09-26 23:59:00", $date4->format( 'Y-m-d H:i:s' ) );
+		
+	}
+	
+	function testDateIntervalMonthOverflow(){
+
+		$timezone = new DateTimeZone( 'Europe/Berlin' );
+		$date1 = new DateTime( '2015-01-30 13:00:00', $timezone );
+		$date2 = new DateTime( '2015-01-30 16:30:10', $timezone );
+
+		//Check mod is correctly calculated
+		$mod = eo_date_interval( $date1, $date2, '+%d days +%h hours +%i minutes +%s seconds' );
+		$this->assertEquals( "+0 days +3 hours +30 minutes +10 seconds", $mod );
 	}
 	
 	

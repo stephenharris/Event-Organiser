@@ -26,15 +26,18 @@ class EO_UnitTest_Factory_For_Event extends WP_UnitTest_Factory_For_Thing {
 	function __construct( $factory = null ) {
 		parent::__construct( $factory );
 		$this->default_generation_definitions = array(
-			'post_status' => 'publish',
-			'post_title' => new WP_UnitTest_Generator_Sequence( 'Post title %s' ),
+			'post_status'  => 'publish',
+			'post_title'   => new WP_UnitTest_Generator_Sequence( 'Post title %s' ),
 			'post_content' => new WP_UnitTest_Generator_Sequence( 'Post content %s' ),
 			'post_excerpt' => new WP_UnitTest_Generator_Sequence( 'Post excerpt %s' ),
-			'post_type' => 'post'
 		);
 	}
 
 	function create_object( $args ) {
+		$args = array_merge( array(
+			'start' => new DateTime( '2015-02-20 17:54:00' ),
+			'end'   => new DateTime( '2015-02-20 18:54:00' ),
+		), $args );
 		return eo_insert_event( $args );
 	}
 

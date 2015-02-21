@@ -34,7 +34,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		wp_enqueue_script( 'eo_calendar' );
 		
 		$supports = eventorganiser_get_option( 'supports' );
-		$venues   = ( in_array( 'event-venue', $supports ) ? get_terms( 'event-venue', array( 'hide_empty' => 0 ) ) : false );
+		$venues = ( get_taxonomy( 'event-venue' ) ? get_terms( 'event-venue', array( 'hide_empty' => 0 ) ) : false );
 		$edittime = ( defined( 'EVENT_ORGANISER_PRO_FEATURES' ) && EVENT_ORGANISER_PRO_FEATURES );
 		
 		wp_localize_script( 'eo_calendar', 'EO_Ajax', array( 
@@ -79,7 +79,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		
 		wp_enqueue_style( 'eo_calendar-style' );
 		wp_enqueue_style( 'eventorganiser-style' );
-		//See trac ticket: http://core.trac.wordpress.org/ticket/24813
+		//See trac ticket: https://core.trac.wordpress.org/ticket/24813
 		if( ( !defined( 'SCRIPT_DEBUG' ) || !SCRIPT_DEBUG ) && version_compare( get_bloginfo( 'version' ), '3.7', '<' ) ){
 			$css = "<style type='text/css'>\n" . $css . "</style>";
 		}
@@ -260,8 +260,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				</tr>
 				
 				<?php 
-					$supports = eventorganiser_get_option( 'supports' );
-					if( in_array( 'event-venue', $supports ) ):?>
+					if( taxonomy_exists( 'event-venue' ) ):?>
 						<tr>
 							<th><?php _e( 'Where', 'eventorganiser' );?>: </th>
 							<td><!-- If javascript is disabed, a simple drop down menu box is displayed to choose venue.

@@ -3,7 +3,7 @@
  *
  * Copyright 2010-2011, Francois Gelinas
  * Dual licensed under the MIT or GPL Version 2 licenses.
- * http://jquery.org/license
+ * https://jquery.org/license
  *
  * http://fgelinas.com/code/timepicker
  *
@@ -72,7 +72,7 @@
             defaultTime: 'now',             // Used as default time when input field is empty or for inline timePicker
                                             // (set to 'now' for the current time, '' for no highlighted time)
             myPosition: 'left top',         // Position of the dialog relative to the input.
-                                            // see the position utility for more info : http://jqueryui.com/demos/position/
+                                            // see the position utility for more info : https://jqueryui.com/demos/position/
             atPosition: 'left bottom',      // Position of the input element to match
                                             // Note : if the position utility is not loaded, the timepicker will attach left top to left bottom
             //NEW: 2011-02-03

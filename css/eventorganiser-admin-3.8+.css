@@ -1,12 +1,12 @@
 /*** Event Admin Page ***/
 /*Ensure event details table has labels aligned to top*/
 #eventorganiser_event_detail td.eo-label{ vertical-align: top }
-#eventorganiser_event_detail .reocurrence_row td{ padding: 0px; }
+#eventorganiser_event_detail .reocurrence_row td{ padding: 0; }
 #eventorganiser_event_detail .reocurrence_row p{ margin-bottom: 18px; }
 
 /*** Datepickers ***/
 /*Correct font size of datepicker inside .form-table */
-.form-table .ui-datepicker-calendar td, .form-table .ui-datepicker-calendar th {font-size: 12px;}
+.form-table .ui-datepicker-calendar td, .form-table .ui-datepicker-calendar th {font-size: inherit;line-height:1.5em}
 .form-table .ui-datepicker select {height: 2em;}
 
 /*** Admin Calendar Page ***/
@@ -14,7 +14,7 @@
 #eo_admin_calendar tbody th,
 #eo_admin_calendar thead th {
 	background: #E4E4E4;
-	padding: 5px 0px!important;
+	padding: 5px 0!important;
 }
 /* Flatten buttons */
 #eo-event-venue-button,
@@ -22,7 +22,8 @@
 .fc-header-goto button,
 .fc-button{
 	background:white;
-}	
+	max-width: 300px;
+}
 /* Hover colour of buttons */
 #eo-event-venue-button:hover,
 #eo-event-cat-button:hover,
@@ -42,12 +43,12 @@
 
 /* Calendar dialog */
 .eo-admin-calendar-dialog{
-	border-radius: 0px;
+	border-radius: 0;
 }
 .eo-admin-calendar-dialog .ui-dialog-titlebar{
 	background: white;
 	border: none;
-	border-radius: 0px;
+	border-radius: 0;
 	font-size: 16px;
 }
 .eo-admin-calendar-dialog .ui-dialog-titlebar span{
@@ -56,18 +57,7 @@
 .eo-admin-calendar-dialog .ui-dialog-titlebar-close:focus,
 .eo-admin-calendar-dialog .ui-dialog-titlebar-close{
 	border:none;
-}
-.eo-admin-calendar-dialog .ui-icon-closethick{
 	background: none;
-}
-.eo-admin-calendar-dialog .ui-dialog-titlebar-close:before{
-	content: '\f158';
-	font: normal 20px/1 'dashicons';
-	speak: none;
-	vertical-align: middle;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	color: #666;
 }
 
 /* Calendar dialog tabs*/
@@ -76,14 +66,14 @@
 	background: #FFF;
 	border: none;
 	border-bottom: 1px solid #DFDFDF;
-	border-radius: 0px;
+	border-radius: 0;
 }
 #eo-dialog-tabs ul li{
-	top: 2px;
 	background: none;
 	border: none;
 }
 #eo-dialog-tabs ul li.ui-tabs-active{
 	background: white;
 	border: 1px solid #DFDFDF;
+	border-bottom: none;
 }

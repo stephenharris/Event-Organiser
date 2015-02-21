@@ -527,7 +527,17 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	$ical = new EO_ICAL_Parser();
     	$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithLongDescription.ics' );
     	
-    	$description = "This event has a really long description and goes over the prescribed limit for iCal feeds. Notice the space at the beginning of this line This is a mid-word break; However this line has a space at the end of the line, and it shouldn't be stripped!";
+    	$description = "This event has a really long description and goes over the prescribed limit for iCal feeds. Notice the space at the beginning of this line This is a mid-word break; However this line has a space at the end of the line, and it shouldn\'t be stripped!";
+    	 
+    	$event = $ical->events[0];
+    	$this->assertEquals( $description, $event['post_content'] );
+    }
+    
+    function testEventWithEscapedCharacters(){
+    	$ical = new EO_ICAL_Parser();
+    	$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithEscapedCharacters.ics' );
+    	
+    	$description = 'Event with escaped characters semi-colon ; comma , and then a new line/paragraph.'."\n\n".'Start of new paragraph. Note: colons are not escaped. This new line should be escaped \\\\n - is it?';
     	 
     	$event = $ical->events[0];
     	$this->assertEquals( $description, $event['post_content'] );
@@ -581,7 +591,101 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	$event = $ical->events[0];
     	$this->assertEquals( 3, $event['sequence'] );  	
     }
+
+    public function testEventWithRecurrenceID()
+    {
+    	
+    	$ical = new EO_ICAL_Parser();
+    	$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithRecurrenceID.ics' );
+
+    	//Check the number of events have imported correctly
+    	$this->assertEquals( 0, count( $ical->warnings ) );
+    	$this->assertEquals( 0, count( $ical->errors ) );
+    	
+    	//Check event
+    	$event = $ical->events[0];
+    	$this->assertEquals( 'weekly', $event['schedule'] );
+    	$this->assertEquals( array( 'SU' ), $event['schedule_meta'] );    
+    }
     
+	public function testPropertyParseAction(){
+		
+		add_action( 'eventorganiser_ical_property_summary', array( $this, '_modifySummary' ), 10, 3);
+			
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/singleEvent.ics' );
+	
+		remove_action( 'eventorganiser_ical_property_summary', array( $this, '_modifySummary' ) );
+		
+		$expected_start = new DateTime( '2013-10-28 19:26:00' );
+		$expected_end = new DateTime( '2013-10-28 20:26:00' );
+		$expected_until = new DateTime( '2013-10-31 00:00:00' );
+	
+		$event = $ical->events[0];
+		$this->assertArrayNotHasKey( 'schedule', $event );
+		$this->assertEquals( "imported: UT Single Event", $event['post_title'] );
+	
+	}
+	
+	public function _modifySummary( $title, $modifiers, $ical_parser ){ 
+		$ical_parser->current_event['post_title'] = "imported: " . $ical_parser->parse_ical_text( $title );
+	}
+	
+	public function testPrePropertyParseAction(){
+		
+		add_filter( 'eventorganiser_pre_ical_property_dtstart', array( $this, '_modifyDtstart' ), 10, 5 );
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithInvalidDateTime.ics' );
+		remove_filter( 'eventorganiser_pre_ical_property_dtstart', array( $this, '_modifyDtstart' ) );
+		
+		$exp_start = new DateTime( '2015-02-01', eo_get_blog_timezone() );
+		$event     = $ical->events[0];
+		
+		$this->assertEquals( $exp_start, $event['start'] );
+	
+	}
+			
+	public function _modifyDtstart( $skip, $value, $modifier, $ical_parser, $prperty ){ 
+
+		$meta    = false;
+		$date_tz = false;
+	
+		//Parse any modifiers
+		if( !empty( $modifiers ) ):
+			foreach( $modifiers as $modifier ):
+				if ( stristr( $modifier, 'TZID' ) ){			
+					$date_tz = $ical_parser->parse_timezone( substr( $modifier, 5 ) );
+				}elseif( stristr( $modifier, 'VALUE' ) ){
+					$meta = substr( $modifier, 6 );
+				}
+			endforeach;
+		endif;
+	
+		//Set timezone
+		if( empty( $date_tz ) )
+			$date_tz = $ical_parser->calendar_timezone;
+			
+		//Parse date / date-time of property
+		if(  $meta === 'DATE' ):
+			$date = $ical_parser->parse_ical_date( $value );
+			$allday = 1;
+		else:
+			try{			
+				$date = $ical_parser->parse_ical_datetime( $value, $date_tz );
+				$allday = 0;
+			}catch( Exception $e ){
+				$date = $ical_parser->parse_ical_date( $value );
+				$allday = 1;
+			}				
+		endif;
+
+		$ical_parser->current_event['start']   = $date;
+		$ical_parser->current_event['all_day'] = $allday;
+	
+		return true;	
+	}
+	
+
 
 	//@TODO
     public function testPartDayForeignRecurringEvent()

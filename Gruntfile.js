@@ -37,12 +37,35 @@ module.exports = function(grunt) {
 		all: [ 'js/*.js', '!js/*.min.js', '!*/time-picker.js', '!*/jquery-ui-eo-timepicker.js', '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
   	
+	cssjanus: {
+		core: {
+			options: {
+				swapLtrRtlInUrl: false,
+				processContent: function( src ) {
+					return src.replace( /url\((.+?)\.css\)/g, 'url($1-rtl.css)' );
+				}
+			},
+			expand: true,
+			ext: '-rtl.css',
+			src: [ 'css/*.css', '!**/*.min.css', '!**/*-rtl.css', '!**/fullcalendar.css' ]
+		}
+	},
+  	
+	cssmin: {
+		minify: {
+			expand: true,
+			src: [ 'css/*.css', '!**/*.min.css' ],
+		    ext: '.min.css',
+		    extDot: 'last'
+		}
+	},
+  	
 	shell: {
 		makeDocs: {
 			options: {
 				stdout: true
 			},
-			command: 'apigen --config /var/www/git/event-organiser/apigen/apigen.conf'
+			command: 'apigen --config apigen/apigen.conf'
 		},
 	},
 
@@ -71,8 +94,10 @@ module.exports = function(grunt) {
 	},
 
 	clean: {
-		//Clean up build folder
-		main: ['dist/event-organiser']
+		main: ['dist/event-organiser'],//Clean up build folder
+		css: [ 'css/*.min.css', 'css/*-rtl.css' ],
+		js: [ 'js/*.min.js' ],
+		i18n: [ 'languages/*.mo', 'languages/*.pot' ] 
 	},
 
 	copy: {
@@ -81,6 +106,7 @@ module.exports = function(grunt) {
 			src:  [
 				'**',
 				'!node_modules/**',
+				'!assets/**',
 				'!dist/**',
 				'!.git/**',
 				'!apigen/**',
@@ -91,11 +117,13 @@ module.exports = function(grunt) {
 				'!package.json',
 				'!.gitignore',
 				'!.gitmodules',
-				'!*~',
+				'!**/*~',
 				'!composer.lock',
 				'!composer.phar',
 				'!composer.json',
-				'!CONTRIBUTING.md'
+				'!CONTRIBUTING.md',
+				'!readme.md',
+				'!ruleset.xml'
 			],
 			dest: 'dist/event-organiser/'
 		},
@@ -104,14 +132,17 @@ module.exports = function(grunt) {
 			src:  [
 				'**',
 				'!dist/**', //build directory
+				'!assets/**',
 				'!.git/**','!.gitignore','!.gitmodules', //git
 				'!node_modules/**','!Gruntfile.js','!package.json', //grunt
 				'!apigen/**','!documentation/**', //documentation
 				'!tests/**', //unit tests
 				'!vendor/**',
-				'!*~',
+				'!**/*~',
 				'!composer.lock','!composer.phar','!composer.json',//composer
-				'!CONTRIBUTING.md'
+				'!CONTRIBUTING.md',
+				'!readme.md',
+				'!ruleset.xml'
 			],
 			dest: process.env.EO_BETA_PLUGIN_DIR + '/<%= pkg.name %>/'
 		}	
@@ -170,7 +201,9 @@ module.exports = function(grunt) {
             options: {
         		svn_user: 'stephenharris',
         		plugin_slug: 'event-organiser',
-        		build_dir: 'dist/event-organiser/'
+        		build_dir: 'dist/event-organiser/',
+        		assets_dir: 'assets/',
+        		max_buffer: 1024*1024
             },
     	}
     },
@@ -186,20 +219,36 @@ module.exports = function(grunt) {
     	options:{
         	text_domain: 'eventorganiser',
         	dest: 'languages/',
-        	keywords: ['__','_e','esc_html__','esc_html_e','esc_attr__', 'esc_attr_e', 'esc_attr_x', 'esc_html_x', 'ngettext', '_n', '_ex', '_nx' ],
+        	msgmerge: true,
+			keywords: ['__:1',
+			           '_e:1',
+			           '_x:1,2c',
+			           'esc_html__:1',
+			           'esc_html_e:1',
+			           'esc_html_x:1,2c',
+			           'esc_attr__:1', 
+			           'esc_attr_e:1', 
+			           'esc_attr_x:1,2c', 
+			           '_ex:1,2c',
+			           '_n:1,2,4d', 
+			           '_nx:1,2,4c',
+			           '_n_noop:1,2',
+			           '_nx_noop:1,2,3c',
+			           'ngettext:1,2'
+			          ],
     	},
     	files:{
-		src:  [
-			'**/*.php',
-			'!node_modules/**',
-			'!dist/**',
-			'!apigen/**',
-			'!documentation/**',
-			'!tests/**',
-			'!vendor/**',
-			'!*~',
-		],
-		expand: true,
+    		src:  [
+    		  '**/*.php',
+    		  '!node_modules/**',
+    		  '!dist/**',
+    		  '!apigen/**',
+    		  '!documentation/**',
+    		  '!tests/**',
+    		  '!vendor/**',
+    		  '!*~',
+    		],
+    		expand: true,
     	}
     },
 
@@ -216,6 +265,7 @@ module.exports = function(grunt) {
 			           'esc_attr_e:1,2d', 
 			           'esc_attr_x:1,2c,3d', 
 			           '_ex:1,2c,3d',
+			           '_x:1,2c,3d',
 			           '_n:1,2,4d', 
 			           '_nx:1,2,4c,5d',
 			           '_n_noop:1,2,3d',
@@ -245,7 +295,7 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'build', [ 'test', 'uglify', 'pot', 'po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
+grunt.registerTask( 'build', [ 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
 
 grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
 

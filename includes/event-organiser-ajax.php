@@ -62,18 +62,49 @@ function eventorganiser_public_fullcalendar() {
 	
 
 	$presets = array('numberposts'=>-1, 'group_events_by'=>'','showpastevents'=>true);
+	
+	if( current_user_can( 'read_private_events' ) ){
+		$priv = '_priv';
+		$post_status = array( 'publish', 'private' );
+	}else{
+		$priv = false;
+		$post_status = array( 'publish' );
+	}
 
 	//Retrieve events		
-	$query = array_merge($request,$presets,array($time_format));
-	$key = 'eo_fc_'.md5(serialize($query));
-	$calendar = get_transient('eo_full_calendar_public');
-	if( $calendar && is_array($calendar) && isset( $calendar[$key] ) ){
-		echo json_encode($calendar[$key]);
+	$query    = array_merge( $request, $presets );
+	
+	//In case polylang is enabled with events as translatable. Include locale in cache key.
+	$options = get_option( 'polylang' );
+	if( defined( 'POLYLANG_VERSION' ) && !empty( $options['post_types']  ) && in_array( 'event', $options['post_types'] ) ){
+		$key = "eo_fc_".md5( serialize( $query ). $time_format . get_locale() );
+	}else{
+		$key = "eo_fc_".md5( serialize( $query ). $time_format );
+	}
+	
+	$calendar = get_transient( "eo_full_calendar_public{$priv}");
+	if( $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
+		$events_array = $calendar[$key];
+		/**
+	 	* Filters the event before it is sent to the calendar. 
+	 	*
+	 	* **Note:** This filters the response immediately before sending, and after 
+	 	* the cache is saved/retrieved. Changes made on this filter are not cached.
+	 	*
+	 	* @package fullCalendar
+	 	* @param array  $events_array An array of events (array).
+	 	* @param array  $query        The query as given to eo_get_events() 
+	 	*/
+		$events_array = apply_filters( 'eventorganiser_fullcalendar', $events_array, $query );
+	
+		echo json_encode( $events_array );
 		exit;
 	}
 
-	$events = eo_get_events($query);
-	$eventsarray = array();
+	$query['post_status'] = $post_status;
+	
+	$events = eo_get_events( $query );
+	$events_array = array();
 
 	//Blog timezone
 	$tz = eo_get_blog_timezone();
@@ -84,7 +115,6 @@ function eventorganiser_public_fullcalendar() {
 		foreach  ($events as $post) :
 			setup_postdata( $post );
 			$event=array();
-			$event['className']=array('eo-event');
 
 			//Title and url
 			$event['title']=html_entity_decode(get_the_title($post->ID),ENT_QUOTES,'UTF-8');
@@ -179,22 +209,21 @@ function eventorganiser_public_fullcalendar() {
 			$description = apply_filters('eventorganiser_event_tooltip', $description, $post->ID,$post->occurrence_id,$post);
 			$event['description'] = $description;
 			
+			$event['className']   = eo_get_event_classes();
+			$event['className'][] = 'eo-event';
+			
 			//Colour past events
 			$now = new DateTime(null,$tz);
 			if($event_start <= $now)
-				$event['className'][] = 'eo-past-event';
+				$event['className'][] = 'eo-past-event'; //deprecated. use eo-event-past or eo-event-running
 			else
-				$event['className'][] = 'eo-future-event';
+				$event['className'][] = 'eo-future-event'; //deprecated. use eo-event-future
 				
-			//Add class if event is all day
-			if( eo_is_all_day() )
-				$event['className'][] = 'eo-all-day';
-			
 			//Include venue if this is set
 			$venue = eo_get_venue($post->ID);
 
 			if($venue && !is_wp_error($venue)){
-				$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);
+				$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);//deprecated. use eo-event-venue-{slug}
 				$event['venue']=$venue;
 			}
 				
@@ -204,7 +233,7 @@ function eventorganiser_public_fullcalendar() {
 			if($terms):
 				foreach ($terms as $term):
 					$event['category'][]= $term->slug;
-					$event['className'][]='category-'.$term->slug;
+					$event['className'][]='category-'.$term->slug;//deprecated. use eo-event-cat-{slug}
 				endforeach;
 			endif;
 			
@@ -215,7 +244,7 @@ function eventorganiser_public_fullcalendar() {
 				if( $terms && !is_wp_error( $terms ) ):
 					foreach ($terms as $term):
 						$event['tags'][]= $term->slug;
-						$event['className'][]='tag-'.$term->slug;
+						$event['className'][]='tag-'.$term->slug;//deprecated. use eo-event-tag-{slug}
 					endforeach;
 				endif;
 			}
@@ -244,8 +273,9 @@ function eventorganiser_public_fullcalendar() {
 			 * @param int    $occurrence_id The event's occurrence ID.
 			 */
 			$event = apply_filters('eventorganiser_fullcalendar_event',$event, $post->ID,$post->occurrence_id);
-			if( $event )
-				$eventsarray[]=$event;
+			if( $event ){
+				$events_array[] = $event;
+			}
 
 		endforeach;
 		wp_reset_postdata();
@@ -254,12 +284,14 @@ function eventorganiser_public_fullcalendar() {
 	if( !$calendar || !is_array($calendar) )
 		$calendar = array();
 	
-	$calendar[$key] = $eventsarray;
+	$calendar[$key] = $events_array;
 
-	set_transient('eo_full_calendar_public',$calendar, 60*60*24);
+	set_transient( "eo_full_calendar_public{$priv}",$calendar, 60*60*24);
+	
+	$events_array = apply_filters( 'eventorganiser_fullcalendar', $events_array, $query );
 
 	//Echo result and exit
-	echo json_encode($eventsarray);
+	echo json_encode( $events_array );
 	exit;
 }
 
@@ -695,7 +727,8 @@ function eventorganiser_search_venues() {
 			}
 		}
 		
-		$novenue = array('term_id'=>0,'name'=>__('No Venue','eventorganiser'));
+		$tax = get_taxonomy( 'event-venue' );
+		$novenue = array( 'term_id' => 0,'name' => $tax->labels->no_item );
 		$venues =array_merge (array($novenue),$venues);
 
 		//echo JSON to page  

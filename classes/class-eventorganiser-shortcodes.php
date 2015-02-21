@@ -22,7 +22,6 @@ class EventOrganiser_Shortcodes {
 	}
  
 	static function handle_calendar_shortcode($atts=array()) {
-		global $post;
 
 		/* Shortcodes don't accept hyphens, so convert taxonomy names */
 		$taxs = array('category','tag','venue');
@@ -52,16 +51,21 @@ class EventOrganiser_Shortcodes {
 	
 		self::$add_script = true;
 
-		$id = count(self::$widget_calendars);
-		self::$widget_calendars['eo_shortcode_calendar_'.$id] = $atts;
+		$id     = count(self::$widget_calendars);
+		$cal_id = 'eo_shortcode_calendar_'.$id;
+		self::$widget_calendars[$cal_id] = $atts;
 
 		$tz = eo_get_blog_timezone();
 		$date =  isset($_GET['eo_month']) ? $_GET['eo_month'].'-01' : 'now';
 		$month = new DateTime($date,$tz);
 		$month = date_create($month->format('Y-m-1'),$tz);
-
-		$html = '<div class="widget_calendar eo-calendar eo-calendar-shortcode eo_widget_calendar" id="eo_shortcode_calendar_'.$id.'">';
-		$html .= '<div id="eo_shortcode_calendar_'.$id.'_content">'.EO_Calendar_Widget::generate_output($month,$atts).'</div>';
+		
+		$html = '<div class="widget_calendar eo-calendar eo-calendar-shortcode eo_widget_calendar" id="'.$cal_id.'">';
+		
+		$html .= '<div id="'.$cal_id.'_content" class="eo-widget-cal-wrap" data-eo-widget-cal-id="'.$cal_id.'">';
+		$html .= EO_Calendar_Widget::generate_output( $month, $atts );
+		$html .='</div>';
+		
 		$html .= '</div>';
 
 		return $html;
