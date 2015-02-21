@@ -25,31 +25,22 @@ add_action( 'wp_ajax_eo_toggle_addon_page', 'eventorganiser_ajax_toggle_addon_pa
 */
 function eventorganiser_public_fullcalendar() {
 	$request = array(
-		'event_start_before'=>$_GET['end'],
-		'event_end_after'=>$_GET['start'],
+		'event_start_before' => $_GET['end'],
+		'event_end_after'    => $_GET['start'],
 	);
 
-	$time_format = !empty($_GET['timeformat']) ? $_GET['timeformat'] : get_option('time_format');
+	$time_format = !empty( $_GET['timeformat'] ) ? $_GET['timeformat'] : get_option( 'time_format' );
 
-	//Restrict by category and/or venue
-	if( !empty($_GET['category']) ){
-		$cats = explode(',',esc_attr($_GET['category']));
-		$request['tax_query'][] = array(
-				'taxonomy' => 'event-category',
-				'field' => 'slug',
-				'terms' => $cats,
-				'operator' => 'IN'
+	//Restrict by category and/or venue/tag
+	foreach( array( 'category', 'venue', 'tag' ) as $tax ){
+		if( !empty( $_GET[$tax] ) ){
+			$request['tax_query'][] = array(
+				'taxonomy' => 'event-'.$tax,
+				'field'    => 'slug',
+				'terms'    => explode( ',', esc_attr( $_GET[$tax] ) ),
+				'operator' => 'IN',
 			);
-	}
-
-	if( !empty($_GET['venue']) ){
-		$venues = explode(',',esc_attr($_GET['venue']));
-		$request['tax_query'][] = array(
-				'taxonomy' => 'event-venue',
-				'field' => 'slug',
-				'terms' => $venues,
-				'operator' => 'IN'
-			);
+		}	
 	}
 
 	if( !empty( $_GET['users_events'] ) && 'false' != $_GET['users_events'] ){
@@ -59,9 +50,8 @@ function eventorganiser_public_fullcalendar() {
 	if( !empty( $_GET['event_occurrence__in'] ) ){
 		$request['event_occurrence__in'] = $_GET['event_occurrence__in'];
 	}
-	
 
-	$presets = array('numberposts'=>-1, 'group_events_by'=>'','showpastevents'=>true);
+	$presets = array( 'numberposts' => -1, 'group_events_by' => '', 'showpastevents' => true );
 	
 	if( current_user_can( 'read_private_events' ) ){
 		$priv = '_priv';
