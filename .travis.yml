@@ -9,6 +9,11 @@ php:
 - 5.6
 - hhvm
 
+branches:
+  only:
+    - master
+    - develop
+
 env:
 - WP_VERSION=latest WP_MULTISITE=0
 - WP_VERSION=4.1 WP_MULTISITE=0
