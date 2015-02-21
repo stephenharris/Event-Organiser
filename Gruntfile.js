@@ -108,6 +108,7 @@ module.exports = function(grunt) {
 				'!node_modules/**',
 				'!assets/**',
 				'!dist/**',
+				'!bin/**',
 				'!.git/**',
 				'!apigen/**',
 				'!documentation/**',
@@ -115,15 +116,15 @@ module.exports = function(grunt) {
 				'!vendor/**',
 				'!Gruntfile.js',
 				'!package.json',
-				'!.gitignore',
-				'!.gitmodules',
+				'!.*',
 				'!**/*~',
 				'!composer.lock',
 				'!composer.phar',
 				'!composer.json',
 				'!CONTRIBUTING.md',
 				'!readme.md',
-				'!ruleset.xml'
+				'!ruleset.xml',
+				'!phpunit.xml',
 			],
 			dest: 'dist/event-organiser/'
 		},
@@ -160,12 +161,6 @@ module.exports = function(grunt) {
 	phpunit: {
 		classes: {
 			dir: 'tests/unit-tests'
-		},
-		options: {
-			bin: 'vendor/bin/phpunit',
-			bootstrap: 'tests/bootstrap.php',
-			noGlobalsBackup: true,
-			colors: true
 		}
 	},
 	
