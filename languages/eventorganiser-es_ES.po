@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-24 16:38+0000\n"
-"PO-Revision-Date: 2015-01-19 07:00:38+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"POT-Creation-Date: 2015-02-21 18:41+0000\n"
+"PO-Revision-Date: 2015-02-09 04:35:23+0000\n"
+"Last-Translator: Maxfer <maxfer@gmail.com>\n"
 "Language-Team: \n"
 "Language: Spanish; Castilian (Spain)\n"
 "MIME-Version: 1.0\n"
@@ -31,15 +31,15 @@ msgstr "Título"
 msgid "Group by"
 msgstr "Organizado por"
 
-#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:237
+#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:234
 msgid "Day"
 msgstr "Día"
 
-#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:237
+#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:234
 msgid "Week"
 msgstr "semana"
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:237
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:234
 msgid "Month"
 msgstr "Mes"
 
@@ -61,7 +61,7 @@ msgstr "Incluir enlace 'Adicionar A Google'"
 msgid "Displays a calendar of your events"
 msgstr "Muestra un calendario de sus eventos"
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:233
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:230
 msgid "Events Calendar"
 msgstr "Calendario de Eventos"
 
@@ -111,8 +111,8 @@ msgstr "Mes próximo"
 msgid "Displays a list of events"
 msgstr "Muestra una lista de eventos"
 
-#: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:481
-#: event-organiser.php:132 includes/event-organiser-cpt.php:217
+#: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
+#: event-organiser.php:136 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -184,7 +184,7 @@ msgid "Delete"
 msgstr "Borrar"
 
 #: classes/class-eo-venue-list-table.php:74
-#: includes/event-organiser-ajax.php:676
+#: includes/event-organiser-ajax.php:674
 msgid "View"
 msgstr "Ver"
 
@@ -199,7 +199,7 @@ msgstr "Categorías de evento"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1496
+#: includes/event-organiser-event-functions.php:1508
 #: templates/event-meta-event-single.php:69
 msgid "Categories"
 msgstr "Categorías"
@@ -242,7 +242,7 @@ msgstr "Lugares de encuentro"
 msgid "Select Venue"
 msgstr "Seleccionar lugar de encuentro"
 
-#: classes/class-eventorganiser-shortcodes.php:376
+#: classes/class-eventorganiser-shortcodes.php:391
 msgid "There is no excerpt because this is a protected post."
 msgstr "No hay extracto porque esto es un post protegido."
 
@@ -270,112 +270,112 @@ msgstr "Descubra más &hellip; "
 msgid "Calendar View"
 msgstr "Vista de Calendario"
 
-#: event-organiser-calendar.php:58 includes/event-organiser-register.php:58
+#: event-organiser-calendar.php:55 includes/event-organiser-register.php:58
 msgid "today"
 msgstr "hoy"
 
-#: event-organiser-calendar.php:59 includes/event-organiser-register.php:59
+#: event-organiser-calendar.php:56 includes/event-organiser-register.php:59
 #: includes/event-organiser-register.php:248
 msgid "day"
 msgstr "dia"
 
-#: event-organiser-calendar.php:60 includes/event-organiser-register.php:60
+#: event-organiser-calendar.php:57 includes/event-organiser-register.php:60
 #: includes/event-organiser-register.php:250
 msgid "week"
 msgstr "semana"
 
-#: event-organiser-calendar.php:61 includes/event-organiser-register.php:61
+#: event-organiser-calendar.php:58 includes/event-organiser-register.php:61
 #: includes/event-organiser-register.php:252
 msgid "month"
 msgstr "mes"
 
-#: event-organiser-calendar.php:62 includes/event-organiser-register.php:62
+#: event-organiser-calendar.php:59 includes/event-organiser-register.php:62
 msgid "go to date"
 msgstr "ir a fecha"
 
-#: event-organiser-calendar.php:63 event-organiser-manage.php:122
+#: event-organiser-calendar.php:60 event-organiser-manage.php:122
 #: includes/event-organiser-cpt.php:105
 msgid "View all categories"
 msgstr "Ver todas las categorías"
 
-#: event-organiser-calendar.php:64 includes/event-organiser-cpt.php:45
+#: event-organiser-calendar.php:61 includes/event-organiser-cpt.php:45
 msgid "View all venues"
 msgstr "Ver todos los lugares de encuentro"
 
-#: event-organiser-calendar.php:111
+#: event-organiser-calendar.php:108
 msgid "You do not have sufficient permissions to create events. "
 msgstr "Usted no tiene los permisos suficientes para crear eventos."
 
-#: event-organiser-calendar.php:167
+#: event-organiser-calendar.php:164
 #, fuzzy
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Usted no tiene los permisos suficientes para editar este evento."
 
-#: event-organiser-calendar.php:185
+#: event-organiser-calendar.php:182
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr "Usted no tiene los permisos suficientes para borrar este evento."
 
-#: event-organiser-calendar.php:195
+#: event-organiser-calendar.php:192
 msgid "Occurrence deleted."
 msgstr "Ocurrencia borrada."
 
-#: event-organiser-calendar.php:211
+#: event-organiser-calendar.php:208
 #, fuzzy
 msgid "Calendar options"
 msgstr "Opciones de calendario"
 
-#: event-organiser-calendar.php:218
+#: event-organiser-calendar.php:215
 msgid "24 hour time"
 msgstr "Tiempo de 24 horas"
 
-#: event-organiser-calendar.php:240
-#: includes/event-organiser-event-functions.php:1443
+#: event-organiser-calendar.php:237
+#: includes/event-organiser-event-functions.php:1455
 msgid "Loading&#8230;"
 msgstr "Cargando&#8230; "
 
-#: event-organiser-calendar.php:247
+#: event-organiser-calendar.php:244
 msgid "Current date/time"
 msgstr "Fecha/hora actual"
 
-#: event-organiser-calendar.php:252
+#: event-organiser-calendar.php:249
 msgid "Create an event"
 msgstr "Crear un evento"
 
-#: event-organiser-calendar.php:257
+#: event-organiser-calendar.php:254
 msgid "When"
 msgstr "Cuándo"
 
-#: event-organiser-calendar.php:261
+#: event-organiser-calendar.php:258
 msgid "Event Title"
 msgstr "Título del Evento"
 
-#: event-organiser-calendar.php:268 includes/event-organiser-ajax.php:399
+#: event-organiser-calendar.php:265 includes/event-organiser-ajax.php:397
 msgid "Where"
 msgstr "Dónde"
 
-#: event-organiser-calendar.php:293
+#: event-organiser-calendar.php:290
 msgid "Save Draft"
 msgstr "Salvar Borrador"
 
-#: event-organiser-calendar.php:294 event-organiser-calendar.php:301
+#: event-organiser-calendar.php:291 event-organiser-calendar.php:298
 #: event-organiser-edit.php:258
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: event-organiser-calendar.php:297
+#: event-organiser-calendar.php:294
 msgid "Publish Event"
 msgstr "Publicar Evento"
 
-#: event-organiser-calendar.php:303
+#: event-organiser-calendar.php:300
 msgid "Submit for Review"
 msgstr "Enviar para Revisión"
 
-#: event-organiser-calendar.php:324 event-organiser-edit.php:14
+#: event-organiser-calendar.php:321 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:37
 msgid "Event Details"
 msgstr "Detalles de Evento"
 
-#: event-organiser-calendar.php:326
+#: event-organiser-calendar.php:323
 msgid "Event Detail"
 msgstr "Detalle de Evento"
 
@@ -467,7 +467,7 @@ msgid "unknown"
 msgstr "desconocido"
 
 #: event-organiser-edit.php:31 event-organiser-manage.php:23
-#: event-organiser-settings.php:142 includes/event-organiser-ajax.php:386
+#: event-organiser-settings.php:142 includes/event-organiser-ajax.php:384
 msgid "Organiser"
 msgstr "Organiser"
 
@@ -552,7 +552,7 @@ msgid "day of week"
 msgstr "día de la semana"
 
 #: event-organiser-edit.php:185
-#: includes/event-organiser-event-functions.php:819
+#: includes/event-organiser-event-functions.php:824
 #: includes/event-organiser-register.php:265
 msgid "until"
 msgstr "hasta"
@@ -576,7 +576,7 @@ msgstr "Seleccionar un lugar de encuentro"
 msgid "Venue Name"
 msgstr "Nombre del Lugar de Encuentro"
 
-#: event-organiser-edit.php:410
+#: event-organiser-edit.php:415
 #, fuzzy
 msgid "Event dates were not saved."
 msgstr "Las fechas del evento no fueron salvadas."
@@ -731,42 +731,42 @@ msgstr "Ajustes de Event Organiser"
 msgid "Event Organiser"
 msgstr "Event Organiser"
 
-#: event-organiser-settings.php:46 event-organiser.php:105
+#: event-organiser-settings.php:46 event-organiser.php:109
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Editar Eventos"
 
-#: event-organiser-settings.php:47 event-organiser.php:106
+#: event-organiser-settings.php:47 event-organiser.php:110
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Publicar Eventos"
 
-#: event-organiser-settings.php:48 event-organiser.php:107
+#: event-organiser-settings.php:48 event-organiser.php:111
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Borrar Eventos"
 
-#: event-organiser-settings.php:49 event-organiser.php:108
+#: event-organiser-settings.php:49 event-organiser.php:112
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Editar Otros Eventos"
 
-#: event-organiser-settings.php:50 event-organiser.php:109
+#: event-organiser-settings.php:50 event-organiser.php:113
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Borrar Otros Eventos"
 
-#: event-organiser-settings.php:51 event-organiser.php:110
+#: event-organiser-settings.php:51 event-organiser.php:114
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Leer Eventos Privados"
 
-#: event-organiser-settings.php:52 event-organiser.php:111
+#: event-organiser-settings.php:52 event-organiser.php:115
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Gestionar Lugares de Encuentros"
 
-#: event-organiser-settings.php:53 event-organiser.php:112
+#: event-organiser-settings.php:53 event-organiser.php:116
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Gestionar Categorías y Etiquetas de Evento"
@@ -1086,34 +1086,28 @@ msgstr "Lugar de encuentro <strong>actualizado</strong>"
 msgid "Venue(s) <strong>deleted</strong>"
 msgstr "Lugar(es) de encuentro <strong>borrado(s)</strong>"
 
-#: event-organiser-venues.php:255 event-organiser-venues.php:294
-#: includes/event-organiser-cpt.php:219
-msgctxt "post"
-msgid "Add New"
-msgstr ""
-
 #: event-organiser-venues.php:258
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Resultados de la búsqueda para &#8220;%s&#8221;"
 
-#: event-organiser-venues.php:417
+#: event-organiser-venues.php:418
 msgid "Latitude/Longitude:"
-msgstr ""
+msgstr "Latitud/Longitud"
 
-#: event-organiser-venues.php:445
+#: event-organiser-venues.php:446
 msgid "Venue name"
 msgstr "Nombre del Lugar de Encuentro"
 
-#: event-organiser-venues.php:451
+#: event-organiser-venues.php:452
 msgid "Permalink:"
 msgstr "Permalink:"
 
-#: event-organiser-venues.php:458
+#: event-organiser-venues.php:459
 msgid "Get Link"
 msgstr "Obtener Enlace"
 
-#: event-organiser-venues.php:480
+#: event-organiser-venues.php:481
 msgid "Slug"
 msgstr "Alias"
 
@@ -1266,51 +1260,72 @@ msgstr "1 categoría fue creada"
 msgid "%d categories were created"
 msgstr "%d categorías fueron creadas"
 
-#: includes/event-organiser-ajax.php:352
+#: includes/event-organiser-ajax.php:347
 msgid "Protected"
 msgstr "Protegido"
 
-#: includes/event-organiser-ajax.php:354
+#: includes/event-organiser-ajax.php:349
 msgid "Private"
 msgstr "Privado"
 
-#: includes/event-organiser-ajax.php:356
+#: includes/event-organiser-ajax.php:351
 msgid "Draft"
 msgstr "Borrador"
 
-#: includes/event-organiser-ajax.php:383
+#: includes/event-organiser-ajax.php:381
 #: templates/event-meta-event-single.php:58
 msgid "Start"
 msgstr "Inicio"
 
-#: includes/event-organiser-ajax.php:384
+#: includes/event-organiser-ajax.php:382
 msgid "End"
 msgstr "Final"
 
-#: includes/event-organiser-ajax.php:425
+#: includes/event-organiser-ajax.php:423
 msgid "This event reoccurs"
 msgstr "Este evento se repite"
 
-#: includes/event-organiser-ajax.php:431 includes/event-organiser-cpt.php:221
+#: includes/event-organiser-ajax.php:429 includes/event-organiser-cpt.php:221
 msgid "Edit Event"
 msgstr "Editar Evento"
 
-#: includes/event-organiser-ajax.php:450
+#: includes/event-organiser-ajax.php:448
 msgid "Delete this occurrence"
 msgstr "Borrar esta ocurrencia "
 
-#: includes/event-organiser-ajax.php:464
+#: includes/event-organiser-ajax.php:462
 msgid "Break this series"
 msgstr "Romper esta serie"
 
-#: includes/event-organiser-ajax.php:672
-#: includes/event-organiser-event-functions.php:1401
+#: includes/event-organiser-ajax.php:670
+#: includes/event-organiser-event-functions.php:1407
 msgid "All Day"
 msgstr "Todo el Día"
 
-#: includes/event-organiser-ajax.php:677
+#: includes/event-organiser-ajax.php:675
 msgid "Add To Google Calendar"
 msgstr "Adicionar a Google Calendar"
+
+#: includes/event-organiser-ajax.php:786
+msgid "Event not found"
+msgstr ""
+
+#: includes/event-organiser-ajax.php:798
+msgid "Events are not editable via the admin calendar"
+msgstr ""
+
+#: includes/event-organiser-ajax.php:808
+msgid "Are you sure you want to do this?"
+msgstr ""
+
+#: includes/event-organiser-ajax.php:818
+msgid "You do not have permission to edit this event"
+msgstr ""
+
+#: includes/event-organiser-ajax.php:840
+#, php-format
+msgid "Event not created: %s"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:33
 msgid "Search Venues"
@@ -1358,7 +1373,7 @@ msgstr "Localización del Lugar de Encuentro"
 
 #: includes/event-organiser-cpt.php:46
 msgid "Venue:"
-msgstr ""
+msgstr "Lugar de encuentro:"
 
 #: includes/event-organiser-cpt.php:47
 msgid "No Venue"
@@ -1367,7 +1382,7 @@ msgstr "Sin Lugar de Encuentro"
 #: includes/event-organiser-cpt.php:93
 msgctxt "taxonomy singular name"
 msgid "Category"
-msgstr ""
+msgstr "Categoría"
 
 #: includes/event-organiser-cpt.php:94
 msgid "Search Categories"
@@ -1383,7 +1398,7 @@ msgstr "Categoría Padre"
 
 #: includes/event-organiser-cpt.php:97
 msgid "Parent Category:"
-msgstr ""
+msgstr "Categoría padre"
 
 #: includes/event-organiser-cpt.php:98
 msgid "Edit Category"
@@ -1408,7 +1423,7 @@ msgstr "No se encontraron categorías"
 #: includes/event-organiser-cpt.php:147
 msgctxt "taxonomy singular name"
 msgid "Tag"
-msgstr ""
+msgstr "Etiqueta"
 
 #: includes/event-organiser-cpt.php:148
 msgid "Search Tags"
@@ -1447,7 +1462,7 @@ msgid "Choose from the most used tags"
 msgstr "Escoger de las etiquetas más usadas"
 
 #: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1503
+#: includes/event-organiser-event-functions.php:1515
 #: templates/event-meta-event-single.php:74
 msgid "Tags"
 msgstr "Etiquetas"
@@ -1463,6 +1478,11 @@ msgstr "Separar etiquetas por coma"
 #: includes/event-organiser-cpt.php:161
 msgid "View all tags"
 msgstr "Ver todas las etiquetas"
+
+#: includes/event-organiser-cpt.php:219
+msgctxt "post"
+msgid "Add New"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:220
 msgid "Add New Event"
@@ -1753,78 +1773,78 @@ msgstr "Color"
 msgid "Assign the category a colour."
 msgstr "Asignar a la categoría un color"
 
-#: includes/event-organiser-event-functions.php:740
+#: includes/event-organiser-event-functions.php:745
 #: includes/event-organiser-register.php:266
 msgid "last"
 msgstr "último"
 
-#: includes/event-organiser-event-functions.php:740
+#: includes/event-organiser-event-functions.php:745
 #: includes/event-organiser-register.php:266
 msgid "first"
 msgstr "primero"
 
-#: includes/event-organiser-event-functions.php:740
+#: includes/event-organiser-event-functions.php:745
 #: includes/event-organiser-register.php:266
 msgid "second"
 msgstr "segundo"
 
-#: includes/event-organiser-event-functions.php:740
+#: includes/event-organiser-event-functions.php:745
 #: includes/event-organiser-register.php:266
 msgid "third"
 msgstr "tercero"
 
-#: includes/event-organiser-event-functions.php:740
+#: includes/event-organiser-event-functions.php:745
 #: includes/event-organiser-register.php:266
 msgid "fourth"
 msgstr "cuarto"
 
-#: includes/event-organiser-event-functions.php:750
+#: includes/event-organiser-event-functions.php:755
 msgid "one time only"
 msgstr "una sola vez"
 
-#: includes/event-organiser-event-functions.php:753
+#: includes/event-organiser-event-functions.php:758
 #, fuzzy
 msgid "custom reoccurrence"
 msgstr "recurrencia personalizada"
 
-#: includes/event-organiser-event-functions.php:760
+#: includes/event-organiser-event-functions.php:765
 #: includes/event-organiser-register.php:256
 msgid "every day"
 msgstr "cada día"
 
-#: includes/event-organiser-event-functions.php:762
+#: includes/event-organiser-event-functions.php:767
 #: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d days"
 msgstr "cada %d días"
 
-#: includes/event-organiser-event-functions.php:768
+#: includes/event-organiser-event-functions.php:773
 #: includes/event-organiser-register.php:258
 msgid "every week on"
 msgstr "cada semana en"
 
-#: includes/event-organiser-event-functions.php:770
+#: includes/event-organiser-event-functions.php:775
 #: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d weeks on"
 msgstr "cada %d semanas en"
 
-#: includes/event-organiser-event-functions.php:781
+#: includes/event-organiser-event-functions.php:786
 #: includes/event-organiser-register.php:260
 msgid "every month on the"
 msgstr "cada mes en el"
 
-#: includes/event-organiser-event-functions.php:783
+#: includes/event-organiser-event-functions.php:788
 #: includes/event-organiser-register.php:261
 #, php-format
 msgid "every %d months on the"
 msgstr "cada %d meses en el"
 
-#: includes/event-organiser-event-functions.php:812
+#: includes/event-organiser-event-functions.php:817
 msgid "every year"
 msgstr "cada año"
 
-#: includes/event-organiser-event-functions.php:814
+#: includes/event-organiser-event-functions.php:819
 #, php-format
 msgid "every %d years"
 msgstr "cada %d años"
@@ -1941,33 +1961,37 @@ msgstr "Código Postal"
 msgid "Country"
 msgstr "País"
 
-#: includes/event.php:575
+#: includes/event.php:549
 msgid "Schedule not recognised."
 msgstr "Programación no reconocida."
 
-#: includes/event.php:584
+#: includes/event.php:558
 msgid "Start date not provided."
 msgstr "Fecha de inicio no proveida."
 
-#: includes/event.php:602
+#: includes/event.php:576
 msgid "Start date occurs after end date."
 msgstr "La fecha de inicio ocurre después de la fecha de fin."
 
-#: includes/event.php:605
+#: includes/event.php:579
 msgid "Schedule end date is before is before the start date."
 msgstr "La fecha de fin programada es anterior a la fecha de inicio."
 
-#: includes/event.php:688
+#: includes/event.php:662
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Programación mensual inválida (ordinal inválido)"
 
-#: includes/event.php:808
+#: includes/event.php:782
 msgid "Event does not contain any dates."
 msgstr "El evento no contiene ningunas fechas."
 
-#: includes/event.php:949
+#: includes/event.php:923
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr "La ocurrencia no fue borrada. La ocurrencia no fue encontrada."
+
+#: includes/event.php:984
+msgid "There is already an occurrence on this date"
+msgstr ""
 
 #. / TRANSLATORS: This is the description that of the plug-in that appears in the "Plugins" page.
 #: includes/i18n.php:8
@@ -1989,7 +2013,7 @@ msgstr "Eventos:"
 #: templates/taxonomy-event-venue.php:48
 #: templates/taxonomy-event-venue.php:105
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
-msgstr "Eventos anteriores <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Eventos posteriores <span class=\"meta-nav\">&rarr;</span>"
 
 #: templates/archive-event.php:56 templates/archive-event.php:111
 #: templates/taxonomy-event-category.php:49
