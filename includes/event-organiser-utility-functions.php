@@ -1530,3 +1530,17 @@ function eo_array_combine_assoc( $key_array, $value_array ) {
 	
 	return $output;
 }
+
+/**
+ * Wrapper for {@see get_user_by()}. Returns the user ID instead of the object.
+ * 
+ * @since 2.12.0
+ * @uses get_user_by();
+ * @param string $field The field to retrieve the user with. id | slug | email | login
+ * @param int|string $value A value for $field. A user ID, slug, email address, or login name.
+ * @return int The ID of the user. 0 on failure.
+ */
+function eo_get_user_id_by( $field, $value ){
+	$user = get_user_by( $field, $value );
+	return $user ? $user->ID : 0;
+}

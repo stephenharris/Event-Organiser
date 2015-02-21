@@ -302,6 +302,20 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		$this->assertEquals( "+0 days +3 hours +30 minutes +10 seconds", $mod );
 	}
 	
+	function testGetUserIDBy(){
+		
+		$user_id = $this->factory->user->create(array(
+			'user_login' => 'theusername',
+			'user_email' => 'theuser@example.com'
+		));
+		
+		$this->assertEquals( $user_id, eo_get_user_id_by( 'id', $user_id ) );
+		$this->assertEquals( $user_id, eo_get_user_id_by( 'slug', 'theusername' ) );
+		$this->assertEquals( $user_id, eo_get_user_id_by( 'email', 'theuser@example.com' ) );
+		
+		$this->assertEquals( 0, eo_get_user_id_by( 'slug', 'doesnotexist' ) );
+		
+	}
 	
 	/**
 	 * TODO eo_get_blog_timezone(): Why does +10 give Asia/Choibalsan timezone.
