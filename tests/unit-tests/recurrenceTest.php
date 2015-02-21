@@ -480,6 +480,11 @@ class recurrenceTest extends EO_UnitTestCase
     
     public function testChangeDurationOfOccurrence()
     {
+    	
+    	$this->markTestSkipped(
+    		'This feature has not been implemented yet.'
+    	);
+    	
     	$event = array(
     		'start'         => new DateTime( '2014-08-11 18:48:00', eo_get_blog_timezone() ),
     		'end'           => new DateTime( '2014-08-11 19:48:00', eo_get_blog_timezone() ),
