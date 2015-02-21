@@ -5,7 +5,8 @@
 
 add_action( 'wp_ajax_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' ); 
 add_action( 'wp_ajax_nopriv_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' ); 
-add_action( 'wp_ajax_event-admin-cal', 'eventorganiser_admin_calendar' ); 
+add_action( 'wp_ajax_event-admin-cal', 'eventorganiser_admin_calendar' );
+add_action( 'wp_ajax_eofc-edit-date', 'eventorganiser_admin_calendar_edit_date' ); 
 add_action( 'wp_ajax_eofc-format-time', 'eventorganiser_admin_cal_time_format' ); 
 add_action( 'wp_ajax_eo-search-venue', 'eventorganiser_search_venues' ); 
 add_action( 'wp_ajax_nopriv_eo_widget_agenda', 'eventorganiser_widget_agenda' );
@@ -356,6 +357,9 @@ function eventorganiser_admin_calendar() {
 					$title.=' - '.__('Draft');
 				}
 				$event['title']= html_entity_decode ($title,ENT_QUOTES,'UTF-8');
+				
+				$event['event_id']      = $post->ID;
+				$event['occurrence_id'] = $post->occurrence_id;  
 
 				$schedule = eo_get_event_schedule($post->ID);
 
@@ -765,5 +769,87 @@ function eventorganiser_ajax_toggle_addon_page(){
 
 	update_option( 'eventorganiser_options', $options );
 	exit(1);
+}
+
+/**
+ * Ajax response to event occurrence being moved.
+ * 
+ * TODO Prevent two occurrences from the same event 
+ * occuring on the same *date*. 
+ * 
+ * @ignore
+ */
+function eventorganiser_admin_calendar_edit_date(){
+	
+	$event_id      = (int) $_POST['event_id'];
+	$occurrence_id = (int) $_POST['occurrence_id'];
+	$all_day       = eo_is_all_day( $event_id );
+
+	if( 'event' != get_post_type( $event_id ) ){
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'Event not found', 'eventorganiser' )	
+			),	
+		));
+		exit;
+	}
+	
+	$edittime = ( defined( 'EVENT_ORGANISER_PRO_FEATURES' ) && EVENT_ORGANISER_PRO_FEATURES );
+	
+	if( !$edittime ){
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'Events are not editable via the admin calendar', 'eventorganiser' )
+			),
+		));
+		exit;
+	}
+	
+	if( !check_ajax_referer( 'edit_events', false, false ) ){
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'Are you sure you want to do this?', 'eventorganiser' )
+			),
+		));
+		exit;
+	}
+	
+	if( !current_user_can( 'edit_event', $event_id ) ){
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'You do not have permission to edit this event', 'eventorganiser' )
+			),
+		));
+		exit;
+	}
+		
+	$tz        = eo_get_blog_timezone();
+	$new_start = new DateTime( $_POST['start'], $tz );
+	$new_end   = new DateTime( $_POST['end'], $tz );  
+
+	$re = eventorganiser_move_occurrence( $event_id, $occurrence_id, $new_start, $new_end );
+	
+	if( !is_wp_error( $re ) ){
+		echo json_encode( array(
+			'success' => true,
+		));
+		exit;
+	}else{
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => sprintf(
+					__( 'Event not created: %s', 'eventorganiser' ),
+					$re->get_error_message()		
+				)
+			),
+		));
+		exit;
+	}
+	
 }
 ?>

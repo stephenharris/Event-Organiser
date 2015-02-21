@@ -349,7 +349,7 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 				'StartDate'        => $occurrence->format('Y-m-d'),
 				'StartTime'        => $occurrence->format('H:i:s'),
 				'EndDate'          => $occurrence_end->format('Y-m-d'),
-				'FinishTime'       => $end->format('H:i:s'),
+				'FinishTime'       => $occurrence_end->format('H:i:s'),
 			);
 
 			$wpdb->update(
@@ -540,8 +540,9 @@ function eo_get_event_schedule( $post_id=0 ){
 
 		$exclude = array_filter( (array) $exclude );
 		$include = array_filter( (array) $include );
-		$exclude = array_udiff($exclude, $include, '_eventorganiser_compare_dates');
-		$include = array_udiff($include, $exclude, '_eventorganiser_compare_dates');
+		
+		$exclude = array_udiff($exclude, $include, '_eventorganiser_compare_datetime');
+		$include = array_udiff($include, $exclude, '_eventorganiser_compare_datetime');
 		
 		//White list schedule
 		if( !in_array($schedule, array('once','daily','weekly','monthly','yearly','custom')) )
@@ -768,10 +769,10 @@ function eo_get_event_schedule( $post_id=0 ){
 		//Add inclusions, removes exceptions and duplicates
 		if( defined( 'WP_DEBUG' ) && WP_DEBUG ){
 			//Make sure 'included' dates doesn't appear in generate date
-			$include = array_udiff( $include, $occurrences, '_eventorganiser_compare_dates' );
+			$include = array_udiff( $include, $occurrences, '_eventorganiser_compare_datetime' );
 		}
 		$occurrences = array_merge($occurrences, $include); 
-		$occurrences = array_udiff($occurrences, $exclude, '_eventorganiser_compare_dates');
+		$occurrences = array_udiff( $occurrences, $exclude, '_eventorganiser_compare_datetime') ;
 		$occurrences = _eventorganiser_remove_duplicates($occurrences);
 
 		//Sort occurrences
@@ -947,4 +948,75 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 
 		return true;
 	}
+
+	
+/**
+ * Updates a specific occurrence, and preserves the occurrence ID. 
+ * 
+ * Currently two occurrences cannot occupy the same date.
+ * 
+ * @ignore
+ * @access private
+ * @since 2.12.0
+ * 
+ * @param int $event_id      ID of the event whose occurrence we're moving
+ * @param int $occurrence_id ID of the occurrence we're moving
+ * @param DateTime $start    New start DateTime of the occurrence
+ * @param DateTime $end      New end DateTime of the occurrence
+ * @return bool|WP_Error True on success. WP_Error on failure.
+ */
+function eventorganiser_move_occurrence( $event_id, $occurrence_id, $start, $end ){
+
+	global $wpdb;
+		
+	$old_start = eo_get_the_start( DATETIMEOBJ, $event_id, null, $occurrence_id );
+	$schedule  = eo_get_event_schedule( $event_id );
+	
+	if( $start == $old_start ){
+		return true;
+	}
+	
+	$current_occurrences = eo_get_the_occurrences( $event_id );
+	unset( $current_occurrences[$occurrence_id] );
+	$current_occurrences = array_map( 'eo_format_datetime', $current_occurrences );
+	
+	if( in_array( $start->format( 'd-m-Y' ), $current_occurrences ) ){
+		return new WP_Error( 'events-cannot-share-date', __( 'There is already an occurrence on this date', 'eventorganiser' ) );		
+	}
+	
+	//We update the date directly in the DB first so the occurrence is not deleted and recreated,
+	//but simply updated. 
+	
+	$wpdb->update(
+		$wpdb->eo_events, 
+		array(
+			'StartDate'  => $start->format( 'Y-m-d' ),
+			'StartTime'  => $start->format( 'H:i:s' ),
+			'EndDate'    => $end->format( 'Y-m-d' ),
+			'FinishTime' => $end->format( 'H:i:s' ),
+		),				
+		array( 'event_id' => $occurrence_id )
+	);
+	
+	wp_cache_delete( 'eventorganiser_occurrences_'.$event_id );//Important: update DB clear cache
+
+	//Now update event schedule...
+	
+	//If date being removed was manually included remove it, 
+	//otherwise add it to exclude. Then add new date as include.
+	if( false === ( $index = array_search( $old_start, $schedule['include'] ) ) ){
+		$schedule['exclude'][] = $old_start;
+	}else{
+		unset( $schedule['include'][$index] );
+	}
+	$schedule['include'][] = $start;
+
+	$re = eo_update_event( $event_id, $schedule );
+	
+	if( $re && !is_wp_error( $re ) ){
+		return true;
+	}
+	
+	return $re;
+}
 ?>

@@ -50,6 +50,10 @@ function _eventorganiser_set_constants(){
 	define( 'EVENT_ORGANISER_URL', plugin_dir_url( __FILE__ ) );
 	
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-add-ons.php');
+	
+	if( !defined( 'EVENT_ORGANISER_PRO_FEATURES' ) ){
+		define( 'EVENT_ORGANISER_PRO_FEATURES', false );
+	}
 }
 
 /*
