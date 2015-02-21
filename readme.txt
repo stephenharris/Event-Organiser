@@ -220,7 +220,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 == Changelog ==
 
 = 2.12.0 - 20th February 2015 =
-*You are strongly recommended to udating to 2.12.0 before updating to **WordPress 4.2** (to be released). 
+*You are strongly recommended to update to 2.12.0 before updating to **WordPress 4.2** (to be released). 
 Please see this [post](http://wp-event-organiser.com/blog/announcements/event-organiser-wordpress-4-2)*
 
 * Includes fix for WordPress 4.2 "term splitting".
