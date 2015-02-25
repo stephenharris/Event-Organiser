@@ -23,7 +23,9 @@
 * * **orderby** - default is `eventstart`. You can also have `eventend`.
 * * **showpastevents** - default is `true` (it's recommended to use `event_start_after=today` or `event_end_after=today` instead)
 * * **event-category** - the slug of an event category. Get events for this category
-* * **event-venue** - the slug of an event venue. Get events for this venue 
+* * **event-venue** - the slug of an event venue. Get events for this venue
+* * **event-tag** - the slug of an event venue. Get events for this tag
+* * **group_events_by** - If set to 'series', only the first matching occurrence of a recurring event is returned.  
 * * **bookee_id** - (int) ID of user to retrieve events for which the user is attending 
 * *
 *
