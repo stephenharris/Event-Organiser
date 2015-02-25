@@ -76,16 +76,12 @@ get_header(); ?>
 
 					<!-- Output the date of the occurrence-->
 					<?php
-						//Format date/time according to whether its an all day event.
-						//Use microdata http://support.google.com/webmasters/bin/answer.py?hl=en&answer=176035
- 						if( eo_is_all_day() ){
-							$format = 'd F Y';
-							$microformat = 'Y-m-d';
-						}else{
-							$format = 'd F Y '.get_option('time_format');
-							$microformat = 'c';
-						}?>
-						<time itemprop="startDate" datetime="<?php eo_the_start($microformat); ?>"><?php eo_the_start($format); ?></time>
+					//Format date/time according to whether its an all day event.
+					$format = eo_get_event_datetime_format();
+					//Use microdata http://support.google.com/webmasters/bin/answer.py?hl=en&answer=176035
+					$microformat = eo_is_all_day() ? 'Y-m-d' : 'c';
+					?>
+					<time itemprop="startDate" datetime="<?php eo_the_start( $microformat ); ?>"><?php eo_the_start( $format ); ?></time>
 
 					<!-- Display event meta list -->
 					<?php echo eo_get_event_meta_list(); ?>
