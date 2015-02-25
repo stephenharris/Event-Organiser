@@ -90,8 +90,8 @@ function eo_format_date($dateString='',$format='d-m-Y'){
 }
 
 /**
- * Formats two DateTime objects according to a specified format by "spliting" 
- * 
+ * Formats two DateTime objects according to a specified format by "spliting"
+ *
  * The function uses a single formatting string to generate a range string like
  * 16th-17th February by intelligtently inserting a seperator where the DateTimes
  * differ according to the specified format.
@@ -110,6 +110,99 @@ function eo_format_date($dateString='',$format='d-m-Y'){
  * @return string|dateTime The formatted date range
  */
 function eo_format_datetime_range( $datetime1, $datetime2, $format, $seperator = '&ndash;', $is_rtl = null ){
+	$fragment = _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl );
+	return is_array( $fragment ) ? implode( $seperator, $fragment ) : $fragment;
+}
+
+/**
+ * Formats the start/end date/time of an occurrence.
+ *
+ * This function uses date format for all-day events and appends the time format for all 
+ * other events. It then splits this format intelligently by inserting the $seperator
+ * where the formatted start/end datetimes differ.
+ * 
+ * It will optionally wrap the start & end dates with microdata.
+ * 
+ * Note: for all-day, non-multi-day events, this will return just the start date.
+ *
+ * @since 3.0.0
+ * @link http://php.net/manual/en/function.date.php PHP Date
+ * @uses _eo_format_datetime_range
+ * 
+ * @param int $event_id The event ID. Defaults to the current event if not provided.
+ * @param int $occurrence_id The occurrence ID.  Defaults to the current occurrence if not provided.
+ * @param string $date_format How to format the date part of the occurrence's datetime.
+ * @param string $time_format How to format the time part of the occurrence's datetime.
+ * @param string $seperator A string used to seperate differing parts of the formatted start/end datetimes.
+ * @param bool $microdata Whether to wrap the formatted start/end datetimes in microdata
+ * @return string|dateTime The formatted occurrence start/end date range
+ */
+function eo_format_event_occurrence( $event_id = false, $occurrence_id = false, $date_format = false, $time_format = false, $seperator = '&ndash;', $microdata = true ){
+	global $post;
+	
+	$event_id      = $event_id ? intval( $event_id ) : get_the_ID(); 
+	$occurrence_id = $occurrence_id ? intval( $occurrence_id ) : intval( $post->occurrence_id );
+	
+	$format        = eo_get_event_datetime_format( $event_id, $date_format, $time_format );
+	$microformat   = eo_is_all_day( $event_id ) ? 'Y-m-d' : 'c';
+
+	$start = eo_get_the_start( DATETIMEOBJ, $event_id, null, $occurrence_id );
+	$end   = eo_get_the_end( DATETIMEOBJ, $event_id, null, $occurrence_id );
+	
+	$start_formatted = eo_format_datetime( $start, $format );
+	$end_formatted   = eo_format_datetime( $end, $format );
+	
+	if( $start_formatted == $end_formatted ){
+		$end_formatted = false;
+		
+	}else{
+		$fragment = _eo_format_datetime_range( $start, $end, $format, is_rtl() );
+		$start_formatted = is_rtl() ? $fragment['right'] : $fragment['left'];
+		$end_formatted   = is_rtl() ? $fragment['left'] : $fragment['right'];
+	}
+
+	if( $microdata ){
+		$start_formatted = sprintf(
+			'<time itemprop="startDate" datetime="%s">%s</time>',
+			$start->format( $microformat ),
+			$start_formatted
+		);
+		
+		if( $end_formatted ){
+			$end_formatted = sprintf(
+				'<time itemprop="endDate" datetime="%s">%s</time>',
+				$end->format( $microformat ),
+				$end_formatted
+			);
+		}
+	}
+	
+	$formatted = $start_formatted;
+	
+	if( $end_formatted ){
+		$formatted = is_rtl() ? $end_formatted . $seperator . $start_formatted : $start_formatted . $seperator . $end_formatted;
+	}
+	
+	return $formatted;
+}
+
+/**
+ * Helper function used by `eo_format_datetime_range()` and `eo_format_event_occurrence()` to format
+ * a datetime range given a format.
+ * 
+ * @access private
+ * @since 3.0.0
+ * @used-by eo_format_datetime_range()
+ * @used-by eo_format_event_occurrence()
+ *  
+ * @param dateTime $datetime1 The first datetime object
+ * @param dateTime $datetime2 The second datetime object
+ * @param string $format How to format the date range, see http://php.net/manual/en/function.date.php
+ * @param string $seperator A string used to seperate differing parts of the formatted DateTimes
+ * @param bool $is_rtl Whether the formatted date should be written right-to-left. Defaults to is_rtl().
+ * @return string|dateTime The formatted date range
+ */
+function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = null ){
 	
 	if( is_null( $is_rtl ) ){
 		$is_rtl = is_rtl();
@@ -190,15 +283,22 @@ function eo_format_datetime_range( $datetime1, $datetime2, $format, $seperator =
 		
 	}
 	
+	$fragment = array(
+		'left'  => $left,
+		'right' => $right,
+	);
+		
 	if( false !== $middle1 ){
 		if( !$is_rtl ){
-			$middle = $middle1 . $seperator . $middle2;
+			$fragment['left'] .= $middle1;
+			$fragment['right'] = $middle2 . $fragment['right'];
 		}else{
-			$middle = $middle2 . $seperator . $middle1;
+			$fragment['left'] .= $middle2;
+			$fragment['right'] = $middle1 . $fragment['right'];
 		}
 	}
 
-	return $left . $middle . $right;
+	return $fragment;
 
 }
 
