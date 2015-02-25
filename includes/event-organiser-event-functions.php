@@ -1476,17 +1476,18 @@ function eo_get_event_fullcalendar( $args = array() ){
  * @param int $post_id The event (post) ID. Uses current event if not supplied
  * @return string|bool HTML mark-up. False if an invalid $post_is provided.
 */
-function eo_get_event_meta_list( $post_id=0 ){
+function eo_get_event_meta_list( $event_id = 0 ){
 
-	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
+	$event_id = (int) ( empty( $event_id ) ? get_the_ID() : $event_id);
 
-	if( empty($post_id) ) 
+	if( empty( $event_id ) ){ 
 		return false;
+	}
 
 	$html  = '<ul class="eo-event-meta" style="margin:10px 0px;">';
 	$venue = get_taxonomy( 'event-venue' );
 
-	if( ( $venue_id = eo_get_venue( $post_id ) ) && $venue ){
+	if( ( $venue_id = eo_get_venue( $event_id ) ) && $venue ){
 		$html .= sprintf(
 			'<li><strong>%s:</strong> <a href="%s">
 				<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/Organization">
@@ -1494,7 +1495,7 @@ function eo_get_event_meta_list( $post_id=0 ){
 					<span itemprop="geo" itemscope itemtype="http://data-vocabulary.org/Geo">
 						<meta itemprop="latitude" content="%f" />
 						<meta itemprop="longitude" content="%f" />
-     				</span>
+					</span>
 				</span>
 			</a></li>',
 			$venue->labels->singular_name,
@@ -1505,18 +1506,20 @@ function eo_get_event_meta_list( $post_id=0 ){
 		);
 	}
 
-	if( get_the_terms(get_the_ID(),'event-category') ){
-		$html .= sprintf('<li><strong>%s:</strong> %s</li>',
-							__('Categories','eventorganiser'),
-							get_the_term_list( get_the_ID(),'event-category', '', ', ', '' )
-						);
+	if( get_the_terms( get_the_ID(), 'event-category' ) ){
+		$html .= sprintf(
+			'<li><strong>%s:</strong> %s</li>',
+			__( 'Categories', 'eventorganiser' ),
+			get_the_term_list( get_the_ID(),'event-category', '', ', ', '' )
+		);
 	}
 
-	if( get_the_terms(get_the_ID(),'event-tag') && !is_wp_error( get_the_terms(get_the_ID(),'event-tag') ) ){
-		$html .= sprintf('<li><strong>%s:</strong> %s</li>',
-							__('Tags','eventorganiser'),
-							get_the_term_list( get_the_ID(),'event-tag', '', ', ', '' )
-						);
+	if( get_the_terms( get_the_ID(), 'event-tag' ) && !is_wp_error( get_the_terms( get_the_ID(), 'event-tag' ) ) ){
+		$html .= sprintf(
+			'<li><strong>%s:</strong> %s</li>',
+			__( 'Tags', 'eventorganiser' ),
+			get_the_term_list( get_the_ID(),' event-tag', '', ', ', '' )
+		);
 	}
 
 	$html .='</ul>';
@@ -1528,9 +1531,9 @@ function eo_get_event_meta_list( $post_id=0 ){
 	 * to the event (venue, categories, tags) etc.
 	 *
 	 * @param array $html The generated mark-up
-	 * @param int $post_id Post ID of the event
+	 * @param int $event_id Post ID of the event
 	 */
-	$html = apply_filters('eventorganiser_event_meta_list', $html, $post_id);
+	$html = apply_filters( 'eventorganiser_event_meta_list', $html, $event_id );
 	return $html;
 }
 
