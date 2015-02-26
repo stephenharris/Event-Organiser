@@ -222,6 +222,7 @@ require_once(EVENT_ORGANISER_DIR.'includes/class-eo-extension.php');
 
 /****** Templates - note some plug-ins will require this to included admin-side too ******/
 require_once('includes/event-organiser-templates.php');
+require_once('includes/class-eo-theme-compatability.php');
 
 /****** Widgets and Shortcodes ******/
 require_once(EVENT_ORGANISER_DIR.'classes/class-eo-agenda-widget.php');

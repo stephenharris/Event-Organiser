@@ -1,3 +1,33 @@
+/* EO Theme compatability */
+.eo-tc-page .eo-events-nav-later{
+	float:right;
+}
+.eo-tc-page .eo-events-nav-newer{
+	float:left;
+}
+.eo-tc-page nav{
+	overflow: auto;
+	margin: 10px auto;
+}
+
+.eo-tc-event{
+	margin: 25px auto;
+}
+.eo-tc-event .eo-event-date{
+	font-style:italic;
+}
+
+.eo-tc-event .eo-event-title{
+	margin-bottom:0px;
+}
+.eo-tc-event .eo-event-details{
+	margin-top: 0px;	
+}
+
+.eo-tc-event .eo-event-meta{
+	clear:both;
+}
+
 .fc-button .ui-button-text{line-height: 8px!important;}
 .ui-button-text-only .ui-button-text {padding: .4em .8em;}
 .ui-button { margin-left: -1px; }
