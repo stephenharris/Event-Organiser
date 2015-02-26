@@ -109,7 +109,7 @@ function eo_format_date($dateString='',$format='d-m-Y'){
  * @param bool $is_rtl Whether the formatted date should be written right-to-left. Defaults to is_rtl().
  * @return string|dateTime The formatted date range
  */
-function eo_format_datetime_range( $datetime1, $datetime2, $format, $seperator = '&ndash;', $is_rtl = null ){
+function eo_format_datetime_range( $datetime1, $datetime2, $format, $seperator = ' &ndash; ', $is_rtl = null ){
 	$fragment = _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl );
 	return is_array( $fragment ) ? implode( $seperator, $fragment ) : $fragment;
 }
@@ -137,7 +137,7 @@ function eo_format_datetime_range( $datetime1, $datetime2, $format, $seperator =
  * @param bool $microdata Whether to wrap the formatted start/end datetimes in microdata
  * @return string|dateTime The formatted occurrence start/end date range
  */
-function eo_format_event_occurrence( $event_id = false, $occurrence_id = false, $date_format = false, $time_format = false, $seperator = '&ndash;', $microdata = true ){
+function eo_format_event_occurrence( $event_id = false, $occurrence_id = false, $date_format = false, $time_format = false, $seperator = ' &ndash; ', $microdata = true ){
 	global $post;
 	
 	$event_id      = $event_id ? intval( $event_id ) : get_the_ID(); 
@@ -931,25 +931,29 @@ function _eventorganiser_check_datetime( $datetime_string = '', $format = null )
 function eventorganiser_radio_field( $args ){
 
 	$args = wp_parse_args($args,array(
-			'checked'=>'', 'help' => '', 'options'=>'', 'name'=>'', 'echo'=>1,
-			'class'=>'', 'label' => '','label_for'=>''
-			));	
+		'checked' => '', 'help' => '', 'options' => '', 'name' => '', 'echo' => 1,
+		'class' => '', 'label' => '', 'label_for' => '', 'esc_labels' => true,
+	));	
 
 	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$name = isset($args['name']) ?  $args['name'] : '';
 	$checked = $args['checked'];
-	$label = !empty($args['label']) ? '<legend><label>'.esc_html($args['label']).'</label></legend>' : '';
-	$class =  !empty($args['class']) ? 'class="'.sanitize_html_class($args['class']).'"'  : '';
+	$label = !empty( $args['label'] ) ? '<legend><label>'.esc_html( $args['label'] ).'</label></legend>' : '';
+	$class = !empty( $args['class'] ) ? 'class="'.sanitize_html_class( $args['class'] ).'"'  : '';
 
 	$html = sprintf('<fieldset %s> %s', $class, $label);
 	if( !empty($args['options']) ){
 		foreach ($args['options'] as $value => $opt_label ){
+			
+			$opt_label = $args['esc_labels'] ? esc_html( $opt_label ) : $opt_label;
+			
 			$html .= sprintf('<label for="%1$s"><input type="radio" id="%1$s" name="%3$s" value="%4$s" %2$s> <span> %5$s </span></label><br>',
-				esc_attr($id.'_'.$value),
-				checked($value, $checked, false),
-				esc_attr($name),
-				esc_attr($value),
-				esc_html($opt_label));
+				esc_attr( $id.'_'.$value ),
+				checked( $value, $checked, false ),
+				esc_attr( $name ),
+				esc_attr( $value ),
+				$opt_label
+			);
 		}
 	}
 	if(!empty($args['help'])){
@@ -1141,12 +1145,21 @@ function eventorganiser_checkbox_field($args=array()){
 
 	$args = wp_parse_args($args,array(
 		 	 'help' => '','name'=>'', 'class'=>'', 'label_for' => '',
-			'checked'=>'', 'echo'=>true,'multiselect'=>false
+			'checked'=>'', 'echo'=>true,'multiselect'=>false,  'data'=>false,
 		));
 
 	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$name = isset($args['name']) ?  $args['name'] : '';
 	$class = ( $args['class'] ? "class='".sanitize_html_class($args['class'])."'"  :"" );
+	
+	//Custom data-* attributes
+	$data = '';
+	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
+		foreach( $args['data'] as $key => $attr_value ){
+			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+		}
+	}
+	
 
 	/* $options and $checked are either both arrays or they are both strings. */
 	$options =  isset($args['options']) ? $args['options'] : false;
@@ -1162,7 +1175,7 @@ function eventorganiser_checkbox_field($args=array()){
 							esc_attr($id.'_'.$value),
 							esc_attr(trim($name).'[]'),
 							esc_attr($value),
-							checked( in_array($value, $checked), true, false ),
+							checked( in_array($value, $checked), true, false ) . " ". $data,
 							$class,
 							 esc_attr($opt_label)
 							);
@@ -1171,7 +1184,7 @@ function eventorganiser_checkbox_field($args=array()){
 		$html .= sprintf('<input type="checkbox" id="%1$s" name="%2$s" %3$s %4$s value="%5$s">',
 							esc_attr($id),
 							esc_attr($name),
-							checked( $checked, $options, false ),
+							checked( $checked, $options, false ) . " " . $data,
 							$class,
 							esc_attr($options)
 							);

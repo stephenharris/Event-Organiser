@@ -57,7 +57,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$occurrence_id = array_shift( $occurrence_ids );
 		
 		$expected = '<time itemprop="startDate" datetime="2014-07-09T13:02:00+00:00">July 9, 2014 1:02 pm</time>'
-					.'&ndash;<time itemprop="endDate" datetime="2014-07-09T14:02:00+00:00">2:02 pm</time>';
+					.' &ndash; <time itemprop="endDate" datetime="2014-07-09T14:02:00+00:00">2:02 pm</time>';
 		
 		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id ) );
 		
@@ -95,7 +95,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$occurrence_id  = array_shift( $occurrence_ids );
 	
 		$expected = '<time itemprop="startDate" datetime="2014-07-09">July 9</time>'
-		.'&ndash;<time itemprop="endDate" datetime="2014-07-10">10, 2014</time>';
+		.' &ndash; <time itemprop="endDate" datetime="2014-07-10">10, 2014</time>';
 	
 		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id ) );
 	
@@ -113,9 +113,9 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$occurrence_ids = array_keys( eo_get_the_occurrences_of( $event_id ) );
 		$occurrence_id = array_shift( $occurrence_ids );
 	
-		$expected = 'July 9, 2014 1:02 pm&ndash;2:02 pm';
+		$expected = 'July 9, 2014 1:02 pm &ndash; 2:02 pm';
 	
-		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id, false, false, '&ndash;', false ) );
+		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id, false, false, ' &ndash; ', false ) );
 	
 	}
 	
@@ -133,7 +133,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 	
 		$expected = 'July 9, 2014';
 	
-		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id, false, false, '&ndash;', false ) );
+		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id, false, false, ' &ndash; ', false ) );
 	
 	}
 	
@@ -149,9 +149,9 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$occurrence_ids = array_keys( eo_get_the_occurrences_of( $event_id ) );
 		$occurrence_id  = array_shift( $occurrence_ids );
 	
-		$expected = 'July 9&ndash;10, 2014';
+		$expected = 'July 9 &ndash; 10, 2014';
 	
-		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id, false, false, '&ndash;', false ) );
+		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id, false, false, ' &ndash; ', false ) );
 	
 	}
 	
