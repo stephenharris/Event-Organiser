@@ -1,6 +1,6 @@
 <?php
 /**
- * The template is used for displaying a single event details.
+ * The template is used for displaying a single event details on the single event page.
  *
  * You can use this to edit how the details re displayed on your site. (see notice below).
  *
