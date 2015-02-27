@@ -123,7 +123,7 @@ class EventOrganiser_Shortcodes {
 			'users_events' => 'false',
 			'theme' => 'false',
 			'isrtl' => $wp_locale->is_rtl() ? 'true' : 'false',
-			'responsive' => 'false',
+			'responsive' => 'true',
 		);
 		
 		$atts = wp_parse_args( $atts, $bool_atts );

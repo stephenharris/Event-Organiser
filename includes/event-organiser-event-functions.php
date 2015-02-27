@@ -1403,7 +1403,7 @@ function eo_get_event_fullcalendar( $args = array() ){
 		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
 		'year' => false, 'month' => false, 'date' => false,	'users_events' => false, 'event_occurrence__in' =>array(),
-		'theme' => false, 'reset' => true, 'responsive' => false, 'isrtl' => $wp_locale->is_rtl(),
+		'theme' => false, 'reset' => true, 'responsive' => true, 'isrtl' => $wp_locale->is_rtl(),
 	);
 	
 	$args = shortcode_atts( $defaults, $args, 'eo_fullcalendar' );
