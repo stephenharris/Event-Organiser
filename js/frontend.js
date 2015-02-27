@@ -237,11 +237,12 @@ jQuery(document).ready(function () {
                 	
                 responsive: calendars[i].responsive,
                 defaultView: ( $(window).width() < 514 && calendars[i].responsive )  ? 'listMonth' : calendars[i].defaultview,
+                previousView: calendars[i].defaultview,
                 windowResize: function(view) {
                 	if( view.calendar.options.responsive && $(window).width() < 514 ){
                 		$(this).fullCalendar( 'changeView', 'listMonth' );
                 	} else {
-                		$(this).fullCalendar( 'changeView', view.calendar.options.defaultView );
+                		$(this).fullCalendar( 'changeView', view.calendar.options.previousView );
                 	}
                 },
                 	
