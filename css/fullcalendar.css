@@ -17,8 +17,13 @@
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline; 
+	-webkit-transition:none;
+	-moz-transition:none; 
+	-o-transition:none; 
+	-ms-transition: none; 
+	transition: none;
+	max-width: none;
 }
-
 .eo-fullcalendar-reset .fc-content-skeleton table,
 .eo-fullcalendar-reset .fc-content-skeleton tbody,
 .eo-fullcalendar-reset .fc-content-skeleton tr,
