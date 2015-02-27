@@ -234,7 +234,7 @@ jQuery(document).ready(function () {
 				monthNamesShort: EOAjaxFront.locale.monthAbbrev,
 				dayNames: EOAjaxFront.locale.dayNames,
 				dayNamesShort: EOAjaxFront.locale.dayAbbrev,
-                	
+                height: 'auto',
                 responsive: calendars[i].responsive,
                 defaultView: ( $(window).width() < 514 && calendars[i].responsive )  ? 'listMonth' : calendars[i].defaultview,
                 previousView: calendars[i].defaultview,
