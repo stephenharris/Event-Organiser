@@ -1445,6 +1445,9 @@ function eo_get_event_fullcalendar( $args = array() ){
 	if( $args['reset'] ){
 		$classes[] = 'eo-fullcalendar-reset';
 	}
+	if( $args['responsive'] ){
+		$classes[] = 'eo-fullcalendar-responsive';
+	}
 
 	$html = sprintf( '<div id="eo_fullcalendar_%s_loading" class="eo-fullcalendar-loading" >', $id );
 	$html .= sprintf(
