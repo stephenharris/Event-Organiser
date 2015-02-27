@@ -605,43 +605,38 @@ function eventorganiser_widget_agenda() {
 		echo json_encode( $agenda[$key] );
 		exit;
 	}
-
+	
+	//Find dates of 'next'/'previous' event
+	$selectDates = "SELECT DISTINCT StartDate FROM {$wpdb->eo_events} LEFT JOIN {$wpdb->posts} ON {$wpdb->eo_events}.post_id = {$wpdb->posts}.ID";
+	$whereDates  = " WHERE {$wpdb->eo_events}.StartDate".( $query['order'] == 'ASC' ? ' > ' : ' < ') . '%s ';
+	$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
+	$whereDates .= " AND {$wpdb->posts}.post_status = 'publish' ";
+	$orderlimit  = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
+	$date        = $wpdb->get_row( $wpdb->prepare( $selectDates . $whereDates . $orderlimit, $query['date'], $today->format( 'Y-m-d' ) ) );
+	
+	if( !$date ){
+		return false;
+	}
+	
+	$datetime = new DateTime( $date->StartDate, eo_get_blog_timezone() );
+	
 	if( 'day' == $query['mode'] ){		
-		//Day mode
-		$selectDates = "SELECT DISTINCT StartDate FROM {$wpdb->eo_events}";
-		$whereDates  = " WHERE {$wpdb->eo_events}.StartDate" . ( $query['order'] == 'ASC' ? ' >= ' : ' <= ' ) . '%s ';
-		$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
-		$orderlimit  = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 4";
-		$dates       = $wpdb->get_col( $wpdb->prepare( $selectDates . $whereDates . $orderlimit, $query['date'], $today->format( 'Y-m-d' ) ) );
-
-		if( !$dates ){
-			return false;
-		}
-
-		$query['date1'] = min( $dates[0], $dates[count( $dates ) - 1] );
-		$query['date2'] = max( $dates[0], $dates[count( $dates ) - 1] );
+		//Day mode - events on this day
+		$query['date1'] = $datetime->format( 'Y-m-d' );
+		$query['date2'] = $datetime->format( 'Y-m-d' );
 
 	}elseif( 'week' == $query['mode'] ){		
-		//Week mode - find the week of the next/previous event
-		$selectDates = "SELECT DISTINCT StartDate FROM {$wpdb->eo_events} LEFT JOIN {$wpdb->posts} ON {$wpdb->eo_events}.post_id = {$wpdb->posts}.ID";
-		$whereDates  = " WHERE {$wpdb->eo_events}.StartDate".( $query['order'] == 'ASC' ? ' > ' : ' < ') . '%s ';
-		$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
-		$whereDates .= " AND {$wpdb->posts}.post_status = 'publish' ";
-		$orderlimit  = "ORDER BY {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
-		$date        = $wpdb->get_row( $wpdb->prepare( $selectDates . $whereDates . $orderlimit, $query['date'], $today->format( 'Y-m-d' ) ) );
-
-		if( !$date ){
-			return false;
-		}
-
-		$datetime = new DateTime( $date->StartDate, eo_get_blog_timezone() );
-
+		//Month mode - events in this month
+		
 		//Get the week day, and the start of the week	
 		$week_start_day  = (int) get_option( 'start_of_week' );
 		$event_day       = (int) $datetime->format( 'w' );
+		
 		$offset_from_week_start = ( $event_day - $week_start_day +7 ) % 7;
+		
 		$week_start_date = clone $datetime;
 		$week_start_date->modify( '- ' . $offset_from_week_start . ' days' );
+		
 		$week_end_date   = clone $week_start_date;
 		$week_end_date->modify( '+6 days' );//Query is inclusive.
 
@@ -649,19 +644,7 @@ function eventorganiser_widget_agenda() {
 		$query['date2'] = $week_end_date->format( 'Y-m-d' ); 
 
 	}else{
-		//Month mode - find the month of the next date
-		$selectDates = "SELECT DISTINCT StartDate FROM {$wpdb->eo_events} LEFT JOIN {$wpdb->posts} ON {$wpdb->eo_events}.post_id = {$wpdb->posts}.ID";
-		$whereDates  = " WHERE {$wpdb->eo_events}.StartDate".( $query['order'] == 'ASC' ? ' > ' : ' < ') . '%s ';
-		$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
-		$whereDates .= " AND {$wpdb->posts}.post_status = 'publish' ";
-		$orderlimit  = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
-		$date        = $wpdb->get_row( $wpdb->prepare( $selectDates . $whereDates . $orderlimit, $query['date'], $today->format( 'Y-m-d' ) ) );
-
-		if( !$date ){
-			return false;
-		}
-
-		$datetime = new DateTime( $date->StartDate, eo_get_blog_timezone() );
+		//Month mode - events on this month
 		$query['date1'] = $datetime->format( 'Y-m-01' );
 		$query['date2'] = $datetime->format( 'Y-m-t' ); 
 	}
