@@ -1,22 +1,38 @@
 /* =Basic reset for fullCalendar
 ----------------------------------------------- */
-.eo-fullcalendar div,
-.eo-fullcalendar h2, 
-.eo-fullcalendar table,  
-.eo-fullcalendar tbody, 
-.eo-fullcalendar tfoot, 
-.eo-fullcalendar thead, 
-.eo-fullcalendar tr, 
-.eo-fullcalendar th, 
-.eo-fullcalendar td, 
-.eo-fullcalendar footer, 
-.eo-fullcalendar header{
+.eo-fullcalendar-reset div,
+.eo-fullcalendar-reset h2, 
+.eo-fullcalendar-reset table,  
+.eo-fullcalendar-reset tbody, 
+.eo-fullcalendar-reset tfoot, 
+.eo-fullcalendar-reset thead, 
+.eo-fullcalendar-reset tr, 
+.eo-fullcalendar-reset th, 
+.eo-fullcalendar-reset td, 
+.eo-fullcalendar-reset footer, 
+.eo-fullcalendar-reset header{
 	margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline; 
+}
+
+.eo-fullcalendar-reset .fc-content-skeleton table,
+.eo-fullcalendar-reset .fc-content-skeleton tbody,
+.eo-fullcalendar-reset .fc-content-skeleton tr,
+.eo-fullcalendar-reset .fc-widget-header td,
+.eo-fullcalendar-reset .fc-content-skeleton th,
+.eo-fullcalendar-reset .fc-content-skeleton td{
+	margin:0!important;
+	padding:0!important;
+}
+
+.eo-fullcalendar-loading{
+	background:white;
+	position:absolute;
+	z-index:5
 }
 
 .eo-fullcalendar table {

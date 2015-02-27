@@ -1403,7 +1403,7 @@ function eo_get_event_fullcalendar( $args = array() ){
 		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
 		'year' => false, 'month' => false, 'date' => false,	'users_events' => false, 'event_occurrence__in' =>array(),
-		'theme' => false, 'responsive' => false, 'isrtl' => $wp_locale->is_rtl(),
+		'theme' => false, 'reset' => true, 'responsive' => false, 'isrtl' => $wp_locale->is_rtl(),
 	);
 	
 	$args = shortcode_atts( $defaults, $args, 'eo_fullcalendar' );
@@ -1440,21 +1440,32 @@ function eo_get_event_fullcalendar( $args = array() ){
 	
 	EventOrganiser_Shortcodes::$add_script = true;
 	$id = count( EventOrganiser_Shortcodes::$calendars );
+	
+	$classes = array( 'eo-fullcalendar', 'eo-fullcalendar-shortcode' );
+	if( $args['reset'] ){
+		$classes[] = 'eo-fullcalendar-reset';
+	}
 
-	$html = '<div id="eo_fullcalendar_'.$id.'_loading" style="background:white;position:absolute;z-index:5" >';
+	$html = sprintf( '<div id="eo_fullcalendar_%s_loading" class="eo-fullcalendar-loading" >', $id );
 	$html .= sprintf(
-				'<img src="%1$s" style="vertical-align:middle; padding: 0px 5px 5px 0px;" alt="%2$s" /> %2$s',
-				esc_url( EVENT_ORGANISER_URL . 'css/images/loading-image.gif' ),
-				esc_html__( 'Loading&#8230;', 'eventorganiser' )
-			);
+		'<img src="%1$s" style="vertical-align:middle; padding: 0px 5px 5px 0px;" alt="%2$s" /> %2$s',
+		esc_url( EVENT_ORGANISER_URL . 'css/images/loading-image.gif' ),
+		esc_html__( 'Loading&#8230;', 'eventorganiser' )
+	);
 	$html .= '</div>';
-	$html .= '<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
+	
+	$html .= sprintf(
+		'<div class="%s" id="eo_fullcalendar_%s"></div>',
+		implode( ' ', $classes ),
+		$id
+	);
 
 	if ( $key ){
 		$args = array( 'orderby' => 'name', 'show_count' => 0, 'hide_empty' => 0 );
 		$html .= eventorganiser_category_key( $args,$id );
 	}
- 	return $html;
+	
+	return $html;
 }
 
 
