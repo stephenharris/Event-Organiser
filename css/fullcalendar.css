@@ -33,23 +33,7 @@
 	margin:0!important;
 	padding:0!important;
 }
-
-.eo-fullcalendar-loading{
-	background:white;
-	position:absolute;
-	z-index:5
-}
-
-.eo-fullcalendar table {
-	border-collapse: collapse;
-	border-spacing: 0; 
-}
-.eo-fullcalendar,
-.eo-fullcalendar button {
-	font-size: 12px;
-}
-/* Fix for themes which are over-zealouse with transitions */
-.eo-fullcalendar a{
+.eo-fullcalendar a{ /* Fix for themes which are over-zealouse with transitions */
    -webkit-transition:none;
    -moz-transition:none; 
    -o-transition:none; 
@@ -57,31 +41,21 @@
    transition: none;
    max-width: none;
 }
+.eo-fullcalendar table {
+	border-collapse: collapse;
+	border-spacing: 0; 
+}
 
-/*Front-end full calendar key*/
-.eo-fullcalendar-key ul.eo_fullcalendar_key{display: inline-block;font-size: 0.8em;}
-.eo-fullcalendar-key ul.eo_fullcalendar_key li{display: inline-block;margin:0 3px;}
-.eo-fullcalendar-key span.eo_fullcalendar_key_colour{margin: 4px 2px 4px 5px;border: 1px solid #DFDFDF;border-radius: 4px 4px 4px 4px;font-size: 0.9em;vertical-align: top;padding: 0 6px;}
-
-/*styling for calendar view tabs */
-.view-button{float:right;height: 30px;line-height: 28px;margin-top: 3px;padding: 0 11px;}
-
-/*calendar view conainer */
-#calendar-view{clear: both;height: 34px;margin-bottom: 15px;border-bottom: 1px solid #dfdfdf;padding-right: 100px;position: relative;}
-#calendar-view .nav-tab{ font-size: 15px }
-
-/* loading text */
-#loading{position:absolute;bottom:0;font-size: 16px;line-height: 16px;margin-bottom: 5px;}
-#loading:before {content: url("images/loading-image.gif");padding-right: 5px;}
+.eo-fullcalendar-loading{
+	background:white;
+	position:absolute;
+	z-index:5
+}
 
 /*Added to fit with full calendar*/
 /*button.ui-datepicker-trigger.ui-button.ui-widget{vertical-align: top;}*/
 .ui-datepicker{z-index: 100 !important}
 .ui-selectmenu-menu{z-index: 10!important}
-
-/*For the blocks of colour*/
-.cat .ui-selectmenu-item-icon { height: 14px; width: 14px; border:1px solid #dfdfdf;border-radius: 4px;}
-.cat .ui-selectmenu-item-icon{ background-image:none!important; }
 
 /*!
  * FullCalendar v2.2.6 Stylesheet
