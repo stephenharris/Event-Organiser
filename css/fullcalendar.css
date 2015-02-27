@@ -27,7 +27,7 @@
 .eo-fullcalendar-reset .fc-content-skeleton table,
 .eo-fullcalendar-reset .fc-content-skeleton tbody,
 .eo-fullcalendar-reset .fc-content-skeleton tr,
-.eo-fullcalendar-reset .fc-widget-header td,
+.eo-fullcalendar-reset .fc-view-container td,
 .eo-fullcalendar-reset .fc-content-skeleton th,
 .eo-fullcalendar-reset .fc-content-skeleton td{
 	margin:0!important;
