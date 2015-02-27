@@ -51,8 +51,8 @@ function _eventorganiser_set_constants(){
 	
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-add-ons.php');
 	
-	if( !defined( 'EVENT_ORGANISER_PRO_FEATURES' ) ){
-		define( 'EVENT_ORGANISER_PRO_FEATURES', false );
+	if( !defined( 'EVENT_ORGANISER_BETA_FEATURES' ) ){
+		define( 'EVENT_ORGANISER_BETA_FEATURES', false );
 	}
 }
 

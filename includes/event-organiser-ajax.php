@@ -789,7 +789,7 @@ function eventorganiser_admin_calendar_edit_date(){
 		exit;
 	}
 	
-	$edittime = ( defined( 'EVENT_ORGANISER_PRO_FEATURES' ) && EVENT_ORGANISER_PRO_FEATURES );
+	$edittime = ( defined( 'EVENT_ORGANISER_BETA_FEATURES' ) && EVENT_ORGANISER_BETA_FEATURES );
 	
 	if( !$edittime ){
 		echo json_encode( array(
