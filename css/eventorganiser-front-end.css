@@ -21,15 +21,20 @@ body.single-event .eo-event-meta{
 
 /* Agenda CSS */
 .eo-agenda-widget ul{list-style:none; margin:0}
-.eo-agenda-widget .eo-agenda-widget-nav{overflow:hidden;}
+.eo-agenda-widget .eo-agenda-widget-nav{overflow:hidden;margin-bottom: 3px;text-align: right;}
 .eo-agenda-widget .eo-agenda-widget-nav-next, 
 .eo-agenda-widget .eo-agenda-widget-nav-prev{
+	border: 1px solid #dfdfdf; 
+	font-weight: normal;
 	cursor:pointer;
-	padding: 5px;
+	padding: 3px 9px;
 	background: #ececec;
 	margin: 3px;
-	color: black;
+	color: #21759b;
+	font-size:12px;
+	font-family: Helvetica, Arial, sans-serif;
 	font-weight: bold;
+	border-radius:3px;
 }
 .eo-agenda-widget .eo-agenda-widget-nav-next:hover, 
 .eo-agenda-widget .eo-agenda-widget-nav-prev:hover{
