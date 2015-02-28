@@ -1463,9 +1463,11 @@ function eo_get_event_fullcalendar( $args = array() ){
 		$id
 	);
 
-	if ( $key ){
+	if ( 'top' == strtolower( $key ) ){
 		$args = array( 'orderby' => 'name', 'show_count' => 0, 'hide_empty' => 0 );
-		$html .= eventorganiser_category_key( $args,$id );
+		$html = eventorganiser_category_key( $args, $id ) . $html;
+	}elseif( $key ){
+		$html .= eventorganiser_category_key( $args, $id );
 	}
 	
 	return $html;
