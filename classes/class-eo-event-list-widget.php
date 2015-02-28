@@ -170,12 +170,11 @@ class EO_Event_List_Widget extends WP_Widget{
 				);
 			?>
 			</label>
-	  		<input  id="<?php echo $this->get_field_id( 'template' ); ?>" class="widefat" name="<?php echo $this->get_field_name('template'); ?>" type="text" value="<?php echo esc_attr( $instance['template'] );?>" />
   		</p>
   
   		<p>
     		<label for="<?php echo $this->get_field_id( 'no_events' ); ?>"><?php _e( "'No events' message", 'eventorganiser' ); ?>  </label>
-	  		<input  id="<?php echo $this->get_field_id( 'no_events' ); ?>" class="widefat" name="<?php echo $this->get_field_name('no_events'); ?>" type="text" value="<?php echo esc_attr( $instance['no_events'] );?>" />
+	  		<input  id="<?php echo $this->get_field_id( 'no_events' ); ?>" class="widefat" name="<?php echo $this->get_field_name( 'no_events' ); ?>" type="text" value="<?php echo esc_attr( $instance['no_events'] );?>" />
   		</p>
 		<?php
 	}
@@ -200,13 +199,13 @@ class EO_Event_List_Widget extends WP_Widget{
 		$validated['event-category'] = implode( ',', $event_cats );
 	
 		return $validated;
-    }
+	}
 
 	function widget( $args, $instance ){
 		$instance = array_merge( array(
-  			'no_events' => '',
-  			'template'  => '',
-  		), $instance );
+			'no_events' => '',
+			'template'  => '',
+		), $instance );
 		
 		//Backwards compatability with show past events option
 		if( !isset( $instance['scope'] ) && isset( $instance['showpastevents'] ) ){
@@ -214,61 +213,65 @@ class EO_Event_List_Widget extends WP_Widget{
 			$instance['scope'] = $instance['showpastevents'] ? 'all' : ( $exclude_running ? 'future' : 'future-running' );
 		}
 		unset( $instance['showpastevents'] );
-  	
-  		$template  = $instance['template'];
-  		$no_events = $instance['no_events'];
+
+		$template  = $instance['template'];
+		$no_events = $instance['no_events'];
 		unset( $instance['template'] );
 		unset( $instance['no_events'] );
 
-    	echo $args['before_widget'];
+		echo $args['before_widget'];
 
-		$widget_title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
+		$widget_title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
 
-    	if ( $widget_title ){
-   			echo $args['before_title'] . esc_html( $widget_title ) . $args['after_title'];
-    	}
-    	
-    	$scope     = $instance['scope'];
-    	$intervals = $this->get_event_intervals();
-    	$instance  = array_merge( $instance, (array) $intervals[$scope]['query'] );
+		if ( $widget_title ){
+			echo $args['before_title'] . esc_html( $widget_title ) . $args['after_title'];
+		}
+
+		$scope     = $instance['scope'];
+		$intervals = $this->get_event_intervals();
+		$instance  = array_merge( $instance, (array) $intervals[$scope]['query'] );
 
 		eventorganiser_list_events( $instance, array( 
 			'type'      => 'widget',
 			'class'     => 'eo-events eo-events-widget',
 			'template'  => $template, 
-			'no_events' => $no_events 
+			'no_events' => $no_events,
 		) );
 
 		echo $args['after_widget'];
 	}
- 
 }
 
-function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
+/**
+ * @access private
+ * @ignore
+ */
+function eventorganiser_list_events( $query, $args = array(), $echo = 1 ){
 	
 	$args = array_merge(array(
-					'id'=>'',
-					'class'=>'eo-event-list',
-					'type'=>'shortcode',
-					'no_events' => '',
-				),$args);
+		'id'        => '',
+		'class'     => 'eo-event-list',
+		'type'      => 'shortcode',
+		'no_events' => '',
+	),$args);
 
 	/* Pass these defaults - backwards compat with using eo_get_events()*/
 	$query = wp_parse_args($query, array(		
-		'posts_per_page'=>-1,
-		'post_type'=>'event',
-		'suppress_filters'=>false,
-		'orderby'=> 'eventstart',
-		'order'=> 'ASC',
-		'showrepeats'=>1,
-		'group_events_by'=>'',
-		'showpastevents'=>true,
+		'posts_per_page'   => -1,
+		'post_type'        => 'event',
+		'suppress_filters' => false,
+		'orderby'          => 'eventstart',
+		'order'            => 'ASC',
+		'showrepeats'      => 1,
+		'group_events_by'  => '',
+		'showpastevents'   => true,
 	));
 
 	//Make sure false and 'False' etc actually get parsed as 0/false (input from shortcodes, for instance, can be varied).
 	//This maybe moved to the shortcode handler if this function is made public.
-	if( strtolower($query['showpastevents']) === 'false' )
+	if( 'false' === strtolower( $query['showpastevents'] ) ){
 		$query['showpastevents'] = 0;
+	}
 
 	if( !empty($query['numberposts']) ){
 		$query['posts_per_page'] = (int) $query['numberposts'];
@@ -278,48 +281,48 @@ function eventorganiser_list_events( $query, $args=array(), $echo=1 ){
 
 	global $eo_event_loop,$eo_event_loop_args;
 	$eo_event_loop_args = $args;
-	$eo_event_loop = new WP_Query($query);
+	$eo_event_loop = new WP_Query( $query );
 
 	/**
 	 * @ignore
 	 * Try to find template - backwards compat. Don't use this filter. Will be removed!
 	 */
-	$template_file = apply_filters('eventorganiser_event_list_loop',false);
+	$template_file = apply_filters( 'eventorganiser_event_list_loop', false );
 	$template_file = locate_template( $template_file );
 	if( $template_file || empty($template) ){
 		ob_start();
-		if( empty($template_file) )
+		if( empty( $template_file ) ){
 			$template_file = eo_locate_template( array($eo_event_loop_args['type'].'-event-list.php', 'event-list.php'), true, false );
-		else
+		}else{
 			require( $template_file );
+		}
 
 		$html = ob_get_contents();
 		ob_end_clean();
 
-
 	}else{
 		//Using the 'placeholder' template
-		$no_events = isset($args['no_events']) ? $args['no_events'] :'';
+		$no_events = isset($args['no_events']) ? $args['no_events'] : '';
 
-
-		$line_wrap = '<li class="%2$s">%1$s</li>';
-		$id = (!empty($args['id']) ? 'id="'.esc_attr($args['id']).'"' : '');
+		$id        = ( !empty( $args['id'] ) ? 'id="'.esc_attr( $args['id'] ).'"' : '' );
 		$container = '<ul '.$id.' class="%2$s">%1$s</ul>';
 	
-		$html='';
+		$html = '';
 		if( $eo_event_loop->have_posts() ):	
 			while( $eo_event_loop->have_posts() ): $eo_event_loop->the_post();
-
 				$event_classes = eo_get_event_classes();
-				$html .= sprintf($line_wrap, EventOrganiser_Shortcodes::read_template($template), esc_attr(implode(' ',$event_classes)) );
-
+				$html .= sprintf( 
+					'<li class="%2$s">%1$s</li>', 
+					EventOrganiser_Shortcodes::read_template( $template ), 
+					esc_attr( implode( ' ', $event_classes ) ) 
+				);
 			endwhile;
 
 		elseif( $no_events ):
-			$html .= sprintf($line_wrap, $no_events, 'eo-no-events');
+			$html .= sprintf( '<li class="%2$s">%1$s</li>', $no_events, 'eo-no-events' );
 		endif;
 
-		$html = sprintf($container, $html, esc_attr($args['class']) );
+		$html = sprintf( $container, $html, esc_attr( $args['class'] ) );
 	}
 
 	wp_reset_postdata();
