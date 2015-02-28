@@ -89,7 +89,13 @@ class EO_Event_List_Widget extends WP_Widget{
 	}
 	
 	function form($instance){	
+		
+		if( !isset( $instance['scope'] ) && isset( $instance['showpastevents'] ) ){
+			$exclude_running = eventorganiser_get_option( 'runningisnotpast',0 );
+			$instance['scope'] = $instance['showpastevents'] ? 'all' : ( $exclude_running ? 'future' : 'future-running' );
+		}
 		$instance = wp_parse_args( (array) $instance, self::$w_arg );
+		
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'eventorganiser' ); ?>: </label>
@@ -204,7 +210,8 @@ class EO_Event_List_Widget extends WP_Widget{
 		
 		//Backwards compatability with show past events option
 		if( !isset( $instance['scope'] ) && isset( $instance['showpastevents'] ) ){
-			$instance['scope'] = $instance['showpastevents'] ? 'all' : 'future';
+			$exclude_running = eventorganiser_get_option( 'runningisnotpast',0 );
+			$instance['scope'] = $instance['showpastevents'] ? 'all' : ( $exclude_running ? 'future' : 'future-running' );
 		}
 		unset( $instance['showpastevents'] );
   	
