@@ -636,9 +636,10 @@ function _eventorganiser_upgrade_admin_notice(){
 		$tzstring  = 'UTC'.$offset_st;
 			
 		$message = sprintf(
-			"<h4>" . sprintf( esc_html__("Your site timezone is %s","e"), "<em>{$tzstring}</em>" ). "</h4>"
-			."<p>" . __( "Is this correct? Using a fixed offset from UTC may cause unexpected behaviour if you observe Daylight Savings Time so it's recommended you select a city instead.","e") . "</p>"
-			."<p>" . __( "You can <a href='%s'>change your timezone settings here</a>.",'eventorganiser') . "</p>",
+			"<h4>" . sprintf( esc_html__('Your site timezone is %s','eventorganiser'), "<em>{$tzstring}</em>" ). '</h4>'
+			."<p>" . __( "Is this correct? Using a fixed offset from UTC may cause unexpected behaviour, particular if you observe Daylight Savings Time.", 'eventorganiser' ) . '<br>' 
+					.__( "It is strongly recommended you select a city instead, even if you don't observe Daylight Savings Time.",'eventorganiser') . '</p>'
+			."<p>" . __( "You can <a href='%s'>change your timezone settings here</a>.",'eventorganiser') . '</p>',
 			admin_url( 'options-general.php' ).'#default_role'
 		);
  		$notice_handler->add_notice( 'timezone', '', $message , 'alert');	
