@@ -101,32 +101,38 @@ function eo_format_date($dateString='',$format='d-m-Y'){
  * @return DateTimeZone The blog timezone
 */
 function eo_get_blog_timezone(){
-	$tzstring = wp_cache_get( 'eventorganiser_timezone' );
 	
+	$tzstring = wp_cache_get( 'eventorganiser_timezone' );	
 	$tzstring = apply_filters( 'eventorganiser_timezone', $tzstring );
 
 	if ( false === $tzstring ) {
 
-		$tzstring = get_option('timezone_string');
-		$offset   = get_option('gmt_offset');
-		
-		if( empty($tzstring) && $offset!=0 ):
-			$offset_st = $offset > 0 ? "+$offset" : "$offset";
+		$tzstring = get_option( 'timezone_string' );
+		$offset   = get_option( 'gmt_offset' );
+
+		//We should descourage manual offset
+		//@see http://us.php.net/manual/en/timezones.others.php
+		//@see https://bugs.php.net/bug.php?id=45543
+		//@see https://bugs.php.net/bug.php?id=45528
+		//IANA timezone database that provides PHP's timezone support uses (i.e. revesred) POSIX style signs
+		if( empty( $tzstring ) && 0 != $offset && floor( $offset ) == $offset ){
+			$offset_st = $offset > 0 ? "-$offset" : '+'.absint( $offset );
 			$tzstring  = 'Etc/GMT'.$offset_st;
-		endif;
+		}
 
 		//Issue with the timezone selected, set to 'UTC'
-		if( empty($tzstring) ):
+		if( empty( $tzstring ) ){
 			$tzstring = 'UTC';
-		endif;
+		}
 
 		//Cache timezone string not timezone object
 		//Thanks to Ben Huson http://wordpress.org/support/topic/plugin-event-organiser-getting-500-is-error-when-w3-total-cache-is-on
 		wp_cache_set( 'eventorganiser_timezone', $tzstring );
 	} 
 
-	if( $tzstring instanceof DateTimeZone)
+	if( $tzstring instanceof DateTimeZone ){
 		return $tzstring;
+	}
 
 	$timezone = new DateTimeZone( $tzstring );
 	return $timezone; 
