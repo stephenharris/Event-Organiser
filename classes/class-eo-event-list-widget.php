@@ -67,9 +67,9 @@ class EO_Event_List_Widget extends WP_Widget{
 				),
 			),
 			'future-running' => array(
-				'label' => __( 'Furture & running events', 'eventorganiser' ),
+				'label' => __( 'Future & running events', 'eventorganiser' ),
 				'query'	=> array(
-					'event_end_before' => 'now',
+					'event_end_after' => 'now',
 				),
 			),
 			'today' => array(
