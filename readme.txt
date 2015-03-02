@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
 Tested up to: 4.1.1
-Stable tag: 2.12.0
+Stable tag: 2.12.1
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -218,6 +218,12 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.12.1 - 2nd March 2015 =
+* Fix bug which disabled adding events via the admin calendar
+* Fixed typo with enabling beta feature of changing an occurrence's time via the admin calendar
+* Added php 5.2 to Travis CI tests
+ 
 
 = 2.12.0 - 20th February 2015 =
 *You are strongly recommended to update to 2.12.0 before updating to **WordPress 4.2** (to be released). 
