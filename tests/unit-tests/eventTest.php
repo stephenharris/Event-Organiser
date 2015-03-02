@@ -414,6 +414,83 @@ class eventTest extends EO_UnitTestCase
     
     }
     
+    /**
+     * Event Organiser generates start dates and uses the duration of the first
+     * event to calculate the other occurrences. So the end date of a recurring event  
+     * may vary.
+     * @see https://wordpress.org/support/topic/last-day-missing-because-of-the-leap-year-2016?replies=3
+     */
+    public function testOverLeapYear()
+    {
+    	$event = array(
+    		'start'         => new DateTime( '2015-02-28 00:00:00', eo_get_blog_timezone() ), //Tuesday
+    		'end'           => new DateTime( '2015-03-01 00:00:00', eo_get_blog_timezone() ),
+    		'schedule'      => 'yearly',
+    		'schedule_last' => new DateTime( '2017-03-01 00:00:00', eo_get_blog_timezone() ),
+    	);
+    	
+    	$event_id   =  eo_insert_event( $event );
+    	
+    	$actual   = array_values( eo_get_the_occurrences_of( $event_id ) );
+    	$expected = array(
+    		array(
+    			'start' => new DateTime( '2015-02-28 00:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2015-03-01 00:00:00', eo_get_blog_timezone() ),
+    		),
+    		array(
+    			'start' => new DateTime( '2016-02-28 00:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2016-02-29 00:00:00', eo_get_blog_timezone() ),
+    		),
+    		array(
+    			'start' => new DateTime( '2017-02-28 00:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2017-03-01 00:00:00', eo_get_blog_timezone() ),
+			),
+    	);
+    	
+    	//$actual and $expected contain the occurrence IDs as keys.
+    	$this->assertEquals( $expected, $actual );
+    	 
+    }
+
+    /**
+     * Event Organiser generates start dates and uses the duration of the first
+     * event to calculate the other occurrences. So the end date of a recurring event
+     * may vary.
+     * @see https://wordpress.org/support/topic/last-day-missing-because-of-the-leap-year-2016?replies=3
+     */
+    public function testOverVarythingMonths()
+    {
+    	$event = array(
+    		'start'         => new DateTime( '2015-02-28 00:00:00', eo_get_blog_timezone() ), //Tuesday
+    		'end'           => new DateTime( '2015-03-03 00:00:00', eo_get_blog_timezone() ),
+    		'schedule'      => 'monthly',
+    		'schedule_meta' => 'BYMONTHDAY=28',
+    		'schedule_last' => new DateTime( '2015-04-28 00:00:00', eo_get_blog_timezone() ),
+    	);
+    	 
+    	$event_id   =  eo_insert_event( $event );
+    	 
+    	$actual   = array_values( eo_get_the_occurrences_of( $event_id ) );
+    	$expected = array(
+    		array(
+    			'start' => new DateTime( '2015-02-28 00:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2015-03-03 00:00:00', eo_get_blog_timezone() ),
+    		),
+    		array(
+    			'start' => new DateTime( '2015-03-28 00:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2015-03-31 00:00:00', eo_get_blog_timezone() ),
+    		),
+    		array(
+    			'start' => new DateTime( '2015-04-28 00:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2015-05-01 00:00:00', eo_get_blog_timezone() ),
+    		),
+    	);
+    	 
+    	//$actual and $expected contain the occurrence IDs as keys.
+    	$this->assertEquals( $expected, $actual );
+    
+    }
+    
     
     /**
      * @see https://github.com/stephenharris/Event-Organiser/issues/242 
