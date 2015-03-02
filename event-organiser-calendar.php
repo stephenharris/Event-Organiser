@@ -35,14 +35,15 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		
 		$supports = eventorganiser_get_option( 'supports' );
 		$venues = ( get_taxonomy( 'event-venue' ) ? get_terms( 'event-venue', array( 'hide_empty' => 0 ) ) : false );
-		$edittime = ( defined( 'EVENT_ORGANISER_PRO_FEATURES' ) && EVENT_ORGANISER_PRO_FEATURES );
+		$edittime = ( defined( 'EVENT_ORGANISER_BETA_FEATURES' ) && EVENT_ORGANISER_BETA_FEATURES );
 		
 		wp_localize_script( 'eo_calendar', 'EO_Ajax', array( 
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
 			'startday'   => intval( get_option( 'start_of_week' ) ),
 			'format'     => eventorganiser_php2jquerydate( eventorganiser_get_option( 'dateformat' ) ),
 			'timeFormat' => ( get_current_screen()->get_option( 'eofc_time_format', 'value' ) ? 'h:mmtt' : 'HH:mm' ),
-			'perm_edit'  => $edittime ? current_user_can( 'edit_events' ) : false,
+			'perm_edit'  => current_user_can( 'edit_events' ),
+			'edit_time'  => $edittime ? current_user_can( 'edit_events' ) : false,
 			'edit_nonce' => wp_create_nonce( 'edit_events' ),
 			'categories' => get_terms( 'event-category', array( 'hide_empty' => 0 ) ),
 			'venues'     => $venues,

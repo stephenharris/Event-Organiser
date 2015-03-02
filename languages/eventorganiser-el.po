@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-21 18:41+0000\n"
+"POT-Creation-Date: 2015-03-02 21:46+0000\n"
 "PO-Revision-Date: 2014-04-28 11:40:00+0000\n"
 "Last-Translator: Panagiotis <ngf7mmp@hotmail.com>\n"
 "Language-Team: \n"
@@ -31,15 +31,15 @@ msgstr "Τίτλος"
 msgid "Group by"
 msgstr "Ταξινόμηση με"
 
-#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:235
 msgid "Day"
 msgstr "Ημέρα"
 
-#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:235
 msgid "Week"
 msgstr "Εβδομάδα"
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:235
 msgid "Month"
 msgstr "Μήνας"
 
@@ -59,7 +59,7 @@ msgstr "Συμπερίληψη 'Προσθήκη στο Google'"
 msgid "Displays a calendar of your events"
 msgstr "Εμφανίζει ενα ημερολόγιο με τα events."
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:230
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:231
 msgid "Events Calendar"
 msgstr "Γεγονότα Ημερολογίου"
 
@@ -196,7 +196,7 @@ msgstr "Κατηγορίες Event"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1508
+#: includes/event-organiser-event-functions.php:1512
 #: templates/event-meta-event-single.php:69
 msgid "Categories"
 msgstr "Κατηγορίες"
@@ -264,110 +264,110 @@ msgstr "Δείτε περισσότερα..."
 msgid "Calendar View"
 msgstr "Εμφάνιση Ημερολόγιου."
 
-#: event-organiser-calendar.php:55 includes/event-organiser-register.php:58
+#: event-organiser-calendar.php:56 includes/event-organiser-register.php:58
 msgid "today"
 msgstr "Σήμερα"
 
-#: event-organiser-calendar.php:56 includes/event-organiser-register.php:59
+#: event-organiser-calendar.php:57 includes/event-organiser-register.php:59
 #: includes/event-organiser-register.php:248
 msgid "day"
 msgstr "Ημέρα"
 
-#: event-organiser-calendar.php:57 includes/event-organiser-register.php:60
+#: event-organiser-calendar.php:58 includes/event-organiser-register.php:60
 #: includes/event-organiser-register.php:250
 msgid "week"
 msgstr "Εβδομάδα"
 
-#: event-organiser-calendar.php:58 includes/event-organiser-register.php:61
+#: event-organiser-calendar.php:59 includes/event-organiser-register.php:61
 #: includes/event-organiser-register.php:252
 msgid "month"
 msgstr "Μήνας"
 
-#: event-organiser-calendar.php:59 includes/event-organiser-register.php:62
+#: event-organiser-calendar.php:60 includes/event-organiser-register.php:62
 msgid "go to date"
 msgstr "Πήγαινε στην ημερομηνία"
 
-#: event-organiser-calendar.php:60 event-organiser-manage.php:122
+#: event-organiser-calendar.php:61 event-organiser-manage.php:122
 #: includes/event-organiser-cpt.php:105
 msgid "View all categories"
 msgstr "Εμφάνιση όλοων των κατηγοριών"
 
-#: event-organiser-calendar.php:61 includes/event-organiser-cpt.php:45
+#: event-organiser-calendar.php:62 includes/event-organiser-cpt.php:45
 msgid "View all venues"
 msgstr "Δείτε όλους τους χώρους"
 
-#: event-organiser-calendar.php:108
+#: event-organiser-calendar.php:109
 msgid "You do not have sufficient permissions to create events. "
 msgstr "Δεν έχετε δικαίωμα δημιουργίας events."
 
-#: event-organiser-calendar.php:164
+#: event-organiser-calendar.php:165
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Δεν έχετε δικαίωμα ενημέρωσης του παρόντος event."
 
-#: event-organiser-calendar.php:182
+#: event-organiser-calendar.php:183
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr "Δεν έχετε δικαίωμα διαγραφής του παρόντος event."
 
-#: event-organiser-calendar.php:192
+#: event-organiser-calendar.php:193
 msgid "Occurrence deleted."
 msgstr "Διαγραφή εμφάνισης."
 
-#: event-organiser-calendar.php:208
+#: event-organiser-calendar.php:209
 msgid "Calendar options"
 msgstr "Επιλογές ημερολογίου"
 
-#: event-organiser-calendar.php:215
+#: event-organiser-calendar.php:216
 msgid "24 hour time"
 msgstr "24 ώρες"
 
-#: event-organiser-calendar.php:237
-#: includes/event-organiser-event-functions.php:1455
+#: event-organiser-calendar.php:238
+#: includes/event-organiser-event-functions.php:1457
 msgid "Loading&#8230;"
 msgstr "Φόρτωση ..."
 
-#: event-organiser-calendar.php:244
+#: event-organiser-calendar.php:245
 msgid "Current date/time"
 msgstr "Τρέχουσα ημερομηνία / ώρα"
 
-#: event-organiser-calendar.php:249
+#: event-organiser-calendar.php:250
 msgid "Create an event"
 msgstr "Δημιουργήστε ένα γεγονός"
 
-#: event-organiser-calendar.php:254
+#: event-organiser-calendar.php:255
 msgid "When"
 msgstr "Όταν"
 
-#: event-organiser-calendar.php:258
+#: event-organiser-calendar.php:259
 msgid "Event Title"
 msgstr "Τίτλος γεγονότος"
 
-#: event-organiser-calendar.php:265 includes/event-organiser-ajax.php:397
+#: event-organiser-calendar.php:266 includes/event-organiser-ajax.php:397
 msgid "Where"
 msgstr "Που"
 
-#: event-organiser-calendar.php:290
+#: event-organiser-calendar.php:291
 msgid "Save Draft"
 msgstr "Αποθήκευση προχείρου"
 
-#: event-organiser-calendar.php:291 event-organiser-calendar.php:298
+#: event-organiser-calendar.php:292 event-organiser-calendar.php:299
 #: event-organiser-edit.php:258
 msgid "Cancel"
 msgstr "Άκυρο"
 
-#: event-organiser-calendar.php:294
+#: event-organiser-calendar.php:295
 msgid "Publish Event"
 msgstr "Δημοσίευση γεγονότος"
 
-#: event-organiser-calendar.php:300
+#: event-organiser-calendar.php:301
 msgid "Submit for Review"
 msgstr "Υποβολή για αναθεώρηση"
 
-#: event-organiser-calendar.php:321 event-organiser-edit.php:14
+#: event-organiser-calendar.php:322 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:37
 msgid "Event Details"
 msgstr "Λεπτομέρειες Event"
 
-#: event-organiser-calendar.php:323
+#: event-organiser-calendar.php:324
 msgid "Event Detail"
 msgstr "Λεπτομέρεια γεγονότος"
 
@@ -540,7 +540,7 @@ msgid "day of week"
 msgstr "Ημέρα της Εβδομάδος"
 
 #: event-organiser-edit.php:185
-#: includes/event-organiser-event-functions.php:824
+#: includes/event-organiser-event-functions.php:826
 #: includes/event-organiser-register.php:265
 msgid "until"
 msgstr "Μέχρι"
@@ -1271,7 +1271,7 @@ msgid "Break this series"
 msgstr "Break this series"
 
 #: includes/event-organiser-ajax.php:670
-#: includes/event-organiser-event-functions.php:1407
+#: includes/event-organiser-event-functions.php:1409
 msgid "All Day"
 msgstr "Ολοήμερο"
 
@@ -1431,7 +1431,7 @@ msgid "Choose from the most used tags"
 msgstr "Επιλέξτε απο τις πιο δημοφιλής ετικέτες"
 
 #: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1515
+#: includes/event-organiser-event-functions.php:1520
 #: templates/event-meta-event-single.php:74
 msgid "Tags"
 msgstr "Ετικέτες"
@@ -1744,77 +1744,77 @@ msgstr "Χρώμα"
 msgid "Assign the category a colour."
 msgstr "Ορισε στην κατηγορία ένα χρώμα"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "last"
 msgstr "τελεταίο"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "first"
 msgstr "πρώτα"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "second"
 msgstr "δεύτερο"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "third"
 msgstr "τρίτο"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "fourth"
 msgstr "τέταρτο"
 
-#: includes/event-organiser-event-functions.php:755
+#: includes/event-organiser-event-functions.php:757
 msgid "one time only"
 msgstr "Μόνο μια φορά"
 
-#: includes/event-organiser-event-functions.php:758
+#: includes/event-organiser-event-functions.php:760
 msgid "custom reoccurrence"
 msgstr "custom reoccurrence"
 
-#: includes/event-organiser-event-functions.php:765
+#: includes/event-organiser-event-functions.php:767
 #: includes/event-organiser-register.php:256
 msgid "every day"
 msgstr "Καθημερινά"
 
-#: includes/event-organiser-event-functions.php:767
+#: includes/event-organiser-event-functions.php:769
 #: includes/event-organiser-register.php:257
 #, fuzzy, php-format
 msgid "every %d days"
 msgstr "κάθε &d μέρες"
 
-#: includes/event-organiser-event-functions.php:773
+#: includes/event-organiser-event-functions.php:775
 #: includes/event-organiser-register.php:258
 msgid "every week on"
 msgstr "Εβδομαδιαία στις "
 
-#: includes/event-organiser-event-functions.php:775
+#: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:259
 #, fuzzy, php-format
 msgid "every %d weeks on"
 msgstr "κάθε 7d βδομάδες "
 
-#: includes/event-organiser-event-functions.php:786
+#: includes/event-organiser-event-functions.php:788
 #: includes/event-organiser-register.php:260
 msgid "every month on the"
 msgstr "Κάθε μήνα στις"
 
-#: includes/event-organiser-event-functions.php:788
+#: includes/event-organiser-event-functions.php:790
 #: includes/event-organiser-register.php:261
 #, php-format
 msgid "every %d months on the"
 msgstr "κάθε %d μήνα στις"
 
-#: includes/event-organiser-event-functions.php:817
+#: includes/event-organiser-event-functions.php:819
 msgid "every year"
 msgstr "Κάθε χρόνο"
 
-#: includes/event-organiser-event-functions.php:819
+#: includes/event-organiser-event-functions.php:821
 #, php-format
 msgid "every %d years"
 msgstr "κάθε %d χρόνια"
