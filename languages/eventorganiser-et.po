@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-21 18:41+0000\n"
+"POT-Creation-Date: 2015-03-02 21:46+0000\n"
 "PO-Revision-Date: 2014-01-30 03:47:37+0000\n"
 "Last-Translator: Henri Jeret <henri.jeret@gmail.com>\n"
 "Language-Team: \n"
@@ -31,15 +31,15 @@ msgstr "Pealkiri"
 msgid "Group by"
 msgstr "Grupeeri"
 
-#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:235
 msgid "Day"
 msgstr "Päev"
 
-#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:235
 msgid "Week"
 msgstr "Nädal"
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:235
 msgid "Month"
 msgstr "Kuu"
 
@@ -59,7 +59,7 @@ msgstr ""
 msgid "Displays a calendar of your events"
 msgstr "Kuvab minu sündmuste kalendri"
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:230
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:231
 msgid "Events Calendar"
 msgstr "Sündmuste kalender"
 
@@ -194,7 +194,7 @@ msgstr "Sündmuse rubriigid"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1508
+#: includes/event-organiser-event-functions.php:1512
 #: templates/event-meta-event-single.php:69
 msgid "Categories"
 msgstr "Rubriigid"
@@ -260,110 +260,110 @@ msgstr ""
 msgid "Calendar View"
 msgstr "Kalendri vaade"
 
-#: event-organiser-calendar.php:55 includes/event-organiser-register.php:58
+#: event-organiser-calendar.php:56 includes/event-organiser-register.php:58
 msgid "today"
 msgstr "täna"
 
-#: event-organiser-calendar.php:56 includes/event-organiser-register.php:59
+#: event-organiser-calendar.php:57 includes/event-organiser-register.php:59
 #: includes/event-organiser-register.php:248
 msgid "day"
 msgstr "päev"
 
-#: event-organiser-calendar.php:57 includes/event-organiser-register.php:60
+#: event-organiser-calendar.php:58 includes/event-organiser-register.php:60
 #: includes/event-organiser-register.php:250
 msgid "week"
 msgstr "nädal"
 
-#: event-organiser-calendar.php:58 includes/event-organiser-register.php:61
+#: event-organiser-calendar.php:59 includes/event-organiser-register.php:61
 #: includes/event-organiser-register.php:252
 msgid "month"
 msgstr "kuu"
 
-#: event-organiser-calendar.php:59 includes/event-organiser-register.php:62
+#: event-organiser-calendar.php:60 includes/event-organiser-register.php:62
 msgid "go to date"
 msgstr "mine kuupäevale"
 
-#: event-organiser-calendar.php:60 event-organiser-manage.php:122
+#: event-organiser-calendar.php:61 event-organiser-manage.php:122
 #: includes/event-organiser-cpt.php:105
 msgid "View all categories"
 msgstr "Vaata kõiki rubriike"
 
-#: event-organiser-calendar.php:61 includes/event-organiser-cpt.php:45
+#: event-organiser-calendar.php:62 includes/event-organiser-cpt.php:45
 msgid "View all venues"
 msgstr "Vaata kõiki toimumispaiku"
 
-#: event-organiser-calendar.php:108
+#: event-organiser-calendar.php:109
 msgid "You do not have sufficient permissions to create events. "
 msgstr "Sul pole sündmuse loomiseks piisavalt õigusi"
 
-#: event-organiser-calendar.php:164
+#: event-organiser-calendar.php:165
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Sul pole sündmuse muutmiseks piisavalt õigusi"
 
-#: event-organiser-calendar.php:182
+#: event-organiser-calendar.php:183
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr "Sul pole sündmuse kustutamiseks piisavalt õigusi"
 
-#: event-organiser-calendar.php:192
+#: event-organiser-calendar.php:193
 msgid "Occurrence deleted."
 msgstr "Sündmuse toimumine kustutatud."
 
-#: event-organiser-calendar.php:208
+#: event-organiser-calendar.php:209
 msgid "Calendar options"
 msgstr "Kalendri sätted"
 
-#: event-organiser-calendar.php:215
+#: event-organiser-calendar.php:216
 msgid "24 hour time"
 msgstr "24 tunni aeg"
 
-#: event-organiser-calendar.php:237
-#: includes/event-organiser-event-functions.php:1455
+#: event-organiser-calendar.php:238
+#: includes/event-organiser-event-functions.php:1457
 msgid "Loading&#8230;"
 msgstr "Laen&#8230;"
 
-#: event-organiser-calendar.php:244
+#: event-organiser-calendar.php:245
 msgid "Current date/time"
 msgstr "Hetke kuupäev/aeg"
 
-#: event-organiser-calendar.php:249
+#: event-organiser-calendar.php:250
 msgid "Create an event"
 msgstr "Loo sündmus"
 
-#: event-organiser-calendar.php:254
+#: event-organiser-calendar.php:255
 msgid "When"
 msgstr "Millal"
 
-#: event-organiser-calendar.php:258
+#: event-organiser-calendar.php:259
 msgid "Event Title"
 msgstr "Sündmuse pealkiri"
 
-#: event-organiser-calendar.php:265 includes/event-organiser-ajax.php:397
+#: event-organiser-calendar.php:266 includes/event-organiser-ajax.php:397
 msgid "Where"
 msgstr "Kus"
 
-#: event-organiser-calendar.php:290
+#: event-organiser-calendar.php:291
 msgid "Save Draft"
 msgstr "Salvesta mustand"
 
-#: event-organiser-calendar.php:291 event-organiser-calendar.php:298
+#: event-organiser-calendar.php:292 event-organiser-calendar.php:299
 #: event-organiser-edit.php:258
 msgid "Cancel"
 msgstr "Loobu"
 
-#: event-organiser-calendar.php:294
+#: event-organiser-calendar.php:295
 msgid "Publish Event"
 msgstr "Avalda"
 
-#: event-organiser-calendar.php:300
+#: event-organiser-calendar.php:301
 msgid "Submit for Review"
 msgstr "Saada ülevaatamisele"
 
-#: event-organiser-calendar.php:321 event-organiser-edit.php:14
+#: event-organiser-calendar.php:322 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:37
 msgid "Event Details"
 msgstr "Sündmuse detailid"
 
-#: event-organiser-calendar.php:323
+#: event-organiser-calendar.php:324
 msgid "Event Detail"
 msgstr ""
 
@@ -520,7 +520,7 @@ msgid "day of week"
 msgstr "valitud nädalapäeval"
 
 #: event-organiser-edit.php:185
-#: includes/event-organiser-event-functions.php:824
+#: includes/event-organiser-event-functions.php:826
 #: includes/event-organiser-register.php:265
 msgid "until"
 msgstr "kuni"
@@ -1230,7 +1230,7 @@ msgid "Break this series"
 msgstr "Katkesta seeria"
 
 #: includes/event-organiser-ajax.php:670
-#: includes/event-organiser-event-functions.php:1407
+#: includes/event-organiser-event-functions.php:1409
 msgid "All Day"
 msgstr "Terve päev"
 
@@ -1390,7 +1390,7 @@ msgid "Choose from the most used tags"
 msgstr "Vali enimkasutatud siltide hulgast"
 
 #: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1515
+#: includes/event-organiser-event-functions.php:1520
 #: templates/event-meta-event-single.php:74
 msgid "Tags"
 msgstr "Sildid"
@@ -1696,77 +1696,77 @@ msgstr "Värv"
 msgid "Assign the category a colour."
 msgstr "Määra rubriigile värv."
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "last"
 msgstr "viimane"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "first"
 msgstr "esimene"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "second"
 msgstr "teine"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "third"
 msgstr "kolmas"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "fourth"
 msgstr "neljas"
 
-#: includes/event-organiser-event-functions.php:755
+#: includes/event-organiser-event-functions.php:757
 msgid "one time only"
 msgstr "ainult üks kord"
 
-#: includes/event-organiser-event-functions.php:758
+#: includes/event-organiser-event-functions.php:760
 msgid "custom reoccurrence"
 msgstr "kohandatud kordumine"
 
-#: includes/event-organiser-event-functions.php:765
+#: includes/event-organiser-event-functions.php:767
 #: includes/event-organiser-register.php:256
 msgid "every day"
 msgstr "iga päev"
 
-#: includes/event-organiser-event-functions.php:767
+#: includes/event-organiser-event-functions.php:769
 #: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d days"
 msgstr "iga %d. päev"
 
-#: includes/event-organiser-event-functions.php:773
+#: includes/event-organiser-event-functions.php:775
 #: includes/event-organiser-register.php:258
 msgid "every week on"
 msgstr "iga nädal"
 
-#: includes/event-organiser-event-functions.php:775
+#: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d weeks on"
 msgstr "iga %d. nädal"
 
-#: includes/event-organiser-event-functions.php:786
+#: includes/event-organiser-event-functions.php:788
 #: includes/event-organiser-register.php:260
 msgid "every month on the"
 msgstr "iga kuu"
 
-#: includes/event-organiser-event-functions.php:788
+#: includes/event-organiser-event-functions.php:790
 #: includes/event-organiser-register.php:261
 #, php-format
 msgid "every %d months on the"
 msgstr "iga %d. kuu"
 
-#: includes/event-organiser-event-functions.php:817
+#: includes/event-organiser-event-functions.php:819
 msgid "every year"
 msgstr "iga aasta"
 
-#: includes/event-organiser-event-functions.php:819
+#: includes/event-organiser-event-functions.php:821
 #, php-format
 msgid "every %d years"
 msgstr "iga %d. aasta"
