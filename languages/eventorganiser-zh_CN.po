@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-21 18:41+0000\n"
+"POT-Creation-Date: 2015-03-02 21:46+0000\n"
 "PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
@@ -31,15 +31,15 @@ msgstr "标题"
 msgid "Group by"
 msgstr "分组按"
 
-#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:235
 msgid "Day"
 msgstr "天"
 
-#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:235
 msgid "Week"
 msgstr "周"
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:235
 msgid "Month"
 msgstr "月"
 
@@ -59,7 +59,7 @@ msgstr "包含“添加到谷歌”链接"
 msgid "Displays a calendar of your events"
 msgstr "显示事件的日历"
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:230
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:231
 msgid "Events Calendar"
 msgstr "事件日历"
 
@@ -193,7 +193,7 @@ msgstr "事件分类"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1508
+#: includes/event-organiser-event-functions.php:1512
 #: templates/event-meta-event-single.php:69
 msgid "Categories"
 msgstr "分类"
@@ -259,110 +259,110 @@ msgstr ""
 msgid "Calendar View"
 msgstr "日历视图"
 
-#: event-organiser-calendar.php:55 includes/event-organiser-register.php:58
+#: event-organiser-calendar.php:56 includes/event-organiser-register.php:58
 msgid "today"
 msgstr "今天"
 
-#: event-organiser-calendar.php:56 includes/event-organiser-register.php:59
+#: event-organiser-calendar.php:57 includes/event-organiser-register.php:59
 #: includes/event-organiser-register.php:248
 msgid "day"
 msgstr "日"
 
-#: event-organiser-calendar.php:57 includes/event-organiser-register.php:60
+#: event-organiser-calendar.php:58 includes/event-organiser-register.php:60
 #: includes/event-organiser-register.php:250
 msgid "week"
 msgstr "周"
 
-#: event-organiser-calendar.php:58 includes/event-organiser-register.php:61
+#: event-organiser-calendar.php:59 includes/event-organiser-register.php:61
 #: includes/event-organiser-register.php:252
 msgid "month"
 msgstr "月"
 
-#: event-organiser-calendar.php:59 includes/event-organiser-register.php:62
+#: event-organiser-calendar.php:60 includes/event-organiser-register.php:62
 msgid "go to date"
 msgstr "到日期"
 
-#: event-organiser-calendar.php:60 event-organiser-manage.php:122
+#: event-organiser-calendar.php:61 event-organiser-manage.php:122
 #: includes/event-organiser-cpt.php:105
 msgid "View all categories"
 msgstr "查看所有分类"
 
-#: event-organiser-calendar.php:61 includes/event-organiser-cpt.php:45
+#: event-organiser-calendar.php:62 includes/event-organiser-cpt.php:45
 msgid "View all venues"
 msgstr "查看所有地点"
 
-#: event-organiser-calendar.php:108
+#: event-organiser-calendar.php:109
 msgid "You do not have sufficient permissions to create events. "
 msgstr "你没有足够的权限创建事件"
 
-#: event-organiser-calendar.php:164
+#: event-organiser-calendar.php:165
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "你没有足够的权限编辑这个事件"
 
-#: event-organiser-calendar.php:182
+#: event-organiser-calendar.php:183
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr "你没有足够的权限删除这个事件"
 
-#: event-organiser-calendar.php:192
+#: event-organiser-calendar.php:193
 msgid "Occurrence deleted."
 msgstr ""
 
-#: event-organiser-calendar.php:208
+#: event-organiser-calendar.php:209
 msgid "Calendar options"
 msgstr "日历选项"
 
-#: event-organiser-calendar.php:215
+#: event-organiser-calendar.php:216
 msgid "24 hour time"
 msgstr "24小时"
 
-#: event-organiser-calendar.php:237
-#: includes/event-organiser-event-functions.php:1455
+#: event-organiser-calendar.php:238
+#: includes/event-organiser-event-functions.php:1457
 msgid "Loading&#8230;"
 msgstr "加载中..."
 
-#: event-organiser-calendar.php:244
+#: event-organiser-calendar.php:245
 msgid "Current date/time"
 msgstr "当前日期时间"
 
-#: event-organiser-calendar.php:249
+#: event-organiser-calendar.php:250
 msgid "Create an event"
 msgstr "创建一个事件"
 
-#: event-organiser-calendar.php:254
+#: event-organiser-calendar.php:255
 msgid "When"
 msgstr "何时"
 
-#: event-organiser-calendar.php:258
+#: event-organiser-calendar.php:259
 msgid "Event Title"
 msgstr "事件标题"
 
-#: event-organiser-calendar.php:265 includes/event-organiser-ajax.php:397
+#: event-organiser-calendar.php:266 includes/event-organiser-ajax.php:397
 msgid "Where"
 msgstr "何地"
 
-#: event-organiser-calendar.php:290
+#: event-organiser-calendar.php:291
 msgid "Save Draft"
 msgstr "保存草稿"
 
-#: event-organiser-calendar.php:291 event-organiser-calendar.php:298
+#: event-organiser-calendar.php:292 event-organiser-calendar.php:299
 #: event-organiser-edit.php:258
 msgid "Cancel"
 msgstr "取消"
 
-#: event-organiser-calendar.php:294
+#: event-organiser-calendar.php:295
 msgid "Publish Event"
 msgstr "发布事件"
 
-#: event-organiser-calendar.php:300
+#: event-organiser-calendar.php:301
 msgid "Submit for Review"
 msgstr ""
 
-#: event-organiser-calendar.php:321 event-organiser-edit.php:14
+#: event-organiser-calendar.php:322 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:37
 msgid "Event Details"
 msgstr "事件细节"
 
-#: event-organiser-calendar.php:323
+#: event-organiser-calendar.php:324
 msgid "Event Detail"
 msgstr "事件细节"
 
@@ -519,7 +519,7 @@ msgid "day of week"
 msgstr ""
 
 #: event-organiser-edit.php:185
-#: includes/event-organiser-event-functions.php:824
+#: includes/event-organiser-event-functions.php:826
 #: includes/event-organiser-register.php:265
 msgid "until"
 msgstr "直到"
@@ -1201,7 +1201,7 @@ msgid "Break this series"
 msgstr ""
 
 #: includes/event-organiser-ajax.php:670
-#: includes/event-organiser-event-functions.php:1407
+#: includes/event-organiser-event-functions.php:1409
 msgid "All Day"
 msgstr "全天"
 
@@ -1361,7 +1361,7 @@ msgid "Choose from the most used tags"
 msgstr "从最常用的标签中选择"
 
 #: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1515
+#: includes/event-organiser-event-functions.php:1520
 #: templates/event-meta-event-single.php:74
 msgid "Tags"
 msgstr "标签"
@@ -1625,77 +1625,77 @@ msgstr "颜色"
 msgid "Assign the category a colour."
 msgstr "为分类指定颜色"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "last"
 msgstr "最后"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "first"
 msgstr "第一"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "second"
 msgstr "第二"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "third"
 msgstr "第三"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "fourth"
 msgstr "第四"
 
-#: includes/event-organiser-event-functions.php:755
+#: includes/event-organiser-event-functions.php:757
 msgid "one time only"
 msgstr "仅一次"
 
-#: includes/event-organiser-event-functions.php:758
+#: includes/event-organiser-event-functions.php:760
 msgid "custom reoccurrence"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:765
+#: includes/event-organiser-event-functions.php:767
 #: includes/event-organiser-register.php:256
 msgid "every day"
 msgstr "每天"
 
-#: includes/event-organiser-event-functions.php:767
+#: includes/event-organiser-event-functions.php:769
 #: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d days"
 msgstr "每%d天"
 
-#: includes/event-organiser-event-functions.php:773
+#: includes/event-organiser-event-functions.php:775
 #: includes/event-organiser-register.php:258
 msgid "every week on"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:775
+#: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d weeks on"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:786
+#: includes/event-organiser-event-functions.php:788
 #: includes/event-organiser-register.php:260
 msgid "every month on the"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:788
+#: includes/event-organiser-event-functions.php:790
 #: includes/event-organiser-register.php:261
 #, php-format
 msgid "every %d months on the"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:817
+#: includes/event-organiser-event-functions.php:819
 msgid "every year"
 msgstr "每年"
 
-#: includes/event-organiser-event-functions.php:819
+#: includes/event-organiser-event-functions.php:821
 #, php-format
 msgid "every %d years"
 msgstr "每%d 年"

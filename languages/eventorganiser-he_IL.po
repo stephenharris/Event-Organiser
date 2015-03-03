@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-21 18:41+0000\n"
+"POT-Creation-Date: 2015-03-02 21:46+0000\n"
 "PO-Revision-Date: 2015-02-21 11:47:38+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
@@ -31,15 +31,15 @@ msgstr "כותרת"
 msgid "Group by"
 msgstr "קבץ לפי"
 
-#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:235
 msgid "Day"
 msgstr "יום"
 
-#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:235
 msgid "Week"
 msgstr "שבוע"
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:235
 msgid "Month"
 msgstr "חודש"
 
@@ -59,7 +59,7 @@ msgstr "כלול קישור 'הוספה לגוגל'"
 msgid "Displays a calendar of your events"
 msgstr "הצג לוח שנה עם אירועים"
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:230
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:231
 msgid "Events Calendar"
 msgstr "לוח שנה של אירועים"
 
@@ -195,7 +195,7 @@ msgstr "קטגוריות אירוע"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1508
+#: includes/event-organiser-event-functions.php:1512
 #: templates/event-meta-event-single.php:69
 msgid "Categories"
 msgstr "קטגוריות"
@@ -261,110 +261,110 @@ msgstr "מצא עוד...."
 msgid "Calendar View"
 msgstr "תצוגת לוח שנה"
 
-#: event-organiser-calendar.php:55 includes/event-organiser-register.php:58
+#: event-organiser-calendar.php:56 includes/event-organiser-register.php:58
 msgid "today"
 msgstr "היום"
 
-#: event-organiser-calendar.php:56 includes/event-organiser-register.php:59
+#: event-organiser-calendar.php:57 includes/event-organiser-register.php:59
 #: includes/event-organiser-register.php:248
 msgid "day"
 msgstr "יום"
 
-#: event-organiser-calendar.php:57 includes/event-organiser-register.php:60
+#: event-organiser-calendar.php:58 includes/event-organiser-register.php:60
 #: includes/event-organiser-register.php:250
 msgid "week"
 msgstr "שבוע"
 
-#: event-organiser-calendar.php:58 includes/event-organiser-register.php:61
+#: event-organiser-calendar.php:59 includes/event-organiser-register.php:61
 #: includes/event-organiser-register.php:252
 msgid "month"
 msgstr "חודש"
 
-#: event-organiser-calendar.php:59 includes/event-organiser-register.php:62
+#: event-organiser-calendar.php:60 includes/event-organiser-register.php:62
 msgid "go to date"
 msgstr "עבור לתאריך"
 
-#: event-organiser-calendar.php:60 event-organiser-manage.php:122
+#: event-organiser-calendar.php:61 event-organiser-manage.php:122
 #: includes/event-organiser-cpt.php:105
 msgid "View all categories"
 msgstr "הצג את כל התגיות"
 
-#: event-organiser-calendar.php:61 includes/event-organiser-cpt.php:45
+#: event-organiser-calendar.php:62 includes/event-organiser-cpt.php:45
 msgid "View all venues"
 msgstr "צפה בכל המיקומים"
 
-#: event-organiser-calendar.php:108
+#: event-organiser-calendar.php:109
 msgid "You do not have sufficient permissions to create events. "
 msgstr "אין לך הרשאות ליצור אירוע."
 
-#: event-organiser-calendar.php:164
+#: event-organiser-calendar.php:165
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "אין לך הרשאות לערוך את האירוע."
 
-#: event-organiser-calendar.php:182
+#: event-organiser-calendar.php:183
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr "אין לך הרשאות למחוק את האירוע."
 
-#: event-organiser-calendar.php:192
+#: event-organiser-calendar.php:193
 msgid "Occurrence deleted."
 msgstr "המופע נמחק."
 
-#: event-organiser-calendar.php:208
+#: event-organiser-calendar.php:209
 msgid "Calendar options"
 msgstr "אפשרויות לוח שנה"
 
-#: event-organiser-calendar.php:215
+#: event-organiser-calendar.php:216
 msgid "24 hour time"
 msgstr "שעון 24"
 
-#: event-organiser-calendar.php:237
-#: includes/event-organiser-event-functions.php:1455
+#: event-organiser-calendar.php:238
+#: includes/event-organiser-event-functions.php:1457
 msgid "Loading&#8230;"
 msgstr "בטעינה...."
 
-#: event-organiser-calendar.php:244
+#: event-organiser-calendar.php:245
 msgid "Current date/time"
 msgstr "תאריך/שעה נוכחי"
 
-#: event-organiser-calendar.php:249
+#: event-organiser-calendar.php:250
 msgid "Create an event"
 msgstr "צור אירוע"
 
-#: event-organiser-calendar.php:254
+#: event-organiser-calendar.php:255
 msgid "When"
 msgstr "כאשר"
 
-#: event-organiser-calendar.php:258
+#: event-organiser-calendar.php:259
 msgid "Event Title"
 msgstr "כותרת אירוע"
 
-#: event-organiser-calendar.php:265 includes/event-organiser-ajax.php:397
+#: event-organiser-calendar.php:266 includes/event-organiser-ajax.php:397
 msgid "Where"
 msgstr "איפה"
 
-#: event-organiser-calendar.php:290
+#: event-organiser-calendar.php:291
 msgid "Save Draft"
 msgstr "שמור טיוטה"
 
-#: event-organiser-calendar.php:291 event-organiser-calendar.php:298
+#: event-organiser-calendar.php:292 event-organiser-calendar.php:299
 #: event-organiser-edit.php:258
 msgid "Cancel"
 msgstr "בטל"
 
-#: event-organiser-calendar.php:294
+#: event-organiser-calendar.php:295
 msgid "Publish Event"
 msgstr "פרסם אירוע"
 
-#: event-organiser-calendar.php:300
+#: event-organiser-calendar.php:301
 msgid "Submit for Review"
 msgstr "הגש לסקירה"
 
-#: event-organiser-calendar.php:321 event-organiser-edit.php:14
+#: event-organiser-calendar.php:322 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:37
 msgid "Event Details"
 msgstr "פרטי אירוע"
 
-#: event-organiser-calendar.php:323
+#: event-organiser-calendar.php:324
 msgid "Event Detail"
 msgstr "פרטי האירוע"
 
@@ -531,7 +531,7 @@ msgid "day of week"
 msgstr "יום בשבוע"
 
 #: event-organiser-edit.php:185
-#: includes/event-organiser-event-functions.php:824
+#: includes/event-organiser-event-functions.php:826
 #: includes/event-organiser-register.php:265
 msgid "until"
 msgstr "עד"
@@ -1244,7 +1244,7 @@ msgid "Break this series"
 msgstr "הפרד מסדרה"
 
 #: includes/event-organiser-ajax.php:670
-#: includes/event-organiser-event-functions.php:1407
+#: includes/event-organiser-event-functions.php:1409
 msgid "All Day"
 msgstr "כל היום"
 
@@ -1404,7 +1404,7 @@ msgid "Choose from the most used tags"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1515
+#: includes/event-organiser-event-functions.php:1520
 #: templates/event-meta-event-single.php:74
 msgid "Tags"
 msgstr "תגיות"
@@ -1702,77 +1702,77 @@ msgstr "צבע"
 msgid "Assign the category a colour."
 msgstr "הקצה צבע לקטגוריה"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "last"
 msgstr "אחרון"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "first"
 msgstr "ראשון"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "second"
 msgstr "שני"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "third"
 msgstr "שלישי"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "fourth"
 msgstr "רביעי"
 
-#: includes/event-organiser-event-functions.php:755
+#: includes/event-organiser-event-functions.php:757
 msgid "one time only"
 msgstr "פעם אחת בלבד"
 
-#: includes/event-organiser-event-functions.php:758
+#: includes/event-organiser-event-functions.php:760
 msgid "custom reoccurrence"
 msgstr "חזרה מותאמת אישית"
 
-#: includes/event-organiser-event-functions.php:765
+#: includes/event-organiser-event-functions.php:767
 #: includes/event-organiser-register.php:256
 msgid "every day"
 msgstr "כל יום"
 
-#: includes/event-organiser-event-functions.php:767
+#: includes/event-organiser-event-functions.php:769
 #: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d days"
 msgstr "כל %d ימים"
 
-#: includes/event-organiser-event-functions.php:773
+#: includes/event-organiser-event-functions.php:775
 #: includes/event-organiser-register.php:258
 msgid "every week on"
 msgstr "כל שבוע ב"
 
-#: includes/event-organiser-event-functions.php:775
+#: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d weeks on"
 msgstr "כל %d שבועות ב"
 
-#: includes/event-organiser-event-functions.php:786
+#: includes/event-organiser-event-functions.php:788
 #: includes/event-organiser-register.php:260
 msgid "every month on the"
 msgstr "כל חודש ב"
 
-#: includes/event-organiser-event-functions.php:788
+#: includes/event-organiser-event-functions.php:790
 #: includes/event-organiser-register.php:261
 #, php-format
 msgid "every %d months on the"
 msgstr "כל %d חודשים ב"
 
-#: includes/event-organiser-event-functions.php:817
+#: includes/event-organiser-event-functions.php:819
 msgid "every year"
 msgstr "כל שנה"
 
-#: includes/event-organiser-event-functions.php:819
+#: includes/event-organiser-event-functions.php:821
 #, php-format
 msgid "every %d years"
 msgstr "כל %d שנים"

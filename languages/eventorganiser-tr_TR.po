@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-21 18:41+0000\n"
+"POT-Creation-Date: 2015-03-02 21:46+0000\n"
 "PO-Revision-Date: 2015-01-06 15:59:27+0000\n"
 "Last-Translator: Özge <oacavus@gmail.com>\n"
 "Language-Team: \n"
@@ -31,15 +31,15 @@ msgstr "Başlık"
 msgid "Group by"
 msgstr "Gruplandırma"
 
-#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:235
 msgid "Day"
 msgstr "Gün"
 
-#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:235
 msgid "Week"
 msgstr ""
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:234
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:235
 msgid "Month"
 msgstr "Ay"
 
@@ -59,7 +59,7 @@ msgstr "\"Google'a ekle\" bağlantısı içersin"
 msgid "Displays a calendar of your events"
 msgstr "Etkinliklerinizin takvimini gösterir"
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:230
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:231
 msgid "Events Calendar"
 msgstr "Etkinlik Takvimi"
 
@@ -196,7 +196,7 @@ msgstr "Etkinlik Kategorileri"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1508
+#: includes/event-organiser-event-functions.php:1512
 #: templates/event-meta-event-single.php:69
 msgid "Categories"
 msgstr "Kategori"
@@ -262,110 +262,110 @@ msgstr ""
 msgid "Calendar View"
 msgstr ""
 
-#: event-organiser-calendar.php:55 includes/event-organiser-register.php:58
+#: event-organiser-calendar.php:56 includes/event-organiser-register.php:58
 msgid "today"
 msgstr "bugün"
 
-#: event-organiser-calendar.php:56 includes/event-organiser-register.php:59
+#: event-organiser-calendar.php:57 includes/event-organiser-register.php:59
 #: includes/event-organiser-register.php:248
 msgid "day"
 msgstr "gün"
 
-#: event-organiser-calendar.php:57 includes/event-organiser-register.php:60
+#: event-organiser-calendar.php:58 includes/event-organiser-register.php:60
 #: includes/event-organiser-register.php:250
 msgid "week"
 msgstr ""
 
-#: event-organiser-calendar.php:58 includes/event-organiser-register.php:61
+#: event-organiser-calendar.php:59 includes/event-organiser-register.php:61
 #: includes/event-organiser-register.php:252
 msgid "month"
 msgstr "ay"
 
-#: event-organiser-calendar.php:59 includes/event-organiser-register.php:62
+#: event-organiser-calendar.php:60 includes/event-organiser-register.php:62
 msgid "go to date"
 msgstr ""
 
-#: event-organiser-calendar.php:60 event-organiser-manage.php:122
+#: event-organiser-calendar.php:61 event-organiser-manage.php:122
 #: includes/event-organiser-cpt.php:105
 msgid "View all categories"
 msgstr ""
 
-#: event-organiser-calendar.php:61 includes/event-organiser-cpt.php:45
+#: event-organiser-calendar.php:62 includes/event-organiser-cpt.php:45
 msgid "View all venues"
 msgstr ""
 
-#: event-organiser-calendar.php:108
+#: event-organiser-calendar.php:109
 msgid "You do not have sufficient permissions to create events. "
 msgstr ""
 
-#: event-organiser-calendar.php:164
+#: event-organiser-calendar.php:165
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr ""
 
-#: event-organiser-calendar.php:182
+#: event-organiser-calendar.php:183
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr ""
 
-#: event-organiser-calendar.php:192
+#: event-organiser-calendar.php:193
 msgid "Occurrence deleted."
 msgstr ""
 
-#: event-organiser-calendar.php:208
+#: event-organiser-calendar.php:209
 msgid "Calendar options"
 msgstr ""
 
-#: event-organiser-calendar.php:215
+#: event-organiser-calendar.php:216
 msgid "24 hour time"
 msgstr ""
 
-#: event-organiser-calendar.php:237
-#: includes/event-organiser-event-functions.php:1455
+#: event-organiser-calendar.php:238
+#: includes/event-organiser-event-functions.php:1457
 msgid "Loading&#8230;"
 msgstr "Yükleniyor..."
 
-#: event-organiser-calendar.php:244
+#: event-organiser-calendar.php:245
 msgid "Current date/time"
 msgstr ""
 
-#: event-organiser-calendar.php:249
+#: event-organiser-calendar.php:250
 msgid "Create an event"
 msgstr ""
 
-#: event-organiser-calendar.php:254
+#: event-organiser-calendar.php:255
 msgid "When"
 msgstr ""
 
-#: event-organiser-calendar.php:258
+#: event-organiser-calendar.php:259
 msgid "Event Title"
 msgstr ""
 
-#: event-organiser-calendar.php:265 includes/event-organiser-ajax.php:397
+#: event-organiser-calendar.php:266 includes/event-organiser-ajax.php:397
 msgid "Where"
 msgstr ""
 
-#: event-organiser-calendar.php:290
+#: event-organiser-calendar.php:291
 msgid "Save Draft"
 msgstr ""
 
-#: event-organiser-calendar.php:291 event-organiser-calendar.php:298
+#: event-organiser-calendar.php:292 event-organiser-calendar.php:299
 #: event-organiser-edit.php:258
 msgid "Cancel"
 msgstr ""
 
-#: event-organiser-calendar.php:294
+#: event-organiser-calendar.php:295
 msgid "Publish Event"
 msgstr ""
 
-#: event-organiser-calendar.php:300
+#: event-organiser-calendar.php:301
 msgid "Submit for Review"
 msgstr ""
 
-#: event-organiser-calendar.php:321 event-organiser-edit.php:14
+#: event-organiser-calendar.php:322 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:37
 msgid "Event Details"
 msgstr "Etkinlik Detayları"
 
-#: event-organiser-calendar.php:323
+#: event-organiser-calendar.php:324
 msgid "Event Detail"
 msgstr "Etkinlik Detayı"
 
@@ -535,7 +535,7 @@ msgid "day of week"
 msgstr "haftanın günü"
 
 #: event-organiser-edit.php:185
-#: includes/event-organiser-event-functions.php:824
+#: includes/event-organiser-event-functions.php:826
 #: includes/event-organiser-register.php:265
 msgid "until"
 msgstr ""
@@ -1228,7 +1228,7 @@ msgid "Break this series"
 msgstr ""
 
 #: includes/event-organiser-ajax.php:670
-#: includes/event-organiser-event-functions.php:1407
+#: includes/event-organiser-event-functions.php:1409
 msgid "All Day"
 msgstr "Tüm Gün"
 
@@ -1388,7 +1388,7 @@ msgid "Choose from the most used tags"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1515
+#: includes/event-organiser-event-functions.php:1520
 #: templates/event-meta-event-single.php:74
 msgid "Tags"
 msgstr "Etiketler"
@@ -1652,77 +1652,77 @@ msgstr "Renk"
 msgid "Assign the category a colour."
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "last"
 msgstr "son"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "first"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "second"
 msgstr "ikinci"
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "third"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:745
+#: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "fourth"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:755
+#: includes/event-organiser-event-functions.php:757
 msgid "one time only"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:758
+#: includes/event-organiser-event-functions.php:760
 msgid "custom reoccurrence"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:765
+#: includes/event-organiser-event-functions.php:767
 #: includes/event-organiser-register.php:256
 msgid "every day"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:767
+#: includes/event-organiser-event-functions.php:769
 #: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d days"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:773
+#: includes/event-organiser-event-functions.php:775
 #: includes/event-organiser-register.php:258
 msgid "every week on"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:775
+#: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d weeks on"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:786
+#: includes/event-organiser-event-functions.php:788
 #: includes/event-organiser-register.php:260
 msgid "every month on the"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:788
+#: includes/event-organiser-event-functions.php:790
 #: includes/event-organiser-register.php:261
 #, php-format
 msgid "every %d months on the"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:817
+#: includes/event-organiser-event-functions.php:819
 msgid "every year"
 msgstr ""
 
-#: includes/event-organiser-event-functions.php:819
+#: includes/event-organiser-event-functions.php:821
 #, php-format
 msgid "every %d years"
 msgstr ""
