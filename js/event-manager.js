@@ -1,6 +1,7 @@
 ( function( window, undefined ) {
 	"use strict";
-
+	
+	if( typeof window.wp.hooks == "undefined" ){
 	/**
 	 * Handles managing all events for whatever you plug it into. Priorities for hooks are based on lowest to highest in
 	 * that, lowest priority hooks are fired first.
@@ -243,4 +244,6 @@
 	window.wp = window.wp || {};
 	window.wp.hooks = new EventManager();
 
+	}
+	
 } )( window );
