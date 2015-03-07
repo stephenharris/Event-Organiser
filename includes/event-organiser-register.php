@@ -76,10 +76,10 @@ function eventorganiser_register_script() {
 	wp_register_script( 'eo_qtip2', EVENT_ORGANISER_URL.'js/qtip2.js',array('jquery'),$version,true);
 
 	/* Styles */
-	wp_register_style('eo_calendar-style',EVENT_ORGANISER_URL."css/fullcalendar{$ext}.css",array(),$version);
-	wp_register_style('eo_front',EVENT_ORGANISER_URL."css/eventorganiser-front-end{$rtl}{$ext}.css",array(),$version);
+	eo_register_style( 'eo_calendar-style', EVENT_ORGANISER_URL . "css/fullcalendar{$ext}.css", array(), $version );
+	eo_register_style( 'eo_front', EVENT_ORGANISER_URL . "css/eventorganiser-front-end{$rtl}{$ext}.css", array() , $version );
 }   
-add_action('init', 'eventorganiser_register_script');
+add_action( 'init', 'eventorganiser_register_script' );
 
  /**
  *Register jQuery scripts and CSS files for admin

@@ -98,6 +98,28 @@ function eo_locate_template( $template_names, $load = false, $require_once = tru
 }
 
 /**
+ * A wrapper for {@see wp_enqueue_style()}. Filters the stylesheet url so themes can 
+ * replace a stylesheet with their own.
+ *
+ * @uses wp_register_style()
+ * @since 3.0.0
+ *
+ * @param string      $handle Name of the stylesheet.
+ * @param string|bool $src    Path to the stylesheet from the WordPress root directory. Example: '/css/mystyle.css'.
+ * @param array       $deps   An array of registered style handles this stylesheet depends on. Default empty array.
+ * @param string|bool $ver    String specifying the stylesheet version number. Used to ensure that the correct version
+ *                            is sent to the client regardless of caching. Default 'false'. Accepts 'false', 'null', or 'string'.
+ * @param string      $media  Optional. The media for which this stylesheet has been defined.
+ *                            Default 'all'. Accepts 'all', 'aural', 'braille', 'handheld', 'projection', 'print',
+ *                            'screen', 'tty', or 'tv'.
+ */
+function eo_register_style( $handle, $src, $deps = array(), $ver = false, $media = 'all' ){
+	$src = apply_filters( 'eventorganiser_stylesheet_src', $src, $handle );
+	$src = apply_filters( 'eventorganiser_stylesheet_src_'.$handle, $src );
+	return wp_register_style( $handle, $src, $deps, $ver, $media );
+}
+
+/**
  * Whether an event archive is being viewed
  * 
  * My specifying the type of archive ( e.g. 'day', 'month' or 'year'), we can check if its 
