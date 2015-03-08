@@ -883,21 +883,22 @@ add_filter('wp_get_object_terms','_eventorganiser_get_event_venue',10,4);
  */
 function eventorganiser_update_venue_meta_cache( $terms, $tax){
 
-		if( is_array($tax) && !in_array('event-venue',$tax) ){
+		if( is_array( $tax ) && !in_array( 'event-venue', $tax ) ){
 			return $terms;
 		}
-		if( !is_array($tax) && $tax != 'event-venue'){
+		if( !is_array( $tax ) && 'event-venue' != $tax ){
 			return $terms;
 		}
 
 		$single = false;
-		if( ! is_array($terms) ){
+		if( !is_array( $terms ) ){
 			$single = true;
 			$terms = array( $terms );
 		}
 
-		if( empty($terms) )
-		       return $terms;
+		if( empty( $terms ) ){
+			return $terms;
+		}
 
 		//Check if its array of terms or term IDs
 		$first_element = reset( $terms );
@@ -907,28 +908,11 @@ function eventorganiser_update_venue_meta_cache( $terms, $tax){
 			$term_ids = $terms;
 		}
 
-   		update_meta_cache('eo_venue',$term_ids);
-
-		//Backwards compatible. Depreciated - use the functions, not properties.
-		foreach ($terms as $term){
-			if( !is_object($term) )
-				continue;
-			$term_id = (int) $term->term_id;
-
-			if( !isset($term->venue_address) ){
-				$address = eo_get_venue_address($term_id);
-				foreach( $address as $key => $value )
-					$term->{'venue_'.$key} = $value;
-			}
-
-			if( !isset($term->venue_lat) || !isset($term->venue_lng) ){
-				$term->venue_lat =  number_format(floatval(eo_get_venue_lat($term_id)), 6);
-				$term->venue_lng =  number_format(floatval(eo_get_venue_lng($term_id)), 6);
-			}
-
-		}
+   		update_meta_cache( 'eo_venue', $term_ids );
 		
-		if( $single ) return $terms[0];
+		if( $single ){
+			return $terms[0];
+		}
 
 		return $terms;
 	} 
