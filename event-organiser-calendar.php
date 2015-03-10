@@ -29,13 +29,24 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 	 * Enqueues the page's scripts and styles, and localises them.
 	 */
 	function page_scripts(){
+		
 		global $wp_locale;
 		
 		wp_enqueue_script( 'eo_calendar' );
 		
-		$supports = eventorganiser_get_option( 'supports' );
-		$venues = ( get_taxonomy( 'event-venue' ) ? get_terms( 'event-venue', array( 'hide_empty' => 0 ) ) : false );
 		$edittime = ( defined( 'EVENT_ORGANISER_BETA_FEATURES' ) && EVENT_ORGANISER_BETA_FEATURES );
+		
+		$venues = $categories = $all_cats = $all_venues = false;
+		
+		if( $category_tax = get_taxonomy( 'event-category' ) ){
+			$categories = get_terms( 'event-category', array( 'hide_empty' => 0 ) );
+			$all_cats   = $category_tax->labels->view_all_items;
+		}
+		
+		if( $venue_tax = get_taxonomy( 'event-venue' ) ){
+			$venues     = get_terms( 'event-venue', array( 'hide_empty' => 0 ) );
+			$all_venues = $venue_tax->labels->view_all_items;
+		}
 		
 		wp_localize_script( 'eo_calendar', 'EO_Ajax', array( 
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
@@ -45,7 +56,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			'perm_edit'  => current_user_can( 'edit_events' ),
 			'edit_time'  => $edittime ? current_user_can( 'edit_events' ) : false,
 			'edit_nonce' => wp_create_nonce( 'edit_events' ),
-			'categories' => get_terms( 'event-category', array( 'hide_empty' => 0 ) ),
+			'categories' => $categories,
 			'venues'     => $venues,
 			'locale'     => array(
 				'isrtl'       => $wp_locale->is_rtl(),
@@ -58,16 +69,16 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				'week'        => __( 'week', 'eventorganiser' ),
 				'month'       => __( 'month', 'eventorganiser' ),
 				'gotodate'    => __( 'go to date', 'eventorganiser' ),
-				'cat'         => __( 'View all categories', 'eventorganiser' ),
-				'venue'       => __( 'View all venues', 'eventorganiser' ),
+				'cat'         => $all_cats,
+				'venue'       => $all_venues,
 			)
 		));
 		
 	}
 
-    /**
-     * Prints page styles
-     */
+	/**
+	 * Prints page styles
+	 */
 	function page_styles(){
 		$css = '';
 		if ( $terms = get_terms( 'event-category', array( 'hide_empty' => 0 ) ) ):

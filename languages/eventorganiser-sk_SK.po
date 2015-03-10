@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 21:46+0000\n"
-"PO-Revision-Date: 2013-12-21 06:21:56+0000\n"
-"Last-Translator: ViRPo <virpo@centrum.sk>\n"
+"POT-Creation-Date: 2015-03-10 10:42+0000\n"
+"PO-Revision-Date: 2015-02-28 06:25:39+0000\n"
+"Last-Translator: Juraj G. <jerrykulooo@gmail.com>\n"
 "Language-Team: \n"
 "Language: Slovak (Slovakia)\n"
 "MIME-Version: 1.0\n"
@@ -31,15 +31,15 @@ msgstr ""
 msgid "Group by"
 msgstr ""
 
-#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:235
+#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:246
 msgid "Day"
 msgstr ""
 
-#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:235
+#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:246
 msgid "Week"
 msgstr ""
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:235
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:246
 msgid "Month"
 msgstr ""
 
@@ -59,7 +59,7 @@ msgstr ""
 msgid "Displays a calendar of your events"
 msgstr ""
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:231
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:242
 msgid "Events Calendar"
 msgstr ""
 
@@ -180,7 +180,7 @@ msgstr ""
 #: classes/class-eo-venue-list-table.php:74
 #: includes/event-organiser-ajax.php:674
 msgid "View"
-msgstr ""
+msgstr "Zobraziť"
 
 #: classes/class-eo-widget-categories.php:10
 msgid "A list or dropdown of event categories"
@@ -227,7 +227,7 @@ msgstr ""
 #: classes/class-eo-widget-venues.php:32 event-organiser-settings.php:319
 #: event-organiser-venues.php:185 includes/event-organiser-cpt.php:31
 msgid "Venues"
-msgstr ""
+msgstr "Miesta konania"
 
 #: classes/class-eo-widget-venues.php:57
 msgid "Select Venue"
@@ -257,112 +257,103 @@ msgstr ""
 
 #: event-organiser-calendar.php:22 event-organiser-calendar.php:23
 msgid "Calendar View"
-msgstr ""
+msgstr "Náhľad v kalendári"
 
-#: event-organiser-calendar.php:56 includes/event-organiser-register.php:58
+#: event-organiser-calendar.php:67 includes/event-organiser-register.php:58
 msgid "today"
 msgstr ""
 
-#: event-organiser-calendar.php:57 includes/event-organiser-register.php:59
+#: event-organiser-calendar.php:68 includes/event-organiser-register.php:59
 #: includes/event-organiser-register.php:248
 msgid "day"
 msgstr ""
 
-#: event-organiser-calendar.php:58 includes/event-organiser-register.php:60
+#: event-organiser-calendar.php:69 includes/event-organiser-register.php:60
 #: includes/event-organiser-register.php:250
 msgid "week"
 msgstr ""
 
-#: event-organiser-calendar.php:59 includes/event-organiser-register.php:61
+#: event-organiser-calendar.php:70 includes/event-organiser-register.php:61
 #: includes/event-organiser-register.php:252
 msgid "month"
 msgstr ""
 
-#: event-organiser-calendar.php:60 includes/event-organiser-register.php:62
+#: event-organiser-calendar.php:71 includes/event-organiser-register.php:62
 msgid "go to date"
 msgstr ""
 
-#: event-organiser-calendar.php:61 event-organiser-manage.php:122
-#: includes/event-organiser-cpt.php:105
-msgid "View all categories"
-msgstr ""
-
-#: event-organiser-calendar.php:62 includes/event-organiser-cpt.php:45
-msgid "View all venues"
-msgstr ""
-
-#: event-organiser-calendar.php:109
+#: event-organiser-calendar.php:120
 msgid "You do not have sufficient permissions to create events. "
 msgstr ""
 
-#: event-organiser-calendar.php:165
+#: event-organiser-calendar.php:176
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr ""
 
-#: event-organiser-calendar.php:183
+#: event-organiser-calendar.php:194
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr ""
 
-#: event-organiser-calendar.php:193
+#: event-organiser-calendar.php:204
 msgid "Occurrence deleted."
 msgstr ""
 
-#: event-organiser-calendar.php:209
+#: event-organiser-calendar.php:220
 msgid "Calendar options"
 msgstr ""
 
-#: event-organiser-calendar.php:216
+#: event-organiser-calendar.php:227
 msgid "24 hour time"
 msgstr ""
 
-#: event-organiser-calendar.php:238
+#: event-organiser-calendar.php:249
 #: includes/event-organiser-event-functions.php:1457
 msgid "Loading&#8230;"
 msgstr ""
 
-#: event-organiser-calendar.php:245
+#: event-organiser-calendar.php:256
 msgid "Current date/time"
 msgstr ""
 
-#: event-organiser-calendar.php:250
+#: event-organiser-calendar.php:261
 msgid "Create an event"
 msgstr ""
 
-#: event-organiser-calendar.php:255
+#: event-organiser-calendar.php:266
 msgid "When"
 msgstr ""
 
-#: event-organiser-calendar.php:259
+#: event-organiser-calendar.php:270
 msgid "Event Title"
 msgstr ""
 
-#: event-organiser-calendar.php:266 includes/event-organiser-ajax.php:397
+#: event-organiser-calendar.php:277 includes/event-organiser-ajax.php:397
 msgid "Where"
 msgstr ""
 
-#: event-organiser-calendar.php:291
+#: event-organiser-calendar.php:302
 msgid "Save Draft"
 msgstr ""
 
-#: event-organiser-calendar.php:292 event-organiser-calendar.php:299
+#: event-organiser-calendar.php:303 event-organiser-calendar.php:310
 #: event-organiser-edit.php:258
 msgid "Cancel"
 msgstr ""
 
-#: event-organiser-calendar.php:295
+#: event-organiser-calendar.php:306
 msgid "Publish Event"
 msgstr ""
 
-#: event-organiser-calendar.php:301
+#: event-organiser-calendar.php:312
 msgid "Submit for Review"
 msgstr ""
 
-#: event-organiser-calendar.php:322 event-organiser-edit.php:14
+#: event-organiser-calendar.php:333 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:37
 msgid "Event Details"
 msgstr ""
 
-#: event-organiser-calendar.php:324
+#: event-organiser-calendar.php:335
 msgid "Event Detail"
 msgstr ""
 
@@ -609,51 +600,51 @@ msgstr ""
 
 #: event-organiser-manage.php:19 includes/event-organiser-cpt.php:218
 msgid "Event"
-msgstr ""
+msgstr "Udalosť"
 
 #: event-organiser-manage.php:38
 msgid "Reoccurrence"
 msgstr ""
 
-#: event-organiser-manage.php:153
+#: event-organiser-manage.php:152
 msgid "View all events"
-msgstr ""
+msgstr "Zobraziť všetky udalosti"
 
-#: event-organiser-manage.php:154
+#: event-organiser-manage.php:153
 msgid "Future events"
 msgstr ""
 
-#: event-organiser-manage.php:155
+#: event-organiser-manage.php:154
 msgid "Expired events"
 msgstr ""
 
-#: event-organiser-manage.php:156
+#: event-organiser-manage.php:155
 msgid "Events within 24 hours"
 msgstr ""
 
-#: event-organiser-manage.php:157
+#: event-organiser-manage.php:156
 msgid "Events within 1 week"
 msgstr ""
 
-#: event-organiser-manage.php:158
+#: event-organiser-manage.php:157
 #, php-format
 msgid "Events within %d weeks"
 msgstr ""
 
-#: event-organiser-manage.php:159
+#: event-organiser-manage.php:158
 msgid "Events within 1 month"
 msgstr ""
 
-#: event-organiser-manage.php:160
+#: event-organiser-manage.php:159
 #, php-format
 msgid "Events within %d months"
 msgstr ""
 
-#: event-organiser-manage.php:161
+#: event-organiser-manage.php:160
 msgid "Events within 1 year"
 msgstr ""
 
-#: event-organiser-manage.php:212
+#: event-organiser-manage.php:211
 msgid "&mdash; No Change &mdash;"
 msgstr ""
 
@@ -755,20 +746,20 @@ msgstr ""
 
 #: event-organiser-settings.php:146
 msgid "Comments"
-msgstr ""
+msgstr "Komentáre"
 
 #: event-organiser-settings.php:147
 msgid "Revisions"
-msgstr ""
+msgstr "Aktualizácie"
 
 #: event-organiser-settings.php:148 event-organiser-settings.php:338
 #: includes/event-organiser-cpt.php:146
 msgid "Event Tags"
-msgstr ""
+msgstr "Značky udalostí"
 
 #: event-organiser-settings.php:153 event-organiser-settings.php:180
 msgid "Show past events:"
-msgstr ""
+msgstr "Zobraz ukončené udalosti:"
 
 #: event-organiser-settings.php:159 event-organiser-settings.php:186
 msgid ""
@@ -778,11 +769,11 @@ msgstr ""
 
 #: event-organiser-settings.php:162
 msgid "Add an 'events' link to the navigation menu:"
-msgstr ""
+msgstr "Pridať odkaz na udalosť do menu:"
 
 #: event-organiser-settings.php:167
 msgid "Date Format:"
-msgstr ""
+msgstr "Formát dátumu:"
 
 #: event-organiser-settings.php:173
 msgid "dd-mm-yyyy"
@@ -809,7 +800,7 @@ msgstr ""
 
 #: event-organiser-settings.php:198
 msgid "Are current events past?"
-msgstr ""
+msgstr "Sú terajšie udalosti ukončené?"
 
 #: event-organiser-settings.php:207
 msgid ""
@@ -819,13 +810,15 @@ msgstr ""
 
 #: event-organiser-settings.php:210
 msgid "Delete expired events:"
-msgstr ""
+msgstr "Vymazať ukončené udalosti:"
 
 #: event-organiser-settings.php:216
 msgid ""
 "If selected the event will be automatically trashed 24 hours after the last "
 "occurrence finishes."
 msgstr ""
+"Ak je táto možnosť zaškrtnutá, udalosti budú automaticky presunuté do koša "
+"po ukončení posledného výskytu."
 
 #: event-organiser-settings.php:219
 msgid "Enable events ICAL feed:"
@@ -838,11 +831,11 @@ msgstr ""
 
 #: event-organiser-settings.php:228
 msgid "Exclude events from searches:"
-msgstr ""
+msgstr "Vynechať udalosti z vyhľadávania"
 
 #: event-organiser-settings.php:236
 msgid "Enable templates:"
-msgstr ""
+msgstr "Povoliť šablóny"
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -930,11 +923,11 @@ msgstr ""
 
 #: event-organiser-settings.php:618
 msgid "Role"
-msgstr ""
+msgstr "Úloha"
 
 #: event-organiser-settings.php:629
 msgid "None"
-msgstr ""
+msgstr "Žiadny"
 
 #: event-organiser-settings.php:658
 msgid ""
@@ -956,7 +949,7 @@ msgstr ""
 
 #: event-organiser-settings.php:696
 msgid "Do not add to menu"
-msgstr ""
+msgstr "Nepridávať do menu"
 
 #: event-organiser-settings.php:700
 msgid "Page list (fallback)"
@@ -964,23 +957,23 @@ msgstr ""
 
 #: event-organiser-venues.php:49
 msgid "You do not have permission to manage venues"
-msgstr ""
+msgstr "Nemáte dostatočné práva na správu miest konania"
 
 #: event-organiser-venues.php:54 event-organiser-venues.php:83
 msgid "You do not have permission to edit this venue."
-msgstr ""
+msgstr "Nemáte dostatočné práva na úpravu tohto miesta konania"
 
 #: event-organiser-venues.php:61
 msgid "Venue <strong>was not</strong> updated"
-msgstr ""
+msgstr "Miesto konania <strong>nebolo </strong> aktualizované"
 
 #: event-organiser-venues.php:98
 msgid "Venue <strong>was not</strong> created"
-msgstr ""
+msgstr "Miesto konania <strong>nebolo </strong> vytvorené"
 
 #: event-organiser-venues.php:127
 msgid "You do not have permission to delete this venue"
-msgstr ""
+msgstr "Nemáte dostatočné práva na zmazanie tohto miesta konania"
 
 #: event-organiser-venues.php:154
 msgid "Venue(s) <strong>were not </strong> deleted"
@@ -1013,15 +1006,15 @@ msgstr ""
 
 #: event-organiser-venues.php:446
 msgid "Venue name"
-msgstr ""
+msgstr "Názov miesta konania"
 
 #: event-organiser-venues.php:452
 msgid "Permalink:"
-msgstr ""
+msgstr "Trvalý odkaz:"
 
 #: event-organiser-venues.php:459
 msgid "Get Link"
-msgstr ""
+msgstr "Získať odkaz"
 
 #: event-organiser-venues.php:481
 msgid "Slug"
@@ -1077,7 +1070,7 @@ msgstr ""
 
 #: includes/class-event-organiser-im-export.php:68
 msgid "No file detected."
-msgstr ""
+msgstr "Nebol nájdený žiaden súbor."
 
 #: includes/class-event-organiser-im-export.php:71
 msgid ""
@@ -1169,36 +1162,36 @@ msgstr ""
 
 #: includes/event-organiser-ajax.php:347
 msgid "Protected"
-msgstr ""
+msgstr "Uzamknuté"
 
 #: includes/event-organiser-ajax.php:349
 msgid "Private"
-msgstr ""
+msgstr "Súkromné"
 
 #: includes/event-organiser-ajax.php:351
 msgid "Draft"
-msgstr ""
+msgstr "Koncept"
 
 #: includes/event-organiser-ajax.php:381
 #: templates/event-meta-event-single.php:58
 msgid "Start"
-msgstr ""
+msgstr "Začiatok"
 
 #: includes/event-organiser-ajax.php:382
 msgid "End"
-msgstr ""
+msgstr "Koniec"
 
 #: includes/event-organiser-ajax.php:423
 msgid "This event reoccurs"
-msgstr ""
+msgstr "Táto udalosť sa znovu opakuje"
 
 #: includes/event-organiser-ajax.php:429 includes/event-organiser-cpt.php:221
 msgid "Edit Event"
-msgstr ""
+msgstr "Upraviť udalosť"
 
 #: includes/event-organiser-ajax.php:448
 msgid "Delete this occurrence"
-msgstr ""
+msgstr "Vymazať tento záznam"
 
 #: includes/event-organiser-ajax.php:462
 msgid "Break this series"
@@ -1207,11 +1200,11 @@ msgstr ""
 #: includes/event-organiser-ajax.php:670
 #: includes/event-organiser-event-functions.php:1409
 msgid "All Day"
-msgstr ""
+msgstr "Celý deň"
 
 #: includes/event-organiser-ajax.php:675
 msgid "Add To Google Calendar"
-msgstr ""
+msgstr "Pridať do Google kalendáru"
 
 #: includes/event-organiser-ajax.php:786
 msgid "Event not found"
@@ -1240,7 +1233,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:35
 msgid "View Venue"
-msgstr ""
+msgstr "Zobraziť miesto konania"
 
 #: includes/event-organiser-cpt.php:36
 msgid "Edit Venue"
@@ -1248,30 +1241,34 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:37
 msgid "Update Venue"
-msgstr ""
+msgstr "Aktualizovať miesto konania"
 
 #: includes/event-organiser-cpt.php:38
 msgid "Add New Venue"
-msgstr ""
+msgstr "Pridať nové miesto konania"
 
 #: includes/event-organiser-cpt.php:39
 msgid "New Venue Name"
-msgstr ""
+msgstr "Názov nového miesta konania"
 
 #: includes/event-organiser-cpt.php:40
 msgid "No venues found"
-msgstr ""
+msgstr "Žiadne miesto konania nebolo nájdené"
 
 #: includes/event-organiser-cpt.php:41
 msgid "Add or remove venues"
-msgstr ""
+msgstr "Pridať alebo odstrániť miesta konania"
 
 #: includes/event-organiser-cpt.php:42
 msgid "Separate venues with commas"
-msgstr ""
+msgstr "Oddeliť miesta konania čiarkou"
 
 #: includes/event-organiser-cpt.php:44
 msgid "Venue Location"
+msgstr "Adresa miesta konania"
+
+#: includes/event-organiser-cpt.php:45
+msgid "View all venues"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:46
@@ -1280,7 +1277,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:47
 msgid "No Venue"
-msgstr ""
+msgstr "Žiadne miesto konania"
 
 #: includes/event-organiser-cpt.php:93
 msgctxt "taxonomy singular name"
@@ -1289,15 +1286,15 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:94
 msgid "Search Categories"
-msgstr ""
+msgstr "Hľadať v kategóriách"
 
 #: includes/event-organiser-cpt.php:95
 msgid "All Categories"
-msgstr ""
+msgstr "Všetky kategórie"
 
 #: includes/event-organiser-cpt.php:96
 msgid "Parent Category"
-msgstr ""
+msgstr "Nadradená kategória"
 
 #: includes/event-organiser-cpt.php:97
 msgid "Parent Category:"
@@ -1321,6 +1318,10 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:102
 msgid "No categories found"
+msgstr ""
+
+#: includes/event-organiser-cpt.php:105
+msgid "View all categories"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:147
@@ -1385,52 +1386,52 @@ msgstr ""
 #: includes/event-organiser-cpt.php:219
 msgctxt "post"
 msgid "Add New"
-msgstr ""
+msgstr "Pridať novú"
 
 #: includes/event-organiser-cpt.php:220
 msgid "Add New Event"
-msgstr ""
+msgstr "Pridať novú udalosť"
 
 #: includes/event-organiser-cpt.php:222
 msgid "New Event"
-msgstr ""
+msgstr "Nová udalosť"
 
 #: includes/event-organiser-cpt.php:223
 msgid "All events"
-msgstr ""
+msgstr "Všetky udalosti"
 
 #: includes/event-organiser-cpt.php:224
 msgid "View Event"
-msgstr ""
+msgstr "Zobraziť udalosť"
 
 #: includes/event-organiser-cpt.php:225
 msgid "Search events"
-msgstr ""
+msgstr "Hľadať udalosti"
 
 #: includes/event-organiser-cpt.php:226
 msgid "No events found"
-msgstr ""
+msgstr "Nebola nájdená žiadna udalosť"
 
 #: includes/event-organiser-cpt.php:227
 msgid "No events found in Trash"
-msgstr ""
+msgstr "Udalosť nájdená v koši"
 
 #: includes/event-organiser-cpt.php:310
 #, php-format
 msgid "Event updated. <a href=\"%s\">View event</a>"
-msgstr ""
+msgstr "Udalosť aktualizovaná. <a href=\"%s\">Prezrieť si udalosť.</a>"
 
 #: includes/event-organiser-cpt.php:311
 msgid "Custom field updated."
-msgstr ""
+msgstr "Voliteľné pole bolo aktualizované."
 
 #: includes/event-organiser-cpt.php:312
 msgid "Custom field deleted."
-msgstr ""
+msgstr "Voliteľné pole bolo vymazané."
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
-msgstr ""
+msgstr "Udalosť bola aktualizovaná."
 
 #: includes/event-organiser-cpt.php:315
 #, php-format
@@ -1438,18 +1439,19 @@ msgid "Event restored to revision from %s"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:316
-#, php-format
+#, fuzzy, php-format
 msgid "Event published. <a href=\"%s\">View event</a>"
-msgstr ""
+msgstr "Udalosť bola publikovaná."
 
 #: includes/event-organiser-cpt.php:317
 msgid "Event saved."
-msgstr ""
+msgstr "Udalosť bola uložená."
 
 #: includes/event-organiser-cpt.php:318
 #, php-format
 msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
+"Udalosť pridaná. <a target=\"_blank\" href=\"%s\">Prezrieť si udalosť</a>"
 
 #: includes/event-organiser-cpt.php:319
 #, php-format
@@ -1457,10 +1459,12 @@ msgid ""
 "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
 "\">Preview event</a>"
 msgstr ""
+"Event naplánovaná na: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
+"\">Prezrieť si udalosť</a>"
 
 #: includes/event-organiser-cpt.php:321
 msgid "M j, Y @ G:i"
-msgstr ""
+msgstr "M j, Y o G:i"
 
 #: includes/event-organiser-cpt.php:322
 #, php-format
@@ -1534,7 +1538,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:537 includes/event-organiser-cpt.php:538
 msgid "Selecting a venue"
-msgstr ""
+msgstr "Výber miesta konania"
 
 #: includes/event-organiser-cpt.php:540
 msgid "Use the venues input field to search for existing venues"
@@ -1545,10 +1549,12 @@ msgid ""
 "Only pre-existing venues can be selected. To add a venue, go to the venues "
 "page."
 msgstr ""
+"Môžu byť vybraté iba existujúce miesta konania. Na ich pridanie prejdite ku "
+"stránke miesta konania."
 
 #: includes/event-organiser-cpt.php:551 includes/event-organiser-cpt.php:570
 msgid "Overview"
-msgstr ""
+msgstr "Prehľad"
 
 #: includes/event-organiser-cpt.php:552
 msgid ""
@@ -1571,11 +1577,11 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:561
 msgid "Delete will permanently remove the venue"
-msgstr ""
+msgstr "Vymazanie trvalo odstráni miesto konania"
 
 #: includes/event-organiser-cpt.php:562
 msgid "View will take you to the venue's page"
-msgstr ""
+msgstr "Náhľad vás prenesie na stránku miesta konania"
 
 #: includes/event-organiser-cpt.php:571
 msgid ""
@@ -1593,7 +1599,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:576
 msgid "Add Event"
-msgstr ""
+msgstr "Pridajte udalosť"
 
 #: includes/event-organiser-cpt.php:577
 msgid ""
@@ -1606,12 +1612,12 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:583
 msgid "For more information"
-msgstr ""
+msgstr "Pre viac informácií"
 
 #: includes/event-organiser-cpt.php:584
 #, php-format
 msgid "See the <a %s> documentation</a>"
-msgstr ""
+msgstr "Nahliadnite do <a %s> dokumentácie </a>"
 
 #: includes/event-organiser-cpt.php:585
 msgid "Debugging Event Organiser"
@@ -1619,147 +1625,147 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:586
 msgid "Go Pro!"
-msgstr ""
+msgstr "Zmeňte na Pro!"
 
 #: includes/event-organiser-cpt.php:703 includes/event-organiser-cpt.php:726
 msgid "Color"
-msgstr ""
+msgstr "Farba"
 
 #: includes/event-organiser-cpt.php:709
 msgid "Assign the category a colour."
-msgstr ""
+msgstr "Priraďte kategórii farbu."
 
 #: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "last"
-msgstr ""
+msgstr "posledný"
 
 #: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "first"
-msgstr ""
+msgstr "prvý"
 
 #: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "second"
-msgstr ""
+msgstr "druhý"
 
 #: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "third"
-msgstr ""
+msgstr "tretí"
 
 #: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "fourth"
-msgstr ""
+msgstr "štvrtý"
 
 #: includes/event-organiser-event-functions.php:757
 msgid "one time only"
-msgstr ""
+msgstr "iba raz"
 
 #: includes/event-organiser-event-functions.php:760
 msgid "custom reoccurrence"
-msgstr ""
+msgstr "úprava opätovného opakovania"
 
 #: includes/event-organiser-event-functions.php:767
 #: includes/event-organiser-register.php:256
 msgid "every day"
-msgstr ""
+msgstr "každý deň"
 
 #: includes/event-organiser-event-functions.php:769
 #: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d days"
-msgstr ""
+msgstr "kažých %d dní"
 
 #: includes/event-organiser-event-functions.php:775
 #: includes/event-organiser-register.php:258
 msgid "every week on"
-msgstr ""
+msgstr "každý týždeň v"
 
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d weeks on"
-msgstr ""
+msgstr "každých %d týždňov v"
 
 #: includes/event-organiser-event-functions.php:788
 #: includes/event-organiser-register.php:260
 msgid "every month on the"
-msgstr ""
+msgstr "každý mesiac v"
 
 #: includes/event-organiser-event-functions.php:790
 #: includes/event-organiser-register.php:261
 #, php-format
 msgid "every %d months on the"
-msgstr ""
+msgstr "každých %d mesiacov v"
 
 #: includes/event-organiser-event-functions.php:819
 msgid "every year"
-msgstr ""
+msgstr "každý rok"
 
 #: includes/event-organiser-event-functions.php:821
 #, php-format
 msgid "every %d years"
-msgstr ""
+msgstr "každých %d rokov"
 
 #: includes/event-organiser-register.php:56
 msgid "Show More"
-msgstr ""
+msgstr "Ukázať viac"
 
 #: includes/event-organiser-register.php:57
 msgid "Show Less"
-msgstr ""
+msgstr "Ukázať menej"
 
 #: includes/event-organiser-register.php:243
 msgid "Hide dates"
-msgstr ""
+msgstr "Skryť dátumy"
 
 #: includes/event-organiser-register.php:246
 msgid "Hour"
-msgstr ""
+msgstr "Hodina"
 
 #: includes/event-organiser-register.php:247
 msgid "Minute"
-msgstr ""
+msgstr "Minúta"
 
 #: includes/event-organiser-register.php:249
 msgid "days"
-msgstr ""
+msgstr "dni"
 
 #: includes/event-organiser-register.php:251
 msgid "weeks"
-msgstr ""
+msgstr "týždne"
 
 #: includes/event-organiser-register.php:253
 msgid "months"
-msgstr ""
+msgstr "mesiace"
 
 #: includes/event-organiser-register.php:254
 msgid "year"
-msgstr ""
+msgstr "rok"
 
 #: includes/event-organiser-register.php:255
 msgid "years"
-msgstr ""
+msgstr "roky"
 
 #: includes/event-organiser-register.php:262
 msgid "every year on the"
-msgstr ""
+msgstr "každý rok na"
 
 #: includes/event-organiser-register.php:263
 #, php-format
 msgid "every %d years on the"
-msgstr ""
+msgstr "každých %d rokov na"
 
 #: includes/event-organiser-register.php:264
 msgid "This event will repeat"
-msgstr ""
+msgstr "Táto udalosť sa bude opakovať"
 
 #: includes/event-organiser-register.php:365
 msgid "Settings"
-msgstr ""
+msgstr "Nastavenia"
 
 #: includes/event-organiser-register.php:668
 #, php-format
@@ -1777,50 +1783,55 @@ msgid ""
 "haven't and want the old templates back, <a href='http://wp-event-organiser."
 "com/blog/new-default-templates-in-1-7'>see this post<a/>."
 msgstr ""
+"<h4>Prednastavené šablóny boli zmenené</h4>Nebojte sa! Ak ste nastavili "
+"vlastné šablóny vo vašej téme nevšimnete si žiadne zmeny.</br> Ak ich "
+"nastavené nemáte a chcete svoju starú šablónu späť, <a \n"
+"href='http://wp-event-organiser.com/blog/new-default-templates-"
+"in-1-7'>kliknite na tento článok<a/>."
 
 #: includes/event-organiser-register.php:711
 msgid "Dismiss this notice"
-msgstr ""
+msgstr "Zruš toto upozornenie"
 
 #: includes/event-organiser-register.php:712
 msgid "Dismiss"
-msgstr ""
+msgstr "Zrušiť"
 
 #: includes/event-organiser-venue-functions.php:973
 msgid "Address"
-msgstr ""
+msgstr "Adresa"
 
 #: includes/event-organiser-venue-functions.php:974
 msgid "City"
-msgstr ""
+msgstr "Mesto"
 
 #: includes/event-organiser-venue-functions.php:975
 msgid "State / Province"
-msgstr ""
+msgstr "Štát / Kraj"
 
 #: includes/event-organiser-venue-functions.php:976
 msgid "Post Code"
-msgstr ""
+msgstr "Poštové smerovacie číslo"
 
 #: includes/event-organiser-venue-functions.php:977
 msgid "Country"
-msgstr ""
+msgstr "Krajina"
 
 #: includes/event.php:549
 msgid "Schedule not recognised."
-msgstr ""
+msgstr "Rozvrh bol nerozpoznaný."
 
 #: includes/event.php:558
 msgid "Start date not provided."
-msgstr ""
+msgstr "Nezazdali ste začiatočný dátum."
 
 #: includes/event.php:576
 msgid "Start date occurs after end date."
-msgstr ""
+msgstr "Dátum začiatku je po dátume konca."
 
 #: includes/event.php:579
 msgid "Schedule end date is before is before the start date."
-msgstr ""
+msgstr "Dátum ukončenia rozvrhu je pred dátumom začatia."
 
 #: includes/event.php:662
 msgid "Invalid monthly schedule (invalid ordinal)"
