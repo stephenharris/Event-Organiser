@@ -1508,17 +1508,17 @@ function eo_get_event_meta_list( $event_id = 0 ){
 
 	if( get_the_terms( $event_id, 'event-category' ) ){
 		$html .= sprintf(
-			'<li><strong>%s:</strong> %s</li>',
+			'<li><strong>%s:</strong> %s</li>' . "\n",
 			__( 'Categories', 'eventorganiser' ),
-			get_the_term_list( $event_id,'event-category', '', ', ', '' )
+			get_the_term_list( $event_id, 'event-category', '', ', ', '' )
 		);
 	}
 
 	if( get_the_terms( $event_id, 'event-tag' ) && !is_wp_error( get_the_terms( $event_id, 'event-tag' ) ) ){
 		$html .= sprintf(
-			'<li><strong>%s:</strong> %s</li>',
+			'<li><strong>%s:</strong> %s</li>' . "\n",
 			__( 'Tags', 'eventorganiser' ),
-			get_the_term_list( $event_id,' event-tag', '', ', ', '' )
+			get_the_term_list( $event_id, 'event-tag', '', ', ', '' )
 		);
 	}
 
