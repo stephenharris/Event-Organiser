@@ -60,10 +60,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$cat = wp_insert_term( 'hellworld', 'event-category' );
 		wp_set_object_terms( $event_id, (int) $cat['term_id'], 'event-category' );
 		
-		global $post;
-		$post = get_post( $event_id );
-		setup_postdata( $post );
-		$html = eo_get_event_meta_list();
+		$html = eo_get_event_meta_list( $event_id );
 		
 		$expected = file_get_contents( EO_DIR_TESTDATA . '/event-functions/event-meta-list.html' );
 		
