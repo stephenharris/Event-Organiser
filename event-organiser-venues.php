@@ -26,8 +26,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 	
 	function hooks_init(){
 		if( taxonomy_exists( 'event-venue' ) ){
-			add_action('admin_init', array($this,'admin_init_actions'));
-			add_action('admin_menu', array($this,'add_page'));
+			add_action( 'admin_menu', array( $this, 'add_page' ) );
 		}
 	}
 
