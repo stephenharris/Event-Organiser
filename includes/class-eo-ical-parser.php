@@ -940,7 +940,7 @@ class EO_ICAL_Parser{
 	 */
 	public function parse_ical_date( $ical_date ){
 
-		preg_match('/^(\d{8})*/', $ical_date, $matches);
+		preg_match('/^(\d{8})$/', $ical_date, $matches);
 
 		if( count( $matches ) !=2 ){
 			throw new Exception(
