@@ -8,31 +8,22 @@
  * @since 1.0.0
  * @ignore
  */
-function eventorganiser_edit_init(){
+function _eventorganiser_event_metaboxes_init(){
 	
 	// add a meta box to event post types.
 	add_meta_box( 'eventorganiser_detail', __( 'Event Details', 'eventorganiser' ), '_eventorganiser_details_metabox', 'event', 'normal', 'high' );
-
-	// add a callback function to save any data a user enters in
-	add_action( 'save_post', 'eventorganiser_details_save' );
+	
+	//Repurposes author metabox as organiser
+	$post_type_object = get_post_type_object( 'event' );
+	if( post_type_supports( 'event', 'author' ) ) {
+		if ( is_super_admin() || current_user_can( $post_type_object->cap->edit_others_posts ) ){
+			remove_meta_box( 'authordiv', 'event', 'core' );
+			add_meta_box( 'authordiv',  __( 'Organiser', 'eventorganiser' ), 'post_author_meta_box', 'event', 'normal', 'core' );
+		}
+	}
 }
-add_action( 'admin_init', 'eventorganiser_edit_init' );
+add_action( 'add_meta_boxes_event', '_eventorganiser_event_metaboxes_init' );
 
-/**
- * Repurposes author metabox as organiser
- * @since 1.0.0
- * @ignore
- */
-function _eventorganiser_author_meta_box_title() {
-    $post_type_object = get_post_type_object( 'event' );
-    if ( post_type_supports('event', 'author') ) {
-        if ( is_super_admin() || current_user_can( $post_type_object->cap->edit_others_posts ) ){
-            remove_meta_box( 'authordiv', 'event', 'core' );
-            add_meta_box( 'authordiv',  __( 'Organiser', 'eventorganiser' ), 'post_author_meta_box', 'event', 'normal', 'core' );
-        }
-    }   
-}
-add_action( 'add_meta_boxes_event',  '_eventorganiser_author_meta_box_title' );
 
 /**
  * Sets up the event data metabox
@@ -420,6 +411,7 @@ function eventorganiser_details_save( $post_id ) {
 
 	return;
 }
+add_action( 'save_post', 'eventorganiser_details_save' );
 
 /**
  * Display custom error or alert messages on events CPT page
