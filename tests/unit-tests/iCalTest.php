@@ -428,6 +428,10 @@ class iCalTest extends PHPUnit_Framework_TestCase
     
     public function testTimeZoneParsing()
     {
+    	$this->markTestIncomplete(
+    		sprintf( 'These tests depend on server configuration (i.e. installed timezones) and so can fail on some environment set ups.' )
+    	);
+    	
     	$ical = new EO_ICAL_Parser();
     	
     	$tzid = 'GMT';
