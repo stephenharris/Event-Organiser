@@ -91,13 +91,15 @@ class relativeDateQueryTest extends EO_UnitTestCase
 		//Yesterday event
 		$start = new DateTime( 'yesterday' );
 		$end = new DateTime( 'yesterday' );
+		$start->setTime( 15, 0 );
+		$end->setTime( 16, 0 );
 		$event_ids[] = $this->factory->event->create(
 			array(
-				'start'		=> $start->setTime( 15, 0 ),
-				'end'		=> $end->setTime( 16, 0 ),
+				'start'		=> $start,
+				'end'		=> $end,
 				'all_day' 	=> 0,
 				'schedule'	=> 'once',
-				)
+			)
 		);
 		
 		
