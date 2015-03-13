@@ -23,7 +23,7 @@ env:
 
 
 before_script:
-- pecl install timezonedb
+- sh -c "if [ $TRAVIS_PHP_VERSION != 'hhvm' ]; then pecl install timezonedb; fi"
 - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 script: phpunit
