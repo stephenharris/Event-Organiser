@@ -101,7 +101,9 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		$date2 = new DateTime( '2014-01-30' );
 		$date3 = _eventorganiser_php52_modify( $date2, $modify );
 	
-		$this->assertEquals( $date->modify( $modify ), $date3 );
+		$expected = new DateTime( '2014-02-03' );
+
+		$this->assertEquals( $expected, $date3 );
 	
 	}
 	
