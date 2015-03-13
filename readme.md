@@ -4,7 +4,7 @@
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
 **Tested up to:** 4.1.1  
-**Stable tag:** 2.12.2  
+**Stable tag:** 2.12.3  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -231,9 +231,13 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 2.12.3 - 13th March 2015 ###
+* Fixes bug with iCal parser not correctly handling excluded date-times (bug introduced 2.12.0)
+* Fixes bug with validating iCal date (as opposed to date-time).
+
 ### 2.12.2 - 10th March 2015 ###
 * Fixes conflict with ACF on event admin pages
-* Fixes fatal error on events pages when displaying event tag (bug introduced 12.2.1).
+* Fixes fatal error on events pages when displaying event tag (bug introduced 2.12.1).
 * Fixes `eo_get_event_meta_list()` for use outside the loop.
 * Uses taxonomy labels array for category drop-dropdown labels.
 * Updates Romanian & Slovak translations. 
