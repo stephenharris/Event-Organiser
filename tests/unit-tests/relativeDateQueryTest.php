@@ -104,33 +104,37 @@ class relativeDateQueryTest extends EO_UnitTestCase
 		//Today event
 		$start = new DateTime( 'today' );
 		$end = new DateTime( 'today' );
+		$start->setTime( 15, 0 );
+		$end->setTime( 16, 0 );
 		$event_ids[] = $this->factory->event->create(
-				array(
-						'start'		=> $start->setTime( 15, 0 ),
-						'end'		=> $end->setTime( 16, 0 ),
-						'all_day' 	=> 0,
-						'schedule'	=> 'once',
-				)
+			array(
+				'start'		=> $start,
+				'end'		=> $end,
+				'all_day' 	=> 0,
+				'schedule'	=> 'once',
+			)
 		);
 		
 		
 		//Tomorrow event
 		$start = new DateTime( 'tomorrow' );
 		$end = new DateTime( 'tomorrow' );
+		$start->setTime( 15, 0 );
+		$end->setTime( 16, 0 );
 		$event_ids[] = $this->factory->event->create(
-				array(
-						'start'		=> $start->setTime( 15, 0 ),
-						'end'		=> $end->setTime( 16, 0 ),
-						'all_day' 	=> 0,
-						'schedule'	=> 'once',
-				)
+			array(
+				'start'		=> $start,
+				'end'		=> $end,
+				'all_day' 	=> 0,
+				'schedule'	=> 'once',
+			)
 		);
 	
 		//event_[start|end]_[before|after] is inclusive!
 		$yesterday = new DateTime( 'yesterday' );
 		$events_before_today = eo_get_events( array(
-				'fields' => 'ids',
-				'event_start_before' => $yesterday->format('Y-m-d'),
+			'fields' => 'ids',
+			'event_start_before' => $yesterday->format('Y-m-d'),
 		));
 		$this->assertEquals( array( $event_ids[0]  ), array_map( 'intval', $events_before_today ) );
 		
