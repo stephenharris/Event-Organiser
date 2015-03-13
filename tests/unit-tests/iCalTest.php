@@ -159,6 +159,17 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $expected_excludes, $event['exclude'] );
 	}
 	
+	
+	public function testEventWithExcludesDate(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithExcludesDate.ics' );
+
+		$expected_excludes = array( new DateTime( '2015-03-27', eo_get_blog_timezone() ) );
+	
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_excludes, $event['exclude'] );
+	}
+	
 	public function testEventWithIncludes(){
 		$ical = new EO_ICAL_Parser();
 		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithIncludes.ics' );
