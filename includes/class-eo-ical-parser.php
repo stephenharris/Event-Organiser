@@ -832,6 +832,10 @@ class EO_ICAL_Parser{
 		$tzid = str_replace( '-', '/', $tzid );
 		$tzid = trim( $tzid, '\'"' );
 
+		if( 'GMT' == $tzid ){
+			$tzid = 'UTC';
+		}
+		
 		//Try just using the passed timezone ID
 		try{
 			$tz = new DateTimeZone( $tzid );

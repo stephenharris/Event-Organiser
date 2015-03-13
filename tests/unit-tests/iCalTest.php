@@ -433,7 +433,7 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	$tzid = 'GMT';
     	$expected = new DateTimeZone( 'UTC' );
     	$tz = $ical->parse_timezone( $tzid );
-    	$this->assertEquals( $expected, $tz ); //don't compare names as some servers return GMT as UTC.
+    	$this->assertEquals( $expected, $tz );
     	
     	$tzid = "(GMT+01.00) Amsterdam / Berlin / Bern / Rome / Stockholm / Vienna";
     	$expected = new DateTimeZone( 'Europe/Amsterdam' );
