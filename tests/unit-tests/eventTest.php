@@ -193,9 +193,9 @@ class eventTest extends EO_UnitTestCase
     	
     	$tz    = eo_get_blog_timezone();
     	$start = new DateTime( '2014-06-17 14:45:00', $tz );
-    	$end = new DateTime( '2014-06-17 15:45:00', $tz );
-    	$inc = array( new DateTime( '2014-08-16 14:45:00', $tz ) );
-    	$exc = array( new DateTime( '2014-06-19 14:45:00', $tz ),  new DateTime( '2014-07-03 14:45:00', $tz ) );
+    	$end   = new DateTime( '2014-06-17 15:45:00', $tz );
+    	$inc   = array( new DateTime( '2014-08-16 14:45:00', $tz ) );
+    	$exc   = array( new DateTime( '2014-06-19 14:45:00', $tz ),  new DateTime( '2014-07-03 14:45:00', $tz ) );
     	$event = array(
 			'start'         => $start,
 			'end'           => $end,
@@ -210,21 +210,19 @@ class eventTest extends EO_UnitTestCase
 		$event_id = $this->factory->event->create( $event );
 		$schedule = eo_get_event_schedule( $event_id );
 		
-		
 		$this->assertEquals( $start, $schedule['start'] );
 		$this->assertEquals( $end, $schedule['end'] );
 		$this->assertEquals( false, $schedule['all_day'] );
-		
 		
 		$this->assertEquals( 'weekly', $schedule['schedule'] );
 		$this->assertEquals( array( 'TU', 'TH' ), $schedule['schedule_meta'] );
 		$this->assertEquals( 2, $schedule['frequency'] );
 		
-		
-		$duration = $start->diff( $end );
-		$schedule_last = new DateTime( '2014-08-16 14:45:00', $tz );
+		$duration        = eo_date_interval( $start, $end, '+%y year +%m month +%d days +%h hours +%i minutes +%s seconds' );
+		$schedule_last   = new DateTime( '2014-08-16 14:45:00', $tz );
 		$schedule_finish = clone $schedule_last;
-		$schedule_finish->add( $duration );
+		$schedule_finish->modify( $duration );
+		
 		$this->assertEquals( $start, $schedule['schedule_start'] );
 		$this->assertEquals( $schedule_last, $schedule['schedule_last'] );
 		$this->assertEquals( $schedule_finish, $schedule['schedule_finish'] );

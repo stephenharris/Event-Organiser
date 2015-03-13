@@ -638,19 +638,24 @@ class EO_ICAL_Parser{
 
 				case 'EXDATE':
 				case 'RDATE':
-				//The modifiers have been dealt with above. We do similiar to above, except for an array of dates...
-				$value_array = explode( ',', $value );
+					//The modifiers have been dealt with above. We do similiar to above, except for an array of dates...
+					$value_array = explode( ',', $value );
 
-				//Note, we only consider the Date part and ignore the time
-				foreach( $value_array as $val ):
-					$date = $this->parse_ical_date( $val );
-				
-					if( $property == 'EXDATE' ){
-						$this->current_event['exclude'][] = $date;
-					}else{
-						$this->current_event['include'][] = $date;
-					}
-				endforeach;
+					//Note, we only consider the Date part and ignore the time
+					foreach( $value_array as $date ):
+						
+						if( isset( $meta ) && 'DATE' == $value ){
+							$date = $this->parse_ical_date( $date );
+						}else{
+							$date = $this->parse_ical_datetime( $date, $date_tz );
+						}
+					
+						if( 'EXDATE' == $property ){
+							$this->current_event['exclude'][] = $date;
+						}else{
+							$this->current_event['include'][] = $date;
+						}
+					endforeach;
 				break;
 
 				//Reoccurrence rule properties
@@ -935,7 +940,7 @@ class EO_ICAL_Parser{
 	 */
 	public function parse_ical_date( $ical_date ){
 
-		preg_match('/^(\d{8})*/', $ical_date, $matches);
+		preg_match('/^(\d{8})$/', $ical_date, $matches);
 
 		if( count( $matches ) !=2 ){
 			throw new Exception(
