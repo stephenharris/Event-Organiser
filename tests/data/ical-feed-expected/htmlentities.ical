@@ -15,8 +15,7 @@ DTSTART:20131202T210000Z
 DTEND:20131202T230000Z
 SUMMARY: A quotation mark ‘ and an ellipses …
 DESCRIPTION: A quotation mark ‘ and an ellipses …
-X-ALT-DESC;FMTTYPE=text/html: <p>A quotation mark &#8216\; and an ellipses 
- &#8230\;</p>
+X-ALT-DESC;FMTTYPE=text/html: <p>A quotation mark ‘ and an ellipses …</p>
 URL;VALUE=URI:http://example.org/?event=a-quotation-mark-and-an-ellipses
 END:VEVENT
 END:VCALENDAR
