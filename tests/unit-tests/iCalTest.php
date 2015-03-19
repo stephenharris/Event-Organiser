@@ -159,6 +159,17 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $expected_excludes, $event['exclude'] );
 	}
 	
+	
+	public function testEventWithExcludesDate(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithExcludesDate.ics' );
+
+		$expected_excludes = array( new DateTime( '2015-03-27', eo_get_blog_timezone() ) );
+	
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_excludes, $event['exclude'] );
+	}
+	
 	public function testEventWithIncludes(){
 		$ical = new EO_ICAL_Parser();
 		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithIncludes.ics' );
@@ -428,12 +439,16 @@ class iCalTest extends PHPUnit_Framework_TestCase
     
     public function testTimeZoneParsing()
     {
+    	$this->markTestIncomplete(
+    		sprintf( 'These tests depend on server configuration (i.e. installed timezones) and so can fail on some environment set ups.' )
+    	);
+    	
     	$ical = new EO_ICAL_Parser();
     	
     	$tzid = 'GMT';
     	$expected = new DateTimeZone( 'UTC' );
     	$tz = $ical->parse_timezone( $tzid );
-    	$this->assertEquals( $expected, $tz ); //don't compare names as some servers return GMT as UTC.
+    	$this->assertEquals( $expected, $tz );
     	
     	$tzid = "(GMT+01.00) Amsterdam / Berlin / Bern / Rome / Stockholm / Vienna";
     	$expected = new DateTimeZone( 'Europe/Amsterdam' );

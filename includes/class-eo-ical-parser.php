@@ -644,7 +644,7 @@ class EO_ICAL_Parser{
 					//Note, we only consider the Date part and ignore the time
 					foreach( $value_array as $date ):
 						
-						if( isset( $meta ) && 'DATE' == $value ){
+						if( isset( $meta ) && 'DATE' == $meta ){
 							$date = $this->parse_ical_date( $date );
 						}else{
 							$date = $this->parse_ical_datetime( $date, $date_tz );
@@ -832,6 +832,10 @@ class EO_ICAL_Parser{
 		$tzid = str_replace( '-', '/', $tzid );
 		$tzid = trim( $tzid, '\'"' );
 
+		if( 'GMT' == $tzid ){
+			$tzid = 'UTC';
+		}
+		
 		//Try just using the passed timezone ID
 		try{
 			$tz = new DateTimeZone( $tzid );

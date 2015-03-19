@@ -117,17 +117,17 @@ if ( have_posts() ) :
 			echo eventorganiser_fold_ical_text( "DESCRIPTION: $description" ) . "\r\n";
 		endif;
 		
-		$description = wpautop( get_the_content() );	
+		$description = wpautop( html_entity_decode( get_the_content(), ENT_COMPAT, 'UTF-8' ) );
 		$description = str_replace( "\r\n", '', $description ); //Remove new lines
 		$description = str_replace( "\n", '', $description );
 		$description = eventorganiser_escape_ical_text( $description );
-		echo eventorganiser_fold_ical_text( html_entity_decode( "X-ALT-DESC;FMTTYPE=text/html: $description" ), ENT_COMPAT, 'UTF-8' ) . "\r\n";
-		
+		echo eventorganiser_fold_ical_text( "X-ALT-DESC;FMTTYPE=text/html: $description" ). "\r\n";
+
 		$cats = get_the_terms( get_the_ID(), 'event-category' );
-		if ( $cats && !is_wp_error($cats) ) :
-			$cat_names = wp_list_pluck($cats, 'name');
+		if ( $cats && !is_wp_error( $cats ) ) :
+			$cat_names = wp_list_pluck( $cats, 'name' );
 			$cat_names = array_map( 'eventorganiser_escape_ical_text', $cat_names );
-			echo "CATEGORIES:" . implode(',',$cat_names) . "\r\n";
+			echo 'CATEGORIES:' . implode( ',', $cat_names ) . "\r\n";
 		endif;
 		
 		if ( eo_get_venue() ) :

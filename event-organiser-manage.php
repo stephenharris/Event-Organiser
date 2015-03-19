@@ -221,7 +221,6 @@ function eventorganiser_bulk_edit_box( $column_name, $post_type ) {
  */
 add_action( 'save_post', 'eventorganiser_quick_edit_save' );
 function eventorganiser_quick_edit_save( $post_id ) {
-	global $wpdb;
 
 	//make sure data came from our quick/bulk box
 	if ( !isset( $_REQUEST['_eononce'] ) || !wp_verify_nonce( $_REQUEST['_eononce'], 'eventorganiser_event_quick_edit_'.get_current_blog_id() ) ) return;
