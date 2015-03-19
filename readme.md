@@ -4,7 +4,7 @@
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
 **Tested up to:** 4.1.1  
-**Stable tag:** 2.12.3  
+**Stable tag:** 2.12.4  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -230,6 +230,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 2.12.4 - 14th March 2015 ###
+* Fixes bug with incorrect "Invalid datetime" errors when parsing iCal exdate or rdate dates
+* Decode HTML entities for X-ALT-DESC 
 
 ### 2.12.3 - 13th March 2015 ###
 * Fixes bug with iCal parser not correctly handling excluded date-times (bug introduced 2.12.0)
