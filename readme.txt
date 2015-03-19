@@ -219,7 +219,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
-= 2.12.4 - 14th March 2015 =
+= 2.12.4 - 19th March 2015 =
 * Fixes bug with incorrect "Invalid datetime" errors when parsing iCal exdate or rdate dates
 * Decode HTML entities for X-ALT-DESC 
 
