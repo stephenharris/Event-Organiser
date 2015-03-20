@@ -547,8 +547,8 @@ foreach( $hooks as $hook ){
  */
 function _eventorganiser_delete_calendar_cache() {
 	delete_transient( 'eo_widget_calendar' );
-	delete_transient( 'eo_full_calendar_public' );
-	delete_transient( 'eo_full_calendar_public_priv' );
+	delete_transient( apply_filters( 'eo_full_calendar_transient_key', 'eo_full_calendar_public' ) );
+	delete_transient( apply_filters( 'eo_full_calendar_transient_key', 'eo_full_calendar_public_priv' ) );
 	delete_transient( 'eo_full_calendar_admin' );
 	delete_transient( 'eo_widget_agenda' );
 }
