@@ -76,7 +76,7 @@ function eventorganiser_public_fullcalendar() {
 		$key = "eo_fc_".md5( serialize( $query ). $time_format );
 	}
 	
-	$calendar = get_transient( "eo_full_calendar_public{$priv}");
+	$calendar = get_transient( apply_filters( 'eo_full_calendar_transient_key', "eo_full_calendar_public{$priv}" ) );
 	if( $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
 		$events_array = $calendar[$key];
 		/**
@@ -280,7 +280,7 @@ function eventorganiser_public_fullcalendar() {
 	
 	$calendar[$key] = $events_array;
 
-	set_transient( "eo_full_calendar_public{$priv}",$calendar, 60*60*24);
+	set_transient( apply_filters( 'eo_full_calendar_transient_key', "eo_full_calendar_public{$priv}" ), $calendar, 60*60*24);
 	
 	$events_array = apply_filters( 'eventorganiser_fullcalendar', $events_array, $query );
 
@@ -807,6 +807,7 @@ function eventorganiser_admin_calendar_edit_date(){
 			'data' => array(
 				'message' => __( 'Are you sure you want to do this?', 'eventorganiser' )
 			),
+
 		));
 		exit;
 	}
