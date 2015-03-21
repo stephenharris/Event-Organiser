@@ -56,7 +56,20 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $expected_end, $event['end'] );
 		$this->assertEquals( $expected_until, $event['schedule_last'] );
 	}
-		
+
+	
+	public function testWeeklyEventWithoutMeta(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/weeklyEventWithoutMeta.ics' );
+	
+		$event = $ical->events[0];
+		$this->assertEquals( 0, count( $ical->warnings ) );
+		$this->assertEquals( 0, count( $ical->errors ) );
+		$this->assertEquals( 'weekly', $event['schedule'] );
+		$this->assertArrayNotHasKey( 'schedule_meta', $event ); 
+	}
+	
+	
 	public function testMonthlyByDayEvent(){
 		
 		$ical = new EO_ICAL_Parser();
