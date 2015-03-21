@@ -67,6 +67,19 @@ function eventorganiser_public_fullcalendar() {
 
 	//Retrieve events		
 	$query = array_merge( $request, $presets );
+
+	/**
+	 * Filters the query before it is sent to the calendar.
+	 *
+	 * The returned $query array is used to generate the cache key. The `$query`
+	 * array can contain any keys supported by `eo_get_events()`, and so also
+	 * `get_posts()` and `WP_Query()`.
+	 *
+	 * @package fullCalendar
+	 * @since 2.13.0
+	 * @param array  $query An query array (as given to `eo_get_events()`)
+	 */
+	$query = apply_filters( 'eventorganiser_fullcalendar_query', $query );
 	
 	//In case polylang is enabled with events as translatable. Include locale in cache key.
 	$options = get_option( 'polylang' );
@@ -75,8 +88,6 @@ function eventorganiser_public_fullcalendar() {
 	}else{
 		$key = 'eo_fc_'.md5( serialize( $query ). $time_format );
 	}
-	
-	$key = apply_filters( 'eventorganiser_fullcalendar_cache_key', $key, $query );
 	
 	$calendar = get_transient( "eo_full_calendar_public{$priv}" );
 	if( $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
