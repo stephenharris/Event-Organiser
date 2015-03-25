@@ -102,6 +102,8 @@
 				<?php endif; ?>
 		<?php } ?>
 
+		<?php do_action( 'eventorganiser_additional_event_meta' ) ?>
+
 	</ul>
 
 	<!-- Does the event have a venue? -->
