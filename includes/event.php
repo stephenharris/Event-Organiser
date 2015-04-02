@@ -817,8 +817,8 @@ function eo_get_event_schedule( $post_id=0 ){
 		 * * **include** (array) - Array of DateTime objects to include in the schedule
 		 * * **occurrences** (array) - Array of DateTime objects generated from the above schedule.
 		 * 
-		 * @param array The event schedule with generated occurrences.
-		 * @param array The original event schedule (without occurrences).  
+		 * @param array $_event_data The event schedule with generated occurrences.
+		 * @param array $event_data The original event schedule (without occurrences).  
 		 */
 		$_event_data = apply_filters( 'eventorganiser_generate_occurrences', $_event_data, $event_data );
 		return $_event_data;
