@@ -151,17 +151,17 @@ function eventorganiser_public_fullcalendar() {
 			 * @param int    $event_id      The event's post ID.
 			 * @param int    $occurrence_id The event's occurrence ID.
 			 */
-			$link = apply_filters('eventorganiser_calendar_event_link',$link,$post->ID,$post->occurrence_id);
+			$link = apply_filters( 'eventorganiser_calendar_event_link', $link, $post->ID, $post->occurrence_id );
 			$event['url'] = $link;
 			
 			//All day or not?
 			$event['allDay'] = eo_is_all_day();
 	
 			//Get Event Start and End date, set timezone to the blog's timzone
-			$event_start = new DateTime($post->StartDate.' '.$post->StartTime, $tz);
-			$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, $tz);
-			$event['start']= $event_start->format('Y-m-d\TH:i:s\Z');
-			$event['end']= $event_end->format('Y-m-d\TH:i:s\Z');	
+			$event_start    = new DateTime( $post->StartDate.' '.$post->StartTime, $tz );
+			$event_end      = new DateTime( $post->EndDate.' '.$post->FinishTime, $tz );
+			$event['start'] = $event_start->format( 'Y-m-d\TH:i:s' );
+			$event['end']   = $event_end->format( 'Y-m-d\TH:i:s' );
 
 			//Don't use get_the_excerpt as this adds a link
 			$excerpt_length = apply_filters('excerpt_length', 55);
