@@ -1369,8 +1369,8 @@ function eo_event_category_dropdown( $args = '' ) {
  * * **tooltip** (bool) Whether to show a tooltips. Default true. Content is filtered by [`eventorganiser_event_tooltip`](http://codex.wp-event-organiser.com/hook-eventorganiser_event_tooltip.html)
  * * **users_events** - (bool) True to show only eents for which the current user is attending
  * * **weekends** (bool) Whether to include weekends in the calendar. Default true.
- * * **mintime** (string) Earliest time to show on week/day views. Default '0',
- * * **maxtime** (string) Latest time to show on week/day views. Default '24',
+ * * **mintime** (string) Earliest time to show on week/day views. Default '00:00',
+ * * **maxtime** (string) Latest time to show on week/day views. Default '24:00',
  * * **alldayslot** (bool) Whether to include an all day slot (week / day views) in the calendar. Default true.
  * * **alldaytext** (string) Text to display in all day slot. Default 'All Day'.
  * * **titleformatmonth** (string) Date format (PHP) for title for month view. Default 'l, M j, Y'
@@ -1418,6 +1418,16 @@ function eo_get_event_fullcalendar( $args = array() ){
 	//Convert event_category / event_venue to comma-delimitered strings
 	$args['event_category'] = is_array( $args['event_category'] ) ? implode( ',', $args['event_category'] ) : $args['event_category'];
 	$args['event_venue'] = is_array( $args['event_venue'] ) ? implode( ',', $args['event_venue'] ) : $args['event_venue'];
+	
+	//max/min time MUST be hh:mm format
+	$times = array( 'mintime', 'maxtime' );
+	foreach( $times as $arg ){
+		$args[$arg] = explode( ':', $args[$arg] );
+		if( count( $args[$arg] ) < 2 ){
+			$args[$arg][] = '00';
+		}
+		$args[$arg] = implode( ':', $args[$arg] );
+	}
 	
 	//Convert php time format into moment time format
 	$date_attributes = array( 
