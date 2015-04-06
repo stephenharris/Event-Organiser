@@ -107,6 +107,14 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 	 * @param int $post_id The ID of the event
 	 */
 	do_action( 'eventorganiser_save_event', $post_id );
+
+	/**
+	 * Fires after an event has been updated.
+	 *
+	 * @param int $post_id The ID of the event.
+	 */
+	do_action( 'eventorganiser_updated_event', $post_id );
+
 	return $post_id;
 }
 
@@ -232,6 +240,14 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 	 * @param int $post_id The ID of the event 
 	 */
 	do_action( 'eventorganiser_save_event', $post_id );
+
+	/**
+	 * Fires after an event has been created.
+	 *
+	 * @param int $post_id The ID of the event.
+	 */
+	do_action( 'eventorganiser_created_event', $post_id );
+
 	return $post_id;
 }
 
