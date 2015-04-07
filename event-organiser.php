@@ -47,8 +47,10 @@ function _eventorganiser_set_constants(){
  	* Defines the plug-in directory url
  	* <code>url:http://mysite.com/wp-content/plugins/event-organiser</code>
 	*/
-	define( 'EVENT_ORGANISER_URL', plugin_dir_url( __FILE__ ) );
-	
+	if ( ! defined( 'EVENT_ORGANISER_URL' ) ) {
+		define( 'EVENT_ORGANISER_URL', plugin_dir_url( __FILE__ ) );
+	}
+
 	require_once(EVENT_ORGANISER_DIR.'event-organiser-add-ons.php');
 	
 	if( !defined( 'EVENT_ORGANISER_BETA_FEATURES' ) ){
