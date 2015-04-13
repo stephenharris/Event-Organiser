@@ -107,6 +107,14 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 	 * @param int $post_id The ID of the event
 	 */
 	do_action( 'eventorganiser_save_event', $post_id );
+
+	/**
+	 * Fires after an event has been updated.
+	 *
+	 * @param int $post_id The ID of the event.
+	 */
+	do_action( 'eventorganiser_updated_event', $post_id );
+
 	return $post_id;
 }
 
@@ -232,6 +240,14 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 	 * @param int $post_id The ID of the event 
 	 */
 	do_action( 'eventorganiser_save_event', $post_id );
+
+	/**
+	 * Fires after an event has been created.
+	 *
+	 * @param int $post_id The ID of the event.
+	 */
+	do_action( 'eventorganiser_created_event', $post_id );
+
 	return $post_id;
 }
 
@@ -817,8 +833,8 @@ function eo_get_event_schedule( $post_id=0 ){
 		 * * **include** (array) - Array of DateTime objects to include in the schedule
 		 * * **occurrences** (array) - Array of DateTime objects generated from the above schedule.
 		 * 
-		 * @param array The event schedule with generated occurrences.
-		 * @param array The original event schedule (without occurrences).  
+		 * @param array $_event_data The event schedule with generated occurrences.
+		 * @param array $event_data The original event schedule (without occurrences).  
 		 */
 		$_event_data = apply_filters( 'eventorganiser_generate_occurrences', $_event_data, $event_data );
 		return $_event_data;

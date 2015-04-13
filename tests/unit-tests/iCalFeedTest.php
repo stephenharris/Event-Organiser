@@ -199,8 +199,8 @@ class iCalFeedTest extends EO_UnitTestCase
     	//Remember to correct [day] the 'reccurs weekly by [day]', so thats true for UTC timezone.
     	wp_cache_set( 'eventorganiser_timezone', 'America/New_York' );
 
-    	//Event recurrs every Monday evening in New York (event recurs very Tuesday in UTC)
-	$event_id = $this->factory->event->create( array(
+    	//Event recurrs every Monday evening in New York (event recurs every Tuesday in UTC)
+		$event_id = $this->factory->event->create( array(
 			'start'=> new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
 			'end'=> new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
 			'schedule_last'=> new DateTime('2013-12-30 21:00', eo_get_blog_timezone() ),
@@ -232,8 +232,15 @@ class iCalFeedTest extends EO_UnitTestCase
     		'post_title'    =>'The Event Title',
     		'post_content'  =>'My event content',
     	) );
-    	 
-    	$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=SU;UNTIL=20131229T210000Z", eventorganiser_generate_ics_rrule( $event_id ) );
+
+		//This is a bit of a hack, some php5.2 instances will have an out of date Europe/Moscow timezone details
+		//but cannot install the pecl.php.net/timezonedb package. We therefore can't hardcode the until date string
+		//as it may be 21:00 or 22:00
+		$utc = new DateTimeZone( 'UTC' );
+		$until = new DateTime( '2013-12-30 01:00', eo_get_blog_timezone() );
+		$until->setTimezone( $utc );
+		$until_string = $until->format( 'Ymd\THis\Z'); //Probably 20131229T210000Z or 20131229T220000Z
+    	$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=SU;UNTIL={$until_string}", eventorganiser_generate_ics_rrule( $event_id ) );
     	 
     	wp_cache_delete( 'eventorganiser_timezone' );
     }
