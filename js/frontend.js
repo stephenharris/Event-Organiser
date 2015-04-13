@@ -175,18 +175,18 @@ jQuery(document).ready(function () {
 					var tag      = $(view.calendar.options.id).find(".eo-fc-filter-tag").val();
 					
 					if (typeof category !== "undefined" && category !== "" && $.inArray( category, event.category) < 0 ) {
-						return "<div></div>";
+						return false;
 					}
 					if (typeof venue != "undefined" && venue !== "" && venue != event.venue) {
-						return "<div></div>";
+						return false;
 					}
                         
 					if (typeof tag !== "undefined" && tag !== "" && $.inArray(tag, event.tags) < 0 ) {
-						return "<div></div>";
+						return false;
 					}
                         
 					if( !wp.hooks.applyFilters( 'eventorganiser.fullcalendar_render_event', true, event, element, view ) ){
-						return "<div></div>";
+						return false;
 					}
                         	
 					if ( !view.calendar.options.tooltip ) {
