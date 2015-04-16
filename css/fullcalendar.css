@@ -27,12 +27,10 @@
 }
 .eo-fullcalendar-reset .fc-content-skeleton table,
 .eo-fullcalendar-reset .fc-content-skeleton tbody,
-
-.eo-fullcalendar-reset .fc-view-container tr, /* this, or */
-.eo-fullcalendar-reset .fc-content-skeleton tr, /* this. */
-
-.eo-fullcalendar-reset .fc-content-skeleton tr:nth-child(odd),/* are these */
-.eo-fullcalendar-reset .fc-content-skeleton tr:nth-child(even),/* needed? */
+.eo-fullcalendar-reset .fc-view-container tr,
+.eo-fullcalendar-reset .fc-content-skeleton tr,
+.eo-fullcalendar-reset .fc-content-skeleton tr:nth-child(odd),
+.eo-fullcalendar-reset .fc-content-skeleton tr:nth-child(even),
 .eo-fullcalendar-reset .fc-view-container td,
 .eo-fullcalendar-reset .fc-view-container th,
 .eo-fullcalendar-reset .fc-content-skeleton th,
