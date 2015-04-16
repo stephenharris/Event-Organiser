@@ -20,7 +20,6 @@ body.single-event .eo-event-meta{
 }
 
 /* fullCalendar */
-/* Should we set a background colour, i.e. white? */
 .eo-fullcalendar .fc-toolbar{ margin-bottom: 10px; }
 .eo-fullcalendar, .eo-fullcalendar button { font-size: 1em; }
 .eo-fullcalendar .fc-event{ font-size: 0.9em }
