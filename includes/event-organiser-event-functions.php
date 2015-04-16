@@ -1394,7 +1394,7 @@ function eo_get_event_fullcalendar( $args = array() ){
 	global $wp_locale;
 	$defaults = array(
 		'headerleft' => 'title', 'headercenter' => '', 'headerright' => 'prev next today', 
-		'defaultview' => 'month',
+		'defaultview' => 'month', 'aspectratio' => false,
 		'event-category' => '', 'event_category' => '', 'event-venue' => '', 'event_venue' => '', 
 		'timeformat' => get_option( 'time_format' ), 'axisformat' => get_option( 'time_format' ), 
 		'key' => false, 'tooltip' => true, 
