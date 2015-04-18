@@ -386,10 +386,11 @@ function eventorganiser_details_save( $post_id ) {
 				}
 			}
 
+			/* see https://github.com/stephenharris/Event-Organiser/issues/260
 			if( $orig = array_uintersect( $orig_schedule[$key], $in_ex[$key], '_eventorganiser_compare_dates' ) ){
 				$in_ex[$key] = array_merge( $orig, $in_ex[$key] );
 				$in_ex[$key] = _eventorganiser_remove_duplicates( $in_ex[$key] );
-			}
+			}*/
 		}
 	endforeach;
 	
