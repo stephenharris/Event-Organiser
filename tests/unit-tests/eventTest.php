@@ -33,6 +33,31 @@ class eventTest extends EO_UnitTestCase
 		$this->assertEquals( 'Event does not contain any dates.',  $response->get_error_message( $response->get_error_code() ) );
     }
     
+    
+    /**
+     * Since 'repeat for X' events has no UI supporting it, events created with that schedule will
+     * need the 'repeat until Y' date calculated for them and stored.
+     */
+    public function testNumberOccurrences(){
+    
+    	$tz = eo_get_blog_timezone();
+    
+    	$event = array(
+    		'start'              => new DateTime( '2013-10-19 15:30:00', $tz ),
+    		'end'                => new DateTime( '2013-10-19 15:45:00', $tz ),
+    		'frequeny'           => 1,
+    		'schedule'           => 'weekly',
+    		'number_occurrences' => 4,
+    	);
+    	
+    	$event_id = eo_insert_event( $event );
+    	$schedule = eo_get_event_schedule( $event_id );
+    	
+    	$this->assertEquals( new DateTime( '2013-11-09 15:30:00', $tz ), $schedule['until'] );
+    	
+    }
+    
+    
     public function testDateDifference()
     {
 
