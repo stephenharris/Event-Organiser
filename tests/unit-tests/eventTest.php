@@ -57,6 +57,57 @@ class eventTest extends EO_UnitTestCase
     	
     }
     
+    /**
+     * Schedule last --> until backwards compat
+     */
+    function testScheduleLastUntilBackwardsCompatability(){
+    	
+    	//Create event in database with no 'until' date
+    	global $wpdb;
+    	$event_id = $wpdb->insert( $wpdb->posts, array(
+    		'post_title' => 'Test',
+    	) );
+    	
+    	$wpdb->insert( $wpdb->postmeta, array(
+    		'post_id'    => $event_id,
+    		'meta_key'   => '_eventorganiser_schedule_start_start',
+    		'meta_value' => '2015-04-18 22:00:00',		
+    	));
+    	$wpdb->insert( $wpdb->postmeta, array(
+    		'post_id'    => $event_id,
+    		'meta_key'   => '_eventorganiser_schedule_start_finish',
+    		'meta_value' => '2015-04-18 23:00:00',
+    	));
+    	$wpdb->insert( $wpdb->postmeta, array(
+    		'post_id'    => $event_id,
+    		'meta_key'   => '_eventorganiser_schedule_last_start',
+    		'meta_value' => '2015-04-25 22:00:00',
+    	));
+    	$wpdb->insert( $wpdb->postmeta, array(
+    		'post_id'    => $event_id,
+    		'meta_key'   => '_eventorganiser_schedule_last_finish',
+    		'meta_value' => '2015-04-25 23:00:00',
+    	));
+    	
+    	$event = array(
+    		'frequency' => 1, 'schedule' => 'daily', 'schedule_meta' => array( 'SA' ),
+    		'include' => array(), 'exclude' => array(), 'all_day' => false,
+    	);
+    	$wpdb->insert( $wpdb->postmeta, array(
+    		'post_id'    => $event_id,
+    		'meta_key'   => '_eventorganiser_event_schedule',
+    		'meta_value' => serialize( $event ),
+    	));
+    	
+    	//Check the event schedule contains 'until'. It should be a clone of the  schedule_meta.
+    	$schedule = eo_get_event_schedule( $event_id );
+    	$this->assertEquals( new DateTime( '2015-04-25 22:00:00', eo_get_blog_timezone() ), $schedule['until'] );    	
+    	
+    	//Check that the date is has now been inserted into the database
+    	$this->assertEquals( '2015-04-25 22:00:00', get_post_meta( $event_id, '_eventorganiser_schedule_until', true ) );
+    	
+    }
+    
     
     public function testDateDifference()
     {
