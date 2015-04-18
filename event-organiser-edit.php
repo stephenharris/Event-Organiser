@@ -183,7 +183,7 @@ function _eventorganiser_details_metabox( $post ){
 
 						<p class="reoccurrence_label">
 						<?php _e( 'until', 'eventorganiser' );?> 
-						<input <?php  disabled( (!$sche_once) || $all_day ); ?> class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="recend" size="10" maxlength="10" disabled="disabled" value="<?php echo $schedule_last->format( $phpFormat ); ?>"/>
+						<input <?php  disabled( (!$sche_once) || $all_day ); ?> class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="recend" size="10" maxlength="10" disabled="disabled" value="<?php echo $until->format( $phpFormat ); ?>"/>
 						</p>
 
 						<p id="event_summary"> </p>
