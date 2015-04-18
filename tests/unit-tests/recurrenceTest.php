@@ -26,7 +26,7 @@ class recurrenceTest extends EO_UnitTestCase
     			'end' => new DateTime( '2013-10-22 20:19:00', eo_get_blog_timezone() ),
     			'schedule' => 'daily',
     			'frequency' => 2,
-    			'schedule_last' => new DateTime( '2013-11-02 20:19:00', eo_get_blog_timezone() ),
+    			'until' => new DateTime( '2013-11-02 20:19:00', eo_get_blog_timezone() ),
     			
     	);
     	
@@ -51,7 +51,7 @@ class recurrenceTest extends EO_UnitTestCase
     			'end' => new DateTime( '2013-10-22 20:19:00', eo_get_blog_timezone() ),
     			'schedule' => 'weekly',
     			'schedule_meta' => array( 'WE', 'FR' ),
-    			'schedule_last' => new DateTime( '2013-11-02 20:19:00', eo_get_blog_timezone() ),
+    			'until' => new DateTime( '2013-11-02 20:19:00', eo_get_blog_timezone() ),
     			 
     	);
     	 
@@ -73,7 +73,7 @@ class recurrenceTest extends EO_UnitTestCase
     			'start' => new DateTime( '2013-10-22 19:19:00', eo_get_blog_timezone() ), //Tuesday
     			'end' => new DateTime( '2013-10-22 20:19:00', eo_get_blog_timezone() ),
     			'schedule' => 'weekly',
-    			'schedule_last' => new DateTime( '2013-11-02 20:19:00', eo_get_blog_timezone() ),
+    			'until' => new DateTime( '2013-11-02 20:19:00', eo_get_blog_timezone() ),
     
     	);
     
@@ -95,7 +95,7 @@ class recurrenceTest extends EO_UnitTestCase
     			'start' => new DateTime( '2013-10-22 19:19:00', eo_get_blog_timezone() ), //Tuesday
     			'end' => new DateTime( '2013-10-22 20:19:00', eo_get_blog_timezone() ),
     			'schedule' => 'weekly',
-    			'schedule_last' => new DateTime( '2013-11-02 20:19:00', eo_get_blog_timezone() ),
+    			'until' => new DateTime( '2013-11-02 20:19:00', eo_get_blog_timezone() ),
     
     	);
     
@@ -117,7 +117,7 @@ class recurrenceTest extends EO_UnitTestCase
     			'end' => new DateTime( '2013-10-22 20:19:00', eo_get_blog_timezone() ),
     			'schedule' => 'monthly',
     			'schedule_meta' => 'BYMONTHDAY',
-    			'schedule_last' => new DateTime( '2014-01-22 19:19:00', eo_get_blog_timezone() ),
+    			'until' => new DateTime( '2014-01-22 19:19:00', eo_get_blog_timezone() ),
     
     	);
     
@@ -139,7 +139,7 @@ class recurrenceTest extends EO_UnitTestCase
     			'end' => new DateTime( '2013-10-22 20:19:00', eo_get_blog_timezone() ),
     			'schedule' => 'monthly',
     			'schedule_meta' => 'BYDAY=4WE',
-    			'schedule_last' => new DateTime( '2014-01-22 19:19:00', eo_get_blog_timezone() ),
+    			'until' => new DateTime( '2014-01-22 19:19:00', eo_get_blog_timezone() ),
     
     	);
     
@@ -161,7 +161,7 @@ class recurrenceTest extends EO_UnitTestCase
     			'end' => new DateTime( '2013-10-22 20:19:00', eo_get_blog_timezone() ),
     			'schedule' => 'yearly',
     			'frequency' => 2,
-    			'schedule_last' => new DateTime( '2017-10-22 19:19:00', eo_get_blog_timezone() ),
+    			'until' => new DateTime( '2017-10-22 19:19:00', eo_get_blog_timezone() ),
     
     	);
     
@@ -208,7 +208,7 @@ class recurrenceTest extends EO_UnitTestCase
     			'end' => new DateTime( '2012-02-29 23:59:00', eo_get_blog_timezone() ),
     			'schedule' => 'yearly',
     			'frequency' => 1,
-    			'schedule_last' => new DateTime( '2020-02-29 00:00:00', eo_get_blog_timezone() ),
+    			'until' => new DateTime( '2020-02-29 00:00:00', eo_get_blog_timezone() ),
     
     	);
     
@@ -229,7 +229,7 @@ class recurrenceTest extends EO_UnitTestCase
     			'end' => new DateTime( '2012-10-31 23:59:00', eo_get_blog_timezone() ),
     			'schedule' => 'monthly',
     			'frequency' => 1,
-    			'schedule_last' => new DateTime( '2013-03-31 00:00:00', eo_get_blog_timezone() ),
+    			'until' => new DateTime( '2013-03-31 00:00:00', eo_get_blog_timezone() ),
     			'schedule_meta' => 'BYMONTHDAY',
     
     	);
@@ -403,7 +403,7 @@ class recurrenceTest extends EO_UnitTestCase
     		'end'           => new DateTime( '2013-10-22 20:19:00', eo_get_blog_timezone() ),
     	    'schedule'      => 'daily',
             'frequency'     => 2,
-    		'schedule_last' => new DateTime( '2013-10-26 19:19:00', eo_get_blog_timezone() ),
+    		'until' => new DateTime( '2013-10-26 19:19:00', eo_get_blog_timezone() ),
     	);
     	$event = eo_insert_event( $event_data );
     	
@@ -415,7 +415,7 @@ class recurrenceTest extends EO_UnitTestCase
     	
     	$this->assertEquals( 
     		new DateTime( '2013-10-26 19:19:00', eo_get_blog_timezone() ), 
-    		$schedule['schedule_last'] 
+    		$schedule['until'] 
     	);
 
     }
@@ -429,7 +429,7 @@ class recurrenceTest extends EO_UnitTestCase
     		'start'         => new DateTime( '2014-08-11 18:48:00', eo_get_blog_timezone() ),
     		'end'           => new DateTime( '2014-08-11 19:48:00', eo_get_blog_timezone() ),
     		'schedule'      => 'weekly',
-    		'schedule_last' => new DateTime( '2014-09-01 18:48:00', eo_get_blog_timezone() ),
+    		'until' => new DateTime( '2014-09-01 18:48:00', eo_get_blog_timezone() ),
     		'include'       => array( new DateTime( '2014-08-25 22:48:00', eo_get_blog_timezone() ) ),
     		'exclude'       => array( new DateTime( '2014-08-25 18:48:00', eo_get_blog_timezone() ) ),
     	);
@@ -454,7 +454,7 @@ class recurrenceTest extends EO_UnitTestCase
     		'start'         => new DateTime( '2014-08-11 18:48:00', eo_get_blog_timezone() ),
     		'end'           => new DateTime( '2014-08-11 19:48:00', eo_get_blog_timezone() ),
     		'schedule'      => 'weekly',
-    		'schedule_last' => new DateTime( '2014-09-01 18:48:00', eo_get_blog_timezone() ),
+    		'until' => new DateTime( '2014-09-01 18:48:00', eo_get_blog_timezone() ),
     	);
     
     	$event_id       = $this->factory->event->create( $event );
@@ -489,7 +489,7 @@ class recurrenceTest extends EO_UnitTestCase
     		'start'         => new DateTime( '2014-08-11 18:48:00', eo_get_blog_timezone() ),
     		'end'           => new DateTime( '2014-08-11 19:48:00', eo_get_blog_timezone() ),
     		'schedule'      => 'weekly',
-    		'schedule_last' => new DateTime( '2014-09-01 18:48:00', eo_get_blog_timezone() ),
+    		'until' => new DateTime( '2014-09-01 18:48:00', eo_get_blog_timezone() ),
     	);
    
     	$event_id       = $this->factory->event->create( $event );
@@ -525,7 +525,7 @@ class recurrenceTest extends EO_UnitTestCase
     		'start'         => new DateTime( '2014-08-11 18:48:00', eo_get_blog_timezone() ),
     		'end'           => new DateTime( '2014-08-11 19:48:00', eo_get_blog_timezone() ),
     		'schedule'      => 'weekly',
-    		'schedule_last' => new DateTime( '2014-09-01 18:48:00', eo_get_blog_timezone() ),
+    		'until' => new DateTime( '2014-09-01 18:48:00', eo_get_blog_timezone() ),
     	);
 
     	$event_id       = $this->factory->event->create( $event );

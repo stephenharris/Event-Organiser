@@ -45,9 +45,11 @@ class eventTest extends EO_UnitTestCase
 			'schedule'           => 'weekly',
 			'number_occurrences' => 4,
 		);
-		
+
 		//Create event and store occurrences
 		$event_id = eo_insert_event( $event );
+
+		//Event dates are 19th Oct, 26th Oct, 2nd Nov, 9th Nov
 		$original_occurrences = eo_get_the_occurrences( $event_id );
 		
 		//Update event
@@ -58,8 +60,9 @@ class eventTest extends EO_UnitTestCase
 		eo_update_event( $event_id, $new_event_data );
 		
 		//Get new occurrences
+		//Event dates are 19th Oct, 26th Oct, 20th Nov
 		$new_occurrences = eo_get_the_occurrences( $event_id ); 
-		
+
 		//Compare
 		$added   = array_udiff( $new_occurrences, $original_occurrences, '_eventorganiser_compare_dates' );
 		$removed = array_udiff( $original_occurrences, $new_occurrences, '_eventorganiser_compare_dates' );
@@ -487,6 +490,37 @@ class eventTest extends EO_UnitTestCase
     	//$actual and $expected contain the occurrence IDs as keys.
     	$this->assertEquals( $expected, $actual );
     
+    }
+    
+    /**
+     * Check that the 'until' date is unaffected by included events.
+     * Note until != schedule_last (see https://github.com/stephenharris/Event-Organiser/issues/259). 
+     */
+    public function testUntil()
+    {
+    
+    	$tz = eo_get_blog_timezone();
+    	
+    	$include = new DateTime( '2015-05-23 15:30:00', $tz );
+    	$until   = new DateTime( '2015-05-09 15:30:00', $tz );
+    	$event   = array(
+    		'start'    => new DateTime( '2015-04-18 15:30:00', $tz ),
+    		'end'      => new DateTime( '2015-04-18 15:45:00', $tz ),
+    		'frequeny' => 1,
+    		'schedule' => 'weekly',
+    		'until'    => $until,
+    		'include'  => array( $include ),
+    	);
+    
+    	//Create event and store occurrences
+    	$event_id = eo_insert_event( $event );
+    	
+    	$schedule = eo_get_event_schedule( $event_id );
+    	
+    	$this->assertEquals( $include, eo_get_schedule_last( DATETIMEOBJ, $event_id ) );
+    	$this->assertEquals( $include, $schedule['schedule_last'] );
+    	$this->assertEquals( $until, $schedule['until'] );
+    	
     }
     
     
