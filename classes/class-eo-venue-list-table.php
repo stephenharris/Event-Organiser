@@ -62,27 +62,41 @@ class EO_Venue_List_Table extends WP_List_Table {
      * @param array $item A singular item (one full row's worth of data)
      * @return string Text to be placed inside the column <td>
      */
-    function column_name($item){
+	function column_name( $item ){
 		$term_id = (int) $item->term_id;
 		
 		$delete_url = add_query_arg( 'action', 'delete', get_edit_term_link( $term_id, 'event-venue', 'event' ) );
 
-        //Build row actions
-        $actions = array(
-            'edit'		=> sprintf( '<a href="%s">'.__('Edit').'</a>', get_edit_term_link( $term_id, 'event-venue', 'event' ) ),
-            'delete'    => sprintf( '<a href="%s">'.__('Delete').'</a>', wp_nonce_url( $delete_url, 'eventorganiser_delete_venue_'.$item->slug ) ),
-            'view'		=> sprintf( '<a href="%s">'.__('View').'</a>',  eo_get_venue_link($term_id) )
-        );
-        
-        //Return the title contents
-        return sprintf('<a href="%1$s" class="row-title">%2$s</a>%3$s',
-            /*$1%s*/ get_edit_term_link( $term_id, 'event-venue', 'event' ),
-            /*$2%s*/ esc_html( $item->name ),
-            /*$3%s*/ $this->row_actions( $actions )
-        );
-    }
-    
-    /*
+		//Build row actions
+		$actions = array(
+			'edit' => sprintf( 
+				'<a href="%s">%s</a>', 
+				esc_url( get_edit_term_link( $term_id, 'event-venue', 'event' ) ),
+				esc_html__( 'Edit', 'eventorganiser' )
+			),
+			'delete' => sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( wp_nonce_url( $delete_url, 'eventorganiser_delete_venue_'.$item->slug ) ),
+				esc_html__( 'Delete', 'eventorganiser' )
+			),
+			'view' => sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( eo_get_venue_link( $term_id ) ),
+				esc_html__( 'View', 'eventorganiser' )
+			)
+		);
+
+		//Return the title contents
+		return sprintf(
+			'<a href="%1$s" class="row-title">%2$s</a>%3$s',
+			/*$1%s*/ esc_url( get_edit_term_link( $term_id, 'event-venue', 'event' ) ),
+			/*$2%s*/ esc_html( $item->name ),
+			/*$3%s*/ $this->row_actions( $actions )
+		);
+	}
+
+	
+	/*
      * Checkbox column for Bulk Actions.
      * 
      * @see WP_List_Table::::single_row_columns()

@@ -72,7 +72,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 							admin_url( 'edit.php?post_type=event' ) 
 						);
 
-						wp_redirect( $url );
+						wp_redirect( esc_url_raw( $url ) );
 						exit();
 					}
 					break;
@@ -111,7 +111,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 							admin_url( 'edit.php?post_type=event' ) 
 						);
 
-						wp_redirect( $url );
+						wp_redirect( esc_url_raw( $url ) );
 						exit();
 					}
 					break;
@@ -135,20 +135,20 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 						$venue = get_term_by( 'slug',esc_attr( $venue ), 'event-venue' );
 						$resp = eo_delete_venue( $venue->term_id );
 
-						if ( !is_wp_error( $resp) && true === $resp ){
+						if ( !is_wp_error( $resp ) && true === $resp ){
 							$deleted++;
 						}
 					endforeach;
 		
 					if ( $deleted > 0 ){
 						$url = add_query_arg(
-								array(
-									'page' => 'venues',
-									'message' => 3,
-								    ), 
-								admin_url( 'edit.php?post_type=event' ) 
+							array(
+								'page'    => 'venues',
+								'message' => 3,
+							), 
+							admin_url( 'edit.php?post_type=event' ) 
 						);
-						wp_redirect( $url );
+						wp_redirect( esc_url_raw( $url ) );
 						exit();
 					} else{
 						$EO_Errors = new WP_Error( 'eo_error', __( 'Venue(s) <strong>were not </strong> deleted', 'eventorganiser' ) );

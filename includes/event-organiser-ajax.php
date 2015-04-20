@@ -442,27 +442,31 @@ function eventorganiser_admin_calendar() {
 						'action'=>'delete_occurrence'
 					),$admin_url);
 
-					$delete_url  = wp_nonce_url( $delete_url , 'eventorganiser_delete_occurrence_'.$post->occurrence_id);
+					$delete_url  = wp_nonce_url( $delete_url , 'eventorganiser_delete_occurrence_'.$post->occurrence_id );
 
-					$summary .= "<span class='delete'>
-					<a class='submitdelete' style='color:red;float:right' title='".__('Delete this occurrence','eventorganiser')."' href='".$delete_url."'> ".__('Delete this occurrence','eventorganiser')."</a>
-					</span>";
+					$summary .= sprintf(
+						'<span class="delete"><a class="submitdelete" style="color:red;float:right" title="%1$s" href="%2$s">%1$s</a></span>',
+						esc_attr__( 'Delete this occurrence', 'eventorganiser' ),
+						$delete_url
+					);
 
-					if( $schedule['schedule'] !='once'){
+					if( $schedule['schedule'] != 'once' ){
 						$break_url = add_query_arg(array(
-							'post_type'=>'event',
-							'page'=>'calendar',
-							'series'=>$post->ID,
-							'event'=>$post->occurrence_id,
-							'action'=>'break_series'
+							'post_type' => 'event',
+							'page'      => 'calendar',
+							'series'    => $post->ID,
+							'event'     => $post->occurrence_id,
+							'action'    => 'break_series',
 						),$admin_url);
-						$break_url  = wp_nonce_url( $break_url , 'eventorganiser_break_series_'.$post->occurrence_id);
+						
+						$break_url  = wp_nonce_url( $break_url, 'eventorganiser_break_series_'.$post->occurrence_id );
 
-						$summary .= "<span class='break'>
-						<a class='submitbreak' style='color:red;float:right;padding-right: 2em;' title='".__('Break this series','eventorganiser')."' href='".$break_url."'> ".__('Break this series','eventorganiser')."</a>
-						</span>";
+						$summary .= sprintf(
+							'<span class="break"><a class="submitbreak" style="color:red;float:right;padding-right:2em;" title="%1$s" href="%2$s">%1$s</a></span>',
+							esc_attr__( 'Break this series', 'eventorganiser' ),
+							$break_url
+						);
 					}
-
 				}
 
 				//Event categories
