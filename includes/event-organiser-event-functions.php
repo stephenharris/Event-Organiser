@@ -1612,7 +1612,7 @@ function eo_break_occurrence( $post_id, $occurrence_id ){
 
 	global $post;
 	$post = get_post( $post_id );
-	setup_postdata( $post_id );
+	setup_postdata( $post );
 
 	/**
 	 * Triggered before an occurrence is broken from an event.
