@@ -3,8 +3,8 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
-**Tested up to:** 4.1.1  
-**Stable tag:** 2.12.4  
+**Tested up to:** 4.2  
+**Stable tag:** 2.12.5  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -230,6 +230,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 2.12.5 - 20th April 2015 ###
+* Fixes a bug with editing an event date/time after including additional dates.
 
 ### 2.12.4 - 19th March 2015 ###
 * Fixes bug with incorrect "Invalid datetime" errors when parsing iCal exdate or rdate dates
