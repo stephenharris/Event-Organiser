@@ -77,7 +77,7 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 			$venue_slug = eo_get_venue_slug( $post->ID );
 			
 			if( $venue_id ){
-				echo '<a href="'. add_query_arg( 'event-venue', $venue_slug ) .'">'.esc_html( eo_get_venue_name( $venue_id ) ) . '</a>';
+				echo '<a href="'. esc_url( add_query_arg( 'event-venue', $venue_slug ) ) .'">'.esc_html( eo_get_venue_name( $venue_id ) ) . '</a>';
 				echo '<input type="hidden" value="'.$venue_id.'"/>';
 			}
 			break;
@@ -95,17 +95,17 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 			break;
 
 		case 'eventcategories':
-		    	$terms = get_the_terms( $post->ID, 'event-category' );
- 			
+		    $terms = get_the_terms( $post->ID, 'event-category' );
+
 			if ( !empty( $terms) ) {
-       	 		foreach ( $terms as $term )
-			            $post_terms[] = '<a href="'.add_query_arg( 'event-category', $term->slug ).'">'.esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, 'event-category', 'display' ) ).'</a>';
-			        echo join( ', ', $post_terms );
+				$post_terms = array();
+				foreach ( $terms as $term ){
+					$post_terms[] = '<a href="'.esc_url( add_query_arg( 'event-category', $term->slug ) ).'">'.esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, 'event-category', 'display' ) ).'</a>';
+				}
+				echo join( ', ', $post_terms );
 			}
 			break;
 
-	default:
-		break;
 	} // end switch
 }
 

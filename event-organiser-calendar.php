@@ -159,7 +159,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 					$redirect = add_query_arg( 'message', 7, $redirect );
 				
 				//Redirect to event admin page & exit
-				wp_redirect( $redirect );
+				wp_redirect( esc_url_raw( $redirect ) );
 				exit; 
 			}
 		}elseif ( isset( $_REQUEST['action'] ) && ( $_REQUEST['action'] == 'delete_occurrence' || $_REQUEST['action'] == 'break_series') && isset( $_REQUEST['series'] ) && isset( $_REQUEST['event'] ) ){
@@ -180,7 +180,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				//Redirect to prevent resubmisson
 				$redirect = get_edit_post_link( $new_event_id, '' );
 				$redirect = add_query_arg( 'message', 20, $redirect );
-				wp_redirect( $redirect );
+				wp_redirect( esc_url_raw( $redirect ) );
 				exit;
 
 			elseif( $action == 'delete_occurrence' ):

@@ -3,8 +3,8 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 4.1.1
-Stable tag: 2.12.4
+Tested up to: 4.2
+Stable tag: 2.12.5
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -218,6 +218,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.12.5 - 21st April 2015 =
+* Fixes XSS vulnerability
+* Fixes a bug with editing an event date/time after including additional dates.
+* Fixes warnings produced by `eo_break_occurrence()`
 
 = 2.12.4 - 19th March 2015 =
 * Fixes bug with incorrect "Invalid datetime" errors when parsing iCal exdate or rdate dates
@@ -876,28 +881,5 @@ Minor bug fixes and readme update.
 = 1.0.0 =
 Initial release
 
-== Upgrade Notice ==
-
-= 2.1.1 =
-If you upgraded to 2.1, please upgrade immediately to 2.1.1. This updates includes the updated minified scripts.
-
-= 2.0 =
-Event Organiser Pro has [launched](http://wp-event-organiser.com/pro-features/)!
-
-= 1.8.3 =
-Please note this is an important update, fixing problems related to cross-post-type queries and the event feed introduced in 1.8+.
-
-= 1.8.2 =
-If you have upgrade to 1.8 or 1.8.1 please upgrade to 1.8.2. This update includes fixes to bugs introduced in 1.8.
-
-= 1.5 =
-1.5 is a big update, so please back-up before upgrading.
-
-= 1.3.2 =
-This fixes permalink bug introduced in 1.3.1. If you upgraded to 1.3.1, you should upgrade to 1.3.2. You're advised to 'flush rewrite rules' by simplying visiting your permalinks setting page.
-
-= 1.3 =
-This a fairly big update and includes converting venues into a custom taxonomy. As a result some venue slugs *may* change. See the [plug-in website](http://www.harriswebsolutions.co.uk/event-organiser/uncategorized/2012/whats-new-in-1-3/) for more details.
-
-= 1.0.4 =
-The templates have been adapted to work as is in for more themes. Error messages now display for unsupported versions.
+== Upgrade Notice == 
+2.12.5 addresses a security vulnerability. Please update (see [this announcement for details]( http://wp-event-organiser.com/blog/announcements/xss-vulnerability-event-organiser-extensions).)
