@@ -231,8 +231,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
-### 2.12.5 - 20th April 2015 ###
+### 2.12.5 - 21st April 2015 ###
+* Fixes XSS vulnerability
 * Fixes a bug with editing an event date/time after including additional dates.
+* Fixes warnings produced by `eo_break_occurrence()`
 
 ### 2.12.4 - 19th March 2015 ###
 * Fixes bug with incorrect "Invalid datetime" errors when parsing iCal exdate or rdate dates
@@ -892,27 +894,4 @@ Minor bug fixes and readme update.
 Initial release
 
 ## Upgrade Notice ##
-
-### 2.1.1 ###
-If you upgraded to 2.1, please upgrade immediately to 2.1.1. This updates includes the updated minified scripts.
-
-### 2.0 ###
-Event Organiser Pro has [launched](http://wp-event-organiser.com/pro-features/)!
-
-### 1.8.3 ###
-Please note this is an important update, fixing problems related to cross-post-type queries and the event feed introduced in 1.8+.
-
-### 1.8.2 ###
-If you have upgrade to 1.8 or 1.8.1 please upgrade to 1.8.2. This update includes fixes to bugs introduced in 1.8.
-
-### 1.5 ###
-1.5 is a big update, so please back-up before upgrading.
-
-### 1.3.2 ###
-This fixes permalink bug introduced in 1.3.1. If you upgraded to 1.3.1, you should upgrade to 1.3.2. You're advised to 'flush rewrite rules' by simplying visiting your permalinks setting page.
-
-### 1.3 ###
-This a fairly big update and includes converting venues into a custom taxonomy. As a result some venue slugs *may* change. See the [plug-in website](http://www.harriswebsolutions.co.uk/event-organiser/uncategorized/2012/whats-new-in-1-3/) for more details.
-
-### 1.0.4 ###
-The templates have been adapted to work as is in for more themes. Error messages now display for unsupported versions.
+2.12.5 addresses a security vulnerability. Please update (see [this announcement for details]( http://wp-event-organiser.com/blog/announcements/xss-vulnerability-event-organiser-extensions).)
