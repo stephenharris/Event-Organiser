@@ -80,7 +80,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 		<?php 
 			printf( 
 				'<p><a href="%s" data-eo-debug="downloadurl" class="button secondary">%s</a></p>',
-				add_query_arg( 'eo-download-debug-file', wp_create_nonce( 'eo-download-debug-file' ) ),
+				esc_url( add_query_arg( 'eo-download-debug-file', wp_create_nonce( 'eo-download-debug-file' ) ) ),
 				__( "Download system information file", 'eventorganiser' )
 			);
 		?>
