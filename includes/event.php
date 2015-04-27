@@ -807,6 +807,19 @@ function _eventorganiser_generate_occurrences( $event_data ){
 			$until = end( $occurrences );
 		}
 		
+		//Cast includes/exclude to timezone
+		$tz = eo_get_blog_timezone();
+		if( $include ){
+			foreach( $include as $included_date ){
+				$included_date->setTimezone( $tz );
+			}
+		}
+		if( $exclude ){
+			foreach( $exclude as $excluded_date ){
+				$excluded_date->setTimezone( $tz );
+			}
+		}
+		
 		//Add inclusions, removes exceptions and duplicates
 		if( defined( 'WP_DEBUG' ) && WP_DEBUG ){
 			//Make sure 'included' dates doesn't appear in generate date

@@ -599,7 +599,55 @@ class eventTest extends EO_UnitTestCase
     	
     }
     
-    
+    /**
+     * Checks that included/excluded dates are converted to the blog timezone 
+     * before being inserted into the database
+     * @see https://github.com/stephenharris/Event-Organiser/issues/264
+     */
+    function testEventIncludesInForeignTimezone(){
+    	
+    	//Set the site timezone to America/New_York
+    	$original_tz     = get_option( 'timezone_string' );
+    	update_option( 'timezone_string', 'America/New_York' );
+    	wp_cache_delete( 'eventorganiser_timezone' );
+    	
+    	//Next define an event using a foreign (to the site) timezone. E.g. UTC. 
+    	$utc = new DateTimeZone( 'UTC' );
+    	
+    	$event_id = eo_insert_event( array(
+    			'start'         => new DateTime( '2015-03-27 15:00:00', $utc ),
+    			'end'           => new DateTime( '2015-03-27 22:00:00', $utc ),
+    			'schedule'      => 'daily',
+    			'schedule_last' => new DateTime( '2015-03-29 15:00:00', $utc ),
+    			'include'       => array( new DateTime( '2015-03-30 15:00:00', $utc ) ),
+    			'exclude'       => array( new DateTime( '2015-03-28 15:00:00', $utc ) )
+    	) );
+    	
+    	$actual = array_values( eo_get_the_occurrences_of( $event_id ) );
+    	
+    	$expected = array(
+    		array(
+    			'start' => new DateTime( '2015-03-27 11:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2015-03-27 18:00:00', eo_get_blog_timezone() )
+    		),
+    		array(
+    			'start' => new DateTime( '2015-03-29 11:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2015-03-29 18:00:00', eo_get_blog_timezone() )
+    		),
+    		array(
+    			'start' => new DateTime( '2015-03-30 11:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2015-03-30 18:00:00', eo_get_blog_timezone() )
+    		)
+    	);
+    	
+    	$this->assertEquals( $expected, $actual );
+    	
+    	//Reset
+    	update_option( 'timezone_string', $original_tz );
+    	wp_cache_delete( 'eventorganiser_timezone' );
+    	
+    }
+   
     /**
      * @see https://github.com/stephenharris/Event-Organiser/issues/242 
      */
