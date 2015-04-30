@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 21:46+0000\n"
+"POT-Creation-Date: 2015-04-30 23:55+0100\n"
 "PO-Revision-Date: 2015-01-19 17:42:31+0000\n"
 "Last-Translator: Urban Norlander <urban@norlanderdramatik.se>\n"
 "Language-Team: \n"
@@ -31,15 +31,15 @@ msgstr "Titel"
 msgid "Group by"
 msgstr "Gruppera efter"
 
-#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:235
+#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:246
 msgid "Day"
 msgstr "Dag"
 
-#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:235
+#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:246
 msgid "Week"
 msgstr "Vecka"
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:235
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:246
 msgid "Month"
 msgstr "Månad"
 
@@ -59,7 +59,7 @@ msgstr "Inkludera 'Add To Google'-länk"
 msgid "Displays a calendar of your events"
 msgstr "Visar en kalender med dina evenemang"
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:231
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:242
 msgid "Events Calendar"
 msgstr "Evenemangskalender"
 
@@ -109,7 +109,7 @@ msgid "Displays a list of events"
 msgstr "Visar en lista med evenemang"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:136 includes/event-organiser-cpt.php:217
+#: event-organiser.php:138 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -171,17 +171,17 @@ msgstr ""
 msgid "'No events' message"
 msgstr "'Inga evenemang'-meddelande"
 
-#: classes/class-eo-venue-list-table.php:72 templates/single-event.php:71
+#: classes/class-eo-venue-list-table.php:75 templates/single-event.php:71
 msgid "Edit"
 msgstr "Redigera"
 
-#: classes/class-eo-venue-list-table.php:73
-#: classes/class-eo-venue-list-table.php:128
+#: classes/class-eo-venue-list-table.php:80
+#: classes/class-eo-venue-list-table.php:142
 msgid "Delete"
 msgstr "Ta bort"
 
-#: classes/class-eo-venue-list-table.php:74
-#: includes/event-organiser-ajax.php:674
+#: classes/class-eo-venue-list-table.php:85
+#: includes/event-organiser-ajax.php:691
 msgid "View"
 msgstr "Visa"
 
@@ -262,110 +262,101 @@ msgstr "Mer information &hellip;"
 msgid "Calendar View"
 msgstr "Kalendervy"
 
-#: event-organiser-calendar.php:56 includes/event-organiser-register.php:58
+#: event-organiser-calendar.php:67 includes/event-organiser-register.php:58
 msgid "today"
 msgstr "idag"
 
-#: event-organiser-calendar.php:57 includes/event-organiser-register.php:59
+#: event-organiser-calendar.php:68 includes/event-organiser-register.php:59
 #: includes/event-organiser-register.php:248
 msgid "day"
 msgstr "dag"
 
-#: event-organiser-calendar.php:58 includes/event-organiser-register.php:60
+#: event-organiser-calendar.php:69 includes/event-organiser-register.php:60
 #: includes/event-organiser-register.php:250
 msgid "week"
 msgstr "vecka"
 
-#: event-organiser-calendar.php:59 includes/event-organiser-register.php:61
+#: event-organiser-calendar.php:70 includes/event-organiser-register.php:61
 #: includes/event-organiser-register.php:252
 msgid "month"
 msgstr "månad"
 
-#: event-organiser-calendar.php:60 includes/event-organiser-register.php:62
+#: event-organiser-calendar.php:71 includes/event-organiser-register.php:62
 msgid "go to date"
 msgstr "gå till datum"
 
-#: event-organiser-calendar.php:61 event-organiser-manage.php:122
-#: includes/event-organiser-cpt.php:105
-msgid "View all categories"
-msgstr "Visa alla kategorier"
-
-#: event-organiser-calendar.php:62 includes/event-organiser-cpt.php:45
-msgid "View all venues"
-msgstr "Visa alla lokaler"
-
-#: event-organiser-calendar.php:109
+#: event-organiser-calendar.php:120
 msgid "You do not have sufficient permissions to create events. "
 msgstr "Du har inte rätt att skapa evenemang"
 
-#: event-organiser-calendar.php:165
+#: event-organiser-calendar.php:176
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Du har inte tillräcklig behörighet att redigera denna evenemang"
 
-#: event-organiser-calendar.php:183
+#: event-organiser-calendar.php:194
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr "Du har inte rätt att ta bort detta evenemang"
 
-#: event-organiser-calendar.php:193
+#: event-organiser-calendar.php:204
 msgid "Occurrence deleted."
 msgstr "Evenemang borttaget"
 
-#: event-organiser-calendar.php:209
+#: event-organiser-calendar.php:220
 msgid "Calendar options"
 msgstr "Kalenderalternativ"
 
-#: event-organiser-calendar.php:216
+#: event-organiser-calendar.php:227
 msgid "24 hour time"
 msgstr "24-timmars tid"
 
-#: event-organiser-calendar.php:238
+#: event-organiser-calendar.php:249
 #: includes/event-organiser-event-functions.php:1457
 msgid "Loading&#8230;"
 msgstr "Laddar&#8230;"
 
-#: event-organiser-calendar.php:245
+#: event-organiser-calendar.php:256
 msgid "Current date/time"
 msgstr "Nuvarande datum/tid"
 
-#: event-organiser-calendar.php:250
+#: event-organiser-calendar.php:261
 msgid "Create an event"
 msgstr "Skapa ett evenemang"
 
-#: event-organiser-calendar.php:255
+#: event-organiser-calendar.php:266
 msgid "When"
 msgstr "När"
 
-#: event-organiser-calendar.php:259
+#: event-organiser-calendar.php:270
 msgid "Event Title"
 msgstr "Evenemangstitel"
 
-#: event-organiser-calendar.php:266 includes/event-organiser-ajax.php:397
+#: event-organiser-calendar.php:277 includes/event-organiser-ajax.php:410
 msgid "Where"
 msgstr "Var"
 
-#: event-organiser-calendar.php:291
+#: event-organiser-calendar.php:302
 msgid "Save Draft"
 msgstr "Spara utkast"
 
-#: event-organiser-calendar.php:292 event-organiser-calendar.php:299
+#: event-organiser-calendar.php:303 event-organiser-calendar.php:310
 #: event-organiser-edit.php:258
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: event-organiser-calendar.php:295
+#: event-organiser-calendar.php:306
 msgid "Publish Event"
 msgstr "Publicera evenemang"
 
-#: event-organiser-calendar.php:301
+#: event-organiser-calendar.php:312
 msgid "Submit for Review"
 msgstr "Skicka till granskning"
 
-#: event-organiser-calendar.php:322 event-organiser-edit.php:14
+#: event-organiser-calendar.php:333 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:37
 msgid "Event Details"
 msgstr "Evenemangsdetaljer"
 
-#: event-organiser-calendar.php:324
+#: event-organiser-calendar.php:335
 msgid "Event Detail"
 msgstr "Evenemangdetaljer"
 
@@ -451,7 +442,7 @@ msgid "unknown"
 msgstr "okänd"
 
 #: event-organiser-edit.php:31 event-organiser-manage.php:23
-#: event-organiser-settings.php:142 includes/event-organiser-ajax.php:384
+#: event-organiser-settings.php:142 includes/event-organiser-ajax.php:397
 msgid "Organiser"
 msgstr "Organisatör"
 
@@ -553,7 +544,7 @@ msgstr "Välj en lokal"
 msgid "Venue Name"
 msgstr "Lokalnamn"
 
-#: event-organiser-edit.php:415
+#: event-organiser-edit.php:416
 msgid "Event dates were not saved."
 msgstr "Evenemangsdatum sparades inte."
 
@@ -693,42 +684,42 @@ msgstr "Inställningar för Event Organiser"
 msgid "Event Organiser"
 msgstr "Event Organiser"
 
-#: event-organiser-settings.php:46 event-organiser.php:109
+#: event-organiser-settings.php:46 event-organiser.php:111
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Redigera evenemang"
 
-#: event-organiser-settings.php:47 event-organiser.php:110
+#: event-organiser-settings.php:47 event-organiser.php:112
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Publicera evenemang"
 
-#: event-organiser-settings.php:48 event-organiser.php:111
+#: event-organiser-settings.php:48 event-organiser.php:113
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Ta bort evenemang"
 
-#: event-organiser-settings.php:49 event-organiser.php:112
+#: event-organiser-settings.php:49 event-organiser.php:114
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Redigera andras evenemang"
 
-#: event-organiser-settings.php:50 event-organiser.php:113
+#: event-organiser-settings.php:50 event-organiser.php:115
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Ta bort andras evenemang"
 
-#: event-organiser-settings.php:51 event-organiser.php:114
+#: event-organiser-settings.php:51 event-organiser.php:116
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Läsa privata evenemang"
 
-#: event-organiser-settings.php:52 event-organiser.php:115
+#: event-organiser-settings.php:52 event-organiser.php:117
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Administrera lokaler"
 
-#: event-organiser-settings.php:53 event-organiser.php:116
+#: event-organiser-settings.php:53 event-organiser.php:118
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Administrera evenemangkategorier och etiketter"
@@ -1090,12 +1081,12 @@ msgstr ""
 msgid "[Line %1$d]"
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:943
+#: includes/class-eo-ical-parser.php:952
 #, fuzzy, php-format
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
 msgstr "Ogiltigt datum. Använd YYYYMMDD som format"
 
-#: includes/class-eo-ical-parser.php:981
+#: includes/class-eo-ical-parser.php:990
 #, php-format
 msgid ""
 "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
@@ -1203,69 +1194,69 @@ msgstr "1 kategori skapades"
 msgid "%d categories were created"
 msgstr "%d kategorier importerades"
 
-#: includes/event-organiser-ajax.php:347
+#: includes/event-organiser-ajax.php:360
 msgid "Protected"
 msgstr "Skyddad"
 
-#: includes/event-organiser-ajax.php:349
+#: includes/event-organiser-ajax.php:362
 msgid "Private"
 msgstr "Privat"
 
-#: includes/event-organiser-ajax.php:351
+#: includes/event-organiser-ajax.php:364
 msgid "Draft"
 msgstr "Utkast"
 
-#: includes/event-organiser-ajax.php:381
+#: includes/event-organiser-ajax.php:394
 #: templates/event-meta-event-single.php:58
 msgid "Start"
 msgstr "Start"
 
-#: includes/event-organiser-ajax.php:382
+#: includes/event-organiser-ajax.php:395
 msgid "End"
 msgstr "Slut"
 
-#: includes/event-organiser-ajax.php:423
+#: includes/event-organiser-ajax.php:436
 msgid "This event reoccurs"
 msgstr "Detta evenemang är återkommande"
 
-#: includes/event-organiser-ajax.php:429 includes/event-organiser-cpt.php:221
+#: includes/event-organiser-ajax.php:442 includes/event-organiser-cpt.php:221
 msgid "Edit Event"
 msgstr "Redigera evenemang"
 
-#: includes/event-organiser-ajax.php:448
+#: includes/event-organiser-ajax.php:462
 msgid "Delete this occurrence"
 msgstr "Ta bort detta tillfälle"
 
-#: includes/event-organiser-ajax.php:462
+#: includes/event-organiser-ajax.php:479
 msgid "Break this series"
 msgstr "Avbryt denna serie"
 
-#: includes/event-organiser-ajax.php:670
+#: includes/event-organiser-ajax.php:687
 #: includes/event-organiser-event-functions.php:1409
 msgid "All Day"
 msgstr "Hela dagen"
 
-#: includes/event-organiser-ajax.php:675
+#: includes/event-organiser-ajax.php:692
 msgid "Add To Google Calendar"
 msgstr "Lägg till i Google Calendar"
 
-#: includes/event-organiser-ajax.php:786
+#: includes/event-organiser-ajax.php:803
 msgid "Event not found"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:798
+#: includes/event-organiser-ajax.php:815
 msgid "Events are not editable via the admin calendar"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:808
+#: includes/event-organiser-ajax.php:825
 msgid "Are you sure you want to do this?"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:818
+#: includes/event-organiser-ajax.php:835
 msgid "You do not have permission to edit this event"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:840
+#: includes/event-organiser-ajax.php:857
 #, php-format
 msgid "Event not created: %s"
 msgstr ""
@@ -1309,6 +1300,10 @@ msgstr "Separera lokaler med ett komma"
 #: includes/event-organiser-cpt.php:44
 msgid "Venue Location"
 msgstr "Lokaladress"
+
+#: includes/event-organiser-cpt.php:45
+msgid "View all venues"
+msgstr "Visa alla lokaler"
 
 #: includes/event-organiser-cpt.php:46
 msgid "Venue:"
@@ -1358,6 +1353,10 @@ msgstr "Nytt kategorinamn"
 #: includes/event-organiser-cpt.php:102
 msgid "No categories found"
 msgstr "Inga kategorier hittades"
+
+#: includes/event-organiser-cpt.php:105
+msgid "View all categories"
+msgstr "Visa alla kategorier"
 
 #: includes/event-organiser-cpt.php:147
 msgctxt "taxonomy singular name"
@@ -1895,35 +1894,35 @@ msgstr "Postnummer"
 msgid "Country"
 msgstr "Land"
 
-#: includes/event.php:549
+#: includes/event.php:590
 msgid "Schedule not recognised."
 msgstr "Schemat känns inte igen."
 
-#: includes/event.php:558
+#: includes/event.php:599
 msgid "Start date not provided."
 msgstr "Startdatum ej uppgivet."
 
-#: includes/event.php:576
+#: includes/event.php:617
 msgid "Start date occurs after end date."
 msgstr "Startdatum inträffar efter slutdatum"
 
-#: includes/event.php:579
+#: includes/event.php:620
 msgid "Schedule end date is before is before the start date."
 msgstr "Slutdatum är innan startdatum"
 
-#: includes/event.php:662
+#: includes/event.php:702
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Ogiltigt månadsschema (ogiltigt ordningstal)"
 
-#: includes/event.php:782
+#: includes/event.php:836
 msgid "Event does not contain any dates."
 msgstr "Evenemanget innehåller inget datum"
 
-#: includes/event.php:923
+#: includes/event.php:979
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr "Händelsen är inte raderas. Händelsen hittades inte."
 
-#: includes/event.php:984
+#: includes/event.php:1040
 msgid "There is already an occurrence on this date"
 msgstr ""
 
