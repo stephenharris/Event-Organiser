@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 21:46+0000\n"
+"POT-Creation-Date: 2015-04-30 23:55+0100\n"
 "PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
@@ -32,15 +32,15 @@ msgstr "Назва"
 msgid "Group by"
 msgstr "Групувати за"
 
-#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:235
+#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:246
 msgid "Day"
 msgstr "День"
 
-#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:235
+#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:246
 msgid "Week"
 msgstr "Тиждень"
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:235
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:246
 msgid "Month"
 msgstr "Місяць"
 
@@ -60,7 +60,7 @@ msgstr "Включити посилання \"Додати до Google\""
 msgid "Displays a calendar of your events"
 msgstr "Відображає календар Ваших подій"
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:231
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:242
 msgid "Events Calendar"
 msgstr "Календар подій"
 
@@ -112,7 +112,7 @@ msgid "Displays a list of events"
 msgstr "Відображає список подій"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:136 includes/event-organiser-cpt.php:217
+#: event-organiser.php:138 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -174,17 +174,17 @@ msgstr ""
 msgid "'No events' message"
 msgstr "Повідомлення \"Немає подій\""
 
-#: classes/class-eo-venue-list-table.php:72 templates/single-event.php:71
+#: classes/class-eo-venue-list-table.php:75 templates/single-event.php:71
 msgid "Edit"
 msgstr "Редагування"
 
-#: classes/class-eo-venue-list-table.php:73
-#: classes/class-eo-venue-list-table.php:128
+#: classes/class-eo-venue-list-table.php:80
+#: classes/class-eo-venue-list-table.php:142
 msgid "Delete"
 msgstr "Видалення"
 
-#: classes/class-eo-venue-list-table.php:74
-#: includes/event-organiser-ajax.php:674
+#: classes/class-eo-venue-list-table.php:85
+#: includes/event-organiser-ajax.php:691
 msgid "View"
 msgstr "Перегляд"
 
@@ -265,110 +265,101 @@ msgstr ""
 msgid "Calendar View"
 msgstr "Переглянути календар"
 
-#: event-organiser-calendar.php:56 includes/event-organiser-register.php:58
+#: event-organiser-calendar.php:67 includes/event-organiser-register.php:58
 msgid "today"
 msgstr "сьогодні"
 
-#: event-organiser-calendar.php:57 includes/event-organiser-register.php:59
+#: event-organiser-calendar.php:68 includes/event-organiser-register.php:59
 #: includes/event-organiser-register.php:248
 msgid "day"
 msgstr "день"
 
-#: event-organiser-calendar.php:58 includes/event-organiser-register.php:60
+#: event-organiser-calendar.php:69 includes/event-organiser-register.php:60
 #: includes/event-organiser-register.php:250
 msgid "week"
 msgstr "тиждень"
 
-#: event-organiser-calendar.php:59 includes/event-organiser-register.php:61
+#: event-organiser-calendar.php:70 includes/event-organiser-register.php:61
 #: includes/event-organiser-register.php:252
 msgid "month"
 msgstr "місяць"
 
-#: event-organiser-calendar.php:60 includes/event-organiser-register.php:62
+#: event-organiser-calendar.php:71 includes/event-organiser-register.php:62
 msgid "go to date"
 msgstr "перейти до дати"
 
-#: event-organiser-calendar.php:61 event-organiser-manage.php:122
-#: includes/event-organiser-cpt.php:105
-msgid "View all categories"
-msgstr "Переглянути всі категорії"
-
-#: event-organiser-calendar.php:62 includes/event-organiser-cpt.php:45
-msgid "View all venues"
-msgstr "Переглянути всі розташування"
-
-#: event-organiser-calendar.php:109
+#: event-organiser-calendar.php:120
 msgid "You do not have sufficient permissions to create events. "
 msgstr "Ви не маєте достатньо прав для створення подій"
 
-#: event-organiser-calendar.php:165
+#: event-organiser-calendar.php:176
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Ви не маєте достатньо прав для редагування цієї події"
 
-#: event-organiser-calendar.php:183
+#: event-organiser-calendar.php:194
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr "Ви не маєте достатньо прав для видалення цієї події"
 
-#: event-organiser-calendar.php:193
+#: event-organiser-calendar.php:204
 msgid "Occurrence deleted."
 msgstr "Повторення видалено."
 
-#: event-organiser-calendar.php:209
+#: event-organiser-calendar.php:220
 msgid "Calendar options"
 msgstr "Налаштування календаря"
 
-#: event-organiser-calendar.php:216
+#: event-organiser-calendar.php:227
 msgid "24 hour time"
 msgstr "Години у форматі 24"
 
-#: event-organiser-calendar.php:238
+#: event-organiser-calendar.php:249
 #: includes/event-organiser-event-functions.php:1457
 msgid "Loading&#8230;"
 msgstr "Завантаження&#8230;"
 
-#: event-organiser-calendar.php:245
+#: event-organiser-calendar.php:256
 msgid "Current date/time"
 msgstr "Поточна дата/час"
 
-#: event-organiser-calendar.php:250
+#: event-organiser-calendar.php:261
 msgid "Create an event"
 msgstr "Створити подію"
 
-#: event-organiser-calendar.php:255
+#: event-organiser-calendar.php:266
 msgid "When"
 msgstr "Коли"
 
-#: event-organiser-calendar.php:259
+#: event-organiser-calendar.php:270
 msgid "Event Title"
 msgstr "Назва події"
 
-#: event-organiser-calendar.php:266 includes/event-organiser-ajax.php:397
+#: event-organiser-calendar.php:277 includes/event-organiser-ajax.php:410
 msgid "Where"
 msgstr "Де"
 
-#: event-organiser-calendar.php:291
+#: event-organiser-calendar.php:302
 msgid "Save Draft"
 msgstr "Зберегти чернетку"
 
-#: event-organiser-calendar.php:292 event-organiser-calendar.php:299
+#: event-organiser-calendar.php:303 event-organiser-calendar.php:310
 #: event-organiser-edit.php:258
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: event-organiser-calendar.php:295
+#: event-organiser-calendar.php:306
 msgid "Publish Event"
 msgstr "Опублікувати подію"
 
-#: event-organiser-calendar.php:301
+#: event-organiser-calendar.php:312
 msgid "Submit for Review"
 msgstr "Затвердити для перевірки"
 
-#: event-organiser-calendar.php:322 event-organiser-edit.php:14
+#: event-organiser-calendar.php:333 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:37
 msgid "Event Details"
 msgstr "Деталі Події"
 
-#: event-organiser-calendar.php:324
+#: event-organiser-calendar.php:335
 msgid "Event Detail"
 msgstr "Деталі події"
 
@@ -457,7 +448,7 @@ msgid "unknown"
 msgstr "невідомо"
 
 #: event-organiser-edit.php:31 event-organiser-manage.php:23
-#: event-organiser-settings.php:142 includes/event-organiser-ajax.php:384
+#: event-organiser-settings.php:142 includes/event-organiser-ajax.php:397
 msgid "Organiser"
 msgstr "Організатор"
 
@@ -559,7 +550,7 @@ msgstr "Обрати розташування"
 msgid "Venue Name"
 msgstr "Назва розташування"
 
-#: event-organiser-edit.php:415
+#: event-organiser-edit.php:416
 msgid "Event dates were not saved."
 msgstr "Дати подій не було збережено"
 
@@ -699,42 +690,42 @@ msgstr "Налаштування органайзера подій"
 msgid "Event Organiser"
 msgstr "Органайзер подій"
 
-#: event-organiser-settings.php:46 event-organiser.php:109
+#: event-organiser-settings.php:46 event-organiser.php:111
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Редагування подій"
 
-#: event-organiser-settings.php:47 event-organiser.php:110
+#: event-organiser-settings.php:47 event-organiser.php:112
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Публікація подій"
 
-#: event-organiser-settings.php:48 event-organiser.php:111
+#: event-organiser-settings.php:48 event-organiser.php:113
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Видалення подій"
 
-#: event-organiser-settings.php:49 event-organiser.php:112
+#: event-organiser-settings.php:49 event-organiser.php:114
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Редагування чужих подій"
 
-#: event-organiser-settings.php:50 event-organiser.php:113
+#: event-organiser-settings.php:50 event-organiser.php:115
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Видалення чужих подій"
 
-#: event-organiser-settings.php:51 event-organiser.php:114
+#: event-organiser-settings.php:51 event-organiser.php:116
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Читання приватних подій"
 
-#: event-organiser-settings.php:52 event-organiser.php:115
+#: event-organiser-settings.php:52 event-organiser.php:117
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Керування розташуваннями"
 
-#: event-organiser-settings.php:53 event-organiser.php:116
+#: event-organiser-settings.php:53 event-organiser.php:118
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Керування категоріями та теґами подій"
@@ -1100,12 +1091,12 @@ msgstr ""
 msgid "[Line %1$d]"
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:943
+#: includes/class-eo-ical-parser.php:952
 #, php-format
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:981
+#: includes/class-eo-ical-parser.php:990
 #, php-format
 msgid ""
 "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
@@ -1213,69 +1204,69 @@ msgstr "Було створено 1 категорію"
 msgid "%d categories were created"
 msgstr "Було ствоерно %d категорій"
 
-#: includes/event-organiser-ajax.php:347
+#: includes/event-organiser-ajax.php:360
 msgid "Protected"
 msgstr "Захищена"
 
-#: includes/event-organiser-ajax.php:349
+#: includes/event-organiser-ajax.php:362
 msgid "Private"
 msgstr "Приватна"
 
-#: includes/event-organiser-ajax.php:351
+#: includes/event-organiser-ajax.php:364
 msgid "Draft"
 msgstr "Чернетка"
 
-#: includes/event-organiser-ajax.php:381
+#: includes/event-organiser-ajax.php:394
 #: templates/event-meta-event-single.php:58
 msgid "Start"
 msgstr "Початок"
 
-#: includes/event-organiser-ajax.php:382
+#: includes/event-organiser-ajax.php:395
 msgid "End"
 msgstr "Завершення"
 
-#: includes/event-organiser-ajax.php:423
+#: includes/event-organiser-ajax.php:436
 msgid "This event reoccurs"
 msgstr "Ця подія повторюється"
 
-#: includes/event-organiser-ajax.php:429 includes/event-organiser-cpt.php:221
+#: includes/event-organiser-ajax.php:442 includes/event-organiser-cpt.php:221
 msgid "Edit Event"
 msgstr "Редагувати подію"
 
-#: includes/event-organiser-ajax.php:448
+#: includes/event-organiser-ajax.php:462
 msgid "Delete this occurrence"
 msgstr "Видалити це повторення"
 
-#: includes/event-organiser-ajax.php:462
+#: includes/event-organiser-ajax.php:479
 msgid "Break this series"
 msgstr "Розірвати цю серію"
 
-#: includes/event-organiser-ajax.php:670
+#: includes/event-organiser-ajax.php:687
 #: includes/event-organiser-event-functions.php:1409
 msgid "All Day"
 msgstr "Цілий день"
 
-#: includes/event-organiser-ajax.php:675
+#: includes/event-organiser-ajax.php:692
 msgid "Add To Google Calendar"
 msgstr "Додати до календаря Google"
 
-#: includes/event-organiser-ajax.php:786
+#: includes/event-organiser-ajax.php:803
 msgid "Event not found"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:798
+#: includes/event-organiser-ajax.php:815
 msgid "Events are not editable via the admin calendar"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:808
+#: includes/event-organiser-ajax.php:825
 msgid "Are you sure you want to do this?"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:818
+#: includes/event-organiser-ajax.php:835
 msgid "You do not have permission to edit this event"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:840
+#: includes/event-organiser-ajax.php:857
 #, php-format
 msgid "Event not created: %s"
 msgstr ""
@@ -1319,6 +1310,10 @@ msgstr "Розділяйте розташування комами"
 #: includes/event-organiser-cpt.php:44
 msgid "Venue Location"
 msgstr "Місце розташування"
+
+#: includes/event-organiser-cpt.php:45
+msgid "View all venues"
+msgstr "Переглянути всі розташування"
 
 #: includes/event-organiser-cpt.php:46
 msgid "Venue:"
@@ -1368,6 +1363,10 @@ msgstr "Назва нової категорії"
 #: includes/event-organiser-cpt.php:102
 msgid "No categories found"
 msgstr "Не знайдено жодної категорії"
+
+#: includes/event-organiser-cpt.php:105
+msgid "View all categories"
+msgstr "Переглянути всі категорії"
 
 #: includes/event-organiser-cpt.php:147
 msgctxt "taxonomy singular name"
@@ -1906,35 +1905,35 @@ msgstr "Поштовий індекс"
 msgid "Country"
 msgstr "Країна"
 
-#: includes/event.php:549
+#: includes/event.php:590
 msgid "Schedule not recognised."
 msgstr "Розклад не розпізнано."
 
-#: includes/event.php:558
+#: includes/event.php:599
 msgid "Start date not provided."
 msgstr "Не вказано дату початку."
 
-#: includes/event.php:576
+#: includes/event.php:617
 msgid "Start date occurs after end date."
 msgstr "Дата початку пізніша за дату завершення."
 
-#: includes/event.php:579
+#: includes/event.php:620
 msgid "Schedule end date is before is before the start date."
 msgstr "Кінцева дата розкладу є ранішою за дату початку."
 
-#: includes/event.php:662
+#: includes/event.php:702
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Неправильний місячний розклад (неправильне порядкове число)"
 
-#: includes/event.php:782
+#: includes/event.php:836
 msgid "Event does not contain any dates."
 msgstr ""
 
-#: includes/event.php:923
+#: includes/event.php:979
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr ""
 
-#: includes/event.php:984
+#: includes/event.php:1040
 msgid "There is already an occurrence on this date"
 msgstr ""
 

@@ -33,6 +33,82 @@ class eventTest extends EO_UnitTestCase
 		$this->assertEquals( 'Event does not contain any dates.',  $response->get_error_message( $response->get_error_code() ) );
     }
     
+    
+    /**
+     * Since 'repeat for X' events has no UI supporting it, events created with that schedule will
+     * need the 'repeat until Y' date calculated for them and stored.
+     */
+    public function testNumberOccurrences(){
+    
+    	$tz = eo_get_blog_timezone();
+    
+    	$event = array(
+    		'start'              => new DateTime( '2013-10-19 15:30:00', $tz ),
+    		'end'                => new DateTime( '2013-10-19 15:45:00', $tz ),
+    		'frequeny'           => 1,
+    		'schedule'           => 'weekly',
+    		'number_occurrences' => 4,
+    	);
+    	
+    	$event_id = eo_insert_event( $event );
+    	$schedule = eo_get_event_schedule( $event_id );
+    	
+    	$this->assertEquals( new DateTime( '2013-11-09 15:30:00', $tz ), $schedule['until'] );
+    	
+    }
+    
+    /**
+     * Schedule last --> until backwards compat
+     */
+    function testScheduleLastUntilBackwardsCompatability(){
+    	
+    	//Create event in database with no 'until' date
+    	global $wpdb;
+    	$event_id = $wpdb->insert( $wpdb->posts, array(
+    		'post_title' => 'Test',
+    	) );
+    	
+    	$wpdb->insert( $wpdb->postmeta, array(
+    		'post_id'    => $event_id,
+    		'meta_key'   => '_eventorganiser_schedule_start_start',
+    		'meta_value' => '2015-04-18 22:00:00',		
+    	));
+    	$wpdb->insert( $wpdb->postmeta, array(
+    		'post_id'    => $event_id,
+    		'meta_key'   => '_eventorganiser_schedule_start_finish',
+    		'meta_value' => '2015-04-18 23:00:00',
+    	));
+    	$wpdb->insert( $wpdb->postmeta, array(
+    		'post_id'    => $event_id,
+    		'meta_key'   => '_eventorganiser_schedule_last_start',
+    		'meta_value' => '2015-04-25 22:00:00',
+    	));
+    	$wpdb->insert( $wpdb->postmeta, array(
+    		'post_id'    => $event_id,
+    		'meta_key'   => '_eventorganiser_schedule_last_finish',
+    		'meta_value' => '2015-04-25 23:00:00',
+    	));
+    	
+    	$event = array(
+    		'frequency' => 1, 'schedule' => 'daily', 'schedule_meta' => array( 'SA' ),
+    		'include' => array(), 'exclude' => array(), 'all_day' => false,
+    	);
+    	$wpdb->insert( $wpdb->postmeta, array(
+    		'post_id'    => $event_id,
+    		'meta_key'   => '_eventorganiser_event_schedule',
+    		'meta_value' => serialize( $event ),
+    	));
+    	
+    	//Check the event schedule contains 'until'. It should be a clone of the  schedule_meta.
+    	$schedule = eo_get_event_schedule( $event_id );
+    	$this->assertEquals( new DateTime( '2015-04-25 22:00:00', eo_get_blog_timezone() ), $schedule['until'] );    	
+    	
+    	//Check that the date is has now been inserted into the database
+    	$this->assertEquals( '2015-04-25 22:00:00', get_post_meta( $event_id, '_eventorganiser_schedule_until', true ) );
+    	
+    }
+    
+    
     public function testDateDifference()
     {
 
@@ -45,9 +121,11 @@ class eventTest extends EO_UnitTestCase
 			'schedule'           => 'weekly',
 			'number_occurrences' => 4,
 		);
-		
+
 		//Create event and store occurrences
 		$event_id = eo_insert_event( $event );
+
+		//Event dates are 19th Oct, 26th Oct, 2nd Nov, 9th Nov
 		$original_occurrences = eo_get_the_occurrences( $event_id );
 		
 		//Update event
@@ -58,8 +136,9 @@ class eventTest extends EO_UnitTestCase
 		eo_update_event( $event_id, $new_event_data );
 		
 		//Get new occurrences
+		//Event dates are 19th Oct, 26th Oct, 20th Nov
 		$new_occurrences = eo_get_the_occurrences( $event_id ); 
-		
+
 		//Compare
 		$added   = array_udiff( $new_occurrences, $original_occurrences, '_eventorganiser_compare_dates' );
 		$removed = array_udiff( $original_occurrences, $new_occurrences, '_eventorganiser_compare_dates' );
@@ -489,7 +568,86 @@ class eventTest extends EO_UnitTestCase
     
     }
     
+    /**
+     * Check that the 'until' date is unaffected by included events.
+     * Note until != schedule_last (see https://github.com/stephenharris/Event-Organiser/issues/259). 
+     */
+    public function testUntil()
+    {
     
+    	$tz = eo_get_blog_timezone();
+    	
+    	$include = new DateTime( '2015-05-23 15:30:00', $tz );
+    	$until   = new DateTime( '2015-05-09 15:30:00', $tz );
+    	$event   = array(
+    		'start'    => new DateTime( '2015-04-18 15:30:00', $tz ),
+    		'end'      => new DateTime( '2015-04-18 15:45:00', $tz ),
+    		'frequeny' => 1,
+    		'schedule' => 'weekly',
+    		'until'    => $until,
+    		'include'  => array( $include ),
+    	);
+    
+    	//Create event and store occurrences
+    	$event_id = eo_insert_event( $event );
+    	
+    	$schedule = eo_get_event_schedule( $event_id );
+    	
+    	$this->assertEquals( $include, eo_get_schedule_last( DATETIMEOBJ, $event_id ) );
+    	$this->assertEquals( $include, $schedule['schedule_last'] );
+    	$this->assertEquals( $until, $schedule['until'] );
+    	
+    }
+    
+    /**
+     * Checks that included/excluded dates are converted to the blog timezone 
+     * before being inserted into the database
+     * @see https://github.com/stephenharris/Event-Organiser/issues/264
+     */
+    function testEventIncludesInForeignTimezone(){
+    	
+    	//Set the site timezone to America/New_York
+    	$original_tz     = get_option( 'timezone_string' );
+    	update_option( 'timezone_string', 'America/New_York' );
+    	wp_cache_delete( 'eventorganiser_timezone' );
+    	
+    	//Next define an event using a foreign (to the site) timezone. E.g. UTC. 
+    	$utc = new DateTimeZone( 'UTC' );
+    	
+    	$event_id = eo_insert_event( array(
+    			'start'         => new DateTime( '2015-03-27 15:00:00', $utc ),
+    			'end'           => new DateTime( '2015-03-27 22:00:00', $utc ),
+    			'schedule'      => 'daily',
+    			'schedule_last' => new DateTime( '2015-03-29 15:00:00', $utc ),
+    			'include'       => array( new DateTime( '2015-03-30 15:00:00', $utc ) ),
+    			'exclude'       => array( new DateTime( '2015-03-28 15:00:00', $utc ) )
+    	) );
+    	
+    	$actual = array_values( eo_get_the_occurrences_of( $event_id ) );
+    	
+    	$expected = array(
+    		array(
+    			'start' => new DateTime( '2015-03-27 11:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2015-03-27 18:00:00', eo_get_blog_timezone() )
+    		),
+    		array(
+    			'start' => new DateTime( '2015-03-29 11:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2015-03-29 18:00:00', eo_get_blog_timezone() )
+    		),
+    		array(
+    			'start' => new DateTime( '2015-03-30 11:00:00', eo_get_blog_timezone() ),
+    			'end'   => new DateTime( '2015-03-30 18:00:00', eo_get_blog_timezone() )
+    		)
+    	);
+    	
+    	$this->assertEquals( $expected, $actual );
+    	
+    	//Reset
+    	update_option( 'timezone_string', $original_tz );
+    	wp_cache_delete( 'eventorganiser_timezone' );
+    	
+    }
+   
     /**
      * @see https://github.com/stephenharris/Event-Organiser/issues/242 
      */

@@ -183,7 +183,7 @@ function _eventorganiser_details_metabox( $post ){
 
 						<p class="reoccurrence_label">
 						<?php _e( 'until', 'eventorganiser' );?> 
-						<input <?php  disabled( (!$sche_once) || $all_day ); ?> class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="recend" size="10" maxlength="10" disabled="disabled" value="<?php echo $schedule_last->format( $phpFormat ); ?>"/>
+						<input <?php  disabled( (!$sche_once) || $all_day ); ?> class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="recend" size="10" maxlength="10" disabled="disabled" value="<?php echo $until->format( $phpFormat ); ?>"/>
 						</p>
 
 						<p id="event_summary"> </p>
@@ -347,15 +347,15 @@ function eventorganiser_details_save( $post_id ) {
 	$datetime_format = $date_format . ' ' . $time_format;
 	
 	//Set times for all day events
-	$all_day = intval($raw_data['allday']);
+	$all_day = intval( $raw_data['allday'] );
 	if ( $all_day ){
-		$raw_data['StartTime'] = $is24 ? '00:00' : '12:00am';
+		$raw_data['StartTime']  = $is24 ? '00:00' : '12:00am';
 		$raw_data['FinishTime'] = $is24 ? '23:59' : '11:59pm';
 	}
 	
-	$start         = eo_check_datetime( $datetime_format, trim( $raw_data['StartDate'] ) . ' ' . trim( $raw_data['StartTime'] ) );
-	$end           = eo_check_datetime( $datetime_format, trim( $raw_data['EndDate'] ) . ' ' . trim( $raw_data['FinishTime'] ) );
-	$schedule_last = eo_check_datetime( $datetime_format, trim( $raw_data['schedule_end'] ) . ' ' . trim( $raw_data['StartTime'] ) );
+	$start = eo_check_datetime( $datetime_format, trim( $raw_data['StartDate'] ) . ' ' . trim( $raw_data['StartTime'] ) );
+	$end   = eo_check_datetime( $datetime_format, trim( $raw_data['EndDate'] ) . ' ' . trim( $raw_data['FinishTime'] ) );
+	$until = eo_check_datetime( $datetime_format, trim( $raw_data['schedule_end'] ) . ' ' . trim( $raw_data['StartTime'] ) );
 	
 	//Collect schedule meta
 	$schedule = $raw_data['schedule'];
@@ -395,16 +395,16 @@ function eventorganiser_details_save( $post_id ) {
 	endforeach;
 	
 	$event_data = array(
-		'start' => $start,
-		'end' => $end,
-		'all_day' => $all_day,
-		'schedule' => $schedule,
-		'frequency' => (int) $raw_data['event_frequency'],
-		'schedule_last' => $schedule_last,
+		'start'         => $start,
+		'end'           => $end,
+		'all_day'       => $all_day,
+		'schedule'      => $schedule,
+		'frequency'     => (int) $raw_data['event_frequency'],
+		'until'         => $until,
 		'schedule_meta' => $schedule_meta,
-		'occurs_by' => $occurs_by,
-		'include' => $in_ex['include'],
-		'exclude' => $in_ex['exclude'],
+		'occurs_by'     => $occurs_by,
+		'include'       => $in_ex['include'],
+		'exclude'       => $in_ex['exclude'],
 	);
 
 	$response = eo_update_event( $post_id, $event_data );	

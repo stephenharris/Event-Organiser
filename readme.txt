@@ -3,8 +3,8 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.3
-Tested up to: 4.2
-Stable tag: 2.12.5
+Tested up to: 4.2.1
+Stable tag: 2.13.0
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -218,6 +218,19 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.13.0 - 1st May 2015 =
+* Added `eo_get_the_occurrence_id()` for use 'inside the Loop'
+* Added `eo_get_permalink()` for use by themes/extensions
+* Added filter event calendar query: `eventorganiser_fullcalendar_query`
+* Added `eventorganiser_additional_event_meta` action
+* Added	`eventorganiser_updated_event` hook
+* `schedule_last` argument for `eo_insert_event()` and `eo_update_event()` deprecated in favour of `until`. (`schedule_last` is still
+  supported)
+* Fixed bug where including/excluding dates may change 'until' recurrence date.
+* Fixed bug with importing included/excluded dates in 'foreign' timezone to site timezone 
+* Bump fullCalendar CSS to 1.6.4 inline with fullcalendar.js. Fixes issue with event overlap in week view
+* Fix bug in iCal parsing with feeds containing weekly events without a byday component to the RRule 
 
 = 2.12.5 - 21st April 2015 =
 * Fixes XSS vulnerability

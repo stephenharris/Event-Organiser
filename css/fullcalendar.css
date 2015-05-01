@@ -35,7 +35,7 @@
 }
 
 /*!
- * FullCalendar v1.6.1 Stylesheet
+ * FullCalendar v1.6.4 Stylesheet
  * Docs & License: http://arshaw.com/fullcalendar/
  * (c) 2013 Adam Shaw
  */
@@ -72,6 +72,9 @@ html .fc,.fc table{font-size:1em}
 .fc-state-hover{color:#333;text-decoration:none;background-position:0 -15px;-webkit-transition:background-position .1s linear;-moz-transition:background-position .1s linear;-o-transition:background-position .1s linear;transition:background-position .1s linear}
 .fc-state-down,.fc-state-active{background-color:#ccc;background-image:none;outline:0;box-shadow:inset 0 2px 4px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.05)}
 .fc-state-disabled{cursor:default;background-image:none;opacity:0.65;filter:alpha(opacity=65);box-shadow:none}
+.fc-event-container > * {z-index: 8;}
+.fc-event-container > .ui-draggable-dragging,
+.fc-event-container > .ui-resizable-resizing {z-index: 9;}
 .fc-event{border:1px solid #3a87ad;background-color:#3a87ad;color:#fff;font-size:.85em;cursor:default}
 a.fc-event{text-decoration:none;color:#fff;}
 a.fc-event,.fc-event-draggable{cursor:pointer}

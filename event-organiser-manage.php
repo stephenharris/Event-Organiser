@@ -68,8 +68,9 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 	$series_id = ( empty( $post->event_id) ? $id :'' );
 
 	$phpFormat = 'M, j Y';
-	if ( !eo_is_all_day( $series_id ) )
+	if ( !eo_is_all_day( $series_id ) ){
 		$phpFormat .= '\<\/\b\r\>'. get_option( 'time_format' );
+	}
 	
 	switch ( $column_name ) {
 		case 'venue':
@@ -95,7 +96,7 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 			break;
 
 		case 'eventcategories':
-		    $terms = get_the_terms( $post->ID, 'event-category' );
+			$terms = get_the_terms( $post->ID, 'event-category' );
 
 			if ( !empty( $terms) ) {
 				$post_terms = array();
