@@ -108,6 +108,26 @@ class eventTest extends EO_UnitTestCase
     	
     }
     
+    /**
+     * This is a backwards compatability test. 'schedule_last' can be explicity false.
+     * This should be allowed.
+     */
+    function testScheduleLastFalse(){
+
+    	$tz = eo_get_blog_timezone();
+    	
+    	eo_insert_event( array(
+			'start'         => new DateTime( '2013-10-19 15:30:00', $tz ),
+    		'end'           => new DateTime( '2013-10-19 15:45:00', $tz ),
+    		'frequency'     => 1,
+    		'schedule'      => 'weekly',
+    		'schedule_last' => false,	//This shouldn't cause a fatal error
+		));
+
+    	$this->assertTrue( true );
+    	
+    }
+    
     
     public function testDateDifference()
     {

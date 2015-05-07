@@ -3,8 +3,8 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
-**Tested up to:** 4.2.1  
-**Stable tag:** 2.13.0  
+**Tested up to:** 4.2.2  
+**Stable tag:** 2.13.1  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -230,6 +230,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 2.13.1 - 7th May 2015 ###
+* Fixes bug where use of `%event_duration%` tag modifies end date
+* Fixes bug where `schedule_last` is set to 'false'. (Fixes conflict with FES)
 
 ### 2.13.0 - 1st May 2015 ###
 * Added `eo_get_the_occurrence_id()` for use 'inside the Loop'

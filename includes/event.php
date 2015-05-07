@@ -220,7 +220,7 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 		$event_data['schedule'] = 'custom';
 	}
 	
-	if( isset( $event_data['schedule_last'] ) ){
+	if( !empty( $event_data['schedule_last'] ) ){
 		if( !isset( $event_data['until'] ) ){
 			$event_data['until'] = clone $event_data['schedule_last'];
 		}
