@@ -509,12 +509,34 @@ function eo_get_event_schedule( $post_id=0 ){
 	));
 
 	$tz = eo_get_blog_timezone();
-	$event_details['start'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_start_start', true), $tz);
-	if( $end_datetime = get_post_meta( $post_id,'_eventorganiser_schedule_start_finish', true ) ){
-		$event_details['end'] = new DateTime( $end_datetime, $tz );
-	}else{
-		$event_details['end'] = new DateTime( '+1 hour', $tz );
+
+	// Get start time
+	if ( $start_datetime = get_post_meta( $post_id,'_eventorganiser_schedule_start_start', true ) ) {
+		$event_details['start'] = new DateTime( $start_datetime, $tz );
+
+	// No start time, so set a default start time
+	} else {
+		// round to next half-hour
+		$minute = ( date('i') > 30 ) ? '00' : '30';
+		$hour   = date('H');
+
+		$start = "{$hour}:{$minute}:00";
+		if ( '00' === $minute ) {
+			$start .= ' + 1 hour';
+		}
+
+		$event_details['start'] = new DateTime( $start, $tz );
 	}
+
+	// Get end time
+	if ( $end_datetime = get_post_meta( $post_id,'_eventorganiser_schedule_start_finish', true ) ) {
+		$event_details['end'] = new DateTime( $end_datetime, $tz );
+
+	// No end time, so set a default end time
+	} else {
+		$event_details['end'] = new DateTime( "{$start} + 1 hour", $tz );
+	}
+
 	$event_details['schedule_start'] = clone $event_details['start'];
 	$event_details['schedule_last'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_start', true), $tz);
 	$event_details['schedule_finish'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_finish', true), $tz);
