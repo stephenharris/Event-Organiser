@@ -138,7 +138,7 @@ function _eventorganiser_details_metabox( $post ){
 				<tr class="event-date">
 					<td class="eo-label"><?php _e( 'Reoccurence:', 'eventorganiser' );?> </td>
 					<td> 
-					<?php $reoccurrence_schedules = array( 'once' => __( 'once', 'eventorganiser' ), 'daily' => __( 'daily', 'eventorganiser' ), 'weekly' => __( 'weekly', 'eventorganiser' ),
+					<?php $reoccurrence_schedules = array( 'once' => __( 'none', 'eventorganiser' ), 'daily' => __( 'daily', 'eventorganiser' ), 'weekly' => __( 'weekly', 'eventorganiser' ),
 														'monthly' => __( 'monthly', 'eventorganiser' ), 'yearly' => __( 'yearly', 'eventorganiser' ), 'custom' => __( 'custom', 'eventorganiser' ) );?>
 
 					<select id="HWSEventInput_Req" name="eo_input[schedule]">
