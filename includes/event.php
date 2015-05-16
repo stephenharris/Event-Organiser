@@ -514,27 +514,29 @@ function eo_get_event_schedule( $post_id=0 ){
 	if ( $start_datetime = get_post_meta( $post_id,'_eventorganiser_schedule_start_start', true ) ) {
 		$event_details['start'] = new DateTime( $start_datetime, $tz );
 
-	// No start time, so set a default start time
 	} else {
-		// round to next half-hour
-		$minute = ( date('i') > 30 ) ? '00' : '30';
-		$hour   = date('H');
-
-		$start = "{$hour}:{$minute}:00";
-		if ( '00' === $minute ) {
-			$start .= ' + 1 hour';
+		// No start time, so set a default start time to next half-hour
+		$now = new DateTime( 'now', $tz );
+		
+		$minute = $now->format( 'i' ) > 30 ? 0 : 30;
+		
+		$now->setTime( $now->format( 'G' ), $minute );
+		
+		if( 0 === $minute ){
+			$now->modify( '+1 hour' );
 		}
-
-		$event_details['start'] = new DateTime( $start, $tz );
+		
+		$event_details['start'] = $now; 
 	}
 
 	// Get end time
 	if ( $end_datetime = get_post_meta( $post_id,'_eventorganiser_schedule_start_finish', true ) ) {
 		$event_details['end'] = new DateTime( $end_datetime, $tz );
 
-	// No end time, so set a default end time
 	} else {
-		$event_details['end'] = new DateTime( "{$start} + 1 hour", $tz );
+		// No end time, so set a default end time
+		$event_details['end'] = clone $event_details['start'];
+		$event_details['end']->modify( '+1 hour' );
 	}
 
 	$event_details['schedule_start'] = clone $event_details['start'];
