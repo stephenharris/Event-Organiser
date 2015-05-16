@@ -488,24 +488,25 @@ function _eventorganiser_insert_occurrences( $post_id, $event_data ){
 * @param int $post_id -  The post ID of the event
 * @return array event schedule details
 */
-function eo_get_event_schedule( $post_id=0 ){
+function eo_get_event_schedule( $post_id = 0 ){
 
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
-	if( empty($post_id) ) 
+	if( empty( $post_id ) ){ 
 		return false;
+	}
 
-	$event_details = get_post_meta( $post_id,'_eventorganiser_event_schedule',true);
+	$event_details = get_post_meta( $post_id,'_eventorganiser_event_schedule', true );
 	$event_details = wp_parse_args($event_details, array(
-		'schedule'=>'once',
-		'schedule_meta'=>'',
+		'schedule'           => 'once',
+		'schedule_meta'      => '',
 		'number_occurrences' => 0, //Number occurrences according to recurrence rule. Not necessarily the #occurrences (after includes/excludes)
-		'frequency'=>1,
-		'all_day'=>0,
-		'duration_str'=>'',
-		'include'=>array(),
-		'exclude'=>array(),
-		'_occurrences'=>array(),
+		'frequency'          => 1,
+		'all_day'            => 0,
+		'duration_str'       => '',
+		'include'            => array(),
+		'exclude'            => array(),
+		'_occurrences'       => array(),
 	));
 
 	$tz = eo_get_blog_timezone();
@@ -539,34 +540,34 @@ function eo_get_event_schedule( $post_id=0 ){
 		$event_details['end']->modify( '+1 hour' );
 	}
 
-	$event_details['schedule_start'] = clone $event_details['start'];
-	$event_details['schedule_last'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_start', true), $tz);
-	$event_details['schedule_finish'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_finish', true), $tz);
+	$event_details['schedule_start']  = clone $event_details['start'];
+	$event_details['schedule_last']   = new DateTime( get_post_meta( $post_id,'_eventorganiser_schedule_last_start', true ), $tz );
+	$event_details['schedule_finish'] = new DateTime( get_post_meta( $post_id,'_eventorganiser_schedule_last_finish', true ), $tz );
 
-	if( !empty($event_details['_occurrences']) ){
-		$event_details['_occurrences'] = array_map('eventorganiser_date_create', $event_details['_occurrences']);
+	if ( !empty($event_details['_occurrences'] ) ) {
+		$event_details['_occurrences'] = array_map( 'eventorganiser_date_create', $event_details['_occurrences'] );
 	}
 
-	if( get_post_meta( $post_id,'_eventorganiser_schedule_until', true ) ){
-		$event_details['until'] = new DateTime( get_post_meta( $post_id,'_eventorganiser_schedule_until', true ), $tz);
-	}else{
+	if ( get_post_meta( $post_id,'_eventorganiser_schedule_until', true ) ) {
+		$event_details['until'] = new DateTime( get_post_meta( $post_id,'_eventorganiser_schedule_until', true ), $tz );
+	} else {
 		$event_details['until'] = clone $event_details['schedule_last'];
 		update_post_meta( $post_id, '_eventorganiser_schedule_until', $event_details['until']->format( 'Y-m-d H:i:s' ) );
 	}
 	
-	if( !empty($event_details['include']) ){
-		$event_details['include'] = array_map('eventorganiser_date_create', $event_details['include'] );
+	if ( ! empty( $event_details['include'] ) ) {
+		$event_details['include'] = array_map( 'eventorganiser_date_create', $event_details['include'] );
 	}
-	if( !empty($event_details['exclude']) ){
-		$event_details['exclude'] = array_map('eventorganiser_date_create',$event_details['exclude'] );
+	if( ! empty($event_details['exclude'] ) ){
+		$event_details['exclude'] = array_map( 'eventorganiser_date_create', $event_details['exclude'] );
 	}
 
-	if($event_details['schedule'] == 'weekly'){
+	if ( 'weekly' == $event_details['schedule'] ) {
 		$event_details['occurs_by'] = '';
-	}elseif($event_details['schedule'] == 'monthly'){
-		$bymonthday = preg_match('/BYMONTHDAY=/',$event_details['schedule_meta']);
-		$event_details['occurs_by'] = ($bymonthday ? 'BYMONTHDAY' : 'BYDAY');
-	}else{
+	} elseif ( 'monthly' == $event_details['schedule'] ) {
+		$bymonthday = preg_match( '/BYMONTHDAY=/', $event_details['schedule_meta'] );
+		$event_details['occurs_by'] = ( $bymonthday ? 'BYMONTHDAY' : 'BYDAY' );
+	} else {
 		$event_details['occurs_by'] ='';
 	}
 
