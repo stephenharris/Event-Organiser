@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-30 23:55+0100\n"
+"POT-Creation-Date: 2015-05-23 17:23+0100\n"
 "PO-Revision-Date: 2015-02-21 11:51:44+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
@@ -196,7 +196,7 @@ msgstr "Evenement categorie&#235;n"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1512
+#: includes/event-organiser-event-functions.php:1466
 #: templates/event-meta-event-single.php:69
 msgid "Categories"
 msgstr "Categorie&#235;n"
@@ -236,7 +236,7 @@ msgstr "Locaties"
 msgid "Select Venue"
 msgstr "Selecteer locatie"
 
-#: classes/class-eventorganiser-shortcodes.php:391
+#: classes/class-eventorganiser-shortcodes.php:393
 msgid "There is no excerpt because this is a protected post."
 msgstr "Er is geen samenvatting omdat dit bericht is beveiligd."
 
@@ -312,7 +312,7 @@ msgid "24 hour time"
 msgstr "24-uurs tijd"
 
 #: event-organiser-calendar.php:249
-#: includes/event-organiser-event-functions.php:1457
+#: includes/event-organiser-event-functions.php:1411
 msgid "Loading&#8230;"
 msgstr "Laden&#8230;"
 
@@ -491,8 +491,8 @@ msgid "Reoccurence:"
 msgstr "Terugkeerpatroon:"
 
 #: event-organiser-edit.php:141
-msgid "once"
-msgstr "nee, eenmalig"
+msgid "none"
+msgstr ""
 
 #: event-organiser-edit.php:141
 msgid "daily"
@@ -635,45 +635,45 @@ msgstr "Evenement"
 msgid "Reoccurrence"
 msgstr "Herhaling"
 
-#: event-organiser-manage.php:153
+#: event-organiser-manage.php:163
 msgid "View all events"
 msgstr "Alle evenementen"
 
-#: event-organiser-manage.php:154
+#: event-organiser-manage.php:164
 msgid "Future events"
 msgstr "Toekomstige evenementen"
 
-#: event-organiser-manage.php:155
+#: event-organiser-manage.php:165
 msgid "Expired events"
 msgstr "Afgelopen evenementen"
 
-#: event-organiser-manage.php:156
+#: event-organiser-manage.php:166
 msgid "Events within 24 hours"
 msgstr "Evenementen binnen 24 uur"
 
-#: event-organiser-manage.php:157
+#: event-organiser-manage.php:167
 msgid "Events within 1 week"
 msgstr "Evenementen binnen een week"
 
-#: event-organiser-manage.php:158
+#: event-organiser-manage.php:168
 #, php-format
 msgid "Events within %d weeks"
 msgstr "Evenementen binnen %d Weken"
 
-#: event-organiser-manage.php:159
+#: event-organiser-manage.php:169
 msgid "Events within 1 month"
 msgstr "Evenementen binnen 1 maand"
 
-#: event-organiser-manage.php:160
+#: event-organiser-manage.php:170
 #, php-format
 msgid "Events within %d months"
 msgstr "Evenementen binnen %d maanden"
 
-#: event-organiser-manage.php:161
+#: event-organiser-manage.php:171
 msgid "Events within 1 year"
 msgstr "Items binnen 1 jaar"
 
-#: event-organiser-manage.php:212
+#: event-organiser-manage.php:222
 msgid "&mdash; No Change &mdash;"
 msgstr "— Geen Wijzigingen —"
 
@@ -1258,7 +1258,7 @@ msgid "Break this series"
 msgstr "Splits deze serie"
 
 #: includes/event-organiser-ajax.php:687
-#: includes/event-organiser-event-functions.php:1409
+#: includes/event-organiser-event-functions.php:1363
 msgid "All Day"
 msgstr "Duurt hele dag"
 
@@ -1426,7 +1426,7 @@ msgid "Choose from the most used tags"
 msgstr "Kies uit de meest gebruikte zoekwoorden"
 
 #: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1520
+#: includes/event-organiser-event-functions.php:1474
 #: templates/event-meta-event-single.php:74
 msgid "Tags"
 msgstr "Zoekwoorden"
@@ -1917,35 +1917,35 @@ msgstr "Postcode"
 msgid "Country"
 msgstr "Land"
 
-#: includes/event.php:590
+#: includes/event.php:615
 msgid "Schedule not recognised."
 msgstr "Terugkeerpatroon niet herkend."
 
-#: includes/event.php:599
+#: includes/event.php:624
 msgid "Start date not provided."
 msgstr "Begindatum niet opgegeven."
 
-#: includes/event.php:617
+#: includes/event.php:642
 msgid "Start date occurs after end date."
 msgstr "Startdatum ligt na einddatum."
 
-#: includes/event.php:620
+#: includes/event.php:645
 msgid "Schedule end date is before is before the start date."
 msgstr "Einddatum ligt voor begindatum."
 
-#: includes/event.php:702
+#: includes/event.php:727
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Ongeldige maandelijks terugkeerpatroon"
 
-#: includes/event.php:836
+#: includes/event.php:861
 msgid "Event does not contain any dates."
 msgstr "Evenement bevat geen enkele datum"
 
-#: includes/event.php:979
+#: includes/event.php:1004
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr "Gebeurtenis niet verwijderd. Gebeurtenis niet gevonden."
 
-#: includes/event.php:1040
+#: includes/event.php:1065
 msgid "There is already an occurrence on this date"
 msgstr ""
 

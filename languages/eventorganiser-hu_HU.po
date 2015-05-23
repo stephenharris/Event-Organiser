@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-30 23:55+0100\n"
+"POT-Creation-Date: 2015-05-23 17:23+0100\n"
 "PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
@@ -193,7 +193,7 @@ msgstr "Esemény kategóriák"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1512
+#: includes/event-organiser-event-functions.php:1466
 #: templates/event-meta-event-single.php:69
 msgid "Categories"
 msgstr "Kategóriák"
@@ -237,7 +237,7 @@ msgstr "Helyszínek"
 msgid "Select Venue"
 msgstr ""
 
-#: classes/class-eventorganiser-shortcodes.php:391
+#: classes/class-eventorganiser-shortcodes.php:393
 msgid "There is no excerpt because this is a protected post."
 msgstr "Nincs kivonat, mert ez egy védett tartalmú bejegyzés."
 
@@ -311,7 +311,7 @@ msgid "24 hour time"
 msgstr "24 órás időformátum"
 
 #: event-organiser-calendar.php:249
-#: includes/event-organiser-event-functions.php:1457
+#: includes/event-organiser-event-functions.php:1411
 msgid "Loading&#8230;"
 msgstr "Betöltés&#8230;"
 
@@ -476,8 +476,8 @@ msgid "Reoccurence:"
 msgstr "Ismétlődés:"
 
 #: event-organiser-edit.php:141
-msgid "once"
-msgstr "nincs"
+msgid "none"
+msgstr ""
 
 #: event-organiser-edit.php:141
 msgid "daily"
@@ -609,45 +609,45 @@ msgstr "Esemény"
 msgid "Reoccurrence"
 msgstr "Ismétlődés"
 
-#: event-organiser-manage.php:153
+#: event-organiser-manage.php:163
 msgid "View all events"
 msgstr "Összes esemény"
 
-#: event-organiser-manage.php:154
+#: event-organiser-manage.php:164
 msgid "Future events"
 msgstr "Leendő események"
 
-#: event-organiser-manage.php:155
+#: event-organiser-manage.php:165
 msgid "Expired events"
 msgstr "Elmúlt események"
 
-#: event-organiser-manage.php:156
+#: event-organiser-manage.php:166
 msgid "Events within 24 hours"
 msgstr "Események 24 órán belül"
 
-#: event-organiser-manage.php:157
+#: event-organiser-manage.php:167
 msgid "Events within 1 week"
 msgstr "Események 1 héten belül"
 
-#: event-organiser-manage.php:158
+#: event-organiser-manage.php:168
 #, php-format
 msgid "Events within %d weeks"
 msgstr "Események %d héten belül"
 
-#: event-organiser-manage.php:159
+#: event-organiser-manage.php:169
 msgid "Events within 1 month"
 msgstr "Események 1 hónapon belül"
 
-#: event-organiser-manage.php:160
+#: event-organiser-manage.php:170
 #, php-format
 msgid "Events within %d months"
 msgstr "Események %d hónapon belül"
 
-#: event-organiser-manage.php:161
+#: event-organiser-manage.php:171
 msgid "Events within 1 year"
 msgstr "Események 1 éven belül"
 
-#: event-organiser-manage.php:212
+#: event-organiser-manage.php:222
 msgid "&mdash; No Change &mdash;"
 msgstr "&mdash; Nincs változás &mdash;"
 
@@ -1231,7 +1231,7 @@ msgid "Break this series"
 msgstr "Ismétlődések kikapcsolása"
 
 #: includes/event-organiser-ajax.php:687
-#: includes/event-organiser-event-functions.php:1409
+#: includes/event-organiser-event-functions.php:1363
 msgid "All Day"
 msgstr "Egész napos"
 
@@ -1399,7 +1399,7 @@ msgid "Choose from the most used tags"
 msgstr "Választás a leggyakrabban előforduló címkék közül"
 
 #: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1520
+#: includes/event-organiser-event-functions.php:1474
 #: templates/event-meta-event-single.php:74
 msgid "Tags"
 msgstr "Címkék"
@@ -1896,35 +1896,35 @@ msgstr "Irányítószám"
 msgid "Country"
 msgstr "Város"
 
-#: includes/event.php:590
+#: includes/event.php:615
 msgid "Schedule not recognised."
 msgstr "Ismeretlen esemény ismétlődés típus."
 
-#: includes/event.php:599
+#: includes/event.php:624
 msgid "Start date not provided."
 msgstr "Nincs kezdő dátum."
 
-#: includes/event.php:617
+#: includes/event.php:642
 msgid "Start date occurs after end date."
 msgstr "Kezdő dátum későbbi, mint a befejező."
 
-#: includes/event.php:620
+#: includes/event.php:645
 msgid "Schedule end date is before is before the start date."
 msgstr "Ismétlődés vége az esemény kezdete előtt van."
 
-#: includes/event.php:702
+#: includes/event.php:727
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Hibás havi ismétlődés (hét ismeretlen)"
 
-#: includes/event.php:836
+#: includes/event.php:861
 msgid "Event does not contain any dates."
 msgstr ""
 
-#: includes/event.php:979
+#: includes/event.php:1004
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr ""
 
-#: includes/event.php:1040
+#: includes/event.php:1065
 msgid "There is already an occurrence on this date"
 msgstr ""
 
