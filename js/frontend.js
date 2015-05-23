@@ -144,6 +144,7 @@ jQuery(document).ready(function () {
 				tooltip: calendars[i].tooltip,
 				firstDay: parseInt( eventorganiser.fullcal.firstDay, 10 ),
 				weekends: calendars[i].weekends,
+				hiddenDays: calendars[i].hiddendays,
 				allDaySlot: calendars[i].alldayslot,
 				allDayText: calendars[i].alldaytext,
 				axisFormat: calendars[i].axisformat,

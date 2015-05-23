@@ -164,6 +164,10 @@ class EventOrganiser_Shortcodes {
 				unset( $atts[$shortcode_attr] ); 
 			}
 		}
+		
+		if( isset( $atts['showdays'] ) ){
+			$atts['showdays'] = explode( ',', $atts['showdays'] );
+		}
 				
 		return eo_get_event_fullcalendar( $atts );
 	}

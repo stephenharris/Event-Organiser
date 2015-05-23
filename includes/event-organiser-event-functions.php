@@ -1360,7 +1360,7 @@ function eo_get_event_fullcalendar( $args = array() ){
 		'author' => false, 'author_name' => false,
 		'timeformat' => get_option( 'time_format' ), 'axisformat' => get_option( 'time_format' ),
 		'key' => false, 'tooltip' => true, 
-		'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 
+		'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 'showdays' => array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' ),
 		'alldayslot' => true, 'alldaytext' => __( 'All Day', 'eventorganiser' ), 
 		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
@@ -1369,6 +1369,12 @@ function eo_get_event_fullcalendar( $args = array() ){
 	);
 	
 	$args = shortcode_atts( $defaults, $args, 'eo_fullcalendar' );
+	
+	//Days to show
+	$args['showdays'] = array_map( 'strtoupper', $args['showdays'] );
+	$args['hiddendays'] = array_diff( array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' ), $args['showdays'] );
+	$args['hiddendays'] = array_keys( $args['hiddendays'] );
+	unset( $args['showdays'] );;
 	
 	$key = $args['key'];
 	unset( $args['key'] );
