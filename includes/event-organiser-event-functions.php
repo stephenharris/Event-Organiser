@@ -1311,52 +1311,6 @@ function eo_has_event_finished($id='',$occurrence=0){
 	return ($end <= $now );
 }
 
-/**
- * @ignore
-*/
-function eo_event_category_dropdown( $args = '' ) {
-	$defaults = array(
-		'show_option_all' => '', 
-		'echo' => 1,
-		'selected' => 0, 
-		'name' => 'event-category', 
-		'id' => '',
-		'class' => 'postform event-organiser event-category-dropdown event-dropdown', 
-		'tab_index' => 0, 
-	);
-
-	$defaults['selected'] =  (is_tax('event-category') ? get_query_var('event-category') : 0);
-	$r = wp_parse_args( $args, $defaults );
-	$r['taxonomy']='event-category';
-	extract( $r );
-
-	$tab_index_attribute = '';
-	if ( (int) $tab_index > 0 )
-		$tab_index_attribute = " tabindex=\"$tab_index\"";
-
-	$categories = get_terms($taxonomy, $r ); 
-	$name = esc_attr( $name );
-	$class = esc_attr( $class );
-	$id = $id ? esc_attr( $id ) : $name;
-
-	$output = "<select style='width:150px' name='$name' id='$id' class='$class' $tab_index_attribute>\n";
-	
-	if ( $show_option_all ) {
-		$output .= '<option '.selected($selected,0,false).' value="0">'.$show_option_all.'</option>';
-	}
-
-	if ( ! empty( $categories ) ) {
-		foreach ($categories as $term):
-			$output .= '<option value="'.$term->slug.'"'.selected($selected,$term->slug,false).'>'.$term->name.'</option>';
-		endforeach; 
-	}
-	$output .= "</select>\n";
-
-	if ( $echo )
-		echo $output;
-
-	return $output;
-}
 
 /**
  * Returns HTML mark-up for the fullCalendar

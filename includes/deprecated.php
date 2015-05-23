@@ -176,4 +176,26 @@ function eventorganiser_php2jquerydate( $phpformat="" ){
 	return eo_php2jquerydate( $phpformat );
 }
 
+/**
+ * @ignore
+ * @deprecated 2.13.2 Use eo_taxonomy_dropdown()
+ */
+function eo_event_category_dropdown( $args = '' ) {
+	_deprecated_function( __FUNCTION__, '2.13.2', 'eo_taxonomy_dropdown()' );
+	$args['taxonomy'] = 'event-category';
+	$args['class'] = 'postform event-organiser event-category-dropdown event-dropdown';
+	return eo_taxonomy_dropdown( $args );
+}
+
+/**
+ * @ignore
+ * @access private
+ * @deprecated 2.13.2 Use eo_taxonomy_dropdown()
+ */
+function eo_event_venue_dropdown( $args = '' ) {
+	_deprecated_function( __FUNCTION__, '2.13.2', 'eo_taxonomy_dropdown()' );
+	$args['taxonomy'] = 'event-venue';
+	$args['class'] = 'postform event-organiser event-venue-dropdown event-dropdown';
+	return eo_taxonomy_dropdown( $args );
+}
 ?>

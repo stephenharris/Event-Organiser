@@ -1011,52 +1011,5 @@ function eventorganiser_venue_dropdown($post_id=0,$args){
 		<?php endforeach;?>
 	</select><?php
 }
-/**
- *@ignore
- *@access private
- */
-function eo_event_venue_dropdown( $args = '' ) {
-	$defaults = array(
-		'show_option_all' =>'', 
-		'echo' => 1,
-		'selected' => 0, 
-		'name' => 'event-venue', 
-		'id' => '',
-		'class' => 'postform event-organiser event-venue-dropdown event-dropdown', 
-		'tab_index' => 0, 
-	);
-
-	$defaults['selected'] =  (is_tax('event-venue') ? get_query_var('event-venue') : 0);
-	$r = wp_parse_args( $args, $defaults );
-	$r['taxonomy']='event-venue';
-	extract( $r );
-
-	$tab_index_attribute = '';
-	if ( (int) $tab_index > 0 )
-		$tab_index_attribute = " tabindex=\"$tab_index\"";
-
-	$categories = get_terms($taxonomy, $r ); 
-	$name = esc_attr( $name );
-	$class = esc_attr( $class );
-	$id = $id ? esc_attr( $id ) : $name;
-
-	$output = "<select style='width:150px' name='$name' id='$id' class='$class' $tab_index_attribute>\n";
-	
-	if ( $show_option_all ) {
-		$output .= '<option '.selected($selected,0,false).' value="0">'.$show_option_all.'</option>';
-	}
-
-	if ( ! empty( $categories ) ) {
-		foreach ($categories as $term):
-			$output .= '<option value="'.$term->slug.'"'.selected($selected,$term->slug,false).'>'.$term->name.'</option>';
-		endforeach; 
-	}
-	$output .= "</select>\n";
-
-	if ( $echo )
-		echo $output;
-
-	return $output;
-}
 
 ?>
