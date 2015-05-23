@@ -89,6 +89,7 @@ eovenue.init_map( 'venuemap', {
 		jQuery("#eo_venue_Lng").val( latLng.lng().toFixed(6) );
         
 		this.getMap().setCenter( latLng );
+		google.maps.event.trigger(eovenue.get_map( 'venuemap' ).map,'resize');
 		this.getMap().setZoom( 15 );
 	},
 });

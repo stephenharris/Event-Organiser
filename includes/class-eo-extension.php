@@ -415,13 +415,14 @@ if( !class_exists('EO_Extension') ){
 			 */
 	
 			//Get remote information
-			$plugin_info = $this->get_remote_plugin_info('plugin_info');
+			$plugin_info = $this->get_remote_plugin_info( 'plugin_info' );
 	
 			// If a newer version is available, add the update
-			if ( $plugin_info && version_compare($this->get_current_version(), $plugin_info->new_version, '<' ) ){
+			if ( $plugin_info && version_compare( $this->get_current_version(), $plugin_info->new_version, '<' ) ){
 	
 				$obj = new stdClass();
 				$obj->slug = $this->slug;
+				$obj->plugin = $this->slug; 
 				$obj->new_version = $plugin_info->new_version;
 				$obj->package =$plugin_info->download_link;
 	
@@ -444,7 +445,7 @@ if( !class_exists('EO_Extension') ){
 		 * @param (string) $action -'info', 'version' or 'license'
 		 * @return mixed $remote_version
 		 */
-		public function get_remote_plugin_info($action='plugin_info'){
+		public function get_remote_plugin_info( $action = 'plugin_info' ){
 	
 			$key = wp_hash( 'plm_'.$this->id . '_' . $action . '_' . $this->slug );
 			if( false !== ( $plugin_obj = get_site_transient( $key ) ) && !$this->force_request() ){
@@ -455,21 +456,21 @@ if( !class_exists('EO_Extension') ){
 					'method' => 'POST',
 					'timeout' => 45,
 					'body' => array(
-							'plm-action' => $action,
-							'license'    => get_site_option( $this->id.'_license' ),
-							'product'    => $this->slug,
-							'domain'     => $_SERVER['SERVER_NAME'],
+						'plm-action' => $action,
+						'license'    => get_site_option( $this->id.'_license' ),
+						'product'    => $this->slug,
+						'domain'     => $_SERVER['SERVER_NAME'],
 					)
 			));
 	
 			if ( !is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
 				//If its the plug-in object, unserialize and store for 12 hours.
 				$plugin_obj = ( 'plugin_info' == $action ? unserialize( $request['body'] ) : $request['body'] );
-				set_site_transient( $key, $plugin_obj, 12*60*60 );
+				set_site_transient( $key, $plugin_obj, 12 * 60 * 60 );
 				return $plugin_obj;
 			}
 			//Don't try again for 5 minutes
-			set_site_transient( $key, '', 5*60 );
+			set_site_transient( $key, '', 5 * 60 );
 			return false;
 		}
 	

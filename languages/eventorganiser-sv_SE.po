@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-30 23:55+0100\n"
-"PO-Revision-Date: 2015-01-19 17:42:31+0000\n"
-"Last-Translator: Urban Norlander <urban@norlanderdramatik.se>\n"
+"POT-Creation-Date: 2015-05-23 17:23+0100\n"
+"PO-Revision-Date: 2015-05-11 06:54:24+0000\n"
+"Last-Translator: Frank <frank@gorilla.se>\n"
 "Language-Team: \n"
 "Language: Swedish (Sweden)\n"
 "MIME-Version: 1.0\n"
@@ -196,7 +196,7 @@ msgstr "Evenemangskategorier"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1512
+#: includes/event-organiser-event-functions.php:1466
 #: templates/event-meta-event-single.php:69
 msgid "Categories"
 msgstr "Kategorier"
@@ -236,7 +236,7 @@ msgstr "Lokaler"
 msgid "Select Venue"
 msgstr "Välj plats/lokal"
 
-#: classes/class-eventorganiser-shortcodes.php:391
+#: classes/class-eventorganiser-shortcodes.php:393
 msgid "There is no excerpt because this is a protected post."
 msgstr "Det finns inget utdrag eftersom detta är ett skyddat inlägg."
 
@@ -310,7 +310,7 @@ msgid "24 hour time"
 msgstr "24-timmars tid"
 
 #: event-organiser-calendar.php:249
-#: includes/event-organiser-event-functions.php:1457
+#: includes/event-organiser-event-functions.php:1411
 msgid "Loading&#8230;"
 msgstr "Laddar&#8230;"
 
@@ -481,8 +481,8 @@ msgid "Reoccurence:"
 msgstr "Återkommande: "
 
 #: event-organiser-edit.php:141
-msgid "once"
-msgstr "En gång"
+msgid "none"
+msgstr ""
 
 #: event-organiser-edit.php:141
 msgid "daily"
@@ -614,45 +614,45 @@ msgstr "Evenemang"
 msgid "Reoccurrence"
 msgstr "Återkommande"
 
-#: event-organiser-manage.php:153
+#: event-organiser-manage.php:163
 msgid "View all events"
 msgstr "Visa alla evenemang"
 
-#: event-organiser-manage.php:154
+#: event-organiser-manage.php:164
 msgid "Future events"
 msgstr "Framtida evenemang"
 
-#: event-organiser-manage.php:155
+#: event-organiser-manage.php:165
 msgid "Expired events"
 msgstr "Genomförda evenemang"
 
-#: event-organiser-manage.php:156
+#: event-organiser-manage.php:166
 msgid "Events within 24 hours"
 msgstr "Evenemang inom 24 timmar"
 
-#: event-organiser-manage.php:157
+#: event-organiser-manage.php:167
 msgid "Events within 1 week"
 msgstr "Evenemang inom en vecka"
 
-#: event-organiser-manage.php:158
+#: event-organiser-manage.php:168
 #, php-format
 msgid "Events within %d weeks"
 msgstr "Evenemang inom %d veckor"
 
-#: event-organiser-manage.php:159
+#: event-organiser-manage.php:169
 msgid "Events within 1 month"
 msgstr "Evenemang inom 1 månad"
 
-#: event-organiser-manage.php:160
+#: event-organiser-manage.php:170
 #, php-format
 msgid "Events within %d months"
 msgstr "Evenemang inom %d månader"
 
-#: event-organiser-manage.php:161
+#: event-organiser-manage.php:171
 msgid "Events within 1 year"
 msgstr "Evenemang inom 1 år"
 
-#: event-organiser-manage.php:212
+#: event-organiser-manage.php:222
 msgid "&mdash; No Change &mdash;"
 msgstr "&mdash; Ingen ändring &mdash;"
 
@@ -1232,7 +1232,7 @@ msgid "Break this series"
 msgstr "Avbryt denna serie"
 
 #: includes/event-organiser-ajax.php:687
-#: includes/event-organiser-event-functions.php:1409
+#: includes/event-organiser-event-functions.php:1363
 msgid "All Day"
 msgstr "Hela dagen"
 
@@ -1400,7 +1400,7 @@ msgid "Choose from the most used tags"
 msgstr "Välj bland de vanligaste etiketterna"
 
 #: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1520
+#: includes/event-organiser-event-functions.php:1474
 #: templates/event-meta-event-single.php:74
 msgid "Tags"
 msgstr "Etiketter"
@@ -1894,35 +1894,35 @@ msgstr "Postnummer"
 msgid "Country"
 msgstr "Land"
 
-#: includes/event.php:590
+#: includes/event.php:615
 msgid "Schedule not recognised."
 msgstr "Schemat känns inte igen."
 
-#: includes/event.php:599
+#: includes/event.php:624
 msgid "Start date not provided."
 msgstr "Startdatum ej uppgivet."
 
-#: includes/event.php:617
+#: includes/event.php:642
 msgid "Start date occurs after end date."
 msgstr "Startdatum inträffar efter slutdatum"
 
-#: includes/event.php:620
+#: includes/event.php:645
 msgid "Schedule end date is before is before the start date."
 msgstr "Slutdatum är innan startdatum"
 
-#: includes/event.php:702
+#: includes/event.php:727
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Ogiltigt månadsschema (ogiltigt ordningstal)"
 
-#: includes/event.php:836
+#: includes/event.php:861
 msgid "Event does not contain any dates."
 msgstr "Evenemanget innehåller inget datum"
 
-#: includes/event.php:979
+#: includes/event.php:1004
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr "Händelsen är inte raderas. Händelsen hittades inte."
 
-#: includes/event.php:1040
+#: includes/event.php:1065
 msgid "There is already an occurrence on this date"
 msgstr ""
 
@@ -1963,14 +1963,13 @@ msgstr "Inget hittat"
 
 #: templates/archive-event.php:123
 msgid "Apologies, but no results were found for the requested archive. "
-msgstr "Tyvärr hittades inget i detta arkiv "
+msgstr "Tyvärr hittades inget i detta arkiv"
 
 #: templates/event-meta-event-single.php:46
 #, php-format
 msgid ""
 "This event is running from %1$s until %2$s. It is next occurring on %3$s"
-msgstr ""
-"Detta event håller på från %1$s till %2$s. Det förekommer härnäst den %3$s"
+msgstr "Detta event pågår från %1$s till %2$s. Det förekommer härnäst den %3$s"
 
 #: templates/event-meta-event-single.php:50
 #, php-format

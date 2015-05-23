@@ -121,7 +121,12 @@ function eventorganiser_restrict_events_by_category() {
 	$category_tax = get_taxonomy( 'event-category' );
 	
 	if( 'event' == $typenow && $category_tax && wp_count_terms( 'event-category' ) > 0 ){
-		eo_event_category_dropdown( array( 'hide_empty' => false, 'show_option_all' => $category_tax->labels->view_all_items ) );
+		eo_taxonomy_dropdown( array( 
+			'taxonomy'        => 'event-category',
+			'selected'        => get_query_var( 'event-category' ),
+			'hide_empty'      => false, 
+			'show_option_all' => $category_tax->labels->view_all_items, 
+		) );
 	}
 }
 
@@ -137,7 +142,12 @@ function eventorganiser_restrict_events_by_venue() {
 	
 	//Only add if CPT is event
 	if( 'event' == $typenow && $venue_tax && wp_count_terms( 'event-venue' ) > 0  ){
-		 eo_event_venue_dropdown( array( 'hide_empty' => false, 'show_option_all' => $venue_tax->labels->view_all_items ) );
+		eo_taxonomy_dropdown( array(
+				'taxonomy'        => 'event-venue',
+				'selected'        => get_query_var( 'event-venue' ),
+				'hide_empty'      => false,
+				'show_option_all' => $venue_tax->labels->view_all_items,
+		) );
 	}
 }
 
