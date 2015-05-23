@@ -4,7 +4,7 @@
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
 **Tested up to:** 4.2.2  
-**Stable tag:** 2.13.1  
+**Stable tag:** 2.13.2  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -230,6 +230,14 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 2.13.2 - 23rd May 2015 ###
+* Fixed a bug with the drop-down venue/category filters on the events admin screen with WordPress 4.2.
+* Fixed issue with google map when selecting a venue on the event admin screen.  Props to @r-a-y.
+* The times of newly created events are now rounded (forward) to the half hour. Props to @r-a-y.
+* Reoccurence label is changed from 'once' to 'none'. Props to @r-a-y.
+* Updated translations.
+ 
 
 ### 2.13.1 - 7th May 2015 ###
 * Fixes bug where use of `%event_duration%` tag modifies end date
