@@ -5,7 +5,8 @@
 
 add_action( 'wp_ajax_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' ); 
 add_action( 'wp_ajax_nopriv_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' ); 
-add_action( 'wp_ajax_event-admin-cal', 'eventorganiser_admin_calendar' ); 
+add_action( 'wp_ajax_event-admin-cal', 'eventorganiser_admin_calendar' );
+add_action( 'wp_ajax_eofc-edit-date', 'eventorganiser_admin_calendar_edit_date' ); 
 add_action( 'wp_ajax_eofc-format-time', 'eventorganiser_admin_cal_time_format' ); 
 add_action( 'wp_ajax_eo-search-venue', 'eventorganiser_search_venues' ); 
 add_action( 'wp_ajax_nopriv_eo_widget_agenda', 'eventorganiser_widget_agenda' );
@@ -24,31 +25,26 @@ add_action( 'wp_ajax_eo_toggle_addon_page', 'eventorganiser_ajax_toggle_addon_pa
 */
 function eventorganiser_public_fullcalendar() {
 	$request = array(
-		'event_start_before'=>$_GET['end'],
-		'event_end_after'=>$_GET['start'],
+		'event_start_before' => $_GET['end'],
+		'event_end_after'    => $_GET['start'],
 	);
 
-	$time_format = !empty($_GET['timeformat']) ? $_GET['timeformat'] : get_option('time_format');
+	$time_format = !empty( $_GET['timeformat'] ) ? $_GET['timeformat'] : get_option( 'time_format' );
 
-	//Restrict by category and/or venue
-	if( !empty($_GET['category']) ){
-		$cats = explode(',',esc_attr($_GET['category']));
-		$request['tax_query'][] = array(
-				'taxonomy' => 'event-category',
-				'field' => 'slug',
-				'terms' => $cats,
-				'operator' => 'IN'
+	//Restrict by category and/or venue/tag
+	foreach( array( 'category', 'venue', 'tag' ) as $tax ){
+		if( !empty( $_GET[$tax] ) ){
+			$request['tax_query'][] = array(
+				'taxonomy' => 'event-'.$tax,
+				'field'    => 'slug',
+				'terms'    => explode( ',', esc_attr( $_GET[$tax] ) ),
+				'operator' => 'IN',
 			);
+		}	
 	}
-
-	if( !empty($_GET['venue']) ){
-		$venues = explode(',',esc_attr($_GET['venue']));
-		$request['tax_query'][] = array(
-				'taxonomy' => 'event-venue',
-				'field' => 'slug',
-				'terms' => $venues,
-				'operator' => 'IN'
-			);
+	
+	if( !empty( $_GET['organiser'] ) ){
+		$request['author'] = (int) $_GET['organiser'];
 	}
 
 	if( !empty( $_GET['users_events'] ) && 'false' != $_GET['users_events'] ){
@@ -58,9 +54,8 @@ function eventorganiser_public_fullcalendar() {
 	if( !empty( $_GET['event_occurrence__in'] ) ){
 		$request['event_occurrence__in'] = $_GET['event_occurrence__in'];
 	}
-	
 
-	$presets = array('numberposts'=>-1, 'group_events_by'=>'','showpastevents'=>true);
+	$presets = array( 'numberposts' => -1, 'group_events_by' => '', 'showpastevents' => true );
 	
 	if( current_user_can( 'read_private_events' ) ){
 		$priv = '_priv';
@@ -71,17 +66,30 @@ function eventorganiser_public_fullcalendar() {
 	}
 
 	//Retrieve events		
-	$query    = array_merge( $request, $presets );
+	$query = array_merge( $request, $presets );
+
+	/**
+	 * Filters the query before it is sent to the calendar.
+	 *
+	 * The returned $query array is used to generate the cache key. The `$query`
+	 * array can contain any keys supported by `eo_get_events()`, and so also
+	 * `get_posts()` and `WP_Query()`.
+	 *
+	 * @package fullCalendar
+	 * @since 2.13.0
+	 * @param array  $query An query array (as given to `eo_get_events()`)
+	 */
+	$query = apply_filters( 'eventorganiser_fullcalendar_query', $query );
 	
 	//In case polylang is enabled with events as translatable. Include locale in cache key.
 	$options = get_option( 'polylang' );
 	if( defined( 'POLYLANG_VERSION' ) && !empty( $options['post_types']  ) && in_array( 'event', $options['post_types'] ) ){
-		$key = "eo_fc_".md5( serialize( $query ). $time_format . get_locale() );
+		$key = 'eo_fc_'.md5( serialize( $query ). $time_format . get_locale() );
 	}else{
-		$key = "eo_fc_".md5( serialize( $query ). $time_format );
+		$key = 'eo_fc_'.md5( serialize( $query ). $time_format );
 	}
 	
-	$calendar = get_transient( "eo_full_calendar_public{$priv}");
+	$calendar = get_transient( "eo_full_calendar_public{$priv}" );
 	if( $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
 		$events_array = $calendar[$key];
 		/**
@@ -143,17 +151,17 @@ function eventorganiser_public_fullcalendar() {
 			 * @param int    $event_id      The event's post ID.
 			 * @param int    $occurrence_id The event's occurrence ID.
 			 */
-			$link = apply_filters('eventorganiser_calendar_event_link',$link,$post->ID,$post->occurrence_id);
+			$link = apply_filters( 'eventorganiser_calendar_event_link', $link, $post->ID, $post->occurrence_id );
 			$event['url'] = $link;
 			
 			//All day or not?
 			$event['allDay'] = eo_is_all_day();
 	
 			//Get Event Start and End date, set timezone to the blog's timzone
-			$event_start = new DateTime($post->StartDate.' '.$post->StartTime, $tz);
-			$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, $tz);
-			$event['start']= $event_start->format('Y-m-d\TH:i:s\Z');
-			$event['end']= $event_end->format('Y-m-d\TH:i:s\Z');	
+			$event_start    = new DateTime( $post->StartDate.' '.$post->StartTime, $tz );
+			$event_end      = new DateTime( $post->EndDate.' '.$post->FinishTime, $tz );
+			$event['start'] = $event_start->format( 'Y-m-d\TH:i:s' );
+			$event['end']   = $event_end->format( 'Y-m-d\TH:i:s' );
 
 			//Don't use get_the_excerpt as this adds a link
 			$excerpt_length = apply_filters('excerpt_length', 55);
@@ -356,6 +364,9 @@ function eventorganiser_admin_calendar() {
 					$title.=' - '.__('Draft');
 				}
 				$event['title']= html_entity_decode ($title,ENT_QUOTES,'UTF-8');
+				
+				$event['event_id']      = $post->ID;
+				$event['occurrence_id'] = $post->occurrence_id;  
 
 				$schedule = eo_get_event_schedule($post->ID);
 
@@ -444,27 +455,31 @@ function eventorganiser_admin_calendar() {
 						'action'=>'delete_occurrence'
 					),$admin_url);
 
-					$delete_url  = wp_nonce_url( $delete_url , 'eventorganiser_delete_occurrence_'.$post->occurrence_id);
+					$delete_url  = wp_nonce_url( $delete_url , 'eventorganiser_delete_occurrence_'.$post->occurrence_id );
 
-					$summary .= "<span class='delete'>
-					<a class='submitdelete' style='color:red;float:right' title='".__('Delete this occurrence','eventorganiser')."' href='".$delete_url."'> ".__('Delete this occurrence','eventorganiser')."</a>
-					</span>";
+					$summary .= sprintf(
+						'<span class="delete"><a class="submitdelete" style="color:red;float:right" title="%1$s" href="%2$s">%1$s</a></span>',
+						esc_attr__( 'Delete this occurrence', 'eventorganiser' ),
+						$delete_url
+					);
 
-					if( $schedule['schedule'] !='once'){
+					if( $schedule['schedule'] != 'once' ){
 						$break_url = add_query_arg(array(
-							'post_type'=>'event',
-							'page'=>'calendar',
-							'series'=>$post->ID,
-							'event'=>$post->occurrence_id,
-							'action'=>'break_series'
+							'post_type' => 'event',
+							'page'      => 'calendar',
+							'series'    => $post->ID,
+							'event'     => $post->occurrence_id,
+							'action'    => 'break_series',
 						),$admin_url);
-						$break_url  = wp_nonce_url( $break_url , 'eventorganiser_break_series_'.$post->occurrence_id);
+						
+						$break_url  = wp_nonce_url( $break_url, 'eventorganiser_break_series_'.$post->occurrence_id );
 
-						$summary .= "<span class='break'>
-						<a class='submitbreak' style='color:red;float:right;padding-right: 2em;' title='".__('Break this series','eventorganiser')."' href='".$break_url."'> ".__('Break this series','eventorganiser')."</a>
-						</span>";
+						$summary .= sprintf(
+							'<span class="break"><a class="submitbreak" style="color:red;float:right;padding-right:2em;" title="%1$s" href="%2$s">%1$s</a></span>',
+							esc_attr__( 'Break this series', 'eventorganiser' ),
+							$break_url
+						);
 					}
-
 				}
 
 				//Event categories
@@ -765,5 +780,87 @@ function eventorganiser_ajax_toggle_addon_page(){
 
 	update_option( 'eventorganiser_options', $options );
 	exit(1);
+}
+
+/**
+ * Ajax response to event occurrence being moved.
+ * 
+ * TODO Prevent two occurrences from the same event 
+ * occuring on the same *date*. 
+ * 
+ * @ignore
+ */
+function eventorganiser_admin_calendar_edit_date(){
+	
+	$event_id      = (int) $_POST['event_id'];
+	$occurrence_id = (int) $_POST['occurrence_id'];
+	$all_day       = eo_is_all_day( $event_id );
+
+	if( 'event' != get_post_type( $event_id ) ){
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'Event not found', 'eventorganiser' )	
+			),	
+		));
+		exit;
+	}
+	
+	$edittime = ( defined( 'EVENT_ORGANISER_BETA_FEATURES' ) && EVENT_ORGANISER_BETA_FEATURES );
+	
+	if( !$edittime ){
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'Events are not editable via the admin calendar', 'eventorganiser' )
+			),
+		));
+		exit;
+	}
+	
+	if( !check_ajax_referer( 'edit_events', false, false ) ){
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'Are you sure you want to do this?', 'eventorganiser' )
+			),
+		));
+		exit;
+	}
+	
+	if( !current_user_can( 'edit_event', $event_id ) ){
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => __( 'You do not have permission to edit this event', 'eventorganiser' )
+			),
+		));
+		exit;
+	}
+		
+	$tz        = eo_get_blog_timezone();
+	$new_start = new DateTime( $_POST['start'], $tz );
+	$new_end   = new DateTime( $_POST['end'], $tz );  
+
+	$re = eventorganiser_move_occurrence( $event_id, $occurrence_id, $new_start, $new_end );
+	
+	if( !is_wp_error( $re ) ){
+		echo json_encode( array(
+			'success' => true,
+		));
+		exit;
+	}else{
+		echo json_encode( array(
+			'success' => false,
+			'data' => array(
+				'message' => sprintf(
+					__( 'Event not created: %s', 'eventorganiser' ),
+					$re->get_error_message()		
+				)
+			),
+		));
+		exit;
+	}
+	
 }
 ?>

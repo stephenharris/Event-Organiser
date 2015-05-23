@@ -94,8 +94,10 @@ module.exports = function(grunt) {
 	},
 
 	clean: {
-		//Clean up build folder
-		main: ['dist/event-organiser']
+		main: ['dist/event-organiser'],//Clean up build folder
+		css: [ 'css/*.min.css', 'css/*-rtl.css' ],
+		js: [ 'js/*.min.js' ],
+		i18n: [ 'languages/*.mo', 'languages/*.pot' ] 
 	},
 
 	copy: {
@@ -106,6 +108,7 @@ module.exports = function(grunt) {
 				'!node_modules/**',
 				'!assets/**',
 				'!dist/**',
+				'!bin/**',
 				'!.git/**',
 				'!apigen/**',
 				'!documentation/**',
@@ -113,13 +116,15 @@ module.exports = function(grunt) {
 				'!vendor/**',
 				'!Gruntfile.js',
 				'!package.json',
-				'!.gitignore',
-				'!.gitmodules',
+				'!.*',
 				'!**/*~',
 				'!composer.lock',
 				'!composer.phar',
 				'!composer.json',
-				'!CONTRIBUTING.md'
+				'!CONTRIBUTING.md',
+				'!readme.md',
+				'!ruleset.xml',
+				'!phpunit.xml',
 			],
 			dest: 'dist/event-organiser/'
 		},
@@ -136,7 +141,9 @@ module.exports = function(grunt) {
 				'!vendor/**',
 				'!**/*~',
 				'!composer.lock','!composer.phar','!composer.json',//composer
-				'!CONTRIBUTING.md'
+				'!CONTRIBUTING.md',
+				'!readme.md',
+				'!ruleset.xml'
 			],
 			dest: process.env.EO_BETA_PLUGIN_DIR + '/<%= pkg.name %>/'
 		}	
@@ -154,11 +161,6 @@ module.exports = function(grunt) {
 	phpunit: {
 		classes: {
 			dir: 'tests/unit-tests'
-		},
-		options: {
-			bin: 'vendor/bin/phpunit',
-			bootstrap: 'tests/bootstrap.php',
-			colors: true
 		}
 	},
 	
@@ -288,7 +290,7 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'build', [ 'test', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
+grunt.registerTask( 'build', [ 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
 
 grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
 

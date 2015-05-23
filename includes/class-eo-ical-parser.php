@@ -638,19 +638,24 @@ class EO_ICAL_Parser{
 
 				case 'EXDATE':
 				case 'RDATE':
-				//The modifiers have been dealt with above. We do similiar to above, except for an array of dates...
-				$value_array = explode( ',', $value );
+					//The modifiers have been dealt with above. We do similiar to above, except for an array of dates...
+					$value_array = explode( ',', $value );
 
-				//Note, we only consider the Date part and ignore the time
-				foreach( $value_array as $val ):
-					$date = $this->parse_ical_date( $val );
-				
-					if( $property == 'EXDATE' ){
-						$this->current_event['exclude'][] = $date;
-					}else{
-						$this->current_event['include'][] = $date;
-					}
-				endforeach;
+					//Note, we only consider the Date part and ignore the time
+					foreach( $value_array as $date ):
+						
+						if( isset( $meta ) && 'DATE' == $meta ){
+							$date = $this->parse_ical_date( $date );
+						}else{
+							$date = $this->parse_ical_datetime( $date, $date_tz );
+						}
+					
+						if( 'EXDATE' == $property ){
+							$this->current_event['exclude'][] = $date;
+						}else{
+							$this->current_event['include'][] = $date;
+						}
+					endforeach;
 				break;
 
 				//Reoccurrence rule properties
@@ -827,6 +832,10 @@ class EO_ICAL_Parser{
 		$tzid = str_replace( '-', '/', $tzid );
 		$tzid = trim( $tzid, '\'"' );
 
+		if( 'GMT' == $tzid ){
+			$tzid = 'UTC';
+		}
+		
 		//Try just using the passed timezone ID
 		try{
 			$tz = new DateTimeZone( $tzid );
@@ -935,7 +944,7 @@ class EO_ICAL_Parser{
 	 */
 	public function parse_ical_date( $ical_date ){
 
-		preg_match('/^(\d{8})*/', $ical_date, $matches);
+		preg_match('/^(\d{8})$/', $ical_date, $matches);
 
 		if( count( $matches ) !=2 ){
 			throw new Exception(
@@ -997,36 +1006,37 @@ class EO_ICAL_Parser{
 	 * @param string $RRule - the value of the ICAL RRule property
 	 * @return array - a reoccurrence rule array as understood by Event Organiser
 	 */
-	public function parse_RRule($RRule){
+	public function parse_RRule( $RRule ){
 		//RRule is a sequence of rule parts seperated by ';'
-		$rule_parts = explode(';',$RRule);
+		$rule_parts = explode( ';', $RRule );
 
-		foreach ($rule_parts as $rule_part):
-		
+		foreach( $rule_parts as $rule_part ):
+
 			if( empty( $rule_part ) ){
 				continue;
 			}
 
 			//Each rule part is of the form PROPERTY=VALUE
-			$prop_value =  explode('=',$rule_part, 2);
-			$property = $prop_value[0];
-			$value = $prop_value[1];
+			$prop_value = explode( '=', $rule_part, 2 );
+			$property   = $prop_value[0];
+			$value      = $prop_value[1];
 
 			switch( $property ):
 				case 'FREQ':
-					$rule_array['schedule'] =strtolower($value);
+					$rule_array['schedule'] =strtolower( $value );
 				break;
 
 				case 'INTERVAL':
-					$rule_array['frequency'] =intval($value);
+					$rule_array['frequency'] =intval( $value );
 				break;
 
 				case 'UNTIL':
 					//Is the scheduled end a date-time or just a date?
-					if( preg_match( '/^((\d{8}T\d{6})(Z)?)/', $value ) )
-						$date = $this->parse_ical_datetime( $value, new DateTimeZone('UTC') );
-					else
+					if( preg_match( '/^((\d{8}T\d{6})(Z)?)/', $value ) ){
+						$date = $this->parse_ical_datetime( $value, new DateTimeZone( 'UTC' ) );
+					}else{
 						$date = $this->parse_ical_date( $value );
+					}
 			
 					$rule_array['schedule_last'] = $date;
 				break;
@@ -1051,12 +1061,12 @@ class EO_ICAL_Parser{
 				case 'BYWEEKNO':
 				case 'BYSETPOS':
 					$this->report_warning(
-							$this->line,
-							'unsupported-recurrence-rule',
-							sprintf(
-								'Feed contains unrecognised recurrence rule: "%s" and may have not been imported correctly.',
-								 $property 
-							)
+						$this->line,
+						'unsupported-recurrence-rule',
+						sprintf(
+							'Feed contains unrecognised recurrence rule: "%s" and may have not been imported correctly.',
+							$property 
+						)
 					);
 				break;
 			
@@ -1065,14 +1075,13 @@ class EO_ICAL_Parser{
 				break;
 				
 			endswitch;
-
 		endforeach;
 
 		//Meta-data for Weekly and Monthly schedules
-		if( $rule_array['schedule']=='monthly' ):
+		if( 'monthly' == $rule_array['schedule'] ){
 			
 			if( isset( $byday ) ){
-				preg_match_all('/(-?\d+)([a-zA-Z]+)/', $byday, $matches);
+				preg_match_all( '/(-?\d+)([a-zA-Z]+)/', $byday, $matches );
 				
 				if ( count( $matches[0] ) > 1 ){
 					$this->report_warning(
@@ -1080,7 +1089,7 @@ class EO_ICAL_Parser{
 						'unsupported-recurrence-rule',
 						sprintf(
 							'Feed contains unsupported value for "%s" and may have not been imported correctly.',
-							 $property 
+							$property 
 						)
 					);
 				}
@@ -1093,26 +1102,27 @@ class EO_ICAL_Parser{
 				
 				if ( count( $days ) > 1 ){
 					$this->report_warning(
-							$this->line,
-							'unsupported-recurrence-rule',
-							sprintf(
-									'Feed contains unsupported value for "%s" and may have not been imported correctly.',
-									$property
-							)
+						$this->line,
+						'unsupported-recurrence-rule',
+						sprintf(
+							'Feed contains unsupported value for "%s" and may have not been imported correctly.',
+							$property
+						)
 					);
 				}
 				
 				$rule_array['schedule_meta'] ='BYMONTHDAY='.$days[0];
 
 			}else{
-				throw new Exception('Incomplete scheduling information');
+				throw new Exception( 'Incomplete scheduling information' );
 			}
-
-		elseif( $rule_array['schedule'] == 'weekly' ):
-			preg_match( '/([a-zA-Z,]+)/', $byday, $matches );
-			$rule_array['schedule_meta'] = explode(',',$matches[1]);
-
-		endif;
+		}elseif( 'weekly' == $rule_array['schedule'] ){
+			
+			if( isset( $byday ) ){
+				preg_match( '/([a-zA-Z,]+)/', $byday, $matches );
+				$rule_array['schedule_meta'] = explode( ',', $matches[1] );
+			}
+		}
 
 		//If importing indefinately recurring, recurr up to some large point in time.
 		//TODO make a log of this somewhere.
@@ -1122,7 +1132,7 @@ class EO_ICAL_Parser{
 			$this->report_warning(
 				$this->line,
 				'indefinitely-recurring-event',
-				"Feed contained an indefinitely recurring event. This event will recurr until 2038-01-19."
+				'Feed contained an indefinitely recurring event. This event will recurr until 2038-01-19.'
 			);
 		}
 		
@@ -1141,17 +1151,17 @@ class EO_ICAL_Parser{
 	 */
 	function _split_line( $line ){
 		
-    	//"Escape" colons in quotation marks
-    	$escaped_line = preg_replace( "/\"([^\"]+)(:)([^\"]+)\"/", "\"$1{{colon}}$3\"", $line );
-    	$line_parts = explode( ":", $escaped_line );
-    	
-    	//Property (potentially with modifiers)
-    	$property = str_replace( "{{colon}}", ":", $line_parts[0] );
-    	
-    	//value
-    	array_shift( $line_parts );
-    	$value = ( $line_parts ? implode( ":", $line_parts ) : false );
-    	$value = str_replace( "{{colon}}", ":", $value );
+		//"Escape" colons in quotation marks
+		$escaped_line = preg_replace( '/"([^"]+)(:)([^"]+)"/', '"$1{{colon}}$3"', $line );
+		$line_parts = explode( ':', $escaped_line );
+
+		//Property (potentially with modifiers)
+		$property = str_replace( '{{colon}}', ':', $line_parts[0] );
+
+		//value
+		array_shift( $line_parts );
+		$value = ( $line_parts ? implode( ':', $line_parts ) : false );
+		$value = str_replace( '{{colon}}', ':', $value );
 
 		return array( $property, $value );
 	}

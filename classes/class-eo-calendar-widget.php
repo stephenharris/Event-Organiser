@@ -282,11 +282,11 @@ class EO_Calendar_Widget extends WP_Widget
 				<td id='eo-widget-next-month' colspan='3'><a title='%s' href='%s'> %s &raquo; </a></td>
 			</tr></tfoot>",
 			esc_html__( 'Previous month', 'eventorganiser' ),
-			add_query_arg( 'eo_month', $last_month->format( 'Y-m' ), home_url() ),
+			esc_url( add_query_arg( 'eo_month', $last_month->format( 'Y-m' ), home_url() ) ),
 			esc_html( eo_format_datetime( $last_month, 'M' ) ),
 			esc_html__( 'Next month', 'eventorganiser' ),
-			add_query_arg( 'eo_month', $next_month->format( 'Y-m' ), home_url() ),
-			esc_html(eo_format_datetime( $next_month, 'M' ) )
+			esc_url( add_query_arg( 'eo_month', $next_month->format( 'Y-m' ), home_url() ) ),
+			esc_html( eo_format_datetime( $next_month, 'M' ) )
 		);							
 
 

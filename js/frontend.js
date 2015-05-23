@@ -105,7 +105,9 @@ jQuery(document).ready(function () {
 				
 				category: calendars[i].event_category,
 				venue: calendars[i].event_venue,
-				
+				tag: calendars[i].event_tag,
+				organiser: calendars[i].event_organiser,
+
 				customButtons:{
 					category: function(){
 						return eventorganiser_filter_markup( {
@@ -113,7 +115,7 @@ jQuery(document).ready(function () {
 							select_none: EOAjaxFront.locale.cat,
 							whitelist: calendars[i].event_category,
 							type: 'category'
-						})
+						});
 					},
 					venue: function(){
 						return eventorganiser_filter_markup( {
@@ -121,7 +123,7 @@ jQuery(document).ready(function () {
 							select_none: EOAjaxFront.locale.venue,
 							whitelist: calendars[i].event_venue,
 							type: 'venue'
-						})
+						});
 					},
 					tag: function(){
 						return eventorganiser_filter_markup( {
@@ -129,7 +131,7 @@ jQuery(document).ready(function () {
 							select_none: EOAjaxFront.locale.tag,
 							whitelist: '',
 							type: 'tag'
-						})
+						});
 					},
 					'goto': 	eventorganiser_mini_calendar
 				},
@@ -257,14 +259,20 @@ jQuery(document).ready(function () {
                 				timeformat: options.timeFormatphp,
                 				users_events: 0,
                 		};
-                			
+
                 		if (typeof options.category !== "undefined" && options.category !== "") {
                 			request.category = options.category;
                 		}
                 		if (typeof options.venue !== "undefined" && options.venue !== "") {
                 			request.venue = options.venue;
                 		}
-                			
+                		if (typeof options.tag !== "undefined" && options.tag !== "") {
+                			request.venue = options.venue;
+                		}
+                		if (typeof options.organiser !== "undefined" && options.organiser !== 0) {
+                			request.venue = options.venue;
+                		}
+			
                 		request = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_request', request, start, end, timezone, options );
                 			
                 		$.ajax({

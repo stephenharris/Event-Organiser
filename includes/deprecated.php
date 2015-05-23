@@ -172,7 +172,7 @@ function eventorganiser_event_delete($post_id){
  * @since 1.7
  */
 function eventorganiser_php2jquerydate( $phpformat="" ){
-	_deprecated_function( __FUNCTION__, '2.1.3', 'eo_php2jquerydate()' );
+	//_deprecated_function( __FUNCTION__, '2.1.3', 'eo_php2jquerydate()' );
 	return eo_php2jquerydate( $phpformat );
 }
 
@@ -245,7 +245,31 @@ function eo_php2xdate($phpformat=""){
  * @ignore
  * @since 1.4
  */
-function eventorganiser_php2xdate( $phpformat="" ){
+function eventorganiser_php2xdate( $phpformat = '' ){
 	return eo_php2xdate( $phpformat );
+}
+
+/**
+ * @ignore
+ * @deprecated 2.13.2 Use eo_taxonomy_dropdown()
+ */
+function eo_event_category_dropdown( $args = '' ) {
+	_deprecated_function( __FUNCTION__, '2.13.2', 'eo_taxonomy_dropdown()' );
+	$args['taxonomy'] = 'event-category';
+	$args['class'] = 'postform event-organiser event-category-dropdown event-dropdown';
+	return eo_taxonomy_dropdown( $args );
+}
+
+/**
+ * @ignore
+ * @access private
+ * @deprecated 2.13.2 Use eo_taxonomy_dropdown()
+ */
+function eo_event_venue_dropdown( $args = '' ) {
+	_deprecated_function( __FUNCTION__, '2.13.2', 'eo_taxonomy_dropdown()' );
+	$args['taxonomy'] = 'event-venue';
+	$args['class'] = 'postform event-organiser event-venue-dropdown event-dropdown';
+	return eo_taxonomy_dropdown( $args );
+
 }
 ?>

@@ -6,7 +6,7 @@
 
 /*** Datepickers ***/
 /*Correct font size of datepicker inside .form-table */
-.form-table .ui-datepicker-calendar td, .form-table .ui-datepicker-calendar th {font-size: 12px;}
+.form-table .ui-datepicker-calendar td, .form-table .ui-datepicker-calendar th {font-size: inherit;line-height:1.5em}
 .form-table .ui-datepicker select {height: 2em;}
 
 /*** Admin Calendar Page ***/
@@ -22,7 +22,8 @@
 .fc-header-goto button,
 .fc-button{
 	background:white;
-}	
+	max-width: 300px;
+}
 /* Hover colour of buttons */
 #eo-event-venue-button:hover,
 #eo-event-cat-button:hover,
@@ -56,18 +57,7 @@
 .eo-admin-calendar-dialog .ui-dialog-titlebar-close:focus,
 .eo-admin-calendar-dialog .ui-dialog-titlebar-close{
 	border:none;
-}
-.eo-admin-calendar-dialog .ui-icon-closethick{
 	background: none;
-}
-.eo-admin-calendar-dialog .ui-dialog-titlebar-close:before{
-	content: '\f158';
-	font: normal 20px/1 'dashicons';
-	speak: none;
-	vertical-align: middle;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	color: #666;
 }
 
 /* Calendar dialog tabs*/
@@ -79,11 +69,11 @@
 	border-radius: 0;
 }
 #eo-dialog-tabs ul li{
-	top: 2px;
 	background: none;
 	border: none;
 }
 #eo-dialog-tabs ul li.ui-tabs-active{
 	background: white;
 	border: 1px solid #DFDFDF;
+	border-bottom: none;
 }

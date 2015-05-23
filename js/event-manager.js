@@ -1,16 +1,24 @@
 ( function( window, undefined ) {
 	"use strict";
-	var document = window.document;
-
+	
+	if( typeof window.wp == "undefined" || typeof window.wp.hooks == "undefined" ){
 	/**
 	 * Handles managing all events for whatever you plug it into. Priorities for hooks are based on lowest to highest in
 	 * that, lowest priority hooks are fired first.
 	 */
 	var EventManager = function() {
 		/**
-		 * Maintain a reference to the object scope so 'this' never becomes confusing.
+		 * Maintain a reference to the object scope so our public methods never get confusing.
 		 */
-		var SELF = this;
+		var MethodsAvailable = {
+			removeFilter : removeFilter,
+			applyFilters : applyFilters,
+			applyFilter : applyFilters, //Backwards compat. EO Pro 1.9.5 and earlier uses this
+			addFilter : addFilter,
+			removeAction : removeAction,
+			doAction : doAction,
+			addAction : addAction
+		};
 
 		/**
 		 * Contains the hooks that get registered with this EventManager. The array for storage utilizes a "flat"
@@ -26,111 +34,92 @@
 		 *
 		 * @param action Must contain namespace.identifier
 		 * @param callback Must be a valid callback function before this action is added
-		 * @param priority Defaults to 10
+		 * @param [priority=10] Used to control when the function is executed in relation to other callbacks bound to the same hook
+		 * @param [context] Supply a value to be used for this
 		 */
-		SELF.addAction = function( action, callback, priority ) {
-			if( _validateNamespace( action ) === false || typeof callback !== 'function' ) {
-				return SELF;
+		function addAction( action, callback, priority, context ) {
+			if( typeof action === 'string' && typeof callback === 'function' ) {
+				priority = parseInt( ( priority || 10 ), 10 );
+				_addHook( 'actions', action, callback, priority, context );
 			}
 
-			priority = parseInt( ( priority || 10 ), 10 );
-			_addHook( 'actions', action, callback, priority );
-			return SELF;
-		};
+			return MethodsAvailable;
+		}
 
 		/**
 		 * Performs an action if it exists. You can pass as many arguments as you want to this function; the only rule is
 		 * that the first argument must always be the action.
 		 */
-		SELF.doAction = function( /* action, arg1, arg2, ... */ ) {
+		function doAction( /* action, arg1, arg2, ... */ ) {
 			var args = Array.prototype.slice.call( arguments );
 			var action = args.shift();
 
-			if( _validateNamespace( action ) === false ) {
-				return SELF;
+			if( typeof action === 'string' ) {
+				_runHook( 'actions', action, args );
 			}
 
-			_runHook( 'actions', action, args );
-
-			return SELF;
-		};
+			return MethodsAvailable;
+		}
 
 		/**
 		 * Removes the specified action if it contains a namespace.identifier & exists.
 		 *
 		 * @param action The action to remove
+		 * @param [callback] Callback function to remove
 		 */
-		SELF.removeAction = function( action ) {
-			if( _validateNamespace( action ) === false ) {
-				return SELF;
+		function removeAction( action, callback ) {
+			if( typeof action === 'string' ) {
+				_removeHook( 'actions', action, callback );
 			}
 
-			_removeHook( 'actions', action );
-			return SELF;
-		};
+			return MethodsAvailable;
+		}
 
 		/**
 		 * Adds a filter to the event manager.
 		 *
 		 * @param filter Must contain namespace.identifier
 		 * @param callback Must be a valid callback function before this action is added
-		 * @param priority Defaults to 10
+		 * @param [priority=10] Used to control when the function is executed in relation to other callbacks bound to the same hook
+		 * @param [context] Supply a value to be used for this
 		 */
-		SELF.addFilter = function( filter, callback, priority ) {
-			if( _validateNamespace( filter ) === false || typeof callback !== 'function' ) {
-				return SELF;
+		function addFilter( filter, callback, priority, context ) {
+			if( typeof filter === 'string' && typeof callback === 'function' ) {
+				priority = parseInt( ( priority || 10 ), 10 );
+				_addHook( 'filters', filter, callback, priority );
 			}
 
-			priority = parseInt( ( priority || 10 ), 10 );
-			_addHook( 'filters', filter, callback, priority );
-			return SELF;
-		};
+			return MethodsAvailable;
+		}
 
 		/**
 		 * Performs a filter if it exists. You should only ever pass 1 argument to be filtered. The only rule is that
 		 * the first argument must always be the filter.
 		 */
-		SELF.applyFilters = function( /* filter, filtered arg, arg2, ... */ ) {
-			
+		function applyFilters( /* filter, filtered arg, arg2, ... */ ) {
 			var args = Array.prototype.slice.call( arguments );
 			var filter = args.shift();
-			
-			if( _validateNamespace( filter ) === false ) {
-				return SELF;
+
+			if( typeof filter === 'string' ) {
+				return _runHook( 'filters', filter, args );
 			}
 
-			return _runHook( 'filters', filter, args );
-		};
+			return MethodsAvailable;
+		}
 
-		/**
-		* Backwards compatible
-		* @deprecated 2.1 wp.hooks.applyFilters
-		* Remove EOv2.3+
-		*/
-		SELF.applyFilter = function( /* filter, filtered arg, arg2, ... */ ) {
-			
-			var args = Array.prototype.slice.call( arguments );
-			var filter = args.shift();
-			
-			if( _validateNamespace( filter ) === false ) {
-				return SELF;
-			}
-
-			return _runHook( 'filters', filter, args );
-		};
 		/**
 		 * Removes the specified filter if it contains a namespace.identifier & exists.
 		 *
 		 * @param filter The action to remove
+		 * @param [callback] Callback function to remove
 		 */
-		SELF.removeFilter = function( filter ) {
-			if( _validateNamespace( filter ) === false ) {
-				return SELF;
+		function removeFilter( filter, callback ) {
+			if( typeof filter === 'string') {
+				_removeHook( 'filters', filter, callback );
 			}
 
-			_removeHook( 'filters', filter );
-			return SELF;
-		};
+			return MethodsAvailable;
+		}
 
 		/**
 		 * Removes the specified hook by resetting the value of it.
@@ -139,29 +128,32 @@
 		 * @param hook The hook (namespace.identifier) to remove
 		 * @private
 		 */
-		var _removeHook = function( type, hook ) {
-			if( STORAGE[ type ][ hook ] ) {
+		function _removeHook( type, hook, callback, context ) {
+			if ( !STORAGE[ type ][ hook ] ) {
+				return;
+			}
+			if ( !callback ) {
 				STORAGE[ type ][ hook ] = [];
+			} else {
+				var handlers = STORAGE[ type ][ hook ];
+				var i;
+				if ( !context ) {
+					for ( i = handlers.length; i--; ) {
+						if ( handlers[i].callback === callback ) {
+							handlers.splice( i, 1 );
+						}
+					}
+				}
+				else {
+					for ( i = handlers.length; i--; ) {
+						var handler = handlers[i];
+						if ( handler.callback === callback && handler.context === context) {
+							handlers.splice( i, 1 );
+						}
+					}
+				}
 			}
-		};
-
-		/**
-		 * Validates that the hook has both a namespace and an identifier.
-		 *
-		 * @param hook The hook we are checking for namespace and identifier for.
-		 * @return {Boolean} False if it does not contain both or is incorrect. True if it has an appropriate namespace & identifier.
-		 * @private
-		 */
-		var _validateNamespace = function( hook ) {
-			if( typeof hook !== 'string' ) {
-				return false;
-			}
-			var identifier = hook.replace( /^\s+|\s+$/i, '' ).split( '.' );
-			var namespace = identifier.shift();
-			identifier = identifier.join( '.' );
-
-			return ( namespace !== '' && identifier !== '' );
-		};
+		}
 
 		/**
 		 * Adds the hook to the appropriate storage container
@@ -170,12 +162,14 @@
 		 * @param hook The hook (namespace.identifier) to add to our event manager
 		 * @param callback The function that will be called when the hook is executed.
 		 * @param priority The priority of this hook. Must be an integer.
+		 * @param [context] A value to be used for this
 		 * @private
 		 */
-		var _addHook = function( type, hook, callback, priority ) {
+		function _addHook( type, hook, callback, priority, context ) {
 			var hookObject = {
 				callback : callback,
-				priority : priority
+				priority : priority,
+				context : context
 			};
 
 			// Utilize 'prop itself' : http://jsperf.com/hasownproperty-vs-in-vs-undefined/19
@@ -189,7 +183,7 @@
 			}
 
 			STORAGE[ type ][ hook ] = hooks;
-		};
+		}
 
 		/**
 		 * Use an insert sort for keeping our hooks organized based on priority. This function is ridiculously faster
@@ -198,7 +192,7 @@
 		 * @param hooks The custom array containing all of the appropriate hooks to perform an insert sort on.
 		 * @private
 		 */
-		var _hookInsertSort = function( hooks ) {
+		function _hookInsertSort( hooks ) {
 			var tmpHook, j, prevHook;
 			for( var i = 1, len = hooks.length; i < len; i++ ) {
 				tmpHook = hooks[ i ];
@@ -211,7 +205,7 @@
 			}
 
 			return hooks;
-		};
+		}
 
 		/**
 		 * Runs the specified hook. If it is an action, the value is not modified but if it is a filter, it is.
@@ -221,34 +215,35 @@
 		 * @param args Arguments to pass to the action/filter. If it's a filter, args is actually a single parameter.
 		 * @private
 		 */
-		var _runHook = function( type, hook, args ) {
-			var hooks = STORAGE[ type ][ hook ];
-			if( typeof hooks === 'undefined' ) {
-				if( type === 'filters' ) {
-					return args[0];
-				}
-				return false;
+		function _runHook( type, hook, args ) {
+			var handlers = STORAGE[ type ][ hook ];
+			
+			if ( !handlers ) {
+				return (type === 'filters') ? args[0] : false;
 			}
 
-			for( var i = 0, len = hooks.length; i < len; i++ ) {
-				if( type === 'actions' ) {
-					hooks[ i ].callback.apply( undefined, args );
+			var i = 0, len = handlers.length;
+			if ( type === 'filters' ) {
+				for ( ; i < len; i++ ) {
+					args[ 0 ] = handlers[ i ].callback.apply( handlers[ i ].context, args );
 				}
-				else {
-					args[0] = hooks[ i ].callback.apply( undefined, args );
+			} else {
+				for ( ; i < len; i++ ) {
+					handlers[ i ].callback.apply( handlers[ i ].context, args );
 				}
 			}
 
-			if( type === 'actions' ) {
-				return true;
-			}
+			return ( type === 'filters' ) ? args[ 0 ] : true;
+		}
 
-			return args[0];
-		};
+		// return all of the publicly available methods
+		return MethodsAvailable;
 
 	};
 	
 	window.wp = window.wp || {};
 	window.wp.hooks = new EventManager();
 
+	}
+	
 } )( window );
