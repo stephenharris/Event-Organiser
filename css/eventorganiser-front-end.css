@@ -61,6 +61,7 @@ body.single-event .eo-event-meta{
 .eo-datepicker table {
 	border-collapse: collapse;
 	border-spacing: 0; 
+	width: 100%;
 }
 .eo-datepicker {
 	font-size: 14px;
