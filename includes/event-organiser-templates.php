@@ -120,6 +120,37 @@ function eo_register_style( $handle, $src, $deps = array(), $ver = false, $media
 }
 
 /**
+ * Enqueues a stylesheet
+ * Respects the 'disable css' setting. It calls the `eventorganiser_stylesheet_{handle}`
+ * hook so that the handle can be mapped to another registered stylesheet
+ * @since 3.0.0
+ * @param string $handle
+ */
+function eo_enqueue_style( $handle ){
+
+	if( eventorganiser_get_option( 'disable_css' ) ){
+		return;
+	}
+
+	/**
+	 * Filters the handle for a stylesheet
+	 *
+	 * This can be used to swap a stylesheet for another one. While you can deregister a handle
+	 * and re-register it with a different source, this also allow multiple handles to be mapped
+	 * to one 'common' styelsheet. This is useful for themes that wish to amalgamate a stylesheet
+	 * into it's style.css.
+	 *
+	 * **This is currently only used with front-end stylsheets**
+	 *
+	 * @param string $handle The stylesheet handle
+	 */
+	$handle = apply_filters( 'eventorganiser_stylesheet_' . $handle, $handle );
+
+	wp_enqueue_style( $handle );
+
+}
+
+/**
  * Whether an event archive is being viewed
  * 
  * My specifying the type of archive ( e.g. 'day', 'month' or 'year'), we can check if its 
