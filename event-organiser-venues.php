@@ -1,14 +1,14 @@
 <?php
 /****** VENUE PAGE ******/
 if ( !class_exists( 'EventOrganiser_Admin_Page' ) ){
-    require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+	require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
 }
 
 /**
  * @ignore
  */
-class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
-{
+class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
+	
 	function set_constants(){
 		
 		$tax = get_taxonomy( 'event-venue' );
@@ -18,9 +18,6 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 			$this->menu        = $tax->labels->menu_name;
 			$this->permissions = 'manage_venues';
 			$this->slug        = 'venues';
-
-			//Workaround for bug https://core.trac.wordpress.org/ticket/18958
-			add_filter( 'set-screen-option', array( $this, 'set_per_page' ),10,3 );
 		}
 	}
 	
@@ -181,7 +178,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 			//Venue admin list
 			require_once( 'classes/class-eo-venue-list-table.php' );
 			add_filter( 'manage_event_page_venues_columns', 'eventorganiser_venue_admin_columns' ) ;
-			add_screen_option( 'per_page', array( 'option' => 'edit_event_venue_per_page', 'label' => __( 'Venues', 'eventorganiser' ), 'default' => 20 ) );
+			add_screen_option( 'per_page', array( 'option' => 'edit_event-venue_per_page', 'label' => __( 'Venues', 'eventorganiser' ), 'default' => 20 ) );
 		}
 	}
 
@@ -211,20 +208,6 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 			add_thickbox();	
 		endif;
 	}
-
-	function set_per_page( $validated_value, $option, $value ){
-		//Workaround for bug https://core.trac.wordpress.org/ticket/18958
-
-		if ( 'edit_event_venue_per_page' != $option )
-			return $validated_value;
-
-		$value = (int) $value;
-		if ( $value < 1 || $value > 999 )
-			return false;
-		
-		return $value;
-	}
-
 
 	function display(){
 		

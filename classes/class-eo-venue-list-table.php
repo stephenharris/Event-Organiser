@@ -160,7 +160,7 @@ class EO_Venue_List_Table extends WP_List_Table {
 
 	//First, lets decide how many records per page to show
 	$screen = get_current_screen();
-	$per_page = $this->get_items_per_page( 'edit_event_venue_per_page' );
+	$per_page = $this->get_items_per_page( 'edit_event-venue_per_page' );
 
 	//Get the columns, the hidden columns an sortable columns
 	$columns = get_column_headers('event_page_venues');
