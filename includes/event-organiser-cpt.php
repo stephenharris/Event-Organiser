@@ -239,7 +239,7 @@ function eventorganiser_cpt_register() {
 		$events_slug = trim( eventorganiser_get_option( 'url_events', 'events/event' ), '/' );
 		$on = trim( eventorganiser_get_option( 'url_on', 'on' ), '/' );
 		$event_rewrite = array( 'slug' => $event_slug, 'with_front' => false, 'feeds' => true, 'pages' => true );
-  
+
 		add_rewrite_tag( '%event_ondate%', '([0-9]{4}(?:/[0-9]{2}(?:/[0-9]{2})?)?)','post_type=event&ondate=' ); 
 		add_permastruct( 'event_archive', $events_slug.'/'.$on.'/%event_ondate%', array( 'with_front' => false ) );
 	}
