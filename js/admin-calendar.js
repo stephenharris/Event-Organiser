@@ -67,14 +67,14 @@ eventorganiser.versionCompare = function(left, right) {
 		eventDurationEditable: false,
 		eventStartEditable: EO_Ajax.edit_time,
 		durationEditable: false,
-		eventDrop: function( event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) { 
+		eventDrop: function( event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
             $.ajax({
             	type: "POST",
             	url: EO_Ajax.ajaxurl,
             	data:{
             		action: 'eofc-edit-date',
-            		start:  $.fullCalendar.formatDate( event.start, 'yyyy-MM-dd HH:mm:ss'),
-            		end:  $.fullCalendar.formatDate( event.end, 'yyyy-MM-dd HH:mm:ss'),
+            		start: event.start.format( 'YYYY-MM-DD HH:mm:ss' ),
+            		end: event.end.format( 'YYYY-MM-DD HH:mm:ss' ),
             		event_id: event.event_id,
             		occurrence_id: event.occurrence_id,
             		_wpnonce: EO_Ajax.edit_nonce,
