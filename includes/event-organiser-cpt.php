@@ -852,22 +852,6 @@ add_action( 'switch_blog', 'eventorganiser_wpdb_fix');
 	
 
 /**
- * Updates venue meta cache when an event's venue is retrieved..
- * Hooked onto wp_get_object_terms
- *
- * @ignore
- * @access private
- * @since 1.5
- */
-function _eventorganiser_get_event_venue($terms, $post_ids,$taxonomies,$args){
-	//Passes taxonomies as a string inside quotes...
-	$taxonomies = explode(',',trim($taxonomies,"\x22\x27"));
-	return eventorganiser_update_venue_meta_cache( $terms, $taxonomies);
-}
-add_filter('wp_get_object_terms','_eventorganiser_get_event_venue',10,4);
-
-
-/**
  * Updates venue meta cache when event venues are retrieved.
  *
  * For backwards compatibility it adds the venue details to the taxonomy terms.
@@ -881,43 +865,47 @@ add_filter('wp_get_object_terms','_eventorganiser_get_event_venue',10,4);
  * @param string $tax Should be (an array containing) 'event-venue'.
  * @param array  Array of event-venue terms,
  */
-function eventorganiser_update_venue_meta_cache( $terms, $tax){
+function eventorganiser_update_venue_meta_cache( $terms, $tax, $args ){
 
-		if( is_array( $tax ) && !in_array( 'event-venue', $tax ) ){
-			return $terms;
-		}
-		if( !is_array( $tax ) && 'event-venue' != $tax ){
-			return $terms;
-		}
-
-		$single = false;
-		if( !is_array( $terms ) ){
-			$single = true;
-			$terms = array( $terms );
-		}
-
-		if( empty( $terms ) ){
-			return $terms;
-		}
-
-		//Check if its array of terms or term IDs
-		$first_element = reset( $terms );
-		if ( is_object( $first_element ) ){
-			$term_ids = wp_list_pluck( $terms, 'term_id' );
-		} else {
-			$term_ids = $terms;
-		}
-
-   		update_meta_cache( 'eo_venue', $term_ids );
-		
-		if( $single ){
-			return $terms[0];
-		}
-
+	if( empty( $args['eo_update_venue_cache'] ) ){
 		return $terms;
-	} 
-add_filter('get_terms','eventorganiser_update_venue_meta_cache',10,2);
-add_filter('get_event-venue','eventorganiser_update_venue_meta_cache',10,2);
+	}
+	
+	if( is_array( $tax ) && !in_array( 'event-venue', $tax ) ){
+		return $terms;
+	}
+	
+	if( !is_array( $tax ) && 'event-venue' != $tax ){
+		return $terms;
+	}
+
+	$single = false;
+	if( !is_array( $terms ) ){
+		$single = true;
+		$terms = array( $terms );
+	}
+
+	if( empty( $terms ) ){
+		return $terms;
+	}
+
+	//Check if its array of terms or term IDs
+	$first_element = reset( $terms );
+	if ( is_object( $first_element ) ){
+		$term_ids = wp_list_pluck( $terms, 'term_id' );
+	} else {
+		$term_ids = $terms;
+	}
+		
+	update_meta_cache( 'eo_venue', $term_ids );
+	
+	if( $single ){
+		return $terms[0];
+	}
+
+	return $terms;
+} 
+add_filter( 'get_terms', 'eventorganiser_update_venue_meta_cache', 10, 3 );
 
 
 

@@ -697,38 +697,33 @@ function eventorganiser_widget_agenda() {
 */
 function eventorganiser_search_venues() {
 		
-		// Query the venues with the given term
-		$value = trim(esc_attr($_GET["term"]));
-		$venues = eo_get_venues(array('search'=>$value));
+	// Query the venues with the given term
+	$value = trim( $_GET['term'] );
+	$venues = eo_get_venues( array( 'eo_update_venue_cache' => true, 'search' => $value ) );
 
-		foreach($venues as $venue){
-			$venue_id = (int) $venue->term_id;
+	foreach( $venues as $venue ){
+		$venue_id = (int) $venue->term_id;
+		$address  = eo_get_venue_address( $venue_id );
+			
+		$venue->venue_address  = isset( $address['address'] ) ? $address['address'] : '';
+		$venue->venue_postal   = isset( $address['postcode'] ) ? $address['postcode'] : ''; 
+		$venue->venue_postcode = isset( $address['postcode'] ) ? $address['postcode'] : '';
+		$venue->venue_city     = isset( $address['city'] ) ? $address['city'] : '';
+		$venue->venue_country  = isset( $address['country'] ) ? $address['country'] : '';
+		$venue->venue_state    = isset( $address['state'] ) ? $address['state'] : '';
 
-			if( !isset($term->venue_address) ){
-				/* This is all deprecated - use the API {@link http://codex.wp-event-organiser.com/function-eo_get_venue_address.html} */
-				$address = eo_get_venue_address($venue_id);
-				$venue->venue_address =  isset($address['address']) ? $address['address'] : '';
-				$venue->venue_postal =  isset($address['postcode']) ? $address['postcode'] : ''; 
-				$venue->venue_postcode =  isset($address['postcode']) ? $address['postcode'] : '';
-				$venue->venue_city =  	isset($address['city']) ? $address['city'] : '';
-				$venue->venue_country =  isset($address['country']) ? $address['country'] : '';
-				$venue->venue_state =  isset($address['state']) ? $address['state'] : '';
-			}
-
-			if( !isset($venue->venue_lat) || !isset($venue->venue_lng) ){
-				$venue->venue_lat =  number_format(floatval(eo_get_venue_lat($venue_id)), 6);
-				$venue->venue_lng =  number_format(floatval(eo_get_venue_lng($venue_id)), 6);
-			}
-		}
+		$venue->venue_lat = number_format( floatval( eo_get_venue_lat( $venue_id ) ), 6 );
+		$venue->venue_lng = number_format( floatval( eo_get_venue_lng( $venue_id ) ), 6 );
+	}
 		
-		$tax = get_taxonomy( 'event-venue' );
-		$novenue = array( 'term_id' => 0,'name' => $tax->labels->no_item );
-		$venues =array_merge (array($novenue),$venues);
+	$tax = get_taxonomy( 'event-venue' );
+	$novenue = array( 'term_id' => 0, 'name' => $tax->labels->no_item );
+	$venues  = array_merge( array( $novenue ), $venues );
 
-		//echo JSON to page  
-		$response = $_GET["callback"] . "(" . json_encode($venues) . ")";  
-		echo $response;  
-		exit;
+	//echo JSON to page  
+	$response = $_GET["callback"] . "(" . json_encode( $venues ) . ")";  
+	echo $response;  
+	exit;
 }
 
 /**
