@@ -99,39 +99,39 @@ jQuery(document).ready(function () {
 	}
 
 	$('.eo-upcoming-dates').each(function(index, value){
-		var list = $(this);
-		if (list.find('li:gt(4)').length > 0 ){
+		var list = {el: $(this)};
+		if (list.el.find('li:gt(4)').length > 0 ){
 			var eobloc = 5,
-				locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess},
-				less = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.less ); 
-				pipe = $('<span class="eo-upcoming-dates-pipe">|</span>'),
-				more = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.more );
-			list.find('li:gt('+(eobloc-1)+')').hide().end().after( less, pipe, more);
-			pipe.hide();
+				locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess};
+				list.less = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.less ); 
+				list.pipe = $('<span class="eo-upcoming-dates-pipe">|</span>');
+				list.more = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.more );
+				list.el.find('li:gt('+(eobloc-1)+')').hide().end().after( list.less, list.pipe, list.more);
+				list.pipe.hide();
 
-			less.hide().click(function(e){
+			list.less.hide().click(function(e){
 				e.preventDefault();
-				var index = Math.floor( (list.find('li:visible').length -1) / eobloc)*eobloc -1;
-				list.find('li:gt('+index+')').hide();
-				more.show();
-				pipe.show();
-				if( list.find('li:visible').length <= eobloc ){
-					less.hide();
-					pipe.hide();
+				var index = Math.floor( (list.el.find('li:visible').length -1) / eobloc)*eobloc -1;
+				list.el.find('li:gt('+index+')').hide();
+				list.more.show();
+				list.pipe.show();
+				if( list.el.find('li:visible').length <= eobloc ){
+					list.less.hide();
+					list.pipe.hide();
 				}
 			});
-			more.click(function(e){
+			list.more.click(function(e){
 				e.preventDefault();
-				less.show();
-				pipe.show();
-				list.find('li:hidden:lt('+eobloc+')').show();
-				var offset = pipe.offset();
+				list.less.show();
+				list.pipe.show();
+				list.el.find('li:hidden:lt('+eobloc+')').show();
+				var offset = list.pipe.offset();
 				$('html, body').animate({
 					scrollTop: Math.max( offset.top + 40 - $(window).height(),$(window).scrollTop())
 				});
-				if( list.find('li:hidden').length === 0 ){
-					more.hide();
-					pipe.hide();
+				if( list.el.find('li:hidden').length === 0 ){
+					list.more.hide();
+					list.pipe.hide();
 				}
 			});
 		}
