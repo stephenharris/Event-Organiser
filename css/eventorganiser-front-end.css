@@ -24,6 +24,7 @@ body.single-event .eo-event-meta{
 		float:right;
 	}
 }
+.eo-upcoming-dates-pipe{ margin: auto 5px; }
 
 /* Agenda CSS */
 .eo-agenda-widget ul{list-style:none; margin:0}
