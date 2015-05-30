@@ -103,9 +103,9 @@ jQuery(document).ready(function () {
 		if (list.find('li:gt(4)').length > 0 ){
 			var eobloc = 5,
 				locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess},
-				less = $('<a href="#">'+locale.less+'</a>'),
+				less = $('<a href="#"></a>').text( locale.less ); 
 				pipe = $('<span>|</span>'),
-				more = $('<a href="#">'+locale.more+'</a>');
+				more = $('<a href="#"></a>').text( locale.more );
 			list.find('li:gt('+(eobloc-1)+')').hide().end().after( less, pipe, more);
 			pipe.hide();
 
