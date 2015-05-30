@@ -6,8 +6,16 @@
 	float:left;
 }
 .eo-tc-page nav{
-	overflow: auto;
+	overflow: inherit;
 	margin: 10px auto;
+}
+
+.eo-tc-page nav:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
 }
 
 .eo-tc-event{
