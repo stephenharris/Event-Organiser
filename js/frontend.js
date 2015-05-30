@@ -98,36 +98,46 @@ jQuery(document).ready(function () {
 		return element;
 	}
 
-	if( $('#eo-upcoming-dates').length>0 && $('#eo-upcoming-dates').find('li:gt(4)').length > 0 ){
-		var eobloc = 5;
-		var locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess};
-		$('#eo-upcoming-dates').find('li:gt('+(eobloc-1)+')').hide().end().after(
-	    		$('<a href="#" id="eo-upcoming-dates-less">'+locale.less+'</a> <span id="eo-upcoming-dates-pipe">|</span> <a href="#" id="eo-upcoming-dates-more">'+locale.more+'</a>')
-		);
-		$('#eo-upcoming-dates-pipe').hide();
-		$('#eo-upcoming-dates-less').hide().click(function(e){
-			e.preventDefault();
-			var index = Math.floor( ($('#eo-upcoming-dates li:visible').length -1) / eobloc)*eobloc -1;
-			$('#eo-upcoming-dates li:gt('+index+')').hide();
-			$('#eo-upcoming-dates-more,#eo-upcoming-dates-pipe').show();
-			if( $('#eo-upcoming-dates li:visible').length <= eobloc ){
-					$('#eo-upcoming-dates-less,#eo-upcoming-dates-pipe').hide();
-			}
-		});
-		$('#eo-upcoming-dates-more').click(function(e){
-			e.preventDefault();
-			$('#eo-upcoming-dates-less,#eo-upcoming-dates-pipe, #eo-upcoming-dates li:hidden:lt('+eobloc+')').show();
-			var offset = $('#eo-upcoming-dates-pipe').offset();
-			$('html, body').animate({
-				scrollTop: Math.max( offset.top + 40 - $(window).height(),$(window).scrollTop())
-			});
-			if( $('#eo-upcoming-dates li:hidden').length === 0 ){
-				$('#eo-upcoming-dates-more,#eo-upcoming-dates-pipe').hide();
-			}
-		});
-	}
+	$('.eo-upcoming-dates').each(function(index, value){
+		var list = $(this);
+		if (list.find('li:gt(4)').length > 0 ){
+			var eobloc = 5,
+				locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess},
+				less = $('<a href="#">'+locale.less+'</a>'),
+				pipe = $('<span>|</span>'),
+				more = $('<a href="#">'+locale.more+'</a>');
+			list.find('li:gt('+(eobloc-1)+')').hide().end().after( less, pipe, more);
+			pipe.hide();
 
-        if ($(".eo-fullcalendar").length > 0) {
+			less.hide().click(function(e){
+				e.preventDefault();
+				var index = Math.floor( (list.find('li:visible').length -1) / eobloc)*eobloc -1;
+				list.find('li:gt('+index+')').hide();
+				more.show();
+				pipe.show();
+				if( list.find('li:visible').length <= eobloc ){
+					less.hide();
+					pipe.hide();
+				}
+			});
+			more.click(function(e){
+				e.preventDefault();
+				less.show();
+				pipe.show();
+				list.find('li:hidden:lt('+eobloc+')').show();
+				var offset = pipe.offset();
+				$('html, body').animate({
+					scrollTop: Math.max( offset.top + 40 - $(window).height(),$(window).scrollTop())
+				});
+				if( list.find('li:hidden').length === 0 ){
+					more.hide();
+					pipe.hide();
+				}
+			});
+		}
+	});
+
+	if ($(".eo-fullcalendar").length > 0) {
 		var calendars = eventorganiser.calendars;
 		var loadingTimeOut;
             for (var i = 0; i < calendars.length; i++) {
