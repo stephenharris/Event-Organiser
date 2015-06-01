@@ -17,7 +17,8 @@
         "issues": "https://github.com/stephenharris/Event-Organiser/issues"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.7.*"
+        "phpunit/phpunit": "3.7.*",
+        "phpmd/phpmd" : "@stable"
     }
 }
 

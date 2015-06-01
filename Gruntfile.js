@@ -36,7 +36,16 @@ module.exports = function(grunt) {
 		},
 		all: [ 'js/*.js', '!js/*.min.js', '!*/time-picker.js', '!*/jquery-ui-eo-timepicker.js', '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
-  	
+  	phpmd: {
+  		application: {
+  			dir: 'includes,classes'
+  	    },
+  	    options: {
+  	    	reportFormat: 'text',
+  	    	bin: './vendor/bin/phpmd', 
+  	    	rulesets: 'codesize'
+  	    }
+  	},
 	cssjanus: {
 		core: {
 			options: {
