@@ -236,3 +236,8 @@ require_once(EVENT_ORGANISER_DIR.'classes/class-eo-calendar-widget.php');
 require_once(EVENT_ORGANISER_DIR.'classes/class-eo-widget-categories.php');
 require_once(EVENT_ORGANISER_DIR.'classes/class-eo-widget-venues.php');
 require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-shortcodes.php');
+
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once( dirname( __FILE__ ) . '/includes/wp-cli/class-eo-wp-cli.php' );
+	require_once( dirname( __FILE__ ) . '/includes/wp-cli/class-eo-setting-wp-cli.php' );
+}

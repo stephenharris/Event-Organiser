@@ -191,7 +191,7 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 function eo_insert_event( $post_data = array(), $event_data = array() ){
 	global $wpdb;
 
-	$input = array_merge( $post_data, $event_data );
+	$input = array_merge( (array) $post_data, (array) $event_data );
 	
 	//Backwards compat:
 	if( !empty( $input['venue'] ) ){
@@ -212,7 +212,7 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 		'comment_status', 'context',  'post_date', 'post_date_gmt',
 	) );
 	
-	$event_data = array_intersect_key( $input, $event_keys ) + $event_data;
+	$event_data = array_intersect_key( $input, $event_keys ) + (array) $event_data;
 	$post_data = array_intersect_key( $input, $post_keys );
 		
 	//If schedule is 'once' and dates are included - set to 'custom':
