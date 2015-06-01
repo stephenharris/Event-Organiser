@@ -96,8 +96,9 @@ function eventorganiser_load_textdomain() {
 	/* Check the global language folder */
 	$files = array( WP_LANG_DIR . '/event-organiser/' . $mofile, WP_LANG_DIR . '/' . $mofile );
 	foreach ( $files as $file ){
-		if ( file_exists( $file ) )
+		if ( file_exists( $file ) ){
 			return load_textdomain( $domain, $file );
+		}
 	}
 
 	//If we got this far, fallback to the plug-in language folder.
@@ -122,7 +123,7 @@ $eventorganiser_roles = array(
 require_once( EVENT_ORGANISER_DIR . 'includes/event-organiser-install.php' );
 
 register_activation_hook( __FILE__, 'eventorganiser_install' ); 
-register_deactivation_hook(  __FILE__, 'eventorganiser_deactivate' );
+register_deactivation_hook( __FILE__, 'eventorganiser_deactivate' );
 register_uninstall_hook( __FILE__, 'eventorganiser_uninstall' );
 
 
@@ -159,24 +160,27 @@ function eventorganiser_get_option( $option = false, $default = false ){
 	
 	$options = apply_filters( 'eventorganiser_options', $options );
 	
-	if ( false === $option )
+	if ( false === $option ){
 		return $options;
+	}
 
 	/* Backwards compatibility for 'eventag' option */
-	if ( $option === 'eventtag' )
+	if ( 'eventtag' === $option ){
 		return in_array( 'eventtag', $options['supports'] );
+	}
 	
-	if ( $option === 'dateformat' ){
+	if ( 'dateformat' === $option ){
 		//Backwards compatibility (migration from mm-dd/dd-mm to php format):
-		if ( $options[$option] == 'mm-dd' ){
+		if ( 'mm-dd' == $options[$option] ){
 			$options[$option] = 'm-d-Y';
-		} elseif ( $options[$option] == 'dd-mm' ){
+		} elseif ( 'dd-mm' == $options[$option] ){
 			$options[$option] = 'd-m-Y';
 		}
 	}
 
-	if ( ! isset( $options[$option] ) )
+	if ( ! isset( $options[$option] ) ){
 		return $default;
+	}
 
 	return $options[$option];
 }
