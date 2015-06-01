@@ -352,13 +352,14 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 		
 	$post_types = $query->get( 'post_type' );
 
-	if( 'any' == $post_types )
+	if( 'any' == $post_types ){
 		$post_types = get_post_types( array('exclude_from_search' => false) );
+	}	
 	
-	if( $post_types == 'event' || array('event') == $post_types ){
+	if( 'event' == $post_types || array( 'event' ) == $post_types ){
 		$bool = true;
 	
-	}elseif( ( $query && $query->is_feed('eo-events') ) || is_feed( 'eo-events' ) ){
+	}elseif( ( $query && $query->is_feed( 'eo-events' ) ) || is_feed( 'eo-events' ) ){
 		$bool = true;
 		
 	}elseif( empty( $post_types ) && eo_is_event_taxonomy( $query ) ){
@@ -369,15 +370,16 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 		
 		foreach ( get_post_types() as $pt ) {
 			
-			if( version_compare( '3.4', get_bloginfo( 'version' ) ) <= 0 ){
+			if( version_compare( '3.5', get_bloginfo( 'version' ) ) <= 0 ){
 				$object_taxonomies = $pt === 'attachment' ? get_taxonomies_for_attachments() : get_object_taxonomies( $pt );
 			}else{
-				//Backwards compat for 3.3
+				//Backwards compat for 3.4
 				$object_taxonomies = $pt === 'attachment' ? array() : get_object_taxonomies( $pt );
 			}
 			
-			if ( array_intersect( $taxonomies, $object_taxonomies ) )
+			if ( array_intersect( $taxonomies, $object_taxonomies ) ){
 				$post_types[] = $pt;
+			}
 		}
 
 		if( in_array( 'event', $post_types ) ){
@@ -392,7 +394,6 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 		}else{
 			$bool = false;
 		}
-
 	}elseif( $exclusive ){
 		$bool = false;
 		
