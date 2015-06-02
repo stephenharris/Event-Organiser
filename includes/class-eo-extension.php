@@ -151,10 +151,11 @@ if( !class_exists('EO_Extension') ){
 		public function is_valid( $key ){
 
 			$key = strtoupper( str_replace( '-', '', $key ) );
-			$local_key = get_site_option($this->id.'_plm_local_key');
+			$local_key = get_site_option( $this->id . '_plm_local_key' );
 
 			//Token depends on key being checked to instantly invalidate the local period when key is changed.
-			$token = wp_hash($key.'|'.$_SERVER['SERVER_NAME'].'|'.$_SERVER['SERVER_ADDR'].'|'.$this->slug);
+			$server = array_merge( array( 'SERVER_NAME' => false, 'SERVER_ADDR' => false), $_SERVER );
+			$token = wp_hash( $key . '|' . $server['SERVER_NAME'] . '|' . $server['SERVER_ADDR'] . '|' . $this->slug );
 
 			if( $local_key ){
 				$response = maybe_unserialize( $local_key['response'] );
@@ -162,13 +163,13 @@ if( !class_exists('EO_Extension') ){
 
 				if( $token == $response['token'] ){
 
-					$last_checked = isset($response['date_checked']) ?  intval($response['date_checked'] ) : 0;
+					$last_checked = isset($response['date_checked']) ? intval( $response['date_checked'] ) : 0;
 					$expires = $last_checked + 24 * 24 * 60 * 60;
 
-					if( $response['valid'] == 'TRUE' &&  ( time() < $expires ) ){
+					if( 'TRUE' == $response['valid'] &&  ( time() < $expires ) ){
 						//Local key is still valid
 						return true;
-					}elseif( $response['reason'] == 'license-expired' ){
+					}elseif( 'license-expired' == $response['reason'] ){
 						return new WP_Error( 'license-expired' );
 					}
 				}
@@ -183,59 +184,64 @@ if( !class_exists('EO_Extension') ){
 					}
 				}
 			}
-		
 	
 			//Check license format
-			if( empty( $key ) )
+			if( empty( $key ) ){
 				return new WP_Error( 'no-key-given' );
+			}
 
-			if( preg_match('/[^A-Z234567]/i', $key) )
+			if( preg_match( '/[^A-Z234567]/i', $key ) ){
 				return new WP_Error( 'invalid-license-format' );
+			}
 
 			if( $is_valid = get_transient( $this->id . '_check' ) && false !== get_transient( $this->id . '_check_lock' ) ){
-				if( $token === $is_valid )
+				if ( $token === $is_valid ){
 					return true;
+				}
 			}
 
 			//Check license remotely
 			$resp = wp_remote_post($this->api_url, array(
-					'method' => 'POST',
-					'timeout' => 45,
-					'body' => array(
-							'plm-action' => 'check_license',
-							'license' => $key,
-							'product' => $this->slug,
-							'domain' => $_SERVER['SERVER_NAME'],
-							'token' => $token,
-					),
+				'method'  => 'POST',
+				'timeout' => 45,
+				'body'    => array(
+					'plm-action' => 'check_license',
+					'license'    => $key,
+					'product'    => $this->slug,
+					'domain'     => $server['SERVER_NAME'],
+					'token'      => $token,
+				),
 			));
 	
 			$body = (array) json_decode( wp_remote_retrieve_body( $resp ) );
 			
 			if( !$body || !isset($body['response']) ){
 				//No response or error
-				$grace =  $last_checked + 1 * 24 * 60 * 60;
+				$grace = $last_checked + 1 * 24 * 60 * 60;
 	
-				if(  time() < $grace )
+				if(  time() < $grace ){
 					return true;
+				}
 	
 				return new WP_Error( 'invalid-response' );
 			}
 	
-			$response =  maybe_unserialize( $body['response'] );
+			$response = maybe_unserialize( $body['response'] );
 	
 			update_option( $this->id . '_plm_local_key', $body );
 
-			if( $token != $response['token'] )
+			if( $token != $response['token'] ){
 				return new WP_Error( 'invalid-token' );
+			}
 	
-			if( $response['valid'] == 'TRUE' )
+			if( 'TRUE' == $response['valid'] ){
 				$is_valid = true;
-			else
+			}else{
 				$is_valid = new WP_Error( $response['reason'] );
+			}
 
-			set_transient( $this->id . '_check_lock', $key, 15*20 );
-			set_transient( $this->id . '_check', $token, 15*20 );
+			set_transient( $this->id . '_check_lock', $key, 15 * 20 );
+			set_transient( $this->id . '_check', $token, 15 * 20 );
 
 			return $is_valid;
 		}
@@ -385,7 +391,7 @@ if( !class_exists('EO_Extension') ){
 				'incorrect-product'      => 'The key is not valid for this product.',
 				'license-expired'        => 'Your license key has expired.',
 				'site-limit-reached'     => 'The key has met the site limit.',
-				'unknown'                => 'An unknown error has occurred'
+				'unknown'                => 'An unknown error has occurred',
 			);
 			
 			if( isset( $reasons[$code] ) ){
@@ -398,7 +404,7 @@ if( !class_exists('EO_Extension') ){
 		public function plugin_info( $check, $action, $args ){
 	
 			if ( $args->slug == $this->slug ) {
-				$obj = $this->get_remote_plugin_info('plugin_info');
+				$obj = $this->get_remote_plugin_info( 'plugin_info' );
 				return $obj;
 			}
 			return $check;
@@ -415,15 +421,16 @@ if( !class_exists('EO_Extension') ){
 			 */
 	
 			//Get remote information
-			$plugin_info = $this->get_remote_plugin_info('plugin_info');
+			$plugin_info = $this->get_remote_plugin_info( 'plugin_info' );
 	
 			// If a newer version is available, add the update
-			if ( $plugin_info && version_compare($this->get_current_version(), $plugin_info->new_version, '<' ) ){
+			if ( $plugin_info && version_compare( $this->get_current_version(), $plugin_info->new_version, '<' ) ){
 	
 				$obj = new stdClass();
-				$obj->slug = $this->slug;
+				$obj->slug        = basename( $this->slug, '.php' );
+				$obj->plugin      = basename( $this->slug, '.php' );
 				$obj->new_version = $plugin_info->new_version;
-				$obj->package =$plugin_info->download_link;
+				$obj->package     = $plugin_info->download_link;
 	
 				if( isset( $plugin_info->sections['upgrade_notice'] ) ){
 					$obj->upgrade_notice = $plugin_info->sections['upgrade_notice'];
@@ -444,7 +451,7 @@ if( !class_exists('EO_Extension') ){
 		 * @param (string) $action -'info', 'version' or 'license'
 		 * @return mixed $remote_version
 		 */
-		public function get_remote_plugin_info($action='plugin_info'){
+		public function get_remote_plugin_info( $action = 'plugin_info' ){
 	
 			$key = wp_hash( 'plm_'.$this->id . '_' . $action . '_' . $this->slug );
 			if( false !== ( $plugin_obj = get_site_transient( $key ) ) && !$this->force_request() ){
@@ -452,24 +459,24 @@ if( !class_exists('EO_Extension') ){
 			}
 	
 			$request = wp_remote_post( $this->api_url, array(
-					'method' => 'POST',
-					'timeout' => 45,
-					'body' => array(
-							'plm-action' => $action,
-							'license'    => get_site_option( $this->id.'_license' ),
-							'product'    => $this->slug,
-							'domain'     => $_SERVER['SERVER_NAME'],
-					)
+				'method' => 'POST',
+				'timeout' => 45,
+				'body' => array(
+					'plm-action' => $action,
+					'license'    => get_site_option( $this->id.'_license' ),
+					'product'    => $this->slug,
+					'domain'     => isset( $_SERVER['SERVER_NAME'] ) ? $_SERVER['SERVER_NAME'] : false,
+				)
 			));
 	
 			if ( !is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
 				//If its the plug-in object, unserialize and store for 12 hours.
 				$plugin_obj = ( 'plugin_info' == $action ? unserialize( $request['body'] ) : $request['body'] );
-				set_site_transient( $key, $plugin_obj, 12*60*60 );
+				set_site_transient( $key, $plugin_obj, 12 * 60 * 60 );
 				return $plugin_obj;
 			}
 			//Don't try again for 5 minutes
-			set_site_transient( $key, '', 5*60 );
+			set_site_transient( $key, '', 5 * 60 );
 			return false;
 		}
 	
@@ -479,8 +486,9 @@ if( !class_exists('EO_Extension') ){
 			//We don't use get_current_screen() because of conclict with InfiniteWP
 			global $current_screen;
 	
-			if ( ! isset( $current_screen ) )
+			if ( ! isset( $current_screen ) ){
 				return false;
+			}
 	
 			return isset( $current_screen->id ) && ( 'plugins' == $current_screen->id || 'update-core' == $current_screen->id );
 		}

@@ -63,7 +63,35 @@ eventorganiser.versionCompare = function(left, right) {
 		firstDay: parseInt(EO_Ajax.startday,10),
 		defaultDate: moment( $.cookie('eo_admin_cal_last_viewed_date') ),
 		defaultView: ($.cookie('eo_admin_cal_last_view') ? $.cookie('eo_admin_cal_last_view') : 'month'),
-		editable: false,
+		editable: EO_Ajax.perm_edit,
+		eventDurationEditable: false,
+		eventStartEditable: EO_Ajax.edit_time,
+		durationEditable: false,
+		eventDrop: function( event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) { 
+            $.ajax({
+            	type: "POST",
+            	url: EO_Ajax.ajaxurl,
+            	data:{
+            		action: 'eofc-edit-date',
+            		start:  $.fullCalendar.formatDate( event.start, 'yyyy-MM-dd HH:mm:ss'),
+            		end:  $.fullCalendar.formatDate( event.end, 'yyyy-MM-dd HH:mm:ss'),
+            		event_id: event.event_id,
+            		occurrence_id: event.occurrence_id,
+            		_wpnonce: EO_Ajax.edit_nonce,
+            	}, 
+            	dataType: 'json' 
+            })
+            .done( function( response ){
+            	if( response.success !== true ){
+            		alert( response.data.message );
+            		revertFunc();
+            	}
+            })
+            .fail( function( jqXHR, textStatus, errorMessage ) {
+            	alert( 'Error: ' + errorMessage );
+            	revertFunc();		
+            });
+		},
 		lazyFetching: 'true',
 		eventColor: '#21759B',
 		theme: false,
@@ -205,6 +233,7 @@ eventorganiser.versionCompare = function(left, right) {
 		var element = $("<span class='fc-header-goto'><input type='hidden' id='miniCalendar'/></span>");
 		return element;
 	}
+
 	$('#miniCalendar').datepicker({
 		dateFormat: 'DD, d MM, yy',
 		firstDay: parseInt( EO_Ajax.startday, 10 ),
@@ -218,7 +247,7 @@ eventorganiser.versionCompare = function(left, right) {
 			calendar.fullCalendar('gotoDate', new Date(Date.parse(dateText)));
 		}
 	});
-	$('button.ui-datepicker-trigger').button();
+	$('button.ui-datepicker-trigger').button().addClass('fc-button');
         
     /* Venue drop-down in modal */
 	$.widget("ui.combobox", {

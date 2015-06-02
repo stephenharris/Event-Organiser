@@ -29,17 +29,30 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 	 * Enqueues the page's scripts and styles, and localises them.
 	 */
 	function page_scripts(){
+		
 		global $wp_locale;
 		
 		wp_enqueue_script( 'eo_calendar' );
-		//wp_enqueue_script( 'eo_event' );
+
 		wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
-			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'ajaxurl'  => admin_url( 'admin-ajax.php' ),
 			'startday' => intval( get_option( 'start_of_week' ) ),
-			'format' => eo_php2jquerydate( eventorganiser_get_option( 'dateformat' ) ),
-			));
+			'format'   => eo_php2jquerydate( eventorganiser_get_option( 'dateformat' ) ),
+		));
 		
-		$venues = ( get_taxonomy( 'event-venue' ) ? get_terms( 'event-venue', array( 'hide_empty' => 0 ) ) : false );
+		$edittime = ( defined( 'EVENT_ORGANISER_BETA_FEATURES' ) && EVENT_ORGANISER_BETA_FEATURES );
+		
+		$venues = $categories = $all_cats = $all_venues = false;
+		
+		if( $category_tax = get_taxonomy( 'event-category' ) ){
+			$categories = get_terms( 'event-category', array( 'hide_empty' => 0 ) );
+			$all_cats   = $category_tax->labels->view_all_items;
+		}
+		
+		if( $venue_tax = get_taxonomy( 'event-venue' ) ){
+			$venues     = get_terms( 'event-venue', array( 'hide_empty' => 0 ) );
+			$all_venues = $venue_tax->labels->view_all_items;
+		}
 		
 		wp_localize_script( 'eo_calendar', 'EO_Ajax', array( 
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
@@ -47,7 +60,9 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			'format'     => eo_php_to_moment( eventorganiser_get_option( 'dateformat' ) ),
 			'timeFormat' => ( get_current_screen()->get_option( 'eofc_time_format', 'value' ) ? 'h:mmtt' : 'HH:mm' ),
 			'perm_edit'  => current_user_can( 'edit_events' ),
-			'categories' => get_terms( 'event-category', array( 'hide_empty' => 0 ) ),
+			'edit_time'  => $edittime ? current_user_can( 'edit_events' ) : false,
+			'edit_nonce' => wp_create_nonce( 'edit_events' ),
+			'categories' => $categories,
 			'venues'     => $venues,
 			'locale'     => array(
 				'isrtl'       => $wp_locale->is_rtl(),
@@ -60,9 +75,9 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				'week'        => __( 'week', 'eventorganiser' ),
 				'month'       => __( 'month', 'eventorganiser' ),
 				'gotodate'    => __( 'go to date', 'eventorganiser' ),
-				'cat'         => __( 'View all categories', 'eventorganiser' ),
-				'venue'       => __( 'View all venues', 'eventorganiser' ),
-			)	
+				'cat'         => $all_cats,
+				'venue'       => $all_venues,
+			)
 		));
 		
 	}
@@ -150,7 +165,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 					$redirect = add_query_arg( 'message', 7, $redirect );
 				
 				//Redirect to event admin page & exit
-				wp_redirect( $redirect );
+				wp_redirect( esc_url_raw( $redirect ) );
 				exit; 
 			}
 		}elseif ( isset( $_REQUEST['action'] ) && ( $_REQUEST['action'] == 'delete_occurrence' || $_REQUEST['action'] == 'break_series') && isset( $_REQUEST['series'] ) && isset( $_REQUEST['event'] ) ){
@@ -171,7 +186,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				//Redirect to prevent resubmisson
 				$redirect = get_edit_post_link( $new_event_id, '' );
 				$redirect = add_query_arg( 'message', 20, $redirect );
-				wp_redirect( $redirect );
+				wp_redirect( esc_url_raw( $redirect ) );
 				exit;
 
 			elseif( $action == 'delete_occurrence' ):

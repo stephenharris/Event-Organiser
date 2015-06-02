@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-22 12:03+0000\n"
+"POT-Creation-Date: 2015-05-23 17:23+0100\n"
 "PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
@@ -31,15 +31,15 @@ msgstr "Cím"
 msgid "Group by"
 msgstr "Csoportosítás"
 
-#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:237
+#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:246
 msgid "Day"
 msgstr "Nap"
 
-#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:237
+#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:246
 msgid "Week"
 msgstr "Hét"
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:237
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:246
 msgid "Month"
 msgstr "Hónap"
 
@@ -59,7 +59,7 @@ msgstr ""
 msgid "Displays a calendar of your events"
 msgstr "Eseménynaptár megjelenítése"
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:233
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:242
 msgid "Events Calendar"
 msgstr "Eseménynaptár"
 
@@ -108,8 +108,8 @@ msgstr "Következő hónap"
 msgid "Displays a list of events"
 msgstr "Eseménylista megjelenítése"
 
-#: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:481
-#: event-organiser.php:132 includes/event-organiser-cpt.php:217
+#: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
+#: event-organiser.php:138 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -168,17 +168,17 @@ msgstr ""
 msgid "'No events' message"
 msgstr "\"Nincsenek események\" üzenet szövege"
 
-#: classes/class-eo-venue-list-table.php:72 templates/single-event.php:71
+#: classes/class-eo-venue-list-table.php:75 templates/single-event.php:71
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: classes/class-eo-venue-list-table.php:73
-#: classes/class-eo-venue-list-table.php:128
+#: classes/class-eo-venue-list-table.php:80
+#: classes/class-eo-venue-list-table.php:142
 msgid "Delete"
 msgstr "Törlés"
 
-#: classes/class-eo-venue-list-table.php:74
-#: includes/event-organiser-ajax.php:676
+#: classes/class-eo-venue-list-table.php:85
+#: includes/event-organiser-ajax.php:691
 msgid "View"
 msgstr "Előnézet"
 
@@ -193,26 +193,30 @@ msgstr "Esemény kategóriák"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1494
+#: includes/event-organiser-event-functions.php:1466
 #: templates/event-meta-event-single.php:69
 msgid "Categories"
 msgstr "Kategóriák"
 
 #: classes/class-eo-widget-categories.php:54
+#, fuzzy
 msgid "Select Category"
 msgstr "Válassz kategóriát"
 
 #: classes/class-eo-widget-categories.php:125
 #: classes/class-eo-widget-venues.php:127
+#, fuzzy
 msgid "Title:"
 msgstr "Cím:"
 
 #: classes/class-eo-widget-categories.php:129
 #: classes/class-eo-widget-venues.php:131
+#, fuzzy
 msgid "Display as dropdown"
 msgstr "Mutasd lenyíló menüként"
 
 #: classes/class-eo-widget-categories.php:132
+#, fuzzy
 msgid "Show hierarchy"
 msgstr "Hierarchia mutatása"
 
@@ -233,7 +237,7 @@ msgstr "Helyszínek"
 msgid "Select Venue"
 msgstr ""
 
-#: classes/class-eventorganiser-shortcodes.php:377
+#: classes/class-eventorganiser-shortcodes.php:393
 msgid "There is no excerpt because this is a protected post."
 msgstr "Nincs kivonat, mert ez egy védett tartalmú bejegyzés."
 
@@ -259,115 +263,108 @@ msgstr ""
 msgid "Calendar View"
 msgstr "Naptár nézet"
 
-#: event-organiser-calendar.php:58 includes/event-organiser-register.php:58
+#: event-organiser-calendar.php:67 includes/event-organiser-register.php:58
 msgid "today"
 msgstr "ma"
 
-#: event-organiser-calendar.php:59 includes/event-organiser-register.php:59
-#: includes/event-organiser-register.php:249
+#: event-organiser-calendar.php:68 includes/event-organiser-register.php:59
+#: includes/event-organiser-register.php:248
 msgid "day"
 msgstr "naponta"
 
-#: event-organiser-calendar.php:60 includes/event-organiser-register.php:60
-#: includes/event-organiser-register.php:251
+#: event-organiser-calendar.php:69 includes/event-organiser-register.php:60
+#: includes/event-organiser-register.php:250
 msgid "week"
 msgstr "hét"
 
-#: event-organiser-calendar.php:61 includes/event-organiser-register.php:61
-#: includes/event-organiser-register.php:253
+#: event-organiser-calendar.php:70 includes/event-organiser-register.php:61
+#: includes/event-organiser-register.php:252
 msgid "month"
 msgstr "hónap"
 
-#: event-organiser-calendar.php:62 includes/event-organiser-register.php:62
+#: event-organiser-calendar.php:71 includes/event-organiser-register.php:62
 msgid "go to date"
 msgstr "ugrás dátumra"
 
-#: event-organiser-calendar.php:63 event-organiser-manage.php:122
-#: includes/event-organiser-cpt.php:105
-msgid "View all categories"
-msgstr "Összes kategória"
-
-#: event-organiser-calendar.php:64 includes/event-organiser-cpt.php:45
-msgid "View all venues"
-msgstr "Összes helyszín"
-
-#: event-organiser-calendar.php:111
+#: event-organiser-calendar.php:120
 msgid "You do not have sufficient permissions to create events. "
 msgstr "Nincs jogosultság esemény létrehozásához"
 
-#: event-organiser-calendar.php:167
+#: event-organiser-calendar.php:176
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Nincs jogosultság esemény szerkesztéséhez"
 
-#: event-organiser-calendar.php:185
+#: event-organiser-calendar.php:194
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr "Nincs jogosultság esemény törléséhez"
 
-#: event-organiser-calendar.php:195
+#: event-organiser-calendar.php:204
 msgid "Occurrence deleted."
 msgstr "Ismétlődés törölve."
 
-#: event-organiser-calendar.php:211
+#: event-organiser-calendar.php:220
 msgid "Calendar options"
 msgstr "Naptár beállítások"
 
-#: event-organiser-calendar.php:218
+#: event-organiser-calendar.php:227
 msgid "24 hour time"
 msgstr "24 órás időformátum"
 
-#: event-organiser-calendar.php:240
-#: includes/event-organiser-event-functions.php:1441
+#: event-organiser-calendar.php:249
+#: includes/event-organiser-event-functions.php:1411
 msgid "Loading&#8230;"
 msgstr "Betöltés&#8230;"
 
-#: event-organiser-calendar.php:247
+#: event-organiser-calendar.php:256
 msgid "Current date/time"
 msgstr "Dátum/idő"
 
-#: event-organiser-calendar.php:252
+#: event-organiser-calendar.php:261
 msgid "Create an event"
 msgstr "Esemény létrehozása"
 
-#: event-organiser-calendar.php:257
+#: event-organiser-calendar.php:266
 msgid "When"
 msgstr "Időpont"
 
-#: event-organiser-calendar.php:261
+#: event-organiser-calendar.php:270
 msgid "Event Title"
 msgstr "Esemény címe"
 
-#: event-organiser-calendar.php:268 includes/event-organiser-ajax.php:399
+#: event-organiser-calendar.php:277 includes/event-organiser-ajax.php:410
 msgid "Where"
 msgstr "Helyszín"
 
-#: event-organiser-calendar.php:293
+#: event-organiser-calendar.php:302
 msgid "Save Draft"
 msgstr "Vázlat mentése"
 
-#: event-organiser-calendar.php:294 event-organiser-calendar.php:301
+#: event-organiser-calendar.php:303 event-organiser-calendar.php:310
 #: event-organiser-edit.php:258
 msgid "Cancel"
 msgstr "Mégsem"
 
-#: event-organiser-calendar.php:297
+#: event-organiser-calendar.php:306
 msgid "Publish Event"
 msgstr "Esemény közzététele"
 
-#: event-organiser-calendar.php:303
+#: event-organiser-calendar.php:312
 msgid "Submit for Review"
 msgstr "Elküld megtekintésre"
 
-#: event-organiser-calendar.php:324 event-organiser-edit.php:14
+#: event-organiser-calendar.php:333 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:37
 msgid "Event Details"
 msgstr "Esemény részletek"
 
-#: event-organiser-calendar.php:326
+#: event-organiser-calendar.php:335
+#, fuzzy
 msgid "Event Detail"
 msgstr "Esemény részletei"
 
 #: event-organiser-debug.php:13 event-organiser-debug.php:14
 #: event-organiser-debug.php:59
+#, fuzzy
 msgid "System Info"
 msgstr "Rendszer infó"
 
@@ -435,11 +432,12 @@ msgid "%s requires %s version %s or higher"
 msgstr ""
 
 #: event-organiser-debug.php:460
+#, fuzzy
 msgid "unknown"
 msgstr "ismeretlen"
 
 #: event-organiser-edit.php:31 event-organiser-manage.php:23
-#: event-organiser-settings.php:142 includes/event-organiser-ajax.php:386
+#: event-organiser-settings.php:142 includes/event-organiser-ajax.php:397
 msgid "Organiser"
 msgstr "Szerző"
 
@@ -478,8 +476,8 @@ msgid "Reoccurence:"
 msgstr "Ismétlődés:"
 
 #: event-organiser-edit.php:141
-msgid "once"
-msgstr "nincs"
+msgid "none"
+msgstr ""
 
 #: event-organiser-edit.php:141
 msgid "daily"
@@ -519,8 +517,8 @@ msgid "day of week"
 msgstr "adott hét napján"
 
 #: event-organiser-edit.php:185
-#: includes/event-organiser-event-functions.php:819
-#: includes/event-organiser-register.php:266
+#: includes/event-organiser-event-functions.php:826
+#: includes/event-organiser-register.php:265
 msgid "until"
 msgstr "eddig:"
 
@@ -528,7 +526,7 @@ msgstr "eddig:"
 msgid "Include/Exclude occurrences"
 msgstr "Ismétlődések ki-/bekapcsolása"
 
-#: event-organiser-edit.php:198 includes/event-organiser-register.php:243
+#: event-organiser-edit.php:198 includes/event-organiser-register.php:242
 msgid "Show dates"
 msgstr ""
 
@@ -541,7 +539,7 @@ msgstr "Helyszín kiválasztása"
 msgid "Venue Name"
 msgstr "Helyszín megnevezése"
 
-#: event-organiser-edit.php:410
+#: event-organiser-edit.php:416
 msgid "Event dates were not saved."
 msgstr "Esemény dátumok nem lettek elmentve."
 
@@ -611,45 +609,45 @@ msgstr "Esemény"
 msgid "Reoccurrence"
 msgstr "Ismétlődés"
 
-#: event-organiser-manage.php:153
+#: event-organiser-manage.php:163
 msgid "View all events"
 msgstr "Összes esemény"
 
-#: event-organiser-manage.php:154
+#: event-organiser-manage.php:164
 msgid "Future events"
 msgstr "Leendő események"
 
-#: event-organiser-manage.php:155
+#: event-organiser-manage.php:165
 msgid "Expired events"
 msgstr "Elmúlt események"
 
-#: event-organiser-manage.php:156
+#: event-organiser-manage.php:166
 msgid "Events within 24 hours"
 msgstr "Események 24 órán belül"
 
-#: event-organiser-manage.php:157
+#: event-organiser-manage.php:167
 msgid "Events within 1 week"
 msgstr "Események 1 héten belül"
 
-#: event-organiser-manage.php:158
+#: event-organiser-manage.php:168
 #, php-format
 msgid "Events within %d weeks"
 msgstr "Események %d héten belül"
 
-#: event-organiser-manage.php:159
+#: event-organiser-manage.php:169
 msgid "Events within 1 month"
 msgstr "Események 1 hónapon belül"
 
-#: event-organiser-manage.php:160
+#: event-organiser-manage.php:170
 #, php-format
 msgid "Events within %d months"
 msgstr "Események %d hónapon belül"
 
-#: event-organiser-manage.php:161
+#: event-organiser-manage.php:171
 msgid "Events within 1 year"
 msgstr "Események 1 éven belül"
 
-#: event-organiser-manage.php:212
+#: event-organiser-manage.php:222
 msgid "&mdash; No Change &mdash;"
 msgstr "&mdash; Nincs változás &mdash;"
 
@@ -681,42 +679,42 @@ msgstr "Event Organiser Beállítások"
 msgid "Event Organiser"
 msgstr "Események"
 
-#: event-organiser-settings.php:46 event-organiser.php:105
+#: event-organiser-settings.php:46 event-organiser.php:111
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Események szerkesztése"
 
-#: event-organiser-settings.php:47 event-organiser.php:106
+#: event-organiser-settings.php:47 event-organiser.php:112
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Események közzététele"
 
-#: event-organiser-settings.php:48 event-organiser.php:107
+#: event-organiser-settings.php:48 event-organiser.php:113
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Események törlése"
 
-#: event-organiser-settings.php:49 event-organiser.php:108
+#: event-organiser-settings.php:49 event-organiser.php:114
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Más szerző eseményének szerkesztése"
 
-#: event-organiser-settings.php:50 event-organiser.php:109
+#: event-organiser-settings.php:50 event-organiser.php:115
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Más szerző eseményének törlése"
 
-#: event-organiser-settings.php:51 event-organiser.php:110
+#: event-organiser-settings.php:51 event-organiser.php:116
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Privát események olvasása"
 
-#: event-organiser-settings.php:52 event-organiser.php:111
+#: event-organiser-settings.php:52 event-organiser.php:117
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Helyszínek kezelése"
 
-#: event-organiser-settings.php:53 event-organiser.php:112
+#: event-organiser-settings.php:53 event-organiser.php:118
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Esemény kategóriák és -címkék kezelése"
@@ -791,6 +789,7 @@ msgid "mm-dd-yyyy"
 msgstr "éééé.nn.hh."
 
 #: event-organiser-settings.php:175
+#, fuzzy
 msgid "yyyy-mm-dd"
 msgstr "éééé-hh-dd"
 
@@ -920,14 +919,17 @@ msgid "Event (date archive)"
 msgstr ""
 
 #: event-organiser-settings.php:312
+#, fuzzy
 msgid "Year archive"
 msgstr "Év archívum"
 
 #: event-organiser-settings.php:313
+#, fuzzy
 msgid "Month archive"
 msgstr "Hónap archívum"
 
 #: event-organiser-settings.php:314
+#, fuzzy
 msgid "Day archive"
 msgstr "Nap archívum"
 
@@ -1022,34 +1024,28 @@ msgstr "Helyszín <strong>frissítve</strong>"
 msgid "Venue(s) <strong>deleted</strong>"
 msgstr "Helyszín(ek) <strong>törölve</strong>"
 
-#: event-organiser-venues.php:255 event-organiser-venues.php:294
-#: includes/event-organiser-cpt.php:219
-msgctxt "post"
-msgid "Add New"
-msgstr ""
-
 #: event-organiser-venues.php:258
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Keresés eredménye &#8220;%s&#8221;"
 
-#: event-organiser-venues.php:417
+#: event-organiser-venues.php:418
 msgid "Latitude/Longitude:"
 msgstr ""
 
-#: event-organiser-venues.php:445
+#: event-organiser-venues.php:446
 msgid "Venue name"
 msgstr "Helyszín megnevezése"
 
-#: event-organiser-venues.php:451
+#: event-organiser-venues.php:452
 msgid "Permalink:"
 msgstr "Közvetlen link:"
 
-#: event-organiser-venues.php:458
+#: event-organiser-venues.php:459
 msgid "Get Link"
 msgstr "Link elkészítése"
 
-#: event-organiser-venues.php:480
+#: event-organiser-venues.php:481
 msgid "Slug"
 msgstr "Közvetlen link (Slug)"
 
@@ -1084,12 +1080,12 @@ msgstr ""
 msgid "[Line %1$d]"
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:943
+#: includes/class-eo-ical-parser.php:952
 #, php-format
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:981
+#: includes/class-eo-ical-parser.php:990
 #, php-format
 msgid ""
 "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
@@ -1114,7 +1110,7 @@ msgstr ""
 "legfeljebb 2MB méretben."
 
 #: includes/class-event-organiser-im-export.php:73
-#, php-format
+#, fuzzy, php-format
 msgid "File size: %s. File type: %s"
 msgstr "Fájl méret: %s. Fájl típus: %s"
 
@@ -1197,51 +1193,72 @@ msgstr "1 kategória létrehozva"
 msgid "%d categories were created"
 msgstr "%d kategória létrehozva"
 
-#: includes/event-organiser-ajax.php:352
+#: includes/event-organiser-ajax.php:360
 msgid "Protected"
 msgstr "Védett"
 
-#: includes/event-organiser-ajax.php:354
+#: includes/event-organiser-ajax.php:362
 msgid "Private"
 msgstr "Privát"
 
-#: includes/event-organiser-ajax.php:356
+#: includes/event-organiser-ajax.php:364
 msgid "Draft"
 msgstr "Vázlat"
 
-#: includes/event-organiser-ajax.php:383
+#: includes/event-organiser-ajax.php:394
 #: templates/event-meta-event-single.php:58
 msgid "Start"
 msgstr "Kezdete"
 
-#: includes/event-organiser-ajax.php:384
+#: includes/event-organiser-ajax.php:395
 msgid "End"
 msgstr "Vége"
 
-#: includes/event-organiser-ajax.php:425
+#: includes/event-organiser-ajax.php:436
 msgid "This event reoccurs"
 msgstr "Ismétlődő esemény"
 
-#: includes/event-organiser-ajax.php:431 includes/event-organiser-cpt.php:221
+#: includes/event-organiser-ajax.php:442 includes/event-organiser-cpt.php:221
 msgid "Edit Event"
 msgstr "Szerkesztés"
 
-#: includes/event-organiser-ajax.php:450
+#: includes/event-organiser-ajax.php:462
 msgid "Delete this occurrence"
 msgstr "Törlés (csak 1 esemény)"
 
-#: includes/event-organiser-ajax.php:464
+#: includes/event-organiser-ajax.php:479
 msgid "Break this series"
 msgstr "Ismétlődések kikapcsolása"
 
-#: includes/event-organiser-ajax.php:672
-#: includes/event-organiser-event-functions.php:1399
+#: includes/event-organiser-ajax.php:687
+#: includes/event-organiser-event-functions.php:1363
 msgid "All Day"
 msgstr "Egész napos"
 
-#: includes/event-organiser-ajax.php:677
+#: includes/event-organiser-ajax.php:692
 msgid "Add To Google Calendar"
 msgstr "Google Naptár-hoz hozzáadni"
+
+#: includes/event-organiser-ajax.php:803
+msgid "Event not found"
+msgstr ""
+
+#: includes/event-organiser-ajax.php:815
+msgid "Events are not editable via the admin calendar"
+msgstr ""
+
+#: includes/event-organiser-ajax.php:825
+msgid "Are you sure you want to do this?"
+msgstr ""
+
+#: includes/event-organiser-ajax.php:835
+msgid "You do not have permission to edit this event"
+msgstr ""
+
+#: includes/event-organiser-ajax.php:857
+#, php-format
+msgid "Event not created: %s"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:33
 msgid "Search Venues"
@@ -1282,6 +1299,10 @@ msgstr "Helyszínek vesszővel elválasztva"
 #: includes/event-organiser-cpt.php:44
 msgid "Venue Location"
 msgstr "Helyszín címe"
+
+#: includes/event-organiser-cpt.php:45
+msgid "View all venues"
+msgstr "Összes helyszín"
 
 #: includes/event-organiser-cpt.php:46
 msgid "Venue:"
@@ -1332,6 +1353,10 @@ msgstr "Kategória neve"
 msgid "No categories found"
 msgstr "Nincsenek kategóriák"
 
+#: includes/event-organiser-cpt.php:105
+msgid "View all categories"
+msgstr "Összes kategória"
+
 #: includes/event-organiser-cpt.php:147
 msgctxt "taxonomy singular name"
 msgid "Tag"
@@ -1374,7 +1399,7 @@ msgid "Choose from the most used tags"
 msgstr "Választás a leggyakrabban előforduló címkék közül"
 
 #: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1501
+#: includes/event-organiser-event-functions.php:1474
 #: templates/event-meta-event-single.php:74
 msgid "Tags"
 msgstr "Címkék"
@@ -1389,6 +1414,11 @@ msgstr "Címkék listája, vesszővel elválasztva"
 
 #: includes/event-organiser-cpt.php:161
 msgid "View all tags"
+msgstr ""
+
+#: includes/event-organiser-cpt.php:219
+msgctxt "post"
+msgid "Add New"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:220
@@ -1683,139 +1713,142 @@ msgstr "Szín"
 msgid "Assign the category a colour."
 msgstr "Kategóriához rendelt szín."
 
-#: includes/event-organiser-event-functions.php:740
-#: includes/event-organiser-register.php:267
+#: includes/event-organiser-event-functions.php:747
+#: includes/event-organiser-register.php:266
 msgid "last"
 msgstr "utolsó"
 
-#: includes/event-organiser-event-functions.php:740
-#: includes/event-organiser-register.php:267
+#: includes/event-organiser-event-functions.php:747
+#: includes/event-organiser-register.php:266
 msgid "first"
 msgstr "első"
 
-#: includes/event-organiser-event-functions.php:740
-#: includes/event-organiser-register.php:267
+#: includes/event-organiser-event-functions.php:747
+#: includes/event-organiser-register.php:266
 msgid "second"
 msgstr "második"
 
-#: includes/event-organiser-event-functions.php:740
-#: includes/event-organiser-register.php:267
+#: includes/event-organiser-event-functions.php:747
+#: includes/event-organiser-register.php:266
 msgid "third"
 msgstr "harmadik"
 
-#: includes/event-organiser-event-functions.php:740
-#: includes/event-organiser-register.php:267
+#: includes/event-organiser-event-functions.php:747
+#: includes/event-organiser-register.php:266
 msgid "fourth"
 msgstr "negyedik"
 
-#: includes/event-organiser-event-functions.php:750
+#: includes/event-organiser-event-functions.php:757
 msgid "one time only"
 msgstr "nincs"
 
-#: includes/event-organiser-event-functions.php:753
+#: includes/event-organiser-event-functions.php:760
 msgid "custom reoccurrence"
 msgstr "egyedi ismétlődés"
 
-#: includes/event-organiser-event-functions.php:760
-#: includes/event-organiser-register.php:257
+#: includes/event-organiser-event-functions.php:767
+#: includes/event-organiser-register.php:256
 msgid "every day"
 msgstr "naponta"
 
-#: includes/event-organiser-event-functions.php:762
-#: includes/event-organiser-register.php:258
+#: includes/event-organiser-event-functions.php:769
+#: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d days"
 msgstr "%d naponta"
 
-#: includes/event-organiser-event-functions.php:768
-#: includes/event-organiser-register.php:259
+#: includes/event-organiser-event-functions.php:775
+#: includes/event-organiser-register.php:258
 msgid "every week on"
 msgstr "hetente minden"
 
-#: includes/event-organiser-event-functions.php:770
-#: includes/event-organiser-register.php:260
+#: includes/event-organiser-event-functions.php:777
+#: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d weeks on"
 msgstr "%d hetente minden"
 
-#: includes/event-organiser-event-functions.php:781
-#: includes/event-organiser-register.php:261
+#: includes/event-organiser-event-functions.php:788
+#: includes/event-organiser-register.php:260
 msgid "every month on the"
 msgstr "havonta"
 
-#: includes/event-organiser-event-functions.php:783
-#: includes/event-organiser-register.php:262
+#: includes/event-organiser-event-functions.php:790
+#: includes/event-organiser-register.php:261
 #, php-format
 msgid "every %d months on the"
 msgstr "%d havonta"
 
-#: includes/event-organiser-event-functions.php:812
+#: includes/event-organiser-event-functions.php:819
 msgid "every year"
 msgstr "évente"
 
-#: includes/event-organiser-event-functions.php:814
+#: includes/event-organiser-event-functions.php:821
 #, php-format
 msgid "every %d years"
 msgstr "%d évente"
 
 #: includes/event-organiser-register.php:56
+#, fuzzy
 msgid "Show More"
 msgstr "Mutass többet"
 
 #: includes/event-organiser-register.php:57
+#, fuzzy
 msgid "Show Less"
 msgstr "Mutass kevesebbet"
 
-#: includes/event-organiser-register.php:244
+#: includes/event-organiser-register.php:243
+#, fuzzy
 msgid "Hide dates"
 msgstr "Dátumok elrejtése"
 
-#: includes/event-organiser-register.php:247
+#: includes/event-organiser-register.php:246
 msgid "Hour"
 msgstr "Óra"
 
-#: includes/event-organiser-register.php:248
+#: includes/event-organiser-register.php:247
 msgid "Minute"
 msgstr "Perc"
 
-#: includes/event-organiser-register.php:250
+#: includes/event-organiser-register.php:249
 msgid "days"
 msgstr "naponta"
 
-#: includes/event-organiser-register.php:252
+#: includes/event-organiser-register.php:251
 msgid "weeks"
 msgstr "hetente"
 
-#: includes/event-organiser-register.php:254
+#: includes/event-organiser-register.php:253
 msgid "months"
 msgstr "hónaponta"
 
-#: includes/event-organiser-register.php:255
+#: includes/event-organiser-register.php:254
 msgid "year"
 msgstr "évente"
 
-#: includes/event-organiser-register.php:256
+#: includes/event-organiser-register.php:255
 msgid "years"
 msgstr "évente"
 
-#: includes/event-organiser-register.php:263
+#: includes/event-organiser-register.php:262
 msgid "every year on the"
 msgstr "évente"
 
-#: includes/event-organiser-register.php:264
+#: includes/event-organiser-register.php:263
 #, php-format
 msgid "every %d years on the"
 msgstr "%d évente"
 
-#: includes/event-organiser-register.php:265
+#: includes/event-organiser-register.php:264
 msgid "This event will repeat"
 msgstr "Esemény ismétlése: "
 
-#: includes/event-organiser-register.php:366
+#: includes/event-organiser-register.php:365
 msgid "Settings"
 msgstr "Beállítások"
 
-#: includes/event-organiser-register.php:669
+#: includes/event-organiser-register.php:668
 #, php-format
 msgid ""
 "<h4>City & State Fields Added</h4>City and state / province fields for "
@@ -1824,7 +1857,7 @@ msgid ""
 "details aftewards."
 msgstr ""
 
-#: includes/event-organiser-register.php:676
+#: includes/event-organiser-register.php:675
 msgid ""
 "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
@@ -1832,11 +1865,12 @@ msgid ""
 "com/blog/new-default-templates-in-1-7'>see this post<a/>."
 msgstr ""
 
-#: includes/event-organiser-register.php:712
+#: includes/event-organiser-register.php:711
 msgid "Dismiss this notice"
 msgstr ""
 
-#: includes/event-organiser-register.php:713
+#: includes/event-organiser-register.php:712
+#, fuzzy
 msgid "Dismiss"
 msgstr "Elvet"
 
@@ -1845,10 +1879,12 @@ msgid "Address"
 msgstr "Cím"
 
 #: includes/event-organiser-venue-functions.php:974
+#, fuzzy
 msgid "City"
 msgstr "Város"
 
 #: includes/event-organiser-venue-functions.php:975
+#, fuzzy
 msgid "State / Province"
 msgstr "Állam / Megye"
 
@@ -1860,32 +1896,36 @@ msgstr "Irányítószám"
 msgid "Country"
 msgstr "Város"
 
-#: includes/event.php:573
+#: includes/event.php:615
 msgid "Schedule not recognised."
 msgstr "Ismeretlen esemény ismétlődés típus."
 
-#: includes/event.php:582
+#: includes/event.php:624
 msgid "Start date not provided."
 msgstr "Nincs kezdő dátum."
 
-#: includes/event.php:600
+#: includes/event.php:642
 msgid "Start date occurs after end date."
 msgstr "Kezdő dátum későbbi, mint a befejező."
 
-#: includes/event.php:603
+#: includes/event.php:645
 msgid "Schedule end date is before is before the start date."
 msgstr "Ismétlődés vége az esemény kezdete előtt van."
 
-#: includes/event.php:686
+#: includes/event.php:727
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Hibás havi ismétlődés (hét ismeretlen)"
 
-#: includes/event.php:806
+#: includes/event.php:861
 msgid "Event does not contain any dates."
 msgstr ""
 
-#: includes/event.php:947
+#: includes/event.php:1004
 msgid "Occurrence not deleted. Occurrence not found."
+msgstr ""
+
+#: includes/event.php:1065
+msgid "There is already an occurrence on this date"
 msgstr ""
 
 #. / TRANSLATORS: This is the description that of the plug-in that appears in the "Plugins" page.
@@ -1897,6 +1937,7 @@ msgstr ""
 
 #: templates/archive-event.php:34 templates/archive-event.php:37
 #: templates/archive-event.php:40
+#, fuzzy
 msgid "Events: "
 msgstr "Események: "
 
@@ -1939,6 +1980,7 @@ msgid "This event finished on %s"
 msgstr "Esemény vége: %s"
 
 #: templates/event-meta-event-single.php:89
+#, fuzzy
 msgid "Upcoming Dates"
 msgstr "Közelgő dátumok"
 
@@ -1967,6 +2009,7 @@ msgid "Event Category Archives: %s"
 msgstr "Esemény kategória archívum: %s"
 
 #: templates/taxonomy-event-category.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested category. "
 msgstr "Sajnáljuk, de a kért kategória nem tartalmaz eseményeket."
 

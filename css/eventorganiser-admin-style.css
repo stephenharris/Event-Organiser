@@ -24,8 +24,20 @@
 	}
 }
 
-@media only screen and (max-width: 1024px) {
+
+@media only screen and (max-width: 1320px) {
 	#post-body.columns-2 #venuemap{
+		width: 100%;
+		clear: both;
+	}
+	.folded #post-body.columns-2 #venuemap{
+		width: 60%;
+		clear:none;
+	}
+}
+
+@media only screen and (max-width: 1190px) {
+	.folded #post-body.columns-2 #venuemap{
 		width: 100%;
 		clear: both;
 	}
@@ -48,6 +60,10 @@
 
 /* Calendar View*/
 .fc-basic-view tbody .fc-row { min-height: 7em; }
+.fc-header-dropdown{margin-top: 2px;display: inline-block;}
+.fc-text-arrow{line-height:0;}
+.fc-button-prev .ui-button-text, .fc-button-next .ui-button-text {padding-top: 0.5em;}
+.fc-button{height: 2.2em;line-height: 2.2em;}
 .event.past-event{opacity:0.5;}
 form.eo_cal .ui-autocomplete-input{width:220px;}
 #eo_admin_calendar .fc-bg{ background: white; }
@@ -58,7 +74,7 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 #eo_admin_calendar select { min-width:180px; width:auto}
 .ui-widget-overlay{z-index:1000;}
 .eo-admin-calendar-dialog{z-index:2000;}
-.eo-admin-calendar-dialog.ui-dialog .ui-dialog-titlebar-close span {margin: -8px;}
+/*.eo-admin-calendar-dialog.ui-dialog .ui-dialog-titlebar-close span {margin: -8px;}*/
 #eo-dialog-tabs, #events-meta {border: none;padding: 0}
 
 /* Selectmenu
@@ -98,16 +114,21 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .ui-combobox-input {margin: 0;padding: 0.3em;}
 .eo-venue-combobox-buttons{position: absolute;width:4.5em;}
 
-#eo_occurrence_datepicker .ui-datepicker .ui-state-default a,
-#eo_occurrence_datepicker .ui-datepicker .ui-state-active a{color:#FFF;
-background: #7eacbf; /* Old browsers */
-background: -moz-linear-gradient(top, #7eacbf 0%, #21759b 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7eacbf), color-stop(100%,#21759b)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, #7eacbf 0%,#21759b 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, #7eacbf 0%,#21759b 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, #7eacbf 0%,#21759b 100%); /* IE10+ */
-background: linear-gradient(to bottom, #7eacbf 0%,#21759b 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7eacbf', endColorstr='#21759b',GradientType=0 ); /* IE6-9 */
+.eo-admin-calendar-dialog .ui-autocomplete {
+	max-height: 100px;
+	max-width:220px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+}
+
+#eo_occurrence_datepicker .ui-datepicker .eo-op-date-not-selected a,
+#eo_occurrence_datepicker .ui-widget-content .ui-datepicker-current-day a{
+	background: #ececec;
+}
+#eo_occurrence_datepicker .ui-datepicker .eo-op-date-selected a{
+color:#FFF;
+background: #1e8cbe;
 }
 
 

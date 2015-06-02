@@ -36,7 +36,36 @@ module.exports = function(grunt) {
 		},
 		all: [ 'js/*.js', '!js/*.min.js', '!*/moment.js', '!*/time-picker.js', '!*/jquery-ui-eo-timepicker.js', '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
-  	
+    phpcs: {
+        application: {
+            src: [
+                  '**/*.php',
+                  '!node_modules/**',
+                  '!dist/**',
+                  '!apigen/**',
+                  '!documentation/**',
+                  '!tests/**',
+                  '!vendor/**',
+                  '!*~',
+            ]
+        },
+        options: {
+        	report: 'summary',
+        	bin: './vendor/bin/phpcs',
+        	showSniffCodes: true,
+        	standard: 'codesniff'
+        }
+    },
+  	phpmd: {
+  		application: {
+  			dir: 'includes,classes'
+  	    },
+  	    options: {
+  	    	reportFormat: 'text',
+  	    	bin: './vendor/bin/phpmd', 
+  	    	rulesets: 'codesize'
+  	    }
+  	},
 	cssjanus: {
 		core: {
 			options: {
@@ -94,8 +123,10 @@ module.exports = function(grunt) {
 	},
 
 	clean: {
-		//Clean up build folder
-		main: ['dist/event-organiser']
+		main: ['dist/event-organiser'],//Clean up build folder
+		css: [ 'css/*.min.css', 'css/*-rtl.css' ],
+		js: [ 'js/*.min.js' ],
+		i18n: [ 'languages/*.mo', 'languages/*.pot' ] 
 	},
 
 	copy: {
@@ -103,23 +134,17 @@ module.exports = function(grunt) {
 		main: {
 			src:  [
 				'**',
-				'!node_modules/**',
-				'!assets/**',
-				'!dist/**',
-				'!.git/**',
-				'!apigen/**',
-				'!documentation/**',
-				'!tests/**',
-				'!vendor/**',
-				'!Gruntfile.js',
-				'!package.json',
-				'!.gitignore',
-				'!.gitmodules',
-				'!**/*~',
-				'!composer.lock',
-				'!composer.phar',
-				'!composer.json',
-				'!CONTRIBUTING.md'
+				'!node_modules/**','!Gruntfile.js','!package.json', //npm/Grunt
+				'!assets/**', //wp-org assets
+				'!dist/**', //build directory
+				'!.git/**', //version control
+				'!apigen/**', '!documentation/**', //docs
+				'!tests/**','!bin/**', //unit test
+				'!vendor/**','!composer.lock','!composer.phar','!composer.json', //composer
+				'!.*','!**/*~', //hidden files
+				'!CONTRIBUTING.md',
+				'!readme.md',
+				'!codesniff','!phpunit.xml', //CodeSniffer & Mess Detector
 			],
 			dest: 'dist/event-organiser/'
 		},
@@ -127,16 +152,17 @@ module.exports = function(grunt) {
 		beta: {
 			src:  [
 				'**',
+				'!node_modules/**','!Gruntfile.js','!package.json', //npm/Grunt
+				'!assets/**', //wp-org assets
 				'!dist/**', //build directory
-				'!assets/**',
-				'!.git/**','!.gitignore','!.gitmodules', //git
-				'!node_modules/**','!Gruntfile.js','!package.json', //grunt
-				'!apigen/**','!documentation/**', //documentation
-				'!tests/**', //unit tests
-				'!vendor/**',
-				'!**/*~',
-				'!composer.lock','!composer.phar','!composer.json',//composer
-				'!CONTRIBUTING.md'
+				'!.git/**', //version control
+				'!apigen/**', '!documentation/**', //docs
+				'!tests/**','!bin/**', //unit test
+				'!vendor/**','!composer.lock','!composer.phar','!composer.json', //composer
+				'!.*','!**/*~', //hidden files
+				'!CONTRIBUTING.md',
+				'!readme.md',
+				'!codesniff','!phpunit.xml', //CodeSniffer & Mess Detector
 			],
 			dest: process.env.EO_BETA_PLUGIN_DIR + '/<%= pkg.name %>/'
 		}	
@@ -154,11 +180,6 @@ module.exports = function(grunt) {
 	phpunit: {
 		classes: {
 			dir: 'tests/unit-tests'
-		},
-		options: {
-			bin: 'vendor/bin/phpunit',
-			bootstrap: 'tests/bootstrap.php',
-			colors: true
 		}
 	},
 	
@@ -288,7 +309,7 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'build', [ 'test', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'clean', 'copy' ] );
+grunt.registerTask( 'build', [ 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
 
 grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
 
