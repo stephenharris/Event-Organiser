@@ -465,7 +465,7 @@ jQuery(document).ready(function () {
     	
     	eventorganiser.agenda_widget.prototype.group_change = function( previous, current ){
     		
-    		if( previous == false ){
+    		if( previous === false ){
     			return true;
     		}
     		
@@ -580,7 +580,7 @@ eventorganiser.google_map = function( param ){
 	this.param = param;
 	this.markers = {};
 	this.map = null;
-}
+};
 eventorganiser.google_map.prototype.load = function(){    
 	var args = {
         zoom: this.param.zoom,
@@ -610,7 +610,7 @@ eventorganiser.google_map.prototype.load = function(){
 		var lat = this.param.locations[j].lat;
     	var lng = this.param.locations[j].lng;
     	
-    	if (lat == undefined || lng == undefined) {
+    	if (lat === undefined || lng === undefined) {
     		continue;
     	}
     			
@@ -693,7 +693,7 @@ eventorganiser.google_map.prototype.tooltip = function(){
 			event: 'mouseleave unfocus'
 		}
 	 });	
-}
+};
 jQuery(document).ready(function(){
 	var maps = eventorganiser.map;
 	for (var i = 0; i < maps.length; i++) {
