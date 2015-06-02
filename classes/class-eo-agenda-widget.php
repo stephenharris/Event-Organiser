@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Class used to create the event calendar widget
  */
 class EO_Events_Agenda_Widget extends WP_Widget{
-	
+
 	var $w_arg = array();
 
 	static $agendas = array();
@@ -25,11 +25,11 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 	 *
 	 * @return void.
 	 */
-	public static function register(){
+	public static function register() {
 		register_widget( __CLASS__ );
 	}
 
-	function form( $instance ){
+	function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, $this->w_arg );
 		?>
 		<p>
@@ -63,7 +63,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 		<?php
 	}
 
-	function update( $new_instance, $old_instance ){
+	function update( $new_instance, $old_instance ) {
 		$validated = array();
 		delete_transient( 'eo_widget_agenda' );
 		$validated['title']         = sanitize_text_field( $new_instance['title'] );
@@ -74,16 +74,16 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 		return $validated;
 	}
 
-	function widget( $args, $instance ){
-		
+	function widget( $args, $instance ) {
+
 		wp_enqueue_script( 'eo_front' );
-		
-		if( !eventorganiser_get_option( 'disable_css' ) ){
+
+		if ( ! eventorganiser_get_option( 'disable_css' ) ) {
 			wp_enqueue_style( 'eo_front' );
 		}
-	
+
 		add_action( 'wp_footer', array( __CLASS__, 'add_options_to_script' ) );
-	
+
 		self::$agendas[$args['widget_id']] = array(
 			'id'            => esc_attr( $args['widget_id'] ),
 			'number'        => $this->number,
@@ -98,16 +98,16 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 
 		$widget_title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
 
-		if( $widget_title ){
+		if ( $widget_title ) {
 			echo $args['before_title'] . esc_html( $widget_title ) . $args['after_title'];
 		}
-				
+
 		echo '<div data-eo-agenda-widget-id="'.esc_attr( $args['widget_id'] ).'" id="' . esc_attr( $args['widget_id'] ) . '_container' . '" class="eo-agenda-widget"></div>';
 
 		echo $args['after_widget'];
 	}
 
-	static function print_main_template(){
+	static function print_main_template() {
 		?>
   		<script type="text/template" id="eo-tmpl-agenda-widget">
 		<div class='eo-agenda-widget-nav'>
@@ -119,7 +119,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
   		<?php
 	}
 
-	static function print_group_template(){
+	static function print_group_template() {
 		?>
 	  	<script type="text/template" id="eo-tmpl-agenda-widget-group">
 		<li class="date">
@@ -129,8 +129,8 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 		</script>
 	  	<?php
 	}
-	
-	static function print_item_template(){
+
+	static function print_item_template() {
 		?>
 		<script type="text/template" id="eo-tmpl-agenda-widget-item">
 		<li class="event">
@@ -164,14 +164,14 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 		</script>
 	 	<?php
 	}
-		
+
 	static function add_options_to_script() {
-		if( !empty( self::$agendas ) ){
+		if ( ! empty( self::$agendas ) ) {
 			wp_localize_script( 'eo_front', 'eo_widget_agenda', self::$agendas );
 			self::print_main_template();
 			self::print_group_template();
 			self::print_item_template();
-		}	
+		}
 	}
 
 }
