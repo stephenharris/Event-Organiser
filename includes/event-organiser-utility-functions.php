@@ -256,77 +256,72 @@ function eo_date_interval($_date1,$_date2, $format){
 }	 
 
 /**
-* Very basic class to convert php date format into xdate date format used for javascript.
-*
-* Takes a php date format and converts it to {@link http://arshaw.com/xdate/#Formatting xdate format} so
-* that it can b used in javascript (notably the fullCalendar).
-*
-* Doesn't support
-* 
-* * L Whether it's a leap year
-* * N ISO-8601 numeric representation of the day of the week (added in PHP 5.1.0)
-* * w Numeric representation of the day of the week (0=sun,...)
-* * z The day of the year (starting from 0)
-* * t Number of days in the given month
-* * B Swatch Internet time
-* * u microseconds
-* * e 	Timezone identifier (added in PHP 5.1.0) 	Examples: UTC, GMT, Atlantic/Azores
-* * I (capital i) 	Whether or not the date is in daylight saving time 	1 if Daylight Saving Time, 0 otherwise.
-* * O  Difference to Greenwich time (GMT) in hours 	Example: +0200
-* * T  Timezone abbreviation 	Examples: EST, MDT ...
-* * Z  Timezone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.
-* * c  ISO 8601 date (added in PHP 5) 	2004-02-12T15:19:21+00:00
-* * r  RFC 2822 formatted date 	Example: Thu, 21 Dec 2000 16:01:07 +0200
-* * U Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) 	See also time()
-*
-* @since 2.1.3
-*
-*@param string $phpformat Format according to https://php.net/manual/en/function.date.php
-*@return string The format translated to xdate format: http://arshaw.com/xdate/#Formatting
-*/
-function eo_php2xdate($phpformat=""){
-	$php2xdate = array(
-		'Y'=>'yyyy','y'=>'yy','L'=>''/*Not Supported*/,'o'=>'I',
-		'j'=>'d','d'=>'dd','D'=>'ddd','l'=>'dddd','N'=>'', /*NS*/ 'S'=>'S',
-		'w'=>'', /*NS*/ 'z'=>'',/*NS*/ 'W'=>'w',
-		'F'=>'MMMM','m'=>'MM','M'=>'MMM','n'=>'M','t'=>'',/*NS*/
-		'a'=>'tt','A'=>'TT',
-		'B'=>'',/*NS*/'g'=>'h','G'=>'H','h'=>'hh','H'=>'HH','u'=>'fff',
-		'i'=>'mm','s'=>'ss',
-		'O'=>'zz ', 'P'=>'zzz',
-		'c'=>'u',
-	);
-		
-	$xdateformat="";
-
-	for($i=0;  $i< strlen($phpformat); $i++){
-
-		//Handle backslash excape
-		if($phpformat[$i]=="\\"){
-			$xdateformat .= "\\".$phpformat[$i+1];
-			$i++;
-			continue;
-		}
-
-		if(isset($php2xdate[$phpformat[$i]])){
-			$xdateformat .= $php2xdate[$phpformat[$i]];
-		}else{
-			$xdateformat .= $phpformat[$i];
-		}
-	}
-	return $xdateformat;
-}
-
-/**
- * Very basic class to convert php date format into xdate date format used for javascript.
- * @deprecated 2.1.3
- * @ignore
- * @since 1.4
+ * Converts php date format into Moment.js date format used for javascript.
+ *
+ * **Please note that this function does not conver all tokens**
+ *
+ * @since 3.0.0
+ * @link http://momentjs.com/docs/#/displaying/format/
+ * @param string $phpformat Format according to https://php.net/manual/en/function.date.php
+ * @return string The format translated to Moment.js format: momentjs.com/docs/#/displaying/format/
  */
-function eventorganiser_php2xdate( $phpformat="" ){
-	return eo_php2xdate( $phpformat );
-}
+function eo_php_to_moment( $phpformat ){
 
+	/* Not supported: N, S, z, W, t, L, o, T, e, I, Z, u, X */
+	$map = array(
+			//Day
+			'j' => 'D', 'd' => 'DD', 'D' => 'ddd', 'l' => 'dddd', 'jS' => 'Do', 'w' => 'd',
+			//Week
+			'W' => 'w',
+			//Month
+			'F' => 'MMMM', 'm' => 'MM', 'M' => 'MMM', 'n' => 'M',
+			//Year
+			'Y' => 'YYYY', 'y' => 'YY', 'o' => 'gggg',
+			//Hour
+			'g' => 'h', 'G' => 'H', 'h' => 'hh', 'H' => 'HH',
+			//Merdian
+			'a' => 'a', 'A' => 'A',
+			//Minute
+			'i' => 'mm',
+			//Second
+			's' => 'ss',
+			'B' => 'SSS',
+			//Timezone
+			'P' => 'Z',
+			'O' => 'ZZ',
+			//Full date time
+			'c' => 'YYYY-MM-DD[T]HH:mm:ssZ',
+			'R' => 'ddd, D MMM YYYY HH:mm:ss ZZ',
+			'U' => 'X',
+	);
+
+	$regexp  = '/(\\\\\S|d|D|jS?|l|N|.)/';
+	$matches = array();
+
+	preg_match_all( $regexp, $phpformat, $matches );
+
+	if ( !$matches || false === is_array( $matches ) ){
+		return $format;
+	}
+
+	$php_tokens = array_keys( $map );
+	$moment_format = '';
+
+	foreach ( $matches[0] as $id => $match ){
+		// if there is a matching php token in token list
+		if ( in_array( $match, $php_tokens ) ){
+			// use the php token instead
+			$string = $map[$match];
+		}elseif( preg_match( '/(\\\\\S)/', $match ) ){
+			$string = '['. substr( $match, 1 ) . ']';
+		}else{
+			$string = $match;
+		}
+		$moment_format .= $string;
+	}
+
+	return $moment_format;
+}
 
 /**
  * Converts php date format into jQuery UI date format.

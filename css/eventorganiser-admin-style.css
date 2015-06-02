@@ -59,12 +59,24 @@
 #eo_venue_form #venue_address .inside{padding:0;margin:0;}
 
 /* Calendar View*/
+.fc-basic-view tbody .fc-row { min-height: 7em; }
 .fc-header-dropdown{margin-top: 2px;display: inline-block;}
 .fc-text-arrow{line-height:0;}
 .fc-button-prev .ui-button-text, .fc-button-next .ui-button-text {padding-top: 0.5em;}
 .fc-button{height: 2.2em;line-height: 2.2em;}
 .event.past-event{opacity:0.5;}
 form.eo_cal .ui-autocomplete-input{width:220px;}
+#eo_admin_calendar .fc-bg{ background: white; }
+#calendar-view .view-button{float:right;height: 30px;line-height: 28px;margin-top: 3px;padding: 0 11px;}
+#calendar-view{clear: both;height: 34px;margin-bottom: 15px;border-bottom: 1px solid #dfdfdf;padding-right: 100px;position: relative;}
+#calendar-view .nav-tab{ font-size: 15px }
+#calendar-view #loading{position:absolute;bottom:0;font-size: 16px;line-height: 16px;margin-bottom: 5px;}
+#calendar-view #loading:before {content: url("images/loading-image.gif");padding-right: 5px;}
+/*For the blocks of colour*/
+.cat .ui-selectmenu-item-icon { height: 14px; width: 14px; border:1px solid #dfdfdf;border-radius: 4px;}
+.cat .ui-selectmenu-item-icon{ background-image:none!important; }
+
+
 /* Table on event details calendar view*/
 .eo-cal-meta .form-table th {width:50px;}
 /*Drop down filters*/

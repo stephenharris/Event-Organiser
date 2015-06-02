@@ -14,9 +14,9 @@ if ( !class_exists( 'EventOrganiser_Admin_Page' ) ){
  */
 class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 {
-    /**
-     * This sets the calendar page variables
-     */
+	/**
+	 * This sets the calendar page variables
+	*/
 	function set_constants(){
 		$this->hook = 'edit.php?post_type=event';
 		$this->title = __( 'Calendar View', 'eventorganiser' );
@@ -33,6 +33,14 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		global $wp_locale;
 		
 		wp_enqueue_script( 'eo_calendar' );
+
+		//wp_enqueue_script( 'eo_event' );
+		wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'startday' => intval( get_option( 'start_of_week' ) ),
+			'format' => eo_php2jquerydate( eventorganiser_get_option( 'dateformat' ) ),
+		));
+
 		
 		$edittime = ( defined( 'EVENT_ORGANISER_BETA_FEATURES' ) && EVENT_ORGANISER_BETA_FEATURES );
 		
@@ -48,11 +56,11 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			$all_venues = $venue_tax->labels->view_all_items;
 		}
 		
-		wp_localize_script( 'eo_calendar', 'EO_Ajax', array( 
+		wp_localize_script( 'eo_calendar', 'EO_Ajax', array(
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
 			'startday'   => intval( get_option( 'start_of_week' ) ),
-			'format'     => eventorganiser_php2jquerydate( eventorganiser_get_option( 'dateformat' ) ),
-			'timeFormat' => ( get_current_screen()->get_option( 'eofc_time_format', 'value' ) ? 'h:mmtt' : 'HH:mm' ),
+			'format'     => eo_php_to_moment( eventorganiser_get_option( 'dateformat' ) ),
+			'timeFormat' => ( get_current_screen()->get_option( 'eofc_time_format', 'value' ) ? 'h:mmtt' : 'HH:mm' ),			
 			'perm_edit'  => current_user_can( 'edit_events' ),
 			'edit_time'  => $edittime ? current_user_can( 'edit_events' ) : false,
 			'edit_nonce' => wp_create_nonce( 'edit_events' ),

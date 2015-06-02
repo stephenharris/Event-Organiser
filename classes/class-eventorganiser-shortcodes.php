@@ -110,25 +110,29 @@ class EventOrganiser_Shortcodes {
 		return $html;
 	}
 
-	static function handle_fullcalendar_shortcode($atts=array()) {
+	static function handle_fullcalendar_shortcode( $atts = array() ){
 
 		global $wp_locale;
 		
 		/* Handle Boolean attributes - this will be passed as strings, we want them as boolean */
 		$bool_atts = array(
-			'key'=>'false',
-			'tooltip'=>'true',
-			'weekends'=>'true',
-			'alldayslot'=>'true',
-			'users_events' => 'false',
-			'theme' => 'true',
-			'isrtl' => $wp_locale->is_rtl() ? 'true' : 'false'
+			'tooltip' => 'true', 'weekends' => 'true', 'alldayslot' => 'true', 'users_events' => 'false',
+			'theme' => 'false', 'isrtl' => $wp_locale->is_rtl() ? 'true' : 'false', 'responsive' => 'true',
 		);
 		
 		$atts = wp_parse_args( $atts, $bool_atts );
 
 		foreach( $bool_atts as $att => $value ){
 			$atts[$att] = ( strtolower( $atts[$att] ) == 'true' ? true : false );
+		}
+		
+		//Backwards compatability, key used to be true/false. Now can be bottom/top
+		if( isset( $atts['key'] ) ){
+			if( 'true' == strtolower( $atts['key'] ) ){
+				$atts['key'] = 'bottom';
+			}elseif( !in_array( strtolower( $atts['key'] ), array( 'bottom', 'top' ) ) ){
+				$atts['key'] = false;
+			}
 		}
 
 		if( isset($atts['venue']) && !isset( $atts['event_venue'] ) ){
@@ -140,6 +144,17 @@ class EventOrganiser_Shortcodes {
 			unset( $atts['category'] );
 		}
 		
+		$date_attributes = array( 
+			'timeformat', 'axisformat', 'titleformatday', 'titleformatweek', 'titleformatmonth',
+			'columnformatmonth', 'columnformatweek', 'columnformatday',
+		);
+		
+		foreach( $date_attributes as $attribute ){
+			if( isset( $atts[$attribute] ) ){
+				$atts[$attribute] = self::_cleanup_format( $atts[$attribute] );
+			}
+		}
+
 		$taxonomies = get_object_taxonomies( 'event' );
 		foreach( $taxonomies as $tax ){
 			//Shortcode attributes can't contain hyphens
@@ -149,8 +164,35 @@ class EventOrganiser_Shortcodes {
 				unset( $atts[$shortcode_attr] ); 
 			}
 		}
+		
+		if( isset( $atts['showdays'] ) ){
+			$atts['showdays'] = explode( ',', $atts['showdays'] );
+		}
 				
 		return eo_get_event_fullcalendar( $atts );
+	}
+	
+	/**
+	 * Prior to 3.0.0, formats could accept operators to deal with ranges.
+	 * Specifically {...} switches to formatting the 2nd date and ((...)) only displays 
+	 * the enclosed format if the current date is different from the alternate date in 
+	 * the same regards.E.g.  M j(( Y)){ '—'(( M)) j Y} produces the following dates: 
+	 * Dec 30 2013 — Jan 5 2014, Jan 6 — 12 2014
+	 * 
+	 * This was removed in 3.0.0, fullCalendar.js will now automatically split the date where
+	 * appropriate. This function removes {...} and all enclosed content and replaces ((...))
+	 * by the content contained within to help prevent an users upgrading from the old version.
+	 * 
+	 * @ignore
+	 */
+	static function _cleanup_format( $format ){
+		$format = preg_replace( '/({.*})/', '', $format );
+		$format = preg_replace_callback( '/\(\((.*)\)\)/', array( __CLASS__ ,'_replace_open_bracket' ), $format );			
+		return $format;
+	}
+	
+	static function _replace_open_bracket( $matches ){
+		return $matches[1];
 	}
 
 	static function handle_venuemap_shortcode($atts) {
@@ -442,13 +484,14 @@ class EventOrganiser_Shortcodes {
 		));	
 		
 		if( !empty(self::$calendars) || !empty(self::$map) || !empty(self::$widget_calendars) ):				
-			wp_enqueue_script( 'eo_qtip2');		
-			wp_enqueue_script( 'eo_front');
-
+			wp_enqueue_script( 'eo_qtip2' );		
+			wp_enqueue_script( 'eo_front' );
+		
 			if( !eventorganiser_get_option( 'disable_css' ) ){
-				wp_enqueue_style( 'eo_front');
-				wp_enqueue_style('eo_calendar-style');
+				wp_enqueue_style( 'eo_front' );
+				wp_enqueue_style( 'eo_calendar-style' );
 			}
+
 		endif;
 
 		if( !empty( self::$map ) ){

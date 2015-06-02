@@ -40,30 +40,7 @@ eventorganiser.versionCompare = function(left, right) {
 
 
 (function ($) {
-	 /**Parses string formatted as YYYY-MM-DD to a Date object.
-	  * If the supplied string does not match the format, an 
-	  * invalid Date (value NaN) is returned.
-	  * Used as a workaround for IE7/8 difficulities.
-	  * @link https://stackoverflow.com/questions/2182246/javascript-dates-in-ie-nan-firefox-chrome-ok
-	  * @param {string} dateStringInRange format YYYY-MM-DD, with year in
-	  * range of 0000-9999, inclusive.
-	  * @return {Date} Date object representing the string.
-	  */
-	  function eventorganiser_parseISO8601( dateStringInRange ) {
-	    var isoExp = /^\s*(\d{4})-(\d\d)-(\d\d)\s*$/,
-	        date = new Date(NaN), month,
-	        parts = isoExp.exec(dateStringInRange);
 
-	    if( parts ) {
-	      month = +parts[2];
-	      date.setFullYear( parts[1], month - 1, parts[3] );
-	      if( month != date.getMonth() + 1 ) {
-	        date.setTime( NaN );
-	      }
-	    }
-	    return date;
-	  }
-	  
     $(document).ready(function () {
 	
 	/* Calendar Dialogs */
@@ -79,43 +56,25 @@ eventorganiser.versionCompare = function(left, right) {
 	$('#events-meta').parent().find('.ui-dialog-titlebar-close').appendTo('.ui-tabs-nav').closest('.ui-dialog').children('.ui-dialog-titlebar').remove();
 
 	/* Time Format from screen option */
-	var format = ($('#eofc_time_format').is(":checked") ? 'HH:mm' : 'h:mmtt');
+	var format = ($('#eofc_time_format').is(":checked") ? 'HH:mm' : 'h:mma');
     
-	var initial_date = eventorganiser_parseISO8601( jQuery.cookie('eo_admin_cal_last_viewed_date') );
-	
-    //Invalid dates cause trouble in IE7&8 https://github.com/stephenharris/Event-Organiser/issues/96
-    //Check date is valid: https://stackoverflow.com/questions/1353684/
-	if ( Object.prototype.toString.call( initial_date  ) === "[object Date]" ) {
-		if ( isNaN( initial_date.getTime() ) ) {
-				//not valid
-				initial_date = new Date();
-		} else {
-				//Is valid date
-		}
-	} else {
-		//not valid;
-		initial_date = new Date();
-	}
-
 	/* Calendar */
-        var calendar = jQuery('#eo_admin_calendar').fullCalendar({
+	var calendar = jQuery('#eo_admin_calendar').fullCalendar({
 		firstDay: parseInt(EO_Ajax.startday,10),
-		date: initial_date.getDate(),
-		month: initial_date.getMonth(),
-		year: initial_date.getFullYear(),
+		defaultDate: moment( $.cookie('eo_admin_cal_last_viewed_date') ),
 		defaultView: ($.cookie('eo_admin_cal_last_view') ? $.cookie('eo_admin_cal_last_view') : 'month'),
 		editable: EO_Ajax.perm_edit,
 		eventDurationEditable: false,
 		eventStartEditable: EO_Ajax.edit_time,
 		durationEditable: false,
-		eventDrop: function( event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) { 
+		eventDrop: function( event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
             $.ajax({
             	type: "POST",
             	url: EO_Ajax.ajaxurl,
             	data:{
             		action: 'eofc-edit-date',
-            		start:  $.fullCalendar.formatDate( event.start, 'yyyy-MM-dd HH:mm:ss'),
-            		end:  $.fullCalendar.formatDate( event.end, 'yyyy-MM-dd HH:mm:ss'),
+            		start: event.start.format( 'YYYY-MM-DD HH:mm:ss' ),
+            		end: event.end.format( 'YYYY-MM-DD HH:mm:ss' ),
             		event_id: event.event_id,
             		occurrence_id: event.occurrence_id,
             		_wpnonce: EO_Ajax.edit_nonce,
@@ -135,7 +94,7 @@ eventorganiser.versionCompare = function(left, right) {
 		},
 		lazyFetching: 'true',
 		eventColor: '#21759B',
-		theme: true,
+		theme: false,
 		customButtons:{
 			category:  eventorganiser_cat_dropdown,
 			venue:  ( EO_Ajax.venues !== '' ? eventorganiser_venue_dropdown : null ),
@@ -143,11 +102,13 @@ eventorganiser.versionCompare = function(left, right) {
 		},
 		buttonText: {
 			today: EO_Ajax.locale.today,
-			 month: EO_Ajax.locale.month,
+			month: EO_Ajax.locale.month,
 			week: EO_Ajax.locale.week,
 			day: EO_Ajax.locale.day,
 			cat: EO_Ajax.locale.cat,
-			venue: EO_Ajax.locale.venue
+			venue: EO_Ajax.locale.venue,
+			prev: '<',
+			next: '>'
 		},
 		monthNames: EO_Ajax.locale.monthNames,
 		monthNamesShort: EO_Ajax.locale.monthAbbrev,
@@ -156,208 +117,193 @@ eventorganiser.versionCompare = function(left, right) {
 		isRTL: EO_Ajax.locale.isrtl,
 		header: {
 			left: 'title',
-                	center: 'category venue',
-                	right: 'prev goto today next'
+			center: 'category venue',
+			right: 'prev goto today next'
 		},
 		buttonIcons: false,
 		buttonui: true,
-		events: function (start, end, callback) {
-                	jQuery.ajax({
+		events: function (start, end, timezone, callback) {
+			jQuery.ajax({
 				url: EO_Ajax.ajaxurl + "?action=event-admin-cal",
-                    		dataType: 'JSON',
+				dataType: 'JSON',
 				data: {
-					start: jQuery.fullCalendar.formatDate(start, 'yyyy-MM-dd'),
-					end: jQuery.fullCalendar.formatDate(end, 'yyyy-MM-dd')
-                    		},
-                    		success: function (data) {
-                        		callback(data);
-                    		}
-                	});
+					start: start.format( 'YYYY-MM-DD' ),
+					end:   end.format( 'YYYY-MM-DD' )
+				},
+				success: callback,
+            });
 		},
 		categories: EO_Ajax.categories,
 		venues: EO_Ajax.venues,
 		selectable: true,
 		selectHelper: true,
 		eventRender: function (event, element) {
-			var cat = jQuery(".filter-category .eo-cal-filter").val();
-                	var venue = jQuery(".filter-venue .eo-cal-filter").val();
-                	if ( typeof cat !== "undefined" && cat !== '' && (jQuery.inArray(cat, event.category) < 0)) {
-                    		return '<div></div>';
-                	}
-                	if ( typeof venue !== "undefined" && venue !== '' && venue != event.venue) {
-                    		return '<div></div>';
-                	}
+			var cat   = jQuery(".filter-category .eo-cal-filter").val();
+			var venue = jQuery(".filter-venue .eo-cal-filter").val();
+			if ( typeof cat !== "undefined" && cat !== '' && (jQuery.inArray(cat, event.category) < 0)) {
+				return '<div></div>';
+			}
+			if ( typeof venue !== "undefined" && venue !== '' && venue != event.venue) {
+				return '<div></div>';
+			}
 		},
-		viewDisplay: function (element) {
-			var date = jQuery.fullCalendar.formatDate( element.start,'yyyy-MM-dd');
-			var view = element.name;
-
+		viewRender: function ( view, element ) {
+			var date = view.intervalStart.format( 'YYYY-MM-DD' );
 			//Expire cooke after 10 minutes
 			var expires_date = new Date();
 			expires_date = new Date(expires_date.getTime() + (10 * 60 * 1000));			
 			$.cookie('eo_admin_cal_last_viewed_date', date,{ expires: expires_date });
-			$.cookie('eo_admin_cal_last_view', view,{ expires: expires_date });
-    		},
+			$.cookie('eo_admin_cal_last_view', view.name,{ expires: expires_date });
+		},
 		weekMode: 'variable',
-		aspectRatio: 1.50,
 		loading: function (bool) {
 			if (bool) jQuery('#loading').show();
 			else jQuery('#loading').hide();
 		},
-		timeFormat:format,
+		timeFormat: format,
 		axisFormat: format,
 		eventClick: function (event, jsevent, view) {
-                	jsevent.preventDefault();
-			jQuery("#eo-dialog-tabs ul li").each(function(){
+			jsevent.preventDefault();
+			$("#eo-dialog-tabs ul li").each(function(){
 				var id = $(this).attr('id').substring(14);
-	                	jQuery("#eo-dialog-tabs #"+$(this).attr('id')+'-content').html(event[id]);
+				$("#eo-dialog-tabs #"+$(this).attr('id')+'-content').html(event[id]);
 			});
-
 			$('#events-meta').dialog('open');
 		},
-		select: function (startDate, endDate, allDay, jsEvent, view) {
-                	if (EO_Ajax.perm_edit) {
+		select: function ( startDate, endDate, jsEvent, view ){
+			if ( EO_Ajax.perm_edit ){
 				jsEvent.preventDefault();
-				var fc_format = 'yyyy-MM-dd';
 				var options = jQuery(this)[0].calendar.options;
-				var start_date = jQuery.fullCalendar.formatDate(startDate, fc_format);
-				var start_time = jQuery.fullCalendar.formatDate(startDate, 'HH:mm');
-				var end_date = jQuery.fullCalendar.formatDate(endDate, fc_format);
-				var end_time = jQuery.fullCalendar.formatDate(endDate, 'HH:mm');
-				var the_date;
-				if ( allDay ) {
-					format = 'ddd, dS MMMM';
+				
+				var start_date = startDate.format( 'YYYY-MM-DD' );
+				var start_time = startDate.format( 'HH:mm' );
+				
+				if ( !startDate.hasTime() ) {
+					endDate.subtract(1, 'minute');
+					format = 'ddd, Do MMMM';
 					allDay = 1;
 				} else {
-					format = 'ddd, dS MMMM h(:mm)tt';
+					format = 'ddd, Do MMMM h:mma';
 					allDay = 0;
 				}
-                    		
-				if (start_date == end_date) {
-					the_date = jQuery.fullCalendar.formatDate(startDate, format, options);
-					if (!allDay) {
-						the_date = the_date + ' &mdash; ' + jQuery.fullCalendar.formatDate(endDate, 'h(:mm)tt', options );
-					}
-				} else {
-					the_date = jQuery.fullCalendar.formatDate(startDate, format, options) + ' &mdash; ' + jQuery.fullCalendar.formatDate( endDate, format, options );
-				}
 				
+				var end_date   = endDate.format( 'YYYY-MM-DD' );
+				var end_time   = endDate.format( 'HH:mm' );
+
+				var the_date = $.fullCalendar.formatRange( startDate, endDate, format );
+						
 				$("#eo_event_create_cal input[name='eo_event[event_title]']").val('');
 				$("#eo_event_create_cal input.ui-autocomplete-input").val('');
 				$("#eo_event_create_cal textarea[name='eo_event[event_content]']").val('');
-    			$("#eo_event_create_cal input[name='eo_event[StartDate]']").val(start_date);
-    			$("#eo_event_create_cal input[name='eo_event[StartTime]']").val(start_time);
-    			$("#eo_event_create_cal input[name='eo_event[EndDate]']").val(end_date);
+				$("#eo_event_create_cal input[name='eo_event[StartDate]']").val(start_date);
+				$("#eo_event_create_cal input[name='eo_event[StartTime]']").val(start_time);
+				$("#eo_event_create_cal input[name='eo_event[EndDate]']").val(end_date);
 				$("#eo_event_create_cal input[name='eo_event[FinishTime]']").val(end_time);
-    			$("#eo_event_create_cal input[name='eo_event[allday]']").val(allDay);
-    			$("#eo_event_create_cal td#date").html(the_date);
-    			$('#eo_event_create_cal').dialog('open');
-    			$("form.eo_cal input[type='submit']").removeAttr('disabled');
-    			$("form.eo_cal input#reset").click(function (event) {
-        			$('#eo_event_create_cal').dialog('close');
-        		});
-    		}
+				$("#eo_event_create_cal input[name='eo_event[allday]']").val(allDay);
+				$("#eo_event_create_cal td#date").html(the_date);
+				$('#eo_event_create_cal').dialog('open');
+				$("form.eo_cal input[type='submit']").removeAttr('disabled');
+				$("form.eo_cal input#reset").click(function (event) {
+					$('#eo_event_create_cal').dialog('close');
+				});
+			}
 		}
-        });
+	});
 
 	/* Update time format screen option */
-        $('#eofc_time_format').change(function () {
-            format = ($('#eofc_time_format').is(":checked") ? 'HH:mm' : 'h:mmtt');
-            calendar.fullCalendar('option', 'timeFormat', format);
-            $.post(ajaxurl, {
-                action: 'eofc-format-time',
-                is24: $('#eofc_time_format').is(":checked")
-            });
-        });
-
+	$('#eofc_time_format').change(function () {
+		format = ($('#eofc_time_format').is(":checked") ? 'HH:mm' : 'h:mmtt');
+		calendar.fullCalendar('option', 'timeFormat', format);
+		$.post(ajaxurl, {
+			action: 'eofc-format-time',
+			is24: $('#eofc_time_format').is(":checked")
+		});
+	});
 
 	/* View tabs */
-        $('.view-button').click(function (event) {
-        	event.preventDefault();
-        	$('.view-button').removeClass('nav-tab-active');
-        	calendar.fullCalendar('changeView', $(this).attr('id'));
-        	$(this).addClass('nav-tab-active');
-        });
+	$('.view-button').click(function (event) {
+		event.preventDefault();
+		$('.view-button').removeClass('nav-tab-active');
+		calendar.fullCalendar('changeView', $(this).attr('id'));
+		$(this).addClass('nav-tab-active');
+	});
 
 	/* GoTo 'mini calendar' */
 	function eventorganiser_mini_calendar(){
 		var element = $("<span class='fc-header-goto'><input type='hidden' id='miniCalendar'/></span>");
 		return element;
 	}
-        $('#miniCalendar').datepicker({
-            dateFormat: 'DD, d MM, yy',
-            firstDay: parseInt( EO_Ajax.startday, 10 ),
-            changeMonth: true,
-            monthNamesShort: EO_Ajax.locale.monthAbbrev,
-            dayNamesMin: EO_Ajax.locale.dayAbbrev,
-            changeYear: true,
-            showOn: 'button',
-            buttonText: EO_Ajax.locale.gotodate,
-            onSelect: function (dateText, dp) {
-                calendar.fullCalendar('gotoDate', new Date(Date.parse(dateText)));
-            }
-        });
-        $('button.ui-datepicker-trigger').button().addClass('fc-button');
+
+	$('#miniCalendar').datepicker({
+		dateFormat: 'DD, d MM, yy',
+		firstDay: parseInt( EO_Ajax.startday, 10 ),
+		changeMonth: true,
+		monthNamesShort: EO_Ajax.locale.monthAbbrev,
+		dayNamesMin: EO_Ajax.locale.dayAbbrev,
+		changeYear: true,
+		showOn: 'button',
+		buttonText: EO_Ajax.locale.gotodate,
+		onSelect: function (dateText, dp) {
+			calendar.fullCalendar('gotoDate', new Date(Date.parse(dateText)));
+		}
+	});
+	$('button.ui-datepicker-trigger').button().addClass('fc-button');
         
     /* Venue drop-down in modal */
-        
-      //The venue combobox
-        $.widget("ui.combobox", {
-        	_create: function () {
-        	var c = this.element.hide(),d = c.children(":selected"),e = d.val() ? d.text() : "";
-        	var wrapper  = $("<span>").addClass("ui-combobox eo-venue-input").insertAfter(c);
-        	var options = {
-        			delay: 0,
-        			minLength: 0,
-        			source: function (a, callback) {
-        				$.getJSON(EO_Ajax.ajaxurl + "?callback=?&action=eo-search-venue", a, function (a) {
-        					var venues = $.map(a, function (a) {a.label = a.name;return a;});
-        					callback(venues);
-        				});
-        			},
-        			select: function (a, b) {
-        				$("#venue_select").removeAttr("selected");
-        				$("#venue_select").val(b.item.term_id);
-        			}
-        		};
-        		var input = $("<input>").appendTo(wrapper).val(e).addClass("ui-combobox-input").autocomplete(options).addClass("ui-widget-content ui-corner-left");
+	$.widget("ui.combobox", {
+		_create: function () {
+			var c = this.element.hide(),d = c.children(":selected"),e = d.val() ? d.text() : "";
+			var wrapper  = $("<span>").addClass("ui-combobox eo-venue-input").insertAfter(c);
+			var options = {
+				delay: 0,
+				minLength: 0,
+				source: function (a, callback) {
+					$.getJSON(EO_Ajax.ajaxurl + "?callback=?&action=eo-search-venue", a, function (a) {
+						var venues = $.map(a, function (a) {a.label = a.name;return a;});
+						callback(venues);
+					});
+				},
+				select: function (a, b) {
+					$("#venue_select").removeAttr("selected");
+					$("#venue_select").val(b.item.term_id);
+				}
+			};
+			var input = $("<input>").appendTo(wrapper).val(e).addClass("ui-combobox-input").autocomplete(options).addClass("ui-widget-content ui-corner-left");
                      
-        		/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
-        		var jquery_ui_version = $.ui ? $.ui.version || 0 : -1;
-        		var ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete' : 'autocomplete' );
-        		
-        		
-        		//Apend venue address to drop-down
-        		input.data( ac_namespace )._renderItem = function (a, b) {
-        			if (b.term_id === 0 ) {
-        				return $("<li></li>").data( ac_namespace + "-item", b).append("<a>" + b.label + "</a>").appendTo(a);
-        			}
-        			//Clean address
-        			var address_array = [b.venue_address, b.venue_city, b.venue_state,b.venue_postcode,b.venue_country];
-        			var address = $.grep(address_array,function(n){return(n);}).join(', ');
-        		
-        			/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
-        			var li_ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete-item' : 'item.autocomplete' );
+			/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
+			var jquery_ui_version = $.ui ? $.ui.version || 0 : -1;
+			var ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete' : 'autocomplete' );
 
-        			return $("<li></li>").data( li_ac_namespace, b)
-        				.append("<a>" + b.label + "</br> <span style='font-size: 0.8em'><em>" +address+ "</span></em></a>").appendTo(a);
-        		};
+			//Apend venue address to drop-down
+			input.data( ac_namespace )._renderItem = function (a, b) {
+				if (b.term_id === 0 ) {
+					return $("<li></li>").data( ac_namespace + "-item", b).append("<a>" + b.label + "</a>").appendTo(a);
+				}
+				//Clean address
+				var address_array = [b.venue_address, b.venue_city, b.venue_state,b.venue_postcode,b.venue_country];
+				var address = $.grep(address_array,function(n){return(n);}).join(', ');
 
-        		//Add new / selec buttons
-    			var button_height = eventorganiser.is_mp6 ? '25px' : '21px';
-    			var button_wrappers = $("<span>").addClass("eo-venue-combobox-buttons").appendTo(wrapper);
-    			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height:"+button_height+";'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
-    				icons: { primary: "ui-icon-triangle-1-s"},
-    				text: false
-    			}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
-    				if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return;}
-    				$(this).blur();
-    				input.autocomplete("search", "").focus();
-    			});
-    			
-        	}
-        });
-        $("#venue_select").combobox();
+				/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
+				var li_ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete-item' : 'item.autocomplete' );
+
+				return $("<li></li>").data( li_ac_namespace, b)
+					.append("<a>" + b.label + "</br> <span style='font-size: 0.8em'><em>" +address+ "</span></em></a>").appendTo(a);
+			};
+
+			//Add new / selec buttons
+			var button_height = eventorganiser.is_mp6 ? '25px' : '21px';
+			var button_wrappers = $("<span>").addClass("eo-venue-combobox-buttons").appendTo(wrapper);
+			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height:"+button_height+";'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
+				icons: { primary: "ui-icon-triangle-1-s"},
+				text: false
+			}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
+				if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return;}
+				$(this).blur();
+				input.autocomplete("search", "").focus();
+			});
+		}
+	});
+	$("#venue_select").combobox();
 
     
 
