@@ -36,6 +36,26 @@ module.exports = function(grunt) {
 		},
 		all: [ 'js/*.js', '!js/*.min.js', '!*/time-picker.js', '!*/jquery-ui-eo-timepicker.js', '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
+    phpcs: {
+        application: {
+            src: [
+                  '**/*.php',
+                  '!node_modules/**',
+                  '!dist/**',
+                  '!apigen/**',
+                  '!documentation/**',
+                  '!tests/**',
+                  '!vendor/**',
+                  '!*~',
+            ]
+        },
+        options: {
+        	report: 'summary',
+        	bin: './vendor/bin/phpcs',
+        	showSniffCodes: true,
+        	standard: 'codesniff'
+        }
+    },
   	phpmd: {
   		application: {
   			dir: 'includes,classes'
@@ -114,26 +134,17 @@ module.exports = function(grunt) {
 		main: {
 			src:  [
 				'**',
-				'!node_modules/**',
-				'!assets/**',
-				'!dist/**',
-				'!bin/**',
-				'!.git/**',
-				'!apigen/**',
-				'!documentation/**',
-				'!tests/**',
-				'!vendor/**',
-				'!Gruntfile.js',
-				'!package.json',
-				'!.*',
-				'!**/*~',
-				'!composer.lock',
-				'!composer.phar',
-				'!composer.json',
+				'!node_modules/**','!Gruntfile.js','!package.json', //npm/Grunt
+				'!assets/**', //wp-org assets
+				'!dist/**', //build directory
+				'!.git/**', //version control
+				'!apigen/**', '!documentation/**', //docs
+				'!tests/**','!bin/**', //unit test
+				'!vendor/**','!composer.lock','!composer.phar','!composer.json', //composer
+				'!.*','!**/*~', //hidden files
 				'!CONTRIBUTING.md',
 				'!readme.md',
-				'!ruleset.xml',
-				'!phpunit.xml',
+				'!codesniff','!phpunit.xml', //CodeSniffer & Mess Detector
 			],
 			dest: 'dist/event-organiser/'
 		},
@@ -141,18 +152,17 @@ module.exports = function(grunt) {
 		beta: {
 			src:  [
 				'**',
+				'!node_modules/**','!Gruntfile.js','!package.json', //npm/Grunt
+				'!assets/**', //wp-org assets
 				'!dist/**', //build directory
-				'!assets/**',
-				'!.git/**','!.gitignore','!.gitmodules', //git
-				'!node_modules/**','!Gruntfile.js','!package.json', //grunt
-				'!apigen/**','!documentation/**', //documentation
-				'!tests/**', //unit tests
-				'!vendor/**',
-				'!**/*~',
-				'!composer.lock','!composer.phar','!composer.json',//composer
+				'!.git/**', //version control
+				'!apigen/**', '!documentation/**', //docs
+				'!tests/**','!bin/**', //unit test
+				'!vendor/**','!composer.lock','!composer.phar','!composer.json', //composer
+				'!.*','!**/*~', //hidden files
 				'!CONTRIBUTING.md',
 				'!readme.md',
-				'!ruleset.xml'
+				'!codesniff','!phpunit.xml', //CodeSniffer & Mess Detector
 			],
 			dest: process.env.EO_BETA_PLUGIN_DIR + '/<%= pkg.name %>/'
 		}	

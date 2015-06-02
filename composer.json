@@ -18,7 +18,13 @@
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
-        "phpmd/phpmd" : "@stable"
+        "phpmd/phpmd" : "@stable",
+        "squizlabs/php_codesniffer": "2.*",
+		"wp-coding-standards/wpcs" : "0.*"
+    },
+    "scripts"    : {
+        "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths ../../wp-coding-standards/wpcs",
+        "post-update-cmd" : "\"vendor/bin/phpcs\" --config-set installed_paths ../../wp-coding-standards/wpcs"
     }
 }
 
