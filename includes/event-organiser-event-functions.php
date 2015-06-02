@@ -1354,9 +1354,9 @@ function eo_get_event_fullcalendar( $args = array() ){
 
 	global $wp_locale;
 	$defaults = array(
-		'headerleft' => 'title', 'headercenter' => '', 'headerright' => 'prev next today',
-		'defaultview' => 'month', 'aspectratio' => false, 
-		'event-category' => '', 'event_category' => '', 'event-venue' => '', 'event_venue' => '', 'event-tag' => '',
+		'headerleft' => 'title', 'headercenter' => '', 'headerright' => 'prev next today', 
+		'defaultview' => 'month', 'aspectratio' => false,
+		'event-category' => '', 'event_category' => '', 'event-venue' => '', 'event_venue' => '', 'event-tag' => '', 
 		'author' => false, 'author_name' => false,
 		'timeformat' => get_option( 'time_format' ), 'axisformat' => get_option( 'time_format' ),
 		'key' => false, 'tooltip' => true, 
@@ -1400,7 +1400,7 @@ function eo_get_event_fullcalendar( $args = array() ){
 		}
 		$args[$arg] = implode( ':', $args[$arg] );
 	}
-	
+
 	//Convert php time format into moment time format
 	$date_attributes = array( 
 		'timeformat', 'axisformat', 

@@ -31,9 +31,25 @@ body.single-event .eo-event-meta{
 
 /* Agenda CSS */
 .eo-agenda-widget ul{list-style:none; margin:0}
-.eo-agenda-widget .agenda-nav{overflow:hidden}
-.eo-agenda-widget .next, 
-.eo-agenda-widget .prev{float:right; padding:5px 0; background:#ececec; margin:3px}
+.eo-agenda-widget .eo-agenda-widget-nav{overflow:hidden;margin-bottom: 3px;text-align: right;}
+.eo-agenda-widget .eo-agenda-widget-nav-next, 
+.eo-agenda-widget .eo-agenda-widget-nav-prev{
+	border: 1px solid #dfdfdf; 
+	font-weight: normal;
+	cursor:pointer;
+	padding: 3px 9px;
+	background: #ececec;
+	margin: 3px;
+	color: #21759b;
+	font-size:12px;
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+	border-radius:3px;
+}
+.eo-agenda-widget .eo-agenda-widget-nav-next:hover, 
+.eo-agenda-widget .eo-agenda-widget-nav-prev:hover{
+	background: #ddd;
+}
 .eo-agenda-widget ul.dates{border-bottom:1px solid #ececec; font-weight:bold}
 .eo-agenda-widget ul.a-date{margin:0}
 .eo-agenda-widget li.date{border-top:1px solid #ececec; padding:10px 0}

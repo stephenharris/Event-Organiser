@@ -597,111 +597,101 @@ function eventorganiser_widget_cal() {
  *@ignore
 */
 function eventorganiser_widget_agenda() {
-		global $wpdb;
+		
+	global $wpdb;
 
-		$number = (int) $_GET['instance_number'];
-		$wid = new EO_Events_Agenda_Widget();
-		$settings =  $wid->get_settings();
-		$instance = $settings[$number];
-		$today= new DateTime('now', eo_get_blog_timezone());
-		$query=array();
-		$return_array = array();
+	$number   = (int) $_GET['instance_number'];
+	$wid      = new EO_Events_Agenda_Widget();
+	$settings = $wid->get_settings();
+	$instance = $settings[$number];
+	$today    = new DateTime( 'now', eo_get_blog_timezone() );
+	$query    = array();
+	$return   = array();
 
-		$query['mode'] = !empty($instance['mode']) ? $instance['mode'] : 'day';
-		$query['direction'] = intval($_GET['direction']);
-		$query['date'] = ($query['direction'] <1? $_GET['start'] : $_GET['end']);
-		$query['order'] = ($query['direction'] <1? 'DESC' : 'ASC');
+	$query['mode']      = !empty($instance['mode']) ? $instance['mode'] : 'day';
+	$query['direction'] = intval( $_GET['direction'] );
+	$query['date']      = ( $query['direction'] < 1 ? $_GET['start'] : $_GET['end'] );
+	$query['order']     = ( $query['direction'] < 1 ? 'DESC' : 'ASC' );
 
-		$key = 'eo_ag_'.md5(serialize($query)).get_locale();
-		$agenda = get_transient('eo_widget_agenda');
-		if( $agenda && is_array($agenda) && isset($agenda[$key]) ){
-			echo json_encode($agenda[$key]);
-			exit;
-		}
-
-		if( 'day' == $query['mode'] ){		
-			//Day mode
-			$selectDates="SELECT DISTINCT StartDate FROM {$wpdb->eo_events}";
-			$whereDates = " WHERE {$wpdb->eo_events}.StartDate".( $query['order']=='ASC' ? " >= " : " <= ")."%s ";
-			$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
-			$orderlimit = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 4";
-			$dates = $wpdb->get_col($wpdb->prepare($selectDates.$whereDates.$orderlimit, $query['date'],$today->format('Y-m-d')));
-
-			if(!$dates)
-				return false;
-
-			$query['date1']  = min($dates[0],$dates[count($dates)-1]);
-			$query['date2'] = max($dates[0],$dates[count($dates)-1]);
-
-		}elseif( 'week' == $query['mode'] ){		
-			//Week mode - find the week of the next/previous event
-			$selectDates="SELECT DISTINCT StartDate FROM {$wpdb->eo_events}";
-			$whereDates = " WHERE {$wpdb->eo_events}.StartDate".( $query['order']=='ASC' ? " > " : " < ")."%s ";
-			$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
-			$orderlimit = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
-			$date = $wpdb->get_row($wpdb->prepare($selectDates.$whereDates.$orderlimit, $query['date'],$today->format('Y-m-d')));
-
-			if(!$date)
-				return false;
-
-			$datetime = new DateTime($date->StartDate, eo_get_blog_timezone());
-
-			//Get the week day, and the start of the week	
-			$week_start_day = (int) get_option('start_of_week');
-			$event_day = (int) $datetime->format('w');
-			$offset_from_week_start = ($event_day - $week_start_day +7)%7;
-			$week_start_date = clone $datetime;
-			$week_start_date->modify('- '.$offset_from_week_start.' days');
-			$week_end_date = clone $week_start_date;
-			$week_end_date->modify('+6 days');//Query is inclusive.
-
-			$query['date1']  = $week_start_date->format('Y-m-d');
-			$query['date2'] = $week_end_date->format('Y-m-d'); 
-
-		}else{
-			//Month mode - find the month of the next date
-			$selectDates="SELECT DISTINCT StartDate FROM {$wpdb->eo_events}";
-			$whereDates = " WHERE {$wpdb->eo_events}.StartDate".( $query['order']=='ASC' ? " > " : " < ")."%s ";
-			$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
-			$orderlimit = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
-			$date = $wpdb->get_row($wpdb->prepare($selectDates.$whereDates.$orderlimit, $query['date'],$today->format('Y-m-d')));
-
-			if(!$date)
-				return false;
-
-			$datetime = new DateTime($date->StartDate, eo_get_blog_timezone());
-			$query['date1']  = $datetime->format('Y-m-01');
-			$query['date2'] = $datetime->format('Y-m-t'); 
-		}
-
-		$events = eo_get_events(array(
-			'event_start_after'=>$query['date1'],
-			'event_start_before'=>$query['date2']
-		));
-
-		global $post;
-		foreach ($events as $post):
-			$return_array[] = array(
-				'StartDate'=>$post->StartDate,
-				'display'=>eo_get_the_start($instance['group_format']),
-				'time'=> ( ($instance['mode']=='day' && eo_is_all_day())  ? __('All Day','eventorganiser') : eo_get_the_start($instance['item_format']) ),
-				'post_title'=>get_the_title(),
-				'color'=>eo_get_event_color(),
-				'event_url'=>get_permalink(),
-				'link'=>'<a href="'.get_permalink().'">'.__('View','eventorganiser').'</a>',
-				'Glink'=>'<a href="'.eo_get_add_to_google_link().'" target="_blank">'.__('Add To Google Calendar','eventorganiser').'</a>'
-			);
-		endforeach;
-
-		if( !$agenda || !is_array($agenda) )
-			$agenda = array();
-	
-		$agenda[$key] = $return_array;
-
-		set_transient('eo_widget_agenda',$agenda, 60*60*24);
-
-		echo json_encode($return_array);
+	$key    = 'eo_ag_'.md5( serialize( $query ) ) . get_locale();
+	$agenda = get_transient( 'eo_widget_agenda' );
+		
+	if( $agenda && is_array( $agenda ) && isset( $agenda[$key] ) ){
+		echo json_encode( $agenda[$key] );
 		exit;
+	}
+	
+	//Find dates of 'next'/'previous' event
+	$selectDates = "SELECT DISTINCT StartDate FROM {$wpdb->eo_events} LEFT JOIN {$wpdb->posts} ON {$wpdb->eo_events}.post_id = {$wpdb->posts}.ID";
+	$whereDates  = " WHERE {$wpdb->eo_events}.StartDate".( $query['order'] == 'ASC' ? ' > ' : ' < ') . '%s ';
+	$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
+	$whereDates .= " AND {$wpdb->posts}.post_status = 'publish' ";
+	$orderlimit  = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
+	$date        = $wpdb->get_row( $wpdb->prepare( $selectDates . $whereDates . $orderlimit, $query['date'], $today->format( 'Y-m-d' ) ) );
+	
+	if( !$date ){
+		return false;
+	}
+	
+	$datetime = new DateTime( $date->StartDate, eo_get_blog_timezone() );
+	
+	if( 'day' == $query['mode'] ){		
+		//Day mode - events on this day
+		$query['date1'] = $datetime->format( 'Y-m-d' );
+		$query['date2'] = $datetime->format( 'Y-m-d' );
+
+	}elseif( 'week' == $query['mode'] ){		
+		//Month mode - events in this month
+		
+		//Get the week day, and the start of the week	
+		$week_start_day  = (int) get_option( 'start_of_week' );
+		$event_day       = (int) $datetime->format( 'w' );
+		
+		$offset_from_week_start = ( $event_day - $week_start_day +7 ) % 7;
+		
+		$week_start_date = clone $datetime;
+		$week_start_date->modify( '- ' . $offset_from_week_start . ' days' );
+		
+		$week_end_date   = clone $week_start_date;
+		$week_end_date->modify( '+6 days' );//Query is inclusive.
+
+		$query['date1'] = $week_start_date->format( 'Y-m-d' );
+		$query['date2'] = $week_end_date->format( 'Y-m-d' ); 
+
+	}else{
+		//Month mode - events on this month
+		$query['date1'] = $datetime->format( 'Y-m-01' );
+		$query['date2'] = $datetime->format( 'Y-m-t' ); 
+	}
+
+	$events = eo_get_events(array(
+		'event_start_after'  => $query['date1'],
+		'event_start_before' => $query['date2'],
+	));
+
+	global $post;
+	foreach( $events as $post ):
+		$return[] = array(
+			'start'       => eo_get_the_start( 'Y-m-d H:i:s', $post->ID, null, $post->occurrence_id ),
+			'end'         => eo_get_the_end( 'Y-m-d H:i:s', $post->ID, null, $post->occurrence_id ),
+			'all_day'     => eo_is_all_day( $post->ID ),
+			'title'       => get_the_title(),
+			'link'        => get_permalink(),
+			'google_link' => eo_get_add_to_google_link(),
+			'color'       => eo_get_event_color()
+		);
+	endforeach;
+
+	if( !$agenda || !is_array( $agenda ) ){
+		$agenda = array();
+	}
+	
+	$agenda[$key] = $return;
+
+	set_transient( 'eo_widget_agenda', $agenda, 60 * 60 * 24 );
+
+	echo json_encode( $return );
+	exit;
 }
 
 
