@@ -427,10 +427,10 @@ if( !class_exists('EO_Extension') ){
 			if ( $plugin_info && version_compare( $this->get_current_version(), $plugin_info->new_version, '<' ) ){
 	
 				$obj = new stdClass();
-				$obj->slug = $this->slug;
-				$obj->plugin = $this->slug; 
+				$obj->slug        = basename( $this->slug, '.php' );
+				$obj->plugin      = basename( $this->slug, '.php' );
 				$obj->new_version = $plugin_info->new_version;
-				$obj->package =$plugin_info->download_link;
+				$obj->package     = $plugin_info->download_link;
 	
 				if( isset( $plugin_info->sections['upgrade_notice'] ) ){
 					$obj->upgrade_notice = $plugin_info->sections['upgrade_notice'];
