@@ -370,14 +370,9 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 		
 		foreach ( get_post_types() as $pt ) {
 			
-			if( version_compare( '3.5', get_bloginfo( 'version' ) ) <= 0 ){
-				$object_taxonomies = $pt === 'attachment' ? get_taxonomies_for_attachments() : get_object_taxonomies( $pt );
-			}else{
-				//Backwards compat for 3.4
-				$object_taxonomies = $pt === 'attachment' ? array() : get_object_taxonomies( $pt );
-			}
+			$object_taxonomies = ( $pt === 'attachment' ? get_taxonomies_for_attachments() : get_object_taxonomies( $pt ) );
 			
-			if ( array_intersect( $taxonomies, $object_taxonomies ) ){
+			if ( array_intersect( $taxonomies, $object_taxonomies ) ) {
 				$post_types[] = $pt;
 			}
 		}
