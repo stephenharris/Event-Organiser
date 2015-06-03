@@ -245,9 +245,8 @@ class EO_Calendar_Widget extends WP_Widget
 		foreach( $events as $event ):
 	
 			if( $args['show-long'] ){
-		
-				$start   = eo_get_the_start( DATETIMEOBJ, $event->ID, null, $event->occurrence_id );
-				$end     = eo_get_the_end( DATETIMEOBJ, $event->ID, null, $event->occurrence_id );
+				$start   = eo_get_the_start( DATETIMEOBJ, $event->ID, $event->occurrence_id );
+				$end     = eo_get_the_end( DATETIMEOBJ, $event->ID, $event->occurrence_id );
 				$pointer = clone $start;
 				
 				while( $pointer->format( 'Ymd' ) <= $end->format( 'Ymd' ) ){
@@ -255,10 +254,9 @@ class EO_Calendar_Widget extends WP_Widget
 					$calendar_events[ $date ][] = $event;
 					$pointer->modify( '+1 day' );
 				}
-		
 			}else{
-				$date = eo_get_the_start( 'Y-m-d', $event->ID, null, $event->occurrence_id );
-				$calendar_events[$date][]=  $event;
+				$date = eo_get_the_start( 'Y-m-d', $event->ID, $event->occurrence_id );
+				$calendar_events[$date][] = $event;
 			}
 			
 		endforeach;
