@@ -291,12 +291,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 			<?php wp_nonce_field( $nonce ); ?>
 
 			<?php 
-			//WP3.3-3.3.1 backwards compabt
-			if( version_compare( get_bloginfo( 'version' ), 3.4 ) < 0 ){
-				$columns = '1';
-			}else{
-				$columns = (1 == get_current_screen()->get_columns() ? '1' : '2' );
-			}
+			$columns = (1 == get_current_screen()->get_columns() ? '1' : '2' );
 			?>
 			<div id="poststuff">
 
