@@ -317,16 +317,10 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		$ical = new EO_ICAL_Parser();
 		$ical->parse( EO_DIR_TESTDATA . '/ical/timeZoneWithColon.ics' );
 
-		//Check the warning is reported:
-		$code = $ical->warnings[0]->get_error_code();
-		$message = $ical->warnings[0]->get_error_message( $code );
-		$this->assertEquals( 'timezone-parser-warning', $code );
-		$this->assertEquals( '[Line 8] Unknown timezone "(GMT +01:00)" interpreted as "Europe/London".', $message );
-		
 		$event = $ical->events[0];
 		
 		//Check that the timezone has be interpreted as intended
-		$tz = new DateTimeZone( "Europe/London" );
+		$tz = new DateTimeZone( "Etc/GMT-1" );
 		$this->assertEquals( $tz, $event['start']->getTimezone() );
 		
 		//Check that the date/time has been interpeted correctly
@@ -461,7 +455,7 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	$tzid = 'GMT';
     	$expected = new DateTimeZone( 'UTC' );
     	$tz = $ical->parse_timezone( $tzid );
-    	$this->assertEquals( $expected, $tz );
+    	$this->assertEquals( $expected, $tz ); //don't compare names as some servers return GMT as UTC.
     	
     	$tzid = "(GMT+01.00) Amsterdam / Berlin / Bern / Rome / Stockholm / Vienna";
     	$expected = new DateTimeZone( 'Europe/Amsterdam' );
@@ -487,7 +481,7 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	
     	//(GMT +01:00)
     	$tzid = "(GMT +04:00)";
-    	$expected = new DateTimeZone( 'Asia/Baghdad' );
+    	$expected = new DateTimeZone( 'Etc/GMT-4' ); //Reversed sign is intentional
     	$tz = $ical->parse_timezone( $tzid );
     	$this->assertEquals( $expected->getName(), $tz->getName() );
 
@@ -497,7 +491,7 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals( $expected->getName(), $tz->getName() );
     	
     	$tzid = "(GMT -04:00)";
-    	$expected = new DateTimeZone( 'America/Porto_Acre' );
+    	$expected = new DateTimeZone( 'Etc/GMT+4' ); //Reversed sign is intentional
     	$tz = $ical->parse_timezone( $tzid );
     	$this->assertEquals( $expected->getName(), $tz->getName() );
     	

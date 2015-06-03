@@ -842,6 +842,8 @@ class EO_ICAL_Parser{
 		}catch( exception $e ){
 			$tz = null;
 		}
+		
+		$trigger_warning = false; //Set this to true if we make a 'guess'.
 
 		//If we have something like (GMT+01.00) Amsterdam / Berlin / Bern / Rome / Stockholm / Vienna lets try the cities
 		if( is_null( $tz ) && preg_match( '/GMT(?P<offset>.+)\)(?P<cities>.+)?/', $tzid, $matches ) ){
@@ -877,9 +879,19 @@ class EO_ICAL_Parser{
 				
 				$offset = (int) str_replace( '/', '-',  trim( $matches['offset'] ) );
 				
-				if( $offset == 0 ){
+				if( 0 == $offset ){
 					$tz = new DateTimeZone( 'UTC' );
+
+				}elseif( $offset == floor( $offset ) ){
+					//Etc/GMT only handles integer hour offsets
+					//IANA timezone database that provides PHP's timezone support uses (i.e. reversed) POSIX style signs
+					//@see http://us.php.net/manual/en/timezones.others.php
+					$offset_string = $offset > 0 ? "-$offset" : '+'.absint( $offset );
+					$tz = new DateTimeZone( 'Etc/GMT'.$offset_string );
+					
 				}else{
+					$trigger_warning = true; //We're guessing based on timezone offset.
+					
 					$offset *= 3600; // convert hour offset to seconds
 					$allowed_zones = timezone_abbreviations_list();
 
@@ -919,9 +931,10 @@ class EO_ICAL_Parser{
 		
 		if ( ! ($tz instanceof DateTimeZone ) ) {
 			$tz = eo_get_blog_timezone();
+			$trigger_warning = true;
 		}
 		
-		if( $tz->getName() != $tzid ){
+		if( $tz->getName() != $tzid && $trigger_warning ){
 			$this->report_warning( 
 				$this->line, 
 				'timezone-parser-warning', 

@@ -226,6 +226,7 @@ if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-event-functions.php');
 require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-venue-functions.php');
 require_once(EVENT_ORGANISER_DIR.'includes/event-organiser-utility-functions.php');
+require_once(EVENT_ORGANISER_DIR.'includes/class-eo-admin-notice.php');
 require_once(EVENT_ORGANISER_DIR.'includes/deprecated.php');
 require_once(EVENT_ORGANISER_DIR.'includes/event.php');
 require_once(EVENT_ORGANISER_DIR.'includes/class-eo-extension.php');

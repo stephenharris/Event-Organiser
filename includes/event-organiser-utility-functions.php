@@ -316,46 +316,40 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
  * @return DateTimeZone The blog timezone
 */
 function eo_get_blog_timezone(){
-	$tzstring = wp_cache_get( 'eventorganiser_timezone' );
+	
+	$tzstring = wp_cache_get( 'eventorganiser_timezone' );	
+	$tzstring = apply_filters( 'eventorganiser_timezone', $tzstring );
 
 	if ( false === $tzstring ) {
 
-		$tzstring =get_option('timezone_string');
-		$offset = get_option('gmt_offset');
+		$tzstring = get_option( 'timezone_string' );
+		$offset   = get_option( 'gmt_offset' );
 
-		// Remove old Etc mappings.  Fallback to gmt_offset.
-		if ( !empty($tz_string) && false !== strpos($tzstring,'Etc/GMT') )
-			$tzstring = '';
-
-		if( empty($tzstring) && $offset!=0 ):
-			//use offset		
-			$offset *= 3600; // convert hour offset to seconds
-			$allowed_zones = timezone_abbreviations_list();
-
-			foreach ($allowed_zones as $abbr):
-				foreach ($abbr as $city):
-					if ($city['offset'] == $offset){
-						$tzstring=$city['timezone_id'];
-						break 2;
-					}
-				endforeach;
-			endforeach;
-		endif;
+		//We should descourage manual offset
+		//@see http://us.php.net/manual/en/timezones.others.php
+		//@see https://bugs.php.net/bug.php?id=45543
+		//@see https://bugs.php.net/bug.php?id=45528
+		//IANA timezone database that provides PHP's timezone support uses (i.e. reversed) POSIX style signs
+		if( empty( $tzstring ) && 0 != $offset && floor( $offset ) == $offset ){
+			$offset_st = $offset > 0 ? "-$offset" : '+'.absint( $offset );
+			$tzstring  = 'Etc/GMT'.$offset_st;
+		}
 
 		//Issue with the timezone selected, set to 'UTC'
-		if( empty($tzstring) ):
+		if( empty( $tzstring ) ){
 			$tzstring = 'UTC';
-		endif;
+		}
 
 		//Cache timezone string not timezone object
 		//Thanks to Ben Huson https://wordpress.org/support/topic/plugin-event-organiser-getting-500-is-error-when-w3-total-cache-is-on
 		wp_cache_set( 'eventorganiser_timezone', $tzstring );
 	} 
 
-	if( $tzstring instanceof DateTimeZone)
+	if( $tzstring instanceof DateTimeZone ){
 		return $tzstring;
+	}
 
-	$timezone = new DateTimeZone($tzstring);
+	$timezone = new DateTimeZone( $tzstring );
 	return $timezone; 
 }
 
