@@ -97,7 +97,6 @@ jQuery(document).ready(function () {
 			}
 			
 			var args = {
-					
 				id: calendar,
 				
 				year: calendars[i].year ? calendars[i].year : undefined,
@@ -316,36 +315,46 @@ jQuery(document).ready(function () {
 	}
 
 	/* Upcoming dates */
-	if( $('#eo-upcoming-dates').length>0 && $('#eo-upcoming-dates').find('li:gt(4)').length > 0 ){
-		var eobloc = 5;
-		var locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess};
-		$('#eo-upcoming-dates').find('li:gt('+(eobloc-1)+')').hide().end().after(
-	    		$('<a href="#" id="eo-upcoming-dates-less">'+locale.less+'</a> <span id="eo-upcoming-dates-pipe">|</span> <a href="#" id="eo-upcoming-dates-more">'+locale.more+'</a>')
-		);
-		$('#eo-upcoming-dates-pipe').hide();
-		$('#eo-upcoming-dates-less').hide().click(function(e){
-			e.preventDefault();
-			var index = Math.floor( ($('#eo-upcoming-dates li:visible').length -1) / eobloc)*eobloc -1;
-			$('#eo-upcoming-dates li:gt('+index+')').hide();
-			$('#eo-upcoming-dates-more,#eo-upcoming-dates-pipe').show();
-			if( $('#eo-upcoming-dates li:visible').length <= eobloc ){
-					$('#eo-upcoming-dates-less,#eo-upcoming-dates-pipe').hide();
-			}
-		});
-		$('#eo-upcoming-dates-more').click(function(e){
-			e.preventDefault();
-			$('#eo-upcoming-dates-less,#eo-upcoming-dates-pipe, #eo-upcoming-dates li:hidden:lt('+eobloc+')').show();
-			var offset = $('#eo-upcoming-dates-pipe').offset();
-			$('html, body').animate({
-				scrollTop: Math.max( offset.top + 40 - $(window).height(),$(window).scrollTop())
+	$('.eo-upcoming-dates').each(function(index, value){
+		var list = {el: $(this)};
+		if (list.el.find('li:gt(4)').length > 0 ){
+			var eobloc = 5,
+			locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess};
+			list.less = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.less ); 
+			list.pipe = $('<span class="eo-upcoming-dates-pipe">|</span>');
+			list.more = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.more );
+			list.el.find('li:gt('+(eobloc-1)+')').hide().end().after( list.less, list.pipe, list.more);
+			list.pipe.hide();
+
+			list.less.hide().click(function(e){
+				e.preventDefault();
+				var index = Math.floor( (list.el.find('li:visible').length -1) / eobloc)*eobloc -1;
+				list.el.find('li:gt('+index+')').hide();
+				list.more.show();
+				list.pipe.show();
+				if( list.el.find('li:visible').length <= eobloc ){
+					list.less.hide();
+					list.pipe.hide();
+				}
 			});
-			if( $('#eo-upcoming-dates li:hidden').length === 0 ){
-				$('#eo-upcoming-dates-more,#eo-upcoming-dates-pipe').hide();
-			}
-		});
-	}
+			list.more.click(function(e){
+				e.preventDefault();
+				list.less.show();
+				list.pipe.show();
+				list.el.find('li:hidden:lt('+eobloc+')').show();
+				var offset = list.pipe.offset();
+				$('html, body').animate({
+					scrollTop: Math.max( offset.top + 40 - $(window).height(),$(window).scrollTop())
+				});
+				if( list.el.find('li:hidden').length === 0 ){
+					list.more.hide();
+					list.pipe.hide();
+				}
+			});
+		}
+	});
 	
-        if ($(".eo-widget-cal-wrap").length > 0 ) {
+	if ($(".eo-widget-cal-wrap").length > 0 ) {
 
         	$(".eo-widget-cal-wrap").on("click", 'tfoot a', function (a) {
         		a.preventDefault();

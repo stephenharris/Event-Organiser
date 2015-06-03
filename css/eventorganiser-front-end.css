@@ -62,6 +62,7 @@ body.single-event .eo-event-meta{
 		float:right;
 	}
 }
+.eo-upcoming-dates-pipe{ margin: auto 5px; }
 
 /* fullCalendar */
 .eo-fullcalendar .fc-toolbar{ margin-bottom: 10px; }

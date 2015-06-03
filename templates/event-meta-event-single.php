@@ -81,7 +81,7 @@
 				if ( $upcoming->have_posts() ) : ?>
 
 					<li><strong><?php _e( 'Upcoming Dates', 'eventorganiser' ); ?>:</strong>
-						<ul id="eo-upcoming-dates">
+						<ul class="eo-upcoming-dates">
 							<?php
 							while ( $upcoming->have_posts() ) {
 								$upcoming->the_post();
