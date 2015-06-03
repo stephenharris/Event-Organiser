@@ -152,8 +152,8 @@ function eo_enqueue_style( $handle ) {
 
 /**
  * Whether an event archive is being viewed
- * 
- * My specifying the type of archive ( e.g. 'day', 'month' or 'year'), we can check if its 
+ *
+ * By specifying the type of archive ( e.g. 'day', 'month' or 'year'), we can check if its
  * a day, month or year archive. By default, it will just return `is_post_type_archive('event')`
  *
  * You can get the date of the archive via {@see `eo_get_event_archive_date()`}
@@ -163,28 +163,26 @@ function eo_enqueue_style( $handle ) {
  *@param string $type The type archive. 'day', 'month', or 'year'
  *@return bool Whether an event archive is being viewed, where type is specified, if its an event archive of that type.
 */
-function eo_is_event_archive( $type = false ){
+function eo_is_event_archive( $type = false ) {
 
-	if( !is_post_type_archive('event') )
-		return false;
-	
-	$ondate = str_replace('/','-', trim( get_query_var('ondate') ) );
+	if ( ! is_post_type_archive( 'event' ) ) {
+		return false; 
+	}
 
-	switch( $type ){
+	$ondate = str_replace( '/', '-', trim( get_query_var( 'ondate' ) ) );
+
+	switch ( $type ){
 		case 'year':
-			if( preg_match( '/\d{4}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate.'-01-01' ) )
-				return true;
-			return false;
+			return ( preg_match( '/\d{4}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate.'-01-01' ) );
+			break;
 
 		case 'month':
-			if( preg_match( '/^\d{4}-\d{2}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate.'-01' ) )
-				return true;
-			return false;
+			return ( preg_match( '/^\d{4}-\d{2}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate.'-01' ) );
+			break;
 
 		case 'day':
-			if( preg_match( '/^\d{4}-\d{2}-\d{2}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate ) )
-				return true;
-			return false;
+			return ( preg_match( '/^\d{4}-\d{2}-\d{2}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate ) );
+			break;
 
 		default:
 			return true;
