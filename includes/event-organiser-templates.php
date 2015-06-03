@@ -25,19 +25,20 @@
  * @param string $name The name of the specialised template.
  */
 function eo_get_template_part( $slug, $name = null ) {
-	
+
 	/**
 	 * @ignore
 	 */
 	do_action( "get_template_part_{$slug}", $slug, $name );
 
 	$templates = array();
-	if ( isset($name) )
-		$templates[] = "{$slug}-{$name}.php";
+	if ( isset($name) ) {
+		$templates[] = "{$slug}-{$name}.php"; 
+	}
 
 	$templates[] = "{$slug}.php";
 
-	eo_locate_template($templates, true, false);
+	eo_locate_template( $templates, true, false );
 }
 
 
@@ -47,7 +48,7 @@ function eo_get_template_part( $slug, $name = null ) {
  * Searches the child theme first, then the parent theme before checking the plug-in templates folder.
  * So parent themes can override the default plug-in templates, and child themes can over-ride both.
  *
- * Behaves almost identically to `{@see locate_template()}` 
+ * Behaves almost identically to `{@see locate_template()}`
  *
  * @since 1.7
  *
@@ -62,35 +63,36 @@ function eo_locate_template( $template_names, $load = false, $require_once = tru
 	$template_dir = get_stylesheet_directory(); //child theme
 	$parent_template_dir = get_template_directory(); //parent theme
 	$stack = array( $template_dir, $parent_template_dir, EVENT_ORGANISER_DIR . 'templates' );
-	
+
 	/**
 	 * Filters the template stack: an array of directories the plug-in looks for
 	 * for templates.
-	 * 
-	 * The directories are checked in the order in which they appear in this array. 
+	 *
+	 * The directories are checked in the order in which they appear in this array.
 	 * By default the array includes (in order)
-	 * 
+	 *
 	 *  - child theme directory
 	 *  - parent theme directory
-	 *  - `event-organiser/templates` 
+	 *  - `event-organiser/templates`
 	 *
 	 * @param array $stack Array of directories (absolute path).
 	 */
 	$stack = apply_filters( 'eventorganiser_template_stack', $stack );
 	$stack = array_unique( $stack );
-	
+
 	foreach ( (array) $template_names as $template_name ) {
-		if ( !$template_name )
-			continue;
-		foreach ( $stack as $template_stack ){
+		if ( ! $template_name ) {
+			continue; 
+		}
+		foreach ( $stack as $template_stack ) {
 			if ( file_exists( trailingslashit( $template_stack ) . $template_name ) ) {
 				$located = trailingslashit( $template_stack ) . $template_name;
 				break;
 			}
-		} 
+		}
 	}
 
-	if ( $load && '' != $located ){
+	if ( $load && '' != $located ) {
 		load_template( $located, $require_once );
 	}
 
@@ -98,7 +100,7 @@ function eo_locate_template( $template_names, $load = false, $require_once = tru
 }
 
 /**
- * A wrapper for {@see wp_enqueue_style()}. Filters the stylesheet url so themes can 
+ * A wrapper for {@see wp_enqueue_style()}. Filters the stylesheet url so themes can
  * replace a stylesheet with their own.
  *
  * @uses wp_register_style()
@@ -113,7 +115,7 @@ function eo_locate_template( $template_names, $load = false, $require_once = tru
  *                            Default 'all'. Accepts 'all', 'aural', 'braille', 'handheld', 'projection', 'print',
  *                            'screen', 'tty', or 'tv'.
  */
-function eo_register_style( $handle, $src, $deps = array(), $ver = false, $media = 'all' ){
+function eo_register_style( $handle, $src, $deps = array(), $ver = false, $media = 'all' ) {
 	$src = apply_filters( 'eventorganiser_stylesheet_src', $src, $handle );
 	$src = apply_filters( 'eventorganiser_stylesheet_src_'.$handle, $src );
 	return wp_register_style( $handle, $src, $deps, $ver, $media );
@@ -192,7 +194,7 @@ function eo_is_event_archive( $type = false ) {
 /**
  * Returns formatted date of an event archive.
  *
- * Returns the formatted ate of an event archive. E.g. for date archives, returns that date, 
+ * Returns the formatted date of an event archive. E.g. for date archives, returns that date,
  * for year archives returns 1st January of that year, for month archives 1st of that month.
  * The date is formatted according to `$format` via {@see `eo_format_datetime()`}
  *
@@ -218,27 +220,28 @@ function eo_is_event_archive( $type = false ) {
  * @param string|constant $format How to format the date, see https://php.net/manual/en/function.date.php  or DATETIMEOBJ constant to return the datetime object.
  * @return string|dateTime The formatted date
 */
-function eo_get_event_archive_date( $format = DATETIMEOBJ ){
+function eo_get_event_archive_date( $format = DATETIMEOBJ ) {
 
-	if( !is_post_type_archive('event') )
-		return false;
-	
-	$ondate = str_replace('/','-',get_query_var('ondate'));
-	
-	if( empty( $ondate) ){
+	if ( ! is_post_type_archive( 'event' ) ) {
+		return false; 
+	}
+
+	$ondate = str_replace( '/', '-', get_query_var( 'ondate' ) );
+
+	if ( empty( $ondate) ) {
 		return false;
 	}
-	
-	$parts = count(explode('-',$ondate));
 
-	if( $parts == 1 && is_numeric($ondate) ){
+	$parts = count( explode( '-', $ondate ) );
+
+	if ( $parts == 1 && is_numeric( $ondate ) ) {
 		//Numeric - interpret as year
 		$ondate .= '-01-01';
-	}elseif( $parts == 2 ){
+	} elseif ( $parts == 2 ) {
 		// 2012-01 format: interpret as month
 		$ondate .= '-01';
 	}
-		
+
 	$ondate = eo_check_datetime( 'Y-m-d', $ondate );
 	return eo_format_datetime( $ondate, $format );
 }
@@ -256,28 +259,26 @@ function eo_get_event_archive_date( $format = DATETIMEOBJ ){
  * @param string $context What the template is for ('event','archive-event','event-venue', etc).
  * @return (true|false) return true if template is recognised as an 'event' template. False otherwise.
  */
-function eventorganiser_is_event_template($templatePath,$context=''){
+function eventorganiser_is_event_template( $templatepath, $context = '' ) {
 
-	$template = basename($templatePath);
+	$template = basename( $templatepath );
 
-	switch($context):
-		case 'event';	
+	switch ( $context ){
+		case 'event';
 			return $template == 'single-event.php';
 
 		case 'archive':
 			return $template == 'archive-event.php';
 
 		case 'event-venue':
-			if((1 == preg_match('/^taxonomy-event-venue((-(\S*))?).php/',$template) || $template == 'venues-template.php'))
-				return true;
-			return false;
+			return ( (1 == preg_match( '/^taxonomy-event-venue((-(\S*))?).php/', $template ) || $template == 'venues-template.php') );
 
 		case 'event-category':
-			return (1 == preg_match('/^taxonomy-event-category((-(\S*))?).php/',$template));
+			return (1 == preg_match( '/^taxonomy-event-category((-(\S*))?).php/', $template ));
 
 		case 'event-tag':
-			return (1 == preg_match('/^taxonomy-event-tag((-(\S*))?).php/',$template));
-	endswitch;
+			return (1 == preg_match( '/^taxonomy-event-tag((-(\S*))?).php/', $template ));
+	}
 
 	return false;
 }
@@ -292,55 +293,61 @@ function eventorganiser_is_event_template($templatePath,$context=''){
  * @param string $template Absolute path to template
  * @return string Absolute path to template
  */
-function eventorganiser_set_template( $template ){
+function eventorganiser_set_template( $template ) {
 
 	//Has EO template handling been turned off?
-	if( !eventorganiser_get_option('templates') || get_theme_support( 'event-organiser' ) )
-		return $template;
+	if ( ! eventorganiser_get_option( 'templates' ) || get_theme_support( 'event-organiser' ) ) {
+		return $template; 
+	}
 
 	//If WordPress couldn't find an 'event' template use plug-in instead:
 
-	if( is_post_type_archive('event') && !eventorganiser_is_event_template($template,'archive'))
-		$template = EVENT_ORGANISER_DIR.'templates/archive-event.php';
+	if ( is_post_type_archive( 'event' ) && ! eventorganiser_is_event_template( $template, 'archive' ) ) {
+		$template = EVENT_ORGANISER_DIR . 'templates/archive-event.php';
+	}
 
-	if( ( is_tax('event-venue') || eo_is_venue() ) && !eventorganiser_is_event_template($template,'event-venue'))
-		$template = EVENT_ORGANISER_DIR.'templates/taxonomy-event-venue.php';
+	if ( ( is_tax( 'event-venue' ) || eo_is_venue() ) && ! eventorganiser_is_event_template( $template, 'event-venue' ) ) {
+		$template = EVENT_ORGANISER_DIR . 'templates/taxonomy-event-venue.php'; 
+	}
 
-	if( is_tax('event-category')  && !eventorganiser_is_event_template($template,'event-category'))
-		$template = EVENT_ORGANISER_DIR.'templates/taxonomy-event-category.php';
+	if ( is_tax( 'event-category' )  && ! eventorganiser_is_event_template( $template, 'event-category' ) ) {
+		$template = EVENT_ORGANISER_DIR . 'templates/taxonomy-event-category.php'; 
+	}
 
-	if( is_tax('event-tag') && eventorganiser_get_option('eventtag') && !eventorganiser_is_event_template($template,'event-tag') )
-		$template = EVENT_ORGANISER_DIR.'templates/taxonomy-event-tag.php';
+	if ( is_tax( 'event-tag' ) && eventorganiser_get_option( 'eventtag' ) && ! eventorganiser_is_event_template( $template, 'event-tag' ) ) {
+		$template = EVENT_ORGANISER_DIR . 'templates/taxonomy-event-tag.php'; 
+	}
 
 	/*
 	 * In view of theme compatibility, if an event template isn't found
 	 * rather than using our own single-event.php, we use ordinary single.php and
 	 * add content in via the_content
 	*/
-	if( is_singular('event') && !eventorganiser_is_event_template($template,'event') ){	
+	if ( is_singular( 'event' ) && ! eventorganiser_is_event_template( $template, 'event' ) ) {
 		//Viewing a single event
-		
+
 		//Hide next/previous post link
-		add_filter("next_post_link",'__return_false');
-		add_filter("previous_post_link",'__return_false');
+		add_filter( 'next_post_link', '__return_false' );
+		add_filter( 'previous_post_link', '__return_false' );
 
 		//Prepend our event details
-		add_filter('the_content','_eventorganiser_single_event_content');
-	}		
+		add_filter( 'the_content', '_eventorganiser_single_event_content' );
+	}
 
 	return $template;
 }
-add_filter('template_include', 'eventorganiser_set_template');
+add_filter( 'template_include', 'eventorganiser_set_template' );
 
 
-function _eventorganiser_single_event_content( $content ){
+function _eventorganiser_single_event_content( $content ) {
 
 	//Sanity check!
-	if( !is_singular('event') )
-		return $content;
-		
+	if ( ! is_singular( 'event' ) ) {
+		return $content; 
+	}
+
 	//Check we are an event!
-	if( get_post_type( get_the_ID() ) !== 'event' ){
+	if ( get_post_type( get_the_ID() ) !== 'event' ) {
 		return $content;
 	}
 
@@ -354,10 +361,10 @@ function _eventorganiser_single_event_content( $content ){
 	}else{
 		$eo_event_parsed[get_the_ID()] = 1;
 	}*/
-	
-	//Object buffering				
+
+	//Object buffering
 	ob_start();
-	eo_get_template_part('event-meta','event-single');
+	eo_get_template_part( 'event-meta','event-single' );
 	//include(EVENT_ORGANISER_DIR.'templates/event-meta-event-single.php');
 	$event_details = ob_get_contents();
 	ob_end_clean();
@@ -365,18 +372,18 @@ function _eventorganiser_single_event_content( $content ){
 	/**
 	 * Filters the event details automatically appended to the event's content
 	 * when single-event.php is not present in the theme.
-	 * 
-	 * If template handling is enabled and the theme does not have `single-event.php` 
+	 *
+	 * If template handling is enabled and the theme does not have `single-event.php`
 	 * template, Event Organiser uses `the_content` filter to add prepend the content
 	 * with event details. This filter allows you to change the prepended details.
-	 * 
-	 * Unless you have a good reason, it's strongly recommended to change the templates 
+	 *
+	 * Unless you have a good reason, it's strongly recommended to change the templates
 	 * rather than use this filter.
-	 * 
+	 *
 	 * @param string $event_details The event details to be added.
 	 * @param string $content       The original event content
 	 */
-	$event_details = apply_filters('eventorganiser_pre_event_content', $event_details, $content);
+	$event_details = apply_filters( 'eventorganiser_pre_event_content', $event_details, $content );
 
 	return $event_details.$content;
 }
