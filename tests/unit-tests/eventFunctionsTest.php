@@ -69,5 +69,116 @@ class eventFunctionsTest extends EO_UnitTestCase
 	}
 	
 	
+	public function testMicroDataEventFormat(){
+		$event_id = $this->factory->event->create(
+			array(
+				'start'    => new DateTime( '2014-07-09 13:02:00', eo_get_blog_timezone() ),
+				'end'      => new DateTime( '2014-07-09 14:02:00', eo_get_blog_timezone() ),
+				'all_day'  => 0,
+				'schedule' => 'once',
+			)
+		);
+		$occurrence_ids = array_keys( eo_get_the_occurrences_of( $event_id ) ); 
+		$occurrence_id = array_shift( $occurrence_ids );
+		
+		$expected = '<time itemprop="startDate" datetime="2014-07-09T13:02:00+00:00">July 9, 2014 1:02 pm</time>'
+					.'&ndash;<time itemprop="endDate" datetime="2014-07-09T14:02:00+00:00">2:02 pm</time>';
+		
+		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id ) );
+		
+	}
+
+	public function testMicroDataAllDayEventFormat(){
+		$event_id = $this->factory->event->create(
+			array(
+				'start'    => new DateTime( '2014-07-09 13:02:00', eo_get_blog_timezone() ),
+				'end'      => new DateTime( '2014-07-09 14:02:00', eo_get_blog_timezone() ),
+				'all_day'  => 1,
+				'schedule' => 'once',
+			)
+		);
+		$occurrence_ids = array_keys( eo_get_the_occurrences_of( $event_id ) );
+		$occurrence_id = array_shift( $occurrence_ids );
+	
+		$expected = '<time itemprop="startDate" datetime="2014-07-09">July 9, 2014</time>';
+	
+		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id ) );
+	
+	}
+	
+	
+	public function testMicroDataAllDayLongEventFormat(){
+		$event_id = $this->factory->event->create(
+			array(
+				'start'    => new DateTime( '2014-07-09 13:02:00', eo_get_blog_timezone() ),
+				'end'      => new DateTime( '2014-07-10 14:02:00', eo_get_blog_timezone() ),
+				'all_day'  => 1,
+				'schedule' => 'once',
+			)
+		);
+		$occurrence_ids = array_keys( eo_get_the_occurrences_of( $event_id ) );
+		$occurrence_id  = array_shift( $occurrence_ids );
+	
+		$expected = '<time itemprop="startDate" datetime="2014-07-09">July 9</time>'
+		.'&ndash;<time itemprop="endDate" datetime="2014-07-10">10, 2014</time>';
+	
+		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id ) );
+	
+	}
+	
+	public function testEventFormat(){
+		$event_id = $this->factory->event->create(
+			array(
+				'start'    => new DateTime( '2014-07-09 13:02:00', eo_get_blog_timezone() ),
+				'end'      => new DateTime( '2014-07-09 14:02:00', eo_get_blog_timezone() ),
+				'all_day'  => 0,
+				'schedule' => 'once',
+			)
+		);
+		$occurrence_ids = array_keys( eo_get_the_occurrences_of( $event_id ) );
+		$occurrence_id = array_shift( $occurrence_ids );
+	
+		$expected = 'July 9, 2014 1:02 pm&ndash;2:02 pm';
+	
+		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id, false, false, '&ndash;', false ) );
+	
+	}
+	
+	public function testAllDayEventFormat(){
+		$event_id = $this->factory->event->create(
+			array(
+				'start'    => new DateTime( '2014-07-09 13:02:00', eo_get_blog_timezone() ),
+				'end'      => new DateTime( '2014-07-09 14:02:00', eo_get_blog_timezone() ),
+				'all_day'  => 1,
+				'schedule' => 'once',
+				)
+		);
+		$occurrence_ids = array_keys( eo_get_the_occurrences_of( $event_id ) );
+		$occurrence_id = array_shift( $occurrence_ids );
+	
+		$expected = 'July 9, 2014';
+	
+		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id, false, false, '&ndash;', false ) );
+	
+	}
+	
+	public function testAllDayLongEventFormat(){
+		$event_id = $this->factory->event->create(
+			array(
+				'start'    => new DateTime( '2014-07-09 13:02:00', eo_get_blog_timezone() ),
+				'end'      => new DateTime( '2014-07-10 14:02:00', eo_get_blog_timezone() ),
+				'all_day'  => 1,
+				'schedule' => 'once',
+			)
+		);
+		$occurrence_ids = array_keys( eo_get_the_occurrences_of( $event_id ) );
+		$occurrence_id  = array_shift( $occurrence_ids );
+	
+		$expected = 'July 9&ndash;10, 2014';
+	
+		$this->assertEquals( $expected, eo_format_event_occurrence( $event_id, $occurrence_id, false, false, '&ndash;', false ) );
+	
+	}
+	
 }
 
