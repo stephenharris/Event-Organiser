@@ -213,7 +213,6 @@ class EventOrganiser_Shortcodes {
 
 		$venue_slugs = explode( ',', $atts['venue'] );
 
-		var_dump( $atts );
 		$args = shortcode_atts( array(
 			'zoom' => 15, 'zoomcontrol' => 'true', 'minzoom' => 0, 'maxzoom' => null,
 			'scrollwheel' => 'true', 'rotatecontrol' => 'true', 'pancontrol' => 'true',
