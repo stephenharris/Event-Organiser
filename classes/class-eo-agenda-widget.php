@@ -77,10 +77,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 	function widget( $args, $instance ) {
 
 		wp_enqueue_script( 'eo_front' );
-
-		if ( ! eventorganiser_get_option( 'disable_css' ) ) {
-			wp_enqueue_style( 'eo_front' );
-		}
+		eo_enqueue_style( 'eo_front' );
 
 		add_action( 'wp_footer', array( __CLASS__, 'add_options_to_script' ) );
 

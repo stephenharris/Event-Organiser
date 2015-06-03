@@ -460,50 +460,50 @@ class EventOrganiser_Shortcodes {
 		$input = str_replace(array("'",'"',"&#8221;","&#8216;", "&#8217;"),'',$input); //remove quotations
 		return $input;
 	}
- 
+
 	static function print_script() {
-		global $wp_locale;
-		if ( ! self::$add_script ) return;
-		
-		$_terms = get_terms( 'event-category', array('hide_empty' => 0));
+
+		if ( ! self::$add_script ) {
+			return;
+		}
+
+		$_terms = get_terms( 'event-category', array( 'hide_empty' => 0 ) );
 		$terms = array();
 		while ( $term = array_shift( $_terms ) ){
 			$terms[$term->term_id] = $term;
 		}
-		
+
 		$fullcal = (empty(self::$calendars) ? array() : array(
-			'firstDay'=>intval(get_option('start_of_week')),
-			'venues' => get_terms( 'event-venue', array('hide_empty' => 0)),
+			'firstDay'   => intval( get_option( 'start_of_week' ) ),
+			'venues'     => get_terms( 'event-venue', array( 'hide_empty' => 0 ) ),
 			'categories' => $terms,
-			'tags' => get_terms( 'event-tag', array('hide_empty' => 1)),
+			'tags'       => get_terms( 'event-tag', array( 'hide_empty' => 1 ) ),
 		));
-		
+
 		eo_localize_script( 'eo_front', array(
-			'ajaxurl' => admin_url( 'admin-ajax.php'),
-			'calendars' => self::$calendars,
+			'ajaxurl'          => admin_url( 'admin-ajax.php' ),
+			'calendars'        => self::$calendars,
 			'widget_calendars' => self::$widget_calendars,
-			'fullcal' => $fullcal,
-			'map' => self::$map,
-		));	
-		
-		if( !empty(self::$calendars) || !empty(self::$map) || !empty(self::$widget_calendars) ):				
-			wp_enqueue_script( 'eo_qtip2' );		
+			'fullcal'          => $fullcal,
+			'map'              => self::$map,
+		));
+
+		if ( ! empty( self::$calendars ) || ! empty( self::$map ) || ! empty( self::$widget_calendars ) ) {
+
+			wp_enqueue_script( 'eo_qtip2' );
 			wp_enqueue_script( 'eo_front' );
-		
-			if( !eventorganiser_get_option( 'disable_css' ) ){
-				wp_enqueue_style( 'eo_front' );
-				wp_enqueue_style( 'eo_calendar-style' );
-			}
 
-		endif;
+			eo_enqueue_style( 'eo_front' );
+			eo_enqueue_style( 'eo_calendar-style' );
 
-		if( !empty( self::$map ) ){
+		}
+
+		if ( ! empty( self::$map ) ) {
 			wp_enqueue_script( 'eo_GoogleMap' );
 		}
-			
 	}
 }
- 
+
 EventOrganiser_Shortcodes::init();
 
 /**
