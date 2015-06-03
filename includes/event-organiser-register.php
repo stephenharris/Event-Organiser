@@ -151,12 +151,7 @@ function eventorganiser_register_scripts(){
 	wp_register_style( 'eventorganiser-jquery-ui-style', EVENT_ORGANISER_URL."css/eventorganiser-jquery-ui{$rtl}{$ext}.css", array(), $version );
 	
 	/* Admin styling */
-	wp_register_style( 'eventorganiser-3.8+', EVENT_ORGANISER_URL."css/eventorganiser-admin-3.8+{$ext}.css", array(), $version );
-	$deps = array( 'eventorganiser-jquery-ui-style' );
-	if ( ( defined( 'MP6' ) && MP6 ) || version_compare( '3.8-beta-1', get_bloginfo( 'version' ) ) <= 0 ) {
-		$deps[] = 'eventorganiser-3.8+';
-	}
-	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL."css/eventorganiser-admin-style{$rtl}{$ext}.css", $deps, $version );
+	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL."css/eventorganiser-admin-style{$rtl}{$ext}.css", array( 'eventorganiser-jquery-ui-style' ), $version );
 
 	/* Inline Help */
 	wp_register_script( 'eo-inline-help', EVENT_ORGANISER_URL.'js/inline-help.js',array( 'jquery', 'eo_qtip2' ), $version, true );
@@ -474,21 +469,12 @@ add_action('eventorganiser_delete_expired', 'eventorganiser_delete_expired_event
  */
 function eventorganiser_screen_retina_icon(){
 
-	$screen_id = get_current_screen()->id;
+	$screen_id     = get_current_screen()->id;
+	$event_screens = array( 'event', 'edit-event', 'edit-event-tag', 'edit-event-category', 'event_page_venues', 'event_page_calendar' );
 	
-	if ( ( defined( 'MP6' ) && MP6 ) || version_compare( '3.8-beta-1', get_bloginfo( 'version' ) ) <= 0 ):
-		?>
-		<style>
-			#adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
-			#adminmenu #menu-posts-event div.wp-menu-image img { display:none; }
-			/**Add-ons page: for contrast**/
-			#eo-addons-wrap .eo-addon{ background: white; }
-		</style>
-		<?php
-	endif;
-	
-	if( !in_array($screen_id, array('event','edit-event','edit-event-tag','edit-event-category','event_page_venues','event_page_calendar')) )
+	if ( ! in_array( $screen_id, $event_screens ) ) {
 		return;
+	}
 		 
 	$icon_url = EVENT_ORGANISER_URL.'css/images/eoicon-64.png'
 	?>

@@ -407,3 +407,89 @@ a.eo-inline-help img {
 .ui-tooltip .ui-tooltip-tip, 
 .ui-tooltip .ui-tooltip-tip *{position:absolute; line-height:0.1px !important; font-size:0.1px !important; color:#123456; background:transparent; border:0 dashed transparent}
 .ui-tooltip .ui-tooltip-tip canvas{top:0; left:0}
+
+
+/*** Event Admin Page ***/
+/*Ensure event details table has labels aligned to top*/
+#eventorganiser_event_detail td.eo-label{ vertical-align: top }
+#eventorganiser_event_detail .reocurrence_row td{ padding: 0; }
+#eventorganiser_event_detail .reocurrence_row p{ margin-bottom: 18px; }
+
+/*** Datepickers ***/
+/*Correct font size of datepicker inside .form-table */
+.form-table .ui-datepicker-calendar td, .form-table .ui-datepicker-calendar th {font-size: inherit;line-height:1.5em}
+.form-table .ui-datepicker select {height: 2em;}
+
+/*** Admin Calendar Page ***/
+/* Flatten header of admin calendar */
+#eo_admin_calendar tbody th,
+#eo_admin_calendar thead th {
+	background: #E4E4E4;
+	padding: 5px 0!important;
+}
+/* Flatten buttons */
+#eo-event-venue-button,
+#eo-event-cat-button,
+.fc-header-goto button,
+.fc-button{
+	background:white;
+	max-width: 300px;
+}
+/* Hover colour of buttons */
+#eo-event-venue-button:hover,
+#eo-event-cat-button:hover,
+.fc-header-goto button:hover,
+.fc-button:hover{
+	color:#0074A2;
+}
+/* Hover colour of option */
+#eo-event-cat-menu .ui-widget-content .ui-state-hover,
+#eo-event-cat-menu .ui-state-hover,
+#eo-event-venue-menu .ui-widget-content .ui-state-hover,
+#eo-event-venue-menu .ui-state-hover,
+.eo-admin-calendar-dialog .ui-autocomplete .ui-menu-item a.ui-state-focus{
+	background: #EEE;
+}
+
+
+/* Calendar dialog */
+.eo-admin-calendar-dialog{
+	border-radius: 0;
+}
+.eo-admin-calendar-dialog .ui-dialog-titlebar{
+	background: white;
+	border: none;
+	border-radius: 0;
+	font-size: 16px;
+}
+.eo-admin-calendar-dialog .ui-dialog-titlebar span{
+	color: #444;
+}
+.eo-admin-calendar-dialog .ui-dialog-titlebar-close:focus,
+.eo-admin-calendar-dialog .ui-dialog-titlebar-close{
+	border:none;
+	background: none;
+}
+
+/* Calendar dialog tabs*/
+#eo-dialog-tabs ul{
+	position: relative;
+	background: #FFF;
+	border: none;
+	border-bottom: 1px solid #DFDFDF;
+	border-radius: 0;
+}
+#eo-dialog-tabs ul li{
+	background: none;
+	border: none;
+}
+#eo-dialog-tabs ul li.ui-tabs-active{
+	background: white;
+	border: 1px solid #DFDFDF;
+	border-bottom: none;
+}
+
+#adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
+#adminmenu #menu-posts-event div.wp-menu-image img { display:none; }
+/**Add-ons page: for contrast**/
+#eo-addons-wrap .eo-addon{ background: white; }
