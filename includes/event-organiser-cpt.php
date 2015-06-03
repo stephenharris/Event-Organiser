@@ -853,7 +853,7 @@ add_action( 'switch_blog', 'eventorganiser_wpdb_fix');
  * Updates venue meta cache when event venues are retrieved.
  *
  * For backwards compatibility it adds the venue details to the taxonomy terms.
- * Hooked onto get_terms and get_event-venue
+ * Hooked onto get_terms
  *
  * @ignore
  * @access private
@@ -864,29 +864,28 @@ add_action( 'switch_blog', 'eventorganiser_wpdb_fix');
  * @param array  Array of event-venue terms,
  */
 function eventorganiser_update_venue_meta_cache( $terms, $tax, $args ){
-
-	if( empty( $args['eo_update_venue_cache'] ) ){
+	
+	if ( empty( $terms ) ) {
 		return $terms;
 	}
 	
-	if( is_array( $tax ) && !in_array( 'event-venue', $tax ) ){
+	if ( is_array( $tax ) && ! in_array( 'event-venue', $tax ) ) {
 		return $terms;
 	}
 	
-	if( !is_array( $tax ) && 'event-venue' != $tax ){
+	if ( ! is_array( $tax ) && 'event-venue' != $tax ) {
 		return $terms;
 	}
-
-	$single = false;
-	if( !is_array( $terms ) ){
-		$single = true;
-		$terms = array( $terms );
+	
+	//Cast as integer as https://core.trac.wordpress.org/ticket/17646 is only for wp_get_object_terms()
+	foreach ( $terms as $key => $term ) {
+		$terms[$key] = sanitize_term( $term, $term->taxonomy, 'raw' );
 	}
-
-	if( empty( $terms ) ){
+	
+	if ( empty( $args['eo_update_venue_cache'] ) ) {
 		return $terms;
 	}
-
+	
 	//Check if its array of terms or term IDs
 	$first_element = reset( $terms );
 	if ( is_object( $first_element ) ){
@@ -897,10 +896,6 @@ function eventorganiser_update_venue_meta_cache( $terms, $tax, $args ){
 		
 	update_meta_cache( 'eo_venue', $term_ids );
 	
-	if( $single ){
-		return $terms[0];
-	}
-
 	return $terms;
 } 
 add_filter( 'get_terms', 'eventorganiser_update_venue_meta_cache', 10, 3 );
