@@ -502,13 +502,13 @@ add_filter( 'wp_list_pages', 'eventorganiser_menu_link',10,1 );
  */
 function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) { 
 
-	//The add_help_tab function for screen was introduced in WordPress 3.3. Add it only to event pages.
-	if( ! method_exists($screen, 'add_help_tab') || ! in_array($screen_id, array('event','edit-event','event_page_venues','event_page_calendar')) )
+	if (  ! in_array( $screen_id, array( 'event', 'edit-event', 'event_page_venues', 'event_page_calendar' ) ) ) {
 		return $contextual_help;
+	}
 	
 	switch($screen_id):
 		//Add help for event editing / creating page
-		case ('event'):
+		case 'event':
 			    $screen->add_help_tab( array(
 			        'id'      => 'creating-events', 
 			        'title'   => __('Creating events','eventorganiser'),
@@ -542,7 +542,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 			break;
 
 		//Add help for event admin table page
-		case ('edit-event'):
+		case 'edit-event':
 
 			$screen->add_help_tab( array(
 				'id'=>'overview',
@@ -551,7 +551,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 			break;
 
 		//Add help for venue admin table page
-		case ('event_page_venues'):
+		case 'event_page_venues':
 			$contextual_help = 
 			'<p>' . __("Hovering over a row in the venues list will display action links that allow you to manage that venue. You can perform the following actions:",'eventorganiser') . '</p>' .
 			'<ul>' .
@@ -562,7 +562,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 			break;
 
 		//Add help for calendar view
-		case ('event_page_calendar'):
+		case 'event_page_calendar':
 			$screen->add_help_tab( array(
 				'id'=>'overview',
 				'title'=>__('Overview'),
