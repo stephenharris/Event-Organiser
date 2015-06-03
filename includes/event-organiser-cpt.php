@@ -240,9 +240,7 @@ function eventorganiser_cpt_register() {
 		$on = trim( eventorganiser_get_option( 'url_on', 'on' ), '/' );
 		$event_rewrite = array( 'slug' => $event_slug, 'with_front' => false, 'feeds' => true, 'pages' => true );
 
-		/* Workaround for https://core.trac.wordpress.org/ticket/19871 */
-		global $wp_rewrite;  
-		$wp_rewrite->add_rewrite_tag( '%event_ondate%', '([0-9]{4}(?:/[0-9]{2}(?:/[0-9]{2})?)?)','post_type=event&ondate=' ); 
+		add_rewrite_tag( '%event_ondate%', '([0-9]{4}(?:/[0-9]{2}(?:/[0-9]{2})?)?)','post_type=event&ondate=' ); 
 		add_permastruct( 'event_archive', $events_slug.'/'.$on.'/%event_ondate%', array( 'with_front' => false ) );
 	}
 
@@ -852,26 +850,10 @@ add_action( 'switch_blog', 'eventorganiser_wpdb_fix');
 	
 
 /**
- * Updates venue meta cache when an event's venue is retrieved..
- * Hooked onto wp_get_object_terms
- *
- * @ignore
- * @access private
- * @since 1.5
- */
-function _eventorganiser_get_event_venue($terms, $post_ids,$taxonomies,$args){
-	//Passes taxonomies as a string inside quotes...
-	$taxonomies = explode(',',trim($taxonomies,"\x22\x27"));
-	return eventorganiser_update_venue_meta_cache( $terms, $taxonomies);
-}
-add_filter('wp_get_object_terms','_eventorganiser_get_event_venue',10,4);
-
-
-/**
  * Updates venue meta cache when event venues are retrieved.
  *
  * For backwards compatibility it adds the venue details to the taxonomy terms.
- * Hooked onto get_terms and get_event-venue
+ * Hooked onto get_terms
  *
  * @ignore
  * @access private
@@ -881,59 +863,42 @@ add_filter('wp_get_object_terms','_eventorganiser_get_event_venue',10,4);
  * @param string $tax Should be (an array containing) 'event-venue'.
  * @param array  Array of event-venue terms,
  */
-function eventorganiser_update_venue_meta_cache( $terms, $tax){
-
-		if( is_array($tax) && !in_array('event-venue',$tax) ){
-			return $terms;
-		}
-		if( !is_array($tax) && $tax != 'event-venue'){
-			return $terms;
-		}
-
-		$single = false;
-		if( ! is_array($terms) ){
-			$single = true;
-			$terms = array( $terms );
-		}
-
-		if( empty($terms) )
-		       return $terms;
-
-		//Check if its array of terms or term IDs
-		$first_element = reset( $terms );
-		if ( is_object( $first_element ) ){
-			$term_ids = wp_list_pluck( $terms, 'term_id' );
-		} else {
-			$term_ids = $terms;
-		}
-
-   		update_meta_cache('eo_venue',$term_ids);
-
-		//Backwards compatible. Depreciated - use the functions, not properties.
-		foreach ($terms as $term){
-			if( !is_object($term) )
-				continue;
-			$term_id = (int) $term->term_id;
-
-			if( !isset($term->venue_address) ){
-				$address = eo_get_venue_address($term_id);
-				foreach( $address as $key => $value )
-					$term->{'venue_'.$key} = $value;
-			}
-
-			if( !isset($term->venue_lat) || !isset($term->venue_lng) ){
-				$term->venue_lat =  number_format(floatval(eo_get_venue_lat($term_id)), 6);
-				$term->venue_lng =  number_format(floatval(eo_get_venue_lng($term_id)), 6);
-			}
-
-		}
-		
-		if( $single ) return $terms[0];
-
+function eventorganiser_update_venue_meta_cache( $terms, $tax, $args ){
+	
+	if ( empty( $terms ) ) {
 		return $terms;
-	} 
-add_filter('get_terms','eventorganiser_update_venue_meta_cache',10,2);
-add_filter('get_event-venue','eventorganiser_update_venue_meta_cache',10,2);
+	}
+	
+	if ( is_array( $tax ) && ! in_array( 'event-venue', $tax ) ) {
+		return $terms;
+	}
+	
+	if ( ! is_array( $tax ) && 'event-venue' != $tax ) {
+		return $terms;
+	}
+	
+	//Cast as integer as https://core.trac.wordpress.org/ticket/17646 is only for wp_get_object_terms()
+	foreach ( $terms as $key => $term ) {
+		$terms[$key] = sanitize_term( $term, $term->taxonomy, 'raw' );
+	}
+	
+	if ( empty( $args['eo_update_venue_cache'] ) ) {
+		return $terms;
+	}
+	
+	//Check if its array of terms or term IDs
+	$first_element = reset( $terms );
+	if ( is_object( $first_element ) ){
+		$term_ids = wp_list_pluck( $terms, 'term_id' );
+	} else {
+		$term_ids = $terms;
+	}
+		
+	update_meta_cache( 'eo_venue', $term_ids );
+	
+	return $terms;
+} 
+add_filter( 'get_terms', 'eventorganiser_update_venue_meta_cache', 10, 3 );
 
 
 

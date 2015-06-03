@@ -17,8 +17,7 @@ class EventOrganiser_Admin_Page{
 	}
 	
 	function hooks_init(){
-		add_action('admin_init', array($this,'admin_init_actions'));
-		add_action('admin_menu', array($this,'add_page'));
+		add_action( 'admin_menu', array( $this, 'add_page' ) );
 	}
 
 	function set_constants(){
@@ -44,9 +43,6 @@ class EventOrganiser_Admin_Page{
 	}
 
 	function page_styles(){
-	}
-
-	function admin_init_actions(){
 	}
 
 	function current_action(){

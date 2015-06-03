@@ -56,9 +56,11 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		if( !in_array( 'event-venue', $supports ) ){
 			unset( self::$eventorganiser_roles['manage_venues'] );
 		}
+		
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
 	}
 
-	function admin_init_actions(){
+	function register_settings(){
 		
 		register_setting( 'eventorganiser_options', 'eventorganiser_options', array( $this, 'validate' ) );
 		

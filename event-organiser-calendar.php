@@ -96,12 +96,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		endif;
 		
 		wp_enqueue_style( 'eo_calendar-style' );
-		wp_enqueue_style( 'eventorganiser-style' );
-		//See trac ticket: https://core.trac.wordpress.org/ticket/24813
-		if( ( !defined( 'SCRIPT_DEBUG' ) || !SCRIPT_DEBUG ) && version_compare( get_bloginfo( 'version' ), '3.7', '<' ) ){
-			$css = "<style type='text/css'>\n" . $css . "</style>";
-		}
-		
+		wp_enqueue_style( 'eventorganiser-style' );		
 		wp_add_inline_style( 'eo_calendar-style', $css );
 	}
 
@@ -240,7 +235,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 	function display(){
 		//Get the time 'now' according to blog's timezone
 		$now    = new DateTime( null, eo_get_blog_timezone() );
-		$venues = eo_get_venues();
+		$venues = eo_get_venues( array( 'eo_update_venue_cache' => false ) );
 	?>
 
 	<div class="wrap">  

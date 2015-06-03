@@ -555,4 +555,101 @@ function eo_is_venue(){
 	global $wp_query;
 	return (isset($wp_query->query_vars['venue'] ) || is_tax('event-venue'));
 }
+
+
+add_filter( 'the_posts', '_eventorganiser_update_event_dates_cache', 10, 2 );
+
+function _eventorganiser_update_event_dates_cache( $posts, $query ){
+	
+	// No point in doing all this work if we didn't match any posts.
+	if ( !$posts ){
+		return $posts;
+	}
+
+	//PHP 5.3 and early can't cache datetime objects
+	if( version_compare( PHP_VERSION, '5.3.0' ) < 0 ){
+		return $posts;
+	}
+	
+	$query->set( 'eo_cache', true );
+	
+	if( !eventorganiser_is_event_query( $query ) || !$query->get( 'eo_cache' ) ){
+		return $posts;
+	}
+
+	$post_ids = array();
+	foreach( $posts as $post ){		
+		$post_ids[] = $post->ID;
+	}
+	
+	eo_update_event_dates_cache( $post_ids );
+	
+	return $posts;
+}
+
+
+function eo_update_event_dates_cache( $post_ids ){
+	
+	global $wpdb;
+	
+	$post_ids = array_map( 'intval', $post_ids );
+	$ids = array();
+	$cache = array();
+	
+	foreach ( $post_ids as $id ) {
+		
+		$cached_object = wp_cache_get( 'eventorganiser_occurrences_'.$id );
+		//$cached_object = wp_cache_get( $id, $cache_key );
+		//wp_cache_set( 'eventorganiser_occurrences_'.$post_id, $occurrences );
+		
+		if ( false === $cached_object ){
+			$ids[] = $id;
+		}else{
+			$cache[$id] = $cached_object;
+		}
+	}
+	
+	if ( empty( $ids ) ){
+		return $cache;
+	}
+	
+	// Get meta info
+	$id_list = join( ',', $ids );
+		
+	$sql = "SELECT post_id, event_id, StartDate,StartTime,EndDate,FinishTime 
+			FROM {$wpdb->eo_events}
+			WHERE {$wpdb->eo_events}.post_id IN ($id_list) 
+			ORDER BY StartDate ASC";
+	
+	$date_list = $wpdb->get_results( $sql, ARRAY_A );
+	
+	if( !empty( $date_list ) ){
+		
+		$tz = eo_get_blog_timezone();
+	
+		foreach ( $date_list as $date_row ){
+	
+			$post_id = intval( $date_row['post_id'] );
+			$occurrence_id = intval( $date_row['event_id'] );
+			$start = $date_row['StartDate'] . ' ' . $date_row['StartTime'];
+			$end = $date_row['EndDate'] . ' ' . $date_row['FinishTime'];
+		
+			$cache[$post_id][$occurrence_id] = array(
+				'start' => new DateTime( $start, $tz ),
+				'end' 	=> new DateTime( $end, $tz )
+			);
+				
+		}
+	}
+	
+	foreach ( $ids as $id ) {
+		if ( !isset( $cache[$id] ) ){
+			$cache[$id] = array();
+		}
+		wp_cache_set( 'eventorganiser_occurrences_'.$id, $cache[$id] );
+	}
+	
+	return $cache;
+}
+
 ?>

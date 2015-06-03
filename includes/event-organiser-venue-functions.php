@@ -477,17 +477,9 @@ function eo_get_venue_address($venue_slug_or_id=''){
  * @return array List of Term (venue) Objects
  */
 function eo_get_venues($args=array()){
-	$args = wp_parse_args( $args, array('hide_empty'=>0, 'fields'=>'all') );
+	$args = wp_parse_args( $args, array('hide_empty'=>0, 'fields'=>'all','eo_update_venue_cache'=>true) );
 	$venues = get_terms('event-venue',$args);
-	if( $venues && !is_wp_error( $venues ) ){
-		//Ensure IDs are cast as integers {@link https://github.com/stephenh1988/Event-Organiser/issues/21}
-		if( $args['fields'] == 'ids' ){
-			$venues = array_map('intval', $venues);
-		}elseif( $args['fields'] == 'all' ){
-			foreach( $venues as $venue)
-				$venue->term_id = (int)$venue->term_id;
-		}
-	}
+
 	return $venues;
 }
 
@@ -700,13 +692,13 @@ function eo_get_venues($args=array()){
 function eo_get_venue_map( $venue_slug_or_id = '', $args = array() ){
 
 		//Cast as array to allow multi venue support
-		if( $venue_slug_or_id == '%all%' || is_array( $venue_slug_or_id ) && in_array( '%all%', $venue_slug_or_id ) ){
+		if ( '%all%' == $venue_slug_or_id || is_array( $venue_slug_or_id ) && in_array( '%all%', $venue_slug_or_id ) ) {
 			$all_venues = eo_get_venues();
-			if( $all_venues ){
+			if ( $all_venues ) {
 				$venue_slug_or_id = array_map( 'intval', wp_list_pluck( $all_venues, 'term_id' ) );
 			}
 		}
-		if( !is_array( $venue_slug_or_id ) ){
+		if ( ! is_array( $venue_slug_or_id ) ) {
 			$venue_slug_or_id = array( $venue_slug_or_id );
 		}
 

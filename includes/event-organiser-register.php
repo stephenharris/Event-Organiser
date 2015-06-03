@@ -195,8 +195,8 @@ function eventorganiser_admin_init(){
 	global $EO_Errors;
 	$EO_Errors = new WP_Error();
 }
-add_action('admin_init','eventorganiser_admin_init',0);
-add_action('admin_init', array('Event_Organiser_Im_Export', 'get_object'));
+add_action( 'admin_init', 'eventorganiser_admin_init', 0 );
+add_action( 'load-settings_page_event-settings', array( 'Event_Organiser_Im_Export', 'get_object' ) );
 
  /**
  * @since 1.0.0
@@ -315,9 +315,9 @@ function eventorganiser_db_checks(){
 	<?php	endif;
 
 	//Check WordPress version
-	if(get_bloginfo('version')<'3.3'):?>
+	if(get_bloginfo('version')<'3.8'):?>
 		<div class="error"	>
-			<p>Event Organiser requires <strong>WordPress 3.3</strong> to function properly. Your version is <?php echo get_bloginfo('version'); ?>. </p>
+			<p>Event Organiser requires <strong>WordPress 3.8</strong> to function properly. Your version is <?php echo get_bloginfo('version'); ?>. </p>
 		</div>
 	<?php endif; 
 }

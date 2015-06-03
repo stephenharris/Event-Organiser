@@ -174,7 +174,7 @@ class EO_Venue_List_Table extends WP_List_Table {
 
 	//First, lets decide how many records per page to show
 	$screen = get_current_screen();
-	$per_page = $this->get_items_per_page( 'edit_event_venue_per_page' );
+	$per_page = $this->get_items_per_page( 'edit_event-venue_per_page' );
 
 	//Get the columns, the hidden columns an sortable columns
 	$columns = get_column_headers('event_page_venues');
@@ -188,15 +188,15 @@ class EO_Venue_List_Table extends WP_List_Table {
 	$order =( !empty( $_REQUEST['order'] )  ? trim( stripslashes($_REQUEST['order'])) : '');
 
 	//Display result
-	$this->items = get_terms('event-venue',array(
-			'hide_empty'=>false,
-			'search'=>$search,
-			'offset'=> ($current_page-1)*$per_page,
-			'number'=>$per_page,
-			 'orderby'=>$orderby,
-			 'order'=>$order			
-		)
-	);
+	$this->items = get_terms( 'event-venue', array(
+		'hide_empty' => false,
+		'search'     => $search,
+		'offset'     => ($current_page-1) * $per_page,
+		'number'     => $per_page,
+		 'orderby'   => $orderby,
+		 'order'     => $order,
+		'eo_update_venue_cache' => true,	
+	));
 
 	$this->set_pagination_args( array(
 		'total_items' => wp_count_terms('event-venue', compact( 'search', 'orderby' ) ),
