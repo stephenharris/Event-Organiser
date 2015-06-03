@@ -362,25 +362,17 @@ class EventOrganiser_Debugger{
 	}
 
 	function verbose_theme_check(){
-		if( version_compare( '3.4', get_bloginfo( 'version' ) ) <= 0 ){
-			$theme = wp_get_theme();
-			$class = in_array( strtolower( $theme->stylesheet ), $this->themes ) ? $this->warning_class : '';
-			printf(
+			
+		$theme = wp_get_theme();
+		$class = in_array( strtolower( $theme->stylesheet ), $this->themes ) ? $this->warning_class : '';
+		printf(
 			' <span class="%s"> %s %s </span> </br>  %s',
-				esc_attr( $class ),
-				$theme->get('Name'),
-				$theme->get('Version'),
-				$theme->get('ThemeURI')
-			);
-		}else{
-			$theme_name = get_current_theme();
-			$class = in_array( strtolower( $theme_name ), $this->themes ) ? $this->warning_class : '';
-			printf(
-				' <span class="%s"> %s </span> </br>',
-				esc_attr( $class ),
-				$theme_name
-			);
-		}
+			esc_attr( $class ),
+			$theme->get( 'Name' ),
+			$theme->get( 'Version' ),
+			$theme->get( 'ThemeURI' )
+		);
+
 	}
 
 
