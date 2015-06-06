@@ -1,11 +1,10 @@
 <?php
-
-if ( !class_exists( 'EventOrganiser_Admin_Page' ) ){
-    require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+if ( ! class_exists( 'EventOrganiser_Admin_Page' ) ) {
+	require_once( EVENT_ORGANISER_DIR . 'classes/class-eventorganiser-admin-page.php' );
 }
 /**
  * Calendar Admin Page
- * 
+ *
  * Extends the EentOrganiser_Admin_Page class. Creates the calendar admin page
  * @version 1.0
  * @see EventOrganiser_Admin_Page
@@ -100,44 +99,48 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		wp_add_inline_style( 'eo_calendar-style', $css );
 	}
 
-	function page_actions(){
+	function page_actions() {
 
 		//Add screen option
 		$user     = wp_get_current_user();
 		$is12hour = get_user_meta( $user->ID, 'eofc_time_format', true );
-		if( '' === $is12hour )
+		if ( '' === $is12hour ) {
 			$is12hour = eventorganiser_blog_is_24() ? 0 : 1;
-		
+		}
+
+		$action = $this->current_action();
+
 		add_screen_option( 'eofc_time_format', array( 'value' => $is12hour ) );
 		add_filter( 'screen_settings', array( $this, 'screen_options' ), 10, 2 );
 
 		//Check action
-		if ( !empty( $_REQUEST['save'] ) || !empty( $_REQUEST['publish'] ) ){
+		if ( ! empty( $_POST['save'] ) || ! empty( $_POST['publish'] ) ){
 			//Check nonce
 			check_admin_referer( 'eventorganiser_calendar_save' );
 
 			//authentication checks
-			if ( !current_user_can( 'edit_events' ) ) 
+			if ( ! current_user_can( 'edit_events' ) ) {
 				wp_die( __( 'You do not have sufficient permissions to create events. ', 'eventorganiser' ) );
+			}
+				
+			$input = $_POST['eo_event']; //Retrieve input from posted data
 
-			$input = $_REQUEST['eo_event']; //Retrieve input from posted data
-			
 			//Set the status of the new event
-			if ( !empty( $_REQUEST['save'] ) ):
+			if ( ! empty( $_POST['save'] ) ) {
 				$status = 'draft';
-			else:
+			} else {
 				$status = ( current_user_can( 'publish_events' ) ? 'publish' : 'pending' );
-			endif;
-	
+			}
+
 			//Set post and event details
 			$venue = (int) $input['venue_id'];
 
 			$post_input = array(
-				'post_title' => $input['event_title'],
-				'post_status' => $status,
+				'post_title'   => $input['event_title'],
+				'post_status'  => $status,
 				'post_content' => $input['event_content'],
-				'post_type' => 'event',
-				'tax_input' => array( 'event-venue' => array( $venue ) ),
+				'post_type'    => 'event',
+				'tax_input'    => array( 'event-venue' => array( $venue ) ),
 			);
 			$tz = eo_get_blog_timezone();
 			$event_data = array(
@@ -161,12 +164,11 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 				
 				//Redirect to event admin page & exit
 				wp_redirect( esc_url_raw( $redirect ) );
-				exit; 
+				exit;
 			}
-		}elseif ( isset( $_REQUEST['action'] ) && ( $_REQUEST['action'] == 'delete_occurrence' || $_REQUEST['action'] == 'break_series') && isset( $_REQUEST['series'] ) && isset( $_REQUEST['event'] ) ){
-			$post_id  = intval( $_REQUEST['series'] );
-			$event_id = intval( $_REQUEST['event'] );
-			$action   = $_REQUEST['action'];
+		} elseif (  in_array( $action, array( 'delete_occurrence', 'break_series' ) ) && isset( $_GET['series'] ) && isset( $_GET['event'] ) ) {
+			$post_id  = intval( $_GET['series'] );
+			$event_id = intval( $_GET['event'] );
 
 			if ( $action == 'break_series' ):
 				//Check nonce

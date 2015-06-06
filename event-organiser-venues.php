@@ -30,19 +30,21 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 	/*
 	* Actions to be taken prior to page loading. Hooked on to load-{page}
 	*/
-	function page_actions(){	
+	function page_actions(){
 
 		global $EO_Errors;
 		add_action( 'admin_notices',array( $this, 'admin_notices' ) );
 
 		//Determine action if any
-		$action = $this->current_action();
-		$venue = ( isset( $_REQUEST['event-venue'] ) ? $_REQUEST['event-venue'] : false );
+		$action  = $this->current_action();
+		$request = array_merge( $_GET, $_POST );
+		$venue   = ( isset( $request['event-venue'] ) ? $request['event-venue'] : false );
 
 		if ( ( $action && $venue ) || $action == 'add' ):
 
-			if ( !current_user_can( 'manage_venues' ) )
+			if ( ! current_user_can( 'manage_venues' ) ) {
 				wp_die( __( 'You do not have permission to manage venues', 'eventorganiser' ) );
+			}
 
 			switch( $action ):
 				case 'update':
@@ -92,7 +94,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 
 					if ( is_wp_error( $return ) ){
 						$EO_Errors->add( 'eo_error', __( 'Venue <strong>was not</strong> created', 'eventorganiser' ).': '.$return->get_error_message() );
-						$_REQUEST['action'] = 'create';
+						$_POST['action'] = 'create';
 					} else{
 						$term_id = (int) $return['term_id'];
 						$venue = get_term( $term_id, 'event-venue' );
@@ -114,13 +116,15 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 	
 
 				case 'delete':
-					if( is_array( $_REQUEST['event-venue'] ) )
+					if ( is_array( $request['event-venue'] ) ) {
 						$nonce = 'bulk-venues';
-					else
+					} else {
 						$nonce = 'eventorganiser_delete_venue_'.$venue;
-	
-					if( !check_admin_referer( $nonce ) )
+					}
+
+					if ( ! check_admin_referer( $nonce ) ) {
 						wp_die( __( 'You do not have permission to delete this venue', 'eventorganiser' ) );
+					}
 
 					$venues = (array) $venue;
 
@@ -156,7 +160,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 		$action = $this->current_action();
 
 		if ( in_array( $action, array( 'edit', 'update', 'create' ) ) ){
-			$venue = ( isset( $_REQUEST['event-venue'] ) ? $_REQUEST['event-venue'] : false );
+			$venue = ( isset( $request['event-venue'] ) ? $request['event-venue'] : false );
 
 			//Venued edit page	
 			add_meta_box( 'submitdiv', __( 'Save', 'eventorganiser' ), 'eventorganiser_venue_submit', 'event_page_venues', 'side', 'high' );
@@ -213,7 +217,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 		
 		$tax    = get_taxonomy( 'event-venue' );
 		$action = $this->current_action();
-		$venue  = ( isset( $_REQUEST['event-venue'] ) ? $_REQUEST['event-venue'] : false );
+		$venue  = ( isset( $_GET['event-venue'] ) ? $_GET['event-venue'] : false );
 	?>
 	<div class="wrap">
 		<?php screen_icon( 'edit' );?>
@@ -229,7 +233,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 			    $venue_table->prepare_items();    
 	
 				//Check if we have searched the venues
-				$search_term = ( isset( $_REQUEST['s'] ) ?  esc_attr( $_REQUEST['s'] ) : '' );?>
+				$search_term = ( isset( $_GET['s'] ) ?  esc_attr( $_GET['s'] ) : '' );?>
 
 				<h2>
 					<?php ?>

@@ -234,18 +234,26 @@ add_action( 'save_post', 'eventorganiser_quick_edit_save' );
 function eventorganiser_quick_edit_save( $post_id ) {
 
 	//make sure data came from our quick/bulk box
-	if ( !isset( $_REQUEST['_eononce'] ) || !wp_verify_nonce( $_REQUEST['_eononce'], 'eventorganiser_event_quick_edit_'.get_current_blog_id() ) ) return;
-	
-	// verify this is not an auto save routine. 
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-	
+	if ( ! isset( $_POST['_eononce'] ) || ! wp_verify_nonce( $_POST['_eononce'], 'eventorganiser_event_quick_edit_'.get_current_blog_id() ) ) {
+		return;
+	}
+
+	// verify this is not an auto save routine.
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+
 	//verify this is not a cron job
-	if ( defined( 'DOING_CRON' ) && DOING_CRON ) return;
+	if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
+		return;
+	}
 
 	//authentication checks
-	if ( !current_user_can( 'edit_event', $post_id ) ) return;
+	if ( ! current_user_can( 'edit_event', $post_id ) ){
+		return;
+	}
 
-	$venue_id = ( isset( $_REQUEST['eo_input']['event-venue'] ) ? (int) $_REQUEST['eo_input']['event-venue'] : - 1 );
+	$venue_id = ( isset( $_POST['eo_input']['event-venue'] ) ? (int) $_POST['eo_input']['event-venue'] : - 1 );
 
 	if ( $venue_id >= 0 ) {
 		$r = wp_set_post_terms( $post_id, array( $venue_id ), 'event-venue', false );
