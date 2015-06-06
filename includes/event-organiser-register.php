@@ -481,13 +481,11 @@ add_action( 'admin_print_styles', 'eventorganiser_screen_retina_icon' );
  * Print generic javascript variables to the page
  * @ignore
  */
-function eventorganiser_admin_print_scripts(){
-	$is_mp6 = ( ( defined( 'MP6' ) && MP6 ) || version_compare( '3.8-beta-1', get_bloginfo( 'version' ) ) <= 0 );
+function eventorganiser_admin_print_scripts() {
 	?>
 	<script type="text/javascript">
 		var eventorganiser = eventorganiser || {};
-		eventorganiser.wp_version = '<?php echo get_bloginfo("version");?>';
-		eventorganiser.is_mp6 = <?php echo $is_mp6 ? 'true' : 'false'; ?>;
+		eventorganiser.wp_version = '<?php echo esc_js( get_bloginfo( 'version' ) );?>';
 	</script>
 	<?php
 }

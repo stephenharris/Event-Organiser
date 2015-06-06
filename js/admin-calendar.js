@@ -291,9 +291,8 @@ eventorganiser.versionCompare = function(left, right) {
 			};
 
 			//Add new / selec buttons
-			var button_height = eventorganiser.is_mp6 ? '25px' : '21px';
 			var button_wrappers = $("<span>").addClass("eo-venue-combobox-buttons").appendTo(wrapper);
-			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height:"+button_height+";'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
+			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height:26px;'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
 				icons: { primary: "ui-icon-triangle-1-s"},
 				text: false
 			}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
