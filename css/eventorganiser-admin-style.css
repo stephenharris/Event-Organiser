@@ -489,7 +489,5 @@ a.eo-inline-help img {
 	border-bottom: none;
 }
 
-#adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
-#adminmenu #menu-posts-event div.wp-menu-image img { display:none; }
 /**Add-ons page: for contrast**/
 #eo-addons-wrap .eo-addon{ background: white; }

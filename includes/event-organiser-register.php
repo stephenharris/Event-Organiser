@@ -460,37 +460,21 @@ add_action('eventorganiser_delete_expired', 'eventorganiser_delete_expired_event
 
 
 /**
- *  Adds retina support for the screen icon
- * Thanks to numeeja (http://cubecolour.co.uk/)
+ * Print CSS for event menu icon
  *
  * @since 1.5.0
  * @ignore
  * @access private
  */
 function eventorganiser_screen_retina_icon(){
-
-	$screen_id     = get_current_screen()->id;
-	$event_screens = array( 'event', 'edit-event', 'edit-event-tag', 'edit-event-category', 'event_page_venues', 'event_page_calendar' );
-	
-	if ( ! in_array( $screen_id, $event_screens ) ) {
-		return;
-	}
-		 
-	$icon_url = EVENT_ORGANISER_URL.'css/images/eoicon-64.png'
 	?>
 	<style>
-	@media screen and (-webkit-min-device-pixel-ratio: 2) {
-		#icon-edit.icon32 {
-			background: url(<?php echo $icon_url;?>) no-repeat;
-			background-size: 32px 32px;
-			height: 32px;
-			width: 32px;
-		}
-	}
+	#adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
+	#adminmenu #menu-posts-event div.wp-menu-image img { display:none; }
 	</style>
 	<?php
 }
-add_action('admin_print_styles','eventorganiser_screen_retina_icon');
+add_action( 'admin_print_styles', 'eventorganiser_screen_retina_icon' );
 
 
 /**
