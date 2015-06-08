@@ -13,5 +13,6 @@
 
         <!-- Other rules ignored -->
         <exclude name="WordPress.Arrays.ArrayKeySpacingRestrictions.NoSpacesAroundArrayKeys"/>
+        <exclude name="WordPress.Arrays.ArrayDeclaration.IndexNoNewline" />
 	</rule>
 </ruleset>
