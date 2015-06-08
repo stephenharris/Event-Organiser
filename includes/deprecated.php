@@ -272,4 +272,15 @@ function eo_event_venue_dropdown( $args = '' ) {
 	return eo_taxonomy_dropdown( $args );
 
 }
+
+
+/**
+ * Whether the blog's time settings indicates it uses 12 or 24 hour time
+ * @deprecated 2.1.3 Use {@see `eo_blog_is_24()`} instead.
+ * @see eo_blog_is_24()
+ */
+function eventorganiser_blog_is_24() {
+	return eo_blog_is_24();
+}
+
 ?>
