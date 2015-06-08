@@ -1161,11 +1161,12 @@ function eventorganiser_checkbox_field($args=array()){
 			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
 		}
 	}
-	
+
 	/* $options and $checked are either both arrays or they are both strings. */
-	$options =  isset($args['options']) ? $args['options'] : false;
-	$checked =  isset($args['checked']) ? $args['checked'] : 1;
-	
+	$options = isset( $args['options'] ) ? $args['options'] : false;
+	$checked = isset( $args['checked'] ) ? $args['checked'] : 1;
+	$attr    = array();
+
 	//Custom data-* attributes
 	if ( ! empty( $args['data'] ) && is_array( $args['data'] ) ) {
 		foreach ( $args['data'] as $key => $data_value ) {
