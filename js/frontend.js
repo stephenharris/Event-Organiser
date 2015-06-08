@@ -704,6 +704,11 @@ eventorganiser.google_map.prototype.tooltip = function(){
 	 });	
 };
 jQuery(document).ready(function(){
+	
+	if ( ! ( 'map' in eventorganiser ) ) {
+		return;
+	}
+	
 	var maps = eventorganiser.map;
 	for (var i = 0; i < maps.length; i++) {
 	
