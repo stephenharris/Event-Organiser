@@ -1143,21 +1143,21 @@ function eventorganiser_text_field($args){
  * @access private
  * @param $args array The array of arguments
  */
-function eventorganiser_checkbox_field($args=array()){
+function eventorganiser_checkbox_field( $args = array() ) {
 
-	$args = wp_parse_args($args,array(
-		 	 'help' => '','name'=>'', 'class'=>'', 'label_for' => '',
-			'checked'=>'', 'echo'=>true,'multiselect'=>false,  'data'=>false,
-		));
+	$args = wp_parse_args( $args, array(
+		'help' => '', 'name' => '', 'class' => '', 'label_for' => '',
+		'checked' => '', 'echo' => true, 'multiselect' => false, 'data' => false,
+	));
 
-	$id    = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
+	$id    = ( ! empty( $args['id'] ) ? $args['id'] : $args['label_for'] );
 	$name  = isset($args['name']) ?  $args['name'] : '';
-	$class = ( $args['class'] ? "class='".sanitize_html_class($args['class'])."'"  :"" );
+	$class = ( $args['class'] ? sprintf( 'class="%s" ', sanitize_html_class( $args['class'] ) ) : '' );
 
 	//Custom data-* attributes
 	$data = '';
-	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
-		foreach( $args['data'] as $key => $attr_value ){
+	if ( ! empty( $args['data'] ) && is_array( $args['data'] ) ) {
+		foreach ( $args['data'] as $key => $attr_value ) {
 			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
 		}
 	}
@@ -1173,12 +1173,12 @@ function eventorganiser_checkbox_field($args=array()){
 			$attr[] = sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $data_value ) );
 		}
 	}
-	
-	$attr = implode( " ", array_filter( $attr ) );
 
-	$html ='';
+	$attr = implode( ' ', array_filter( $attr ) );
+
+	$html = '';
 	if ( is_array( $options ) ) {
-		
+
 		foreach ( $options as $value => $opt_label ) {
 
 			$html .= sprintf(
@@ -1204,13 +1204,14 @@ function eventorganiser_checkbox_field($args=array()){
 			esc_attr( $options )
 		);
 	}
-	
-	if(!empty($args['help'])){
-		$html .= '<p class="description">'.$args['help'].'</p>';
+
+	if ( ! empty( $args['help'] ) ) {
+		$html .= sprintf( '<p class="description">%s</p>', $args['help'] );
 	}
 
-	if( $args['echo'] )
+	if ( $args['echo'] ) {
 		echo $html;
+	}
 
 	return $html;
 }
