@@ -695,17 +695,17 @@ function eventorganiser_widget_agenda() {
  *@ignore
 */
 function eventorganiser_search_venues() {
-		
+
 	// Query the venues with the given term
 	$value = trim( $_GET['term'] );
-	$venues = eo_get_venues( array( 'eo_update_venue_cache' => true, 'search' => $value ) );
+	$venues = eo_get_venues( array( 'eo_update_venue_cache' => true, 'search' => $value, 'number' => 5 ) );
 
-	foreach( $venues as $venue ){
+	foreach ( $venues as $venue ) {
 		$venue_id = (int) $venue->term_id;
 		$address  = eo_get_venue_address( $venue_id );
-			
+
 		$venue->venue_address  = isset( $address['address'] ) ? $address['address'] : '';
-		$venue->venue_postal   = isset( $address['postcode'] ) ? $address['postcode'] : ''; 
+		$venue->venue_postal   = isset( $address['postcode'] ) ? $address['postcode'] : '';
 		$venue->venue_postcode = isset( $address['postcode'] ) ? $address['postcode'] : '';
 		$venue->venue_city     = isset( $address['city'] ) ? $address['city'] : '';
 		$venue->venue_country  = isset( $address['country'] ) ? $address['country'] : '';
@@ -714,7 +714,7 @@ function eventorganiser_search_venues() {
 		$venue->venue_lat = number_format( floatval( eo_get_venue_lat( $venue_id ) ), 6 );
 		$venue->venue_lng = number_format( floatval( eo_get_venue_lng( $venue_id ) ), 6 );
 	}
-		
+
 	$tax = get_taxonomy( 'event-venue' );
 	$novenue = array( 'term_id' => 0, 'name' => $tax->labels->no_item );
 	$venues  = array_merge( array( $novenue ), $venues );
