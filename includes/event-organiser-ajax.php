@@ -100,12 +100,11 @@ function eventorganiser_public_fullcalendar() {
 	 	*
 	 	* @package fullCalendar
 	 	* @param array  $events_array An array of events (array).
-	 	* @param array  $query        The query as given to eo_get_events() 
+	 	* @param array  $query        The query as given to eo_get_events()
 	 	*/
 		$events_array = apply_filters( 'eventorganiser_fullcalendar', $events_array, $query );
-	
-		echo json_encode( $events_array );
-		exit;
+
+		wp_send_json( $events_array );
 	}
 
 	$query['post_status'] = $post_status;
@@ -298,8 +297,7 @@ function eventorganiser_public_fullcalendar() {
 	$events_array = apply_filters( 'eventorganiser_fullcalendar', $events_array, $query );
 
 	//Echo result and exit
-	echo json_encode( $events_array );
-	exit;
+	wp_send_json( $events_array );
 }
 
 
@@ -332,11 +330,10 @@ function eventorganiser_admin_calendar() {
 		$calendar = get_transient('eo_full_calendar_admin');
 		$key = $_GET['start'].'--'.$_GET['end'] . 'u='.get_current_user_id();
 
-		if( ( !defined('WP_DEBUG') || !WP_DEBUG ) && $calendar && is_array($calendar) && isset($calendar[$key]) ){
-			echo json_encode($calendar[$key]);
-			exit;
+		if ( ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) && $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ) {
+			wp_send_json( $calendar[$key] );
 		}
-	
+
 		//Create query
 		$query_array = array_merge($presets, $request);	
 		$query = new WP_Query($query_array );
@@ -533,9 +530,7 @@ function eventorganiser_admin_calendar() {
 
 		set_transient('eo_full_calendar_admin',$calendar, 60*60*24);
 
-		//Echo result and exit
-		echo json_encode($eventsarray);
-		exit;
+		wp_send_json( $events_array );
 }
 
 
@@ -582,8 +577,7 @@ function eventorganiser_widget_cal() {
 		$args['link-to-single'] = (empty($_GET['link-to-single']) ? 0 : 1);
 		$args['show-long'] = (empty($_GET['show-long']) ? 0 : 1);
 
-		echo json_encode(EO_Calendar_Widget::generate_output($month,$args));
-		exit;
+		wp_send_json( EO_Calendar_Widget::generate_output( $month,$args ) );
 	}
 
 
@@ -615,10 +609,9 @@ function eventorganiser_widget_agenda() {
 
 	$key    = 'eo_ag_'.md5( serialize( $query ) ) . get_locale();
 	$agenda = get_transient( 'eo_widget_agenda' );
-		
-	if( $agenda && is_array( $agenda ) && isset( $agenda[$key] ) ){
-		echo json_encode( $agenda[$key] );
-		exit;
+
+	if ( $agenda && is_array( $agenda ) && isset( $agenda[$key] ) ) {
+		wp_send_json( $agenda[$key] );
 	}
 	
 	//Find dates of 'next'/'previous' event
@@ -690,8 +683,7 @@ function eventorganiser_widget_agenda() {
 
 	set_transient( 'eo_widget_agenda', $agenda, 60 * 60 * 24 );
 
-	echo json_encode( $return );
-	exit;
+	wp_send_json( $return );
 }
 
 
@@ -727,9 +719,9 @@ function eventorganiser_search_venues() {
 	$novenue = array( 'term_id' => 0, 'name' => $tax->labels->no_item );
 	$venues  = array_merge( array( $novenue ), $venues );
 
-	//echo JSON to page  
-	$response = $_GET["callback"] . "(" . json_encode( $venues ) . ")";  
-	echo $response;  
+	//echo JSON to page
+	$response = $_GET['callback'] . '(' . json_encode( $venues ) . ')';
+	echo $response;
 	exit;
 }
 
@@ -781,71 +773,50 @@ function eventorganiser_admin_calendar_edit_date(){
 	$occurrence_id = (int) $_POST['occurrence_id'];
 	$all_day       = eo_is_all_day( $event_id );
 
-	if( 'event' != get_post_type( $event_id ) ){
-		echo json_encode( array(
-			'success' => false,
-			'data' => array(
-				'message' => __( 'Event not found', 'eventorganiser' )	
-			),	
+	if ( 'event' != get_post_type( $event_id ) ) {
+		wp_send_json_error( array(
+			'message' => __( 'Event not found', 'eventorganiser' ),
 		));
-		exit;
 	}
-	
+
 	$edittime = ( defined( 'EVENT_ORGANISER_BETA_FEATURES' ) && EVENT_ORGANISER_BETA_FEATURES );
-	
-	if( !$edittime ){
-		echo json_encode( array(
-			'success' => false,
-			'data' => array(
-				'message' => __( 'Events are not editable via the admin calendar', 'eventorganiser' )
-			),
+
+	if ( ! $edittime ) {
+		wp_send_json_error( array(
+			'message' => __( 'Events are not editable via the admin calendar', 'eventorganiser' ),
+		));
+	}
+
+	if ( ! check_ajax_referer( 'edit_events', false, false ) ) {
+		wp_send_json_error( array(
+			'message' => __( 'Are you sure you want to do this?', 'eventorganiser' ),
 		));
 		exit;
 	}
-	
-	if( !check_ajax_referer( 'edit_events', false, false ) ){
-		echo json_encode( array(
-			'success' => false,
-			'data' => array(
-				'message' => __( 'Are you sure you want to do this?', 'eventorganiser' )
-			),
+
+	if ( ! current_user_can( 'edit_event', $event_id ) ) {
+		wp_send_json_error( array(
+			'message' => __( 'You do not have permission to edit this event', 'eventorganiser' ),
 		));
-		exit;
 	}
-	
-	if( !current_user_can( 'edit_event', $event_id ) ){
-		echo json_encode( array(
-			'success' => false,
-			'data' => array(
-				'message' => __( 'You do not have permission to edit this event', 'eventorganiser' )
-			),
-		));
-		exit;
-	}
-		
+
 	$tz        = eo_get_blog_timezone();
 	$new_start = new DateTime( $_POST['start'], $tz );
-	$new_end   = new DateTime( $_POST['end'], $tz );  
+	$new_end   = new DateTime( $_POST['end'], $tz );
 
 	$re = eventorganiser_move_occurrence( $event_id, $occurrence_id, $new_start, $new_end );
-	
-	if( !is_wp_error( $re ) ){
-		echo json_encode( array(
-			'success' => true,
-		));
-		exit;
-	}else{
-		echo json_encode( array(
-			'success' => false,
-			'data' => array(
-				'message' => sprintf(
-					__( 'Event not created: %s', 'eventorganiser' ),
-					$re->get_error_message()		
-				)
+
+	if ( ! is_wp_error( $re ) ) {
+		wp_send_json_success();
+
+	} else {
+		wp_send_json_error( array(
+			'message' => sprintf(
+				__( 'Event not created: %s', 'eventorganiser' ),
+				$re->get_error_message()
 			),
 		));
-		exit;
 	}
-	
+
 }
 ?>
