@@ -863,41 +863,37 @@ add_action( 'switch_blog', 'eventorganiser_wpdb_fix');
  * @param string $tax Should be (an array containing) 'event-venue'.
  * @param array  Array of event-venue terms,
  */
-function eventorganiser_update_venue_meta_cache( $terms, $tax, $args ){
-	
-	if ( empty( $terms ) ) {
+function eventorganiser_update_venue_meta_cache( $terms, $tax, $args ) {
+
+	if ( empty($terms) ) {
 		return $terms;
 	}
-	
+
 	if ( is_array( $tax ) && ! in_array( 'event-venue', $tax ) ) {
 		return $terms;
 	}
-	
+
 	if ( ! is_array( $tax ) && 'event-venue' != $tax ) {
 		return $terms;
 	}
-	
+
 	//Cast as integer as https://core.trac.wordpress.org/ticket/17646 is only for wp_get_object_terms()
+	$term_ids = array();
 	foreach ( $terms as $key => $term ) {
-		$terms[$key] = sanitize_term( $term, $term->taxonomy, 'raw' );
+		if ( is_object( $term ) ) {
+			$terms[$key] = sanitize_term( $term, $term->taxonomy, 'raw' );
+			$term_ids[] = $terms[$key]->term_id;
+		} else {
+			$term_ids[] = (int) $term;
+		}
 	}
-	
-	if ( empty( $args['eo_update_venue_cache'] ) ) {
-		return $terms;
+
+	if ( ! empty( $args['eo_update_venue_cache'] ) ) {
+		update_meta_cache( 'eo_venue', $term_ids );
 	}
-	
-	//Check if its array of terms or term IDs
-	$first_element = reset( $terms );
-	if ( is_object( $first_element ) ){
-		$term_ids = wp_list_pluck( $terms, 'term_id' );
-	} else {
-		$term_ids = $terms;
-	}
-		
-	update_meta_cache( 'eo_venue', $term_ids );
-	
+
 	return $terms;
-} 
+}
 add_filter( 'get_terms', 'eventorganiser_update_venue_meta_cache', 10, 3 );
 
 
