@@ -461,10 +461,9 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			
 			break;
 		}
-		
 
-		$existing_options = get_option( 'eventorganiser_options', array() );
-		$clean = array_merge( $existing_options, $clean );
+		$existing = (array) get_option( 'eventorganiser_options', array() );
+		$clean    = array_merge( $existing, $clean );
 		return $clean;
 	}
 
