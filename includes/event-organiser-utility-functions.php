@@ -303,7 +303,7 @@ function eo_php2xdate($phpformat=""){
 
 		//Handle backslash excape
 		if($phpformat[$i]=="\\"){
-			$xdateformat .= "\\".$phpformat[$i+1];
+			$xdateformat .= "'".$phpformat[$i+1]."'";
 			$i++;
 			continue;
 		}
