@@ -503,34 +503,35 @@ function eventorganiser_admin_calendar() {
 				/**
 				 * @ignore
 				 */
-				$event = apply_filters('eventorganiser_admin_calendar',$event, $post);
+				$event = apply_filters( 'eventorganiser_admin_calendar', $event, $post );
 				/**
 				 * Filters the event before its sent to the admin calendar.
 				 *
 				 * **Note:** As the calendar is cached, changes made using this filter
 				 * will not take effect immediately. You can clear the cache by
 				 * updating an event.
-				 * 
+				 *
 				 * @package admin-calendar
 				 * @param array $event         The event array.
 				 * @param int   $event_id      The event's post ID.
 				 * @param int   $occurrence_id The event's occurrence ID.
 				 */
-				$event = apply_filters('eventorganiser_admin_fullcalendar_event', $event, $post->ID, $post->occurrence_id );
+				$event = apply_filters( 'eventorganiser_admin_fullcalendar_event', $event, $post->ID, $post->occurrence_id );
 
 				//Add event to array
-				$eventsarray[]=$event;
+				$eventsarray[] = $event;
 			endwhile;
 		endif;
 
-		if( !$calendar || !is_array($calendar) )
+		if ( ! $calendar || ! is_array( $calendar ) ) {
 			$calendar = array();
-	
+		}
+
 		$calendar[$key] = $eventsarray;
 
-		set_transient('eo_full_calendar_admin',$calendar, 60*60*24);
+		set_transient( 'eo_full_calendar_admin', $calendar, 60 * 60 * 24 );
 
-		wp_send_json( $events_array );
+		wp_send_json( $eventsarray );
 }
 
 
