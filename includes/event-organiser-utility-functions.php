@@ -370,7 +370,7 @@ function eo_get_blog_timezone(){
  * @param string $format Used to format the interval. See https://www.php.net/manual/en/dateinterval.format.php
  * @return string Formatted interval.
 */
-function eo_date_interval($_date1,$_date2, $format){
+function eo_date_interval( $_date1, $_date2, $format ) {
 
 	//Calculate R values (signs)
 	$R = ($_date1 <= $_date2 ? '+' : '-');
@@ -381,42 +381,45 @@ function eo_date_interval($_date1,$_date2, $format){
 	$date2 = clone ($_date1 <= $_date2 ? $_date2 : $_date1);
 
 	//Calculate total days difference
-	$total_days = floor(abs($date1->format('U') - $date2->format('U'))/86400);
+	$total_days = floor( abs( $date1->format( 'U' ) - $date2->format( 'U' ) ) / 86400 );
 
-	$periods = array( 'years'=>-1,'months'=>-1,'days'=>-1,'hours'=>-1);
+	$periods = array( 'years' => -1, 'months' => -1, 'days' => -1, 'hours' => -1 );
 
-	foreach ($periods as $period => &$i ){
+	foreach ( $periods as $period => &$i ) {
 
 		$temp_pointer = clone $date1;
-		
-		while( $temp_pointer <= $date2 ){
+
+		while ( $temp_pointer <= $date2 ) {
 			$temp_pointer->modify( "+1 $period" );
 			$i++;
 		}
-		
-		if ( $i > -1 ){
+
+		if ( $i > -1 ) {
 			$date1->modify( "+$i $period" );
-		}else{
+		} else {
 			$date1->modify( "$i $period" );
 		}
-		
 	}
-	extract($periods);
+
+	$years   = $periods['years'];
+	$months  = $periods['months'];
+	$days    = $periods['days'];
+	$hours   = $periods['hours'];
 
 	//Minutes, seconds
-	$seconds = round(abs($date1->format('U') - $date2->format('U')));
-	$minutes = floor($seconds/60);
-	$seconds = $seconds - $minutes*60;
+	$seconds = round( abs( $date1->format( 'U' ) - $date2->format( 'U' ) ) );
+	$minutes = floor( $seconds / 60 );
+	$seconds = $seconds - ( $minutes * 60 );
 
-	$chars = str_split( $format );
+	$chars  = str_split( $format );
 	$length = count( $chars );
-	
-	if( $length == 1 ){
+
+	if ( 1 == $length ) {
 		return $format;
 	}
-	
+
 	$values = array(
-			'%' => "%",
+			'%' => '%',
 			'y' => $years,
 			'Y' => zeroise( $years, 2 ),
 			'm' => $months,
@@ -433,36 +436,33 @@ function eo_date_interval($_date1,$_date2, $format){
 			'r' => $r,
 			'R' => $R,
 	);
-	
-	$result = "";
-	$previous_char_processed =  false;
-	
-	for( $i = 0; $i < $length; $i++ ){
-	
-		if( ( $i > 0 && $chars[$i-1] === '%' ) && !$previous_char_processed ){
-				
-			if( isset( $values[$chars[$i]] ) ){
+
+	$result = '';
+	$previous_char_processed = false;
+
+	for ( $i = 0; $i < $length; $i++ ) {
+
+		if( ( $i > 0 && '%' === $chars[$i-1] ) && ! $previous_char_processed ) {
+
+			if ( isset( $values[$chars[$i]] ) ) {
 				$result .= $values[$chars[$i]];
 				$previous_char_processed = true;
-								
-			}else{
-				$result .= $chars[$i-1].$chars[$i];
+
+			} else {
+				$result .= $chars[$i-1] . $chars[$i];
 				$previous_char_processed = true;
 			}
-			
-					
-		}elseif( $chars[$i] == '%' ){
+		} elseif ( '%' == $chars[$i] ) {
 			$previous_char_processed = false;
-			
-		}else{
+
+		} else {
 			$result .= $chars[$i];
 			$previous_char_processed = true;
 		}
 		//var_dump($result);
 	}
-	
 	return $result;
-}	 
+}
 
 /**
  * Converts php date format into Moment.js date format used for javascript.
