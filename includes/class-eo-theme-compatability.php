@@ -154,7 +154,7 @@ class EO_Theme_Compat {
 		//Create the dummy post
 		$this->reset_post( array(
 			'eo_theme_compat' => true,
-			'post_title'      => $title . ' (compat mode)',
+			'post_title'      => $title,
 			'post_content'    => $precontent . $content,
 			'post_excerpt'    => $precontent . $content,
 			'post_type'       => 'event',
