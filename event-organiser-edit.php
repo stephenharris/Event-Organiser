@@ -144,7 +144,7 @@ function _eventorganiser_details_metabox( $post ){
 					<td></td>
 					<td>
 						<p><?php _e( 'Repeat every', 'eventorganiser' );?> 
-						<input <?php  disabled( !$sche_once || $all_day );?> class="ui-widget-content ui-corner-all" name="eo_input[event_frequency]" id="HWSEvent_freq" type="number" min="1" max="365" maxlength="4" size="4" disabled="disabled" value="<?php echo $frequency;?>" /> 
+						<input type="number" id="HWSEvent_freq" <?php  disabled( ! $sche_once || $all_day );?> class="ui-widget-content ui-corner-all" name="eo_input[event_frequency]"  min="1" max="365" maxlength="4" size="4" value="<?php echo intval( $frequency );?>" /> 
 						<span id="recpan" >  </span>				
 						</p>
 
@@ -439,4 +439,3 @@ function _eventorganiser_event_edit_admin_notice(){
         	}
 	}	
 }
-?>
