@@ -1777,7 +1777,7 @@ function eo_taxonomy_dropdown( $args ){
 	$terms = get_terms( $args['taxonomy'], $query );
 
 	$output = sprintf( 
-		'<select style="width:150px" name="%s" id="%s" class="%s" />\n', 
+		'<select style="width:150px" name="%s" id="%s" class="%s">',
 		esc_attr( $args['name'] ),
 		$args['id'] ? esc_attr( $args['id'] ) : esc_attr( $args['name'] ),
 		esc_attr( $args['class'] )
@@ -1792,7 +1792,7 @@ function eo_taxonomy_dropdown( $args ){
 			$output .= sprintf( '<option value="%s" %s>%s</option>', esc_attr( $term->slug ), selected( $args['selected'], $term->slug, false ), esc_html( $term->name ) );
 		}
 	}
-	$output .= "</select>\n";
+	$output .= '</select>';
 	
 	if ( $args['echo'] ){
 		echo $output;
