@@ -71,8 +71,8 @@ class EventOrganiser_Shortcodes {
 		return $html;
 	}
 
-	static function handle_subscription_shortcode($atts, $content=null) {
-		extract( shortcode_atts( array(
+	static function handle_subscription_shortcode( $atts, $content = null ) {
+		$atts = shortcode_atts( array(
 			'title' => 'Subscribe to calendar',
 			'type' => 'google',
 			'class' => '',
@@ -80,31 +80,31 @@ class EventOrganiser_Shortcodes {
 			'style' => '',
 			'category' => false,
 			'venue' => false,
-		), $atts, 'eo_subscribe' ) );
-		
-		if( $category ){
+		), $atts, 'eo_subscribe' );
+
+		if ( $atts['category'] ) {
 			$url = eo_get_event_category_feed( $category );
-			
-		}elseif( $venue ){
+
+		} elseif ( $atts['venue'] ) {
 			$url = eo_get_event_venue_feed( $venue );
-		
-		}else{
+
+		} else {
 			$url = eo_get_events_feed();
-		
+
 		}
 
-		$class = $class ? 'class="'.esc_attr($class).'"' : false;
-		$title = $title ? 'title="'.esc_attr($title).'"' : false;
-		$style = $style ? 'style="'.esc_attr($style).'"' : false;
-		$id = $id ? 'id="'.esc_attr($id).'"' : false;
-		
-		if(strtolower($type)=='webcal'):
-			$url = str_replace( 'http://', 'webcal://',$url);
-		elseif( strtolower($type)=='ical' ):
+		$class = $atts['class'] ? 'class="' . esc_attr( $atts['class'] ) . '"' : false;
+		$title = $atts['title'] ? 'title="' . esc_attr( $atts['title'] ) . '"' : false;
+		$style = $atts['style'] ? 'style="' . esc_attr( $atts['style'] ) . '"' : false;
+		$id    = $atts['id']    ? 'id="' . esc_attr( $atts['id'] ) . '"' : false;
+
+		if ( strtolower( $atts['type'] ) == 'webcal' ) {
+			$url = str_replace( 'http://', 'webcal://', $url );
+		} elseif ( strtolower( $atts['type'] ) == 'ical' ) {
 			//Do nothing
-		else:
-			$url = add_query_arg('cid',urlencode($url),'http://www.google.com/calendar/render');
-		endif;
+		} else {
+			$url = add_query_arg( 'cid', urlencode( $url ), 'http://www.google.com/calendar/render' );
+		}
 
 		$html = '<a href="'.$url.'" target="_blank" '.$class.' '.$title.' '.$id.' '.$style.'>'.$content.'</a>';
 		return $html;

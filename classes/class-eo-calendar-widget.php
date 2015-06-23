@@ -87,9 +87,9 @@ class EO_Calendar_Widget extends WP_Widget
 				<input type="text" id="%1$s" name="%3$s" value="%4$s" class="widefat">
 				<em> %5$s </em>
 			</p>',
-			esc_attr( $this->get_field_id('event-category') ),
+			esc_attr( $this->get_field_id( 'event-category' ) ),
 			esc_html__( 'Event categories', 'eventorganiser' ),
-			esc_attr( $this->get_field_name('event-category') ),
+			esc_attr( $this->get_field_name( 'event-category' ) ),
 			esc_attr( $instance['event-category'] ),
 			esc_html__( 'List category slug(s), seperate by comma. Leave blank for all', 'eventorganiser' )
 		);
@@ -131,30 +131,29 @@ class EO_Calendar_Widget extends WP_Widget
 		return $validated;
 	}
 
-	function widget( $args, $instance ){
+	function widget( $args, $instance ) {
 
-		wp_enqueue_script( 'eo_front');
-		extract($args, EXTR_SKIP);
+		wp_enqueue_script( 'eo_front' );
 
 		//Set the month to display (DateTime must be 1st of that month)
-		$tz = eo_get_blog_timezone();
-		$date =  get_query_var('ondate') ?  str_replace('/','-',get_query_var('ondate')) : 'now';
-		try{
-			$month = new DateTime($date,$tz);
-		}catch( Exception $e){
-			$month = new DateTime('now',$tz);
+		$tz   = eo_get_blog_timezone();
+		$date = get_query_var( 'ondate' ) ?  str_replace( '/', '-', get_query_var( 'ondate' ) ) : 'now';
+		try {
+			$month = new DateTime( $date, $tz );
+		} catch ( Exception $e ) {
+			$month = new DateTime( 'now', $tz );
 		}
-		$month = date_create($month->format('Y-m-1'),$tz);
-	
+		$month = date_create( $month->format( 'Y-m-1' ), $tz );
+
 		/* Set up the event query */
 		$calendar = array(
 			'showpastevents' => ( empty( $instance['showpastevents'] ) ? 0 : 1 ),
 			'show-long'      => ( empty( $instance['show-long'] ) ? 0 : 1 ),
 			'link-to-single' => ( empty( $instance['link-to-single'] ) ? 0 : 1 ),
-			'event-venue'    => ( !empty( $instance['event-venue'] ) ? $instance['event-venue'] : 0 ),
-			'event-category' => ( !empty( $instance['event-category'] ) ? $instance['event-category'] : 0 ),
+			'event-venue'    => ( ! empty( $instance['event-venue'] ) ? $instance['event-venue'] : 0 ),
+			'event-category' => ( ! empty( $instance['event-category'] ) ? $instance['event-category'] : 0 ),
 		);
-		$title = !empty( $instance['title'] ) ? $instance['title'] : false;
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : false;
 
 		add_action( 'wp_footer', array( __CLASS__, 'add_options_to_script' ) );
 
@@ -162,18 +161,19 @@ class EO_Calendar_Widget extends WP_Widget
 		self::$widget_cal[$id] = $calendar;
 
 		//Echo widget
-		echo $before_widget;
+		echo $args['before_widget'];
 
-		$widget_title = apply_filters('widget_title', $title, $instance, $this->id_base);
+		$widget_title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 
-		if ( $widget_title )
-			echo $before_title . esc_html( $widget_title ) . $after_title;
+		if ( $widget_title ) {
+			echo $args['before_title'] . esc_html( $widget_title ) . $args['after_title'];
+		}
 
 		echo "<div id='{$id}_content' class='eo-widget-cal-wrap' data-eo-widget-cal-id='{$id}' >";
 			echo $this->generate_output( $month, $calendar );
-		echo "</div>";
+		echo '</div>';
 
-		echo $after_widget;
+		echo $args['after_widget'];
 	}
 
 	static function add_options_to_script() {
@@ -387,4 +387,3 @@ class EO_Calendar_Widget extends WP_Widget
 	}
 }
 add_action( 'widgets_init', array( 'EO_Calendar_Widget', 'register' ) );
-?>
