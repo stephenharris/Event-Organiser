@@ -28,12 +28,7 @@ class EO_Admin_Notice_Handler{
 	/**
 	 * Construct the controller and listen for form submission
 	 */
-	public function __construct() {
-
-		//Singletons!
-		if ( ! is_null( self::$instance ) ) {
-			trigger_error( "Tried to construct a second instance of class \"$class\"", E_USER_WARNING );
-		}
+	private function __construct() {
 
 		if ( did_action( 'plugins_loaded' ) ) {
 			self::load();
