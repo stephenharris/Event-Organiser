@@ -139,12 +139,13 @@ module.exports = function(grunt) {
 				'!dist/**', //build directory
 				'!.git/**', //version control
 				'!apigen/**', '!documentation/**', //docs
-				'!tests/**','!bin/**', //unit test
+				'!tests/**','!bin/**','!phpunit.xml', //unit test
 				'!vendor/**','!composer.lock','!composer.phar','!composer.json', //composer
 				'!.*','!**/*~', //hidden files
 				'!CONTRIBUTING.md',
 				'!readme.md',
-				'!codesniff','!phpunit.xml', //CodeSniffer & Mess Detector
+				'!codesniff/**','!phpmd.xml', //CodeSniffer & Mess Detector
+				'!css/images/**/*.xcf', //source images
 			],
 			dest: 'dist/event-organiser/'
 		},
@@ -157,12 +158,13 @@ module.exports = function(grunt) {
 				'!dist/**', //build directory
 				'!.git/**', //version control
 				'!apigen/**', '!documentation/**', //docs
-				'!tests/**','!bin/**', //unit test
+				'!tests/**','!bin/**','!phpunit.xml', //unit test
 				'!vendor/**','!composer.lock','!composer.phar','!composer.json', //composer
 				'!.*','!**/*~', //hidden files
 				'!CONTRIBUTING.md',
 				'!readme.md',
-				'!codesniff','!phpunit.xml', //CodeSniffer & Mess Detector
+				'!codesniff/**','!phpmd.xml', //CodeSniffer & Mess Detector
+				'!css/images/**/*.xcf', //source images
 			],
 			dest: process.env.EO_BETA_PLUGIN_DIR + '/<%= pkg.name %>/'
 		}	
