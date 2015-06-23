@@ -103,7 +103,7 @@ $.widget("ui.combobox", {
 			delay: 0,
 			minLength: 0,
 			source: function (a, callback) {
-				$.getJSON(EO_Ajax_Event.ajaxurl + "?callback=?&action=eo-search-venue", a, function (a) {
+				$.getJSON(EO_Ajax_Event.ajaxurl + "?action=eo-search-venue", a, function (a) {
 					var venues = $.map(a, function (a) {a.label = a.name;return a;});
 					callback(venues);
 				});

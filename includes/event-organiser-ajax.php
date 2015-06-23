@@ -721,9 +721,7 @@ function eventorganiser_search_venues() {
 	$venues  = array_merge( array( $novenue ), $venues );
 
 	//echo JSON to page
-	$response = $_GET['callback'] . '(' . json_encode( $venues ) . ')';
-	echo $response;
-	exit;
+	wp_send_json( $venues );
 }
 
 /**
@@ -820,4 +818,3 @@ function eventorganiser_admin_calendar_edit_date(){
 	}
 
 }
-?>
