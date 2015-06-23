@@ -54,7 +54,6 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 	function display(){
 	?>
 	<div class="wrap">
-		<?php screen_icon( 'edit' );?>
 		
 		<h2><?php _e('System Info','eventorganiser');?> </h2>
 		

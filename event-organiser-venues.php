@@ -220,7 +220,6 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 		$venue  = ( isset( $_GET['event-venue'] ) ? $_GET['event-venue'] : false );
 	?>
 	<div class="wrap">
-		<?php screen_icon( 'edit' );?>
 
 		<?php	
 			if ( ( ( $action == 'edit' || $action == 'update' ) && $venue )  || $action == 'create' ):

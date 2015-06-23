@@ -241,7 +241,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 	?>
 
 	<div class="wrap">  
-		<?php screen_icon( 'edit' );?>
+
 		<h2><?php _e( 'Events Calendar', 'eventorganiser' ); ?></h2>
 
 		<?php 
@@ -348,4 +348,3 @@ function eventorganiser_event_detail_dialog(){
 		echo '</div>';
 		echo '</div>';
 }
-?>
