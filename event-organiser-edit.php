@@ -86,9 +86,9 @@ function _eventorganiser_details_metabox( $post ){
 		<p>
 		<?php 
 		if( $is24 ){
-			printf( __( 'Ensure dates are entered in %1$s format and times in 24 hour format', 'eventorganiser' ), '<strong>'.$format.'</strong>' );
+			printf( __( 'Ensure dates are entered in %1$s format and times in 24 hour format.', 'eventorganiser' ), '<strong>'.$format.'</strong>' );
 		}else{
-			printf( __( 'Ensure dates are entered in %1$s format and times in 12 hour format', 'eventorganiser' ), '<strong>'.$format.'</strong>' );
+			printf( __( 'Ensure dates are entered in %1$s format and times in 12 hour format.', 'eventorganiser' ), '<strong>'.$format.'</strong>' );
 		}
  		?>
  		</p>
