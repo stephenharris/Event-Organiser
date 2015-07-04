@@ -29,7 +29,7 @@ function eventorganiser_public_fullcalendar() {
 		'event_end_after'    => $_GET['start'],
 	);
 
-	$time_format = !empty( $_GET['timeformat'] ) ? $_GET['timeformat'] : get_option( 'time_format' );
+	$time_format = ! empty( $_GET['timeformat'] ) ? stripslashes( $_GET['timeformat'] ) : get_option( 'time_format' );
 
 	//Restrict by category and/or venue/tag
 	foreach( array( 'category', 'venue', 'tag' ) as $tax ){
