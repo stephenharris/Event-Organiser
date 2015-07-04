@@ -165,38 +165,11 @@ function eventorganiser_public_fullcalendar() {
 			//Don't use get_the_excerpt as this adds a link
 			$excerpt_length = apply_filters('excerpt_length', 55);
 
-			$description = wp_trim_words( strip_shortcodes(get_the_content()), $excerpt_length, '...' );
+			$description = wp_trim_words( strip_shortcodes( get_the_content() ), $excerpt_length, '...' );
 
-			if( $event_start->format('Y-m-d') != $event_end->format('Y-m-d') ){
-				//Start & ends on different days
-
-				if( !eo_is_all_day() ){
-					//Not all day, include time
-					 $date = eo_format_datetime($event_start,'F j '.$time_format).' - '.eo_format_datetime($event_end,'F j '.$time_format);
-				}else{
-					//All day, don't include date
-					if( $event_start->format('Y-m') == $event_end->format('Y-m') ){
-						//Same month
-						 $date = eo_format_datetime($event_start,'F j').' - '.eo_format_datetime($event_end,'j, Y');
-					}else{
-						//Different month
-						 $date = eo_format_datetime($event_start,'F j').' - '.eo_format_datetime($event_end,'F j');
-					}
-				}
-
-			}else{
-				//Start and end on the same day
-							
-				if( !eo_is_all_day() ){
-					//Not all day, include time
-					 $date = eo_format_datetime($event_start,$format="F j, Y $time_format").' - '.eo_format_datetime($event_end,$time_format);
-				}else{
-					//All day
-					 $date = eo_format_datetime($event_start,$format='F j, Y');
-				}
-			}
+			$date1 = eo_format_event_occurrence( $post->ID, $post->occurrence_id, 'F j, Y ', $time_format, ' - ', false );
 			$description = $date.'</br></br>'.$description;
-			
+
 			/**
 			 * Filters the description of the event as it appears on the calendar tooltip.
 			 * 
