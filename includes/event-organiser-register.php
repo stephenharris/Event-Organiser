@@ -617,10 +617,16 @@ function _eventorganiser_upgrade_admin_notice(){
  	$notice_handler->add_notice( 'changedtemplate17', '', $message , 'alert');
 
  	if( !get_option('timezone_string') && current_user_can( 'manage_options' ) ){
- 		$offset    = get_option('gmt_offset');
- 		$offset_st = $offset > 0 ? "+$offset" : "$offset";
-		$tzstring  = 'UTC'.$offset_st;
-			
+ 		$offset = (float) get_option('gmt_offset');
+ 		$plus   = $offset >= 0 ? '+' : '-';
+ 		
+ 		if ( floor( abs( $offset ) ) !== abs( $offset ) ) {
+ 			$mins = ( abs( $offset ) - floor( abs( $offset ) ) ) * 60;
+ 			$tzstring  = 'UTC ' . $plus.floor( abs( $offset ) ) . ':' . $mins;
+ 		} else {
+ 			$tzstring  = 'UTC ' . $plus.abs( $offset );
+ 		}
+
 		$message = sprintf(
 			"<h4>" . sprintf( esc_html__('Your site timezone is %s','eventorganiser'), "<em>{$tzstring}</em>" ). '</h4>'
 			."<p>" . __( "Is this correct? Using a fixed offset from UTC may cause unexpected behaviour, particular if you observe Daylight Savings Time.", 'eventorganiser' ) . '<br>' 
