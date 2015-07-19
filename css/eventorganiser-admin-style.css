@@ -196,6 +196,11 @@ color:#FFF;
 background: #1e8cbe;
 }
 
+.ui-timepicker-table tbody .ui-state-hover,
+.ui-datepicker-calendar tbody .ui-state-hover{
+	outline: 2px solid #1e8cbe !important;
+}
+
 
 /*
  * Timepicker stylesheet
