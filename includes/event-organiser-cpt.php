@@ -274,9 +274,9 @@ function eventorganiser_cpt_register() {
 			'delete_post'         => 'delete_event',
 			'read_post'           => 'read_event',
 		),
-		'has_archive'   => $events_slug, 
+		'has_archive'   => $events_slug,
 		'hierarchical'  => false,
-		'menu_icon'     => ( defined( 'MP6' ) && MP6 ? false : EVENT_ORGANISER_URL.'css/images/eoicon-16.png' ),
+		'menu_icon'     => false,
 		'menu_position' => $menu_position,
 		'supports'      => eventorganiser_get_option( 'supports' ),
 	);
