@@ -529,7 +529,7 @@ window.eventOrganiserSchedulePicker = {
         }
         
         if ($("#venue_select").val() === null) {
-            $("tr.venue_row").hide();
+            $(".venue_row").hide();
         }
             
         //Generate summary

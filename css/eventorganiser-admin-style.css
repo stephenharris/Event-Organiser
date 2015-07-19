@@ -1,20 +1,77 @@
-/* Venue map on event edit page */
-#venuemap{height:300px; width:100%;float:right;margin: 10px 0 10px -300px}
+/* Simple grid */
+.eo-grid-12 {
+	float:left;
+  	width: 66.66%;
+}
+.eo-grid-8 {
+	float:left;
+  	width: 66.66%;
+}
+.eo-grid-4 {
+	float:left;
+  	width: 33.33%;
+}
+.eo-grid-6 {
+	float:left;
+  	width: 50%;
+}
+.eo-grid-3 {
+	float:left;
+  	width: 25%;
+}
+.eo-grid-row{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.eo-grid-12,.eo-grid-8,.eo-grid-4,
+.eo-grid-6,.eo-grid-3 {
+	min-height: 1px;
+}
+.eo-grid:after,
+.eo-grid-row:after{
+	content: "";
+    display: table;
+    clear: both;
+}
 
-/*Hide post date filter*/
-.post-type-event .tablenav.top .alignleft.actions select[name="m"]{display: none; }
+@media only screen and (max-width: 850px) {
+	.eo-grid-4,
+	.eo-grid-6,
+	.eo-grid-8{
+		width: 100%;
+	}
+	.eo-grid-3{
+		width: 50%;
+	}
+}
 
-#eventorganiser_event_detail tr.eo-add-new-venue{
+@media only screen and (max-width: 500px) {
+	.eo-grid-3{
+		width: 100%;
+	}
+}
+
+/* Event edit page */
+.eo-days-of-week li{
+	display: inline-block;
+	margin-right: 8px;	
+}
+.eo-days-of-week li input[type="checkbox"] {
+	margin-right: 2px;
+}
+.eo-days-of-week-text{
+	float:left;
+	margin-right:10px;
+}
+.eo-add-new-venue{
 	display: none;
 }
+#venuemap{height:300px; width:100%;float:right;margin: 10px 0 10px -300px}
 
-#eventorganiser_event_detail tr .eo-label{
-	width:190px;
-}
-/* Venue page address form spacing */
-#venue_address table tr{line-height: 4em;}
+/* Events page: */
+.post-type-event .tablenav.top .alignleft.actions select[name="m"]{display: none; }
 
-/* Venue map on venue page*/
+/* Venue edit page*/
 #venue_address.postbox #venuemap{height: 335px;margin: 0 0 0 -60%;width: 60%;}
 
 @media only screen and (max-width: 860px) {
@@ -23,7 +80,6 @@
 		clear: both;
 	}
 }
-
 
 @media only screen and (max-width: 1320px) {
 	#post-body.columns-2 #venuemap{
