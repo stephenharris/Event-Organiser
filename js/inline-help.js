@@ -15,7 +15,7 @@ jQuery(document).ready(function($) {
 			},
 			hide: 'unfocus',
 			style: {
-				classes: 'qtip-wiki qtip-light qtip-shadow'
+				classes: 'qtip-eo ui-tooltip-shadow'
 			},
 			position : {
 				 viewport: $(window)
