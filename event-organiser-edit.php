@@ -192,11 +192,12 @@ function _eventorganiser_details_metabox( $post ) {
 							$d = ($start_day + $i) % 7;
 							$ical_d = $ical_days[$d];
 							$day = $wp_locale->weekday_abbrev[$wp_locale->weekday[$d]];
+							$fullday = $wp_locale->weekday[$d];
 							$schedule_days = ( is_array( $schedule_meta ) ? $schedule_meta : array() );
 							?>
 							<li>
 								<input type="checkbox" id="day-<?php echo $day;?>"  <?php checked( in_array( $ical_d, $schedule_days ), true ); ?>  value="<?php echo esc_attr( $ical_d )?>" class="daysofweek" name="eo_input[days][]" disabled="disabled" />
-								<label for="day-<?php echo $day;?>" > <?php echo $day;?></label>
+								<label for="day-<?php echo $day;?>" > <abbr title="<?php echo $fullday; ?>"><?php echo $day;?></abbr></label>
 							</li>
 							<?php
 						endfor;
