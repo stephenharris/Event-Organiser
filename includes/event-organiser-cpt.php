@@ -840,14 +840,13 @@ function eo_get_category_meta($term='',$key=''){
  * @access private
  * @since 1.5
  */
-function eventorganiser_wpdb_fix(){
+function eventorganiser_wpdb_fix() {
 	global $wpdb;
 	$wpdb->eo_venuemeta = "{$wpdb->prefix}eo_venuemeta";
 	$wpdb->eo_events = "{$wpdb->prefix}eo_events";
 }
-add_action( 'init', 'eventorganiser_wpdb_fix',1);
-add_action( 'switch_blog', 'eventorganiser_wpdb_fix');
-	
+add_action( 'plugins_loaded', 'eventorganiser_wpdb_fix', 1 );
+add_action( 'switch_blog', 'eventorganiser_wpdb_fix' );
 
 /**
  * Updates venue meta cache when event venues are retrieved.
