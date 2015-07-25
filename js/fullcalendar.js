@@ -1,5 +1,5 @@
 /*!
- * FullCalendar v2.2.6
+ * FullCalendar v2.2.7
  * Docs & License: http://arshaw.com/fullcalendar/
  * (c) 2013 Adam Shaw
  * Edits made by Stephen Harris for Event Organiser
@@ -129,7 +129,7 @@ var rtlDefaults = {
 
 ;;
 
-var fc = $.fullCalendar = { version: "2.2.6" };
+var fc = $.fullCalendar = { version: "2.2.7" };
 var fcViews = fc.views = {};
 
 
