@@ -167,7 +167,7 @@ function eventorganiser_public_fullcalendar() {
 
 			$description = wp_trim_words( strip_shortcodes( get_the_content() ), $excerpt_length, '...' );
 
-			$date1 = eo_format_event_occurrence( $post->ID, $post->occurrence_id, 'F j, Y ', $time_format, ' - ', false );
+			$date = eo_format_event_occurrence( $post->ID, $post->occurrence_id, 'F j, Y ', $time_format, ' - ', false );
 			$description = $date.'</br></br>'.$description;
 
 			/**
