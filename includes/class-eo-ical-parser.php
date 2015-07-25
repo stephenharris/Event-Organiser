@@ -1032,15 +1032,15 @@ class EO_ICAL_Parser{
 
 				case 'UNTIL':
 					//Is the scheduled end a date-time or just a date?
-					if( preg_match( '/^((\d{8}T\d{6})(Z)?)/', $value ) ){
+					if ( preg_match( '/^((\d{8}T\d{6})(Z)?)/', $value ) ) {
 						$date = $this->parse_ical_datetime( $value, new DateTimeZone( 'UTC' ) );
-					}else{
+					} else {
 						$date = $this->parse_ical_date( $value );
 					}
-			
-					$rule_array['schedule_last'] = $date;
+					$rule_array['until'] = $date;
+					$rule_array['schedule_last'] = $date; //Backwards compatability 2.13.5
 				break;
-			
+
 				case 'COUNT':
 					$rule_array['number_occurrences'] = absint( $value );
 				break;
@@ -1126,16 +1126,17 @@ class EO_ICAL_Parser{
 
 		//If importing indefinately recurring, recurr up to some large point in time.
 		//TODO make a log of this somewhere.
-		if( empty( $rule_array['schedule_last'] ) && empty( $rule_array['number_occurrences'] ) ){
-			$rule_array['schedule_last'] = new DateTime( '2038-01-19 00:00:00' );
-			
+		if ( empty( $rule_array['until'] ) && empty( $rule_array['number_occurrences'] ) ) {
+			$rule_array['until'] = new DateTime( '2038-01-19 00:00:00' );
+			$rule_array['schedule_last'] = clone $rule_array['until']; //Backwards compatability 2.13.5
+
 			$this->report_warning(
 				$this->line,
 				'indefinitely-recurring-event',
 				'Feed contained an indefinitely recurring event. This event will recurr until 2038-01-19.'
 			);
 		}
-		
+
 		return $rule_array;
 	}
 
