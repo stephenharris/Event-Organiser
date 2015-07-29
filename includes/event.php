@@ -398,7 +398,7 @@ function  _eventorganiser_insert_occurrences( $post_id, $event_data ){
 	wp_cache_set( 'eventorganiser_occurrences_'.$post_id, $occurrence_cache );
 
 	unset( $event_data['occurrences'] );
-	$event_data['_occurrences'] = $occurrence_array;
+	//$event_data['_occurrences'] = $occurrence_array;
 		
 	if( !empty($include) ){
 		$event_data['include'] = array_map('eo_format_datetime', $include, array_fill(0, count($include), 'Y-m-d H:i:s') );
@@ -465,7 +465,7 @@ function eo_get_event_schedule( $post_id=0 ){
 		'duration_str'=>'',
 		'include'=>array(),
 		'exclude'=>array(),
-		'_occurrences'=>array(),
+		'_occurrences'=>array(),//no longer used
 	));
 
 	$tz = eo_get_blog_timezone();
@@ -478,10 +478,6 @@ function eo_get_event_schedule( $post_id=0 ){
 	$event_details['schedule_start'] = clone $event_details['start'];
 	$event_details['schedule_last'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_start', true), $tz);
 	$event_details['schedule_finish'] = new DateTime(get_post_meta( $post_id,'_eventorganiser_schedule_last_finish', true), $tz);
-
-	if( !empty($event_details['_occurrences']) ){
-		$event_details['_occurrences'] = array_map('eventorganiser_date_create', $event_details['_occurrences']);
-	}
 
 	if( !empty($event_details['include']) ){
 		$event_details['include'] = array_map('eventorganiser_date_create', $event_details['include'] );
