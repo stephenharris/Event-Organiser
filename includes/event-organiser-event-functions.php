@@ -246,14 +246,13 @@ function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $oc
 
 	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
+	$occurrence    = eo_get_the_occurrence( $post_id, $occurrence_id );
 
-	$occurrences = eo_get_the_occurrences_of( $post_id );
-
-	if( !$occurrences || !isset( $occurrences[$occurrence_id] ) ){
+	if ( ! $occurrence ) {
 		return false;
 	}
 
-	$start = $occurrences[$occurrence_id]['start'];
+	$start = $occurrence['start'];
 
 	/**
 	 * Filters the value returned by `eo_get_the_start()`
@@ -266,6 +265,49 @@ function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $oc
 	 */
 	$formatted_date = apply_filters( 'eventorganiser_get_the_start', eo_format_datetime( $start, $format ), $start, $format, $post_id, $occurrence_id );
 	return $formatted_date;
+}
+
+/**
+ * Returns an array contining the start and end datetime of the specified occurrence.
+ * 
+ * The returned array contains two DateTime objects with the keys: 'start' and 'end',
+ *
+ * @since 3.0.0
+ * @package event-date-functions
+ * @param int $event_id
+ * @param int $occurrence_id
+ * @return boolean|array False if the occurence was not found. 
+ */
+function eo_get_the_occurrence( $event_id, $occurrence_id ){
+
+	global $wpdb;
+	
+	$occurrences = wp_cache_get( 'eventorganiser_occurrences_'.$event_id );
+	
+	if ( ! isset ( $occurrences[$occurrence_id] ) ) {
+		
+		$result = $wpdb->get_row($wpdb->prepare(
+			"SELECT event_id, StartDate,StartTime,EndDate,FinishTime FROM {$wpdb->eo_events} 
+			WHERE {$wpdb->eo_events}.post_id=%d AND {$wpdb->eo_events}.event_id=%d ORDER BY StartDate ASC", 
+			$event_id, 
+			$occurrence_id
+		));
+	
+		if( ! $result ) {
+			return false;
+		}
+	
+		$occurrences[$occurrence_id] = array(
+			'start' => new DateTime($result->StartDate.' '.$result->StartTime, eo_get_blog_timezone()),
+			'end' => new DateTime($result->EndDate.' '.$result->FinishTime, eo_get_blog_timezone())
+		);
+		
+		wp_cache_set( 'eventorganiser_occurrences_'.$event_id, $occurrences );
+		
+	}
+	
+	return $occurrences[$occurrence_id];
+	
 }
 
 /**
@@ -391,14 +433,13 @@ function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occu
 	
 	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
+	$occurrence    = eo_get_the_occurrence( $post_id, $occurrence_id );
 
-	$occurrences = eo_get_the_occurrences_of( $post_id );
-
-	if( !$occurrences || !isset( $occurrences[$occurrence_id] ) ){
+	if ( ! $occurrence ) {
 		return false;
 	}
 
-	$end = $occurrences[$occurrence_id]['end'];
+	$end = $occurrence['end'];
 
 	/**
 	 * Filters the value returned by `eo_get_the_end()`
@@ -580,11 +621,11 @@ function eo_get_current_occurrence_of($post_id=0){
 function eo_is_all_day($post_id=0){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
-	if( empty($post_id) ) 
+	if( empty($post_id) ) {
 		return false;
-
+	}
+	//$schedule = get_post_meta( $post_id,'_eventorganiser_event_schedule', true );
 	$schedule = eo_get_event_schedule($post_id);
-
 	return (bool) $schedule['all_day'];
 }
 
