@@ -46,22 +46,23 @@ add_filter('query_vars', 'eventorganiser_register_query_vars' );
 function eventorganiser_pre_get_posts( $query ) {
 
 	//Deprecated, use event-venue instead.
-	if( !empty($query->query_vars['venue']) ){
-		$venue = $query->get('venue');
-		$query->set('event-venue',$venue);
+	if ( $query->get( 'venue' ) ) {
+		$venue = $query->get( 'venue' );
+		$query->set( 'event-venue',$venue );
 		$query->set( 'post_type', 'event' );
 	}
 
 	//If the query is for eo-events feed, set post type
-	if( $query->is_feed( 'eo-events' ) ){
+	if ( $query->is_feed( 'eo-events' ) ) {
 		$query->set( 'post_type', 'event' );
-	}   
-	
-	//If querying for all events starting on given date, set the date parameters
-	if( !empty($query->query_vars['ondate']) ) {
+	}
 
-		$ondate_start = str_replace('/','-',$query->query_vars['ondate']);
-		$ondate_end = str_replace('/','-',$query->query_vars['ondate']);
+	//If querying for all events starting on given date, set the date parameters
+	if ( $query->get( 'ondate' ) ) {
+
+		//Normalise date delimiter
+		$ondate_start = str_replace( '/', '-', $query->get( 'ondate' ) );
+		$ondate_end = str_replace( '/', '-', $query->get( 'ondate' ) );
 
 		$parts = count(explode('-',$ondate_start));
 		if( $parts == 1 && is_numeric($ondate_start) ){
@@ -146,8 +147,8 @@ function eventorganiser_pre_get_posts( $query ) {
 	endforeach;
 
 	//If eo_interval is set, determine date ranges
-	if( !empty($query->query_vars['eo_interval']) ){
-		switch($query->get('eo_interval')):
+	if ( $query->get( 'eo_interval' ) ) {
+		switch ( $query->get( 'eo_interval' ) ) :
 			case 'expired':
 				$meta_query = (array) $query->get('meta_query');
 				$meta_query[] =array(
@@ -175,9 +176,9 @@ function eventorganiser_pre_get_posts( $query ) {
 			case 'P6M':
 			case 'P1Y':
 				//I hate you php5.2
-				$intervals = array('P1D'=>'+1 day', 'P1W'=>'+1 week','P1M'=>'+1 month','P6M'=>'+6 month','P1Y'=>'+1 Year');
+				$intervals = array( 'P1D' => '+1 day', 'P1W' => '+1 week', 'P1M' => '+1 month', 'P6M' => '+6 month', 'P1Y' => '+1 Year' );
 				$cutoff = clone $blog_now;
-				$cutoff->modify($intervals[$query->query_vars['eo_interval']]);
+				$cutoff->modify( $intervals[ $query->get( 'eo_interval' ) ] );
 
 				if( is_admin() && 'series' == $query->get('group_events_by') ){
 					//On admin we want to show the **first** occurrence of a recurring event which has an occurrence in the interval
@@ -299,19 +300,20 @@ function eventorganiser_event_fields( $select, $query ){
  *@param string $query WP_Query
  *@return string
  */
-function eventorganiser_event_groupby( $groupby, $query ){
+function eventorganiser_event_groupby( $groupby, $query ) {
 	global $wpdb;
 
-	if(!empty($query->query_vars['group_events_by']) && $query->query_vars['group_events_by'] == 'series'){
+	if ( $query->get( 'group_events_by' ) == 'series' ) {
 		return "{$wpdb->posts}.ID";
 	}
 
-	if( eventorganiser_is_event_query( $query, true ) ):
-		if(empty($groupby))
+	if ( eventorganiser_is_event_query( $query, true ) ) {
+		if ( empty( $groupby ) ) {
 			return $groupby;
+		}
 
 		return "{$wpdb->eo_events}.event_id";
-	endif;
+	}
 
 	return $groupby;
 }
@@ -515,16 +517,15 @@ function eventorganiser_events_where( $where, $query ){
  *@param string $query WP_Query
  *@return string
  */
-function eventorganiser_sort_events( $orderby, $query ){
+function eventorganiser_sort_events( $orderby, $query ) {
 	global $wpdb;
 
-	if( !empty($query->query_vars['orderby']) ){
+	if ( $query->get( 'orderby' ) ) {
 		//If the query sets an orderby return what to do if it is one of our custom orderbys
+		$order_crit = $query->get( 'orderby' );
+		$order_dir  = $query->get( 'order' );
 
-		$order_crit= $query->query_vars['orderby'];
-		$order_dir = $query->query_vars['order'];
-
-		switch($order_crit):
+		switch ( $order_crit ) :
 			case 'eventstart':
 				return  " {$wpdb->eo_events}.StartDate $order_dir, {$wpdb->eo_events}.StartTime $order_dir";
 				break;
@@ -537,7 +538,7 @@ function eventorganiser_sort_events( $orderby, $query ){
 				return $orderby;
 		endswitch;
 
-	}elseif( eventorganiser_is_event_query( $query, true ) ){
+	} elseif ( eventorganiser_is_event_query( $query, true ) ) {
 			//If no orderby is set, but we are querying events, return the default order for events;
 			$orderby = " {$wpdb->eo_events}.StartDate ASC, {$wpdb->eo_events}.StartTime ASC";
 	}
@@ -655,5 +656,3 @@ function eo_update_event_dates_cache( $post_ids ){
 	
 	return $cache;
 }
-
-?>
