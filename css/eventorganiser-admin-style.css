@@ -381,6 +381,27 @@ a.eo-inline-help img {
 	background: none;
 }
 
+/* Keyboard shortcuts dialog */
+#eo-keyboard-shortcuts .eo-sc-key{
+	text-align: right;
+	padding: 0px 10px;
+	display: inline-block;
+	width: 100px;
+}
+#eo-keyboard-shortcuts kbd{
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 11px;
+	line-height: 10px;
+	color: #555;
+	vertical-align: middle;
+	background-color: #fcfcfc;
+	border: solid 1px #ccc;
+	border-bottom-color: #bbb;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #bbb;
+}
+
 /* Calendar dialog tabs*/
 #eo-dialog-tabs ul{
 	position: relative;

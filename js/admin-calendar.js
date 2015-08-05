@@ -228,9 +228,7 @@ eventorganiser.versionCompare = function(left, right) {
 	/* View tabs */
 	$('.view-button').click(function (event) {
 		event.preventDefault();
-		$('.view-button').removeClass('nav-tab-active');
-		calendar.fullCalendar('changeView', $(this).attr('id'));
-		$(this).addClass('nav-tab-active');
+		eventorganiser_switch_calendar_to( $(this).attr('id') );
 	});
 
 	/* GoTo 'mini calendar' */
@@ -238,6 +236,81 @@ eventorganiser.versionCompare = function(left, right) {
 		var element = $("<span class='fc-header-goto'><input type='hidden' id='miniCalendar'/></span>");
 		return element;
 	}
+	
+	function eventorganiser_switch_calendar_to( mode ){
+		$('.view-button').removeClass('nav-tab-active');
+		calendar.fullCalendar( 'changeView', mode );
+		$('#'+mode).addClass('nav-tab-active');
+	}
+	
+	//Keybard shortcuts
+	$(window).on( 'keypress', function( e ){
+		
+		if ( $(e.target).closest('.ui-dialog').length > 0 ) {
+			return;
+		}
+		
+		switch( e.which ) {
+			case 49://1
+			case 109://m
+			case 77://M
+				eventorganiser_switch_calendar_to( 'month' );
+				break;
+				
+			case 50://W
+			case 119://w
+			case 87://W
+				eventorganiser_switch_calendar_to( 'agendaWeek' );
+				break;
+			case 51://3
+			case 100://d
+			case 68://D
+				eventorganiser_switch_calendar_to( 'agendaDay' );
+				break;
+			case 116://t
+			case 84://T
+				calendar.fullCalendar('today');
+			case 103://g
+			case 71://G
+				//$('#miniCalendar').datepicker("show").focus();
+				break;
+				
+			case 110://n
+			case 78://N
+			case 106://j
+			case 74://J
+				calendar.fullCalendar( 'next' );
+				break;
+			case 107://k
+			case 75://K
+			case 112://p
+			case 80://P
+				calendar.fullCalendar( 'prev' );
+				break;
+				
+			case 63://?
+				//open keyboard shortcuts
+				$('#eo-keyboard-shortcuts').dialog({
+					autoOpen: false,
+					dialogClass: 'eo-admin-calendar-dialog',
+					title: "Keyboard shortcuts",
+					closeText: 'Close modal',
+					draggable: false,
+					modal: true,
+					open: function( event, ui ) {
+						$(this).parent('.eo-admin-calendar-dialog').focus();
+					}
+				}).dialog('open');//.focus();
+				break;
+			default:
+				console.log( e.which );
+				return;
+				 
+		}
+		console.log( '--' + e.which );
+		e.preventDefault();
+	} );
+	
 
 	$('#miniCalendar').datepicker({
 		dateFormat: 'DD, d MM, yy',

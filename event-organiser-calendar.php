@@ -322,6 +322,51 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			</form>
 		</div>
 		<?php endif; ?>
+		
+		<div id='eo-keyboard-shortcuts' style="display:none;" class="eo-dialog">
+		
+			<p> <?php esc_html_e( 'The following keyboard shortcuts are available', 'eventorganiser' ); ?> 
+			<br />
+			
+			<span class="eo-sc-key"><kbd>j</kbd> or <kbd>n</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to next period', 'eventorganiser' );?></span>
+			<br />
+
+			<span class="eo-sc-key"><kbd>k</kbd> or <kbd>p</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to previous period', 'eventorganiser' );?></span>
+			<br />
+
+			<span class="eo-sc-key"><kbd>1</kbd> or <kbd>m</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to month view', 'eventorganiser' );?></span>
+			<br />
+						
+			<span class="eo-sc-key"><kbd>2</kbd> or <kbd>w</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to week view', 'eventorganiser' );?></span>
+			<br />
+
+			<span class="eo-sc-key"><kbd>3</kbd> or <kbd>d</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to day view', 'eventorganiser' );?></span>
+			<br />
+					
+			<span class="eo-sc-key"><kbd>t</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to today in view', 'eventorganiser' );?></span>
+			<br />
+
+			<span class="eo-sc-key"><kbd>enter</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Open modal of selected event', 'eventorganiser' );?></span>
+			<br />
+					
+			<span class="eo-sc-key"><kbd>esc</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Close modal', 'eventorganiser' );?></span>
+			<br />
+			
+			<span class="eo-sc-key"><kbd>?</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Open shorcut help', 'eventorganiser' );?></span>
+			<br />		
+			
+			</p>
+		</div>
+		
 	</div><!-- .wrap -->
 <?php
 	}
