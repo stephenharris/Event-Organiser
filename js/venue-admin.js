@@ -23,7 +23,7 @@ jQuery(document).ready(function ($) {
         draggable: true,
         onDrag: function( evt ) {
         	this.dragging = true;
-        	var latlng = evt.latLng.lat().toFixed(6) + ',' + evt.latLng.lng().toFixed(6);
+        	var latlng = evt.latLng.lat().toFixed(6) + ', ' + evt.latLng.lng().toFixed(6);
         	$("#eo-venue-latllng-text").text( latlng );
         },
         onDragend: function( evt ) {
@@ -33,7 +33,7 @@ jQuery(document).ready(function ($) {
         onPositionchanged: function (){
         	if( !this.dragging ){
         		var latLng    = this.getPosition();
-        		var latlngStr = latLng.lat().toFixed(6) + ',' + latLng.lng().toFixed(6);
+        		var latlngStr = latLng.lat().toFixed(6) + ', ' + latLng.lng().toFixed(6);
         		
         		$("#eo_venue_Lat").val( latLng.lat().toFixed(6) );
         		$("#eo_venue_Lng").val( latLng.lng().toFixed(6) );
@@ -76,7 +76,7 @@ jQuery(document).ready(function ($) {
 				}
 		}else{
 			//Not valid...
-			$(this).text( old_lat + "," + old_lng );
+			$(this).text( old_lat + ", " + old_lng );
 		}
 	});
 	
