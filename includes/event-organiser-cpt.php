@@ -695,17 +695,16 @@ add_action( 'event-category_edit_form_fields', 'eventorganiser_edit_tax_meta', 1
  * @access private
  * @since 1.3
  */
-function eventorganiser_tax_meta_form($colour){
+function eventorganiser_tax_meta_form( $colour ) {
 	?>
-		<th>
-			<label for="tag-description"><?php _e('Color','eventorganiser')?></label>
-		</th>
-		<td> 
-			<input type="text" style="width:100px" name="eo_term_meta[colour]" class="color colour-input" id="color" value="<?php echo $colour; ?>" />
-			<a id="link-color-example" class="color eo-event-category-color-sample hide-if-no-js"></a>
-   			 <div style="z-index: 100; background: none repeat scroll 0% 0% rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); position: absolute;display: none;" id="colorpicker"></div>
-			<p><?php _e('Assign the category a colour.','eventorganiser')?></p>
-		</td>
+	<th>
+		<label for="event-category-color"><?php esc_html_e( 'Color', 'eventorganiser' )?></label>
+	</th>
+	<td> 
+		<input type="text" style="width:100px" name="eo_term_meta[colour]" class="color colour-input" id="event-category-color" value="<?php echo $colour; ?>" aria-describedby="event-category-color-desc" />
+   		<div style="z-index: 100; background: none repeat scroll 0% 0% rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); position: absolute;display: none;" id="colorpicker"></div>
+		<p id="event-category-color-desc"><?php esc_html_e( 'Assign the category a colour.', 'eventorganiser' ); ?></p>
+	</td>
 	<script>
 var farbtastic;(function($){var pickColor=function(a){farbtastic.setColor(a);$('.colour-input').val(a);$('a.color').css('background-color',a)};$(document).ready(function(){farbtastic=$.farbtastic('#colorpicker',pickColor);pickColor($('.colour-input').val());$('.color').click(function(e){e.preventDefault();if($('#colorpicker').is(":visible")){$('#colorpicker').hide()}else{$('#colorpicker').show()}});$('.colour-input').keyup(function(){var a=$('.colour-input').val(),b=a;a=a.replace(/[^a-fA-F0-9]/,'');if('#'+a!==b)$('.colour-input').val(a);if(a.length===3||a.length===6)pickColor('#'+a)});$(document).mousedown(function(){$('#colorpicker').hide()})})})(jQuery);
 	</script>	
