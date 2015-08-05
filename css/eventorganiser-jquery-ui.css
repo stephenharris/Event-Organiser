@@ -1038,10 +1038,11 @@ body .ui-tooltip {
 .ui-state-focus,
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {
-  border: 1px solid #cccccc;
+  border: 1px solid #1e8cbe;
   background: #ececec    ;
   font-weight: normal;
   color: #000000;
+  
 }
 .ui-state-hover a,
 .ui-state-hover a:hover,
