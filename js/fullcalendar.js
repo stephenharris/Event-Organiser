@@ -7848,7 +7848,7 @@ function Header(calendar, options) {
 					var button;
 
 					if (buttonName == 'title') {
-						groupChildren = groupChildren.add($('<h2>&nbsp;</h2>')); // we always want it to take up height
+						groupChildren = groupChildren.add($('<h2 aria-live="polite">&nbsp;</h2>')); // we always want it to take up height
 						isOnlyButtons = false;
 					}
 					else if($.isFunction(options.customButtons[buttonName])){
