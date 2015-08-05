@@ -170,7 +170,8 @@ function eventorganiser_display_occurrences() {
 			'P6M' => sprintf( __( 'Events within %d months', 'eventorganiser' ), 6 ),
 			'P1Y' => __( 'Events within 1 year', 'eventorganiser' ),
 		);
-		$current = ( !empty( $wp_query->query_vars['eo_interval'] ) ? $wp_query->query_vars['eo_interval'] : 'all' );	
+		//@see https://core.trac.wordpress.org/ticket/16471
+		$current = ( get_query_var( 'eo_interval' ) ? get_query_var( 'eo_interval' ) : 'all' );
 ?>
 		<select style="width:150px;" name='eo_interval' id='show-events-in-interval' class='postform'>
 			<?php foreach ( $intervals as $id => $interval ): ?>
@@ -283,5 +284,3 @@ function eventorganiser_quick_edit_script() { ?>
     </script>
     <?php
 }
-
-?>
