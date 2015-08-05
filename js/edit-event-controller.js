@@ -153,7 +153,8 @@ $.widget("ui.combobox", {
 	$("<a href='#' style='vertical-align: top;margin: 0px -1px;padding: 0px;height:27px;'>").attr("title", "Show All Venues").appendTo(button_wrappers).button({
 		icons: { primary: "ui-icon-triangle-1-s"},
 		text: false
-	}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
+	}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function (ev) {
+		ev.preventDefault();
 		if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return;}
 		$(this).blur();
 		input.autocomplete("search", "").focus();
@@ -164,7 +165,8 @@ $.widget("ui.combobox", {
 		$("<a href='#' style='vertical-align: top;margin: 0px -1px;padding: 0px;height:27px;'>").attr("title", "Create New Venue").appendTo(button_wrappers).button({
 			icons: {primary: "ui-icon-plus"},
 			text: false
-		}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right add-new-venue ui-combobox-button").click(function () {
+		}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right add-new-venue ui-combobox-button").click(function (ev) {
+			ev.preventDefault();
 			$("#eventorganiser_detail .eo-add-new-venue").show();			
 			$(".venue_row").show();
 				
@@ -193,7 +195,7 @@ $.widget("ui.combobox", {
 				eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
 				eovenue.get_map( 'venuemap' ).map.setZoom( 1 );
 			}
-			$(this).blur();
+			$("#eventorganiser_detail .eo-add-new-venue input").first().focus();
 		});
 	}	
 }
@@ -217,7 +219,7 @@ $(".eo_addressInput").change(function () {
 //When cancelling venue input, restore defaults
 $('.eo-add-new-venue-cancel').click(function(e){
 	e.preventDefault();
-	$('.eo-venue-combobox-select').show();
+	$('.eo-venue-combobox-select').show().find('input:visible').first().focus();
 	$('.eo-add-new-venue input').val('');
 
 	//Restore old venue details
