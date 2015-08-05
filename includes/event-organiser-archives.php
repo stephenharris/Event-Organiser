@@ -99,18 +99,21 @@ function eventorganiser_pre_get_posts( $query ) {
 	$blog_now = new DateTime(null, eo_get_blog_timezone());
 
 	//Determine whether or not to show past events and each occurrence. //If not set, use options
+	//@see https://core.trac.wordpress.org/ticket/16471
 	if( !is_admin() && !is_single() && !$query->is_feed('eo-events') && !isset($query->query_vars['showpastevents']) ){
 		//If showpastevents is not set - use options (except for admin / single pages.
 		$query->set('showpastevents', eventorganiser_get_option('showpast') );
 	}
 
 	//Deprecated: showrepeats - use group_events_by instead
+	//@see https://core.trac.wordpress.org/ticket/16471
 	if( isset($query->query_vars['showrepeats']) && !isset($query->query_vars['group_events_by']) ){
 		if( !$query->query_vars['showrepeats'] )
 			$query->set('group_events_by','series');
 	}
 
 	//Determine how to group events: by series or show each occurrence
+	//@see https://core.trac.wordpress.org/ticket/16471
 	if( !isset($query->query_vars['group_events_by']) ){
 
 		//Group by isn't set - default depends on context:
@@ -202,6 +205,7 @@ function eventorganiser_pre_get_posts( $query ) {
 	$running_event_is_past= (  eventorganiser_get_option('runningisnotpast') ? true : false);
 
 	//Set date range according to whether we show past events
+	//@see https://core.trac.wordpress.org/ticket/16471
 	if(isset($query->query_vars['showpastevents'])&& !$query->query_vars['showpastevents'] ){
 		//Showing only future events
 
@@ -435,21 +439,25 @@ function eventorganiser_events_where( $where, $query ){
 	if( eventorganiser_is_event_query( $query, true ) ):
 
 		//If we only want events (or occurrences of events) that belong to a particular 'event'
+		//https://core.trac.wordpress.org/ticket/16471
 		if( isset( $query->query_vars['event_series'] ) ):
 			$series_id =$query->query_vars['event_series'];
 			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.post_id =%d ",$series_id);
 		endif;
 
+		//https://core.trac.wordpress.org/ticket/16471
 		if( isset( $query->query_vars['event_occurrence_id'] ) ):
 			$occurrence_id =$query->query_vars['event_occurrence_id'];
 			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.event_id=%d ",$occurrence_id);
 		endif;
 		
+		//https://core.trac.wordpress.org/ticket/16471
 		if( isset( $query->query_vars['event_occurrence__not_in'] ) ):
 			$occurrence__not_in = implode(', ', array_map( 'intval', $query->query_vars['event_occurrence__not_in'] ) );
 			$where .= " AND {$wpdb->eo_events}.event_id NOT IN({$occurrence__not_in}) ";
 		endif;
 		
+		//https://core.trac.wordpress.org/ticket/16471
 		if( isset( $query->query_vars['event_occurrence__in'] ) ):
 			$occurrence__in = implode(', ', array_map( 'intval', $query->query_vars['event_occurrence__in'] ) );
 			$where .= " AND {$wpdb->eo_events}.event_id IN({$occurrence__in}) ";
@@ -548,6 +556,7 @@ function eventorganiser_sort_events( $orderby, $query ){
  */
 function eo_is_venue(){
 	global $wp_query;
+	//@see https://core.trac.wordpress.org/ticket/16471
 	return (isset($wp_query->query_vars['venue'] ) || is_tax('event-venue'));
 }
 
