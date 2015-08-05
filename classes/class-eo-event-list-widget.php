@@ -265,6 +265,7 @@ function eventorganiser_list_events( $query, $args = array(), $echo = 1 ) {
 		'showrepeats'      => 1,
 		'group_events_by'  => '',
 		'showpastevents'   => true,
+		'no_found_rows'    => true,
 	));
 
 	//Make sure false and 'False' etc actually get parsed as 0/false (input from shortcodes, for instance, can be varied).
@@ -334,4 +335,3 @@ function eventorganiser_list_events( $query, $args = array(), $echo = 1 ) {
 	return $html;
 }
 add_action( 'widgets_init', array( 'EO_Event_List_Widget', 'register' ) );
-?>
