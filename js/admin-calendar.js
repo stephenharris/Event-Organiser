@@ -49,7 +49,12 @@ eventorganiser.versionCompare = function(left, right) {
 		autoOpen: false,
 		dialogClass: 'eo-admin-calendar-dialog',
 		width: 527,
-		modal:true
+		modal:true,
+		closeText: 'Close modal',
+		draggable: false,
+		open: function( event, ui ) {
+			$(this).parent('.eo-admin-calendar-dialog').focus();
+		}
 	});
 	//Add eo-ui-button to jQuery UI button
 	$('.eo-dialog').parent().find('.ui-dialog-titlebar-close').addClass('eo-ui-button');

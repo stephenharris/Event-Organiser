@@ -131,14 +131,14 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 /*For the blocks of colour*/
 .cat .ui-selectmenu-item-icon { height: 14px; width: 14px; border:1px solid #dfdfdf;border-radius: 4px;}
 .cat .ui-selectmenu-item-icon{ background-image:none!important; }
-
+.event_page_calendar .ui-widget-overlay{ z-index:99999!important;}
 
 /* Table on event details calendar view*/
 .eo-cal-meta .form-table th {width:50px;}
 /*Drop down filters*/
 #eo_admin_calendar select { min-width:180px; width:auto}
 .ui-widget-overlay{z-index:1000;}
-.eo-admin-calendar-dialog{z-index:2000;}
+.eo-admin-calendar-dialog{z-index:100000!important;}
 /*.eo-admin-calendar-dialog.ui-dialog .ui-dialog-titlebar-close span {margin: -8px;}*/
 #eo-dialog-tabs, #events-meta {border: none;padding: 0}
 
