@@ -250,11 +250,13 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		?>
 		<div id="calendar-view">
 			<span id='loading' style='display:none'><?php _e( 'Loading&#8230;', 'eventorganiser' );?></span>
+			<ul class="tablist" role="tablist">
 			<?php foreach( $views as $id => $label ) 
-				printf( '<a href="#" class="nav-tab view-button %s" id="%s">%s</a>', ( $id == $current ? 'nav-tab-active' : '' ), $id, $label );
+				printf( '<li role="tab"><a href="#" role="tab" class="nav-tab view-button %s" id="%s">%s</a></li>', ( $id == $current ? 'nav-tab-active' : '' ), $id, $label );
 			?>
+			</ul>
 		</div>
-
+		
 		<div id='eo_admin_calendar'></div>
 		<span><?php _e( 'Current date/time', 'eventorganiser' );?>: <?php echo $now->format( 'Y-m-d G:i:s \G\M\TP' );?></span>
 
