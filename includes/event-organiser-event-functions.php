@@ -1268,18 +1268,18 @@ function eo_get_add_to_google_link( $event_id = 0, $occurrence_id = 0 ){
 /**
  * @ignore
 */
-function eo_has_event_started( $event_id = false, $occurrence_id = false ){
+function eo_has_event_started( $event_id = false, $occurrence_id = false ) {
 	$start = eo_get_the_start( DATETIMEOBJ, $event_id, $occurrence_id );
-	$now   = new DateTime( 'now', $tz );
+	$now   = new DateTime( 'now', eo_get_blog_timezone() );
 	return ($start <= $now );
 }
 
 /**
  * @ignore
 */
-function eo_has_event_finished( $event_id = false, $occurrence_id = false ){
+function eo_has_event_finished( $event_id = false, $occurrence_id = false ) {
 	$end = eo_get_the_end( DATETIMEOBJ, $event_id, $occurrence_id );
-	$now   = new DateTime( 'now', $tz );
+	$now = new DateTime( 'now', eo_get_blog_timezone() );
 	return ($end <= $now );
 }
 
