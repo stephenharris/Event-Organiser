@@ -611,21 +611,21 @@ function _eventorganiser_upgrade_admin_notice() {
 		__("<h4>City & State Fields Added</h4>City and state / province fields for venues have now been added. </br> If you'd like, Event Organiser can <a href='%s'>attempt to auto-fill them</a>. You can always manually change the details aftewards.",'eventorganiser'),
 		add_query_arg('action','eo-autofillcity',admin_url('admin-post.php'))
 	);
- 	$notice_handler->add_notice( 'autofillvenue17', 'event_page_venues', $message , 'alert');
+	$notice_handler->add_notice( 'autofillvenue17', 'event_page_venues', $message , 'alert');
 
- 	$message = __("<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post<a/>.",'eventorganiser');
- 	$notice_handler->add_notice( 'changedtemplate17', '', $message , 'alert');
+	$message = __("<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post<a/>.",'eventorganiser');
+	$notice_handler->add_notice( 'changedtemplate17', '', $message , 'alert' );
 
- 	if( !get_option('timezone_string') && current_user_can( 'manage_options' ) ){
- 		$offset = (float) get_option('gmt_offset');
- 		$plus   = $offset >= 0 ? '+' : '-';
- 		
- 		if ( floor( abs( $offset ) ) !== abs( $offset ) ) {
- 			$mins = ( abs( $offset ) - floor( abs( $offset ) ) ) * 60;
- 			$tzstring  = 'UTC ' . $plus.floor( abs( $offset ) ) . ':' . $mins;
- 		} else {
- 			$tzstring  = 'UTC ' . $plus.abs( $offset );
- 		}
+	if ( ! get_option( 'timezone_string' ) && current_user_can( 'manage_options' ) && get_option( 'gmt_offset' ) ) {
+		$offset = (float) get_option( 'gmt_offset' );
+		$plus   = $offset >= 0 ? '+' : '-';
+
+		if ( floor( abs( $offset ) ) !== abs( $offset ) ) {
+			$mins = ( abs( $offset ) - floor( abs( $offset ) ) ) * 60;
+			$tzstring  = 'UTC ' . $plus.floor( abs( $offset ) ) . ':' . $mins;
+		} else {
+			$tzstring  = 'UTC ' . $plus.abs( $offset );
+		}
 
 		$message = sprintf(
 			"<h4>" . sprintf( esc_html__('Your site timezone is %s','eventorganiser'), "<em>{$tzstring}</em>" ). '</h4>'
