@@ -603,10 +603,10 @@ add_action( 'admin_enqueue_scripts', 'eventorganiser_pointer_load',99999);
 
 
 
-function _eventorganiser_upgrade_admin_notice(){
+function _eventorganiser_upgrade_admin_notice() {
 
 	$notice_handler = EO_Admin_Notice_Handler::get_instance();
-		
+
 	$message = sprintf(
 		__("<h4>City & State Fields Added</h4>City and state / province fields for venues have now been added. </br> If you'd like, Event Organiser can <a href='%s'>attempt to auto-fill them</a>. You can always manually change the details aftewards.",'eventorganiser'),
 		add_query_arg('action','eo-autofillcity',admin_url('admin-post.php'))
@@ -634,9 +634,9 @@ function _eventorganiser_upgrade_admin_notice(){
 			."<p>" . __( "You can <a href='%s'>change your timezone settings here</a>.",'eventorganiser') . '</p>',
 			admin_url( 'options-general.php' ).'#default_role'
 		);
- 		$notice_handler->add_notice( 'timezone', '', $message , 'alert');	
+		$notice_handler->add_notice( 'timezone', '', $message , 'alert' );
 	}
-		
+
 }
 add_action( 'admin_notices', '_eventorganiser_upgrade_admin_notice', 1 );
 
