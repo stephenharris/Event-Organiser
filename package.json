@@ -1,6 +1,6 @@
 {
   "name": "event-organiser",
-  "version": "2.13.5",
+  "version": "2.13.6",
   "description": "Event mangement plugin for WordPress",
   "main": "Gruntfile.js",
   "repository": {
