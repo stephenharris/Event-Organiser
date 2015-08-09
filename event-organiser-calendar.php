@@ -344,19 +344,19 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			<br />
 
 			<span class="eo-sc-key"><kbd>1</kbd> or <kbd>m</kbd></span>
-			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to month view', 'eventorganiser' );?></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Switch to month view', 'eventorganiser' );?></span>
 			<br />
 						
 			<span class="eo-sc-key"><kbd>2</kbd> or <kbd>w</kbd></span>
-			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to week view', 'eventorganiser' );?></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Switch to week view', 'eventorganiser' );?></span>
 			<br />
 
 			<span class="eo-sc-key"><kbd>3</kbd> or <kbd>d</kbd></span>
-			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to day view', 'eventorganiser' );?></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Switch to day view', 'eventorganiser' );?></span>
 			<br />
 					
 			<span class="eo-sc-key"><kbd>t</kbd></span>
-			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to today in view', 'eventorganiser' );?></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Jump to today in view', 'eventorganiser' );?></span>
 			<br />
 
 			<span class="eo-sc-key"><kbd>enter</kbd></span>
