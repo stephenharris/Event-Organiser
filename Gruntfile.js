@@ -63,7 +63,7 @@ module.exports = function(grunt) {
   	    options: {
   	    	reportFormat: 'text',
   	    	bin: './vendor/bin/phpmd', 
-  	    	rulesets: 'codesize'
+  	    	rulesets: 'phpmd.xml'
   	    }
   	},
 	cssjanus: {
