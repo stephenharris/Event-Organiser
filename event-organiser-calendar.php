@@ -101,6 +101,8 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 
 	function page_actions() {
 
+		add_action( 'admin_notices', array( $this, 'render_sr_shortcut' ), -999 );
+
 		//Add screen option
 		$user     = wp_get_current_user();
 		$is12hour = get_user_meta( $user->ID, 'eofc_time_format', true );
@@ -218,8 +220,13 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		}
 	}
 
+	function render_sr_shortcut() {
+		?>
+		<a href="#" id="eo-keyboard-sr-shortcut" class="screen-reader-shortcut"><?php esc_html_e( 'View keyboard shortcuts' ); ?></a>
+		<?php
+	}
 
-	function screen_options( $options, $screen ){
+	function screen_options( $options, $screen ) {
 		$options .= '<h5>'.__( 'Calendar options', 'eventorganiser' ).'</h5>';
 		$options .= sprintf(
 			'<p><label for="%s" style="line-height: 20px;"> <input type="checkbox" name="%s" id="%s" %s> %s </label></p>',

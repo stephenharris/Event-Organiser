@@ -290,27 +290,35 @@ eventorganiser.versionCompare = function(left, right) {
 				
 			case 63://?
 				//open keyboard shortcuts
-				$('#eo-keyboard-shortcuts').dialog({
-					autoOpen: false,
-					dialogClass: 'eo-admin-calendar-dialog',
-					title: "Keyboard shortcuts",
-					closeText: 'Close modal',
-					draggable: false,
-					modal: true,
-					open: function( event, ui ) {
-						$(this).parent('.eo-admin-calendar-dialog').focus();
-					}
-				}).dialog('open');//.focus();
+				$('#eo-keyboard-shortcuts').dialog('open');
 				break;
 			default:
-				console.log( e.which );
 				return;
 				 
 		}
-		console.log( '--' + e.which );
 		e.preventDefault();
 	} );
 	
+	$('#eo-keyboard-shortcuts').dialog({
+		autoOpen: false,
+		dialogClass: 'eo-admin-calendar-dialog',
+		title: "Keyboard shortcuts",
+		closeText: 'Close modal',
+		draggable: false,
+		modal: true,
+		open: function( event, ui ) {
+			$(this).parent('.eo-admin-calendar-dialog').focus();
+		}
+	});
+	
+	$('#eo-keyboard-sr-shortcut').on( 'click', function( ev ){
+		ev.preventDefault();
+		$('#eo-keyboard-shortcuts').dialog('open');
+	});
+	
+	//Hack to move screen reader shortcut to where WordPress' SR shortcuts live (if we can)
+	var sr_shortcuts = $('#adminmenumain .screen-reader-shortcut');
+	if ( sr_shortcuts.length > 0 ) { $('#eo-keyboard-sr-shortcut').insertAfter( sr_shortcuts.last() ); }
 
 	$('#miniCalendar').datepicker({
 		dateFormat: 'DD, d MM, yy',
