@@ -101,8 +101,9 @@ class EO_Calendar_Widget extends WP_Widget
 			</p>',
 			esc_attr( $this->get_field_id( 'event-venue' ) ),
 			esc_html__( 'Event venue', 'eventorganiser' ),
-			eo_event_venue_dropdown( array( 
+			eo_taxonomy_dropdown( array( 
 				'echo'            => 0,
+				'taxonomy'        => 'event-venue',
 				'show_option_all' => esc_html__( 'All Venues','eventorganiser' ),
 				'id'              => $this->get_field_id( 'event-venue' ),
 				'selected'        => $instance['event-venue'], 
