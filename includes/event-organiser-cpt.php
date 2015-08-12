@@ -702,6 +702,7 @@ function eventorganiser_tax_meta_form( $colour ) {
 	</th>
 	<td> 
 		<input type="text" style="width:100px" name="eo_term_meta[colour]" class="color colour-input" id="event-category-color" value="<?php echo $colour; ?>" aria-describedby="event-category-color-desc" />
+		<a id="link-color-example" class="color eo-event-category-color-sample hide-if-no-js"></a>
    		<div style="z-index: 100; background: none repeat scroll 0% 0% rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); position: absolute;display: none;" id="colorpicker"></div>
 		<p id="event-category-color-desc"><?php esc_html_e( 'Assign the category a colour.', 'eventorganiser' ); ?></p>
 	</td>
