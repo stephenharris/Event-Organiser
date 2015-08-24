@@ -562,23 +562,23 @@ function eo_is_venue(){
 }
 
 
-function _eventorganiser_update_event_dates_cache( $posts, $query ){
+function _eventorganiser_update_event_dates_cache( $events, $query ){
 	
 	// No point in doing all this work if we didn't match any posts.
-	if ( ! $posts ) {
-		return $posts;
+	if ( ! $events ) {
+		return $events;
 	}
 
 	//PHP 5.3 and early can't cache datetime objects
 	if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-		return $posts;
+		return $events;
 	}
 	
-	//TODO do we need to check if $posts is an array of WP_Post objects?
+	//TODO do we need to check if $events is an array of WP_Post objects?
 	//TODO allow this to be skipped?
 
 	if ( ! eventorganiser_is_event_query( $query ) ) {
-		return $posts;
+		return $events;
 	}
 
 	$tz = eo_get_blog_timezone();
@@ -601,7 +601,7 @@ function _eventorganiser_update_event_dates_cache( $posts, $query ){
 		
 	}
 	
-	return $posts;
+	return $events;
 }
 
 add_filter( 'the_posts', '_eventorganiser_update_event_dates_cache', 10, 2 );
