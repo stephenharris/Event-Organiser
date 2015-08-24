@@ -2,6 +2,15 @@
 
 class venueTest extends EO_UnitTestCase
 {
+	
+	public function setUp() {
+		parent::setUp();
+	
+		global $wpdb;
+	
+		$wpdb->query( 'DELETE FROM ' . $wpdb->eo_venuemeta );
+	}
+	
 	/**
 	 * When an event is saved, if a new venue fails to create because it already exists
 	 * we assign the event the ID of the pre-existing venue. To identify if a duplicate 
