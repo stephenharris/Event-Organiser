@@ -1002,7 +1002,7 @@ function eventorganiser_select_field($args){
 	$selected = $args['selected'];
 	$classes = array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) );
 	$class = implode( ' ', $classes );
-	$multiselect = ($args['multiselect'] ? 'multiple' : '' );
+	$multiselect = ($args['multiselect'] ? 'multiple="multiple"' : '' );
 	$disabled = ($args['disabled'] ? 'disabled="disabled"' : '' );
 	$style = (  !empty($args['style']) ?  sprintf('style="%s"', $args['style']) : '' );
 	
@@ -1010,7 +1010,7 @@ function eventorganiser_select_field($args){
 	$data = '';
 	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
 		foreach( $args['data'] as $key => $attr_value ){
-			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+			$data .= sprintf( ' data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
 		}
 	}
 	
@@ -1095,13 +1095,13 @@ function eventorganiser_text_field($args){
 	$data = '';
 	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
 		foreach( $args['data'] as $key => $attr_value ){
-			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+			$data .= sprintf( ' data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
 		}
 	}
 	
 	
 
-	$attributes = array_filter( array($min,$max,$size,$placeholder,$disabled, $disabled, $style, $data ) );
+	$attributes = array_filter( array($min,$max,$size,$placeholder,$required, $disabled, $style, $data ) );
 
 	$html = sprintf('<input type="%s" name="%s" class="%s" id="%s" value="%s" autocomplete="off" %s /> %s',
 		esc_attr( $type ), 
