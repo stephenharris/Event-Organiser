@@ -345,7 +345,9 @@ class eventTest extends EO_UnitTestCase
 			
 		);
 		
-		$this->assertEquals( $occurrences, array_values( $schedule['_occurrences'] ) );	
+		$actual_occurrences = eo_get_the_occurrences( $event_id ); 
+		
+		$this->assertEquals( $occurrences, array_values( $actual_occurrences ) );	
     }
 
     
