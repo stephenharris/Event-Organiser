@@ -991,9 +991,7 @@ class EO_Walker_TaxonomyDropdown extends Walker_CategoryDropdown{
 		$value = ($args['value']=='slug' ? $category->slug : $category->term_id );
 
 		$output .= "\t<option class=\"level-$depth\" value=\"".$value."\"";
-		if ( $value === (string) $args['selected'] ){
-			$output .= ' selected="selected"';
-		}
+		$output .= ' ' . selected( (string) $args['selected'], $value, false );
 		$output .= '>';
 		$output .= $pad.$cat_name;
 		if ( $args['show_count'] )

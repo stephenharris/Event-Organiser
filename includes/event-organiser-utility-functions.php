@@ -995,17 +995,16 @@ function eventorganiser_select_field($args){
 		'label_for'=>'','class'=>'','disabled'=>false,'multiselect'=>false,
 		'inline_help' => false, 'style' => false, 'data' => false,
 	));	
-	
 
-	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
-	$name = isset($args['name']) ?  $args['name'] : '';
-	$selected = $args['selected'];
-	$classes = array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) );
-	$class = implode( ' ', $classes );
-	$multiselect = ($args['multiselect'] ? 'multiple="multiple"' : '' );
-	$disabled = ($args['disabled'] ? 'disabled="disabled"' : '' );
-	$style = (  !empty($args['style']) ?  sprintf('style="%s"', $args['style']) : '' );
-	
+	$id          = ( ! empty($args['id']) ? $args['id'] : $args['label_for'] );
+	$name        = isset($args['name']) ?  $args['name'] : '';
+	$selected    = $args['selected'];
+	$classes     = array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) );
+	$class       = implode( ' ', $classes );
+	$multiselect = ( $args['multiselect'] ? 'multiple="multiple"' : '' );
+	$disabled    = disabled( $args['disabled'], true, false );
+	$style       = ( ! empty($args['style']) ? sprintf( 'style="%s"', $args['style'] ) : '' );
+
 	//Custom data-* attributes
 	$data = '';
 	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
