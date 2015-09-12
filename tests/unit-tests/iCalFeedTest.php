@@ -51,11 +51,7 @@ class iCalFeedTest extends EO_UnitTestCase
 		ob_end_clean();
 		
 		//Get expected feed output
-		ob_start();
-		include(  EO_DIR_TESTDATA .'/ical-feed-expected/organizer.ical' );
-		$expected = ob_get_contents();
-		ob_end_clean();
-		$expected = str_replace( '%%now%%', $now->format( 'Ymd\THis\Z' ), $expected );
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/organizer.ical' );
 				 
 		$this->assertEquals( $expected, $actual );
 	}
@@ -87,11 +83,7 @@ class iCalFeedTest extends EO_UnitTestCase
 		ob_end_clean();
 		
 		//Get expected feed output
-		ob_start();
-		include(  EO_DIR_TESTDATA .'/ical-feed-expected/description.ical' );
-		$expected = ob_get_contents();
-		ob_end_clean();
-		$expected = str_replace( '%%now%%', $now->format( 'Ymd\THis\Z' ), $expected );
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/description.ical' );
 		
 		$this->assertEquals( $expected, $actual );
 	}
@@ -120,11 +112,7 @@ class iCalFeedTest extends EO_UnitTestCase
 		ob_end_clean();
 		
 		//Get expected feed output
-		ob_start();
-		include(  EO_DIR_TESTDATA .'/ical-feed-expected/escaped.ical' );
-		$expected = ob_get_contents();
-		ob_end_clean();
-		$expected = str_replace( '%%now%%', $now->format( 'Ymd\THis\Z' ), $expected );
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/escaped.ical' );
 		
 		$this->assertEquals( $expected, $actual );
 	}
@@ -157,11 +145,7 @@ class iCalFeedTest extends EO_UnitTestCase
 		ob_end_clean();
 	
 		//Get expected feed output
-		ob_start();
-		include(  EO_DIR_TESTDATA .'/ical-feed-expected/htmlentities.ical' );
-		$expected = ob_get_contents();
-		ob_end_clean();
-		$expected = str_replace( '%%now%%', $now->format( 'Ymd\THis\Z' ), $expected );
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/htmlentities.ical' );
 	
 		$this->assertEquals( $expected, $actual );
 	}
