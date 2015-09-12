@@ -24,7 +24,6 @@ class iCalFeedTest extends EO_UnitTestCase
 
 	public function testOrganizer(){
 
-		//Event recurrs every Monday evening in New York (event recurs very Tuesday in UTC)
 		$event_id = $this->factory->event->create( array(
 			'start' => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
 			'end'  => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
@@ -39,7 +38,7 @@ class iCalFeedTest extends EO_UnitTestCase
 			'post_status' => 'publish',
 			'post_date'   => '2015-02-18 17:30:00',
 		) );
-		$now = new DateTime();
+		
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
 				
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) ); 
@@ -58,7 +57,6 @@ class iCalFeedTest extends EO_UnitTestCase
 	
 	public function testSummary(){
 
-		//Event recurrs every Monday evening in New York (event recurs very Tuesday in UTC)
 		$event_id = $this->factory->event->create( array(
 			'start'        => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
 			'end'          => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
@@ -71,7 +69,7 @@ class iCalFeedTest extends EO_UnitTestCase
 			'post_status'  => 'publish',
 			'post_date'    => '2015-02-18 17:30:00',
 		) );
-		$now = new DateTime();
+		
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
 				
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) ); 
@@ -90,7 +88,6 @@ class iCalFeedTest extends EO_UnitTestCase
 	
 	public function testEscapedCharacters(){
 
-		//Event recurrs every Monday evening in New York (event recurs very Tuesday in UTC)
 		$event_id = $this->factory->event->create( array(
 			'start'        => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
 			'end'          => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
@@ -100,7 +97,7 @@ class iCalFeedTest extends EO_UnitTestCase
 			'post_status'  => 'publish',
 			'post_date'    => '2015-02-18 17:30:00',
 		) );
-		$now = new DateTime();
+
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
 				
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) ); 
@@ -123,7 +120,6 @@ class iCalFeedTest extends EO_UnitTestCase
 	 */
 	public function testHTMLEntities(){
 	
-		//Event recurrs every Monday evening in New York (event recurs very Tuesday in UTC)
 		$event_id = $this->factory->event->create( array(
 			'start'        => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
 			'end'          => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
@@ -133,7 +129,7 @@ class iCalFeedTest extends EO_UnitTestCase
 			'post_status'  => 'publish',
 			'post_date'    => '2015-02-18 17:30:00',
 		) );
-		$now = new DateTime();
+
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
 	
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
