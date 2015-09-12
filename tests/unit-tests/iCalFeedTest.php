@@ -302,4 +302,161 @@ class iCalFeedTest extends EO_UnitTestCase
 		$this->assertEquals( $expected, eventorganiser_escape_ical_text( $escape ) );
 		
 	}
+	
+	/**
+	 * If the site has a non-offset timezone, then this should displayed in the dstart/dtend and includes/excludes
+	 */
+	public function testEventTimezone(){
+	
+		$original_timezone = get_option( 'timezone_string' );
+		update_option( 'timezone_string', 'Europe/Zurich' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+		
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2015-09-05 17:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2015-09-05 18:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2015-09-26 17:00', eo_get_blog_timezone() ),
+			'frequency'     => 1,
+			'schedule'      => 'weekly',
+			'schedule_meta' => array( 'SA' ),
+			'post_title'    => 'Event with timezone',
+			'include'      => array( 
+				new DateTime('2015-09-22 17:00', eo_get_blog_timezone() ),
+				new DateTime('2015-09-23 17:00', eo_get_blog_timezone() )
+			),
+			'exclude'      => array(
+				new DateTime('2015-09-19 17:00', eo_get_blog_timezone() )
+			),
+			'post_date'     => '2015-02-18 17:30:00',
+		) );
+		
+		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
+		
+		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
+		
+		//Get actual feed output
+		ob_start();
+		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
+		$actual = ob_get_contents();
+		ob_end_clean();
+		
+		//Get expected feed output
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/event-with-timezone.ical' );
+	
+		update_option( 'timezone_string', $original_timezone );		
+		wp_cache_delete( 'eventorganiser_timezone' );
+		
+		$this->assertEquals( $expected, $actual );
+	
+	}
+	
+	/**
+	 * If the site has an offset timezone, then the event dates should be converted to UTC
+	 */
+	public function testEventWithOffsetTimezone(){
+	
+		$original_timezone = get_option( 'timezone_string' );
+		$original_offset   = get_option( 'gmt_offset' );
+		update_option( 'timezone_string', '' );
+		update_option( 'gmt_offset', -1 );
+		wp_cache_delete( 'eventorganiser_timezone' );
+	
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2015-11-05 17:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2015-11-05 18:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2015-11-26 17:00', eo_get_blog_timezone() ),
+			'frequency'     => 1,
+			'schedule'      => 'weekly',
+			'schedule_meta' => array( 'TH' ),
+			'post_title'    => 'Event with offset timezone',
+			'include'      => array(
+				new DateTime('2015-11-22 17:00', eo_get_blog_timezone() ),
+				new DateTime('2015-11-23 17:00', eo_get_blog_timezone() )
+			),
+			'exclude'      => array(
+				new DateTime('2015-11-19 17:00', eo_get_blog_timezone() )
+			),
+			'post_date'     => '2015-02-18 17:30:00',
+		) );
+	
+		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
+	
+		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
+	
+		//Get actual feed output
+		ob_start();
+		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
+		$actual = ob_get_contents();
+		ob_end_clean();
+	
+		//Get expected feed output
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/event-with-offset.ical' );
+
+		update_option( 'timezone_string', $original_timezone );
+		update_option( 'gmt_offset', $original_offset );
+		wp_cache_delete( 'eventorganiser_timezone' );
+	
+		$this->assertEquals( $expected, $actual );
+	
+	}
+	
+	/**
+	 * If the event is an all-day event then no timezone information should be present
+	 * in the dtstart, dtend, exdate or rdate values.
+	 */
+	public function testALlDayEvent(){
+	
+		$original_timezone = get_option( 'timezone_string' );
+		update_option( 'timezone_string', 'Europe/Zurich' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+			
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2015-11-05 00:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2015-11-05 23:59', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2015-11-26 00:00', eo_get_blog_timezone() ),
+			'all_day'       => 1,
+			'frequency'     => 1,
+			'schedule'      => 'weekly',
+			'schedule_meta' => array( 'TH' ),
+			'post_title'    => 'All day event',
+			'include'      => array(
+				new DateTime('2015-11-22 00:00', eo_get_blog_timezone() ),
+				new DateTime('2015-11-23 00:00', eo_get_blog_timezone() )
+			),
+			'exclude'      => array(
+				new DateTime('2015-11-19 00:00', eo_get_blog_timezone() )
+			),
+			'post_date'     => '2015-02-18 17:30:00',
+		) );
+	
+		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
+	
+		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
+	
+		//Get actual feed output
+		ob_start();
+		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
+		$actual = ob_get_contents();
+		ob_end_clean();
+	
+		//Get expected feed output
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/all-day-event.ical' );
+	
+		update_option( 'timezone_string', $original_timezone );		
+		wp_cache_delete( 'eventorganiser_timezone' );
+			
+		$this->assertEquals( $expected, $actual );
+	
+	}
+		
+	public function _readExpectedIcal( $file ) {
+		$now = new DateTime();
+		ob_start();
+		include( $file );
+		$expected = ob_get_contents();
+		ob_end_clean();
+		$expected = str_replace( '%%now%%', $now->format( 'Ymd\THis\Z' ), $expected );
+		return $expected;		
+	}
+	
 }

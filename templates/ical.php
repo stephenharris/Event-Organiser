@@ -11,9 +11,12 @@ echo "X-WR-CALDESC:" . get_bloginfo('name') . " - Events\r\n";
 // Loop through events
 if ( have_posts() ) :
 
-	$now = new DateTime();
+	$now     = new DateTime();
 	$dtstamp = $now->format('Ymd\THis\Z');
-	$UTC_tz = new DateTimeZone('UTC');
+	
+	//Set $tz if a timezone is specified - this does not include GMT offsets
+	$timezone     = ( get_option( 'timezone_string' ) ? eo_get_blog_timezone() : false );
+	$utc_timezone = new DateTimeZone( 'UTC' ); 
 
 	while( have_posts() ): the_post();
 	
@@ -29,20 +32,6 @@ if ( have_posts() ) :
 		$modified_date = get_post_modified_time('Ymd\THis\Z',true);
 		$schedule_data = eo_get_event_schedule();
 
-		// Set up start and end date times
-		if ( eo_is_all_day() ) {
-			$format =	'Ymd';
-			$start_date = $start->format($format);
-			$end->modify('+1 minute');
-			$end_date = $end->format($format);				
-		} else {
-			$format =	'Ymd\THis\Z';
-			$start->setTimezone($UTC_tz);
-			$start_date =$start->format($format);
-			$end->setTimezone($UTC_tz);
-			$end_date = $end->format($format);
-		}
-
 		// Generate Event status
 		if ( get_post_status(get_the_ID()) == 'publish' )
 			$status = 'CONFIRMED';
@@ -57,13 +46,22 @@ if ( have_posts() ) :
 		echo "CREATED:" . $created_date . "\r\n";
 		echo "LAST-MODIFIED:" . $modified_date . "\r\n";
 		
-		if ( eo_is_all_day() ) :
-			echo "DTSTART;VALUE=DATE:" . $start_date . "\r\n";
-			echo "DTEND;VALUE=DATE:" . $end_date . "\r\n";
-		else :
-			echo "DTSTART:" . $start_date . "\r\n";
-			echo "DTEND:" . $end_date . "\r\n";
-		endif;
+		if ( eo_is_all_day() ) {
+			//All day event
+			$end->modify('+1 minute');
+			echo "DTSTART;VALUE=DATE:" . $start->format( 'Ymd' ) . "\r\n";
+			echo "DTEND;VALUE=DATE:" . $end->format( 'Ymd' ) . "\r\n";
+		} elseif ( $timezone ) {
+			//Non-all-day event with timezone
+			echo "DTSTART;TZID=" . eo_get_blog_timezone()->getName().":" . $start->format( 'Ymd\THis' ) . "\r\n";
+			echo "DTEND;TZID=" . eo_get_blog_timezone()->getName().":" . $end->format( 'Ymd\THis' ) . "\r\n";
+		} else {
+			//Non-all-day event without timezone or with GMT offset
+			$start->setTimezone( $utc_timezone );
+			$end->setTimezone( $utc_timezone );
+			echo "DTSTART:" . $start->format( 'Ymd\THis\Z' ) . "\r\n";
+			echo "DTEND:" . $end->format( 'Ymd\THis\Z' ) . "\r\n";			
+		}
 		
 		if ( $reoccurrence_rule = eventorganiser_generate_ics_rrule() ) :
 			echo "RRULE:" . $reoccurrence_rule . "\r\n";
@@ -72,31 +70,37 @@ if ( have_posts() ) :
 		if ( !empty($schedule_data['exclude']) ) :
 			$exclude_strings = array();
 			foreach ( $schedule_data['exclude'] as $exclude ){
-				if ( !eo_is_all_day() ){
-					$vdate = '';
-					$exclude->setTimezone($UTC_tz);
-					$exclude_strings[] = $exclude->format('Ymd\THis\Z');
+				if ( eo_is_all_day() ){
+					$param = ';VALUE=DATE';
+					$exclude_strings[] = $exclude->format( 'Ymd' );
+				} elseif( $timezone ) {
+					$param = ';TZID=' . eo_get_blog_timezone()->getName();
+					$exclude_strings[] = $exclude->format( 'Ymd\THis' );
 				}else{
-					$vdate = ';VALUE=DATE';
-					$exclude_strings[] = $exclude->format('Ymd');
+					$param = '';
+					$exclude->setTimezone( $utc_timezone );
+					$exclude_strings[] = $exclude->format( 'Ymd\THis\Z' );
 				}
 			}
-			echo "EXDATE" . $vdate . ":" . implode(',',$exclude_strings) . "\r\n";
+			echo "EXDATE" . $param . ":" . implode(',',$exclude_strings) . "\r\n";
 		endif;
 		
 		if ( !empty($schedule_data['include']) ) :
 			$include_strings = array();
 			foreach ( $schedule_data['include'] as $include ){
-				if ( !eo_is_all_day() ){
-					$vdate = '';
-					$include->setTimezone($UTC_tz);
-					$include_strings[] = $include->format('Ymd\THis\Z');
+				if ( eo_is_all_day() ){
+					$param = ';VALUE=DATE';
+					$include_strings[] = $include->format( 'Ymd' );
+				} elseif( $timezone ) {
+					$param = ';TZID=' . eo_get_blog_timezone()->getName();
+					$include_strings[] = $include->format( 'Ymd\THis' );
 				}else{
-					$vdate = ';VALUE=DATE';
-					$include_strings[] = $include->format('Ymd');
+					$param = '';
+					$include->setTimezone( $utc_timezone );
+					$include_strings[] = $include->format( 'Ymd\THis\Z' );
 				}
 			}
-			echo "RDATE" . $vdate . ":" . implode(',',$include_strings) . "\r\n";
+			echo "RDATE" . $param . ":" . implode(',',$include_strings) . "\r\n";
 		endif;
 		
 		echo eventorganiser_fold_ical_text(  
