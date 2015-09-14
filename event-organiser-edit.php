@@ -356,9 +356,6 @@ function eventorganiser_details_save( $post_id ) {
 		'StartDate' => '', 'EndDate' => '', 'StartTime' => '00:00', 'FinishTime' => '23:59', 'schedule' => 'once', 'event_frequency' => 1,
 		'schedule_end' => '', 'allday' => 0, 'schedule_meta' => '', 'days' => array(), 'include' => '', 'exclude' => '', ) );
 
-	//var_dump( $_POST );
-	//var_dump( $raw_data );
-	//exit;
 	//Update venue
 	$venue_id = !empty( $raw_data['event-venue'] ) ? intval( $raw_data['event-venue'] ) : null;
 
@@ -497,6 +494,6 @@ function _eventorganiser_event_edit_admin_notice(){
 			unset( $notice[0] );
 			unset( $notice[$pid] );
 			update_option( 'eo_notice', $notice );
-        	}
+        }
 	}	
 }
