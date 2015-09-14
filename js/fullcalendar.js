@@ -4755,7 +4755,7 @@ DayGrid.mixin({
 			timeHtml = '<span class="fc-time">' + htmlEscape(this.getEventTimeText(event)) + '</span>';
 		}
 		
-		var dateSR ='<span class="screen-reader-text"> ' + htmlEscape( this.getEventTimeText( event, "dddd, MMMM Do YYYY" ) ) + ' </span>';
+		var dateSR ='<span class="eo-fullcalendar-screen-reader-text screen-reader-text"> ' + htmlEscape( this.getEventTimeText( event, "dddd, MMMM Do YYYY" ) ) + ' </span>';
 
 		titleHtml =
 			'<span class="fc-title">' +
