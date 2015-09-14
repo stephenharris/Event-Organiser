@@ -49,7 +49,12 @@ eventorganiser.versionCompare = function(left, right) {
 		autoOpen: false,
 		dialogClass: 'eo-admin-calendar-dialog',
 		width: 527,
-		modal:true
+		modal:true,
+		closeText: 'Close modal',
+		draggable: false,
+		open: function( event, ui ) {
+			$(this).parent('.eo-admin-calendar-dialog').focus();
+		}
 	});
 	//Add eo-ui-button to jQuery UI button
 	$('.eo-dialog').parent().find('.ui-dialog-titlebar-close').addClass('eo-ui-button');
@@ -223,9 +228,7 @@ eventorganiser.versionCompare = function(left, right) {
 	/* View tabs */
 	$('.view-button').click(function (event) {
 		event.preventDefault();
-		$('.view-button').removeClass('nav-tab-active');
-		calendar.fullCalendar('changeView', $(this).attr('id'));
-		$(this).addClass('nav-tab-active');
+		eventorganiser_switch_calendar_to( $(this).attr('id') );
 	});
 
 	/* GoTo 'mini calendar' */
@@ -233,6 +236,89 @@ eventorganiser.versionCompare = function(left, right) {
 		var element = $("<span class='fc-header-goto'><input type='hidden' id='miniCalendar'/></span>");
 		return element;
 	}
+	
+	function eventorganiser_switch_calendar_to( mode ){
+		$('.view-button').removeClass('nav-tab-active');
+		calendar.fullCalendar( 'changeView', mode );
+		$('#'+mode).addClass('nav-tab-active');
+	}
+	
+	//Keybard shortcuts
+	$(window).on( 'keypress', function( e ){
+		
+		if ( $(e.target).closest('.ui-dialog').length > 0 ) {
+			return;
+		}
+		
+		switch( e.which ) {
+			case 49://1
+			case 109://m
+			case 77://M
+				eventorganiser_switch_calendar_to( 'month' );
+				break;
+				
+			case 50://W
+			case 119://w
+			case 87://W
+				eventorganiser_switch_calendar_to( 'agendaWeek' );
+				break;
+			case 51://3
+			case 100://d
+			case 68://D
+				eventorganiser_switch_calendar_to( 'agendaDay' );
+				break;
+			case 116://t
+			case 84://T
+				calendar.fullCalendar('today');
+			case 103://g
+			case 71://G
+				//$('#miniCalendar').datepicker("show").focus();
+				break;
+				
+			case 110://n
+			case 78://N
+			case 106://j
+			case 74://J
+				calendar.fullCalendar( 'next' );
+				break;
+			case 107://k
+			case 75://K
+			case 112://p
+			case 80://P
+				calendar.fullCalendar( 'prev' );
+				break;
+				
+			case 63://?
+				//open keyboard shortcuts
+				$('#eo-keyboard-shortcuts').dialog('open');
+				break;
+			default:
+				return;
+				 
+		}
+		e.preventDefault();
+	} );
+	
+	$('#eo-keyboard-shortcuts').dialog({
+		autoOpen: false,
+		dialogClass: 'eo-admin-calendar-dialog',
+		title: "Keyboard shortcuts",
+		closeText: 'Close modal',
+		draggable: false,
+		modal: true,
+		open: function( event, ui ) {
+			$(this).parent('.eo-admin-calendar-dialog').focus();
+		}
+	});
+	
+	$('#eo-keyboard-sr-shortcut').on( 'click', function( ev ){
+		ev.preventDefault();
+		$('#eo-keyboard-shortcuts').dialog('open');
+	});
+	
+	//Hack to move screen reader shortcut to where WordPress' SR shortcuts live (if we can)
+	var sr_shortcuts = $('#adminmenumain .screen-reader-shortcut');
+	if ( sr_shortcuts.length > 0 ) { $('#eo-keyboard-sr-shortcut').insertAfter( sr_shortcuts.last() ); }
 
 	$('#miniCalendar').datepicker({
 		dateFormat: 'DD, d MM, yy',
@@ -292,10 +378,11 @@ eventorganiser.versionCompare = function(left, right) {
 
 			//Add new / selec buttons
 			var button_wrappers = $("<span>").addClass("eo-venue-combobox-buttons").appendTo(wrapper);
-			$("<a style='vertical-align: top;margin: 0px -1px;padding: 0px;height:26px;'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
+			$("<a href='#' style='vertical-align: top;margin: 0px -1px;padding: 0px;height:26px;'>").attr("title", "Show All Items").appendTo(button_wrappers).button({
 				icons: { primary: "ui-icon-triangle-1-s"},
 				text: false
-			}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function () {
+			}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function (ev) {
+				ev.preventDefault();
 				if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return;}
 				$(this).blur();
 				input.autocomplete("search", "").focus();

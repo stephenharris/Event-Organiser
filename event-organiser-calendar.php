@@ -101,6 +101,8 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 
 	function page_actions() {
 
+		add_action( 'admin_notices', array( $this, 'render_sr_shortcut' ), -999 );
+
 		//Add screen option
 		$user     = wp_get_current_user();
 		$is12hour = get_user_meta( $user->ID, 'eofc_time_format', true );
@@ -218,8 +220,13 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		}
 	}
 
+	function render_sr_shortcut() {
+		?>
+		<a href="#" id="eo-keyboard-sr-shortcut" class="screen-reader-shortcut"><?php esc_html_e( 'View keyboard shortcuts' ); ?></a>
+		<?php
+	}
 
-	function screen_options( $options, $screen ){
+	function screen_options( $options, $screen ) {
 		$options .= '<h5>'.__( 'Calendar options', 'eventorganiser' ).'</h5>';
 		$options .= sprintf(
 			'<p><label for="%s" style="line-height: 20px;"> <input type="checkbox" name="%s" id="%s" %s> %s </label></p>',
@@ -250,11 +257,13 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		?>
 		<div id="calendar-view">
 			<span id='loading' style='display:none'><?php _e( 'Loading&#8230;', 'eventorganiser' );?></span>
+			<ul class="tablist" role="tablist">
 			<?php foreach( $views as $id => $label ) 
-				printf( '<a href="#" class="nav-tab view-button %s" id="%s">%s</a>', ( $id == $current ? 'nav-tab-active' : '' ), $id, $label );
+				printf( '<li role="tab"><a href="#" role="tab" class="nav-tab view-button %s" id="%s">%s</a></li>', ( $id == $current ? 'nav-tab-active' : '' ), $id, $label );
 			?>
+			</ul>
 		</div>
-
+		
 		<div id='eo_admin_calendar'></div>
 		<span><?php _e( 'Current date/time', 'eventorganiser' );?>: <?php echo $now->format( 'Y-m-d G:i:s \G\M\TP' );?></span>
 
@@ -301,25 +310,70 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			<input type="hidden" name="eo_event[FinishTime]">
 			<input type="hidden" name="eo_event[allday]">
 		  	<?php wp_nonce_field( 'eventorganiser_calendar_save' ); ?>
-			<?php if ( current_user_can( 'publish_events' ) ):?>
-				<input type="submit" class="button" tabindex="4" value="<?php _e( 'Save Draft', 'eventorganiser' );?>" id="event-draft" name="save">
+			<?php if ( current_user_can( 'publish_events' ) ) { ?>
+				<input type="submit" class="button" value="<?php _e( 'Save Draft', 'eventorganiser' );?>" id="event-draft" name="save">
 				<input type="reset" class="button" id="reset" value="<?php _e( 'Cancel', 'eventorganiser' );?>">
 
 				<span id="publishing-action">
-					<input type="submit" accesskey="p" tabindex="5" value="<?php _e( 'Publish Event', 'eventorganiser' );?>" class="button-primary" id="publish" name="publish">
+					<input type="submit" accesskey="p" value="<?php _e( 'Publish Event', 'eventorganiser' );?>" class="button-primary" id="publish" name="publish">
 				</span>
 
-			<?php elseif( current_user_can( 'edit_events' ) ):?>
+			<?php } elseif ( current_user_can( 'edit_events' ) ) {?>
 				<input type="reset" class="button" id="reset" value="<?php _e( 'Cancel', 'eventorganiser' );?>">
 				<span id="publishing-action">
 					<input type="submit" accesskey="p" tabindex="5" value="<?php _e( 'Submit for Review', 'eventorganiser' );?>" class="eo_alignright button-primary" id="submit-for-review" name="publish">
 				</span>
-			<?php endif; ?>
+			<?php }; ?>
 			
 			<br class="clear">
 			</form>
 		</div>
 		<?php endif; ?>
+		
+		<div id='eo-keyboard-shortcuts' style="display:none;" class="eo-dialog">
+		
+			<p> <?php esc_html_e( 'The following keyboard shortcuts are available', 'eventorganiser' ); ?> 
+			<br />
+			
+			<span class="eo-sc-key"><kbd>j</kbd> or <kbd>n</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to next period', 'eventorganiser' );?></span>
+			<br />
+
+			<span class="eo-sc-key"><kbd>k</kbd> or <kbd>p</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Navigate to previous period', 'eventorganiser' );?></span>
+			<br />
+
+			<span class="eo-sc-key"><kbd>1</kbd> or <kbd>m</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Switch to month view', 'eventorganiser' );?></span>
+			<br />
+						
+			<span class="eo-sc-key"><kbd>2</kbd> or <kbd>w</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Switch to week view', 'eventorganiser' );?></span>
+			<br />
+
+			<span class="eo-sc-key"><kbd>3</kbd> or <kbd>d</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Switch to day view', 'eventorganiser' );?></span>
+			<br />
+					
+			<span class="eo-sc-key"><kbd>t</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Jump to today in view', 'eventorganiser' );?></span>
+			<br />
+
+			<span class="eo-sc-key"><kbd>enter</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Open modal of selected event', 'eventorganiser' );?></span>
+			<br />
+					
+			<span class="eo-sc-key"><kbd>esc</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Close modal', 'eventorganiser' );?></span>
+			<br />
+			
+			<span class="eo-sc-key"><kbd>?</kbd></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Open shorcut help', 'eventorganiser' );?></span>
+			<br />		
+			
+			</p>
+		</div>
+		
 	</div><!-- .wrap -->
 <?php
 	}
