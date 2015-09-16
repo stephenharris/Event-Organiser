@@ -270,6 +270,7 @@ eventorganiser.versionCompare = function(left, right) {
 			case 116://t
 			case 84://T
 				calendar.fullCalendar('today');
+				break;
 			case 103://g
 			case 71://G
 				//$('#miniCalendar').datepicker("show").focus();
