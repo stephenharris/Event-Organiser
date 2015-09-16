@@ -731,13 +731,24 @@ class iCalTest extends PHPUnit_Framework_TestCase
 	
 
 
-	//@TODO
-    public function testPartDayForeignRecurringEvent()
-    {
+	/**
+	 * When importing a part day event occurring monthly across a timezone, the day the event 
+	 * repeats on in the feed timezone may be different from the day the event repeats on in 
+	 * the destination (site) timezone. So the schedule meta should be  updated to reflect his.
+	 * E.g. 
+	 *  1. An event occuring monthly on the 5th @10pm in America/New_York would be on the 6th in UTC.
+	 * 
+	 * There are issues with how, for example, an event recurring on the first Monday of each month at 
+	 * 10pm in America/New_York might be 'translated' to UTC. This stems from the fact that strictly 
+	 * speaking these recurrence rules cannot be neatly converted across timezones. Perhaps this is is 
+	 * an argument in favour of allowing events to have a timezone? 
+	 * 
+	 * This should probably be fixed  eo_insert/update_event
+	 * 
+	 * @TODO
+	 */
+    public function testPartDayForeignRecurringEvent() {
 
-    	//@see testPartDayForeignWeeklyEvent()
-    	//This shouldn't be fixed here - but in eo_insert/update_event
-    	
     	$ical = new EO_ICAL_Parser();
     	$ical->parse( EO_DIR_TESTDATA . '/ical/foreignPartDayRecurringEvent.ics' );
 
@@ -745,11 +756,17 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	//$this->assertEquals( "BYMONTHDAY=4", $ical->events[0]['schedule_meta'] );
     }
     
-	//@TODO
-    public function testPartDayForeignWeeklyEvent()
-    {
+	/**
+	 * When importing a part day event occurring weekly across a timezone, the day the event
+	 * repeats on in the feed timezone may be different from the day the event repeats on
+	 * in the destination (site) timezone. So the schedule meta should be updated to reflect his.
+	 * 
+	 * This should probably be fixed  eo_insert/update_event
+	 * 
+	 * @TODO
+	 */
+    public function testPartDayForeignWeeklyEvent() {
     	//A Monday 10pm event in New York would be a Tuesday event in UTC
-    	//This shouldn't be fixed here - but in eo_insert/update_event
     	
     	$ical = new EO_ICAL_Parser();
     	$ical->parse( EO_DIR_TESTDATA . '/ical/foreignPartDayWeeklyEvent.ics' );
