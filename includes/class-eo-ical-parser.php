@@ -628,8 +628,19 @@ class EO_ICAL_Parser{
 					$date = $this->parse_ical_date( $value );
 					$allday = 1;
 				else:
-					$date = $this->parse_ical_datetime( $value, $date_tz );
-					$allday = 0;
+					try{
+						$date = $this->parse_ical_datetime( $value, $date_tz );
+						$allday = 0;
+					} catch ( Exception $datetime_exception ) {
+						
+						try{
+							$date = $this->parse_ical_date( $value );
+							$allday = 1;
+						} catch ( Exception $date_exception ) {
+							throw $datetime_exception;
+						}
+					}
+					
 				endif;
 
 				if( empty( $date ) )
@@ -670,7 +681,16 @@ class EO_ICAL_Parser{
 						if( isset( $meta ) && 'DATE' == $meta ){
 							$date = $this->parse_ical_date( $date );
 						}else{
-							$date = $this->parse_ical_datetime( $date, $date_tz );
+							try{
+								$date = $this->parse_ical_datetime( $date, $date_tz );
+							} catch ( Exception $datetime_exception ) {
+							
+								try{
+									$date = $this->parse_ical_date( $date );
+								} catch ( Exception $date_exception ) {
+									throw $datetime_exception;
+								}
+							}
 						}
 					
 						if( 'EXDATE' == $property ){

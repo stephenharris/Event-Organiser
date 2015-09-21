@@ -791,6 +791,32 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		
 	}
 	
+	
+	/**
+	 * The iCal specifications state that Date values MUST be specified with VALUE=DATE modifier, e.g.
+	 *     DTSTART;VALUE=DATE:20150921
+	 * implying that
+	 *     DTSTART:20150921
+	 * should be treated as an error. However some iCal feeds do not conform, and this can cause a needless 
+	 * as error as the DATE value type be inferred from the fact a correctly formatted date is given.
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/291 
+	 */
+	public function testEventWithDateWithoutDateModifier(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithDateStartWithoutModifier.ics' );
+	
+		$expected_start = new DateTime( '2015-09-21 00:00:00', eo_get_blog_timezone() );
+		$expected_end   = new DateTime( '2015-09-21 23:59:59', eo_get_blog_timezone() );
+		
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_start, $event['start'] );
+		$this->assertEquals( $expected_end, $event['end'] );
+		$this->assertEquals( 1, $event['all_day'] );
+
+	}
+	
+	
+	
 	/**
 	 * When importing a part day event occurring monthly across a timezone, the day the event 
 	 * repeats on in the feed timezone may be different from the day the event repeats on in 
