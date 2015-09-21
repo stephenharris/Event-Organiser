@@ -381,6 +381,25 @@ class EO_ICAL_Parser{
 						
 						$this->current_event['_lines']['end'] = $this->line;
 						
+						//If not dtend was given, set it appropriately
+						//@see https://github.com/stephenharris/Event-Organiser/issues/292
+						if ( ! isset( $this->current_event['end'] ) && isset( $this->current_event['start'] ) ) {
+							
+							$end = clone $this->current_event['start'];
+							if ( ! empty( $this->current_event['duration'] ) ) {
+								
+								$end->modify( $this->current_event['duration'] );
+								unset( $this->current_event['duration'] );
+								
+							} else if ( ! empty( $this->current_event['all_day'] ) ) {
+								//event is assumed to have a duration of 1 day, for us that means
+								//same date as start date, but with a time of 23:59
+								$end->setTime( 23, 59 );
+							}
+							$this->current_event['end'] = $end;
+							
+						}
+						
 						//Now we've finished passing the event, move venue data to $this->venue_meta
 						if( isset( $this->current_event['geo'] ) && !empty( $this->current_event['event-venue'] ) ){
 							$venue = $this->current_event['event-venue'];
@@ -634,6 +653,10 @@ class EO_ICAL_Parser{
 					break;
 
 				endswitch;
+				break;
+				
+				case 'DURATION':
+					$this->current_event['duration'] = $this->parse_duration( $value );
 				break;
 
 				case 'EXDATE':
@@ -1009,6 +1032,30 @@ class EO_ICAL_Parser{
 		$datetime = new DateTime( $matches[2], $tz );
 
 		return $datetime;
+	}
+	
+	public function parse_duration( $duration_str ) {
+		
+		preg_match(
+			"/(?<sign>\+|-)?P(?:(?<weeks>\d+)W)?(?:(?<days>\d+)D)?(?:T(?:(?:(?<hours>\d+)H)?(?:(?<minutes>\d+)M)?(?:(?<seconds>\d+)S)?))?/", 
+			$duration_str, $matches );
+		
+		if ( ! $matches ) {
+			throw new Exception( 'Invalid duration: "' . $duration_str . '"' );
+		}
+		
+		$keys = array( 'weeks', 'days', 'hours', 'minutes', 'seconds' );
+		
+		$duration_array = array_filter( array_intersect_key( $matches, array_flip( $keys ) ) );
+		$sign           = $matches['sign'] ? $matches['sign'] : '+';
+		
+		$duration_str = '';
+		foreach( $duration_array as $period => $length ) {
+			$duration_str .= "{$sign}{$length} {$period} ";
+		}
+		
+		return trim( $duration_str );
+				
 	}
 
 	/**

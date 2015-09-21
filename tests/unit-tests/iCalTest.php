@@ -729,8 +729,68 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		return true;	
 	}
 	
+	public function testAllDayEventWithoutEndDate(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/allDayEventWithoutEndDate.ics' );
+	
+		$expected_end = new DateTime( '2013-10-28 23:59:00' );
+	
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_end, $event['end'] );
+	}
 
+	public function testPartAllDayEventWithoutEndDate(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/partDayEventWithoutEndDate.ics' );
+	
+		$expected_end = new DateTime( '2013-10-28 19:26:00', new DateTimeZone( 'America/New_York' ) );
+	
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_end, $event['end'] );
+	}
 
+	public function testEventWithDuration(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithDuration.ics' );
+		
+		$expected_end = new DateTime( '2013-11-06 22:30:05', new DateTimeZone( 'America/New_York' ) );
+	
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_end, $event['end'] );
+	}
+	
+	public function testEventWithDurationAndEndDate(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithDurationAndEndDate.ics' );
+	
+		$expected_end = new DateTime( '2013-10-28 20:26:00', new DateTimeZone( 'America/New_York' ) );
+		
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_end, $event['end'] );
+	}
+	
+	public function testParseDuration(){
+		
+		$ical = new EO_ICAL_Parser();
+		
+		$duration = '+P5W3D';
+		$expected = '+5 weeks +3 days';
+		$this->assertEquals( $expected, $ical->parse_duration( $duration ) );
+
+		$duration = '+P15DT5H0M20S';
+		$expected = '+15 days +5 hours +20 seconds';
+		$this->assertEquals( $expected, $ical->parse_duration( $duration ) );
+		
+		$duration = 'P7W';
+		$expected = '+7 weeks';
+		$this->assertEquals( $expected, $ical->parse_duration( $duration ) );
+
+		$duration = '-P1WT2H';
+		$expected = '-1 weeks -2 hours';
+		$this->assertEquals( $expected, $ical->parse_duration( $duration ) );
+		
+	}
+	
 	/**
 	 * When importing a part day event occurring monthly across a timezone, the day the event 
 	 * repeats on in the feed timezone may be different from the day the event repeats on in 
