@@ -66,6 +66,14 @@
 .eo-add-new-venue{
 	display: none;
 }
+input#venue_select{
+	background-repeat: no-repeat;
+	background-position: right center;
+	padding-right: 3px;
+}
+input#venue_select.eo-waiting{
+	background-image: url(images/spinner.gif);
+}
 #venuemap{height:300px; width:100%;float:right;margin: 10px 0 10px -300px}
 
 /* Events page: */

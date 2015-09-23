@@ -99,14 +99,17 @@ $.widget("ui.combobox", {
 	_create: function () {
 	var c = this.element.hide(), id = c.attr( 'id' ),d = c.children(":selected"),e = d.val() ? d.text() : "";
 	var wrapper  = $("<span>").addClass("ui-combobox eo-venue-input").insertAfter(c);
-	$hiddenEl = $('<input type="hidden" name="'+c.attr('name')+'" value="'+e+'"/>');
+	var $hiddenEl = $('<input type="hidden" name="'+c.attr('name')+'" value="'+e+'"/>');
+	var input = $("<input>").attr('id',id).appendTo(wrapper).val(e).addClass("ui-combobox-input");
 	var options = {
 		delay: 0,
 		minLength: 0,
 		source: function (a, callback) {
+			input.addClass( 'eo-waiting' );
 			$.getJSON(EO_Ajax_Event.ajaxurl + "?action=eo-search-venue", a, function (a) {
 				var venues = $.map(a, function (a) {a.label = a.name;return a;});
 				callback(venues);
+				input.removeClass( 'eo-waiting' );
 			});
 		},
 		select: function (a, b) {
@@ -125,7 +128,7 @@ $.widget("ui.combobox", {
 			$hiddenEl.val( b.item.term_id );
 		}
 	};
-	var input = $("<input>").attr('id',id).appendTo(wrapper).val(e).addClass("ui-combobox-input").autocomplete(options).addClass("ui-widget-content ui-corner-left");
+	input.autocomplete(options).addClass("ui-widget-content ui-corner-left");
     this.element.replaceWith( $hiddenEl );
 
 	/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
@@ -150,15 +153,26 @@ $.widget("ui.combobox", {
 
 	//Add new / select buttons
 	var button_wrappers = $("<span>").addClass("eo-venue-combobox-buttons").appendTo(wrapper);
-	$("<a href='#' style='vertical-align: top;margin: 0px -1px;padding: 0px;height:27px;'>").attr("title", "Show All Venues").appendTo(button_wrappers).button({
-		icons: { primary: "ui-icon-triangle-1-s"},
-		text: false
-	}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button").click(function (ev) {
-		ev.preventDefault();
-		if (input.autocomplete("widget").is(":visible")) {input.autocomplete("close");return;}
-		$(this).blur();
-		input.autocomplete("search", "").focus();
-	});
+	$("<a href='#' style='vertical-align: top;margin: 0px -1px;padding: 0px;height:27px;'>")
+		.attr("title", "Show All Venues")
+		.appendTo(button_wrappers)
+		.button({
+			icons: { primary: "ui-icon-triangle-1-s"},
+			text: false
+		})
+		.removeClass("ui-corner-all")
+		.addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button")
+		.mousedown(function() {
+			wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+		})
+		.click(function (ev) {
+			ev.preventDefault();
+            if ( wasOpen ) {
+                return;
+            }
+			$(this).blur();
+			input.autocomplete("search", "").focus();
+		});
 
 	if( EO_Ajax_Event.current_user_can.manage_venues ){
 		//Only add this on event edit page - i.e. not on calendar page.
