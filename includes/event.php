@@ -1011,11 +1011,6 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 			unset($event_details['include'][$key]);
 		}
 
-		//Remove the date from the occurrences
-		if( isset($event_details['_occurrences'][$event_id]) ){
-			unset($event_details['_occurrences'][$event_id]);
-		}
-
 		//Update post meta and delete date from events table
 		update_post_meta( $post_id,'_eventorganiser_event_schedule',$event_details);		
 		eo_delete_event_occurrences( $post_id, $event_id );
