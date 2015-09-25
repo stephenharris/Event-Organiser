@@ -701,7 +701,7 @@ class EO_ICAL_Parser{
 					endforeach;
 				break;
 
-				//Reoccurrence rule properties
+				//Recurrence rule properties
 				case 'RRULE':
 				$this->current_event += $this->parse_RRule($value);
 				break;
@@ -1084,7 +1084,7 @@ class EO_ICAL_Parser{
 	 * @since 1.1.0
 	 * @ignore
 	 * @param string $RRule - the value of the ICAL RRule property
-	 * @return array - a reoccurrence rule array as understood by Event Organiser
+	 * @return array - a recurrence rule array as understood by Event Organiser
 	 */
 	public function parse_RRule( $RRule ){
 		//RRule is a sequence of rule parts seperated by ';'

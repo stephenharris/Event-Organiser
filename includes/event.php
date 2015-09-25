@@ -11,7 +11,7 @@
 *
 * The event data array can contain
 *
-* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the reoccurrence pattern
+* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the recurrence pattern
 * * `schedule_meta` =>
 *   * For monthly schedules,
 *      * (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
@@ -19,7 +19,7 @@
 *   * For weekly schedules,
 *      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
 *      * Can be left blank to repeat weekly from the start date.
-* * `frequency` => (int) positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
+* * `frequency` => (int) positive integer, sets frequency of recurrence (every 2 days, or every 3 days etc)
 * * `all_day` => 1 if its an all day event, 0 if not
 * * `start` =>  start date (of first occurrence)  as a datetime object
 * * `end` => end date (of first occurrence)  as a datetime object
@@ -139,7 +139,7 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 *
 * The event data array can contain
 *
-* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the reoccurrence pattern
+* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the recurrence pattern
 * * `schedule_meta` =>
 *   * For monthly schedules,
 *      * (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
@@ -147,7 +147,7 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 *   * For weekly schedules,
 *      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
 *      * Can be left blank to repeat weekly from the start date.
-* * `frequency` => (int) positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
+* * `frequency` => (int) positive integer, sets frequency of recurrence (every 2 days, or every 3 days etc)
 * * `all_day` => 1 if its an all day event, 0 if not
 * * `start` =>  start date (of first occurrence)  as a datetime object
 * * `end` => end date (of first occurrence)  as a datetime object
@@ -467,15 +467,15 @@ function _eventorganiser_insert_occurrences( $post_id, $event_data ){
 *
 *  Event details include
 *
-* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the reoccurrence pattern
+* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the recurrence pattern
 * * `schedule_meta` =>
 *   * For monthly schedules,
 *      * (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
 *      * (string) BYDAY=ND. N= 1|2|3|4|-1 (first, second, third, fourth, last). D is day of week SU|MO|TU|WE|TH|FR|SA. E.g. BYDAY=2TU (repeat on second tuesday)
 *   * For weekly schedules,
 *      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
-* * `occurs_by` - For use with monthly schedules: how the event reoccurs: BYDAY or BYMONTHDAY
-* * `frequency` => (int) positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
+* * `occurs_by` - For use with monthly schedules: how the event recurs: BYDAY or BYMONTHDAY
+* * `frequency` => (int) positive integer, sets frequency of recurrence (every 2 days, or every 3 days etc)
 * * `all_day` => 1 if its an all day event, 0 if not
 * * `start` =>  start date (of first occurrence)  as a datetime object
 * * `end` => end date (of first occurrence)  as a datetime object
@@ -933,10 +933,10 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 
 			case 'monthly':
 				//TODO Account for possible day shifts with timezone set to UTC
-				$reoccurrence_rule = "FREQ=MONTHLY;INTERVAL=".$frequency.";";
-				$reoccurrence_rule.=$schedule_meta.";";
-				$reoccurrence_rule.= "UNTIL=".$schedule_last;
-				return $reoccurrence_rule;
+				$recurrence_rule = "FREQ=MONTHLY;INTERVAL=".$frequency.";";
+				$recurrence_rule .=$schedule_meta.";";
+				$recurrence_rule .= "UNTIL=".$schedule_last;
+				return $recurrence_rule;
 	
 			case 'weekly':
 				

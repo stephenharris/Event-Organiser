@@ -65,8 +65,8 @@ if ( have_posts() ) :
 			echo "DTEND:" . $end_date . "\r\n";
 		endif;
 		
-		if ( $reoccurrence_rule = eventorganiser_generate_ics_rrule() ) :
-			echo "RRULE:" . $reoccurrence_rule . "\r\n";
+		if ( $recurrence_rule = eventorganiser_generate_ics_rrule() ) :
+			echo "RRULE:" . $recurrence_rule . "\r\n";
 		endif;
 		
 		if ( !empty($schedule_data['exclude']) ) :

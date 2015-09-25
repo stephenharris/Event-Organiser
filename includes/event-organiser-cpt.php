@@ -514,20 +514,20 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 			        'title'   => __('Creating events','eventorganiser'),
         			'content' => '<p>' . __('Creating events:','eventorganiser') . '</p>'.
 			'<ul>' .
-				'<li>' . __('The start date is the date the event starts. If the event is a reoccuring event, this is the start date of the first occurrence.','eventorganiser') . '</li>' .
-				'<li>' . __('The end date is the date the event finishes. If the event is a reoccuring event, this is the end date of the first occurrence.','eventorganiser') . '</li>' .
+				'<li>' . __('The start date is the date the event starts. If the event is a recurring event, this is the start date of the first occurrence.','eventorganiser') . '</li>' .
+				'<li>' . __('The end date is the date the event finishes. If the event is a recurring event, this is the end date of the first occurrence.','eventorganiser') . '</li>' .
 				'<li>' . __('All dates and times must be entered in the specified format. This format can changed in the settings page.','eventorganiser') . '</li>' .
 			'</ul>'
 				));
 			    $screen->add_help_tab( array(
 			        'id'      => 'repeating-events',
 			        'title'   => __('Repeating events','eventorganiser'),
-        			'content' => '<p>' . __('To repeat an event according to some regular pattern, use the reoccurrence dropdown menu to select how the event is to repeat. Further options then appear, ','eventorganiser') . '</p>' .
+        			'content' => '<p>' . __('To repeat an event according to some regular pattern, use the recurrence dropdown menu to select how the event is to repeat. Further options then appear, ','eventorganiser') . '</p>' .
 			'<ul>' .
 				'<li>' . __('Specify how regularly the event should repeat (default 1)','eventorganiser') . '</li>' .
-				'<li>' . __('Choose the reoccurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date.','eventorganiser') . '</li>' .
-				'<li>' . __('If monthly reoccurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) ','eventorganiser') . '</li>' .
-				'<li>' . __('If weekly reoccurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used','eventorganiser') . '</li>' .
+				'<li>' . __('Choose the recurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date.','eventorganiser') . '</li>' .
+				'<li>' . __('If monthly recurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) ','eventorganiser') . '</li>' .
+				'<li>' . __('If weekly recurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used','eventorganiser') . '</li>' .
 			'</ul>'
 				));
 			    $screen->add_help_tab( array(
@@ -547,7 +547,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 			$screen->add_help_tab( array(
 				'id'=>'overview',
 			        'title'   => __('Overview'),
-				'content'=>'<p>' . __('This is the list of all saved events. Note that <strong> reoccurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event.','eventorganiser') . '</p>' ));
+				'content'=>'<p>' . __('This is the list of all saved events. Note that <strong> recurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event.','eventorganiser') . '</p>' ));
 			break;
 
 		//Add help for venue admin table page

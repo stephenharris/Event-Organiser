@@ -400,10 +400,10 @@ function eventorganiser_admin_calendar() {
 	
 				$summary .= "</table><p>";
 							
-				//Include schedule summary if event reoccurrs
+				//Include schedule summary if event recurs
 			
 				if( $schedule['schedule'] != 'once' )
-					$summary .='<em>'.__('This event reoccurs','eventorganiser').' '.eo_get_schedule_summary().'</em>';
+					$summary .='<em>'.__('This event recurs','eventorganiser').' '.eo_get_schedule_summary().'</em>';
 				$summary .='</p>';
 
 				//Include edit link in summary if user has permission

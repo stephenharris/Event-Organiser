@@ -710,13 +710,13 @@ function eo_schedule_last($format='d-m-Y',$post_id=0){
 
 
 /**
-* Returns true if event reoccurs or false if it is a one time event.
+* Returns true if event recurs or false if it is a one time event.
 * 
 * ### Examples
-* Display a different message depending on whether the event reoccurs or not, inside the loop.
+* Display a different message depending on whether the event recurs or not, inside the loop.
 * <code>
-*      <?php if( eo_reoccurs() ){ 
-*                  echo 'This event reoccurs'; 
+*      <?php if( eo_recurs() ){ 
+*                  echo 'This event recurs'; 
 *            }else{ 
 *                  echo 'This event is a one-time event'; 
 *            } 
@@ -724,8 +724,8 @@ function eo_schedule_last($format='d-m-Y',$post_id=0){
 * </code>
 * Outside the loop, for event with ID 7:
 * <code>
-*      <?php if( eo_reoccurs(7) ){ 
-*                  echo 'This event reoccurs'; 
+*      <?php if( eo_recurs(7) ){ 
+*                  echo 'This event recurs'; 
 *            }else{ 
 *                  echo 'This event is a one-time event'; 
 *            } 
@@ -733,9 +733,9 @@ function eo_schedule_last($format='d-m-Y',$post_id=0){
 * </code>
 * @since 1.0.0
 * @param int $post_id The event (post) ID. Uses current event if empty.
-* @return bool true if event a reoccurring event
+* @return bool true if event a recurring event
 */
-function eo_reoccurs($post_id=0){
+function eo_recurs($post_id=0){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
 	if( empty($post_id) ) 
@@ -745,7 +745,6 @@ function eo_reoccurs($post_id=0){
 	
 	return ($schedule['schedule'] != 'once');
 }
-
 
 /**
 * Returns a summary of the events schedule.
@@ -763,99 +762,87 @@ function eo_get_schedule_summary($post_id=0){
 
 	$nth= array(__('last','eventorganiser'),'',__('first','eventorganiser'),__('second','eventorganiser'),__('third','eventorganiser'),__('fourth','eventorganiser'));
 
-	$reoccur = eo_get_event_schedule($post_id);
+	$recur = eo_get_event_schedule($post_id);
 
-	if(empty($reoccur))
+	if(empty($recur))
 		return false;
 
 	$return='';
 
-	if($reoccur['schedule']=='once'){
+	if($recur['schedule']=='once'){
 		$return = __('one time only','eventorganiser');
 
-	}elseif($reoccur['schedule']=='custom'){
-		$return = __('custom reoccurrence','eventorganiser');
+	}elseif($recur['schedule']=='custom'){
+		$return = __('custom recurrence','eventorganiser');
 
 	}else{
-		switch($reoccur['schedule']):
+		switch($recur['schedule']):
 
 			case 'daily':
-				if($reoccur['frequency']==1):
+				if($recur['frequency']==1):
 					$return .=__('every day','eventorganiser');
 				else:
-					$return .=sprintf(__('every %d days','eventorganiser'),$reoccur['frequency']);
+					$return .=sprintf(__('every %d days','eventorganiser'),$recur['frequency']);
 				endif;
 				break;
 
 			case 'weekly':
-				if($reoccur['frequency']==1):
+				if($recur['frequency']==1):
 					$return .=__('every week on','eventorganiser');
 				else:
-					$return .=sprintf(__('every %d weeks on','eventorganiser'),$reoccur['frequency']);
+					$return .=sprintf(__('every %d weeks on','eventorganiser'),$recur['frequency']);
 				endif;
 
-				foreach( $reoccur['schedule_meta'] as $ical_day){
+				foreach( $recur['schedule_meta'] as $ical_day){
 					$days[] =  $ical2day[$ical_day];
 					}
 				$return .=' '.implode(', ',$days);
 				break;
 
 			case 'monthly':
-				if($reoccur['frequency']==1):
+				if($recur['frequency']==1):
 					$return .=__('every month on the','eventorganiser');
 				else:
-					$return .=sprintf(__('every %d months on the','eventorganiser'),$reoccur['frequency']);
+					$return .=sprintf(__('every %d months on the','eventorganiser'),$recur['frequency']);
 				endif;
 				$return .= ' ';
-				$bymonthday =preg_match('/^BYMONTHDAY=(\d{1,2})/' ,$reoccur['schedule_meta'],$matches);
+				$bymonthday =preg_match('/^BYMONTHDAY=(\d{1,2})/' ,$recur['schedule_meta'],$matches);
 
 				if( $bymonthday  ){
 					$d = intval($matches[1]);
-					$m =intval($reoccur['schedule_start']->format('n'));
-					$y =intval($reoccur['schedule_start']->format('Y'));
-					$reoccur['start']->setDate($y,$m,$d);
-					$return .= $reoccur['schedule_start']->format('jS');
+					$m =intval($recur['schedule_start']->format('n'));
+					$y =intval($recur['schedule_start']->format('Y'));
+					$recur['start']->setDate($y,$m,$d);
+					$return .= $recur['schedule_start']->format('jS');
 
-				}elseif($reoccur['schedule_meta']=='date'){
-					$return .= $reoccur['schedule_start']->format('jS');
+				}elseif($recur['schedule_meta']=='date'){
+					$return .= $recur['schedule_start']->format('jS');
 
 				}else{
-					$byday = preg_match('/^BYDAY=(-?\d{1,2})([a-zA-Z]{2})/' ,$reoccur['schedule_meta'],$matches);
+					$byday = preg_match('/^BYDAY=(-?\d{1,2})([a-zA-Z]{2})/' ,$recur['schedule_meta'],$matches);
 					if($byday):
 						$n=intval($matches[1])+1;
 						$return .=$nth[$n].' '.$ical2day[$matches[2]];
 					else:
-						$bydayOLD = preg_match('/^(-?\d{1,2})([a-zA-Z]{2})/' ,$reoccur['schedule_meta'],$matchesOLD);
+						$bydayOLD = preg_match('/^(-?\d{1,2})([a-zA-Z]{2})/' ,$recur['schedule_meta'],$matchesOLD);
 						$n=intval($matchesOLD[1])+1;
 						$return .=$nth[$n].' '.$ical2day[$matchesOLD[2]];
 					endif;
 				}
 				break;
 			case 'yearly':
-				if($reoccur['frequency']==1):
+				if($recur['frequency']==1):
 					$return .=__('every year','eventorganiser');
 				else:
-					$return .=sprintf(__('every %d years','eventorganiser'),$reoccur['frequency']);
+					$return .=sprintf(__('every %d years','eventorganiser'),$recur['frequency']);
 				endif;
 				break;
 
 		endswitch;
-		$return .= ' '.__('until','eventorganiser').' '. eo_format_datetime($reoccur['schedule_last'],'M, jS Y');
+		$return .= ' '.__('until','eventorganiser').' '. eo_format_datetime($recur['schedule_last'],'M, jS Y');
 	}
 	
 	return $return; 
-}
-
-/**
-* Prints a summary of the events schedule.
-* @since 1.0.0
-* @uses eo_get_schedule_summary()
-* @ignore
-*
-* @param int $post_id The event (post) ID. Uses current event if empty.
- */
-function eo_display_reoccurence($post_id=0){
-	echo eo_get_schedule_summary($post_id);
 }
 
 /** 

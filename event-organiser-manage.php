@@ -35,7 +35,7 @@ function eventorganiser_event_add_columns( $columns ) {
 	$columns['eventcategories'] = __( 'Categories' );
 	$columns['datestart'] = __( 'Start Date/Time', 'eventorganiser' );
 	$columns['dateend'] = __( 'End Date/Time', 'eventorganiser' );
-	$columns['reoccurence'] = __( 'Reoccurrence', 'eventorganiser' ); 
+	$columns['reoccurence'] = __( 'Recurrence', 'eventorganiser' ); 
 
 	return $columns;
 }
@@ -92,7 +92,7 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 			break;
 
 		case 'reoccurence':
-			eo_display_reoccurence( $series_id );
+			echo eo_get_schedule_summary( $series_id );
 			break;
 
 		case 'eventcategories':

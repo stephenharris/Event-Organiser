@@ -27,7 +27,7 @@ add_action( 'add_meta_boxes_event', '_eventorganiser_event_metaboxes_init' );
 
 /**
  * Sets up the event data metabox
-* This allows user to enter date / time, reoccurrence and venue data for the event
+* This allows user to enter date / time, recurrence and venue data for the event
  * @ignore
  * @since 1.0.0
  */
@@ -77,7 +77,7 @@ function _eventorganiser_details_metabox( $post ) {
 	if ( ! $sche_once ) {
 		$notices = sprintf( 
 			'<label for="eo-event-recurrring-notice">%s</label>',
-			__( 'This is a reoccurring event. Check to edit this event and its reoccurrences', 'eventorganiser' )
+			__( 'This is a recurring event. Check to edit this event and its recurrences', 'eventorganiser' )
 		) 
 		.' <input type="checkbox" id="eo-event-recurrring-notice" name="eo_input[AlterRe]" value="yes">';
 	} else {
@@ -155,17 +155,17 @@ function _eventorganiser_details_metabox( $post ) {
  		
 		<div class="eo-grid-row event-date">
 	 		<div class="eo-grid-4">
-				<label for="eo-event-recurrence"><?php esc_html_e( 'Reoccurence', 'eventorganiser' ).':'; ?> </label>
+				<label for="eo-event-recurrence"><?php esc_html_e( 'Recurrence', 'eventorganiser' ).':'; ?> </label>
  			</div>
 	 		<div class="eo-grid-8 event-date">
 				<?php
-				$reoccurrence_schedules = array(
+				$recurrence_schedules = array(
 					'once' => __( 'none', 'eventorganiser' ), 'daily' => __( 'daily', 'eventorganiser' ), 'weekly' => __( 'weekly', 'eventorganiser' ),
 					'monthly' => __( 'monthly', 'eventorganiser' ), 'yearly' => __( 'yearly', 'eventorganiser' ), 'custom' => __( 'custom', 'eventorganiser' ),
 				);
 				?>
 				<select id="eo-event-recurrence" name="eo_input[schedule]">
-					<?php foreach ( $reoccurrence_schedules as $value => $label ) : ?>
+					<?php foreach ( $recurrence_schedules as $value => $label ) : ?>
 						<option value="<?php echo esc_attr( $value )?>" <?php selected( $schedule, $value );?>><?php echo esc_html( $label );?></option>
 					<?php endforeach; ?>
 				</select>
@@ -379,7 +379,7 @@ function eventorganiser_details_save( $post_id ) {
 
 
 	//If reocurring, but not editing occurrences, can abort here, but trigger hook.
-	if ( eo_reoccurs( $post_id ) && ( !isset( $raw_data['AlterRe'] ) || 'yes' != $raw_data['AlterRe'] ) ){
+	if ( eo_recurs( $post_id ) && ( !isset( $raw_data['AlterRe'] ) || 'yes' != $raw_data['AlterRe'] ) ){
 	   /**
  		* Triggered after an event has been updated.
  		*

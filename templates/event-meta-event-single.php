@@ -34,8 +34,8 @@
 	<h4><?php _e( 'Event Details', 'eventorganiser' ); ?></h4>
 
 	<!-- Is event recurring or a single event -->
-	<?php if ( eo_reoccurs() ) :?>
-		<!-- Event reoccurs - is there a next occurrence? -->
+	<?php if ( eo_recurs() ) :?>
+		<!-- Event recurs - is there a next occurrence? -->
 		<?php $next = eo_get_next_occurrence( $date_format );?>
 
 		<?php if ( $next ) : ?>
@@ -50,7 +50,7 @@
 
 	<ul class="eo-event-meta">
 
-		<?php if ( ! eo_reoccurs() ) { ?>
+		<?php if ( ! eo_recurs() ) { ?>
 			<!-- Single event -->
 			<li><strong><?php esc_html_e( 'Start', 'eventorganiser' );?>:</strong> <?php eo_the_start( $date_format );?></li>
 		<?php } ?>
@@ -68,8 +68,8 @@
 			<li><strong><?php esc_html_e( 'Tags', 'eventorganiser' ); ?>:</strong> <?php echo get_the_term_list( get_the_ID(), 'event-tag', '', ', ', '' ); ?></li>
 		<?php } ?>
 
-		<?php if ( eo_reoccurs() ) {
-				//Event reoccurs - display dates.
+		<?php if ( eo_recurs() ) {
+				//Event recurs - display dates.
 				$upcoming = new WP_Query(array(
 					'post_type'         => 'event',
 					'event_start_after' => 'today',

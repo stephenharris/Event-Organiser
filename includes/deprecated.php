@@ -79,7 +79,7 @@ function  eo_schedule_end($format='d-m-Y',$post_id=0){
 
 
 /**
-* Returns an array with details of the event's reoccurences
+* Returns an array with details of the event's recurrences
 * @since 1.0.0
 * @deprecated 1.6
 * @see eo_get_event_schedule()
@@ -93,7 +93,7 @@ function eo_get_reoccurrence($post_id=0){
 
 
 /**
-* Returns an array with details of the event's reoccurences. 
+* Returns an array with details of the event's recurrences. 
 * Note this is is identical to eo_get_reoccurrence() which corrects a spelling error.
 *
 * @param int Optional, the event (post) ID, 
@@ -122,6 +122,35 @@ function eo_get_reoccurence($post_id=0){
 	return $return; 
 }
 
+/**
+ * @since 1.0.0
+ * @param int $post_id The event (post) ID. Uses current event if empty.
+ * @return bool true if event a recurring event
+ * @deprecated 3.0.0 use eo_recurs()
+ * @see eo_get_event_schedule()
+ *
+ * @param int $post_id Optional, the event (post) ID,
+ * @return array Schedule information
+ */
+function eo_reoccurs($post_id=0){
+	//_deprecated_function( __FUNCTION__, '3.0.0', 'eo_recurs()' );
+	return eo_recurs( $post_id );
+}
+
+
+/**
+ * Prints a summary of the events schedule.
+ * @since 1.0.0
+ * @deprecated 3.0.0 use eo_get_schedule_summary()
+ * @uses eo_get_schedule_summary()
+ * @ignore
+ *
+ * @param int $post_id The event (post) ID. Uses current event if empty.
+ */
+function eo_display_reoccurence($post_id=0){
+	_deprecated_function( __FUNCTION__, '3.0.0', '' );
+	echo eo_get_schedule_summary($post_id);
+}
 
 /**
 * Returns the colour of a category associated with the event
