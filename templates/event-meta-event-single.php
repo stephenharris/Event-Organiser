@@ -24,7 +24,7 @@
  */
 ?>
 
-<div class="entry-meta eventorganiser-event-meta">
+<div class="eventorganiser-event-meta">
 	
 	<?php $date_format = eo_get_event_datetime_format(); ?>
 	
