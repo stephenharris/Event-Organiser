@@ -228,13 +228,22 @@ window.eventOrganiserSchedulePicker = {
 		if( $(views.schedule_last_date) ){
 			var schedule_last = $(views.schedule_last_date)
 					.datepicker({
+			    		nextText: '>',
+			    		prevText: '<',
 						dateFormat: this.options.format,
 	                	changeMonth: true,
 	                	changeYear: true,
 	                	monthNamesShort: locale.monthAbbrev,
 	                	dayNamesMin: locale.dayAbbrev,
 	                	isRTL: locale.isrtl,
-	                	firstDay: parseInt( this.options.startday, 10 )
+	                	firstDay: parseInt( this.options.startday, 10 ),
+	            		beforeShow: function(input, inst) {
+	            			if( inst.hasOwnProperty( 'dpDiv' ) ){
+	            				inst.dpDiv.addClass('eo-datepicker');
+	            			}else{
+	            				$('#ui-datepicker-div').addClass('eo-datepicker');
+	            			}
+	            		},
 					})
 					.data('eo-datepicker','schedule_last');
 		}	
@@ -242,6 +251,8 @@ window.eventOrganiserSchedulePicker = {
 		//Start & End
         var dates = $( views.start_date + ', ' + views.end_date).datepicker({
 			dateFormat: this.options.format,
+    		nextText: '>',
+    		prevText: '<',
             changeMonth: true,
             changeYear: true,
             monthNamesShort: locale.monthAbbrev,
@@ -269,7 +280,14 @@ window.eventOrganiserSchedulePicker = {
                 self.update_schedule();
                 self.update_occurrencepicker_rules();
                 self.update_form();
-            }
+            },
+    		beforeShow: function(input, inst) {
+    			if( inst.hasOwnProperty( 'dpDiv' ) ){
+    				inst.dpDiv.addClass('eo-datepicker');
+    			}else{
+    				$('#ui-datepicker-div').addClass('eo-datepicker');
+    			}
+    		},
         });
         
         //Occurrence picker
@@ -277,6 +295,8 @@ window.eventOrganiserSchedulePicker = {
         if (dp.length > 0) {
             dp.datepicker({
                 dateFormat: "yy-mm-dd",
+        		nextText: '>',
+        		prevText: '<',
                 changeMonth: true,
                 changeYear: true,
                 monthNamesShort: locale.monthAbbrev,
@@ -295,6 +315,13 @@ window.eventOrganiserSchedulePicker = {
                      }
                      return [true, "eo-op-date-not-selected", ''];
                  },
+         		beforeShow: function(input, inst) {
+        			if( inst.hasOwnProperty( 'dpDiv' ) ){
+        				inst.dpDiv.addClass('eo-datepicker');
+        			}else{
+        				$('#ui-datepicker-div').addClass('eo-datepicker');
+        			}
+        		},
                 onChangeMonthYear: eventOrganiserSchedule.generate_dates_by_rule
             })
             .hide().find('.ui-datepicker-inline').click(function(e) {
