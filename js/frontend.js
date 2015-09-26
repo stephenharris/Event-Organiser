@@ -73,15 +73,15 @@ jQuery(document).ready(function () {
 		showOn: 'button',
 		beforeShow: function(input, inst) {
 			if( inst.hasOwnProperty( 'dpDiv' ) ){
-				inst.dpDiv.addClass('eo-datepicker eo-fc-datepicker');
+				inst.dpDiv.addClass('eo-datepicker eo-fc-mini-calendar eo-fc-datepicker');
 			}else{
-				$('#ui-datepicker-div').addClass('eo-datepicker eo-fc-datepicker');
+				$('#ui-datepicker-div').addClass('eo-datepicker eo-fc-mini-calendar eo-fc-datepicker');
 			}
 		},
 		onSelect: function (dateText, dp) {
 			var cal_id = $(this).parents('div.eo-fullcalendar').attr('id');
 			$('#'+cal_id).fullCalendar('gotoDate', new Date(Date.parse(dateText)));
-        		}
+        }
     });
 		
 	if ($(".eo-fullcalendar").length > 0) {
