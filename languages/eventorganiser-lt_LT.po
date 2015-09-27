@@ -3,123 +3,126 @@ msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-27 00:58+0100\n"
-"PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
-"Last-Translator: Marta <ieeeeeeeeee@hotmail.com>\n"
+"PO-Revision-Date: 2015-09-12 06:56:36+0000\n"
+"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
-"Language: Catalan; Valencian\n"
+"Language: Lithuanian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: classes/class-eo-agenda-widget.php:12
 msgid "Displays a list of events, grouped by date"
-msgstr "Mostra una llista d'esdeveniments, agrupats per data"
+msgstr "Rodomas renginių sąrašas suskirstytas pagal datas"
 
 #: classes/class-eo-agenda-widget.php:20
 msgid "Events Agenda"
-msgstr "Agenda d'esdeveniments"
+msgstr "Renginiai"
 
 #: classes/class-eo-agenda-widget.php:36
 #: classes/class-eo-calendar-widget.php:46
 #: classes/class-eo-event-list-widget.php:101
 #: classes/class-eo-event-list-widget.php:146
 msgid "Title"
-msgstr "Tílol"
+msgstr "Pavadinimas"
 
 #: classes/class-eo-agenda-widget.php:41
 msgid "Group by"
-msgstr "Agrupat per"
+msgstr "Grupuoti pagal"
 
 #: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:256
 msgid "Day"
-msgstr "Dia"
+msgstr "Diena"
 
 #: classes/class-eo-agenda-widget.php:44 event-organiser-calendar.php:256
 msgid "Week"
-msgstr "Setmana"
+msgstr "Savaitė"
 
 #: classes/class-eo-agenda-widget.php:45 event-organiser-calendar.php:256
 msgid "Month"
-msgstr "Mes"
+msgstr "Mėnesis"
 
 #: classes/class-eo-agenda-widget.php:50
 msgid "Group date format"
-msgstr "Grup de format de data"
+msgstr "Pasirinkti datos formatą"
 
 #: classes/class-eo-agenda-widget.php:55
 msgid "Event date/time format"
-msgstr "Format de data/hora d'esdeveniment"
+msgstr "Renginio data/laiko formatas"
 
 #: classes/class-eo-agenda-widget.php:60
 msgid "Include 'Add To Google' link"
-msgstr "Incloure el enllaç \"Afegir a Google\""
+msgstr "Įtraukti 'Pridėti prie Google' nuorodą"
 
 #: classes/class-eo-agenda-widget.php:140 event-organiser-edit.php:151
 msgid "All day"
-msgstr "Tot el dia"
+msgstr "Visą dieną"
 
 #: classes/class-eo-agenda-widget.php:149
 #: classes/class-eo-venue-list-table.php:86
 msgid "View"
-msgstr "Veure"
+msgstr "Peržiūrėti"
 
 #: classes/class-eo-agenda-widget.php:153
 msgid "Add To Google Calendar"
-msgstr "Afegeix a Google Calendar"
+msgstr "Pridėti prie Google Calendar"
 
 #: classes/class-eo-calendar-widget.php:22
 msgid "Displays a calendar of your events"
-msgstr "Mostra un calendari dels teus esdeveniments"
+msgstr "Rodomas Jūsų renginių kalendorius"
 
 #: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:252
 msgid "Events Calendar"
-msgstr "Calendari d'esdeveniments"
+msgstr "Renginių kalendorius"
 
 #: classes/class-eo-calendar-widget.php:57
 msgid "Include past events"
-msgstr "Incloure esdeveniments pasats"
+msgstr "Įtraukti praėjusius renginius"
 
 #: classes/class-eo-calendar-widget.php:68
 msgid "Show long events"
-msgstr "Mostra esdeveniments de llarga duració"
+msgstr "Rodyti būsimus renginius"
 
 #: classes/class-eo-calendar-widget.php:79
 msgid "Link directly to event for days with only one event"
-msgstr "Enllaç directe a l'esdeveniment per als dies amb un sol esdeveniment"
+msgstr ""
+"Tiesiogiai susieti su renginiu dienomis, kai vyksta tik vienas renginys"
 
 #: classes/class-eo-calendar-widget.php:91
 #: classes/class-eo-event-list-widget.php:109
 msgid "Event categories"
-msgstr "Categories d'esdeveniments"
+msgstr "Renginių kategorijos"
 
 #: classes/class-eo-calendar-widget.php:94
 #: classes/class-eo-event-list-widget.php:111
 msgid "List category slug(s), seperate by comma. Leave blank for all"
 msgstr ""
-"Llistat de categoria d'slug(s), separats per coma. Deixar en blanc per tots"
+"Išdėstyti kategorijų slug(s), atskirtas kableliu. Palikti viską nuežpildytą "
+"spalva"
 
 #: classes/class-eo-calendar-widget.php:103
 msgid "Event venue"
-msgstr "Lloc de l'esdeveniment"
+msgstr "Renginio vieta"
 
 #: classes/class-eo-calendar-widget.php:107
 #: classes/class-eo-event-list-widget.php:119
 #: includes/event-organiser-cpt.php:34
 msgid "All Venues"
-msgstr "Tots els llocs"
+msgstr "Visos renginių vietos"
 
 #: classes/class-eo-calendar-widget.php:283
 msgid "Previous month"
-msgstr "Mes anterior"
+msgstr "Praėjęs mėnuo"
 
 #: classes/class-eo-calendar-widget.php:286
 msgid "Next month"
-msgstr "Mes pròxim"
+msgstr "Kitas mėnuo"
 
 #: classes/class-eo-event-list-widget.php:13
 msgid "Displays a list of events"
-msgstr "Mostra una llista d'esdeveniments"
+msgstr "Rodomas renginių sąrašas"
 
 #: classes/class-eo-event-list-widget.php:14
 #: classes/class-eo-event-list-widget.php:26 event-organiser-venues.php:462
@@ -127,7 +130,7 @@ msgstr "Mostra una llista d'esdeveniments"
 #: includes/event-organiser-cpt.php:217 includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:40
 msgid "Events"
-msgstr "Esdeveniments"
+msgstr "Renginiai"
 
 #: classes/class-eo-event-list-widget.php:36
 msgid "No Events"
@@ -135,12 +138,12 @@ msgstr ""
 
 #: classes/class-eo-event-list-widget.php:45 event-organiser-manage.php:164
 msgid "Future events"
-msgstr "Futurs esdeveniments"
+msgstr "Būsimi renginiai"
 
 #: classes/class-eo-event-list-widget.php:51
 #: includes/event-organiser-cpt.php:223
 msgid "All events"
-msgstr "Tots els esdeveninents"
+msgstr "Visi renginiai"
 
 #: classes/class-eo-event-list-widget.php:57
 msgid "Running events"
@@ -160,12 +163,12 @@ msgstr ""
 
 #: classes/class-eo-event-list-widget.php:105
 msgid "Number of events"
-msgstr "Nombre d'esdeveniments"
+msgstr "Renginių skaičius"
 
 #: classes/class-eo-event-list-widget.php:116
 #: includes/event-organiser-cpt.php:46
 msgid "Venue:"
-msgstr ""
+msgstr "Vieta:"
 
 #: classes/class-eo-event-list-widget.php:127
 msgid "Show:"
@@ -173,15 +176,15 @@ msgstr ""
 
 #: classes/class-eo-event-list-widget.php:143
 msgid "Order by"
-msgstr "Ordenats per"
+msgstr "Klasifikuoti pagal"
 
 #: classes/class-eo-event-list-widget.php:145
 msgid "Start date"
-msgstr "Data d'inici"
+msgstr "Pradžia"
 
 #: classes/class-eo-event-list-widget.php:147
 msgid "Publish date"
-msgstr ""
+msgstr "Paskelbta"
 
 #: classes/class-eo-event-list-widget.php:150
 msgid "ASC"
@@ -193,15 +196,15 @@ msgstr "DESC"
 
 #: classes/class-eo-event-list-widget.php:156 event-organiser-settings.php:193
 msgid "Group occurrences"
-msgstr "Ocurrències de grup"
+msgstr "Sugrupuoti įvykius"
 
 #: classes/class-eo-event-list-widget.php:163
 msgid "Template (leave blank for default)"
-msgstr "Plantilla (deixar en blanc per defecte)"
+msgstr "Šablonas (pradiniam palikti neužpildytą)"
 
 #: classes/class-eo-event-list-widget.php:165
 msgid "Event list widget placeholders"
-msgstr "Marcadors de posició del giny de la llista d'esdeveniments"
+msgstr "Renginių sąrašo valdiklio talpyklos"
 
 #: classes/class-eo-event-list-widget.php:167
 #, php-format
@@ -210,140 +213,140 @@ msgid ""
 "want to appear in the widget. <a href=\"%s\" target=\"_blank\"> Find out "
 "more</a>."
 msgstr ""
-"Pots usar etiquetes especificades com a marcadors de posició per a la "
-"informació d'un esdeveniment que vulguis que aparegui en el giny. <a href="
-"\"%s\" target=\"_blank\"> Esbrina més sobre el tema</a>."
+"Galite naudoti patikslintas žymes kaip talpyklas renginių informacijai jeigu "
+"noritekad ji atsirastų valdiklyje. <a href=\"%s\" target=\"_ blank\"> Find "
+"outmore</a>."
 
 #: classes/class-eo-event-list-widget.php:176
 msgid "'No events' message"
-msgstr "Missatge  \"No hi han esdeveniments\""
+msgstr "Nėra renginių' žinutė"
 
 #: classes/class-eo-venue-list-table.php:76 templates/single-event.php:71
 msgid "Edit"
-msgstr "Edita"
+msgstr "Redaguoti"
 
 #: classes/class-eo-venue-list-table.php:81
 #: classes/class-eo-venue-list-table.php:143
 msgid "Delete"
-msgstr "Esborra"
+msgstr "Trinti"
 
 #: classes/class-eo-widget-categories.php:10
 msgid "A list or dropdown of event categories"
-msgstr "Una llista o desplegable de categories d'esdeveniments"
+msgstr "Sąrašas arba renginių kategorijų išskleidimas"
 
 #: classes/class-eo-widget-categories.php:11 event-organiser-settings.php:317
 #: includes/event-organiser-cpt.php:92
 msgid "Event Categories"
-msgstr "Categories Esdeveniment"
+msgstr "Renginių kategorijos"
 
 #: classes/class-eo-widget-categories.php:25 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
 #: includes/event-organiser-event-functions.php:1501
 #: templates/event-meta-event-single.php:64
 msgid "Categories"
-msgstr "Categoríes"
+msgstr "Kategorijos"
 
 #: classes/class-eo-widget-categories.php:53
 msgid "Select Category"
-msgstr "Selecciona una Categoria"
+msgstr "Pasirinkti kategoriją"
 
 #: classes/class-eo-widget-categories.php:124
 #: classes/class-eo-widget-venues.php:125
 msgid "Title:"
-msgstr "Títol:"
+msgstr "Pavadinimas:"
 
 #: classes/class-eo-widget-categories.php:128
 #: classes/class-eo-widget-venues.php:129
 msgid "Display as dropdown"
-msgstr "Mostra com a desplegable"
+msgstr "Išskleisti"
 
 #: classes/class-eo-widget-categories.php:131
 msgid "Show hierarchy"
-msgstr "Mostra l'herència"
+msgstr "Rodyti hierarchiškai"
 
 #: classes/class-eo-widget-venues.php:11
 msgid "A list or dropdown of event venues"
-msgstr "Una llista o desplegable de llocs d'esdeveniments"
+msgstr "Sąrašas arba renginių vietų išskleidimas"
 
 #: classes/class-eo-widget-venues.php:12
 msgid "Event Venues"
-msgstr "Llocs d'esdeveniment"
+msgstr "Renginio vieta"
 
 #: classes/class-eo-widget-venues.php:29 event-organiser-settings.php:307
 #: event-organiser-venues.php:185 includes/event-organiser-cpt.php:31
 msgid "Venues"
-msgstr "Llocs"
+msgstr "Vieta"
 
 #: classes/class-eo-widget-venues.php:55
 msgid "Select Venue"
-msgstr ""
+msgstr "Pasirinkti vietą"
 
 #: classes/class-eventorganiser-shortcodes.php:437
 msgid "There is no excerpt because this is a protected post."
-msgstr "No hi ha resum perquè aquesta és una entrada protegida."
+msgstr "Nerodoma citata kadangi šis paštas yra apsaugotas"
 
 #: event-organiser-add-ons.php:19 event-organiser-add-ons.php:95
 msgid "Event Organiser Extensions"
-msgstr "Extensions de Event Organiser"
+msgstr "Renginių organizatoriaus išplėtimas"
 
 #: event-organiser-add-ons.php:20
 msgid "Extensions"
-msgstr "Extensions"
+msgstr "Išplėtimai"
 
 #: event-organiser-add-ons.php:99
 msgid ""
 "Event Organiser offers a range of extension which add additional features to "
 "the plug-in."
 msgstr ""
-"L'Organitzador d'Esdeveniments ofereix una gamma d'extensions que afegeixen "
-"funcions addicionals al plug-in."
+"Renginių organizatorius siūlo išplėtinių asortimentą pridedantį papildomų "
+"bruožųįskiepiams."
 
 #: event-organiser-add-ons.php:130 event-organiser-go-pro.php:90
 msgid "Find out more &hellip;"
-msgstr "Trobar més ..."
+msgstr "Sužinoti daugiau &hellip;"
 
 #: event-organiser-calendar.php:21 event-organiser-calendar.php:22
 msgid "Calendar View"
-msgstr "Vista de Calendari"
+msgstr "Kalendoriaus vaizdas"
 
 #: event-organiser-calendar.php:72 includes/event-organiser-register.php:59
 msgid "today"
-msgstr "avui"
+msgstr "šiandien"
 
 #: event-organiser-calendar.php:73 includes/event-organiser-register.php:60
 #: includes/event-organiser-register.php:244
 msgid "day"
-msgstr "dia"
+msgstr "diena"
 
 #: event-organiser-calendar.php:74 includes/event-organiser-register.php:61
 #: includes/event-organiser-register.php:246
 msgid "week"
-msgstr "setmana"
+msgstr "savaitė"
 
 #: event-organiser-calendar.php:75 includes/event-organiser-register.php:62
 #: includes/event-organiser-register.php:248
 msgid "month"
-msgstr "mes"
+msgstr "mėnuo"
 
 #: event-organiser-calendar.php:76 includes/event-organiser-register.php:63
 msgid "go to date"
-msgstr "anar a la data"
+msgstr "peržiūrėti datą"
 
 #: event-organiser-calendar.php:125
 msgid "You do not have sufficient permissions to create events. "
-msgstr "No tens suficients privilegis per crear esdeveniments."
+msgstr "Neturite patvirtinto leidimo kurti renginius."
 
 #: event-organiser-calendar.php:181
 msgid "You do not have sufficient permissions to edit this event. "
-msgstr "No tens suficients privilegis per editar aquest esdeveniment."
+msgstr "Neturite patvirtinto leidimo redaguoti renginį. "
 
 #: event-organiser-calendar.php:199
 msgid "You do not have sufficient permissions to delete this event. "
-msgstr "No tens suficients privilegis per esborrar aquest esdeveniment."
+msgstr "Neturite patvirtinto leidimo ištrinti renginį. "
 
 #: event-organiser-calendar.php:209
 msgid "Occurrence deleted."
-msgstr "Ocurrència esborrada"
+msgstr "Įvykis panaikintas."
 
 #: event-organiser-calendar.php:225
 msgid "View keyboard shortcuts"
@@ -351,53 +354,53 @@ msgstr ""
 
 #: event-organiser-calendar.php:230
 msgid "Calendar options"
-msgstr "Opcions del calendari"
+msgstr "Kalendoriaus parinktys"
 
 #: event-organiser-calendar.php:237
 msgid "24 hour time"
-msgstr "De 24 hores"
+msgstr "24 valandų laikas"
 
 #: event-organiser-calendar.php:259
 #: includes/event-organiser-event-functions.php:1438
 msgid "Loading&#8230;"
-msgstr "Carregant..."
+msgstr "Loading&#8230"
 
 #: event-organiser-calendar.php:268
 msgid "Current date/time"
-msgstr "Data/hora actual"
+msgstr "Nustatyta data/laikas"
 
 #: event-organiser-calendar.php:273
 msgid "Create an event"
-msgstr "Crear un esdeveniment"
+msgstr "Sukurti renginį"
 
 #: event-organiser-calendar.php:278
 msgid "When"
-msgstr "Quan"
+msgstr "Kada"
 
 #: event-organiser-calendar.php:282
 msgid "Event Title"
-msgstr "Títol del esdeveniment"
+msgstr "Renginio pavadinimas"
 
 #: event-organiser-calendar.php:289 includes/event-organiser-ajax.php:380
 msgid "Where"
-msgstr "On"
+msgstr "Kur"
 
 #: event-organiser-calendar.php:314
 msgid "Save Draft"
-msgstr "Guardar esborrany"
+msgstr "Išsaugoti juodraštį"
 
 #: event-organiser-calendar.php:315 event-organiser-calendar.php:322
 #: event-organiser-edit.php:307
 msgid "Cancel"
-msgstr "Cancel·la"
+msgstr "Atšaukti"
 
 #: event-organiser-calendar.php:318
 msgid "Publish Event"
-msgstr "Publicar Esdeveniment"
+msgstr "Paskelbti renginį"
 
 #: event-organiser-calendar.php:324
 msgid "Submit for Review"
-msgstr "Enviar per a revisió"
+msgstr "Pateikti peržiūrai"
 
 #: event-organiser-calendar.php:335
 msgid "The following keyboard shortcuts are available"
@@ -442,42 +445,42 @@ msgstr ""
 #: event-organiser-calendar.php:390 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:34
 msgid "Event Details"
-msgstr "Detall de l'esdeveniment"
+msgstr "Renginio detalės "
 
 #: event-organiser-calendar.php:392
 msgid "Event Detail"
-msgstr "Detall de l'esdeveniment"
+msgstr "Renginio elementas"
 
 #: event-organiser-debug.php:13 event-organiser-debug.php:14
 #: event-organiser-debug.php:58
 msgid "System Info"
-msgstr "Informació del Sistema"
+msgstr "Sisteminė informacija"
 
 #: event-organiser-debug.php:64
 msgid ""
 "This page highlights useful information for debugging. If you're reporting a "
 "bug, please include this information."
 msgstr ""
-"Aquesta pàgina destaca informació útil per eliminar fallades. Si vas a "
-"informar d'una fallada, per favor, inclou aquesta informació."
+"Šis puslapis pažymi suderinamumui naudingą informaciją. Jeigu pranešate apie "
+"klaidą, prašome įtraukti šią informaciją."
 
 #: event-organiser-debug.php:66
 msgid ""
 "The 'system info' link in under the Events admin tab is only visible to "
 "admins and only when <code>WP_DEBUG</code> is set to <code>true</code>."
 msgstr ""
-"L'enllaç \"Informació del sistema\" sota la pestanya de Admin "
-"d'Esdeveniments només és visible per als administradors i només quan "
-"<code>WP_DEBUG</code> está en la posició <code>true</code>."
+"Nuoroda 'Sistemos informacija' prie Renginių administratoriaus pozicijos "
+"yramatoma administratorių ir tik tada kai <code>WP_DEBUG</code> is "
+"setto<code>true</code>."
 
 #: event-organiser-debug.php:71
 msgid ""
 "Most bugs arise from theme or plug-in conflicts. You can check this by "
 "disabling all other plug-ins and switching to TwentyTweleve."
 msgstr ""
-"La majoria de les fallades provenen de conflictes del tema o del plug-in. "
-"Pots revisar-ho desactivant tots els altres plug-ins i canviant a "
-"TwentyTwelve"
+"Daugelis klaidų (bugs) kyla iš temos ir įskiepių konflikto. Galite tai "
+"patikrintiišjungdami visus kitus įskiepius ir prisijungdami prie "
+"TwentyTweleve."
 
 #: event-organiser-debug.php:73
 msgid ""
@@ -485,60 +488,60 @@ msgid ""
 "done so. Once the plug-in or theme has been identified it is often easy to "
 "resolve the issue."
 msgstr ""
-"Per accelerar les coses si informes d'una fallada, per favor indica que has "
-"fet. Una vegada el plug-in o tema hagi estat identificat és més fàcil que es "
-"resolgui."
+"Prisidėdami prie darbų pagreitinimo nurodykite jeigu pranešate apie klaidą "
+"(bug).Kai įskiepas arba tema yra nurodomi dažnu atveju yra paprasta "
+"išspręsti problemą."
 
 #: event-organiser-debug.php:75
 msgid ""
 "Below any <strong>known</strong> plug-in and theme conflicts are highlighted "
 "in red."
 msgstr ""
-"A baix es ressalta en vermell qualsevol conflicte <strong>conegut</strong> "
-"del plug-in i del tema."
+"Žemiau <strong>known</strong> įskiepų ir temos konfliktai yrapažymėti "
+"raudonai."
 
 #: event-organiser-debug.php:83
 msgid "Download system information file"
-msgstr "Descarrega l'arxiu d'informació del sistema"
+msgstr "Atsisiųsti sistemos informaciją"
 
 #: event-organiser-debug.php:181 event-organiser-debug.php:185
 #: event-organiser-debug.php:189 event-organiser-settings.php:209
 msgid "Yes"
-msgstr "Si"
+msgstr "Taip"
 
 #: event-organiser-debug.php:181 event-organiser-debug.php:185
 #: event-organiser-debug.php:189 event-organiser-settings.php:208
 msgid "No"
-msgstr "No"
+msgstr "Ne"
 
 #: event-organiser-debug.php:256
 msgid ""
 "Known plug-in & theme conflicts, highlighted in red, may be minor or have a "
 "simple resolution. Please contact support."
 msgstr ""
-"Els conflictes coneguts del plug-in i tema, ressaltats en vermell, poden ser "
-"menors o tenir una resolució simple. Per favor, contacta amb l'assistència."
+"Žinomi įskiepų ir temos konfliktai, pažymėti raudonai, gali būti smulkūs "
+"arba lengvaisprendžiami. Prašome susisiekti su palaikymu."
 
 #. / TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
 #: event-organiser-debug.php:421
 #, php-format
 msgid "%s has only been tested up to %s %s"
-msgstr "%s sols s'ha provat per damunt de %s %s"
+msgstr "%s buvo patikrintas iki  %s %s"
 
 #. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
 #: event-organiser-debug.php:430
 #, php-format
 msgid "%s requires %s version %s or higher"
-msgstr "%s requereix %s versió %s o superior"
+msgstr "%s requires %s version %s or higher"
 
 #: event-organiser-debug.php:451
 msgid "unknown"
-msgstr "desconegut"
+msgstr "nežinomas"
 
 #: event-organiser-edit.php:21 event-organiser-manage.php:23
 #: event-organiser-settings.php:146 includes/event-organiser-ajax.php:367
 msgid "Organiser"
-msgstr "Organitzador"
+msgstr "Organizatorius"
 
 #: event-organiser-edit.php:80
 msgid "This is a recurring event. Check to edit this event and its recurrences"
@@ -559,7 +562,7 @@ msgstr ""
 
 #: event-organiser-edit.php:107 event-organiser-manage.php:36
 msgid "Start Date/Time"
-msgstr "Inici Data/Hora"
+msgstr "Pradžios Data/Laikas"
 
 #: event-organiser-edit.php:112
 msgid "Start Date"
@@ -571,7 +574,7 @@ msgstr ""
 
 #: event-organiser-edit.php:131 event-organiser-manage.php:37
 msgid "End Date/Time"
-msgstr "Fi Data/Hora"
+msgstr "Pabaigos Data/Laikas"
 
 #: event-organiser-edit.php:136
 msgid "End Date"
@@ -587,31 +590,31 @@ msgstr ""
 
 #: event-organiser-edit.php:163
 msgid "none"
-msgstr ""
+msgstr "nieko"
 
 #: event-organiser-edit.php:163
 msgid "daily"
-msgstr "diari"
+msgstr "kasdien"
 
 #: event-organiser-edit.php:163
 msgid "weekly"
-msgstr "setmanal"
+msgstr "kas savaitę"
 
 #: event-organiser-edit.php:164
 msgid "monthly"
-msgstr "mensual"
+msgstr "kas mėnesį"
 
 #: event-organiser-edit.php:164
 msgid "yearly"
-msgstr "anual"
+msgstr "kasmetinis"
 
 #: event-organiser-edit.php:164
 msgid "custom"
-msgstr "personalitzat"
+msgstr "konfigūracija"
 
 #: event-organiser-edit.php:179
 msgid "Repeat every"
-msgstr "Repetir cada"
+msgstr "Pakartokite kiekvieną"
 
 #: event-organiser-edit.php:180
 msgid "Recurrence frequency"
@@ -624,7 +627,7 @@ msgstr ""
 #: event-organiser-edit.php:188 templates/shortcode-event-list.php:52
 #: templates/widget-event-list.php:49
 msgid "on"
-msgstr "el"
+msgstr "ant, tada"
 
 #: event-organiser-edit.php:209
 msgid "Select whether to repeat monthly by date or day:"
@@ -636,13 +639,13 @@ msgstr ""
 
 #: event-organiser-edit.php:217
 msgid "day of week"
-msgstr "dia de la setmana"
+msgstr "savaitės diena"
 
 #: event-organiser-edit.php:223
 #: includes/event-organiser-event-functions.php:842
 #: includes/event-organiser-register.php:261
 msgid "until"
-msgstr "fins"
+msgstr "iki"
 
 #: event-organiser-edit.php:224
 msgid "Repeat this event until:"
@@ -654,48 +657,48 @@ msgstr ""
 
 #: event-organiser-edit.php:238 includes/event-organiser-register.php:238
 msgid "Show dates"
-msgstr "Mostra les dates"
+msgstr "Rodyti datas"
 
 #: event-organiser-edit.php:272
 #: includes/event-organiser-venue-functions.php:1002
 msgid "Select a venue"
-msgstr "Selecciona un lloc"
+msgstr "Pasirinkti vietą"
 
 #: event-organiser-edit.php:283
 msgid "Venue Name"
-msgstr "Nom del Lloc"
+msgstr "Vietos pavadinimas"
 
 #: event-organiser-edit.php:465
 msgid "Event dates were not saved."
-msgstr "Les dates de l'esdeveniment no s'han guardat"
+msgstr "Renginio datos nebuvo išsaugotos"
 
 #: event-organiser-go-pro.php:24
 msgid "Get Event Organiser Pro Add-On"
-msgstr "Aconseguerixi Event Organiser Pro Add-On"
+msgstr "Įsidiekite renginių organizatorių Pro Add-On"
 
 #: event-organiser-go-pro.php:25
 msgid "Go Pro"
-msgstr "Ves a Pro"
+msgstr "Diegti Pro"
 
 #: event-organiser-go-pro.php:52
 msgid "Get Event Organiser Pro"
-msgstr "Aconsegueixi Event Organiser Pro"
+msgstr "Įsidiekite renginių organizatorių Pro"
 
 #: event-organiser-go-pro.php:55
 msgid ""
 "Event Organiser Pro is a premium add-on bringing advanced booking management "
 "to Event Organiser."
 msgstr ""
-"Event Organiser Pro és un add-on de pagament per dur la gestió avançada de "
-"reserva de Event Organiser."
+"Renginių organizatorius Pro yra priedas pridedamas dėl pažangaus "
+"Renginiųorganizatoriaus rezervavimo valdymo"
 
 #: event-organiser-go-pro.php:56
 msgid "But that's not all &hellip;"
-msgstr "Però açò no es tot..."
+msgstr "Bet tai ne viskas &hellip;"
 
 #: event-organiser-go-pro.php:71
 msgid "Flexible Booking Options"
-msgstr "Opcions de reserva flexibles"
+msgstr "Lanksčios užsakymų parinktys "
 
 #: event-organiser-go-pro.php:72
 msgid ""
@@ -703,14 +706,13 @@ msgid ""
 "such as booking places on a course. You can offer multiple tickets, and "
 "customise the booking form to suit your needs."
 msgstr ""
-"Venda d'entrades per a dates específiques o venda d'entrades per a totes les "
-"dates d'un esdeveniment - com a reserva de places en un curs. Vostè pot "
-"oferir múltiples entrades, i personalitzar el formulari de reserva per "
-"satisfer les seves necessitats."
+"Bilietų pardavimas konkrečiai datai arba bilietų pardavimas visomisrenginio "
+"dienomis – vietų rezervacija eigoje. Galite siūlyti sudėtinius bilietusir "
+"sukonfigūruoti rezervacijos formą pagal savo poreikius."
 
 #: event-organiser-go-pro.php:76
 msgid "Additional shortcodes & improved UI"
-msgstr "Shortcodes adicionals i una millor interfície d'usuari"
+msgstr "Papildomi trumpiniai & pagerintas UI"
 
 #: event-organiser-go-pro.php:77
 msgid ""
@@ -718,214 +720,214 @@ msgid ""
 "the event search shortcode. Event Organiser Pro also adds a text editor "
 "button to make inserting and configuring your shortcodes that bit easier. "
 msgstr ""
-"Doni als seus usuaris la capacitat de cercar i filtrar a través dels seus "
-"esdeveniments amb la cerca d'esdeveniments per shortcode. Event Organiser "
-"Pro també afegeix un botó d'edició de text per a realitzar la inserció i la "
-"configuració dels shorcodes una mica més fàcil."
+"Suteikite vartotojams galimybę ieškoti ir rūšiuoti Jūsų renginius surenginių "
+"paieškos trumpiniu. Renginių organizatorius Pro taip pat prideda "
+"tekstoredaktoriaus mygtuką įgalinantį lengvesnį įterpimą ir trumpinių "
+"konfigūravimą."
 
 #: event-organiser-go-pro.php:81
 msgid "Venue custom fields & thumbnails"
-msgstr "Campos i miniatures personalitzades del Lloc de celebració"
+msgstr "Vietos konfigūravimo laukai & vaizdo miniatiūros"
 
 #: event-organiser-go-pro.php:82
 msgid ""
 "Add information on your venue pages with venue custom fields, or give your "
 "venues more attentioned with their own 'featured image'"
 msgstr ""
-"Afegir informació a les seves pàgines de lloc de celebració amb camps de "
-"Lloc de celebració personalitzats, o donar als seus llocs de celebració més "
-"atenció amb la seva pròpia \"imatge destacada'"
+"Pridėkite informaciją vietų puslapiuose su vietų konfigūravimo laukais, "
+"arbasuteikite savo vietoms daugiau išskirtinumo priskirdami joms 'matomą "
+"atvaizdą'"
 
 #: event-organiser-go-pro.php:96
 msgid "Go to Event Organiser settings"
-msgstr "Anar a la configuració de l'Organitzador d'esdeveniments"
+msgstr "Eiti į Renginių Organizatoriaus nustatymus"
 
 #: event-organiser-manage.php:19 includes/event-organiser-cpt.php:218
 msgid "Event"
-msgstr "Esdeveniment"
+msgstr "Renginys"
 
 #: event-organiser-manage.php:163
 msgid "View all events"
-msgstr "Veure tots els esdeveniments"
+msgstr "Peržiūrėti visus renginius"
 
 #: event-organiser-manage.php:165
 msgid "Expired events"
-msgstr "Esdeveniments expirats"
+msgstr "Įvykę renginiai"
 
 #: event-organiser-manage.php:166
 msgid "Events within 24 hours"
-msgstr "Esdeveniments del dia"
+msgstr "Renginiai per artimiausias 24 valandas"
 
 #: event-organiser-manage.php:167
 msgid "Events within 1 week"
-msgstr "Esdeveniments de la setmana"
+msgstr "Artimiausios savaitės renginiai"
 
 #: event-organiser-manage.php:168
 #, php-format
 msgid "Events within %d weeks"
-msgstr "Esdeveniments en %d setmanes"
+msgstr "Artimiausių %d savaičių renginiai"
 
 #: event-organiser-manage.php:169
 msgid "Events within 1 month"
-msgstr "Esdeveniments del mes"
+msgstr "Artimiausio mėnesio renginiai"
 
 #: event-organiser-manage.php:170
 #, php-format
 msgid "Events within %d months"
-msgstr "Esdeveniments en %d mesos"
+msgstr "Artimiausių %d mėnesių renginiai"
 
 #: event-organiser-manage.php:171
 msgid "Events within 1 year"
-msgstr "Esdeveniments del any"
+msgstr "Šių metų renginiai"
 
 #: event-organiser-manage.php:223
 msgid "&mdash; No Change &mdash;"
-msgstr "— No hi han Canvis —"
+msgstr "&mdash; No Change &mdash;"
 
 #: event-organiser-settings.php:29 event-organiser-settings.php:76
 msgid "General"
-msgstr "General"
+msgstr "Bendras"
 
 #: event-organiser-settings.php:30
 msgid "Permissions"
-msgstr "Privilegis"
+msgstr "Leidimai"
 
 #: event-organiser-settings.php:31
 msgid "Permalinks"
-msgstr "Enllaços Permanents"
+msgstr "Nuolatinės nuorodos"
 
 #: event-organiser-settings.php:32
 msgid "Import"
-msgstr "Importar"
+msgstr "Importuoti"
 
 #: event-organiser-settings.php:32
 msgid "Export"
-msgstr "Exportar"
+msgstr "Eksportuoti"
 
 #: event-organiser-settings.php:40
 msgid "Event Organiser Settings"
-msgstr "Ajustos del Event Organiser"
+msgstr "Renginių organizatoriaus nustatymai"
 
 #: event-organiser-settings.php:41
 msgid "Event Organiser"
-msgstr "Organitza Esdeveniments"
+msgstr "Renginių organizatorius"
 
 #: event-organiser-settings.php:46 event-organiser.php:111
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
-msgstr "Edita Esdeveniments"
+msgstr "Redaguoti renginius"
 
 #: event-organiser-settings.php:47 event-organiser.php:112
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
-msgstr "Publica Esdeveniments"
+msgstr "Paskelbti renginius"
 
 #: event-organiser-settings.php:48 event-organiser.php:113
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
-msgstr "Esborra Esdeveniments"
+msgstr "Ištrinti renginius"
 
 #: event-organiser-settings.php:49 event-organiser.php:114
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
-msgstr "Edita Esdeveniments d'Altres"
+msgstr "Redaguoti Kitus renginius"
 
 #: event-organiser-settings.php:50 event-organiser.php:115
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
-msgstr "Esborra Esdeveniments d'Altres"
+msgstr "Ištrinti Kitus renginius"
 
 #: event-organiser-settings.php:51 event-organiser.php:116
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
-msgstr "Llig Esdeveniments Privats"
+msgstr "Peržiūrėti asmeninius renginius"
 
 #: event-organiser-settings.php:52 event-organiser.php:117
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
-msgstr "Administra Llocs"
+msgstr "Valdyti vietas"
 
 #: event-organiser-settings.php:53 event-organiser.php:118
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
-msgstr "Administrar categories d'esdeveniments i etiquetes"
+msgstr "Tvarkyti renginių kategorijas & žymas"
 
 #: event-organiser-settings.php:75
 msgid "Add-on Licence keys"
-msgstr "Claus de Llicencia dels Add-on"
+msgstr "Pridėti leidimo klavišą"
 
 #: event-organiser-settings.php:78
 msgid "Templates"
-msgstr "Plantilles"
+msgstr "Šablonai"
 
 #: event-organiser-settings.php:141
 msgid "Select which features events should support"
-msgstr "Selecciona quines característiques han de suportar els esdeveniments"
+msgstr "Pasirinkti kurias savybes renginiai turi sustiprinti"
 
 #: event-organiser-settings.php:146
 msgid "Author"
-msgstr "Autor"
+msgstr "Autorius"
 
 #: event-organiser-settings.php:147
 msgid "Thumbnail"
-msgstr "Miniatura"
+msgstr "Vaizdo miniatiūra"
 
 #: event-organiser-settings.php:148
 msgid "Excerpt"
-msgstr "Extracte"
+msgstr "Išrašas"
 
 #: event-organiser-settings.php:149
 msgid "Custom Fields"
-msgstr "Camps personalitzats"
+msgstr "Konfigūravimo laukai"
 
 #: event-organiser-settings.php:150
 msgid "Comments"
-msgstr "Comentaris"
+msgstr "Komentarai"
 
 #: event-organiser-settings.php:151
 msgid "Revisions"
-msgstr "Revisions"
+msgstr "Peržiūros"
 
 #: event-organiser-settings.php:152 event-organiser-settings.php:326
 #: includes/event-organiser-cpt.php:146
 msgid "Event Tags"
-msgstr "Etiquetes d'esdeveniment"
+msgstr "Renginio žymos"
 
 #: event-organiser-settings.php:157 event-organiser-settings.php:184
 msgid "Show past events:"
-msgstr "Mostra esdeveniments pasats:"
+msgstr "Rodyti įvykusius renginius:"
 
 #: event-organiser-settings.php:163 event-organiser-settings.php:190
 msgid ""
 "Display past events on calendars, event lists and archives (this can be over-"
 "ridden by shortcode attributes and widget options)."
 msgstr ""
-"Mostra esdeveniments pasats al calendari, llistat d'esdeveniments i arxiu "
-"(açò pot ser reemplaçat per atributs shortcode i opcions d'extensions)."
+"Rodyti buvusius renginius kalendoriuose, renginių sąrašuose ir "
+"archyvuose(tai gali vykti trumpinių  atributų ir valdiklių pasirinkimo dėka)"
 
 #: event-organiser-settings.php:166
 msgid "Add an 'events' link to the navigation menu:"
-msgstr "Afegir un enllaç d'esdeveniments al menú de navegació:"
+msgstr "Pridėti nuorodą 'renginiai' prie naršymo meniu:"
 
 #: event-organiser-settings.php:171
 msgid "Date Format:"
-msgstr "Format de data:"
+msgstr "Datos formatas:"
 
 #: event-organiser-settings.php:177
 msgid "dd-mm-yyyy"
-msgstr "dd-mm-aaaa"
+msgstr "dd-mm-yyyy"
 
 #: event-organiser-settings.php:178
 msgid "mm-dd-yyyy"
-msgstr "mm-dd-aaaa"
+msgstr "mm-dd-yyyy"
 
 #: event-organiser-settings.php:179
 msgid "yyyy-mm-dd"
-msgstr "aaaa-mm-dd"
+msgstr "yyyy-mm-dd"
 
 #: event-organiser-settings.php:181
 msgid "This alters the default format for inputting dates."
-msgstr "Açò altera el format per defecte per introduïr dates."
+msgstr "Tai keičia datų įkėlimo pradinį formatą."
 
 #: event-organiser-settings.php:199
 msgid ""
@@ -933,49 +935,48 @@ msgid ""
 "and archives (this can be over-ridden by shortcode attributes and widget "
 "options."
 msgstr ""
-"Si es selecciona, sols una ocurrència d'un esdeveniment es mostrarà en la "
-"llista d'esdeveniments i els arxius (aquest pot ser reemplaçat per atributs "
-"shortcode i opcions d'extensions."
+"Jeigu pasirinksite tik vienas renginio atvaizdavimas bus rodomas renginių "
+"sąrašeir archyve (tai gali būti pertvarkoma trumpinių atributų ir valdiklių "
+"opcijų pagalba)"
 
 #: event-organiser-settings.php:202
 msgid "Are current events past?"
-msgstr "Són esdeveniments passats?"
+msgstr "Ar šie renginiai jau įvykę?"
 
 #: event-organiser-settings.php:211
 msgid ""
 "If 'no' is selected, an occurrence of an event is only past when it has "
 "finished. Otherwise, an occurrence is considered 'past' as soon as it starts."
 msgstr ""
-"Si està seleccionat 'no', una ocurrència d'un esdeveniment sol ha succeït "
-"quan ha finalitzat. Si no, una ocurrència es considera 'succeïda' tan aviat "
-"com comenci."
+"Jeigu pasirinksite „ne“, renginys bus atvaizduojamas kaip pasibaigęs tuomet, "
+"kaijis pasibaigs. Kitu atveju, atvaizduojama kaip „pasibaigęs“ kai tik jis "
+"prasideda."
 
 #: event-organiser-settings.php:214
 msgid "Delete expired events:"
-msgstr "Esborrar esdeveniments expirats:"
+msgstr "Ištrinti pasibaigusius renginius:"
 
 #: event-organiser-settings.php:220
 msgid ""
 "If selected the event will be automatically trashed 24 hours after the last "
 "occurrence finishes."
 msgstr ""
-"Si se selecciona l'esdeveniment serà esborrat automàticament en 24 hores "
-"després que acabi la ultima ocurrència."
+"Jeigu pasirinkta renginys bus automatiškai ištrintas praėjus 24 valandomspo "
+"paskutinio atvaizdavimo pabaigos."
 
 #: event-organiser-settings.php:223
 msgid "Enable events ICAL feed:"
-msgstr "Habilitar esdeveniments per al ICAL feed:"
+msgstr "Įgalinti renginių ICAL lauką:"
 
 #: event-organiser-settings.php:229
 #, php-format
 msgid "If selected, visitors can subscribe to your events with the url: %s"
 msgstr ""
-"Si se selecciona, els visitants es poden subscriure als teus esdeveniments "
-"amb la url: %s"
+"Jeigu pasirinkta, lankytojai gali prenumeruoti Jūsų renginius su URL: %s"
 
 #: event-organiser-settings.php:232
 msgid "Exclude events from searches:"
-msgstr "Excloure esdeveniments de les cerques:"
+msgstr "Pašalinti renginius iš paieškų:"
 
 #: event-organiser-settings.php:242
 msgid "Templates:"
@@ -983,51 +984,51 @@ msgstr ""
 
 #: event-organiser-settings.php:247
 msgid "Disable CSS:"
-msgstr "Desabilita CSS:"
+msgstr "Apriboti CSS:"
 
 #: event-organiser-settings.php:253
 msgid ""
 "Check this option to prevent any stylesheets from Event Organiser being "
 "loaded on the front-end"
 msgstr ""
-"Marqui aquesta opció per evitar que qualsevol full d'estil de l'Event "
-"Organiser es carregui en el front-end"
+"Rinkitės šią parinktį norėdami išvengti bet kokio stilizavimo galimybių "
+"pakrovimoRenginių Organizatoriaus priekyje-pabaigoje"
 
 #: event-organiser-settings.php:262
 msgid "Enable event pretty permalinks:"
-msgstr "Habilitar els enllaços permanents \"bonics\" d'esdeveniments"
+msgstr "Įgalinti renginio pretty nuolatines nuorodas:"
 
 #: event-organiser-settings.php:268
 msgid ""
 "If you have pretty permalinks enabled, select to have pretty premalinks for "
 "events."
 msgstr ""
-"Si tens habilitats els enllaços permanents \"bonics\", selecciona per tenir "
-"enllaços permanents per als esdeveniments."
+"Jeigu įgalinote pretty nuolatines nuorodas, pasirinkite pretty "
+"nuolatinesnuorodas renginiams"
 
 #: event-organiser-settings.php:272
 msgid "Event (single)"
-msgstr "Esdeveniment"
+msgstr "Renginys (pavienis)"
 
 #: event-organiser-settings.php:281
 msgid "Events page"
-msgstr ""
+msgstr "Renginių puslapis"
 
 #: event-organiser-settings.php:294
 msgid "Event (date archive)"
-msgstr ""
+msgstr "Renginys (datos archyvas)"
 
 #: event-organiser-settings.php:300
 msgid "Year archive"
-msgstr "Arxiu anual"
+msgstr "Metų archyvas"
 
 #: event-organiser-settings.php:301
 msgid "Month archive"
-msgstr "Arxiu mensual"
+msgstr "Mėnesio archyvas"
 
 #: event-organiser-settings.php:302
 msgid "Day archive"
-msgstr "Arxiu diari"
+msgstr "Dienos archyvas"
 
 #: event-organiser-settings.php:345
 msgid "Enable template handling (default)"
@@ -1068,19 +1069,19 @@ msgstr ""
 
 #: event-organiser-settings.php:640
 msgid "Events archives:"
-msgstr "Arxius d'esdeveniments:"
+msgstr "Renginių archyvai:"
 
 #: event-organiser-settings.php:641
 msgid "Event page:"
-msgstr "Pàgina d'esdeveniments:"
+msgstr "Renginio puslapis:"
 
 #: event-organiser-settings.php:642
 msgid "Venue page:"
-msgstr "Pàgina de Llocs:"
+msgstr "Vietos puslapis:"
 
 #: event-organiser-settings.php:643
 msgid "Events Category page:"
-msgstr "Pàgina de Categorïa d'Esdeveniments:"
+msgstr "Renginių kategorijos puslapis:"
 
 #: event-organiser-settings.php:646
 #, php-format
@@ -1088,166 +1089,167 @@ msgid ""
 "For more information see documentation <a href='%s'>on editing the "
 "templates</a>"
 msgstr ""
-"Per a més informació, pega una mirada a la documentació <a href='%s'>editant "
-"les plantilles</a>"
+"Detalesnei informacijai prašome žiūrėti patvirtinimą <a href='%s'>on editing "
+"the templates</a>"
 
 #: event-organiser-settings.php:656
 msgid "Event management permissions"
-msgstr "Privilegis per al editor d'esdeveniments"
+msgstr "Renginio valdymo leidimai"
 
 #: event-organiser-settings.php:657
 msgid "Set permissions for events and venue management"
-msgstr "Donar privilegis per administrar esdeveniments i llocs"
+msgstr "Nustatyti leidimus renginių ir vietų valdymui"
 
 #: event-organiser-settings.php:662
 msgid "Role"
-msgstr "Rol"
+msgstr "Vaidmuo"
 
 #: event-organiser-settings.php:673
 msgid "None"
-msgstr "Cap"
+msgstr "Nėra"
 
 #: event-organiser-settings.php:702
 msgid ""
 "Choose a custom permalink structure for events, venues, event categories and "
 "event tags."
 msgstr ""
-"Tria una estructura personalitzada d'enllaços permanents per als "
-"esdeveniments, llocs, categories d'esdeveniments i etiquetes d'esdeveniments."
+"Pasirinkite nuolatinės nuorodos struktūrą renginiams, vietoms, renginių "
+"kategorijoms ir renginių žymoms."
 
 #: event-organiser-settings.php:703
 msgid ""
 "Please note to enable these structures you must first have pretty permalinks "
 "enabled on WordPress in Settings > Permalinks."
 msgstr ""
-"Atenció: per habilitar aquestes estructures has d'haver habilitat primer els "
-"enllaços permanents \"bonics\" en WordPress en Opcions > Enllacis permanents."
+"Atkreipkite dėmesį, kad norėdami išjungti šias struktūras pirma turite "
+"išjungtipretty nuolatines nuorodas WordPress Nustatymuose > Nuolatinės "
+"nuorodos."
 
 #: event-organiser-settings.php:704
 msgid ""
 "You may also need to go to WordPress Settings > Permalinks and click 'Save "
 "Changes' before any changes will take effect."
 msgstr ""
-"Pot ser que també necessitis anar a Opcions de WordPress > Enllaços "
-"permanents i fer clic sobre \"Guardar canvis\" perquè que els canvis facin "
-"efecte."
+"Jums taip pat gali reikėti eiti į WordPress Nustatymai > Nuolatinės nuorodos "
+"ir paspausti 'Išsaugoti pakeitimus' prieš tai, kai bet kokie pakeitimai "
+"įsigalios."
 
 #: event-organiser-settings.php:740
 msgid "Do not add to menu"
-msgstr "No afegir al menú"
+msgstr "Neįtraukti į meniu"
 
 #: event-organiser-settings.php:744
 msgid "Page list (fallback)"
-msgstr "Llistat de pàgines (recurs)"
+msgstr "Puslapio sąrašas (atsarginė priemonė)"
 
 #: event-organiser-venues.php:46
 msgid "You do not have permission to manage venues"
-msgstr "No tens privilegis per administrar llocs"
+msgstr "Neturite leidimo valdyti vietas"
 
 #: event-organiser-venues.php:52 event-organiser-venues.php:81
 msgid "You do not have permission to edit this venue."
-msgstr "No tens privilegis per editar aquest lloc."
+msgstr "Neturite leidimo redaguoti vietą"
 
 #: event-organiser-venues.php:59
 msgid "Venue <strong>was not</strong> updated"
-msgstr "Lloc <strong>no</strong> actualitzat"
+msgstr "Venue <strong>was not</strong> updated"
 
 #: event-organiser-venues.php:96
 msgid "Venue <strong>was not</strong> created"
-msgstr "Lloc <strong>no </strong> creat"
+msgstr "Venue <strong>was not</strong> created"
 
 #: event-organiser-venues.php:126
 msgid "You do not have permission to delete this venue"
-msgstr "No tens privilegis per esborrar aquest lloc"
+msgstr "Neturite leidimo ištrinti šią vietą"
 
 #: event-organiser-venues.php:154
 msgid "Venue(s) <strong>were not </strong> deleted"
-msgstr "Lloc(s)"
+msgstr "Venue(s) <strong>were not </strong> deleted"
 
 #: event-organiser-venues.php:166
 msgid "Save"
-msgstr "Guardar"
+msgstr "Išsaugoti"
 
 #: event-organiser-venues.php:193
 msgid "Venue <strong>created</strong>"
-msgstr "Lloc creat"
+msgstr "Venue <strong>created</strong>"
 
 #: event-organiser-venues.php:194
 msgid "Venue <strong>updated</strong>"
-msgstr "Lloc <strong>actualitzat</strong>"
+msgstr "Venue <strong>updated</strong>"
 
 #: event-organiser-venues.php:195
 msgid "Venue(s) <strong>deleted</strong>"
-msgstr "Lloc(s) <strong>esborrats</strong>"
+msgstr "Venue(s) <strong>deleted</strong>"
 
 #: event-organiser-venues.php:243
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
-msgstr "Cercar resultats per “%s”"
+msgstr "Paieškos rezultatai &#8220;%s&#8221;"
 
 #: event-organiser-venues.php:398
 msgid "Latitude/Longitude:"
-msgstr ""
+msgstr "Platuma/Ilguma:"
 
 #: event-organiser-venues.php:426
 msgid "Venue name"
-msgstr "Nom del Lloc"
+msgstr "Vietos pavadinimas"
 
 #: event-organiser-venues.php:432
 msgid "Permalink:"
-msgstr "Permalinks:"
+msgstr "Nuolatinė nuoroda:"
 
 #: event-organiser-venues.php:439
 msgid "Get Link"
-msgstr "Obtindre l'enllaç"
+msgstr "Gauti nuorodą"
 
 #: event-organiser-venues.php:461
 msgid "Slug"
-msgstr "Slug"
+msgstr "SLug"
 
 #: includes/class-eo-admin-notice.php:107
 msgid "Dismiss this notice"
-msgstr "Desestimar aquesta notícia."
+msgstr "Atsisakyti šio pranešimo"
 
 #: includes/class-eo-admin-notice.php:108
 msgid "Dismiss"
-msgstr "Desestimar"
+msgstr "Atsisakyti"
 
 #: includes/class-eo-ical-parser.php:193
 msgid "There was an error detecting iCal source."
-msgstr ""
+msgstr "Įvyko klaida  aptinkant iCAl šaltinį."
 
 #: includes/class-eo-ical-parser.php:201
 msgid "Unable to read iCal file"
-msgstr ""
+msgstr "Negalima perskaityti iCal bylos"
 
 #: includes/class-eo-ical-parser.php:208
 msgid "Feed not found"
-msgstr ""
+msgstr "Tiekimas nerastas"
 
 #: includes/class-eo-ical-parser.php:278
 #, php-format
 msgid "There was an error fetching the feed. Response code: %s."
-msgstr "Va haver-hi un error cercant el feed. Códi de resposta: %s."
+msgstr "Įvyko klaida atvedant tiekimą. Atsiliepimo kodas: %s."
 
 #: includes/class-eo-ical-parser.php:298
 msgid "There was an error opening the ICAL file."
-msgstr "Va haver-hi un error obrint el fitxer ICAL"
+msgstr "Įvyko klaida atidarant ICAL bylą."
 
 #: includes/class-eo-ical-parser.php:518 includes/class-eo-ical-parser.php:543
 #, php-format
 msgid "[Lines %1$d-%2$d]"
-msgstr ""
+msgstr "[Lines %1$d-%2$d]"
 
 #: includes/class-eo-ical-parser.php:525 includes/class-eo-ical-parser.php:550
 #, php-format
 msgid "[Line %1$d]"
-msgstr "[Línia %1$d]"
+msgstr "[Line %1$d]"
 
 #: includes/class-eo-ical-parser.php:1008
 #, php-format
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
-msgstr "Data invàlida \"%s\". Data esperada en format AAAAMMDD."
+msgstr "Negalima data \"%s\". Data laukiama YYYYMMDD formate."
 
 #: includes/class-eo-ical-parser.php:1046
 #, php-format
@@ -1255,8 +1257,8 @@ msgid ""
 "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
 "YYYYMMDDTHHiiss format."
 msgstr ""
-"Data/Hora invàlida \"%s\". Data esperada en format AAAAMMDDTHHiissZ o "
-"AAAAMMDDTHHiiss"
+"Negalima datalaikas \"%s\". Data laukiama YYYYMMDDTHHiissZ arba "
+"YYYYMMDDTHHiiss formate."
 
 #: includes/class-eo-theme-compatability.php:107
 #, php-format
@@ -1281,129 +1283,129 @@ msgstr ""
 #: templates/archive-event.php:32 templates/archive-event.php:35
 #: templates/archive-event.php:38
 msgid "Events: "
-msgstr "Esdeveniments:"
+msgstr "Renginiai:"
 
 #: includes/class-event-organiser-im-export.php:61
 #, php-format
 msgid "File Error encountered: %d"
-msgstr "Error d'arxiu trobat: %d"
+msgstr "Bylos klaida susidūrė: %d"
 
 #: includes/class-event-organiser-im-export.php:68
 msgid "No file detected."
-msgstr "No s'ha detectat cap arxiu."
+msgstr "Nerasta bylų."
 
 #: includes/class-event-organiser-im-export.php:71
 msgid ""
 "Invalid file uploaded. The file must be a ics calendar file of type 'text/"
 "calendar', no larger than 2MB."
 msgstr ""
-"Arxiu pujat invàlid. L'arxiu ha de ser un arxiu de calendari ics del tipus "
-"'text/calendar', no superior a 2MB."
+"Įkeltas neteisingas failas. Failas turi būti ics kalendoriaus failas "
+"'tekstas/kalendorius' tipo, ne didesnis nei 2MB."
 
 #: includes/class-event-organiser-im-export.php:73
 #, php-format
 msgid "File size: %s. File type: %s"
-msgstr "Tamany d'arxiu: %s. Tipus d'arxiu: %s"
+msgstr "Bylos dydis: %s. Bylos tipas: %s "
 
 #: includes/class-event-organiser-im-export.php:91
 msgid "Export Events"
-msgstr "Exportar Esdeveniments"
+msgstr "Eksportuoti renginius"
 
 #: includes/class-event-organiser-im-export.php:94
 msgid ""
 "The export button below generates an ICS file of your events that can be "
 "imported in to other calendar applications such as Google Calendar."
 msgstr ""
-"El botó d'exportació inferior genera un arxiu ICS dels esdeveniments que es "
-"poden importar a altres aplicacions de calendari com Google Calendar.\n"
+"Eksportavimo mygtukas apačioje generuoja Jūsų renginių ICS failą, ir jie "
+"gali būtiimportuoti į kitus kalendorius, tokius kaip Google Calendar."
 
 #: includes/class-event-organiser-im-export.php:97
 msgid "Download Export File"
-msgstr "Descarregar el arxiu d'exportació"
+msgstr "Atsisiųsti eksportuojamą failą"
 
 #: includes/class-event-organiser-im-export.php:100
 msgid "Import Events"
-msgstr "Importar Esdeveniments"
+msgstr "Importuoti renginius"
 
 #: includes/class-event-organiser-im-export.php:103
 msgid "Import an ICS file."
-msgstr "Importar l'arxiu ICS"
+msgstr "Importuoti ICS failą."
 
 #: includes/class-event-organiser-im-export.php:105
 msgid "Import venues"
-msgstr "Importar llocs"
+msgstr "Importuoti vietas"
 
 #: includes/class-event-organiser-im-export.php:107
 msgid "Import categories"
-msgstr "Importar categories"
+msgstr "Importuoti kategorijas"
 
 #: includes/class-event-organiser-im-export.php:111
 msgid "Upload ICS file"
-msgstr "Pujar el fitxer ICS"
+msgstr "Įkelti ICS failą"
 
 #: includes/class-event-organiser-im-export.php:162
 msgid "You do not have sufficient permissions to import events."
-msgstr "No tens suficients permisos per a importar esdeveniments"
+msgstr "Jums nesuteiktas leidimas importuoti renginius."
 
 #: includes/class-event-organiser-im-export.php:244
 msgid "No events were imported."
-msgstr "No s'ha importat cap esdeveniment"
+msgstr "Renginiai nebuvo importuoti."
 
 #: includes/class-event-organiser-im-export.php:253
 msgid "Error:"
-msgstr "Errada:"
+msgstr "Klaida:"
 
 #: includes/class-event-organiser-im-export.php:263
 msgid "Warning:"
-msgstr "Alerta"
+msgstr "Perspėjimas:"
 
 #: includes/class-event-organiser-im-export.php:268
 msgid "1 event was successfully imported"
-msgstr "1 esdeveniment s'ha importat amb èxit"
+msgstr "1 renginys buvo sėkmingai importuotas"
 
 #: includes/class-event-organiser-im-export.php:271
 #, php-format
 msgid "%d events were successfully imported"
-msgstr "%d esdeveniments s'han importat amb èxit"
+msgstr "%d renginių buvo sėkmingai importuoti"
 
 #: includes/class-event-organiser-im-export.php:274
 msgid "1 venue was created"
-msgstr "S'ha creat 1 lloc"
+msgstr "1 vieta buvo sukruta"
 
 #: includes/class-event-organiser-im-export.php:277
 #, php-format
 msgid "%d venues were created"
-msgstr "%d llocs han estat creats"
+msgstr "%d vietų buvo sukruta"
 
 #: includes/class-event-organiser-im-export.php:281
 msgid "1 category was created"
-msgstr "S'ha creat 1 categoria"
+msgstr "1 kategorija buvo sukruta"
 
 #: includes/class-event-organiser-im-export.php:284
 #, php-format
 msgid "%d categories were created"
-msgstr "S'han creat categories %d "
+msgstr "%d kategorijos buvo sukurtos "
 
 #: includes/event-organiser-ajax.php:330
 msgid "Protected"
-msgstr "Protegit"
+msgstr "Apsaugota"
 
 #: includes/event-organiser-ajax.php:332
 msgid "Private"
-msgstr "Privat"
+msgstr "Privatu"
 
 #: includes/event-organiser-ajax.php:334
 msgid "Draft"
-msgstr "Esborrany"
+msgstr "Juodraštis"
 
 #: includes/event-organiser-ajax.php:364
 #: templates/event-meta-event-single.php:55
 msgid "Start"
-msgstr "Inici"
+msgstr "Pradžia"
 
 #: includes/event-organiser-ajax.php:365
 msgid "End"
-msgstr "Fi"
+msgstr "Pabaiga"
 
 #: includes/event-organiser-ajax.php:406
 msgid "This event recurs"
@@ -1411,259 +1413,257 @@ msgstr ""
 
 #: includes/event-organiser-ajax.php:412 includes/event-organiser-cpt.php:221
 msgid "Edit Event"
-msgstr "Edita Esdeveniment"
+msgstr "Redaguoti renginį"
 
 #: includes/event-organiser-ajax.php:432
 msgid "Delete this occurrence"
-msgstr "Esborrar aquesta ocurrència"
+msgstr "Ištrinti šį įvykį"
 
 #: includes/event-organiser-ajax.php:449
 msgid "Break this series"
-msgstr "Trencar aquesta sèrie"
+msgstr "Sukuriamas tarpas"
 
 #: includes/event-organiser-ajax.php:750
 msgid "Event not found"
-msgstr ""
+msgstr "Renginys nerastas"
 
 #: includes/event-organiser-ajax.php:758
 msgid "Events are not editable via the admin calendar"
-msgstr ""
+msgstr "Renginiai neredaguojami per administratoriaus kalendorių"
 
 #: includes/event-organiser-ajax.php:764
 msgid "Are you sure you want to do this?"
-msgstr ""
+msgstr "Esate tikras, kad norite tai padaryti?"
 
 #: includes/event-organiser-ajax.php:771
 msgid "You do not have permission to edit this event"
-msgstr ""
+msgstr "Neturite leidimo redaguoti šį renginį"
 
 #: includes/event-organiser-ajax.php:787
 #, php-format
 msgid "Event not created: %s"
-msgstr ""
+msgstr "Renginys nesukurtas: %s "
 
 #: includes/event-organiser-cpt.php:32
 msgid "Venue"
-msgstr "Lloc"
+msgstr "Renginio vieta"
 
 #: includes/event-organiser-cpt.php:33
 msgid "Search Venues"
-msgstr "Cercar Llocs"
+msgstr "Vietos paieška"
 
 #: includes/event-organiser-cpt.php:35
 msgid "View Venue"
-msgstr "Veure Lloc"
+msgstr "Peržiūrėti Vietą"
 
 #: includes/event-organiser-cpt.php:36
 msgid "Edit Venue"
-msgstr "Editar el Lloc"
+msgstr "Redaguoti vietą"
 
 #: includes/event-organiser-cpt.php:37
 msgid "Update Venue"
-msgstr "Actualització del Lloc"
+msgstr "Atnaujinti vietą"
 
 #: includes/event-organiser-cpt.php:38
 msgid "Add New Venue"
-msgstr "Afegeix un nou lloc"
+msgstr "Pridėti naują vietą"
 
 #: includes/event-organiser-cpt.php:39
 msgid "New Venue Name"
-msgstr "Nom de lloc nou"
+msgstr "Naujos vietos pavadinimas"
 
 #: includes/event-organiser-cpt.php:40
 msgid "No venues found"
-msgstr "No s'han trobar llocs"
+msgstr "Nerasta vietų"
 
 #: includes/event-organiser-cpt.php:41
 msgid "Add or remove venues"
-msgstr "Afefeix o elimina llocs"
+msgstr "Vietų pridėjimas ar panaikinimas"
 
 #: includes/event-organiser-cpt.php:42
 msgid "Separate venues with commas"
-msgstr "Separa llocs amb comes"
+msgstr "Atskirti vietas kableliais"
 
 #: includes/event-organiser-cpt.php:44
 msgid "Venue Location"
-msgstr "Ubicació del Lloc"
+msgstr "Vietos adresas"
 
 #: includes/event-organiser-cpt.php:45
 msgid "View all venues"
-msgstr "Veure tots els llocs"
+msgstr "Peržiūrėti visas vietas"
 
 #: includes/event-organiser-cpt.php:47
 msgid "No Venue"
-msgstr "Cap lloc"
+msgstr "Vieta nerasta"
 
 #: includes/event-organiser-cpt.php:93
 msgctxt "taxonomy singular name"
 msgid "Category"
-msgstr ""
+msgstr "Kategorija"
 
 #: includes/event-organiser-cpt.php:94
 msgid "Search Categories"
-msgstr "Cerca Categories"
+msgstr "Paieškos kategorijos"
 
 #: includes/event-organiser-cpt.php:95
 msgid "All Categories"
-msgstr "Totes les Categories"
+msgstr "Visos kategorijos"
 
 #: includes/event-organiser-cpt.php:96
 msgid "Parent Category"
-msgstr "Categoria Pare"
+msgstr "Kilmės kategorija"
 
 #: includes/event-organiser-cpt.php:97
 msgid "Parent Category:"
-msgstr ""
+msgstr "Kilmės kategorija:"
 
 #: includes/event-organiser-cpt.php:98
 msgid "Edit Category"
-msgstr "Edita Categoria"
+msgstr "Redaguoti kategoriją"
 
 #: includes/event-organiser-cpt.php:99
 msgid "Update Category"
-msgstr "Actualitza Categoria"
+msgstr "Atnaujinti kategoriją"
 
 #: includes/event-organiser-cpt.php:100
 msgid "Add New Category"
-msgstr "Afegeix una nova categoria"
+msgstr "Pridėti naują kategoriją"
 
 #: includes/event-organiser-cpt.php:101
 msgid "New Category Name"
-msgstr "Nom de categoria nova"
+msgstr "Naujos kategorijos pavadinimas"
 
 #: includes/event-organiser-cpt.php:102
 msgid "No categories found"
-msgstr "No s'han trobat categories"
+msgstr "Kategorijų nerasta"
 
 #: includes/event-organiser-cpt.php:105
 msgid "View all categories"
-msgstr "Veure totes les categories"
+msgstr "Peržiūrėti visas kategorijas"
 
 #: includes/event-organiser-cpt.php:147
 msgctxt "taxonomy singular name"
 msgid "Tag"
-msgstr ""
+msgstr "Žyma"
 
 #: includes/event-organiser-cpt.php:148
 msgid "Search Tags"
-msgstr "Cerca Etiquetes"
+msgstr "Ieškoti žymų"
 
 #: includes/event-organiser-cpt.php:149
 msgid "All Tags"
-msgstr "Totes les etiquetes"
+msgstr "Visos žymos"
 
 #: includes/event-organiser-cpt.php:150
 msgid "Popular Tags"
-msgstr "Etiquetes Populars"
+msgstr "Populiarios žymos"
 
 #: includes/event-organiser-cpt.php:151
 msgid "Edit Tag"
-msgstr "Edita la etiqueta"
+msgstr "Redaguoti žymą"
 
 #: includes/event-organiser-cpt.php:152
 msgid "Update Tag"
-msgstr "Actualitza la etiqueta"
+msgstr "Atnaujinti žymą"
 
 #: includes/event-organiser-cpt.php:153
 msgid "Add New Tag"
-msgstr "Afegeix una nova etiqueta"
+msgstr "Pridėti naują žymą"
 
 #: includes/event-organiser-cpt.php:154
 msgid "New Tag Name"
-msgstr "Nou nom d'etiqueta"
+msgstr "Naujos žymos pavadinimas"
 
 #: includes/event-organiser-cpt.php:155
 msgid "No tags found"
-msgstr "No s'han trobat etiquetes"
+msgstr "Žymų nerasta"
 
 #: includes/event-organiser-cpt.php:156
 msgid "Choose from the most used tags"
-msgstr "Trieu entre les etiquetes més utilitzades"
+msgstr "Pasirinkti iš labiausiai naudojamų žymų"
 
 #: includes/event-organiser-cpt.php:157
 #: includes/event-organiser-event-functions.php:1509
 #: templates/event-meta-event-single.php:68
 msgid "Tags"
-msgstr "Etiquetes"
+msgstr "Žymos"
 
 #: includes/event-organiser-cpt.php:158
 msgid "Add or remove tags"
-msgstr "Afegeix o elimina etiquetes"
+msgstr "Pridėti ar panaikinti žymas"
 
 #: includes/event-organiser-cpt.php:159
 msgid "Separate tags with commas"
-msgstr "Separa etiquetes amb comes"
+msgstr "Atskirti žymas kableliais"
 
 #: includes/event-organiser-cpt.php:161
 msgid "View all tags"
-msgstr ""
+msgstr "Peržiūrėti visas žymas"
 
 #: includes/event-organiser-cpt.php:219
 msgctxt "post"
 msgid "Add New"
-msgstr ""
+msgstr "Pridėti naują"
 
 #: includes/event-organiser-cpt.php:220
 msgid "Add New Event"
-msgstr "Afegeix un nou esdeveniment"
+msgstr "Pridėti naują renginį"
 
 #: includes/event-organiser-cpt.php:222
 msgid "New Event"
-msgstr "Nou esdeveniment"
+msgstr "Naujas renginys"
 
 #: includes/event-organiser-cpt.php:224
 msgid "View Event"
-msgstr "Veure Esdeveniment"
+msgstr "Peržiūrėti renginį"
 
 #: includes/event-organiser-cpt.php:225
 msgid "Search events"
-msgstr "Cerca esdeveniments"
+msgstr "Renginių paieška"
 
 #: includes/event-organiser-cpt.php:226
 msgid "No events found"
-msgstr "No s'han trobat esdeveniments"
+msgstr "Renginių nerasta"
 
 #: includes/event-organiser-cpt.php:227
 msgid "No events found in Trash"
-msgstr "No s'han trobat esdeveniments a la paperera"
+msgstr "Renginių šiukšliadėžėje nerasta"
 
 #: includes/event-organiser-cpt.php:308
 #, php-format
 msgid "Event updated. <a href=\"%s\">View event</a>"
-msgstr "Esdeveniment actualitzat. <a href=\"%s\">Mostra l'esdeveniment</a>"
+msgstr "Event updated. <a href=\"%s\">View event</a>"
 
 #: includes/event-organiser-cpt.php:309
 msgid "Custom field updated."
-msgstr "Camp personalitzat actualitzat."
+msgstr "Konfigūravimo laukai atnaujinti."
 
 #: includes/event-organiser-cpt.php:310
 msgid "Custom field deleted."
-msgstr "Camp personalitzat eliminat."
+msgstr "Konfigūravimo laukai panaikinti."
 
 #: includes/event-organiser-cpt.php:311
 msgid "Event updated."
-msgstr "Esdeveniment actualitzat"
+msgstr "Renginys atnaujintas."
 
 #: includes/event-organiser-cpt.php:313
 #, php-format
 msgid "Event restored to revision from %s"
-msgstr "Esdeveniment restaurat a la revisió de % s"
+msgstr "Įvykis atkurtas peržiūrai nuo %s"
 
 #: includes/event-organiser-cpt.php:314
 #, php-format
 msgid "Event published. <a href=\"%s\">View event</a>"
-msgstr "Esdeveniment publicat. <a href=\"%s\">Veure l'event</a>"
+msgstr "Renginys paskelbtas. <a href=\"%s\">View event</a>"
 
 #: includes/event-organiser-cpt.php:315
 msgid "Event saved."
-msgstr "Esdeveniment guardat."
+msgstr "Renginys išsaugotas."
 
 #: includes/event-organiser-cpt.php:316
 #, php-format
 msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
-msgstr ""
-"Esdeveniment enviat.  <a target=\"_blank\" href=\"%s\">Previsualitzar "
-"l'esdeveniment</a>"
+msgstr "Renginys pateiktas. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 
 #: includes/event-organiser-cpt.php:317
 #, php-format
@@ -1671,31 +1671,29 @@ msgid ""
 "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
 "\">Preview event</a>"
 msgstr ""
-"Esdeveniment programat per a: <strong>%1$s</strong>. <a target=\"_blank\" "
-"href=\"%2$s\">Previsualitzar l'esdeveniment</a>"
+"Renginys numatytas: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
+"\">Preview event</a>"
 
 #: includes/event-organiser-cpt.php:319
 msgid "M j, Y @ G:i"
-msgstr "I, j M Y @ G:i"
+msgstr "M j, Y @ G:i"
 
 #: includes/event-organiser-cpt.php:320
 #, php-format
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
-"Esborrany d'event actualitzat. <a target=\"_blank\" href=\"%s\">Esdeveniment "
-"anterior</a>"
 
 #: includes/event-organiser-cpt.php:321
 msgid "This event has been broken from a recurring event."
-msgstr "Aquest esdeveniment ha estat trencat per un esdeveniment recurrent"
+msgstr "Šis renginys buvo nutrauktas periodinio renginio."
 
 #: includes/event-organiser-cpt.php:514
 msgid "Creating events"
-msgstr "Creant esdeveniments"
+msgstr "Renginių kūrimas"
 
 #: includes/event-organiser-cpt.php:515
 msgid "Creating events:"
-msgstr "Creant esdeveniments:"
+msgstr "Renginių kūrimas:"
 
 #: includes/event-organiser-cpt.php:517
 msgid ""
@@ -1714,12 +1712,12 @@ msgid ""
 "All dates and times must be entered in the specified format. This format can "
 "changed in the settings page."
 msgstr ""
-"Totes les dates i hores han de ser introduides en un format especific. "
-"Aquest format pot ser canviat a la pàgina de configuració"
+"Visos datos ir laikai turi būti įvesti nurodytame formate. Šis formatasgali "
+"būti pakeistas Nustatymų puslapyje."
 
 #: includes/event-organiser-cpt.php:524
 msgid "Repeating events"
-msgstr "Repetint esdeveniments"
+msgstr "Periodiniai renginiai"
 
 #: includes/event-organiser-cpt.php:525
 msgid ""
@@ -1730,9 +1728,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:527
 msgid "Specify how regularly the event should repeat (default 1)"
-msgstr ""
-"Especifica amb quina freqüència s'ha de repetir l'esdeveniment (per defecte "
-"1)"
+msgstr "Nurodykite kaip dažnai renginys turi pasikartoti (default 1)"
 
 #: includes/event-organiser-cpt.php:528
 msgid ""
@@ -1756,23 +1752,23 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:535 includes/event-organiser-cpt.php:536
 msgid "Selecting a venue"
-msgstr "Seleccionant un lloc"
+msgstr "Vietos pasirinkimas"
 
 #: includes/event-organiser-cpt.php:538
 msgid "Use the venues input field to search for existing venues"
-msgstr "Utilitzeu el camp d'entrada dels llocs per buscar llocs existents"
+msgstr "Naudoti vietos įvesties lauką esamų vietų paieškai"
 
 #: includes/event-organiser-cpt.php:539
 msgid ""
 "Only pre-existing venues can be selected. To add a venue, go to the venues "
 "page."
 msgstr ""
-"Solament es poden seleccionar llocs preexistents. Per afegir un lloc, anar a "
-"la pàgina de llocs."
+"Tik egzistuojančios vietos gali būti naudojamos. Norėdami sukurti "
+"vietąeikite į vietų puslapį."
 
 #: includes/event-organiser-cpt.php:549 includes/event-organiser-cpt.php:568
 msgid "Overview"
-msgstr "Descripció"
+msgstr "Peržiūra"
 
 #: includes/event-organiser-cpt.php:550
 msgid ""
@@ -1786,25 +1782,24 @@ msgid ""
 "Hovering over a row in the venues list will display action links that allow "
 "you to manage that venue. You can perform the following actions:"
 msgstr ""
-"En passar per sobre d'una fila en la llista de llocs els enllaços de les "
-"accions que et permeten gestionar aquest esdeveniment. Pots realitzar les "
-"següents accions:"
+"Naršymas virš vietų sąrašo eilutės duos veiksmų nuorodas, kurios leidžiaJums "
+"valdyti konkrečią vietą. Galite atlikti šiuos veiksmus:"
 
 #: includes/event-organiser-cpt.php:558
 msgid ""
 "Edit takes you to the editing screen for that venue. You can also reach that "
 "screen by clicking on the venue title."
 msgstr ""
-"Editar et porta a la pantalla d'edició d'aquest lloc. També pots anar a "
-"aquesta pantalla punxant en el títol del lloc."
+"Redagavimo mygtukas nuveda Jus į tos vietos redagavimo vaizdą. Galite šį "
+"ekranąpasiekti ir paspausdami ant vietos pavadinimo."
 
 #: includes/event-organiser-cpt.php:559
 msgid "Delete will permanently remove the venue"
-msgstr "Esborrar, llevarà de forma permanent el lloc"
+msgstr "Mygtukas Ištrinti pašalins vietą"
 
 #: includes/event-organiser-cpt.php:560
 msgid "View will take you to the venue's page"
-msgstr "Veure et portarà a la pàgina del lloc"
+msgstr "Mygtukas Peržiūra perkels Jus į Vietų puslapį"
 
 #: includes/event-organiser-cpt.php:569
 msgid ""
@@ -1812,9 +1807,9 @@ msgid ""
 "event by clicking on it. If you have the necessary permissions, a link to "
 "the event's edit page will appear also."
 msgstr ""
-"Aquesta pàgina mostra totes les  (ocurrències de) els esdeveniments. Pots "
-"veure el resum d'un esdeveniment punxant en ell. Si tens els privilegis "
-"necessaris , també t'apareixerà un enllaç a la pàgina d'editar esdeveniments."
+"Šis puslapis rodo visus (įvykių) renginius. Galite matyti renginių santrauką "
+"paspausdami ant jo. Jeigu turite būtinus leidimus, renginių redagavimo "
+"nuoroda taip pat atsiras."
 
 #: includes/event-organiser-cpt.php:570
 msgid ""
@@ -1822,13 +1817,14 @@ msgid ""
 "mode. You can also filter the events by events by category and venue. The "
 "'go to date' button allows you to quickly jump to a specific date."
 msgstr ""
-"En fer clic a la fitxa corresponent, podràs veure els esdeveniments per mes, "
-"setmana o dia. També pots filtrar els esdeveniments per categoria i lloc. El "
-"botó \"anar a la data\" us permet saltar ràpidament a una data específica."
+"Paspausdami reikiamą skirtuką galite peržiūrėti renginius Mėnesio, Savaitės "
+"arDienos režimu. Taip pat galite filtruoti renginius pagal kategorijas ir "
+"vietas. Mygtukas \"Eiti į datą“ leidžia Jums greitai peršokti į reikiamą "
+"datą."
 
 #: includes/event-organiser-cpt.php:574
 msgid "Add Event"
-msgstr "Afegeix Esdeveniment"
+msgstr "Pridėti Renginį"
 
 #: includes/event-organiser-cpt.php:575
 msgid ""
@@ -1838,66 +1834,66 @@ msgid ""
 "The event can be immediately published or saved as a draft. In any case, the "
 "event is created and you are forwarded to that event's edit page."
 msgstr ""
-"Pots crear un esdeveniment en aquest calendari, punxant en un dia o "
-"arrossegant sobre múltiples dies (en vista Mes) o múltiples hores (en vista "
-"Setmana i Dia). Pots donar-li un títol a l'esdeveniment, especificar un lloc "
-"i donar-li una descripció. L'esdeveniment pot ser publicat immediatament o "
-"guardat com a esborrany. En qualsevol cas, l'esdeveniment està creat i tu "
-"seràs redireccionat a la pàgina d'edició d'aquest esdeveniment."
+"Galite sukruti renginį šiame kalendoriuje paspausdami ant dienos "
+"arbavilkdami per kelias dienas (Mėnesio vaizde) ar kelis laikus (Savaitės ar "
+"dienos vaizde). Galite sukurti renginiui pavadinimą, nurodyti vietą ir "
+"pateikti aprašą. Renginys gali iškarto būti publikuotas arba išsaugotas kaip "
+"juodraštis. Bet kokiu atvejurenginys yra sukurtas ir esate nukreipiami į to "
+"renginio redagavimo puslapį."
 
 #: includes/event-organiser-cpt.php:581
 msgid "For more information"
-msgstr "Per a més informació"
+msgstr "Daugiau informacijos"
 
 #: includes/event-organiser-cpt.php:582
 #, php-format
 msgid "See the <a %s> documentation</a>"
-msgstr "Veure la <a %s> documentació</a>"
+msgstr "Žiūrėti <a %s> documentation</a>"
 
 #: includes/event-organiser-cpt.php:583
 msgid "Debugging Event Organiser"
-msgstr "Depurant Event Organiser"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:584
 msgid "Go Pro!"
-msgstr "Vés a la versió Pro!"
+msgstr "Eiti Pro!"
 
 #: includes/event-organiser-cpt.php:701 includes/event-organiser-cpt.php:724
 msgid "Color"
-msgstr "Color"
+msgstr "Spalva"
 
 #: includes/event-organiser-cpt.php:707
 msgid "Assign the category a colour."
-msgstr "Asignar un color a la categoria"
+msgstr "Priskirti kategorijai spalvą."
 
 #: includes/event-organiser-event-functions.php:763
 #: includes/event-organiser-register.php:267
 msgid "last"
-msgstr "últim"
+msgstr "paskutinis"
 
 #: includes/event-organiser-event-functions.php:763
 #: includes/event-organiser-register.php:263
 msgid "first"
-msgstr "primer"
+msgstr "pirmas"
 
 #: includes/event-organiser-event-functions.php:763
 #: includes/event-organiser-register.php:264
 msgid "second"
-msgstr "segon"
+msgstr "antras"
 
 #: includes/event-organiser-event-functions.php:763
 #: includes/event-organiser-register.php:265
 msgid "third"
-msgstr "tercer"
+msgstr "trečias"
 
 #: includes/event-organiser-event-functions.php:763
 #: includes/event-organiser-register.php:266
 msgid "fourth"
-msgstr "quart"
+msgstr "ketvirtas"
 
 #: includes/event-organiser-event-functions.php:773
 msgid "one time only"
-msgstr "una sola vegada"
+msgstr "vienkartinis"
 
 #: includes/event-organiser-event-functions.php:776
 msgid "custom recurrence"
@@ -1906,105 +1902,105 @@ msgstr ""
 #: includes/event-organiser-event-functions.php:783
 #: includes/event-organiser-register.php:252
 msgid "every day"
-msgstr "cada dia"
+msgstr "kasdien"
 
 #: includes/event-organiser-event-functions.php:785
 #: includes/event-organiser-register.php:253
 #, php-format
 msgid "every %d days"
-msgstr "cada %d dies"
+msgstr "visas %d dienas "
 
 #: includes/event-organiser-event-functions.php:791
 #: includes/event-organiser-register.php:254
 msgid "every week on"
-msgstr "cada setmana a"
+msgstr "kiekvieną savaitę"
 
 #: includes/event-organiser-event-functions.php:793
 #: includes/event-organiser-register.php:255
 #, php-format
 msgid "every %d weeks on"
-msgstr "cada %d setmanes a"
+msgstr "visas %d savaites"
 
 #: includes/event-organiser-event-functions.php:804
 #: includes/event-organiser-register.php:256
 msgid "every month on the"
-msgstr "cada mes a"
+msgstr "kiekvieną mėnesį"
 
 #: includes/event-organiser-event-functions.php:806
 #: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d months on the"
-msgstr "cada %d mesos a"
+msgstr "kiekvieną %d mėnesį"
 
 #: includes/event-organiser-event-functions.php:835
 msgid "every year"
-msgstr "cada any"
+msgstr "kasmet"
 
 #: includes/event-organiser-event-functions.php:837
 #, php-format
 msgid "every %d years"
-msgstr "cada %d anys"
+msgstr "visus %d metus"
 
 #: includes/event-organiser-event-functions.php:1364
 msgid "All Day"
-msgstr "Tot el dia"
+msgstr "Visą dieną"
 
 #: includes/event-organiser-register.php:57
 msgid "Show More"
-msgstr "Mostra Mes"
+msgstr "Rodyti daugiau"
 
 #: includes/event-organiser-register.php:58
 msgid "Show Less"
-msgstr "Mostra Menys"
+msgstr "Rodyti mažiau"
 
 #: includes/event-organiser-register.php:239
 msgid "Hide dates"
-msgstr "Amaga les dates"
+msgstr "Nerodyti datų"
 
 #: includes/event-organiser-register.php:242
 msgid "Hour"
-msgstr "Hora"
+msgstr "Valanda"
 
 #: includes/event-organiser-register.php:243
 msgid "Minute"
-msgstr "Minut"
+msgstr "Minutės"
 
 #: includes/event-organiser-register.php:245
 msgid "days"
-msgstr "dies"
+msgstr "dienos"
 
 #: includes/event-organiser-register.php:247
 msgid "weeks"
-msgstr "setmanes"
+msgstr "savaitės"
 
 #: includes/event-organiser-register.php:249
 msgid "months"
-msgstr "mesos"
+msgstr "mėnesiai"
 
 #: includes/event-organiser-register.php:250
 msgid "year"
-msgstr "any"
+msgstr "metai"
 
 #: includes/event-organiser-register.php:251
 msgid "years"
-msgstr "anys"
+msgstr "metai"
 
 #: includes/event-organiser-register.php:258
 msgid "every year on the"
-msgstr "cada any a"
+msgstr "kasmet"
 
 #: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d years on the"
-msgstr "cada %d anys a"
+msgstr "kiekvienais %d metais"
 
 #: includes/event-organiser-register.php:260
 msgid "This event will repeat"
-msgstr "Aquest event es repeteix"
+msgstr "Renginys pasikartos"
 
 #: includes/event-organiser-register.php:367
 msgid "Settings"
-msgstr "Ajustos"
+msgstr "Nustatymai"
 
 #: includes/event-organiser-register.php:611
 #, php-format
@@ -2014,10 +2010,10 @@ msgid ""
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
 "details aftewards."
 msgstr ""
-"<h4>Camps addicionals de Ciutat i Província</h4> Ara s'han afegit els camps "
-"de ciutat i estat/província.</br>Si ho desitges, Event Organiser pot  <a "
-"href='%s'>intentar el autocompletat amb les mateixes</a>. Sempre pots "
-"canviar manualmente els detalls més tard."
+"<h4>Miestas & Valstija Laukai pridėti</h4>Miesto ir valstijos / regiono "
+"laukai vietoms dabar buvo pridėti. </br> Jeigu norėtumėte, Renginių "
+"organizatorius gali <a href='%s'>bandyti automatiškai juos užpildyti</a>. "
+"Visada galite rankiniu būdu pakeisti detales vėliau."
 
 #: includes/event-organiser-register.php:616
 msgid ""
@@ -2026,10 +2022,11 @@ msgid ""
 "haven't and want the old templates back, <a href='http://wp-event-organiser."
 "com/blog/new-default-templates-in-1-7'>see this post<a/>."
 msgstr ""
-"<h4>Les plantilles per defecte han canviat</h4>No et preocupes, si has "
-"configurat les teves pròpies plantilles al teu tema no advertiràs cap canvi."
-"</br> Si no és el cas i vols les antigues plantilles de nou, <a href='http://"
-"wp-event-organiser.com/blog/new-default-templates-in-1-7'>llegeix açò,<a/>."
+"<h4> Pradiniai šablonai pakeisti</h4>Nepanikuokite! Jeigu nustatėtesavo "
+"pačių šablonus savo temoje, nepastebėsite jokių pokyčių. </br> Jeigu "
+"nenustatėte ir norite, kad senieji šablonai būtų sugrąžinti, , <a "
+"href='http://wp-event-organiser. com/blog/new-default-templates-in-1-7'>see "
+"this post<a/>."
 
 #: includes/event-organiser-register.php:631
 #, php-format
@@ -2055,55 +2052,55 @@ msgstr ""
 
 #: includes/event-organiser-venue-functions.php:967
 msgid "Address"
-msgstr "Adressa"
+msgstr "Adresas"
 
 #: includes/event-organiser-venue-functions.php:968
 msgid "City"
-msgstr "Ciutat"
+msgstr "Miestas"
 
 #: includes/event-organiser-venue-functions.php:969
 msgid "State / Province"
-msgstr "Província"
+msgstr "Valstija/Regionas"
 
 #: includes/event-organiser-venue-functions.php:970
 msgid "Post Code"
-msgstr "Codi Postal"
+msgstr "Pašto indeksas"
 
 #: includes/event-organiser-venue-functions.php:971
 msgid "Country"
-msgstr "País"
+msgstr "Šalis"
 
 #: includes/event.php:611
 msgid "Schedule not recognised."
-msgstr "Horari no reconegut."
+msgstr "Tvarkaraštis neatpažintas."
 
 #: includes/event.php:620
 msgid "Start date not provided."
-msgstr "La data de començament no s'ha donat."
+msgstr "Nėra nurodyta pradžios data."
 
 #: includes/event.php:638
 msgid "Start date occurs after end date."
-msgstr "La data de començament ocorre després de la data de finalització."
+msgstr "Pradžios data nurodyta vėliau nei pabaigos data."
 
 #: includes/event.php:641
 msgid "Schedule end date is before is before the start date."
-msgstr "La data de finalització ocorre abans de la data començament."
+msgstr "Katalogas ir data yra nustatyti prieš pradžios datą."
 
 #: includes/event.php:723
 msgid "Invalid monthly schedule (invalid ordinal)"
-msgstr "Horari mensual no vàlid (ordinal no vàlid)"
+msgstr "Negaliojantis mėnesio tvarkaraštis (neteisingas kelintinis)"
 
 #: includes/event.php:857
 msgid "Event does not contain any dates."
-msgstr "L'esdeveniment no te dates."
+msgstr "Renginiui nenurodytos jokios datos."
 
 #: includes/event.php:1000
 msgid "Occurrence not deleted. Occurrence not found."
-msgstr "Ocurrència no esborrada. L'ocurrència no s'ha trobat."
+msgstr "Įvykis nėra ištrintas. Įvykis nerastas."
 
 #: includes/event.php:1056
 msgid "There is already an occurrence on this date"
-msgstr ""
+msgstr "Šiai datai jau yra įvykis"
 
 #. / TRANSLATORS: This is the description that of the plug-in that appears in the "Plugins" page.
 #: includes/i18n.php:8
@@ -2114,36 +2111,34 @@ msgstr ""
 
 #: templates/eo-events-nav.php:5
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
-msgstr "Esdeveniments següents <span class=\"meta-nav\">→</span>"
+msgstr "Vėlesni renginiai <span class=\"meta-nav\">&rarr;</span>"
 
 #: templates/eo-events-nav.php:6
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
-msgstr "<span class=\"meta-nav\">←</span> Últims Esdeveniments"
+msgstr " <span class=\"meta-nav\">&larr;</span> Naujesni renginiai"
 
 #: templates/eo-loop-events.php:37
 msgid "Nothing Found"
-msgstr "No s'ha trobat res."
+msgstr "Nieko nerasta"
 
 #: templates/eo-loop-events.php:41
 msgid "Apologies, but no results were found for the requested archive. "
-msgstr "Disculpes, però no s'han trobat resultats a l'arxiu sol·licitat."
+msgstr "Apgailestaujame, tačiau peržiūrėtame archyve duomenų nerasta."
 
 #: templates/event-meta-event-single.php:43
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "This event is running from %1$s until %2$s. It is next occurring on %3$s"
-msgstr ""
-"Aquest esdeveniment s'està executant des de %1$s fins a %2$s. La propera "
-"ocurrència serà %3$"
+msgstr "Renginys vyksta nuo %1$s iki %2$s. Kitas jo publikavimas bus %3$s"
 
 #: templates/event-meta-event-single.php:47
 #, php-format
 msgid "This event finished on %s"
-msgstr "El esdeveniment acaba el %s"
+msgstr "Renginys pasibaigė %s"
 
 #: templates/event-meta-event-single.php:83
 msgid "Upcoming Dates"
-msgstr "Properes dates"
+msgstr "Artimiausios datos"
 
 #: templates/single-event.php:58
 #, php-format
@@ -2151,9 +2146,8 @@ msgid ""
 "This event was posted in %1$s by <a href=\"%5$s\">%4$s</a>. Bookmark the <a "
 "href=\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a>."
 msgstr ""
-"Aquest esdeveniment va ser publicat %1$s per <a href=\"%5$s\">%4$s</a>. "
-"Guarda l'<a href=\"%2$s\" title=\"Enllaç permanent a %3$s\" rel=\"bookmark"
-"\">enllaç permanent</a>."
+"Renginys publikuotas %1$s by <a href=\"%5$s\">%4$s</a>. Bookmark the <a href="
+"\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a>."
 
 #: templates/single-event.php:60
 #, php-format
@@ -2161,11 +2155,10 @@ msgid ""
 "This event was posted by <a href=\"%5$s\">%4$s</a>. Bookmark the <a href="
 "\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a>."
 msgstr ""
-"Aquest esdeveniment va ser publicat per <a href=\"%5$s\">%4$s</a>.Guarda "
-"l'<a href=\"%2$s\" title=\"Enllaç permanent a %3$s\" rel=\"bookmark\">enllaç "
-"permanent</a>."
+"Renginys publikuotas <a href=\"%5$s\">%4$s</a>. Bookmark the <a href=\"%2$s"
+"\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a>."
 
 #: templates/taxonomy-event-venue.php:30
 #, php-format
 msgid "Events at: %s"
-msgstr "Esdeveniments a: %s"
+msgstr "Renginiai: %s"
