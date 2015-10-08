@@ -84,11 +84,13 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 			break;
 
 		case 'datestart':
-			eo_the_start( $phpFormat, $series_id );
+			$schedule = eo_get_event_schedule( $series_id );
+			echo eo_format_datetime( $schedule['start'], $phpFormat );
 			break;
 		
 		case 'dateend':
-			eo_the_end( $phpFormat, $series_id );
+			$schedule = eo_get_event_schedule( $series_id );
+			echo eo_format_datetime( $schedule['end'], $phpFormat );
 			break;
 
 		case 'reoccurence':
