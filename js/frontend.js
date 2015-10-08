@@ -289,30 +289,31 @@ jQuery(document).ready(function () {
 			}
 	}
 
-	$('.eo-mini-calendar').datepicker({
-		dateFormat: 'DD, d MM, yy',
-		changeMonth: true,
-		changeYear: true,
-		firstDay: parseInt( eventorganiser.fullcal.firstDay, 10 ),
-		buttonText: EOAjaxFront.locale.gotodate,
-		monthNamesShort: EOAjaxFront.locale.monthAbbrev,
-		dayNamesMin: EOAjaxFront.locale.dayAbbrev,
-		nextText: EOAjaxFront.locale.nextText,
-		prevText: EOAjaxFront.locale.prevText,
-		showOn: 'button',
-		beforeShow: function(input, inst) {
-			if( inst.hasOwnProperty( 'dpDiv' ) ){
-				inst.dpDiv.addClass('eo-datepicker eo-fc-mini-calendar eo-fc-datepicker');
-			}else{
-				$('#ui-datepicker-div').addClass('eo-datepicker eo-fc-mini-calendar eo-fc-datepicker');
+	if ( typeof eventorganiser.fullcal !== 'undefined' ) {
+		$('.eo-mini-calendar').datepicker({
+			dateFormat: 'DD, d MM, yy',
+			changeMonth: true,
+			changeYear: true,
+			firstDay: parseInt( eventorganiser.fullcal.firstDay, 10 ),
+			buttonText: EOAjaxFront.locale.gotodate,
+			monthNamesShort: EOAjaxFront.locale.monthAbbrev,
+			dayNamesMin: EOAjaxFront.locale.dayAbbrev,
+			nextText: EOAjaxFront.locale.nextText,
+			prevText: EOAjaxFront.locale.prevText,
+			showOn: 'button',
+			beforeShow: function(input, inst) {
+				if( inst.hasOwnProperty( 'dpDiv' ) ){
+					inst.dpDiv.addClass('eo-datepicker eo-fc-mini-calendar eo-fc-datepicker');
+				}else{
+					$('#ui-datepicker-div').addClass('eo-datepicker eo-fc-mini-calendar eo-fc-datepicker');
+				}
+			},
+			onSelect: function (dateText, dp) {
+				var cal_id = $(this).parents('div.eo-fullcalendar').attr('id');
+				$('#'+cal_id).fullCalendar('gotoDate', new Date(Date.parse(dateText)));
 			}
-		},
-		onSelect: function (dateText, dp) {
-			var cal_id = $(this).parents('div.eo-fullcalendar').attr('id');
-			$('#'+cal_id).fullCalendar('gotoDate', new Date(Date.parse(dateText)));
-        }
-    });
-	
+		});
+	}
 	
 	/* Upcoming dates */
 	$('.eo-upcoming-dates').each(function(index, value){
