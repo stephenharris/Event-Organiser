@@ -594,7 +594,7 @@ function _eventorganiser_update_event_dates_cache( $events, $query ){
 		
 		$cached_event[$event->occurrence_id] = 	array(
 			'start' => new DateTime($event->StartDate.' '.$event->StartTime, $tz ),
-			'end' => new DateTime($event->EndDate.' '.$event->FinishTime, $tz ),
+			'end'   => new DateTime($event->EndDate.' '.$event->FinishTime, $tz ),
 		);
 		
 		wp_cache_set( 'eventorganiser_occurrences_'.$id, $cached_event );
