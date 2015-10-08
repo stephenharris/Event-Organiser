@@ -81,6 +81,10 @@
 	.eo-fullcalendar-responsive .fc-day-button{
 		display:none;
 	}
+	
+	.eo-fullcalendar-responsive .fc-toolbar h2 {
+		text-align:center;
+	}
 }
 
 /*Added to fit with full calendar*/
