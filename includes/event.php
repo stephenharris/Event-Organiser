@@ -432,6 +432,7 @@ function _eventorganiser_insert_occurrences( $post_id, $event_data ){
 		
 	//Set occurrence cache
 	wp_cache_set( 'eventorganiser_occurrences_'.$post_id, $occurrence_cache );
+	wp_cache_set( 'eventorganiser_all_occurrences_'.$post_id, $occurrence_cache );
 
 	unset( $event_data['occurrences'] );
 	//$event_data['_occurrences'] = $occurrence_array;
@@ -1071,6 +1072,7 @@ function eventorganiser_move_occurrence( $event_id, $occurrence_id, $start, $end
 	);
 	
 	wp_cache_delete( 'eventorganiser_occurrences_'.$event_id );//Important: update DB clear cache
+	wp_cache_delete( 'eventorganiser_all_occurrences_'.$event_id );//Important: update DB clear cache
 
 	//Now update event schedule...
 	

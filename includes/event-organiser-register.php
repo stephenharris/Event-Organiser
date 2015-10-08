@@ -502,6 +502,7 @@ add_action( 'admin_print_styles', 'eventorganiser_admin_print_scripts' );
  */
 function _eventorganiser_delete_occurrences_cache($post_id=0){
 	wp_cache_delete( 'eventorganiser_occurrences_'.$post_id );
+	wp_cache_delete( 'eventorganiser_all_occurrences_'.$post_id );
 }
 //The following need to trigger the cache clear clearly need to trigger a cache clear
 $hooks = array('eventorganiser_save_event', 'eventorganiser_delete_event');
