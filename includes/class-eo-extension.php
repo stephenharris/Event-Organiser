@@ -403,7 +403,7 @@ if( !class_exists('EO_Extension') ){
 		
 		public function plugin_info( $check, $action, $args ){
 	
-			if ( $args->slug == $this->slug ) {
+			if ( isset( $args->slug ) && $args->slug == $this->slug ) {
 				$obj = $this->get_remote_plugin_info( 'plugin_info' );
 				return $obj;
 			}
