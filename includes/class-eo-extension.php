@@ -172,15 +172,15 @@ if( !class_exists('EO_Extension') ){
 					}elseif( 'license-expired' == $response['reason'] ){
 						return new WP_Error( 'license-expired' );
 					}
-				}
-				
-				if( isset( $this->key_data) && !empty( $this->key_data['expires'] ) ){
 					
-					$now         = new DateTime( 'now' );
-					$key_expires = new DateTime( $this->key_data['expires'] );
-
-					if( $now > $key_expires ){
-						return new WP_Error( 'license-expired' );
+					if( isset( $this->key_data) && !empty( $this->key_data['expires'] ) ){
+							
+						$now         = new DateTime( 'now' );
+						$key_expires = new DateTime( $this->key_data['expires'] );
+					
+						if( $now > $key_expires ){
+							return new WP_Error( 'license-expired' );
+						}
 					}
 				}
 			}
