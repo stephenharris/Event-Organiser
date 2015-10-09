@@ -982,6 +982,52 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 		return false;
 }
 
+function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
+	
+	$vtimezone = "BEGIN:VTIMEZONE\r\n";
+	$vtimezone .= sprintf( "TZID:%s\r\n", $timezone->getName() );
+	
+	// get all transitions, and (as an estimate) an early one which we skip
+	$transitions = $timezone->getTransitions( $from - YEAR_IN_SECONDS / 2, $to );
+	
+	if ( ! $transitions ) {
+		return '';
+	}
+
+	foreach ( $transitions as $i => $trans ) {
+		
+		$pm      = $trans['offset'] >= 0 ? '+' : '-';
+ 		$hours   = floor( absint( $trans['offset'] ) / HOUR_IN_SECONDS ) % 24;
+		$minutes = ( absint( $trans['offset'] ) - $hours * HOUR_IN_SECONDS ) / MINUTE_IN_SECONDS;
+		
+		$tzto = $pm . str_pad( $hours, 2, '0', STR_PAD_LEFT ) . str_pad( $minutes, 2, '0', STR_PAD_LEFT );
+	
+		// skip the first entry, we just want it for the TZOFFSETFROM value of the next one
+		if ( $i == 0 ) {
+			$tzfrom = $tzto;
+			if ( count( $transitions ) > 1 ) {
+				continue;
+			}
+		}
+		
+		$type = $trans['isdst'] ? 'DAYLIGHT' : 'STANDARD';		
+		$dt   = new DateTime( $trans['time'], $timezone );
+			
+		$vtimezone .= sprintf( "BEGIN:%s\r\n", $type );
+		$vtimezone .= sprintf( "TZOFFSETFROM:%s\r\n", $tzfrom ); //needs formatting
+		$vtimezone .= sprintf( "TZOFFSETTO:%s\r\n", $tzto ); //needs formatting
+		$vtimezone .= sprintf( "DTSTART:%s\r\n",  $dt->format('Ymd\THis') );
+		$vtimezone .= sprintf( "TZNAME:%s\r\n",  $trans['abbr'] ); 
+		$vtimezone .= sprintf( "END:%s\r\n", $type );
+		
+		$tzfrom = $tzto;	
+	}
+	
+	$vtimezone .= 'END:VTIMEZONE';
+	
+	return $vtimezone;
+}
+
 /**
  * Removes a single occurrence and adds it to the event's 'excluded' dates.
  * @access private

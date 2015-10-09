@@ -16,7 +16,10 @@ if ( have_posts() ) :
 	
 	//Set $tz if a timezone is specified - this does not include GMT offsets
 	$timezone     = ( get_option( 'timezone_string' ) ? eo_get_blog_timezone() : false );
-	$utc_timezone = new DateTimeZone( 'UTC' ); 
+	$utc_timezone = new DateTimeZone( 'UTC' );
+
+	$earliest_date = clone $now;
+	$latest_date   = clone $now;
 
 	while( have_posts() ): the_post();
 	
@@ -31,6 +34,11 @@ if ( have_posts() ) :
 		$created_date = get_post_time('Ymd\THis\Z',true);
 		$modified_date = get_post_modified_time('Ymd\THis\Z',true);
 		$schedule_data = eo_get_event_schedule();
+		
+		if ( $timezone ) {
+			$earliest_date = min( eo_get_schedule_start( DATETIMEOBJ ), $earliest_date );
+			$latest_date   = max( eo_get_schedule_last( DATETIMEOBJ ), $latest_date );
+		}
 
 		// Generate Event status
 		if ( get_post_status(get_the_ID()) == 'publish' )
@@ -151,6 +159,11 @@ if ( have_posts() ) :
 		echo "END:VEVENT\r\n";
 
 	endwhile;
+	
+	if ( $timezone ) {
+		echo eventorganiser_ical_vtimezone( $timezone, $earliest_date->format('U'), $latest_date->format('U') ) . "\r\n";
+	}
+	
 
 endif;
 

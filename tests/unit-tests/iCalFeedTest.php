@@ -384,7 +384,7 @@ class iCalFeedTest extends EO_UnitTestCase
 	 * If the event is an all-day event then no timezone information should be present
 	 * in the dtstart, dtend, exdate or rdate values.
 	 */
-	public function testALlDayEvent(){
+	public function testAllDayEvent(){
 	
 		$original_timezone = get_option( 'timezone_string' );
 		update_option( 'timezone_string', 'Europe/Zurich' );
@@ -428,7 +428,179 @@ class iCalFeedTest extends EO_UnitTestCase
 		$this->assertEquals( $expected, $actual );
 	
 	}
+	
+	public function testVTimezone() {
+		$timezone = new DateTimeZone( 'Europe/London' );
+		$time1 = strtotime( '2015-01-01' );
+		$time2 = strtotime( '2015-12-31' );
 		
+		$expected = "BEGIN:VTIMEZONE\r
+TZID:Europe/London\r
+BEGIN:STANDARD\r
+TZOFFSETFROM:+0100\r
+TZOFFSETTO:+0000\r
+DTSTART:20141026T010000\r
+TZNAME:GMT\r
+END:STANDARD\r
+BEGIN:DAYLIGHT\r
+TZOFFSETFROM:+0000\r
+TZOFFSETTO:+0100\r
+DTSTART:20150329T010000\r
+TZNAME:BST\r
+END:DAYLIGHT\r
+BEGIN:STANDARD\r
+TZOFFSETFROM:+0100\r
+TZOFFSETTO:+0000\r
+DTSTART:20151025T010000\r
+TZNAME:GMT\r
+END:STANDARD\r
+END:VTIMEZONE";
+		
+		$actual = eventorganiser_ical_vtimezone( $timezone, $time1, $time2 );
+
+		$this->assertEquals( $expected, $actual );
+	}
+	
+	
+	public function testVTimezoneNegativeOffset() {
+		$timezone = new DateTimeZone( 'America/New_York' );
+		$time1 = strtotime( '2015-01-01' );
+		$time2 = strtotime( '2015-12-31' );
+				
+		$expected = "BEGIN:VTIMEZONE\r
+TZID:America/New_York\r
+BEGIN:STANDARD\r
+TZOFFSETFROM:-0400\r
+TZOFFSETTO:-0500\r
+DTSTART:20141102T060000\r
+TZNAME:EST\r
+END:STANDARD\r
+BEGIN:DAYLIGHT\r
+TZOFFSETFROM:-0500\r
+TZOFFSETTO:-0400\r
+DTSTART:20150308T070000\r
+TZNAME:EDT\r
+END:DAYLIGHT\r
+BEGIN:STANDARD\r
+TZOFFSETFROM:-0400\r
+TZOFFSETTO:-0500\r
+DTSTART:20151101T060000\r
+TZNAME:EST\r
+END:STANDARD\r
+END:VTIMEZONE";
+	
+		$actual = eventorganiser_ical_vtimezone( $timezone, $time1, $time2 );
+	
+		$this->assertEquals( $expected, $actual );
+	}
+	
+	
+	public function testVTimezoneNonIntegerOffset() {
+		$timezone = new DateTimeZone( 'Asia/Tehran' );
+		$time1 = strtotime( '2015-01-01' );
+		$time2 = strtotime( '2015-12-31' );
+	
+		$expected = "BEGIN:VTIMEZONE\r
+TZID:Asia/Tehran\r
+BEGIN:STANDARD\r
+TZOFFSETFROM:+0430\r
+TZOFFSETTO:+0330\r
+DTSTART:20140921T193000\r
+TZNAME:IRST\r
+END:STANDARD\r
+BEGIN:DAYLIGHT\r
+TZOFFSETFROM:+0330\r
+TZOFFSETTO:+0430\r
+DTSTART:20150321T203000\r
+TZNAME:IRDT\r
+END:DAYLIGHT\r
+BEGIN:STANDARD\r
+TZOFFSETFROM:+0430\r
+TZOFFSETTO:+0330\r
+DTSTART:20150921T193000\r
+TZNAME:IRST\r
+END:STANDARD\r
+END:VTIMEZONE";
+	
+		$actual = eventorganiser_ical_vtimezone( $timezone, $time1, $time2 );
+	
+		$this->assertEquals( $expected, $actual );
+	}
+	
+	
+	/**
+	 * If a named timezone is used, then we should see a VTIMEZONE which appropriate DAYLIGHT and
+	 * STANDARD timezone components spanning the period in which events occur.
+	 */
+	public function testVTimezonePeriod(){
+	
+		$original_timezone = get_option( 'timezone_string' );
+		update_option( 'timezone_string', 'Europe/Paris' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+	
+		$events = array();
+		
+		//A standard recurring event
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2015-10-01 17:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2015-10-01 18:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2015-10-29 17:00', eo_get_blog_timezone() ),
+			'frequency'     => 1,
+			'schedule'      => 'weekly',
+			'schedule_meta' => array( 'TH' ),
+			'post_title'    => 'Recurring event',
+			'post_date'     => '2015-02-18 17:30:00',
+		) );
+		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test-1' );
+		$events[] = $event_id;
+		
+		//A recurring event with some includes to extend the period of interest
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2015-09-01 13:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2015-09-01 14:30', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2015-12-01 13:00', eo_get_blog_timezone() ),
+			'frequency'     => 1,
+			'schedule'      => 'monthly',
+			'schedule_meta' => 'BYMONTHDAY=01',
+			'include'      => array(
+				new DateTime( '2016-12-25 13:00', eo_get_blog_timezone() ),
+			),
+			'post_title'    => 'Event with outlying included date',
+			'post_date'     => '2015-02-18 17:30:00',
+		) );
+		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test-2' );
+		$events[] = $event_id;
+	
+		
+		//A single outlying event
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2014-05-01 03:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2014-05-01 04:00', eo_get_blog_timezone() ),
+			'post_title'    => 'Single event',
+			'post_date'     => '2015-02-18 17:30:00',
+		) );
+		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test-3' );
+		$events[] = $event_id;
+		
+		query_posts( array( 'post__in' => $events, 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
+	
+		//Get actual feed output
+		ob_start();
+		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
+		$actual = ob_get_contents();
+		ob_end_clean();
+	
+		//Get expected feed output
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/multiple-events-with-timezone.ical' );
+		
+		update_option( 'timezone_string', $original_timezone );
+		wp_cache_delete( 'eventorganiser_timezone' );
+	
+		$this->assertEquals( $expected, $actual );
+	
+	}
+	
+	
 	public function _readExpectedIcal( $file ) {
 		$now = new DateTime();
 		ob_start();
