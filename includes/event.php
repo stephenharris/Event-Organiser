@@ -984,6 +984,11 @@ function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
 	$vtimezone = "BEGIN:VTIMEZONE\r\n";
 	$vtimezone .= sprintf( "TZID:%s\r\n", $timezone->getName() );
 	
+	//$timezone->getTransitions() doesn't accept any arguments in php 5.2, and would be ineffecient
+	if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
+		return '';
+	}
+	
 	// get all transitions, and (as an estimate) an early one which we skip
 	$transitions = $timezone->getTransitions( $from - YEAR_IN_SECONDS / 2, $to );
 	

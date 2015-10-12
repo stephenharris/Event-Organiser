@@ -457,8 +457,14 @@ END:STANDARD\r
 END:VTIMEZONE";
 		
 		$actual = eventorganiser_ical_vtimezone( $timezone, $time1, $time2 );
-
-		$this->assertEquals( $expected, $actual );
+		
+		//VTIMEZONEs are skipped on php5.2 because of performance concerns
+		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
+			$this->assertEquals( $expected, '' );
+		} else {
+			$this->assertEquals( $expected, $actual );
+		}
+		
 	}
 	
 	
@@ -491,7 +497,12 @@ END:VTIMEZONE";
 	
 		$actual = eventorganiser_ical_vtimezone( $timezone, $time1, $time2 );
 	
-		$this->assertEquals( $expected, $actual );
+		//VTIMEZONEs are skipped on php5.2 because of performance concerns
+		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
+			$this->assertEquals( $expected, '' );
+		} else {
+			$this->assertEquals( $expected, $actual );
+		}
 	}
 	
 	
@@ -524,7 +535,12 @@ END:VTIMEZONE";
 	
 		$actual = eventorganiser_ical_vtimezone( $timezone, $time1, $time2 );
 	
-		$this->assertEquals( $expected, $actual );
+		//VTIMEZONEs are skipped on php5.2 because of performance concerns
+		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
+			$this->assertEquals( $expected, '' );
+		} else {
+			$this->assertEquals( $expected, $actual );
+		}
 	}
 	
 	
@@ -533,6 +549,13 @@ END:VTIMEZONE";
 	 * STANDARD timezone components spanning the period in which events occur.
 	 */
 	public function testVTimezonePeriod(){
+		
+		//VTIMEZONEs are skipped on php5.2 because of performance concerns
+		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
+			$this->markTestSkipped(
+    			'This test is skipped on php 5.2.'
+    		);
+		}
 	
 		$original_timezone = get_option( 'timezone_string' );
 		update_option( 'timezone_string', 'Europe/Paris' );
