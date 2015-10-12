@@ -120,6 +120,7 @@ jQuery(document).ready(function () {
 				firstDay: parseInt( eventorganiser.fullcal.firstDay, 10 ),
 				weekends: calendars[i].weekends,
 				hiddenDays: calendars[i].hiddendays,
+				slotDuration: calendars[i].slotDuration,
 				allDaySlot: calendars[i].alldayslot,
 				allDayText: calendars[i].alldaytext,
 				axisFormat: calendars[i].axisformat,
