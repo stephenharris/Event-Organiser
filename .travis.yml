@@ -15,6 +15,7 @@ branches:
   only:
     - master
     - develop
+    - ^(?i:release)\/.*$
 
 env:
 - WP_VERSION=latest WP_MULTISITE=0

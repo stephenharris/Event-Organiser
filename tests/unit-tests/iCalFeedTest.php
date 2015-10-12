@@ -288,6 +288,12 @@ class iCalFeedTest extends EO_UnitTestCase
 	 */
 	public function testEventTimezone(){
 	
+		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
+			$this->markTestSkipped(
+				'This test is skipped on php 5.2 becase the VTIMEZONE block is not generated'
+			);
+		}
+		
 		$original_timezone = get_option( 'timezone_string' );
 		update_option( 'timezone_string', 'Europe/Zurich' );
 		wp_cache_delete( 'eventorganiser_timezone' );
@@ -386,6 +392,12 @@ class iCalFeedTest extends EO_UnitTestCase
 	 */
 	public function testAllDayEvent(){
 	
+		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
+			$this->markTestSkipped(
+				'This test is skipped on php 5.2 becase the VTIMEZONE block is not generated'
+			);
+		}
+		
 		$original_timezone = get_option( 'timezone_string' );
 		update_option( 'timezone_string', 'Europe/Zurich' );
 		wp_cache_delete( 'eventorganiser_timezone' );
@@ -460,7 +472,7 @@ END:VTIMEZONE";
 		
 		//VTIMEZONEs are skipped on php5.2 because of performance concerns
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-			$this->assertEquals( $expected, '' );
+			$this->assertEquals( '', $actual );
 		} else {
 			$this->assertEquals( $expected, $actual );
 		}
@@ -499,7 +511,7 @@ END:VTIMEZONE";
 	
 		//VTIMEZONEs are skipped on php5.2 because of performance concerns
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-			$this->assertEquals( $expected, '' );
+			$this->assertEquals( '', $actual );
 		} else {
 			$this->assertEquals( $expected, $actual );
 		}
@@ -537,7 +549,7 @@ END:VTIMEZONE";
 	
 		//VTIMEZONEs are skipped on php5.2 because of performance concerns
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-			$this->assertEquals( $expected, '' );
+			$this->assertEquals( '', $actual );
 		} else {
 			$this->assertEquals( $expected, $actual );
 		}
