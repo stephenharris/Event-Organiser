@@ -288,9 +288,15 @@ class iCalFeedTest extends EO_UnitTestCase
 	 */
 	public function testEventTimezone(){
 	
+		if ( defined( 'HHVM_VERSION' ) ) {
+			$this->markTestSkipped(
+				'This test is skipped on HHVM because of timezone definition issues'	
+			);
+		}
+		
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
 			$this->markTestSkipped(
-				'This test is skipped on php 5.2 becase the VTIMEZONE block is not generated'
+				'This test is skipped on php 5.2 because the VTIMEZONE block is not generated'
 			);
 		}
 		
@@ -519,6 +525,13 @@ END:VTIMEZONE";
 	
 	
 	public function testVTimezoneNonIntegerOffset() {
+		
+		if ( defined( 'HHVM_VERSION' ) ) {
+			$this->markTestSkipped(
+				'This test is skipped on HHVM because of timezone definition issues'
+			);
+		}
+		
 		$timezone = new DateTimeZone( 'Asia/Tehran' );
 		$time1 = strtotime( '2015-01-01' );
 		$time2 = strtotime( '2015-12-31' );
@@ -561,6 +574,12 @@ END:VTIMEZONE";
 	 * STANDARD timezone components spanning the period in which events occur.
 	 */
 	public function testVTimezonePeriod(){
+		
+		if ( defined( 'HHVM_VERSION' ) ) {
+			$this->markTestSkipped(
+				'This test is skipped on HHVM because of timezone definition issues'
+			);
+		}
 		
 		//VTIMEZONEs are skipped on php5.2 because of performance concerns
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
