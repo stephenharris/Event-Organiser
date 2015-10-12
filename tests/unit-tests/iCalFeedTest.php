@@ -460,7 +460,7 @@ END:VTIMEZONE";
 		
 		//VTIMEZONEs are skipped on php5.2 because of performance concerns
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-			$this->assertEquals( $expected, '' );
+			$this->assertEquals( '', $actual );
 		} else {
 			$this->assertEquals( $expected, $actual );
 		}
@@ -499,7 +499,7 @@ END:VTIMEZONE";
 	
 		//VTIMEZONEs are skipped on php5.2 because of performance concerns
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-			$this->assertEquals( $expected, '' );
+			$this->assertEquals( '', $actual );
 		} else {
 			$this->assertEquals( $expected, $actual );
 		}
@@ -537,7 +537,7 @@ END:VTIMEZONE";
 	
 		//VTIMEZONEs are skipped on php5.2 because of performance concerns
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-			$this->assertEquals( $expected, '' );
+			$this->assertEquals( '', $actual );
 		} else {
 			$this->assertEquals( $expected, $actual );
 		}
