@@ -1362,7 +1362,7 @@ function eo_get_event_fullcalendar( $args = array() ){
 		'timeformat' => get_option( 'time_format' ), 'axisformat' => get_option( 'time_format' ),
 		'key' => false, 'tooltip' => true, 
 		'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 'showdays' => array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' ),
-		'slotDuration' => '00:30:00',
+		'slotduration' => '00:30:00',
 		'alldayslot' => true, 'alldaytext' => __( 'All Day', 'eventorganiser' ), 
 		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
