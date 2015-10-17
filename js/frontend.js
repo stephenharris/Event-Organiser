@@ -229,6 +229,7 @@ jQuery(document).ready(function () {
                 responsive: calendars[i].responsive,
                 defaultView: ( $(window).width() < 514 && calendars[i].responsive )  ? _eoResponsiveViewMap[calendars[i].defaultview] : calendars[i].defaultview,
                 previousView: calendars[i].defaultview,
+                nextDayThreshold: calendars[i].nextdaythreshold,
                 windowResize: function(view) {
                 	if( view.calendar.options.responsive && $(window).width() < 514 ){
                 		$(this).fullCalendar( 'changeView', _eoResponsiveViewMap[view.calendar.options.previousView] );
