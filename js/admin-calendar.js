@@ -73,6 +73,13 @@ eventorganiser.versionCompare = function(left, right) {
 		eventStartEditable: EO_Ajax.edit_time,
 		durationEditable: false,
 		eventDrop: function( event, dayDelta, revertFunc, jsEvent, ui, view ) {
+			
+			if ( ! event.end ) {
+				alert( 'Changing the event duration is not supported' );
+				revertFunc();
+				return;
+			}
+			
             $.ajax({
             	type: "POST",
             	url: EO_Ajax.ajaxurl,
