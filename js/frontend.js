@@ -62,6 +62,17 @@ jQuery(document).ready(function () {
 	if ($(".eo-fullcalendar").length > 0) {
 		var loadingTimeOut;
 		var calendars = eventorganiser.calendars;
+		var _eoResponsiveViewMap;
+		_eoResponsiveViewMap = {
+			'agendaDay': 'listDay',
+			'basicDay': 'listDay',
+			'listDay': 'listDay',
+			'agendaWeek': 'listWeek',
+			'basicWeek': 'listWeek',
+			'listWeek' : 'listWeek',
+			'month': 'listMonth',
+			'listMonth': 'listMonth',
+		};
 		for (var i = 0; i < calendars.length; i++) {
 			var calendar = "#eo_fullcalendar_" + (i + 1);
 			if (typeof calendars[i].category === "undefined") {
@@ -120,7 +131,7 @@ jQuery(document).ready(function () {
 				firstDay: parseInt( eventorganiser.fullcal.firstDay, 10 ),
 				weekends: calendars[i].weekends,
 				hiddenDays: calendars[i].hiddendays,
-				slotDuration: calendars[i].slotDuration,
+				slotDuration: calendars[i].slotduration,
 				allDaySlot: calendars[i].alldayslot,
 				allDayText: calendars[i].alldaytext,
 				axisFormat: calendars[i].axisformat,
@@ -216,11 +227,12 @@ jQuery(document).ready(function () {
                 height: calendars[i].aspectratio ? false : 'auto',
 				aspectRatio: calendars[i].aspectratio ? calendars[i].aspectratio : false,
                 responsive: calendars[i].responsive,
-                defaultView: ( $(window).width() < 514 && calendars[i].responsive )  ? 'listMonth' : calendars[i].defaultview,
+                defaultView: ( $(window).width() < 514 && calendars[i].responsive )  ? _eoResponsiveViewMap[calendars[i].defaultview] : calendars[i].defaultview,
                 previousView: calendars[i].defaultview,
+                nextDayThreshold: calendars[i].nextdaythreshold,
                 windowResize: function(view) {
                 	if( view.calendar.options.responsive && $(window).width() < 514 ){
-                		$(this).fullCalendar( 'changeView', 'listMonth' );
+                		$(this).fullCalendar( 'changeView', _eoResponsiveViewMap[view.calendar.options.previousView] );
                 	} else {
                 		$(this).fullCalendar( 'changeView', view.calendar.options.previousView );
                 	}

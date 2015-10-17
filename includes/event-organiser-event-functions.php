@@ -1333,6 +1333,8 @@ function eo_has_event_finished( $event_id = false, $occurrence_id = false ) {
  * * **mintime** (string) Earliest time to show on week/day views. Default '00:00',
  * * **maxtime** (string) Latest time to show on week/day views. Default '24:00',
  * * **slotDuration** (string) The frequency for displaying time slots in agenda views, default '00:30:00' (30 minutes)
+ * * **nextDayThreshold** (string) If the event starts on a previous day, then the end time of the event must be after this time for it appear on this day on the calendar. Default '06:00:00' (6am)
+     e.g. An event 17th October 11pm - 18th October 7am will appear on the 17th and 18th, but an event 17th October 11pm - 18th October 5am will appear only on the 17th.
  * * **alldayslot** (bool) Whether to include an all day slot (week / day views) in the calendar. Default true.
  * * **alldaytext** (string) Text to display in all day slot. Default 'All Day'.
  * * **titleformatmonth** (string) Date format (PHP) for title for month view. Default 'l, M j, Y'
@@ -1362,7 +1364,8 @@ function eo_get_event_fullcalendar( $args = array() ){
 		'timeformat' => get_option( 'time_format' ), 'axisformat' => get_option( 'time_format' ),
 		'key' => false, 'tooltip' => true, 
 		'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 'showdays' => array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' ),
-		'slotDuration' => '00:30:00',
+		'slotduration' => '00:30:00',
+		'nextdaythreshold' => '06:00:00',
 		'alldayslot' => true, 'alldaytext' => __( 'All Day', 'eventorganiser' ), 
 		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
