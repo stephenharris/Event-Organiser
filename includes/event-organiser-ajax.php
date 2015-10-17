@@ -159,9 +159,18 @@ function eventorganiser_public_fullcalendar() {
 			//Get Event Start and End date, set timezone to the blog's timzone
 			$event_start    = new DateTime( $post->StartDate.' '.$post->StartTime, $tz );
 			$event_end      = new DateTime( $post->EndDate.' '.$post->FinishTime, $tz );
+			
+			if ( $event['allDay'] ) {
+				$event_end->modify( '+1 minute' );
+			}
+			
 			$event['start'] = $event_start->format( 'Y-m-d\TH:i:s' );
 			$event['end']   = $event_end->format( 'Y-m-d\TH:i:s' );
-
+			
+			if ( $event['allDay'] ) {
+				$event_end->modify( '-1 minute' );
+			}
+				
 			//Don't use get_the_excerpt as this adds a link
 			$excerpt_length = apply_filters('excerpt_length', 55);
 
@@ -356,8 +365,16 @@ function eventorganiser_admin_calendar() {
 				$event_start = new DateTime($post->StartDate.' '.$post->StartTime, $tz);
 				$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, $tz);
 	
+				if ( $event['allDay'] ) {
+					$event_end->modify( '+1 minute' );
+				}
+				
 				$event['start']= $event_start->format('Y-m-d\TH:i:s\Z');
 				$event['end']= $event_end->format('Y-m-d\TH:i:s\Z');
+				
+				if ( $event['allDay'] ) {
+					$event_end->modify( '-1 minute' );
+				}
 	
 				//Produce summary of event
 				$summary= "<table class='form-table' >"

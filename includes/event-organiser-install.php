@@ -227,6 +227,7 @@ function eventorganiser_upgradecheck() {
 		if ( version_compare( $installed_ver, '3.0.0', '<' ) ) {
 			//Agenda widget refactored, clear widget cache
 			delete_transient( 'eo_widget_agenda' );
+			_eventorganiser_delete_calendar_cache();
 		}
 
 		update_option( 'eventorganiser_version', $eventorganiser_db_version );
