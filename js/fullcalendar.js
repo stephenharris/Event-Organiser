@@ -10229,7 +10229,27 @@ ListView.duration = { months: 1 };
 
 fcViews.listMonth = {
 	type: 'list',
-	duration: { weeks: 4 }
+	duration: { months: 1 }
+};
+
+;;
+
+/* A list view with simple day cells
+----------------------------------------------------------------------------------------------------------------------*/
+
+fcViews.listWeek = {
+	type: 'list',
+	duration: { weeks: 1 }
+};
+
+;;
+
+/* A list view with simple day cells
+----------------------------------------------------------------------------------------------------------------------*/
+
+fcViews.listDay = {
+	type: 'list',
+	duration: { days: 1 }
 };
 
 ;;
