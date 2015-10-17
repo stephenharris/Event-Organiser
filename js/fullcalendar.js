@@ -5,6 +5,7 @@
  * Edits made by Stephen Harris for Event Organiser
  * http://wp-event-organiser.com/
  */
+
 (function(factory) {
 	if (typeof define === 'function' && define.amd) {
 		define([ 'jquery', 'moment' ], factory);
@@ -4755,7 +4756,7 @@ DayGrid.mixin({
 			timeHtml = '<span class="fc-time">' + htmlEscape(this.getEventTimeText(event)) + '</span>';
 		}
 		
-		var dateSR ='<span class="eo-fullcalendar-screen-reader-text screen-reader-text"> ' + htmlEscape( this.getEventTimeText( event, "dddd, MMMM Do YYYY" ) ) + ' </span>';
+		var dateSR ='<span class="eo-fullcalendar-screen-reader-text screen-reader-text"> ' + htmlEscape(this.getEventTimeText(event, "dddd, MMMM Do YYYY")) + ' </span>';
 
 		titleHtml =
 			'<span class="fc-title">' +
@@ -4775,7 +4776,7 @@ DayGrid.mixin({
 				'<div class="fc-content">' +
 					(this.isRTL ?
 						titleHtml + ' ' + timeHtml + dateSR: // put a natural space in between
-						dateSR + timeHtml + ' ' + titleHtml   //
+						dateSR + timeHtml + ' ' + titleHtml  //
 						) +
 				'</div>' +
 				(isResizable ?
