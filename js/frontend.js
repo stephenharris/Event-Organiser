@@ -85,9 +85,7 @@ jQuery(document).ready(function () {
 			var args = {
 				id: calendar,
 				
-				year: calendars[i].year ? calendars[i].year : undefined,
-				month: calendars[i].month ? calendars[i].month : undefined,
-				date: calendars[i].date ? calendars[i].date : undefined,
+				defaultDate: calendars[i].defaultdate ? calendars[i].defaultdate : undefined,
 				
 				category: calendars[i].event_category,
 				venue: calendars[i].event_venue,
