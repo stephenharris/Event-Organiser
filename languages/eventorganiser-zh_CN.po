@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-27 00:58+0100\n"
 "PO-Revision-Date: 2015-09-26 08:12:02+0000\n"
-"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
+"Last-Translator: tinyhill <tinyhill@163.com>\n"
 "Language-Team: \n"
 "Language: Chinese (China)\n"
 "MIME-Version: 1.0\n"
@@ -14,11 +14,11 @@ msgstr ""
 
 #: classes/class-eo-agenda-widget.php:12
 msgid "Displays a list of events, grouped by date"
-msgstr ""
+msgstr "显示活动列表，按日期分组"
 
 #: classes/class-eo-agenda-widget.php:20
 msgid "Events Agenda"
-msgstr "事件日历"
+msgstr "活动日程"
 
 #: classes/class-eo-agenda-widget.php:36
 #: classes/class-eo-calendar-widget.php:46
@@ -49,7 +49,7 @@ msgstr "分组日期格式"
 
 #: classes/class-eo-agenda-widget.php:55
 msgid "Event date/time format"
-msgstr "事件的日期/时间格式"
+msgstr "活动日期/时间格式"
 
 #: classes/class-eo-agenda-widget.php:60
 msgid "Include 'Add To Google' link"
@@ -70,15 +70,15 @@ msgstr "添加到谷歌日历"
 
 #: classes/class-eo-calendar-widget.php:22
 msgid "Displays a calendar of your events"
-msgstr "显示事件的日历"
+msgstr "显示您的活动日历"
 
 #: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:252
 msgid "Events Calendar"
-msgstr "事件日历"
+msgstr "活动日历"
 
 #: classes/class-eo-calendar-widget.php:57
 msgid "Include past events"
-msgstr "包含过去的事件"
+msgstr "包含过期的活动"
 
 #: classes/class-eo-calendar-widget.php:68
 msgid "Show long events"
@@ -91,7 +91,7 @@ msgstr ""
 #: classes/class-eo-calendar-widget.php:91
 #: classes/class-eo-event-list-widget.php:109
 msgid "Event categories"
-msgstr "事件分类"
+msgstr "活动分类"
 
 #: classes/class-eo-calendar-widget.php:94
 #: classes/class-eo-event-list-widget.php:111
@@ -100,7 +100,7 @@ msgstr ""
 
 #: classes/class-eo-calendar-widget.php:103
 msgid "Event venue"
-msgstr "事件地点"
+msgstr "活动地点"
 
 #: classes/class-eo-calendar-widget.php:107
 #: classes/class-eo-event-list-widget.php:119
@@ -118,7 +118,7 @@ msgstr "下月"
 
 #: classes/class-eo-event-list-widget.php:13
 msgid "Displays a list of events"
-msgstr "显示事件列表"
+msgstr "显示活动列表"
 
 #: classes/class-eo-event-list-widget.php:14
 #: classes/class-eo-event-list-widget.php:26 event-organiser-venues.php:462
@@ -126,49 +126,49 @@ msgstr "显示事件列表"
 #: includes/event-organiser-cpt.php:217 includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:40
 msgid "Events"
-msgstr "事件"
+msgstr "活动"
 
 #: classes/class-eo-event-list-widget.php:36
 msgid "No Events"
-msgstr ""
+msgstr "暂无活动"
 
 #: classes/class-eo-event-list-widget.php:45 event-organiser-manage.php:164
 msgid "Future events"
-msgstr "未来的事件"
+msgstr "未开始的活动"
 
 #: classes/class-eo-event-list-widget.php:51
 #: includes/event-organiser-cpt.php:223
 msgid "All events"
-msgstr "所有事件"
+msgstr "所有活动"
 
 #: classes/class-eo-event-list-widget.php:57
 msgid "Running events"
-msgstr ""
+msgstr "进行中的活动"
 
 #: classes/class-eo-event-list-widget.php:64
 msgid "Past events"
-msgstr ""
+msgstr "已过期的活动"
 
 #: classes/class-eo-event-list-widget.php:70
 msgid "Future & running events"
-msgstr ""
+msgstr "未开始或进行中的活动"
 
 #: classes/class-eo-event-list-widget.php:76
 msgid "Events on today"
-msgstr ""
+msgstr "今天的活动"
 
 #: classes/class-eo-event-list-widget.php:105
 msgid "Number of events"
-msgstr "事件数量"
+msgstr "活动数量"
 
 #: classes/class-eo-event-list-widget.php:116
 #: includes/event-organiser-cpt.php:46
 msgid "Venue:"
-msgstr ""
+msgstr "地点："
 
 #: classes/class-eo-event-list-widget.php:127
 msgid "Show:"
-msgstr ""
+msgstr "显示："
 
 #: classes/class-eo-event-list-widget.php:143
 msgid "Order by"
@@ -180,7 +180,7 @@ msgstr "开始日期"
 
 #: classes/class-eo-event-list-widget.php:147
 msgid "Publish date"
-msgstr ""
+msgstr "发布日期"
 
 #: classes/class-eo-event-list-widget.php:150
 msgid "ASC"
@@ -196,11 +196,11 @@ msgstr ""
 
 #: classes/class-eo-event-list-widget.php:163
 msgid "Template (leave blank for default)"
-msgstr "模版（空白则使用缺省）"
+msgstr "模版（留空则使用默认）"
 
 #: classes/class-eo-event-list-widget.php:165
 msgid "Event list widget placeholders"
-msgstr ""
+msgstr "活动列表小工具占位"
 
 #: classes/class-eo-event-list-widget.php:167
 #, php-format
@@ -212,7 +212,7 @@ msgstr ""
 
 #: classes/class-eo-event-list-widget.php:176
 msgid "'No events' message"
-msgstr "“没有事件”消息"
+msgstr "“暂无活动”的信息"
 
 #: classes/class-eo-venue-list-table.php:76 templates/single-event.php:71
 msgid "Edit"
@@ -225,12 +225,12 @@ msgstr "删除"
 
 #: classes/class-eo-widget-categories.php:10
 msgid "A list or dropdown of event categories"
-msgstr "事件分类列表或下拉菜单"
+msgstr "活动分类的列表或下拉菜单"
 
 #: classes/class-eo-widget-categories.php:11 event-organiser-settings.php:317
 #: includes/event-organiser-cpt.php:92
 msgid "Event Categories"
-msgstr "事件分类"
+msgstr "活动分类"
 
 #: classes/class-eo-widget-categories.php:25 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
@@ -255,15 +255,15 @@ msgstr "显示为下拉菜单"
 
 #: classes/class-eo-widget-categories.php:131
 msgid "Show hierarchy"
-msgstr "显示层次"
+msgstr "显示为层级结构"
 
 #: classes/class-eo-widget-venues.php:11
 msgid "A list or dropdown of event venues"
-msgstr "事件地点的列表或下拉菜单"
+msgstr "活动地点的列表或下拉菜单"
 
 #: classes/class-eo-widget-venues.php:12
 msgid "Event Venues"
-msgstr "事件地点"
+msgstr "活动地点"
 
 #: classes/class-eo-widget-venues.php:29 event-organiser-settings.php:307
 #: event-organiser-venues.php:185 includes/event-organiser-cpt.php:31
@@ -272,29 +272,29 @@ msgstr "地点"
 
 #: classes/class-eo-widget-venues.php:55
 msgid "Select Venue"
-msgstr ""
+msgstr "选择地点"
 
 #: classes/class-eventorganiser-shortcodes.php:437
 msgid "There is no excerpt because this is a protected post."
-msgstr ""
+msgstr "暂无摘要，因为这是一篇受保护的文章。"
 
 #: event-organiser-add-ons.php:19 event-organiser-add-ons.php:95
 msgid "Event Organiser Extensions"
-msgstr ""
+msgstr "Event Organiser 扩展"
 
 #: event-organiser-add-ons.php:20
 msgid "Extensions"
-msgstr ""
+msgstr "扩展"
 
 #: event-organiser-add-ons.php:99
 msgid ""
 "Event Organiser offers a range of extension which add additional features to "
 "the plug-in."
-msgstr ""
+msgstr "Event Organiser 提供了一系列能给此插件增加附加功能的扩展。"
 
 #: event-organiser-add-ons.php:130 event-organiser-go-pro.php:90
 msgid "Find out more &hellip;"
-msgstr ""
+msgstr "了解更多 &hellip;"
 
 #: event-organiser-calendar.php:21 event-organiser-calendar.php:22
 msgid "Calendar View"
@@ -325,15 +325,15 @@ msgstr "到日期"
 
 #: event-organiser-calendar.php:125
 msgid "You do not have sufficient permissions to create events. "
-msgstr "你没有足够的权限创建事件"
+msgstr "你没有足够的权限创建活动"
 
 #: event-organiser-calendar.php:181
 msgid "You do not have sufficient permissions to edit this event. "
-msgstr "你没有足够的权限编辑这个事件"
+msgstr "你没有足够的权限编辑这个活动"
 
 #: event-organiser-calendar.php:199
 msgid "You do not have sufficient permissions to delete this event. "
-msgstr "你没有足够的权限删除这个事件"
+msgstr "你没有足够的权限删除这个活动"
 
 #: event-organiser-calendar.php:209
 msgid "Occurrence deleted."
@@ -341,7 +341,7 @@ msgstr ""
 
 #: event-organiser-calendar.php:225
 msgid "View keyboard shortcuts"
-msgstr ""
+msgstr "查看快捷键"
 
 #: event-organiser-calendar.php:230
 msgid "Calendar options"
@@ -362,7 +362,7 @@ msgstr "当前日期时间"
 
 #: event-organiser-calendar.php:273
 msgid "Create an event"
-msgstr "创建一个事件"
+msgstr "创建一个活动"
 
 #: event-organiser-calendar.php:278
 msgid "When"
@@ -370,7 +370,7 @@ msgstr "何时"
 
 #: event-organiser-calendar.php:282
 msgid "Event Title"
-msgstr "事件标题"
+msgstr "活动标题"
 
 #: event-organiser-calendar.php:289 includes/event-organiser-ajax.php:380
 msgid "Where"
@@ -387,15 +387,15 @@ msgstr "取消"
 
 #: event-organiser-calendar.php:318
 msgid "Publish Event"
-msgstr "发布事件"
+msgstr "发布活动"
 
 #: event-organiser-calendar.php:324
 msgid "Submit for Review"
-msgstr ""
+msgstr "提交审核"
 
 #: event-organiser-calendar.php:335
 msgid "The following keyboard shortcuts are available"
-msgstr ""
+msgstr "以下快捷键可用"
 
 #: event-organiser-calendar.php:339
 msgid "Navigate to next period"
@@ -407,15 +407,15 @@ msgstr ""
 
 #: event-organiser-calendar.php:347
 msgid "Switch to month view"
-msgstr ""
+msgstr "切换到月视图"
 
 #: event-organiser-calendar.php:351
 msgid "Switch to week view"
-msgstr ""
+msgstr "切换到周视图"
 
 #: event-organiser-calendar.php:355
 msgid "Switch to day view"
-msgstr ""
+msgstr "切换到天视图"
 
 #: event-organiser-calendar.php:359
 msgid "Jump to today in view"
@@ -423,24 +423,24 @@ msgstr ""
 
 #: event-organiser-calendar.php:363
 msgid "Open modal of selected event"
-msgstr ""
+msgstr "打开选中活动窗口"
 
 #: event-organiser-calendar.php:367
 msgid "Close modal"
-msgstr ""
+msgstr "关闭窗口"
 
 #: event-organiser-calendar.php:371
 msgid "Open shorcut help"
-msgstr ""
+msgstr "打开短代码帮助"
 
 #: event-organiser-calendar.php:390 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:34
 msgid "Event Details"
-msgstr "事件细节"
+msgstr "活动细节"
 
 #: event-organiser-calendar.php:392
 msgid "Event Detail"
-msgstr "事件细节"
+msgstr "活动细节"
 
 #: event-organiser-debug.php:13 event-organiser-debug.php:14
 #: event-organiser-debug.php:58
@@ -526,7 +526,7 @@ msgstr ""
 #: event-organiser-edit.php:99
 #, fuzzy, php-format
 msgid "Enter date in %s format"
-msgstr "事件的日期/时间格式"
+msgstr "活动日期/时间格式"
 
 #: event-organiser-edit.php:100
 msgid "Enter time in 24-hour hh colon mm format"
@@ -558,7 +558,7 @@ msgstr "结束日期"
 
 #: event-organiser-edit.php:140
 msgid "End Time"
-msgstr "结束日时间"
+msgstr "结束时间"
 
 #: event-organiser-edit.php:158 event-organiser-manage.php:38
 msgid "Recurrence"
@@ -566,7 +566,7 @@ msgstr ""
 
 #: event-organiser-edit.php:163
 msgid "none"
-msgstr ""
+msgstr "一次性"
 
 #: event-organiser-edit.php:163
 msgid "daily"
@@ -594,7 +594,7 @@ msgstr "重复每"
 
 #: event-organiser-edit.php:180
 msgid "Recurrence frequency"
-msgstr ""
+msgstr "频率"
 
 #: event-organiser-edit.php:187
 msgid "Repeat on days of week:"
@@ -626,7 +626,7 @@ msgstr "直到"
 #: event-organiser-edit.php:224
 #, fuzzy
 msgid "Repeat this event until:"
-msgstr "重复事件"
+msgstr "重复活动直到："
 
 #: event-organiser-edit.php:235
 msgid "Include/Exclude occurrences:"
@@ -647,11 +647,11 @@ msgstr "地点名称"
 
 #: event-organiser-edit.php:465
 msgid "Event dates were not saved."
-msgstr "事件日期没有被保存"
+msgstr "活动日期没有被保存"
 
 #: event-organiser-go-pro.php:24
 msgid "Get Event Organiser Pro Add-On"
-msgstr ""
+msgstr "获取 Event Organiser Pro 扩展"
 
 #: event-organiser-go-pro.php:25
 msgid "Go Pro"
@@ -659,7 +659,7 @@ msgstr ""
 
 #: event-organiser-go-pro.php:52
 msgid "Get Event Organiser Pro"
-msgstr ""
+msgstr "获取 Event Organiser Pro"
 
 #: event-organiser-go-pro.php:55
 msgid ""
@@ -709,41 +709,41 @@ msgstr ""
 
 #: event-organiser-manage.php:19 includes/event-organiser-cpt.php:218
 msgid "Event"
-msgstr "事件"
+msgstr "活动"
 
 #: event-organiser-manage.php:163
 msgid "View all events"
-msgstr "查看所有事件"
+msgstr "查看所有活动"
 
 #: event-organiser-manage.php:165
 msgid "Expired events"
-msgstr "过期的事件"
+msgstr "过期的活动"
 
 #: event-organiser-manage.php:166
 msgid "Events within 24 hours"
-msgstr "24小时内的事件"
+msgstr "24小时内的活动"
 
 #: event-organiser-manage.php:167
 msgid "Events within 1 week"
-msgstr "1周内的事件"
+msgstr "1周内的活动"
 
 #: event-organiser-manage.php:168
 #, php-format
 msgid "Events within %d weeks"
-msgstr "%d 周内的事件"
+msgstr "%d 周内的活动"
 
 #: event-organiser-manage.php:169
 msgid "Events within 1 month"
-msgstr "1月内的事件"
+msgstr "1月内的活动"
 
 #: event-organiser-manage.php:170
 #, php-format
 msgid "Events within %d months"
-msgstr "%d 月内的事件"
+msgstr "%d 月内的活动"
 
 #: event-organiser-manage.php:171
 msgid "Events within 1 year"
-msgstr "1年内的事件"
+msgstr "1年内的活动"
 
 #: event-organiser-manage.php:223
 msgid "&mdash; No Change &mdash;"
@@ -771,41 +771,41 @@ msgstr "导出"
 
 #: event-organiser-settings.php:40
 msgid "Event Organiser Settings"
-msgstr "事件组织插件设置"
+msgstr "活动组织插件设置"
 
 #: event-organiser-settings.php:41
 msgid "Event Organiser"
-msgstr "事件组织插件"
+msgstr "活动组织插件"
 
 #: event-organiser-settings.php:46 event-organiser.php:111
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
-msgstr "编辑事件"
+msgstr "编辑活动"
 
 #: event-organiser-settings.php:47 event-organiser.php:112
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
-msgstr "发布事件"
+msgstr "发布活动"
 
 #: event-organiser-settings.php:48 event-organiser.php:113
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
-msgstr "删除事件"
+msgstr "删除活动"
 
 #: event-organiser-settings.php:49 event-organiser.php:114
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
-msgstr "编辑其他人的事件"
+msgstr "编辑其他人的活动"
 
 #: event-organiser-settings.php:50 event-organiser.php:115
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
-msgstr "删除其他人的事件"
+msgstr "删除其他人的活动"
 
 #: event-organiser-settings.php:51 event-organiser.php:116
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
-msgstr "读取私人事件"
+msgstr "读取私人活动"
 
 #: event-organiser-settings.php:52 event-organiser.php:117
 #: includes/event-organiser-install.php:118
@@ -815,7 +815,7 @@ msgstr "管理地点"
 #: event-organiser-settings.php:53 event-organiser.php:118
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
-msgstr "管理事件分类和标签"
+msgstr "管理活动分类和标签"
 
 #: event-organiser-settings.php:75
 msgid "Add-on Licence keys"
@@ -856,11 +856,11 @@ msgstr "修订"
 #: event-organiser-settings.php:152 event-organiser-settings.php:326
 #: includes/event-organiser-cpt.php:146
 msgid "Event Tags"
-msgstr "事件标签"
+msgstr "活动标签"
 
 #: event-organiser-settings.php:157 event-organiser-settings.php:184
 msgid "Show past events:"
-msgstr "显示过去的事件"
+msgstr "显示过去的活动"
 
 #: event-organiser-settings.php:163 event-organiser-settings.php:190
 msgid ""
@@ -911,7 +911,7 @@ msgstr ""
 
 #: event-organiser-settings.php:214
 msgid "Delete expired events:"
-msgstr "删除过期事件"
+msgstr "删除过期活动"
 
 #: event-organiser-settings.php:220
 msgid ""
@@ -1019,11 +1019,11 @@ msgstr ""
 
 #: event-organiser-settings.php:640
 msgid "Events archives:"
-msgstr "事件存档"
+msgstr "活动存档"
 
 #: event-organiser-settings.php:641
 msgid "Event page:"
-msgstr "事件页"
+msgstr "活动页"
 
 #: event-organiser-settings.php:642
 msgid "Venue page:"
@@ -1031,7 +1031,7 @@ msgstr "地点页"
 
 #: event-organiser-settings.php:643
 msgid "Events Category page:"
-msgstr "事件分类页"
+msgstr "活动分类页"
 
 #: event-organiser-settings.php:646
 #, php-format
@@ -1221,7 +1221,7 @@ msgstr ""
 #: templates/archive-event.php:32 templates/archive-event.php:35
 #: templates/archive-event.php:38
 msgid "Events: "
-msgstr "事件"
+msgstr "活动"
 
 #: includes/class-event-organiser-im-export.php:61
 #, php-format
@@ -1245,7 +1245,7 @@ msgstr "文件大小: %s. 文件类型: %s"
 
 #: includes/class-event-organiser-im-export.php:91
 msgid "Export Events"
-msgstr "导出事件"
+msgstr "导出活动"
 
 #: includes/class-event-organiser-im-export.php:94
 msgid ""
@@ -1259,7 +1259,7 @@ msgstr "下载导出的文件"
 
 #: includes/class-event-organiser-im-export.php:100
 msgid "Import Events"
-msgstr "导入事件"
+msgstr "导入活动"
 
 #: includes/class-event-organiser-im-export.php:103
 msgid "Import an ICS file."
@@ -1279,11 +1279,11 @@ msgstr "上载ICS文件"
 
 #: includes/class-event-organiser-im-export.php:162
 msgid "You do not have sufficient permissions to import events."
-msgstr "你没有足够的权限导入事件"
+msgstr "你没有足够的权限导入活动"
 
 #: includes/class-event-organiser-im-export.php:244
 msgid "No events were imported."
-msgstr "没有事件被导入"
+msgstr "没有活动被导入"
 
 #: includes/class-event-organiser-im-export.php:253
 msgid "Error:"
@@ -1295,12 +1295,12 @@ msgstr ""
 
 #: includes/class-event-organiser-im-export.php:268
 msgid "1 event was successfully imported"
-msgstr "1个事件被成功导入"
+msgstr "1个活动被成功导入"
 
 #: includes/class-event-organiser-im-export.php:271
 #, php-format
 msgid "%d events were successfully imported"
-msgstr "%d 个事件被成功导入"
+msgstr "%d 个活动被成功导入"
 
 #: includes/class-event-organiser-im-export.php:274
 msgid "1 venue was created"
@@ -1343,11 +1343,11 @@ msgstr "结束"
 
 #: includes/event-organiser-ajax.php:406
 msgid "This event recurs"
-msgstr "此事件再次发生"
+msgstr "此活动再次发生"
 
 #: includes/event-organiser-ajax.php:412 includes/event-organiser-cpt.php:221
 msgid "Edit Event"
-msgstr "编辑事件"
+msgstr "编辑活动"
 
 #: includes/event-organiser-ajax.php:432
 msgid "Delete this occurrence"
@@ -1541,27 +1541,27 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:220
 msgid "Add New Event"
-msgstr "添加新事件"
+msgstr "添加新活动"
 
 #: includes/event-organiser-cpt.php:222
 msgid "New Event"
-msgstr "新事件"
+msgstr "新活动"
 
 #: includes/event-organiser-cpt.php:224
 msgid "View Event"
-msgstr "查看事件"
+msgstr "查看活动"
 
 #: includes/event-organiser-cpt.php:225
 msgid "Search events"
-msgstr "查找事件"
+msgstr "查找活动"
 
 #: includes/event-organiser-cpt.php:226
 msgid "No events found"
-msgstr "没有发现事件"
+msgstr "没有发现活动"
 
 #: includes/event-organiser-cpt.php:227
 msgid "No events found in Trash"
-msgstr "回收站中没有发现事件"
+msgstr "回收站中没有发现活动"
 
 #: includes/event-organiser-cpt.php:308
 #, php-format
@@ -1578,7 +1578,7 @@ msgstr "自定义字段已删除"
 
 #: includes/event-organiser-cpt.php:311
 msgid "Event updated."
-msgstr "事件被更新了"
+msgstr "活动被更新了"
 
 #: includes/event-organiser-cpt.php:313
 #, php-format
@@ -1588,16 +1588,16 @@ msgstr ""
 #: includes/event-organiser-cpt.php:314
 #, php-format
 msgid "Event published. <a href=\"%s\">View event</a>"
-msgstr "事件被发布了。<a href=\"%s\">查看事件</a>"
+msgstr "活动被发布了。<a href=\"%s\">查看活动</a>"
 
 #: includes/event-organiser-cpt.php:315
 msgid "Event saved."
-msgstr "事件被保存了"
+msgstr "活动被保存了"
 
 #: includes/event-organiser-cpt.php:316
 #, php-format
 msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
-msgstr "事件被提交了。<a target=\"_blank\" href=\"%s\">预览事件</a>"
+msgstr "活动被提交了。<a target=\"_blank\" href=\"%s\">预览活动</a>"
 
 #: includes/event-organiser-cpt.php:317
 #, php-format
@@ -1621,11 +1621,11 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:514
 msgid "Creating events"
-msgstr "正在创建事件"
+msgstr "正在创建活动"
 
 #: includes/event-organiser-cpt.php:515
 msgid "Creating events:"
-msgstr "正在创建事件"
+msgstr "正在创建活动"
 
 #: includes/event-organiser-cpt.php:517
 msgid ""
@@ -1643,11 +1643,11 @@ msgstr ""
 msgid ""
 "All dates and times must be entered in the specified format. This format can "
 "changed in the settings page."
-msgstr "所有的日期和事件必须按指定格式输入。格式可以在设置页修改。"
+msgstr "所有的日期和活动必须按指定格式输入。格式可以在设置页修改。"
 
 #: includes/event-organiser-cpt.php:524
 msgid "Repeating events"
-msgstr "重复事件"
+msgstr "重复活动"
 
 #: includes/event-organiser-cpt.php:525
 msgid ""
@@ -1741,7 +1741,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:574
 msgid "Add Event"
-msgstr "添加事件"
+msgstr "添加活动"
 
 #: includes/event-organiser-cpt.php:575
 msgid ""
@@ -1907,7 +1907,7 @@ msgstr ""
 
 #: includes/event-organiser-register.php:260
 msgid "This event will repeat"
-msgstr "此事件会重复"
+msgstr "此活动会重复"
 
 #: includes/event-organiser-register.php:367
 msgid "Settings"
@@ -2036,7 +2036,7 @@ msgstr ""
 #: templates/event-meta-event-single.php:47
 #, php-format
 msgid "This event finished on %s"
-msgstr "事件已在%s结束"
+msgstr "活动已在%s结束"
 
 #: templates/event-meta-event-single.php:83
 msgid "Upcoming Dates"
@@ -2059,4 +2059,4 @@ msgstr ""
 #: templates/taxonomy-event-venue.php:30
 #, php-format
 msgid "Events at: %s"
-msgstr "事件在： %s"
+msgstr "活动在： %s"
