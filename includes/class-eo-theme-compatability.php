@@ -451,5 +451,5 @@ class EO_Theme_Compat {
 	}
 
 }
-$compat = EO_Theme_Compat::get_instance();
-$compat->init();
+$eo_compat = EO_Theme_Compat::get_instance();
+$eo_compat->init();
