@@ -1,7 +1,7 @@
-Feature: Creating events
-    In order to create events
+Feature: Manage events
+    In order to manage events
     As a user
-    I need to be able to configure the event's schedule
+    I need to be able to see the events admin page in the dashboard
 
     Background:
         Given I have a vanilla wordpress installation

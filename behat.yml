@@ -6,14 +6,14 @@ default:
         - WordPressAdminContext
   extensions:
     Johnbillion\WordPressExtension:
-      path: 'tmp/wordpress'
+      path: '/tmp/wordpress'
       connection:
-        db: 'wordpress_test2'
+        db: 'wordpress_test'
         username: 'root'
-        password: 'root'
+        password: ''
       symlink:
         from: '%paths.base%'
-        to: 'tmp/wordpress/wp-content/plugins/event-organiser'
+        to: '/tmp/wordpress/wp-content/plugins/event-organiser'
     Behat\MinkExtension:
       base_url:    'http://localhost:8000'
       goutte: ~
