@@ -17,10 +17,20 @@
         "issues": "https://github.com/stephenharris/Event-Organiser/issues"
     },
     "require-dev": {
-        "phpunit/phpunit": "3.7.*",
+        "phpunit/phpunit": "4.0.*",
         "phpmd/phpmd" : "@stable",
         "squizlabs/php_codesniffer": "2.*",
-		"wp-coding-standards/wpcs" : "0.*"
+		"wp-coding-standards/wpcs" : "0.*",
+        "behat/behat": "~3.0",
+        "behat/mink": "~1.4",
+        "behat/mink-extension": "~2.0",
+        "behat/mink-goutte-driver": "~1.1",
+        "behat/mink-selenium2-driver": "*",
+        "johnbillion/wordpress-behat-extension": "~0.1",
+        "johnpbloch/wordpress": "~4.2.0"
+    },
+	"extra": {
+        "wordpress-install-dir": "vendor/wordpress"
     },
     "scripts"    : {
         "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths ../../wp-coding-standards/wpcs",

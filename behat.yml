@@ -1,0 +1,20 @@
+default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext
+        - WordPressAdminContext
+  extensions:
+    Johnbillion\WordPressExtension:
+      path: 'tmp/wordpress'
+      connection:
+        db: 'wordpress_test2'
+        username: 'root'
+        password: 'root'
+      symlink:
+        from: '%paths.base%'
+        to: 'tmp/wordpress/wp-content/plugins/event-organiser'
+    Behat\MinkExtension:
+      base_url:    'http://localhost:8000'
+      goutte: ~
+      selenium2: ~
