@@ -12,8 +12,8 @@ echo "X-WR-CALDESC:" . get_bloginfo('name') . " - Events\r\n";
 if ( have_posts() ) :
 
 	$now     = new DateTime();
-	$dtstamp = $now->format('Ymd\THis\Z');
-	
+	$dtstamp = eo_format_date( 'now', 'Ymd\THis\Z' );
+
 	//Set $tz if a timezone is specified - this does not include GMT offsets
 	$timezone     = ( get_option( 'timezone_string' ) ? eo_get_blog_timezone() : false );
 	$utc_timezone = new DateTimeZone( 'UTC' );

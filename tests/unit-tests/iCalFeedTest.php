@@ -2,7 +2,28 @@
 
 class iCalFeedTest extends EO_UnitTestCase
 {
+	
+	public function setUp() {
+		add_filter( 'eventorganiser_format_datetime_string', array( $this, 'groundhogDay' ), 10, 4 );
+		parent::setUp();
+	}
 
+
+	public function tearDown() {
+		remove_filter( 'eventorganiser_format_datetime_string', array( $this, 'groundhogDay' ) );
+		parent::tearDown();
+	}
+	
+	public function groundhogDay( $formatted_datetime, $datetime_string, $format ) {
+		if ( 'now' == $datetime_string ) {
+			//Hardcode 'now' for unit tests.
+			$datetime           = new DateTime( '1993-02-02 11:00:00', eo_get_blog_timezone() );
+			$formatted_datetime = $datetime->format( $format );
+		}
+		return $formatted_datetime;
+	}
+	
+	
 	public function testRRULE(){
 	
 		$event_id = $this->factory->event->create( array(
@@ -661,7 +682,6 @@ END:VTIMEZONE";
 		include( $file );
 		$expected = ob_get_contents();
 		ob_end_clean();
-		$expected = str_replace( '%%now%%', $now->format( 'Ymd\THis\Z' ), $expected );
 		return $expected;		
 	}
 	
