@@ -106,23 +106,33 @@ function eventorganiser_register_scripts(){
 		'eo-venue-util'
 	),$version,true);
 
-	/*  Script for event edit page. (Legacy version) */
-	wp_register_script( 'eo-time-picker', EVENT_ORGANISER_URL."js/time-picker{$ext}.js",array(
+	/**
+	 * jquery-timepicker
+	 *
+	 * @license MIT
+	 * @link    https://github.com/jonthornton/jquery-timepicker
+	 */
+	wp_register_script( 'eo-timepicker', EVENT_ORGANISER_URL . "js/jquery.timepicker{$ext}.js", array(
 		'jquery',
-		'jquery-ui-datepicker',
-	),$version,true);
+	), $version, true );
 
-	/* New version - prefixed timepicker */
-	wp_register_script( 'eo-timepicker', EVENT_ORGANISER_URL."js/jquery-ui-eo-timepicker{$ext}.js",array(
+	/**
+	 * Datepair.js
+	 *
+	 * @license MIT
+	 * @link    https://github.com/jonthornton/Datepair.js
+	 */
+	wp_register_script( 'eo-datepair', EVENT_ORGANISER_URL . "js/datepair{$ext}.js", array(), $version, true );
+	wp_register_script( 'eo-jquery-datepair', EVENT_ORGANISER_URL . "js/jquery.datepair{$ext}.js", array(
+		'eo-datepair',
 		'jquery',
-		'jquery-ui-datepicker',
-	),$version,true);
+	), $version, true );
 
 	wp_register_script( 'eo_event', EVENT_ORGANISER_URL."js/event{$ext}.js",array(
 		'jquery',
 		'jquery-ui-datepicker',
 		'eo-timepicker',
-		'eo-time-picker',//Deprecated remove in 3.0?
+		'eo-jquery-datepair',
 		'eo-venue-util',
 		'jquery-ui-autocomplete',
 		'jquery-ui-widget',
@@ -150,8 +160,14 @@ function eventorganiser_register_scripts(){
 	/*  Pick and register jQuery UI style */
 	wp_register_style( 'eventorganiser-jquery-ui-style', EVENT_ORGANISER_URL."css/eventorganiser-jquery-ui{$rtl}{$ext}.css", array(), $version );
 
+	// Timepicker CSS
+	wp_register_style( 'eo-timepicker', EVENT_ORGANISER_URL . "css/jquery.timepicker{$ext}.css", array(), $version );
+
 	/* Admin styling */
-	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL."css/eventorganiser-admin-style{$rtl}{$ext}.css", array( 'eventorganiser-jquery-ui-style' ), $version );
+	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL."css/eventorganiser-admin-style{$rtl}{$ext}.css", array(
+		'eventorganiser-jquery-ui-style',
+		'eo-timepicker'
+	), $version );
 
 	/* Inline Help */
 	wp_register_script( 'eo-inline-help', EVENT_ORGANISER_URL.'js/inline-help.js',array( 'jquery', 'eo_qtip2' ), $version, true );
