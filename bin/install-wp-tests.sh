@@ -5,9 +5,6 @@ if [ $# -lt 3 ]; then
 	exit 1
 fi
 
-parent=$(dirname $PWD)
-grandparent=$(dirname $parent)
-
 DB_NAME=$1
 DB_USER=$2
 DB_PASS=$3
@@ -102,9 +99,9 @@ install_config
 install_test_suite
 install_db
 
-rm -r "${WP_CORE_DIR}wp-content/plugins/*"
+rm -r ${WP_CORE_DIR}wp-content/plugins/*
 
-cp -r $grandparent/ "${WP_CORE_DIR}wp-content/plugins"
+cp -r $PWD "${WP_CORE_DIR}wp-content/plugins/"
 
 ls "${WP_CORE_DIR}wp-content/plugins"
 
