@@ -135,8 +135,8 @@ function _eventorganiser_details_metabox( $post ) {
 	 		
 	 			<label for="eo-end-date" class="screen-reader-text"><?php esc_html_e( 'End Date', 'eventorganiser' ); ?></label>
 				<input id="eo-end-date" aria-describedby="eo-end-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" <?php disabled( ! $sche_once );?>  value="<?php echo $end->format( $phpFormat ); ?>"/>
+
 				<span id="eo-end-date-desc" class="screen-reader-text"><?php echo esc_html( $date_desc );?></span>
-				
 				<label for="eo-end-time" class="screen-reader-text"><?php esc_html_e( 'End Time', 'eventorganiser' ); ?></label>
 				<?php
 				printf(
@@ -145,11 +145,15 @@ function _eventorganiser_details_metabox( $post ) {
 					eo_format_datetime( $end, $time_format )
 				);
 				?>
-				<span id="eo-end-time-desc" class="screen-reader-text"><?php echo esc_html( $time_desc );?></span>	
-				<label for="eo_allday">
+				<span id="eo-end-time-desc" class="screen-reader-text"><?php echo esc_html( $time_desc );?></span>
+
+				<span>
 					<input type="checkbox" id="eo_allday"  <?php checked( $all_day ); ?> name="eo_input[allday]"  <?php  disabled( ! $sche_once );?> value="1"/>
-					<?php esc_html_e( 'All day', 'eventorganiser' );?>
-				</label>
+					<label for="eo_allday">
+						<?php esc_html_e( 'All day', 'eventorganiser' );?>
+					</label>
+				</span>
+
  			</div>
  		</div>
  		
