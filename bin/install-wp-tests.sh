@@ -102,11 +102,11 @@ install_config
 install_test_suite
 install_db
 
-rm "$WP_CORE_DIR/wp-content/plugins/*"
+rm -r "${WP_CORE_DIR}wp-content/plugins/*"
 
-cp -r $grandparent "$WP_CORE_DIR/wp-content/plugins"
+cp -r $grandparent/ "${WP_CORE_DIR}wp-content/plugins"
 
-ls "$WP_CORE_DIR/wp-content/plugins"
+ls "${WP_CORE_DIR}wp-content/plugins"
 
 
 # Used when waiting for stuff
