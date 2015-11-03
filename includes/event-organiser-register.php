@@ -16,7 +16,7 @@ function eventorganiser_register_script() {
 
 	/* Moment.js */
 	wp_register_script( 'eo_momentjs', EVENT_ORGANISER_URL."js/moment{$ext}.js", '2.9.0', true );
-	
+
 	/* FullCalendar */
 	wp_register_script( 'eo_fullcalendar', EVENT_ORGANISER_URL."js/fullcalendar{$ext}.js",array(
 		'jquery',
@@ -25,11 +25,11 @@ function eventorganiser_register_script() {
 		'jquery-ui-widget',
 		'jquery-ui-button',
 	),$version,true);
-	
+
 	/* Google Maps */
 	$protocal = is_ssl() ? 'https://' : 'http://';
 	wp_register_script( 'eo_GoogleMap', $protocal.'maps.googleapis.com/maps/api/js?sensor=false&language='.substr( get_locale(), 0, 2 ) );
-	
+
 	/* Front-end script */
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",array(
 		'jquery','eo_qtip2',
@@ -40,7 +40,7 @@ function eventorganiser_register_script() {
 		'eo_fullcalendar',
 		'eo-wp-js-hooks',
 	),$version,true);
-	
+
 	/* Add js variables to frontend script */
 	$category = get_taxonomy( 'event-category' );
 	$venue    = get_taxonomy( 'event-venue' );
@@ -72,14 +72,14 @@ function eventorganiser_register_script() {
 
 	/* WP-JS-Hooks */
 	wp_register_script( 'eo-wp-js-hooks', EVENT_ORGANISER_URL."js/event-manager{$ext}.js",array('jquery'),$version,true);
-	
+
 	/* Q-Tip */
 	wp_register_script( 'eo_qtip2', EVENT_ORGANISER_URL.'js/qtip2.js',array('jquery'),$version,true);
 
 	/* Styles */
 	eo_register_style( 'eo_calendar-style', EVENT_ORGANISER_URL . "css/fullcalendar{$ext}.css", array(), $version );
 	eo_register_style( 'eo_front', EVENT_ORGANISER_URL . "css/eventorganiser-front-end{$rtl}{$ext}.css", array() , $version );
-}   
+}
 add_action( 'init', 'eventorganiser_register_script' );
 
  /**
@@ -99,25 +99,25 @@ function eventorganiser_register_scripts(){
 		'jquery',
 		'eo_GoogleMap'
 	),$version,true);
-	
+
 	/*  Venue script for venue edit */
 	wp_register_script( 'eo-venue-admin', EVENT_ORGANISER_URL."js/venue-admin{$ext}.js",array(
 		'jquery',
 		'eo-venue-util'
 	),$version,true);
-	
+
 	/*  Script for event edit page. (Legacy version) */
 	wp_register_script( 'eo-time-picker', EVENT_ORGANISER_URL."js/time-picker{$ext}.js",array(
 		'jquery',
-		'jquery-ui-datepicker',		
+		'jquery-ui-datepicker',
 	),$version,true);
-	
+
 	/* New version - prefixed timepicker */
 	wp_register_script( 'eo-timepicker', EVENT_ORGANISER_URL."js/jquery-ui-eo-timepicker{$ext}.js",array(
 		'jquery',
 		'jquery-ui-datepicker',
 	),$version,true);
-	
+
 	wp_register_script( 'eo_event', EVENT_ORGANISER_URL."js/event{$ext}.js",array(
 		'jquery',
 		'jquery-ui-datepicker',
@@ -129,7 +129,7 @@ function eventorganiser_register_scripts(){
 		'jquery-ui-button',
 		'jquery-ui-position',
 	),$version,true);
-	
+
 	wp_register_script( 'eo-edit-event-controller', EVENT_ORGANISER_URL."js/edit-event-controller{$ext}.js",array(
 			'jquery',
 			'eo_event',
@@ -149,7 +149,7 @@ function eventorganiser_register_scripts(){
 
 	/*  Pick and register jQuery UI style */
 	wp_register_style( 'eventorganiser-jquery-ui-style', EVENT_ORGANISER_URL."css/eventorganiser-jquery-ui{$rtl}{$ext}.css", array(), $version );
-	
+
 	/* Admin styling */
 	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL."css/eventorganiser-admin-style{$rtl}{$ext}.css", array( 'eventorganiser-jquery-ui-style' ), $version );
 
@@ -176,9 +176,9 @@ function eventorganiser_cgmp_workaround(){
 	remove_action( 'wp_head', 'cgmp_google_map_deregister_scripts', 200 );
 }
 add_action( 'wp_head', 'eventorganiser_cgmp_workaround', 1 );
-	
+
  /**
- * Check the export and event creation (from Calendar view) actions. 
+ * Check the export and event creation (from Calendar view) actions.
  * These cannot be called later. Most other actions are only called when
  * the appropriate page is loading.
  *
@@ -206,7 +206,7 @@ function eventorganiser_public_export(){
 add_action('init','eventorganiser_public_export');
 
 /**
- * Queues up the javascript / style scripts for Events custom page type 
+ * Queues up the javascript / style scripts for Events custom page type
  * Hooked onto admin_enqueue_scripts
  *
  * @since 1.0.0
@@ -217,10 +217,10 @@ function eventorganiser_add_admin_scripts( $hook ) {
 	global $post,$current_screen,$wp_locale;
 
 	if ( $hook == 'post-new.php' || $hook == 'post.php') {
-		if( $post->post_type == 'event' ) {     
+		if( $post->post_type == 'event' ) {
 
 			wp_enqueue_script( 'eo-edit-event-controller' );
-			wp_localize_script( 'eo_event', 'EO_Ajax_Event', array( 
+			wp_localize_script( 'eo_event', 'EO_Ajax_Event', array(
 					'ajaxurl'   => admin_url( 'admin-ajax.php' ),
 					'wpversion' => get_bloginfo( 'version' ),
 					'startday'  => intval( get_option( 'start_of_week' ) ),
@@ -278,7 +278,7 @@ add_action( 'admin_enqueue_scripts', 'eventorganiser_add_admin_scripts', 998, 1 
 
 
 /**
- * Perform database and WP version checks. Display appropriate error messages. 
+ * Perform database and WP version checks. Display appropriate error messages.
  * Triggered on update.
  *
  * @since 1.4.0
@@ -314,7 +314,7 @@ function eventorganiser_db_checks(){
 		<div class="error"	>
 			<p>Event Organiser requires <strong>WordPress 3.8</strong> to function properly. Your version is <?php echo get_bloginfo('version'); ?>. </p>
 		</div>
-	<?php endif; 
+	<?php endif;
 }
 
 
@@ -359,7 +359,7 @@ add_action('admin_notices','eventorganiser_admin_notices');
  * @access private
  */
 function eventorganiser_plugin_settings_link($links, $file) {
-    
+
 	if( $file == 'event-organiser/event-organiser.php' ) {
 		/* Insert the link at the end*/
 		$links['settings'] = sprintf('<a href="%s"> %s </a>',
@@ -369,7 +369,7 @@ function eventorganiser_plugin_settings_link($links, $file) {
         }
 	return $links;
 }
-add_filter('plugin_action_links', 'eventorganiser_plugin_settings_link', 10, 2);    
+add_filter('plugin_action_links', 'eventorganiser_plugin_settings_link', 10, 2);
 
 /**
  * Schedules cron job for automatically deleting expired events
@@ -423,35 +423,35 @@ function eventorganiser_get_next_cron_time( $cron_name ){
 function eventorganiser_delete_expired_events(){
 	//Get expired events
 	$events = eo_get_events(array('showrepeats'=>0,'showpastevents'=>1,'eo_interval'=>'expired'));
-	
+
 	/**
 	 * Filters how long (in seconds) after an event as finished it should be considered expired.
-	 * 
+	 *
 	 * If enabled in *Settings > Event Organiser > General*, expired events are trashed.
-	 * 
-	 * @param int $time_until_expired Time (in seconds) to wait after an event has finished. Defaults to 24 hours. 
+	 *
+	 * @param int $time_until_expired Time (in seconds) to wait after an event has finished. Defaults to 24 hours.
 	 */
 	$time_until_expired = (int) apply_filters( 'eventorganiser_events_expire_time', 24*60*60 );
 	$time_until_expired = max( $time_until_expired, 0 );
 
 	if($events):
 		$now = new DateTime('now', eo_get_blog_timezone());
-	
+
 		foreach($events as $event):
-			
+
 			$start = eo_get_the_start( DATETIMEOBJ, $event->ID, null, $event->occurrence_id );
 			$end = eo_get_the_end( DATETIMEOBJ, $event->ID, null, $event->occurrence_id );
-			
+
 			$expired = round(abs($end->format('U')-$start->format('U'))) + $time_until_expired; //Duration + expire time
-			
+
 			$finished =  eo_get_schedule_last( DATETIMEOBJ, $event->ID );
 			$finished->modify("+$expired seconds");//[Expired time] after the last occurrence finishes
-			
+
 			//Delete if [expired time] has passed
 			if( $finished <= $now ){
 				wp_trash_post((int) $event->ID);
 			}
-			
+
 		endforeach;
 	endif;
 }
@@ -492,7 +492,7 @@ function eventorganiser_admin_print_scripts() {
 add_action( 'admin_print_styles', 'eventorganiser_admin_print_scripts' );
 
 
-/** 
+/**
  * Purge the occurrences cache
  * Hooked onto eventorganiser_save_event and eventorganiser_delete_event
  *
@@ -533,7 +533,7 @@ function _eventorganiser_delete_calendar_cache() {
 $hooks = array(
 	'eventorganiser_save_event', 'eventorganiser_delete_event', 'wp_trash_post','update_option_gmt_offset', /* obvious */
 	'update_option_start_of_week', /* Start of week is used for calendars */
-	'update_option_rewrite_rules', /* If permalinks updated - links on fullcalendar might now be invalid */ 
+	'update_option_rewrite_rules', /* If permalinks updated - links on fullcalendar might now be invalid */
 	'delete_option_rewrite_rules',
 	'update_option_siteurl',
 	'update_option_home',
@@ -588,16 +588,16 @@ function eventorganiser_pointer_load( $hook_suffix ) {
 		}
 
 		//No valid pointers? Stop here.
-		if( empty($valid_pointers) )	
+		if( empty($valid_pointers) )
 			return;
 
-		// Add pointers style to queue. 
+		// Add pointers style to queue.
 		wp_enqueue_style( 'wp-pointer' );
-		
+
 		// Add pointers script to queue. Add custom script.
 		wp_enqueue_script('eventorganiser-pointer',EVENT_ORGANISER_URL.'js/eventorganiser-pointer.js',array('wp-pointer','eo_event'));
 
-		// Add pointer options to script. 
+		// Add pointer options to script.
 		wp_localize_script('eventorganiser-pointer', 'eventorganiserPointer', $valid_pointers);
 }
 add_action( 'admin_enqueue_scripts', 'eventorganiser_pointer_load',99999);
@@ -630,7 +630,7 @@ function _eventorganiser_upgrade_admin_notice() {
 
 		$message = sprintf(
 			"<h4>" . sprintf( esc_html__('Your site timezone is %s','eventorganiser'), "<em>{$tzstring}</em>" ). '</h4>'
-			."<p>" . __( "Is this correct? Using a fixed offset from UTC may cause unexpected behaviour, particular if you observe Daylight Savings Time.", 'eventorganiser' ) . '<br>' 
+			."<p>" . __( "Is this correct? Using a fixed offset from UTC may cause unexpected behaviour, particular if you observe Daylight Savings Time.", 'eventorganiser' ) . '<br>'
 					.__( "It is strongly recommended you select a city instead, even if you don't observe Daylight Savings Time.",'eventorganiser') . '</p>'
 			."<p>" . __( "You can <a href='%s'>change your timezone settings here</a>.",'eventorganiser') . '</p>',
 			admin_url( 'options-general.php' ).'#default_role'
@@ -645,7 +645,7 @@ add_action( 'admin_notices', '_eventorganiser_upgrade_admin_notice', 1 );
  * Handles city auto-fill request.
  *
  * Hooked onto admin_post_eo-autofillcity. Triggered when user clicks 'autofill' link.
- * This routine goes through all the venues, reverse geocodes to find their city and 
+ * This routine goes through all the venues, reverse geocodes to find their city and
  * autofills the city field (added in 1.7).
  *
  *@ignore
@@ -671,7 +671,7 @@ function _eventorganiser_autofill_city(){
 		If( eo_get_venue_meta($venue_id,'_city',true) )
 			continue;
 
-		$response=wp_remote_get("http://open.mapquestapi.com/nominatim/v1/reverse?format=json&lat={$lat}&lon={$lng}&osm_type=N&limit=1");	
+		$response=wp_remote_get("http://open.mapquestapi.com/nominatim/v1/reverse?format=json&lat={$lat}&lon={$lng}&osm_type=N&limit=1");
 		$geo = json_decode(wp_remote_retrieve_body( $response ));
 		if( isset($geo->address->city) ){
 			$cities[$venue_id] = $geo->address->city;
@@ -689,7 +689,7 @@ function _eventorganiser_autofill_city(){
 				eo_update_venue_meta($venue_id, '_state', $geo->address->state);
 			}
 		}
-	}	
+	}
 
 	wp_safe_redirect(admin_url('edit.php?post_type=event&page=venues'));
 }
