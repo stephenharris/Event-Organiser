@@ -12,17 +12,17 @@ echo "X-WR-CALDESC:" . get_bloginfo('name') . " - Events\r\n";
 if ( have_posts() ) :
 
 	$now     = new DateTime();
-	$dtstamp = $now->format('Ymd\THis\Z');
-	
+	$dtstamp = eo_format_date( 'now', 'Ymd\THis\Z' );
+
 	//Set $tz if a timezone is specified - this does not include GMT offsets
 	$timezone     = ( get_option( 'timezone_string' ) ? eo_get_blog_timezone() : false );
 	$utc_timezone = new DateTimeZone( 'UTC' );
 
-	$earliest_date = clone $now;
-	$latest_date   = clone $now;
+	$earliest_date = false;
+	$latest_date   = false;
 
-	while( have_posts() ): the_post();
-	
+	while ( have_posts() ) : the_post();
+
 		global $post;
 
 		// If event has no corresponding row in events table then skip it
@@ -34,10 +34,10 @@ if ( have_posts() ) :
 		$created_date = get_post_time('Ymd\THis\Z',true);
 		$modified_date = get_post_modified_time('Ymd\THis\Z',true);
 		$schedule_data = eo_get_event_schedule();
-		
+
 		if ( $timezone ) {
-			$earliest_date = min( eo_get_schedule_start( DATETIMEOBJ ), $earliest_date );
-			$latest_date   = max( eo_get_schedule_last( DATETIMEOBJ ), $latest_date );
+			$earliest_date = $earliest_date ? min( eo_get_schedule_start( DATETIMEOBJ ), $earliest_date ) : eo_get_schedule_start( DATETIMEOBJ );
+			$latest_date   = $latest_date ? max( eo_get_schedule_last( DATETIMEOBJ ), $latest_date ) : eo_get_schedule_last( DATETIMEOBJ );
 		}
 
 		// Generate Event status
@@ -159,11 +159,10 @@ if ( have_posts() ) :
 		echo "END:VEVENT\r\n";
 
 	endwhile;
-	
+
 	if ( $timezone ) {
-		echo eventorganiser_ical_vtimezone( $timezone, $earliest_date->format('U'), $latest_date->format('U') ) . "\r\n";
+		echo eventorganiser_ical_vtimezone( $timezone, $earliest_date->format( 'U' ), $latest_date->format( 'U' ) ) . "\r\n";
 	}
-	
 
 endif;
 

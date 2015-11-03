@@ -79,12 +79,13 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
  * @param string $format How to format the date. DATETIMEOBJ for datetime object.
  * @return string|dateTime The formatted date
 */
-function eo_format_date($dateString='',$format='d-m-Y'){
+function eo_format_date( $dateString = '', $format = 'd-m-Y' ) {
 
-	if($format!=''&& $dateString!=''){
-		$datetime = new DateTime($dateString, eo_get_blog_timezone());
-		$formated =  eo_format_datetime($datetime,$format);
-		return $formated;
+	if ( $format != '' && $dateString != '' ) {
+		$datetime  = new DateTime( $dateString, eo_get_blog_timezone() );
+		$formatted = eo_format_datetime( $datetime, $format );
+		$formatted = apply_filters( 'eventorganiser_format_datetime_string', $formatted , $dateString, $format, $datetime );
+		return $formatted;
 	}
 	return false;
 }
