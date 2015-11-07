@@ -75,10 +75,10 @@ function _eventorganiser_details_metabox( $post ) {
 	$sche_once = ( 'once' == $schedule || ! empty( get_current_screen()->action ) );
 
 	if ( ! $sche_once ) {
-		$notices = sprintf( 
+		$notices = sprintf(
 			'<label for="eo-event-recurrring-notice">%s</label>',
 			__( 'This is a recurring event. Check to edit this event and its recurrences', 'eventorganiser' )
-		) 
+		)
 		.' <input type="checkbox" id="eo-event-recurrring-notice" name="eo_input[AlterRe]" value="yes">';
 	} else {
 		$notices = '';
@@ -93,9 +93,9 @@ function _eventorganiser_details_metabox( $post ) {
 	 */
 	$notices = apply_filters( 'eventorganiser_event_metabox_notice', $notices, $post );
 	if ( $notices ) {
-		echo '<div class="updated below-h2"><p>'.$notices.'</p></div>';
+		echo '<div class="updated inline"><p>'.$notices.'</p></div>';
 	}
-	
+
 	$date_desc = sprintf( __( 'Enter date in %s format', 'eventorganiser' ), $format );
 	$time_desc = $is24 ? __( 'Enter time in 24-hour hh colon mm format', 'eventorganiser' ) : __( 'Enter time in 12-hour hh colon mm am or pm format', 'eventorganiser' );
 	?>
