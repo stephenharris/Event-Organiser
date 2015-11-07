@@ -1,6 +1,6 @@
 <?php
 /**
- * Functions for Event CPT editing / creating page 
+ * Functions for Event CPT editing / creating page
  * @since 1.0.0
  */
 /**
@@ -8,17 +8,17 @@
  * @since 1.0.0
  * @ignore
  */
-function _eventorganiser_event_metaboxes_init(){
-	
+function _eventorganiser_event_metaboxes_init() {
+
 	// add a meta box to event post types.
 	add_meta_box( 'eventorganiser_detail', __( 'Event Details', 'eventorganiser' ), '_eventorganiser_details_metabox', 'event', 'normal', 'high' );
-	
+
 	//Repurposes author metabox as organiser
 	$post_type_object = get_post_type_object( 'event' );
-	if( post_type_supports( 'event', 'author' ) ) {
-		if ( is_super_admin() || current_user_can( $post_type_object->cap->edit_others_posts ) ){
-			remove_meta_box( 'authordiv', 'event', 'core' );
-			add_meta_box( 'authordiv',  __( 'Organiser', 'eventorganiser' ), 'post_author_meta_box', 'event', 'normal', 'core' );
+	if ( post_type_supports( 'event', 'author' ) ) {
+		if ( is_super_admin() || current_user_can( $post_type_object->cap->edit_others_posts ) ) {
+			remove_meta_box( 'authordiv', 'event', 'normal' );
+			add_meta_box( 'authordiv',  __( 'Organiser', 'eventorganiser' ), 'post_author_meta_box', 'event', 'normal', 'default' );
 		}
 	}
 }
@@ -33,7 +33,7 @@ add_action( 'add_meta_boxes_event', '_eventorganiser_event_metaboxes_init' );
  */
 function _eventorganiser_details_metabox( $post ) {
 
-	global $wp_locale;	
+	global $wp_locale;
 
 	//Sets the format as php understands it, and textual.
 	$phpFormat = eventorganiser_get_option( 'dateformat' );
