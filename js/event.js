@@ -487,7 +487,7 @@ window.eventOrganiserSchedulePicker = {
         var speed = 700;
         
         $(".event-date :input").attr("disabled", !this.options.editable).toggleClass("ui-state-disabled", !this.options.editable);
-    	$("label[for=eo_allday]").toggleClass("ui-state-disabled", !this.options.editable);
+    	$("label[for=eo-all-day]").toggleClass("ui-state-disabled", !this.options.editable);
     	
     	if( this.options.editable ){
     		$(view.start_time+', '+view.end_time).attr("disabled", schedule.is_all_day ).toggleClass("ui-state-disabled", schedule.is_all_day );

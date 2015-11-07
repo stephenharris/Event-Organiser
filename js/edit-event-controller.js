@@ -48,19 +48,19 @@ eventOrganiserSchedulePicker.init({
 		start_time: '#eo-start-time',
 		end_date: '#eo-end-date',
 		end_time: '#eo-end-time',
-		occurrence_picker: '#eo_occurrence_datepicker',
+		occurrence_picker: '#eo-occurrence-datepicker',
 		occurrence_picker_toggle: '.eo_occurrence_toggle',
-		schedule_last_date: '#recend',
+		schedule_last_date: '#eo-schedule-last-date',
     	schedule: "#eo-event-recurrence",
-    	is_all_day: "#eo_allday",
+    	is_all_day: "#eo-all-day",
 		frequency: '#eo-recurrence-frequency',
-		week_repeat: '#dayofweekrepeat',
-		month_repeat: '#dayofmonthrepeat',
+		week_repeat: '#eo-day-of-week-repeat',
+		month_repeat: '#eo-day-of-month-repeat',
 		recurrence_section: '.reocurrence_row',
-    	include: '#eo_occurrence_includes',
-    	exclude: '#eo_occurrence_excludes',
-    	schedule_span: '#recpan',//day(s)|week(s)|month(s)|year(s) - human readable span
-    	summary: "#event_summary"
+    	include: '#eo-occurrence-includes',
+    	exclude: '#eo-occurrence-excludes',
+    	schedule_span: '#eo-recurrence-schedule-label',//reads day(s)|week(s)|month(s)|year(s) - depending on schedule selection
+    	summary: "#eo-event-summary"
 	},
 	format: EO_Ajax_Event.format,
 	is24hour: Boolean(EO_Ajax_Event.is24hour),
