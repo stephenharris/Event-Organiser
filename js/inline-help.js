@@ -2,7 +2,6 @@
 jQuery(document).ready(function($) {
 	$('.eo-inline-help').each(function() {
 		var id = $(this).attr('id').substr(15);
-		$(this).click(function(e){e.preventDefault();});
 		$(this).qtip({
 			content: {
 				text: eoHelp[id].content,
@@ -11,15 +10,19 @@ jQuery(document).ready(function($) {
 				}
 			},
 			show: {
-				solo: true 
+				solo: true,
+				event: 'click mouseenter',
 			},
-			hide: 'unfocus',
+			hide: 'unfocus, click',
 			style: {
 				classes: 'qtip-eo ui-tooltip-shadow'
 			},
 			position : {
 				 viewport: $(window)
 			}
+		});
+		$(this).click(function(e){
+			e.preventDefault();
 		});
 	});
 });
