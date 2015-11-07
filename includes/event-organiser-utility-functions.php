@@ -1386,31 +1386,33 @@ function eventorganiser_cache_set( $key, $value, $group, $expire = 0 ){
  * @param bool $echo Whether the link HTML should be printed as well as returned.
  * @return string
  */
-function eventorganiser_inline_help( $title, $content, $echo = false, $type = 'help' ){
+function eventorganiser_inline_help( $title, $content, $echo = false, $type = 'help' ) {
 	static $help = array();
-	
+
 	$help[] = array(
-		'title' => $title,
+		'title'   => $title,
 		'content' => $content,
 	);
-	
+
 	wp_localize_script( 'eo-inline-help', 'eoHelp', $help );
 
 	//Ensure style is called after  WP styles
 	add_action( 'admin_footer', '_eventorganiser_enqueue_inline_help_scripts', 100 );
 
-	$id = count($help)-1;
+	$id = count( $help ) - 1;
 	$src = EVENT_ORGANISER_URL."css/images/{$type}-14.png";
-	
-	$link = sprintf( '<a href="#" id="%s" class="eo-inline-help eo-%s-inline"><img src="%s" width="16" height="16"></a>', 
-				'eo-inline-help-' . $id, 
-				$type, 
-				$src 
-			);
-	
-	if( $echo )
+
+	$link = sprintf( '<a href="#" id="%s" class="eo-inline-help eo-%s-inline"><img src="%s" width="16" height="16" alt="%s"></a>',
+		'eo-inline-help-' . $id,
+		$type,
+		$src,
+		esc_attr__( 'Help', 'eventorganiser' )
+	);
+
+	if ( $echo ) {
 		echo $link;
-	
+	}
+
 	return $link;
 }
 
