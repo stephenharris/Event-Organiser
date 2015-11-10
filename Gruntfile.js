@@ -155,7 +155,10 @@ module.exports = function(grunt) {
 			files: {
 				'readme.md': 'readme.txt'
 			},
-		},
+			options: {
+				'screenshot_url': 'assets/{screenshot}.png'
+			}
+		}
 	},
 
 	phpunit: {

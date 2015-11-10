@@ -211,22 +211,22 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 ## Screenshots ##
 
 ### 1. Event admin screen ###
-![Event admin screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-1.png)
+![Event admin screen](assets/screenshot-1.png)
 
 ### 2. Venue admin screen ###
-![Venue admin screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-2.png)
+![Venue admin screen](assets/screenshot-2.png)
 
 ### 3. Event details metabox, showing the full reoccurrence options and venue selection ###
-![Event details metabox, showing the full reoccurrence options and venue selection](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-3.png)
+![Event details metabox, showing the full reoccurrence options and venue selection](assets/screenshot-3.png)
 
 ### 4. Venue editing screen, with Google Maps ###
-![Venue editing screen, with Google Maps](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-4.png)
+![Venue editing screen, with Google Maps](assets/screenshot-4.png)
 
 ### 5. Calendar View screen ###
-![Calendar View screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-5.png)
+![Calendar View screen](assets/screenshot-5.png)
 
 ### 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven) ###
-![View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-6.png)
+![View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)](assets/screenshot-6.png)
 
 
 ## Changelog ##
