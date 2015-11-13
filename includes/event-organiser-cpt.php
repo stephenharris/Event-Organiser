@@ -243,7 +243,7 @@ function eventorganiser_cpt_register() {
 		add_rewrite_tag( '%event_ondate%', '([0-9]{4}(?:/[0-9]{2}(?:/[0-9]{2})?)?)','post_type=event&ondate=' ); 
 		add_permastruct( 'event_archive', $events_slug.'/'.$on.'/%event_ondate%', array( 'with_front' => false ) );
 	}
-
+	
 	/**
 	 * Filters the menu position.
 	 * 
@@ -377,28 +377,8 @@ function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 }
 add_filter( 'map_meta_cap', 'eventorganiser_event_meta_cap', 10, 4 );
 
-
 /**
- * Adds the Event Organiser icon to the page head
- * Hooked onto admin_head
- *
- * @ignore
- * @access private
- * @since 1.0
- */
-function eventorganiser_plugin_header_image() {
-        global $post_type;
-
-	if ((isset($_GET['post_type']) && $_GET['post_type'] == 'event') || ($post_type == 'event')) : ?>
-	<style>
-	#icon-edit { background:transparent url('<?php echo EVENT_ORGANISER_URL.'/css/images/eoicon-32.png';?>') no-repeat; }		
-        </style>
-	<?php endif; 
-}
-add_action('admin_head', 'eventorganiser_plugin_header_image');
-
-/**
- * With appropriate settings we add a menu item of 'post_type_archive' type. 
+ * With appropriate settings we add a menu item of 'post_type_archive' type.
  * WP doesn't understand this so we set the url ourself - hooking just before its saved to db.
  * Hooked onto wp_update_nav_menu_item
  *
