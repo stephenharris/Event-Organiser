@@ -104,10 +104,6 @@ install_db
 
 rm -r ${WP_CORE_DIR}wp-content/plugins/*
 
-cp -r $grandparent "$WP_CORE_DIR/wp-content/plugins/event-organiser"
-
-ls "$WP_CORE_DIR/wp-content/plugins"
-
 # Used when waiting for stuff
 NAP_LENGTH=1
 SELENIUM_PORT=4444

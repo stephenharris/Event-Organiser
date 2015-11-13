@@ -12,7 +12,7 @@ default:
         username: 'root'
         password: ''
       symlink:
-        from: '%paths.base%'
+        from: '%paths.base%/dist/event-organiser'
         to: '/tmp/wordpress/wp-content/plugins/event-organiser'
     Behat\MinkExtension:
       base_url:    'http://localhost:8000'
