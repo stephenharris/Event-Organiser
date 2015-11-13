@@ -5,6 +5,9 @@ if [ $# -lt 3 ]; then
 	exit 1
 fi
 
+parent=$(dirname $PWD)
+grandparent=$(dirname $parent)
+
 DB_NAME=$1
 DB_USER=$2
 DB_PASS=$3
@@ -101,10 +104,9 @@ install_db
 
 rm -r ${WP_CORE_DIR}wp-content/plugins/*
 
-cp -r $PWD/dist/event-organiser "${WP_CORE_DIR}wp-content/plugins/"
+cp -r $grandparent "$WP_CORE_DIR/wp-content/plugins/event-organiser"
 
-ls "${WP_CORE_DIR}wp-content/plugins"
-
+ls "$WP_CORE_DIR/wp-content/plugins"
 
 # Used when waiting for stuff
 NAP_LENGTH=1
