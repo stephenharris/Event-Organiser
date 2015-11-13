@@ -101,7 +101,7 @@ install_db
 
 rm -r ${WP_CORE_DIR}wp-content/plugins/*
 
-cp -r $PWD "${WP_CORE_DIR}wp-content/plugins/"
+cp -r $PWD/dist/event-organiser "${WP_CORE_DIR}wp-content/plugins/"
 
 ls "${WP_CORE_DIR}wp-content/plugins"
 

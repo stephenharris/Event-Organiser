@@ -1,5 +1,8 @@
 language: php
 
+node_js:
+- "0.10"
+
 sudo: false
 
 php:
@@ -32,6 +35,9 @@ matrix:
 before_script:
 - sh -c "if [ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '5.2' ]; then pecl install timezonedb; fi"
 - if [[ ${PHP_FULL_SUITE_VER} == ${TRAVIS_PHP_VERSION:0:3} ]]; then composer install; fi
+- npm install grunt-cli -g
+- npm install
+- grunt untested_build
 - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 script: 
