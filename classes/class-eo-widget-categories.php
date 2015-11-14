@@ -131,6 +131,5 @@ class EO_Widget_Categories extends WP_Widget {
 		<label for="<?php echo esc_attr( $this->get_field_id( 'hierarchical' ) ); ?>"><?php esc_html_e( 'Show hierarchy' ); ?></label></p>
 <?php
 	}
-
 }
 add_action( 'widgets_init', array( 'EO_Widget_Categories', 'register' ) );
