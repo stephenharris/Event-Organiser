@@ -11,6 +11,72 @@ use Johnbillion\WordPressExtension\Context\WordPressContext;
 
 class FeatureContext extends WordPressContext implements Context, SnippetAcceptingContext {
 
+	/**
+	 * Add these events to this wordpress installation
+	 *
+	 * @see eo_insert_event
+	 *
+	 * @Given /^there are events$/
+	 */
+	public function thereAreEvents(TableNode $table)
+	{
+		foreach ($table->getHash() as $postData) {
+			if (!is_int(eo_insert_event($postData))) {
+				throw new \InvalidArgumentException("Invalid event information schema.");
+			}
+		}
+	}
+	
+	/**
+	 * @Then the event :title should have the following schedule
+	 */
+	public function theEventShouldHaveTheFollowingSchedule($title, TableNode $fields)
+	{
+		
+		$event = get_page_by_title( $title, OBJECT, 'event' );
+		if ( ! $event ) {
+			throw new \InvalidArgumentException( sprintf( 'Event "%s" was  not found', $title ) );
+		}
+		
+		$correct = true;
+		
+		$schedule = eo_get_event_schedule( $event->ID );
+		$tz       = eo_get_blog_timezone();
+		$actual   = array();
+		
+		foreach ( $fields->getRowsHash() as $field => $value ) {
+			
+			switch( $field ) {
+				case 'start':
+				case 'end':
+				case 'until':
+					$actual_value = $schedule[$field]->format( 'Y-m-d h:ia' );	
+					break;
+				case 'recurrence':
+					$actual_value = $schedule['schedule'];
+					break;
+				case 'recurrence_meta':
+					$actual_value = $schedule['schedule_meta'];
+					break;
+				case 'frequency':
+					$actual_value = $schedule[$field];
+					break;
+				default:
+					$actual_value = false;
+			}
+			$actual[] = array( $field, $actual_value );
+		}
+		
+		$actual_table = new TableNode( $actual );
+		
+		if ( $actual_table->getTableAsString() != $fields->getTableAsString() ) {
+			throw new \Exception( sprintf(
+				"Actual schedule:\n %s",
+				$actual_table->getTableAsString()
+			) );
+		}
+	
+	}
 
 	/**
 	 * @Then there should be :num ":element" elements visible

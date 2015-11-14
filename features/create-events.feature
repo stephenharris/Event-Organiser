@@ -24,6 +24,12 @@ Feature: Create events
         	| eo-end-time   | 11:45pm      |
 		And I press "save-post"
 		Then I should see "Event draft updated"
+		And the event "Single Event" should have the following schedule
+		    | start      | 2015-10-25 10:30pm |
+		    | end        | 2015-10-25 11:45pm |
+		    | recurrence | once               |
+		    | frequency  | 1                  |
+        	| until      | 2015-10-25 10:30pm |
 		
     Scenario: Daily event
         When I go to "wp-admin/post-new.php?post_type=event"
@@ -38,6 +44,12 @@ Feature: Create events
 		And I fill in "recend" with "13-11-2014"
 		And I press "save-post"
 		Then I should see "Event draft updated"
+		And the event "Daily Event" should have the following schedule
+		    | start      | 2014-11-06 10:00pm |
+		    | end        | 2014-11-06 11:00pm |
+		    | recurrence | daily              |
+		    | frequency  | 2                  |
+        	| until      | 2014-11-13 10:00pm |
 		
     Scenario: Weekly event
         When I go to "wp-admin/post-new.php?post_type=event"
@@ -52,6 +64,12 @@ Feature: Create events
 		And I fill in "recend" with "29-01-2015"
 		And I press "save-post"
 		Then I should see "Event draft updated"
+		And the event "Weekly Event" should have the following schedule
+		    | start      | 2015-01-01 02:15pm |
+		    | end        | 2015-01-02 02:30pm |
+		    | recurrence | weekly             |
+		    | frequency  | 1                  |
+        	| until      | 2015-01-29 02:15pm |
 		
     Scenario: Monthly event (by date)
         When I go to "wp-admin/post-new.php?post_type=event"
@@ -66,6 +84,13 @@ Feature: Create events
 		And I fill in "recend" with "30-12-2016"
 		And I press "save-post"
 		Then I should see "Event draft updated"
+		And the event "Monthly Event 1" should have the following schedule
+		    | start           | 2016-01-30 01:00pm |
+		    | end             | 2016-01-30 02:00pm |
+		    | recurrence      | monthly            |
+		    | recurrence_meta | BYMONTHDAY=30      |
+		    | frequency       | 1                  |
+        	| until           | 2016-12-30 01:00pm |
 
     Scenario: Monthly event (by day of the month)
         When I go to "wp-admin/post-new.php?post_type=event"
@@ -80,6 +105,13 @@ Feature: Create events
 		And I fill in "recend" with "31-12-2016"
 		And I press "save-post"
 		Then I should see "Event draft updated"
+		And the event "Monthly Event 2" should have the following schedule
+		    | start           | 2016-01-30 01:00pm |
+		    | end             | 2016-01-30 02:00pm |
+		    | recurrence      | monthly            |
+		    | recurrence_meta | BYDAY=-1SA         |
+		    | frequency       | 1                  |
+        	| until           | 2016-12-31 01:00pm |
 
     Scenario: Yearly event
         When I go to "wp-admin/post-new.php?post_type=event"
@@ -93,4 +125,9 @@ Feature: Create events
 		And I fill in "recend" with "29-02-2024"
 		And I press "save-post"
 		Then I should see "Event draft updated"
-
+		And the event "Yearly Event" should have the following schedule
+		    | start           | 2016-02-29 05:00pm |
+		    | end             | 2016-02-29 06:00pm |
+		    | recurrence      | yearly             |
+		    | frequency       | 1                  |
+        	| until           | 2024-02-29 05:00pm |
