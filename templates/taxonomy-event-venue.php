@@ -47,4 +47,4 @@ get_header(); ?>
 
 <!-- Call template sidebar and footer -->
 <?php get_sidebar(); ?>
-<?php get_footer(); ?>
+<?php get_footer();
