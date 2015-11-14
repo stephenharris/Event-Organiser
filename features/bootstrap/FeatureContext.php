@@ -20,9 +20,29 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	 */
 	public function thereAreEvents(TableNode $table)
 	{
+		$tz = eo_get_blog_timezone();
 		foreach ($table->getHash() as $postData) {
-			if (!is_int(eo_insert_event($postData))) {
-				throw new \InvalidArgumentException("Invalid event information schema.");
+			
+			foreach ( $postData as $key => $value ) {
+				switch( $key ) {
+					case 'start':
+					case 'end':
+					case 'until':
+						$postData[$key] = new DateTime( $value, $tz );
+						break;
+				}
+			}
+			
+			$event_id = eo_insert_event($postData);
+
+			if (!is_int($event_id)) {
+				
+				$message = 'Invalid event information schema';
+				
+				if (is_wp_error($event_id)) {
+					$message .= ': ' . $event_id->get_error_message();	
+				}
+				throw new \InvalidArgumentException( $message );
 			}
 		}
 	}
