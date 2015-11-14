@@ -42,6 +42,6 @@ before_script:
 
 script: 
 - phpunit
-- if [[ ${PHP_FULL_SUITE_VER} == ${TRAVIS_PHP_VERSION:0:3} ]]; then vendor/bin/behat; fi
+- if [[ ${PHP_FULL_SUITE_VER} == ${TRAVIS_PHP_VERSION:0:3} && ${WP_VERSION} != '3.8.11' ]]; then vendor/bin/behat; fi
 
 
