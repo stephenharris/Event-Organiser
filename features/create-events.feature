@@ -14,6 +14,7 @@ Feature: Create events
     
         And I am logged in as "admin" with password "test"
 
+    @javascript
     Scenario: Single event
         When I go to "wp-admin/post-new.php?post_type=event"
     	And I fill in the following:
@@ -30,7 +31,8 @@ Feature: Create events
 		    | recurrence | once               |
 		    | frequency  | 1                  |
         	| until      | 2015-10-25 10:30pm |
-		
+
+    @javascript
     Scenario: Daily event
         When I go to "wp-admin/post-new.php?post_type=event"
     	And I fill in the following:
@@ -50,7 +52,8 @@ Feature: Create events
 		    | recurrence | daily              |
 		    | frequency  | 2                  |
         	| until      | 2014-11-13 10:00pm |
-		
+
+    @javascript
     Scenario: Weekly event
         When I go to "wp-admin/post-new.php?post_type=event"
     	And I fill in the following:
@@ -70,7 +73,8 @@ Feature: Create events
 		    | recurrence | weekly             |
 		    | frequency  | 1                  |
         	| until      | 2015-01-29 02:15pm |
-		
+
+    @javascript
     Scenario: Monthly event (by date)
         When I go to "wp-admin/post-new.php?post_type=event"
     	And I fill in the following:
@@ -92,6 +96,7 @@ Feature: Create events
 		    | frequency       | 1                  |
         	| until           | 2016-12-30 01:00pm |
 
+    @javascript
     Scenario: Monthly event (by day of the month)
         When I go to "wp-admin/post-new.php?post_type=event"
     	And I fill in the following:
@@ -113,6 +118,7 @@ Feature: Create events
 		    | frequency       | 1                  |
         	| until           | 2016-12-31 01:00pm |
 
+    @javascript
     Scenario: Yearly event
         When I go to "wp-admin/post-new.php?post_type=event"
     	And I fill in the following:
