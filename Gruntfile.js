@@ -311,7 +311,7 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'untested_build', [ 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
+grunt.registerTask( 'test_build', [ 'clean', 'uglify', 'cssjanus', 'cssmin', 'copy' ] );
 
 grunt.registerTask( 'build', [ 'test', 'untested_build' ] );
 

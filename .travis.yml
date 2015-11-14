@@ -37,7 +37,7 @@ before_script:
 - if [[ ${PHP_FULL_SUITE_VER} == ${TRAVIS_PHP_VERSION:0:3} ]]; then composer install; fi
 - npm install grunt-cli -g
 - npm install
-- grunt untested_build
+- grunt test_build
 - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 script: 
