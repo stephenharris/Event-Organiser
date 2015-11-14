@@ -26,6 +26,7 @@ Feature: View events
     	Then I should see "Single"
     	And I should see "Start: April 30, 2115 1:00 pm"
 
+	@javascript
 	Scenario: Daily event
         When I go to "events/event/daily"
     	Then I should see "Daily"
