@@ -5,6 +5,9 @@ if [ $# -lt 3 ]; then
 	exit 1
 fi
 
+parent=$(dirname $PWD)
+grandparent=$(dirname $parent)
+
 DB_NAME=$1
 DB_USER=$2
 DB_PASS=$3
@@ -14,6 +17,8 @@ WP_VERSION=${5-latest}
 WP_TESTS_DIR=${WP_TESTS_DIR-/tmp/wordpress-tests-lib}
 WP_CORE_DIR=/tmp/wordpress/
 
+# Exit if anything fails AND echo each command before executing
+# http://www.peterbe.com/plog/set-ex
 set -ex
 
 install_wp() {
@@ -29,6 +34,46 @@ install_wp() {
 	tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
 
 	wget -nv -O $WP_CORE_DIR/wp-content/db.php https://raw.github.com/markoheijnen/wp-mysqli/master/db.php
+}
+
+install_db() {
+
+	# parse DB_HOST for port or socket references
+	local PARTS=(${DB_HOST//\:/ })
+	local DB_HOSTNAME=${PARTS[0]};
+	local DB_SOCK_OR_PORT=${PARTS[1]};
+	local EXTRA=""
+
+	if ! [ -z $DB_HOSTNAME ] ; then
+		if [[ "$DB_SOCK_OR_PORT" =~ ^[0-9]+$ ]] ; then
+			EXTRA=" --host=$DB_HOSTNAME --port=$DB_SOCK_OR_PORT --protocol=tcp"
+		elif ! [ -z $DB_SOCK_OR_PORT ] ; then
+			EXTRA=" --socket=$DB_SOCK_OR_PORT"
+		elif ! [ -z $DB_HOSTNAME ] ; then
+			EXTRA=" --host=$DB_HOSTNAME --protocol=tcp"
+		fi
+	fi
+
+	# create database
+	mysqladmin --no-defaults create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
+
+}
+
+install_config() {
+	# portable in-place argument for both GNU sed and Mac OSX sed
+	if [[ $(uname -s) == 'Darwin' ]]; then
+		local ioption='-i .bak'
+	else
+		local ioption='-i'
+	fi
+
+	cp "$WP_CORE_DIR/wp-config-sample.php" "$WP_CORE_DIR/wp-config.php"
+	
+	sed $ioption "s:dirname(__FILE__) . '/':'$WP_CORE_DIR':" "$WP_CORE_DIR/wp-config.php"
+	sed $ioption "s/database_name_here/$DB_NAME/" "$WP_CORE_DIR/wp-config.php"
+	sed $ioption "s/username_here/$DB_USER/" "$WP_CORE_DIR/wp-config.php"
+	sed $ioption "s/password_here/$DB_PASS/" "$WP_CORE_DIR/wp-config.php"
+	sed $ioption "s|localhost|${DB_HOST}|" "$WP_CORE_DIR/wp-config.php"
 }
 
 install_test_suite() {
@@ -52,27 +97,39 @@ install_test_suite() {
 	sed $ioption "s|localhost|${DB_HOST}|" wp-tests-config.php
 }
 
-install_db() {
-	# parse DB_HOST for port or socket references
-	local PARTS=(${DB_HOST//\:/ })
-	local DB_HOSTNAME=${PARTS[0]};
-	local DB_SOCK_OR_PORT=${PARTS[1]};
-	local EXTRA=""
-
-	if ! [ -z $DB_HOSTNAME ] ; then
-		if [[ "$DB_SOCK_OR_PORT" =~ ^[0-9]+$ ]] ; then
-			EXTRA=" --host=$DB_HOSTNAME --port=$DB_SOCK_OR_PORT --protocol=tcp"
-		elif ! [ -z $DB_SOCK_OR_PORT ] ; then
-			EXTRA=" --socket=$DB_SOCK_OR_PORT"
-		elif ! [ -z $DB_HOSTNAME ] ; then
-			EXTRA=" --host=$DB_HOSTNAME --protocol=tcp"
-		fi
-	fi
-
-	# create database
-	mysqladmin --no-defaults create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
-}
-
 install_wp
+install_config
 install_test_suite
 install_db
+
+rm -r ${WP_CORE_DIR}wp-content/plugins/*
+
+# Used when waiting for stuff
+NAP_LENGTH=1
+SELENIUM_PORT=4444
+
+# Wait for a specific port to respond to connections.
+wait_for_port() {
+    local PORT=$1
+    while echo | telnet localhost $PORT 2>&1 | grep -qe 'Connection refused'; do
+        echo "Connection refused on port $PORT. Waiting $NAP_LENGTH seconds..."
+        sleep $NAP_LENGTH
+    done
+}
+
+rm -f /tmp/.X0-lock
+
+Xvfb & export DISPLAY=localhost:0.0
+
+echo 'start php';
+php -S localhost:8000 -t /tmp/wordpress -d disable_functions=mail > /dev/null 2>&1 &
+
+# Start Selenium
+wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
+java -jar selenium-server-standalone-2.46.0.jar -p $SELENIUM_PORT > /dev/null 2>&1 &
+
+# Wait for Selenium, if necessary
+#wait_for_port $SELENIUM_PORT
+
+echo 'waiting to start tests...';
+sleep 5

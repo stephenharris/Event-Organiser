@@ -45,6 +45,7 @@ module.exports = function(grunt) {
                   '!apigen/**',
                   '!documentation/**',
                   '!tests/**',
+                  '!features/**',
                   '!vendor/**',
                   '!*~',
             ]
@@ -311,7 +312,9 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'build', [ 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
+grunt.registerTask( 'test_build', [ 'clean', 'uglify', 'cssjanus', 'cssmin', 'copy' ] );
+
+grunt.registerTask( 'build', [ 'test', 'untested_build' ] );
 
 grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
 
