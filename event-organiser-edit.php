@@ -93,9 +93,10 @@ function _eventorganiser_details_metabox( $post ) {
 	 */
 	$notices = apply_filters( 'eventorganiser_event_metabox_notice', $notices, $post );
 	if ( $notices ) {
-		echo '<div class="updated below-h2"><p>'.$notices.'</p></div>';
+		//updated class used for backwards compatability see https://core.trac.wordpress.org/ticket/27418
+		echo '<div class="notice notice-success updated inline"><p>'.$notices.'</p></div>';
 	}
-	
+
 	$date_desc = sprintf( __( 'Enter date in %s format', 'eventorganiser' ), $format );
 	$time_desc = $is24 ? __( 'Enter time in 24-hour hh colon mm format', 'eventorganiser' ) : __( 'Enter time in 12-hour hh colon mm am or pm format', 'eventorganiser' );
 	?>
