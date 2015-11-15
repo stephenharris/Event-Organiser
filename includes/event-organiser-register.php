@@ -329,18 +329,40 @@ function eventorganiser_admin_notices() {
 	global $EO_Errors;
 	$errors  = array();
 	$notices = array();
+
 	if ( isset( $EO_Errors ) ) {
 		$errors  = $EO_Errors->get_error_messages( 'eo_error' );
 		$notices = $EO_Errors->get_error_messages( 'eo_notice' );
-		
+
 		if ( ! empty( $errors ) ) {
 			printf( '<div class="notice notice-error error"><p>%s</p></div>', implode( '</p><p>', $errors ) );
 		}
-		
+
 		if ( ! empty( $notices ) ) {
 			printf( '<div class="notice notice-success updated"><p>%s</p></div>', implode( '</p><p>', $notices ) );
 		}
 	}
+
+	//Render errors we've had to store the DB
+	global $post;
+	$notice = get_option( 'eo_notice' );
+
+	if ( ! empty( $notice ) && ! empty( $post->ID )  ) {
+		foreach ( $notice as $pid => $messages ) {
+			if ( $post->ID == $pid ) {
+				printf(
+					'<div id="eo-error-message" class="notice notice-error error"><p>%s</p></div>',
+					implode( ' </p> <p> ', $messages )
+				);
+
+				//make sure to remove notice after its displayed so its only displayed when needed.
+				unset( $notice[0] );
+				unset( $notice[$pid] );
+				update_option( 'eo_notice', $notice );
+			}
+		}
+	}
+
 }
 add_action( 'admin_notices','eventorganiser_admin_notices' );
 
