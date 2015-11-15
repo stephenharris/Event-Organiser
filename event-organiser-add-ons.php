@@ -186,9 +186,8 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 				</a>
 			<?php endif; ?>
 		</div>
-		<?php 
+		<?php
 	}
-	
+
 }
-$calendar_page = new EventOrganiser_Add_Ons_Page();
-?>
+$addons_page = new EventOrganiser_Add_Ons_Page();
