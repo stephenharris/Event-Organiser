@@ -6,8 +6,11 @@
  * $notice_handler->add_notice( 'foobar', 'screen_id', 'Notice...' );
  * </code>
  * @ignore
+ * When minimum requirement is increased to 4.2 we can refactor some of this in light of
+ * trac ticket 31233.
+ * @see https://core.trac.wordpress.org/ticket/31233
  */
-class EO_Admin_Notice_Handler{
+class EO_Admin_Notice_Handler {
 
 	static $prefix = 'eventorganiser';
 
@@ -92,9 +95,9 @@ class EO_Admin_Notice_Handler{
 				continue;
 			}
 
-			$class = $notice['type'] == 'error' ? 'error' : 'updated';
+			$class = 'error' == $notice['type'] ? 'notice-error error' : 'notice-success updated';
 
-			printf("<div class='%s-notice {$class}' id='%s'>%s<p> <a class='%s' href='%s' title='%s'><strong>%s</strong></a></p></div>",
+			printf("<div class='notice %s-notice {$class}' id='%s'>%s<p> <a class='%s' href='%s' title='%s'><strong>%s</strong></a></p></div>",
 				esc_attr( self::$prefix ),
 				esc_attr( self::$prefix.'-notice-'.$id ),
 				$notice['message'],
@@ -188,7 +191,7 @@ class EO_Admin_Notice_Handler{
 						if ('1' === response) {
 							$('#'+noticeClass+'-'+noticeID).fadeOut('slow');
 						} else {
-							$('#'+noticeClass+'-'+noticeID).removeClass('updated').addClass('error');
+							$('#'+noticeClass+'-'+noticeID).removeClass('updated notice-success').addClass('notice-error error');
 						}
 					}
 				);
