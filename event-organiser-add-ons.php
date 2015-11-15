@@ -85,8 +85,7 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 		<?php
 	}
 
-	
-	function display(){
+	function display() {
 		$plugins = get_plugins();
 		$plugin = $plugins['event-organiser/event-organiser.php'];
 		?>
@@ -95,7 +94,7 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 			<h2> <?php esc_html_e( 'Event Organiser Extensions', 'eventorganiser' ); ?></h2>
 
 			<div class="eo-addon-text">
-				<?php 
+				<?php
 					echo '<p>'.__( 'Event Organiser offers a range of extension which add additional features to the plug-in.', 'eventorganiser' ) . '</p>';
 					$settings_link = esc_url( admin_url( 'options-general.php?page=event-settings' ) );
 				?>
@@ -105,14 +104,14 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 			</div>
 
 			<hr style="color:#CCC;background-color:#CCC;border:0;border-bottom:1px solid #CCC;">
-			<?php 
+			<?php
 			$addons = self::get_addons();
-			
-			if ( $addons && ! is_wp_error( $addons ) ):
+
+			if ( $addons && ! is_wp_error( $addons ) ) :
 				echo '<div id="eo-addons-wrap">';
-				foreach ( $addons as $addon ):
-					if ( ! isset( $addon['status'] ) || ! in_array( $addon['status'], array( 'available', 'coming-soon' ) ) ){
-						continue;	
+				foreach ( $addons as $addon ) :
+					if ( ! isset( $addon['status'] ) || ! in_array( $addon['status'], array( 'available', 'coming-soon' ) ) ) {
+						continue;
 					}
 					self::print_addon( $addon );
 				endforeach;
