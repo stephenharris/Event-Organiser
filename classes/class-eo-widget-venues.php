@@ -129,6 +129,5 @@ class EO_Widget_Venues extends WP_Widget {
 		<label for="<?php echo esc_attr( $this->get_field_id( 'dropdown' ) ); ?>"><?php esc_attr_e( 'Display as dropdown', 'eventorganiser' ); ?></label><br />
 <?php
 	}
-
 }
 add_action( 'widgets_init', array( 'EO_Widget_Venues', 'register' ) );

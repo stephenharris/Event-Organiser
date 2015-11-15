@@ -42,4 +42,4 @@
 		</div><!-- .entry-content -->
 	</article><!-- #post-0 -->
 
-<?php }; ?>
+<?php };

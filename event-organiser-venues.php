@@ -187,16 +187,17 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 	}
 
 
-	function admin_notices(){
+	function admin_notices() {
 		$m = isset( $_GET['message'] ) ? (int) $_GET['message'] : 0;
 		$messages = array(
 			1 => __( 'Venue <strong>created</strong>', 'eventorganiser' ),
 			2 => __( 'Venue <strong>updated</strong>', 'eventorganiser' ),
-			3 => __( 'Venue(s) <strong>deleted</strong>', 'eventorganiser' )
+			3 => __( 'Venue(s) <strong>deleted</strong>', 'eventorganiser' ),
 		);
 
-		if( isset( $messages[$m]) )
-			printf( '<div class="updated"><p>%s</p></div>', $messages[$m] );
+		if ( isset( $messages[$m] ) ) {
+			printf( '<div class="notice notice-success updated"><p>%s</p></div>', $messages[$m] );
+		}
 	}
 
 	function page_scripts(){

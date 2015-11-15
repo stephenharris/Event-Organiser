@@ -4,7 +4,7 @@
  * Inspired, and based on, Easy Digital Download's add-on page (by Pippin Williamson)
  */
 if ( ! class_exists( 'EventOrganiser_Admin_Page' ) ) {
-	require_once(EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+	require_once( EVENT_ORGANISER_DIR . 'classes/class-eventorganiser-admin-page.php' );
 }
 /**
  * @ignore
@@ -117,9 +117,10 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 				endforeach;
 				echo '</div>';
 			else :
-				?>
-				<div class="error"><p>There was an error retrieving the add-on list from the server. Please try again later.</p></div>
-				<?php
+				printf(
+					'<div class="notice notice-error error"><p></p></div>',
+					'There was an error retrieving the add-on list from the server. Please try again later.'
+				);
 			endif;
 			?>
 			
@@ -164,7 +165,7 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 			<h3 class="eo-addon-title"><?php echo esc_html( $addon['title'] ); ?> </h3>
 			<div class="img-wrap">
 				<?php if ( $addon['url'] ) : ?>
-				<a href="<?php echo esc_url( $addon['url'] );?>" title="<?php echo esc_attr( $addon['title'] ); ?>">
+				<a href="<?php echo esc_url( $addon['url'] );?>" title="<?php echo esc_attr( $addon['title'] );?>">
 				<?php endif; ?>
 					<img src="<?php echo esc_url( $addon['thumbnail'] );?>" class="attachment-addon wp-post-image" alt="<?php echo esc_attr( $addon['title'] ); ?>" title="<?php echo esc_attr( $addon['title'] ); ?>">
 				<?php if ( $addon['url'] ) : ?>
@@ -186,6 +187,5 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 		</div>
 		<?php
 	}
-
 }
-$calendar_page = new EventOrganiser_Add_Ons_Page();
+$eo_addons_page = new EventOrganiser_Add_Ons_Page();

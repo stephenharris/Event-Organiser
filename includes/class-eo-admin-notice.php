@@ -6,8 +6,11 @@
  * $notice_handler->add_notice( 'foobar', 'screen_id', 'Notice...' );
  * </code>
  * @ignore
+ * When minimum requirement is increased to 4.2 we can refactor some of this in light of
+ * trac ticket 31233.
+ * @see https://core.trac.wordpress.org/ticket/31233
  */
-class EO_Admin_Notice_Handler{
+class EO_Admin_Notice_Handler {
 
 	static $prefix = 'eventorganiser';
 
@@ -80,7 +83,7 @@ class EO_Admin_Notice_Handler{
 			$id = sanitize_key( $id );
 
 			//Notices cannot have been dismissed and must have a message
-			if ( in_array( $id, $seen_notices ) || empty($notice['message'])  ) {
+			if ( in_array( $id, $seen_notices ) || empty( $notice['message'] )  ) {
 				continue;
 			}
 
@@ -88,13 +91,13 @@ class EO_Admin_Notice_Handler{
 			$notice_screen_id = array_filter( $notice_screen_id );
 
 			//Notices must for this screen. If empty, its for all screens.
-			if ( ! empty($notice_screen_id) && ! in_array( $screen_id, $notice_screen_id ) ) {
+			if ( ! empty( $notice_screen_id ) && ! in_array( $screen_id, $notice_screen_id ) ) {
 				continue;
 			}
 
-			$class = $notice['type'] == 'error' ? 'error' : 'updated';
+			$class = 'error' == $notice['type'] ? 'notice-error error' : 'notice-success updated';
 
-			printf("<div class='%s-notice {$class}' id='%s'>%s<p> <a class='%s' href='%s' title='%s'><strong>%s</strong></a></p></div>",
+			printf("<div class='notice %s-notice {$class}' id='%s'>%s<p> <a class='%s' href='%s' title='%s'><strong>%s</strong></a></p></div>",
 				esc_attr( self::$prefix ),
 				esc_attr( self::$prefix.'-notice-'.$id ),
 				$notice['message'],
@@ -118,15 +121,15 @@ class EO_Admin_Notice_Handler{
 
 		//Don't use $_REQUEST, http://stackoverflow.com/questions/2142497/whats-wrong-with-using-request
 		$request = array_merge( $_GET, $_POST );
-		
-		$notice = isset($request['notice']) ? $request['notice'] : false;
-		if ( empty($notice) ) {
+
+		$notice = isset( $request['notice'] ) ? $request['notice'] : false;
+		if ( empty( $notice ) ) {
 			return;
 		}
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			//Ajax dismiss handler
-			if ( empty($request['notice'])  || empty($request['_wpnonce'])  || $request['action'] !== self::$prefix.'-dismiss-notice' ) {
+			if ( empty( $request['notice'] )  || empty( $request['_wpnonce'] )  || $request['action'] !== self::$prefix.'-dismiss-notice' ) {
 				return;
 			}
 
@@ -135,7 +138,7 @@ class EO_Admin_Notice_Handler{
 			}
 		} else {
 			//Fallback dismiss handler
-			if ( empty($request['action']) || empty($request['notice'])  || empty($request['_wpnonce'])  || $request['action'] !== self::$prefix.'-dismiss-notice' ) {
+			if ( empty( $request['action'] ) || empty( $request['notice'] )  || empty( $request['_wpnonce'] )  || $request['action'] !== self::$prefix.'-dismiss-notice' ) {
 				return;
 			}
 
@@ -155,7 +158,7 @@ class EO_Admin_Notice_Handler{
 	 * Dismiss a given a notice
 	 *@param string $notice The notice (ID) to dismiss
 	 */
-	static function dismiss_notice($notice) {
+	static function dismiss_notice( $notice ) {
 		$seen_notices   = get_option( self::$prefix.'_admin_notices', array() );
 		$seen_notices[] = $notice;
 		$seen_notices   = array_unique( $seen_notices );
@@ -188,7 +191,7 @@ class EO_Admin_Notice_Handler{
 						if ('1' === response) {
 							$('#'+noticeClass+'-'+noticeID).fadeOut('slow');
 						} else {
-							$('#'+noticeClass+'-'+noticeID).removeClass('updated').addClass('error');
+							$('#'+noticeClass+'-'+noticeID).removeClass('updated notice-success').addClass('notice-error error');
 						}
 					}
 				);

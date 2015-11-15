@@ -170,6 +170,5 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 			self::print_item_template();
 		}
 	}
-
 }
 add_action( 'widgets_init', array( 'EO_Events_Agenda_Widget', 'register' ) );

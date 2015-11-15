@@ -57,4 +57,4 @@
 			
 	<div style="clear:both;"></div>
 
-</article><!-- #post-<?php the_ID(); ?> -->
+</article>

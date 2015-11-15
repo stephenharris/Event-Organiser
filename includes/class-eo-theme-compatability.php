@@ -449,7 +449,6 @@ class EO_Theme_Compat {
 		return true;
 
 	}
-
 }
 $eo_compat = EO_Theme_Compat::get_instance();
 $eo_compat->init();

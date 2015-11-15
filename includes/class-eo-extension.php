@@ -77,16 +77,15 @@ if( !class_exists('EO_Extension') ){
 				add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 			}
 		}
-	
-	
+
 		public function admin_notices() {
-	
+
 			$installed_plugins = get_plugins();
-	
-			echo '<div class="updated">';
-	
+
+			echo '<div class="notice notice-success updated">';
+
 			//Display warnings for uninstalled dependencies
-			if ( !empty( $this->not_installed )  ) {
+			if ( ! empty( $this->not_installed )  ) {
 				foreach (  $this->not_installed as $dep_slug ) {
 					printf(
 						'<p> <strong>%1$s</strong> has been deactivated as it requires %2$s (version %3$s or higher). Please <a href="%4$s"> install %2$s</a>.</p>',
@@ -97,7 +96,7 @@ if( !class_exists('EO_Extension') ){
 					);
 				}
 			}
-	
+
 			//Display warnings for outdated dependencides.
 			if ( !empty( $this->outdated ) && 'update-core' != get_current_screen()->id ) {
 				foreach (  $this->outdated as $dep_slug ) {

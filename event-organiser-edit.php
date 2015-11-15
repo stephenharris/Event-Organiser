@@ -93,7 +93,8 @@ function _eventorganiser_details_metabox( $post ) {
 	 */
 	$notices = apply_filters( 'eventorganiser_event_metabox_notice', $notices, $post );
 	if ( $notices ) {
-		echo '<div class="updated inline"><p>'.$notices.'</p></div>';
+		//updated class used for backwards compatability see https://core.trac.wordpress.org/ticket/27418
+		echo '<div class="notice notice-success updated inline"><p>'.$notices.'</p></div>';
 	}
 
 	$date_desc = sprintf( __( 'Enter date in %s format', 'eventorganiser' ), $format );
@@ -475,29 +476,3 @@ function eventorganiser_details_save( $post_id ) {
 	return;
 }
 add_action( 'save_post', 'eventorganiser_details_save' );
-
-/**
- * Display custom error or alert messages on events CPT page
- *
- * @ignore
- * @since 1.0.0
- */
-add_action( 'admin_notices', '_eventorganiser_event_edit_admin_notice', 0 );
-function _eventorganiser_event_edit_admin_notice(){
-
-	global $post;
-
-	$notice = get_option( 'eo_notice' );
-	if ( empty( $notice ) || empty( $post->ID )  ) return '';
-
-	foreach ( $notice as $pid => $messages ){
-		if ( $post->ID == $pid ){
-			printf( '<div id="message" class="error"> <p> %s </p> </div>', implode( ' </p> <p> ', $messages ) );
-
-			//make sure to remove notice after its displayed so its only displayed when needed.
-			unset( $notice[0] );
-			unset( $notice[$pid] );
-			update_option( 'eo_notice', $notice );
-        }
-	}	
-}
