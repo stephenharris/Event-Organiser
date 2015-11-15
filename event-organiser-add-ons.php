@@ -116,10 +116,11 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 					self::print_addon( $addon );
 				endforeach;
 				echo '</div>';
-			else:
-				?>
-				<div class="error"><p>There was an error retrieving the add-on list from the server. Please try again later.</p></div>
-				<?php 
+			else :
+				printf(
+					'<div class="notice notice-error error"><p></p></div>',
+					'There was an error retrieving the add-on list from the server. Please try again later.'
+				);
 			endif;
 			?>
 			
