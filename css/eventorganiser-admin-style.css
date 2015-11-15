@@ -63,6 +63,13 @@
 	float:left;
 	margin-right:10px;
 }
+#eo-recurrence-frequency-wrapper{
+	margin: 0 0 1em 0;	
+}
+#eo-day-of-month-repeat,
+#eo-schedule-last-date-wrapper{
+	margin: 1em 0 1em 0;
+}
 .eo-add-new-venue{
 	display: none;
 }

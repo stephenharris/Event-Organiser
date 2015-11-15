@@ -1,6 +1,6 @@
 <?php
 /**
- * Functions for Event CPT editing / creating page 
+ * Functions for Event CPT editing / creating page
  * @since 1.0.0
  */
 /**
@@ -8,17 +8,17 @@
  * @since 1.0.0
  * @ignore
  */
-function _eventorganiser_event_metaboxes_init(){
-	
+function _eventorganiser_event_metaboxes_init() {
+
 	// add a meta box to event post types.
 	add_meta_box( 'eventorganiser_detail', __( 'Event Details', 'eventorganiser' ), '_eventorganiser_details_metabox', 'event', 'normal', 'high' );
-	
+
 	//Repurposes author metabox as organiser
 	$post_type_object = get_post_type_object( 'event' );
-	if( post_type_supports( 'event', 'author' ) ) {
-		if ( is_super_admin() || current_user_can( $post_type_object->cap->edit_others_posts ) ){
-			remove_meta_box( 'authordiv', 'event', 'core' );
-			add_meta_box( 'authordiv',  __( 'Organiser', 'eventorganiser' ), 'post_author_meta_box', 'event', 'normal', 'core' );
+	if ( post_type_supports( 'event', 'author' ) ) {
+		if ( is_super_admin() || current_user_can( $post_type_object->cap->edit_others_posts ) ) {
+			remove_meta_box( 'authordiv', 'event', 'normal' );
+			add_meta_box( 'authordiv',  __( 'Organiser', 'eventorganiser' ), 'post_author_meta_box', 'event', 'normal', 'default' );
 		}
 	}
 }
@@ -33,7 +33,7 @@ add_action( 'add_meta_boxes_event', '_eventorganiser_event_metaboxes_init' );
  */
 function _eventorganiser_details_metabox( $post ) {
 
-	global $wp_locale;	
+	global $wp_locale;
 
 	//Sets the format as php understands it, and textual.
 	$phpFormat = eventorganiser_get_option( 'dateformat' );
@@ -75,10 +75,10 @@ function _eventorganiser_details_metabox( $post ) {
 	$sche_once = ( 'once' == $schedule || ! empty( get_current_screen()->action ) );
 
 	if ( ! $sche_once ) {
-		$notices = sprintf( 
+		$notices = sprintf(
 			'<label for="eo-event-recurrring-notice">%s</label>',
 			__( 'This is a recurring event. Check to edit this event and its recurrences', 'eventorganiser' )
-		) 
+		)
 		.' <input type="checkbox" id="eo-event-recurrring-notice" name="eo_input[AlterRe]" value="yes">';
 	} else {
 		$notices = '';
@@ -149,8 +149,8 @@ function _eventorganiser_details_metabox( $post ) {
 				<span id="eo-end-time-desc" class="screen-reader-text"><?php echo esc_html( $time_desc );?></span>
 
 				<span>
-					<input type="checkbox" id="eo_allday"  <?php checked( $all_day ); ?> name="eo_input[allday]"  <?php  disabled( ! $sche_once );?> value="1"/>
-					<label for="eo_allday">
+					<input type="checkbox" id="eo-all-day"  <?php checked( $all_day ); ?> name="eo_input[allday]"  <?php  disabled( ! $sche_once );?> value="1"/>
+					<label for="eo-all-day">
 						<?php esc_html_e( 'All day', 'eventorganiser' );?>
 					</label>
 				</span>
@@ -180,14 +180,14 @@ function _eventorganiser_details_metabox( $post ) {
  		<div class="eo-grid-row event-date reocurrence_row">
 	 		<div class="eo-grid-4"></div>
 	 		<div class="eo-grid-8 event-date">
-				<p>
+				<div id="eo-recurrence-frequency-wrapper">
 					<?php esc_html_e( 'Repeat every', 'eventorganiser' );?>
 					<label for="eo-recurrence-frequency" class="screen-reader-text"><?php esc_html_e( 'Recurrence frequency', 'eventorganiser' );?></label> 
 					<input type="number" id="eo-recurrence-frequency" <?php  disabled( ! $sche_once || $all_day );?> class="ui-widget-content ui-corner-all" name="eo_input[event_frequency]"  min="1" max="365" maxlength="4" size="4" value="<?php echo intval( $frequency );?>" /> 
-					<span id="recpan"></span>				
-				</p>
+					<span id="eo-recurrence-schedule-label"></span>
+				</div>
 
-				<div id="dayofweekrepeat">
+				<div id="eo-day-of-week-repeat">
 				
 					<span id="eo-days-of-week-label" class="screen-reader-text"><?php esc_html_e( 'Repeat on days of week:', 'eventorganiser' );?></span>
 					<span class="eo-days-of-week-text"><?php esc_html_e( 'on', 'eventorganiser' );?></span>
@@ -210,27 +210,27 @@ function _eventorganiser_details_metabox( $post ) {
 					</ul>
 				</div>
 
-				<div id="dayofmonthrepeat">
+				<div id="eo-day-of-month-repeat">
 					<span id="eo-days-of-month-label" class="screen-reader-text"><?php esc_html_e( 'Select whether to repeat monthly by date or day:', 'eventorganiser' );?></span>
 					<div class="eo-days-of-month" role="group" aria-labelledby="eo-days-of-month-label">	
-						<label for="bymonthday" >	
-							<input type="radio" id="bymonthday" disabled="disabled" name="eo_input[schedule_meta]" <?php checked( $occurs_by, 'BYMONTHDAY' ); ?> value="BYMONTHDAY=" /> 
+						<label for="eo-by-month-day" >
+							<input type="radio" id="eo-by-month-day" disabled="disabled" name="eo_input[schedule_meta]" <?php checked( $occurs_by, 'BYMONTHDAY' ); ?> value="BYMONTHDAY=" /> 
 							<?php esc_html_e( 'date of month', 'eventorganiser' );?>
 						</label>
-						<label for="byday" >
-							<input type="radio" id="byday" disabled="disabled" name="eo_input[schedule_meta]"  <?php checked( 'BYMONTHDAY' != $occurs_by, true ); ?> value="BYDAY=" />
+						<label for="eo-by-day" >
+							<input type="radio" id="eo-by-day" disabled="disabled" name="eo_input[schedule_meta]"  <?php checked( 'BYMONTHDAY' != $occurs_by, true ); ?> value="BYDAY=" />
 							<?php esc_html_e( 'day of week', 'eventorganiser' );?>
 						</label>
 					</div>
 				</div>
 
-				<div class="reoccurrence_label">
+				<div id="eo-schedule-last-date-wrapper" class="reoccurrence_label">
 					<?php esc_html_e( 'until', 'eventorganiser' );?>
-					<label id="eo-repeat-until-label" for="recend" class="screen-reader-text"><?php esc_html_e( 'Repeat this event until:', 'eventorganiser' );?></label> 
-					<input <?php  disabled( ( ! $sche_once ) || $all_day ); ?> class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="recend" size="10" maxlength="10" disabled="disabled" value="<?php echo $until->format( $phpFormat ); ?>"/>
+					<label id="eo-repeat-until-label" for="eo-schedule-last-date" class="screen-reader-text"><?php esc_html_e( 'Repeat this event until:', 'eventorganiser' );?></label> 
+					<input <?php  disabled( ( ! $sche_once ) || $all_day ); ?> class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="eo-schedule-last-date" size="10" maxlength="10" disabled="disabled" value="<?php echo $until->format( $phpFormat ); ?>"/>
 				</div>
 
-				<p id="event_summary" role="status" aria-live="polite"></p>
+				<p id="eo-event-summary" role="status" aria-live="polite"></p>
 				
  			</div>
  		</div>
@@ -242,7 +242,7 @@ function _eventorganiser_details_metabox( $post ) {
 	 		<div class="eo-grid-8 event-date">
 				<?php submit_button( __( 'Show dates', 'eventorganiser' ), 'hide-if-no-js eo_occurrence_toggle button small', 'eo_date_toggle', false ); ?>
 						
-				<div id="eo_occurrence_datepicker"></div>
+				<div id="eo-occurrence-datepicker"></div>
 				<?php
 				if ( ! empty( $include ) ) {
 					$include_str = array_map( 'eo_format_datetime', $include, array_fill( 0, count( $include ), 'Y-m-d' ) );
@@ -250,7 +250,7 @@ function _eventorganiser_details_metabox( $post ) {
 				} else {
 					$include_str = '';
 				}?>
-				<input type="hidden" name="eo_input[include]" id="eo_occurrence_includes" value="<?php echo $include_str; ?>"/>
+				<input type="hidden" name="eo_input[include]" id="eo-occurrence-includes" value="<?php echo $include_str; ?>"/>
 
 				<?php
 				if ( ! empty($exclude) ) {
@@ -259,7 +259,7 @@ function _eventorganiser_details_metabox( $post ) {
 				} else {
 					$exclude_str = '';
 				}?>
-				<input type="hidden" name="eo_input[exclude]" id="eo_occurrence_excludes" value="<?php echo $exclude_str; ?>"/>
+				<input type="hidden" name="eo_input[exclude]" id="eo-occurrence-excludes" value="<?php echo $exclude_str; ?>"/>
 	 		
  			</div>
  		</div>
