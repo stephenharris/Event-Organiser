@@ -624,13 +624,10 @@ function _eventorganiser_upgrade_admin_notice() {
 
 	$notice_handler = EO_Admin_Notice_Handler::get_instance();
 
-	$message = sprintf(
-		__("<h4>City & State Fields Added</h4>City and state / province fields for venues have now been added. </br> If you'd like, Event Organiser can <a href='%s'>attempt to auto-fill them</a>. You can always manually change the details aftewards.",'eventorganiser'),
-		add_query_arg('action','eo-autofillcity',admin_url('admin-post.php'))
+	$message = __(
+		"<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post<a/>.",
+		'eventorganiser'
 	);
-	$notice_handler->add_notice( 'autofillvenue17', 'event_page_venues', $message , 'alert');
-
-	$message = __("<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post<a/>.",'eventorganiser');
 	$notice_handler->add_notice( 'changedtemplate17', '', $message , 'alert' );
 
 	if ( ! get_option( 'timezone_string' ) && current_user_can( 'manage_options' ) && get_option( 'gmt_offset' ) ) {
@@ -656,60 +653,6 @@ function _eventorganiser_upgrade_admin_notice() {
 
 }
 add_action( 'admin_notices', '_eventorganiser_upgrade_admin_notice', 1 );
-
-/**
- * Handles city auto-fill request.
- *
- * Hooked onto admin_post_eo-autofillcity. Triggered when user clicks 'autofill' link.
- * This routine goes through all the venues, reverse geocodes to find their city and 
- * autofills the city field (added in 1.7).
- *
- *@ignore
- *@access private
- *@link https://github.com/stephenh1988/Event-Organiser/issues/18
- *@link http://open.mapquestapi.com/nominatim/ Nominatim Search Service
- */
-function _eventorganiser_autofill_city(){
-	$seen_notices = get_option('eventorganiser_admin_notices',array());
-
-	if( in_array('autofillvenue17', $seen_notices) )
-		return;
-
-	EO_Admin_Notice_Handler::dismiss_notice('autofillvenue17');
-
-	$cities =array();
-	$venues = eo_get_venues();
-
-	foreach( $venues as $venue ){
-		$venue_id = (int) $venue->term_id;
-		$latlng =extract(eo_get_venue_latlng($venue_id));
-
-		If( eo_get_venue_meta($venue_id,'_city',true) )
-			continue;
-
-		$response=wp_remote_get("http://open.mapquestapi.com/nominatim/v1/reverse?format=json&lat={$lat}&lon={$lng}&osm_type=N&limit=1");	
-		$geo = json_decode(wp_remote_retrieve_body( $response ));
-		if( isset($geo->address->city) ){
-			$cities[$venue_id] = $geo->address->city;
-			eo_update_venue_meta($venue_id, '_city', $geo->address->city);
-		}
-		if( isset($geo->address->country_code) && 'gb' == $geo->address->country_code ){
-			//For the UK use county not state.
-			if( isset($geo->address->county) ){
-				$cities[$venue_id] = $geo->address->county;
-				eo_update_venue_meta($venue_id, '_state', $geo->address->county);
-			}
-		}else{
-			if( isset($geo->address->state) ){
-				$cities[$venue_id] = $geo->address->state;
-				eo_update_venue_meta($venue_id, '_state', $geo->address->state);
-			}
-		}
-	}	
-
-	wp_safe_redirect(admin_url('edit.php?post_type=event&page=venues'));
-}
-add_action('admin_post_eo-autofillcity','_eventorganiser_autofill_city');
 
 /**
  * Helper function to clear the cache for number of authors.

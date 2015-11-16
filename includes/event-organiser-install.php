@@ -102,10 +102,10 @@ function eventorganiser_site_install(){
 	add_option('eventorganiser_options',$eventorganiser_options);
 
 	/* Add existing notices */
-	$notices = array('autofillvenue17','changedtemplate17');
-	add_option('eventorganiser_admin_notices',$notices);
-	
-	//Add roles to administrator		
+	$notices = array( 'changedtemplate17' );
+	add_option( 'eventorganiser_admin_notices', $notices );
+
+	//Add roles to administrator
 	global $wp_roles;
 	$all_roles = $wp_roles->roles;
 	$eventorganiser_roles =  array(
@@ -456,4 +456,3 @@ function eventorganiser_uninstall_site(){
 	$re =$wpdb->get_results( $sql);	
 	flush_rewrite_rules();
     }
-?>
