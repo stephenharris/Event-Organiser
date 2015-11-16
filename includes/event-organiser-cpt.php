@@ -258,8 +258,8 @@ function eventorganiser_cpt_register() {
 		'public'              => true,
 		'publicly_queryable'  => true,
 		'exclude_from_search' => $exclude_from_search,
-		'show_ui'             => true, 
-		'show_in_menu'        => true, 
+		'show_ui'             => true,
+		'show_in_menu'        => true,
 		'query_var'           => true,
 		'capability_type'     => 'event',
 		'rewrite'             => $event_rewrite,
@@ -276,14 +276,14 @@ function eventorganiser_cpt_register() {
 		),
 		'has_archive'   => $events_slug,
 		'hierarchical'  => false,
-		'menu_icon'     => false,
+		'menu_icon'     => 'dashicons-calendar',
 		'menu_position' => $menu_position,
 		'supports'      => eventorganiser_get_option( 'supports' ),
 	);
 
 	/**
 	 * Filters the settings used in `register_post_type()` for event post type.
-	 * 
+	 *
 	 * @param array $args Settings passed to `register_post_type()` in the second argument.
 	 */
 	$args = apply_filters( 'eventorganiser_event_properties', $args );

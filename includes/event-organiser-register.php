@@ -474,25 +474,6 @@ function eventorganiser_delete_expired_events(){
 add_action('eventorganiser_delete_expired', 'eventorganiser_delete_expired_events');
 
 
-
-/**
- * Print CSS for event menu icon
- *
- * @since 1.5.0
- * @ignore
- * @access private
- */
-function eventorganiser_screen_retina_icon(){
-	?>
-	<style>
-	#adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
-	#adminmenu #menu-posts-event div.wp-menu-image img { display:none; }
-	</style>
-	<?php
-}
-add_action( 'admin_print_styles', 'eventorganiser_screen_retina_icon' );
-
-
 /**
  * Print generic javascript variables to the page
  * @ignore
@@ -508,7 +489,7 @@ function eventorganiser_admin_print_scripts() {
 add_action( 'admin_print_styles', 'eventorganiser_admin_print_scripts' );
 
 
-/** 
+/**
  * Purge the occurrences cache
  * Hooked onto eventorganiser_save_event and eventorganiser_delete_event
  *
