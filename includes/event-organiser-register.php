@@ -555,70 +555,9 @@ $hooks = array(
 	'update_option_home',
 	'edited_event-category', /* Colours of events may change */
 );
-foreach( $hooks as $hook ){
-	add_action($hook, '_eventorganiser_delete_calendar_cache');
+foreach ( $hooks as $hook ) {
+	add_action( $hook, '_eventorganiser_delete_calendar_cache' );
 }
-
-
-/**
- * Handles admin pointers
- *
- * Kick starts the enquing. Rename this to something unique (i.e. include your plugin/theme name).
- *
- *@access private
- *@ignore
- *@since 1.5
- */
-function eventorganiser_pointer_load( $hook_suffix ) {
-
-		$screen_id = get_current_screen()->id;
-
-		//Get pointers for this screen
-		/**
-		 * Filters the user 'pointers' for a specific screen.
-		 *
-		 * The `$screen_id` part of the hook refers to the screen's ID.
-		 *
-		 * @param array $pointers Filters to display on this screen.
-		 */
-		$pointers = apply_filters('eventorganiser_admin_pointers-'.$screen_id, array());
-
-		if( !$pointers || !is_array($pointers) )
-			return;
-
-		// Get dismissed pointers
-		$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
-		$valid_pointers =array();
-
-		//Check pointers and remove dismissed ones.
-		foreach ($pointers as $pointer_id => $pointer ){
-
-			//Sanity check
-			if ( in_array( $pointer_id, $dismissed ) || empty($pointer)  || empty( $pointer_id ) || empty( $pointer['target'] ) || empty( $pointer['options'] ) )
-				continue;
-
-			 $pointer['pointer_id'] = $pointer_id;
-
-			//Add the pointer to $valid_pointers array
-			$valid_pointers['pointers'][] =  $pointer;
-		}
-
-		//No valid pointers? Stop here.
-		if( empty($valid_pointers) )	
-			return;
-
-		// Add pointers style to queue. 
-		wp_enqueue_style( 'wp-pointer' );
-		
-		// Add pointers script to queue. Add custom script.
-		wp_enqueue_script('eventorganiser-pointer',EVENT_ORGANISER_URL.'js/eventorganiser-pointer.js',array('wp-pointer','eo_event'));
-
-		// Add pointer options to script. 
-		wp_localize_script('eventorganiser-pointer', 'eventorganiserPointer', $valid_pointers);
-}
-add_action( 'admin_enqueue_scripts', 'eventorganiser_pointer_load',99999);
-
-
 
 function _eventorganiser_upgrade_admin_notice() {
 
