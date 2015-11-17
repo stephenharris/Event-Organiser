@@ -1651,25 +1651,27 @@ function eventorganiser_fold_ical_text( $text ){
 }
 
 /**
- * Like wp_list_pluck() but plucks out key and value from each object in the list
- * 
+ * Similar to wp_list_pluck() (4.0+) plucks out key and value from each object in the list
+ *
  * @since 2.2
+ * @link https://core.trac.wordpress.org/ticket/28666
  * @param array $list A list of objects or arrays
  * @param int|string $field A field from the object to used as the key of the entire object
  * @param int|string $field A field from the object to place instead of the entire object
  * @return multitype:unknown NULL
  */
-function eo_list_pluck_key_value( $list, $key_field, $value_field ){
-	
+function eo_list_pluck_key_value( $list, $key_field, $value_field ) {
+
 	$new_list = array();
-	
+
 	foreach ( $list as $key => $value ) {
-		if ( is_object( $value ) )
+		if ( is_object( $value ) ) {
 			$new_list[ $value->$key_field ] = $value->$value_field;
-		else
+		} else {
 			$new_list[ $value[ $key_field ] ] = $value[ $value_field ];
+		}
 	} 
-	
+
 	return $new_list;
 }
 
