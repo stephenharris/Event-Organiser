@@ -187,6 +187,7 @@ function eventorganiser_get_option( $option = false, $default = false ) {
 
 /****** Register event post type and event taxonomy******/
 require_once( EVENT_ORGANISER_DIR.'includes/event-organiser-cpt.php' );
+require_once( EVENT_ORGANISER_DIR.'includes/class-eo-walker-taxonomydropdown.php' );
 
 /****** Register scripts, styles and actions******/
 require_once( EVENT_ORGANISER_DIR.'includes/event-organiser-register.php' );

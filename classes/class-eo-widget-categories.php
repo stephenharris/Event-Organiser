@@ -49,7 +49,7 @@ class EO_Widget_Categories extends WP_Widget {
 
 		if ( $d ) {
 			$cat_args['walker'] = new EO_Walker_TaxonomyDropdown();
-			$cat_args['value'] = 'slug';
+			$cat_args['field_value'] = 'slug';
 			$cat_args['show_option_none'] = __( 'Select Category' );
 			/**
 			 * Filters the settings for the event category dropdown.

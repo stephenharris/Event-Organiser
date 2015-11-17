@@ -940,48 +940,6 @@ function eventorganiser_edit_venue_link($link, $term_id, $taxonomy){
 add_filter('get_edit_term_link','eventorganiser_edit_venue_link',10,3);
 
 
-/*
- * A walker class to use that extends wp_dropdown_categories and allows it to use the term's slug as a value rather than ID.
-*
-* See https://core.trac.wordpress.org/ticket/13258
-*
-* Usage, as normal:
-* wp_dropdown_categories($args);
-*
-* But specify the custom walker class, and (optionally) a 'id' or 'slug' for the 'value' parameter:
-* $args=array('walker'=> new EO_Walker_TaxonomyDropdown(), 'value'=>'slug', .... );
-* wp_dropdown_categories($args);
-*
-* If the 'value' parameter is not set it will use term ID for categories, and the term's slug for other taxonomies in the value attribute of the term's <option>.
-*/
-
-class EO_Walker_TaxonomyDropdown extends Walker_CategoryDropdown{
-
-	function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
-		$pad = str_repeat('&nbsp;', $depth * 3);
-		/**
-		 * @ignore
-		 */
-		$cat_name = apply_filters('list_cats', $category->name, $category);
-
-		if( !isset($args['value']) ){
-			$args['value'] = ( $category->taxonomy != 'category' ? 'slug' : 'id' );
-		}
-
-		$value = ($args['value']=='slug' ? $category->slug : $category->term_id );
-
-		$output .= "\t<option class=\"level-$depth\" value=\"".$value."\"";
-		$output .= ' ' . selected( (string) $args['selected'], $value, false );
-		$output .= '>';
-		$output .= $pad.$cat_name;
-		if ( $args['show_count'] )
-			$output .= '&nbsp;&nbsp;('. $category->count .')';
-
-		$output .= "</option>\n";
-	}
-
-}
-
 /**
  * For this to work you need to add the following to the custom field exceptions on the ThreeWP settings page:
  *
