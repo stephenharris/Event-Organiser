@@ -55,6 +55,7 @@ class iCalFeedTest extends EO_UnitTestCase
 			'schedule_meta' => array( 'MO' ),
 			'post_title'=>'The Event Title',
 			'post_content'=>'My event content',
+			'post_excerpt'=>'My event excerpt',
 			'post_author' => 1,
 			'post_status' => 'publish',
 			'post_date'   => '2015-02-18 17:30:00',
@@ -333,6 +334,8 @@ class iCalFeedTest extends EO_UnitTestCase
 			'schedule'      => 'weekly',
 			'schedule_meta' => array( 'SA' ),
 			'post_title'    => 'Event with timezone',
+			'post_content'  => 'Event with timezone content',
+			'post_excerpt'  => 'Event with timezone excerpt',
 			'include'      => array( 
 				new DateTime('2015-09-22 17:00', eo_get_blog_timezone() ),
 				new DateTime('2015-09-23 17:00', eo_get_blog_timezone() )
@@ -382,6 +385,8 @@ class iCalFeedTest extends EO_UnitTestCase
 			'schedule'      => 'weekly',
 			'schedule_meta' => array( 'TH' ),
 			'post_title'    => 'Event with offset timezone',
+			'post_content'  => 'Post content',
+			'post_excerpt'  => 'Post excerpt',
 			'include'      => array(
 				new DateTime('2015-11-22 17:00', eo_get_blog_timezone() ),
 				new DateTime('2015-11-23 17:00', eo_get_blog_timezone() )
@@ -438,6 +443,8 @@ class iCalFeedTest extends EO_UnitTestCase
 			'schedule'      => 'weekly',
 			'schedule_meta' => array( 'TH' ),
 			'post_title'    => 'All day event',
+			'post_content'  => 'Post content',
+			'post_excerpt'  => 'Post excerpt',
 			'include'      => array(
 				new DateTime('2015-11-22 00:00', eo_get_blog_timezone() ),
 				new DateTime('2015-11-23 00:00', eo_get_blog_timezone() )
@@ -624,6 +631,8 @@ END:VTIMEZONE";
 			'schedule'      => 'weekly',
 			'schedule_meta' => array( 'TH' ),
 			'post_title'    => 'Recurring event',
+			'post_content'  => 'Post content',
+			'post_excerpt'  => 'Post excerpt',
 			'post_date'     => '2015-02-18 17:30:00',
 		) );
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test-1' );
@@ -641,6 +650,8 @@ END:VTIMEZONE";
 				new DateTime( '2016-12-25 13:00', eo_get_blog_timezone() ),
 			),
 			'post_title'    => 'Event with outlying included date',
+			'post_content'  => 'Post content',
+			'post_excerpt'  => 'Post excerpt',
 			'post_date'     => '2015-02-18 17:30:00',
 		) );
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test-2' );
@@ -652,6 +663,8 @@ END:VTIMEZONE";
 			'start'         => new DateTime('2014-05-01 03:00', eo_get_blog_timezone() ),
 			'end'           => new DateTime('2014-05-01 04:00', eo_get_blog_timezone() ),
 			'post_title'    => 'Single event',
+			'post_content'  => 'Post content',
+			'post_excerpt'  => 'Post excerpt',
 			'post_date'     => '2015-02-18 17:30:00',
 		) );
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test-3' );
