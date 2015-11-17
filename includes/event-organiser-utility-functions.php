@@ -1310,16 +1310,6 @@ function eventorganiser_textarea_field($args){
 /**
  * @ignore
  * @private
- * @param unknown_type $text
- * @return mixed
- */
-function eventorganiser_esc_printf($text){
-	return str_replace('%','%%',$text);
-}
-
-/**
- * @ignore
- * @private
  * @param unknown_type $key
  * @param unknown_type $group
  * @return Ambigous <boolean, mixed>
