@@ -475,34 +475,34 @@ function eo_date_interval( $_date1, $_date2, $format ) {
  * @param string $phpformat Format according to https://php.net/manual/en/function.date.php
  * @return string The format translated to Moment.js format: momentjs.com/docs/#/displaying/format/
  */
-function eo_php_to_moment( $phpformat ){
+function eo_php_to_moment( $phpformat ) {
 
 	/* Not supported: N, S, z, W, t, L, o, T, e, I, Z, u, X */
 	$map = array(
-			//Day
-			'j' => 'D', 'd' => 'DD', 'D' => 'ddd', 'l' => 'dddd', 'jS' => 'Do', 'w' => 'd',
-			//Week
-			'W' => 'w',
-			//Month
-			'F' => 'MMMM', 'm' => 'MM', 'M' => 'MMM', 'n' => 'M',
-			//Year
-			'Y' => 'YYYY', 'y' => 'YY', 'o' => 'gggg',
-			//Hour
-			'g' => 'h', 'G' => 'H', 'h' => 'hh', 'H' => 'HH',
-			//Merdian
-			'a' => 'a', 'A' => 'A',
-			//Minute
-			'i' => 'mm',
-			//Second
-			's' => 'ss',
-			'B' => 'SSS',
-			//Timezone
-			'P' => 'Z',
-			'O' => 'ZZ',
-			//Full date time
-			'c' => 'YYYY-MM-DD[T]HH:mm:ssZ',
-			'R' => 'ddd, D MMM YYYY HH:mm:ss ZZ',
-			'U' => 'X',
+		//Day
+		'j' => 'D', 'd' => 'DD', 'D' => 'ddd', 'l' => 'dddd', 'jS' => 'Do', 'w' => 'd',
+		//Week
+		'W' => 'w',
+		//Month
+		'F' => 'MMMM', 'm' => 'MM', 'M' => 'MMM', 'n' => 'M',
+		//Year
+		'Y' => 'YYYY', 'y' => 'YY', 'o' => 'gggg',
+		//Hour
+		'g' => 'h', 'G' => 'H', 'h' => 'hh', 'H' => 'HH',
+		//Merdian
+		'a' => 'a', 'A' => 'A',
+		//Minute
+		'i' => 'mm',
+		//Second
+		's' => 'ss',
+		'B' => 'SSS',
+		//Timezone
+		'P' => 'Z',
+		'O' => 'ZZ',
+		//Full date time
+		'c' => 'YYYY-MM-DD[T]HH:mm:ssZ',
+		'R' => 'ddd, D MMM YYYY HH:mm:ss ZZ',
+		'U' => 'X',
 	);
 
 	$regexp  = '/(\\\\\S|d|D|jS?|l|N|.)/';
@@ -510,21 +510,21 @@ function eo_php_to_moment( $phpformat ){
 
 	preg_match_all( $regexp, $phpformat, $matches );
 
-	if ( !$matches || false === is_array( $matches ) ){
+	if ( ! $matches || false === is_array( $matches ) ) {
 		return $format;
 	}
 
 	$php_tokens = array_keys( $map );
 	$moment_format = '';
 
-	foreach ( $matches[0] as $id => $match ){
+	foreach ( $matches[0] as $id => $match ) {
 		// if there is a matching php token in token list
-		if ( in_array( $match, $php_tokens ) ){
+		if ( in_array( $match, $php_tokens ) ) {
 			// use the php token instead
 			$string = $map[$match];
-		}elseif( preg_match( '/(\\\\\S)/', $match ) ){
+		} elseif ( preg_match( '/(\\\\\S)/', $match ) ) {
 			$string = '['. substr( $match, 1 ) . ']';
-		}else{
+		} else {
 			$string = $match;
 		}
 		$moment_format .= $string;
