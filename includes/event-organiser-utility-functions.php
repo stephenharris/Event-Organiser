@@ -754,43 +754,57 @@ function eventorganiser_date_create($datetime_string){
 	return date_create( $datetime_string, eo_get_blog_timezone() );
 }
 
+/**
+ * Converts a datetime string and the intended format to a DateTime object.
+ *
+ * @since 1.9.5
+ * @param string $format The format the date string is given in
+ * @param string $datetime_string The date string to be cast to a DateTime object
+ * @param DateTimeZone $timezone The timezone of the datetime string. Defaults to site timezone.
+ * @return boolean|DateTime
+ */
+function eo_check_datetime( $format, $datetime_string, $timezone = false ) {
 
-function eo_check_datetime( $format, $datetime_string, $timezone = false ){
-	
 	$timezone = ( $timezone instanceof DateTimeZone ) ? $timezone : eo_get_blog_timezone();
-	
+
 	global $wp_locale;
-	
+
 	//Handle localised am/pm
-	$am = $wp_locale->get_meridiem('am');
-	$AM = $wp_locale->get_meridiem('AM');
-	$pm = $wp_locale->get_meridiem('pm');
-	$PM = $wp_locale->get_meridiem('PM');
-	
+	$am = $wp_locale->get_meridiem( 'am' );
+	$AM = $wp_locale->get_meridiem( 'AM' );
+	$pm = $wp_locale->get_meridiem( 'pm' );
+	$PM = $wp_locale->get_meridiem( 'PM' );
+
 	$meridan = array_filter( compact( 'am', 'AM', 'pm', 'PM' ), 'trim' );
 	$meridan = array_filter( $meridan );
-	if( $meridan ){
+	if ( $meridan ) {
 		$datetime_string = str_replace( array_values( $meridan ), array_keys( $meridan ), $datetime_string );
 	}
 
-	if ( version_compare(PHP_VERSION, '5.3.0') >= 0 ){
-    	return date_create_from_format( $format, $datetime_string, $timezone );
-	}elseif( function_exists( 'strptime' ) ){
-		
+	if ( version_compare( PHP_VERSION, '5.3.0' ) >= 0 ) {
+		return date_create_from_format( $format, $datetime_string, $timezone );
+	} elseif ( function_exists( 'strptime' ) ) {
+
 		//Workaround for outdated php versions. Limited support, see conversion array below.
-		
+
 		//Format conversion
 		$format_conversion = array(
-			'Y' => '%Y', 
-			'm'	=> '%m', 'F' => '%B', 
-			'd'	=> '%d', 'j' => '%e',
-			'S' => '%0',
-			'H' => '%H', 'G' => '%H', 'h'=> '%I', 'g' => '%I', 
-			'i' => '%M', 
-			's' => '%S', 
-			'a' => '%p', 'A' => '%P'
+			'Y' => '%Y', //year
+			'm'	=> '%m', //month
+			'F' => '%B',
+			'd'	=> '%d', //day
+			'j' => '%e',
+			'S' => '%0', //suffix
+			'H' => '%H', //hour
+			'G' => '%H',
+			'h' => '%I',
+			'g' => '%I',
+			'i' => '%M', //minute
+			's' => '%S', //second
+			'a' => '%p', //meridan
+			'A' => '%P',
 		);
-		
+
 		$strptime_format = str_replace(
 			array_keys( $format_conversion ),
 			array_values( $format_conversion ),
@@ -799,75 +813,73 @@ function eo_check_datetime( $format, $datetime_string, $timezone = false ){
 
 		$strptime = strptime( $datetime_string, $strptime_format );
 
-		if( false == $strptime || !array_filter( $strptime ) ){
+		if ( false == $strptime || ! array_filter( $strptime ) ) {
 			return false;
 		}
-		
+
 		$ymdhis = sprintf(
-				'%04d-%02d-%02d %02d:%02d:%02d',
-				$strptime['tm_year'] + 1900, 
-				$strptime['tm_mon'] + 1,
-				$strptime['tm_mday'],
-				$strptime['tm_hour'],
-				$strptime['tm_min'],
-				$strptime['tm_sec']
+			'%04d-%02d-%02d %02d:%02d:%02d',
+			$strptime['tm_year'] + 1900,
+			$strptime['tm_mon'] + 1,
+			$strptime['tm_mday'],
+			$strptime['tm_hour'],
+			$strptime['tm_min'],
+			$strptime['tm_sec']
 		);
 
 		try {
 			$date = new DateTime( $ymdhis, $timezone );
 			return $date;
-		} catch (Exception $e) {			
+		} catch ( Exception $e ) {			
 			return false;
 		}
-		
-	}else{
+
+	} else {
 
 		//Workaround for outdated php versions without strptime. Limited support, see conversion array below.
-		
+
 		//Format conversion
 		$format_conversion = array(
-				'Y' => '(?P<year>\d{4})',
-				'm'	=> '(?P<month>\d{1,})', 
-				'd'	=> '(?P<day>\d{1,})', 
-				'H' => '(?P<hour>\d{2})', 
-				'G' => '(?P<hour>\d{1,2})',
-				'h' => '(?P<hour>\d{2})', 
-				'g' => '(?P<hour>\d{1,2})',
-				'i' => '(?P<minute>\d{1,2})',
-				's' => '(?P<second>\d{1,2})',
-				'a' => '(?P<meridan>(am|pm))',
-				'A' => '(?P<meridan>(AM|PM))'
+			'Y' => '(?P<year>\d{4})',
+			'm'	=> '(?P<month>\d{1,})',
+			'd'	=> '(?P<day>\d{1,})',
+			'H' => '(?P<hour>\d{2})',
+			'G' => '(?P<hour>\d{1,2})',
+			'h' => '(?P<hour>\d{2})',
+			'g' => '(?P<hour>\d{1,2})',
+			'i' => '(?P<minute>\d{1,2})',
+			's' => '(?P<second>\d{1,2})',
+			'a' => '(?P<meridan>(am|pm))',
+			'A' => '(?P<meridan>(AM|PM))',
 		);
-		
-		$reg_exp = "/^" . strtr( $format, $format_conversion ) . "$/";
-		
-		if( !preg_match( $reg_exp, $datetime_string, $matches ) ){
+
+		$reg_exp = '/^' . strtr( $format, $format_conversion ) . '$/';
+
+		if ( ! preg_match( $reg_exp, $datetime_string, $matches ) ) {
 			return false;
 		}
-		
+
 		$meridan    = isset( $matches['meridan'] ) ? strtolower( $matches['meridan'] ) : false;
 		$components = eo_array_key_whitelist( $matches, array( 'year', 'month', 'day', 'hour', 'minute', 'second' ) );
 		extract( array_map( 'intval', $components ) );
-		
-		if ( !checkdate( $month, $day, $year ) ){
+
+		if ( ! checkdate( $month, $day, $year ) ) {
 			return false;
 		}
-		
+
 		$datetime = new DateTime( null, $timezone );
 		$datetime->setDate( $year, $month, $day );
-		
-		if( isset( $hour ) && isset( $minute ) ){
-			if( $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 ){
+
+		if ( isset( $hour ) && isset( $minute ) ) {
+			if ( $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 ) {
 				return false;
 			}
-			$hour = ( $meridan === 'pm' && $hour < 12 ) ? $hour + 12 : $hour; //acount for 12 hour time
+			$hour = ( 'pm' === $meridan && $hour < 12 ) ? $hour + 12 : $hour; //acount for 12 hour time
 			$datetime->setTime( $hour, $minute );
 		}
-		
+
 		return $datetime;
-	
 	}
-		
 }
 
 /**
