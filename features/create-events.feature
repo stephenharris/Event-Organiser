@@ -16,9 +16,9 @@ Feature: Create events
 
     @javascript
     Scenario: Single event
-        When I go to "wp-admin/post-new.php?post_type=event"
+        When I go to "wp-admin/post-new.php?post_type=event&post_title=Single+Event"
+        And I wait for AJAX to finish
     	And I fill in the following:
-    		| title         | Single Event |
         	| eo-start-date | 25-10-2015   |
         	| eo-start-time | 10:30pm      |
         	| eo-end-date   | 25-10-2015   |
@@ -34,9 +34,9 @@ Feature: Create events
 
     @javascript
     Scenario: Daily event
-        When I go to "wp-admin/post-new.php?post_type=event"
-    	And I fill in the following:
-    		| title         | Daily Event  |
+        When I go to "wp-admin/post-new.php?post_type=event&post_title=Daily+Event"
+        And I wait for AJAX to finish
+        And I fill in the following:
         	| eo-start-date | 06-11-2014   |
         	| eo-start-time | 10:00pm      |
         	| eo-end-date   | 06-11-2014   |
@@ -55,9 +55,9 @@ Feature: Create events
 
     @javascript
     Scenario: Weekly event
-        When I go to "wp-admin/post-new.php?post_type=event"
+        When I go to "wp-admin/post-new.php?post_type=event&post_title=Weekly+Event"
+        And I wait for AJAX to finish
     	And I fill in the following:
-    		| title         | Weekly Event  |
         	| eo-start-date | 01-01-2015    |
         	| eo-start-time | 02:15pm       |
         	| eo-end-date   | 02-01-2015    |
@@ -76,9 +76,9 @@ Feature: Create events
 
     @javascript
     Scenario: Monthly event (by date)
-        When I go to "wp-admin/post-new.php?post_type=event"
+        When I go to "wp-admin/post-new.php?post_type=event&post_title=Monthly+Event+1"
+        And I wait 4 seconds
     	And I fill in the following:
-    		| title         | Monthly Event 1 |
         	| eo-start-date | 30-01-2016      |
         	| eo-start-time | 01:00pm         |
         	| eo-end-date   | 30-01-2016      |
@@ -98,9 +98,9 @@ Feature: Create events
 
     @javascript
     Scenario: Monthly event (by day of the month)
-        When I go to "wp-admin/post-new.php?post_type=event"
+        When I go to "wp-admin/post-new.php?post_type=event&post_title=Monthly+Event+2"
+        And I wait 4 seconds
     	And I fill in the following:
-    		| title         | Monthly Event 2 |
         	| eo-start-date | 30-01-2016      |
         	| eo-start-time | 01:00pm         |
         	| eo-end-date   | 30-01-2016      |
@@ -120,9 +120,9 @@ Feature: Create events
 
     @javascript
     Scenario: Yearly event
-        When I go to "wp-admin/post-new.php?post_type=event"
+        When I go to "wp-admin/post-new.php?post_type=event&post_title=Yearly+Event"
+        And I wait 4 seconds
     	And I fill in the following:
-    		| title         | Yearly Event  |
         	| eo-start-date | 29-02-2016    |
         	| eo-start-time | 05:00pm       |
         	| eo-end-date   | 29-02-2016    |
