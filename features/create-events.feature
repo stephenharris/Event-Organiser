@@ -43,7 +43,7 @@ Feature: Create events
         	| eo-end-time   | 11:00pm      |
 		And I select "daily" from "eo-event-recurrence"
 		And I fill in "eo-recurrence-frequency" with "2"
-		And I fill in "recend" with "13-11-2014"
+		And I fill in "eo-schedule-last-date" with "13-11-2014"
 		And I press "save-post"
 		Then I should see "Event draft updated"
 		And the event "Daily Event" should have the following schedule
@@ -64,7 +64,7 @@ Feature: Create events
         	| eo-end-time   | 02:30pm       |
 		And I select "weekly" from "eo-event-recurrence"
 		And I check "day-Sat"
-		And I fill in "recend" with "29-01-2015"
+		And I fill in "eo-schedule-last-date" with "29-01-2015"
 		And I press "save-post"
 		Then I should see "Event draft updated"
 		And the event "Weekly Event" should have the following schedule
@@ -85,7 +85,7 @@ Feature: Create events
         	| eo-end-time   | 02:00pm         |
 		And I select "monthly" from "eo-event-recurrence"
 		And I select "BYMONTHDAY=" from "eo_input[schedule_meta]"
-		And I fill in "recend" with "30-12-2016"
+		And I fill in "eo-schedule-last-date" with "30-12-2016"
 		And I press "save-post"
 		Then I should see "Event draft updated"
 		And the event "Monthly Event 1" should have the following schedule
@@ -107,7 +107,7 @@ Feature: Create events
         	| eo-end-time   | 02:00pm         |
 		And I select "monthly" from "eo-event-recurrence"
 		And I select "BYDAY=" from "eo_input[schedule_meta]"
-		And I fill in "recend" with "31-12-2016"
+		And I fill in "eo-schedule-last-date" with "31-12-2016"
 		And I press "save-post"
 		Then I should see "Event draft updated"
 		And the event "Monthly Event 2" should have the following schedule
@@ -128,7 +128,7 @@ Feature: Create events
         	| eo-end-date   | 29-02-2016    |
         	| eo-end-time   | 06:00pm       |
 		And I select "yearly" from "eo-event-recurrence"
-		And I fill in "recend" with "29-02-2024"
+		And I fill in "eo-schedule-last-date" with "29-02-2024"
 		And I press "save-post"
 		Then I should see "Event draft updated"
 		And the event "Yearly Event" should have the following schedule
