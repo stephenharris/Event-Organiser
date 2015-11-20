@@ -107,28 +107,10 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			 */
 			do_action("eventorganiser_register_tab_{$tab_id}", $tab_id );
 		}
-
-		//Re-add start_of_week option: https://core.trac.wordpress.org/ticket/28344
-		//https://github.com/stephenharris/Event-Organiser/issues/307
-		if ( version_compare( get_bloginfo( 'version' ), '4.4-beta1', '>=' ) ) {
-			add_action( 'load-options-general.php', array( $this, '_register_start_of_week' ) );
-			add_action( 'whitelist_options', array( $this, '_whitelist_start_of_week' ) );
-		}
-
 	}
-
-	function _register_start_of_week() {
-		add_settings_field( 'start_of_week', __( 'Week Starts On' ), 'options_general_start_of_week', 'general', 'default', array( 'label_for' => 'start_of_week' ) );
-	}
-
-	function _whitelist_start_of_week( $whitelist_options ) {
-		$whitelist_options['general'][] = 'start_of_week';
-		return $whitelist_options;
-	}
-
+	
 	function page_actions(){
 		//Register options
-		
 		add_action( 'eventorganiser_event_settings_permalinks', 'flush_rewrite_rules' );
 
 		foreach ( $this->tabs as $tab_id => $label ){
