@@ -5,6 +5,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
+	
 	uglify: {
 		options: {
 			compress: {
@@ -23,6 +24,7 @@ module.exports = function(grunt) {
 			}]
 		}
 	},
+	
 	jshint: {
 		options: {
 			reporter: require('jshint-stylish'),
@@ -36,6 +38,7 @@ module.exports = function(grunt) {
 		},
 		all: [ 'js/*.js', '!js/*.min.js', '!*/moment.js', '!*/time-picker.js', '!*/jquery-ui-eo-timepicker.js', '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
+  	
     phpcs: {
         application: {
             src: [
@@ -57,7 +60,8 @@ module.exports = function(grunt) {
         	standard: 'codesniff'
         }
     },
-  	phpmd: {
+  	
+    phpmd: {
   		application: {
   			dir: 'includes,classes'
   	    },
@@ -67,6 +71,7 @@ module.exports = function(grunt) {
   	    	rulesets: 'phpmd.xml'
   	    }
   	},
+  	
 	cssjanus: {
 		core: {
 			options: {
