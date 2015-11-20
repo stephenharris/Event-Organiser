@@ -149,27 +149,7 @@ module.exports = function(grunt) {
 				'!css/images/**/*.xcf', //source images
 			],
 			dest: 'dist/event-organiser/'
-		},
-		
-		beta: {
-			src:  [
-				'**',
-				'!node_modules/**','!Gruntfile.js','!package.json', //npm/Grunt
-				'!assets/**', //wp-org assets
-				'!dist/**', //build directory
-				'!.git/**', //version control
-				'!apigen/**', '!documentation/**', //docs
-				'!tests/**','!bin/**','!phpunit.xml', //unit test
-				'!vendor/**','!composer.lock','!composer.phar','!composer.json', //composer
-				'!.*','!**/*~', //hidden files
-				'!CONTRIBUTING.md',
-				'!readme.md',
-				'!codesniff/**','!phpmd.xml', //CodeSniffer & Mess Detector
-				'!css/images/**/*.xcf', //source images
-			],
-			dest: process.env.EO_BETA_PLUGIN_DIR + '/<%= pkg.name %>/'
-		}	
-	
+		}
 	},
 
 	wp_readme_to_markdown: {
