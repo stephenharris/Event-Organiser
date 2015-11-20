@@ -25,15 +25,17 @@ install_wp() {
 	mkdir -p $WP_CORE_DIR
 
 	if [ $WP_VERSION == 'latest' ]; then 
-		local ARCHIVE_NAME='latest'
+		wget -nv -O /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz
+		tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
+	elif [ $WP_VERSION == 'nightly' ]; then
+		wget -nv -O /tmp/wordpress.zip https://wordpress.org/nightly-builds/wordpress-latest.zip
+		unzip -d $WP_CORE_DIR /tmp/wordpress.zip && f=("$WP_CORE_DIR"/*) && mv "$WP_CORE_DIR"/*/* "$WP_CORE_DIR" && rmdir "${f[@]}"
 	else
-		local ARCHIVE_NAME="wordpress-$WP_VERSION"
+		wget -nv -O /tmp/wordpress.tar.gz "https://wordpress.org/wordpress-$WP_VERSION.tar.gz"
+		tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
 	fi
 
-	wget -nv -O /tmp/wordpress.tar.gz https://wordpress.org/${ARCHIVE_NAME}.tar.gz
-	tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
-
-	wget -nv -O $WP_CORE_DIR/wp-content/db.php https://raw.github.com/markoheijnen/wp-mysqli/master/db.php
+	wget -nv -O $WP_CORE_DIR/wp-content/db.php https://raw.github.com/markoheijnen/wp-mysqli/master/db.php	
 }
 
 install_db() {
