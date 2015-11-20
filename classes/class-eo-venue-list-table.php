@@ -196,9 +196,10 @@ class EO_Venue_List_Table extends WP_List_Table {
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 		$taxonomy = 'event-venue';
 
-		$search  = ( ! empty( $_REQUEST['s'] ) ? trim( stripslashes( $_REQUEST['s'] ) ) : '' );
-		$orderby = ( ! empty( $_REQUEST['orderby'] )  ? trim( stripslashes( $_REQUEST['orderby'] ) ) : '' );
-		$order   = ( ! empty( $_REQUEST['order'] )  ? trim( stripslashes( $_REQUEST['order'] ) ) : '' );
+		$request = array_merge( $_GET, $_POST );
+		$search  = ( ! empty( $request['s'] ) ? trim( stripslashes( $request['s'] ) ) : '' );
+		$orderby = ( ! empty( $request['orderby'] )  ? trim( stripslashes( $request['orderby'] ) ) : '' );
+		$order   = ( ! empty( $request['order'] )  ? trim( stripslashes( $request['order'] ) ) : '' );
 
 		//Display result
 		$this->items = get_terms( 'event-venue', array(
