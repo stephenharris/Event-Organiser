@@ -111,13 +111,13 @@ function _eventorganiser_details_metabox( $post ) {
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-start-datetime-label">
 	 		
 	 			<label for="eo-start-date" class="screen-reader-text"><?php esc_html_e( 'Start Date', 'eventorganiser' ); ?></label>
-				<input id="eo-start-date" aria-describedby="eo-start-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" value="<?php echo $start->format( $phpFormat ); ?>"/>
+				<input type="text" id="eo-start-date" aria-describedby="eo-start-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" value="<?php echo $start->format( $phpFormat ); ?>"/>
 				<span id="eo-start-date-desc" class="screen-reader-text"><?php echo  $date_desc;?></span>
 				
 				<label for="eo-start-time" class="screen-reader-text"><?php esc_html_e( 'Start Time', 'eventorganiser' ); ?></label>
 				<?php
 				printf(
-					'<input id="eo-start-time" aria-describedby="eo-start-time-desc" name="eo_input[StartTime]" class="eo_time ui-widget-content ui-corner-all" size="6" maxlength="8" value="%s"/>',
+					'<input type="text" id="eo-start-time" aria-describedby="eo-start-time-desc" name="eo_input[StartTime]" class="eo_time ui-widget-content ui-corner-all" size="6" maxlength="8" value="%s"/>',
 					eo_format_datetime( $start, $time_format )
 				);
 				?>
@@ -134,13 +134,13 @@ function _eventorganiser_details_metabox( $post ) {
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-end-datetime-label">
 	 		
 	 			<label for="eo-end-date" class="screen-reader-text"><?php esc_html_e( 'End Date', 'eventorganiser' ); ?></label>
-				<input id="eo-end-date" aria-describedby="eo-end-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" value="<?php echo $end->format( $phpFormat ); ?>"/>
+				<input type="text" id="eo-end-date" aria-describedby="eo-end-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" value="<?php echo $end->format( $phpFormat ); ?>"/>
 
 				<span id="eo-end-date-desc" class="screen-reader-text"><?php echo esc_html( $date_desc );?></span>
 				<label for="eo-end-time" class="screen-reader-text"><?php esc_html_e( 'End Time', 'eventorganiser' ); ?></label>
 				<?php
 				printf(
-					'<input id="eo-end-time" aria-describedby="eo-end-time-desc" name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all" size="6" maxlength="8" value="%s"/>',
+					'<input type="text" id="eo-end-time" aria-describedby="eo-end-time-desc" name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all" size="6" maxlength="8" value="%s"/>',
 					eo_format_datetime( $end, $time_format )
 				);
 				?>
