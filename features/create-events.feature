@@ -17,7 +17,7 @@ Feature: Create events
     @javascript
     Scenario: Single event
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Single+Event"
-        And I wait for AJAX to finish
+        And I wait 6 seconds
     	And I fill in the following:
         	| eo-start-date | 25-10-2015   |
         	| eo-start-time | 10:30pm      |
@@ -35,7 +35,7 @@ Feature: Create events
     @javascript
     Scenario: Daily event
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Daily+Event"
-        And I wait for AJAX to finish
+        And I wait 6 seconds
         And I fill in the following:
         	| eo-start-date | 06-11-2014   |
         	| eo-start-time | 10:00pm      |
@@ -44,7 +44,8 @@ Feature: Create events
 		And I select "daily" from "eo-event-recurrence"
 		And I fill in "eo-recurrence-frequency" with "2"
 		And I fill in "eo-schedule-last-date" with "13-11-2014"
-		And I press "save-post"
+		Then the event summary should read "This event will repeat every 2 days until November 13th 2014"  
+		When I press "save-post"
 		Then I should see "Event draft updated"
 		And the event "Daily Event" should have the following schedule
 		    | start      | 2014-11-06 10:00pm |
@@ -56,7 +57,7 @@ Feature: Create events
     @javascript
     Scenario: Weekly event
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Weekly+Event"
-        And I wait for AJAX to finish
+        And I wait 6 seconds
     	And I fill in the following:
         	| eo-start-date | 01-01-2015    |
         	| eo-start-time | 02:15pm       |
@@ -65,7 +66,8 @@ Feature: Create events
 		And I select "weekly" from "eo-event-recurrence"
 		And I check "day-Sat"
 		And I fill in "eo-schedule-last-date" with "29-01-2015"
-		And I press "save-post"
+		Then the event summary should read "This event will repeat every week on Thursday, Saturday until January 29th 2015"  
+		When I press "save-post"
 		Then I should see "Event draft updated"
 		And the event "Weekly Event" should have the following schedule
 		    | start      | 2015-01-01 02:15pm |
@@ -86,7 +88,8 @@ Feature: Create events
 		And I select "monthly" from "eo-event-recurrence"
 		And I select "BYMONTHDAY=" from "eo_input[schedule_meta]"
 		And I fill in "eo-schedule-last-date" with "30-12-2016"
-		And I press "save-post"
+		Then the event summary should read "This event will repeat every month on the 30th until December 30th 2016"  
+		When I press "save-post"
 		Then I should see "Event draft updated"
 		And the event "Monthly Event 1" should have the following schedule
 		    | start           | 2016-01-30 01:00pm |
@@ -108,7 +111,8 @@ Feature: Create events
 		And I select "monthly" from "eo-event-recurrence"
 		And I select "BYDAY=" from "eo_input[schedule_meta]"
 		And I fill in "eo-schedule-last-date" with "31-12-2016"
-		And I press "save-post"
+		Then the event summary should read "This event will repeat every month on the last Saturday until December 31st 2016"  
+		When I press "save-post"
 		Then I should see "Event draft updated"
 		And the event "Monthly Event 2" should have the following schedule
 		    | start           | 2016-01-30 01:00pm |
@@ -129,7 +133,8 @@ Feature: Create events
         	| eo-end-time   | 06:00pm       |
 		And I select "yearly" from "eo-event-recurrence"
 		And I fill in "eo-schedule-last-date" with "29-02-2024"
-		And I press "save-post"
+		Then the event summary should read "This event will repeat every year on the February 29th until February 29th 2024"  
+		When I press "save-post"
 		Then I should see "Event draft updated"
 		And the event "Yearly Event" should have the following schedule
 		    | start           | 2016-02-29 05:00pm |
