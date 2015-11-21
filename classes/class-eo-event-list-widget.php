@@ -88,7 +88,7 @@ class EO_Event_List_Widget extends WP_Widget{
 
 	}
 
-	function form($instance) {
+	function form( $instance ) {
 
 		if ( ! isset( $instance['scope'] ) && isset( $instance['showpastevents'] ) ) {
 			$exclude_running = eventorganiser_get_option( 'runningisnotpast',0 );
@@ -142,9 +142,9 @@ class EO_Event_List_Widget extends WP_Widget{
 		<p>
   			<label for="<?php echo $this->get_field_id( 'orderby' ); ?>"><?php _e( 'Order by', 'eventorganiser' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>">
-				<option value="eventstart" <?php selected( $instance['orderby' ], 'eventstart' ); ?>><?php _e( 'Start date', 'eventorganiser' ); ?></option>
-				<option value="title" <?php selected( $instance[ 'orderby' ], 'title' );?>><?php _e( 'Title', 'eventorganiser' ); ?></option>
-				<option value="date" <?php selected( $instance[ 'orderby' ], 'date' );?>><?php _e( 'Publish date', 'eventorganiser' ); ?></option>
+				<option value="eventstart" <?php selected( $instance['orderby'], 'eventstart' ); ?>><?php _e( 'Start date', 'eventorganiser' ); ?></option>
+				<option value="title" <?php selected( $instance['orderby'], 'title' );?>><?php _e( 'Title', 'eventorganiser' ); ?></option>
+				<option value="date" <?php selected( $instance['orderby'], 'date' );?>><?php _e( 'Publish date', 'eventorganiser' ); ?></option>
 			</select>
 			<select id="<?php echo $this->get_field_id( 'order' ); ?>" name="<?php echo $this->get_field_name( 'order' ); ?>" type="text">
 				<option value="asc" <?php selected( $instance['order'], 'asc' ); ?>><?php _e( 'ASC', 'eventorganiser' ); ?> </option>
@@ -188,9 +188,9 @@ class EO_Event_List_Widget extends WP_Widget{
 			'numberposts'     => intval( $new_inst['numberposts'] ),
 			'venue'           => sanitize_text_field( $new_inst['venue'] ),
 			'scope'           => isset( $new_inst['scope'] ) && in_array( $new_inst['scope'], $intervals ) ? $new_inst['scope'] : 'future',
-			'order'           => $new_inst['order'] == 'asc' ? 'asc' : 'desc',
+			'order'           => ( 'asc' == $new_inst['order'] ? 'asc' : 'desc' ),
 			'orderby'         => in_array( $new_inst['orderby'],  array( 'title', 'eventstart', 'date' ) ) ? $new_inst['orderby'] : 'eventstart',
-			'group_events_by' => isset( $new_inst['group_events_by'] ) && $new_inst['group_events_by'] == 'series' ? 'series' : '',
+			'group_events_by' => isset( $new_inst['group_events_by'] ) && ( 'series' == $new_inst['group_events_by'] ? 'series' : '' ),
 			'template'        => $new_inst['template'],
 			'no_events'       => $new_inst['no_events'],
 		);
@@ -274,11 +274,11 @@ function eventorganiser_list_events( $query, $args = array(), $echo = 1 ) {
 		$query['showpastevents'] = 0;
 	}
 
-	if ( ! empty($query['numberposts']) ) {
+	if ( ! empty( $query['numberposts'] ) ) {
 		$query['posts_per_page'] = (int) $query['numberposts'];
 	}
 
-	$template = isset($args['template']) ? $args['template'] :'';
+	$template = isset( $args['template'] ) ? $args['template'] :'';
 
 	global $eo_event_loop,$eo_event_loop_args;
 	$eo_event_loop_args = $args;
@@ -290,7 +290,7 @@ function eventorganiser_list_events( $query, $args = array(), $echo = 1 ) {
 	 */
 	$template_file = apply_filters( 'eventorganiser_event_list_loop', false );
 	$template_file = locate_template( $template_file );
-	if ( $template_file || empty($template) ) {
+	if ( $template_file || empty( $template ) ) {
 		ob_start();
 		if ( empty( $template_file ) ) {
 			$template_file = eo_locate_template( array( $eo_event_loop_args['type'].'-event-list.php', 'event-list.php' ), true, false );
@@ -303,7 +303,7 @@ function eventorganiser_list_events( $query, $args = array(), $echo = 1 ) {
 
 	} else {
 		//Using the 'placeholder' template
-		$no_events = isset($args['no_events']) ? $args['no_events'] : '';
+		$no_events = isset( $args['no_events'] ) ? $args['no_events'] : '';
 
 		$id        = ( ! empty( $args['id'] ) ? 'id="'.esc_attr( $args['id'] ).'"' : '' );
 		$container = '<ul '.$id.' class="%2$s">%1$s</ul>';
