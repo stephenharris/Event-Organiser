@@ -57,7 +57,10 @@ install_db() {
 	fi
 
 	# create database
-	mysqladmin --no-defaults create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
+	if ! mysql --user="$DB_USER" --password="$DB_PASS" $EXTRA -e 'use $DB_NAME'; then
+  		mysqladmin --no-defaults create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
+	fi
+	
 
 }
 
