@@ -13,13 +13,14 @@ Feature: View events
             | event-organiser/event-organiser.php | enabled |
             
 		And there are events
-            | post_title | start            | end              | post_status | all_day | schedule | schedule_meta | frequency | until            |
-            | Single     | 2115-04-30 13:00 | 2115-04-30 14:00 | publish     | 0       | once     |               |           |                  |
-            | Daily      | 2115-05-01       | 2115-05-01       | publish     | 1       | daily    |               | 1         | 2115-05-15       |
-            | Weekly     | 2115-06-01 19:30 | 2115-06-01 21:30 | publish     | 0       | weekly   |               | 2         | 2115-06-29 19:30 |
-            | Monthly 1  | 2115-01-15 09:45 | 2115-01-15 11:00 | publish     | 0       | monthly  | BYMONTHDAY    | 1         | 2115-12-15 09:45 |
-            | Monthly 2  | 2115-01-15 09:45 | 2115-01-15 11:00 | publish     | 0       | monthly  | BYDAY         | 1         | 2115-12-17 09:45 |
-            | Yearly     | 2112-01-01       | 2112-01-01       | publish     | 1       | yearly   |               | 1         | 2115-01-01       |
+            | post_title   | start            | end              | post_status | all_day | schedule | schedule_meta | frequency | until            |
+            | Single       | 2115-04-30 13:00 | 2115-04-30 14:00 | publish     | 0       | once     |               |           |                  |
+            | Daily        | 2115-05-01       | 2115-05-01       | publish     | 1       | daily    |               | 1         | 2115-05-15       |
+            | Weekly       | 2115-06-01 19:30 | 2115-06-01 21:30 | publish     | 0       | weekly   |               | 2         | 2115-06-29 19:30 |
+            | Monthly 1    | 2115-01-15 09:45 | 2115-01-15 11:00 | publish     | 0       | monthly  | BYMONTHDAY    | 1         | 2115-12-15 09:45 |
+            | Monthly 2    | 2115-01-15 09:45 | 2115-01-15 11:00 | publish     | 0       | monthly  | BYDAY         | 1         | 2115-12-17 09:45 |
+            | Yearly       | 2112-01-01       | 2112-01-01       | publish     | 1       | yearly   |               | 1         | 2115-01-01       |
+            | Yearly Past  | 2012-01-01       | 2012-01-01       | publish     | 1       | yearly   |               | 1         | 2015-01-01       |
 
     Scenario: Single event
         When I go to "events/event/single"
@@ -90,3 +91,17 @@ Feature: View events
     	And I should see "January 1, 2113"
     	And I should see "January 1, 2114"
     	And I should see "January 1, 2115"
+    	
+    Scenario: Yearly past event
+        When I go to "events/event/yearly-past"
+    	Then I should see "Yearly Past"
+    	And I should see "This event finished on 01 January 2015"
+
+	Scenario: Different event format
+    	Given I set "date_format" option to "jS M y"
+    	And I set "time_format" option to "H:i"
+    	When I go to "events/event/weekly"
+		And I should see "This event is running from 1 June 2115 until 29 June 2115. It is next occurring on 1st Jun 15 19:30"
+    	And I should see "1st Jun 15 19:30"
+    	And I should see "15th Jun 15 19:30"
+    	And I should see "29th Jun 15 19:30"  
