@@ -30,6 +30,7 @@ Feature: View events
 	Scenario: Daily event
         When I go to "events/event/daily"
     	Then I should see "Daily"
+    	And I should see "This event is running from 1 May 2115 until 15 May 2115. It is next occurring on May 1, 2115"
     	And I should see "May 1, 2115"
     	And I should see "May 2, 2115"
     	And I should see "May 3, 2115"
@@ -42,6 +43,7 @@ Feature: View events
     Scenario: Weekly event
         When I go to "events/event/weekly"
     	Then I should see "Weekly"
+    	And I should see "This event is running from 1 June 2115 until 29 June 2115. It is next occurring on June 1, 2115 7:30 pm"
     	And I should see "June 1, 2115 7:30 pm"
     	And I should see "June 15, 2115 7:30 pm"
     	And I should see "June 29, 2115 7:30 pm"
@@ -49,6 +51,7 @@ Feature: View events
     Scenario: Monthly event (by date)
         When I go to "events/event/monthly-1"
     	Then I should see "Monthly 1"
+		And I should see "This event is running from 15 January 2115 until 15 December 2115. It is next occurring on January 15, 2115 9:45 am"
 		And I should see "January 15, 2115 9:45 am"
     	And I should see "February 15, 2115 9:45 am"
     	And I should see "March 15, 2115 9:45 am"
@@ -65,6 +68,7 @@ Feature: View events
     Scenario: Monthly event (by day)
         When I go to "events/event/monthly-2"
     	Then I should see "Monthly 2"
+    	And I should see "This event is running from 15 January 2115 until 17 December 2115. It is next occurring on January 15, 2115 9:45 am"
     	And I should see "January 15, 2115 9:45 am"
     	And I should see "February 19, 2115 9:45 am"
     	And I should see "March 19, 2115 9:45 am"
@@ -81,6 +85,7 @@ Feature: View events
     Scenario: Yearly event
         When I go to "events/event/yearly"
     	Then I should see "Yearly"
+    	And I should see "This event is running from 1 January 2112 until 1 January 2115. It is next occurring on January 1, 2112"
     	And I should see "January 1, 2112"
     	And I should see "January 1, 2113"
     	And I should see "January 1, 2114"
