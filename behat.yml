@@ -4,6 +4,7 @@ default:
       contexts:
         - FeatureContext
         - WordPressAdminContext
+        - WordPressPostListContext
   extensions:
     Johnbillion\WordPressExtension:
       path: '/tmp/wordpress'
