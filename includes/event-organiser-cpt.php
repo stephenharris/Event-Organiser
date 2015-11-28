@@ -790,34 +790,39 @@ add_filter('get_the_terms','eventorganiser_get_terms_meta');
 /**
  * Retrieve a category term's colour.
  *
+ * This function has only every supported in the 'color' key, and will be removed
+ * when WordPress core term meta is used in place of storing category data in the options table.
+ *
+ * You should not use this function, but intead use {@see eo_get_category_color()}
+ *
+ * @deprecated 3.0.0 Use eo_get_category_color()
  * @since 1.3
  * @param term|slug $term The event category term object, or slug. Can be empty to get colour of term being viewed.
  * @return string The event category colour in Hex format
  */
-function eo_get_category_meta($term='',$key=''){
-	if( $key != 'color' )
+function eo_get_category_meta( $term = '', $key = '' ) {
+
+	if ( 'color' != $key ) {
 		return false;
-
-	if (is_object($term)){
-		if(isset($term->color))
-			return $term->color;
-		else
-			$term = $term->slug;
 	}
 
-	if( !empty($term) ){
-		$term = get_term_by('slug', $term,'event-category');
-		if( isset($term->color))
-			return $term->color;
+	if ( is_object( $term ) && ! isset( $term->color ) ) {
+		$term = get_term( $term->term_id, 'event-category' );
+	}
 
-	}elseif( is_tax('event-category') ){
+	if ( ! empty( $term ) && is_int( $term ) ) {
+		$term = get_term_by( 'id', $term, 'event-category' );
+	} elseif ( ! empty( $term ) ) {
+		$term = get_term_by( 'slug', $term, 'event-category' );
+	} elseif ( is_tax( 'event-category' ) ) {
 		$term = get_queried_object();
-		$term = $term->term_id;
-		$term = get_term( $term, 'event-category' );
-		if( isset($term->color))
-			return $term->color;
+		$term = get_term( $term->term_id, 'event-category' );
 	}
-	
+
+	if ( isset( $term->color ) ) {
+		return $term->color;
+	}
+
 	return false;
 }
 
