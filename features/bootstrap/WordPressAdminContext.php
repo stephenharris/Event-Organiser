@@ -24,32 +24,5 @@ class WordPressAdminContext extends Johnbillion\WordPressExtension\Context\WordP
 		
 	}
 
-	/**
-	 * @Then I should be on the :admin_page page
-	 */
-	public function iShouldBeOnThePage($admin_page)
-	{
-		
-		//h2s were used prior to 4.4 and h1s after
-		$header2 = $this->getSession()->getPage()->find( 'css', '.wrap > h2' );
-		$header1 = $this->getSession()->getPage()->find( 'css', '.wrap > h1' );
-		
-		if ( $header1 ) {
-			$header_text  = $header1->getText();
-			$add_new_link = $header1->find( 'css', 'a' )->getText();
-		} else {
-			$header_text  = $header2->getText();
-			$add_new_link = $header2->find( 'css', 'a' )->getText();
-		}			
-
-		//The page headers can often incude an 'add new link'. Strip that out of the header text.
-		$header_text  = trim( str_replace( $add_new_link, '', $header_text ) );
-
-		if ( $header_text != $admin_page ) {
-			throw new \Exception( sprintf( 'Actual page: %s',  $header_text ) );
-		} 
-	}
-	
-	
 }
 
