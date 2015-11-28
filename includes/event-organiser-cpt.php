@@ -70,13 +70,13 @@ function eventorganiser_create_event_taxonomies() {
 	}
 	/**
 	 * Filters the event venue taxonomy properties.
-	 * 
-	 * Allows you to change the properties and labels of the event venue taxonomy. You can 
+	 *
+	 * Allows you to change the properties and labels of the event venue taxonomy. You can
 	 * return `false` to prevent the taxonomy from registering. All labels include those
 	 * supported by `register_taxonomy()`, as well as additional strings:
-	 * 
+	 *
 	 * * venue_location - Venue location metabox title
-	 * * view_all_items - Used in drop-down filters for venues 
+	 * * view_all_items - Used in drop-down filters for venues
 	 * * singular_name_colon - Same as singular_name but with a colon.
 	 * * no_item - Venue selection, when opting no to select a venue for the event.
 	 *
@@ -84,10 +84,10 @@ function eventorganiser_create_event_taxonomies() {
 	 *                                     Does not register the taxonomy if set to false.
 	 */
 	$event_venue_args = apply_filters( 'eventorganiser_register_taxonomy_event-venue', $event_venue_args );
-	if( $event_venue_args ){
-		register_taxonomy( 'event-venue',array('event'), $event_venue_args );	
+	if ( $event_venue_args ) {
+		register_taxonomy( 'event-venue',array( 'event' ), $event_venue_args );
 	}
-	
+
 	//Register event category taxonomy
 	$category_labels = array(
 		'name'              => __( 'Event Categories', 'eventorganiser' ),
@@ -120,26 +120,26 @@ function eventorganiser_create_event_taxonomies() {
 			'manage_terms' => 'manage_event_categories',
 			'edit_terms'   => 'manage_event_categories',
 			'delete_terms' => 'manage_event_categories',
-			'assign_terms' => 'edit_events'
-  		),
-  	);
-  	
-  	/**
+			'assign_terms' => 'edit_events',
+		),
+	);
+
+	/**
 	 * Filters the event category taxonomy properties.
-	 * 
-	 * Allows you to change the properties and labels of the event venue taxonomy. You can 
-	 * return `false` to prevent the taxonomy from registering. All labels include those
+	 *
+	 * Allows you to change the properties and labels of the event category taxonomy. You can
+	 *  return `false` to prevent the taxonomy from registering. All labels include those
 	 * supported by `register_taxonomy()`, as well as additional strings:
-	 * 
-	 * * view_all_items - Used in drop-down filters for venues 
+	 *
+	 * * view_all_items - Used in drop-down filters for categories
 	 *
 	 * @param array|bool $event_category_args Settings passed to `register_taxonomy()` in the third argument.
 	 *                                        Does not register the taxonomy if set to false.
 	 */
 	$event_category_args = apply_filters( 'eventorganiser_register_taxonomy_event-category', $event_category_args );
-	
-	if( $event_category_args ){
-		register_taxonomy( 'event-category',array('event'), $event_category_args );	
+
+	if ( $event_category_args ) {
+		register_taxonomy( 'event-category', array( 'event' ), $event_category_args );
 	}
 
 	//Register event tag taxonomy
@@ -178,32 +178,32 @@ function eventorganiser_create_event_taxonomies() {
 				'manage_terms' => 'manage_event_categories',
 				'edit_terms'   => 'manage_event_categories',
 				'delete_terms' => 'manage_event_categories',
-				'assign_terms' =>'edit_events'
-  			),
-  		);
-  		
-	}else{
+				'assign_terms' => 'edit_events',
+			),
+		);
+
+	} else {
 		$event_tag_args = false;
 	}
-		
+
 	/**
 	 * Filters the event tag taxonomy properties.
-	 * 
-	 * Allows you to change the properties and labels of the event venue taxonomy. You can 
-	 * return `false` to prevent the taxonomy from registering. All labels include those
+	 *
+	 * Allows you to change the properties and labels of the event tag taxonomy. You can
+	 *  return `false` to prevent the taxonomy from registering. All labels include those
 	 * supported by `register_taxonomy()`, as well as additional strings:
-	 * 
-	 * * view_all_items - Used in drop-down filters for venues 
+	 *
+	 * * view_all_items - Used in drop-down filters for tags
 	 *
 	 * @param array|bool $event_tag_args Settings passed to `register_taxonomy()` in the third argument.
 	 *                                   Does not register the taxonomy if set to false.
 	 */
 	$event_tag_args = apply_filters( 'eventorganiser_register_taxonomy_event-tag', $event_tag_args );
-	
-	if( $event_tag_args ){
-		register_taxonomy( 'event-tag',array( 'event' ), $event_tag_args );	
+
+	if ( $event_tag_args ) {
+		register_taxonomy( 'event-tag',array( 'event' ), $event_tag_args );
 	}
-  		
+
 }
 add_action( 'init', 'eventorganiser_create_event_taxonomies', 1 );
 
