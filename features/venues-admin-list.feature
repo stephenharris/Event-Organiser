@@ -77,8 +77,15 @@ Feature: Venues admin list
 	      | Living Room |
 	      | Akva        |
 
-    @admin @new
-	Scenario: Navigating to the 
+    @admin
+	Scenario: Navigating to the
 		Given I am on "/wp-admin/edit.php?post_type=event&page=venues"
 		When I follow "Add New Venue"
 		Then I should be on the "Add New Venue" page
+
+		
+    @admin
+	Scenario: Navigating to the
+		Given I am on "/wp-admin/edit.php?post_type=event&page=venues"
+		When I follow "Akva"
+		Then I should be on the "Edit Venue" page
