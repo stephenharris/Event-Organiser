@@ -10,23 +10,23 @@
  */
 function eventorganiser_create_event_taxonomies() {
 
-	if( !eventorganiser_get_option( 'prettyurl' ) ){
+	if ( ! eventorganiser_get_option( 'prettyurl' ) ) {
 		$cat_rewrite = $tag_rewrite = $venue_rewrite = false;
 
-	}else{
-		$cat_slug = trim(eventorganiser_get_option('url_cat','events/category'), "/");
+	} else {
+		$cat_slug = trim( eventorganiser_get_option( 'url_cat', 'events/category' ), '/' );
 		$cat_rewrite = array( 'slug' => $cat_slug, 'with_front' => false );
 
-		$tag_slug = trim(eventorganiser_get_option('url_tag','events/tag'), "/");
+		$tag_slug = trim( eventorganiser_get_option( 'url_tag', 'events/tag' ), '/' );
 		$tag_rewrite = array( 'slug' => $tag_slug, 'with_front' => false );
 
-		$venue_slug = trim(eventorganiser_get_option('url_venue','events/venue'), "/");
+		$venue_slug = trim( eventorganiser_get_option( 'url_venue','events/venue' ), '/' );
 		$venue_rewrite = array( 'slug' => $venue_slug, 'with_front' => false );
 	}
-	
+
 	//Register event venue taxonomy
 	$supports = eventorganiser_get_option( 'supports' );
-	if( in_array( 'event-venue', $supports ) ){
+	if ( in_array( 'event-venue', $supports ) ) {
 		$venue_labels = array(
 			'name'                       => __( 'Venues','eventorganiser' ),
 			'singular_name'              => __( 'Venue', 'eventorganiser' ),
@@ -40,14 +40,16 @@ function eventorganiser_create_event_taxonomies() {
 			'not_found'                  => __( 'No venues found', 'eventorganiser' ),
 			'add_or_remove_items'        => __( 'Add or remove venues', 'eventorganiser' ),
 			'separate_items_with_commas' => __( 'Separate venues with commas', 'eventorganiser' ),
+			'items_list_navigation'      => __( 'Event venues list navigation', 'eventorganiser' ),
+			'items_list'                 => __( 'Event venues list', 'eventorganiser' ),
 			//non-default wp labels
 			'venue_location'             => __( 'Venue Location', 'eventorganiser' ),
 			'view_all_items'             => __( 'View all venues', 'eventorganiser' ),
 			'singular_name_colon'        => __( 'Venue:', 'eventorganiser' ),
 			'no_item'                    => __( 'No Venue', 'eventorganiser' ),
-  		);
+		);
 
-  		$event_venue_args = array(
+		$event_venue_args = array(
 			'hierarchical'          => false,
 			'labels'                => $venue_labels,
 			'public'                => true,
@@ -55,17 +57,16 @@ function eventorganiser_create_event_taxonomies() {
 			'show_ui'               => false,//Use custom UI
 			'update_count_callback' => '_update_post_term_count',
 			'query_var'             => true,
-  			'rewrite'               => $venue_rewrite,
+			'rewrite'               => $venue_rewrite,
 			'capabilities'          => array(
 				'manage_terms' => 'manage_venues',
 				'edit_terms'   => 'manage_venues',
 				'delete_terms' => 'manage_venues',
-				'assign_terms' => 'edit_events'
-  			),
-  		);
-		
-	}else{
-		$event_venue_args = false;		
+				'assign_terms' => 'edit_events',
+			),
+		);
+	} else {
+		$event_venue_args = false;
 	}
 	/**
 	 * Filters the event venue taxonomy properties.
@@ -95,24 +96,26 @@ function eventorganiser_create_event_taxonomies() {
 		'all_items'         => __( 'All Categories' ),
 		'parent_item'       => __( 'Parent Category' ),
 		'parent_item_colon' => __( 'Parent Category:' ),
-		'edit_item'         => __( 'Edit Category' ), 
+		'edit_item'         => __( 'Edit Category' ),
 		'update_item'       => __( 'Update Category' ),
 		'add_new_item'      => __( 'Add New Category' ),
 		'new_item_name'     => __( 'New Category Name' ),
 		'not_found'         => __( 'No categories found' ),
 		'menu_name'         => __( 'Categories' ),
+		'items_list_navigation'      => __( 'Event categories list navigation', 'eventorganiser' ),
+		'items_list'                 => __( 'Event categories list', 'eventorganiser' ),
 		//Non-wp default labels
 		'view_all_items'             => __( 'View all categories', 'eventorganiser' ),
-  	); 	
-  	
-  	$event_category_args = array(
+	);
+
+	$event_category_args = array(
 		'hierarchical'          => true,
 		'labels'                => $category_labels,
 		'show_ui'               => true,
-    	'update_count_callback' => '_update_post_term_count',
+		'update_count_callback' => '_update_post_term_count',
 		'query_var'             => true,
-  		'rewrite'               => $cat_rewrite,
-  		'public'                => true,
+		'rewrite'               => $cat_rewrite,
+		'public'                => true,
 		'capabilities' => array(
 			'manage_terms' => 'manage_event_categories',
 			'edit_terms'   => 'manage_event_categories',
@@ -140,7 +143,7 @@ function eventorganiser_create_event_taxonomies() {
 	}
 
 	//Register event tag taxonomy
-	if( eventorganiser_get_option('eventtag') ){
+	if ( eventorganiser_get_option( 'eventtag' ) ) {
 
 		$tag_labels = array(
 			'name'                       => __( 'Event Tags', 'eventorganiser' ),
@@ -157,17 +160,19 @@ function eventorganiser_create_event_taxonomies() {
 			'menu_name'                  => __( 'Tags' ),
 			'add_or_remove_items'        => __( 'Add or remove tags' ),
 			'separate_items_with_commas' => __( 'Separate tags with commas' ),
+			'items_list_navigation'      => __( 'Event tags list navigation', 'eventorganiser' ),
+			'items_list'                 => __( 'Event tags list', 'eventorganiser' ),
 			//Non-wp default labels
 			'view_all_items'             => __( 'View all tags', 'eventorganiser' ),
-  		); 	
+		);
 
-  		$event_tag_args = array(
+		$event_tag_args = array(
 			'hierarchical'          => false,
 			'labels'                => $tag_labels,
 			'show_ui'               => true,
 			'update_count_callback' => '_update_post_term_count',
 			'query_var'             => true,
-  			'public'                => true,
+			'public'                => true,
 			'rewrite'               => $tag_rewrite,
 			'capabilities' => array(
 				'manage_terms' => 'manage_event_categories',
