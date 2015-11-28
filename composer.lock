@@ -759,12 +759,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/stephenharris/WordPressBehatExtension.git",
-                "reference": "201c9271ea67d7ce6536a00fe0ac5c99d64626bf"
+                "reference": "07af1c6bbe1eb80b5e49f42f1a2664ee1aea11af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stephenharris/WordPressBehatExtension/zipball/201c9271ea67d7ce6536a00fe0ac5c99d64626bf",
-                "reference": "201c9271ea67d7ce6536a00fe0ac5c99d64626bf",
+                "url": "https://api.github.com/repos/stephenharris/WordPressBehatExtension/zipball/07af1c6bbe1eb80b5e49f42f1a2664ee1aea11af",
+                "reference": "07af1c6bbe1eb80b5e49f42f1a2664ee1aea11af",
                 "shasum": ""
             },
             "require": {
@@ -810,7 +810,7 @@
             "support": {
                 "source": "https://github.com/stephenharris/WordPressBehatExtension/tree/feature/addcontexts"
             },
-            "time": "2015-11-28 01:32:13"
+            "time": "2015-11-28 09:02:58"
         },
         {
             "name": "pdepend/pdepend",
