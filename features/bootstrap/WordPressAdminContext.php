@@ -23,5 +23,28 @@ class WordPressAdminContext extends Johnbillion\WordPressExtension\Context\WordP
 		}
 		
 	}
+
+	/**
+	 * @Then I should be on the :admin_page page
+	 */
+	public function iShouldBeOnThePage($admin_page)
+	{
+		$header2 = $this->getSession()->getPage()->find( 'css', '.wrap > h2' );
+		$header1 = $this->getSession()->getPage()->find( 'css', '.wrap > h1' );
+		
+		if ( $header1 ) {
+			if ( $header1->getText() != $admin_page ) {
+				throw new PendingException( sprintf( 'Actual page: %s',  $header1->getText() ) );
+			} 
+		} else {
+			if ( $header2->getText() != $admin_page ) {
+				throw new PendingException( sprintf( 'Actual page: %s',  $header2->getText() ) );
+			}
+		}
+		
+	}
+	
+	
 	
 }
+

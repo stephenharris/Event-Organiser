@@ -11,7 +11,7 @@ class WordPressPostListContext extends Johnbillion\WordPressExtension\Context\Wo
 	/**
 	 * @When I sort events by :column :order
 	 */
-	public function iFollowSortEventsByDatetime($column, $order)
+	public function iFollowSortEventsBy($column, $order)
 	{
 		
 		$order = ( strtolower( substr( $order, 0, 3 ) ) == 'asc' ? 'asc' : 'desc' );
@@ -35,6 +35,25 @@ class WordPressPostListContext extends Johnbillion\WordPressExtension\Context\Wo
 		
 	}
 	
-	
+
+	/**
+	 * @When I sort venues by :column :order
+	 */
+	public function iFollowSortVenuesBy($column, $order)
+	{
+		
+		$order  = ( strtolower( substr( $order, 0, 3 ) ) == 'asc' ? 'asc' : 'desc' );
+		$column = str_replace( ' ', '', strtolower( $column ) );
+		switch( strtolower( $column ) ) {
+			default:
+				$orderby = strtolower( $column );
+			
+		}
+		
+		$this->visitPath( 
+			sprintf( '/wp-admin/edit.php?post_type=event&page=venues&orderby=%s&order=%s', $orderby, $order ) 
+		);
+		
+	}	
 	
 }
