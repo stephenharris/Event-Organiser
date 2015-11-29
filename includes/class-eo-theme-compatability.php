@@ -322,7 +322,6 @@ class EO_Theme_Compat {
 				'comment_status'        => $wp_query->post->comment_status,
 				'comment_count'         => $wp_query->post->comment_count,
 				'filter'                => $wp_query->post->filter,
-
 				'is_404'                => false,
 				'is_page'               => false,
 				'is_single'             => false,
@@ -355,7 +354,6 @@ class EO_Theme_Compat {
 				'comment_status'        => 'closed',
 				'comment_count'         => 0,
 				'filter'                => 'raw',
-
 				'is_404'                => false,
 				'is_page'               => false,
 				'is_single'             => false,
