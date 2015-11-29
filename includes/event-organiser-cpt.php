@@ -90,22 +90,22 @@ function eventorganiser_create_event_taxonomies() {
 
 	//Register event category taxonomy
 	$category_labels = array(
-		'name'              => __( 'Event Categories', 'eventorganiser' ),
-		'singular_name'     => _x( 'Category', 'taxonomy singular name' ),
-		'search_items'      => __( 'Search Categories' ),
-		'all_items'         => __( 'All Categories' ),
-		'parent_item'       => __( 'Parent Category' ),
-		'parent_item_colon' => __( 'Parent Category:' ),
-		'edit_item'         => __( 'Edit Category' ),
-		'update_item'       => __( 'Update Category' ),
-		'add_new_item'      => __( 'Add New Category' ),
-		'new_item_name'     => __( 'New Category Name' ),
-		'not_found'         => __( 'No categories found' ),
-		'menu_name'         => __( 'Categories' ),
-		'items_list_navigation'      => __( 'Event categories list navigation', 'eventorganiser' ),
-		'items_list'                 => __( 'Event categories list', 'eventorganiser' ),
+		'name'                  => __( 'Event Categories', 'eventorganiser' ),
+		'singular_name'         => _x( 'Category', 'taxonomy singular name' ),
+		'search_items'          => __( 'Search Categories' ),
+		'all_items'             => __( 'All Categories' ),
+		'parent_item'           => __( 'Parent Category' ),
+		'parent_item_colon'     => __( 'Parent Category:' ),
+		'edit_item'             => __( 'Edit Category' ),
+		'update_item'           => __( 'Update Category' ),
+		'add_new_item'          => __( 'Add New Category' ),
+		'new_item_name'         => __( 'New Category Name' ),
+		'not_found'             => __( 'No categories found' ),
+		'menu_name'             => __( 'Categories' ),
+		'items_list_navigation' => __( 'Event categories list navigation', 'eventorganiser' ),
+		'items_list'            => __( 'Event categories list', 'eventorganiser' ),
 		//Non-wp default labels
-		'view_all_items'             => __( 'View all categories', 'eventorganiser' ),
+		'view_all_items'        => __( 'View all categories', 'eventorganiser' ),
 	);
 
 	$event_category_args = array(
