@@ -80,7 +80,7 @@ function eventorganiser_site_install(){
 
 	//Add options and capabilities
 	$eventorganiser_options = array (	
-		'supports' => array('title','editor','author','thumbnail','excerpt','custom-fields','comments'),
+		'supports' => array('title','editor','author','thumbnail','excerpt','custom-fields'),
 		'event_redirect' => 'events',
 		'dateformat'=>'dd-mm',
 		'prettyurl'=> 1,

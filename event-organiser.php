@@ -139,7 +139,7 @@ function eventorganiser_get_option( $option = false, $default = false ) {
 		'group_events' => '',
 		'feed' => 1,
 		'deleteexpired' => 0,
-		'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments', 'eventtag', 'event-venue' ),
+		'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'eventtag', 'event-venue' ),
 		'event_redirect' => 'events',
 		'dateformat' => 'd-m-Y',
 		'prettyurl' => 1,

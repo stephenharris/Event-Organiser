@@ -51,14 +51,14 @@ Feature: Events admin list
   	Scenario: Viewing events in the admin list
     	When I go to "/wp-admin/edit.php?post_type=event"
     	Then the post list table looks like
-	      | Event       | Comments     | Venue       | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Yearly Past | —No comments |             |                   | Jan, 1 2012         | Jan, 1 2012          | every year until Jan, 1st 2015                        |
-	      | Yearly      | —No comments |             | Children’s        | Jan, 1 2112         | Jan, 1 2112          | every year until Jan, 1st 2115                        |
-	      | Monthly 2   | —No comments | Akva        | Food & Drink      | Jan, 15 21158:45 am | Jan, 15 211511:00 am | every month on the third Tuesday until Dec, 17th 2115 |
-	      | Monthly 1   | —No comments |             |                   | Jan, 15 21159:45 am | Jan, 15 211510:00 am | every month on the 15th until Dec, 15th 2115          |
-	      | Single      | —No comments | Living Room | Music             | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
-	      | Daily       | —No comments | Dragonfly   |                   | May, 1 2115         | May, 1 2115          | every day until May, 15th 2115                        |
-	      | Weekly      | —No comments | Akva        | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
+	      | Event       | Venue       | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
+	      | Yearly Past |             |                   | Jan, 1 2012         | Jan, 1 2012          | every year until Jan, 1st 2015                        |
+	      | Yearly      |             | Children’s        | Jan, 1 2112         | Jan, 1 2112          | every year until Jan, 1st 2115                        |
+	      | Monthly 2   | Akva        | Food & Drink      | Jan, 15 21158:45 am | Jan, 15 211511:00 am | every month on the third Tuesday until Dec, 17th 2115 |
+	      | Monthly 1   |             |                   | Jan, 15 21159:45 am | Jan, 15 211510:00 am | every month on the 15th until Dec, 15th 2115          |
+	      | Single      | Living Room | Music             | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
+	      | Daily       | Dragonfly   |                   | May, 1 2115         | May, 1 2115          | every day until May, 15th 2115                        |
+	      | Weekly      | Akva        | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
 
     @admin
 	Scenario: Sorting by start and end date
@@ -123,18 +123,18 @@ Feature: Events admin list
 		And I select "Expired events" from "show-events-in-interval"
 		And I press "Filter"
 		Then the post list table looks like
-	      | Event       | Comments     | Venue | Categories | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Yearly Past | —No comments |       |            | Jan, 1 2012         | Jan, 1 2012          | every year until Jan, 1st 2015                        |
+	      | Event       | Venue | Categories | Start Date/Time     | End Date/Time        | Recurrence                                            |
+	      | Yearly Past |       |            | Jan, 1 2012         | Jan, 1 2012          | every year until Jan, 1st 2015                        |
 		When I select "Future events" from "show-events-in-interval"
 		And I press "Filter"
 		Then the post list table looks like
-	      | Event       | Comments     | Venue       | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Yearly      | —No comments |             | Children’s        | Jan, 1 2112         | Jan, 1 2112          | every year until Jan, 1st 2115                        |
-	      | Monthly 2   | —No comments | Akva        | Food & Drink      | Jan, 15 21158:45 am | Jan, 15 211511:00 am | every month on the third Tuesday until Dec, 17th 2115 |
-	      | Monthly 1   | —No comments |             |                   | Jan, 15 21159:45 am | Jan, 15 211510:00 am | every month on the 15th until Dec, 15th 2115          |
-	      | Single      | —No comments | Living Room | Music             | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
-	      | Daily       | —No comments | Dragonfly   |                   | May, 1 2115         | May, 1 2115          | every day until May, 15th 2115                        |
-	      | Weekly      | —No comments | Akva        | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
+	      | Event       | Venue       | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
+	      | Yearly      |             | Children’s        | Jan, 1 2112         | Jan, 1 2112          | every year until Jan, 1st 2115                        |
+	      | Monthly 2   | Akva        | Food & Drink      | Jan, 15 21158:45 am | Jan, 15 211511:00 am | every month on the third Tuesday until Dec, 17th 2115 |
+	      | Monthly 1   |             |                   | Jan, 15 21159:45 am | Jan, 15 211510:00 am | every month on the 15th until Dec, 15th 2115          |
+	      | Single      | Living Room | Music             | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
+	      | Daily       | Dragonfly   |                   | May, 1 2115         | May, 1 2115          | every day until May, 15th 2115                        |
+	      | Weekly      | Akva        | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
 	      		
 	@admin @event-category
 	Scenario: Filtering by category
@@ -142,19 +142,19 @@ Feature: Events admin list
 		And I select "Music" from "event-category"
 		And I press "Filter"
 		Then the post list table looks like
-	      | Event       | Comments     | Venue       | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Single      | —No comments | Living Room | Music             | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
-	      | Weekly      | —No comments | Akva        | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
+	      | Event       | Venue       | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
+	      | Single      | Living Room | Music             | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
+	      | Weekly      | Akva        | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
 		When I select "Literature" from "event-category"
 		And I press "Filter"
 		Then the post list table looks like
-	      | Event       | Comments     | Venue | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Weekly      | —No comments | Akva  | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
+	      | Event       | Venue | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
+	      | Weekly      | Akva  | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
 	    When I follow "Music"  
 		Then the post list table looks like
-	      | Event       | Comments     | Venue       | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Single      | —No comments | Living Room | Music             | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
-	      | Weekly      | —No comments | Akva        | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
+	      | Event       | Venue       | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
+	      | Single      | Living Room | Music             | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
+	      | Weekly      | Akva        | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
 	
     @admin @event-venue
 	Scenario: Filtering by venue
@@ -162,16 +162,16 @@ Feature: Events admin list
 		And I select "Akva" from "event-venue"
 		And I press "Filter"
 		Then the post list table looks like
-	      | Event       | Comments     | Venue | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Monthly 2   | —No comments | Akva  | Food & Drink      | Jan, 15 21158:45 am | Jan, 15 211511:00 am | every month on the third Tuesday until Dec, 17th 2115 |
-	      | Weekly      | —No comments | Akva  | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
+	      | Event       | Venue | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
+	      | Monthly 2   | Akva  | Food & Drink      | Jan, 15 21158:45 am | Jan, 15 211511:00 am | every month on the third Tuesday until Dec, 17th 2115 |
+	      | Weekly      | Akva  | Literature, Music | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
 		When I select "Living Room" from "event-venue"
 		And I press "Filter"
 		Then the post list table looks like
-	      | Event       | Comments     | Venue       | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Single      | —No comments | Living Room | Music             | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
+	      | Event       | Venue       | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
+	      | Single      | Living Room | Music             | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
 	    When I go to "/wp-admin/edit.php?post_type=event"
 	    And I follow "Dragonfly"  
 		Then the post list table looks like
-	      | Event       | Comments     | Venue     | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Daily       | —No comments | Dragonfly |                   | May, 1 2115         | May, 1 2115          | every day until May, 15th 2115                        |
+	      | Event       | Venue     | Categories        | Start Date/Time     | End Date/Time        | Recurrence                                            |
+	      | Daily       | Dragonfly |                   | May, 1 2115         | May, 1 2115          | every day until May, 15th 2115                        |
