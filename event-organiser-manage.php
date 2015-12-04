@@ -64,7 +64,7 @@ add_action( 'manage_event_posts_custom_column', 'eventorganiser_event_fill_colum
 function eventorganiser_event_fill_columns( $column_name, $id ) {
 	global $post;
 
-	$series_id = ( empty( $post->event_id) ? $id :'' );
+	$series_id = ( empty( $post->event_id ) ? $id :'' );
 
 	$phpFormat = 'M, j Y';
 	if ( ! eo_is_all_day( $series_id ) ) {
@@ -109,13 +109,13 @@ function eventorganiser_restrict_events_by_category() {
 	global $typenow;
 
 	$category_tax = get_taxonomy( 'event-category' );
-	
-	if( 'event' == $typenow && $category_tax && wp_count_terms( 'event-category' ) > 0 ){
-		eo_taxonomy_dropdown( array( 
+
+	if ( 'event' == $typenow && $category_tax && wp_count_terms( 'event-category' ) > 0 ) {
+		eo_taxonomy_dropdown( array(
 			'taxonomy'        => 'event-category',
 			'selected'        => get_query_var( 'event-category' ),
-			'hide_empty'      => false, 
-			'show_option_all' => $category_tax->labels->view_all_items, 
+			'hide_empty'      => false,
+			'show_option_all' => $category_tax->labels->view_all_items,
 		) );
 	}
 }
@@ -127,16 +127,16 @@ function eventorganiser_restrict_events_by_category() {
 add_action( 'restrict_manage_posts', 'eventorganiser_restrict_events_by_venue' );
 function eventorganiser_restrict_events_by_venue() {
 	global $typenow;
-	
+
 	$venue_tax = get_taxonomy( 'event-venue' );
-	
+
 	//Only add if CPT is event
-	if( 'event' == $typenow && $venue_tax && wp_count_terms( 'event-venue' ) > 0  ){
+	if ( 'event' == $typenow && $venue_tax && wp_count_terms( 'event-venue' ) > 0  ) {
 		eo_taxonomy_dropdown( array(
-				'taxonomy'        => 'event-venue',
-				'selected'        => get_query_var( 'event-venue' ),
-				'hide_empty'      => false,
-				'show_option_all' => $venue_tax->labels->view_all_items,
+			'taxonomy'        => 'event-venue',
+			'selected'        => get_query_var( 'event-venue' ),
+			'hide_empty'      => false,
+			'show_option_all' => $venue_tax->labels->view_all_items,
 		) );
 	}
 }
@@ -148,23 +148,23 @@ function eventorganiser_restrict_events_by_venue() {
 add_action( 'restrict_manage_posts', 'eventorganiser_display_occurrences' );
 function eventorganiser_display_occurrences() {
 	global $typenow, $wp_query;
-	if ( $typenow == 'event' ):
+	if ( 'event' == $typenow ) :
 		$intervals = array(
-			'all' => __( 'View all events', 'eventorganiser' ),
-			'future' => __( 'Future events', 'eventorganiser' ),
+			'all'     => __( 'View all events', 'eventorganiser' ),
+			'future'  => __( 'Future events', 'eventorganiser' ),
 			'expired' => __( 'Expired events', 'eventorganiser' ),
-			'P1D' => __( 'Events within 24 hours', 'eventorganiser' ),
-			'P1W' => __( 'Events within 1 week', 'eventorganiser' ),
-			'P2W' => sprintf( __( 'Events within %d weeks', 'eventorganiser' ), 2 ),
-			'P1M' => __( 'Events within 1 month', 'eventorganiser' ),
-			'P6M' => sprintf( __( 'Events within %d months', 'eventorganiser' ), 6 ),
-			'P1Y' => __( 'Events within 1 year', 'eventorganiser' ),
+			'P1D'     => __( 'Events within 24 hours', 'eventorganiser' ),
+			'P1W'     => __( 'Events within 1 week', 'eventorganiser' ),
+			'P2W'     => sprintf( __( 'Events within %d weeks', 'eventorganiser' ), 2 ),
+			'P1M'     => __( 'Events within 1 month', 'eventorganiser' ),
+			'P6M'     => sprintf( __( 'Events within %d months', 'eventorganiser' ), 6 ),
+			'P1Y'     => __( 'Events within 1 year', 'eventorganiser' ),
 		);
 		//@see https://core.trac.wordpress.org/ticket/16471
 		$current = ( get_query_var( 'eo_interval' ) ? get_query_var( 'eo_interval' ) : 'all' );
 ?>
 		<select style="width:150px;" name='eo_interval' id='show-events-in-interval' class='postform'>
-			<?php foreach ( $intervals as $id => $interval ): ?>
+			<?php foreach ( $intervals as $id => $interval ) : ?>
 				<option value="<?php echo $id; ?>" <?php selected( $current, $id )?>> <?php echo $interval;?> </option>
 			<?php endforeach; ?>
 		</select>
@@ -260,7 +260,8 @@ function eventorganiser_quick_edit_save( $post_id ) {
 
 
 add_action( 'admin_head-edit.php', 'eventorganiser_quick_edit_script' );
-function eventorganiser_quick_edit_script() { ?>
+function eventorganiser_quick_edit_script() {
+	?>
     <script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery( '#the-list' ).on( 'click', 'a.editinline', function() {
