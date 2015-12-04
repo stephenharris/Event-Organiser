@@ -418,9 +418,6 @@ function eventorganiser_uninstall_site(){
 		}
 	}
 
-	//Remove all posts of CPT Event
-	//?? $wpdb->query("DELETE FROM $wpdb->posts WHERE post_type = 'event'");
-
 	//Delete options
 	delete_option('eventorganiser_options');
 	delete_option('eventorganiser_admin_notices');
