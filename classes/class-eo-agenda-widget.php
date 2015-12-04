@@ -150,7 +150,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 					</span>
 					<span> &nbsp; </span>
 					<span>
-						<a href="<%= event.google_link %>" target="_blank"><?php esc_html_e( 'Add To Google Calendar', 'eventorganiserp' ); ?></a>
+						<a href="<%= event.google_link %>" target="_blank"><?php esc_html_e( 'Add To Google Calendar', 'eventorganiser' ); ?></a>
 					</span>
 				</div>
 			<% } %>
