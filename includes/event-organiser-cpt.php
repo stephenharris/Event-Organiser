@@ -91,7 +91,7 @@ function eventorganiser_create_event_taxonomies() {
 
 	//Register event category taxonomy
 	$category_labels = array(
-		'name'                  => __( 'Event Categories', 'eventorganiser' ),
+		'name'                  => __( 'Categories', 'eventorganiser' ),
 		'singular_name'         => _x( 'Category', 'taxonomy singular name' ),
 		'search_items'          => __( 'Search Categories' ),
 		'all_items'             => __( 'All Categories' ),
