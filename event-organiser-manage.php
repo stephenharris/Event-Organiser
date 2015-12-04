@@ -236,8 +236,10 @@ function eventorganiser_bulk_edit_box( $column_name, $post_type ) {
 add_action( 'save_post', 'eventorganiser_quick_edit_save' );
 function eventorganiser_quick_edit_save( $post_id ) {
 
+	$request = array_merge( $_GET, $_POST );
+
 	//make sure data came from our quick/bulk box
-	if ( ! isset( $_POST['_eononce'] ) || ! wp_verify_nonce( $_POST['_eononce'], 'eventorganiser_event_quick_edit_'.get_current_blog_id() ) ) {
+	if ( ! isset( $request['_eononce'] ) || ! wp_verify_nonce( $request['_eononce'], 'eventorganiser_event_quick_edit_'.get_current_blog_id() ) ) {
 		return;
 	}
 
@@ -252,11 +254,11 @@ function eventorganiser_quick_edit_save( $post_id ) {
 	}
 
 	//authentication checks
-	if ( ! current_user_can( 'edit_event', $post_id ) ){
+	if ( ! current_user_can( 'edit_event', $post_id ) ) {
 		return;
 	}
 
-	$venue_id = ( isset( $_POST['eo_input']['event-venue'] ) ? (int) $_POST['eo_input']['event-venue'] : - 1 );
+	$venue_id = ( isset( $request['eo_input']['event-venue'] ) ? (int) $request['eo_input']['event-venue'] : - 1 );
 
 	if ( $venue_id >= 0 ) {
 		$r = wp_set_post_terms( $post_id, array( $venue_id ), 'event-venue', false );
@@ -268,7 +270,7 @@ function eventorganiser_quick_edit_save( $post_id ) {
 	 * @param int $post_id The ID of the event
 	 */
 	do_action( 'eventorganiser_save_event', $post_id );
-	return;	
+	return;
 }
 
 
