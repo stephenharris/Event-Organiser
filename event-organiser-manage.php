@@ -175,47 +175,44 @@ function eventorganiser_display_occurrences() {
 
 /*
  * Bulk and quick editting of venues. Add drop-down menu for quick editing
- * @Since 1.3
+ * @since 3.0.0
+ * @private
  */
-add_action( 'quick_edit_custom_box',  'eventorganiser_quick_edit_box', 10, 2 );
-function eventorganiser_quick_edit_box( $column_name, $post_type ) {
-	if ( $column_name != 'venue' || $post_type != 'event' ) return;?>
+function eventorganiser_quick_bulk_edit_box( $column_name, $post_type ) {
+	if ( 'venue' != $column_name  || 'event' != $post_type ) {
+		return;
+	}
+	$tax = get_taxonomy( 'event-venue' );
 
-	<fieldset class="inline-edit-col-left"><div class="inline-edit-col">
-	<?php wp_nonce_field( 'eventorganiser_event_quick_edit_'.get_current_blog_id(), '_eononce' );?>
+	$args = array(
+		'orderby'    => 'name',
+		'hide_empty' => 0,
+		'name'       => 'eo_input[event-venue]',
+		'taxonomy'   => 'event-venue',
+	);
+
+	if ( 'quick_edit_custom_box' == current_filter() ) {
+		$args['id']              = 'eventorganiser_venue';
+		$args['show_option_all'] = $tax->labels->no_item;
+	} else {
+		$args['id']               = 'eventorganiser_venue_bulk';
+		$args['show_option_none'] = __( '&mdash; No Change &mdash;' );
+	}
+
+	?>
+	<fieldset class="inline-edit-col-left">
+	<div class="inline-edit-col">
+		<?php wp_nonce_field( 'eventorganiser_event_quick_edit_'.get_current_blog_id(), '_eononce' );?>
 		<label class="">
-			<span class="title">Event Venue</span><?php
-			wp_dropdown_categories( array( 
-				'show_option_all' => 'No venue', 
-				'orderby' => 'name', 
-				'hide_empty' => 0, 
-				'name' => 'eo_input[event-venue]', 
-				'id' => 'eventorganiser_venue', 
-				'taxonomy' => 'event-venue' 
-			) ); ?>
-	</label>
-	</div></fieldset>
+			<span class="title"><?php echo esc_html( $tax->labels->singular_name ); ?></span>
+			<?php wp_dropdown_categories( $args ); ?>
+		</label>
+	</div>
+	</fieldset>
 	<?php
 }
-
-/*
- * Bulk and quick editting of venues. Add drop-down menu for bulk editing
- * @Since 1.3
- */
-add_action( 'bulk_edit_custom_box',  'eventorganiser_bulk_edit_box', 10, 2 );
-function eventorganiser_bulk_edit_box( $column_name, $post_type ) {
-	if ( $column_name != 'venue' || $post_type != 'event' ) return;?>
-
-	<fieldset class="inline-edit-col-left"><div class="inline-edit-col">
-	<?php wp_nonce_field( 'eventorganiser_event_quick_edit_'.get_current_blog_id(), '_eononce' );?>
-		<label class="">
-			<span class="title">Event Venue</span><?php
-			$args = array( 'show_option_none' => __( '&mdash; No Change &mdash;' ), 'orderby' => 'name', 'hide_empty' => 0, 'name' => 'eo_input[event-venue]', 'id' => 'eventorganiser_venue_bulk', 'taxonomy' => 'event-venue' );
-			 wp_dropdown_categories( $args ); ?>
-	</label>
-	</div></fieldset>
-	<?php
-}
+add_action( 'quick_edit_custom_box',  'eventorganiser_quick_bulk_edit_box', 10, 2 );
+add_action( 'bulk_edit_custom_box',  'eventorganiser_quick_bulk_edit_box', 10, 2 );
 
 /*
  * Bulk and quick editting of venues. Save venue update.
