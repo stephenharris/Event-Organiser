@@ -55,6 +55,7 @@ function eventorganiser_create_event_taxonomies() {
 			'public'                => true,
 			'show_in_nav_menus'     => true,
 			'show_ui'               => false,//Use custom UI
+			'show_admin_column'     => false,//Custom quick edit
 			'update_count_callback' => '_update_post_term_count',
 			'query_var'             => true,
 			'rewrite'               => $venue_rewrite,
@@ -112,6 +113,7 @@ function eventorganiser_create_event_taxonomies() {
 		'hierarchical'          => true,
 		'labels'                => $category_labels,
 		'show_ui'               => true,
+		'show_admin_column'     => true,
 		'update_count_callback' => '_update_post_term_count',
 		'query_var'             => true,
 		'rewrite'               => $cat_rewrite,

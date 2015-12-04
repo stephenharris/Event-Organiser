@@ -19,23 +19,22 @@ function eventorganiser_event_add_columns( $columns ) {
 	$columns['title'] = __( 'Event', 'eventorganiser' );
 
 	//If displaying 'author', change title
-	if ( isset( $columns['author'] ) ){
+	if ( isset( $columns['author'] ) ) {
 		$columns['author'] = __( 'Organiser', 'eventorganiser' );
 	}
-	
-	if( isset( $columns['author'] ) && !eo_is_multi_event_organiser() ){
+
+	if ( isset( $columns['author'] ) && ! eo_is_multi_event_organiser() ) {
 		unset( $columns['author'] );
 	}
 
-	if( taxonomy_exists( 'event-venue' ) ){
+	if ( taxonomy_exists( 'event-venue' ) ) {
 		$tax = get_taxonomy( 'event-venue' );
 		$columns['venue'] = $tax->labels->singular_name;
 	}
-	
-	$columns['eventcategories'] = __( 'Categories' );
-	$columns['datestart'] = __( 'Start Date/Time', 'eventorganiser' );
-	$columns['dateend'] = __( 'End Date/Time', 'eventorganiser' );
-	$columns['reoccurence'] = __( 'Recurrence', 'eventorganiser' ); 
+
+	$columns['datestart']   = __( 'Start Date/Time', 'eventorganiser' );
+	$columns['dateend']     = __( 'End Date/Time', 'eventorganiser' );
+	$columns['reoccurence'] = __( 'Recurrence', 'eventorganiser' );
 
 	return $columns;
 }
@@ -68,18 +67,19 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 	$series_id = ( empty( $post->event_id) ? $id :'' );
 
 	$phpFormat = 'M, j Y';
-	if ( !eo_is_all_day( $series_id ) ){
+	if ( ! eo_is_all_day( $series_id ) ) {
 		$phpFormat .= '\<\/\b\r\>'. get_option( 'time_format' );
 	}
-	
+
 	switch ( $column_name ) {
 		case 'venue':
-			$venue_id = eo_get_venue( $post->ID );
+			$venue_id   = eo_get_venue( $post->ID );
 			$venue_slug = eo_get_venue_slug( $post->ID );
-			
-			if( $venue_id ){
-				echo '<a href="'. esc_url( add_query_arg( 'event-venue', $venue_slug ) ) .'">'.esc_html( eo_get_venue_name( $venue_id ) ) . '</a>';
-				echo '<input type="hidden" value="'.$venue_id.'"/>';
+			$venue_name = eo_get_venue_name( $venue_id );
+
+			if ( $venue_id ) {
+				printf( '<a href="%s">%s</a>', esc_url( add_query_arg( 'event-venue', $venue_slug ) ), esc_html( $venue_name ) );
+				printf( '<input type="hidden" value="%d"/>', $venue_id );
 			}
 			break;
 
@@ -87,7 +87,7 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 			$schedule = eo_get_event_schedule( $series_id );
 			echo eo_format_datetime( $schedule['start'], $phpFormat );
 			break;
-		
+
 		case 'dateend':
 			$schedule = eo_get_event_schedule( $series_id );
 			echo eo_format_datetime( $schedule['end'], $phpFormat );
@@ -95,18 +95,6 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 
 		case 'reoccurence':
 			echo eo_get_schedule_summary( $series_id );
-			break;
-
-		case 'eventcategories':
-			$terms = get_the_terms( $post->ID, 'event-category' );
-
-			if ( !empty( $terms) ) {
-				$post_terms = array();
-				foreach ( $terms as $term ){
-					$post_terms[] = '<a href="'.esc_url( add_query_arg( 'event-category', $term->slug ) ).'">'.esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, 'event-category', 'display' ) ).'</a>';
-				}
-				echo join( ', ', $post_terms );
-			}
 			break;
 
 	} // end switch
