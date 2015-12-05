@@ -977,7 +977,7 @@ function eo_get_the_occurrences_of($post_id=0){
  * @param int|object $term_id The term ID or term object to retrieve the colour of
  */
 function eo_get_category_color( $term_id ) {
-	$term = is_int( $term_id ) ? get_term_by( 'id', $term, 'event-category' ) : $term_id;
+	$term = is_int( $term_id ) ? get_term_by( 'id', $term_id, 'event-category' ) : $term_id;
 	return eo_get_category_meta( $term, 'color' );
 }
 

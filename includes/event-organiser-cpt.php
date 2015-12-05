@@ -821,13 +821,11 @@ function eo_get_category_meta( $term = '', $key = '' ) {
 
 	if ( is_object( $term ) && ! isset( $term->color ) ) {
 		$term = get_term( $term->term_id, 'event-category' );
-	}
-
-	if ( ! empty( $term ) && is_int( $term ) ) {
+	} else if ( ! empty( $term ) && is_int( $term ) ) {
 		$term = get_term_by( 'id', $term, 'event-category' );
-	} elseif ( ! empty( $term ) ) {
+	} elseif ( ! empty( $term ) && is_string( $term ) ) {
 		$term = get_term_by( 'slug', $term, 'event-category' );
-	} elseif ( is_tax( 'event-category' ) ) {
+	} elseif ( empty( $term ) && is_tax( 'event-category' ) ) {
 		$term = get_queried_object();
 		$term = get_term( $term->term_id, 'event-category' );
 	}
