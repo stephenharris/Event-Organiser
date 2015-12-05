@@ -48,6 +48,22 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	}
 	
 	/**
+	 * @Given there are venues
+	 * 
+	 * @see eo_insert_venue
+	 */
+	public function thereAreVenues(TableNode $venues)
+	{
+		foreach ($venues->getHash() as $venueData) {
+			$return = eo_insert_venue($venueData['name'],$venueData);
+			if (is_wp_error($return)) {
+				throw new \InvalidArgumentException(sprintf("Invalid venue information schema: %s", $return->get_error_message()));
+			}
+		}
+	}
+	
+	
+	/**
 	 * @Then the event :title should have the following schedule
 	 */
 	public function theEventShouldHaveTheFollowingSchedule($title, TableNode $fields)

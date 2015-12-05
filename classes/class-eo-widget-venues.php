@@ -51,7 +51,7 @@ class EO_Widget_Venues extends WP_Widget {
 
 		if ( $d ) {
 			$cat_args['walker'] = new EO_Walker_TaxonomyDropdown();
-			$cat_args['value'] = 'slug';
+			$cat_args['field_value'] = 'slug';
 			$cat_args['show_option_none'] = __( 'Select Venue', 'eventorganiser' );
 			/**
 			 * Filters the settings for the event venue list drppdown.
@@ -122,7 +122,7 @@ class EO_Widget_Venues extends WP_Widget {
 		$title    = esc_attr( $instance['title'] );
 		$dropdown = isset( $instance['dropdown'] ) ? (bool) $instance['dropdown'] : false;
 ?>
-		<p><label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:' ); ?></label>
+		<p><label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'eventorganiser' ); ?></label>
 		<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
 		<p><input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'dropdown' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'dropdown' ) ); ?>"<?php checked( $dropdown ); ?> />

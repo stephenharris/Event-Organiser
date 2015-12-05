@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-27 00:58+0100\n"
+"POT-Creation-Date: 2015-12-05 15:11+0000\n"
 "PO-Revision-Date: 2015-09-25 19:51:01+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
@@ -31,15 +31,15 @@ msgstr "Titill"
 msgid "Group by"
 msgstr "Flokka eftir"
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:256
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:254
 msgid "Day"
 msgstr "Dagur"
 
-#: classes/class-eo-agenda-widget.php:44 event-organiser-calendar.php:256
+#: classes/class-eo-agenda-widget.php:44 event-organiser-calendar.php:254
 msgid "Week"
 msgstr "Vika"
 
-#: classes/class-eo-agenda-widget.php:45 event-organiser-calendar.php:256
+#: classes/class-eo-agenda-widget.php:45 event-organiser-calendar.php:254
 msgid "Month"
 msgstr "Mánuður"
 
@@ -55,7 +55,7 @@ msgstr "Snið á viðburðar dagsetningu/tíma"
 msgid "Include 'Add To Google' link"
 msgstr "Birta 'Bæta við Google' slóð"
 
-#: classes/class-eo-agenda-widget.php:140 event-organiser-edit.php:151
+#: classes/class-eo-agenda-widget.php:140 event-organiser-edit.php:152
 msgid "All day"
 msgstr "Heils dags"
 
@@ -72,7 +72,7 @@ msgstr "Bæta við Google Calendar"
 msgid "Displays a calendar of your events"
 msgstr "Sýnir dagatalsyfirlit þinna viðburða"
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:252
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:250
 msgid "Events Calendar"
 msgstr "Viðburða"
 
@@ -122,9 +122,9 @@ msgid "Displays a list of events"
 msgstr "Birta lista viðburða"
 
 #: classes/class-eo-event-list-widget.php:14
-#: classes/class-eo-event-list-widget.php:26 event-organiser-venues.php:462
+#: classes/class-eo-event-list-widget.php:26 event-organiser-venues.php:463
 #: event-organiser.php:138 includes/class-eo-theme-compatability.php:143
-#: includes/event-organiser-cpt.php:217 includes/event-organiser-cpt.php:229
+#: includes/event-organiser-cpt.php:224 includes/event-organiser-cpt.php:236
 #: includes/event-organiser-install.php:96 templates/archive-event.php:40
 msgid "Events"
 msgstr "Viðburðir"
@@ -133,12 +133,12 @@ msgstr "Viðburðir"
 msgid "No Events"
 msgstr ""
 
-#: classes/class-eo-event-list-widget.php:45 event-organiser-manage.php:164
+#: classes/class-eo-event-list-widget.php:45 event-organiser-manage.php:154
 msgid "Future events"
 msgstr "Framtíðar viðburðir"
 
 #: classes/class-eo-event-list-widget.php:51
-#: includes/event-organiser-cpt.php:223
+#: includes/event-organiser-cpt.php:230
 msgid "All events"
 msgstr "Allir viðburðir"
 
@@ -163,7 +163,7 @@ msgid "Number of events"
 msgstr "Fjöldi viðburða"
 
 #: classes/class-eo-event-list-widget.php:116
-#: includes/event-organiser-cpt.php:46
+#: includes/event-organiser-cpt.php:48
 msgid "Venue:"
 msgstr ""
 
@@ -231,13 +231,12 @@ msgid "A list or dropdown of event categories"
 msgstr "Listi eða fellilisti yfir viðburðaflokka"
 
 #: classes/class-eo-widget-categories.php:11 event-organiser-settings.php:317
-#: includes/event-organiser-cpt.php:92
 msgid "Event Categories"
 msgstr "Flokkar viðburða"
 
-#: classes/class-eo-widget-categories.php:25 event-organiser-manage.php:35
-#: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1501
+#: classes/class-eo-widget-categories.php:25
+#: includes/event-organiser-cpt.php:94 includes/event-organiser-cpt.php:105
+#: includes/event-organiser-event-functions.php:1524
 #: templates/event-meta-event-single.php:64
 msgid "Categories"
 msgstr "Flokkar"
@@ -281,7 +280,7 @@ msgstr ""
 msgid "There is no excerpt because this is a protected post."
 msgstr "Enginn útdráttur þar sem hér er ritvarin færsla."
 
-#: event-organiser-add-ons.php:19 event-organiser-add-ons.php:95
+#: event-organiser-add-ons.php:19 event-organiser-add-ons.php:94
 msgid "Event Organiser Extensions"
 msgstr "Viðbætur"
 
@@ -289,7 +288,7 @@ msgstr "Viðbætur"
 msgid "Extensions"
 msgstr "Viðbætur"
 
-#: event-organiser-add-ons.php:99
+#: event-organiser-add-ons.php:98
 msgid ""
 "Event Organiser offers a range of extension which add additional features to "
 "the plug-in."
@@ -354,94 +353,94 @@ msgstr "Valmöguleikar dagatals"
 msgid "24 hour time"
 msgstr "24 tíma klukka"
 
-#: event-organiser-calendar.php:259
-#: includes/event-organiser-event-functions.php:1438
+#: event-organiser-calendar.php:257
+#: includes/event-organiser-event-functions.php:1461
 msgid "Loading&#8230;"
 msgstr "Hleður inn..."
 
-#: event-organiser-calendar.php:268
+#: event-organiser-calendar.php:266
 msgid "Current date/time"
 msgstr "Núverandi stund"
 
-#: event-organiser-calendar.php:273
+#: event-organiser-calendar.php:271
 msgid "Create an event"
 msgstr "Stofna til viðburðar"
 
-#: event-organiser-calendar.php:278
+#: event-organiser-calendar.php:276
 msgid "When"
 msgstr "Hvenær"
 
-#: event-organiser-calendar.php:282
+#: event-organiser-calendar.php:280
 msgid "Event Title"
 msgstr "Titill viðburðar"
 
-#: event-organiser-calendar.php:289 includes/event-organiser-ajax.php:380
+#: event-organiser-calendar.php:287 includes/event-organiser-ajax.php:397
 msgid "Where"
 msgstr "Hvar"
 
-#: event-organiser-calendar.php:314
+#: event-organiser-calendar.php:312
 msgid "Save Draft"
 msgstr "Vista uppkast"
 
-#: event-organiser-calendar.php:315 event-organiser-calendar.php:322
-#: event-organiser-edit.php:307
+#: event-organiser-calendar.php:313 event-organiser-calendar.php:320
+#: event-organiser-edit.php:310
 msgid "Cancel"
 msgstr "Hætta við"
 
-#: event-organiser-calendar.php:318
+#: event-organiser-calendar.php:316
 msgid "Publish Event"
 msgstr "Birta viðburð"
 
-#: event-organiser-calendar.php:324
+#: event-organiser-calendar.php:322
 msgid "Submit for Review"
 msgstr "Senda í rýni"
 
-#: event-organiser-calendar.php:335
+#: event-organiser-calendar.php:333
 msgid "The following keyboard shortcuts are available"
 msgstr ""
 
-#: event-organiser-calendar.php:339
+#: event-organiser-calendar.php:337
 msgid "Navigate to next period"
 msgstr ""
 
-#: event-organiser-calendar.php:343
+#: event-organiser-calendar.php:341
 msgid "Navigate to previous period"
 msgstr ""
 
-#: event-organiser-calendar.php:347
+#: event-organiser-calendar.php:345
 msgid "Switch to month view"
 msgstr ""
 
-#: event-organiser-calendar.php:351
+#: event-organiser-calendar.php:349
 msgid "Switch to week view"
 msgstr ""
 
-#: event-organiser-calendar.php:355
+#: event-organiser-calendar.php:353
 msgid "Switch to day view"
 msgstr ""
 
-#: event-organiser-calendar.php:359
+#: event-organiser-calendar.php:357
 msgid "Jump to today in view"
 msgstr ""
 
-#: event-organiser-calendar.php:363
+#: event-organiser-calendar.php:361
 msgid "Open modal of selected event"
 msgstr ""
 
-#: event-organiser-calendar.php:367
+#: event-organiser-calendar.php:365
 msgid "Close modal"
 msgstr ""
 
-#: event-organiser-calendar.php:371
+#: event-organiser-calendar.php:369
 msgid "Open shorcut help"
 msgstr ""
 
-#: event-organiser-calendar.php:390 event-organiser-edit.php:14
+#: event-organiser-calendar.php:388 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:34
 msgid "Event Details"
 msgstr "Nánar um viðburð"
 
-#: event-organiser-calendar.php:392
+#: event-organiser-calendar.php:390
 msgid "Event Detail"
 msgstr "Nánar um viðburð"
 
@@ -524,7 +523,7 @@ msgid "unknown"
 msgstr "óþekkt"
 
 #: event-organiser-edit.php:21 event-organiser-manage.php:23
-#: event-organiser-settings.php:146 includes/event-organiser-ajax.php:367
+#: event-organiser-settings.php:146 includes/event-organiser-ajax.php:384
 msgid "Organiser"
 msgstr "Skipuleggjandi"
 
@@ -532,33 +531,33 @@ msgstr "Skipuleggjandi"
 msgid "This is a recurring event. Check to edit this event and its recurrences"
 msgstr "Sjá nánar viðburð og hans viðburðaröð"
 
-#: event-organiser-edit.php:99
+#: event-organiser-edit.php:100
 #, fuzzy, php-format
 msgid "Enter date in %s format"
 msgstr "Snið á viðburðar dagsetningu/tíma"
 
-#: event-organiser-edit.php:100
+#: event-organiser-edit.php:101
 msgid "Enter time in 24-hour hh colon mm format"
 msgstr ""
 
-#: event-organiser-edit.php:100
+#: event-organiser-edit.php:101
 msgid "Enter time in 12-hour hh colon mm am or pm format"
 msgstr ""
 
-#: event-organiser-edit.php:107 event-organiser-manage.php:36
+#: event-organiser-edit.php:108 event-organiser-manage.php:35
 msgid "Start Date/Time"
 msgstr "Upphafsstund"
 
-#: event-organiser-edit.php:112
+#: event-organiser-edit.php:113
 msgid "Start Date"
 msgstr "Upphafsdagsetning"
 
-#: event-organiser-edit.php:116
+#: event-organiser-edit.php:117
 #, fuzzy
 msgid "Start Time"
 msgstr "Upphafsstund"
 
-#: event-organiser-edit.php:131 event-organiser-manage.php:37
+#: event-organiser-edit.php:131 event-organiser-manage.php:36
 msgid "End Date/Time"
 msgstr "Lokastund"
 
@@ -572,91 +571,91 @@ msgstr "Lokastund"
 msgid "End Time"
 msgstr "Lokastund"
 
-#: event-organiser-edit.php:158 event-organiser-manage.php:38
+#: event-organiser-edit.php:161 event-organiser-manage.php:37
 msgid "Recurrence"
 msgstr "Viðburðaraðir"
 
-#: event-organiser-edit.php:163
+#: event-organiser-edit.php:166
 msgid "none"
 msgstr ""
 
-#: event-organiser-edit.php:163
+#: event-organiser-edit.php:166
 msgid "daily"
 msgstr "daglega"
 
-#: event-organiser-edit.php:163
+#: event-organiser-edit.php:166
 msgid "weekly"
 msgstr "vikulega"
 
-#: event-organiser-edit.php:164
+#: event-organiser-edit.php:167
 msgid "monthly"
 msgstr "mánaðarlega"
 
-#: event-organiser-edit.php:164
+#: event-organiser-edit.php:167
 msgid "yearly"
 msgstr "árlega"
 
-#: event-organiser-edit.php:164
+#: event-organiser-edit.php:167
 msgid "custom"
 msgstr "sérvalið"
 
-#: event-organiser-edit.php:179
+#: event-organiser-edit.php:182
 msgid "Repeat every"
 msgstr "Endurtekið tilvik"
 
-#: event-organiser-edit.php:180
+#: event-organiser-edit.php:183
 msgid "Recurrence frequency"
 msgstr ""
 
-#: event-organiser-edit.php:187
+#: event-organiser-edit.php:190
 msgid "Repeat on days of week:"
 msgstr "dagur viku"
 
-#: event-organiser-edit.php:188 templates/shortcode-event-list.php:52
+#: event-organiser-edit.php:191 templates/shortcode-event-list.php:52
 #: templates/widget-event-list.php:49
 msgid "on"
 msgstr "á"
 
-#: event-organiser-edit.php:209
+#: event-organiser-edit.php:212
 msgid "Select whether to repeat monthly by date or day:"
 msgstr ""
 
-#: event-organiser-edit.php:213
+#: event-organiser-edit.php:216
 msgid "date of month"
 msgstr "dagur mánaðar"
 
-#: event-organiser-edit.php:217
+#: event-organiser-edit.php:220
 msgid "day of week"
 msgstr "dagur viku"
 
-#: event-organiser-edit.php:223
+#: event-organiser-edit.php:226
 #: includes/event-organiser-event-functions.php:842
 #: includes/event-organiser-register.php:261
 msgid "until"
 msgstr "þar til"
 
-#: event-organiser-edit.php:224
+#: event-organiser-edit.php:227
 msgid "Repeat this event until:"
 msgstr ""
 
-#: event-organiser-edit.php:235
+#: event-organiser-edit.php:238
 msgid "Include/Exclude occurrences:"
 msgstr "Fella út/halda inni tilvikum"
 
-#: event-organiser-edit.php:238 includes/event-organiser-register.php:238
+#: event-organiser-edit.php:241 includes/event-organiser-register.php:238
 msgid "Show dates"
 msgstr "Sýna dagsetningar"
 
-#: event-organiser-edit.php:272
+#: event-organiser-edit.php:275
 #: includes/event-organiser-venue-functions.php:1002
 msgid "Select a venue"
 msgstr "Velja viðburðarstað"
 
-#: event-organiser-edit.php:283
+#: event-organiser-edit.php:286
 msgid "Venue Name"
 msgstr "Nafn viðburðarstaðar"
 
-#: event-organiser-edit.php:465
+#: event-organiser-edit.php:468
 msgid "Event dates were not saved."
 msgstr "Dagsetningar viðburðar ekki vistaðar."
 
@@ -728,45 +727,45 @@ msgstr ""
 msgid "Go to Event Organiser settings"
 msgstr "Fara í stillingar"
 
-#: event-organiser-manage.php:19 includes/event-organiser-cpt.php:218
+#: event-organiser-manage.php:19 includes/event-organiser-cpt.php:225
 msgid "Event"
 msgstr "Viðburður"
 
-#: event-organiser-manage.php:163
+#: event-organiser-manage.php:153
 msgid "View all events"
 msgstr "Birta allt"
 
-#: event-organiser-manage.php:165
+#: event-organiser-manage.php:155
 msgid "Expired events"
 msgstr "Liðnir viðburðir"
 
-#: event-organiser-manage.php:166
+#: event-organiser-manage.php:156
 msgid "Events within 24 hours"
 msgstr "Viðburðir næsta sólarhringinn"
 
-#: event-organiser-manage.php:167
+#: event-organiser-manage.php:157
 msgid "Events within 1 week"
 msgstr "Viðburðir innan einnar viku"
 
-#: event-organiser-manage.php:168
+#: event-organiser-manage.php:158
 #, php-format
 msgid "Events within %d weeks"
 msgstr "Viðburðir innan %d vikna"
 
-#: event-organiser-manage.php:169
+#: event-organiser-manage.php:159
 msgid "Events within 1 month"
 msgstr "Viðburðir innan eins mánaðar"
 
-#: event-organiser-manage.php:170
+#: event-organiser-manage.php:160
 #, php-format
 msgid "Events within %d months"
 msgstr "Viðburðir innan %d mánaða"
 
-#: event-organiser-manage.php:171
+#: event-organiser-manage.php:161
 msgid "Events within 1 year"
 msgstr "Viðburðir innan árs"
 
-#: event-organiser-manage.php:223
+#: event-organiser-manage.php:199
 msgid "&mdash; No Change &mdash;"
 msgstr "— Án breytinga —"
 
@@ -875,7 +874,7 @@ msgid "Revisions"
 msgstr "Útgáfur"
 
 #: event-organiser-settings.php:152 event-organiser-settings.php:326
-#: includes/event-organiser-cpt.php:146
+#: includes/event-organiser-cpt.php:151
 msgid "Event Tags"
 msgstr "Tög viðburðar"
 
@@ -1160,36 +1159,36 @@ msgstr "Stað <strong>eytt</strong>"
 msgid "Venue(s) <strong>deleted</strong>"
 msgstr "Stað/stöðum <strong>eytt</strong>"
 
-#: event-organiser-venues.php:243
+#: event-organiser-venues.php:244
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Search results for &#8220;%s&#8221;"
 
-#: event-organiser-venues.php:398
+#: event-organiser-venues.php:399
 msgid "Latitude/Longitude:"
 msgstr ""
 
-#: event-organiser-venues.php:426
+#: event-organiser-venues.php:427
 msgid "Venue name"
 msgstr "Nafn staðar"
 
-#: event-organiser-venues.php:432
+#: event-organiser-venues.php:433
 msgid "Permalink:"
 msgstr "Slóð"
 
-#: event-organiser-venues.php:439
+#: event-organiser-venues.php:440
 msgid "Get Link"
 msgstr "Fá slóð"
 
-#: event-organiser-venues.php:461
+#: event-organiser-venues.php:462
 msgid "Slug"
 msgstr "Netvænt stuttheiti"
 
-#: includes/class-eo-admin-notice.php:107
+#: includes/class-eo-admin-notice.php:110
 msgid "Dismiss this notice"
 msgstr "Hunsa tilkynningu"
 
-#: includes/class-eo-admin-notice.php:108
+#: includes/class-eo-admin-notice.php:111
 msgid "Dismiss"
 msgstr "Hætta við"
 
@@ -1364,60 +1363,60 @@ msgstr "1 flokkur stofnaður"
 msgid "%d categories were created"
 msgstr "%d flokkar stofnaðir"
 
-#: includes/event-organiser-ajax.php:330
+#: includes/event-organiser-ajax.php:339
 msgid "Protected"
 msgstr "Varið"
 
-#: includes/event-organiser-ajax.php:332
+#: includes/event-organiser-ajax.php:341
 msgid "Private"
 msgstr "Einka"
 
-#: includes/event-organiser-ajax.php:334
+#: includes/event-organiser-ajax.php:343
 msgid "Draft"
 msgstr "Uppkast"
 
-#: includes/event-organiser-ajax.php:364
+#: includes/event-organiser-ajax.php:381
 #: templates/event-meta-event-single.php:55
 msgid "Start"
 msgstr "Upphaf"
 
-#: includes/event-organiser-ajax.php:365
+#: includes/event-organiser-ajax.php:382
 msgid "End"
 msgstr "Endir"
 
-#: includes/event-organiser-ajax.php:406
+#: includes/event-organiser-ajax.php:423
 msgid "This event recurs"
 msgstr "Þessi viðburður endurtekur sig"
 
-#: includes/event-organiser-ajax.php:412 includes/event-organiser-cpt.php:221
+#: includes/event-organiser-ajax.php:429 includes/event-organiser-cpt.php:228
 msgid "Edit Event"
 msgstr "Breyta viðburði"
 
-#: includes/event-organiser-ajax.php:432
+#: includes/event-organiser-ajax.php:449
 msgid "Delete this occurrence"
 msgstr "Eyða þessum viðburði"
 
-#: includes/event-organiser-ajax.php:449
+#: includes/event-organiser-ajax.php:466
 msgid "Break this series"
 msgstr "Brjóta niður runu"
 
-#: includes/event-organiser-ajax.php:750
+#: includes/event-organiser-ajax.php:767
 msgid "Event not found"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:758
+#: includes/event-organiser-ajax.php:775
 msgid "Events are not editable via the admin calendar"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:764
+#: includes/event-organiser-ajax.php:781
 msgid "Are you sure you want to do this?"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:771
+#: includes/event-organiser-ajax.php:788
 msgid "You do not have permission to edit this event"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:787
+#: includes/event-organiser-ajax.php:804
 #, php-format
 msgid "Event not created: %s"
 msgstr ""
@@ -1462,188 +1461,223 @@ msgstr "Bæta við eða eyða stöðum"
 msgid "Separate venues with commas"
 msgstr "Skiljið að staði með kommum"
 
+#: includes/event-organiser-cpt.php:43
+msgid "Event venues list navigation"
+msgstr ""
+
 #: includes/event-organiser-cpt.php:44
+#, fuzzy
+msgid "Event venues list"
+msgstr "Viðburðarstaður"
+
+#: includes/event-organiser-cpt.php:46
 msgid "Venue Location"
 msgstr "Staðsetning staðar"
 
-#: includes/event-organiser-cpt.php:45
+#: includes/event-organiser-cpt.php:47
 msgid "View all venues"
 msgstr "Birta allt"
 
-#: includes/event-organiser-cpt.php:47
+#: includes/event-organiser-cpt.php:49
 msgid "No Venue"
 msgstr "Enginn staður"
 
-#: includes/event-organiser-cpt.php:93
+#: includes/event-organiser-cpt.php:95
 msgctxt "taxonomy singular name"
 msgid "Category"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:94
+#: includes/event-organiser-cpt.php:96
 msgid "Search Categories"
 msgstr "Leita í flokkum"
 
-#: includes/event-organiser-cpt.php:95
+#: includes/event-organiser-cpt.php:97
 msgid "All Categories"
 msgstr "Allir viðburðir"
 
-#: includes/event-organiser-cpt.php:96
+#: includes/event-organiser-cpt.php:98
 msgid "Parent Category"
 msgstr "Yfirflokkur"
 
-#: includes/event-organiser-cpt.php:97
+#: includes/event-organiser-cpt.php:99
 msgid "Parent Category:"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:98
+#: includes/event-organiser-cpt.php:100
 msgid "Edit Category"
 msgstr "Breyta flokki"
 
-#: includes/event-organiser-cpt.php:99
+#: includes/event-organiser-cpt.php:101
 msgid "Update Category"
 msgstr "Uppfæra flokk"
 
-#: includes/event-organiser-cpt.php:100
+#: includes/event-organiser-cpt.php:102
 msgid "Add New Category"
 msgstr "Bæta við nýjum flokki"
 
-#: includes/event-organiser-cpt.php:101
+#: includes/event-organiser-cpt.php:103
 msgid "New Category Name"
 msgstr "Nýtt nafn flokks"
 
-#: includes/event-organiser-cpt.php:102
+#: includes/event-organiser-cpt.php:104
 msgid "No categories found"
 msgstr "Engir flokkar fundust"
 
-#: includes/event-organiser-cpt.php:105
+#: includes/event-organiser-cpt.php:106
+#, fuzzy
+msgid "Event categories list navigation"
+msgstr "Flokkar viðburða"
+
+#: includes/event-organiser-cpt.php:107
+#, fuzzy
+msgid "Event categories list"
+msgstr "Flokkar viðburða"
+
+#: includes/event-organiser-cpt.php:109
 msgid "View all categories"
 msgstr "Birta allt"
 
-#: includes/event-organiser-cpt.php:147
+#: includes/event-organiser-cpt.php:152
 msgctxt "taxonomy singular name"
 msgid "Tag"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:148
+#: includes/event-organiser-cpt.php:153
 msgid "Search Tags"
 msgstr "Leita í tögum"
 
-#: includes/event-organiser-cpt.php:149
+#: includes/event-organiser-cpt.php:154
 msgid "All Tags"
 msgstr "Öll tög"
 
-#: includes/event-organiser-cpt.php:150
+#: includes/event-organiser-cpt.php:155
 msgid "Popular Tags"
 msgstr "Vinsæl tög"
 
-#: includes/event-organiser-cpt.php:151
+#: includes/event-organiser-cpt.php:156
 msgid "Edit Tag"
 msgstr "Breyta tagi"
 
-#: includes/event-organiser-cpt.php:152
+#: includes/event-organiser-cpt.php:157
 msgid "Update Tag"
 msgstr "Uppfæra tag"
 
-#: includes/event-organiser-cpt.php:153
+#: includes/event-organiser-cpt.php:158
 msgid "Add New Tag"
 msgstr "Bæta við nýju tagi"
 
-#: includes/event-organiser-cpt.php:154
+#: includes/event-organiser-cpt.php:159
 msgid "New Tag Name"
 msgstr "Nýtt heiti tags"
 
-#: includes/event-organiser-cpt.php:155
+#: includes/event-organiser-cpt.php:160
 msgid "No tags found"
 msgstr "Engin tög fundust"
 
-#: includes/event-organiser-cpt.php:156
+#: includes/event-organiser-cpt.php:161
 msgid "Choose from the most used tags"
 msgstr "Veljið úr vinsælustu tögum"
 
-#: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1509
+#: includes/event-organiser-cpt.php:162
+#: includes/event-organiser-event-functions.php:1532
 #: templates/event-meta-event-single.php:68
 msgid "Tags"
 msgstr "Tög"
 
-#: includes/event-organiser-cpt.php:158
+#: includes/event-organiser-cpt.php:163
 msgid "Add or remove tags"
 msgstr "Bæta við eða fjarlægja tög"
 
-#: includes/event-organiser-cpt.php:159
+#: includes/event-organiser-cpt.php:164
 msgid "Separate tags with commas"
 msgstr "Látið kommur skilja að tög"
 
-#: includes/event-organiser-cpt.php:161
+#: includes/event-organiser-cpt.php:165
+msgid "Event tags list navigation"
+msgstr ""
+
+#: includes/event-organiser-cpt.php:166
+#, fuzzy
+msgid "Event tags list"
+msgstr "Tög viðburðar"
+
+#: includes/event-organiser-cpt.php:168
 msgid "View all tags"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:219
+#: includes/event-organiser-cpt.php:226
 msgctxt "post"
 msgid "Add New"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:220
+#: includes/event-organiser-cpt.php:227
 msgid "Add New Event"
 msgstr "Skrá nýjan viðburð"
 
-#: includes/event-organiser-cpt.php:222
+#: includes/event-organiser-cpt.php:229
 msgid "New Event"
 msgstr "Nýr viðburður"
 
-#: includes/event-organiser-cpt.php:224
+#: includes/event-organiser-cpt.php:231
 msgid "View Event"
 msgstr "Birta viðburð"
 
-#: includes/event-organiser-cpt.php:225
+#: includes/event-organiser-cpt.php:232
 msgid "Search events"
 msgstr "Leita í viðburðum"
 
-#: includes/event-organiser-cpt.php:226
+#: includes/event-organiser-cpt.php:233
 msgid "No events found"
 msgstr "Engir viðburðir fundust"
 
-#: includes/event-organiser-cpt.php:227
+#: includes/event-organiser-cpt.php:234
 msgid "No events found in Trash"
 msgstr "Engir viðburðir í ruslinu"
 
-#: includes/event-organiser-cpt.php:308
+#: includes/event-organiser-cpt.php:237
+#, fuzzy
+msgid "Filter events list"
+msgstr "Framtíðar viðburðir"
+
+#: includes/event-organiser-cpt.php:238
+#, fuzzy
+msgid "Events list navigation"
+msgstr "Bæta við 'viðburðar' tengli í yfirvalmynd:"
+
+#: includes/event-organiser-cpt.php:239
+#, fuzzy
+msgid "Events list"
+msgstr "Viðburðir:"
+
+#: includes/event-organiser-cpt.php:320
 #, php-format
 msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Viðburður uppfærður. <a href=\"%s\">Skoða viðburð</a>"
 
-#: includes/event-organiser-cpt.php:309
-msgid "Custom field updated."
-msgstr "Valkvætt svæði uppfært."
-
-#: includes/event-organiser-cpt.php:310
-msgid "Custom field deleted."
-msgstr "Valkvæðu svæði eytt."
-
-#: includes/event-organiser-cpt.php:311
+#: includes/event-organiser-cpt.php:321
 msgid "Event updated."
 msgstr "Viðburður uppfærður."
 
-#: includes/event-organiser-cpt.php:313
+#: includes/event-organiser-cpt.php:323
 #, php-format
 msgid "Event restored to revision from %s"
 msgstr "Fyrri útgáfa viðburðar notuð %s"
 
-#: includes/event-organiser-cpt.php:314
+#: includes/event-organiser-cpt.php:324
 #, php-format
 msgid "Event published. <a href=\"%s\">View event</a>"
 msgstr "Viðburður birtur. <a href=\"%s\">Sjá viðburð</a>"
 
-#: includes/event-organiser-cpt.php:315
+#: includes/event-organiser-cpt.php:325
 msgid "Event saved."
 msgstr "Viðburður vistaður."
 
-#: includes/event-organiser-cpt.php:316
+#: includes/event-organiser-cpt.php:327
 #, php-format
 msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr "Viðburður skráður. <a target=\"_blank\" href=\"%s\">Skoða viðburð</a>"
 
-#: includes/event-organiser-cpt.php:317
+#: includes/event-organiser-cpt.php:331
 #, php-format
 msgid ""
 "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
@@ -1652,29 +1686,29 @@ msgstr ""
 "Viðburður tímasettur: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
 "\">Skoða viðburð</a>"
 
-#: includes/event-organiser-cpt.php:319
+#: includes/event-organiser-cpt.php:333
 msgid "M j, Y @ G:i"
 msgstr "M j, Y @ G:i"
 
-#: includes/event-organiser-cpt.php:320
+#: includes/event-organiser-cpt.php:336
 #, php-format
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 "Uppkast viðburðar uppfært. <a target=\"_blank\" href=\"%s\">Skoða uppkast</a>"
 
-#: includes/event-organiser-cpt.php:321
+#: includes/event-organiser-cpt.php:339
 msgid "This event has been broken from a recurring event."
 msgstr "Þessi viðburður hefur verið slitinn út úr viðburðaröð."
 
-#: includes/event-organiser-cpt.php:514
+#: includes/event-organiser-cpt.php:515
 msgid "Creating events"
 msgstr "Stofnun viðburða"
 
-#: includes/event-organiser-cpt.php:515
+#: includes/event-organiser-cpt.php:516
 msgid "Creating events:"
 msgstr "Stofna viðburði:"
 
-#: includes/event-organiser-cpt.php:517
+#: includes/event-organiser-cpt.php:518
 msgid ""
 "The start date is the date the event starts. If the event is a recurring "
 "event, this is the start date of the first occurrence."
@@ -1682,7 +1716,7 @@ msgstr ""
 "Upphafsdagsetninging er sá dagur sem viðburður byrjar. Ef viðburðurinn er "
 "hluti af viðburðaröð, þá er miðað við lok fyrsta viðburðar í röðinni."
 
-#: includes/event-organiser-cpt.php:518
+#: includes/event-organiser-cpt.php:519
 msgid ""
 "The end date is the date the event finishes. If the event is a recurring "
 "event, this is the end date of the first occurrence."
@@ -1690,7 +1724,7 @@ msgstr ""
 "Lokadagsetning er sá dagur sem viðburði lýkur. Ef viðburðurinn er hluti af "
 "viðburðaröð, þá er miðað við lok fyrsta viðburðar í röðinni."
 
-#: includes/event-organiser-cpt.php:519
+#: includes/event-organiser-cpt.php:520
 msgid ""
 "All dates and times must be entered in the specified format. This format can "
 "changed in the settings page."
@@ -1698,11 +1732,11 @@ msgstr ""
 "Dags og tímasetningar þurfa að fylgja forminu. Möguleiki er að velja hvaða "
 "form ætti að nota á stillingasíðunni."
 
-#: includes/event-organiser-cpt.php:524
+#: includes/event-organiser-cpt.php:525
 msgid "Repeating events"
 msgstr "Endurteknir viðburðir"
 
-#: includes/event-organiser-cpt.php:525
+#: includes/event-organiser-cpt.php:526
 msgid ""
 "To repeat an event according to some regular pattern, use the recurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
@@ -1712,11 +1746,11 @@ msgstr ""
 "dropdown menu to select how the event is to repeat. Further options then "
 "appear,"
 
-#: includes/event-organiser-cpt.php:527
+#: includes/event-organiser-cpt.php:528
 msgid "Specify how regularly the event should repeat (default 1)"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:528
+#: includes/event-organiser-cpt.php:529
 msgid ""
 "Choose the recurrence end date. No further occurrences are added after this "
 "date, but an occurrence that starts before may finish after this date."
@@ -1724,7 +1758,7 @@ msgstr ""
 "Choose the reoccurrence end date. No further occurrences are added after "
 "this date, but an occurrence that starts before may finish after this date."
 
-#: includes/event-organiser-cpt.php:529
+#: includes/event-organiser-cpt.php:530
 msgid ""
 "If monthly recurrence is selected, select whether this should repeat on that "
 "date of the month (e.g. on the 24th) or on the day of the month (e.g. on the "
@@ -1734,7 +1768,7 @@ msgstr ""
 "that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
 "on the third Tuesday)"
 
-#: includes/event-organiser-cpt.php:530
+#: includes/event-organiser-cpt.php:531
 msgid ""
 "If weekly recurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
@@ -1744,15 +1778,15 @@ msgstr ""
 "should be repeated. If no days are selected, the day of the start date is "
 "used"
 
-#: includes/event-organiser-cpt.php:535 includes/event-organiser-cpt.php:536
+#: includes/event-organiser-cpt.php:536 includes/event-organiser-cpt.php:537
 msgid "Selecting a venue"
 msgstr "Velja viðburðastað"
 
-#: includes/event-organiser-cpt.php:538
+#: includes/event-organiser-cpt.php:539
 msgid "Use the venues input field to search for existing venues"
 msgstr "Notaðu viðburðarstaðinn til að leita að þeim sem skráðir eru"
 
-#: includes/event-organiser-cpt.php:539
+#: includes/event-organiser-cpt.php:540
 msgid ""
 "Only pre-existing venues can be selected. To add a venue, go to the venues "
 "page."
@@ -1760,11 +1794,11 @@ msgstr ""
 "Aðeins forvaldir viðburðarstaðir geta verið merktir. Til að bæta við "
 "viðburðarstað, farðu á tilsvarandi síðu."
 
-#: includes/event-organiser-cpt.php:549 includes/event-organiser-cpt.php:568
+#: includes/event-organiser-cpt.php:550 includes/event-organiser-cpt.php:569
 msgid "Overview"
 msgstr "Yfirlit"
 
-#: includes/event-organiser-cpt.php:550
+#: includes/event-organiser-cpt.php:551
 msgid ""
 "This is the list of all saved events. Note that <strong> recurring events "
 "appear as a single row </strong> in the table and the start and end date "
@@ -1774,27 +1808,27 @@ msgstr ""
 "appear as a single row </strong> in the table and the start and end date "
 "refers to the first occurrence of that event."
 
-#: includes/event-organiser-cpt.php:556
+#: includes/event-organiser-cpt.php:557
 msgid ""
 "Hovering over a row in the venues list will display action links that allow "
 "you to manage that venue. You can perform the following actions:"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:558
+#: includes/event-organiser-cpt.php:559
 msgid ""
 "Edit takes you to the editing screen for that venue. You can also reach that "
 "screen by clicking on the venue title."
 msgstr ""
 
-#: includes/event-organiser-cpt.php:559
+#: includes/event-organiser-cpt.php:560
 msgid "Delete will permanently remove the venue"
 msgstr "Eyðing viðburðarstaðar er endanleg aðgerð"
 
-#: includes/event-organiser-cpt.php:560
+#: includes/event-organiser-cpt.php:561
 msgid "View will take you to the venue's page"
 msgstr "Skoða, mun beina þér á viðburðastaða síðuna."
 
-#: includes/event-organiser-cpt.php:569
+#: includes/event-organiser-cpt.php:570
 msgid ""
 "This page shows all (occurrances of) events. You can view the summary of an "
 "event by clicking on it. If you have the necessary permissions, a link to "
@@ -1804,7 +1838,7 @@ msgstr ""
 "smella á slóð hans. Ef þú hefur réttindi til geturðu meira að segja fengið "
 "að breyta honum."
 
-#: includes/event-organiser-cpt.php:570
+#: includes/event-organiser-cpt.php:571
 msgid ""
 "By clicking the relevant tab, you can view events in Month, Week or Day "
 "mode. You can also filter the events by events by category and venue. The "
@@ -1814,11 +1848,11 @@ msgstr ""
 "Svo geturðu líka skoðað eftir flokki eða viðburðarstað. 'Hoppa á "
 "dagsetningu' hnappurinn leyfir þér svo að hoppa þangað sem þú vilt í tíma."
 
-#: includes/event-organiser-cpt.php:574
+#: includes/event-organiser-cpt.php:575
 msgid "Add Event"
 msgstr "Bæta við viðburði"
 
-#: includes/event-organiser-cpt.php:575
+#: includes/event-organiser-cpt.php:576
 msgid ""
 "You can create an event on this Calendar, by clicking on day or dragging "
 "over multiple days (in Month view) or multiple times (in Week and Day view). "
@@ -1832,28 +1866,28 @@ msgstr ""
 "eða vista uppkast. Hvernig sem fer þá er viðburðurinn búinn til og þú er "
 "sendur áfram á síðu til að breyta."
 
-#: includes/event-organiser-cpt.php:581
+#: includes/event-organiser-cpt.php:582
 msgid "For more information"
 msgstr "Fyrir frekari upplýsingar"
 
-#: includes/event-organiser-cpt.php:582
+#: includes/event-organiser-cpt.php:583
 #, php-format
 msgid "See the <a %s> documentation</a>"
 msgstr "Sjá <a %s> skjölunina</a>"
 
-#: includes/event-organiser-cpt.php:583
+#: includes/event-organiser-cpt.php:584
 msgid "Debugging Event Organiser"
 msgstr "Aflúsa Event Organiser"
 
-#: includes/event-organiser-cpt.php:584
+#: includes/event-organiser-cpt.php:585
 msgid "Go Pro!"
 msgstr "Go Pro!"
 
-#: includes/event-organiser-cpt.php:701 includes/event-organiser-cpt.php:724
+#: includes/event-organiser-cpt.php:702 includes/event-organiser-cpt.php:725
 msgid "Color"
 msgstr "Litur"
 
-#: includes/event-organiser-cpt.php:707
+#: includes/event-organiser-cpt.php:708
 msgid "Assign the category a colour."
 msgstr "Setja lit flokks"
 
@@ -1932,7 +1966,7 @@ msgstr "hver ár"
 msgid "every %d years"
 msgstr "hvert %d ár"
 
-#: includes/event-organiser-event-functions.php:1364
+#: includes/event-organiser-event-functions.php:1369
 msgid "All Day"
 msgstr "Heilsdags"
 
@@ -1989,23 +2023,11 @@ msgstr "hvert %d ár þann"
 msgid "This event will repeat"
 msgstr "Þessi viðburður verður endurtekinn"
 
-#: includes/event-organiser-register.php:367
+#: includes/event-organiser-register.php:383
 msgid "Settings"
 msgstr "Stillingar"
 
-#: includes/event-organiser-register.php:611
-#, php-format
-msgid ""
-"<h4>City & State Fields Added</h4>City and state / province fields for "
-"venues have now been added. </br> If you'd like, Event Organiser can <a "
-"href='%s'>attempt to auto-fill them</a>. You can always manually change the "
-"details aftewards."
-msgstr ""
-"<h4>Borgar og svæða reitum bætt við</h4>Borga og svæða reitir fyrir staði "
-"hefur verið bætt við. </br> Ef þú vilt þá getur Event Organiser <a "
-"href='%s'>reynt að fylla þá út</a>. Þú getur svo breytt í höndunum síðar."
-
-#: includes/event-organiser-register.php:616
+#: includes/event-organiser-register.php:551
 msgid ""
 "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
@@ -2018,26 +2040,30 @@ msgstr ""
 "href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>sjá "
 "hér<a/>."
 
-#: includes/event-organiser-register.php:631
+#: includes/event-organiser-register.php:568
 #, php-format
 msgid "Your site timezone is %s"
 msgstr ""
 
-#: includes/event-organiser-register.php:632
+#: includes/event-organiser-register.php:569
 msgid ""
 "Is this correct? Using a fixed offset from UTC may cause unexpected "
 "behaviour, particular if you observe Daylight Savings Time."
 msgstr ""
 
-#: includes/event-organiser-register.php:633
+#: includes/event-organiser-register.php:570
 msgid ""
 "It is strongly recommended you select a city instead, even if you don't "
 "observe Daylight Savings Time."
 msgstr ""
 
-#: includes/event-organiser-register.php:634
+#: includes/event-organiser-register.php:571
 #, php-format
 msgid "You can <a href='%s'>change your timezone settings here</a>."
+msgstr ""
+
+#: includes/event-organiser-utility-functions.php:1363
+msgid "Help"
 msgstr ""
 
 #: includes/event-organiser-venue-functions.php:967
@@ -2060,35 +2086,35 @@ msgstr "Póstnúmer"
 msgid "Country"
 msgstr "Land"
 
-#: includes/event.php:611
+#: includes/event.php:612
 msgid "Schedule not recognised."
 msgstr "Skipulag óþekkt."
 
-#: includes/event.php:620
+#: includes/event.php:621
 msgid "Start date not provided."
 msgstr "Engin upphafsdagsetning."
 
-#: includes/event.php:638
+#: includes/event.php:639
 msgid "Start date occurs after end date."
 msgstr "Upphaf er á eftir enda."
 
-#: includes/event.php:641
+#: includes/event.php:642
 msgid "Schedule end date is before is before the start date."
 msgstr "Lokadagsetning er á undan upphafsdagsetningu."
 
-#: includes/event.php:723
+#: includes/event.php:724
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Ógilt mánaðarskipulag (ógilt raðnúmer)"
 
-#: includes/event.php:857
+#: includes/event.php:858
 msgid "Event does not contain any dates."
 msgstr "Viðburður án dagsetninga."
 
-#: includes/event.php:1000
+#: includes/event.php:1052
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr "Tilviki ekki eytt. Tilvik fannst ekki."
 
-#: includes/event.php:1056
+#: includes/event.php:1108
 msgid "There is already an occurrence on this date"
 msgstr ""
 
@@ -2152,3 +2178,19 @@ msgstr ""
 #, fuzzy, php-format
 msgid "Events at: %s"
 msgstr "Viðburður á:"
+
+#~ msgid "Custom field updated."
+#~ msgstr "Valkvætt svæði uppfært."
+
+#~ msgid "Custom field deleted."
+#~ msgstr "Valkvæðu svæði eytt."
+
+#~ msgid ""
+#~ "<h4>City & State Fields Added</h4>City and state / province fields for "
+#~ "venues have now been added. </br> If you'd like, Event Organiser can <a "
+#~ "href='%s'>attempt to auto-fill them</a>. You can always manually change "
+#~ "the details aftewards."
+#~ msgstr ""
+#~ "<h4>Borgar og svæða reitum bætt við</h4>Borga og svæða reitir fyrir staði "
+#~ "hefur verið bætt við. </br> Ef þú vilt þá getur Event Organiser <a "
+#~ "href='%s'>reynt að fylla þá út</a>. Þú getur svo breytt í höndunum síðar."

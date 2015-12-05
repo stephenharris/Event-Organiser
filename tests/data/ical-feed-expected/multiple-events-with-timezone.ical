@@ -14,8 +14,8 @@ LAST-MODIFIED:20150218T163000Z
 DTSTART;TZID=Europe/Paris:20140501T030000
 DTEND;TZID=Europe/Paris:20140501T040000
 SUMMARY: Single event
-DESCRIPTION: Post excerpt 3
-X-ALT-DESC;FMTTYPE=text/html: <p>Post content 3</p>
+DESCRIPTION: Post excerpt
+X-ALT-DESC;FMTTYPE=text/html: <p>Post content</p>
 URL;VALUE=URI:http://example.org/?event=single-event
 END:VEVENT
 BEGIN:VEVENT
@@ -29,8 +29,8 @@ DTEND;TZID=Europe/Paris:20150901T143000
 RRULE:FREQ=MONTHLY;INTERVAL=1;BYMONTHDAY=1;UNTIL=20161225T120000Z
 RDATE;TZID=Europe/Paris:20161225T130000
 SUMMARY: Event with outlying included date
-DESCRIPTION: Post excerpt 2
-X-ALT-DESC;FMTTYPE=text/html: <p>Post content 2</p>
+DESCRIPTION: Post excerpt
+X-ALT-DESC;FMTTYPE=text/html: <p>Post content</p>
 URL;VALUE=URI:http://example.org/?event=event-with-outlying-included-date
 END:VEVENT
 BEGIN:VEVENT
@@ -43,8 +43,8 @@ DTSTART;TZID=Europe/Paris:20151001T170000
 DTEND;TZID=Europe/Paris:20151001T180000
 RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=TH;UNTIL=20151029T160000Z
 SUMMARY: Recurring event
-DESCRIPTION: Post excerpt 1
-X-ALT-DESC;FMTTYPE=text/html: <p>Post content 1</p>
+DESCRIPTION: Post excerpt
+X-ALT-DESC;FMTTYPE=text/html: <p>Post content</p>
 URL;VALUE=URI:http://example.org/?event=recurring-event
 END:VEVENT
 BEGIN:VTIMEZONE

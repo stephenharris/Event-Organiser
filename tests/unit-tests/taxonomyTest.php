@@ -52,6 +52,78 @@ class taxonomyTest extends EO_UnitTestCase
   		$args['labels'] = $new_venue_labels;
   		return $args;
 	}
+
+	public function testEoTaxonomyDropdownValueFieldShouldDefaultToSlug() {
+		// Create a test category.
+		$cat_id = $this->factory->event_category->create( array(
+			'name' => 'Test Category',
+			'slug' => 'test_category',
+		) );
+
+		 // Get the default functionality of eo_taxonomy_dropdown().
+		$found = eo_taxonomy_dropdown( array(
+			'taxonomy'   => 'event-category',
+			'echo'       => 0,
+			'hide_empty' => 0,
+		) );
+		
+		// Test to see if it returns the default with the category ID.
+		$this->assertContains( 'value="test_category"', $found );
+	}
+
+	public function testEoTaxonomyDropdownValueFieldTermId() {
+	
+		// Create a test category.
+		$cat_id = $this->factory->event_category->create( array(
+			'name' => 'Test Category',
+			'slug' => 'test_category',
+		) );
+
+		$found = eo_taxonomy_dropdown( array(
+			'taxonomy'   => 'event-category',
+			'echo'       => 0,
+			'hide_empty' => 0,
+			'value_field' => 'term_id',
+		) );
+
+		// Test to see if it returns the default with the category ID.
+		$this->assertContains( 'value="' . $cat_id . '"', $found );
+	}
+
+	public function testEoTaxonomyDropdownValueFieldSlug() {
+		// Create a test category.
+		$cat_id = $this->factory->event_category->create( array(
+			'name' => 'Test Category',
+			'slug' => 'test_category',
+		) );
+
+		$found = eo_taxonomy_dropdown( array(
+			'taxonomy'   => 'event-category',
+			'echo'       => 0,
+			'hide_empty' => 0,
+			'value_field' => 'term_id',
+		) );
+
+		// Test to see if it returns the default with the category slug.
+		$this->assertContains( 'value="'.$cat_id.'"', $found );
+	}
+
+	public function testEoTaxonomyDropdownValueFieldShouldFallBackToTermIdWhenAnInvalidValueIsProvided() {
+		// Create a test category.
+		$cat_id = $this->factory->event_category->create( array(
+			'name' => 'Test Category',
+			'slug' => 'test_category',
+		) );
+		
+		$found = eo_taxonomy_dropdown( array(
+			'taxonomy'    => 'event-category',
+			'echo'        => 0,
+			'hide_empty'  => 0,
+			'value_field' => 'foo',
+		) );
+
+		$this->assertContains( 'value="'.$cat_id.'"', $found );
+	 }
 	
 }
 

@@ -119,10 +119,8 @@ class EO_Admin_Notice_Handler {
 	 */
 	static function dismiss_handler() {
 
-		//Don't use $_REQUEST, http://stackoverflow.com/questions/2142497/whats-wrong-with-using-request
 		$request = array_merge( $_GET, $_POST );
-
-		$notice = isset( $request['notice'] ) ? $request['notice'] : false;
+		$notice  = isset( $request['notice'] ) ? $request['notice'] : false;
 		if ( empty( $notice ) ) {
 			return;
 		}

@@ -17,8 +17,8 @@ RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=SA;UNTIL=20150926T150000Z
 EXDATE;TZID=Europe/Zurich:20150919T170000
 RDATE;TZID=Europe/Zurich:20150922T170000,20150923T170000
 SUMMARY: Event with timezone
-DESCRIPTION: Post excerpt 1
-X-ALT-DESC;FMTTYPE=text/html: <p>Post content 1</p>
+DESCRIPTION: Event with timezone excerpt
+X-ALT-DESC;FMTTYPE=text/html: <p>Event with timezone content</p>
 URL;VALUE=URI:http://example.org/?event=event-with-timezone
 END:VEVENT
 BEGIN:VTIMEZONE

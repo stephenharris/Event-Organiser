@@ -222,7 +222,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 
 	function render_sr_shortcut() {
 		?>
-		<a href="#" id="eo-keyboard-sr-shortcut" class="screen-reader-shortcut"><?php esc_html_e( 'View keyboard shortcuts' ); ?></a>
+		<a href="#" id="eo-keyboard-sr-shortcut" class="screen-reader-shortcut"><?php esc_html_e( 'View keyboard shortcuts', 'eventorganiser' ); ?></a>
 		<?php
 	}
 
@@ -239,8 +239,6 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 		return $options;
 	}
 
-
-	
 	function display(){
 		//Get the time 'now' according to blog's timezone
 		$now    = new DateTime( null, eo_get_blog_timezone() );

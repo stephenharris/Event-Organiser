@@ -80,7 +80,7 @@ function eventorganiser_site_install(){
 
 	//Add options and capabilities
 	$eventorganiser_options = array (	
-		'supports' => array('title','editor','author','thumbnail','excerpt','custom-fields','comments'),
+		'supports' => array('title','editor','author','thumbnail','excerpt','custom-fields'),
 		'event_redirect' => 'events',
 		'dateformat'=>'dd-mm',
 		'prettyurl'=> 1,
@@ -102,10 +102,10 @@ function eventorganiser_site_install(){
 	add_option('eventorganiser_options',$eventorganiser_options);
 
 	/* Add existing notices */
-	$notices = array('autofillvenue17','changedtemplate17');
-	add_option('eventorganiser_admin_notices',$notices);
-	
-	//Add roles to administrator		
+	$notices = array( 'changedtemplate17' );
+	add_option( 'eventorganiser_admin_notices', $notices );
+
+	//Add roles to administrator
 	global $wp_roles;
 	$all_roles = $wp_roles->roles;
 	$eventorganiser_roles =  array(
@@ -418,9 +418,6 @@ function eventorganiser_uninstall_site(){
 		}
 	}
 
-	//Remove all posts of CPT Event
-	//?? $wpdb->query("DELETE FROM $wpdb->posts WHERE post_type = 'event'");
-
 	//Delete options
 	delete_option('eventorganiser_options');
 	delete_option('eventorganiser_admin_notices');
@@ -456,4 +453,3 @@ function eventorganiser_uninstall_site(){
 	$re =$wpdb->get_results( $sql);	
 	flush_rewrite_rules();
     }
-?>

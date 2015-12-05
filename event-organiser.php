@@ -2,7 +2,7 @@
 /*
 Plugin Name: Event Organiser
 Plugin URI: http://www.wp-event-organiser.com
-Version: 3.0.0-beta-4
+Version: 3.0.0-beta-5
 Description: Creates a custom post type 'events' with features such as recurring events, venues, Google Maps, calendar views and events and venue pages
 Author: Stephen Harris
 Author URI: http://www.stephenharris.info
@@ -38,7 +38,7 @@ Domain Path: /languages
 /**
  * Set the plug-in database version
  */
-define( 'EVENT_ORGANISER_VER', '3.0.0-beta-4' );
+define( 'EVENT_ORGANISER_VER', '3.0.0-beta-5' );
 
 add_action( 'after_setup_theme', '_eventorganiser_set_constants' );
 function _eventorganiser_set_constants() {
@@ -139,7 +139,7 @@ function eventorganiser_get_option( $option = false, $default = false ) {
 		'group_events' => '',
 		'feed' => 1,
 		'deleteexpired' => 0,
-		'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'comments', 'eventtag', 'event-venue' ),
+		'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'eventtag', 'event-venue' ),
 		'event_redirect' => 'events',
 		'dateformat' => 'd-m-Y',
 		'prettyurl' => 1,
@@ -187,6 +187,7 @@ function eventorganiser_get_option( $option = false, $default = false ) {
 
 /****** Register event post type and event taxonomy******/
 require_once( EVENT_ORGANISER_DIR.'includes/event-organiser-cpt.php' );
+require_once( EVENT_ORGANISER_DIR.'includes/class-eo-walker-taxonomydropdown.php' );
 
 /****** Register scripts, styles and actions******/
 require_once( EVENT_ORGANISER_DIR.'includes/event-organiser-register.php' );

@@ -12,29 +12,40 @@ php:
 - 5.5
 - 5.6
 - hhvm
-- nightly
+- 7
 
 branches:
   only:
-    - master
     - develop
     - /^(?i:release)\/.*$/
-    - tests/behat
 
 env:
-- WP_VERSION=latest WP_MULTISITE=0 PHP_FULL_SUITE_VER=5.5
-- WP_VERSION=4.2.5 WP_MULTISITE=0 PHP_FULL_SUITE_VER=5.5
-- WP_VERSION=4.1.8 WP_MULTISITE=0 PHP_FULL_SUITE_VER=5.5
-- WP_VERSION=3.9.9 WP_MULTISITE=0 PHP_FULL_SUITE_VER=5.5
-- WP_VERSION=3.8.11 WP_MULTISITE=0 PHP_FULL_SUITE_VER=5.5
+- WP_VERSION=nightly
+- WP_VERSION=latest
+- WP_VERSION=4.2.5
+- WP_VERSION=4.1.8
+- WP_VERSION=4.0.8
+- WP_VERSION=3.9.9
+- WP_VERSION=3.8.11
 
 matrix:
+  exclude:
+    - php: 7
+      env: WP_VERSION=3.8.11
+    - php: 7
+      env: WP_VERSION=3.9.9
+    - php: 7
+      env: WP_VERSION=4.0.8
+    - php: 7
+      env: WP_VERSION=4.1.8
+    - php: 7
+      env: WP_VERSION=4.2.5
   allow_failures:
-    - php: nightly
+    - env: WP_VERSION=nightly
 
 before_script:
 - sh -c "if [ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '5.2' ]; then pecl install timezonedb; fi"
-- if [[ ${PHP_FULL_SUITE_VER} == ${TRAVIS_PHP_VERSION:0:3} ]]; then composer install; fi
+- if [[ 5.5 == ${TRAVIS_PHP_VERSION:0:3} ]]; then composer install; fi
 - npm install grunt-cli -g
 - npm install
 - grunt test_build
@@ -42,6 +53,6 @@ before_script:
 
 script: 
 - phpunit
-- if [[ ${PHP_FULL_SUITE_VER} == ${TRAVIS_PHP_VERSION:0:3} && ${WP_VERSION} != '3.8.11' ]]; then vendor/bin/behat; fi
+- if [[ 5.5 == ${TRAVIS_PHP_VERSION:0:3} && ${WP_VERSION} != '3.8.11' ]]; then vendor/bin/behat; fi
 
 

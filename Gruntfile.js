@@ -5,6 +5,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
+	
 	uglify: {
 		options: {
 			compress: {
@@ -23,6 +24,7 @@ module.exports = function(grunt) {
 			}]
 		}
 	},
+	
 	jshint: {
 		options: {
 			reporter: require('jshint-stylish'),
@@ -36,6 +38,7 @@ module.exports = function(grunt) {
 		},
 		all: [ 'js/*.js', '!js/*.min.js', '!*/moment.js', '!*/time-picker.js', '!*/jquery-ui-eo-timepicker.js', '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
+  	
     phpcs: {
         application: {
             src: [
@@ -57,7 +60,8 @@ module.exports = function(grunt) {
         	standard: 'codesniff'
         }
     },
-  	phpmd: {
+  	
+    phpmd: {
   		application: {
   			dir: 'includes,classes'
   	    },
@@ -67,6 +71,7 @@ module.exports = function(grunt) {
   	    	rulesets: 'phpmd.xml'
   	    }
   	},
+  	
 	cssjanus: {
 		core: {
 			options: {
@@ -141,6 +146,7 @@ module.exports = function(grunt) {
 				'!.git/**', //version control
 				'!apigen/**', '!documentation/**', //docs
 				'!tests/**','!bin/**','!phpunit.xml', //unit test
+				'!features/**', '!behat.yml',//behat test
 				'!vendor/**','!composer.lock','!composer.phar','!composer.json', //composer
 				'!.*','!**/*~', //hidden files
 				'!CONTRIBUTING.md',
@@ -149,27 +155,7 @@ module.exports = function(grunt) {
 				'!css/images/**/*.xcf', //source images
 			],
 			dest: 'dist/event-organiser/'
-		},
-		
-		beta: {
-			src:  [
-				'**',
-				'!node_modules/**','!Gruntfile.js','!package.json', //npm/Grunt
-				'!assets/**', //wp-org assets
-				'!dist/**', //build directory
-				'!.git/**', //version control
-				'!apigen/**', '!documentation/**', //docs
-				'!tests/**','!bin/**','!phpunit.xml', //unit test
-				'!vendor/**','!composer.lock','!composer.phar','!composer.json', //composer
-				'!.*','!**/*~', //hidden files
-				'!CONTRIBUTING.md',
-				'!readme.md',
-				'!codesniff/**','!phpmd.xml', //CodeSniffer & Mess Detector
-				'!css/images/**/*.xcf', //source images
-			],
-			dest: process.env.EO_BETA_PLUGIN_DIR + '/<%= pkg.name %>/'
-		}	
-	
+		}
 	},
 
 	wp_readme_to_markdown: {
@@ -317,7 +303,7 @@ grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
 grunt.registerTask( 'test_build', [ 'clean', 'uglify', 'cssjanus', 'cssmin', 'copy' ] );
 
-grunt.registerTask( 'build', [ 'test', 'untested_build' ] );
+grunt.registerTask( 'build', [ 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
 
 grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
 

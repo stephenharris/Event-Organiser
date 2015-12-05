@@ -312,4 +312,52 @@ function eventorganiser_blog_is_24() {
 	return eo_blog_is_24();
 }
 
-?>
+/**
+ * (Private) Utility function checks a date-time string is formatted correctly (according to the options)
+ * This function is in use by:
+ * - Pro 1.11.2
+ * - Discount Codes 1.2.1
+ *
+ * @deprecated 3.0.0 use eo_check_datetime
+ * @ignore
+ * @since 1.0.0
+ *
+ * @param datetime_string - a datetime string
+ * @param string $format - Format of the datetime string. One of 'd-m-Y H:i', 'm-d-Y H:i' and 'Y-m-d H:i'.
+ * @return int DateTime| false - the parsed datetime string as a DateTime object or false on error (incorrectly formatted for example)
+ */
+function _eventorganiser_check_datetime( $datetime_string = '', $format = null ) {
+
+	//Informally deprecated, as still in use by known plug-ins, see above
+	//_deprecated_function( __FUNCTION__, '3.0.0', 'eo_check_datetime()' );
+
+	if ( is_null( $format ) ) {
+		$format = eventorganiser_get_option( 'dateformat' );
+	}
+
+	//Get regular expression.
+	if ( 'Y-m-d' == $format ) {
+		$reg_exp = '/(?P<year>\d{4})[-.\/](?P<month>\d{1,})[-.\/](?P<day>\d{1,}) (?P<hour>\d{2}):(?P<minute>\d{2})/';
+
+	} elseif ( 'd-m-Y' == $format ) {
+		$reg_exp = '/(?P<day>\d{1,})[-.\/](?P<month>\d{1,})[-.\/](?P<year>\d{4}) (?P<hour>\d{2}):(?P<minute>\d{2})/';
+
+	} else {
+		$reg_exp = '/(?P<month>\d{1,})[-.\/](?P<day>\d{1,})[-.\/](?P<year>\d{4}) (?P<hour>\d{2}):(?P<minute>\d{2})/';
+	}
+
+	if ( ! preg_match( $reg_exp, $datetime_string, $matches ) ) {
+		return false;
+	}
+
+	extract( array_map( 'intval', $matches ) );
+
+	if ( ! checkdate( $month, $day, $year ) || $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 ) {
+		return false;
+	}
+
+	$datetime = new DateTime( null, eo_get_blog_timezone() );
+	$datetime->setDate( $year, $month, $day );
+	$datetime->setTime( $hour, $minute );
+	return $datetime;
+}

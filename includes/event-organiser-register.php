@@ -474,25 +474,6 @@ function eventorganiser_delete_expired_events(){
 add_action('eventorganiser_delete_expired', 'eventorganiser_delete_expired_events');
 
 
-
-/**
- * Print CSS for event menu icon
- *
- * @since 1.5.0
- * @ignore
- * @access private
- */
-function eventorganiser_screen_retina_icon(){
-	?>
-	<style>
-	#adminmenu #menu-posts-event div.wp-menu-image:before {content: '\f145';}
-	#adminmenu #menu-posts-event div.wp-menu-image img { display:none; }
-	</style>
-	<?php
-}
-add_action( 'admin_print_styles', 'eventorganiser_screen_retina_icon' );
-
-
 /**
  * Print generic javascript variables to the page
  * @ignore
@@ -508,7 +489,7 @@ function eventorganiser_admin_print_scripts() {
 add_action( 'admin_print_styles', 'eventorganiser_admin_print_scripts' );
 
 
-/** 
+/**
  * Purge the occurrences cache
  * Hooked onto eventorganiser_save_event and eventorganiser_delete_event
  *
@@ -547,90 +528,29 @@ function _eventorganiser_delete_calendar_cache() {
 
 //The following need to trigger the cache
 $hooks = array(
-	'eventorganiser_save_event', 'eventorganiser_delete_event', 'wp_trash_post','update_option_gmt_offset', /* obvious */
+	'eventorganiser_save_event',
+	'eventorganiser_delete_event',
+	'wp_trash_post',
+	'update_option_gmt_offset', /* obvious */
 	'update_option_start_of_week', /* Start of week is used for calendars */
-	'update_option_rewrite_rules', /* If permalinks updated - links on fullcalendar might now be invalid */ 
+	'update_option_rewrite_rules', /* If permalinks updated - links on fullcalendar might now be invalid */
 	'delete_option_rewrite_rules',
 	'update_option_siteurl',
 	'update_option_home',
 	'edited_event-category', /* Colours of events may change */
 );
-foreach( $hooks as $hook ){
-	add_action($hook, '_eventorganiser_delete_calendar_cache');
+foreach ( $hooks as $hook ) {
+	add_action( $hook, '_eventorganiser_delete_calendar_cache' );
 }
-
-
-/**
- * Handles admin pointers
- *
- * Kick starts the enquing. Rename this to something unique (i.e. include your plugin/theme name).
- *
- *@access private
- *@ignore
- *@since 1.5
- */
-function eventorganiser_pointer_load( $hook_suffix ) {
-
-		$screen_id = get_current_screen()->id;
-
-		//Get pointers for this screen
-		/**
-		 * Filters the user 'pointers' for a specific screen.
-		 *
-		 * The `$screen_id` part of the hook refers to the screen's ID.
-		 *
-		 * @param array $pointers Filters to display on this screen.
-		 */
-		$pointers = apply_filters('eventorganiser_admin_pointers-'.$screen_id, array());
-
-		if( !$pointers || !is_array($pointers) )
-			return;
-
-		// Get dismissed pointers
-		$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
-		$valid_pointers =array();
-
-		//Check pointers and remove dismissed ones.
-		foreach ($pointers as $pointer_id => $pointer ){
-
-			//Sanity check
-			if ( in_array( $pointer_id, $dismissed ) || empty($pointer)  || empty( $pointer_id ) || empty( $pointer['target'] ) || empty( $pointer['options'] ) )
-				continue;
-
-			 $pointer['pointer_id'] = $pointer_id;
-
-			//Add the pointer to $valid_pointers array
-			$valid_pointers['pointers'][] =  $pointer;
-		}
-
-		//No valid pointers? Stop here.
-		if( empty($valid_pointers) )	
-			return;
-
-		// Add pointers style to queue. 
-		wp_enqueue_style( 'wp-pointer' );
-		
-		// Add pointers script to queue. Add custom script.
-		wp_enqueue_script('eventorganiser-pointer',EVENT_ORGANISER_URL.'js/eventorganiser-pointer.js',array('wp-pointer','eo_event'));
-
-		// Add pointer options to script. 
-		wp_localize_script('eventorganiser-pointer', 'eventorganiserPointer', $valid_pointers);
-}
-add_action( 'admin_enqueue_scripts', 'eventorganiser_pointer_load',99999);
-
-
 
 function _eventorganiser_upgrade_admin_notice() {
 
 	$notice_handler = EO_Admin_Notice_Handler::get_instance();
 
-	$message = sprintf(
-		__("<h4>City & State Fields Added</h4>City and state / province fields for venues have now been added. </br> If you'd like, Event Organiser can <a href='%s'>attempt to auto-fill them</a>. You can always manually change the details aftewards.",'eventorganiser'),
-		add_query_arg('action','eo-autofillcity',admin_url('admin-post.php'))
+	$message = __(
+		"<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post<a/>.",
+		'eventorganiser'
 	);
-	$notice_handler->add_notice( 'autofillvenue17', 'event_page_venues', $message , 'alert');
-
-	$message = __("<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post<a/>.",'eventorganiser');
 	$notice_handler->add_notice( 'changedtemplate17', '', $message , 'alert' );
 
 	if ( ! get_option( 'timezone_string' ) && current_user_can( 'manage_options' ) && get_option( 'gmt_offset' ) ) {
@@ -656,60 +576,6 @@ function _eventorganiser_upgrade_admin_notice() {
 
 }
 add_action( 'admin_notices', '_eventorganiser_upgrade_admin_notice', 1 );
-
-/**
- * Handles city auto-fill request.
- *
- * Hooked onto admin_post_eo-autofillcity. Triggered when user clicks 'autofill' link.
- * This routine goes through all the venues, reverse geocodes to find their city and 
- * autofills the city field (added in 1.7).
- *
- *@ignore
- *@access private
- *@link https://github.com/stephenh1988/Event-Organiser/issues/18
- *@link http://open.mapquestapi.com/nominatim/ Nominatim Search Service
- */
-function _eventorganiser_autofill_city(){
-	$seen_notices = get_option('eventorganiser_admin_notices',array());
-
-	if( in_array('autofillvenue17', $seen_notices) )
-		return;
-
-	EO_Admin_Notice_Handler::dismiss_notice('autofillvenue17');
-
-	$cities =array();
-	$venues = eo_get_venues();
-
-	foreach( $venues as $venue ){
-		$venue_id = (int) $venue->term_id;
-		$latlng =extract(eo_get_venue_latlng($venue_id));
-
-		If( eo_get_venue_meta($venue_id,'_city',true) )
-			continue;
-
-		$response=wp_remote_get("http://open.mapquestapi.com/nominatim/v1/reverse?format=json&lat={$lat}&lon={$lng}&osm_type=N&limit=1");	
-		$geo = json_decode(wp_remote_retrieve_body( $response ));
-		if( isset($geo->address->city) ){
-			$cities[$venue_id] = $geo->address->city;
-			eo_update_venue_meta($venue_id, '_city', $geo->address->city);
-		}
-		if( isset($geo->address->country_code) && 'gb' == $geo->address->country_code ){
-			//For the UK use county not state.
-			if( isset($geo->address->county) ){
-				$cities[$venue_id] = $geo->address->county;
-				eo_update_venue_meta($venue_id, '_state', $geo->address->county);
-			}
-		}else{
-			if( isset($geo->address->state) ){
-				$cities[$venue_id] = $geo->address->state;
-				eo_update_venue_meta($venue_id, '_state', $geo->address->state);
-			}
-		}
-	}	
-
-	wp_safe_redirect(admin_url('edit.php?post_type=event&page=venues'));
-}
-add_action('admin_post_eo-autofillcity','_eventorganiser_autofill_city');
 
 /**
  * Helper function to clear the cache for number of authors.

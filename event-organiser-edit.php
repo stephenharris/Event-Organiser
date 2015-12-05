@@ -111,14 +111,13 @@ function _eventorganiser_details_metabox( $post ) {
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-start-datetime-label">
 	 		
 	 			<label for="eo-start-date" class="screen-reader-text"><?php esc_html_e( 'Start Date', 'eventorganiser' ); ?></label>
-				<input id="eo-start-date" aria-describedby="eo-start-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" <?php disabled( ! $sche_once );?> value="<?php echo $start->format( $phpFormat ); ?>"/>
+				<input type="text" id="eo-start-date" aria-describedby="eo-start-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" value="<?php echo $start->format( $phpFormat ); ?>"/>
 				<span id="eo-start-date-desc" class="screen-reader-text"><?php echo  $date_desc;?></span>
 				
 				<label for="eo-start-time" class="screen-reader-text"><?php esc_html_e( 'Start Time', 'eventorganiser' ); ?></label>
 				<?php
 				printf(
-					'<input id="eo-start-time" aria-describedby="eo-start-time-desc" name="eo_input[StartTime]" class="eo_time ui-widget-content ui-corner-all" size="6" maxlength="8" %s value="%s"/>',
-					disabled( ( ! $sche_once ) || $all_day, true, false ),
+					'<input type="text" id="eo-start-time" aria-describedby="eo-start-time-desc" name="eo_input[StartTime]" class="eo_time ui-widget-content ui-corner-all" size="6" maxlength="8" value="%s"/>',
 					eo_format_datetime( $start, $time_format )
 				);
 				?>
@@ -135,21 +134,20 @@ function _eventorganiser_details_metabox( $post ) {
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-end-datetime-label">
 	 		
 	 			<label for="eo-end-date" class="screen-reader-text"><?php esc_html_e( 'End Date', 'eventorganiser' ); ?></label>
-				<input id="eo-end-date" aria-describedby="eo-end-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" <?php disabled( ! $sche_once );?>  value="<?php echo $end->format( $phpFormat ); ?>"/>
+				<input type="text" id="eo-end-date" aria-describedby="eo-end-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" value="<?php echo $end->format( $phpFormat ); ?>"/>
 
 				<span id="eo-end-date-desc" class="screen-reader-text"><?php echo esc_html( $date_desc );?></span>
 				<label for="eo-end-time" class="screen-reader-text"><?php esc_html_e( 'End Time', 'eventorganiser' ); ?></label>
 				<?php
 				printf(
-					'<input id="eo-end-time" aria-describedby="eo-end-time-desc" name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all" size="6" maxlength="8" %s value="%s"/>',
-					disabled( ( ! $sche_once ) || $all_day, true, false ),
+					'<input type="text" id="eo-end-time" aria-describedby="eo-end-time-desc" name="eo_input[FinishTime]" class="eo_time ui-widget-content ui-corner-all" size="6" maxlength="8" value="%s"/>',
 					eo_format_datetime( $end, $time_format )
 				);
 				?>
 				<span id="eo-end-time-desc" class="screen-reader-text"><?php echo esc_html( $time_desc );?></span>
 
 				<span>
-					<input type="checkbox" id="eo-all-day"  <?php checked( $all_day ); ?> name="eo_input[allday]"  <?php  disabled( ! $sche_once );?> value="1"/>
+					<input type="checkbox" id="eo-all-day"  <?php checked( $all_day ); ?> name="eo_input[allday]" value="1"/>
 					<label for="eo-all-day">
 						<?php esc_html_e( 'All day', 'eventorganiser' );?>
 					</label>
@@ -183,7 +181,7 @@ function _eventorganiser_details_metabox( $post ) {
 				<div id="eo-recurrence-frequency-wrapper">
 					<?php esc_html_e( 'Repeat every', 'eventorganiser' );?>
 					<label for="eo-recurrence-frequency" class="screen-reader-text"><?php esc_html_e( 'Recurrence frequency', 'eventorganiser' );?></label> 
-					<input type="number" id="eo-recurrence-frequency" <?php  disabled( ! $sche_once || $all_day );?> class="ui-widget-content ui-corner-all" name="eo_input[event_frequency]"  min="1" max="365" maxlength="4" size="4" value="<?php echo intval( $frequency );?>" /> 
+					<input type="number" id="eo-recurrence-frequency" class="ui-widget-content ui-corner-all" name="eo_input[event_frequency]"  min="1" max="365" maxlength="4" size="4" value="<?php echo intval( $frequency );?>" /> 
 					<span id="eo-recurrence-schedule-label"></span>
 				</div>
 
@@ -201,7 +199,7 @@ function _eventorganiser_details_metabox( $post ) {
 							$schedule_days = ( is_array( $schedule_meta ) ? $schedule_meta : array() );
 							?>
 							<li>
-								<input type="checkbox" id="day-<?php echo $day;?>"  <?php checked( in_array( $ical_d, $schedule_days ), true ); ?>  value="<?php echo esc_attr( $ical_d )?>" class="daysofweek" name="eo_input[days][]" disabled="disabled" />
+								<input type="checkbox" id="day-<?php echo $day;?>"  <?php checked( in_array( $ical_d, $schedule_days ), true ); ?>  value="<?php echo esc_attr( $ical_d )?>" class="daysofweek" name="eo_input[days][]"/>
 								<label for="day-<?php echo $day;?>" > <abbr title="<?php echo $fullday; ?>"><?php echo $day;?></abbr></label>
 							</li>
 							<?php
@@ -214,11 +212,11 @@ function _eventorganiser_details_metabox( $post ) {
 					<span id="eo-days-of-month-label" class="screen-reader-text"><?php esc_html_e( 'Select whether to repeat monthly by date or day:', 'eventorganiser' );?></span>
 					<div class="eo-days-of-month" role="group" aria-labelledby="eo-days-of-month-label">	
 						<label for="eo-by-month-day" >
-							<input type="radio" id="eo-by-month-day" disabled="disabled" name="eo_input[schedule_meta]" <?php checked( $occurs_by, 'BYMONTHDAY' ); ?> value="BYMONTHDAY=" /> 
+							<input type="radio" id="eo-by-month-day" name="eo_input[schedule_meta]" <?php checked( $occurs_by, 'BYMONTHDAY' ); ?> value="BYMONTHDAY=" /> 
 							<?php esc_html_e( 'date of month', 'eventorganiser' );?>
 						</label>
 						<label for="eo-by-day" >
-							<input type="radio" id="eo-by-day" disabled="disabled" name="eo_input[schedule_meta]"  <?php checked( 'BYMONTHDAY' != $occurs_by, true ); ?> value="BYDAY=" />
+							<input type="radio" id="eo-by-day" name="eo_input[schedule_meta]"  <?php checked( 'BYMONTHDAY' != $occurs_by, true ); ?> value="BYDAY=" />
 							<?php esc_html_e( 'day of week', 'eventorganiser' );?>
 						</label>
 					</div>
@@ -227,7 +225,7 @@ function _eventorganiser_details_metabox( $post ) {
 				<div id="eo-schedule-last-date-wrapper" class="reoccurrence_label">
 					<?php esc_html_e( 'until', 'eventorganiser' );?>
 					<label id="eo-repeat-until-label" for="eo-schedule-last-date" class="screen-reader-text"><?php esc_html_e( 'Repeat this event until:', 'eventorganiser' );?></label> 
-					<input <?php  disabled( ( ! $sche_once ) || $all_day ); ?> class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="eo-schedule-last-date" size="10" maxlength="10" disabled="disabled" value="<?php echo $until->format( $phpFormat ); ?>"/>
+					<input class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="eo-schedule-last-date" size="10" maxlength="10" value="<?php echo $until->format( $phpFormat ); ?>"/>
 				</div>
 
 				<p id="eo-event-summary" role="status" aria-live="polite"></p>
