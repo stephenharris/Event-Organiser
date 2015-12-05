@@ -49,14 +49,14 @@ class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
 	?>
 		<div class="wrap">  
 			<div class="wrap about-wrap">
-				<h1> <?php printf(__('Get Event Organiser Pro', 'eventorganiser'), $plugin['Version']); ?> </h1>
+				<h1> <?php esc_html_e( 'Get Event Organiser Pro', 'eventorganiser' ) ; ?> </h1>
 
 			<div class="about-text"><?php 
 				echo '<p>'.__( 'Event Organiser Pro is a premium add-on bringing advanced booking management to Event Organiser.', 'eventorganiser' );
     			echo '<p>'.__( "But that's not all &hellip;", 'eventorganiser' ); ?>
 			</div>
 
-			<div class="event-organiser-logo" style="background: url('<?php echo EVENT_ORGANISER_URL.'css/images/eobadge.png';?>');padding-top: 150px;height: 52px;width: 185px;color: #666;font-weight: bold;font-size: 14px;text-align: center;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);margin: 0 -5px;position: absolute;top: 0;right: 0;"></div>
+			<div class="event-organiser-logo" style="background: url('<?php echo EVENT_ORGANISER_URL.'css/images/eobadge.png';?>');height: 134px;width: 130px;color: #666;font-weight: bold;font-size: 14px;text-align: center;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);margin: 0 -5px;position: absolute;top: 0;right: 0;"></div>
 
 			<hr style="color:#CCC;background-color:#CCC;border:0;border-bottom:1px solid #CCC;">
 			
@@ -99,18 +99,15 @@ class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
 		</div><!-- .wrap -->
 <?php
 	}
-	
-	static function print_feature( $title, $content, $img ){
+
+	static function print_feature( $title, $content, $img ) {
 		?>
 		<div class="eo-feature-section images-stagger-right">
-			<img src="<?php echo EVENT_ORGANISER_URL.'css/images/'.$img?>">
-			<?php echo '<h4>'.$title.'</h4>'; ?>
-			<p>	<?php echo $content; ?></p>
+			<img src="<?php echo esc_url( EVENT_ORGANISER_URL.'css/images/'.$img );?>" alt="" title="<?php echo esc_attr( $title );?>">
+			<?php echo '<h4>' . esc_html( $title ) . '</h4>'; ?>
+			<p>	<?php echo esc_html( $content ); ?></p>
 		</div>
-		<?php 
+		<?php
 	}
-	
 }
 $calendar_page = new EventOrganiser_Pro_Page();
-
-?>

@@ -2,9 +2,9 @@
 Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
-Requires at least: 3.3
-Tested up to: 4.2.2
-Stable tag: 2.13.2
+Requires at least: 3.8.0
+Tested up to: 4.3.0
+Stable tag: 2.13.6
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -218,6 +218,19 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
 
 == Changelog ==
+
+= 2.13.6 - 9th August 2015 =
+* Fixes incompatability with WordPress 4.3 on venue admin screen 
+
+= 2.13.5 - 25th July 2015 =
+* Register database tables early
+* Fix bug where 'schedule_last' is used instead of 'until' in parsing iCal feed.
+
+= 2.13.4 - 13th June 2015 =
+* Correct escaped characters in time format not being displayed as literal text. Fixes [#273](https://github.com/stephenharris/Event-Organiser/issues/273).
+
+= 2.13.3 - 2nd June 2015 =
+* Fixed incomptability with WordPress 3.4. **Please note that from Event Organiser 3.0.0 onwards, the minimum requirement is being increased to WordPress 3.8**  
 
 = 2.13.2 - 23rd May 2015 =
 * Fixed a bug with the drop-down venue/category filters on the events admin screen with WordPress 4.2.
@@ -907,4 +920,9 @@ Minor bug fixes and readme update.
 Initial release
 
 == Upgrade Notice == 
+
+= 2.13.4 =
+Advance notice: As of 3.0.0 Event Organiser shall require WordPress 3.8 or better.
+
+= 2.12.5 =
 2.12.5 addresses a security vulnerability. Please update (see [this announcement for details]( http://wp-event-organiser.com/blog/announcements/xss-vulnerability-event-organiser-extensions).)

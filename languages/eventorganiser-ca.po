@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
+"POT-Creation-Date: 2015-12-05 15:11+0000\n"
 "PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
 "Last-Translator: Marta <ieeeeeeeeee@hotmail.com>\n"
 "Language-Team: \n"
@@ -12,59 +12,71 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: classes/class-eo-agenda-widget.php:11
+#: classes/class-eo-agenda-widget.php:12
 msgid "Displays a list of events, grouped by date"
 msgstr "Mostra una llista d'esdeveniments, agrupats per data"
 
-#: classes/class-eo-agenda-widget.php:19
+#: classes/class-eo-agenda-widget.php:20
 msgid "Events Agenda"
 msgstr "Agenda d'esdeveniments"
 
-#: classes/class-eo-agenda-widget.php:35
+#: classes/class-eo-agenda-widget.php:36
 #: classes/class-eo-calendar-widget.php:46
-#: classes/class-eo-event-list-widget.php:40
-#: classes/class-eo-event-list-widget.php:69
+#: classes/class-eo-event-list-widget.php:101
+#: classes/class-eo-event-list-widget.php:146
 msgid "Title"
 msgstr "Tílol"
 
-#: classes/class-eo-agenda-widget.php:39
+#: classes/class-eo-agenda-widget.php:41
 msgid "Group by"
 msgstr "Agrupat per"
 
-#: classes/class-eo-agenda-widget.php:41 event-organiser-calendar.php:246
+#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:254
 msgid "Day"
 msgstr "Dia"
 
-#: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:246
+#: classes/class-eo-agenda-widget.php:44 event-organiser-calendar.php:254
 msgid "Week"
 msgstr "Setmana"
 
-#: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:246
+#: classes/class-eo-agenda-widget.php:45 event-organiser-calendar.php:254
 msgid "Month"
 msgstr "Mes"
 
-#: classes/class-eo-agenda-widget.php:47
+#: classes/class-eo-agenda-widget.php:50
 msgid "Group date format"
 msgstr "Grup de format de data"
 
-#: classes/class-eo-agenda-widget.php:51
+#: classes/class-eo-agenda-widget.php:55
 msgid "Event date/time format"
 msgstr "Format de data/hora d'esdeveniment"
 
-#: classes/class-eo-agenda-widget.php:55
+#: classes/class-eo-agenda-widget.php:60
 msgid "Include 'Add To Google' link"
 msgstr "Incloure el enllaç \"Afegir a Google\""
+
+#: classes/class-eo-agenda-widget.php:140 event-organiser-edit.php:152
+msgid "All day"
+msgstr "Tot el dia"
+
+#: classes/class-eo-agenda-widget.php:149
+#: classes/class-eo-venue-list-table.php:86
+msgid "View"
+msgstr "Veure"
+
+#: classes/class-eo-agenda-widget.php:153
+msgid "Add To Google Calendar"
+msgstr "Afegeix a Google Calendar"
 
 #: classes/class-eo-calendar-widget.php:22
 msgid "Displays a calendar of your events"
 msgstr "Mostra un calendari dels teus esdeveniments"
 
-#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:242
+#: classes/class-eo-calendar-widget.php:24 event-organiser-calendar.php:250
 msgid "Events Calendar"
 msgstr "Calendari d'esdeveniments"
 
 #: classes/class-eo-calendar-widget.php:57
-#: classes/class-eo-event-list-widget.php:78
 msgid "Include past events"
 msgstr "Incloure esdeveniments pasats"
 
@@ -77,12 +89,12 @@ msgid "Link directly to event for days with only one event"
 msgstr "Enllaç directe a l'esdeveniment per als dies amb un sol esdeveniment"
 
 #: classes/class-eo-calendar-widget.php:91
-#: classes/class-eo-event-list-widget.php:48
+#: classes/class-eo-event-list-widget.php:109
 msgid "Event categories"
 msgstr "Categories d'esdeveniments"
 
 #: classes/class-eo-calendar-widget.php:94
-#: classes/class-eo-event-list-widget.php:50
+#: classes/class-eo-event-list-widget.php:111
 msgid "List category slug(s), seperate by comma. Leave blank for all"
 msgstr ""
 "Llistat de categoria d'slug(s), separats per coma. Deixar en blanc per tots"
@@ -91,73 +103,107 @@ msgstr ""
 msgid "Event venue"
 msgstr "Lloc de l'esdeveniment"
 
-#: classes/class-eo-calendar-widget.php:106
-#: classes/class-eo-event-list-widget.php:58
+#: classes/class-eo-calendar-widget.php:107
+#: classes/class-eo-event-list-widget.php:119
 #: includes/event-organiser-cpt.php:34
 msgid "All Venues"
 msgstr "Tots els llocs"
 
-#: classes/class-eo-calendar-widget.php:284
+#: classes/class-eo-calendar-widget.php:283
 msgid "Previous month"
 msgstr "Mes anterior"
 
-#: classes/class-eo-calendar-widget.php:287
+#: classes/class-eo-calendar-widget.php:286
 msgid "Next month"
 msgstr "Mes pròxim"
 
-#: classes/class-eo-event-list-widget.php:22
+#: classes/class-eo-event-list-widget.php:13
 msgid "Displays a list of events"
 msgstr "Mostra una llista d'esdeveniments"
 
-#: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
-#: includes/event-organiser-cpt.php:229
-#: includes/event-organiser-install.php:96 templates/archive-event.php:42
+#: classes/class-eo-event-list-widget.php:14
+#: classes/class-eo-event-list-widget.php:26 event-organiser-venues.php:463
+#: event-organiser.php:138 includes/class-eo-theme-compatability.php:143
+#: includes/event-organiser-cpt.php:224 includes/event-organiser-cpt.php:236
+#: includes/event-organiser-install.php:96 templates/archive-event.php:40
 msgid "Events"
 msgstr "Esdeveniments"
 
-#: classes/class-eo-event-list-widget.php:44
+#: classes/class-eo-event-list-widget.php:36
+msgid "No Events"
+msgstr ""
+
+#: classes/class-eo-event-list-widget.php:45 event-organiser-manage.php:154
+msgid "Future events"
+msgstr "Futurs esdeveniments"
+
+#: classes/class-eo-event-list-widget.php:51
+#: includes/event-organiser-cpt.php:230
+msgid "All events"
+msgstr "Tots els esdeveninents"
+
+#: classes/class-eo-event-list-widget.php:57
+msgid "Running events"
+msgstr ""
+
+#: classes/class-eo-event-list-widget.php:64
+msgid "Past events"
+msgstr ""
+
+#: classes/class-eo-event-list-widget.php:70
+msgid "Future & running events"
+msgstr ""
+
+#: classes/class-eo-event-list-widget.php:76
+msgid "Events on today"
+msgstr ""
+
+#: classes/class-eo-event-list-widget.php:105
 msgid "Number of events"
 msgstr "Nombre d'esdeveniments"
 
-#: classes/class-eo-event-list-widget.php:55
-#: includes/event-organiser-cpt.php:32
-msgid "Venue"
-msgstr "Lloc"
+#: classes/class-eo-event-list-widget.php:116
+#: includes/event-organiser-cpt.php:48
+msgid "Venue:"
+msgstr ""
 
-#: classes/class-eo-event-list-widget.php:66
+#: classes/class-eo-event-list-widget.php:127
+msgid "Show:"
+msgstr ""
+
+#: classes/class-eo-event-list-widget.php:143
 msgid "Order by"
 msgstr "Ordenats per"
 
-#: classes/class-eo-event-list-widget.php:68
+#: classes/class-eo-event-list-widget.php:145
 msgid "Start date"
 msgstr "Data d'inici"
 
-#: classes/class-eo-event-list-widget.php:70
+#: classes/class-eo-event-list-widget.php:147
 msgid "Publish date"
 msgstr ""
 
-#: classes/class-eo-event-list-widget.php:73
+#: classes/class-eo-event-list-widget.php:150
 msgid "ASC"
 msgstr "ASC"
 
-#: classes/class-eo-event-list-widget.php:74
+#: classes/class-eo-event-list-widget.php:151
 msgid "DESC"
 msgstr "DESC"
 
-#: classes/class-eo-event-list-widget.php:82 event-organiser-settings.php:189
+#: classes/class-eo-event-list-widget.php:156 event-organiser-settings.php:193
 msgid "Group occurrences"
 msgstr "Ocurrències de grup"
 
-#: classes/class-eo-event-list-widget.php:88
+#: classes/class-eo-event-list-widget.php:163
 msgid "Template (leave blank for default)"
 msgstr "Plantilla (deixar en blanc per defecte)"
 
-#: classes/class-eo-event-list-widget.php:90
+#: classes/class-eo-event-list-widget.php:165
 msgid "Event list widget placeholders"
 msgstr "Marcadors de posició del giny de la llista d'esdeveniments"
 
-#: classes/class-eo-event-list-widget.php:92
+#: classes/class-eo-event-list-widget.php:167
 #, php-format
 msgid ""
 "You can use specified tags as placeholders for event information which you "
@@ -168,55 +214,49 @@ msgstr ""
 "informació d'un esdeveniment que vulguis que aparegui en el giny. <a href="
 "\"%s\" target=\"_blank\"> Esbrina més sobre el tema</a>."
 
-#: classes/class-eo-event-list-widget.php:102
+#: classes/class-eo-event-list-widget.php:176
 msgid "'No events' message"
 msgstr "Missatge  \"No hi han esdeveniments\""
 
-#: classes/class-eo-venue-list-table.php:75 templates/single-event.php:71
+#: classes/class-eo-venue-list-table.php:76 templates/single-event.php:71
 msgid "Edit"
 msgstr "Edita"
 
-#: classes/class-eo-venue-list-table.php:80
-#: classes/class-eo-venue-list-table.php:142
+#: classes/class-eo-venue-list-table.php:81
+#: classes/class-eo-venue-list-table.php:143
 msgid "Delete"
 msgstr "Esborra"
-
-#: classes/class-eo-venue-list-table.php:85
-#: includes/event-organiser-ajax.php:691
-msgid "View"
-msgstr "Veure"
 
 #: classes/class-eo-widget-categories.php:10
 msgid "A list or dropdown of event categories"
 msgstr "Una llista o desplegable de categories d'esdeveniments"
 
-#: classes/class-eo-widget-categories.php:11 event-organiser-settings.php:329
-#: includes/event-organiser-cpt.php:92
+#: classes/class-eo-widget-categories.php:11 event-organiser-settings.php:317
 msgid "Event Categories"
 msgstr "Categories Esdeveniment"
 
-#: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
-#: includes/event-organiser-cpt.php:103
-#: includes/event-organiser-event-functions.php:1466
-#: templates/event-meta-event-single.php:69
+#: classes/class-eo-widget-categories.php:25
+#: includes/event-organiser-cpt.php:94 includes/event-organiser-cpt.php:105
+#: includes/event-organiser-event-functions.php:1524
+#: templates/event-meta-event-single.php:64
 msgid "Categories"
 msgstr "Categoríes"
 
-#: classes/class-eo-widget-categories.php:54
+#: classes/class-eo-widget-categories.php:53
 msgid "Select Category"
 msgstr "Selecciona una Categoria"
 
-#: classes/class-eo-widget-categories.php:125
-#: classes/class-eo-widget-venues.php:127
+#: classes/class-eo-widget-categories.php:124
+#: classes/class-eo-widget-venues.php:125
 msgid "Title:"
 msgstr "Títol:"
 
-#: classes/class-eo-widget-categories.php:129
-#: classes/class-eo-widget-venues.php:131
+#: classes/class-eo-widget-categories.php:128
+#: classes/class-eo-widget-venues.php:129
 msgid "Display as dropdown"
 msgstr "Mostra com a desplegable"
 
-#: classes/class-eo-widget-categories.php:132
+#: classes/class-eo-widget-categories.php:131
 msgid "Show hierarchy"
 msgstr "Mostra l'herència"
 
@@ -228,20 +268,20 @@ msgstr "Una llista o desplegable de llocs d'esdeveniments"
 msgid "Event Venues"
 msgstr "Llocs d'esdeveniment"
 
-#: classes/class-eo-widget-venues.php:32 event-organiser-settings.php:319
+#: classes/class-eo-widget-venues.php:29 event-organiser-settings.php:307
 #: event-organiser-venues.php:185 includes/event-organiser-cpt.php:31
 msgid "Venues"
 msgstr "Llocs"
 
-#: classes/class-eo-widget-venues.php:57
+#: classes/class-eo-widget-venues.php:55
 msgid "Select Venue"
 msgstr ""
 
-#: classes/class-eventorganiser-shortcodes.php:393
+#: classes/class-eventorganiser-shortcodes.php:437
 msgid "There is no excerpt because this is a protected post."
 msgstr "No hi ha resum perquè aquesta és una entrada protegida."
 
-#: event-organiser-add-ons.php:19 event-organiser-add-ons.php:95
+#: event-organiser-add-ons.php:19 event-organiser-add-ons.php:94
 msgid "Event Organiser Extensions"
 msgstr "Extensions de Event Organiser"
 
@@ -249,7 +289,7 @@ msgstr "Extensions de Event Organiser"
 msgid "Extensions"
 msgstr "Extensions"
 
-#: event-organiser-add-ons.php:99
+#: event-organiser-add-ons.php:98
 msgid ""
 "Event Organiser offers a range of extension which add additional features to "
 "the plug-in."
@@ -261,114 +301,158 @@ msgstr ""
 msgid "Find out more &hellip;"
 msgstr "Trobar més ..."
 
-#: event-organiser-calendar.php:22 event-organiser-calendar.php:23
+#: event-organiser-calendar.php:21 event-organiser-calendar.php:22
 msgid "Calendar View"
 msgstr "Vista de Calendari"
 
-#: event-organiser-calendar.php:67 includes/event-organiser-register.php:58
+#: event-organiser-calendar.php:72 includes/event-organiser-register.php:59
 msgid "today"
 msgstr "avui"
 
-#: event-organiser-calendar.php:68 includes/event-organiser-register.php:59
-#: includes/event-organiser-register.php:248
+#: event-organiser-calendar.php:73 includes/event-organiser-register.php:60
+#: includes/event-organiser-register.php:244
 msgid "day"
 msgstr "dia"
 
-#: event-organiser-calendar.php:69 includes/event-organiser-register.php:60
-#: includes/event-organiser-register.php:250
+#: event-organiser-calendar.php:74 includes/event-organiser-register.php:61
+#: includes/event-organiser-register.php:246
 msgid "week"
 msgstr "setmana"
 
-#: event-organiser-calendar.php:70 includes/event-organiser-register.php:61
-#: includes/event-organiser-register.php:252
+#: event-organiser-calendar.php:75 includes/event-organiser-register.php:62
+#: includes/event-organiser-register.php:248
 msgid "month"
 msgstr "mes"
 
-#: event-organiser-calendar.php:71 includes/event-organiser-register.php:62
+#: event-organiser-calendar.php:76 includes/event-organiser-register.php:63
 msgid "go to date"
 msgstr "anar a la data"
 
-#: event-organiser-calendar.php:120
+#: event-organiser-calendar.php:125
 msgid "You do not have sufficient permissions to create events. "
 msgstr "No tens suficients privilegis per crear esdeveniments."
 
-#: event-organiser-calendar.php:176
+#: event-organiser-calendar.php:181
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "No tens suficients privilegis per editar aquest esdeveniment."
 
-#: event-organiser-calendar.php:194
+#: event-organiser-calendar.php:199
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr "No tens suficients privilegis per esborrar aquest esdeveniment."
 
-#: event-organiser-calendar.php:204
+#: event-organiser-calendar.php:209
 msgid "Occurrence deleted."
 msgstr "Ocurrència esborrada"
 
-#: event-organiser-calendar.php:220
+#: event-organiser-calendar.php:225
+msgid "View keyboard shortcuts"
+msgstr ""
+
+#: event-organiser-calendar.php:230
 msgid "Calendar options"
 msgstr "Opcions del calendari"
 
-#: event-organiser-calendar.php:227
+#: event-organiser-calendar.php:237
 msgid "24 hour time"
 msgstr "De 24 hores"
 
-#: event-organiser-calendar.php:249
-#: includes/event-organiser-event-functions.php:1411
+#: event-organiser-calendar.php:257
+#: includes/event-organiser-event-functions.php:1461
 msgid "Loading&#8230;"
 msgstr "Carregant..."
 
-#: event-organiser-calendar.php:256
+#: event-organiser-calendar.php:266
 msgid "Current date/time"
 msgstr "Data/hora actual"
 
-#: event-organiser-calendar.php:261
+#: event-organiser-calendar.php:271
 msgid "Create an event"
 msgstr "Crear un esdeveniment"
 
-#: event-organiser-calendar.php:266
+#: event-organiser-calendar.php:276
 msgid "When"
 msgstr "Quan"
 
-#: event-organiser-calendar.php:270
+#: event-organiser-calendar.php:280
 msgid "Event Title"
 msgstr "Títol del esdeveniment"
 
-#: event-organiser-calendar.php:277 includes/event-organiser-ajax.php:410
+#: event-organiser-calendar.php:287 includes/event-organiser-ajax.php:397
 msgid "Where"
 msgstr "On"
 
-#: event-organiser-calendar.php:302
+#: event-organiser-calendar.php:312
 msgid "Save Draft"
 msgstr "Guardar esborrany"
 
-#: event-organiser-calendar.php:303 event-organiser-calendar.php:310
-#: event-organiser-edit.php:258
+#: event-organiser-calendar.php:313 event-organiser-calendar.php:320
+#: event-organiser-edit.php:310
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: event-organiser-calendar.php:306
+#: event-organiser-calendar.php:316
 msgid "Publish Event"
 msgstr "Publicar Esdeveniment"
 
-#: event-organiser-calendar.php:312
+#: event-organiser-calendar.php:322
 msgid "Submit for Review"
 msgstr "Enviar per a revisió"
 
-#: event-organiser-calendar.php:333 event-organiser-edit.php:14
-#: templates/event-meta-event-single.php:37
+#: event-organiser-calendar.php:333
+msgid "The following keyboard shortcuts are available"
+msgstr ""
+
+#: event-organiser-calendar.php:337
+msgid "Navigate to next period"
+msgstr ""
+
+#: event-organiser-calendar.php:341
+msgid "Navigate to previous period"
+msgstr ""
+
+#: event-organiser-calendar.php:345
+msgid "Switch to month view"
+msgstr ""
+
+#: event-organiser-calendar.php:349
+msgid "Switch to week view"
+msgstr ""
+
+#: event-organiser-calendar.php:353
+msgid "Switch to day view"
+msgstr ""
+
+#: event-organiser-calendar.php:357
+msgid "Jump to today in view"
+msgstr ""
+
+#: event-organiser-calendar.php:361
+msgid "Open modal of selected event"
+msgstr ""
+
+#: event-organiser-calendar.php:365
+msgid "Close modal"
+msgstr ""
+
+#: event-organiser-calendar.php:369
+msgid "Open shorcut help"
+msgstr ""
+
+#: event-organiser-calendar.php:388 event-organiser-edit.php:14
+#: templates/event-meta-event-single.php:34
 msgid "Event Details"
 msgstr "Detall de l'esdeveniment"
 
-#: event-organiser-calendar.php:335
+#: event-organiser-calendar.php:390
 msgid "Event Detail"
 msgstr "Detall de l'esdeveniment"
 
 #: event-organiser-debug.php:13 event-organiser-debug.php:14
-#: event-organiser-debug.php:59
+#: event-organiser-debug.php:58
 msgid "System Info"
 msgstr "Informació del Sistema"
 
-#: event-organiser-debug.php:65
+#: event-organiser-debug.php:64
 msgid ""
 "This page highlights useful information for debugging. If you're reporting a "
 "bug, please include this information."
@@ -376,7 +460,7 @@ msgstr ""
 "Aquesta pàgina destaca informació útil per eliminar fallades. Si vas a "
 "informar d'una fallada, per favor, inclou aquesta informació."
 
-#: event-organiser-debug.php:67
+#: event-organiser-debug.php:66
 msgid ""
 "The 'system info' link in under the Events admin tab is only visible to "
 "admins and only when <code>WP_DEBUG</code> is set to <code>true</code>."
@@ -385,7 +469,7 @@ msgstr ""
 "d'Esdeveniments només és visible per als administradors i només quan "
 "<code>WP_DEBUG</code> está en la posició <code>true</code>."
 
-#: event-organiser-debug.php:72
+#: event-organiser-debug.php:71
 msgid ""
 "Most bugs arise from theme or plug-in conflicts. You can check this by "
 "disabling all other plug-ins and switching to TwentyTweleve."
@@ -394,7 +478,7 @@ msgstr ""
 "Pots revisar-ho desactivant tots els altres plug-ins i canviant a "
 "TwentyTwelve"
 
-#: event-organiser-debug.php:74
+#: event-organiser-debug.php:73
 msgid ""
 "To help speed things along, if you report a bug please indicate if you have "
 "done so. Once the plug-in or theme has been identified it is often easy to "
@@ -404,7 +488,7 @@ msgstr ""
 "fet. Una vegada el plug-in o tema hagi estat identificat és més fàcil que es "
 "resolgui."
 
-#: event-organiser-debug.php:76
+#: event-organiser-debug.php:75
 msgid ""
 "Below any <strong>known</strong> plug-in and theme conflicts are highlighted "
 "in red."
@@ -412,21 +496,21 @@ msgstr ""
 "A baix es ressalta en vermell qualsevol conflicte <strong>conegut</strong> "
 "del plug-in i del tema."
 
-#: event-organiser-debug.php:84
+#: event-organiser-debug.php:83
 msgid "Download system information file"
 msgstr "Descarrega l'arxiu d'informació del sistema"
 
-#: event-organiser-debug.php:182 event-organiser-debug.php:186
-#: event-organiser-debug.php:190 event-organiser-settings.php:205
+#: event-organiser-debug.php:181 event-organiser-debug.php:185
+#: event-organiser-debug.php:189 event-organiser-settings.php:209
 msgid "Yes"
 msgstr "Si"
 
-#: event-organiser-debug.php:182 event-organiser-debug.php:186
-#: event-organiser-debug.php:190 event-organiser-settings.php:204
+#: event-organiser-debug.php:181 event-organiser-debug.php:185
+#: event-organiser-debug.php:189 event-organiser-settings.php:208
 msgid "No"
 msgstr "No"
 
-#: event-organiser-debug.php:257
+#: event-organiser-debug.php:256
 msgid ""
 "Known plug-in & theme conflicts, highlighted in red, may be minor or have a "
 "simple resolution. Please contact support."
@@ -435,125 +519,152 @@ msgstr ""
 "menors o tenir una resolució simple. Per favor, contacta amb l'assistència."
 
 #. / TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
-#: event-organiser-debug.php:430
+#: event-organiser-debug.php:421
 #, php-format
 msgid "%s has only been tested up to %s %s"
 msgstr "%s sols s'ha provat per damunt de %s %s"
 
 #. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
-#: event-organiser-debug.php:439
+#: event-organiser-debug.php:430
 #, php-format
 msgid "%s requires %s version %s or higher"
 msgstr "%s requereix %s versió %s o superior"
 
-#: event-organiser-debug.php:460
+#: event-organiser-debug.php:451
 msgid "unknown"
 msgstr "desconegut"
 
-#: event-organiser-edit.php:31 event-organiser-manage.php:23
-#: event-organiser-settings.php:142 includes/event-organiser-ajax.php:397
+#: event-organiser-edit.php:21 event-organiser-manage.php:23
+#: event-organiser-settings.php:146 includes/event-organiser-ajax.php:384
 msgid "Organiser"
 msgstr "Organitzador"
 
-#: event-organiser-edit.php:75
-msgid "This is a reoccurring event"
-msgstr "Aquest és un esdeveniment recurrent"
-
-#: event-organiser-edit.php:76
-msgid "Check to edit this event and its reoccurrences"
-msgstr "Marca per editar aquest esdeveniment i les seves recurrències."
-
-#: event-organiser-edit.php:98
-#, php-format
-msgid "Ensure dates are entered in %1$s format and times in 24 hour format"
+#: event-organiser-edit.php:80
+msgid "This is a recurring event. Check to edit this event and its recurrences"
 msgstr ""
 
 #: event-organiser-edit.php:100
 #, php-format
-msgid "Ensure dates are entered in %1$s format and times in 12 hour format"
+msgid "Enter date in %s format"
 msgstr ""
 
-#: event-organiser-edit.php:107 event-organiser-manage.php:36
+#: event-organiser-edit.php:101
+msgid "Enter time in 24-hour hh colon mm format"
+msgstr ""
+
+#: event-organiser-edit.php:101
+msgid "Enter time in 12-hour hh colon mm am or pm format"
+msgstr ""
+
+#: event-organiser-edit.php:108 event-organiser-manage.php:35
 msgid "Start Date/Time"
 msgstr "Inici Data/Hora"
 
-#: event-organiser-edit.php:120 event-organiser-manage.php:37
+#: event-organiser-edit.php:113
+msgid "Start Date"
+msgstr ""
+
+#: event-organiser-edit.php:117
+msgid "Start Time"
+msgstr ""
+
+#: event-organiser-edit.php:131 event-organiser-manage.php:36
 msgid "End Date/Time"
 msgstr "Fi Data/Hora"
 
-#: event-organiser-edit.php:132
-msgid "All day"
-msgstr "Tot el dia"
+#: event-organiser-edit.php:136
+msgid "End Date"
+msgstr ""
 
-#: event-organiser-edit.php:139
-msgid "Reoccurence:"
-msgstr "Recurrència "
+#: event-organiser-edit.php:140
+msgid "End Time"
+msgstr ""
 
-#: event-organiser-edit.php:141
+#: event-organiser-edit.php:161 event-organiser-manage.php:37
+msgid "Recurrence"
+msgstr ""
+
+#: event-organiser-edit.php:166
 msgid "none"
 msgstr ""
 
-#: event-organiser-edit.php:141
+#: event-organiser-edit.php:166
 msgid "daily"
 msgstr "diari"
 
-#: event-organiser-edit.php:141
+#: event-organiser-edit.php:166
 msgid "weekly"
 msgstr "setmanal"
 
-#: event-organiser-edit.php:142
+#: event-organiser-edit.php:167
 msgid "monthly"
 msgstr "mensual"
 
-#: event-organiser-edit.php:142
+#: event-organiser-edit.php:167
 msgid "yearly"
 msgstr "anual"
 
-#: event-organiser-edit.php:142
+#: event-organiser-edit.php:167
 msgid "custom"
 msgstr "personalitzat"
 
-#: event-organiser-edit.php:155
+#: event-organiser-edit.php:182
 msgid "Repeat every"
 msgstr "Repetir cada"
 
-#: event-organiser-edit.php:161 templates/shortcode-event-list.php:52
+#: event-organiser-edit.php:183
+msgid "Recurrence frequency"
+msgstr ""
+
+#: event-organiser-edit.php:190
+msgid "Repeat on days of week:"
+msgstr ""
+
+#: event-organiser-edit.php:191 templates/shortcode-event-list.php:52
 #: templates/widget-event-list.php:49
 msgid "on"
 msgstr "el"
 
-#: event-organiser-edit.php:176
-msgid "day of month"
-msgstr "dia del mes"
+#: event-organiser-edit.php:212
+msgid "Select whether to repeat monthly by date or day:"
+msgstr ""
 
-#: event-organiser-edit.php:180
+#: event-organiser-edit.php:216
+msgid "date of month"
+msgstr ""
+
+#: event-organiser-edit.php:220
 msgid "day of week"
 msgstr "dia de la setmana"
 
-#: event-organiser-edit.php:185
-#: includes/event-organiser-event-functions.php:826
-#: includes/event-organiser-register.php:265
+#: event-organiser-edit.php:226
+#: includes/event-organiser-event-functions.php:842
+#: includes/event-organiser-register.php:261
 msgid "until"
 msgstr "fins"
 
-#: event-organiser-edit.php:195
-msgid "Include/Exclude occurrences"
-msgstr "Incloure/excloure ocurrències"
+#: event-organiser-edit.php:227
+msgid "Repeat this event until:"
+msgstr ""
 
-#: event-organiser-edit.php:198 includes/event-organiser-register.php:242
+#: event-organiser-edit.php:238
+msgid "Include/Exclude occurrences:"
+msgstr ""
+
+#: event-organiser-edit.php:241 includes/event-organiser-register.php:238
 msgid "Show dates"
 msgstr "Mostra les dates"
 
-#: event-organiser-edit.php:230
-#: includes/event-organiser-venue-functions.php:1008
+#: event-organiser-edit.php:275
+#: includes/event-organiser-venue-functions.php:1002
 msgid "Select a venue"
 msgstr "Selecciona un lloc"
 
-#: event-organiser-edit.php:240
+#: event-organiser-edit.php:286
 msgid "Venue Name"
 msgstr "Nom del Lloc"
 
-#: event-organiser-edit.php:416
+#: event-organiser-edit.php:468
 msgid "Event dates were not saved."
 msgstr "Les dates de l'esdeveniment no s'han guardat"
 
@@ -628,57 +739,49 @@ msgstr ""
 msgid "Go to Event Organiser settings"
 msgstr "Anar a la configuració de l'Organitzador d'esdeveniments"
 
-#: event-organiser-manage.php:19 includes/event-organiser-cpt.php:218
+#: event-organiser-manage.php:19 includes/event-organiser-cpt.php:225
 msgid "Event"
 msgstr "Esdeveniment"
 
-#: event-organiser-manage.php:38
-msgid "Reoccurrence"
-msgstr "Recurrent"
-
-#: event-organiser-manage.php:163
+#: event-organiser-manage.php:153
 msgid "View all events"
 msgstr "Veure tots els esdeveniments"
 
-#: event-organiser-manage.php:164
-msgid "Future events"
-msgstr "Futurs esdeveniments"
-
-#: event-organiser-manage.php:165
+#: event-organiser-manage.php:155
 msgid "Expired events"
 msgstr "Esdeveniments expirats"
 
-#: event-organiser-manage.php:166
+#: event-organiser-manage.php:156
 msgid "Events within 24 hours"
 msgstr "Esdeveniments del dia"
 
-#: event-organiser-manage.php:167
+#: event-organiser-manage.php:157
 msgid "Events within 1 week"
 msgstr "Esdeveniments de la setmana"
 
-#: event-organiser-manage.php:168
+#: event-organiser-manage.php:158
 #, php-format
 msgid "Events within %d weeks"
 msgstr "Esdeveniments en %d setmanes"
 
-#: event-organiser-manage.php:169
+#: event-organiser-manage.php:159
 msgid "Events within 1 month"
 msgstr "Esdeveniments del mes"
 
-#: event-organiser-manage.php:170
+#: event-organiser-manage.php:160
 #, php-format
 msgid "Events within %d months"
 msgstr "Esdeveniments en %d mesos"
 
-#: event-organiser-manage.php:171
+#: event-organiser-manage.php:161
 msgid "Events within 1 year"
 msgstr "Esdeveniments del any"
 
-#: event-organiser-manage.php:222
+#: event-organiser-manage.php:199
 msgid "&mdash; No Change &mdash;"
 msgstr "— No hi han Canvis —"
 
-#: event-organiser-settings.php:29 event-organiser-settings.php:74
+#: event-organiser-settings.php:29 event-organiser-settings.php:76
 msgid "General"
 msgstr "General"
 
@@ -746,52 +849,52 @@ msgstr "Administra Llocs"
 msgid "Manage Event Categories & Tags"
 msgstr "Administrar categories d'esdeveniments i etiquetes"
 
-#: event-organiser-settings.php:73
+#: event-organiser-settings.php:75
 msgid "Add-on Licence keys"
 msgstr "Claus de Llicencia dels Add-on"
 
-#: event-organiser-settings.php:75
+#: event-organiser-settings.php:78
 msgid "Templates"
 msgstr "Plantilles"
 
-#: event-organiser-settings.php:137
+#: event-organiser-settings.php:141
 msgid "Select which features events should support"
 msgstr "Selecciona quines característiques han de suportar els esdeveniments"
 
-#: event-organiser-settings.php:142
+#: event-organiser-settings.php:146
 msgid "Author"
 msgstr "Autor"
 
-#: event-organiser-settings.php:143
+#: event-organiser-settings.php:147
 msgid "Thumbnail"
 msgstr "Miniatura"
 
-#: event-organiser-settings.php:144
+#: event-organiser-settings.php:148
 msgid "Excerpt"
 msgstr "Extracte"
 
-#: event-organiser-settings.php:145
+#: event-organiser-settings.php:149
 msgid "Custom Fields"
 msgstr "Camps personalitzats"
 
-#: event-organiser-settings.php:146
+#: event-organiser-settings.php:150
 msgid "Comments"
 msgstr "Comentaris"
 
-#: event-organiser-settings.php:147
+#: event-organiser-settings.php:151
 msgid "Revisions"
 msgstr "Revisions"
 
-#: event-organiser-settings.php:148 event-organiser-settings.php:338
-#: includes/event-organiser-cpt.php:146
+#: event-organiser-settings.php:152 event-organiser-settings.php:326
+#: includes/event-organiser-cpt.php:151
 msgid "Event Tags"
 msgstr "Etiquetes d'esdeveniment"
 
-#: event-organiser-settings.php:153 event-organiser-settings.php:180
+#: event-organiser-settings.php:157 event-organiser-settings.php:184
 msgid "Show past events:"
 msgstr "Mostra esdeveniments pasats:"
 
-#: event-organiser-settings.php:159 event-organiser-settings.php:186
+#: event-organiser-settings.php:163 event-organiser-settings.php:190
 msgid ""
 "Display past events on calendars, event lists and archives (this can be over-"
 "ridden by shortcode attributes and widget options)."
@@ -799,31 +902,31 @@ msgstr ""
 "Mostra esdeveniments pasats al calendari, llistat d'esdeveniments i arxiu "
 "(açò pot ser reemplaçat per atributs shortcode i opcions d'extensions)."
 
-#: event-organiser-settings.php:162
+#: event-organiser-settings.php:166
 msgid "Add an 'events' link to the navigation menu:"
 msgstr "Afegir un enllaç d'esdeveniments al menú de navegació:"
 
-#: event-organiser-settings.php:167
+#: event-organiser-settings.php:171
 msgid "Date Format:"
 msgstr "Format de data:"
 
-#: event-organiser-settings.php:173
+#: event-organiser-settings.php:177
 msgid "dd-mm-yyyy"
 msgstr "dd-mm-aaaa"
 
-#: event-organiser-settings.php:174
+#: event-organiser-settings.php:178
 msgid "mm-dd-yyyy"
 msgstr "mm-dd-aaaa"
 
-#: event-organiser-settings.php:175
+#: event-organiser-settings.php:179
 msgid "yyyy-mm-dd"
 msgstr "aaaa-mm-dd"
 
-#: event-organiser-settings.php:177
+#: event-organiser-settings.php:181
 msgid "This alters the default format for inputting dates."
 msgstr "Açò altera el format per defecte per introduïr dates."
 
-#: event-organiser-settings.php:195
+#: event-organiser-settings.php:199
 msgid ""
 "If selected only one occurrence of an event will be displayed on event lists "
 "and archives (this can be over-ridden by shortcode attributes and widget "
@@ -833,11 +936,11 @@ msgstr ""
 "llista d'esdeveniments i els arxius (aquest pot ser reemplaçat per atributs "
 "shortcode i opcions d'extensions."
 
-#: event-organiser-settings.php:198
+#: event-organiser-settings.php:202
 msgid "Are current events past?"
 msgstr "Són esdeveniments passats?"
 
-#: event-organiser-settings.php:207
+#: event-organiser-settings.php:211
 msgid ""
 "If 'no' is selected, an occurrence of an event is only past when it has "
 "finished. Otherwise, an occurrence is considered 'past' as soon as it starts."
@@ -846,11 +949,11 @@ msgstr ""
 "quan ha finalitzat. Si no, una ocurrència es considera 'succeïda' tan aviat "
 "com comenci."
 
-#: event-organiser-settings.php:210
+#: event-organiser-settings.php:214
 msgid "Delete expired events:"
 msgstr "Esborrar esdeveniments expirats:"
 
-#: event-organiser-settings.php:216
+#: event-organiser-settings.php:220
 msgid ""
 "If selected the event will be automatically trashed 24 hours after the last "
 "occurrence finishes."
@@ -858,58 +961,127 @@ msgstr ""
 "Si se selecciona l'esdeveniment serà esborrat automàticament en 24 hores "
 "després que acabi la ultima ocurrència."
 
-#: event-organiser-settings.php:219
+#: event-organiser-settings.php:223
 msgid "Enable events ICAL feed:"
 msgstr "Habilitar esdeveniments per al ICAL feed:"
 
-#: event-organiser-settings.php:225
+#: event-organiser-settings.php:229
 #, php-format
 msgid "If selected, visitors can subscribe to your events with the url: %s"
 msgstr ""
 "Si se selecciona, els visitants es poden subscriure als teus esdeveniments "
 "amb la url: %s"
 
-#: event-organiser-settings.php:228
+#: event-organiser-settings.php:232
 msgid "Exclude events from searches:"
 msgstr "Excloure esdeveniments de les cerques:"
 
-#: event-organiser-settings.php:236
-msgid "Enable templates:"
-msgstr "Habilitar les plantilles:"
-
 #: event-organiser-settings.php:242
+msgid "Templates:"
+msgstr ""
+
+#: event-organiser-settings.php:247
+msgid "Disable CSS:"
+msgstr "Desabilita CSS:"
+
+#: event-organiser-settings.php:253
+msgid ""
+"Check this option to prevent any stylesheets from Event Organiser being "
+"loaded on the front-end"
+msgstr ""
+"Marqui aquesta opció per evitar que qualsevol full d'estil de l'Event "
+"Organiser es carregui en el front-end"
+
+#: event-organiser-settings.php:262
+msgid "Enable event pretty permalinks:"
+msgstr "Habilitar els enllaços permanents \"bonics\" d'esdeveniments"
+
+#: event-organiser-settings.php:268
+msgid ""
+"If you have pretty permalinks enabled, select to have pretty premalinks for "
+"events."
+msgstr ""
+"Si tens habilitats els enllaços permanents \"bonics\", selecciona per tenir "
+"enllaços permanents per als esdeveniments."
+
+#: event-organiser-settings.php:272
+msgid "Event (single)"
+msgstr "Esdeveniment"
+
+#: event-organiser-settings.php:281
+msgid "Events page"
+msgstr ""
+
+#: event-organiser-settings.php:294
+msgid "Event (date archive)"
+msgstr ""
+
+#: event-organiser-settings.php:300
+msgid "Year archive"
+msgstr "Arxiu anual"
+
+#: event-organiser-settings.php:301
+msgid "Month archive"
+msgstr "Arxiu mensual"
+
+#: event-organiser-settings.php:302
+msgid "Day archive"
+msgstr "Arxiu diari"
+
+#: event-organiser-settings.php:345
+msgid "Enable template handling (default)"
+msgstr ""
+
+#: event-organiser-settings.php:346
+msgid ""
+"Event Organiser's page templates will be used if your theme does not provide "
+"appropriate templates."
+msgstr ""
+
+#: event-organiser-settings.php:349
+msgid "Enable theme compatability mode"
+msgstr ""
+
+#: event-organiser-settings.php:350
+msgid ""
+"Event Organiser will attempt to ensure compatability with your theme and "
+"apply additional styles."
+msgstr ""
+
+#: event-organiser-settings.php:353
+msgid "Disable template handling"
+msgstr ""
+
+#: event-organiser-settings.php:354
+msgid "Event Organiser's page templates will not be used."
+msgstr ""
+
+#: event-organiser-settings.php:633
 msgid ""
 "For each of the pages, the corresponding template is used. To use your own "
 "template simply give it the same name and store in your theme folder. By "
 "default, if Event Organiser cannot find a template in your theme directory, "
-"it will use its own default template. To prevent this, uncheck this option. "
-"WordPress will then decide which template from your theme's folder to use."
+"it will use its own default template. You can disable this below. WordPress "
+"will then decide which template from your theme's folder to use."
 msgstr ""
-"Per a cadascuna de les pàgines, s'utilitza la seva corresponent plantilla. "
-"Per utilitzar la teva pròpia plantilla simplement has de donar-li el mateix "
-"nom i guardar-ho a la carpeta del teu tema. Per defecte, si Event Organiser "
-"no pot trobar una plantilla en el directori del teu tema, utilitzarà la seva "
-"plantilla per defecte. Per prevenir això, deselecciona aquesta opció. "
-"Llavors WordPress decidirà quina plantilla de la teva carpeta del tema "
-"utilitzar."
 
-#: event-organiser-settings.php:248
+#: event-organiser-settings.php:640
 msgid "Events archives:"
 msgstr "Arxius d'esdeveniments:"
 
-#: event-organiser-settings.php:249
+#: event-organiser-settings.php:641
 msgid "Event page:"
 msgstr "Pàgina d'esdeveniments:"
 
-#: event-organiser-settings.php:250
+#: event-organiser-settings.php:642
 msgid "Venue page:"
 msgstr "Pàgina de Llocs:"
 
-#: event-organiser-settings.php:251
+#: event-organiser-settings.php:643
 msgid "Events Category page:"
 msgstr "Pàgina de Categorïa d'Esdeveniments:"
 
-#: event-organiser-settings.php:254
+#: event-organiser-settings.php:646
 #, php-format
 msgid ""
 "For more information see documentation <a href='%s'>on editing the "
@@ -918,71 +1090,23 @@ msgstr ""
 "Per a més informació, pega una mirada a la documentació <a href='%s'>editant "
 "les plantilles</a>"
 
-#: event-organiser-settings.php:259
-msgid "Disable CSS:"
-msgstr "Desabilita CSS:"
-
-#: event-organiser-settings.php:265
-msgid ""
-"Check this option to prevent any stylesheets from Event Organiser being "
-"loaded on the front-end"
-msgstr ""
-"Marqui aquesta opció per evitar que qualsevol full d'estil de l'Event "
-"Organiser es carregui en el front-end"
-
-#: event-organiser-settings.php:274
-msgid "Enable event pretty permalinks:"
-msgstr "Habilitar els enllaços permanents \"bonics\" d'esdeveniments"
-
-#: event-organiser-settings.php:280
-msgid ""
-"If you have pretty permalinks enabled, select to have pretty premalinks for "
-"events."
-msgstr ""
-"Si tens habilitats els enllaços permanents \"bonics\", selecciona per tenir "
-"enllaços permanents per als esdeveniments."
-
-#: event-organiser-settings.php:284
-msgid "Event (single)"
-msgstr "Esdeveniment"
-
-#: event-organiser-settings.php:293
-msgid "Events page"
-msgstr ""
-
-#: event-organiser-settings.php:306
-msgid "Event (date archive)"
-msgstr ""
-
-#: event-organiser-settings.php:312
-msgid "Year archive"
-msgstr "Arxiu anual"
-
-#: event-organiser-settings.php:313
-msgid "Month archive"
-msgstr "Arxiu mensual"
-
-#: event-organiser-settings.php:314
-msgid "Day archive"
-msgstr "Arxiu diari"
-
-#: event-organiser-settings.php:612
+#: event-organiser-settings.php:656
 msgid "Event management permissions"
 msgstr "Privilegis per al editor d'esdeveniments"
 
-#: event-organiser-settings.php:613
+#: event-organiser-settings.php:657
 msgid "Set permissions for events and venue management"
 msgstr "Donar privilegis per administrar esdeveniments i llocs"
 
-#: event-organiser-settings.php:618
+#: event-organiser-settings.php:662
 msgid "Role"
 msgstr "Rol"
 
-#: event-organiser-settings.php:629
+#: event-organiser-settings.php:673
 msgid "None"
 msgstr "Cap"
 
-#: event-organiser-settings.php:658
+#: event-organiser-settings.php:702
 msgid ""
 "Choose a custom permalink structure for events, venues, event categories and "
 "event tags."
@@ -990,7 +1114,7 @@ msgstr ""
 "Tria una estructura personalitzada d'enllaços permanents per als "
 "esdeveniments, llocs, categories d'esdeveniments i etiquetes d'esdeveniments."
 
-#: event-organiser-settings.php:659
+#: event-organiser-settings.php:703
 msgid ""
 "Please note to enable these structures you must first have pretty permalinks "
 "enabled on WordPress in Settings > Permalinks."
@@ -998,7 +1122,7 @@ msgstr ""
 "Atenció: per habilitar aquestes estructures has d'haver habilitat primer els "
 "enllaços permanents \"bonics\" en WordPress en Opcions > Enllacis permanents."
 
-#: event-organiser-settings.php:660
+#: event-organiser-settings.php:704
 msgid ""
 "You may also need to go to WordPress Settings > Permalinks and click 'Save "
 "Changes' before any changes will take effect."
@@ -1007,31 +1131,31 @@ msgstr ""
 "permanents i fer clic sobre \"Guardar canvis\" perquè que els canvis facin "
 "efecte."
 
-#: event-organiser-settings.php:696
+#: event-organiser-settings.php:740
 msgid "Do not add to menu"
 msgstr "No afegir al menú"
 
-#: event-organiser-settings.php:700
+#: event-organiser-settings.php:744
 msgid "Page list (fallback)"
 msgstr "Llistat de pàgines (recurs)"
 
-#: event-organiser-venues.php:49
+#: event-organiser-venues.php:46
 msgid "You do not have permission to manage venues"
 msgstr "No tens privilegis per administrar llocs"
 
-#: event-organiser-venues.php:54 event-organiser-venues.php:83
+#: event-organiser-venues.php:52 event-organiser-venues.php:81
 msgid "You do not have permission to edit this venue."
 msgstr "No tens privilegis per editar aquest lloc."
 
-#: event-organiser-venues.php:61
+#: event-organiser-venues.php:59
 msgid "Venue <strong>was not</strong> updated"
 msgstr "Lloc <strong>no</strong> actualitzat"
 
-#: event-organiser-venues.php:98
+#: event-organiser-venues.php:96
 msgid "Venue <strong>was not</strong> created"
 msgstr "Lloc <strong>no </strong> creat"
 
-#: event-organiser-venues.php:127
+#: event-organiser-venues.php:126
 msgid "You do not have permission to delete this venue"
 msgstr "No tens privilegis per esborrar aquest lloc"
 
@@ -1055,30 +1179,38 @@ msgstr "Lloc <strong>actualitzat</strong>"
 msgid "Venue(s) <strong>deleted</strong>"
 msgstr "Lloc(s) <strong>esborrats</strong>"
 
-#: event-organiser-venues.php:258
+#: event-organiser-venues.php:244
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Cercar resultats per “%s”"
 
-#: event-organiser-venues.php:418
+#: event-organiser-venues.php:399
 msgid "Latitude/Longitude:"
 msgstr ""
 
-#: event-organiser-venues.php:446
+#: event-organiser-venues.php:427
 msgid "Venue name"
 msgstr "Nom del Lloc"
 
-#: event-organiser-venues.php:452
+#: event-organiser-venues.php:433
 msgid "Permalink:"
 msgstr "Permalinks:"
 
-#: event-organiser-venues.php:459
+#: event-organiser-venues.php:440
 msgid "Get Link"
 msgstr "Obtindre l'enllaç"
 
-#: event-organiser-venues.php:481
+#: event-organiser-venues.php:462
 msgid "Slug"
 msgstr "Slug"
+
+#: includes/class-eo-admin-notice.php:110
+msgid "Dismiss this notice"
+msgstr "Desestimar aquesta notícia."
+
+#: includes/class-eo-admin-notice.php:111
+msgid "Dismiss"
+msgstr "Desestimar"
 
 #: includes/class-eo-ical-parser.php:193
 msgid "There was an error detecting iCal source."
@@ -1101,22 +1233,22 @@ msgstr "Va haver-hi un error cercant el feed. Códi de resposta: %s."
 msgid "There was an error opening the ICAL file."
 msgstr "Va haver-hi un error obrint el fitxer ICAL"
 
-#: includes/class-eo-ical-parser.php:499 includes/class-eo-ical-parser.php:524
+#: includes/class-eo-ical-parser.php:518 includes/class-eo-ical-parser.php:543
 #, php-format
 msgid "[Lines %1$d-%2$d]"
 msgstr ""
 
-#: includes/class-eo-ical-parser.php:506 includes/class-eo-ical-parser.php:531
+#: includes/class-eo-ical-parser.php:525 includes/class-eo-ical-parser.php:550
 #, php-format
 msgid "[Line %1$d]"
 msgstr "[Línia %1$d]"
 
-#: includes/class-eo-ical-parser.php:952
+#: includes/class-eo-ical-parser.php:1008
 #, php-format
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
 msgstr "Data invàlida \"%s\". Data esperada en format AAAAMMDD."
 
-#: includes/class-eo-ical-parser.php:990
+#: includes/class-eo-ical-parser.php:1046
 #, php-format
 msgid ""
 "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
@@ -1124,6 +1256,31 @@ msgid ""
 msgstr ""
 "Data/Hora invàlida \"%s\". Data esperada en format AAAAMMDDTHHiissZ o "
 "AAAAMMDDTHHiiss"
+
+#: includes/class-eo-theme-compatability.php:107
+#, php-format
+msgid "Events at %s"
+msgstr ""
+
+#: includes/class-eo-theme-compatability.php:118
+#: templates/taxonomy-event-category.php:27
+#, php-format
+msgid "Event Category: %s"
+msgstr ""
+
+#: includes/class-eo-theme-compatability.php:128
+#: templates/taxonomy-event-tag.php:27
+#, php-format
+msgid "Event Tag: %s"
+msgstr ""
+
+#: includes/class-eo-theme-compatability.php:137
+#: includes/class-eo-theme-compatability.php:139
+#: includes/class-eo-theme-compatability.php:141
+#: templates/archive-event.php:32 templates/archive-event.php:35
+#: templates/archive-event.php:38
+msgid "Events: "
+msgstr "Esdeveniments:"
 
 #: includes/class-event-organiser-im-export.php:61
 #, php-format
@@ -1226,72 +1383,67 @@ msgstr "S'ha creat 1 categoria"
 msgid "%d categories were created"
 msgstr "S'han creat categories %d "
 
-#: includes/event-organiser-ajax.php:360
+#: includes/event-organiser-ajax.php:339
 msgid "Protected"
 msgstr "Protegit"
 
-#: includes/event-organiser-ajax.php:362
+#: includes/event-organiser-ajax.php:341
 msgid "Private"
 msgstr "Privat"
 
-#: includes/event-organiser-ajax.php:364
+#: includes/event-organiser-ajax.php:343
 msgid "Draft"
 msgstr "Esborrany"
 
-#: includes/event-organiser-ajax.php:394
-#: templates/event-meta-event-single.php:58
+#: includes/event-organiser-ajax.php:381
+#: templates/event-meta-event-single.php:55
 msgid "Start"
 msgstr "Inici"
 
-#: includes/event-organiser-ajax.php:395
+#: includes/event-organiser-ajax.php:382
 msgid "End"
 msgstr "Fi"
 
-#: includes/event-organiser-ajax.php:436
-msgid "This event reoccurs"
-msgstr "Aquest esdeveniment torna a ocórrer"
+#: includes/event-organiser-ajax.php:423
+msgid "This event recurs"
+msgstr ""
 
-#: includes/event-organiser-ajax.php:442 includes/event-organiser-cpt.php:221
+#: includes/event-organiser-ajax.php:429 includes/event-organiser-cpt.php:228
 msgid "Edit Event"
 msgstr "Edita Esdeveniment"
 
-#: includes/event-organiser-ajax.php:462
+#: includes/event-organiser-ajax.php:449
 msgid "Delete this occurrence"
 msgstr "Esborrar aquesta ocurrència"
 
-#: includes/event-organiser-ajax.php:479
+#: includes/event-organiser-ajax.php:466
 msgid "Break this series"
 msgstr "Trencar aquesta sèrie"
 
-#: includes/event-organiser-ajax.php:687
-#: includes/event-organiser-event-functions.php:1363
-msgid "All Day"
-msgstr "Tot el dia"
-
-#: includes/event-organiser-ajax.php:692
-msgid "Add To Google Calendar"
-msgstr "Afegeix a Google Calendar"
-
-#: includes/event-organiser-ajax.php:803
+#: includes/event-organiser-ajax.php:767
 msgid "Event not found"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:815
+#: includes/event-organiser-ajax.php:775
 msgid "Events are not editable via the admin calendar"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:825
+#: includes/event-organiser-ajax.php:781
 msgid "Are you sure you want to do this?"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:835
+#: includes/event-organiser-ajax.php:788
 msgid "You do not have permission to edit this event"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:857
+#: includes/event-organiser-ajax.php:804
 #, php-format
 msgid "Event not created: %s"
 msgstr ""
+
+#: includes/event-organiser-cpt.php:32
+msgid "Venue"
+msgstr "Lloc"
 
 #: includes/event-organiser-cpt.php:33
 msgid "Search Venues"
@@ -1329,198 +1481,225 @@ msgstr "Afefeix o elimina llocs"
 msgid "Separate venues with commas"
 msgstr "Separa llocs amb comes"
 
+#: includes/event-organiser-cpt.php:43
+msgid "Event venues list navigation"
+msgstr ""
+
 #: includes/event-organiser-cpt.php:44
+#, fuzzy
+msgid "Event venues list"
+msgstr "Lloc de l'esdeveniment"
+
+#: includes/event-organiser-cpt.php:46
 msgid "Venue Location"
 msgstr "Ubicació del Lloc"
 
-#: includes/event-organiser-cpt.php:45
+#: includes/event-organiser-cpt.php:47
 msgid "View all venues"
 msgstr "Veure tots els llocs"
 
-#: includes/event-organiser-cpt.php:46
-msgid "Venue:"
-msgstr ""
-
-#: includes/event-organiser-cpt.php:47
+#: includes/event-organiser-cpt.php:49
 msgid "No Venue"
 msgstr "Cap lloc"
 
-#: includes/event-organiser-cpt.php:93
+#: includes/event-organiser-cpt.php:95
 msgctxt "taxonomy singular name"
 msgid "Category"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:94
+#: includes/event-organiser-cpt.php:96
 msgid "Search Categories"
 msgstr "Cerca Categories"
 
-#: includes/event-organiser-cpt.php:95
+#: includes/event-organiser-cpt.php:97
 msgid "All Categories"
 msgstr "Totes les Categories"
 
-#: includes/event-organiser-cpt.php:96
+#: includes/event-organiser-cpt.php:98
 msgid "Parent Category"
 msgstr "Categoria Pare"
 
-#: includes/event-organiser-cpt.php:97
+#: includes/event-organiser-cpt.php:99
 msgid "Parent Category:"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:98
+#: includes/event-organiser-cpt.php:100
 msgid "Edit Category"
 msgstr "Edita Categoria"
 
-#: includes/event-organiser-cpt.php:99
+#: includes/event-organiser-cpt.php:101
 msgid "Update Category"
 msgstr "Actualitza Categoria"
 
-#: includes/event-organiser-cpt.php:100
+#: includes/event-organiser-cpt.php:102
 msgid "Add New Category"
 msgstr "Afegeix una nova categoria"
 
-#: includes/event-organiser-cpt.php:101
+#: includes/event-organiser-cpt.php:103
 msgid "New Category Name"
 msgstr "Nom de categoria nova"
 
-#: includes/event-organiser-cpt.php:102
+#: includes/event-organiser-cpt.php:104
 msgid "No categories found"
 msgstr "No s'han trobat categories"
 
-#: includes/event-organiser-cpt.php:105
+#: includes/event-organiser-cpt.php:106
+#, fuzzy
+msgid "Event categories list navigation"
+msgstr "Categories d'esdeveniments"
+
+#: includes/event-organiser-cpt.php:107
+#, fuzzy
+msgid "Event categories list"
+msgstr "Categories d'esdeveniments"
+
+#: includes/event-organiser-cpt.php:109
 msgid "View all categories"
 msgstr "Veure totes les categories"
 
-#: includes/event-organiser-cpt.php:147
+#: includes/event-organiser-cpt.php:152
 msgctxt "taxonomy singular name"
 msgid "Tag"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:148
+#: includes/event-organiser-cpt.php:153
 msgid "Search Tags"
 msgstr "Cerca Etiquetes"
 
-#: includes/event-organiser-cpt.php:149
+#: includes/event-organiser-cpt.php:154
 msgid "All Tags"
 msgstr "Totes les etiquetes"
 
-#: includes/event-organiser-cpt.php:150
+#: includes/event-organiser-cpt.php:155
 msgid "Popular Tags"
 msgstr "Etiquetes Populars"
 
-#: includes/event-organiser-cpt.php:151
+#: includes/event-organiser-cpt.php:156
 msgid "Edit Tag"
 msgstr "Edita la etiqueta"
 
-#: includes/event-organiser-cpt.php:152
+#: includes/event-organiser-cpt.php:157
 msgid "Update Tag"
 msgstr "Actualitza la etiqueta"
 
-#: includes/event-organiser-cpt.php:153
+#: includes/event-organiser-cpt.php:158
 msgid "Add New Tag"
 msgstr "Afegeix una nova etiqueta"
 
-#: includes/event-organiser-cpt.php:154
+#: includes/event-organiser-cpt.php:159
 msgid "New Tag Name"
 msgstr "Nou nom d'etiqueta"
 
-#: includes/event-organiser-cpt.php:155
+#: includes/event-organiser-cpt.php:160
 msgid "No tags found"
 msgstr "No s'han trobat etiquetes"
 
-#: includes/event-organiser-cpt.php:156
+#: includes/event-organiser-cpt.php:161
 msgid "Choose from the most used tags"
 msgstr "Trieu entre les etiquetes més utilitzades"
 
-#: includes/event-organiser-cpt.php:157
-#: includes/event-organiser-event-functions.php:1474
-#: templates/event-meta-event-single.php:74
+#: includes/event-organiser-cpt.php:162
+#: includes/event-organiser-event-functions.php:1532
+#: templates/event-meta-event-single.php:68
 msgid "Tags"
 msgstr "Etiquetes"
 
-#: includes/event-organiser-cpt.php:158
+#: includes/event-organiser-cpt.php:163
 msgid "Add or remove tags"
 msgstr "Afegeix o elimina etiquetes"
 
-#: includes/event-organiser-cpt.php:159
+#: includes/event-organiser-cpt.php:164
 msgid "Separate tags with commas"
 msgstr "Separa etiquetes amb comes"
 
-#: includes/event-organiser-cpt.php:161
+#: includes/event-organiser-cpt.php:165
+msgid "Event tags list navigation"
+msgstr ""
+
+#: includes/event-organiser-cpt.php:166
+#, fuzzy
+msgid "Event tags list"
+msgstr "Etiquetes d'esdeveniment"
+
+#: includes/event-organiser-cpt.php:168
 msgid "View all tags"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:219
+#: includes/event-organiser-cpt.php:226
 msgctxt "post"
 msgid "Add New"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:220
+#: includes/event-organiser-cpt.php:227
 msgid "Add New Event"
 msgstr "Afegeix un nou esdeveniment"
 
-#: includes/event-organiser-cpt.php:222
+#: includes/event-organiser-cpt.php:229
 msgid "New Event"
 msgstr "Nou esdeveniment"
 
-#: includes/event-organiser-cpt.php:223
-msgid "All events"
-msgstr "Tots els esdeveninents"
-
-#: includes/event-organiser-cpt.php:224
+#: includes/event-organiser-cpt.php:231
 msgid "View Event"
 msgstr "Veure Esdeveniment"
 
-#: includes/event-organiser-cpt.php:225
+#: includes/event-organiser-cpt.php:232
 msgid "Search events"
 msgstr "Cerca esdeveniments"
 
-#: includes/event-organiser-cpt.php:226
+#: includes/event-organiser-cpt.php:233
 msgid "No events found"
 msgstr "No s'han trobat esdeveniments"
 
-#: includes/event-organiser-cpt.php:227
+#: includes/event-organiser-cpt.php:234
 msgid "No events found in Trash"
 msgstr "No s'han trobat esdeveniments a la paperera"
 
-#: includes/event-organiser-cpt.php:310
+#: includes/event-organiser-cpt.php:237
+#, fuzzy
+msgid "Filter events list"
+msgstr "Futurs esdeveniments"
+
+#: includes/event-organiser-cpt.php:238
+#, fuzzy
+msgid "Events list navigation"
+msgstr "Afegir un enllaç d'esdeveniments al menú de navegació:"
+
+#: includes/event-organiser-cpt.php:239
+#, fuzzy
+msgid "Events list"
+msgstr "Esdeveniments:"
+
+#: includes/event-organiser-cpt.php:320
 #, php-format
 msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Esdeveniment actualitzat. <a href=\"%s\">Mostra l'esdeveniment</a>"
 
-#: includes/event-organiser-cpt.php:311
-msgid "Custom field updated."
-msgstr "Camp personalitzat actualitzat."
-
-#: includes/event-organiser-cpt.php:312
-msgid "Custom field deleted."
-msgstr "Camp personalitzat eliminat."
-
-#: includes/event-organiser-cpt.php:313
+#: includes/event-organiser-cpt.php:321
 msgid "Event updated."
 msgstr "Esdeveniment actualitzat"
 
-#: includes/event-organiser-cpt.php:315
+#: includes/event-organiser-cpt.php:323
 #, php-format
 msgid "Event restored to revision from %s"
 msgstr "Esdeveniment restaurat a la revisió de % s"
 
-#: includes/event-organiser-cpt.php:316
+#: includes/event-organiser-cpt.php:324
 #, php-format
 msgid "Event published. <a href=\"%s\">View event</a>"
 msgstr "Esdeveniment publicat. <a href=\"%s\">Veure l'event</a>"
 
-#: includes/event-organiser-cpt.php:317
+#: includes/event-organiser-cpt.php:325
 msgid "Event saved."
 msgstr "Esdeveniment guardat."
 
-#: includes/event-organiser-cpt.php:318
+#: includes/event-organiser-cpt.php:327
 #, php-format
 msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 "Esdeveniment enviat.  <a target=\"_blank\" href=\"%s\">Previsualitzar "
 "l'esdeveniment</a>"
 
-#: includes/event-organiser-cpt.php:319
+#: includes/event-organiser-cpt.php:331
 #, php-format
 msgid ""
 "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
@@ -1529,48 +1708,42 @@ msgstr ""
 "Esdeveniment programat per a: <strong>%1$s</strong>. <a target=\"_blank\" "
 "href=\"%2$s\">Previsualitzar l'esdeveniment</a>"
 
-#: includes/event-organiser-cpt.php:321
+#: includes/event-organiser-cpt.php:333
 msgid "M j, Y @ G:i"
 msgstr "I, j M Y @ G:i"
 
-#: includes/event-organiser-cpt.php:322
+#: includes/event-organiser-cpt.php:336
 #, php-format
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 "Esborrany d'event actualitzat. <a target=\"_blank\" href=\"%s\">Esdeveniment "
 "anterior</a>"
 
-#: includes/event-organiser-cpt.php:323
+#: includes/event-organiser-cpt.php:339
 msgid "This event has been broken from a recurring event."
 msgstr "Aquest esdeveniment ha estat trencat per un esdeveniment recurrent"
 
-#: includes/event-organiser-cpt.php:516
+#: includes/event-organiser-cpt.php:515
 msgid "Creating events"
 msgstr "Creant esdeveniments"
 
-#: includes/event-organiser-cpt.php:517
+#: includes/event-organiser-cpt.php:516
 msgid "Creating events:"
 msgstr "Creant esdeveniments:"
 
-#: includes/event-organiser-cpt.php:519
+#: includes/event-organiser-cpt.php:518
 msgid ""
-"The start date is the date the event starts. If the event is a reoccuring "
+"The start date is the date the event starts. If the event is a recurring "
 "event, this is the start date of the first occurrence."
 msgstr ""
-"La data de començament és la data que l'esdeveniment comença. Si "
-"l'esdeveniment és un esdeveniment recurrent, aquesta és la data de "
-"començament de la primera ocurrència."
 
-#: includes/event-organiser-cpt.php:520
+#: includes/event-organiser-cpt.php:519
 msgid ""
-"The end date is the date the event finishes. If the event is a reoccuring "
+"The end date is the date the event finishes. If the event is a recurring "
 "event, this is the end date of the first occurrence."
 msgstr ""
-"La data de finalització és la data que l'esdeveniment acaba. Si "
-"l'esdeveniment és un esdeveniment recurrent, aquesta és la data de "
-"finalització de la primera ocurrència."
 
-#: includes/event-organiser-cpt.php:521
+#: includes/event-organiser-cpt.php:520
 msgid ""
 "All dates and times must be entered in the specified format. This format can "
 "changed in the settings page."
@@ -1578,64 +1751,52 @@ msgstr ""
 "Totes les dates i hores han de ser introduides en un format especific. "
 "Aquest format pot ser canviat a la pàgina de configuració"
 
-#: includes/event-organiser-cpt.php:526
+#: includes/event-organiser-cpt.php:525
 msgid "Repeating events"
 msgstr "Repetint esdeveniments"
 
-#: includes/event-organiser-cpt.php:527
+#: includes/event-organiser-cpt.php:526
 msgid ""
-"To repeat an event according to some regular pattern, use the reoccurrence "
+"To repeat an event according to some regular pattern, use the recurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
 "appear, "
 msgstr ""
-"Per repetir un esdeveniment d'acord amb algun patró regular, utilitza el "
-"menú desplegable de recurrències per triar com es repetirà aquest "
-"esdeveniment. Apareixeran mes opcions."
 
-#: includes/event-organiser-cpt.php:529
+#: includes/event-organiser-cpt.php:528
 msgid "Specify how regularly the event should repeat (default 1)"
 msgstr ""
 "Especifica amb quina freqüència s'ha de repetir l'esdeveniment (per defecte "
 "1)"
 
+#: includes/event-organiser-cpt.php:529
+msgid ""
+"Choose the recurrence end date. No further occurrences are added after this "
+"date, but an occurrence that starts before may finish after this date."
+msgstr ""
+
 #: includes/event-organiser-cpt.php:530
 msgid ""
-"Choose the reoccurrence end date. No further occurrences are added after "
-"this date, but an occurrence that starts before may finish after this date."
+"If monthly recurrence is selected, select whether this should repeat on that "
+"date of the month (e.g. on the 24th) or on the day of the month (e.g. on the "
+"third Tuesday) "
 msgstr ""
-"Triar la recurrència i la data. No s'afegiran mes recurrències després "
-"d'aquesta data, però una ocurrència que comença abans pot acabar després "
-"d'aquesta data"
 
 #: includes/event-organiser-cpt.php:531
 msgid ""
-"If monthly reoccurrence is selected, select whether this should repeat on "
-"that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
-"on the third Tuesday) "
-msgstr ""
-"Si està seleccionada recurrència mensual, selecciona si s'ha de repetir en "
-"aquesta data del mes (per exemple el 24) o el mateix dia del mes (per "
-"exemple, el tercer dimarts)"
-
-#: includes/event-organiser-cpt.php:532
-msgid ""
-"If weekly reoccurrence is selected, select which days of the week the event "
+"If weekly recurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
 "used"
 msgstr ""
-"Si està seleccionada recurrència setmanal, selecciona quins dies de la "
-"setmana l'esdeveniment deu repetir-se. Si no hi ha dies seleccionats, s'usa "
-"el dia de la data de començament."
 
-#: includes/event-organiser-cpt.php:537 includes/event-organiser-cpt.php:538
+#: includes/event-organiser-cpt.php:536 includes/event-organiser-cpt.php:537
 msgid "Selecting a venue"
 msgstr "Seleccionant un lloc"
 
-#: includes/event-organiser-cpt.php:540
+#: includes/event-organiser-cpt.php:539
 msgid "Use the venues input field to search for existing venues"
 msgstr "Utilitzeu el camp d'entrada dels llocs per buscar llocs existents"
 
-#: includes/event-organiser-cpt.php:541
+#: includes/event-organiser-cpt.php:540
 msgid ""
 "Only pre-existing venues can be selected. To add a venue, go to the venues "
 "page."
@@ -1643,22 +1804,18 @@ msgstr ""
 "Solament es poden seleccionar llocs preexistents. Per afegir un lloc, anar a "
 "la pàgina de llocs."
 
-#: includes/event-organiser-cpt.php:551 includes/event-organiser-cpt.php:570
+#: includes/event-organiser-cpt.php:550 includes/event-organiser-cpt.php:569
 msgid "Overview"
 msgstr "Descripció"
 
-#: includes/event-organiser-cpt.php:552
+#: includes/event-organiser-cpt.php:551
 msgid ""
-"This is the list of all saved events. Note that <strong> reoccurring events "
+"This is the list of all saved events. Note that <strong> recurring events "
 "appear as a single row </strong> in the table and the start and end date "
 "refers to the first occurrence of that event."
 msgstr ""
-"Aquesta és la llista dels esdeveniments guardats. Adona't que <strong> els "
-"esdeveniments recurrents apareixen com un fila simple </strong> a la taula i "
-"la data de començament i final es refereix a la primera ocurrència d'aquest "
-"esdeveniment."
 
-#: includes/event-organiser-cpt.php:558
+#: includes/event-organiser-cpt.php:557
 msgid ""
 "Hovering over a row in the venues list will display action links that allow "
 "you to manage that venue. You can perform the following actions:"
@@ -1667,7 +1824,7 @@ msgstr ""
 "accions que et permeten gestionar aquest esdeveniment. Pots realitzar les "
 "següents accions:"
 
-#: includes/event-organiser-cpt.php:560
+#: includes/event-organiser-cpt.php:559
 msgid ""
 "Edit takes you to the editing screen for that venue. You can also reach that "
 "screen by clicking on the venue title."
@@ -1675,15 +1832,15 @@ msgstr ""
 "Editar et porta a la pantalla d'edició d'aquest lloc. També pots anar a "
 "aquesta pantalla punxant en el títol del lloc."
 
-#: includes/event-organiser-cpt.php:561
+#: includes/event-organiser-cpt.php:560
 msgid "Delete will permanently remove the venue"
 msgstr "Esborrar, llevarà de forma permanent el lloc"
 
-#: includes/event-organiser-cpt.php:562
+#: includes/event-organiser-cpt.php:561
 msgid "View will take you to the venue's page"
 msgstr "Veure et portarà a la pàgina del lloc"
 
-#: includes/event-organiser-cpt.php:571
+#: includes/event-organiser-cpt.php:570
 msgid ""
 "This page shows all (occurrances of) events. You can view the summary of an "
 "event by clicking on it. If you have the necessary permissions, a link to "
@@ -1693,7 +1850,7 @@ msgstr ""
 "veure el resum d'un esdeveniment punxant en ell. Si tens els privilegis "
 "necessaris , també t'apareixerà un enllaç a la pàgina d'editar esdeveniments."
 
-#: includes/event-organiser-cpt.php:572
+#: includes/event-organiser-cpt.php:571
 msgid ""
 "By clicking the relevant tab, you can view events in Month, Week or Day "
 "mode. You can also filter the events by events by category and venue. The "
@@ -1703,11 +1860,11 @@ msgstr ""
 "setmana o dia. També pots filtrar els esdeveniments per categoria i lloc. El "
 "botó \"anar a la data\" us permet saltar ràpidament a una data específica."
 
-#: includes/event-organiser-cpt.php:576
+#: includes/event-organiser-cpt.php:575
 msgid "Add Event"
 msgstr "Afegeix Esdeveniment"
 
-#: includes/event-organiser-cpt.php:577
+#: includes/event-organiser-cpt.php:576
 msgid ""
 "You can create an event on this Calendar, by clicking on day or dragging "
 "over multiple days (in Month view) or multiple times (in Week and Day view). "
@@ -1722,177 +1879,168 @@ msgstr ""
 "guardat com a esborrany. En qualsevol cas, l'esdeveniment està creat i tu "
 "seràs redireccionat a la pàgina d'edició d'aquest esdeveniment."
 
-#: includes/event-organiser-cpt.php:583
+#: includes/event-organiser-cpt.php:582
 msgid "For more information"
 msgstr "Per a més informació"
 
-#: includes/event-organiser-cpt.php:584
+#: includes/event-organiser-cpt.php:583
 #, php-format
 msgid "See the <a %s> documentation</a>"
 msgstr "Veure la <a %s> documentació</a>"
 
-#: includes/event-organiser-cpt.php:585
+#: includes/event-organiser-cpt.php:584
 msgid "Debugging Event Organiser"
 msgstr "Depurant Event Organiser"
 
-#: includes/event-organiser-cpt.php:586
+#: includes/event-organiser-cpt.php:585
 msgid "Go Pro!"
 msgstr "Vés a la versió Pro!"
 
-#: includes/event-organiser-cpt.php:703 includes/event-organiser-cpt.php:726
+#: includes/event-organiser-cpt.php:702 includes/event-organiser-cpt.php:725
 msgid "Color"
 msgstr "Color"
 
-#: includes/event-organiser-cpt.php:709
+#: includes/event-organiser-cpt.php:708
 msgid "Assign the category a colour."
 msgstr "Asignar un color a la categoria"
 
-#: includes/event-organiser-event-functions.php:747
-#: includes/event-organiser-register.php:266
+#: includes/event-organiser-event-functions.php:763
+#: includes/event-organiser-register.php:267
 msgid "last"
 msgstr "últim"
 
-#: includes/event-organiser-event-functions.php:747
-#: includes/event-organiser-register.php:266
+#: includes/event-organiser-event-functions.php:763
+#: includes/event-organiser-register.php:263
 msgid "first"
 msgstr "primer"
 
-#: includes/event-organiser-event-functions.php:747
-#: includes/event-organiser-register.php:266
+#: includes/event-organiser-event-functions.php:763
+#: includes/event-organiser-register.php:264
 msgid "second"
 msgstr "segon"
 
-#: includes/event-organiser-event-functions.php:747
-#: includes/event-organiser-register.php:266
+#: includes/event-organiser-event-functions.php:763
+#: includes/event-organiser-register.php:265
 msgid "third"
 msgstr "tercer"
 
-#: includes/event-organiser-event-functions.php:747
+#: includes/event-organiser-event-functions.php:763
 #: includes/event-organiser-register.php:266
 msgid "fourth"
 msgstr "quart"
 
-#: includes/event-organiser-event-functions.php:757
+#: includes/event-organiser-event-functions.php:773
 msgid "one time only"
 msgstr "una sola vegada"
 
-#: includes/event-organiser-event-functions.php:760
-msgid "custom reoccurrence"
-msgstr "Recurrència personalitzada"
+#: includes/event-organiser-event-functions.php:776
+msgid "custom recurrence"
+msgstr ""
 
-#: includes/event-organiser-event-functions.php:767
-#: includes/event-organiser-register.php:256
+#: includes/event-organiser-event-functions.php:783
+#: includes/event-organiser-register.php:252
 msgid "every day"
 msgstr "cada dia"
 
-#: includes/event-organiser-event-functions.php:769
-#: includes/event-organiser-register.php:257
+#: includes/event-organiser-event-functions.php:785
+#: includes/event-organiser-register.php:253
 #, php-format
 msgid "every %d days"
 msgstr "cada %d dies"
 
-#: includes/event-organiser-event-functions.php:775
-#: includes/event-organiser-register.php:258
+#: includes/event-organiser-event-functions.php:791
+#: includes/event-organiser-register.php:254
 msgid "every week on"
 msgstr "cada setmana a"
 
-#: includes/event-organiser-event-functions.php:777
-#: includes/event-organiser-register.php:259
+#: includes/event-organiser-event-functions.php:793
+#: includes/event-organiser-register.php:255
 #, php-format
 msgid "every %d weeks on"
 msgstr "cada %d setmanes a"
 
-#: includes/event-organiser-event-functions.php:788
-#: includes/event-organiser-register.php:260
+#: includes/event-organiser-event-functions.php:804
+#: includes/event-organiser-register.php:256
 msgid "every month on the"
 msgstr "cada mes a"
 
-#: includes/event-organiser-event-functions.php:790
-#: includes/event-organiser-register.php:261
+#: includes/event-organiser-event-functions.php:806
+#: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d months on the"
 msgstr "cada %d mesos a"
 
-#: includes/event-organiser-event-functions.php:819
+#: includes/event-organiser-event-functions.php:835
 msgid "every year"
 msgstr "cada any"
 
-#: includes/event-organiser-event-functions.php:821
+#: includes/event-organiser-event-functions.php:837
 #, php-format
 msgid "every %d years"
 msgstr "cada %d anys"
 
-#: includes/event-organiser-register.php:56
+#: includes/event-organiser-event-functions.php:1369
+msgid "All Day"
+msgstr "Tot el dia"
+
+#: includes/event-organiser-register.php:57
 msgid "Show More"
 msgstr "Mostra Mes"
 
-#: includes/event-organiser-register.php:57
+#: includes/event-organiser-register.php:58
 msgid "Show Less"
 msgstr "Mostra Menys"
 
-#: includes/event-organiser-register.php:243
+#: includes/event-organiser-register.php:239
 msgid "Hide dates"
 msgstr "Amaga les dates"
 
-#: includes/event-organiser-register.php:246
+#: includes/event-organiser-register.php:242
 msgid "Hour"
 msgstr "Hora"
 
-#: includes/event-organiser-register.php:247
+#: includes/event-organiser-register.php:243
 msgid "Minute"
 msgstr "Minut"
 
-#: includes/event-organiser-register.php:249
+#: includes/event-organiser-register.php:245
 msgid "days"
 msgstr "dies"
 
-#: includes/event-organiser-register.php:251
+#: includes/event-organiser-register.php:247
 msgid "weeks"
 msgstr "setmanes"
 
-#: includes/event-organiser-register.php:253
+#: includes/event-organiser-register.php:249
 msgid "months"
 msgstr "mesos"
 
-#: includes/event-organiser-register.php:254
+#: includes/event-organiser-register.php:250
 msgid "year"
 msgstr "any"
 
-#: includes/event-organiser-register.php:255
+#: includes/event-organiser-register.php:251
 msgid "years"
 msgstr "anys"
 
-#: includes/event-organiser-register.php:262
+#: includes/event-organiser-register.php:258
 msgid "every year on the"
 msgstr "cada any a"
 
-#: includes/event-organiser-register.php:263
+#: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d years on the"
 msgstr "cada %d anys a"
 
-#: includes/event-organiser-register.php:264
+#: includes/event-organiser-register.php:260
 msgid "This event will repeat"
 msgstr "Aquest event es repeteix"
 
-#: includes/event-organiser-register.php:365
+#: includes/event-organiser-register.php:383
 msgid "Settings"
 msgstr "Ajustos"
 
-#: includes/event-organiser-register.php:668
-#, php-format
-msgid ""
-"<h4>City & State Fields Added</h4>City and state / province fields for "
-"venues have now been added. </br> If you'd like, Event Organiser can <a "
-"href='%s'>attempt to auto-fill them</a>. You can always manually change the "
-"details aftewards."
-msgstr ""
-"<h4>Camps addicionals de Ciutat i Província</h4> Ara s'han afegit els camps "
-"de ciutat i estat/província.</br>Si ho desitges, Event Organiser pot  <a "
-"href='%s'>intentar el autocompletat amb les mateixes</a>. Sempre pots "
-"canviar manualmente els detalls més tard."
-
-#: includes/event-organiser-register.php:675
+#: includes/event-organiser-register.php:551
 msgid ""
 "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up "
 "your own templates in your theme you won't notice any change. </br> If you "
@@ -1904,106 +2052,108 @@ msgstr ""
 "</br> Si no és el cas i vols les antigues plantilles de nou, <a href='http://"
 "wp-event-organiser.com/blog/new-default-templates-in-1-7'>llegeix açò,<a/>."
 
-#: includes/event-organiser-register.php:711
-msgid "Dismiss this notice"
-msgstr "Desestimar aquesta notícia."
+#: includes/event-organiser-register.php:568
+#, php-format
+msgid "Your site timezone is %s"
+msgstr ""
 
-#: includes/event-organiser-register.php:712
-msgid "Dismiss"
-msgstr "Desestimar"
+#: includes/event-organiser-register.php:569
+msgid ""
+"Is this correct? Using a fixed offset from UTC may cause unexpected "
+"behaviour, particular if you observe Daylight Savings Time."
+msgstr ""
 
-#: includes/event-organiser-venue-functions.php:973
+#: includes/event-organiser-register.php:570
+msgid ""
+"It is strongly recommended you select a city instead, even if you don't "
+"observe Daylight Savings Time."
+msgstr ""
+
+#: includes/event-organiser-register.php:571
+#, php-format
+msgid "You can <a href='%s'>change your timezone settings here</a>."
+msgstr ""
+
+#: includes/event-organiser-utility-functions.php:1363
+msgid "Help"
+msgstr ""
+
+#: includes/event-organiser-venue-functions.php:967
 msgid "Address"
 msgstr "Adressa"
 
-#: includes/event-organiser-venue-functions.php:974
+#: includes/event-organiser-venue-functions.php:968
 msgid "City"
 msgstr "Ciutat"
 
-#: includes/event-organiser-venue-functions.php:975
+#: includes/event-organiser-venue-functions.php:969
 msgid "State / Province"
 msgstr "Província"
 
-#: includes/event-organiser-venue-functions.php:976
+#: includes/event-organiser-venue-functions.php:970
 msgid "Post Code"
 msgstr "Codi Postal"
 
-#: includes/event-organiser-venue-functions.php:977
+#: includes/event-organiser-venue-functions.php:971
 msgid "Country"
 msgstr "País"
 
-#: includes/event.php:615
+#: includes/event.php:612
 msgid "Schedule not recognised."
 msgstr "Horari no reconegut."
 
-#: includes/event.php:624
+#: includes/event.php:621
 msgid "Start date not provided."
 msgstr "La data de començament no s'ha donat."
 
-#: includes/event.php:642
+#: includes/event.php:639
 msgid "Start date occurs after end date."
 msgstr "La data de començament ocorre després de la data de finalització."
 
-#: includes/event.php:645
+#: includes/event.php:642
 msgid "Schedule end date is before is before the start date."
 msgstr "La data de finalització ocorre abans de la data començament."
 
-#: includes/event.php:727
+#: includes/event.php:724
 msgid "Invalid monthly schedule (invalid ordinal)"
 msgstr "Horari mensual no vàlid (ordinal no vàlid)"
 
-#: includes/event.php:861
+#: includes/event.php:858
 msgid "Event does not contain any dates."
 msgstr "L'esdeveniment no te dates."
 
-#: includes/event.php:1004
+#: includes/event.php:1052
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr "Ocurrència no esborrada. L'ocurrència no s'ha trobat."
 
-#: includes/event.php:1065
+#: includes/event.php:1108
 msgid "There is already an occurrence on this date"
 msgstr ""
 
 #. / TRANSLATORS: This is the description that of the plug-in that appears in the "Plugins" page.
 #: includes/i18n.php:8
 msgid ""
-"Creates a custom post type 'events' with features such as reoccurring "
-"events, venues, Google Maps, calendar views and events and venue pages"
+"Creates a custom post type 'events' with features such as recurring events, "
+"venues, Google Maps, calendar views and events and venue pages"
 msgstr ""
 
-#: templates/archive-event.php:34 templates/archive-event.php:37
-#: templates/archive-event.php:40
-msgid "Events: "
-msgstr "Esdeveniments:"
-
-#: templates/archive-event.php:55 templates/archive-event.php:110
-#: templates/taxonomy-event-category.php:48
-#: templates/taxonomy-event-category.php:106
-#: templates/taxonomy-event-tag.php:48 templates/taxonomy-event-tag.php:106
-#: templates/taxonomy-event-venue.php:48
-#: templates/taxonomy-event-venue.php:105
+#: templates/eo-events-nav.php:5
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
 msgstr "Esdeveniments següents <span class=\"meta-nav\">→</span>"
 
-#: templates/archive-event.php:56 templates/archive-event.php:111
-#: templates/taxonomy-event-category.php:49
-#: templates/taxonomy-event-category.php:107
-#: templates/taxonomy-event-tag.php:49 templates/taxonomy-event-tag.php:107
-#: templates/taxonomy-event-venue.php:49
-#: templates/taxonomy-event-venue.php:106
+#: templates/eo-events-nav.php:6
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
 msgstr "<span class=\"meta-nav\">←</span> Últims Esdeveniments"
 
-#: templates/archive-event.php:119 templates/taxonomy-event-category.php:116
-#: templates/taxonomy-event-tag.php:116 templates/taxonomy-event-venue.php:115
+#: templates/eo-loop-events.php:37
 msgid "Nothing Found"
 msgstr "No s'ha trobat res."
 
-#: templates/archive-event.php:123
+#: templates/eo-loop-events.php:41
 msgid "Apologies, but no results were found for the requested archive. "
 msgstr "Disculpes, però no s'han trobat resultats a l'arxiu sol·licitat."
 
-#: templates/event-meta-event-single.php:46
+#: templates/event-meta-event-single.php:43
 #, fuzzy, php-format
 msgid ""
 "This event is running from %1$s until %2$s. It is next occurring on %3$s"
@@ -2011,12 +2161,12 @@ msgstr ""
 "Aquest esdeveniment s'està executant des de %1$s fins a %2$s. La propera "
 "ocurrència serà %3$"
 
-#: templates/event-meta-event-single.php:50
+#: templates/event-meta-event-single.php:47
 #, php-format
 msgid "This event finished on %s"
 msgstr "El esdeveniment acaba el %s"
 
-#: templates/event-meta-event-single.php:89
+#: templates/event-meta-event-single.php:83
 msgid "Upcoming Dates"
 msgstr "Properes dates"
 
@@ -2040,31 +2190,24 @@ msgstr ""
 "l'<a href=\"%2$s\" title=\"Enllaç permanent a %3$s\" rel=\"bookmark\">enllaç "
 "permanent</a>."
 
-#: templates/taxonomy-event-category.php:31
-#, php-format
-msgid "Event Category Archives: %s"
-msgstr "Arxius de categoria d'evento: %s"
-
-#: templates/taxonomy-event-category.php:120
-msgid "Apologies, but no events were found for the requested category. "
-msgstr ""
-"Disculpa, però no s'han trobat esdeveniments en la categoria sol·licitada."
-
-#: templates/taxonomy-event-tag.php:31
-#, php-format
-msgid "Event Tag Archives: %s"
-msgstr "Arxiu d'etiqueta d'esdeveniment: %s"
-
-#: templates/taxonomy-event-tag.php:120
-msgid "Apologies, but no events were found for the requested tag. "
-msgstr ""
-"Disculpa, però no s'han trobat esdeveniments amb l'etiqueta sol·licitada."
-
-#: templates/taxonomy-event-venue.php:31
+#: templates/taxonomy-event-venue.php:30
 #, php-format
 msgid "Events at: %s"
 msgstr "Esdeveniments a: %s"
 
-#: templates/taxonomy-event-venue.php:118
-msgid "Apologies, but no events were found for the requested venue. "
-msgstr "Disculpes, però no s'han trobat esdeveniments per al lloc sol·licitat."
+#~ msgid "Custom field updated."
+#~ msgstr "Camp personalitzat actualitzat."
+
+#~ msgid "Custom field deleted."
+#~ msgstr "Camp personalitzat eliminat."
+
+#~ msgid ""
+#~ "<h4>City & State Fields Added</h4>City and state / province fields for "
+#~ "venues have now been added. </br> If you'd like, Event Organiser can <a "
+#~ "href='%s'>attempt to auto-fill them</a>. You can always manually change "
+#~ "the details aftewards."
+#~ msgstr ""
+#~ "<h4>Camps addicionals de Ciutat i Província</h4> Ara s'han afegit els "
+#~ "camps de ciutat i estat/província.</br>Si ho desitges, Event Organiser "
+#~ "pot  <a href='%s'>intentar el autocompletat amb les mateixes</a>. Sempre "
+#~ "pots canviar manualmente els detalls més tard."

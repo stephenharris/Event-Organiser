@@ -1,6 +1,10 @@
 /*
- * This copy of jQuery UI Timepicker has been enteded to prepend an 'eo'
- * prefix to prevent namespace clashes.
+ * Forked from jQuery UI Timepicker 0.3.3. 
+ * 
+ * Changes:
+ * * Prepend an 'eo' prefix to prevent namespace clashes.
+ * * Add href="#" to hour/minute anchor tags
+ * * Keyboard navigation of hours & minutes
 */
 /*
  * jQuery UI Timepicker 0.3.3
@@ -205,6 +209,55 @@
                 });
             $.data(target, PROP_NAME, inst);
         },
+        
+        _getHours: function( inst ){
+            var hours = Array(),hours_options = this._get(inst, 'hours');            
+            for (h = hours_options.starts; h <= hours_options.ends; h++) {
+            	hours.push (h);
+            }
+            return hours;
+        	
+        },        
+        _getMinutes: function( inst ){
+        	
+        	var minutes_options = this._get(inst, 'minutes');
+        	var minutes = Array();
+        	
+            if ( ! minutes_options.starts) {
+                minutes_options.starts = 0;
+            }
+            if ( ! minutes_options.ends) {
+                minutes_options.ends = 59;
+            }
+            if ( ! minutes_options.manual) {
+                minutes_options.manual = [];
+            }
+            for (m = minutes_options.starts; m <= minutes_options.ends; m += minutes_options.interval) {
+                minutes.push(m);
+            }
+            for (i = 0; i < minutes_options.manual.length;i++) {
+                var currMin = minutes_options.manual[i];
+
+                // Validate & filter duplicates of manual minute input
+                if (typeof currMin != 'number' || currMin < 0 || currMin > 59 || $.inArray(currMin, minutes) >= 0) {
+                    continue;
+                }
+                minutes.push(currMin);
+            }
+
+            // Sort to get correct order after adding manual minutes
+            // Use compare function to sort by number, instead of string (default)
+            minutes.sort(function(a, b) {
+                return a-b;
+            });
+            
+            return minutes;
+        },
+        
+        /* Function to fix JavaScript modulo behaviour: ensures returned value is positive */
+        _modulo: function ( value, modulo ){
+        	return ( ( value % modulo ) + modulo ) % modulo;
+        },
 
         /* Handle keystrokes. */
         _doKeyDown: function (event) {
@@ -212,19 +265,72 @@
             var handled = true;
             inst._keyEvent = true;
             if ($.eotimepicker._timepickerShowing) {
+            	
+            	var ctrlOrCmd = ( event.ctrlKey || event.metaKey );
+            	var shift     = event.shiftKey;
+
+            	var hours = $.eotimepicker._getHours( inst ),
+            		minutes = $.eotimepicker._getMinutes( inst ),
+            		rows    = $.eotimepicker._get(inst, 'rows');
+            	
+            	var hoursPerRow   = Math.ceil(hours.length / rows);
+                var minutesPerRow = Math.round(minutes.length / rows + 0.49);
+                
                 switch (event.keyCode) {
                     case 9: $.eotimepicker._hideTimepicker();
                         handled = false;
                         break; // hide on tab out
+                    
                     case 13:
+                    	inst.hours = inst.hlHours;
+                    	inst.minutes = inst.hlMinutes;
                         $.eotimepicker._updateSelectedValue(inst);
                         $.eotimepicker._hideTimepicker();
-
 						return false; // don't submit the form
 						break; // select the value on enter
+						
                     case 27: $.eotimepicker._hideTimepicker();
                         break; // hide on escape
-                    default: handled = false;
+                        
+    				case 37:
+    					handled = ctrlOrCmd || shift;
+    					if( shift )  {
+    						$.eotimepicker._moveHighlight( inst, -1, 'minute' );
+    					} else if ( ctrlOrCmd ) {
+    						$.eotimepicker._moveHighlight( inst, -1, 'hour' );	
+    					}
+    					break; //Move up hour/minute;
+    				
+    				case 38:
+    					handled = ctrlOrCmd || shift;
+    					if( shift )  {
+    						$.eotimepicker._moveHighlight( inst, -minutesPerRow, 'minute' );
+    					} else if ( ctrlOrCmd ) {
+    						$.eotimepicker._moveHighlight( inst, -hoursPerRow, 'hour' );	
+    					}
+    					break; // Move left hour/minute
+    				
+    				case 39: 
+    					handled = ctrlOrCmd || shift;
+    					if( shift )  {
+    						$.eotimepicker._moveHighlight( inst, +1, 'minute' );
+    					} else if ( ctrlOrCmd ) {
+    						$.eotimepicker._moveHighlight( inst, +1, 'hour' );	
+    					}
+					break; //Move right hour/minute
+					
+    				case 40: 
+    					handled = ctrlOrCmd || shift;
+    					if( shift )  {
+    						$.eotimepicker._moveHighlight( inst, minutesPerRow, 'minute' );
+    					} else if ( ctrlOrCmd ) {
+    						$.eotimepicker._moveHighlight( inst, hoursPerRow, 'hour' );	
+    					}
+					break; //Move down hour/minute
+					
+                    default: 
+                    	handled = false;
+                    
                 }
             }
             else if (event.keyCode == 36 && event.ctrlKey) { // display the time picker on ctrl+home
@@ -237,6 +343,38 @@
                 event.preventDefault();
                 event.stopPropagation();
             }
+        },
+        
+        _moveHighlight: function( inst, offset, period ){
+        	
+        	var minutes = this._getMinutes( inst );
+        	var hours   = this._getHours( inst );
+            var maxTime = this._get(inst, 'maxTime');
+            var minTime = this._get(inst, 'minTime');
+        	
+        	if ( period.toLowerCase() == 'hour' ){
+        		var index = $.inArray( inst.hlHours, hours );
+        		inst.hlHours = hours[ this._modulo( index + offset, hours.length )];
+        	} else{
+        		var index = $.inArray( inst.hlMinutes, minutes );
+        		inst.hlMinutes = minutes[ this._modulo( index + offset, minutes.length )];
+        	}
+        	
+        	//Make sure we don't go over the max, or under the minimum time
+        	if( minTime.hour ) {
+        		inst.hlHours = Math.max( inst.hlHours, minTime.hour );	
+        	}
+        	if( maxTime.hour ) {
+        		inst.hlHours = Math.min( inst.hlHours, maxTime.hour );	
+        	}        	
+        	
+        	if( minTime.minute && inst.hlHours <= minTime.hour ) {
+            	inst.hlMinutes = Math.max( inst.hlMinutes, minTime.minute );	
+            }
+        	if( maxTime.minute && inst.hlHours >= maxTime.hour ) {
+           		inst.hlMinutes = Math.min( inst.hlMinutes, maxTime.minute );	
+           	}
+
         },
 
         /* Update selected time on keyUp */
@@ -334,6 +472,10 @@
             $.eotimepicker._lastInput = input;
 
             $.eotimepicker._setTimeFromField(inst);
+            
+            //set highlighted cells to current time
+            inst.hlMinutes = inst.minutes;
+            inst.hlHours = inst.hours;
 
             // calculate default position
             if ($.eotimepicker._inDialog) { input.value = ''; } // hide cursor
@@ -520,7 +662,6 @@
                 amFirstRow = 0,
                 pmFirstRow = 0,
                 hours = Array(),
-                hours_options = this._get(inst, 'hours'),
                 hoursPerRow = null,
                 hourCounter = 0,
                 hourLabel = this._get(inst, 'hourText'),
@@ -532,12 +673,7 @@
                 deselectButtonText = this._get(inst, 'deselectButtonText'),
                 showButtonPanel = showCloseButton || showNowButton || showDeselectButton;
 
-
-
-            // prepare all hours and minutes, makes it easier to distribute by rows
-            for (h = hours_options.starts; h <= hours_options.ends; h++) {
-                hours.push (h);
-            }
+            hours = this._getHours( inst );
             hoursPerRow = Math.ceil(hours.length / rows); // always round up
 
             if (showPeriodLabels) {
@@ -669,41 +805,13 @@
             var m, row, html = '',
                 rows = this._get(inst, 'rows'),
                 minutes = Array(),
-                minutes_options = this._get(inst, 'minutes'),
                 minutesPerRow = null,
                 minuteCounter = 0,
                 showMinutesLeadingZero = (this._get(inst, 'showMinutesLeadingZero') == true),
                 onMinuteShow = this._get(inst, 'onMinuteShow'),
                 minuteLabel = this._get(inst, 'minuteText');
 
-            if ( ! minutes_options.starts) {
-                minutes_options.starts = 0;
-            }
-            if ( ! minutes_options.ends) {
-                minutes_options.ends = 59;
-            }
-            if ( ! minutes_options.manual) {
-                minutes_options.manual = [];
-            }
-            for (m = minutes_options.starts; m <= minutes_options.ends; m += minutes_options.interval) {
-                minutes.push(m);
-            }
-            for (i = 0; i < minutes_options.manual.length;i++) {
-                var currMin = minutes_options.manual[i];
-
-                // Validate & filter duplicates of manual minute input
-                if (typeof currMin != 'number' || currMin < 0 || currMin > 59 || $.inArray(currMin, minutes) >= 0) {
-                    continue;
-                }
-                minutes.push(currMin);
-            }
-
-            // Sort to get correct order after adding manual minutes
-            // Use compare function to sort by number, instead of string (default)
-            minutes.sort(function(a, b) {
-                return a-b;
-            });
-
+            minutes = this._getMinutes( inst );
             minutesPerRow = Math.round(minutes.length / rows + 0.49); // always round up
 
             /*
@@ -785,8 +893,9 @@
 			
             if (enabled) {
                 html = '<td class="ui-timepicker-hour-cell" data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g,"\\") + '" data-hour="' + hour.toString() + '">' +
-                   '<a class="ui-state-default ' +
-                   (hour == inst.hours ? 'ui-state-active' : '') +
+                   '<a href="#" class="ui-state-default ' +
+                   (hour == inst.hours ? 'ui-state-active' : '') + ' ' +
+                   (hour == inst.hlHours ? 'ui-state-hover' : '') +
                    '">' +
                    displayHour.toString() +
                    '</a></td>';
@@ -806,9 +915,10 @@
 
         /* Generate the content of a "Hour" cell */
         _generateHTMLMinuteCell: function (inst, minute, displayText) {
+        	
              var html = "";
              var enabled = true;
-             var hour = inst.hours;
+             var hour = inst.hlHours;
              var onMinuteShow = this._get(inst, 'onMinuteShow');		//custom callback
              var maxTime = this._get(inst, 'maxTime');
              var minTime = this._get(inst, 'minTime');
@@ -830,8 +940,9 @@
 			
              if (enabled) {
 	             html = '<td class="ui-timepicker-minute-cell" data-timepicker-instance-id="#' + inst.id.replace(/\\\\/g,"\\") + '" data-minute="' + minute.toString() + '" >' +
-	                   '<a class="ui-state-default ' +
-	                   (minute == inst.minutes ? 'ui-state-active' : '') +
+	                   '<a href="#" class="ui-state-default ' +
+	                   (minute == inst.minutes ? 'ui-state-active' : '') + ' ' +
+	                   (minute == inst.hlMinutes ? 'ui-state-hover' : '') +
 	                   '" >' +
 	                   displayText +
 	                   '</a></td>';

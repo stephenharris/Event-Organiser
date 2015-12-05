@@ -1,14 +1,14 @@
 <?php
 /****** VENUE PAGE ******/
 if ( !class_exists( 'EventOrganiser_Admin_Page' ) ){
-    require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+	require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
 }
 
 /**
  * @ignore
  */
-class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
-{
+class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
+	
 	function set_constants(){
 		
 		$tax = get_taxonomy( 'event-venue' );
@@ -18,35 +18,33 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 			$this->menu        = $tax->labels->menu_name;
 			$this->permissions = 'manage_venues';
 			$this->slug        = 'venues';
-
-			//Workaround for bug https://core.trac.wordpress.org/ticket/18958
-			add_filter( 'set-screen-option', array( $this, 'set_per_page' ),10,3 );
 		}
 	}
 	
 	function hooks_init(){
 		if( taxonomy_exists( 'event-venue' ) ){
-			add_action('admin_init', array($this,'admin_init_actions'));
-			add_action('admin_menu', array($this,'add_page'));
+			add_action( 'admin_menu', array( $this, 'add_page' ) );
 		}
 	}
 
 	/*
 	* Actions to be taken prior to page loading. Hooked on to load-{page}
 	*/
-	function page_actions(){	
+	function page_actions(){
 
 		global $EO_Errors;
 		add_action( 'admin_notices',array( $this, 'admin_notices' ) );
 
 		//Determine action if any
-		$action = $this->current_action();
-		$venue = ( isset( $_REQUEST['event-venue'] ) ? $_REQUEST['event-venue'] : false );
+		$action  = $this->current_action();
+		$request = array_merge( $_GET, $_POST );
+		$venue   = ( isset( $request['event-venue'] ) ? $request['event-venue'] : false );
 
 		if ( ( $action && $venue ) || $action == 'add' ):
 
-			if ( !current_user_can( 'manage_venues' ) )
+			if ( ! current_user_can( 'manage_venues' ) ) {
 				wp_die( __( 'You do not have permission to manage venues', 'eventorganiser' ) );
+			}
 
 			switch( $action ):
 				case 'update':
@@ -96,7 +94,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 
 					if ( is_wp_error( $return ) ){
 						$EO_Errors->add( 'eo_error', __( 'Venue <strong>was not</strong> created', 'eventorganiser' ).': '.$return->get_error_message() );
-						$_REQUEST['action'] = 'create';
+						$_POST['action'] = 'create';
 					} else{
 						$term_id = (int) $return['term_id'];
 						$venue = get_term( $term_id, 'event-venue' );
@@ -118,13 +116,15 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 	
 
 				case 'delete':
-					if( is_array( $_REQUEST['event-venue'] ) )
+					if ( is_array( $request['event-venue'] ) ) {
 						$nonce = 'bulk-venues';
-					else
+					} else {
 						$nonce = 'eventorganiser_delete_venue_'.$venue;
-	
-					if( !check_admin_referer( $nonce ) )
+					}
+
+					if ( ! check_admin_referer( $nonce ) ) {
 						wp_die( __( 'You do not have permission to delete this venue', 'eventorganiser' ) );
+					}
 
 					$venues = (array) $venue;
 
@@ -160,7 +160,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 		$action = $this->current_action();
 
 		if ( in_array( $action, array( 'edit', 'update', 'create' ) ) ){
-			$venue = ( isset( $_REQUEST['event-venue'] ) ? $_REQUEST['event-venue'] : false );
+			$venue = ( isset( $request['event-venue'] ) ? $request['event-venue'] : false );
 
 			//Venued edit page	
 			add_meta_box( 'submitdiv', __( 'Save', 'eventorganiser' ), 'eventorganiser_venue_submit', 'event_page_venues', 'side', 'high' );
@@ -182,21 +182,22 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 			//Venue admin list
 			require_once( 'classes/class-eo-venue-list-table.php' );
 			add_filter( 'manage_event_page_venues_columns', 'eventorganiser_venue_admin_columns' ) ;
-			add_screen_option( 'per_page', array( 'option' => 'edit_event_venue_per_page', 'label' => __( 'Venues', 'eventorganiser' ), 'default' => 20 ) );
+			add_screen_option( 'per_page', array( 'option' => 'edit_event-venue_per_page', 'label' => __( 'Venues', 'eventorganiser' ), 'default' => 20 ) );
 		}
 	}
 
 
-	function admin_notices(){
+	function admin_notices() {
 		$m = isset( $_GET['message'] ) ? (int) $_GET['message'] : 0;
 		$messages = array(
 			1 => __( 'Venue <strong>created</strong>', 'eventorganiser' ),
 			2 => __( 'Venue <strong>updated</strong>', 'eventorganiser' ),
-			3 => __( 'Venue(s) <strong>deleted</strong>', 'eventorganiser' )
+			3 => __( 'Venue(s) <strong>deleted</strong>', 'eventorganiser' ),
 		);
 
-		if( isset( $messages[$m]) )
-			printf( '<div class="updated"><p>%s</p></div>', $messages[$m] );
+		if ( isset( $messages[$m] ) ) {
+			printf( '<div class="notice notice-success updated"><p>%s</p></div>', $messages[$m] );
+		}
 	}
 
 	function page_scripts(){
@@ -213,28 +214,13 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 		endif;
 	}
 
-	function set_per_page( $validated_value, $option, $value ){
-		//Workaround for bug https://core.trac.wordpress.org/ticket/18958
-
-		if ( 'edit_event_venue_per_page' != $option )
-			return $validated_value;
-
-		$value = (int) $value;
-		if ( $value < 1 || $value > 999 )
-			return false;
-		
-		return $value;
-	}
-
-
 	function display(){
 		
 		$tax    = get_taxonomy( 'event-venue' );
 		$action = $this->current_action();
-		$venue  = ( isset( $_REQUEST['event-venue'] ) ? $_REQUEST['event-venue'] : false );
+		$venue  = ( isset( $_GET['event-venue'] ) ? $_GET['event-venue'] : false );
 	?>
 	<div class="wrap">
-		<?php screen_icon( 'edit' );?>
 
 		<?php	
 			if ( ( ( $action == 'edit' || $action == 'update' ) && $venue )  || $action == 'create' ):
@@ -247,7 +233,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 			    $venue_table->prepare_items();    
 	
 				//Check if we have searched the venues
-				$search_term = ( isset( $_REQUEST['s'] ) ?  esc_attr( $_REQUEST['s'] ) : '' );?>
+				$search_term = ( isset( $_GET['s'] ) ?  esc_attr( $_GET['s'] ) : '' );?>
 
 				<h2>
 					<?php ?>
@@ -309,12 +295,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page
 			<?php wp_nonce_field( $nonce ); ?>
 
 			<?php 
-			//WP3.3-3.3.1 backwards compabt
-			if( version_compare( get_bloginfo( 'version' ), 3.4 ) < 0 ){
-				$columns = '1';
-			}else{
-				$columns = (1 == get_current_screen()->get_columns() ? '1' : '2' );
-			}
+			$columns = (1 == get_current_screen()->get_columns() ? '1' : '2' );
 			?>
 			<div id="poststuff">
 

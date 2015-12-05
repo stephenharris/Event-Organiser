@@ -31,7 +31,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 		
 		
 		$eo_debugger = new EventOrganiser_Debugger();
-		$eo_debugger->set_prequiste( 'WordPress', '3.3', '4.0');
+		$eo_debugger->set_prequiste( 'WordPress', '3.8.0', '4.2.2');
 		//$eo_debugger->set_known_plugin_conflicts();
 		//$eo_debugger->set_known_theme_conflicts();
 		$eo_debugger->set_db_tables( 'eo_events', 'eo_venuemeta' );
@@ -54,7 +54,6 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 	function display(){
 	?>
 	<div class="wrap">
-		<?php screen_icon( 'edit' );?>
 		
 		<h2><?php _e('System Info','eventorganiser');?> </h2>
 		
@@ -362,25 +361,17 @@ class EventOrganiser_Debugger{
 	}
 
 	function verbose_theme_check(){
-		if( version_compare( '3.4', get_bloginfo( 'version' ) ) <= 0 ){
-			$theme = wp_get_theme();
-			$class = in_array( strtolower( $theme->stylesheet ), $this->themes ) ? $this->warning_class : '';
-			printf(
+			
+		$theme = wp_get_theme();
+		$class = in_array( strtolower( $theme->stylesheet ), $this->themes ) ? $this->warning_class : '';
+		printf(
 			' <span class="%s"> %s %s </span> </br>  %s',
-				esc_attr( $class ),
-				$theme->get('Name'),
-				$theme->get('Version'),
-				$theme->get('ThemeURI')
-			);
-		}else{
-			$theme_name = get_current_theme();
-			$class = in_array( strtolower( $theme_name ), $this->themes ) ? $this->warning_class : '';
-			printf(
-				' <span class="%s"> %s </span> </br>',
-				esc_attr( $class ),
-				$theme_name
-			);
-		}
+			esc_attr( $class ),
+			$theme->get( 'Name' ),
+			$theme->get( 'Version' ),
+			$theme->get( 'ThemeURI' )
+		);
+
 	}
 
 

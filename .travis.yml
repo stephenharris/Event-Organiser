@@ -1,5 +1,8 @@
 language: php
 
+node_js:
+- "0.10"
+
 sudo: false
 
 php:
@@ -9,22 +12,47 @@ php:
 - 5.5
 - 5.6
 - hhvm
+- 7
 
 branches:
   only:
-    - master
     - develop
+    - /^(?i:release)\/.*$/
 
 env:
-- WP_VERSION=latest WP_MULTISITE=0
-- WP_VERSION=4.1 WP_MULTISITE=0
-- WP_VERSION=4.0 WP_MULTISITE=0
-- WP_VERSION=3.9.2 WP_MULTISITE=0
+- WP_VERSION=nightly
+- WP_VERSION=latest
+- WP_VERSION=4.2.5
+- WP_VERSION=4.1.8
+- WP_VERSION=4.0.8
+- WP_VERSION=3.9.9
+- WP_VERSION=3.8.11
 
+matrix:
+  exclude:
+    - php: 7
+      env: WP_VERSION=3.8.11
+    - php: 7
+      env: WP_VERSION=3.9.9
+    - php: 7
+      env: WP_VERSION=4.0.8
+    - php: 7
+      env: WP_VERSION=4.1.8
+    - php: 7
+      env: WP_VERSION=4.2.5
+  allow_failures:
+    - env: WP_VERSION=nightly
 
 before_script:
 - sh -c "if [ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '5.2' ]; then pecl install timezonedb; fi"
+- if [[ 5.5 == ${TRAVIS_PHP_VERSION:0:3} ]]; then composer install; fi
+- npm install grunt-cli -g
+- npm install
+- grunt test_build
 - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
-script: phpunit
+script: 
+- phpunit
+- if [[ 5.5 == ${TRAVIS_PHP_VERSION:0:3} && ${WP_VERSION} != '3.8.11' ]]; then vendor/bin/behat; fi
+
 

@@ -381,6 +381,25 @@ class EO_ICAL_Parser{
 						
 						$this->current_event['_lines']['end'] = $this->line;
 						
+						//If not dtend was given, set it appropriately
+						//@see https://github.com/stephenharris/Event-Organiser/issues/292
+						if ( ! isset( $this->current_event['end'] ) && isset( $this->current_event['start'] ) ) {
+							
+							$end = clone $this->current_event['start'];
+							if ( ! empty( $this->current_event['duration'] ) ) {
+								
+								$end->modify( $this->current_event['duration'] );
+								unset( $this->current_event['duration'] );
+								
+							} else if ( ! empty( $this->current_event['all_day'] ) ) {
+								//event is assumed to have a duration of 1 day, for us that means
+								//same date as start date, but with a time of 23:59
+								$end->setTime( 23, 59 );
+							}
+							$this->current_event['end'] = $end;
+							
+						}
+						
 						//Now we've finished passing the event, move venue data to $this->venue_meta
 						if( isset( $this->current_event['geo'] ) && !empty( $this->current_event['event-venue'] ) ){
 							$venue = $this->current_event['event-venue'];
@@ -609,8 +628,19 @@ class EO_ICAL_Parser{
 					$date = $this->parse_ical_date( $value );
 					$allday = 1;
 				else:
-					$date = $this->parse_ical_datetime( $value, $date_tz );
-					$allday = 0;
+					try{
+						$date = $this->parse_ical_datetime( $value, $date_tz );
+						$allday = 0;
+					} catch ( Exception $datetime_exception ) {
+						
+						try{
+							$date = $this->parse_ical_date( $value );
+							$allday = 1;
+						} catch ( Exception $date_exception ) {
+							throw $datetime_exception;
+						}
+					}
+					
 				endif;
 
 				if( empty( $date ) )
@@ -635,6 +665,10 @@ class EO_ICAL_Parser{
 
 				endswitch;
 				break;
+				
+				case 'DURATION':
+					$this->current_event['duration'] = $this->parse_duration( $value );
+				break;
 
 				case 'EXDATE':
 				case 'RDATE':
@@ -647,7 +681,16 @@ class EO_ICAL_Parser{
 						if( isset( $meta ) && 'DATE' == $meta ){
 							$date = $this->parse_ical_date( $date );
 						}else{
-							$date = $this->parse_ical_datetime( $date, $date_tz );
+							try{
+								$date = $this->parse_ical_datetime( $date, $date_tz );
+							} catch ( Exception $datetime_exception ) {
+							
+								try{
+									$date = $this->parse_ical_date( $date );
+								} catch ( Exception $date_exception ) {
+									throw $datetime_exception;
+								}
+							}
 						}
 					
 						if( 'EXDATE' == $property ){
@@ -658,7 +701,7 @@ class EO_ICAL_Parser{
 					endforeach;
 				break;
 
-				//Reoccurrence rule properties
+				//Recurrence rule properties
 				case 'RRULE':
 				$this->current_event += $this->parse_RRule($value);
 				break;
@@ -842,6 +885,8 @@ class EO_ICAL_Parser{
 		}catch( exception $e ){
 			$tz = null;
 		}
+		
+		$trigger_warning = false; //Set this to true if we make a 'guess'.
 
 		//If we have something like (GMT+01.00) Amsterdam / Berlin / Bern / Rome / Stockholm / Vienna lets try the cities
 		if( is_null( $tz ) && preg_match( '/GMT(?P<offset>.+)\)(?P<cities>.+)?/', $tzid, $matches ) ){
@@ -877,9 +922,19 @@ class EO_ICAL_Parser{
 				
 				$offset = (int) str_replace( '/', '-',  trim( $matches['offset'] ) );
 				
-				if( $offset == 0 ){
+				if( 0 == $offset ){
 					$tz = new DateTimeZone( 'UTC' );
+
+				}elseif( $offset == floor( $offset ) ){
+					//Etc/GMT only handles integer hour offsets
+					//IANA timezone database that provides PHP's timezone support uses (i.e. reversed) POSIX style signs
+					//@see http://us.php.net/manual/en/timezones.others.php
+					$offset_string = $offset > 0 ? "-$offset" : '+'.absint( $offset );
+					$tz = new DateTimeZone( 'Etc/GMT'.$offset_string );
+					
 				}else{
+					$trigger_warning = true; //We're guessing based on timezone offset.
+					
 					$offset *= 3600; // convert hour offset to seconds
 					$allowed_zones = timezone_abbreviations_list();
 
@@ -919,9 +974,10 @@ class EO_ICAL_Parser{
 		
 		if ( ! ($tz instanceof DateTimeZone ) ) {
 			$tz = eo_get_blog_timezone();
+			$trigger_warning = true;
 		}
 		
-		if( $tz->getName() != $tzid ){
+		if( $tz->getName() != $tzid && $trigger_warning ){
 			$this->report_warning( 
 				$this->line, 
 				'timezone-parser-warning', 
@@ -997,6 +1053,30 @@ class EO_ICAL_Parser{
 
 		return $datetime;
 	}
+	
+	public function parse_duration( $duration_str ) {
+		
+		preg_match(
+			"/(?<sign>\+|-)?P(?:(?<weeks>\d+)W)?(?:(?<days>\d+)D)?(?:T(?:(?:(?<hours>\d+)H)?(?:(?<minutes>\d+)M)?(?:(?<seconds>\d+)S)?))?/", 
+			$duration_str, $matches );
+		
+		if ( ! $matches ) {
+			throw new Exception( 'Invalid duration: "' . $duration_str . '"' );
+		}
+		
+		$keys = array( 'weeks', 'days', 'hours', 'minutes', 'seconds' );
+		
+		$duration_array = array_filter( array_intersect_key( $matches, array_flip( $keys ) ) );
+		$sign           = $matches['sign'] ? $matches['sign'] : '+';
+		
+		$duration_str = '';
+		foreach( $duration_array as $period => $length ) {
+			$duration_str .= "{$sign}{$length} {$period} ";
+		}
+		
+		return trim( $duration_str );
+				
+	}
 
 	/**
 	 * Takes a date-time in ICAL and returns a datetime object
@@ -1004,7 +1084,7 @@ class EO_ICAL_Parser{
 	 * @since 1.1.0
 	 * @ignore
 	 * @param string $RRule - the value of the ICAL RRule property
-	 * @return array - a reoccurrence rule array as understood by Event Organiser
+	 * @return array - a recurrence rule array as understood by Event Organiser
 	 */
 	public function parse_RRule( $RRule ){
 		//RRule is a sequence of rule parts seperated by ';'
@@ -1032,15 +1112,15 @@ class EO_ICAL_Parser{
 
 				case 'UNTIL':
 					//Is the scheduled end a date-time or just a date?
-					if( preg_match( '/^((\d{8}T\d{6})(Z)?)/', $value ) ){
+					if ( preg_match( '/^((\d{8}T\d{6})(Z)?)/', $value ) ) {
 						$date = $this->parse_ical_datetime( $value, new DateTimeZone( 'UTC' ) );
-					}else{
+					} else {
 						$date = $this->parse_ical_date( $value );
 					}
-			
-					$rule_array['schedule_last'] = $date;
+					$rule_array['until'] = $date;
+					$rule_array['schedule_last'] = $date; //Backwards compatability 2.13.5
 				break;
-			
+
 				case 'COUNT':
 					$rule_array['number_occurrences'] = absint( $value );
 				break;
@@ -1126,16 +1206,17 @@ class EO_ICAL_Parser{
 
 		//If importing indefinately recurring, recurr up to some large point in time.
 		//TODO make a log of this somewhere.
-		if( empty( $rule_array['schedule_last'] ) && empty( $rule_array['number_occurrences'] ) ){
-			$rule_array['schedule_last'] = new DateTime( '2038-01-19 00:00:00' );
-			
+		if ( empty( $rule_array['until'] ) && empty( $rule_array['number_occurrences'] ) ) {
+			$rule_array['until'] = new DateTime( '2038-01-19 00:00:00' );
+			$rule_array['schedule_last'] = clone $rule_array['until']; //Backwards compatability 2.13.5
+
 			$this->report_warning(
 				$this->line,
 				'indefinitely-recurring-event',
 				'Feed contained an indefinitely recurring event. This event will recurr until 2038-01-19.'
 			);
 		}
-		
+
 		return $rule_array;
 	}
 

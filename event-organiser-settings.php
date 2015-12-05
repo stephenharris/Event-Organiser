@@ -56,9 +56,11 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		if( !in_array( 'event-venue', $supports ) ){
 			unset( self::$eventorganiser_roles['manage_venues'] );
 		}
+		
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
 	}
 
-	function admin_init_actions(){
+	function register_settings(){
 		
 		register_setting( 'eventorganiser_options', 'eventorganiser_options', array( $this, 'validate' ) );
 		
@@ -72,7 +74,9 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					register_setting( 'eventorganiser_'.$tab_id, 'eventorganiser_options', array( $this, 'validate' ) );
 					add_settings_section( $tab_id.'_licence', __( 'Add-on Licence keys', 'eventorganiser' ), array( $this, 'display_licence_keys' ), 'eventorganiser_'.$tab_id );
 					add_settings_section( $tab_id,__( 'General', 'eventorganiser' ), '__return_false',  'eventorganiser_'.$tab_id);
-					add_settings_section( $tab_id.'_templates',__( 'Templates', 'eventorganiser' ), '__return_false',  'eventorganiser_'.$tab_id);
+					if( !get_theme_support( 'event-organiser' ) ){
+						add_settings_section( $tab_id.'_templates',__( 'Templates', 'eventorganiser' ), array( $this, 'template_settings' ),  'eventorganiser_'.$tab_id);
+					}
 					break;
 				case 'permissions':
 					register_setting( 'eventorganiser_'.$tab_id, 'eventorganiser_options', array( $this, 'validate' ) );
@@ -233,29 +237,13 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'checked' => eventorganiser_get_option( 'excludefromsearch' ),
 				) );
 
-				add_settings_field( 'templates',  __("Enable templates:", 'eventorganiser' ), 'eventorganiser_checkbox_field' , 'eventorganiser_'.$tab_id, $tab_id.'_templates',
-					array(
-						'label_for' => 'templates',
-						'name' => 'eventorganiser_options[templates]',
-						'options' => 1,
-						'checked' => eventorganiser_get_option( 'templates' ),
-						'help' => __("For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. To prevent this, uncheck this option. WordPress will then decide which template from your theme's folder to use.", 'eventorganiser' )
-									. sprintf(
-											"<p><strong> %s </strong><code>archive-event.php</code></p>
-											<p><strong> %s </strong><code>single-event.php</code></p>
-											<p><strong> %s </strong><code>taxonomy-event-venue.php</code></p>
-											<p><strong> %s </strong><code>taxonomy-event-category.php</code></p>",
-												__("Events archives:", 'eventorganiser' ),
-												__("Event page:", 'eventorganiser' ),
-												 __("Venue page:", 'eventorganiser' ),
-												__("Events Category page:", 'eventorganiser' )
-										)
-									.sprintf( 
-										__( "For more information see documentation <a href='%s'>on editing the templates</a>", 'eventorganiser' ),
-										'http://docs.wp-event-organiser.com/theme-integration'
-									)
-					) );
-				
+				add_settings_field( 
+					'templates',
+					__( 'Templates:', 'eventorganiser' ),
+					array( $this, '_render_template_options' ), 
+					'eventorganiser_'.$tab_id, $tab_id.'_templates'
+				);
+						
 				add_settings_field( 'disable_css',  __("Disable CSS:", 'eventorganiser' ), 'eventorganiser_checkbox_field' , 'eventorganiser_'.$tab_id, $tab_id.'_templates',
 					array(
 						'label_for' => 'disable_css',
@@ -348,6 +336,43 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		}
 	}
 
+	function _render_template_options() {
+
+		$current = eventorganiser_get_option( 'templates' );
+
+		$options = array(
+			'1' => array(
+				'label' => __( 'Enable template handling (default)', 'eventorganiser' ),
+				'help'  => __( "Event Organiser's page templates will be used if your theme does not provide appropriate templates.", 'eventorganiser' ),
+			),
+			'themecompat' => array(
+				'label' => __( 'Enable theme compatability mode', 'eventorganiser' ),
+				'help'  => __( 'Event Organiser will attempt to ensure compatability with your theme and apply additional styles.', 'eventorganiser' ),
+			),
+			'0' => array(
+				'label' => __( 'Disable template handling', 'eventorganiser' ),
+				'help'  => __( "Event Organiser's page templates will not be used.", 'eventorganiser' ),
+			),
+		);
+
+		echo '<fieldset>';
+		foreach ( $options as $value => $option ) {
+			printf(
+				'<label for="%1$s">
+					<input type="radio" id="%1$s" name="eventorganiser_options[templates]" value="%3$s" %2$s> 
+					%4$s
+					<p class="description">%5$s</p>
+				</label><br>',
+				esc_attr( 'templates_'.$value ),
+				checked( $value, $current, false ),
+				esc_attr( $value ),
+				esc_html( $option['label'] ),
+				esc_html( $option['help'] )
+			);
+		}
+		echo '</fieldset>';
+	}
+
 
 	function validate( $option ){
 		/* Backwards compatibility: all EO options are in one row, but on seperate pages. Merge with existing options*/
@@ -363,7 +388,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		
 		switch ( $tab ){
 			case 'general':
-				$checkboxes  = array( 'showpast', 'templates', 'excludefromsearch', 'deleteexpired', 'feed', 'group_events', 'disable_css' );
+				$checkboxes  = array( 'showpast', 'excludefromsearch', 'deleteexpired', 'feed', 'group_events', 'disable_css' );
 				$text = array( 'navtitle', 'dateformat', 'runningisnotpast', 'addtomenu' );
 
 				foreach ( $checkboxes as $cb ){
@@ -381,6 +406,8 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					$clean[$txt] = $this->validate_text( $option[$txt] );
 				}
 
+				$clean['templates'] = in_array( $option['templates'], array( 1, 0, 'themecompat' ) ) ? $option['templates'] : 1; 
+				
 				//Group events is handled differently
 				$clean['group_events'] = ( !empty( $clean['group_events'] ) ? 'series' : '' );
 
@@ -434,10 +461,9 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			
 			break;
 		}
-		
 
-		$existing_options = get_option( 'eventorganiser_options', array() );
-		$clean = array_merge( $existing_options, $clean );
+		$existing = (array) get_option( 'eventorganiser_options', array() );
+		$clean    = array_merge( $existing, $clean );
 		return $clean;
 	}
 
@@ -539,8 +565,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		?>
     		<div class="wrap">  
       
-			<?php screen_icon( 'options-general' ); ?>
-		        <?php 
+				<?php
 
 				$active_tab = ( isset( $_GET[ 'tab' ] ) &&  isset( $this->tabs[$_GET[ 'tab' ]] ) ? $_GET[ 'tab' ] : 'general' );
 				$page = $this->slug;
@@ -604,6 +629,25 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		} 
 	}
 	
+	function template_settings(){
+		esc_html_e("For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. You can disable this below. WordPress will then decide which template from your theme's folder to use.", 'eventorganiser' );
+		echo '<ul>';
+		printf(
+			"<li><strong> %s </strong><code>archive-event.php</code></li>
+			<li><strong> %s </strong><code>single-event.php</code></li>
+			<li><strong> %s </strong><code>taxonomy-event-venue.php</code></li>
+			<li><strong> %s </strong><code>taxonomy-event-category.php</code></li>",
+			__("Events archives:", 'eventorganiser' ),
+			__("Event page:", 'eventorganiser' ),
+			__("Venue page:", 'eventorganiser' ),
+			__("Events Category page:", 'eventorganiser' )
+		);
+		printf(
+			__( "For more information see documentation <a href='%s'>on editing the templates</a>", 'eventorganiser' ),
+			'http://docs.wp-event-organiser.com/theme-integration'
+		);	
+		echo '</ul>';
+	}
 	
 	function display_permissions(){
 		global $wp_roles;
@@ -705,4 +749,3 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	}
 }
 $settings_page = new EventOrganiser_Settings_Page();
-?>
