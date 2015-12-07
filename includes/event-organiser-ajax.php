@@ -365,18 +365,19 @@ function eventorganiser_admin_calendar() {
 				//Get Event Start and End date, set timezone to the blog's timzone
 				$event_start = new DateTime($post->StartDate.' '.$post->StartTime, $tz);
 				$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, $tz);
-	
+
+				//fullCalendar API expects end date to be 00:00 of the following day
 				if ( $event['allDay'] ) {
 					$event_end->modify( '+1 minute' );
 				}
-				
-				$event['start']= $event_start->format('Y-m-d\TH:i:s\Z');
-				$event['end']= $event_end->format('Y-m-d\TH:i:s\Z');
-				
+
+				$event['start'] = $event_start->format( 'Y-m-d\TH:i:s\Z' );
+				$event['end']   = $event_end->format( 'Y-m-d\TH:i:s\Z' );
+
 				if ( $event['allDay'] ) {
 					$event_end->modify( '-1 minute' );
 				}
-	
+
 				//Produce summary of event
 				$summary= "<table class='form-table' >"
 							."<tr><th> ".__('Start','eventorganiser').": </th><td> ".eo_format_datetime($event_start,$format)."</td></tr>"
