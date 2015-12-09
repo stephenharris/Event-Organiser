@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-26 08:12:02+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Chinese (China)\n"
@@ -109,7 +109,7 @@ msgid "Displays a list of events"
 msgstr "显示事件列表"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -436,7 +436,7 @@ msgstr "组织者"
 
 #: event-organiser-edit.php:75
 msgid "This is a reoccurring event"
-msgstr "这是一个重复发生的事件"
+msgstr ""
 
 #: event-organiser-edit.php:76
 msgid "Check to edit this event and its reoccurrences"
@@ -672,42 +672,42 @@ msgstr "事件组织插件设置"
 msgid "Event Organiser"
 msgstr "事件组织插件"
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "编辑事件"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "发布事件"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "删除事件"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "编辑其他人的事件"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "删除其他人的事件"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "读取私人事件"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "管理地点"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "管理事件分类和标签"
@@ -828,8 +828,9 @@ msgid "Exclude events from searches:"
 msgstr ""
 
 #: event-organiser-settings.php:236
+#, fuzzy
 msgid "Enable templates:"
-msgstr "启用模版"
+msgstr "模版"
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -1176,6 +1177,7 @@ msgid "End"
 msgstr "结束"
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
 msgstr "此事件再次发生"
 
@@ -1416,12 +1418,14 @@ msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:311
+#, fuzzy
 msgid "Custom field updated."
-msgstr "自定义字段已更新"
+msgstr "自定义字段"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr "自定义字段已删除"
+msgstr "没有检测到文件"
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1902,18 +1906,18 @@ msgid ""
 msgstr ""
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr ""
+msgstr "事件分类"
 
 #: templates/taxonomy-event-category.php:120
 msgid "Apologies, but no events were found for the requested category. "
 msgstr ""
 
 #: templates/taxonomy-event-tag.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr ""
+msgstr "事件存档"
 
 #: templates/taxonomy-event-tag.php:120
 msgid "Apologies, but no events were found for the requested tag. "
@@ -1927,3 +1931,23 @@ msgstr "事件在： %s"
 #: templates/taxonomy-event-venue.php:118
 msgid "Apologies, but no events were found for the requested venue. "
 msgstr ""
+
+#~ msgid "End Date"
+#~ msgstr "结束日期"
+
+#~ msgid "End Time"
+#~ msgstr "结束日时间"
+
+#, fuzzy
+#~ msgid "Enter date in %s format"
+#~ msgstr "事件的日期/时间格式"
+
+#, fuzzy
+#~ msgid "Repeat this event until:"
+#~ msgstr "重复事件"
+
+#~ msgid "Start Date"
+#~ msgstr "开始日期"
+
+#~ msgid "Start Time"
+#~ msgstr "开始日时间"

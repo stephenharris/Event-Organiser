@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-26 06:47:22+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Norwegian; Nynorsk\n"
@@ -109,7 +109,7 @@ msgid "Displays a list of events"
 msgstr "Vis en liste med arrangementer"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -287,9 +287,8 @@ msgid "You do not have sufficient permissions to create events. "
 msgstr "Du har ikke rettigheter til å lage arrangementer"
 
 #: event-organiser-calendar.php:176
-#, fuzzy
 msgid "You do not have sufficient permissions to edit this event. "
-msgstr "Du har ikke rettigheter til å slette arrangementer"
+msgstr ""
 
 #: event-organiser-calendar.php:194
 msgid "You do not have sufficient permissions to delete this event. "
@@ -437,9 +436,10 @@ msgstr "Arrangør"
 
 #: event-organiser-edit.php:75
 msgid "This is a reoccurring event"
-msgstr "Dette arrangementet har gjentakelser"
+msgstr ""
 
 #: event-organiser-edit.php:76
+#, fuzzy
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Huk av for å redigere dette arrangementer og dets gjentakelser"
 
@@ -466,8 +466,9 @@ msgid "All day"
 msgstr "Heldag"
 
 #: event-organiser-edit.php:139
+#, fuzzy
 msgid "Reoccurence:"
-msgstr "Gjentakelse:"
+msgstr "Gjentakelse"
 
 #: event-organiser-edit.php:141
 msgid "none"
@@ -503,6 +504,7 @@ msgid "on"
 msgstr "på"
 
 #: event-organiser-edit.php:176
+#, fuzzy
 msgid "day of month"
 msgstr "dag i måneden"
 
@@ -600,6 +602,7 @@ msgid "Event"
 msgstr "Arrangement"
 
 #: event-organiser-manage.php:38
+#, fuzzy
 msgid "Reoccurrence"
 msgstr "Gjentakelse"
 
@@ -673,42 +676,42 @@ msgstr "Event Organiser innstillinger"
 msgid "Event Organiser"
 msgstr ""
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Rediger arrangementer"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Publiser arrangementer"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Slett arrangementer"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Endre andres arrangementer"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Sletter andres arrangementer"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Se private arrangementer"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Behandle steder"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Behandle arrangement kategorier og stikkord"
@@ -838,7 +841,7 @@ msgstr "Ekskluder arrangementer fra søk:"
 
 #: event-organiser-settings.php:236
 msgid "Enable templates:"
-msgstr "Slå på maler:"
+msgstr ""
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -848,12 +851,6 @@ msgid ""
 "it will use its own default template. To prevent this, uncheck this option. "
 "WordPress will then decide which template from your theme's folder to use."
 msgstr ""
-"For hver av sidene vill den tilhørende malen bli brukt. For å bruke din egen "
-"mal gir du den bare samme navn og lagrer den i katalogen til temaet ditt. "
-"Som standard vil Event Organiser bruke sine innebygde maler dersom den dem "
-"ikke finner en mal i katalogen til temaet ditt. For å forhindre dette, ikke "
-"huk av dette valget. Da vill WordPress bestemme hvilken mal fra ditt tema "
-"som skal brukes."
 
 #: event-organiser-settings.php:248
 msgid "Events archives:"
@@ -1201,6 +1198,7 @@ msgid "End"
 msgstr "Slutt"
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
 msgstr "Dette arrangementet gjentas"
 
@@ -1441,12 +1439,14 @@ msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Arrangement oppdatert. <a href=\"%s\">Vis arrangement</a>"
 
 #: includes/event-organiser-cpt.php:311
+#, fuzzy
 msgid "Custom field updated."
-msgstr "Tilpasset felt oppdatert."
+msgstr "Tilpassede felt"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr "Tilpasset felt slettet."
+msgstr "Fant ingen fil."
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1506,6 +1506,7 @@ msgid "Creating events:"
 msgstr "Lager arrangementer:"
 
 #: includes/event-organiser-cpt.php:519
+#, fuzzy
 msgid ""
 "The start date is the date the event starts. If the event is a reoccuring "
 "event, this is the start date of the first occurrence."
@@ -1515,6 +1516,7 @@ msgstr ""
 "forekomsten."
 
 #: includes/event-organiser-cpt.php:520
+#, fuzzy
 msgid ""
 "The end date is the date the event finishes. If the event is a reoccuring "
 "event, this is the end date of the first occurrence."
@@ -1536,6 +1538,7 @@ msgid "Repeating events"
 msgstr "Gjentar arrangementer"
 
 #: includes/event-organiser-cpt.php:527
+#, fuzzy
 msgid ""
 "To repeat an event according to some regular pattern, use the reoccurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
@@ -1550,6 +1553,7 @@ msgid "Specify how regularly the event should repeat (default 1)"
 msgstr "Spesifiser hvor ofte arrangementet skal gjentas (standard 1)"
 
 #: includes/event-organiser-cpt.php:530
+#, fuzzy
 msgid ""
 "Choose the reoccurrence end date. No further occurrences are added after "
 "this date, but an occurrence that starts before may finish after this date."
@@ -1559,6 +1563,7 @@ msgstr ""
 "utover sluttdatoen."
 
 #: includes/event-organiser-cpt.php:531
+#, fuzzy
 msgid ""
 "If monthly reoccurrence is selected, select whether this should repeat on "
 "that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
@@ -1569,6 +1574,7 @@ msgstr ""
 "tredje tirsdagen)"
 
 #: includes/event-organiser-cpt.php:532
+#, fuzzy
 msgid ""
 "If weekly reoccurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
@@ -1598,6 +1604,7 @@ msgid "Overview"
 msgstr "Oversikt"
 
 #: includes/event-organiser-cpt.php:552
+#, fuzzy
 msgid ""
 "This is the list of all saved events. Note that <strong> reoccurring events "
 "appear as a single row </strong> in the table and the start and end date "
@@ -1725,8 +1732,9 @@ msgid "one time only"
 msgstr "kun en gnag"
 
 #: includes/event-organiser-event-functions.php:760
+#, fuzzy
 msgid "custom reoccurrence"
-msgstr ""
+msgstr "Gjentakelse"
 
 #: includes/event-organiser-event-functions.php:767
 #: includes/event-organiser-register.php:256
@@ -1978,24 +1986,26 @@ msgstr ""
 "\"%2$s\" title=\"Permalenke til %3$s\" rel=\"bookmark\">permalenken</a>."
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr "Arrangementskategoriarkiv: %s"
+msgstr "Arrangementkategorier"
 
 #: templates/taxonomy-event-category.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested category. "
 msgstr ""
-"Beklager, men ingen arrangementer ble funnet for den forespurte kategorien."
+"Beklager, men ingen arrangementer ble funnet for det forespurte arkivet."
 
 #: templates/taxonomy-event-tag.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr "Arrangementsstikkordarkiv: %s"
+msgstr "Arrangementarkiv:"
 
 #: templates/taxonomy-event-tag.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested tag. "
 msgstr ""
-"Beklager, men ingen arrangementer ble funnet for det forespurte stikkordet."
+"Beklager, men ingen arrangementer ble funnet for det forespurte arkivet."
 
 #: templates/taxonomy-event-venue.php:31
 #, php-format
@@ -2003,6 +2013,22 @@ msgid "Events at: %s"
 msgstr "Arrangementer på: %s"
 
 #: templates/taxonomy-event-venue.php:118
+#, fuzzy
 msgid "Apologies, but no events were found for the requested venue. "
 msgstr ""
-"Beklager, men ingen arrangementer ble funnet for det forespurte stedet."
+"Beklager, men ingen arrangementer ble funnet for det forespurte arkivet."
+
+#~ msgid "End Date"
+#~ msgstr "Slutt dato"
+
+#~ msgid "End Time"
+#~ msgstr "Slutt klokkeslett"
+
+#~ msgid "Repeat on days of week:"
+#~ msgstr "dag i uken"
+
+#~ msgid "Start Date"
+#~ msgstr "Start dato"
+
+#~ msgid "Start Time"
+#~ msgstr "Start klokkeslett"

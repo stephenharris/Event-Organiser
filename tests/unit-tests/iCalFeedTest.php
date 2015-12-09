@@ -35,6 +35,7 @@ class iCalFeedTest extends EO_UnitTestCase
 			'schedule_meta' => array( 'MO' ),
 			'post_title'=>'The Event Title',
 			'post_content'=>'My event content',
+			'post_excerpt'=>'My event excerpt',
 			'post_author' => 1,
 			'post_status' => 'publish',
 			'post_date'   => '2015-02-18 17:30:00',

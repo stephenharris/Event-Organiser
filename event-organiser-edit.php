@@ -88,7 +88,7 @@ function _eventorganiser_details_metabox( $post ){
 	 */
 	$notices = apply_filters('eventorganiser_event_metabox_notice', $notices, $post );
 	if( $notices ){
-		echo '<div class="updated below-h2"><p>'.$notices.'</p></div>';		
+		echo '<div class="updated inline below-h2"><p>'.$notices.'</p></div>';
 	}
 	?>
 	<div class="<?php echo ( $sche_once ? 'onetime': 'reoccurence' );?>">

@@ -3,8 +3,8 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.3  
-**Tested up to:** 4.3.0  
-**Stable tag:** 2.13.6  
+**Tested up to:** 4.4.0  
+**Stable tag:** 2.13.7  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -101,6 +101,7 @@ A big thank you to those who have provided translations for Event Organiser. If 
 * Italian - Emilio Frusciante, Pio Muto, Daniele Piccoli
 * Japanese - ogawa, tkj, takeshi terai, haya.
 * Latvian - Kristaps
+* Lithuaniun - Stephan Siegi
 * Macedonian - Aleksandar 
 * Norwegian - Erlend Birkedal
 * Norweign (Bokmål) - DagC
@@ -211,26 +212,32 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 ## Screenshots ##
 
 ### 1. Event admin screen ###
-![Event admin screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-1.png)
+![Event admin screen](assets/screenshot-1.png)
 
 ### 2. Venue admin screen ###
-![Venue admin screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-2.png)
+![Venue admin screen](assets/screenshot-2.png)
 
 ### 3. Event details metabox, showing the full reoccurrence options and venue selection ###
-![Event details metabox, showing the full reoccurrence options and venue selection](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-3.png)
+![Event details metabox, showing the full reoccurrence options and venue selection](assets/screenshot-3.png)
 
 ### 4. Venue editing screen, with Google Maps ###
-![Venue editing screen, with Google Maps](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-4.png)
+![Venue editing screen, with Google Maps](assets/screenshot-4.png)
 
 ### 5. Calendar View screen ###
-![Calendar View screen](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-5.png)
+![Calendar View screen](assets/screenshot-5.png)
 
 ### 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven) ###
-![View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)](http://s.wordpress.org/extend/plugins/event-organiser/screenshot-6.png)
+![View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)](assets/screenshot-6.png)
 
 
 ## Changelog ##
 
+### 2.13.7 - 9th December 2015
+* Fixes a bug with the event list widgets on WordPress 4.4
+* Ensures categories in the category fullCalendar shortcode are listed alphabetically
+* Replaces deprecated `.below-h2` with `.inline` notice classes
+* Updated translations and Lithuaniun
+###
 ### 2.13.6 - 9th August 2015 ###
 * Fixes incompatability with WordPress 4.3 on venue admin screen 
 
@@ -933,8 +940,6 @@ Initial release
 
 ## Upgrade Notice ##
 
-### 2.13.4 ###
+### 2.13.7 ###
+This fixes a bug with the event list widget on WordPress 4.4
 **Advance notice:** As of 3.0.0 Event Organiser shall require WordPress 3.8 or better.  
-
-### 2.12.5 ###
-2.12.5 addresses a security vulnerability. Please update (see [this announcement for details]( http://wp-event-organiser.com/blog/announcements/xss-vulnerability-event-organiser-extensions).)

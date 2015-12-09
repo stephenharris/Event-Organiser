@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2014-07-03 09:00:44+0000\n"
-"Last-Translator: Juhani Marttila <juhani@mart.fi>\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-25 18:47:17+0000\n"
+"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -111,7 +111,7 @@ msgid "Displays a list of events"
 msgstr "Näyttää tapahtumalistan"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -441,9 +441,10 @@ msgstr "Järjestäjä"
 
 #: event-organiser-edit.php:75
 msgid "This is a reoccurring event"
-msgstr "Tämä on toistuva tapahtuma."
+msgstr ""
 
 #: event-organiser-edit.php:76
+#, fuzzy
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Valitse muokataksesi tapahtumaa ja sen toistuvuutta"
 
@@ -470,8 +471,9 @@ msgid "All day"
 msgstr "Koko päivä"
 
 #: event-organiser-edit.php:139
+#, fuzzy
 msgid "Reoccurence:"
-msgstr "Toistuva:"
+msgstr "Toistuminen"
 
 #: event-organiser-edit.php:141
 msgid "none"
@@ -507,6 +509,7 @@ msgid "on"
 msgstr ""
 
 #: event-organiser-edit.php:176
+#, fuzzy
 msgid "day of month"
 msgstr "päivänä kuukaudessa"
 
@@ -521,6 +524,7 @@ msgid "until"
 msgstr "kunnes"
 
 #: event-organiser-edit.php:195
+#, fuzzy
 msgid "Include/Exclude occurrences"
 msgstr "Lisää/poista esiintymisiä:"
 
@@ -604,6 +608,7 @@ msgid "Event"
 msgstr "Tapahtuma"
 
 #: event-organiser-manage.php:38
+#, fuzzy
 msgid "Reoccurrence"
 msgstr "Toistuminen"
 
@@ -677,42 +682,42 @@ msgstr "Event Organiser asetukset"
 msgid "Event Organiser"
 msgstr "Event Organiser"
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Muokkaa tapahtumia"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Julkaise tapahtumia"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Poista tapahtumia"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Muokkaa muiden tapahtumia"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Poista muiden tapahtumia"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Lue yksityinen tapahtuma"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Hallitse tapahtumapaikkoja"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Hallitse tapahtuman kategorioita & tageja"
@@ -843,8 +848,9 @@ msgid "Exclude events from searches:"
 msgstr "Hauista pois suljettavat tapahtumat:"
 
 #: event-organiser-settings.php:236
+#, fuzzy
 msgid "Enable templates:"
-msgstr "Ota käyttöön pohjat:"
+msgstr "Pohjat"
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -854,11 +860,6 @@ msgid ""
 "it will use its own default template. To prevent this, uncheck this option. "
 "WordPress will then decide which template from your theme's folder to use."
 msgstr ""
-"Kullekin sivulle käytetään vastaavaa pohjaa. Voit käyttää omaa pohjaa "
-"yksinkertaisesti antamalla sille saman nimen ja tallentamalla sen teeman "
-"kansioon. Oletuksena jos Event Organiser  ei löydä pohjaa teeman "
-"hakemistoon, se käyttää omaa oletuspohjaa. Tämän estämiseksi poista tämä "
-"vaihtoehto. WordPress sitten päättää, mitä pohjaa teeman kansiosta käytetään."
 
 #: event-organiser-settings.php:248
 msgid "Events archives:"
@@ -1208,6 +1209,7 @@ msgid "End"
 msgstr "Loppuu"
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
 msgstr "Tämä tapahtuma toistuu"
 
@@ -1448,12 +1450,14 @@ msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Tapahtuma päivitetty. <a href=\"%s\">Näytä tapahtuma</a>"
 
 #: includes/event-organiser-cpt.php:311
+#, fuzzy
 msgid "Custom field updated."
-msgstr "Mukautettu kenttä päivitetty."
+msgstr "Mukautetut kentät"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr "Mukautettu kenttä poistettu."
+msgstr "Tiedostoa ei havaittu."
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1513,6 +1517,7 @@ msgid "Creating events:"
 msgstr "Luomassa tapahtumia:"
 
 #: includes/event-organiser-cpt.php:519
+#, fuzzy
 msgid ""
 "The start date is the date the event starts. If the event is a reoccuring "
 "event, this is the start date of the first occurrence."
@@ -1521,6 +1526,7 @@ msgstr ""
 "tapahtuma, tämä on ensimmäisen esiintymän alkamispäivämäärä."
 
 #: includes/event-organiser-cpt.php:520
+#, fuzzy
 msgid ""
 "The end date is the date the event finishes. If the event is a reoccuring "
 "event, this is the end date of the first occurrence."
@@ -1541,6 +1547,7 @@ msgid "Repeating events"
 msgstr "Toistuvat tapahtumat"
 
 #: includes/event-organiser-cpt.php:527
+#, fuzzy
 msgid ""
 "To repeat an event according to some regular pattern, use the reoccurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
@@ -1555,6 +1562,7 @@ msgid "Specify how regularly the event should repeat (default 1)"
 msgstr "Määritä, miten säännöllisesti tapahtumaa toistetaan (oletus 1)"
 
 #: includes/event-organiser-cpt.php:530
+#, fuzzy
 msgid ""
 "Choose the reoccurrence end date. No further occurrences are added after "
 "this date, but an occurrence that starts before may finish after this date."
@@ -1564,6 +1572,7 @@ msgstr ""
 "jälkeen."
 
 #: includes/event-organiser-cpt.php:531
+#, fuzzy
 msgid ""
 "If monthly reoccurrence is selected, select whether this should repeat on "
 "that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
@@ -1574,6 +1583,7 @@ msgstr ""
 "tiistaina)"
 
 #: includes/event-organiser-cpt.php:532
+#, fuzzy
 msgid ""
 "If weekly reoccurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
@@ -1606,6 +1616,7 @@ msgid "Overview"
 msgstr "Yleiskatsaus"
 
 #: includes/event-organiser-cpt.php:552
+#, fuzzy
 msgid ""
 "This is the list of all saved events. Note that <strong> reoccurring events "
 "appear as a single row </strong> in the table and the start and end date "
@@ -1735,6 +1746,7 @@ msgid "one time only"
 msgstr "vain kerran"
 
 #: includes/event-organiser-event-functions.php:760
+#, fuzzy
 msgid "custom reoccurrence"
 msgstr "muokattu toistuvuus"
 
@@ -1845,10 +1857,6 @@ msgid ""
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
 "details aftewards."
 msgstr ""
-"<h4>Kaupunki & osavaltio kentät lisätty</ h4>Kaupunki ja osavaltio / lääni "
-"kentät tapahtumapaikoille on nyt lisätty. </ br> Jos haluat, Event Organizer "
-"voi <a href='%s'> yrittää täyttää automaattisesti ne </ a>. Voit aina "
-"muuttaa manuaalisesti yksityiskohtia jälkikäteen."
 
 #: includes/event-organiser-register.php:675
 msgid ""
@@ -1999,22 +2007,24 @@ msgstr ""
 "\">kestolinkki</a>."
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr "Tapahtumakategoria arkistot: %s"
+msgstr "Tapahtumakategoriat"
 
 #: templates/taxonomy-event-category.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested category. "
-msgstr "Pahoittelut, mutta tapahtumia ei löytynyt valitulle katgorialle."
+msgstr "Pahoittelut, mutta tapahtumia ei löytynyt valitulle arkistolle"
 
 #: templates/taxonomy-event-tag.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr "Tapahtuma avainsana arkisto: %s"
+msgstr "Tapahtumarkisto:"
 
 #: templates/taxonomy-event-tag.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested tag. "
-msgstr "Pahoittelut, mutta tapahtumia ei löytynyt valitulle avainsanalle."
+msgstr "Pahoittelut, mutta tapahtumia ei löytynyt valitulle arkistolle"
 
 #: templates/taxonomy-event-venue.php:31
 #, php-format
@@ -2022,5 +2032,25 @@ msgid "Events at: %s"
 msgstr "Tapahtumat: %s"
 
 #: templates/taxonomy-event-venue.php:118
+#, fuzzy
 msgid "Apologies, but no events were found for the requested venue. "
-msgstr "Pahoittelut, mutta tapahtumia ei löytynyt valitulle tapahtumapaikalle."
+msgstr "Pahoittelut, mutta tapahtumia ei löytynyt valitulle arkistolle"
+
+#~ msgid "End Date"
+#~ msgstr "Päättyy päivä"
+
+#~ msgid "End Time"
+#~ msgstr "Päättyy aika"
+
+#, fuzzy
+#~ msgid "Enter date in %s format"
+#~ msgstr "Tapahtuman päivämäärän/ajan muoto"
+
+#~ msgid "Repeat on days of week:"
+#~ msgstr "päivänä viikossa"
+
+#~ msgid "Start Date"
+#~ msgstr "Aloituspäivämäärä"
+
+#~ msgid "Start Time"
+#~ msgstr "Aloitusaika"

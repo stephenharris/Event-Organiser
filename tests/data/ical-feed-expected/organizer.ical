@@ -15,7 +15,7 @@ DTSTART:20131202T210000Z
 DTEND:20131202T230000Z
 RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;UNTIL=20131230T210000Z
 SUMMARY: The Event Title
-DESCRIPTION: Post excerpt 1
+DESCRIPTION: My event excerpt
 X-ALT-DESC;FMTTYPE=text/html: <p>My event content</p>
 ORGANIZER;CN="admin":MAILTO:admin@example.org
 URL;VALUE=URI:http://example.org/?event=the-event-title

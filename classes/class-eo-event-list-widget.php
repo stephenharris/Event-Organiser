@@ -145,6 +145,7 @@ class EO_Event_List_Widget extends WP_Widget{
    		echo $before_title.esc_html($widget_title).$after_title;
     }
 
+	unset( $instance['title'] );
 	eventorganiser_list_events( $instance, array( 'type'=>'widget','class'=>'eo-events eo-events-widget','template'=>$template, 'no_events'=>$no_events ) );
 
 	echo $after_widget;

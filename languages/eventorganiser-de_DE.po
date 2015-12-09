@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2015-03-17 06:31:01+0000\n"
-"Last-Translator: Kumarasok <kumarasok@live.com>\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-26 19:57:35+0000\n"
+"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: German (Germany)\n"
 "MIME-Version: 1.0\n"
@@ -111,7 +111,7 @@ msgid "Displays a list of events"
 msgstr "Zeigt eine Terminliste"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -463,9 +463,10 @@ msgstr "Organiser"
 
 #: event-organiser-edit.php:75
 msgid "This is a reoccurring event"
-msgstr "Dies ist ein sich wiederholender Termin"
+msgstr ""
 
 #: event-organiser-edit.php:76
+#, fuzzy
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Anwählen, um den Termin und all seine Vorkommen zu bearbeiten"
 
@@ -473,15 +474,11 @@ msgstr "Anwählen, um den Termin und all seine Vorkommen zu bearbeiten"
 #, php-format
 msgid "Ensure dates are entered in %1$s format and times in 24 hour format"
 msgstr ""
-"Stelle sicher, dass das Datum im Format %1$s und Uhrzeiten im 24-Stunden-"
-"Format eingegeben wurden."
 
 #: event-organiser-edit.php:100
 #, php-format
 msgid "Ensure dates are entered in %1$s format and times in 12 hour format"
 msgstr ""
-"Stelle sicher, dass das Datum im Format %1$s und Uhrzeiten im 12-Stunden-"
-"Format eingegeben wurden."
 
 #: event-organiser-edit.php:107 event-organiser-manage.php:36
 msgid "Start Date/Time"
@@ -496,8 +493,9 @@ msgid "All day"
 msgstr "ganztags"
 
 #: event-organiser-edit.php:139
+#, fuzzy
 msgid "Reoccurence:"
-msgstr "Wiederholung:"
+msgstr "Wiederholung"
 
 #: event-organiser-edit.php:141
 msgid "none"
@@ -533,6 +531,7 @@ msgid "on"
 msgstr "am"
 
 #: event-organiser-edit.php:176
+#, fuzzy
 msgid "day of month"
 msgstr "Tag des Monats"
 
@@ -547,6 +546,7 @@ msgid "until"
 msgstr "bis"
 
 #: event-organiser-edit.php:195
+#, fuzzy
 msgid "Include/Exclude occurrences"
 msgstr "Daten ein- und ausschliessen"
 
@@ -559,8 +559,8 @@ msgstr "Termine anzeigen"
 msgid "Select a venue"
 msgstr ""
 "Einen  \n"
-"\t\t\t\tVeranstatungsort\n"
-"\t\t\t auswählen"
+"\\t\\t\\t\\tVeranstatungsort\n"
+"\\t\\t\\t auswählen"
 
 #: event-organiser-edit.php:240
 msgid "Venue Name"
@@ -627,7 +627,7 @@ msgstr ""
 msgid "Venue custom fields & thumbnails"
 msgstr ""
 "Benutzerdefinierte Felder und Thumbnails\n"
-"\t\t\tder Veranstaltungsorte"
+"\\t\\t\\tder Veranstaltungsorte"
 
 #: event-organiser-go-pro.php:82
 msgid ""
@@ -647,6 +647,7 @@ msgid "Event"
 msgstr "Termin"
 
 #: event-organiser-manage.php:38
+#, fuzzy
 msgid "Reoccurrence"
 msgstr "Wiederholung"
 
@@ -720,42 +721,42 @@ msgstr "'Event Organiser'-Einstellungen"
 msgid "Event Organiser"
 msgstr "Event Organiser"
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Termine bearbeiten"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Termine veröffentlichen"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Termine löschen"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Termine von anderen bearbeiten"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Termine von anderen löschen"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Private Termine lesen"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Veranstaltungsorte verwalten"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Terminkategorien und -schlagworte verwalten"
@@ -887,8 +888,9 @@ msgid "Exclude events from searches:"
 msgstr "Termine von der Suche ausschließen:"
 
 #: event-organiser-settings.php:236
+#, fuzzy
 msgid "Enable templates:"
-msgstr "Vorlagen aktivieren:"
+msgstr "Vorlagen"
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -898,12 +900,6 @@ msgid ""
 "it will use its own default template. To prevent this, uncheck this option. "
 "WordPress will then decide which template from your theme's folder to use."
 msgstr ""
-"Für jede der Seiten wird die entsprechende Vorlage verwendet. Um eine eigene "
-"Vorlage zu verwenden, geben Sie ihr einfach den gleichen Namen und speichern "
-"Sie in Ihrem Theme-Ordner. Wenn 'Event Organiser' keine Vorlage in Ihrem "
-"Theme findet, wird die voreingestellte Vorlage verwendet. Um das zu "
-"verhindern entferne den Haken. Wordpress wird dann entscheiden, welche "
-"Vorlage aus Deinem Theme-Ordner genutzt wird."
 
 #: event-organiser-settings.php:248
 msgid "Events archives:"
@@ -1258,6 +1254,7 @@ msgid "End"
 msgstr "Ende"
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
 msgstr "Dieser Termin wiederholt sich"
 
@@ -1498,12 +1495,14 @@ msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Termin aktualisiert. <a href=\"%s\">Termin zeigen</a>"
 
 #: includes/event-organiser-cpt.php:311
+#, fuzzy
 msgid "Custom field updated."
-msgstr "Benutzerdefiniertes Feld aktualisiert."
+msgstr "Benutzerdefinierte Felder"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr "Benutzerdefiniertes Feld gelöscht."
+msgstr "Keine Datei gefunden."
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1562,6 +1561,7 @@ msgid "Creating events:"
 msgstr "Termine erstellen:"
 
 #: includes/event-organiser-cpt.php:519
+#, fuzzy
 msgid ""
 "The start date is the date the event starts. If the event is a reoccuring "
 "event, this is the start date of the first occurrence."
@@ -1570,6 +1570,7 @@ msgstr ""
 "wiederkehrend ist, ist es das Startdatum des ersten Terminereignisses."
 
 #: includes/event-organiser-cpt.php:520
+#, fuzzy
 msgid ""
 "The end date is the date the event finishes. If the event is a reoccuring "
 "event, this is the end date of the first occurrence."
@@ -1590,6 +1591,7 @@ msgid "Repeating events"
 msgstr "Wiederkehrende Termine"
 
 #: includes/event-organiser-cpt.php:527
+#, fuzzy
 msgid ""
 "To repeat an event according to some regular pattern, use the reoccurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
@@ -1604,6 +1606,7 @@ msgid "Specify how regularly the event should repeat (default 1)"
 msgstr "Gibt an, wie oft ein Termin wiederholt werden soll (Standard 1)"
 
 #: includes/event-organiser-cpt.php:530
+#, fuzzy
 msgid ""
 "Choose the reoccurrence end date. No further occurrences are added after "
 "this date, but an occurrence that starts before may finish after this date."
@@ -1613,6 +1616,7 @@ msgstr ""
 "vorher startet, kann nach diesem Zeitpunkt enden."
 
 #: includes/event-organiser-cpt.php:531
+#, fuzzy
 msgid ""
 "If monthly reoccurrence is selected, select whether this should repeat on "
 "that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
@@ -1623,6 +1627,7 @@ msgstr ""
 "B. am dritten Dienstag)."
 
 #: includes/event-organiser-cpt.php:532
+#, fuzzy
 msgid ""
 "If weekly reoccurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
@@ -1655,6 +1660,7 @@ msgid "Overview"
 msgstr "Übersicht"
 
 #: includes/event-organiser-cpt.php:552
+#, fuzzy
 msgid ""
 "This is the list of all saved events. Note that <strong> reoccurring events "
 "appear as a single row </strong> in the table and the start and end date "
@@ -1786,6 +1792,7 @@ msgid "one time only"
 msgstr "einmalig"
 
 #: includes/event-organiser-event-functions.php:760
+#, fuzzy
 msgid "custom reoccurrence"
 msgstr "Eigene Wiederholung"
 
@@ -1896,10 +1903,6 @@ msgid ""
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
 "details aftewards."
 msgstr ""
-"<h4>Stadt- & Bundesland-Felder hinzugefügt</h4>Stadt- und Bundesland-Felder "
-"für Veranstaltungsorte wurden nun hinzugefügt. </br> Wenn Sie möchten, kann "
-"'Event Organiser' <a href='%s'>versuchen, sie automatisch auszufüllen</a>. "
-"Es können danach jederzeit die Details manuell geändert werden."
 
 #: includes/event-organiser-register.php:675
 msgid ""
@@ -1977,6 +1980,7 @@ msgstr ""
 
 #. / TRANSLATORS: This is the description that of the plug-in that appears in the "Plugins" page.
 #: includes/i18n.php:8
+#, fuzzy
 msgid ""
 "Creates a custom post type 'events' with features such as reoccurring "
 "events, venues, Google Maps, calendar views and events and venue pages"
@@ -2055,22 +2059,24 @@ msgstr ""
 "\">Permalink</a>."
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr "Terminkategoriearchiv: %s"
+msgstr "Terminkategorien"
 
 #: templates/taxonomy-event-category.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested category. "
-msgstr "Leider wurden keine Termine in der angefragten Kategorie gefunden."
+msgstr "Leider wurden keine Ergebnisse für das angefragte Archiv gefunden."
 
 #: templates/taxonomy-event-tag.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr "Terminschlagwortarchiv: %s"
+msgstr "Terminarchiv:"
 
 #: templates/taxonomy-event-tag.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested tag. "
-msgstr "Leider wurden keine Termine für das angefragte Schlagwort gefunden."
+msgstr "Leider wurden keine Ergebnisse für das angefragte Archiv gefunden."
 
 #: templates/taxonomy-event-venue.php:31
 #, php-format
@@ -2078,5 +2084,27 @@ msgid "Events at: %s"
 msgstr "Termine am: %s"
 
 #: templates/taxonomy-event-venue.php:118
+#, fuzzy
 msgid "Apologies, but no events were found for the requested venue. "
-msgstr "Leider wurden keine Termine für diesen Veranstaltungsort gefunden."
+msgstr "Leider wurden keine Ergebnisse für das angefragte Archiv gefunden."
+
+#~ msgid "End Date"
+#~ msgstr "Ende Datum"
+
+#~ msgid "End Time"
+#~ msgstr "Ende Zeit"
+
+#~ msgid "Recurrence frequency"
+#~ msgstr "Wiederholung"
+
+#~ msgid "Repeat on days of week:"
+#~ msgstr "Tag der Woche"
+
+#~ msgid "Repeat this event until:"
+#~ msgstr "Wiederkehrende Termine"
+
+#~ msgid "Start Date"
+#~ msgstr "Start Datum"
+
+#~ msgid "Start Time"
+#~ msgstr "Start Zeit"

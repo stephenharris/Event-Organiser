@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2014-04-28 11:40:00+0000\n"
-"Last-Translator: Panagiotis <ngf7mmp@hotmail.com>\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-25 17:20:37+0000\n"
+"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Greek, Modern\n"
 "MIME-Version: 1.0\n"
@@ -83,9 +83,8 @@ msgstr "Κατηγορίες Events"
 
 #: classes/class-eo-calendar-widget.php:94
 #: classes/class-eo-event-list-widget.php:50
-#, fuzzy
 msgid "List category slug(s), seperate by comma. Leave blank for all"
-msgstr "List category slug(s), seperate by comma. Leave blank for all"
+msgstr ""
 
 #: classes/class-eo-calendar-widget.php:103
 msgid "Event venue"
@@ -110,7 +109,7 @@ msgid "Displays a list of events"
 msgstr "Εμφάνιση λίστας με events"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -146,7 +145,6 @@ msgid "DESC"
 msgstr "DESC"
 
 #: classes/class-eo-event-list-widget.php:82 event-organiser-settings.php:189
-#, fuzzy
 msgid "Group occurrences"
 msgstr "Ομάδα περιστατικών ή εμφανίσεων"
 
@@ -239,9 +237,8 @@ msgid "Select Venue"
 msgstr "Επιλογή τόπου"
 
 #: classes/class-eventorganiser-shortcodes.php:393
-#, fuzzy
 msgid "There is no excerpt because this is a protected post."
-msgstr "There is no excerpt because this is a protected post."
+msgstr ""
 
 #: event-organiser-add-ons.php:19 event-organiser-add-ons.php:95
 msgid "Event Organiser Extensions"
@@ -371,7 +368,6 @@ msgid "System Info"
 msgstr "Πληροφορίες Συστύματος"
 
 #: event-organiser-debug.php:65
-#, fuzzy
 msgid ""
 "This page highlights useful information for debugging. If you're reporting a "
 "bug, please include this information."
@@ -408,7 +404,6 @@ msgstr ""
 "έχει εντοπιστεί είναι πιο εύκολο να επιλυθεί το ζήτημα."
 
 #: event-organiser-debug.php:76
-#, fuzzy
 msgid ""
 "Below any <strong>known</strong> plug-in and theme conflicts are highlighted "
 "in red."
@@ -461,10 +456,12 @@ msgid "Organiser"
 msgstr "Διοργανωτής"
 
 #: event-organiser-edit.php:75
+#, fuzzy
 msgid "This is a reoccurring event"
-msgstr "Αυτο είναι ένα επαναλαμβανόμενο event."
+msgstr "Το event έχει διακοπεί από ένα επαναλαμβανόμενο event."
 
 #: event-organiser-edit.php:76
+#, fuzzy
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Τσέκαρε για επεξεργασία"
 
@@ -491,8 +488,9 @@ msgid "All day"
 msgstr "Ολοήμερο"
 
 #: event-organiser-edit.php:139
+#, fuzzy
 msgid "Reoccurence:"
-msgstr "Επαναλαμβάνεται"
+msgstr "Επανεμφάνιση-επανάληψη"
 
 #: event-organiser-edit.php:141
 msgid "none"
@@ -528,6 +526,7 @@ msgid "on"
 msgstr "on"
 
 #: event-organiser-edit.php:176
+#, fuzzy
 msgid "day of month"
 msgstr "Ημέρα του μήνα"
 
@@ -542,6 +541,7 @@ msgid "until"
 msgstr "Μέχρι"
 
 #: event-organiser-edit.php:195
+#, fuzzy
 msgid "Include/Exclude occurrences"
 msgstr "Συμπερίληψη/Εξαίρεση περιστατικών"
 
@@ -636,6 +636,7 @@ msgid "Event"
 msgstr "Γεγονός"
 
 #: event-organiser-manage.php:38
+#, fuzzy
 msgid "Reoccurrence"
 msgstr "Επανεμφάνιση-επανάληψη"
 
@@ -709,42 +710,42 @@ msgstr "Ρυθμίσεις"
 msgid "Event Organiser"
 msgstr "Event Organiser"
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Επεξεργασία Event"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Δημοσίευση Event"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Διαγραφή Event"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Επεξεργασία άλλων event"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Διαγραφή άλλων Event"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Διαβασε ιδιωτικά Event"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Διαχείρηση Χώρων"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Διαχείρηση Κατηγοριών και Tags"
@@ -877,11 +878,11 @@ msgid "Exclude events from searches:"
 msgstr "Αποκλείστε γεγονότα από τις αναζητήσεις:"
 
 #: event-organiser-settings.php:236
+#, fuzzy
 msgid "Enable templates:"
-msgstr "Ενεργοποίηση templates - προτύπων -"
+msgstr "Θέματα"
 
 #: event-organiser-settings.php:242
-#, fuzzy
 msgid ""
 "For each of the pages, the corresponding template is used. To use your own "
 "template simply give it the same name and store in your theme folder. By "
@@ -889,13 +890,6 @@ msgid ""
 "it will use its own default template. To prevent this, uncheck this option. "
 "WordPress will then decide which template from your theme's folder to use."
 msgstr ""
-"Για καθεμία από τις σελίδες, το αντίστοιχο πρότυπο έχει χρησιμοποιείτθει. "
-"Για να χρησιμοποιήσετε το δικό σας template(πρότυπο) απλά δώστε το ίδιο "
-"όνομα και αποθηκεύστε το στο φάκελο του θέματος σας. Από προεπιλογή,άν οι "
-"Event Organiser δεν μπορεί να βρει το πρότυπο στον κατάλογο θεμάτων σας, θα "
-"χρησιμοποιήσει το δικό σας πρότυπο από προεπιλογή. Για να αποφευχθεί αυτό, "
-"απενεργοποιήστε αυτήν την επιλογή. WordPress θα αποφασίσει ποιο πρότυπο από "
-"το φάκελο των θεμάτων σας θα χρησιμοποιήσετε."
 
 #: event-organiser-settings.php:248
 msgid "Events archives:"
@@ -1252,6 +1246,7 @@ msgid "End"
 msgstr "Τέλος"
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
 msgstr "Αυτο το event επαναλαμβάνεται"
 
@@ -1494,11 +1489,12 @@ msgstr "Το event ενημερώθηκε. <a href=\"%s\">Εμφάνιση event
 #: includes/event-organiser-cpt.php:311
 #, fuzzy
 msgid "Custom field updated."
-msgstr "Custom field updated."
+msgstr "Custom Fields"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr "Custom field deleted."
+msgstr "Το Αρχείο δεν βρέθηκε"
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1568,6 +1564,7 @@ msgstr ""
 "της πρώτης εμφάνισης."
 
 #: includes/event-organiser-cpt.php:520
+#, fuzzy
 msgid ""
 "The end date is the date the event finishes. If the event is a reoccuring "
 "event, this is the end date of the first occurrence."
@@ -1589,6 +1586,7 @@ msgid "Repeating events"
 msgstr "Events που επαναλαμβάνονται"
 
 #: includes/event-organiser-cpt.php:527
+#, fuzzy
 msgid ""
 "To repeat an event according to some regular pattern, use the reoccurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
@@ -1603,6 +1601,7 @@ msgid "Specify how regularly the event should repeat (default 1)"
 msgstr "Καθορίστε πόσο συχνά το γεγονός θα πρέπει να επαναλάβει (προεπιλογή 1)"
 
 #: includes/event-organiser-cpt.php:530
+#, fuzzy
 msgid ""
 "Choose the reoccurrence end date. No further occurrences are added after "
 "this date, but an occurrence that starts before may finish after this date."
@@ -1612,6 +1611,7 @@ msgstr ""
 "ξεκινά πριν να ολοκληρωθεί μετά την ημερομηνία αυτή."
 
 #: includes/event-organiser-cpt.php:531
+#, fuzzy
 msgid ""
 "If monthly reoccurrence is selected, select whether this should repeat on "
 "that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
@@ -1622,6 +1622,7 @@ msgstr ""
 "ημέρα του μήνα (π.χ. για την τρίτη Τρίτη)"
 
 #: includes/event-organiser-cpt.php:532
+#, fuzzy
 msgid ""
 "If weekly reoccurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
@@ -1653,6 +1654,7 @@ msgid "Overview"
 msgstr "Περίληψη"
 
 #: includes/event-organiser-cpt.php:552
+#, fuzzy
 msgid ""
 "This is the list of all saved events. Note that <strong> reoccurring events "
 "appear as a single row </strong> in the table and the start and end date "
@@ -1781,8 +1783,9 @@ msgid "one time only"
 msgstr "Μόνο μια φορά"
 
 #: includes/event-organiser-event-functions.php:760
+#, fuzzy
 msgid "custom reoccurrence"
-msgstr "custom reoccurrence"
+msgstr "Ομάδα περιστατικών ή εμφανίσεων"
 
 #: includes/event-organiser-event-functions.php:767
 #: includes/event-organiser-register.php:256
@@ -1791,9 +1794,9 @@ msgstr "Καθημερινά"
 
 #: includes/event-organiser-event-functions.php:769
 #: includes/event-organiser-register.php:257
-#, fuzzy, php-format
+#, php-format
 msgid "every %d days"
-msgstr "κάθε &d μέρες"
+msgstr "κάθε %d μέρες"
 
 #: includes/event-organiser-event-functions.php:775
 #: includes/event-organiser-register.php:258
@@ -1802,9 +1805,9 @@ msgstr "Εβδομαδιαία στις "
 
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:259
-#, fuzzy, php-format
+#, php-format
 msgid "every %d weeks on"
-msgstr "κάθε 7d βδομάδες "
+msgstr "κάθε %d βδομάδες"
 
 #: includes/event-organiser-event-functions.php:788
 #: includes/event-organiser-register.php:260
@@ -1891,10 +1894,6 @@ msgid ""
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
 "details aftewards."
 msgstr ""
-"<h4>City & State Fields Added</h4>City and state / province fields for "
-"venues have now been added. </br> If you'd like, Event Organiser can <a "
-"href='%s'>attempt to auto-fill them</a>. You can always manually change the "
-"details aftewards."
 
 #: includes/event-organiser-register.php:675
 msgid ""
@@ -2044,22 +2043,24 @@ msgstr ""
 "href=\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">permalink</a>."
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr "Αρχείο:  %s"
+msgstr "Κατηγορίες Event"
 
 #: templates/taxonomy-event-category.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested category. "
-msgstr "Συγνώμη, αλλά δεν βρέθηκαν γεγονότα για την κατηγορία που επιλέξατε."
+msgstr "Ζητάμε συγνώμη. Δεν βρέθηκαν αποτελέσματα για το ζητούμενο αρχείο."
 
 #: templates/taxonomy-event-tag.php:31
 #, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr "Ετικέτα αρχείων: %s"
+msgstr "Αρχείο"
 
 #: templates/taxonomy-event-tag.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested tag. "
-msgstr "Συγνώμη, αλλά δεν βρέθηκαν γεγονότα για την αιτούμενη ετικέτα."
+msgstr "Ζητάμε συγνώμη. Δεν βρέθηκαν αποτελέσματα για το ζητούμενο αρχείο."
 
 #: templates/taxonomy-event-venue.php:31
 #, php-format
@@ -2067,5 +2068,25 @@ msgid "Events at: %s"
 msgstr "Γεγονότα στα: %s"
 
 #: templates/taxonomy-event-venue.php:118
+#, fuzzy
 msgid "Apologies, but no events were found for the requested venue. "
-msgstr "Συγνώμη, αλλά δεν βρέθηκαν γεγονότα για το αιτούμενο χώρο."
+msgstr "Ζητάμε συγνώμη. Δεν βρέθηκαν αποτελέσματα για το ζητούμενο αρχείο."
+
+#~ msgid "End Date"
+#~ msgstr "Λήξη Ημέρα"
+
+#~ msgid "End Time"
+#~ msgstr "Λήξη Ώρα"
+
+#, fuzzy
+#~ msgid "Enter date in %s format"
+#~ msgstr "Διαμόρφωση Ημερομηνίας/ώρας Event"
+
+#~ msgid "Repeat on days of week:"
+#~ msgstr "Ημέρα της Εβδομάδος"
+
+#~ msgid "Start Date"
+#~ msgstr "Ημερομηνία Έναρξης"
+
+#~ msgid "Start Time"
+#~ msgstr "Έναρξη Ώρα"

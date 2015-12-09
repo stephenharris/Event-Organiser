@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2015-01-25 07:34:51+0000\n"
-"Last-Translator: iclover <chacha@feelfree.jp>\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-26 04:11:21+0000\n"
+"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -109,7 +109,7 @@ msgid "Displays a list of events"
 msgstr "イベントリストを表示する"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -436,9 +436,10 @@ msgstr "主催"
 
 #: event-organiser-edit.php:75
 msgid "This is a reoccurring event"
-msgstr "繰り返しイベントです"
+msgstr ""
 
 #: event-organiser-edit.php:76
+#, fuzzy
 msgid "Check to edit this event and its reoccurrences"
 msgstr "このイベントとその繰り返し内容を変更する"
 
@@ -465,8 +466,9 @@ msgid "All day"
 msgstr "終日"
 
 #: event-organiser-edit.php:139
+#, fuzzy
 msgid "Reoccurence:"
-msgstr "繰り返し:"
+msgstr "繰り返し"
 
 #: event-organiser-edit.php:141
 msgid "none"
@@ -516,6 +518,7 @@ msgid "until"
 msgstr "まで"
 
 #: event-organiser-edit.php:195
+#, fuzzy
 msgid "Include/Exclude occurrences"
 msgstr "繰り返し日を追加／削除"
 
@@ -601,6 +604,7 @@ msgid "Event"
 msgstr "イベント"
 
 #: event-organiser-manage.php:38
+#, fuzzy
 msgid "Reoccurrence"
 msgstr "繰り返し"
 
@@ -674,42 +678,42 @@ msgstr "Event Organiser設定"
 msgid "Event Organiser"
 msgstr "Event Organiser"
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "イベントの編集"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "イベントの公開"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "イベントの削除"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "その他のイベントの編集"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "その他のイベントの削除"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "プライベートイベントの閲覧"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "会場の管理"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "カテゴリとタグの管理"
@@ -838,8 +842,9 @@ msgid "Exclude events from searches:"
 msgstr "イベントを検索から除く:"
 
 #: event-organiser-settings.php:236
+#, fuzzy
 msgid "Enable templates:"
-msgstr "テンプレートを利用:"
+msgstr "テンプレート"
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -849,12 +854,6 @@ msgid ""
 "it will use its own default template. To prevent this, uncheck this option. "
 "WordPress will then decide which template from your theme's folder to use."
 msgstr ""
-"それぞれのページに合せてテンプレートが使用されます。自作のテンプレートを使う"
-"には、あなたのテーマフォルダーにて同じ名前を指定して保存してください。あなた"
-"のテーマフォルダーに指定のテンプレートが見つからない場合は、Event Organiserの"
-"既定のテンプレートが使用されます。これを防ぐためには、このチェックを外してく"
-"ださい。ワードプレスが自動的にあなたのテーマフォルダーからテンプレートを決定"
-"します。"
 
 #: event-organiser-settings.php:248
 msgid "Events archives:"
@@ -1201,6 +1200,7 @@ msgid "End"
 msgstr "終了"
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
 msgstr "このイベントを繰り返す"
 
@@ -1441,12 +1441,14 @@ msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "イベントが更新されました。<a href=\"%s\">見る</a>"
 
 #: includes/event-organiser-cpt.php:311
+#, fuzzy
 msgid "Custom field updated."
-msgstr "カスタムフィールドが更新されました。"
+msgstr "カスタムフィールド"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr "カスタムフィールドが削除されました。"
+msgstr "ファイルが見つかりませんでした"
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1684,6 +1686,7 @@ msgid "one time only"
 msgstr "1回のみ"
 
 #: includes/event-organiser-event-functions.php:760
+#, fuzzy
 msgid "custom reoccurrence"
 msgstr "カスタム周期"
 
@@ -1890,7 +1893,6 @@ msgstr "過去のイベント <span class=\"meta-nav\">&rarr;</span>"
 #: templates/taxonomy-event-tag.php:49 templates/taxonomy-event-tag.php:107
 #: templates/taxonomy-event-venue.php:49
 #: templates/taxonomy-event-venue.php:106
-#, fuzzy
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
 msgstr "<span class=\"meta-nav\">&larr;</span> 新しいイベント"
 
@@ -1939,22 +1941,24 @@ msgstr ""
 "クは<a href=\"%2$s\" title=\"Permalink to %3$s\" rel=\"bookmark\">こちら</a>"
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr "イベントカテゴリアーカイブ: %s"
+msgstr "イベントカテゴリ"
 
 #: templates/taxonomy-event-category.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested category. "
-msgstr "ごめんなさい。指定されたカテゴリは見つかりませんでした。"
+msgstr "ごめんなさい。指定されたアーカイブは見つかりませんでした。"
 
 #: templates/taxonomy-event-tag.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr "イベントタグアーカイブ: %s"
+msgstr "イベントアーカイブ:"
 
 #: templates/taxonomy-event-tag.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested tag. "
-msgstr "ごめんなさい。指定されたタグは見つかりませんでした。"
+msgstr "ごめんなさい。指定されたアーカイブは見つかりませんでした。"
 
 #: templates/taxonomy-event-venue.php:31
 #, php-format
@@ -1962,5 +1966,25 @@ msgid "Events at: %s"
 msgstr "イベント会場: %s"
 
 #: templates/taxonomy-event-venue.php:118
+#, fuzzy
 msgid "Apologies, but no events were found for the requested venue. "
-msgstr "ごめんなさい。指定された会場は見つかりませんでした。"
+msgstr "ごめんなさい。指定されたアーカイブは見つかりませんでした。"
+
+#~ msgid "End Date"
+#~ msgstr "終了日"
+
+#~ msgid "End Time"
+#~ msgstr "終了時"
+
+#, fuzzy
+#~ msgid "Enter date in %s format"
+#~ msgstr "イベント日時の形式"
+
+#~ msgid "Repeat this event until:"
+#~ msgstr "イベントを繰り返す"
+
+#~ msgid "Start Date"
+#~ msgstr "開始日"
+
+#~ msgid "Start Time"
+#~ msgstr "開始時"
