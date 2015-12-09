@@ -417,15 +417,13 @@ class EventOrganiser_Shortcodes {
 	}
  
 	static function print_script() {
-		global $wp_locale;
-		if ( ! self::$add_script ) return;
-		
-		$_terms = get_terms( 'event-category', array('hide_empty' => 0));
-		$terms = array();
-		while ( $term = array_shift( $_terms ) ){
-			$terms[$term->term_id] = $term;
+
+		if ( ! self::$add_script ) {
+			return;
 		}
-		
+
+		$terms = get_terms( 'event-category', array( 'hide_empty' => 0 ) );
+
 		$fullcal = (empty(self::$calendars) ? array() : array(
 			'firstDay'=>intval(get_option('start_of_week')),
 			'venues' => get_terms( 'event-venue', array('hide_empty' => 0)),
