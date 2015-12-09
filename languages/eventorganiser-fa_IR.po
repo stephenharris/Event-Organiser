@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-25 18:40:05+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Persian (Iran, Islamic Republic of)\n"
@@ -70,7 +70,7 @@ msgstr ""
 
 #: classes/class-eo-calendar-widget.php:68
 msgid "Show long events"
-msgstr ""
+msgstr "نمایش رویداد‌های طولانی"
 
 #: classes/class-eo-calendar-widget.php:79
 msgid "Link directly to event for days with only one event"
@@ -109,7 +109,7 @@ msgid "Displays a list of events"
 msgstr ""
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -134,7 +134,7 @@ msgstr "تاریخ شروع"
 
 #: classes/class-eo-event-list-widget.php:70
 msgid "Publish date"
-msgstr ""
+msgstr "تاریخ انتشار"
 
 #: classes/class-eo-event-list-widget.php:73
 msgid "ASC"
@@ -189,7 +189,7 @@ msgstr ""
 #: classes/class-eo-widget-categories.php:11 event-organiser-settings.php:329
 #: includes/event-organiser-cpt.php:92
 msgid "Event Categories"
-msgstr ""
+msgstr "دسته‌های رویداد"
 
 #: classes/class-eo-widget-categories.php:28 event-organiser-manage.php:35
 #: includes/event-organiser-cpt.php:103
@@ -227,11 +227,11 @@ msgstr "مکان‌های رویداد"
 #: classes/class-eo-widget-venues.php:32 event-organiser-settings.php:319
 #: event-organiser-venues.php:185 includes/event-organiser-cpt.php:31
 msgid "Venues"
-msgstr ""
+msgstr "سالن‌ها"
 
 #: classes/class-eo-widget-venues.php:57
 msgid "Select Venue"
-msgstr ""
+msgstr "انتخاب سالن"
 
 #: classes/class-eventorganiser-shortcodes.php:393
 msgid "There is no excerpt because this is a protected post."
@@ -243,7 +243,7 @@ msgstr ""
 
 #: event-organiser-add-ons.php:20
 msgid "Extensions"
-msgstr ""
+msgstr "افزونه‌ها"
 
 #: event-organiser-add-ons.php:99
 msgid ""
@@ -426,9 +426,8 @@ msgid "%s requires %s version %s or higher"
 msgstr ""
 
 #: event-organiser-debug.php:460
-#, fuzzy
 msgid "unknown"
-msgstr "ناشاناخته"
+msgstr ""
 
 #: event-organiser-edit.php:31 event-organiser-manage.php:23
 #: event-organiser-settings.php:142 includes/event-organiser-ajax.php:397
@@ -466,12 +465,13 @@ msgid "All day"
 msgstr "تمام روز"
 
 #: event-organiser-edit.php:139
+#, fuzzy
 msgid "Reoccurence:"
 msgstr "تکرار"
 
 #: event-organiser-edit.php:141
 msgid "none"
-msgstr ""
+msgstr "هیچکدام"
 
 #: event-organiser-edit.php:141
 msgid "daily"
@@ -503,6 +503,7 @@ msgid "on"
 msgstr "در"
 
 #: event-organiser-edit.php:176
+#, fuzzy
 msgid "day of month"
 msgstr "روز ماه"
 
@@ -600,6 +601,7 @@ msgid "Event"
 msgstr "رویداد"
 
 #: event-organiser-manage.php:38
+#, fuzzy
 msgid "Reoccurrence"
 msgstr "تکرار"
 
@@ -673,42 +675,42 @@ msgstr "تنظیمات مدیریت رویدادها"
 msgid "Event Organiser"
 msgstr "مدیریت رویدادها"
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "ویرایش رویداد"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "انتشار رویداد"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "حذف رویداد"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "ویرایش رویداد دیگران"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "حذف رویداد دیگران"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "خواندن رویدادهای خصوصی"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "مدیریت مکان‌ها"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr ""
@@ -782,7 +784,7 @@ msgstr ""
 
 #: event-organiser-settings.php:175
 msgid "yyyy-mm-dd"
-msgstr ""
+msgstr "yyyy/mm/dd"
 
 #: event-organiser-settings.php:177
 msgid "This alters the default format for inputting dates."
@@ -829,8 +831,9 @@ msgid "Exclude events from searches:"
 msgstr ""
 
 #: event-organiser-settings.php:236
+#, fuzzy
 msgid "Enable templates:"
-msgstr ""
+msgstr "قالب‌ها"
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -890,11 +893,11 @@ msgstr ""
 
 #: event-organiser-settings.php:293
 msgid "Events page"
-msgstr ""
+msgstr "صفحه رویداد‌ها"
 
 #: event-organiser-settings.php:306
 msgid "Event (date archive)"
-msgstr ""
+msgstr "رویداد (تاریخ بایگانی)"
 
 #: event-organiser-settings.php:312
 msgid "Year archive"
@@ -918,7 +921,7 @@ msgstr ""
 
 #: event-organiser-settings.php:618
 msgid "Role"
-msgstr ""
+msgstr "نقش"
 
 #: event-organiser-settings.php:629
 msgid "None"
@@ -972,7 +975,7 @@ msgstr ""
 
 #: event-organiser-venues.php:154
 msgid "Venue(s) <strong>were not </strong> deleted"
-msgstr ""
+msgstr "سالن (ها) حذف <strong>نشده</strong>"
 
 #: event-organiser-venues.php:166
 msgid "Save"
@@ -997,7 +1000,7 @@ msgstr ""
 
 #: event-organiser-venues.php:418
 msgid "Latitude/Longitude:"
-msgstr ""
+msgstr "عرض/طول جغرافیایی"
 
 #: event-organiser-venues.php:446
 msgid "Venue name"
@@ -1039,12 +1042,12 @@ msgstr ""
 #: includes/class-eo-ical-parser.php:499 includes/class-eo-ical-parser.php:524
 #, php-format
 msgid "[Lines %1$d-%2$d]"
-msgstr ""
+msgstr "[خط‌های %1$d-%2$d]"
 
 #: includes/class-eo-ical-parser.php:506 includes/class-eo-ical-parser.php:531
 #, php-format
 msgid "[Line %1$d]"
-msgstr ""
+msgstr "[خط %1$d]"
 
 #: includes/class-eo-ical-parser.php:952
 #, php-format
@@ -1094,7 +1097,7 @@ msgstr ""
 
 #: includes/class-event-organiser-im-export.php:100
 msgid "Import Events"
-msgstr ""
+msgstr "درون‌ریزی رویدادها"
 
 #: includes/class-event-organiser-im-export.php:103
 msgid "Import an ICS file."
@@ -1102,11 +1105,11 @@ msgstr ""
 
 #: includes/class-event-organiser-im-export.php:105
 msgid "Import venues"
-msgstr ""
+msgstr "درون‌ریزی سالن‌ها"
 
 #: includes/class-event-organiser-im-export.php:107
 msgid "Import categories"
-msgstr ""
+msgstr "درونٰ‌ریزی دسته‌ها"
 
 #: includes/class-event-organiser-im-export.php:111
 msgid "Upload ICS file"
@@ -1126,7 +1129,7 @@ msgstr ""
 
 #: includes/class-event-organiser-im-export.php:263
 msgid "Warning:"
-msgstr ""
+msgstr "اخطار:"
 
 #: includes/class-event-organiser-im-export.php:268
 msgid "1 event was successfully imported"
@@ -1177,6 +1180,7 @@ msgid "End"
 msgstr "پایان"
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
 msgstr "تکرارهای این رویدادا"
 
@@ -1203,7 +1207,7 @@ msgstr "افزودن به تقویم گوگل"
 
 #: includes/event-organiser-ajax.php:803
 msgid "Event not found"
-msgstr ""
+msgstr "رویداد پیدا نشد"
 
 #: includes/event-organiser-ajax.php:815
 msgid "Events are not editable via the admin calendar"
@@ -1220,7 +1224,7 @@ msgstr ""
 #: includes/event-organiser-ajax.php:857
 #, php-format
 msgid "Event not created: %s"
-msgstr ""
+msgstr "رویداد ایجاد نشد: %s"
 
 #: includes/event-organiser-cpt.php:33
 msgid "Search Venues"
@@ -1268,7 +1272,7 @@ msgstr "نمایش همه مکان‌ها"
 
 #: includes/event-organiser-cpt.php:46
 msgid "Venue:"
-msgstr ""
+msgstr "سالن"
 
 #: includes/event-organiser-cpt.php:47
 msgid "No Venue"
@@ -1277,7 +1281,7 @@ msgstr "بدون مکان"
 #: includes/event-organiser-cpt.php:93
 msgctxt "taxonomy singular name"
 msgid "Category"
-msgstr ""
+msgstr "دسته"
 
 #: includes/event-organiser-cpt.php:94
 msgid "Search Categories"
@@ -1322,7 +1326,7 @@ msgstr "نمایش تمامی دسته‌بندی‌ها"
 #: includes/event-organiser-cpt.php:147
 msgctxt "taxonomy singular name"
 msgid "Tag"
-msgstr ""
+msgstr "برچسب"
 
 #: includes/event-organiser-cpt.php:148
 msgid "Search Tags"
@@ -1376,7 +1380,7 @@ msgstr "برچسب ها را با کاما جدا کنید"
 
 #: includes/event-organiser-cpt.php:161
 msgid "View all tags"
-msgstr ""
+msgstr "مشاهده همه برچسب‌ها"
 
 #: includes/event-organiser-cpt.php:219
 msgctxt "post"
@@ -1417,12 +1421,14 @@ msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "رویداد بروز شد. <a href=\"%s\">مشاهده صفحه رویداد</a>"
 
 #: includes/event-organiser-cpt.php:311
+#, fuzzy
 msgid "Custom field updated."
-msgstr "فیلد سفارشی بروز شد"
+msgstr "فیلد سفارشی"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr "فیلد سفارشی حذف شد"
+msgstr "فایلی یافت نشد"
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1652,11 +1658,12 @@ msgstr "چهارمین"
 
 #: includes/event-organiser-event-functions.php:757
 msgid "one time only"
-msgstr ""
+msgstr "فقط یک بار"
 
 #: includes/event-organiser-event-functions.php:760
+#, fuzzy
 msgid "custom reoccurrence"
-msgstr ""
+msgstr "تکرار"
 
 #: includes/event-organiser-event-functions.php:767
 #: includes/event-organiser-register.php:256
@@ -1667,29 +1674,29 @@ msgstr "هر روز"
 #: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d days"
-msgstr ""
+msgstr "هر %d روز"
 
 #: includes/event-organiser-event-functions.php:775
 #: includes/event-organiser-register.php:258
 msgid "every week on"
-msgstr ""
+msgstr "هر هفته در"
 
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d weeks on"
-msgstr ""
+msgstr "هر %d هفته در"
 
 #: includes/event-organiser-event-functions.php:788
 #: includes/event-organiser-register.php:260
 msgid "every month on the"
-msgstr ""
+msgstr "هر ماه در"
 
 #: includes/event-organiser-event-functions.php:790
 #: includes/event-organiser-register.php:261
 #, php-format
 msgid "every %d months on the"
-msgstr ""
+msgstr "هر %d ماه در"
 
 #: includes/event-organiser-event-functions.php:819
 msgid "every year"
@@ -1698,7 +1705,7 @@ msgstr "هرسال"
 #: includes/event-organiser-event-functions.php:821
 #, php-format
 msgid "every %d years"
-msgstr ""
+msgstr "هر %d سال"
 
 #: includes/event-organiser-register.php:56
 msgid "Show More"
@@ -1742,12 +1749,12 @@ msgstr "سال‌ها"
 
 #: includes/event-organiser-register.php:262
 msgid "every year on the"
-msgstr ""
+msgstr "هر سال در"
 
 #: includes/event-organiser-register.php:263
 #, php-format
 msgid "every %d years on the"
-msgstr ""
+msgstr "هر %d سال در"
 
 #: includes/event-organiser-register.php:264
 msgid "This event will repeat"
@@ -1903,18 +1910,18 @@ msgid ""
 msgstr ""
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr ""
+msgstr "دسته‌های رویداد"
 
 #: templates/taxonomy-event-category.php:120
 msgid "Apologies, but no events were found for the requested category. "
 msgstr ""
 
 #: templates/taxonomy-event-tag.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr ""
+msgstr "بایگانی رویدادها:"
 
 #: templates/taxonomy-event-tag.php:120
 msgid "Apologies, but no events were found for the requested tag. "
@@ -1928,3 +1935,26 @@ msgstr "رویدادها در: %s"
 #: templates/taxonomy-event-venue.php:118
 msgid "Apologies, but no events were found for the requested venue. "
 msgstr ""
+
+#~ msgid "End Date"
+#~ msgstr "تاریخ پایان"
+
+#~ msgid "End Time"
+#~ msgstr "زمان پایان"
+
+#, fuzzy
+#~ msgid "Enter date in %s format"
+#~ msgstr "فرمت تاریخ/زمان رویداد"
+
+#~ msgid "Repeat on days of week:"
+#~ msgstr "روز هفته"
+
+#~ msgid "Start Date"
+#~ msgstr "تاریخ شروع"
+
+#~ msgid "Start Time"
+#~ msgstr "زمان شروع"
+
+#, fuzzy
+#~ msgid "Switch to week view"
+#~ msgstr "ثبت برای پیش‌نمایش"

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2015-05-11 06:54:24+0000\n"
-"Last-Translator: Frank <frank@gorilla.se>\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-26 19:46:26+0000\n"
+"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Swedish (Sweden)\n"
 "MIME-Version: 1.0\n"
@@ -109,7 +109,7 @@ msgid "Displays a list of events"
 msgstr "Visar en lista med evenemang"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -448,21 +448,22 @@ msgstr "Organisatör"
 
 #: event-organiser-edit.php:75
 msgid "This is a reoccurring event"
-msgstr "Detta är ett återkommande evenemang"
+msgstr ""
 
 #: event-organiser-edit.php:76
+#, fuzzy
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Bocka i för att ändra detta återkommande evenemang "
 
 #: event-organiser-edit.php:98
 #, php-format
 msgid "Ensure dates are entered in %1$s format and times in 24 hour format"
-msgstr "Kontrollera att datumet är i %1$s format och tiden i 24-timmarsformat"
+msgstr ""
 
 #: event-organiser-edit.php:100
 #, php-format
 msgid "Ensure dates are entered in %1$s format and times in 12 hour format"
-msgstr "Kontrollera att datumet är i %1$s format och tiden i 12-timmarsformat"
+msgstr ""
 
 #: event-organiser-edit.php:107 event-organiser-manage.php:36
 msgid "Start Date/Time"
@@ -477,8 +478,9 @@ msgid "All day"
 msgstr "Hela dagen"
 
 #: event-organiser-edit.php:139
+#, fuzzy
 msgid "Reoccurence:"
-msgstr "Återkommande: "
+msgstr "Återkommande"
 
 #: event-organiser-edit.php:141
 msgid "none"
@@ -514,6 +516,7 @@ msgid "on"
 msgstr "på"
 
 #: event-organiser-edit.php:176
+#, fuzzy
 msgid "day of month"
 msgstr "dag i månaden"
 
@@ -528,6 +531,7 @@ msgid "until"
 msgstr "tills"
 
 #: event-organiser-edit.php:195
+#, fuzzy
 msgid "Include/Exclude occurrences"
 msgstr "Inkludera/Exkludera förkomster"
 
@@ -611,6 +615,7 @@ msgid "Event"
 msgstr "Evenemang"
 
 #: event-organiser-manage.php:38
+#, fuzzy
 msgid "Reoccurrence"
 msgstr "Återkommande"
 
@@ -684,42 +689,42 @@ msgstr "Inställningar för Event Organiser"
 msgid "Event Organiser"
 msgstr "Event Organiser"
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Redigera evenemang"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Publicera evenemang"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Ta bort evenemang"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Redigera andras evenemang"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Ta bort andras evenemang"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Läsa privata evenemang"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Administrera lokaler"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Administrera evenemangkategorier och etiketter"
@@ -851,8 +856,9 @@ msgid "Exclude events from searches:"
 msgstr "Exkludera evenemang från sökningar: "
 
 #: event-organiser-settings.php:236
+#, fuzzy
 msgid "Enable templates:"
-msgstr "Aktivera mallar:"
+msgstr "Mallar"
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -862,11 +868,6 @@ msgid ""
 "it will use its own default template. To prevent this, uncheck this option. "
 "WordPress will then decide which template from your theme's folder to use."
 msgstr ""
-"För varje sida används motsvarande mall. Om du vill använda en egen mall ge "
-"den samma namn och spara den i din temafolder. Om Event Organiser inte kan "
-"hitta en mall i din temakatalog kommer den att använda sin egen mall. För "
-"att undvika detta bocka ur detta alternativ. WordPress kommer då bestämma "
-"vilken mall från ditt temas folder som används. "
 
 #: event-organiser-settings.php:248
 msgid "Events archives:"
@@ -1082,9 +1083,9 @@ msgid "[Line %1$d]"
 msgstr ""
 
 #: includes/class-eo-ical-parser.php:952
-#, fuzzy, php-format
+#, php-format
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
-msgstr "Ogiltigt datum. Använd YYYYMMDD som format"
+msgstr "Ogiltigt datum \"%s\". Använd YYYYMMDD som format"
 
 #: includes/class-eo-ical-parser.php:990
 #, php-format
@@ -1216,6 +1217,7 @@ msgid "End"
 msgstr "Slut"
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
 msgstr "Detta evenemang är återkommande"
 
@@ -1456,12 +1458,14 @@ msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Evenemanget uppdaterades. <a href=\"%s\">Visa evenemang</a>"
 
 #: includes/event-organiser-cpt.php:311
+#, fuzzy
 msgid "Custom field updated."
-msgstr "Anpassat fält uppdaterat."
+msgstr "Anpassade fält"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr "Anpassat fält borttaget."
+msgstr "Ingen fil hittades."
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1521,6 +1525,7 @@ msgid "Creating events:"
 msgstr "Skapa evenemang:"
 
 #: includes/event-organiser-cpt.php:519
+#, fuzzy
 msgid ""
 "The start date is the date the event starts. If the event is a reoccuring "
 "event, this is the start date of the first occurrence."
@@ -1529,6 +1534,7 @@ msgstr ""
 "återkommande är detta startdatumet för det första tillfället. "
 
 #: includes/event-organiser-cpt.php:520
+#, fuzzy
 msgid ""
 "The end date is the date the event finishes. If the event is a reoccuring "
 "event, this is the end date of the first occurrence."
@@ -1549,6 +1555,7 @@ msgid "Repeating events"
 msgstr "Återkommande evenemang"
 
 #: includes/event-organiser-cpt.php:527
+#, fuzzy
 msgid ""
 "To repeat an event according to some regular pattern, use the reoccurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
@@ -1562,6 +1569,7 @@ msgid "Specify how regularly the event should repeat (default 1)"
 msgstr "Specificera hur evenemanget ska återkomma (förinställning 1)"
 
 #: includes/event-organiser-cpt.php:530
+#, fuzzy
 msgid ""
 "Choose the reoccurrence end date. No further occurrences are added after "
 "this date, but an occurrence that starts before may finish after this date."
@@ -1571,6 +1579,7 @@ msgstr ""
 "detta datum. "
 
 #: includes/event-organiser-cpt.php:531
+#, fuzzy
 msgid ""
 "If monthly reoccurrence is selected, select whether this should repeat on "
 "that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
@@ -1581,6 +1590,7 @@ msgstr ""
 "ex. på den tredje tisdagen)"
 
 #: includes/event-organiser-cpt.php:532
+#, fuzzy
 msgid ""
 "If weekly reoccurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
@@ -1611,6 +1621,7 @@ msgid "Overview"
 msgstr "Översikt"
 
 #: includes/event-organiser-cpt.php:552
+#, fuzzy
 msgid ""
 "This is the list of all saved events. Note that <strong> reoccurring events "
 "appear as a single row </strong> in the table and the start and end date "
@@ -1739,6 +1750,7 @@ msgid "one time only"
 msgstr "endast en gång"
 
 #: includes/event-organiser-event-functions.php:760
+#, fuzzy
 msgid "custom reoccurrence"
 msgstr "Anpassad upprepning"
 
@@ -1849,10 +1861,6 @@ msgid ""
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
 "details aftewards."
 msgstr ""
-"<h4>Stad & delstat/landskapsfält tillagt</h4>Stad och delstat/landskapsfält "
-"för platser har nu blivit tillagt. </br> Om du vill kan Event Organiser <a "
-"href='%s'>försöka auto-fylla dem</a>. Du kan alltid ändra det manuellt "
-"efteråt."
 
 #: includes/event-organiser-register.php:675
 msgid ""
@@ -2000,22 +2008,24 @@ msgstr ""
 "\"%2$s\" title=\"Permalänk till %3$s\" rel=\"bookmark\">permalänken</a>."
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr "Arkiv för evenemangskategorier: %s"
+msgstr "Evenemangskategorier"
 
 #: templates/taxonomy-event-category.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested category. "
-msgstr "Tyvärr hittades inga evenemang för denna kategori."
+msgstr "Tyvärr hittades inget i detta arkiv"
 
 #: templates/taxonomy-event-tag.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr "Arkiv för evenemangsetiketter: %s"
+msgstr "Evenemangsarkiv"
 
 #: templates/taxonomy-event-tag.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested tag. "
-msgstr "Tyvärr hittades inga evenemang för denna etikett. "
+msgstr "Tyvärr hittades inget i detta arkiv"
 
 #: templates/taxonomy-event-venue.php:31
 #, php-format
@@ -2023,5 +2033,28 @@ msgid "Events at: %s"
 msgstr "Evenemang på: %s"
 
 #: templates/taxonomy-event-venue.php:118
+#, fuzzy
 msgid "Apologies, but no events were found for the requested venue. "
-msgstr "Tyvärr hittades inga evenemang för denna lokal."
+msgstr "Tyvärr hittades inget i detta arkiv"
+
+#~ msgid "End Date"
+#~ msgstr "Slutdatum"
+
+#~ msgid "End Time"
+#~ msgstr "Sluttid"
+
+#, fuzzy
+#~ msgid "Enter date in %s format"
+#~ msgstr "Evenemang-datum/tid-format"
+
+#~ msgid "Repeat on days of week:"
+#~ msgstr "dag i veckan"
+
+#~ msgid "Repeat this event until:"
+#~ msgstr "Återkommande evenemang"
+
+#~ msgid "Start Date"
+#~ msgstr "Startdatum"
+
+#~ msgid "Start Time"
+#~ msgstr "Starttid"

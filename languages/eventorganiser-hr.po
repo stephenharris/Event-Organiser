@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-25 19:06:04+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Croatian\n"
@@ -110,7 +110,7 @@ msgid "Displays a list of events"
 msgstr "Prikaži listu događanja"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -450,9 +450,10 @@ msgstr "Organizator"
 
 #: event-organiser-edit.php:75
 msgid "This is a reoccurring event"
-msgstr "Ovo je ponavljajuči događaj"
+msgstr ""
 
 #: event-organiser-edit.php:76
+#, fuzzy
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Označi da bi ste uređivali ovaj događaj i njegova ponavljanja"
 
@@ -479,8 +480,9 @@ msgid "All day"
 msgstr "Cijeli dan"
 
 #: event-organiser-edit.php:139
+#, fuzzy
 msgid "Reoccurence:"
-msgstr "Pojavljivanja:"
+msgstr "Pojavljivanja"
 
 #: event-organiser-edit.php:141
 msgid "none"
@@ -516,6 +518,7 @@ msgid "on"
 msgstr "na"
 
 #: event-organiser-edit.php:176
+#, fuzzy
 msgid "day of month"
 msgstr "dan u mjesecu"
 
@@ -530,6 +533,7 @@ msgid "until"
 msgstr "do"
 
 #: event-organiser-edit.php:195
+#, fuzzy
 msgid "Include/Exclude occurrences"
 msgstr "Uključi/isključi ponavljanja"
 
@@ -613,6 +617,7 @@ msgid "Event"
 msgstr "Događaj"
 
 #: event-organiser-manage.php:38
+#, fuzzy
 msgid "Reoccurrence"
 msgstr "Pojavljivanja"
 
@@ -686,42 +691,42 @@ msgstr "Postavke Event Organiser"
 msgid "Event Organiser"
 msgstr "Event Organiser"
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Uredi Događanja"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Objavi Događaje"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Obriši događaje"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Uredi druga događanja"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Obriši druga događanja"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Pročitaj privatne događaje"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Upravljanje sastajalištima"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Upravljanje kategorijama događanja i Oznakama"
@@ -853,8 +858,9 @@ msgid "Exclude events from searches:"
 msgstr "Izdvoji događanja i pretraživanja:"
 
 #: event-organiser-settings.php:236
+#, fuzzy
 msgid "Enable templates:"
-msgstr "Omogući predloške:"
+msgstr "Predlošci"
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -864,12 +870,6 @@ msgid ""
 "it will use its own default template. To prevent this, uncheck this option. "
 "WordPress will then decide which template from your theme's folder to use."
 msgstr ""
-"Za svaku od stranica, Zadani predložak se koristi. Ako bi ste koristili "
-"svoje predložak jednostavno mu dajte isto ime i spremite ga u folder THEME. "
-"Po defaultu, Ako Event Organiser ne može pronaći predložak u vašem "
-"direktoriju thema, koristit će svoj zadani predložak. Da bi ste ovo "
-"izbjegli, isključite ovu opciju. Wordpress će onda odlučiti koji predložak "
-"iz vašeg direktorija thema da se koristi."
 
 #: event-organiser-settings.php:248
 msgid "Events archives:"
@@ -1218,6 +1218,7 @@ msgid "End"
 msgstr "Kraj"
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
 msgstr "Ovaj se događaj ponavlja"
 
@@ -1458,12 +1459,14 @@ msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Događaj ažuriran <a href=\"%s\">Pregledaj događaj</a>"
 
 #: includes/event-organiser-cpt.php:311
+#, fuzzy
 msgid "Custom field updated."
-msgstr "Prilagođeno polje ažurirano"
+msgstr "Prilagođena polja"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr "Prilagođeno polje obrisano"
+msgstr "Datoteka nije detektirana"
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1521,6 +1524,7 @@ msgid "Creating events:"
 msgstr "Kreiranje događaja:"
 
 #: includes/event-organiser-cpt.php:519
+#, fuzzy
 msgid ""
 "The start date is the date the event starts. If the event is a reoccuring "
 "event, this is the start date of the first occurrence."
@@ -1529,6 +1533,7 @@ msgstr ""
 "prvog održavanja."
 
 #: includes/event-organiser-cpt.php:520
+#, fuzzy
 msgid ""
 "The end date is the date the event finishes. If the event is a reoccuring "
 "event, this is the end date of the first occurrence."
@@ -1549,6 +1554,7 @@ msgid "Repeating events"
 msgstr "Ponavljanje događaja:"
 
 #: includes/event-organiser-cpt.php:527
+#, fuzzy
 msgid ""
 "To repeat an event according to some regular pattern, use the reoccurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
@@ -1563,6 +1569,7 @@ msgid "Specify how regularly the event should repeat (default 1)"
 msgstr "Odredi koliko bi se događaj trebao ponavljati (zadano 1)"
 
 #: includes/event-organiser-cpt.php:530
+#, fuzzy
 msgid ""
 "Choose the reoccurrence end date. No further occurrences are added after "
 "this date, but an occurrence that starts before may finish after this date."
@@ -1572,6 +1579,7 @@ msgstr ""
 "datuma."
 
 #: includes/event-organiser-cpt.php:531
+#, fuzzy
 msgid ""
 "If monthly reoccurrence is selected, select whether this should repeat on "
 "that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
@@ -1582,6 +1590,7 @@ msgstr ""
 "četvrtak)"
 
 #: includes/event-organiser-cpt.php:532
+#, fuzzy
 msgid ""
 "If weekly reoccurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
@@ -1612,6 +1621,7 @@ msgid "Overview"
 msgstr "pregled"
 
 #: includes/event-organiser-cpt.php:552
+#, fuzzy
 msgid ""
 "This is the list of all saved events. Note that <strong> reoccurring events "
 "appear as a single row </strong> in the table and the start and end date "
@@ -1740,6 +1750,7 @@ msgid "one time only"
 msgstr "jedan put samo"
 
 #: includes/event-organiser-event-functions.php:760
+#, fuzzy
 msgid "custom reoccurrence"
 msgstr "prilagođeno sjedište"
 
@@ -1850,10 +1861,6 @@ msgid ""
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
 "details aftewards."
 msgstr ""
-"<h4> Grad i Država polje Dodano </ h4> grad i država / pokrajina stavke za "
-"mjesta sada su dodani. </ br> Ako želite, Event Organiser može <a href='%s'> "
-"pokušati da se automatski popunjavaju</>. Uvijek možete ručno promijeniti "
-"podatke poslije."
 
 #: includes/event-organiser-register.php:675
 msgid ""
@@ -2000,22 +2007,24 @@ msgstr ""
 "href=\"%2$s\" title=\"Stalne veze %3$s\" rel=\"bookmark\">stalne veze</a>."
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr "Arhiva kategorije događanja:%s"
+msgstr "Kategorije događaja"
 
 #: templates/taxonomy-event-category.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested category. "
-msgstr "Isprike, nijedan događaj nije pronađen za traženu kategoriju"
+msgstr "Oooops, nema rezultat pretraživanja tražene arhive."
 
 #: templates/taxonomy-event-tag.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr "Arhiva oznaka događanja: %s"
+msgstr "Arhiva događanja:"
 
 #: templates/taxonomy-event-tag.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested tag. "
-msgstr "Isprike, no nijedan događaj nije pronađen za traženu oznaku."
+msgstr "Oooops, nema rezultat pretraživanja tražene arhive."
 
 #: templates/taxonomy-event-venue.php:31
 #, php-format
@@ -2023,5 +2032,28 @@ msgid "Events at: %s"
 msgstr "Događaji na: %s"
 
 #: templates/taxonomy-event-venue.php:118
+#, fuzzy
 msgid "Apologies, but no events were found for the requested venue. "
-msgstr "Isprike, nijedan događaj nije pronađen za traženo sastajalište."
+msgstr "Oooops, nema rezultat pretraživanja tražene arhive."
+
+#~ msgid "End Date"
+#~ msgstr "Završetak Datum"
+
+#~ msgid "End Time"
+#~ msgstr "Završetak Vrijeme"
+
+#, fuzzy
+#~ msgid "Enter date in %s format"
+#~ msgstr "Format datum/vrijeme događaja"
+
+#~ msgid "Repeat on days of week:"
+#~ msgstr "dan u tjednu"
+
+#~ msgid "Repeat this event until:"
+#~ msgstr "Ponavljanje događaja:"
+
+#~ msgid "Start Date"
+#~ msgstr "Početni datum"
+
+#~ msgid "Start Time"
+#~ msgstr "Početni vrijeme"

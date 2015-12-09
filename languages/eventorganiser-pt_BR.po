@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2014-09-23 08:06:06+0000\n"
-"Last-Translator: Rafael Wahasugui <rafawhs@gmail.com>\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-26 06:54:13+0000\n"
+"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Portuguese (Brazil)\n"
 "MIME-Version: 1.0\n"
@@ -109,7 +109,7 @@ msgid "Displays a list of events"
 msgstr "Mostrar uma lista de eventos"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -442,10 +442,12 @@ msgid "Organiser"
 msgstr "Organizador"
 
 #: event-organiser-edit.php:75
+#, fuzzy
 msgid "This is a reoccurring event"
-msgstr "Este é um evento recorrente"
+msgstr "Este evento foi quebrado a partir de um evento recorrente."
 
 #: event-organiser-edit.php:76
+#, fuzzy
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Marque para editar este evento e suas recorrências"
 
@@ -472,8 +474,9 @@ msgid "All day"
 msgstr "Dia todo"
 
 #: event-organiser-edit.php:139
+#, fuzzy
 msgid "Reoccurence:"
-msgstr "Recorrência:"
+msgstr "Recorrência"
 
 #: event-organiser-edit.php:141
 msgid "none"
@@ -509,6 +512,7 @@ msgid "on"
 msgstr "na"
 
 #: event-organiser-edit.php:176
+#, fuzzy
 msgid "day of month"
 msgstr "dia do mês"
 
@@ -523,6 +527,7 @@ msgid "until"
 msgstr "até"
 
 #: event-organiser-edit.php:195
+#, fuzzy
 msgid "Include/Exclude occurrences"
 msgstr "Incluir e excluir ocorrências"
 
@@ -612,6 +617,7 @@ msgid "Event"
 msgstr "Evento"
 
 #: event-organiser-manage.php:38
+#, fuzzy
 msgid "Reoccurrence"
 msgstr "Recorrência"
 
@@ -685,42 +691,42 @@ msgstr "Configurações do Event Organiser"
 msgid "Event Organiser"
 msgstr ""
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Editar Eventos"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Publicar Eventos"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Excluir Eventos"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Editar Evento de outros"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Excluir Eventos de outros"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Ler Eventos privados"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Gerenciar Locais"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Gerenciar Categorias e Tags de Eventos"
@@ -850,7 +856,7 @@ msgstr "Remover eventos das buscas:"
 
 #: event-organiser-settings.php:236
 msgid "Enable templates:"
-msgstr "Habilitar templates:"
+msgstr ""
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -860,11 +866,6 @@ msgid ""
 "it will use its own default template. To prevent this, uncheck this option. "
 "WordPress will then decide which template from your theme's folder to use."
 msgstr ""
-"Para cada página é utilizado um template correspondete. Para utilizar seu "
-"próprio template, faça uma cópia com o mesmo nome para a pasta do seu tema. "
-"Por padrão, se o plugin não encontrar um template na pasta do tema, o "
-"template padrão será utilizado. Para previnir isto, desmarque esta opção. O "
-"WordPress irá decidir qual template irá utilizar."
 
 #: event-organiser-settings.php:248
 msgid "Events archives:"
@@ -1212,6 +1213,7 @@ msgid "End"
 msgstr "Fim"
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
 msgstr "Este evento é recorrente"
 
@@ -1452,12 +1454,14 @@ msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Evento atualizado. <a href=\"%s\">Ver evento</a>"
 
 #: includes/event-organiser-cpt.php:311
+#, fuzzy
 msgid "Custom field updated."
-msgstr "Campo personalizado atualizado."
+msgstr "Campos personalizados"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr "Campo personalizado excluído."
+msgstr "Nenhum arquivo detectado."
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1513,6 +1517,7 @@ msgid "Creating events:"
 msgstr "Criando eventos:"
 
 #: includes/event-organiser-cpt.php:519
+#, fuzzy
 msgid ""
 "The start date is the date the event starts. If the event is a reoccuring "
 "event, this is the start date of the first occurrence."
@@ -1521,6 +1526,7 @@ msgstr ""
 "recorrente, esta é a data inicial da primeira ocorrência."
 
 #: includes/event-organiser-cpt.php:520
+#, fuzzy
 msgid ""
 "The end date is the date the event finishes. If the event is a reoccuring "
 "event, this is the end date of the first occurrence."
@@ -1541,6 +1547,7 @@ msgid "Repeating events"
 msgstr "Repetindo eventos"
 
 #: includes/event-organiser-cpt.php:527
+#, fuzzy
 msgid ""
 "To repeat an event according to some regular pattern, use the reoccurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
@@ -1555,6 +1562,7 @@ msgstr ""
 "Especifique qual a regularidade que o evento deverá se repetir (default 1)"
 
 #: includes/event-organiser-cpt.php:530
+#, fuzzy
 msgid ""
 "Choose the reoccurrence end date. No further occurrences are added after "
 "this date, but an occurrence that starts before may finish after this date."
@@ -1564,6 +1572,7 @@ msgstr ""
 "deve terminar depois desta data."
 
 #: includes/event-organiser-cpt.php:531
+#, fuzzy
 msgid ""
 "If monthly reoccurrence is selected, select whether this should repeat on "
 "that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
@@ -1574,6 +1583,7 @@ msgstr ""
 "feira)"
 
 #: includes/event-organiser-cpt.php:532
+#, fuzzy
 msgid ""
 "If weekly reoccurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
@@ -1604,6 +1614,7 @@ msgid "Overview"
 msgstr "Descrição"
 
 #: includes/event-organiser-cpt.php:552
+#, fuzzy
 msgid ""
 "This is the list of all saved events. Note that <strong> reoccurring events "
 "appear as a single row </strong> in the table and the start and end date "
@@ -1732,6 +1743,7 @@ msgid "one time only"
 msgstr "apenas uma vez"
 
 #: includes/event-organiser-event-functions.php:760
+#, fuzzy
 msgid "custom reoccurrence"
 msgstr "Recorrência Personalizada"
 
@@ -1842,10 +1854,6 @@ msgid ""
 "href='%s'>attempt to auto-fill them</a>. You can always manually change the "
 "details aftewards."
 msgstr ""
-"<h4>Campos \"Cidade e Estado\" Adicionados</h4>Campos \"Cidade e estado / "
-"província\" foram adicionados em \"locais\". </br> Se você quiser, o Event "
-"Organiser pode <a href='%s'>tentar auto-preenchê-los</a>. Você pode também "
-"alterar manualmente os detalhes a qualquer momento."
 
 #: includes/event-organiser-register.php:675
 msgid ""
@@ -1960,7 +1968,7 @@ msgid "Apologies, but no results were found for the requested archive. "
 msgstr "Nenhum evento encontrado nos arquivos solicitados"
 
 #: templates/event-meta-event-single.php:46
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "This event is running from %1$s until %2$s. It is next occurring on %3$s"
 msgstr ""
@@ -1972,7 +1980,6 @@ msgid "This event finished on %s"
 msgstr "Este evento irá acabar em %s"
 
 #: templates/event-meta-event-single.php:89
-#, fuzzy
 msgid "Upcoming Dates"
 msgstr "Próximos Eventos"
 
@@ -1995,22 +2002,24 @@ msgstr ""
 "\" title=\"Permalink to %3$s\" rel=\"bookmark\">link</a>."
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr "Eventos da Categoria: %s"
+msgstr "Categorias do Evento"
 
 #: templates/taxonomy-event-category.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested category. "
-msgstr "Nenhum evento foi encontrado na categoria solicitada."
+msgstr "Nenhum evento encontrado nos arquivos solicitados"
 
 #: templates/taxonomy-event-tag.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr "Eventos com a Tag: %s"
+msgstr "Arquivo de Eventos:"
 
 #: templates/taxonomy-event-tag.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested tag. "
-msgstr "Nenhum evento encontrado para a tag solicitada."
+msgstr "Nenhum evento encontrado nos arquivos solicitados"
 
 #: templates/taxonomy-event-venue.php:31
 #, php-format
@@ -2018,5 +2027,25 @@ msgid "Events at: %s"
 msgstr "Eventos em: %s"
 
 #: templates/taxonomy-event-venue.php:118
+#, fuzzy
 msgid "Apologies, but no events were found for the requested venue. "
-msgstr "Nenhum evento encontrado para o local solicitado."
+msgstr "Nenhum evento encontrado nos arquivos solicitados"
+
+#~ msgid "End Date"
+#~ msgstr "Data Final"
+
+#~ msgid "End Time"
+#~ msgstr "Horário Final"
+
+#, fuzzy
+#~ msgid "Enter date in %s format"
+#~ msgstr "Formato de data e hora"
+
+#~ msgid "Repeat on days of week:"
+#~ msgstr "dia da semana"
+
+#~ msgid "Start Date"
+#~ msgstr "Data inicial"
+
+#~ msgid "Start Time"
+#~ msgstr "Horário Inicial"

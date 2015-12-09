@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2013-12-04 20:12:37+0000\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-25 19:25:57+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Hungarian (Hungary)\n"
@@ -109,7 +109,7 @@ msgid "Displays a list of events"
 msgstr "Eseménylista megjelenítése"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -199,24 +199,20 @@ msgid "Categories"
 msgstr "Kategóriák"
 
 #: classes/class-eo-widget-categories.php:54
-#, fuzzy
 msgid "Select Category"
 msgstr "Válassz kategóriát"
 
 #: classes/class-eo-widget-categories.php:125
 #: classes/class-eo-widget-venues.php:127
-#, fuzzy
 msgid "Title:"
-msgstr "Cím:"
+msgstr ""
 
 #: classes/class-eo-widget-categories.php:129
 #: classes/class-eo-widget-venues.php:131
-#, fuzzy
 msgid "Display as dropdown"
 msgstr "Mutasd lenyíló menüként"
 
 #: classes/class-eo-widget-categories.php:132
-#, fuzzy
 msgid "Show hierarchy"
 msgstr "Hierarchia mutatása"
 
@@ -358,13 +354,11 @@ msgid "Event Details"
 msgstr "Esemény részletek"
 
 #: event-organiser-calendar.php:335
-#, fuzzy
 msgid "Event Detail"
 msgstr "Esemény részletei"
 
 #: event-organiser-debug.php:13 event-organiser-debug.php:14
 #: event-organiser-debug.php:59
-#, fuzzy
 msgid "System Info"
 msgstr "Rendszer infó"
 
@@ -432,7 +426,6 @@ msgid "%s requires %s version %s or higher"
 msgstr ""
 
 #: event-organiser-debug.php:460
-#, fuzzy
 msgid "unknown"
 msgstr "ismeretlen"
 
@@ -443,9 +436,10 @@ msgstr "Szerző"
 
 #: event-organiser-edit.php:75
 msgid "This is a reoccurring event"
-msgstr "Ez egy ismétlődő esemény"
+msgstr ""
 
 #: event-organiser-edit.php:76
+#, fuzzy
 msgid "Check to edit this event and its reoccurrences"
 msgstr "Esemény és ismétlődéseinek szerkesztése"
 
@@ -472,8 +466,9 @@ msgid "All day"
 msgstr "Egész napos esemény"
 
 #: event-organiser-edit.php:139
+#, fuzzy
 msgid "Reoccurence:"
-msgstr "Ismétlődés:"
+msgstr "Ismétlődés"
 
 #: event-organiser-edit.php:141
 msgid "none"
@@ -509,6 +504,7 @@ msgid "on"
 msgstr "ezeken a napokon: "
 
 #: event-organiser-edit.php:176
+#, fuzzy
 msgid "day of month"
 msgstr "hónap napján"
 
@@ -523,6 +519,7 @@ msgid "until"
 msgstr "eddig:"
 
 #: event-organiser-edit.php:195
+#, fuzzy
 msgid "Include/Exclude occurrences"
 msgstr "Ismétlődések ki-/bekapcsolása"
 
@@ -606,6 +603,7 @@ msgid "Event"
 msgstr "Esemény"
 
 #: event-organiser-manage.php:38
+#, fuzzy
 msgid "Reoccurrence"
 msgstr "Ismétlődés"
 
@@ -679,42 +677,42 @@ msgstr "Event Organiser Beállítások"
 msgid "Event Organiser"
 msgstr "Események"
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Események szerkesztése"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Események közzététele"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Események törlése"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Más szerző eseményének szerkesztése"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Más szerző eseményének törlése"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Privát események olvasása"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Helyszínek kezelése"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Esemény kategóriák és -címkék kezelése"
@@ -789,7 +787,6 @@ msgid "mm-dd-yyyy"
 msgstr "éééé.nn.hh."
 
 #: event-organiser-settings.php:175
-#, fuzzy
 msgid "yyyy-mm-dd"
 msgstr "éééé-hh-dd"
 
@@ -843,8 +840,9 @@ msgid "Exclude events from searches:"
 msgstr "Esemény keresés tiltása:"
 
 #: event-organiser-settings.php:236
+#, fuzzy
 msgid "Enable templates:"
-msgstr "Sablonok engedélyezése:"
+msgstr "Sablonok"
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -854,12 +852,6 @@ msgid ""
 "it will use its own default template. To prevent this, uncheck this option. "
 "WordPress will then decide which template from your theme's folder to use."
 msgstr ""
-"Saját sablonok használata esemény oldalakhoz<br/>Esemény oldalakhoz tartozik "
-"egy-egy sablon, saját sablonokhoz az alábbi fájlneveket kell használni az "
-"aktuális WordPress sablon mappában.<br/>Bekapcsolva: ha a sablonfájl nem "
-"található meg a mappában, akkor a bővítmény a saját sablonját fogja "
-"használni<br/>Kikapcsolva: a WordPress fogja eldönteni, hogy melyik "
-"sablonfájlt forgja az oldalhoz használni."
 
 #: event-organiser-settings.php:248
 msgid "Events archives:"
@@ -919,17 +911,14 @@ msgid "Event (date archive)"
 msgstr ""
 
 #: event-organiser-settings.php:312
-#, fuzzy
 msgid "Year archive"
 msgstr "Év archívum"
 
 #: event-organiser-settings.php:313
-#, fuzzy
 msgid "Month archive"
 msgstr "Hónap archívum"
 
 #: event-organiser-settings.php:314
-#, fuzzy
 msgid "Day archive"
 msgstr "Nap archívum"
 
@@ -1110,7 +1099,7 @@ msgstr ""
 "legfeljebb 2MB méretben."
 
 #: includes/class-event-organiser-im-export.php:73
-#, fuzzy, php-format
+#, php-format
 msgid "File size: %s. File type: %s"
 msgstr "Fájl méret: %s. Fájl típus: %s"
 
@@ -1215,6 +1204,7 @@ msgid "End"
 msgstr "Vége"
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
 msgstr "Ismétlődő esemény"
 
@@ -1455,12 +1445,14 @@ msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Esemény frissítve. <a href=\"%s\">Esemény megtekintése</a>"
 
 #: includes/event-organiser-cpt.php:311
+#, fuzzy
 msgid "Custom field updated."
-msgstr "Egyedi mező firssítve."
+msgstr " Egyedi mezők"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr "Egyedi mező törölve."
+msgstr "Nincs fájl."
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1519,6 +1511,7 @@ msgid "Creating events:"
 msgstr "Esemény létrehozása:"
 
 #: includes/event-organiser-cpt.php:519
+#, fuzzy
 msgid ""
 "The start date is the date the event starts. If the event is a reoccuring "
 "event, this is the start date of the first occurrence."
@@ -1527,6 +1520,7 @@ msgstr ""
 "első esemény kezdete."
 
 #: includes/event-organiser-cpt.php:520
+#, fuzzy
 msgid ""
 "The end date is the date the event finishes. If the event is a reoccuring "
 "event, this is the end date of the first occurrence."
@@ -1547,6 +1541,7 @@ msgid "Repeating events"
 msgstr "Ismétlődő események"
 
 #: includes/event-organiser-cpt.php:527
+#, fuzzy
 msgid ""
 "To repeat an event according to some regular pattern, use the reoccurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
@@ -1563,6 +1558,7 @@ msgstr ""
 "1)"
 
 #: includes/event-organiser-cpt.php:530
+#, fuzzy
 msgid ""
 "Choose the reoccurrence end date. No further occurrences are added after "
 "this date, but an occurrence that starts before may finish after this date."
@@ -1572,6 +1568,7 @@ msgstr ""
 "lesz ismétlődés. "
 
 #: includes/event-organiser-cpt.php:531
+#, fuzzy
 msgid ""
 "If monthly reoccurrence is selected, select whether this should repeat on "
 "that date of the month (e.g. on the 24th) or on the day of the month (e.g. "
@@ -1582,6 +1579,7 @@ msgstr ""
 "napján (pl. 3. hét péntek)"
 
 #: includes/event-organiser-cpt.php:532
+#, fuzzy
 msgid ""
 "If weekly reoccurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
@@ -1614,6 +1612,7 @@ msgid "Overview"
 msgstr "Áttekintés"
 
 #: includes/event-organiser-cpt.php:552
+#, fuzzy
 msgid ""
 "This is the list of all saved events. Note that <strong> reoccurring events "
 "appear as a single row </strong> in the table and the start and end date "
@@ -1743,6 +1742,7 @@ msgid "one time only"
 msgstr "nincs"
 
 #: includes/event-organiser-event-functions.php:760
+#, fuzzy
 msgid "custom reoccurrence"
 msgstr "egyedi ismétlődés"
 
@@ -1789,17 +1789,14 @@ msgid "every %d years"
 msgstr "%d évente"
 
 #: includes/event-organiser-register.php:56
-#, fuzzy
 msgid "Show More"
 msgstr "Mutass többet"
 
 #: includes/event-organiser-register.php:57
-#, fuzzy
 msgid "Show Less"
 msgstr "Mutass kevesebbet"
 
 #: includes/event-organiser-register.php:243
-#, fuzzy
 msgid "Hide dates"
 msgstr "Dátumok elrejtése"
 
@@ -1870,7 +1867,6 @@ msgid "Dismiss this notice"
 msgstr ""
 
 #: includes/event-organiser-register.php:712
-#, fuzzy
 msgid "Dismiss"
 msgstr "Elvet"
 
@@ -1879,12 +1875,10 @@ msgid "Address"
 msgstr "Cím"
 
 #: includes/event-organiser-venue-functions.php:974
-#, fuzzy
 msgid "City"
 msgstr "Város"
 
 #: includes/event-organiser-venue-functions.php:975
-#, fuzzy
 msgid "State / Province"
 msgstr "Állam / Megye"
 
@@ -1937,9 +1931,8 @@ msgstr ""
 
 #: templates/archive-event.php:34 templates/archive-event.php:37
 #: templates/archive-event.php:40
-#, fuzzy
 msgid "Events: "
-msgstr "Események: "
+msgstr "Események:"
 
 #: templates/archive-event.php:55 templates/archive-event.php:110
 #: templates/taxonomy-event-category.php:48
@@ -1980,7 +1973,6 @@ msgid "This event finished on %s"
 msgstr "Esemény vége: %s"
 
 #: templates/event-meta-event-single.php:89
-#, fuzzy
 msgid "Upcoming Dates"
 msgstr "Közelgő dátumok"
 
@@ -2004,23 +1996,24 @@ msgstr ""
 "a(z) %3$s bejegyzéshez\" rel=\"bookmark\">Közvetlen link </a> a könyvjelzőbe."
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr "Esemény kategória archívum: %s"
+msgstr "Esemény kategóriák"
 
 #: templates/taxonomy-event-category.php:120
 #, fuzzy
 msgid "Apologies, but no events were found for the requested category. "
-msgstr "Sajnáljuk, de a kért kategória nem tartalmaz eseményeket."
+msgstr "Sajnáljuk, de a kért archívum nem tartalmaz eseményeket."
 
 #: templates/taxonomy-event-tag.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr "Esemény címke archívum: %s"
+msgstr "Esemény archívum:"
 
 #: templates/taxonomy-event-tag.php:120
+#, fuzzy
 msgid "Apologies, but no events were found for the requested tag. "
-msgstr "Sajnáljuk, de nem tartozik esemény a címkéhez."
+msgstr "Sajnáljuk, de a kért archívum nem tartalmaz eseményeket."
 
 #: templates/taxonomy-event-venue.php:31
 #, php-format
@@ -2028,5 +2021,26 @@ msgid "Events at: %s"
 msgstr "Események ezen a helyszínen: %s"
 
 #: templates/taxonomy-event-venue.php:118
+#, fuzzy
 msgid "Apologies, but no events were found for the requested venue. "
-msgstr "Sajnáljuk, de nem tartozik esemény a helyszínhez."
+msgstr "Sajnáljuk, de a kért archívum nem tartalmaz eseményeket."
+
+#~ msgid "End Date"
+#~ msgstr "Esemény vége"
+
+#~ msgid "End Time"
+#~ msgstr "Esemény vége"
+
+#, fuzzy
+#~ msgid "Enter date in %s format"
+#~ msgstr "Dátum/idő formátum"
+
+#, fuzzy
+#~ msgid "Repeat on days of week:"
+#~ msgstr "adott hét napján"
+
+#~ msgid "Start Date"
+#~ msgstr "Kezdő dátum"
+
+#~ msgid "Start Time"
+#~ msgstr "Esemény kezdete"

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-23 17:23+0100\n"
-"PO-Revision-Date: 2015-01-06 15:59:27+0000\n"
-"Last-Translator: Özge <oacavus@gmail.com>\n"
+"POT-Creation-Date: 2015-12-09 22:54+0000\n"
+"PO-Revision-Date: 2015-09-26 08:10:14+0000\n"
+"Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Turkish (Turkey)\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgstr "Gün"
 
 #: classes/class-eo-agenda-widget.php:42 event-organiser-calendar.php:246
 msgid "Week"
-msgstr ""
+msgstr "Hafta"
 
 #: classes/class-eo-agenda-widget.php:43 event-organiser-calendar.php:246
 msgid "Month"
@@ -66,15 +66,16 @@ msgstr "Etkinlik Takvimi"
 #: classes/class-eo-calendar-widget.php:57
 #: classes/class-eo-event-list-widget.php:78
 msgid "Include past events"
-msgstr "Geçmiş etkinlikleri içer"
+msgstr "Geçmiş etkinlikleri içersin"
 
 #: classes/class-eo-calendar-widget.php:68
 msgid "Show long events"
-msgstr ""
+msgstr "Uzun etkinlikleri göster"
 
 #: classes/class-eo-calendar-widget.php:79
 msgid "Link directly to event for days with only one event"
 msgstr ""
+"Sadece bir gün etkinlik olan günler için o etkinliğe doğrudan bağlantı versin"
 
 #: classes/class-eo-calendar-widget.php:91
 #: classes/class-eo-event-list-widget.php:48
@@ -98,7 +99,7 @@ msgstr "Tüm Mekanlar"
 
 #: classes/class-eo-calendar-widget.php:284
 msgid "Previous month"
-msgstr "Geçen ay"
+msgstr "Önceki ay"
 
 #: classes/class-eo-calendar-widget.php:287
 msgid "Next month"
@@ -106,10 +107,10 @@ msgstr "Gelecek ay"
 
 #: classes/class-eo-event-list-widget.php:22
 msgid "Displays a list of events"
-msgstr ""
+msgstr "Etkinliklerin bir listesini gösterir"
 
 #: classes/class-eo-event-list-widget.php:23 event-organiser-venues.php:482
-#: event-organiser.php:138 includes/event-organiser-cpt.php:217
+#: event-organiser.php:139 includes/event-organiser-cpt.php:217
 #: includes/event-organiser-cpt.php:229
 #: includes/event-organiser-install.php:96 templates/archive-event.php:42
 msgid "Events"
@@ -126,7 +127,7 @@ msgstr "Mekan"
 
 #: classes/class-eo-event-list-widget.php:66
 msgid "Order by"
-msgstr "Sıralama"
+msgstr "Sırala"
 
 #: classes/class-eo-event-list-widget.php:68
 msgid "Start date"
@@ -134,7 +135,7 @@ msgstr "Başlangıç tarihi"
 
 #: classes/class-eo-event-list-widget.php:70
 msgid "Publish date"
-msgstr ""
+msgstr "Yayınlanma tarihi"
 
 #: classes/class-eo-event-list-widget.php:73
 msgid "ASC"
@@ -154,7 +155,7 @@ msgstr "Tema (varsayılan için boş bırakın)"
 
 #: classes/class-eo-event-list-widget.php:90
 msgid "Event list widget placeholders"
-msgstr "Etkinlik listesi bileşen yer tutucuları"
+msgstr "Etkinlik listesinde eklenti yer tutucuları"
 
 #: classes/class-eo-event-list-widget.php:92
 #, php-format
@@ -165,7 +166,7 @@ msgid ""
 msgstr ""
 "Bileşende görüntülenmesini istediğiniz etkinlik bilgisi için yer tutucu "
 "olarak özel etiketler kullanabilirsiniz. <a href=\"%s\" target=\"_blank\"> "
-"Daha fazlasını öğrenin</a>."
+"Daha fazlasını için</a>."
 
 #: classes/class-eo-event-list-widget.php:102
 msgid "'No events' message"
@@ -173,21 +174,21 @@ msgstr "\"Etkinlik yok\" mesajı"
 
 #: classes/class-eo-venue-list-table.php:75 templates/single-event.php:71
 msgid "Edit"
-msgstr ""
+msgstr "Düzenle"
 
 #: classes/class-eo-venue-list-table.php:80
 #: classes/class-eo-venue-list-table.php:142
 msgid "Delete"
-msgstr "sil"
+msgstr "Sil"
 
 #: classes/class-eo-venue-list-table.php:85
 #: includes/event-organiser-ajax.php:691
 msgid "View"
-msgstr ""
+msgstr "Görüntüle"
 
 #: classes/class-eo-widget-categories.php:10
 msgid "A list or dropdown of event categories"
-msgstr ""
+msgstr "Etkinlik kategorilerinin listesi veya açılır listesi"
 
 #: classes/class-eo-widget-categories.php:11 event-organiser-settings.php:329
 #: includes/event-organiser-cpt.php:92
@@ -208,20 +209,20 @@ msgstr "Kategori Seç"
 #: classes/class-eo-widget-categories.php:125
 #: classes/class-eo-widget-venues.php:127
 msgid "Title:"
-msgstr ""
+msgstr "Başlık"
 
 #: classes/class-eo-widget-categories.php:129
 #: classes/class-eo-widget-venues.php:131
 msgid "Display as dropdown"
-msgstr ""
+msgstr "Açılır liste biçiminde göster"
 
 #: classes/class-eo-widget-categories.php:132
 msgid "Show hierarchy"
-msgstr ""
+msgstr "Önem sıralamasını göster"
 
 #: classes/class-eo-widget-venues.php:11
 msgid "A list or dropdown of event venues"
-msgstr "Etkinlik mekanlarının bir listesi"
+msgstr "Etkinlik mekanlarının listesi veya açılır listesi"
 
 #: classes/class-eo-widget-venues.php:12
 msgid "Event Venues"
@@ -234,11 +235,11 @@ msgstr "Mekanlar"
 
 #: classes/class-eo-widget-venues.php:57
 msgid "Select Venue"
-msgstr ""
+msgstr "Mekan seçin"
 
 #: classes/class-eventorganiser-shortcodes.php:393
 msgid "There is no excerpt because this is a protected post."
-msgstr "Alıntı yasaktır çünkü bu korunan bir iletidir."
+msgstr "Seçilemez çünkü bu korunan bir iletidir."
 
 #: event-organiser-add-ons.php:19 event-organiser-add-ons.php:95
 msgid "Event Organiser Extensions"
@@ -481,8 +482,9 @@ msgid "All day"
 msgstr "Tüm gün"
 
 #: event-organiser-edit.php:139
+#, fuzzy
 msgid "Reoccurence:"
-msgstr ""
+msgstr "özel tekrar"
 
 #: event-organiser-edit.php:141
 msgid "none"
@@ -518,6 +520,7 @@ msgid "on"
 msgstr "@"
 
 #: event-organiser-edit.php:176
+#, fuzzy
 msgid "day of month"
 msgstr "ayın günü"
 
@@ -615,8 +618,9 @@ msgid "Event"
 msgstr "Etkinlik"
 
 #: event-organiser-manage.php:38
+#, fuzzy
 msgid "Reoccurrence"
-msgstr ""
+msgstr "özel tekrar"
 
 #: event-organiser-manage.php:163
 msgid "View all events"
@@ -688,42 +692,42 @@ msgstr "Etkinlik Düzenleyici Ayarları"
 msgid "Event Organiser"
 msgstr "Etkinlik Düzenleyici"
 
-#: event-organiser-settings.php:46 event-organiser.php:111
+#: event-organiser-settings.php:46 event-organiser.php:112
 #: includes/event-organiser-install.php:112
 msgid "Edit Events"
 msgstr "Etkinlikleri düzenle"
 
-#: event-organiser-settings.php:47 event-organiser.php:112
+#: event-organiser-settings.php:47 event-organiser.php:113
 #: includes/event-organiser-install.php:113
 msgid "Publish Events"
 msgstr "Etkinlikleri yayınla"
 
-#: event-organiser-settings.php:48 event-organiser.php:113
+#: event-organiser-settings.php:48 event-organiser.php:114
 #: includes/event-organiser-install.php:114
 msgid "Delete Events"
 msgstr "Etkinlikleri sil"
 
-#: event-organiser-settings.php:49 event-organiser.php:114
+#: event-organiser-settings.php:49 event-organiser.php:115
 #: includes/event-organiser-install.php:115
 msgid "Edit Others' Events"
 msgstr "Diğerlerinin etkinlikleri düzenle"
 
-#: event-organiser-settings.php:50 event-organiser.php:115
+#: event-organiser-settings.php:50 event-organiser.php:116
 #: includes/event-organiser-install.php:116
 msgid "Delete Other's Events"
 msgstr "Diğerlerinin etkinliklerini sil"
 
-#: event-organiser-settings.php:51 event-organiser.php:116
+#: event-organiser-settings.php:51 event-organiser.php:117
 #: includes/event-organiser-install.php:117
 msgid "Read Private Events"
 msgstr "Özel etkinlikleri oku"
 
-#: event-organiser-settings.php:52 event-organiser.php:117
+#: event-organiser-settings.php:52 event-organiser.php:118
 #: includes/event-organiser-install.php:118
 msgid "Manage Venues"
 msgstr "Mekanları yönet"
 
-#: event-organiser-settings.php:53 event-organiser.php:118
+#: event-organiser-settings.php:53 event-organiser.php:119
 #: includes/event-organiser-install.php:119
 msgid "Manage Event Categories & Tags"
 msgstr "Etkinlik kategorileri ve etiketlerini yönet"
@@ -853,8 +857,9 @@ msgid "Exclude events from searches:"
 msgstr "Etkinlikleri aramalardan çıkar:"
 
 #: event-organiser-settings.php:236
+#, fuzzy
 msgid "Enable templates:"
-msgstr "Temaları etkinleştir:"
+msgstr "Temalar"
 
 #: event-organiser-settings.php:242
 msgid ""
@@ -863,7 +868,7 @@ msgid ""
 "default, if Event Organiser cannot find a template in your theme directory, "
 "it will use its own default template. To prevent this, uncheck this option. "
 "WordPress will then decide which template from your theme's folder to use."
-msgstr "Ter bir sayfa için ilgili tema kullanılır. "
+msgstr ""
 
 #: event-organiser-settings.php:248
 msgid "Events archives:"
@@ -916,11 +921,11 @@ msgstr "Etkinlik (tek)"
 
 #: event-organiser-settings.php:293
 msgid "Events page"
-msgstr ""
+msgstr "Etkinlikler sayfası"
 
 #: event-organiser-settings.php:306
 msgid "Event (date archive)"
-msgstr ""
+msgstr "Etkinlik (gün arşivi)"
 
 #: event-organiser-settings.php:312
 msgid "Year archive"
@@ -1023,7 +1028,7 @@ msgstr ""
 
 #: event-organiser-venues.php:418
 msgid "Latitude/Longitude:"
-msgstr ""
+msgstr "Enlem/Boylam"
 
 #: event-organiser-venues.php:446
 msgid "Venue name"
@@ -1203,8 +1208,9 @@ msgid "End"
 msgstr ""
 
 #: includes/event-organiser-ajax.php:436
+#, fuzzy
 msgid "This event reoccurs"
-msgstr ""
+msgstr "Bu etkinlik tekrarlanır"
 
 #: includes/event-organiser-ajax.php:442 includes/event-organiser-cpt.php:221
 msgid "Edit Event"
@@ -1402,12 +1408,12 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:161
 msgid "View all tags"
-msgstr ""
+msgstr "Tüm etiketleri görüntüle"
 
 #: includes/event-organiser-cpt.php:219
 msgctxt "post"
 msgid "Add New"
-msgstr ""
+msgstr "Yeni Ekle"
 
 #: includes/event-organiser-cpt.php:220
 msgid "Add New Event"
@@ -1443,12 +1449,14 @@ msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:311
+#, fuzzy
 msgid "Custom field updated."
-msgstr ""
+msgstr "Ek alanlar"
 
 #: includes/event-organiser-cpt.php:312
+#, fuzzy
 msgid "Custom field deleted."
-msgstr ""
+msgstr "Ek alanlar"
 
 #: includes/event-organiser-cpt.php:313
 msgid "Event updated."
@@ -1556,7 +1564,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:537 includes/event-organiser-cpt.php:538
 msgid "Selecting a venue"
-msgstr ""
+msgstr "Bir mekan seçmek"
 
 #: includes/event-organiser-cpt.php:540
 msgid "Use the venues input field to search for existing venues"
@@ -1567,37 +1575,47 @@ msgid ""
 "Only pre-existing venues can be selected. To add a venue, go to the venues "
 "page."
 msgstr ""
+"Sadece var olan mekanlar seçilebilir. Bir mekan eklemek için mekanlar "
+"sayfasına gidin."
 
 #: includes/event-organiser-cpt.php:551 includes/event-organiser-cpt.php:570
 msgid "Overview"
 msgstr "Önizleme"
 
 #: includes/event-organiser-cpt.php:552
+#, fuzzy
 msgid ""
 "This is the list of all saved events. Note that <strong> reoccurring events "
 "appear as a single row </strong> in the table and the start and end date "
 "refers to the first occurrence of that event."
 msgstr ""
+"Bu kaydedilen bütün etkinliklerin listesidir. <strong>Tekrarlayan "
+"etkinliklerin tek bir satır halinde göründüğüne </strong> ve başlangıç ile "
+"bitiş tarihinin o etkinliğin ilk tekrarını işaret ettiğine dikkat edin."
 
 #: includes/event-organiser-cpt.php:558
 msgid ""
 "Hovering over a row in the venues list will display action links that allow "
 "you to manage that venue. You can perform the following actions:"
 msgstr ""
+"Mekanlar listesindeki bir satır üzerine fareyi getirirseniz, o mekanı "
+"yönetecek aksiyon bağlantıları görünür. Aksiyonlar şunlardır:"
 
 #: includes/event-organiser-cpt.php:560
 msgid ""
 "Edit takes you to the editing screen for that venue. You can also reach that "
 "screen by clicking on the venue title."
 msgstr ""
+"Düzenle, sizi o mekanın düzenleme sayfasına götürür. O ekrana mekan "
+"başlığını tıklayarak da ulaşabilirsiniz."
 
 #: includes/event-organiser-cpt.php:561
 msgid "Delete will permanently remove the venue"
-msgstr ""
+msgstr "Sil, mekanı kalıcı olarak siler"
 
 #: includes/event-organiser-cpt.php:562
 msgid "View will take you to the venue's page"
-msgstr ""
+msgstr "Görüntüle, sizi mekan sayfasına taşır"
 
 #: includes/event-organiser-cpt.php:571
 msgid ""
@@ -1605,6 +1623,9 @@ msgid ""
 "event by clicking on it. If you have the necessary permissions, a link to "
 "the event's edit page will appear also."
 msgstr ""
+"Bu sayfa bütün etkinlikleri (tekrarları dahil) gösterir. Bir etkinliğin "
+"özeti için üzerine tıklayabilirsiniz. Aynı zamanda, gerekli izinlere "
+"sahipseniz etkinliğin düzenleme sayfasında bir bağlantı görüntülenir."
 
 #: includes/event-organiser-cpt.php:572
 msgid ""
@@ -1612,10 +1633,14 @@ msgid ""
 "mode. You can also filter the events by events by category and venue. The "
 "'go to date' button allows you to quickly jump to a specific date."
 msgstr ""
+"İlgili sekmeyi tıklayarak, etkinlikleri Ay, Hafta veya Gün tarzında "
+"görüntüleyebilirsiniz. Etkinlikleri aynı zamanda kategori veya mekan olarak "
+"da filtreleyebilirsiniz. 'Güne gidin' düğmesi sizi hızlıca belrili bir güne "
+"taşır."
 
 #: includes/event-organiser-cpt.php:576
 msgid "Add Event"
-msgstr ""
+msgstr "Etkinnlik Ekleyin"
 
 #: includes/event-organiser-cpt.php:577
 msgid ""
@@ -1625,23 +1650,29 @@ msgid ""
 "The event can be immediately published or saved as a draft. In any case, the "
 "event is created and you are forwarded to that event's edit page."
 msgstr ""
+"Bu Takvim üzerinde, bir günü tıklayarak veya (Ay görünümünde) birden fazla "
+"gün ya da (Hafta ve Gün görünümünde) birden fazla zaman üzerinde fareyi "
+"sürükleyerek bir etkinlik oluşturabilirsiniz. Etkinliğe bir isim verebilir, "
+"bir mekan belirleyebilir ve bir açıklama yazabilirsiniz. Etkinlik hemen "
+"yayınlanabilir ya da taslak olarak kaydedilebilir. Her halde etkinlik "
+"yaratılmış olur ve ileride bu etkinlik sayfasında düzenleme yapabilirsiniz."
 
 #: includes/event-organiser-cpt.php:583
 msgid "For more information"
-msgstr ""
+msgstr "Daha fazla bilgi için"
 
 #: includes/event-organiser-cpt.php:584
 #, php-format
 msgid "See the <a %s> documentation</a>"
-msgstr ""
+msgstr "ile ilgili <a %s> dökümana bakın</a>"
 
 #: includes/event-organiser-cpt.php:585
 msgid "Debugging Event Organiser"
-msgstr ""
+msgstr "Event Organiser'da Hata Ayıklama"
 
 #: includes/event-organiser-cpt.php:586
 msgid "Go Pro!"
-msgstr ""
+msgstr "Pro'ya Yükseltin!"
 
 #: includes/event-organiser-cpt.php:703 includes/event-organiser-cpt.php:726
 msgid "Color"
@@ -1649,7 +1680,7 @@ msgstr "Renk"
 
 #: includes/event-organiser-cpt.php:709
 msgid "Assign the category a colour."
-msgstr ""
+msgstr "Bir kategori rengi tayin edin"
 
 #: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
@@ -1659,7 +1690,7 @@ msgstr "son"
 #: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "first"
-msgstr ""
+msgstr "ilk"
 
 #: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
@@ -1669,74 +1700,75 @@ msgstr "ikinci"
 #: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "third"
-msgstr ""
+msgstr "üçüncü"
 
 #: includes/event-organiser-event-functions.php:747
 #: includes/event-organiser-register.php:266
 msgid "fourth"
-msgstr ""
+msgstr "dördüncü"
 
 #: includes/event-organiser-event-functions.php:757
 msgid "one time only"
-msgstr ""
+msgstr "sadece bir defa"
 
 #: includes/event-organiser-event-functions.php:760
+#, fuzzy
 msgid "custom reoccurrence"
-msgstr ""
+msgstr "özel tekrar"
 
 #: includes/event-organiser-event-functions.php:767
 #: includes/event-organiser-register.php:256
 msgid "every day"
-msgstr ""
+msgstr "hergün"
 
 #: includes/event-organiser-event-functions.php:769
 #: includes/event-organiser-register.php:257
 #, php-format
 msgid "every %d days"
-msgstr ""
+msgstr "her %d günde"
 
 #: includes/event-organiser-event-functions.php:775
 #: includes/event-organiser-register.php:258
 msgid "every week on"
-msgstr ""
+msgstr "her hafta"
 
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:259
 #, php-format
 msgid "every %d weeks on"
-msgstr ""
+msgstr "her %d haftada"
 
 #: includes/event-organiser-event-functions.php:788
 #: includes/event-organiser-register.php:260
 msgid "every month on the"
-msgstr ""
+msgstr "her ay"
 
 #: includes/event-organiser-event-functions.php:790
 #: includes/event-organiser-register.php:261
 #, php-format
 msgid "every %d months on the"
-msgstr ""
+msgstr "her %d ayında"
 
 #: includes/event-organiser-event-functions.php:819
 msgid "every year"
-msgstr ""
+msgstr "her yıl"
 
 #: includes/event-organiser-event-functions.php:821
 #, php-format
 msgid "every %d years"
-msgstr ""
+msgstr "her %d yıl"
 
 #: includes/event-organiser-register.php:56
 msgid "Show More"
-msgstr ""
+msgstr "Daha Fazla"
 
 #: includes/event-organiser-register.php:57
 msgid "Show Less"
-msgstr ""
+msgstr "Daha Az"
 
 #: includes/event-organiser-register.php:243
 msgid "Hide dates"
-msgstr ""
+msgstr "Günleri gösterme"
 
 #: includes/event-organiser-register.php:246
 msgid "Hour"
@@ -1748,23 +1780,23 @@ msgstr "Dakika"
 
 #: includes/event-organiser-register.php:249
 msgid "days"
-msgstr "günler"
+msgstr "gün"
 
 #: includes/event-organiser-register.php:251
 msgid "weeks"
-msgstr ""
+msgstr "hafta"
 
 #: includes/event-organiser-register.php:253
 msgid "months"
-msgstr "aylar"
+msgstr "ay"
 
 #: includes/event-organiser-register.php:254
 msgid "year"
-msgstr ""
+msgstr "yıl"
 
 #: includes/event-organiser-register.php:255
 msgid "years"
-msgstr ""
+msgstr "yıl"
 
 #: includes/event-organiser-register.php:262
 msgid "every year on the"
@@ -1773,11 +1805,11 @@ msgstr ""
 #: includes/event-organiser-register.php:263
 #, php-format
 msgid "every %d years on the"
-msgstr ""
+msgstr "her %d yılda"
 
 #: includes/event-organiser-register.php:264
 msgid "This event will repeat"
-msgstr ""
+msgstr "Bu etkinlik tekrarlanır"
 
 #: includes/event-organiser-register.php:365
 msgid "Settings"
@@ -1799,18 +1831,22 @@ msgid ""
 "haven't and want the old templates back, <a href='http://wp-event-organiser."
 "com/blog/new-default-templates-in-1-7'>see this post<a/>."
 msgstr ""
+"<h4>Varsayılan Şablon Değişti</h4>Telaşlanmayın! Eğer şablonlarınızı kendi "
+"temanız içine kurduysanız herhangi bir değişiklik olmayacak. </br> Eğer bunu "
+"yapmadıysanız ve eski şablonu geri istiyorsanız, <a href='http://wp-event-"
+"organiser.com/blog/new-default-templates-in-1-7'>bu yazıyı okuyun</a>."
 
 #: includes/event-organiser-register.php:711
 msgid "Dismiss this notice"
-msgstr ""
+msgstr "Bu notu gözardı edin"
 
 #: includes/event-organiser-register.php:712
 msgid "Dismiss"
-msgstr ""
+msgstr "Gözardı edin"
 
 #: includes/event-organiser-venue-functions.php:973
 msgid "Address"
-msgstr ""
+msgstr "Adres"
 
 #: includes/event-organiser-venue-functions.php:974
 msgid "City"
@@ -1818,19 +1854,19 @@ msgstr "Şehir"
 
 #: includes/event-organiser-venue-functions.php:975
 msgid "State / Province"
-msgstr ""
+msgstr "Eyalet / Bölge"
 
 #: includes/event-organiser-venue-functions.php:976
 msgid "Post Code"
-msgstr ""
+msgstr "Posta Kodu"
 
 #: includes/event-organiser-venue-functions.php:977
 msgid "Country"
-msgstr ""
+msgstr "Ülke"
 
 #: includes/event.php:615
 msgid "Schedule not recognised."
-msgstr "Etkinlik anlaşılamadı."
+msgstr "Program tanınmadı."
 
 #: includes/event.php:624
 msgid "Start date not provided."
@@ -1838,11 +1874,11 @@ msgstr "Başlangıç tarihi belirtilmemiş."
 
 #: includes/event.php:642
 msgid "Start date occurs after end date."
-msgstr ""
+msgstr "Başlangıç tarihi bitiş tarihinden sonra."
 
 #: includes/event.php:645
 msgid "Schedule end date is before is before the start date."
-msgstr "Etkinliğin sonlanma tarihi başlangıç tarihinden önce."
+msgstr "Programın sonlanma tarihi başlangıç tarihinden önce."
 
 #: includes/event.php:727
 msgid "Invalid monthly schedule (invalid ordinal)"
@@ -1858,7 +1894,7 @@ msgstr ""
 
 #: includes/event.php:1065
 msgid "There is already an occurrence on this date"
-msgstr ""
+msgstr "Bu tarihte zaten bir tekrar var"
 
 #. / TRANSLATORS: This is the description that of the plug-in that appears in the "Plugins" page.
 #: includes/i18n.php:8
@@ -1879,7 +1915,7 @@ msgstr "Etkinlikler"
 #: templates/taxonomy-event-venue.php:48
 #: templates/taxonomy-event-venue.php:105
 msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
-msgstr "Eski etkinlikler"
+msgstr "Sonraki etkinlikler"
 
 #: templates/archive-event.php:56 templates/archive-event.php:111
 #: templates/taxonomy-event-category.php:49
@@ -1929,18 +1965,18 @@ msgid ""
 msgstr ""
 
 #: templates/taxonomy-event-category.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Category Archives: %s"
-msgstr ""
+msgstr "Etkinlik Kategorileri"
 
 #: templates/taxonomy-event-category.php:120
 msgid "Apologies, but no events were found for the requested category. "
 msgstr ""
 
 #: templates/taxonomy-event-tag.php:31
-#, php-format
+#, fuzzy, php-format
 msgid "Event Tag Archives: %s"
-msgstr ""
+msgstr "Etkinlik arşivleri:"
 
 #: templates/taxonomy-event-tag.php:120
 msgid "Apologies, but no events were found for the requested tag. "
@@ -1949,8 +1985,25 @@ msgstr ""
 #: templates/taxonomy-event-venue.php:31
 #, fuzzy, php-format
 msgid "Events at: %s"
-msgstr "Buradaki Etkinlikler"
+msgstr "%daki Etkinlikler"
 
 #: templates/taxonomy-event-venue.php:118
 msgid "Apologies, but no events were found for the requested venue. "
 msgstr ""
+
+#, fuzzy
+#~ msgid "Enter date in %s format"
+#~ msgstr "Etkinlik tarit/saat formatı"
+
+#~ msgid "Repeat on days of week:"
+#~ msgstr "haftanın günü"
+
+#~ msgid "Running events"
+#~ msgstr "Süren etkinlikler"
+
+#~ msgid "Start Date"
+#~ msgstr "Başlangıç tarihi"
+
+#, fuzzy
+#~ msgid "Start Time"
+#~ msgstr "Başlangıç tarihi"
