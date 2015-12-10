@@ -359,31 +359,34 @@ function eventorganiser_admin_calendar() {
 				}
 
 				//Get author (or organiser)
-				$organiser = get_userdata( $post->post_author)->display_name;
-	
+				$user = get_userdata( $post->post_author );
+				$organiser = $user ? $user->display_name : '';
+
 				//Get Event Start and End date, set timezone to the blog's timzone
 				$event_start = new DateTime($post->StartDate.' '.$post->StartTime, $tz);
 				$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, $tz);
-	
+
+				//fullCalendar API expects end date to be 00:00 of the following day
 				if ( $event['allDay'] ) {
 					$event_end->modify( '+1 minute' );
 				}
-				
-				$event['start']= $event_start->format('Y-m-d\TH:i:s\Z');
-				$event['end']= $event_end->format('Y-m-d\TH:i:s\Z');
-				
+
+				$event['start'] = $event_start->format( 'Y-m-d\TH:i:s\Z' );
+				$event['end']   = $event_end->format( 'Y-m-d\TH:i:s\Z' );
+
 				if ( $event['allDay'] ) {
 					$event_end->modify( '-1 minute' );
 				}
-	
+
 				//Produce summary of event
 				$summary= "<table class='form-table' >"
 							."<tr><th> ".__('Start','eventorganiser').": </th><td> ".eo_format_datetime($event_start,$format)."</td></tr>"
 							."<tr><th> ".__('End','eventorganiser').": </th><td> ".eo_format_datetime($event_end, $format)."</td></tr>";
-				if( eo_is_multi_event_organiser() ){
-					$summary .= "<tr><th> ".__('Organiser','eventorganiser').": </th><td>".$organiser."</td></tr>";
+
+				if ( $organiser && eo_is_multi_event_organiser() ) {
+					$summary .= sprintf( '<tr><th>%s</th><td>%s</td></tr>', esc_html__( 'Organiser:', 'eventorganiser' ), $organiser );
 				}
-	
+
 				$event['className']=array('event');
 
 				 $now = new DateTime(null,$tz);
