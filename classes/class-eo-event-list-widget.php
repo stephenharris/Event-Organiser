@@ -231,6 +231,7 @@ class EO_Event_List_Widget extends WP_Widget{
 		$intervals = $this->get_event_intervals();
 		$instance  = array_merge( $instance, (array) $intervals[$scope]['query'] );
 
+		unset( $instance['title'] );
 		eventorganiser_list_events( $instance, array(
 			'type'      => 'widget',
 			'class'     => 'eo-events eo-events-widget',
