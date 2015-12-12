@@ -222,17 +222,14 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			}
 		}
 
-		$actual = array(
-			array( 'text' => 'text' ),
-		);
 		foreach ( $elements as $n => $element ) {
-			$actual[] = array( 'text' => $elements[$n]->getText() );
+			$actual[] = array( $elements[$n]->getText() );
 		}
 		$actual_table = new TableNode( $actual );
 
 		if ( $actual_table->getTableAsString() != $table->getTableAsString() ) {
 			throw new \Exception( sprintf(
-				"Found elements:\n %s",
+				"Found elements:\n%s",
 				$actual_table->getTableAsString()
 			) );
 		}
