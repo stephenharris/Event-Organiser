@@ -22,14 +22,15 @@ class EO_Event_List_Widget extends WP_Widget{
 	public static function register() {
 		register_widget( __CLASS__ );
 
+		//When adding new variables, remember to exclude non-query related ones
+		//from being pass to eventorganiser_list_events().
 		self::$w_arg = array(
 			'title'           => __( 'Events', 'eventorganiser' ),
 			'numberposts'     => 5,
 			'event-category'  => '',
-			'venue_id'        => null,
 			'venue'           => '',
 			'orderby'         => 'eventstart',
-			'scope'        => 'future',
+			'scope'           => 'future',
 			'group_events_by' => '',
 			'order'           => 'ASC',
 			'template'        => '',
@@ -216,8 +217,6 @@ class EO_Event_List_Widget extends WP_Widget{
 
 		$template  = $instance['template'];
 		$no_events = $instance['no_events'];
-		unset( $instance['template'] );
-		unset( $instance['no_events'] );
 
 		echo $args['before_widget'];
 
@@ -231,8 +230,11 @@ class EO_Event_List_Widget extends WP_Widget{
 		$intervals = $this->get_event_intervals();
 		$instance  = array_merge( $instance, (array) $intervals[$scope]['query'] );
 
-		unset( $instance['title'] );
-		eventorganiser_list_events( $instance, array(
+		//Ensure $query doesn't contain any non-query related values
+		//@see https://github.com/stephenharris/Event-Organiser/issues/314
+		$non_query = array( 'title', 'scope', 'no_events', 'template' );
+		$query = array_diff_key( $instance, array_flip( $non_query ) );
+		eventorganiser_list_events( $query, array(
 			'type'      => 'widget',
 			'class'     => 'eo-events eo-events-widget',
 			'template'  => $template,
