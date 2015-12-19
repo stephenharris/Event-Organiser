@@ -264,9 +264,9 @@ function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, 
  * @package event-date-functions
  * @param int $event_id
  * @param int $occurrence_id
- * @return boolean|array False if the occurence was not found. 
+ * @return boolean|array False if the occurrence was not found.
  */
-function eo_get_the_occurrence( $event_id, $occurrence_id ){
+function eo_get_the_occurrence( $event_id, $occurrence_id ) {
 
 	global $wpdb;
 	
@@ -330,7 +330,7 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
 }
 
 /**
- * Echos the start date of occurence of event
+ * Echos the start date of occurrence of event
  * @since 1.0.0
  * @uses eo_get_the_start()
  * @package event-date-functions
@@ -431,7 +431,7 @@ function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $d
 }
 
 /**
-* Echos the end date of occurence of event
+* Echos the end date of occurrence of event
  * @since 1.0.0
  * @uses eo_get_the_end()
 * @package event-date-functions
@@ -530,14 +530,14 @@ function eo_get_next_occurrence_of($post_id=0){
 /**
 * Prints the formated date of next occurrence of an event
 * @since 1.0.0
-* @uses eo_get_next_occurence()
+* @uses eo_get_next_occurrence()
 * @package event-date-functions
 *
 * @param string $format The format to use, using PHP Date format
-* @param int $post_id The event (post) ID. Uses current event if empty. 
+* @param int $post_id The event (post) ID. Uses current event if empty.
  */
-function eo_next_occurence($format='',$post_id=0){
-	echo eo_get_next_occurence($format,$post_id);
+function eo_next_occurrence( $format = '', $event_id = 0 ) {
+	echo eo_get_next_occurrence( $format, $event_id );
 }
 
 /**
@@ -854,7 +854,7 @@ function eo_get_schedule_summary($post_id=0){
 * @ignore
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
-* @return array Array of arrays of DateTime objects of the start and end date-times of occurences. False if none exist.
+* @return array Array of arrays of DateTime objects of the start and end date-times of occurrences. False if none exist.
  */
 function eo_get_the_future_occurrences_of( $post_id=0 ){
 	global $wpdb;
@@ -922,7 +922,7 @@ function eo_get_the_future_occurrences_of( $post_id=0 ){
 * @package event-date-functions
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
-* @return array Array of arrays of DateTime objects of the start and end date-times of occurences. False if none exist.
+* @return array Array of arrays of DateTime objects of the start and end date-times of occurrences. False if none exist.
  */
 function eo_get_the_occurrences_of($post_id=0){
 	global $wpdb;
