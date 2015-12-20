@@ -688,7 +688,8 @@ a.fc-more:hover {
 /* the things within each left/right/center section */
 .fc .fc-toolbar > * > * { /* extra precedence to override button border margins */
 	float: left;
-	margin-left: .75em;
+	margin-left: .37em;
+	margin-right: .37em;
 }
 
 @media print, all and (max-width: 601px) {
@@ -708,9 +709,12 @@ a.fc-more:hover {
 	}
 }
 
-/* the first thing within each left/center/right section */
-.fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */
-	margin-left: 0;
+@media print, all and (min-width: 514px) {
+	/* the first thing within each left/center/right section */
+	.fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */
+		margin-left: 0;
+		margin-right: 0;
+	}
 }
 	
 /* title text */
