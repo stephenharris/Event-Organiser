@@ -246,8 +246,8 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$end = clone $start;
 		$end->modify( '+1 hour' );
 
-		$tommorrow = clone $now;
-		$tommorrow = $now->modify( '+1 day' );
+		$tomorrow = clone $now;
+		$tomorrow = $tomorrow->modify( '+1 day' );
 		
 		$event_id = $this->factory->event->create(
 			array(
@@ -265,7 +265,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$actual = ob_get_contents();
 		ob_end_clean();
 		
-		$this->assertEquals( $tommorrow->format(  'Y-m-d H:i' ), $actual );
+		$this->assertEquals( $tomorrow->format(  'Y-m-d H:i' ), $actual );
 	}
 	
 }
