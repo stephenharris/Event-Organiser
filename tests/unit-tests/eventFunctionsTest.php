@@ -247,7 +247,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$end->modify( '+1 hour' );
 
 		$tomorrow = clone $now;
-		$tomorrow = $tomorrow->modify( '+1 day' );
+		$tomorrow->modify( '+1 day' );
 		
 		$event_id = $this->factory->event->create(
 			array(
