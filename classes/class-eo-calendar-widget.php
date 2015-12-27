@@ -178,8 +178,10 @@ class EO_Calendar_Widget extends WP_Widget
 
 	static function add_options_to_script() {
 		wp_enqueue_script( 'eo_front' );
-		if( !empty( self::$widget_cal ) )
-			wp_localize_script( 'eo_front', 'eo_widget_cal', self::$widget_cal );	
+		eo_enqueue_style( 'eo_front' );
+		if ( ! empty( self::$widget_cal ) ) {
+			wp_localize_script( 'eo_front', 'eo_widget_cal', self::$widget_cal );
+		}
 	}
 
 	/**
