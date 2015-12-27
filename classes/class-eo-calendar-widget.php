@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Class used to create the event calendar widget
  */
@@ -13,29 +13,29 @@ class EO_Calendar_Widget extends WP_Widget
 		'show-long'      => false,
 		'link-to-single' => false,
 	);
-	
+
 	static $widget_cal = array();
 
 	function __construct() {
 		$widget_ops = array(
-			'classname'   => 'widget_calendar eo_widget_calendar', 
-			'description' => __( 'Displays a calendar of your events','eventorganiser' ) 
+			'classname'   => 'widget_calendar eo_widget_calendar',
+			'description' => __( 'Displays a calendar of your events','eventorganiser' ),
 		);
 		parent::__construct( 'EO_Calendar_Widget', __( 'Events Calendar', 'eventorganiser' ), $widget_ops );
-  	}
-  	
-  	/**
-  	 * Registers the widget with the WordPress Widget API.
-  	 *
-  	 * @return void.
-  	 */
-  	public static function register() {
-  		register_widget( __CLASS__ );
-  	}
- 
-	function form( $instance )  {
-	
-		$instance = wp_parse_args( (array) $instance, $this->w_arg ); 	
+	}
+
+	/**
+	 * Registers the widget with the WordPress Widget API.
+	 *
+	 * @return void.
+	 */
+	public static function register() {
+		register_widget( __CLASS__ );
+	}
+
+	function form( $instance ) {
+
+		$instance = wp_parse_args( (array) $instance, $this->w_arg );
 
 		printf(
 			'<p>
@@ -58,7 +58,7 @@ class EO_Calendar_Widget extends WP_Widget
 			esc_attr( $this->get_field_name( 'showpastevents' ) ),
 			checked( $instance['showpastevents'], 1, false )
 		);
-		
+
 		printf(
 			'<p>
 				<label for="%1$s"> %2$s: </label>
@@ -69,7 +69,7 @@ class EO_Calendar_Widget extends WP_Widget
 			esc_attr( $this->get_field_name( 'show-long' ) ),
 			checked( $instance['show-long'], 1, false )
 		);
-		
+
 		printf(
 			'<p>
 				<label for="%1$s"> %2$s: </label>
@@ -115,19 +115,19 @@ class EO_Calendar_Widget extends WP_Widget
 	}
 
 
-	function update($new_instance, $old_instance){
-		
+	function update( $new_instance, $old_instance ) {
+
 		$validated = array(
 			'title'          => sanitize_text_field( $new_instance['title'] ),
 			'event-category' => sanitize_text_field( $new_instance['event-category'] ),
 			'event-venue'    => sanitize_text_field( $new_instance['event-venue'] ),
-			'showpastevents' => !empty( $new_instance['showpastevents'] ) ? 1:  0,
-			'show-long'      => !empty( $new_instance['show-long'] ) ? 1:  0,
-			'link-to-single' => !empty( $new_instance['link-to-single'] ) ? 1:  0,		
+			'showpastevents' => ! empty( $new_instance['showpastevents'] ) ? 1:  0,
+			'show-long'      => ! empty( $new_instance['show-long'] ) ? 1:  0,
+			'link-to-single' => ! empty( $new_instance['link-to-single'] ) ? 1:  0,
 		);
 
 		delete_transient( 'eo_widget_calendar' );
-		
+
 		return $validated;
 	}
 
@@ -189,92 +189,92 @@ class EO_Calendar_Widget extends WP_Widget
 	*
 	* @param $month - DateTime object for first day of the month (in blog timezone)
 	*/
-	static function generate_output( $month, $args = array() ){
+	static function generate_output( $month, $args = array() ) {
 
 		//Translations
 		global $wp_locale;
-		
+
 		$today = new DateTime( 'now', eo_get_blog_timezone() );
 
-		$key = $month->format('YM') . serialize( $args ).get_locale().$today->format('Y-m-d');
+		$key = $month->format( 'YM' ) . serialize( $args ).get_locale().$today->format( 'Y-m-d' );
 		$calendar = get_transient( 'eo_widget_calendar' );
-		if( ( !defined( 'WP_DEBUG' ) || !WP_DEBUG ) && $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
+		if ( ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) && $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ) {
 			return $calendar[$key];
 		}
-		
+
 		//Parse defaults
 		$args['show-long']  = isset( $args['show-long'] ) ? $args['show-long']  : false;
 		$args['link-to-single']  = isset( $args['link-to-single'] ) ? $args['link-to-single']  : false;
-			
+
 		//Month details
-		$first_day_of_month = intval( $month->format('N') ); //0=sun,...,6=sat
-		$days_in_month      = intval( $month->format('t') ); // 28-31
-		
+		$first_day_of_month = intval( $month->format( 'N' ) ); //0=sun,...,6=sat
+		$days_in_month      = intval( $month->format( 't' ) ); // 28-31
+
 		$last_month = clone $month;
 		$next_month = clone $month;
-		$last_month->modify( 'last month' );	
+		$last_month->modify( 'last month' );
 		$next_month->modify( 'next month' );
 
 		//Retrieve the start day of the week from the options.
 		$start_day = intval( get_option( 'start_of_week' ) );//0=sun,...,6=sat
 
 		//How many blank cells before inserting dates
-		$offset = ( $first_day_of_month - $start_day +7 ) % 7;
+		$offset = ( $first_day_of_month - $start_day + 7 ) % 7;
 
 		//Number of weeks to show in Calendar
-		$totalweeks = ceil( ( $offset + $days_in_month )/7 );
+		$totalweeks = ceil( ( $offset + $days_in_month ) / 7 );
 
 		//Get events for this month
-		$start = $month->format('Y-m-d');
-		$end   = $month->format('Y-m-t');
+		$start = $month->format( 'Y-m-d' );
+		$end   = $month->format( 'Y-m-t' );
 
 		//Query events
-		$required = array( 
-			'numberposts' => -1, 
-			'showrepeats' => 1,  
+		$required = array(
+			'numberposts' => -1,
+			'showrepeats' => 1,
 		);
-		
-		if( $args['show-long'] ){
+
+		if ( $args['show-long'] ) {
 			$args['event_start_before'] = $end;
-			$args['event_end_after'] = $start;
-		}else{
+			$args['event_end_after']    = $start;
+		} else {
 			$args['event_start_before'] = $end;
-			$args['event_start_after'] = $start;
+			$args['event_start_after']  = $start;
 		}
 		$events = eo_get_events( array_merge( $args, $required ) );
-	
+
 		//Populate events array
 		$calendar_events = array();
-		foreach( $events as $event ):
-	
-			if( $args['show-long'] ){
+		foreach ( $events as $event ) :
+
+			if ( $args['show-long'] ) {
 				$start   = eo_get_the_start( DATETIMEOBJ, $event->ID, $event->occurrence_id );
 				$end     = eo_get_the_end( DATETIMEOBJ, $event->ID, $event->occurrence_id );
 				$pointer = clone $start;
-				
-				while( $pointer->format( 'Ymd' ) <= $end->format( 'Ymd' ) ){
+
+				while ( $pointer->format( 'Ymd' ) <= $end->format( 'Ymd' ) ) {
 					$date = eo_format_datetime( $pointer, 'Y-m-d' );
 					$calendar_events[ $date ][] = $event;
 					$pointer->modify( '+1 day' );
 				}
-			}else{
+			} else {
 				$date = eo_get_the_start( 'Y-m-d', $event->ID, $event->occurrence_id );
 				$calendar_events[$date][] = $event;
 			}
-			
+
 		endforeach;
 
 		$before = "<table id='wp-calendar'>";
 
-		$title = sprintf("<caption> %s </caption>", esc_html(eo_format_datetime( $month, 'F Y' ) ) );
+		$title = sprintf( '<caption> %s </caption>', esc_html( eo_format_datetime( $month, 'F Y' ) ) );
 
-		$head = "<thead><tr>";
-		for ( $d=0; $d <= 6; $d++ ): 
-			$day = $wp_locale->get_weekday( ($d + $start_day ) % 7 );
+		$head = '<thead><tr>';
+		for ( $d = 0; $d <= 6; $d++ ) :
+			$day = $wp_locale->get_weekday( ( $d + $start_day ) % 7 );
 			$day_abbrev = $wp_locale->get_weekday_initial( $day );
-			$head .= sprintf( "<th title='%s' scope='col'>%s</th>", esc_attr( $day ), esc_html($day_abbrev ) );
+			$head .= sprintf( "<th title='%s' scope='col'>%s</th>", esc_attr( $day ), esc_html( $day_abbrev ) );
 		endfor;
-		$head.="</tr></thead>";
+		$head .= '</tr></thead>';
 
 		$foot = sprintf(
 			"<tfoot><tr>
@@ -288,65 +288,64 @@ class EO_Calendar_Widget extends WP_Widget
 			esc_html__( 'Next month', 'eventorganiser' ),
 			esc_url( add_query_arg( 'eo_month', $next_month->format( 'Y-m' ), home_url() ) ),
 			esc_html( eo_format_datetime( $next_month, 'M' ) )
-		);							
+		);
 
-
-		$body = "<tbody>";
+		$body = '<tbody>';
 		$current_date = clone $month;
-	
+
 		//Foreach week in calendar
-		for( $w = 0; $w <= $totalweeks-1; $w++ ):
-			$body .= "<tr>";
+		for ( $w = 0; $w <= $totalweeks - 1; $w++ ) :
+			$body .= '<tr>';
 
 			//For each cell in this week
- 			for( $cell = $w*7 +1; $cell <= ($w+1)*7;  $cell++ ): 
+			for ( $cell = ( $w * 7 ) + 1; $cell <= ($w + 1) * 7;  $cell++ ) :
 
-				$formated_date = $current_date->format('Y-m-d');
- 				$data = "data-eo-wc-date='{$formated_date}'";
+				$formated_date = $current_date->format( 'Y-m-d' );
+				$data = "data-eo-wc-date='{$formated_date}'";
 
-				if( $cell <= $offset ){
-					$body .= "<td class='pad eo-before-month' colspan='1'>&nbsp;</td>";
-				}elseif( $cell-$offset > $days_in_month ){
-					$body .= "<td class='pad eo-after-month' colspan='1'>&nbsp;</td>";
+				if ( $cell <= $offset ) {
+					$body .= '<td class="pad eo-before-month" colspan="1">&nbsp;</td>';
+				} elseif ( $cell - $offset > $days_in_month ) {
+					$body .= '<td class="pad eo-after-month" colspan="1">&nbsp;</td>';
 
-				}else{
+				} else {
 					$class = array();
 
-					if( $formated_date < $today->format('Y-m-d') ){
+					if ( $formated_date < $today->format( 'Y-m-d' ) ) {
 						$class[] = 'eo-past-date';
-					}elseif( $formated_date == $today->format('Y-m-d') ){
+					} elseif ( $formated_date == $today->format( 'Y-m-d' ) ) {
 						$class[] = 'today';
-					}else{
+					} else {
 						$class[] = 'eo-future-date';
 					}
-						
+
 					//Does the date have any events
-					if( isset( $calendar_events[$formated_date] ) ){
+					if ( isset( $calendar_events[$formated_date] ) ) {
 						$class[] = 'event';
 						$events = $calendar_events[$formated_date];
 
-						if( $events && count( $events ) == 1 && $args['link-to-single']  ){
+						if ( $events && 1 == count( $events ) && $args['link-to-single'] ) {
 							$only_event = $events[0];
 							$link = get_permalink( $only_event->ID );
-						}else{
-							$link = eo_get_event_archive_link( 
-								$current_date->format('Y'), 
-								$current_date->format('m'), 
-								$current_date->format('d') 
+						} else {
+							$link = eo_get_event_archive_link(
+								$current_date->format( 'Y' ),
+								$current_date->format( 'm' ),
+								$current_date->format( 'd' )
 							);
 						}
 						$link = esc_url( $link );
 
 						/**
 						 * Filters the the link of a date on the events widget calendar
-						 * 
+						 *
 						 * @package widgets
 						 * @param string $link The link
 						 * @param datetime $current_date The date being filtered
 						 * @param array $events Array of events starting on this day
 						*/
 						$link = apply_filters( 'eventorganiser_widget_calendar_date_link', $link, $current_date, $events );
-						foreach( $events as $event ){
+						foreach ( $events as $event ) {
 							$class = array_merge( $class, eo_get_event_classes( $event->ID, $event->occurrence_id ) );
 						}
 						$class   = array_unique( array_filter( $class ) );
@@ -360,9 +359,9 @@ class EO_Calendar_Widget extends WP_Widget
 							$link,
 							$cell - $offset
 						);
-					}else{
-						$classes = implode(' ',$class);
-						$body .= sprintf( "<td $data class='%s'> %s </td>", esc_attr( $classes ), $cell-$offset );
+					} else {
+						$classes = implode( ' ',$class );
+						$body .= sprintf( "<td $data class='%s'> %s </td>", esc_attr( $classes ), $cell - $offset );
 					}
 
 					//Proceed to next day
@@ -370,21 +369,21 @@ class EO_Calendar_Widget extends WP_Widget
 				}
 
 		 	endfor;//Endfor each day in week
-		
-		 	$body .="</tr>";
+
+		 	$body .= '</tr>';
 
 		endfor; //End for each week
 
-		$body .="</tbody>";
-		$after = "</table>";
+		$body .= '</tbody>';
+		$after = '</table>';
 
-		if( !$calendar || !is_array( $calendar ) ){
+		if ( ! $calendar || ! is_array( $calendar ) ) {
 			$calendar = array();
 		}
-	
+
 		$calendar[$key] = $before.$title.$head.$foot.$body.$after;
 
-		set_transient( 'eo_widget_calendar', $calendar, 60*60*24 );
+		set_transient( 'eo_widget_calendar', $calendar, DAY_IN_SECONDS );
 		return $calendar[$key];
 	}
 }
