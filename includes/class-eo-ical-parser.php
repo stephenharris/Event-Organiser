@@ -240,23 +240,24 @@ class EO_ICAL_Parser{
 		
 		return true;
 	}
-	
+
 	/**
 	 * Fetches ICAL calendar from a feed url and returns its contents as an array.
 	 * 
 	 * @ignore
-	 * @param sring $url The url of the ICAL feed 
-	 * @return array|bool Array of line in ICAL feed, false on error 
+	 * @param sring $url The url of the ICAL feed
+	 * @return array|bool Array of line in ICAL feed, false on error
 	 */
 	protected function url_to_array( $url ){
-		
-		//Handle webcal:// protocol: change to http://
-		$url = preg_replace('#^(webcal://)#', 'http://', $url );
-		
-		$response =  wp_remote_get( $url, array( 'timeout' => $this->remote_timeout ) );
+
+		//Handle webcal:// and feed:// protocol: change to http://
+		$url = preg_replace( '#^(webcal://)#', 'http://', $url );
+		$url = preg_replace( '#^(feed://)#', 'http://', $url );
+
+		$response = wp_remote_get( $url, array( 'timeout' => $this->remote_timeout ) );
 		$contents = wp_remote_retrieve_body( $response );
 		$response_code = wp_remote_retrieve_response_code( $response );
-		
+
 		if( is_wp_error( $response ) )
 			return $response;
 		
