@@ -173,23 +173,23 @@ class EO_ICAL_Parser{
 
 	/**
 	 * Parses the given $file. Returns WP_Error on error.
-	 * 
+	 *
 	 * @param string $file Path to iCal file or an url to an ical file
 	 * @return bool|WP_Error. True if parsed. Returns WP_Error on error;
 	 */
-	function parse( $file ){
-		
-		//Local file
-		if( is_file($file) && file_exists($file)  ){
-			$this->ical_array = $this->file_to_array( $file );
+	function parse( $file ) {
 
 		//Remote file
-		}elseif( preg_match('!^(http|https|ftp|webcal)://!i', $file) ){
+		if( preg_match('!^(http|https|ftp|webcal|feed)://!i', $file ) ) {
 			$this->ical_array = $this->url_to_array( $file );
 
-		}else{
-			$this->ical_array =  new WP_Error( 
-				'invalid-ical-source', 
+		//Local file
+		} elseif ( @is_file( $file ) && @file_exists( $file )  ) {
+			$this->ical_array = $this->file_to_array( $file );
+			
+		} else {
+			$this->ical_array =  new WP_Error(
+				'invalid-ical-source',
 				__( 'There was an error detecting iCal source.', 'eventorganiser' )
 			);
 		}
