@@ -825,7 +825,7 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		$response = $ical->parse( 'webcal://ical.example' );
 		
 		$this->assertTrue( is_wp_error( $response ) );
-		$this->assertEquals( 'Could not resolve host: ical.example', $response->get_error_message() );
+		$this->assertEquals( 'http_request_failed', $response->get_error_code() );
 	}
 	
 	/**
