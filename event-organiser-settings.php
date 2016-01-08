@@ -624,27 +624,27 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			}	
 		} 
 	}
-	
-	function template_settings(){
-		esc_html_e("For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. You can disable this below. WordPress will then decide which template from your theme's folder to use.", 'eventorganiser' );
+
+	function template_settings() {
+		esc_html_e( "For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. You can disable this below. WordPress will then decide which template from your theme's folder to use.", 'eventorganiser' );
 		echo '<ul>';
 		printf(
-			"<li><strong> %s </strong><code>archive-event.php</code></li>
+			'<li><strong> %s </strong><code>archive-event.php</code></li>
 			<li><strong> %s </strong><code>single-event.php</code></li>
 			<li><strong> %s </strong><code>taxonomy-event-venue.php</code></li>
-			<li><strong> %s </strong><code>taxonomy-event-category.php</code></li>",
-			__("Events archives:", 'eventorganiser' ),
-			__("Event page:", 'eventorganiser' ),
-			__("Venue page:", 'eventorganiser' ),
-			__("Events Category page:", 'eventorganiser' )
+			<li><strong> %s </strong><code>taxonomy-event-category.php</code></li>',
+			esc_html__( 'Events archives:', 'eventorganiser' ),
+			esc_html__( 'Event page:', 'eventorganiser' ),
+			esc_html__( 'Venue page:', 'eventorganiser' ),
+			esc_html__( 'Events Category page:', 'eventorganiser' )
 		);
 		printf(
 			__( "For more information see documentation <a href='%s'>on editing the templates</a>", 'eventorganiser' ),
 			'http://docs.wp-event-organiser.com/theme-integration'
-		);	
+		);
 		echo '</ul>';
 	}
-	
+
 	function display_permissions(){
 		global $wp_roles;
 		
