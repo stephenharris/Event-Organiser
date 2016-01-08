@@ -559,60 +559,56 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		endforeach; //End foreach $editable_roles
 	}
 
+	function display() {
 
-
-	function display(){
+		$active_tab = ( isset( $_GET['tab'] ) &&  isset( $this->tabs[$_GET['tab']] ) ? $_GET['tab'] : 'general' );
+		$label      = $this->tabs[$active_tab];
 		?>
-    		<div class="wrap">  
-      
-				<?php
+    	<div class="wrap">  
+      		<h1>
+      			<span aria-hidden=true><?php esc_html_e( 'Event Settings', 'eventorganiser' );?></span>
+      			<span class="screen-reader-text"><?php printf( esc_html__( 'Event Settings: %s', 'eventorganiser' ), $label ); ?></span>
+      		</h1>
+			<?php
+			echo '<h2 class="nav-tab-wrapper">';
+			foreach ( $this->tabs as $tab_id => $label ) {
+				printf(
+					'<a href="%s" class="nav-tab %s">%s</a>',
+					esc_url( add_query_arg( array( 'page' => $this->slug, 'tab' => $tab_id ) ) ),
+					( $active_tab == $tab_id ? 'nav-tab-active' : '' ),
+					esc_html( $label )
+				);
+			}
+			echo '</h2>';
 
-				$active_tab = ( isset( $_GET[ 'tab' ] ) &&  isset( $this->tabs[$_GET[ 'tab' ]] ) ? $_GET[ 'tab' ] : 'general' );
-				$page = $this->slug;
+			if ( 'imexport' != $active_tab ) {
+				echo '<form method="post" action="options.php">';
+				settings_fields( 'eventorganiser_'.$active_tab );
+				do_settings_sections( 'eventorganiser_'.$active_tab );
 
-				echo '<h2 class="nav-tab-wrapper">';
-
-					foreach ( $this->tabs as $tab_id => $label ){
-				          	printf(
-							'<a href="?page=%s&tab=%s" class="nav-tab %s">%s</a>',
-							$page,
-							$tab_id,
-							( $active_tab == $tab_id ? 'nav-tab-active' : '' ),
-							esc_html( $label )
-						);
-					}
-				echo '</h2>';
-				?>
-
-				<?php if ( 'imexport' != $active_tab ){
-					echo '<form method="post" action="options.php">';
-						settings_fields( 'eventorganiser_'.$active_tab );
-						do_settings_sections( 'eventorganiser_'.$active_tab ); 
-	
-						/**
-						 * @ignore
-						 */
-						do_action( 'eventorganiser_event_settings_'.$active_tab );
-						//Tab identifier - so we know which tab we are validating. See $this->validate().
-						printf( '<input type="hidden" name="eventorganiser_options[tab]" value="%s" />', esc_attr( $active_tab ) );
-						submit_button(); 
-				        echo '</form>';
-				} else {
-					/**
-					 * @ignore
-					 * The import/export tab is handled differently not using `add_settings_section()`.
-					 * This tab may be move too Tools.
-					 */
-					do_action( 'eventorganiser_event_settings_imexport' ); 
-				}
-				?>
-          
+				/**
+				 * @ignore
+				 */
+				do_action( 'eventorganiser_event_settings_'.$active_tab );
+				//Tab identifier - so we know which tab we are validating. See $this->validate().
+				printf( '<input type="hidden" name="eventorganiser_options[tab]" value="%s" />', esc_attr( $active_tab ) );
+				submit_button();
+				echo '</form>';
+			} else {
+				/**
+				 * @ignore
+				 * The import/export tab is handled differently not using `add_settings_section()`.
+				 * This tab may be move too Tools.
+				 */
+				do_action( 'eventorganiser_event_settings_imexport' );
+			}
+			?>
 		</div><!-- /.wrap -->  
 
 	<?php
 	}
-	
-	function display_licence_keys(){
+
+	function display_licence_keys() {
 		global $wp_settings_fields;
 		$page = 'eventorganiser_general';
 		$section_id = 'general_licence';
