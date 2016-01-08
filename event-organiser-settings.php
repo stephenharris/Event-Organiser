@@ -645,18 +645,18 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		echo '</ul>';
 	}
 
-	function display_permissions(){
+	function display_permissions() {
 		global $wp_roles;
-		
+
 		?>
-		<h4> <?php _e( 'Event management permissions', 'eventorganiser' ); ?></h4>
-		<p> <?php _e( 'Set permissions for events and venue management', 'eventorganiser' ); ?> </p>
+		<h4><?php esc_html_e( 'Event management permissions', 'eventorganiser' ); ?></h4>
+		<p><?php esc_html_e( 'Set permissions for events and venue management', 'eventorganiser' ); ?></p>
 		
 		<table class="widefat fixed posts">
 			<thead>
 			<tr>
-				<th><?php _e( 'Role', 'eventorganiser' ); ?></th>
-				<?php foreach ( self::$eventorganiser_roles as $eo_role => $eo_role_display ): ?>
+				<th><?php esc_html_e( 'Role', 'eventorganiser' ); ?></th>
+				<?php foreach ( self::$eventorganiser_roles as $eo_role => $eo_role_display ) : ?>
 					<th><?php echo esc_html( $eo_role_display );?></th>
 				<?php endforeach; ?> 
 			</tr>
@@ -664,26 +664,26 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		<tbody id="the-list">
 			<?php
 			$array_index = 0;
-			foreach ( get_editable_roles() as $role_name => $display_name ):
-				$role = $wp_roles->get_role( $role_name ); 
-				$role_name = isset( $wp_roles->role_names[$role_name] ) ? translate_user_role( $wp_roles->role_names[$role_name] ) : __( 'None' );
+			foreach ( get_editable_roles() as $role_name => $display_name ) :
+				$role = $wp_roles->get_role( $role_name );
+				$role_name = isset( $wp_roles->role_names[$role_name] ) ? translate_user_role( $wp_roles->role_names[$role_name] ) : esc_html__( 'None', 'eventorganiser' );
 
-				printf( '<tr %s>', $array_index == 0 ? 'class="alternate"' : '' );
-					printf( '<td> %s </td>',esc_html( $role_name ) );
+				printf( '<tr %s>', 0 == $array_index ? 'class="alternate"' : '' );
+				printf( '<td> %s </td>',esc_html( $role_name ) );
 
-					foreach ( self::$eventorganiser_roles as $eo_role => $eo_role_display ):
-						printf(
-							'<td>
-								<input type="checkbox" name="eventorganiser_options[permissions][%s][%s]" value="1" %s %s  />
-							</td>',
-							esc_attr( $role->name ),
-							esc_attr( $eo_role ),
-							checked( '1', $role->has_cap( $eo_role ), false ),
-							disabled( $role->name, 'administrator', false ) 
-						);
-					endforeach; //End foreach $eventRoles 
+				foreach ( self::$eventorganiser_roles as $eo_role => $eo_role_display ) :
+					printf(
+						'<td>
+							<input type="checkbox" name="eventorganiser_options[permissions][%s][%s]" value="1" %s %s  />
+						</td>',
+						esc_attr( $role->name ),
+						esc_attr( $eo_role ),
+						checked( '1', $role->has_cap( $eo_role ), false ),
+						disabled( $role->name, 'administrator', false )
+					);
+				endforeach;
 				echo '</tr>';
-	
+
 				$array_index = ( $array_index + 1) % 2;
 			endforeach; //End foreach $editable_role ?>
 		</tbody>
