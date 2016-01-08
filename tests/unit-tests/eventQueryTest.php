@@ -90,6 +90,35 @@ class eventQueryTest extends EO_UnitTestCase
 		$this->assertEquals( $expected, $actual );
     }
 
+    
+    public function testEventCategoryQuery(){
+    	    	
+    	$term_id = $this->factory->term->create( array( 
+    		'slug'     => 'film',
+    		'taxonomy' => 'event-category',
+    		'name'     => 'Film'
+    	) );
+
+    	$e0 = $this->event_ids[0];
+    	$e2 = $this->event_ids[2];
+
+    	wp_set_post_terms( $e0, array( $term_id ), 'event-category' );
+    	wp_set_post_terms( $e2, array( $term_id ), 'event-category' );
+    	    	
+    	$actual = eo_get_events( array(
+    		'fields'    => 'ids',
+    		'tax_query' => array(
+    			array(
+    				'taxonomy' => 'event-category',
+    				'field'    => 'slug',
+    				'terms'    => array( 'film' )
+    			)
+    		)
+    	));
+    	
+    	$this->assertEquals( array( $e0, $e0, $e0, $e2, $e0, $e2,$e0, $e2, $e2, $e2 ), $actual );
+    	
+    }
   
 }
 

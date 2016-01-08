@@ -688,7 +688,8 @@ a.fc-more:hover {
 /* the things within each left/right/center section */
 .fc .fc-toolbar > * > * { /* extra precedence to override button border margins */
 	float: left;
-	margin-left: .75em;
+	margin-left: .37em;
+	margin-right: .37em;
 }
 
 @media print, all and (max-width: 601px) {
@@ -708,9 +709,12 @@ a.fc-more:hover {
 	}
 }
 
-/* the first thing within each left/center/right section */
-.fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */
-	margin-left: 0;
+@media print, all and (min-width: 514px) {
+	/* the first thing within each left/center/right section */
+	.fc .fc-toolbar > * > :first-child { /* extra precedence to override button border margins */
+		margin-left: 0;
+		margin-right: 0;
+	}
 }
 	
 /* title text */
@@ -1087,47 +1091,67 @@ be a descendant of the grid when it is being dragged.
 .fc-time-grid-event .fc-resizer:after {
 	content: "=";
 }
-.fc-listMonth-view .fc-week-number {
+.fc-listMonth-view .fc-week-number,
+.fc-listWeek-view .fc-week-number
+.fc-listDay-view .fc-week-number {
 	padding: 0 2px;
 	vertical-align: middle;
 }
 
-.fc-listMonth-view tbody .fc-row {
+.fc-listMonth-view tbody .fc-row,
+.fc-listWeek-view tbody .fc-row,
+.fc-listDay-view tbody .fc-row {
 	min-height: 2em;
 }
 
-.fc-listMonth-view .fc-week-number span {
+.fc-listMonth-view .fc-week-number span,
+.fc-listWeek-view .fc-week-number span,
+.fc-listDay-view .fc-week-number span {
 	line-height: 2em;
 }
 
-.fc-listMonth-view .fc-day-grid-event {
+.fc-listMonth-view .fc-day-grid-event,
+.fc-listWeek-view .fc-day-grid-event,
+.fc-listDay-view .fc-day-grid-event {
 	margin: 0 2px 1px;
 }
 
-.fc-listMonth-view .fc-row .fc-content-skeleton {
+.fc-listMonth-view .fc-row .fc-content-skeleton,
+.fc-listWeek-view .fc-row .fc-content-skeleton,
+.fc-listDay-view .fc-row .fc-content-skeleton {
 	padding-bottom: 0;
 }
 
-.fc-listMonth-view .fc-row .fc-content-skeleton .fc-day-number {
+.fc-listMonth-view .fc-row .fc-content-skeleton .fc-day-number,
+.fc-listWeek-view .fc-row .fc-content-skeleton .fc-day-number,
+.fc-listDay-view .fc-row .fc-content-skeleton .fc-day-number {
 	text-align: left;
 	line-height: 2em;
 	border-bottom: 1px solid #DBDADA;
 	font-weight: bold;
 }
 
-.fc-listMonth-view .fc-row .fc-content-skeleton .fc-day-number .fc-list-header-left {
+.fc-listMonth-view .fc-row .fc-content-skeleton .fc-day-number .fc-list-header-left,
+.fc-listWeek-view .fc-row .fc-content-skeleton .fc-day-number .fc-list-header-left,
+.fc-listDay-view .fc-row .fc-content-skeleton .fc-day-number .fc-list-header-left {
 	float: left;
 	padding-left: 5px;
 }
 
-.fc-listMonth-view .fc-row .fc-content-skeleton .fc-day-number .fc-list-header-right {
+.fc-listMonth-view .fc-row .fc-content-skeleton .fc-day-number .fc-list-header-right,
+.fc-listWeek-view .fc-row .fc-content-skeleton .fc-day-number .fc-list-header-right,
+.fc-listDay-view .fc-row .fc-content-skeleton .fc-day-number .fc-list-header-right {
 	float: right;
 	padding-right: 5px;
 	color: #666;
 }
 
 .fc-listMonth-view.fc-display-date-above .fc-row .fc-content-skeleton  tbody:before,
-.fc-listMonth-view.fc-display-date-above .fc-row .fc-content-skeleton  tbody:after {
+.fc-listMonth-view.fc-display-date-above .fc-row .fc-content-skeleton  tbody:after,
+.fc-listWeek-view.fc-display-date-above .fc-row .fc-content-skeleton  tbody:before,
+.fc-listWeek-view.fc-display-date-above .fc-row .fc-content-skeleton  tbody:after,
+.fc-listDay-view.fc-display-date-above .fc-row .fc-content-skeleton  tbody:before,
+.fc-listDay-view.fc-display-date-above .fc-row .fc-content-skeleton  tbody:after {
 	line-height: .5em;
 	content: "-";
 	color: white;

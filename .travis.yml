@@ -43,12 +43,14 @@ matrix:
   allow_failures:
     - env: WP_VERSION=nightly
 
-before_script:
+install:
 - sh -c "if [ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '5.2' ]; then pecl install timezonedb; fi"
 - if [[ 5.5 == ${TRAVIS_PHP_VERSION:0:3} ]]; then composer install; fi
-- npm install grunt-cli -g
+- npm install grunt-cli
 - npm install
-- grunt test_build
+  
+before_script:
+- node_modules/grunt-cli/bin/grunt test_build
 - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 script: 

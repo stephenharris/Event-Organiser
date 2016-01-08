@@ -74,6 +74,31 @@ body.single-event .eo-event-meta{
 .eo-fullcalendar-key ul.eo_fullcalendar_key li{display: inline-block;margin:0 3px;}
 .eo-fullcalendar-key span.eo_fullcalendar_key_colour{margin: 4px 2px 4px 5px;border: 1px solid #DFDFDF;border-radius: 4px 4px 4px 4px;font-size: 0.9em;vertical-align: top;padding: 0 6px;}
 
+.eo-widget-cal-wrap{
+	position:relative;
+}
+.eo-widget-cal-overlay{
+	position:absolute;
+	height:100%;
+	width:100%;
+}
+.eo-widget-cal-loading{
+	opacity: .6;
+}
+.eo-widget-cal-spinner{
+	border-radius: 50%;
+	opacity: .9;
+	background: url(images/loading-40x40.gif);
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 40px;
+	height: 40px;
+	margin: -20px 0 0 -20px; /* height or width / 2 */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+
 /* Agenda CSS */
 .eo-agenda-widget ul{list-style:none; margin:0}
 .eo-agenda-widget .eo-agenda-widget-nav{overflow:hidden;margin-bottom: 3px;text-align: right;}

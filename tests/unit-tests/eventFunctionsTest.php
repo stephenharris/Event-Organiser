@@ -237,5 +237,36 @@ class eventFunctionsTest extends EO_UnitTestCase
 	
 	}
 	
+	public function testNextOccurrence(){
+		
+		$now = new DateTime( 'now' );
+		
+		$start = clone $now;
+		$start->modify( '-5 days' );
+		$end = clone $start;
+		$end->modify( '+1 hour' );
+
+		$tomorrow = clone $now;
+		$tomorrow->modify( '+1 day' );
+		
+		$event_id = $this->factory->event->create(
+			array(
+				'start'     => $start,
+				'end'       => $end,
+				'all_day'   => 0,
+				'schedule'  => 'daily',
+				'frequency' => 2,
+				'until'     =>  new DateTime( '+3 days' )
+			)
+		);
+		
+		ob_start();
+		eo_next_occurrence( 'Y-m-d H:i', $event_id );
+		$actual = ob_get_contents();
+		ob_end_clean();
+		
+		$this->assertEquals( $tomorrow->format(  'Y-m-d H:i' ), $actual );
+	}
+	
 }
 
