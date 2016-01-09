@@ -5,7 +5,7 @@
 .eo-tc-page .eo-events-nav-newer{
 	float:left;
 }
-.eo-tc-page nav{
+.eo-tc-page .eo-events-nav{
 	overflow: inherit;
 	margin: 10px auto;
 }
