@@ -88,7 +88,7 @@ function eventorganiser_site_install() {
 		'event_redirect'    => 'events',
 		'dateformat'        => 'dd-mm',
 		'prettyurl'         => 1,
-		'templates'         => 1,
+		'templates'         => 'themecompat',
 		'addtomenu'         => 0,
 		'excludefromsearch' => 0,
 		'showpast'          => 0,

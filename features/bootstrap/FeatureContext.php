@@ -351,6 +351,35 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		}
 	}
 	
+	/**
+	 * @Given event templates are enabled
+	 */
+	public function eventTemplatesAreEnabled()
+	{
+		$options = eventorganiser_get_option( false );
+		$options['templates'] = 0;
+		update_option( 'eventorganiser_options', $options );
+	}
+		
+	/**
+	 * @Given event templates are disabled
+	 */
+	public function eventTemplatesAreDisabled()
+	{
+		$options = eventorganiser_get_option( false );
+		$options['templates'] = 0;
+		update_option( 'eventorganiser_options', $options );
+	}
+	
+	/**
+	 * @Given theme compatability is enabled
+	 */
+	public function themeCompatabilityIsEnabled()
+	{
+		$options = eventorganiser_get_option( false );
+		$options['templates'] = 'themecompat';
+		update_option( 'eventorganiser_options', $options );
+	}
 	
 	/**
 	 * @Given I have an event list widget in :sidebar
