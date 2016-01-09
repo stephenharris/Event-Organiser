@@ -21,7 +21,7 @@
  * 2. Should we use loop start/end to remove all content/excerpt filters and restore them again, or
  * just clobber the callbacks by making sure we're last. Or both?
  */
-class EO_Theme_Compat {
+class EO_Theme_Compatabilty {
 
 	/**
 	 * Singleton instance.
@@ -448,5 +448,5 @@ class EO_Theme_Compat {
 
 	}
 }
-$eo_compat = EO_Theme_Compat::get_instance();
+$eo_compat = EO_Theme_Compatabilty::get_instance();
 $eo_compat->init();
