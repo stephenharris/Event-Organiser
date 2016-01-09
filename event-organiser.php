@@ -143,7 +143,7 @@ function eventorganiser_get_option( $option = false, $default = false ) {
 		'event_redirect' => 'events',
 		'dateformat' => 'd-m-Y',
 		'prettyurl' => 1,
-		'templates' => 1,
+		'templates' => 'themecompat',
 		'addtomenu' => 0,
 		'menu_item_db_id' => 0,
 		'excludefromsearch' => 0,

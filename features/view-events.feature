@@ -27,6 +27,35 @@ Feature: View events
     	Then I should see "Single"
     	And I should see "Start: April 30, 2115 1:00 pm"
 
+    Scenario: All events
+        When I go to "events/event"
+    	Then I should see "Events"
+    	And I should see an ".eo-tc-page" element
+    	
+    Scenario: Single event (with templates disabled)
+        Given event templates are disabled
+        When I go to "events/event/single"
+    	Then I should see "Single"
+    	And I should not see "Start:"
+
+    Scenario: Single event (with templates enabled)
+        Given event templates are enabled
+        When I go to "events/event/single"
+    	Then I should see "Single"
+    	And I should see "Start: April 30, 2115 1:00 pm"
+    	
+    Scenario: All events (templates enabled)
+        Given event templates are enabled
+        When I go to "events/event"
+    	Then I should see "Events"
+    	And I should not see an ".eo-tc-page" element
+    	
+    Scenario: All events (templates enabled)
+        Given theme compatability is enabled
+        When I go to "events/event"
+    	Then I should see "Events"
+    	And I should see an ".eo-tc-page" element
+
 	@javascript
 	Scenario: Daily event
         When I go to "events/event/daily"
@@ -105,3 +134,4 @@ Feature: View events
     	And I should see "1st Jun 15 19:30"
     	And I should see "15th Jun 15 19:30"
     	And I should see "29th Jun 15 19:30"  
+    	
