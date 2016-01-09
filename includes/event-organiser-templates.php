@@ -283,62 +283,6 @@ function eventorganiser_is_event_template( $templatepath, $context = '' ) {
 	return false;
 }
 
-/**
- * Checks to see if appropriate templates are present in active template directory.
- * Otherwises uses templates present in plugin's template directory.
- * Hooked onto template_include'
- *
- * @ignore
- * @since 1.0.0
- * @param string $template Absolute path to template
- * @return string Absolute path to template
- */
-function eventorganiser_set_template( $template ) {
-
-	//Has EO template handling been turned off?
-	if ( ! eventorganiser_get_option( 'templates' ) || get_theme_support( 'event-organiser' ) ) {
-		return $template;
-	}
-
-	//If WordPress couldn't find an 'event' template use plug-in instead:
-
-	if ( is_post_type_archive( 'event' ) && ! eventorganiser_is_event_template( $template, 'archive' ) ) {
-		$template = EVENT_ORGANISER_DIR . 'templates/archive-event.php';
-	}
-
-	if ( ( is_tax( 'event-venue' ) || eo_is_venue() ) && ! eventorganiser_is_event_template( $template, 'event-venue' ) ) {
-		$template = EVENT_ORGANISER_DIR . 'templates/taxonomy-event-venue.php';
-	}
-
-	if ( is_tax( 'event-category' )  && ! eventorganiser_is_event_template( $template, 'event-category' ) ) {
-		$template = EVENT_ORGANISER_DIR . 'templates/taxonomy-event-category.php';
-	}
-
-	if ( is_tax( 'event-tag' ) && eventorganiser_get_option( 'eventtag' ) && ! eventorganiser_is_event_template( $template, 'event-tag' ) ) {
-		$template = EVENT_ORGANISER_DIR . 'templates/taxonomy-event-tag.php';
-	}
-
-	/*
-	 * In view of theme compatibility, if an event template isn't found
-	 * rather than using our own single-event.php, we use ordinary single.php and
-	 * add content in via the_content
-	*/
-	if ( is_singular( 'event' ) && ! eventorganiser_is_event_template( $template, 'event' ) ) {
-		//Viewing a single event
-
-		//Hide next/previous post link
-		add_filter( 'next_post_link', '__return_false' );
-		add_filter( 'previous_post_link', '__return_false' );
-
-		//Prepend our event details
-		add_filter( 'the_content', '_eventorganiser_single_event_content' );
-	}
-
-	return $template;
-}
-add_filter( 'template_include', 'eventorganiser_set_template' );
-
-
 function _eventorganiser_single_event_content( $content ) {
 
 	//Sanity check!
