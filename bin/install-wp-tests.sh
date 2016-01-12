@@ -133,7 +133,7 @@ java -jar selenium-server-standalone-2.46.0.jar -p $SELENIUM_PORT > /dev/null 2>
 wait_for_port $SELENIUM_PORT
 
 # Start phantomjs
-phantomjs --webdriver=8643
+phantomjs --webdriver=8643  > /dev/null 2>&1 &
 
 echo 'waiting to start tests...';
 sleep 5
