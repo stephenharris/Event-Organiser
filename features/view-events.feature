@@ -50,7 +50,7 @@ Feature: View events
     	Then I should see "Events"
     	And I should not see an ".eo-tc-page" element
     	
-    Scenario: All events (templates enabled)
+    Scenario: All events (theme compatability mode)
         Given theme compatability is enabled
         When I go to "events/event"
     	Then I should see "Events"

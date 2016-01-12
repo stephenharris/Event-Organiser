@@ -372,7 +372,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	public function eventTemplatesAreEnabled()
 	{
 		$options = eventorganiser_get_option( false );
-		$options['templates'] = 0;
+		$options['templates'] = 1;
 		update_option( 'eventorganiser_options', $options );
 	}
 		
