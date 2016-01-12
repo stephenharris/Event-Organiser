@@ -122,10 +122,6 @@ wait_for_port() {
     done
 }
 
-rm -f /tmp/.X0-lock
-
-Xvfb & export DISPLAY=localhost:0.0
-
 echo 'start php';
 php -S localhost:8000 -t /tmp/wordpress -d disable_functions=mail > /dev/null 2>&1 &
 
@@ -134,7 +130,10 @@ wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standal
 java -jar selenium-server-standalone-2.46.0.jar -p $SELENIUM_PORT > /dev/null 2>&1 &
 
 # Wait for Selenium, if necessary
-#wait_for_port $SELENIUM_PORT
+wait_for_port $SELENIUM_PORT
+
+# Start phantomjs
+phantomjs --webdriver=8643
 
 echo 'waiting to start tests...';
 sleep 5
