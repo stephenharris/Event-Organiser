@@ -32,6 +32,7 @@ Feature: Create events
 
     @javascript
     Scenario: Daily event
+        Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Daily+Event"
         And I fill in the following:
         	| eo-start-date | 06-11-2014   |
@@ -53,6 +54,7 @@ Feature: Create events
 
     @javascript
     Scenario: Weekly event
+        Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Weekly+Event"
     	And I fill in the following:
         	| eo-start-date | 01-01-2015    |
@@ -74,6 +76,7 @@ Feature: Create events
 
     @javascript
     Scenario: Monthly event (by date)
+        Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Monthly+Event+1"
     	And I fill in the following:
         	| eo-start-date | 30-01-2016      |
@@ -96,6 +99,7 @@ Feature: Create events
 
     @javascript
     Scenario: Monthly event (by day of the month)
+        Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Monthly+Event+2"
     	And I fill in the following:
         	| eo-start-date | 30-01-2016      |
@@ -118,6 +122,7 @@ Feature: Create events
 
     @javascript
     Scenario: Yearly event
+        Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Yearly+Event"
     	And I fill in the following:
         	| eo-start-date | 29-02-2016    |
