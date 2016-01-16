@@ -294,7 +294,7 @@ function _eventorganiser_details_metabox( $post ) {
 			foreach ( $address_fields as $key => $label ) {
 				printf(
 					'<div class="eo-grid-4">
-						<label for="eo_venue_add-%2$s">%1$s:</label>
+						<label for="eo_venue_add-%2$s">%1$s</label>
 					</div>
 					<div class="eo-grid-8">
 						<input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo_venue_add-%2$s"  value=""/>
