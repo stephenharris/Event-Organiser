@@ -1,16 +1,16 @@
 <?php
-/**
- * Class used for displaying venue table and handling interations
- */
 
 /*
  *The WP_List_Table class isn't automatically available to plugins, so we need
  * to check if it's available and load it if necessary.
  */
-if(!class_exists('WP_List_Table')){
-    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+if ( ! class_exists( 'WP_List_Table' ) ) {
+	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
+/**
+ * Class used for displaying venue table
+ */
 class EO_Venue_List_Table extends WP_List_Table {
 
 	/**
