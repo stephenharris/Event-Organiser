@@ -12,20 +12,17 @@ if(!class_exists('WP_List_Table')){
 }
 
 class EO_Venue_List_Table extends WP_List_Table {
-        
-    /*
-     * Constructor. Set some default configs.
-     */
-	function __construct(){
-		global $status, $page;
-		
+
+	/**
+	 * Constructor. Set some default configs.
+	 */
+	function __construct() {
 		//Set parent defaults
 		parent::__construct( array(
-			'singular'  => 'venue',     //singular name of the listed records
-			'plural'    => 'venues',    //plural name of the listed records
-			'ajax'      => true        //does this table support ajax?
-        	) );
-	    }
+			'singular'  => 'venue',//singular name of the listed records
+			'plural'    => 'venues',//plural name of the listed records
+		));
+	}
 
 	/*
 	 * For more detailed insight into how columns are handled, take a look at
