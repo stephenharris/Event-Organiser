@@ -108,25 +108,24 @@ class EO_Venue_List_Table extends WP_List_Table {
 		);
 	}
 
-    /*
-     * Set columns sortable
-     * 
-     * @return array An associative array containing all the columns that should be sortable: 'slugs'=>array('data_values',bool)
-     */
-    function get_sortable_columns() {
-        $sortable_columns = array(
-            'name'		     => array( 'name', true ),   //true means its sorted by default  
-            'venue_address'  => array( 'address', false ),  
-            'venue_city'	 => array( 'city', false ), 
-            'venue_state'	 => array( 'state', false ),
-            'venue_postcode' => array( 'postcode', false ),
-            'venue_country'	 => array( 'country', false ),
-            'venue_slug'	 => array( 'slug', false ),
-            'posts'		     => array( 'count', false ),
-        );
-        return $sortable_columns;
-    }
-
+	/**
+	 * Set columns sortable
+	 *
+	 * @return array An associative array containing all the columns that should be sortable: 'slugs'=>array('data_values',bool)
+	 */
+	function get_sortable_columns() {
+		$sortable_columns = array(
+			'name'		     => array( 'name', true ),//true means its sorted by default
+			'venue_address'  => array( 'address', false ),
+			'venue_city'	 => array( 'city', false ),
+			'venue_state'	 => array( 'state', false ),
+			'venue_postcode' => array( 'postcode', false ),
+			'venue_country'	 => array( 'country', false ),
+			'venue_slug'	 => array( 'slug', false ),
+			'posts'		     => array( 'count', false ),
+		);
+		return $sortable_columns;
+	}
 
 	/**
 	 * Set bulk actions
@@ -163,17 +162,17 @@ class EO_Venue_List_Table extends WP_List_Table {
 	public function ajax_user_can() {
 		return current_user_can( 'manage_venues' );
 	}
-	
-    /*
-     * Prepare venues for display
-     * 
-     * @uses $this->_column_headers
-     * @uses $this->items
-     * @uses $this->get_columns()
-     * @uses $this->get_sortable_columns()
-     * @uses $this->get_pagenum()
-     * @uses $this->set_pagination_args()
-     */
+
+	/**
+	 * Prepare venues for display
+	 *
+	 * @uses $this->_column_headers
+	 * @uses $this->items
+	 * @uses $this->get_columns()
+	 * @uses $this->get_sortable_columns()
+	 * @uses $this->get_pagenum()
+	 * @uses $this->set_pagination_args()
+	 */
 	function prepare_items() {
 
 		//Retrieve page number for pagination
@@ -217,5 +216,4 @@ class EO_Venue_List_Table extends WP_List_Table {
 		$tax = get_taxonomy( 'event-venue' );
 		echo esc_html( $tax->labels->not_found );
 	}
-
 }
