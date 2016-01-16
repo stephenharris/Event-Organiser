@@ -93,23 +93,21 @@ class EO_Venue_List_Table extends WP_List_Table {
 		);
 	}
 
-	
-	/*
-     * Checkbox column for Bulk Actions.
-     * 
-     * @see WP_List_Table::::single_row_columns()
-     * @param array $item A singular item (one full row's worth of data)
-     * @return string Text to be placed inside the column <td> (movie title only)
-     */
-    function column_cb($item){
-        return sprintf(
-            '<input type="checkbox" name="%1$s[]" value="%2$s" />',
-            /*$1%s*/ 'event-venue',  
-            /*$2%s*/ $item->slug       //The value of the checkbox should be the record's id
-        );
-    }
-    
-   
+	/**
+	 * Checkbox column for Bulk Actions.
+	 *
+	 * @see WP_List_Table::::single_row_columns()
+	 * @param array $item A singular item (one full row's worth of data)
+	 * @return string Text to be placed inside the column <td> (movie title only)
+	 */
+	function column_cb( $item ) {
+		return sprintf(
+			'<input type="checkbox" name="%1$s[]" value="%2$s" />',
+			/*$1%s*/ 'event-venue',
+			/*$2%s*/ esc_attr( $item->slug )
+		);
+	}
+
     /*
      * Set columns sortable
      * 
@@ -130,35 +128,34 @@ class EO_Venue_List_Table extends WP_List_Table {
     }
 
 
-    /*
-     * Set bulk actions
-     * 
-     * @return array An associative array containing all the bulk actions: 'slugs'=>'Visible Titles'
-     */
-    function get_bulk_actions() {
-        $actions = array(
-            'delete'    => __('Delete')
-        );
-        return $actions;
-    }
-    
+	/**
+	 * Set bulk actions
+	 *
+	 * @return array An associative array containing all the bulk actions: 'slugs'=>'Visible Titles'
+	 */
+	function get_bulk_actions() {
+		$actions = array(
+			'delete' => esc_html__( 'Delete', 'eventorganiser' ),
+		);
+		return $actions;
+	}
 
-     /*
-     * Echos the row, after assigning it an ID based ont eh venue being shown. Assign appropriate class to alternate rows.
-     */       
+
+	/**
+	 * Echos the row, after assigning it an ID based ont eh venue being shown. Assign appropriate class to alternate rows.
+	 */
 	function single_row( $item ) {
 		static $row_class = '';
-		$row_id = 'id="venue-'.$item->term_id.'"';
-		$row_class = ( $row_class == '' ? ' class="alternate"' : '' );
-		echo '<tr' .$row_class.' '.$row_id.'>';
+		$row_class = ( '' == $row_class ? 'alternate' : '' );
+		echo sprintf( '<tr class="%s" id="venue-%d">', $row_class, $item->term_id );
 		echo $this->single_row_columns( $item );
 		echo '</tr>';
 	}
 
-	function get_columns(){
+	function get_columns() {
 		return get_column_headers( 'event_page_venues' );
 	}
-	
+
 	/**
 	 *
 	 * @return bool
