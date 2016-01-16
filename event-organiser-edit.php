@@ -40,9 +40,9 @@ function _eventorganiser_details_metabox( $post ) {
 	if ( 'd-m-Y' == $phpFormat ) {
 		$format = 'dd &ndash; mm &ndash; yyyy'; //Human form
 	} elseif ( 'Y-m-d' == $phpFormat ) {
-		$format = 'yyyy-mm-dd'; //Human form
+		$format = 'yyyy &ndash; mm &ndash; dd'; //Human form
 	} else {
-		$format = 'mm-dd-yyyy'; //Human form
+		$format = 'mm &ndash; dd &ndash; yyyy'; //Human form
 	}
 
 	$is24        = eventorganiser_blog_is_24();
