@@ -112,7 +112,7 @@ function _eventorganiser_details_metabox( $post ) {
 	 		
 	 			<label for="eo-start-date" class="screen-reader-text"><?php esc_html_e( 'Start Date', 'eventorganiser' ); ?></label>
 				<input type="text" id="eo-start-date" aria-describedby="eo-start-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" value="<?php echo $start->format( $phpFormat ); ?>"/>
-				<span id="eo-start-date-desc" class="screen-reader-text"><?php echo  $date_desc;?></span>
+				<span id="eo-start-date-desc" class="screen-reader-text"><?php echo esc_html( $date_desc );?></span>
 				
 				<label for="eo-start-time" class="screen-reader-text"><?php esc_html_e( 'Start Time', 'eventorganiser' ); ?></label>
 				<?php
@@ -199,8 +199,8 @@ function _eventorganiser_details_metabox( $post ) {
 							$schedule_days = ( is_array( $schedule_meta ) ? $schedule_meta : array() );
 							?>
 							<li>
-								<input type="checkbox" id="day-<?php echo $day;?>"  <?php checked( in_array( $ical_d, $schedule_days ), true ); ?>  value="<?php echo esc_attr( $ical_d )?>" class="daysofweek" name="eo_input[days][]"/>
-								<label for="day-<?php echo $day;?>" > <abbr title="<?php echo $fullday; ?>"><?php echo $day;?></abbr></label>
+								<input type="checkbox" id="day-<?php echo esc_attr( $day );?>"  <?php checked( in_array( $ical_d, $schedule_days ), true ); ?>  value="<?php echo esc_attr( $ical_d )?>" class="daysofweek" name="eo_input[days][]"/>
+								<label for="day-<?php echo esc_attr( $day );?>" > <abbr aria-label="<?php echo esc_attr( $fullday ); ?>"><?php echo esc_attr( $day );?></abbr></label>
 							</li>
 							<?php
 						endfor;
@@ -272,7 +272,7 @@ function _eventorganiser_details_metabox( $post ) {
  			</div>
 	 		<div class="eo-grid-8">
 				<select size="50" id="venue_select" name="eo_input[event-venue]">
-					<option><?php _e( 'Select a venue', 'eventorganiser' );?></option>
+					<option><?php esc_html_e( 'Select a venue', 'eventorganiser' );?></option>
 					<?php foreach ( $venues as $venue ) : ?>
 						<option <?php  selected( $venue->term_id, $venue_id );?> value="<?php echo intval( $venue->term_id );?>"><?php echo esc_html( $venue->name ); ?></option>
 					<?php endforeach;?>
@@ -299,7 +299,7 @@ function _eventorganiser_details_metabox( $post ) {
 					<div class="eo-grid-8">
 						<input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo_venue_add-%2$s"  value=""/>
 					</div>',
-					$label,
+					esc_html( $label ),
 					esc_attr( trim( $key, '_' ) )/* Keys are prefixed by '_' */
 				);
 			}
@@ -315,8 +315,8 @@ function _eventorganiser_details_metabox( $post ) {
 	 		<div class="eo-grid-4"></div>
 	 		<div class="eo-grid-8">
 				<div id="eventorganiser_venue_meta" style="display:none;">
-					<input type="hidden" id="eo_venue_Lat" name="eo_venue[latitude]" value="<?php eo_venue_lat( $venue_id );?>" />
-					<input type="hidden" id="eo_venue_Lng" name="eo_venue[longtitude]" value="<?php eo_venue_lng( $venue_id ); ?>" />
+					<input type="hidden" id="eo_venue_Lat" name="eo_venue[latitude]" value="<?php esc_attr( eo_venue_lat( $venue_id ) );?>" />
+					<input type="hidden" id="eo_venue_Lng" name="eo_venue[longtitude]" value="<?php esc_attr( eo_venue_lng( $venue_id ) ); ?>" />
 				</div>
 					
 				<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
