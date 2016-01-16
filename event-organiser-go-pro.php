@@ -87,13 +87,13 @@ class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
 			<div style="clear:both"></div>
 
 			<p>
-			<strong><a href="http://wp-event-organiser.com/pro-features?aid=7"><?php _e('Find out more &hellip;', 'eventorganiser')?></a></strong>
+			<strong><a href="http://wp-event-organiser.com/pro-features?aid=7"><?php esc_html_e( 'Find out more&hellip;', 'eventorganiser' )?></a></strong>
 			</p>
 			
 			<hr style="color:#CCC;background-color:#CCC;border:0;border-bottom:1px solid #CCC;">
 			
 			<div class="return-to-dashboard">
-				<a href="<?php echo admin_url('options-general.php?page=event-settings');?>"><?php _e('Go to Event Organiser settings', 'eventorganiser');?></a>
+				<a href="<?php echo admin_url( 'options-general.php?page=event-settings' );?>"><?php esc_html_e( 'Go to Event Organiser settings', 'eventorganiser' );?></a>
 			</div>
 		</div>
 		</div><!-- .wrap -->
