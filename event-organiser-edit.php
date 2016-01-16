@@ -105,7 +105,7 @@ function _eventorganiser_details_metabox( $post ) {
  		<div class="eo-grid-row">
 	 		<div class="eo-grid-4">
 				<span class="eo-label" id="eo-start-datetime-label">
-					<?php esc_html_e( 'Start Date/Time', 'eventorganiser' ).':'; ?> 
+					<?php esc_html_e( 'Start Date/Time:', 'eventorganiser' ); ?> 
 				</span>
  			</div>
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-start-datetime-label">
@@ -128,7 +128,7 @@ function _eventorganiser_details_metabox( $post ) {
 		<div class="eo-grid-row">
 	 		<div class="eo-grid-4">
 				<span class="eo-label" id="eo-end-datetime-label">
-					<?php esc_html_e( 'End Date/Time', 'eventorganiser' ).':'; ?> 
+					<?php esc_html_e( 'End Date/Time:', 'eventorganiser' ); ?> 
 				</span>
  			</div>
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-end-datetime-label">
