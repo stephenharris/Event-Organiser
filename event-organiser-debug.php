@@ -55,24 +55,22 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 	?>
 	<div class="wrap">
 		
-		<h2><?php _e('System Info','eventorganiser');?> </h2>
+		<h2><?php esc_html_e( 'System Info','eventorganiser' );?> </h2>
 		
 		<?php  $eo_debugger = $this->debugger; ?>
 		
 		<p>
-		<?php 
-		_e( "This page highlights useful information for debugging. If you're reporting a bug, please include this information.", 'eventorganiser' );
-		echo " ";
-		_e( "The 'system info' link in under the Events admin tab is only visible to admins and only when <code>WP_DEBUG</code> is set to <code>true</code>.", 'eventorganiser' );
+		<?php
+		printf( 
+			esc_html__( "This page highlights useful information for debugging. If you're reporting a bug, please include this information. The 'system info' link in under the Events admin tab is only visible to admins and only when %s is set to %s.", 'eventorganiser' ),
+			'<code>WP_DEBUG</code>',
+			'<code>true</code>'
+		);
 		?>
 		</p>
 		<p class="description">
-		<?php 
-		_e( "Most bugs arise from theme or plug-in conflicts. You can check this by disabling all other plug-ins and switching to TwentyTweleve.", 'eventorganiser' );
-		echo " ";
-		_e( "To help speed things along, if you report a bug please indicate if you have done so. Once the plug-in or theme has been identified it is often easy to resolve the issue.", 'eventorganiser' );
-		echo " ";
-		_e( "Below any <strong>known</strong> plug-in and theme conflicts are highlighted in red.", 'eventorganiser' );
+		<?php
+		esc_html_e( 'Most bugs arise from theme or plug-in conflicts. You can check this by disabling all other plug-ins and switching to TwentyTweleve. To help speed things along, if you report a bug please indicate if you have done so. Once the plug-in or theme has been identified it is often easy to resolve the issue. Below any <strong>known</strong> plug-in and theme conflicts are highlighted in red.', 'eventorganiser' );
 		?>
 		</p>
 		
@@ -80,18 +78,18 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 			printf( 
 				'<p><a href="%s" data-eo-debug="downloadurl" class="button secondary">%s</a></p>',
 				esc_url( add_query_arg( 'eo-download-debug-file', wp_create_nonce( 'eo-download-debug-file' ) ) ),
-				__( "Download system information file", 'eventorganiser' )
+				esc_html__( 'Download system information file', 'eventorganiser' )
 			);
 		?>
 				
 		<table class="widefat">
 				<tr>
 					<th> Site url </th>
-					<td><?php echo site_url(); ?></td>
+					<td><?php echo esc_html( site_url() ); ?></td>
 				</tr>
 				<tr>
 					<th> Home url </th>
-					<td><?php echo home_url(); ?></td>
+					<td><?php echo esc_html( home_url() ); ?></td>
 				</tr>
 				<tr>
 					<th> Multisite </th>
@@ -101,12 +99,12 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				<tr>
 					<th> Permalink </th>
 					<td>
-					<?php echo get_option( 'permalink_structure' );?>
+					<?php echo esc_html( get_option( 'permalink_structure' ) );?>
 					</td>
 				</tr>
 				<tr>
 					<th> Event Organsier version </th>
-					<td><?php echo EVENT_ORGANISER_VER; ?></td>
+					<td><?php echo esc_html( EVENT_ORGANISER_VER ); ?></td>
 				</tr>
 				<tr>
 					<th> WordPress </th>
@@ -150,19 +148,19 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				
 				<tr>
 					<th> PHP Version </th>
-					<td> <?php echo PHP_VERSION; ?></td>
+					<td> <?php echo esc_html( PHP_VERSION ); ?></td>
 				</tr>
 				<tr>
 					<th> MySQL Version </th>
 					<td> 
 					<?php
 						global $wpdb;
-						echo empty( $wpdb->use_mysqli ) ? mysql_get_server_info() : mysqli_get_server_info( $wpdb->dbh );
+						echo empty( $wpdb->use_mysqli ) ? esc_html ( mysql_get_server_info() ) : esc_html( mysqli_get_server_info( $wpdb->dbh ) );
 					?></td>
 				</tr>    
 				<tr>
 					<th> Web Server </th>
-					<td> <?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
+					<td> <?php echo esc_html( $_SERVER['SERVER_SOFTWARE'] ); ?></td>
 				</tr>      
 				<tr>
 					<th> PHP Memory Usage </th>
@@ -170,23 +168,23 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				</tr>   
 				<tr>
 					<th> PHP Post Max Size </th>
-					<td><?php echo ini_get('post_max_size'); ?></td>
+					<td><?php echo esc_html( ini_get( 'post_max_size' ) ); ?></td>
 				</tr>   
 				<tr>
 					<th> PHP Upload Max Size </th>
-					<td><?php echo ini_get('upload_max_filesize'); ?></td>
+					<td><?php echo esc_html( ini_get( 'upload_max_filesize' ) ); ?></td>
 				</tr>
 				<tr>
 					<th> PHP FSOCKOPEN Support </th>
-					<td>  <?php echo (function_exists('fsockopen')) ? _e('Yes', 'eventorganiser') . "\n" : _e('No', 'eventorganiser') . "\n"; ?></td>
+					<td>  <?php echo (function_exists( 'fsockopen' )) ? esc_html_e( 'Yes', 'eventorganiser' ) . "\n" : esc_html_e( 'No', 'eventorganiser' ) . "\n"; ?></td>
 				</tr>
 				<tr>
 					<th> PHP cURL Support </th>
-					<td>  <?php echo (function_exists('curl_init')) ? _e('Yes', 'eventorganiser') . "\n" : _e('No', 'eventorganiser') . "\n"; ?></td>
+					<td>  <?php echo (function_exists( 'curl_init' )) ? esc_html_e( 'Yes', 'eventorganiser' ) . "\n" : esc_html_e( 'No', 'eventorganiser' ) . "\n"; ?></td>
 				</tr>
 				<tr>
 					<th> OpenSSL Support </th>
-					<td>  <?php echo (function_exists('openssl_verify')) ? _e('Yes', 'eventorganiser') . "\n" : _e('No', 'eventorganiser') . "\n"; ?></td>
+					<td>  <?php echo (function_exists( 'openssl_verify' )) ? esc_html_e( 'Yes', 'eventorganiser' ) . "\n" : esc_html_e( 'No', 'eventorganiser' ) . "\n"; ?></td>
 				</tr>
 				<tr>
 					<th> Plug-ins </th>
@@ -352,10 +350,10 @@ class EventOrganiser_Debugger{
 			$class = in_array( strtolower( $plugin_slug ), $this->plugins ) ? $this->warning_class : '';
 				
 			printf(
-			' <span class="%s"> %s %s </span> </br>',
-			esc_attr( $class ),
-			$plugin_data['Name'],
-			$plugin_data['Version']
+				' <span class="%s"> %s %s </span> </br>',
+				esc_attr( $class ),
+				esc_html( $plugin_data['Name'] ),
+				esc_html( $plugin_data['Version'] )
 			);
 		}
 	}
@@ -367,9 +365,9 @@ class EventOrganiser_Debugger{
 		printf(
 			' <span class="%s"> %s %s </span> </br>  %s',
 			esc_attr( $class ),
-			$theme->get( 'Name' ),
-			$theme->get( 'Version' ),
-			$theme->get( 'ThemeURI' )
+			esc_html( $theme->get( 'Name' ) ),
+			esc_html( $theme->get( 'Version' ) ),
+			esc_html( $theme->get( 'ThemeURI' ) )
 		);
 
 	}
@@ -413,21 +411,29 @@ class EventOrganiser_Debugger{
 			printf( '<span class="%s">%s</span>', esc_attr( $this->ok_class ), $v );
 		}elseif( 0 == $this->check_prequiste( $requirement, $v ) ){
 			printf(
-			'<span class="%s">%s</span>. %s',
-			esc_attr( $this->alert_class ),
-			$v,
-			sprintf(
-				/// TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
-				__( '%s has only been tested up to %s %s', 'eventorganiser' ), $this->plugin, $requirement, $versions['max'] )
+				'<span class="%s">%s</span>. %s',
+				esc_attr( $this->alert_class ),
+				esc_html( $v ),
+				esc_html( sprintf(
+					/// TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
+					__( '%s has only been tested up to %s %s', 'eventorganiser' ), 
+					$this->plugin,
+					$requirement, 
+					$versions['max'] 
+				) )
 			);
 		}elseif( -1 == $this->check_prequiste( $requirement, $v ) ){
 			printf(
-			'<span class="%s">%s</span>. %s',
-			esc_attr( $this->warning_class ),
-			$v,
-			sprintf(
-				/// TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
-			 	__( '%s requires %s version %s or higher', 'eventorganiser' ), $this->plugin, $requirement, $versions['min'] )
+				'<span class="%s">%s</span>. %s',
+				esc_attr( $this->warning_class ),
+				esc_html( $v ),
+				esc_html( sprintf(
+					/// TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
+					__( '%s requires %s version %s or higher', 'eventorganiser' ), 
+					$this->plugin, 
+					$requirement, 
+					$versions['min'] 
+				) )
 			);
 		}
 	}
@@ -442,13 +448,13 @@ class EventOrganiser_Debugger{
 				ceil( $memory_usage ),
 				ini_get( 'memory_limit' ),
 				$percentage > 90 ? $this->alert_class : $this->ok_class,
-				$percentage . "%"
+				esc_html( $percentage . '%' )
 			);
 		}else{
 			printf( ' ? / %d  <span class="%s">( %s )</span>',
 				ini_get( 'memory_limit' ),
 				$this->alert_class,
-				__( 'unknown', 'eventorganiser' )
+				esc_html__( 'unknown', 'eventorganiser' )
 			);
 		}
 
