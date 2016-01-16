@@ -55,41 +55,47 @@ class EO_Venue_List_Table extends WP_List_Table {
 	}
 
 
-    /*
-     * @see WP_List_Table::::single_row_columns()
-     * @param array $item A singular item (one full row's worth of data)
-     * @return string Text to be placed inside the column <td>
-     */
-	function column_name( $item ){
+	/**
+	 * @see WP_List_Table::::single_row_columns()
+	 * @param array $item A singular item (one full row's worth of data)
+	 * @return string Text to be placed inside the column <td>
+	 */
+	function column_name( $item ) {
 		$term_id = (int) $item->term_id;
-		
+
+		$name       = $item->name;
 		$delete_url = add_query_arg( 'action', 'delete', get_edit_term_link( $term_id, 'event-venue', 'event' ) );
 
-		//Build row actions
+		//Inline row actions
 		$actions = array(
-			'edit' => sprintf( 
-				'<a href="%s">%s</a>', 
+			'edit' => sprintf(
+				'<a href="%s" aria-label="%s">%s</a>',
 				esc_url( get_edit_term_link( $term_id, 'event-venue', 'event' ) ),
+				/* translators: %s: venue name */
+				esc_attr( sprintf( __( 'Edit &#8220;%s&#8221;', 'event-organiser' ), $name ) ),
 				esc_html__( 'Edit', 'eventorganiser' )
 			),
 			'delete' => sprintf(
-				'<a href="%s">%s</a>',
+				'<a href="%s" aria-label="%s">%s</a>',
 				esc_url( wp_nonce_url( $delete_url, 'eventorganiser_delete_venue_'.$item->slug ) ),
+				/* translators: %s: venue name */
+				esc_attr( sprintf( __( 'Delete &#8220;%s&#8221;', 'event-organiser' ), $name ) ),
 				esc_html__( 'Delete', 'eventorganiser' )
 			),
 			'view' => sprintf(
-				'<a href="%s">%s</a>',
+				'<a href="%s" aria-label="%s">%s</a>',
 				esc_url( eo_get_venue_link( $term_id ) ),
+				/* translators: %s: venue name */
+				esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'event-organiser' ), $name ) ),
 				esc_html__( 'View', 'eventorganiser' )
-			)
+			),
 		);
 
-		//Return the title contents
 		return sprintf(
 			'<a href="%1$s" class="row-title">%2$s</a>%3$s',
-			/*$1%s*/ esc_url( get_edit_term_link( $term_id, 'event-venue', 'event' ) ),
-			/*$2%s*/ esc_html( $item->name ),
-			/*$3%s*/ $this->row_actions( $actions )
+			esc_url( get_edit_term_link( $term_id, 'event-venue', 'event' ) ),
+			esc_html( $name ),
+			$this->row_actions( $actions )
 		);
 	}
 
