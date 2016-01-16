@@ -103,9 +103,9 @@ class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
 	static function print_feature( $title, $content, $img ) {
 		?>
 		<div class="eo-feature-section images-stagger-right">
-			<img src="<?php echo esc_url( EVENT_ORGANISER_URL.'css/images/'.$img );?>" alt="" title="<?php echo esc_attr( $title );?>">
+			<img src="<?php echo esc_url( EVENT_ORGANISER_URL.'css/images/'.$img );?>" alt="">
 			<?php echo '<h4>' . esc_html( $title ) . '</h4>'; ?>
-			<p>	<?php echo esc_html( $content ); ?></p>
+			<p><?php echo esc_html( $content ); ?></p>
 		</div>
 		<?php
 	}
