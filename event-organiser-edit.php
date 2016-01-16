@@ -84,7 +84,6 @@ function _eventorganiser_details_metabox( $post ) {
 		$notices = '';
 	}
 
-	//Start of meta box
 	/**
 	 * Filters the notice at the top of the event details metabox.
 	 *
@@ -362,21 +361,21 @@ function eventorganiser_details_save( $post_id ) {
 	$raw_data = ( isset( $_POST['eo_input'] ) ? $_POST['eo_input'] : array() );
 	$raw_data = wp_parse_args( $raw_data, array(
 		'StartDate' => '', 'EndDate' => '', 'StartTime' => '00:00', 'FinishTime' => '23:59', 'schedule' => 'once', 'event_frequency' => 1,
-		'schedule_end' => '', 'allday' => 0, 'schedule_meta' => '', 'days' => array(), 'include' => '', 'exclude' => '', ) );
-
-	//Update venue
-	$venue_id = !empty( $raw_data['event-venue'] ) ? intval( $raw_data['event-venue'] ) : null;
+		'schedule_end' => '', 'allday' => 0, 'schedule_meta' => '', 'days' => array(), 'include' => '', 'exclude' => '',
+	) );
 
 	//Maybe create a new venue
-	if ( empty( $venue_id ) && !empty( $_POST['eo_venue']) && current_user_can( 'manage_venues' ) ){
+	$venue_id = ! empty( $raw_data['event-venue'] ) ? intval( $raw_data['event-venue'] ) : null;
+	if ( empty( $venue_id ) && ! empty( $_POST['eo_venue'] ) && current_user_can( 'manage_venues' ) ) {
 		$venue = $_POST['eo_venue'];
-		if ( !empty( $venue['name'] ) ){
+		if ( ! empty( $venue['name'] ) ) {
 			$new_venue = eo_insert_venue( $venue['name'], $venue );
-			if ( !is_wp_error( $new_venue ) ){
+			if ( ! is_wp_error( $new_venue ) ) {
 				$venue_id = $new_venue['term_id'];
-			}else{
-				if( $new_venue->get_error_code() == 'term_exists' ){
-					$venue_id = eo_get_venue( $event_id );
+			} else {
+				if ( $new_venue->get_error_code() == 'term_exists' ) {
+					$existing_venue = get_term_by( 'name', $venue['name'], 'event-venue' );
+					$venue_id       = $existing_venue ? $existing_venue->term_id : null;
 				}
 			}
 		}
