@@ -341,13 +341,13 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		$current = eventorganiser_get_option( 'templates' );
 
 		$options = array(
-			'1' => array(
-				'label' => __( 'Enable template handling (default)', 'eventorganiser' ),
-				'help'  => __( "Event Organiser's page templates will be used if your theme does not provide appropriate templates.", 'eventorganiser' ),
-			),
 			'themecompat' => array(
-				'label' => __( 'Enable theme compatability mode', 'eventorganiser' ),
+				'label' => __( 'Enable theme compatability mode (default)', 'eventorganiser' ),
 				'help'  => __( 'Event Organiser will attempt to ensure compatability with your theme and apply additional styles.', 'eventorganiser' ),
+			),
+			'1' => array(
+				'label' => __( 'Enable template handling', 'eventorganiser' ),
+				'help'  => __( "Event Organiser's page templates will be used if your theme does not provide appropriate templates.", 'eventorganiser' ),
 			),
 			'0' => array(
 				'label' => __( 'Disable template handling', 'eventorganiser' ),
