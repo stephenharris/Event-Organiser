@@ -93,7 +93,7 @@ class EO_Theme_Compatabilty {
 		if ( ! eventorganiser_get_option( 'templates' ) || get_theme_support( 'event-organiser' ) ) {
 			return $template;
 		}
-		
+
 		/*
 		 * In view of theme compatibility, if an event template isn't found
 		 * rather than using our own single-event.php, we use ordinary single.php and
@@ -101,29 +101,29 @@ class EO_Theme_Compatabilty {
 		 */
 		if ( is_singular( 'event' ) && ! eventorganiser_is_event_template( $template, 'event' ) ) {
 			//Viewing a single event
-		
+
 			//Hide next/previous post link
 			add_filter( 'next_post_link', '__return_false' );
 			add_filter( 'previous_post_link', '__return_false' );
-		
+
 			//Prepend our event details
 			add_filter( 'the_content', '_eventorganiser_single_event_content' );
 			return $template;
 		}
-		
+
 		// If an appropriate template has been found, we'll just stop here
 		if ( is_post_type_archive( 'event' ) && eventorganiser_is_event_template( $template, 'archive' ) ) {
 			return $template;
 		}
-		
+
 		if ( ( is_tax( 'event-venue' ) || eo_is_venue() ) && eventorganiser_is_event_template( $template, 'event-venue' ) ) {
 			return $template;
 		}
-		
+
 		if ( is_tax( 'event-category' )  && eventorganiser_is_event_template( $template, 'event-category' ) ) {
 			return $template;
 		}
-		
+
 		if ( is_tax( 'event-tag' ) && eventorganiser_get_option( 'eventtag' ) && eventorganiser_is_event_template( $template, 'event-tag' ) ) {
 			return $template;
 		}
@@ -133,15 +133,15 @@ class EO_Theme_Compatabilty {
 			if ( is_post_type_archive( 'event' ) ) {
 				$template = EVENT_ORGANISER_DIR . 'templates/archive-event.php';
 			}
-			
+
 			if ( is_tax( 'event-venue' ) || eo_is_venue() ) {
 				$template = EVENT_ORGANISER_DIR . 'templates/taxonomy-event-venue.php';
 			}
-			
+
 			if ( is_tax( 'event-category' ) ) {
 				$template = EVENT_ORGANISER_DIR . 'templates/taxonomy-event-category.php';
 			}
-			
+
 			if ( is_tax( 'event-tag' ) && eventorganiser_get_option( 'eventtag' ) ) {
 				$template = EVENT_ORGANISER_DIR . 'templates/taxonomy-event-tag.php';
 			}

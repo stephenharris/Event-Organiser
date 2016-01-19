@@ -53,7 +53,7 @@
 	</header><!-- .entry-header -->
 	
 	<!-- Show Event text as 'the_excerpt' or 'the_content' -->
-	<div class="eo-event-cntent entry-content" itemprop="description"><?php the_excerpt(); ?></div>
+	<div class="eo-event-content" itemprop="description"><?php the_excerpt(); ?></div>
 			
 	<div style="clear:both;"></div>
 

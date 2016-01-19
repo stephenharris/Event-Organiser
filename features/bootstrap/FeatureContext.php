@@ -3,7 +3,9 @@
 use Behat\Behat\Context\ClosuredContextInterface,
 	Behat\Behat\Context\TranslatedContextInterface,
 	Behat\Behat\Context\Context,
-	Behat\Behat\Context\SnippetAcceptingContext;
+	Behat\Behat\Context\SnippetAcceptingContext,
+	Behat\Behat\Hook\Scope\AfterScenarioScope;
+use Behat\Testwork\Tester\Result\TestResult;
 use Behat\Gherkin\Node\TableNode;
 use Johnbillion\WordPressExtension\Context\WordPressContext;
 
@@ -11,6 +13,19 @@ use Johnbillion\WordPressExtension\Context\WordPressContext;
 
 class FeatureContext extends WordPressContext implements Context, SnippetAcceptingContext {
 
+	/**
+	 * Location to store screenshots, or false if none are to be taken
+	 * @var string|bool
+	 */
+	protected $screenshot_dir = false;
+	
+	public function __construct($screenshot_dir=false) {
+		//TODO What if $screenshot_dir is a valid, albeit non-existing directory 
+		if ( $screenshot_dir && is_dir( $screenshot_dir ) ) {
+			$this->screenshot_dir = rtrim( $screenshot_dir, '/' ) . '/';
+		}
+	}
+	
 	/**
 	 * Add these events to this wordpress installation
 	 *
@@ -357,7 +372,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	public function eventTemplatesAreEnabled()
 	{
 		$options = eventorganiser_get_option( false );
-		$options['templates'] = 0;
+		$options['templates'] = 1;
 		update_option( 'eventorganiser_options', $options );
 	}
 		
@@ -518,8 +533,27 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		$backtrace = debug_backtrace();
 	
 			throw new Exception(
-			"Timeout thrown by " . $backtrace[1]['class'] . "::" . $backtrace[1]['function'] . "()\n" .
-        $backtrace[1]['file'] . ", line " . $backtrace[1]['line']
+				"Timeout thrown by " . $backtrace[1]['class'] . "::" . $backtrace[1]['function'] . "()\n"
 	        );
+	}
+	
+	/**
+	 * @AfterScenario
+	 */
+	public function takeScreenshotAfterFailedStep(AfterScenarioScope $scope)
+	{
+
+		if ($this->screenshot_dir && TestResult::FAILED === $scope->getTestResult()->getResultCode()) {
+			if ($this->getSession()->getDriver() instanceof \Behat\Mink\Driver\Selenium2Driver) {
+				$screenshot = $this->getSession()->getDriver()->getScreenshot();
+				$feature    = $scope->getFeature();
+				$scenario   = $scope->getScenario();
+				$filename   = basename( $feature->getFile(), '.feature' ) . '-' . $scenario->getLine() . '.png';
+				
+				file_put_contents( '/tmp/' . $filename, $screenshot);
+				file_put_contents( '/tmp/screenshot.png', $screenshot);
+				file_put_contents( $this->screenshot_dir . $filename, $screenshot);
+			}
+		}
 	}
 }

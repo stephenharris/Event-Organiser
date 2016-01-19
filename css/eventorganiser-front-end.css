@@ -34,7 +34,9 @@
 
 .eo-tc-event .eo-event-meta{
 	clear:both;
+	list-style:none;
 }
+
 
 .fc-button .ui-button-text{line-height: 8px!important;}
 .ui-button-text-only .ui-button-text {padding: .4em .8em;}
@@ -211,9 +213,10 @@ body.single-event .eo-event-meta{
 	border: none;
 	padding: 0px 5px;
 	box-shadow: none;
-	margin: 0px 10px;
+	margin: 0px 5px;
 	height: 30px;
 	color: #000;
+	font-size: 1em;
 }
 
 .eo-datepicker td span,
