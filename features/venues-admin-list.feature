@@ -45,34 +45,29 @@ Feature: Venues admin list
 		When I go to "/wp-admin/edit.php?post_type=event&page=venues"
 		And I sort venues by "name" "ascending"
 		Then I should see the following in the repeated ".wp-list-table tr .column-name .row-title" element
-	      | text        |
 	      | Akva        |
 	      | Dragonfly   |
 	      | Living Room |
 		When I sort venues by "name" "descending"
 		Then I should see the following in the repeated ".wp-list-table tr .column-name .row-title" element
-	      | text        |
 	      | Living Room |
 	      | Dragonfly   |
 	      | Akva        |
 
 		And I sort venues by "address" "ascending"
 		Then I should see the following in the repeated ".wp-list-table tr .column-name .row-title" element
-	      | text        |
 	      | Living Room |
 	      | Akva        |
 	      | Dragonfly   |
 
 		When I sort venues by "postcode" "descending"
 		Then I should see the following in the repeated ".wp-list-table tr .column-name .row-title" element
-	      | text        |
 	      | Akva        |
 	      | Living Room |
 	      | Dragonfly   |
 	      
 		When I sort venues by "count" "ascending"
 		Then I should see the following in the repeated ".wp-list-table tr .column-name .row-title" element
-	      | text        |
 	      | Dragonfly   |
 	      | Living Room |
 	      | Akva        |

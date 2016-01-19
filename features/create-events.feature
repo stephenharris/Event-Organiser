@@ -14,10 +14,8 @@ Feature: Create events
     
         And I am logged in as "admin" with password "test"
 
-    @javascript
     Scenario: Single event
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Single+Event"
-        And I wait 6 seconds
     	And I fill in the following:
         	| eo-start-date | 25-10-2015   |
         	| eo-start-time | 10:30pm      |
@@ -34,8 +32,8 @@ Feature: Create events
 
     @javascript
     Scenario: Daily event
+        Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Daily+Event"
-        And I wait 6 seconds
         And I fill in the following:
         	| eo-start-date | 06-11-2014   |
         	| eo-start-time | 10:00pm      |
@@ -56,8 +54,8 @@ Feature: Create events
 
     @javascript
     Scenario: Weekly event
+        Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Weekly+Event"
-        And I wait 6 seconds
     	And I fill in the following:
         	| eo-start-date | 01-01-2015    |
         	| eo-start-time | 02:15pm       |
@@ -78,8 +76,8 @@ Feature: Create events
 
     @javascript
     Scenario: Monthly event (by date)
+        Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Monthly+Event+1"
-        And I wait 4 seconds
     	And I fill in the following:
         	| eo-start-date | 30-01-2016      |
         	| eo-start-time | 01:00pm         |
@@ -101,8 +99,8 @@ Feature: Create events
 
     @javascript
     Scenario: Monthly event (by day of the month)
+        Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Monthly+Event+2"
-        And I wait 4 seconds
     	And I fill in the following:
         	| eo-start-date | 30-01-2016      |
         	| eo-start-time | 01:00pm         |
@@ -124,8 +122,8 @@ Feature: Create events
 
     @javascript
     Scenario: Yearly event
+        Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Yearly+Event"
-        And I wait 4 seconds
     	And I fill in the following:
         	| eo-start-date | 29-02-2016    |
         	| eo-start-time | 05:00pm       |

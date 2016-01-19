@@ -370,9 +370,16 @@ jQuery(document).ready(function () {
 
         	$(".eo-widget-cal-wrap").on("click", 'tfoot a', function (a) {
         		a.preventDefault();
+
+        		if ( $(this).data('eo-widget-cal-disabled' ) ) {
+        			return;
+        		}
         		
-        		var calID = $(this).closest(".eo-widget-cal-wrap").data("eo-widget-cal-id");
+        		var $calEl = $(this).closest(".eo-widget-cal-wrap");
+        		var calID = $calEl.data("eo-widget-cal-id");
         		
+        		$calEl.find( 'tfoot a').data('eo-widget-cal-disabled',1);
+
         		//Defaults
         		var cal = {showpastevents: 1, 'show-long': 0, 'link-to-single': 0 };
 
@@ -387,8 +394,15 @@ jQuery(document).ready(function () {
 
                 //Set month
                 cal.eo_month = eveorg_getParameterByName("eo_month", $(this).attr("href"));
+                
+                $calEl.addClass( 'eo-widget-cal-loading' );
+                $("#" + calID + "_overlay").remove();
+                $("#" + calID + "_content").prepend( '<div class="eo-widget-cal-overlay" id="' + calID + '_overlay"><div class="eo-widget-cal-spinner"/></div>' );
 
-                $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal", cal,function (a) {$("#" + calID + "_content").html(a);});
+                $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal", cal,function (a) {
+                	$("#" + calID + "_content").html(a);
+                	$calEl.removeClass( 'eo-widget-cal-loading' );
+                });
         	});
         }
 

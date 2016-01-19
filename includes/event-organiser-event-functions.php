@@ -264,9 +264,9 @@ function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, 
  * @package event-date-functions
  * @param int $event_id
  * @param int $occurrence_id
- * @return boolean|array False if the occurence was not found. 
+ * @return boolean|array False if the occurrence was not found.
  */
-function eo_get_the_occurrence( $event_id, $occurrence_id ){
+function eo_get_the_occurrence( $event_id, $occurrence_id ) {
 
 	global $wpdb;
 	
@@ -330,7 +330,7 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
 }
 
 /**
- * Echos the start date of occurence of event
+ * Echos the start date of occurrence of event
  * @since 1.0.0
  * @uses eo_get_the_start()
  * @package event-date-functions
@@ -431,7 +431,7 @@ function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $d
 }
 
 /**
-* Echos the end date of occurence of event
+* Echos the end date of occurrence of event
  * @since 1.0.0
  * @uses eo_get_the_end()
 * @package event-date-functions
@@ -530,14 +530,14 @@ function eo_get_next_occurrence_of($post_id=0){
 /**
 * Prints the formated date of next occurrence of an event
 * @since 1.0.0
-* @uses eo_get_next_occurence()
+* @uses eo_get_next_occurrence()
 * @package event-date-functions
 *
 * @param string $format The format to use, using PHP Date format
-* @param int $post_id The event (post) ID. Uses current event if empty. 
+* @param int $post_id The event (post) ID. Uses current event if empty.
  */
-function eo_next_occurence($format='',$post_id=0){
-	echo eo_get_next_occurence($format,$post_id);
+function eo_next_occurrence( $format = '', $event_id = 0 ) {
+	echo eo_get_next_occurrence( $format, $event_id );
 }
 
 /**
@@ -854,7 +854,7 @@ function eo_get_schedule_summary($post_id=0){
 * @ignore
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
-* @return array Array of arrays of DateTime objects of the start and end date-times of occurences. False if none exist.
+* @return array Array of arrays of DateTime objects of the start and end date-times of occurrences. False if none exist.
  */
 function eo_get_the_future_occurrences_of( $post_id=0 ){
 	global $wpdb;
@@ -922,7 +922,7 @@ function eo_get_the_future_occurrences_of( $post_id=0 ){
 * @package event-date-functions
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
-* @return array Array of arrays of DateTime objects of the start and end date-times of occurences. False if none exist.
+* @return array Array of arrays of DateTime objects of the start and end date-times of occurrences. False if none exist.
  */
 function eo_get_the_occurrences_of($post_id=0){
 	global $wpdb;
@@ -1334,7 +1334,7 @@ function eo_has_event_finished( $event_id = false, $occurrence_id = false ) {
  * * **maxtime** (string) Latest time to show on week/day views. Default '24:00',
  * * **slotDuration** (string) The frequency for displaying time slots in agenda views, default '00:30:00' (30 minutes)
  * * **nextDayThreshold** (string) If the event starts on a previous day, then the end time of the event must be after this time for it appear on this day on the calendar. Default '06:00:00' (6am)
-     e.g. An event 17th October 11pm - 18th October 7am will appear on the 17th and 18th, but an event 17th October 11pm - 18th October 5am will appear only on the 17th.
+ *   e.g. An event 17th October 11pm - 18th October 7am will appear on the 17th and 18th, but an event 17th October 11pm - 18th October 5am will appear only on the 17th.
  * * **alldayslot** (bool) Whether to include an all day slot (week / day views) in the calendar. Default true.
  * * **alldaytext** (string) Text to display in all day slot. Default 'All Day'.
  * * **titleformatmonth** (string) Date format (PHP) for title for month view. Default 'l, M j, Y'
@@ -1350,34 +1350,34 @@ function eo_has_event_finished( $event_id = false, $occurrence_id = false ) {
  * @link http://arshaw.com/fullcalendar/ The fullCalendar (jQuery plug-in)
  * @link https://github.com/stephenharris/fullcalendar Event Organiser version of fullCalendar
  * @since 1.7
- * @param array $args An array of attributes for the calendar 
+ * @param array $args An array of attributes for the calendar
  * @return string HTML mark-up.
 */
-function eo_get_event_fullcalendar( $args = array() ){
+function eo_get_event_fullcalendar( $args = array() ) {
 
 	global $wp_locale;
 	$defaults = array(
-		'headerleft' => 'title', 'headercenter' => '', 'headerright' => 'prev next today', 
-		'defaultview' => 'month', 'aspectratio' => false,
-		'event-category' => '', 'event_category' => '', 'event-venue' => '', 'event_venue' => '', 'event-tag' => '', 
+		'headerleft' => 'title', 'headercenter' => '', 'headerright' => 'prev next today',
+		'defaultview' => 'month', 'aspectratio' => false, 'compact' => false,
+		'event-category' => '', 'event_category' => '', 'event-venue' => '', 'event_venue' => '', 'event-tag' => '',
 		'author' => false, 'author_name' => false,
 		'timeformat' => get_option( 'time_format' ), 'axisformat' => get_option( 'time_format' ),
-		'key' => false, 'tooltip' => true, 
+		'key' => false, 'tooltip' => true,
 		'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 'showdays' => array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' ),
 		'slotduration' => '00:30:00',
 		'nextdaythreshold' => '06:00:00',
-		'alldayslot' => true, 'alldaytext' => __( 'All Day', 'eventorganiser' ), 
+		'alldayslot' => true, 'alldaytext' => __( 'All Day', 'eventorganiser' ),
 		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
-		'year' => false, 'month' => false, 'date' => false, 'defaultdate' => false,	'users_events' => false, 'event_occurrence__in' =>array(),
+		'year' => false, 'month' => false, 'date' => false, 'defaultdate' => false,	'users_events' => false, 'event_occurrence__in' => array(),
 		'theme' => false, 'reset' => true, 'responsive' => true, 'isrtl' => $wp_locale->is_rtl(),
 	);
-	
+
 	//year/month/day
 	if ( isset( $args['year'] ) ) {
 		$args['month'] = isset( $args['month'] ) ? $args['month'] : '01';
 		$args['date'] = isset( $args['date'] ) ? $args['date'] : '01';
-	}	
+	}
 	if ( isset( $args['month'] ) ) {
 		$args['year'] = isset( $args['year'] ) ? $args['year'] : date( 'Y' );
 		$args['date'] = isset( $args['date'] ) ? $args['date'] : '01';
@@ -1386,13 +1386,13 @@ function eo_get_event_fullcalendar( $args = array() ){
 		$args['year'] = isset( $args['year'] ) ? $args['year'] : date( 'Y' );
 		$args['month'] = isset( $args['month'] ) ? $args['month'] : date( 'M' );
 	}
-	
+
 	if ( isset( $args['year'] ) ) {
 		$args['defaultdate'] = $args['year'] . '-' . $args['month'] . '-' . $args['date'];
 	}
-	
+
 	$args = shortcode_atts( $defaults, $args, 'eo_fullcalendar' );
-	
+
 	//Days to show
 	$args['showdays'] = array_map( 'strtoupper', $args['showdays'] );
 	$args['hiddendays'] = array_diff( array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' ), $args['showdays'] );
@@ -1437,21 +1437,27 @@ function eo_get_event_fullcalendar( $args = array() ){
 		$args[$date_attribute.'php'] = $args[$date_attribute];
 		$args[$date_attribute] = eo_php_to_moment( $args[$date_attribute] );
 	}
-	
+
 	//Month expects 0-11, we ask for 1-12.
 	$args['month'] = ( $args['month'] ? $args['month'] - 1 : false );
 
 	EventOrganiser_Shortcodes::$calendars[] = array_merge( $args );
-	
+
 	EventOrganiser_Shortcodes::$add_script = true;
 	$id = count( EventOrganiser_Shortcodes::$calendars );
-	
+
 	$classes = array( 'eo-fullcalendar', 'eo-fullcalendar-shortcode' );
-	if( $args['reset'] ){
+
+	if ( $args['reset'] ) {
 		$classes[] = 'eo-fullcalendar-reset';
 	}
-	if( $args['responsive'] ){
+
+	if ( $args['responsive'] ) {
 		$classes[] = 'eo-fullcalendar-responsive';
+	}
+
+	if ( $args['compact'] ) {
+		$classes[] = 'fc-oneline';
 	}
 
 	$html = sprintf( '<div id="eo_fullcalendar_%s_loading" class="eo-fullcalendar-loading" >', $id );
@@ -1461,7 +1467,7 @@ function eo_get_event_fullcalendar( $args = array() ){
 		esc_html__( 'Loading&#8230;', 'eventorganiser' )
 	);
 	$html .= '</div>';
-	
+
 	$html .= sprintf(
 		'<div class="%s" id="eo_fullcalendar_%s"></div>',
 		implode( ' ', $classes ),

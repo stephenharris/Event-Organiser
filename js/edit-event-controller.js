@@ -99,7 +99,7 @@ $.widget("ui.combobox", {
 	_create: function () {
 	var c = this.element.hide(), id = c.attr( 'id' ),d = c.children(":selected"),e = d.val() ? d.text() : "";
 	var wrapper  = $("<span>").addClass("ui-combobox eo-venue-input").insertAfter(c);
-	var $hiddenEl = $('<input type="hidden" name="'+c.attr('name')+'" value="'+e+'"/>');
+	var $hiddenEl = $('<input type="hidden" name="'+c.attr('name')+'" value="'+d.val()+'"/>');
 	var input = $("<input>").attr('id',id).appendTo(wrapper).val(e).addClass("ui-combobox-input");
 	var options = {
 		delay: 0,
@@ -186,12 +186,12 @@ $.widget("ui.combobox", {
 				
 			//Store existing venue details in case the user cancels creating a new one
 			eo_venue_obj={
-				id: $("#venue_select").val(),
+				id: $("[name='eo_input[event-venue]']").val(),
 				label: $(".eo-venue-input input").val(),
 				lat: $("#eo_venue_Lat").val(),
 				lng: $("#eo_venue_Lng").val()
 			};
-			$("#venue_select").removeAttr("selected").val(0);
+			$("[name='eo_input[event-venue]']").val(0);
 			$('.eo-venue-combobox-select').hide();
 			$('.eo-venue-input input').val('');
 
@@ -239,7 +239,7 @@ $('.eo-add-new-venue-cancel').click(function(e){
 	//Restore old venue details
 	var latlng = new google.maps.LatLng( eo_venue_obj.lat, eo_venue_obj.lng );
 	eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
-	$("#venue_select").val( eo_venue_obj.id );
+	$("[name='eo_input[event-venue]']").val( eo_venue_obj.id );
 	$(".eo-venue-input input").val( eo_venue_obj.label );
 	$("#eventorganiser_detail .eo-add-new-venue").hide();	
 });

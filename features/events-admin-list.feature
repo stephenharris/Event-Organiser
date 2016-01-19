@@ -65,7 +65,6 @@ Feature: Events admin list
 		When I go to "/wp-admin/edit.php?post_type=event"
 		And I sort events by "start date" "descending"
 		Then I should see the following in the repeated ".wp-list-table tr .column-title strong" element
-	      | text        |
 	      | Weekly      |
 	      | Daily       |
 	      | Single      |
@@ -75,7 +74,6 @@ Feature: Events admin list
 	      | Yearly Past |
 		When I sort events by "end date" "ascending"
 		Then I should see the following in the repeated ".wp-list-table tr .column-title strong" element
-	      | text        |
 	      | Yearly Past |
 	      | Yearly      |
 	      | Monthly 1   |
@@ -85,7 +83,6 @@ Feature: Events admin list
 	      | Weekly      |
 		When I sort events by "end date" "descending"
 		Then I should see the following in the repeated ".wp-list-table tr .column-title strong" element
-	      | text        |
 	      | Weekly      |
 	      | Daily       |
 	      | Single      |
@@ -95,7 +92,6 @@ Feature: Events admin list
 	      | Yearly Past |
 		When I sort events by "start date" "ascending"
 		Then I should see the following in the repeated ".wp-list-table tr .column-title strong" element
-	      | text        |
 	      | Yearly Past |
 	      | Yearly      |
 	      | Monthly 2   |
@@ -108,7 +104,6 @@ Feature: Events admin list
 	Scenario: Sorting by title
 		When I sort events by "title" "ascending"
 		Then I should see the following in the repeated ".wp-list-table tr .column-title strong" element
-	      | text        |
 	      | Daily       |
 	      | Monthly 1   |
 	      | Monthly 2   |

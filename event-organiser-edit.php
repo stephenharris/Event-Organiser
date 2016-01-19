@@ -40,9 +40,9 @@ function _eventorganiser_details_metabox( $post ) {
 	if ( 'd-m-Y' == $phpFormat ) {
 		$format = 'dd &ndash; mm &ndash; yyyy'; //Human form
 	} elseif ( 'Y-m-d' == $phpFormat ) {
-		$format = 'yyyy-mm-dd'; //Human form
+		$format = 'yyyy &ndash; mm &ndash; dd'; //Human form
 	} else {
-		$format = 'mm-dd-yyyy'; //Human form
+		$format = 'mm &ndash; dd &ndash; yyyy'; //Human form
 	}
 
 	$is24        = eventorganiser_blog_is_24();
@@ -84,7 +84,6 @@ function _eventorganiser_details_metabox( $post ) {
 		$notices = '';
 	}
 
-	//Start of meta box
 	/**
 	 * Filters the notice at the top of the event details metabox.
 	 *
@@ -105,14 +104,14 @@ function _eventorganiser_details_metabox( $post ) {
  		<div class="eo-grid-row">
 	 		<div class="eo-grid-4">
 				<span class="eo-label" id="eo-start-datetime-label">
-					<?php esc_html_e( 'Start Date/Time', 'eventorganiser' ).':'; ?> 
+					<?php esc_html_e( 'Start Date/Time:', 'eventorganiser' ); ?> 
 				</span>
  			</div>
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-start-datetime-label">
 	 		
 	 			<label for="eo-start-date" class="screen-reader-text"><?php esc_html_e( 'Start Date', 'eventorganiser' ); ?></label>
 				<input type="text" id="eo-start-date" aria-describedby="eo-start-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" value="<?php echo $start->format( $phpFormat ); ?>"/>
-				<span id="eo-start-date-desc" class="screen-reader-text"><?php echo  $date_desc;?></span>
+				<span id="eo-start-date-desc" class="screen-reader-text"><?php echo esc_html( $date_desc );?></span>
 				
 				<label for="eo-start-time" class="screen-reader-text"><?php esc_html_e( 'Start Time', 'eventorganiser' ); ?></label>
 				<?php
@@ -128,7 +127,7 @@ function _eventorganiser_details_metabox( $post ) {
 		<div class="eo-grid-row">
 	 		<div class="eo-grid-4">
 				<span class="eo-label" id="eo-end-datetime-label">
-					<?php esc_html_e( 'End Date/Time', 'eventorganiser' ).':'; ?> 
+					<?php esc_html_e( 'End Date/Time:', 'eventorganiser' ); ?> 
 				</span>
  			</div>
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-end-datetime-label">
@@ -199,8 +198,8 @@ function _eventorganiser_details_metabox( $post ) {
 							$schedule_days = ( is_array( $schedule_meta ) ? $schedule_meta : array() );
 							?>
 							<li>
-								<input type="checkbox" id="day-<?php echo $day;?>"  <?php checked( in_array( $ical_d, $schedule_days ), true ); ?>  value="<?php echo esc_attr( $ical_d )?>" class="daysofweek" name="eo_input[days][]"/>
-								<label for="day-<?php echo $day;?>" > <abbr title="<?php echo $fullday; ?>"><?php echo $day;?></abbr></label>
+								<input type="checkbox" id="day-<?php echo esc_attr( $day );?>"  <?php checked( in_array( $ical_d, $schedule_days ), true ); ?>  value="<?php echo esc_attr( $ical_d )?>" class="daysofweek" name="eo_input[days][]"/>
+								<label for="day-<?php echo esc_attr( $day );?>" > <abbr aria-label="<?php echo esc_attr( $fullday ); ?>"><?php echo esc_attr( $day );?></abbr></label>
 							</li>
 							<?php
 						endfor;
@@ -251,7 +250,7 @@ function _eventorganiser_details_metabox( $post ) {
 				<input type="hidden" name="eo_input[include]" id="eo-occurrence-includes" value="<?php echo $include_str; ?>"/>
 
 				<?php
-				if ( ! empty($exclude) ) {
+				if ( ! empty( $exclude ) ) {
 					$exclude_str = array_map( 'eo_format_datetime', $exclude, array_fill( 0, count( $exclude ), 'Y-m-d' ) );
 					$exclude_str = esc_attr( sanitize_text_field( implode( ',', $exclude_str ) ) );
 				} else {
@@ -272,7 +271,7 @@ function _eventorganiser_details_metabox( $post ) {
  			</div>
 	 		<div class="eo-grid-8">
 				<select size="50" id="venue_select" name="eo_input[event-venue]">
-					<option><?php _e( 'Select a venue', 'eventorganiser' );?></option>
+					<option><?php esc_html_e( 'Select a venue', 'eventorganiser' );?></option>
 					<?php foreach ( $venues as $venue ) : ?>
 						<option <?php  selected( $venue->term_id, $venue_id );?> value="<?php echo intval( $venue->term_id );?>"><?php echo esc_html( $venue->name ); ?></option>
 					<?php endforeach;?>
@@ -294,12 +293,12 @@ function _eventorganiser_details_metabox( $post ) {
 			foreach ( $address_fields as $key => $label ) {
 				printf(
 					'<div class="eo-grid-4">
-						<label for="eo_venue_add-%2$s">%1$s:</label>
+						<label for="eo_venue_add-%2$s">%1$s</label>
 					</div>
 					<div class="eo-grid-8">
 						<input type="text" name="eo_venue[%2$s]" class="eo_addressInput" id="eo_venue_add-%2$s"  value=""/>
 					</div>',
-					$label,
+					esc_html( $label ),
 					esc_attr( trim( $key, '_' ) )/* Keys are prefixed by '_' */
 				);
 			}
@@ -315,8 +314,8 @@ function _eventorganiser_details_metabox( $post ) {
 	 		<div class="eo-grid-4"></div>
 	 		<div class="eo-grid-8">
 				<div id="eventorganiser_venue_meta" style="display:none;">
-					<input type="hidden" id="eo_venue_Lat" name="eo_venue[latitude]" value="<?php eo_venue_lat( $venue_id );?>" />
-					<input type="hidden" id="eo_venue_Lng" name="eo_venue[longtitude]" value="<?php eo_venue_lng( $venue_id ); ?>" />
+					<input type="hidden" id="eo_venue_Lat" name="eo_venue[latitude]" value="<?php esc_attr( eo_venue_lat( $venue_id ) );?>" />
+					<input type="hidden" id="eo_venue_Lng" name="eo_venue[longtitude]" value="<?php esc_attr( eo_venue_lng( $venue_id ) ); ?>" />
 				</div>
 					
 				<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
@@ -336,7 +335,7 @@ function _eventorganiser_details_metabox( $post ) {
 /**
  * Saves the event data posted from the event metabox.
  * Hooked to the 'save_post' action
- * 
+ *
  * @since 1.0.0
  *
  * @param int $post_id the event post ID
@@ -344,51 +343,55 @@ function _eventorganiser_details_metabox( $post ) {
  */
 function eventorganiser_details_save( $post_id ) {
 
-	//make sure data came from our meta box
-	if ( !isset( $_POST['_eononce'] ) || !wp_verify_nonce( $_POST['_eononce'], 'eventorganiser_event_update_'.$post_id.'_'.get_current_blog_id() ) ) return;
+	//make sure data came from our meta box and prevent CSRF
+	if ( ! isset( $_POST['_eononce'] ) || ! wp_verify_nonce( $_POST['_eononce'], 'eventorganiser_event_update_'.$post_id.'_'.get_current_blog_id() ) ) {
+		return;
+	}
 
-	//verify this is not an auto save routine. 
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
-	
-	//authentication checks
-	if ( !current_user_can( 'edit_event', $post_id ) ) return;
+	//we don't want to be creating/deleting dates until user has finished and clicked 'update'
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'edit_event', $post_id ) ) {
+		return;
+	}
 
 	//Collect raw data
 	$raw_data = ( isset( $_POST['eo_input'] ) ? $_POST['eo_input'] : array() );
 	$raw_data = wp_parse_args( $raw_data, array(
 		'StartDate' => '', 'EndDate' => '', 'StartTime' => '00:00', 'FinishTime' => '23:59', 'schedule' => 'once', 'event_frequency' => 1,
-		'schedule_end' => '', 'allday' => 0, 'schedule_meta' => '', 'days' => array(), 'include' => '', 'exclude' => '', ) );
-
-	//Update venue
-	$venue_id = !empty( $raw_data['event-venue'] ) ? intval( $raw_data['event-venue'] ) : null;
+		'schedule_end' => '', 'allday' => 0, 'schedule_meta' => '', 'days' => array(), 'include' => '', 'exclude' => '',
+	) );
 
 	//Maybe create a new venue
-	if ( empty( $venue_id ) && !empty( $_POST['eo_venue']) && current_user_can( 'manage_venues' ) ){
+	$venue_id = ! empty( $raw_data['event-venue'] ) ? intval( $raw_data['event-venue'] ) : null;
+	if ( empty( $venue_id ) && ! empty( $_POST['eo_venue'] ) && current_user_can( 'manage_venues' ) ) {
 		$venue = $_POST['eo_venue'];
-		if ( !empty( $venue['name'] ) ){
+		if ( ! empty( $venue['name'] ) ) {
 			$new_venue = eo_insert_venue( $venue['name'], $venue );
-			if ( !is_wp_error( $new_venue ) ){
+			if ( ! is_wp_error( $new_venue ) ) {
 				$venue_id = $new_venue['term_id'];
-			}else{
-				if( $new_venue->get_error_code() == 'term_exists' ){
-					$venue_id = eo_get_venue( $event_id );
+			} else {
+				if ( $new_venue->get_error_code() == 'term_exists' ) {
+					$existing_venue = get_term_by( 'name', $venue['name'], 'event-venue' );
+					$venue_id       = $existing_venue ? $existing_venue->term_id : null;
 				}
 			}
 		}
 	}
 
 	//Set venue
-	$r = wp_set_post_terms( $post_id, array( $venue_id ), 'event-venue', false );
+	wp_set_post_terms( $post_id, array( $venue_id ), 'event-venue', false );
 
-
-	//If reocurring, but not editing occurrences, can abort here, but trigger hook.
-	if ( eo_recurs( $post_id ) && ( !isset( $raw_data['AlterRe'] ) || 'yes' != $raw_data['AlterRe'] ) ){
-	   /**
- 		* Triggered after an event has been updated.
- 		*
- 		* @param int $post_id The ID of the event
- 		*/
-		do_action( 'eventorganiser_save_event', $post_id );//Need this to update cache
+	//If reocurring, but not editing occurrences, can abort here, but still trigger eventorganiser_save_event.
+	if ( eo_recurs( $post_id ) && ( ! isset( $raw_data['AlterRe'] ) || 'yes' != $raw_data['AlterRe'] ) ) {
+		/**
+		 * Triggered after an event has been updated.
+		 *
+		 * @param int $post_id The ID of the event
+		 */
+		do_action( 'eventorganiser_save_event', $post_id );//Need this so cache is updated
 		return;
 	}
 
@@ -397,24 +400,24 @@ function eventorganiser_details_save( $post_id ) {
 	$is24 = eventorganiser_blog_is_24();
 	$time_format = $is24 ? 'H:i' : 'g:ia';
 	$datetime_format = $date_format . ' ' . $time_format;
-	
+
 	//Set times for all day events
 	$all_day = intval( $raw_data['allday'] );
-	if ( $all_day ){
+	if ( $all_day ) {
 		$raw_data['StartTime']  = $is24 ? '00:00' : '12:00am';
 		$raw_data['FinishTime'] = $is24 ? '23:59' : '11:59pm';
 	}
-	
+
 	$start = eo_check_datetime( $datetime_format, trim( $raw_data['StartDate'] ) . ' ' . trim( $raw_data['StartTime'] ) );
 	$end   = eo_check_datetime( $datetime_format, trim( $raw_data['EndDate'] ) . ' ' . trim( $raw_data['FinishTime'] ) );
 	$until = eo_check_datetime( $datetime_format, trim( $raw_data['schedule_end'] ) . ' ' . trim( $raw_data['StartTime'] ) );
-	
-	//Collect schedule meta
+
+	//Parse schedule meta
 	$schedule = $raw_data['schedule'];
-	if ( 'weekly' == $schedule ){
+	if ( 'weekly' == $schedule ) {
 		$schedule_meta = $raw_data['days'];
 		$occurs_by = '';
-	} elseif (  'monthly' == $schedule ){
+	} elseif (  'monthly' == $schedule ) {
 		$schedule_meta = $raw_data['schedule_meta'];
 		$occurs_by = trim( $schedule_meta, '=' );
 	} else {
@@ -422,18 +425,18 @@ function eventorganiser_details_save( $post_id ) {
 		$occurs_by     = '';
 	}
 
-	//Collect include/exclude 
-	$in_ex         = array();
-	$orig_schedule = eo_get_event_schedule( $post_id );
-	foreach ( array( 'include', 'exclude' ) as $key ):
-		
+	//Parse included and exclude dates
+	$in_ex = array();
+	foreach ( array( 'include', 'exclude' ) as $key ) :
+
 		$in_ex[$key] = array();
 		$arr         = explode( ',', sanitize_text_field( $raw_data[$key] ) );
-		
-		if ( !empty( $arr ) ){
-			foreach ( $arr as $date ){
-				if( $date_obj = eo_check_datetime( 'Y-m-d', trim( $date ) ) ){
-					$date_obj->setTime( $start->format('H'), $start->format('i') );
+
+		if ( ! empty( $arr ) ) {
+			//Go through each included/exclude date and convert it into a datetime (with the event's time)
+			foreach ( $arr as $date ) {
+				if ( $date_obj = eo_check_datetime( 'Y-m-d', trim( $date ) ) ) {
+					$date_obj->setTime( $start->format( 'H' ), $start->format( 'i' ) );
 					$in_ex[$key][] = $date_obj;
 				}
 			}
@@ -445,7 +448,7 @@ function eventorganiser_details_save( $post_id ) {
 			}*/
 		}
 	endforeach;
-	
+
 	$event_data = array(
 		'start'         => $start,
 		'end'           => $end,
@@ -459,9 +462,9 @@ function eventorganiser_details_save( $post_id ) {
 		'exclude'       => $in_ex['exclude'],
 	);
 
-	$response = eo_update_event( $post_id, $event_data );	
+	$response = eo_update_event( $post_id, $event_data );
 
-	if ( is_wp_error( $response ) ){
+	if ( is_wp_error( $response ) ) {
 		global $EO_Errors;
 		$code = $response->get_error_code();
 		$message = $response->get_error_message( $code );

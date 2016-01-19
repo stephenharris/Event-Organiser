@@ -110,16 +110,17 @@ class EventOrganiser_Shortcodes {
 		return $html;
 	}
 
-	static function handle_fullcalendar_shortcode( $atts = array() ){
+	static function handle_fullcalendar_shortcode( $atts = array() ) {
 
 		global $wp_locale;
-		
+
 		/* Handle Boolean attributes - this will be passed as strings, we want them as boolean */
 		$bool_atts = array(
 			'tooltip' => 'true', 'weekends' => 'true', 'alldayslot' => 'true', 'users_events' => 'false',
 			'theme' => 'false', 'isrtl' => $wp_locale->is_rtl() ? 'true' : 'false', 'responsive' => 'true',
+			'compact' => false,
 		);
-		
+
 		$atts = wp_parse_args( $atts, $bool_atts );
 
 		foreach( $bool_atts as $att => $value ){
@@ -352,17 +353,15 @@ class EventOrganiser_Shortcodes {
 			case 'event_duration':
 				$start = eo_get_the_start( DATETIMEOBJ );
 				$end   = clone eo_get_the_end( DATETIMEOBJ );
-				if( eo_is_all_day() ){
+				if ( eo_is_all_day() ) {
 					$end->modify( '+1 minute' );
 				}
-
-				if( function_exists( 'date_diff' ) ){
+				if ( function_exists( 'date_diff' ) ) {
 					$duration = date_diff( $start, $end );
 					$replacement = $duration->format( $matches[2] );
-				}else{
+				} else {
 					$replacement = eo_date_interval( $start,$end, $matches[2] );
 				}
-				$replacement = false;
 				break;
 
 			case 'event_tags':

@@ -5,7 +5,7 @@
 .eo-tc-page .eo-events-nav-newer{
 	float:left;
 }
-.eo-tc-page nav{
+.eo-tc-page .eo-events-nav{
 	overflow: inherit;
 	margin: 10px auto;
 }
@@ -34,7 +34,9 @@
 
 .eo-tc-event .eo-event-meta{
 	clear:both;
+	list-style:none;
 }
+
 
 .fc-button .ui-button-text{line-height: 8px!important;}
 .ui-button-text-only .ui-button-text {padding: .4em .8em;}
@@ -73,6 +75,31 @@ body.single-event .eo-event-meta{
 .eo-fullcalendar-key ul.eo_fullcalendar_key{display: inline-block;font-size: 0.8em;}
 .eo-fullcalendar-key ul.eo_fullcalendar_key li{display: inline-block;margin:0 3px;}
 .eo-fullcalendar-key span.eo_fullcalendar_key_colour{margin: 4px 2px 4px 5px;border: 1px solid #DFDFDF;border-radius: 4px 4px 4px 4px;font-size: 0.9em;vertical-align: top;padding: 0 6px;}
+
+.eo-widget-cal-wrap{
+	position:relative;
+}
+.eo-widget-cal-overlay{
+	position:absolute;
+	height:100%;
+	width:100%;
+}
+.eo-widget-cal-loading{
+	opacity: .6;
+}
+.eo-widget-cal-spinner{
+	border-radius: 50%;
+	opacity: .9;
+	background: url(images/loading-40x40.gif);
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 40px;
+	height: 40px;
+	margin: -20px 0 0 -20px; /* height or width / 2 */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
 
 /* Agenda CSS */
 .eo-agenda-widget ul{list-style:none; margin:0}
@@ -186,9 +213,10 @@ body.single-event .eo-event-meta{
 	border: none;
 	padding: 0px 5px;
 	box-shadow: none;
-	margin: 0px 10px;
+	margin: 0px 5px;
 	height: 30px;
 	color: #000;
+	font-size: 1em;
 }
 
 .eo-datepicker td span,

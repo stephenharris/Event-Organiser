@@ -30,7 +30,6 @@ Feature: Manage events
     Scenario: Events menu placement
         When I go to "/wp-admin/index.php"
         And I should see the following in the repeated "#adminmenu > li a .wp-menu-name" element
-            | text       |
             | Dashboard  |
             | Posts      |
             | Events     |            

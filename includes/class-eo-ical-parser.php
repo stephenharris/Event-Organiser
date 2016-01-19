@@ -173,23 +173,23 @@ class EO_ICAL_Parser{
 
 	/**
 	 * Parses the given $file. Returns WP_Error on error.
-	 * 
+	 *
 	 * @param string $file Path to iCal file or an url to an ical file
 	 * @return bool|WP_Error. True if parsed. Returns WP_Error on error;
 	 */
-	function parse( $file ){
-		
-		//Local file
-		if( is_file($file) && file_exists($file)  ){
-			$this->ical_array = $this->file_to_array( $file );
+	function parse( $file ) {
 
 		//Remote file
-		}elseif( preg_match('!^(http|https|ftp|webcal)://!i', $file) ){
+		if( preg_match('!^(http|https|ftp|webcal|feed)://!i', $file ) ) {
 			$this->ical_array = $this->url_to_array( $file );
 
-		}else{
-			$this->ical_array =  new WP_Error( 
-				'invalid-ical-source', 
+		//Local file
+		} elseif ( @is_file( $file ) && @file_exists( $file )  ) {
+			$this->ical_array = $this->file_to_array( $file );
+			
+		} else {
+			$this->ical_array =  new WP_Error(
+				'invalid-ical-source',
 				__( 'There was an error detecting iCal source.', 'eventorganiser' )
 			);
 		}
@@ -240,23 +240,24 @@ class EO_ICAL_Parser{
 		
 		return true;
 	}
-	
+
 	/**
 	 * Fetches ICAL calendar from a feed url and returns its contents as an array.
 	 * 
 	 * @ignore
-	 * @param sring $url The url of the ICAL feed 
-	 * @return array|bool Array of line in ICAL feed, false on error 
+	 * @param sring $url The url of the ICAL feed
+	 * @return array|bool Array of line in ICAL feed, false on error
 	 */
 	protected function url_to_array( $url ){
-		
-		//Handle webcal:// protocol: change to http://
-		$url = preg_replace('#^(webcal://)#', 'http://', $url );
-		
-		$response =  wp_remote_get( $url, array( 'timeout' => $this->remote_timeout ) );
+
+		//Handle webcal:// and feed:// protocol: change to http://
+		$url = preg_replace( '#^(webcal://)#', 'http://', $url );
+		$url = preg_replace( '#^(feed://)#', 'http://', $url );
+
+		$response = wp_remote_get( $url, array( 'timeout' => $this->remote_timeout ) );
 		$contents = wp_remote_retrieve_body( $response );
 		$response_code = wp_remote_retrieve_response_code( $response );
-		
+
 		if( is_wp_error( $response ) )
 			return $response;
 		

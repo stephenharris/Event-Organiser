@@ -7,50 +7,54 @@
  *@access private
  *@ignore
 */
- function eventorganiser_install( $is_networkwide = false ){
-       global $wpdb;
+function eventorganiser_install( $is_networkwide = false ) {
 
-       if( !defined( 'EVENT_ORGANISER_URL' ) ){
-       		define( 'EVENT_ORGANISER_URL', plugin_dir_url( EVENT_ORGANISER_DIR.'event-organiser.php' ) );
-       }
-       
-    	// Is this multisite and did the user click network activate?
-    	$is_multisite = ( function_exists('is_multisite') && is_multisite() );
+	global $wpdb;
 
-    	if ($is_multisite && $is_networkwide) {
-    	    	// Get the current blog so we can return to it.
-	        $current_blog_id = get_current_blog_id();
+	if ( ! defined( 'EVENT_ORGANISER_URL' ) ) {
+		define( 'EVENT_ORGANISER_URL', plugin_dir_url( EVENT_ORGANISER_DIR.'event-organiser.php' ) );
+	}
 
-	        // Get a list of all blogs.
-	         $blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
-		if( $blog_ids ){
+	// If this is multisite and the user clicked network activate - we'll need to loop over all sites
+	$is_multisite = ( function_exists( 'is_multisite' ) && is_multisite() );
+
+	if ( $is_multisite && $is_networkwide ) {
+		// Get the current blog so we can return to it.
+		$current_blog_id = get_current_blog_id();
+
+		$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+		if ( $blog_ids ) {
 			foreach ( $blog_ids as $blog_id ) {
 				switch_to_blog( $blog_id );
-	            		eventorganiser_site_install();
-	       		 }
+				eventorganiser_site_install();
+			}
 			switch_to_blog( $current_blog_id );
-		}else{
+		} else {
 			eventorganiser_site_install();
 		}
-    	}else {
-    	    eventorganiser_site_install();
-    	}
+	} else {
+		eventorganiser_site_install();
+	}
 }
 
-function eventorganiser_site_install(){
-	global $wpdb; 
+function eventorganiser_site_install() {
+
+	global $wpdb;
+
 	$eventorganiser_db_version = defined( 'EVENT_ORGANISER_VER' ) ? EVENT_ORGANISER_VER : false;
 
 	eventorganiser_wpdb_fix();
 
 	$charset_collate = '';
-	if ( ! empty($wpdb->charset) )
+	if ( ! empty($wpdb->charset) ) {
 		$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-	if ( ! empty($wpdb->collate) )
+	}
+	if ( ! empty($wpdb->collate) ) {
 		$charset_collate .= " COLLATE $wpdb->collate";
+	}
 
 	//Events table
-	$sql_events_table = "CREATE TABLE " .$wpdb->eo_events. " (
+	$sql_events_table = "CREATE TABLE {$wpdb->eo_events} (
 		event_id bigint(20) NOT NULL AUTO_INCREMENT,
 		post_id bigint(20) NOT NULL,
 		StartDate DATE NOT NULL,
@@ -62,9 +66,9 @@ function eventorganiser_site_install(){
 		KEY StartDate (StartDate),
 		KEY EndDate (EndDate)
 		)".$charset_collate;
-	
+
 	//Venue meta table
-	$sql_venuemeta_table ="CREATE TABLE {$wpdb->prefix}eo_venuemeta (
+	$sql_venuemeta_table = "CREATE TABLE {$wpdb->eo_venuemeta} (
 		meta_id bigint(20) unsigned NOT NULL auto_increment,
 		eo_venue_id bigint(20) unsigned NOT NULL default '0',
  		meta_key varchar(255) default NULL,
@@ -74,32 +78,32 @@ function eventorganiser_site_install(){
 		KEY meta_key (meta_key)
 		) $charset_collate; ";
 
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	dbDelta($sql_events_table);
-	dbDelta($sql_venuemeta_table);
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql_events_table );
+	dbDelta( $sql_venuemeta_table );
 
 	//Add options and capabilities
-	$eventorganiser_options = array (	
-		'supports' => array('title','editor','author','thumbnail','excerpt','custom-fields'),
-		'event_redirect' => 'events',
-		'dateformat'=>'dd-mm',
-		'prettyurl'=> 1,
-		'templates'=> 1,
-		'addtomenu'=> 0,
-		'excludefromsearch'=>0,
-		'showpast'=> 0,
-		'group_events'=>'',
-		'url_venue'=>'events/event',
-		'url_venue'=> 'events/venues',
-		'url_cat' => 'events/category',
-		'url_tag' => 'events/tag',
-		'navtitle' => __('Events','eventorganiser'),
-		'eventtag' => 1,
-		'feed' => 1,
+	$eventorganiser_options = array(
+		'supports'          => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields' ),
+		'event_redirect'    => 'events',
+		'dateformat'        => 'dd-mm',
+		'prettyurl'         => 1,
+		'templates'         => 'themecompat',
+		'addtomenu'         => 0,
+		'excludefromsearch' => 0,
+		'showpast'          => 0,
+		'group_events'      => '',
+		'url_venue'         => 'events/event',
+		'url_venue'         => 'events/venues',
+		'url_cat'           => 'events/category',
+		'url_tag'           => 'events/tag',
+		'navtitle'          => __( 'Events', 'eventorganiser' ),
+		'eventtag'          => 1,
+		'feed'              => 1,
 		'runningisnotpast' => 0,
-		'deleteexpired' => 0
+		'deleteexpired'    => 0,
 	);
-	add_option('eventorganiser_options',$eventorganiser_options);
+	add_option( 'eventorganiser_options', $eventorganiser_options );
 
 	/* Add existing notices */
 	$notices = array( 'changedtemplate17' );
@@ -108,22 +112,22 @@ function eventorganiser_site_install(){
 	//Add roles to administrator
 	global $wp_roles;
 	$all_roles = $wp_roles->roles;
-	$eventorganiser_roles =  array(
-			 'edit_events' => __( 'Edit Events', 'eventorganiser' ),
-			 'publish_events' => __( 'Publish Events', 'eventorganiser' ),
-			 'delete_events' => __( 'Delete Events', 'eventorganiser' ),
-			'edit_others_events' => __( 'Edit Others\' Events', 'eventorganiser' ),
-			 'delete_others_events' => __( 'Delete Other\'s Events', 'eventorganiser' ),
-			'read_private_events' => __( 'Read Private Events', 'eventorganiser' ),
-			 'manage_venues' => __( 'Manage Venues', 'eventorganiser' ),
-			 'manage_event_categories' => __( 'Manage Event Categories & Tags', 'eventorganiser' ),
-		);
-	foreach ($all_roles as $role_name => $display_name):
-		$role = $wp_roles->get_role($role_name);
-		if($role->has_cap('manage_options')){
-			foreach($eventorganiser_roles as $eo_role=>$eo_role_display):
-				$role->add_cap($eo_role);
-			endforeach;  
+	$eventorganiser_roles = array(
+		'edit_events'             => __( 'Edit Events', 'eventorganiser' ),
+		'publish_events'          => __( 'Publish Events', 'eventorganiser' ),
+		'delete_events'           => __( 'Delete Events', 'eventorganiser' ),
+		'edit_others_events'      => __( 'Edit Others\' Events', 'eventorganiser' ),
+		'delete_others_events'    => __( 'Delete Other\'s Events', 'eventorganiser' ),
+		'read_private_events'     => __( 'Read Private Events', 'eventorganiser' ),
+		'manage_venues'           => __( 'Manage Venues', 'eventorganiser' ),
+		'manage_event_categories' => __( 'Manage Event Categories & Tags', 'eventorganiser' ),
+	);
+	foreach ( $all_roles as $role_name => $display_name ) :
+		$role = $wp_roles->get_role( $role_name );
+		if ( $role->has_cap( 'manage_options' ) ) {
+			foreach ( $eventorganiser_roles as $eo_role => $eo_role_display ) :
+				$role->add_cap( $eo_role );
+			endforeach;
 		}
 	endforeach;  //End foreach $all_roles
 

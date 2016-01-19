@@ -25,9 +25,7 @@
 ?>
 
 <div class="eventorganiser-event-meta">
-	
-	<?php $date_format = eo_get_event_datetime_format(); ?>
-	
+
 	<hr>
 
 	<!-- Event details -->
@@ -36,7 +34,7 @@
 	<!-- Is event recurring or a single event -->
 	<?php if ( eo_recurs() ) :?>
 		<!-- Event recurs - is there a next occurrence? -->
-		<?php $next = eo_get_next_occurrence( $date_format );?>
+		<?php $next = eo_get_next_occurrence( eo_get_event_datetime_format() );?>
 
 		<?php if ( $next ) : ?>
 			<!-- If the event is occurring again in the future, display the date -->
@@ -52,7 +50,7 @@
 
 		<?php if ( ! eo_recurs() ) { ?>
 			<!-- Single event -->
-			<li><strong><?php esc_html_e( 'Start', 'eventorganiser' );?>:</strong> <?php eo_the_start( $date_format );?></li>
+			<li><strong><?php esc_html_e( 'Date', 'eventorganiser' );?>:</strong> <?php echo eo_format_event_occurrence();?></li>
 		<?php } ?>
 
 		<?php if ( eo_get_venue() ) {
@@ -85,7 +83,7 @@
 							<?php
 							while ( $upcoming->have_posts() ) {
 								$upcoming->the_post();
-								echo '<li>' . eo_get_the_start( $date_format ) . '</li>';
+								echo '<li>' . eo_format_event_occurrence() . '</li>';
 							};
 							?>
 						</ul>

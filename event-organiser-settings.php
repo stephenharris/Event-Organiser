@@ -341,13 +341,13 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		$current = eventorganiser_get_option( 'templates' );
 
 		$options = array(
-			'1' => array(
-				'label' => __( 'Enable template handling (default)', 'eventorganiser' ),
-				'help'  => __( "Event Organiser's page templates will be used if your theme does not provide appropriate templates.", 'eventorganiser' ),
-			),
 			'themecompat' => array(
-				'label' => __( 'Enable theme compatability mode', 'eventorganiser' ),
+				'label' => __( 'Enable theme compatability mode (default)', 'eventorganiser' ),
 				'help'  => __( 'Event Organiser will attempt to ensure compatability with your theme and apply additional styles.', 'eventorganiser' ),
+			),
+			'1' => array(
+				'label' => __( 'Enable template handling', 'eventorganiser' ),
+				'help'  => __( "Event Organiser's page templates will be used if your theme does not provide appropriate templates.", 'eventorganiser' ),
 			),
 			'0' => array(
 				'label' => __( 'Disable template handling', 'eventorganiser' ),
@@ -559,60 +559,56 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		endforeach; //End foreach $editable_roles
 	}
 
+	function display() {
 
-
-	function display(){
+		$active_tab = ( isset( $_GET['tab'] ) &&  isset( $this->tabs[$_GET['tab']] ) ? $_GET['tab'] : 'general' );
+		$label      = $this->tabs[$active_tab];
 		?>
-    		<div class="wrap">  
-      
-				<?php
+    	<div class="wrap">  
+      		<h1>
+      			<span aria-hidden=true><?php esc_html_e( 'Event Settings', 'eventorganiser' );?></span>
+      			<span class="screen-reader-text"><?php printf( esc_html__( 'Event Settings: %s', 'eventorganiser' ), $label ); ?></span>
+      		</h1>
+			<?php
+			echo '<h2 class="nav-tab-wrapper">';
+			foreach ( $this->tabs as $tab_id => $label ) {
+				printf(
+					'<a href="%s" class="nav-tab %s">%s</a>',
+					esc_url( add_query_arg( array( 'page' => $this->slug, 'tab' => $tab_id ) ) ),
+					( $active_tab == $tab_id ? 'nav-tab-active' : '' ),
+					esc_html( $label )
+				);
+			}
+			echo '</h2>';
 
-				$active_tab = ( isset( $_GET[ 'tab' ] ) &&  isset( $this->tabs[$_GET[ 'tab' ]] ) ? $_GET[ 'tab' ] : 'general' );
-				$page = $this->slug;
+			if ( 'imexport' != $active_tab ) {
+				echo '<form method="post" action="options.php">';
+				settings_fields( 'eventorganiser_'.$active_tab );
+				do_settings_sections( 'eventorganiser_'.$active_tab );
 
-				echo '<h2 class="nav-tab-wrapper">';
-
-					foreach ( $this->tabs as $tab_id => $label ){
-				          	printf(
-							'<a href="?page=%s&tab=%s" class="nav-tab %s">%s</a>',
-							$page,
-							$tab_id,
-							( $active_tab == $tab_id ? 'nav-tab-active' : '' ),
-							esc_html( $label )
-						);
-					}
-				echo '</h2>';
-				?>
-
-				<?php if ( 'imexport' != $active_tab ){
-					echo '<form method="post" action="options.php">';
-						settings_fields( 'eventorganiser_'.$active_tab );
-						do_settings_sections( 'eventorganiser_'.$active_tab ); 
-	
-						/**
-						 * @ignore
-						 */
-						do_action( 'eventorganiser_event_settings_'.$active_tab );
-						//Tab identifier - so we know which tab we are validating. See $this->validate().
-						printf( '<input type="hidden" name="eventorganiser_options[tab]" value="%s" />', esc_attr( $active_tab ) );
-						submit_button(); 
-				        echo '</form>';
-				} else {
-					/**
-					 * @ignore
-					 * The import/export tab is handled differently not using `add_settings_section()`.
-					 * This tab may be move too Tools.
-					 */
-					do_action( 'eventorganiser_event_settings_imexport' ); 
-				}
-				?>
-          
+				/**
+				 * @ignore
+				 */
+				do_action( 'eventorganiser_event_settings_'.$active_tab );
+				//Tab identifier - so we know which tab we are validating. See $this->validate().
+				printf( '<input type="hidden" name="eventorganiser_options[tab]" value="%s" />', esc_attr( $active_tab ) );
+				submit_button();
+				echo '</form>';
+			} else {
+				/**
+				 * @ignore
+				 * The import/export tab is handled differently not using `add_settings_section()`.
+				 * This tab may be move too Tools.
+				 */
+				do_action( 'eventorganiser_event_settings_imexport' );
+			}
+			?>
 		</div><!-- /.wrap -->  
 
 	<?php
 	}
-	
-	function display_licence_keys(){
+
+	function display_licence_keys() {
 		global $wp_settings_fields;
 		$page = 'eventorganiser_general';
 		$section_id = 'general_licence';
@@ -628,39 +624,39 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			}	
 		} 
 	}
-	
-	function template_settings(){
-		esc_html_e("For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. You can disable this below. WordPress will then decide which template from your theme's folder to use.", 'eventorganiser' );
+
+	function template_settings() {
+		esc_html_e( "For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. You can disable this below. WordPress will then decide which template from your theme's folder to use.", 'eventorganiser' );
 		echo '<ul>';
 		printf(
-			"<li><strong> %s </strong><code>archive-event.php</code></li>
+			'<li><strong> %s </strong><code>archive-event.php</code></li>
 			<li><strong> %s </strong><code>single-event.php</code></li>
 			<li><strong> %s </strong><code>taxonomy-event-venue.php</code></li>
-			<li><strong> %s </strong><code>taxonomy-event-category.php</code></li>",
-			__("Events archives:", 'eventorganiser' ),
-			__("Event page:", 'eventorganiser' ),
-			__("Venue page:", 'eventorganiser' ),
-			__("Events Category page:", 'eventorganiser' )
+			<li><strong> %s </strong><code>taxonomy-event-category.php</code></li>',
+			esc_html__( 'Events archives:', 'eventorganiser' ),
+			esc_html__( 'Event page:', 'eventorganiser' ),
+			esc_html__( 'Venue page:', 'eventorganiser' ),
+			esc_html__( 'Events Category page:', 'eventorganiser' )
 		);
 		printf(
 			__( "For more information see documentation <a href='%s'>on editing the templates</a>", 'eventorganiser' ),
 			'http://docs.wp-event-organiser.com/theme-integration'
-		);	
+		);
 		echo '</ul>';
 	}
-	
-	function display_permissions(){
+
+	function display_permissions() {
 		global $wp_roles;
-		
+
 		?>
-		<h4> <?php _e( 'Event management permissions', 'eventorganiser' ); ?></h4>
-		<p> <?php _e( 'Set permissions for events and venue management', 'eventorganiser' ); ?> </p>
+		<h4><?php esc_html_e( 'Event management permissions', 'eventorganiser' ); ?></h4>
+		<p><?php esc_html_e( 'Set permissions for events and venue management', 'eventorganiser' ); ?></p>
 		
 		<table class="widefat fixed posts">
 			<thead>
 			<tr>
-				<th><?php _e( 'Role', 'eventorganiser' ); ?></th>
-				<?php foreach ( self::$eventorganiser_roles as $eo_role => $eo_role_display ): ?>
+				<th><?php esc_html_e( 'Role', 'eventorganiser' ); ?></th>
+				<?php foreach ( self::$eventorganiser_roles as $eo_role => $eo_role_display ) : ?>
 					<th><?php echo esc_html( $eo_role_display );?></th>
 				<?php endforeach; ?> 
 			</tr>
@@ -668,26 +664,26 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		<tbody id="the-list">
 			<?php
 			$array_index = 0;
-			foreach ( get_editable_roles() as $role_name => $display_name ):
-				$role = $wp_roles->get_role( $role_name ); 
-				$role_name = isset( $wp_roles->role_names[$role_name] ) ? translate_user_role( $wp_roles->role_names[$role_name] ) : __( 'None' );
+			foreach ( get_editable_roles() as $role_name => $display_name ) :
+				$role = $wp_roles->get_role( $role_name );
+				$role_name = isset( $wp_roles->role_names[$role_name] ) ? translate_user_role( $wp_roles->role_names[$role_name] ) : esc_html__( 'None', 'eventorganiser' );
 
-				printf( '<tr %s>', $array_index == 0 ? 'class="alternate"' : '' );
-					printf( '<td> %s </td>',esc_html( $role_name ) );
+				printf( '<tr %s>', 0 == $array_index ? 'class="alternate"' : '' );
+				printf( '<td> %s </td>',esc_html( $role_name ) );
 
-					foreach ( self::$eventorganiser_roles as $eo_role => $eo_role_display ):
-						printf(
-							'<td>
-								<input type="checkbox" name="eventorganiser_options[permissions][%s][%s]" value="1" %s %s  />
-							</td>',
-							esc_attr( $role->name ),
-							esc_attr( $eo_role ),
-							checked( '1', $role->has_cap( $eo_role ), false ),
-							disabled( $role->name, 'administrator', false ) 
-						);
-					endforeach; //End foreach $eventRoles 
+				foreach ( self::$eventorganiser_roles as $eo_role => $eo_role_display ) :
+					printf(
+						'<td>
+							<input type="checkbox" name="eventorganiser_options[permissions][%s][%s]" value="1" %s %s  />
+						</td>',
+						esc_attr( $role->name ),
+						esc_attr( $eo_role ),
+						checked( '1', $role->has_cap( $eo_role ), false ),
+						disabled( $role->name, 'administrator', false )
+					);
+				endforeach;
 				echo '</tr>';
-	
+
 				$array_index = ( $array_index + 1) % 2;
 			endforeach; //End foreach $editable_role ?>
 		</tbody>

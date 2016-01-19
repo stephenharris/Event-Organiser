@@ -814,8 +814,19 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( 1, $event['all_day'] );
 
 	}
-	
-	
+
+	/**
+	 * This checks that a warning is not emitted when trying to parse a source
+	 * with a webcal:// protocol.
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/319
+	 */
+	public function testWebCalProtocol(){
+		$ical = new EO_ICAL_Parser();
+		$response = $ical->parse( 'webcal://ical.example' );
+		
+		$this->assertTrue( is_wp_error( $response ) );
+		$this->assertEquals( 'http_request_failed', $response->get_error_code() );
+	}
 	
 	/**
 	 * When importing a part day event occurring monthly across a timezone, the day the event 
