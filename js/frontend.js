@@ -5,6 +5,16 @@ var eventorganiser = eventorganiser || {};
 
 (function ($) {
 jQuery(document).ready(function () {
+	
+	function _eventorganiser_get_where( collection, field, value ) {
+		var object;
+		for (  object in collection ){
+			if ( collection[field] == value ) {
+				return object;
+			}
+		}
+		return false;
+	}
 
 	/* Fullcalendar */
 	function eventorganiser_filter_markup( options ){
@@ -31,7 +41,7 @@ jQuery(document).ready(function () {
 				//Check ancestors
 				var parent = term;
 				while( !include_in_dropdown && parent.parent > 0 ){
-					parent = terms[parent.parent];
+					parent = _eventorganiser_get_where( options.terms, 'term_id', parent.parent );
 					if( $.inArray( parent.slug, whitelist ) !== -1 ){
 						include_in_dropdown = true;
 					}
