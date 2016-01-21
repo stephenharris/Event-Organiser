@@ -191,6 +191,7 @@ window.eventOrganiserSchedulePicker = {
 		this.schedule = options.schedule;
 		this.set_up_datepickers();
 		this.set_up_timepickers();
+		this.set_up_datepair();
 		        
         //On input, update form
         $(".event-date :input, .eo-all-day-toggle").change(function(o) {
@@ -219,8 +220,8 @@ window.eventOrganiserSchedulePicker = {
 		var locale = this.options.locale;
 		
 		//Init data
-		var start =  $(views.start_date).data('eo-datepicker','start');
-		var end = $(views.end_date).data('eo-datepicker','end');
+		var start =  $(views.start_date).addClass( 'start' ).data('eo-datepicker','start');
+		var end = $(views.end_date).addClass( 'end' ).data('eo-datepicker','end');
 		$(views.is_all_day).addClass('eo-all-day-toggle');
 		
 		//Date pickers
@@ -271,9 +272,11 @@ window.eventOrganiserSchedulePicker = {
                 
                 var startDate = $( views.start_date ).datepicker( 'getDate' );
                 var endDate   = $( views.end_date ).datepicker( 'getDate' );
+
+		// @todo what is this used for?
                 if( startDate.getTime() != endDate.getTime() ){
                 	var time = { hour: null, minute: null };
-                	$( views.start_time + ", " + views.end_time ).eotimepicker('option', { maxTime: time, minTime: time });
+			//$( views.start_time + ", " + views.end_time ).eotimepicker('option', { maxTime: time, minTime: time });
                 }
                 
                 //Replace with do_action
@@ -365,72 +368,26 @@ window.eventOrganiserSchedulePicker = {
     },
 	
 	set_up_timepickers: function(){
-		
-		
-		var options = this.options;
 		var views = this.options.views;
-        //Time pickers
-		$( views.start_time ).data( 'eo-event-data', 'start-time' );
-		$( views.end_time ).data( 'eo-event-data', 'end-time' );
-        $( views.start_time + ', ' +  views.end_time).eotimepicker({
-            showPeriodLabels: !options.is24hour,
-            showPeriod: !this.options.is24hour,
-            showLeadingZero: options.is24hour,
-            periodSeparator: '',
-            amPmText: options.locale.meridian,
-            hourText: options.locale.hour,
-            minuteText: options.locale.minute,
-            isRTL: options.locale.isrtl,
-    		onSelect: function( timeString, timePickerInst ){
-    			var startDate = $( views.start_date ).datepicker( 'getDate' );
-    			var endDate   = $( views.end_date ).datepicker( 'getDate' );
 
-    			//If dates are the same update timepicker...
-    			if( startDate.getTime() == endDate.getTime() ){
-    	            	
-    				var time = {
-    					hour:   timePickerInst.hours,
-    					minute: timePickerInst.minutes,
-    				};
-    					
-    				if( 'start-time' == $( timePickerInst.input ).data( 'eo-event-data' ) ){
-    					//We have selected start time, update end time
-    					$( views.end_time ).eotimepicker('option', { minTime: time });
-    					
-    					/*
-    					var endTime = {
-    						hour:   $( views.end_time ).eotimepicker( 'getHour' ),
-    						minute: $( views.end_time ).eotimepicker( 'getMinute' ),
-    					};
-    					if( time.hour > endTime.hour || ( ( time.hour = endTime.hour ) && time.minute > endTime.minute ) ){
-    						//Correct end:
-    						var newEndTime = new Date('2012-11-24 ' + endTime.hour +":"+endTime.minute );
-    						$( views.end_time ).eotimepicker( 'setTime', newEndTime );
-    					}*/
-    					
-    				}else{
-    					$( views.start_time ).eotimepicker('option', { maxTime: time });
-    					/*
-    					var startTime = {
-        					hour:   $( views.end_time ).eotimepicker( 'getHour' ),
-        					minute: $( views.end_time ).eotimepicker( 'getMinute' ),
-        				};
-        					
-        				if( time.hour < startTime.hour || ( ( time.hour = startTime.hour ) && time.minute < startTime.minute ) ){
-        					console.log( 'end before start!');
-    						//Correct start:
-    						var newStartTime = new Date('2012-11-24 ' + startTime.hour +":"+startTime.minute );
-    						$( views.end_time ).eotimepicker( 'setTime', newStartTime );
-        				}
-        				*/
-    				}
-    	            		
-    			}
-    	            		
-    		}
-        }).addClass('eo-time-picker');
+		$( views.start_time ).addClass( 'start' ).data( 'eo-event-data', 'start-time' );
+		$( views.end_time ).addClass( 'end' ).data( 'eo-event-data', 'end-time' );
+
+		$( '#eventorganiser_detail .eo_time' ).timepicker({
+			'showDuration': true,
+		}).addClass('eo-time-picker');
 	},
-	
+
+	set_up_datepair: function() {
+		$( '#eventorganiser_detail' ).datepair({
+			'startClass': 'start',
+			'endClass': 'end',
+			'timeClass': 'eo_time',
+			'dateClass': 'hasDatepicker',
+			'defaultTimeDelta': 1800000 // default to 30 min. increments
+		});
+	},
+
 	/**
 	 * @this;
 	 */
