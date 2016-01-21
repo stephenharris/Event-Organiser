@@ -21,8 +21,9 @@
 .eo-tc-event{
 	margin: 25px auto;
 }
-.eo-tc-event .eo-event-date{
-	font-style:italic;
+
+.eo-tc-event .eo-event-header{
+	display:block;
 }
 
 .eo-tc-event .eo-event-title{
