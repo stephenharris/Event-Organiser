@@ -29,6 +29,13 @@
 .eo-tc-event .eo-event-title{
 	margin-bottom:0px;
 }
+
+.eo-tc-event .eo-event-date{
+	font-style:italic;
+	display: block;
+	margin: 5px 0;;
+}
+
 .eo-tc-event .eo-event-details{
 	margin-top: 0px;	
 }
