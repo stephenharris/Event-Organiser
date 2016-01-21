@@ -20,11 +20,11 @@
 					
 	<header class="eo-event-header entry-header">
 
-		<h1 class="eo-event-title entry-title">
+		<h2 class="eo-event-title entry-title">
 			<a href="<?php the_permalink(); ?>" itemprop="url">
 				<span itemprop="summary"><?php the_title() ?></span>
 			</a>
-		</h1>
+		</h2>
 
 		<div class="eo-event-date"> 
 			<?php
