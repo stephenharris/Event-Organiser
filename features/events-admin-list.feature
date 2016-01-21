@@ -52,10 +52,10 @@ Feature: Events admin list
     	When I go to "/wp-admin/edit.php?post_type=event"
     	Then the post list table looks like
 	      | Event       | Categories        | Venue       | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Yearly Past | —                 |             | Jan, 1 2012         | Jan, 1 2012          | every year until Jan, 1st 2015                        |
-	      | Yearly      | Children’s        |             | Jan, 1 2112         | Jan, 1 2112          | every year until Jan, 1st 2115                        |
+	      | Yearly Past | —                 | —           | Jan, 1 2012         | Jan, 1 2012          | every year until Jan, 1st 2015                        |
+	      | Yearly      | Children’s        | —           | Jan, 1 2112         | Jan, 1 2112          | every year until Jan, 1st 2115                        |
 	      | Monthly 2   | Food & Drink      | Akva        | Jan, 15 21158:45 am | Jan, 15 211511:00 am | every month on the third Tuesday until Dec, 17th 2115 |
-	      | Monthly 1   | —                 |             | Jan, 15 21159:45 am | Jan, 15 211510:00 am | every month on the 15th until Dec, 15th 2115          |
+	      | Monthly 1   | —                 | —           | Jan, 15 21159:45 am | Jan, 15 211510:00 am | every month on the 15th until Dec, 15th 2115          |
 	      | Single      | Music             | Living Room | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
 	      | Daily       | —                 | Dragonfly   | May, 1 2115         | May, 1 2115          | every day until May, 15th 2115                        |
 	      | Weekly      | Literature, Music | Akva        | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |
@@ -119,14 +119,14 @@ Feature: Events admin list
 		And I press "Filter"
 		Then the post list table looks like
 	      | Event       | Categories     | Venue | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Yearly Past | —              |       | Jan, 1 2012         | Jan, 1 2012          | every year until Jan, 1st 2015                        |
+	      | Yearly Past | —              | —     | Jan, 1 2012         | Jan, 1 2012          | every year until Jan, 1st 2015                        |
 		When I select "Future events" from "show-events-in-interval"
 		And I press "Filter"
 		Then the post list table looks like
 	      | Event       | Categories        | Venue       | Start Date/Time     | End Date/Time        | Recurrence                                            |
-	      | Yearly      | Children’s        |             | Jan, 1 2112         | Jan, 1 2112          | every year until Jan, 1st 2115                        |
+	      | Yearly      | Children’s        | —           | Jan, 1 2112         | Jan, 1 2112          | every year until Jan, 1st 2115                        |
 	      | Monthly 2   | Food & Drink      | Akva        | Jan, 15 21158:45 am | Jan, 15 211511:00 am | every month on the third Tuesday until Dec, 17th 2115 |
-	      | Monthly 1   | —                 |             | Jan, 15 21159:45 am | Jan, 15 211510:00 am | every month on the 15th until Dec, 15th 2115          |
+	      | Monthly 1   | —                 | —           | Jan, 15 21159:45 am | Jan, 15 211510:00 am | every month on the 15th until Dec, 15th 2115          |
 	      | Single      | Music             | Living Room | Apr, 30 21151:00 pm | Apr, 30 21152:00 pm  | one time only                                         |
 	      | Daily       | —                 | Dragonfly   | May, 1 2115         | May, 1 2115          | every day until May, 15th 2115                        |
 	      | Weekly      | Literature, Music | Akva        | Jun, 1 21157:30 pm  | Jun, 1 21159:30 pm   | every 2 weeks on Saturday until Jun, 29th 2115        |

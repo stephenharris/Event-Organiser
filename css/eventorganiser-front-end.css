@@ -2,12 +2,13 @@
 .eo-tc-page .eo-events-nav-later{
 	float:right;
 }
-.eo-tc-page .eo-events-nav-newer{
+.eo-tc-page .eo-events-nav-earlier{
 	float:left;
 }
 .eo-tc-page .eo-events-nav{
 	overflow: inherit;
 	margin: 10px auto;
+	dislpay:inline;
 }
 
 .eo-tc-page nav:after {
@@ -21,13 +22,21 @@
 .eo-tc-event{
 	margin: 25px auto;
 }
-.eo-tc-event .eo-event-date{
-	font-style:italic;
+
+.eo-tc-event .eo-event-header{
+	display:block;
 }
 
 .eo-tc-event .eo-event-title{
 	margin-bottom:0px;
 }
+
+.eo-tc-event .eo-event-date{
+	font-style:italic;
+	display: block;
+	margin: 5px 0;;
+}
+
 .eo-tc-event .eo-event-details{
 	margin-top: 0px;	
 }
@@ -35,6 +44,21 @@
 .eo-tc-event .eo-event-meta{
 	clear:both;
 	list-style:none;
+	margin: 10px 10px;
+	float: none;
+	display: inline-block;
+	padding: 0;
+}
+.eo-tc-event .eo-event-content{
+    display: inherit;
+    float: none;
+    margin-left: 10px;	
+}
+
+.eo-event-thumbnail{
+	display: inline;
+	float:left;
+	margin: 10px;	
 }
 
 

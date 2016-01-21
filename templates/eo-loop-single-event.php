@@ -20,38 +20,35 @@
 					
 	<header class="eo-event-header entry-header">
 
-		<h1 class="eo-event-title entry-title" style="display: inline;" >
+		<h2 class="eo-event-title entry-title">
 			<a href="<?php the_permalink(); ?>" itemprop="url">
-				<?php
-				//If it has one, display the thumbnail
-				if ( has_post_thumbnail() ) {
-					the_post_thumbnail( 'thumbnail', array( 'style' => 'float:left;margin-right:20px;' ) );
-				}
-
-				//Display the title
-				?>
 				<span itemprop="summary"><?php the_title() ?></span>
 			</a>
-		</h1>
+		</h2>
 
-		<div class="eo-event-details event-entry-meta">
-
-			<div class="eo-event-date"> 
+		<div class="eo-event-date"> 
 			<?php
 				//Formats the start & end date of the event
 				echo eo_format_event_occurrence();
-				?>
-			</div>
-		
-			<?php
-			//A list of event details: venue, categories, tags.
-			echo eo_get_event_meta_list();
 			?>
+		</div>
 			
-		</div><!-- .event-entry-meta -->
-
 	</header><!-- .entry-header -->
 	
+	<div class="eo-event-details event-entry-meta">
+			
+		<?php
+		//If it has one, display the thumbnail
+		if ( has_post_thumbnail() ) {
+			the_post_thumbnail( 'thumbnail', array( 'class' => 'attachment-thumbnail eo-event-thumbnail' ) );
+		}
+
+		//A list of event details: venue, categories, tags.
+		echo eo_get_event_meta_list();
+		?>
+			
+	</div><!-- .event-entry-meta -->
+
 	<!-- Show Event text as 'the_excerpt' or 'the_content' -->
 	<div class="eo-event-content" itemprop="description"><?php the_excerpt(); ?></div>
 			

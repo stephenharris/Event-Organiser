@@ -42,11 +42,11 @@ function eventorganiser_create_event_taxonomies() {
 			'separate_items_with_commas' => __( 'Separate venues with commas', 'eventorganiser' ),
 			'items_list_navigation'      => __( 'Event venues list navigation', 'eventorganiser' ),
 			'items_list'                 => __( 'Event venues list', 'eventorganiser' ),
+			'no_terms'                   => __( 'No Venue', 'eventorganiser' ),
 			//non-default wp labels
 			'venue_location'             => __( 'Venue Location', 'eventorganiser' ),
 			'view_all_items'             => __( 'View all venues', 'eventorganiser' ),
 			'singular_name_colon'        => __( 'Venue:', 'eventorganiser' ),
-			'no_item'                    => __( 'No Venue', 'eventorganiser' ),
 		);
 
 		$event_venue_args = array(
@@ -237,6 +237,9 @@ function eventorganiser_cpt_register() {
 		'filter_items_list'     => __( 'Filter events list', 'eventorganiser' ),
 		'items_list_navigation' => __( 'Events list navigation', 'eventorganiser' ),
 		'items_list'            => __( 'Events list', 'eventorganiser' ),
+		'archives'              => __( 'Event Archives', 'eventorganiser' ),
+		'insert_into_item'      => __( 'Insert into event', 'eventorganiser' ),
+		'uploaded_to_this_item' => __( 'Uploaded to this event', 'eventorganiser' ),		
 	);
 
 	$exclude_from_search = ( 0 == eventorganiser_get_option( 'excludefromsearch' ) ) ? false : true;
