@@ -8,6 +8,7 @@
 .eo-tc-page .eo-events-nav{
 	overflow: inherit;
 	margin: 10px auto;
+	dislpay:inline;
 }
 
 .eo-tc-page nav:after {
