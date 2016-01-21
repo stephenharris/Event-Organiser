@@ -193,7 +193,7 @@ function eventorganiser_quick_bulk_edit_box( $column_name, $post_type ) {
 
 	if ( 'quick_edit_custom_box' == current_filter() ) {
 		$args['id']              = 'eventorganiser_venue';
-		$args['show_option_all'] = $tax->labels->no_item;
+		$args['show_option_all'] = $tax->labels->no_tags;
 	} else {
 		$args['id']               = 'eventorganiser_venue_bulk';
 		$args['show_option_none'] = __( '&mdash; No Change &mdash;' );
