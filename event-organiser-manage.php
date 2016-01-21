@@ -73,6 +73,7 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 
 	switch ( $column_name ) {
 		case 'venue':
+			$taxonomy_object = get_taxonomy( 'event-venue' );
 			$venue_id   = eo_get_venue( $post->ID );
 			$venue_slug = eo_get_venue_slug( $post->ID );
 			$venue_name = eo_get_venue_name( $venue_id );
@@ -80,6 +81,8 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 			if ( $venue_id ) {
 				printf( '<a href="%s">%s</a>', esc_url( add_query_arg( 'event-venue', $venue_slug ) ), esc_html( $venue_name ) );
 				printf( '<input type="hidden" value="%d"/>', $venue_id );
+			} else {
+				echo '<span aria-hidden="true">&#8212;</span><span class="screen-reader-text">' . $taxonomy_object->labels->no_terms . '</span>';
 			}
 			break;
 
