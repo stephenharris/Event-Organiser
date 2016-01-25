@@ -17,7 +17,7 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 function _manually_activate() {	
 	eventorganiser_install();
 }
-tests_add_filter( 'init', '_manually_activate', 0 );
+tests_add_filter( 'init', '_manually_activate' );
 
 require $_tests_dir . '/includes/bootstrap.php';
 

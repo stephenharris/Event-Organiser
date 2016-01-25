@@ -113,6 +113,11 @@ class eventFunctionsTest extends EO_UnitTestCase
 		);
 		
 		$tag = wp_insert_term( 'foobar', 'event-tag' );
+		
+		if ( is_wp_error( $tag ) ) {
+			throw new Exception( $tag->get_error_message() );
+		}
+		
 		wp_set_object_terms( $event_id, (int) $tag['term_id'], 'event-tag' );
 
 		$cat = wp_insert_term( 'hellworld', 'event-category' );
