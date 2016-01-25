@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bash
 
 if [ $# -lt 3 ]; then
@@ -54,7 +55,8 @@ install_db() {
 		fi
 	fi
 
-	# create database
+	# reset database
+	mysql --user="$DB_USER" --password="$DB_PASS" $EXTRA -e "DROP $DB_NAME IF EXISTS"; then
 	mysqladmin --no-defaults create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
 
 }
