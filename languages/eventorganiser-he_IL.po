@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-05 15:11+0000\n"
+"POT-Creation-Date: 2016-01-25 23:36+0000\n"
 "PO-Revision-Date: 2015-09-25 19:02:29+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
@@ -22,8 +22,8 @@ msgstr "סדר יום אירועים"
 
 #: classes/class-eo-agenda-widget.php:36
 #: classes/class-eo-calendar-widget.php:46
-#: classes/class-eo-event-list-widget.php:101
-#: classes/class-eo-event-list-widget.php:146
+#: classes/class-eo-event-list-widget.php:102
+#: classes/class-eo-event-list-widget.php:147
 msgid "Title"
 msgstr "כותרת"
 
@@ -55,12 +55,12 @@ msgstr "פורמט תאריך ושעה"
 msgid "Include 'Add To Google' link"
 msgstr "כלול קישור 'הוספה לגוגל'"
 
-#: classes/class-eo-agenda-widget.php:140 event-organiser-edit.php:152
+#: classes/class-eo-agenda-widget.php:140 event-organiser-edit.php:151
 msgid "All day"
 msgstr "כל היום"
 
 #: classes/class-eo-agenda-widget.php:149
-#: classes/class-eo-venue-list-table.php:86
+#: classes/class-eo-venue-list-table.php:90
 msgid "View"
 msgstr ""
 
@@ -89,12 +89,12 @@ msgid "Link directly to event for days with only one event"
 msgstr "קשר ישירות לאירוע בימים בהם מופיע רק אירוע אחד"
 
 #: classes/class-eo-calendar-widget.php:91
-#: classes/class-eo-event-list-widget.php:109
+#: classes/class-eo-event-list-widget.php:110
 msgid "Event categories"
 msgstr "קטגוריות אירוע"
 
 #: classes/class-eo-calendar-widget.php:94
-#: classes/class-eo-event-list-widget.php:111
+#: classes/class-eo-event-list-widget.php:112
 msgid "List category slug(s), seperate by comma. Leave blank for all"
 msgstr "רשימת סלאג קטגוריה, הפרדה בפסיק, להשאיר ריק עבור כולם"
 
@@ -103,16 +103,16 @@ msgid "Event venue"
 msgstr "מיקום אירוע"
 
 #: classes/class-eo-calendar-widget.php:107
-#: classes/class-eo-event-list-widget.php:119
+#: classes/class-eo-event-list-widget.php:120
 #: includes/event-organiser-cpt.php:34
 msgid "All Venues"
 msgstr "כל המיקומים"
 
-#: classes/class-eo-calendar-widget.php:283
+#: classes/class-eo-calendar-widget.php:285
 msgid "Previous month"
 msgstr "חודש קודם"
 
-#: classes/class-eo-calendar-widget.php:286
+#: classes/class-eo-calendar-widget.php:288
 msgid "Next month"
 msgstr "חודש הבא"
 
@@ -121,88 +121,88 @@ msgid "Displays a list of events"
 msgstr "הצג רשימה של אירועים"
 
 #: classes/class-eo-event-list-widget.php:14
-#: classes/class-eo-event-list-widget.php:26 event-organiser-venues.php:463
-#: event-organiser.php:138 includes/class-eo-theme-compatability.php:143
+#: classes/class-eo-event-list-widget.php:28 event-organiser-venues.php:463
+#: event-organiser.php:138 includes/class-eo-theme-compatability.php:197
 #: includes/event-organiser-cpt.php:224 includes/event-organiser-cpt.php:236
-#: includes/event-organiser-install.php:96 templates/archive-event.php:40
+#: includes/event-organiser-install.php:100 templates/archive-event.php:40
 msgid "Events"
 msgstr "אירועים"
 
-#: classes/class-eo-event-list-widget.php:36
+#: classes/class-eo-event-list-widget.php:37
 msgid "No Events"
 msgstr ""
 
-#: classes/class-eo-event-list-widget.php:45 event-organiser-manage.php:154
+#: classes/class-eo-event-list-widget.php:46 event-organiser-manage.php:157
 msgid "Future events"
 msgstr "אירועים עתידיים"
 
-#: classes/class-eo-event-list-widget.php:51
+#: classes/class-eo-event-list-widget.php:52
 #: includes/event-organiser-cpt.php:230
 msgid "All events"
 msgstr "כל האירועים"
 
-#: classes/class-eo-event-list-widget.php:57
+#: classes/class-eo-event-list-widget.php:58
 msgid "Running events"
 msgstr ""
 
-#: classes/class-eo-event-list-widget.php:64
+#: classes/class-eo-event-list-widget.php:65
 msgid "Past events"
 msgstr ""
 
-#: classes/class-eo-event-list-widget.php:70
+#: classes/class-eo-event-list-widget.php:71
 msgid "Future & running events"
 msgstr ""
 
-#: classes/class-eo-event-list-widget.php:76
+#: classes/class-eo-event-list-widget.php:77
 msgid "Events on today"
 msgstr ""
 
-#: classes/class-eo-event-list-widget.php:105
+#: classes/class-eo-event-list-widget.php:106
 msgid "Number of events"
 msgstr "מספר אירועים"
 
-#: classes/class-eo-event-list-widget.php:116
-#: includes/event-organiser-cpt.php:48
+#: classes/class-eo-event-list-widget.php:117
+#: includes/event-organiser-cpt.php:49
 msgid "Venue:"
 msgstr "מקום:"
 
-#: classes/class-eo-event-list-widget.php:127
+#: classes/class-eo-event-list-widget.php:128
 msgid "Show:"
 msgstr ""
 
-#: classes/class-eo-event-list-widget.php:143
+#: classes/class-eo-event-list-widget.php:144
 msgid "Order by"
 msgstr "מיון לפי"
 
-#: classes/class-eo-event-list-widget.php:145
+#: classes/class-eo-event-list-widget.php:146
 msgid "Start date"
 msgstr "תאריך התחלה"
 
-#: classes/class-eo-event-list-widget.php:147
+#: classes/class-eo-event-list-widget.php:148
 msgid "Publish date"
 msgstr "תאריך פרסום"
 
-#: classes/class-eo-event-list-widget.php:150
+#: classes/class-eo-event-list-widget.php:151
 msgid "ASC"
 msgstr "סדר עולה"
 
-#: classes/class-eo-event-list-widget.php:151
+#: classes/class-eo-event-list-widget.php:152
 msgid "DESC"
 msgstr "סדר יורד"
 
-#: classes/class-eo-event-list-widget.php:156 event-organiser-settings.php:193
+#: classes/class-eo-event-list-widget.php:157 event-organiser-settings.php:193
 msgid "Group occurrences"
 msgstr "קבוצת מופעים"
 
-#: classes/class-eo-event-list-widget.php:163
+#: classes/class-eo-event-list-widget.php:164
 msgid "Template (leave blank for default)"
 msgstr "תבנית (להשאיר ריק לברירת המחדל)"
 
-#: classes/class-eo-event-list-widget.php:165
+#: classes/class-eo-event-list-widget.php:166
 msgid "Event list widget placeholders"
 msgstr "מצייני מיקום וידג'ט רשימת אירועים"
 
-#: classes/class-eo-event-list-widget.php:167
+#: classes/class-eo-event-list-widget.php:168
 #, php-format
 msgid ""
 "You can use specified tags as placeholders for event information which you "
@@ -212,18 +212,33 @@ msgstr ""
 "אפשר להשתמש בתגיות המצוינות כמצייני מיקום עבור מידע אירוע שתרצה שיופיע "
 "בוידג'ט. <a href=\"%s\" target=\"_blank\">למידע נוסף</a>."
 
-#: classes/class-eo-event-list-widget.php:176
+#: classes/class-eo-event-list-widget.php:177
 msgid "'No events' message"
 msgstr "'אין אירועים'"
+
+#: classes/class-eo-venue-list-table.php:75
+#, php-format
+msgid "Edit &#8220;%s&#8221;"
+msgstr ""
 
 #: classes/class-eo-venue-list-table.php:76 templates/single-event.php:71
 msgid "Edit"
 msgstr ""
 
-#: classes/class-eo-venue-list-table.php:81
+#: classes/class-eo-venue-list-table.php:82
+#, php-format
+msgid "Delete &#8220;%s&#8221;"
+msgstr ""
+
+#: classes/class-eo-venue-list-table.php:83
 #: classes/class-eo-venue-list-table.php:143
 msgid "Delete"
 msgstr "מחק אירועים"
+
+#: classes/class-eo-venue-list-table.php:89
+#, php-format
+msgid "View &#8220;%s&#8221;"
+msgstr ""
 
 #: classes/class-eo-widget-categories.php:10
 msgid "A list or dropdown of event categories"
@@ -235,8 +250,8 @@ msgstr "קטגוריות אירוע"
 
 #: classes/class-eo-widget-categories.php:25
 #: includes/event-organiser-cpt.php:94 includes/event-organiser-cpt.php:105
-#: includes/event-organiser-event-functions.php:1524
-#: templates/event-meta-event-single.php:64
+#: includes/event-organiser-event-functions.php:1530
+#: templates/event-meta-event-single.php:62
 msgid "Categories"
 msgstr "קטגוריות"
 
@@ -275,7 +290,7 @@ msgstr "מיקומים"
 msgid "Select Venue"
 msgstr "בחר מיקום"
 
-#: classes/class-eventorganiser-shortcodes.php:437
+#: classes/class-eventorganiser-shortcodes.php:436
 msgid "There is no excerpt because this is a protected post."
 msgstr ""
 
@@ -293,7 +308,7 @@ msgid ""
 "the plug-in."
 msgstr "Event Organiser מציע הרחבות המוסיפות תכונות נוספות לתוסף."
 
-#: event-organiser-add-ons.php:130 event-organiser-go-pro.php:90
+#: event-organiser-add-ons.php:130
 msgid "Find out more &hellip;"
 msgstr "מצא עוד...."
 
@@ -353,7 +368,7 @@ msgid "24 hour time"
 msgstr "שעון 24"
 
 #: event-organiser-calendar.php:257
-#: includes/event-organiser-event-functions.php:1461
+#: includes/event-organiser-event-functions.php:1467
 msgid "Loading&#8230;"
 msgstr "בטעינה...."
 
@@ -373,7 +388,7 @@ msgstr "כאשר"
 msgid "Event Title"
 msgstr "כותרת אירוע"
 
-#: event-organiser-calendar.php:287 includes/event-organiser-ajax.php:397
+#: event-organiser-calendar.php:287 includes/event-organiser-ajax.php:400
 msgid "Where"
 msgstr "איפה"
 
@@ -382,7 +397,7 @@ msgid "Save Draft"
 msgstr "שמור טיוטה"
 
 #: event-organiser-calendar.php:313 event-organiser-calendar.php:320
-#: event-organiser-edit.php:310
+#: event-organiser-edit.php:309
 msgid "Cancel"
 msgstr "בטל"
 
@@ -435,7 +450,7 @@ msgid "Open shorcut help"
 msgstr ""
 
 #: event-organiser-calendar.php:388 event-organiser-edit.php:14
-#: templates/event-meta-event-single.php:34
+#: templates/event-meta-event-single.php:32
 msgid "Event Details"
 msgstr "פרטי אירוע"
 
@@ -444,64 +459,43 @@ msgid "Event Detail"
 msgstr "פרטי האירוע"
 
 #: event-organiser-debug.php:13 event-organiser-debug.php:14
-#: event-organiser-debug.php:58
+#: event-organiser-debug.php:57
 msgid "System Info"
 msgstr "מידע מערכת"
 
 #: event-organiser-debug.php:64
+#, php-format
 msgid ""
 "This page highlights useful information for debugging. If you're reporting a "
-"bug, please include this information."
+"bug, please include this information. The 'system info' link in under the "
+"Events admin tab is only visible to admins and only when %s is set to %s."
 msgstr ""
-"עמוד זה מציג מידע שימושי על ניפוי. אם אתה מדווח על באג, נא לכלול מידע זה."
 
-#: event-organiser-debug.php:66
-msgid ""
-"The 'system info' link in under the Events admin tab is only visible to "
-"admins and only when <code>WP_DEBUG</code> is set to <code>true</code>."
-msgstr ""
-"קישור 'מידע המערכת' תחת לשונית ניהול אירועים מוצג רק למנהלים ורק כאשר הקוד "
-"<code>WP_DEBUG</code> מוגדר כפעיל."
-
-#: event-organiser-debug.php:71
+#: event-organiser-debug.php:72
 msgid ""
 "Most bugs arise from theme or plug-in conflicts. You can check this by "
-"disabling all other plug-ins and switching to TwentyTweleve."
+"disabling all other plug-ins and switching to TwentyTweleve. To help speed "
+"things along, if you report a bug please indicate if you have done so. Once "
+"the plug-in or theme has been identified it is often easy to resolve the "
+"issue. Below any <strong>known</strong> plug-in and theme conflicts are "
+"highlighted in red."
 msgstr ""
-"רוב הבאגים נובעים מהתנגשויות ערכות נושא או תוספים. ניתן לבדוק זאת על-ידי "
-"כיבוי כל התוספים האחרים והחלפת ערכת הנושא ל 2012."
 
-#: event-organiser-debug.php:73
-msgid ""
-"To help speed things along, if you report a bug please indicate if you have "
-"done so. Once the plug-in or theme has been identified it is often easy to "
-"resolve the issue."
-msgstr ""
-"כדי לעזור לזרז תהליכים, אם אתה מדווח על באג נא לעדכן אם ביצעת את הבדיקה הזו. "
-"משזוהו ערכת הנושא או התוסף זה בדרך-כלל קל לפתור את הבעיה."
-
-#: event-organiser-debug.php:75
-msgid ""
-"Below any <strong>known</strong> plug-in and theme conflicts are highlighted "
-"in red."
-msgstr ""
-"להלן כמה התנגשויות תוספים וערכות נושא <strong>ידועות</strong> מסומנות באדום."
-
-#: event-organiser-debug.php:83
+#: event-organiser-debug.php:80
 msgid "Download system information file"
 msgstr "הורדת קובץ מידע מערכת"
 
-#: event-organiser-debug.php:181 event-organiser-debug.php:185
-#: event-organiser-debug.php:189 event-organiser-settings.php:209
+#: event-organiser-debug.php:177 event-organiser-debug.php:181
+#: event-organiser-debug.php:185 event-organiser-settings.php:209
 msgid "Yes"
 msgstr "כן"
 
-#: event-organiser-debug.php:181 event-organiser-debug.php:185
-#: event-organiser-debug.php:189 event-organiser-settings.php:208
+#: event-organiser-debug.php:177 event-organiser-debug.php:181
+#: event-organiser-debug.php:185 event-organiser-settings.php:208
 msgid "No"
 msgstr "לא"
 
-#: event-organiser-debug.php:256
+#: event-organiser-debug.php:253
 msgid ""
 "Known plug-in & theme conflicts, highlighted in red, may be minor or have a "
 "simple resolution. Please contact support."
@@ -510,23 +504,23 @@ msgstr ""
 "נא ליצור קשר עם התמיכה."
 
 #. / TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
-#: event-organiser-debug.php:421
+#: event-organiser-debug.php:424
 #, php-format
 msgid "%s has only been tested up to %s %s"
 msgstr "%s נבדק רק עד %s %s"
 
 #. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
-#: event-organiser-debug.php:430
+#: event-organiser-debug.php:437
 #, php-format
 msgid "%s requires %s version %s or higher"
 msgstr "%s נדרשת %s גרסה %s או יותר"
 
-#: event-organiser-debug.php:451
+#: event-organiser-debug.php:462
 msgid "unknown"
 msgstr "לא ידוע"
 
 #: event-organiser-edit.php:21 event-organiser-manage.php:23
-#: event-organiser-settings.php:146 includes/event-organiser-ajax.php:384
+#: event-organiser-settings.php:146
 msgid "Organiser"
 msgstr "מארגן"
 
@@ -534,128 +528,128 @@ msgstr "מארגן"
 msgid "This is a recurring event. Check to edit this event and its recurrences"
 msgstr "ערוך אירוע זה וכל האירועים החוזרים"
 
-#: event-organiser-edit.php:100
+#: event-organiser-edit.php:99
 #, fuzzy, php-format
 msgid "Enter date in %s format"
 msgstr "פורמט תאריך ושעה"
 
-#: event-organiser-edit.php:101
+#: event-organiser-edit.php:100
 msgid "Enter time in 24-hour hh colon mm format"
 msgstr ""
 
-#: event-organiser-edit.php:101
+#: event-organiser-edit.php:100
 msgid "Enter time in 12-hour hh colon mm am or pm format"
 msgstr ""
 
-#: event-organiser-edit.php:108 event-organiser-manage.php:35
-msgid "Start Date/Time"
-msgstr "תאריך/שעת התחלה"
+#: event-organiser-edit.php:107
+msgid "Start Date/Time:"
+msgstr ""
 
-#: event-organiser-edit.php:113
+#: event-organiser-edit.php:112
 msgid "Start Date"
 msgstr "תאריך התחלה"
 
-#: event-organiser-edit.php:117
+#: event-organiser-edit.php:116
 msgid "Start Time"
 msgstr "שעת התחלה"
 
-#: event-organiser-edit.php:131 event-organiser-manage.php:36
-msgid "End Date/Time"
-msgstr "תאריך/שעת סיום"
+#: event-organiser-edit.php:130
+msgid "End Date/Time:"
+msgstr ""
 
-#: event-organiser-edit.php:136
+#: event-organiser-edit.php:135
 msgid "End Date"
 msgstr "תאריך סיום"
 
-#: event-organiser-edit.php:140
+#: event-organiser-edit.php:139
 msgid "End Time"
 msgstr "שעת סיום"
 
-#: event-organiser-edit.php:161 event-organiser-manage.php:37
+#: event-organiser-edit.php:160 event-organiser-manage.php:37
 msgid "Recurrence"
 msgstr "אירועים חוזרים"
 
-#: event-organiser-edit.php:166
+#: event-organiser-edit.php:165
 msgid "none"
 msgstr ""
 
-#: event-organiser-edit.php:166
+#: event-organiser-edit.php:165
 msgid "daily"
 msgstr "יומי"
 
-#: event-organiser-edit.php:166
+#: event-organiser-edit.php:165
 msgid "weekly"
 msgstr "שבועי"
 
-#: event-organiser-edit.php:167
+#: event-organiser-edit.php:166
 msgid "monthly"
 msgstr "חודשי"
 
-#: event-organiser-edit.php:167
+#: event-organiser-edit.php:166
 msgid "yearly"
 msgstr "שנתי"
 
-#: event-organiser-edit.php:167
+#: event-organiser-edit.php:166
 msgid "custom"
 msgstr "מותאם"
 
-#: event-organiser-edit.php:182
+#: event-organiser-edit.php:181
 msgid "Repeat every"
 msgstr "חזור כל"
 
-#: event-organiser-edit.php:183
+#: event-organiser-edit.php:182
 msgid "Recurrence frequency"
 msgstr ""
 
-#: event-organiser-edit.php:190
+#: event-organiser-edit.php:189
 msgid "Repeat on days of week:"
 msgstr "יום בשבוע"
 
-#: event-organiser-edit.php:191 templates/shortcode-event-list.php:52
-#: templates/widget-event-list.php:49
+#: event-organiser-edit.php:190 templates/shortcode-event-list.php:48
+#: templates/widget-event-list.php:44
 msgid "on"
 msgstr "ב"
 
-#: event-organiser-edit.php:212
+#: event-organiser-edit.php:211
 msgid "Select whether to repeat monthly by date or day:"
 msgstr ""
 
-#: event-organiser-edit.php:216
+#: event-organiser-edit.php:215
 msgid "date of month"
 msgstr "יום בחודש"
 
-#: event-organiser-edit.php:220
+#: event-organiser-edit.php:219
 msgid "day of week"
 msgstr "יום בשבוע"
 
-#: event-organiser-edit.php:226
+#: event-organiser-edit.php:225
 #: includes/event-organiser-event-functions.php:842
 #: includes/event-organiser-register.php:261
 msgid "until"
 msgstr "עד"
 
-#: event-organiser-edit.php:227
+#: event-organiser-edit.php:226
 msgid "Repeat this event until:"
 msgstr ""
 
-#: event-organiser-edit.php:238
+#: event-organiser-edit.php:237
 msgid "Include/Exclude occurrences:"
 msgstr "כלול/אל תכלול מופעים"
 
-#: event-organiser-edit.php:241 includes/event-organiser-register.php:238
+#: event-organiser-edit.php:240 includes/event-organiser-register.php:238
 msgid "Show dates"
 msgstr "הצג תאריכים"
 
-#: event-organiser-edit.php:275
+#: event-organiser-edit.php:274
 #: includes/event-organiser-venue-functions.php:1002
 msgid "Select a venue"
 msgstr "בחר מיקום"
 
-#: event-organiser-edit.php:286
+#: event-organiser-edit.php:285
 msgid "Venue Name"
 msgstr "שם מיקום"
 
-#: event-organiser-edit.php:468
+#: event-organiser-edit.php:471
 msgid "Event dates were not saved."
 msgstr "תאריכי אירוע לא נשמרו."
 
@@ -720,6 +714,10 @@ msgid ""
 "venues more attentioned with their own 'featured image'"
 msgstr "הוסף מידע בדפי המיקומים שלך ע\"י הוספת שדות מותאמים"
 
+#: event-organiser-go-pro.php:90
+msgid "Find out more&hellip;"
+msgstr ""
+
 #: event-organiser-go-pro.php:96
 msgid "Go to Event Organiser settings"
 msgstr "עבור אל הגדרות ארגון אירועים"
@@ -728,41 +726,49 @@ msgstr "עבור אל הגדרות ארגון אירועים"
 msgid "Event"
 msgstr "אירוע"
 
-#: event-organiser-manage.php:153
+#: event-organiser-manage.php:35
+msgid "Start Date/Time"
+msgstr "תאריך/שעת התחלה"
+
+#: event-organiser-manage.php:36
+msgid "End Date/Time"
+msgstr "תאריך/שעת סיום"
+
+#: event-organiser-manage.php:156
 msgid "View all events"
 msgstr "צפה בכל האירועים"
 
-#: event-organiser-manage.php:155
+#: event-organiser-manage.php:158
 msgid "Expired events"
 msgstr "אירועים שחלפו"
 
-#: event-organiser-manage.php:156
+#: event-organiser-manage.php:159
 msgid "Events within 24 hours"
 msgstr "אירועים בטווח 24 שעות"
 
-#: event-organiser-manage.php:157
+#: event-organiser-manage.php:160
 msgid "Events within 1 week"
 msgstr "אירועים בטווח שבוע"
 
-#: event-organiser-manage.php:158
+#: event-organiser-manage.php:161
 #, php-format
 msgid "Events within %d weeks"
 msgstr "אירועים בטווח %d שבועות"
 
-#: event-organiser-manage.php:159
+#: event-organiser-manage.php:162
 msgid "Events within 1 month"
 msgstr "אירועים בטווח חודש"
 
-#: event-organiser-manage.php:160
+#: event-organiser-manage.php:163
 #, php-format
 msgid "Events within %d months"
 msgstr "אירועים בטווח %d חודשים"
 
-#: event-organiser-manage.php:161
+#: event-organiser-manage.php:164
 msgid "Events within 1 year"
 msgstr " אירועים בטווח שנה"
 
-#: event-organiser-manage.php:199
+#: event-organiser-manage.php:202
 msgid "&mdash; No Change &mdash;"
 msgstr ""
 
@@ -795,42 +801,42 @@ msgid "Event Organiser"
 msgstr "ארגון אירועים"
 
 #: event-organiser-settings.php:46 event-organiser.php:111
-#: includes/event-organiser-install.php:112
+#: includes/event-organiser-install.php:116
 msgid "Edit Events"
 msgstr "ערוך אירועים"
 
 #: event-organiser-settings.php:47 event-organiser.php:112
-#: includes/event-organiser-install.php:113
+#: includes/event-organiser-install.php:117
 msgid "Publish Events"
 msgstr "פרסם אירועים"
 
 #: event-organiser-settings.php:48 event-organiser.php:113
-#: includes/event-organiser-install.php:114
+#: includes/event-organiser-install.php:118
 msgid "Delete Events"
 msgstr "מחק אירועים"
 
 #: event-organiser-settings.php:49 event-organiser.php:114
-#: includes/event-organiser-install.php:115
+#: includes/event-organiser-install.php:119
 msgid "Edit Others' Events"
 msgstr "עריכת אירוע של מישהו אחר"
 
 #: event-organiser-settings.php:50 event-organiser.php:115
-#: includes/event-organiser-install.php:116
+#: includes/event-organiser-install.php:120
 msgid "Delete Other's Events"
 msgstr "מחיקת אירוע של מישהו אחר"
 
 #: event-organiser-settings.php:51 event-organiser.php:116
-#: includes/event-organiser-install.php:117
+#: includes/event-organiser-install.php:121
 msgid "Read Private Events"
 msgstr "קרא אירועים פרטיים"
 
 #: event-organiser-settings.php:52 event-organiser.php:117
-#: includes/event-organiser-install.php:118
+#: includes/event-organiser-install.php:122
 msgid "Manage Venues"
 msgstr "נהל מיקומים"
 
 #: event-organiser-settings.php:53 event-organiser.php:118
-#: includes/event-organiser-install.php:119
+#: includes/event-organiser-install.php:123
 msgid "Manage Event Categories & Tags"
 msgstr "נהל קטגוריות ותגיות אירוע"
 
@@ -1005,23 +1011,23 @@ msgid "Day archive"
 msgstr "ארכיון יומי"
 
 #: event-organiser-settings.php:345
-msgid "Enable template handling (default)"
+msgid "Enable theme compatability mode (default)"
 msgstr ""
 
 #: event-organiser-settings.php:346
 msgid ""
-"Event Organiser's page templates will be used if your theme does not provide "
-"appropriate templates."
+"Event Organiser will attempt to ensure compatability with your theme and "
+"apply additional styles."
 msgstr ""
 
 #: event-organiser-settings.php:349
-msgid "Enable theme compatability mode"
+msgid "Enable template handling"
 msgstr ""
 
 #: event-organiser-settings.php:350
 msgid ""
-"Event Organiser will attempt to ensure compatability with your theme and "
-"apply additional styles."
+"Event Organiser's page templates will be used if your theme does not provide "
+"appropriate templates."
 msgstr ""
 
 #: event-organiser-settings.php:353
@@ -1032,7 +1038,16 @@ msgstr ""
 msgid "Event Organiser's page templates will not be used."
 msgstr ""
 
-#: event-organiser-settings.php:633
+#: event-organiser-settings.php:569
+msgid "Event Settings"
+msgstr ""
+
+#: event-organiser-settings.php:570
+#, php-format
+msgid "Event Settings: %s"
+msgstr ""
+
+#: event-organiser-settings.php:629
 msgid ""
 "For each of the pages, the corresponding template is used. To use your own "
 "template simply give it the same name and store in your theme folder. By "
@@ -1041,46 +1056,46 @@ msgid ""
 "will then decide which template from your theme's folder to use."
 msgstr ""
 
-#: event-organiser-settings.php:640
+#: event-organiser-settings.php:636
 msgid "Events archives:"
 msgstr "ארכיון אירועים:"
 
-#: event-organiser-settings.php:641
+#: event-organiser-settings.php:637
 msgid "Event page:"
 msgstr "דף אירוע:"
 
-#: event-organiser-settings.php:642
+#: event-organiser-settings.php:638
 msgid "Venue page:"
 msgstr "דף מיקום:"
 
-#: event-organiser-settings.php:643
+#: event-organiser-settings.php:639
 msgid "Events Category page:"
 msgstr "דף קטגוריות אירועים:"
 
-#: event-organiser-settings.php:646
+#: event-organiser-settings.php:642
 #, php-format
 msgid ""
 "For more information see documentation <a href='%s'>on editing the "
 "templates</a>"
 msgstr "למידע נוסף ראה תיעוד <a href='%s'>על עריכת templates</a>"
 
-#: event-organiser-settings.php:656
+#: event-organiser-settings.php:652
 msgid "Event management permissions"
 msgstr "ניהול הרשאות לאירועים"
 
-#: event-organiser-settings.php:657
+#: event-organiser-settings.php:653
 msgid "Set permissions for events and venue management"
 msgstr "ערוך הרשאות לניהול אירועים ומיקומים"
 
-#: event-organiser-settings.php:662
+#: event-organiser-settings.php:658
 msgid "Role"
 msgstr "תפקיד"
 
-#: event-organiser-settings.php:673
+#: event-organiser-settings.php:669
 msgid "None"
 msgstr ""
 
-#: event-organiser-settings.php:702
+#: event-organiser-settings.php:698
 msgid ""
 "Choose a custom permalink structure for events, venues, event categories and "
 "event tags."
@@ -1088,7 +1103,7 @@ msgstr ""
 "לבחור מבנה קישור קבוע מותאם אישית עבור אירועים, אולמות, אירוע קטגוריות ותגים "
 "אירוע."
 
-#: event-organiser-settings.php:703
+#: event-organiser-settings.php:699
 msgid ""
 "Please note to enable these structures you must first have pretty permalinks "
 "enabled on WordPress in Settings > Permalinks."
@@ -1096,7 +1111,7 @@ msgstr ""
 "שימו לב: כדי לאפשר מבנים אלה תחילה עליך יפה permalinks מופעל על וורדפרס "
 "בהגדרות > Permalinks."
 
-#: event-organiser-settings.php:704
+#: event-organiser-settings.php:700
 msgid ""
 "You may also need to go to WordPress Settings > Permalinks and click 'Save "
 "Changes' before any changes will take effect."
@@ -1104,11 +1119,11 @@ msgstr ""
 "אתה צריך לגשת להגדרות וורדפרס > קישורים קבועים וללחוץ על \"שמירת שינויים\" "
 "לפני שהשינויים ייכנסו לתוקף."
 
-#: event-organiser-settings.php:740
+#: event-organiser-settings.php:736
 msgid "Do not add to menu"
 msgstr "אל תוסיף לתפריט"
 
-#: event-organiser-settings.php:744
+#: event-organiser-settings.php:740
 msgid "Page list (fallback)"
 msgstr "רשימת עמודים"
 
@@ -1177,6 +1192,14 @@ msgstr "קבל קישור"
 msgid "Slug"
 msgstr ""
 
+#: features/bootstrap/FeatureContext.php:408
+msgid "Main Sidebar"
+msgstr ""
+
+#: features/bootstrap/FeatureContext.php:410
+msgid "Widgets in this area will be shown on all posts and pages."
+msgstr ""
+
 #: includes/class-eo-admin-notice.php:110
 msgid "Dismiss this notice"
 msgstr "שחרר הודעה זו"
@@ -1197,31 +1220,31 @@ msgstr "לא ניתן לקרוא קובץ iCal"
 msgid "Feed not found"
 msgstr "ההזנה לא נמצאה"
 
-#: includes/class-eo-ical-parser.php:278
+#: includes/class-eo-ical-parser.php:279
 #, php-format
 msgid "There was an error fetching the feed. Response code: %s."
 msgstr "אירעה שגיאה בהבאת ההזנה. קוד שגיאה: %s."
 
-#: includes/class-eo-ical-parser.php:298
+#: includes/class-eo-ical-parser.php:299
 msgid "There was an error opening the ICAL file."
 msgstr "בעיה בפתיחת קובץ ICAL."
 
-#: includes/class-eo-ical-parser.php:518 includes/class-eo-ical-parser.php:543
+#: includes/class-eo-ical-parser.php:519 includes/class-eo-ical-parser.php:544
 #, php-format
 msgid "[Lines %1$d-%2$d]"
 msgstr "[שורות %1$d-%2$d]"
 
-#: includes/class-eo-ical-parser.php:525 includes/class-eo-ical-parser.php:550
+#: includes/class-eo-ical-parser.php:526 includes/class-eo-ical-parser.php:551
 #, php-format
 msgid "[Line %1$d]"
 msgstr "[שורה %1$d]"
 
-#: includes/class-eo-ical-parser.php:1008
+#: includes/class-eo-ical-parser.php:1009
 #, php-format
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
 msgstr "תאריך לא חוקי \"%s\". אנא השתמש בתבנית הבאה: YYYYMMDD."
 
-#: includes/class-eo-ical-parser.php:1046
+#: includes/class-eo-ical-parser.php:1047
 #, php-format
 msgid ""
 "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or "
@@ -1230,26 +1253,26 @@ msgstr ""
 "תאריך/שעה לא חוקיים \"%s\". אנא השתמש באחת מהתבניות הבאות: YYYYMMDDTHHiissZ "
 "או YYYYMMDDTHHiiss."
 
-#: includes/class-eo-theme-compatability.php:107
+#: includes/class-eo-theme-compatability.php:161
 #, php-format
 msgid "Events at %s"
 msgstr ""
 
-#: includes/class-eo-theme-compatability.php:118
+#: includes/class-eo-theme-compatability.php:172
 #: templates/taxonomy-event-category.php:27
 #, php-format
 msgid "Event Category: %s"
 msgstr ""
 
-#: includes/class-eo-theme-compatability.php:128
+#: includes/class-eo-theme-compatability.php:182
 #: templates/taxonomy-event-tag.php:27
 #, php-format
 msgid "Event Tag: %s"
 msgstr ""
 
-#: includes/class-eo-theme-compatability.php:137
-#: includes/class-eo-theme-compatability.php:139
-#: includes/class-eo-theme-compatability.php:141
+#: includes/class-eo-theme-compatability.php:191
+#: includes/class-eo-theme-compatability.php:193
+#: includes/class-eo-theme-compatability.php:195
 #: templates/archive-event.php:32 templates/archive-event.php:35
 #: templates/archive-event.php:38
 msgid "Events: "
@@ -1368,48 +1391,51 @@ msgstr ""
 msgid "Draft"
 msgstr "שמור טיוטה"
 
-#: includes/event-organiser-ajax.php:381
-#: templates/event-meta-event-single.php:55
+#: includes/event-organiser-ajax.php:383
 msgid "Start"
 msgstr "התחלה"
 
-#: includes/event-organiser-ajax.php:382
+#: includes/event-organiser-ajax.php:384
 msgid "End"
 msgstr "סיום"
 
-#: includes/event-organiser-ajax.php:423
+#: includes/event-organiser-ajax.php:387
+msgid "Organiser:"
+msgstr ""
+
+#: includes/event-organiser-ajax.php:426
 msgid "This event recurs"
 msgstr "האירוע חוזר"
 
-#: includes/event-organiser-ajax.php:429 includes/event-organiser-cpt.php:228
+#: includes/event-organiser-ajax.php:432 includes/event-organiser-cpt.php:228
 msgid "Edit Event"
 msgstr "ערוך אירוע"
 
-#: includes/event-organiser-ajax.php:449
+#: includes/event-organiser-ajax.php:452
 msgid "Delete this occurrence"
 msgstr "מחק את המאורע הנוכחי"
 
-#: includes/event-organiser-ajax.php:466
+#: includes/event-organiser-ajax.php:469
 msgid "Break this series"
 msgstr "הפרד מסדרה"
 
-#: includes/event-organiser-ajax.php:767
+#: includes/event-organiser-ajax.php:770
 msgid "Event not found"
 msgstr "ההזנה לא נמצאה"
 
-#: includes/event-organiser-ajax.php:775
+#: includes/event-organiser-ajax.php:778
 msgid "Events are not editable via the admin calendar"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:781
+#: includes/event-organiser-ajax.php:784
 msgid "Are you sure you want to do this?"
 msgstr ""
 
-#: includes/event-organiser-ajax.php:788
+#: includes/event-organiser-ajax.php:791
 msgid "You do not have permission to edit this event"
 msgstr "אין לך הרשאות לערוך מיקום."
 
-#: includes/event-organiser-ajax.php:804
+#: includes/event-organiser-ajax.php:807
 #, php-format
 msgid "Event not created: %s"
 msgstr "אירועים ב: %s"
@@ -1459,21 +1485,20 @@ msgid "Event venues list navigation"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:44
-#, fuzzy
 msgid "Event venues list"
-msgstr "מיקום אירוע"
+msgstr ""
 
-#: includes/event-organiser-cpt.php:46
+#: includes/event-organiser-cpt.php:45
+msgid "No Venue"
+msgstr "אין מיקום"
+
+#: includes/event-organiser-cpt.php:47
 msgid "Venue Location"
 msgstr "מיקום"
 
-#: includes/event-organiser-cpt.php:47
+#: includes/event-organiser-cpt.php:48
 msgid "View all venues"
 msgstr "צפה בכל המיקומים"
-
-#: includes/event-organiser-cpt.php:49
-msgid "No Venue"
-msgstr "אין מיקום"
 
 #: includes/event-organiser-cpt.php:95
 msgctxt "taxonomy singular name"
@@ -1517,14 +1542,12 @@ msgid "No categories found"
 msgstr "לא נמצאו מיקומים"
 
 #: includes/event-organiser-cpt.php:106
-#, fuzzy
 msgid "Event categories list navigation"
-msgstr "קטגוריות אירוע"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:107
-#, fuzzy
 msgid "Event categories list"
-msgstr "קטגוריות אירוע"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:109
 msgid "View all categories"
@@ -1572,8 +1595,8 @@ msgid "Choose from the most used tags"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:162
-#: includes/event-organiser-event-functions.php:1532
-#: templates/event-meta-event-single.php:68
+#: includes/event-organiser-event-functions.php:1538
+#: templates/event-meta-event-single.php:66
 msgid "Tags"
 msgstr "תגיות"
 
@@ -1590,9 +1613,8 @@ msgid "Event tags list navigation"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:166
-#, fuzzy
 msgid "Event tags list"
-msgstr "תגיות אירוע"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:168
 msgid "View all tags"
@@ -1628,50 +1650,59 @@ msgid "No events found in Trash"
 msgstr "אין אירועים בפח הזבל"
 
 #: includes/event-organiser-cpt.php:237
-#, fuzzy
 msgid "Filter events list"
-msgstr "אירועים עתידיים"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:238
-#, fuzzy
 msgid "Events list navigation"
-msgstr "הוסף קישור \"אירועים\" לתפריט הניווט:"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:239
-#, fuzzy
 msgid "Events list"
-msgstr "אירועים: "
+msgstr ""
 
-#: includes/event-organiser-cpt.php:320
+#: includes/event-organiser-cpt.php:240
+msgid "Event Archives"
+msgstr ""
+
+#: includes/event-organiser-cpt.php:241
+msgid "Insert into event"
+msgstr ""
+
+#: includes/event-organiser-cpt.php:242
+msgid "Uploaded to this event"
+msgstr ""
+
+#: includes/event-organiser-cpt.php:323
 #, php-format
 msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "אירוע עודכן. <a href=\"%s\">צפה באירוע</a>"
 
-#: includes/event-organiser-cpt.php:321
+#: includes/event-organiser-cpt.php:324
 msgid "Event updated."
 msgstr "אירוע עודכן."
 
-#: includes/event-organiser-cpt.php:323
+#: includes/event-organiser-cpt.php:326
 #, php-format
 msgid "Event restored to revision from %s"
 msgstr " אירוע שוחזר לתיקון מ %s"
 
-#: includes/event-organiser-cpt.php:324
+#: includes/event-organiser-cpt.php:327
 #, php-format
 msgid "Event published. <a href=\"%s\">View event</a>"
 msgstr "האירוע פורסם. <a href=\"%s\">הצג את האירוע</a>"
 
-#: includes/event-organiser-cpt.php:325
+#: includes/event-organiser-cpt.php:328
 msgid "Event saved."
 msgstr "אירוע עודכן."
 
-#: includes/event-organiser-cpt.php:327
+#: includes/event-organiser-cpt.php:330
 #, php-format
 msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 "האירוע הוגש. <a target=\"_blank\" href=\"%s\">תצוגה מוקדמת של האירוע</a>"
 
-#: includes/event-organiser-cpt.php:331
+#: includes/event-organiser-cpt.php:334
 #, php-format
 msgid ""
 "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
@@ -1680,30 +1711,30 @@ msgstr ""
 "האירוע מתוזמן ל: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
 "\">תצוגה מוקדמת של האירוע</a>"
 
-#: includes/event-organiser-cpt.php:333
+#: includes/event-organiser-cpt.php:336
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:336
+#: includes/event-organiser-cpt.php:339
 #, php-format
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 "טיוטת האירוע עודכנה. <a target=\"_blank\" href=\"%s\">תצודה מקדימה של "
 "האירוע</a>"
 
-#: includes/event-organiser-cpt.php:339
+#: includes/event-organiser-cpt.php:342
 msgid "This event has been broken from a recurring event."
 msgstr "האירוע הופרד מהסדרה."
 
-#: includes/event-organiser-cpt.php:515
+#: includes/event-organiser-cpt.php:518
 msgid "Creating events"
 msgstr "יצירת אירועים"
 
-#: includes/event-organiser-cpt.php:516
+#: includes/event-organiser-cpt.php:519
 msgid "Creating events:"
 msgstr "יצירת אירועים:"
 
-#: includes/event-organiser-cpt.php:518
+#: includes/event-organiser-cpt.php:521
 msgid ""
 "The start date is the date the event starts. If the event is a recurring "
 "event, this is the start date of the first occurrence."
@@ -1711,7 +1742,7 @@ msgstr ""
 "תאריך התחלה הוא התאריך בו מתחיל האירוע. אם מדובר באירוע חוזר, אז זהו תאריך "
 "ההתחלה של האירוע הראשון בסדרה."
 
-#: includes/event-organiser-cpt.php:519
+#: includes/event-organiser-cpt.php:522
 msgid ""
 "The end date is the date the event finishes. If the event is a recurring "
 "event, this is the end date of the first occurrence."
@@ -1719,17 +1750,17 @@ msgstr ""
 "תאריך סיום הוא התאריך בו האירוע מסתיים. אם מדובר באירוע חוזר, אז זהו תאריך "
 "הסיום של האירוע הראשון בסדרה."
 
-#: includes/event-organiser-cpt.php:520
+#: includes/event-organiser-cpt.php:523
 msgid ""
 "All dates and times must be entered in the specified format. This format can "
 "changed in the settings page."
 msgstr "כל התאריכים והשעות חייבים להיות בפורמט קבוע."
 
-#: includes/event-organiser-cpt.php:525
+#: includes/event-organiser-cpt.php:528
 msgid "Repeating events"
 msgstr "אירועים חוזרים"
 
-#: includes/event-organiser-cpt.php:526
+#: includes/event-organiser-cpt.php:529
 msgid ""
 "To repeat an event according to some regular pattern, use the recurrence "
 "dropdown menu to select how the event is to repeat. Further options then "
@@ -1738,11 +1769,11 @@ msgstr ""
 "כדי לחזור על אירוע בהתאם לתבנית קבועה, נא להשתמש בתפריט הנפתח של אירוע חוזר "
 "כדי לבחור את אופן החזרה של האירוע, "
 
-#: includes/event-organiser-cpt.php:528
+#: includes/event-organiser-cpt.php:531
 msgid "Specify how regularly the event should repeat (default 1)"
 msgstr "ציין כיצד האירוע יחזור על עצמו (ברירת המחדל 1)"
 
-#: includes/event-organiser-cpt.php:529
+#: includes/event-organiser-cpt.php:532
 msgid ""
 "Choose the recurrence end date. No further occurrences are added after this "
 "date, but an occurrence that starts before may finish after this date."
@@ -1750,7 +1781,7 @@ msgstr ""
 "בחר תאריך סיום למופע החוזר. לא יתווספו אירועים חוזרים לאחר תאריך זה, אבל "
 "מופע שהתחיל לפני יכול להסתיים אחרי תאריך זה."
 
-#: includes/event-organiser-cpt.php:530
+#: includes/event-organiser-cpt.php:533
 msgid ""
 "If monthly recurrence is selected, select whether this should repeat on that "
 "date of the month (e.g. on the 24th) or on the day of the month (e.g. on the "
@@ -1759,7 +1790,7 @@ msgstr ""
 "אם נבחר מופע חוזר חודשי, נא לבחור אם החזרה צריכה להיות בתאריך של היום בחודש "
 "(למשל ב-24) או ביום בחודש (למשל ביום שלישי השלישי)."
 
-#: includes/event-organiser-cpt.php:531
+#: includes/event-organiser-cpt.php:534
 msgid ""
 "If weekly recurrence is selected, select which days of the week the event "
 "should be repeated. If no days are selected, the day of the start date is "
@@ -1768,26 +1799,26 @@ msgstr ""
 "אם נבחר מופע חוזר שבועי, נא לבחור באילו ימים בשבוע הוא מתרחש. אם לא נבחרים "
 "ימים, יום ההתחלה יהיה בשימוש."
 
-#: includes/event-organiser-cpt.php:536 includes/event-organiser-cpt.php:537
+#: includes/event-organiser-cpt.php:539 includes/event-organiser-cpt.php:540
 msgid "Selecting a venue"
 msgstr "בחירת מיקום"
 
-#: includes/event-organiser-cpt.php:539
+#: includes/event-organiser-cpt.php:542
 msgid "Use the venues input field to search for existing venues"
 msgstr "השתמש בשדות הקלט של המיקום כדי לבחור במיקומים קיימים"
 
-#: includes/event-organiser-cpt.php:540
+#: includes/event-organiser-cpt.php:543
 msgid ""
 "Only pre-existing venues can be selected. To add a venue, go to the venues "
 "page."
 msgstr ""
 "ניתן לבחור רק במיקומים שנוצרו מראש. כדי להוסיף מיקום עבור אל דף המיקומים."
 
-#: includes/event-organiser-cpt.php:550 includes/event-organiser-cpt.php:569
+#: includes/event-organiser-cpt.php:553 includes/event-organiser-cpt.php:572
 msgid "Overview"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:551
+#: includes/event-organiser-cpt.php:554
 msgid ""
 "This is the list of all saved events. Note that <strong> recurring events "
 "appear as a single row </strong> in the table and the start and end date "
@@ -1796,7 +1827,7 @@ msgstr ""
 "זו הרשימה של כל האירועים שנשמרו. שים לב ש<strong>מופעים חוזרים מופיעים כשורה "
 "אחת</strong> בטבלה ומועדי ההתחלה והסיום מתייחסים להתרחשות הראשונה של האירוע."
 
-#: includes/event-organiser-cpt.php:557
+#: includes/event-organiser-cpt.php:560
 msgid ""
 "Hovering over a row in the venues list will display action links that allow "
 "you to manage that venue. You can perform the following actions:"
@@ -1804,7 +1835,7 @@ msgstr ""
 "בריחוף עכבר מעל שורה ברשימת המיקומים, יוצג ו קישורי פעולה שיאפשרו לך לנהל את "
 "המיקום. אפשר לבצע את הפעולות שלהלן:"
 
-#: includes/event-organiser-cpt.php:559
+#: includes/event-organiser-cpt.php:562
 msgid ""
 "Edit takes you to the editing screen for that venue. You can also reach that "
 "screen by clicking on the venue title."
@@ -1812,15 +1843,15 @@ msgstr ""
 "העריכה לוקחת אותך למסך העריכה של אותו מיקום. אפשר להגיע למסך הזה גם על-ידי "
 "לחיצה על כותרת המיקום."
 
-#: includes/event-organiser-cpt.php:560
+#: includes/event-organiser-cpt.php:563
 msgid "Delete will permanently remove the venue"
 msgstr "מחיקה תסיר את המקום לצמיתות"
 
-#: includes/event-organiser-cpt.php:561
+#: includes/event-organiser-cpt.php:564
 msgid "View will take you to the venue's page"
 msgstr "הצג ייקח אותך אל דף המקום"
 
-#: includes/event-organiser-cpt.php:570
+#: includes/event-organiser-cpt.php:573
 msgid ""
 "This page shows all (occurrances of) events. You can view the summary of an "
 "event by clicking on it. If you have the necessary permissions, a link to "
@@ -1830,7 +1861,7 @@ msgstr ""
 "ידי לחיצה עליו. אם יש לך את ההרשאות הדרושות, יופיע גם קישור לדף עריכה של "
 "האירוע."
 
-#: includes/event-organiser-cpt.php:571
+#: includes/event-organiser-cpt.php:574
 msgid ""
 "By clicking the relevant tab, you can view events in Month, Week or Day "
 "mode. You can also filter the events by events by category and venue. The "
@@ -1840,11 +1871,11 @@ msgstr ""
 "יומית. אתה יכול גם לסנן את האירועים לפי אירועים, קטגוריות ומיקום. הכפתור "
 "\"עבור אל\" מאפשר לך לעבור ישירות לתאריך ספציפי."
 
-#: includes/event-organiser-cpt.php:575
+#: includes/event-organiser-cpt.php:578
 msgid "Add Event"
 msgstr "הוסף אירוע"
 
-#: includes/event-organiser-cpt.php:576
+#: includes/event-organiser-cpt.php:579
 msgid ""
 "You can create an event on this Calendar, by clicking on day or dragging "
 "over multiple days (in Month view) or multiple times (in Week and Day view). "
@@ -1857,28 +1888,28 @@ msgstr ""
 "שם, מיקום ותיאור. מרגע שהאירוע נוצר, תוכל לבחור האם לפרסם אותו או לשמור "
 "כטיוטה. בכל שלב תוכל לחזור ולערוך את האירוע."
 
-#: includes/event-organiser-cpt.php:582
+#: includes/event-organiser-cpt.php:585
 msgid "For more information"
 msgstr "למידע נוסף"
 
-#: includes/event-organiser-cpt.php:583
+#: includes/event-organiser-cpt.php:586
 #, php-format
 msgid "See the <a %s> documentation</a>"
 msgstr "ראה <a %s> תיעוד</a>"
 
-#: includes/event-organiser-cpt.php:584
+#: includes/event-organiser-cpt.php:587
 msgid "Debugging Event Organiser"
 msgstr "ניפוי ארגון אירועים"
 
-#: includes/event-organiser-cpt.php:585
+#: includes/event-organiser-cpt.php:588
 msgid "Go Pro!"
 msgstr "הרשם לגרסת Pro!"
 
-#: includes/event-organiser-cpt.php:702 includes/event-organiser-cpt.php:725
+#: includes/event-organiser-cpt.php:705 includes/event-organiser-cpt.php:728
 msgid "Color"
 msgstr "צבע"
 
-#: includes/event-organiser-cpt.php:708
+#: includes/event-organiser-cpt.php:711
 msgid "Assign the category a colour."
 msgstr "הקצה צבע לקטגוריה"
 
@@ -2133,18 +2164,22 @@ msgstr "שום דבר לא נמצא"
 msgid "Apologies, but no results were found for the requested archive. "
 msgstr "מצטערים, אבל לא נמצאו תוצאות עבור הארכיון המבוקש."
 
-#: templates/event-meta-event-single.php:43
+#: templates/event-meta-event-single.php:41
 #, php-format
 msgid ""
 "This event is running from %1$s until %2$s. It is next occurring on %3$s"
 msgstr "אירוע זה מתרחש החל מ %1$s ועד %2$s. המפגש הבא מתרחש ב %3$s"
 
-#: templates/event-meta-event-single.php:47
+#: templates/event-meta-event-single.php:45
 #, php-format
 msgid "This event finished on %s"
 msgstr "האירוע הסתיים ב %s"
 
-#: templates/event-meta-event-single.php:83
+#: templates/event-meta-event-single.php:53
+msgid "Date"
+msgstr ""
+
+#: templates/event-meta-event-single.php:81
 msgid "Upcoming Dates"
 msgstr "תאריכים עתידיים"
 
@@ -2170,16 +2205,3 @@ msgstr ""
 #, php-format
 msgid "Events at: %s"
 msgstr "אירועים ב: %s"
-
-#~ msgid "Custom field deleted."
-#~ msgstr "לא נמצא קובץ."
-
-#~ msgid ""
-#~ "<h4>City & State Fields Added</h4>City and state / province fields for "
-#~ "venues have now been added. </br> If you'd like, Event Organiser can <a "
-#~ "href='%s'>attempt to auto-fill them</a>. You can always manually change "
-#~ "the details aftewards."
-#~ msgstr ""
-#~ "<h4>נוספו שדות עיר ומדינה</h4> שדות עיר ומדינה / פרובינציה נוספו כעת.</"
-#~ "br> אם תרצה Event Organiser יכול <a href='%s'>לנסות למלא אותם אוטומטית</"
-#~ "a>."
