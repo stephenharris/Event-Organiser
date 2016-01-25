@@ -202,11 +202,11 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
     overflow-x: hidden;
 }
 
-#eo_occurrence_datepicker .ui-datepicker .eo-op-date-not-selected a,
-#eo_occurrence_datepicker .ui-widget-content .ui-datepicker-current-day a{
+#eo-occurrence-datepicker .ui-datepicker .eo-op-date-not-selected a,
+#eo-occurrence-datepicker .ui-widget-content .ui-datepicker-current-day a{
 	background: #ececec;
 }
-#eo_occurrence_datepicker .ui-datepicker .eo-op-date-selected a{
+#eo-occurrence-datepicker .ui-datepicker .eo-op-date-selected a{
 color:#FFF;
 background: #1e8cbe;
 }
