@@ -55,7 +55,7 @@ install_db() {
 	fi
 
 	# reset database
-	mysql --user="$DB_USER" --password="$DB_PASS" $EXTRA -e "DROP TABLE IF EXISTS $DB_NAME";
+	mysql --user="$DB_USER" --password="$DB_PASS" $EXTRA -e "DROP DATABASE IF EXISTS $DB_NAME";
 	mysqladmin --no-defaults create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA;
 
 }
