@@ -37,7 +37,9 @@ get_header(); ?>
 		?>
 
 		<!-- Display the venue map. If you specify a class, ensure that class has height/width dimensions-->
-		<?php echo eo_get_venue_map( $venue_id, array( 'width' => '100%' ) ); ?>
+		<?php $latlng = eo_get_venue_latlng($venue_id); if (!empty((float)$latlng['lat']) && !empty((float)$latlng['lng'])) : ?>
+			<?php echo eo_get_venue_map( $venue_id, array( 'width' => '100%' ) ); ?>
+		<?php endif; ?>
 	
 	</header>
 		
