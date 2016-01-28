@@ -103,10 +103,13 @@
 
 	<!-- Does the event have a venue? -->
 	<?php if ( eo_get_venue() ) : ?>
-		<!-- Display map -->
-		<div class="eo-event-venue-map">
-			<?php echo eo_get_venue_map( eo_get_venue(), array( 'width' => '100%' ) ); ?>
-		</div>
+		<?php // Does the vanue have a map location> ?>
+		<?php $latlng = eo_get_venue_latlng( eo_get_venue() ); if ( ! empty((float)$latlng['lat'] ) && !empty( (float)$latlng['lng']) ) : ?>
+			<!-- Display map -->
+			<div class="eo-event-venue-map">
+				<?php echo eo_get_venue_map( eo_get_venue(), array( 'width' => '100%' ) ); ?>
+			</div>
+		<?php endif; ?>
 	<?php endif; ?>
 
 
