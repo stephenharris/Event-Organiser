@@ -216,7 +216,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 3. Event details metabox, showing the full reoccurrence options and venue selection
 4. Venue editing screen, with Google Maps
 5. Calendar View screen
-6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)
+6. Calendar shortcode (using TwentyThirteen)
+7. Calendar shortcode when viewed on a mobile device (using TwentyFourteen)
+8. Events list (using TwentySixteen)
 
 == Changelog ==
 

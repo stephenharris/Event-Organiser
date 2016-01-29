@@ -226,8 +226,14 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 ### 5. Calendar View screen ###
 ![Calendar View screen](assets/screenshot-5.png)
 
-### 6. View of a venue page on the front-end (in a theme based on WordPress TwentyEleven) ###
-![View of a venue page on the front-end (in a theme based on WordPress TwentyEleven)](assets/screenshot-6.png)
+### 6. Calendar shortcode (using TwentyThirteen) ###
+![Calendar shortcode (using TwentyThirteen)](assets/screenshot-6.png)
+
+### 7. Calendar shortcode when viewed on a mobile device (using TwentyFourteen) ###
+![Calendar shortcode when viewed on a mobile device (using TwentyFourteen)](assets/screenshot-7.png)
+
+### 8. Events list (using TwentySixteen) ###
+![Events list (using TwentySixteen)](assets/screenshot-8.png)
 
 
 ## Changelog ##
