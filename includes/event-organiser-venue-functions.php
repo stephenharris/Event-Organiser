@@ -351,7 +351,9 @@ function eo_venue_lng( $venue_slug_or_id = '' ) {
  */
 function eo_venue_has_latlng( $venue_slug_or_id = '' ) {
 	$latlng = eo_get_venue_latlng( $venue_slug_or_id );
-	return ( ! empty( (float) $latlng['lat'] ) || ! empty( (float) $latlng['lng'] ) );
+	$lat = (float) $latlng['lat'];
+	$lng = (float) $latlng['lng'];
+	return ( $lat || $lng );
 }
 
 /**
