@@ -42,6 +42,59 @@ class venueTest extends EO_UnitTestCase
 	}
 	
 	/**
+	 * When an event is saved, if a new venue fails to create because it already exists
+	 * we assign the event the ID of the pre-existing venue. To identify if a duplicate
+	 * venue is created we use the returned error code (returned by wp_insert_term()).
+	 * This unit test is to check if that error code ever changes!
+	 *
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/202
+	 */
+	public function testVenueHasLatLng()
+	{
+		$venue = array(
+			'name'        => 'Test Venue',
+			'description' => 'Description',
+			'address'     => '1 Test Road',
+			'city'        => 'Testville',
+			'state'       => 'Testas',
+			'country'     => 'United States of Tests',
+			'latitude'    => 0,
+			'longtitude'  => 0,
+		);
+	
+		$venue_ids = eo_insert_venue( $venue['name'], $venue );
+		$this->assertFalse( eo_venue_has_latlng( $venue_ids['term_id'] ) );
+	
+		$venue = array(
+			'name'        => 'Test Venue 2',
+			'description' => 'Description',
+			'address'     => '1 Test Road',
+			'city'        => 'Testville',
+			'state'       => 'Testas',
+			'country'     => 'United States of Tests',
+			'latitude'    => 0.001,
+			'longtitude'  => 0,
+		);
+	
+		$venue_ids = eo_insert_venue( $venue['name'], $venue );
+		$this->assertTrue( eo_venue_has_latlng( $venue_ids['term_id'] ) );
+	
+		$venue = array(
+			'name'        => 'Test Venue 3',
+			'description' => 'Description',
+			'address'     => '1 Test Road',
+			'city'        => 'Testville',
+			'state'       => 'Testas',
+			'country'     => 'United States of Tests',
+			'latitude'    => 0,
+			'longtitude'  => 0.001,
+		);
+		
+		$venue_ids = eo_insert_venue( $venue['name'], $venue );
+		$this->assertTrue( eo_venue_has_latlng( $venue_ids['term_id'] ) );
+	}
+	
+	/**
 	 * This test checks that the callback to the split_shared_term
 	 * hook (handles venues being split is doing its job.
 	 */
