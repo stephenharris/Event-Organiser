@@ -1,20 +1,92 @@
-/* Venue map on event edit page */
-#venuemap{height:300px; width:100%;float:right;margin: 10px 0 10px -300px}
+/* Simple grid */
+.eo-grid-12 {
+	float:left;
+  	width: 66.66%;
+}
+.eo-grid-8 {
+	float:left;
+  	width: 66.66%;
+}
+.eo-grid-4 {
+	float:left;
+  	width: 33.33%;
+}
+.eo-grid-6 {
+	float:left;
+  	width: 50%;
+}
+.eo-grid-3 {
+	float:left;
+  	width: 25%;
+}
+.eo-grid-row{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.eo-grid-12,.eo-grid-8,.eo-grid-4,
+.eo-grid-6,.eo-grid-3 {
+	min-height: 1px;
+}
+.eo-grid:after,
+.eo-grid-row:after{
+	content: "";
+    display: table;
+    clear: both;
+}
 
-/*Hide post date filter*/
-.post-type-event .tablenav.top .alignleft.actions select[name="m"]{display: none; }
+@media only screen and (max-width: 850px) {
+	.eo-grid-4,
+	.eo-grid-6,
+	.eo-grid-8{
+		width: 100%;
+	}
+	.eo-grid-3{
+		width: 50%;
+	}
+}
 
-#eventorganiser_event_detail tr.eo-add-new-venue{
+@media only screen and (max-width: 500px) {
+	.eo-grid-3{
+		width: 100%;
+	}
+}
+
+/* Event edit page */
+.eo-days-of-week li{
+	display: inline-block;
+	margin-right: 8px;	
+}
+.eo-days-of-week li input[type="checkbox"] {
+	margin-right: 2px;
+}
+.eo-days-of-week-text{
+	float:left;
+	margin-right:10px;
+}
+#eo-recurrence-frequency-wrapper{
+	margin: 0 0 1em 0;	
+}
+#eo-day-of-month-repeat,
+#eo-schedule-last-date-wrapper{
+	margin: 1em 0 1em 0;
+}
+.eo-add-new-venue{
 	display: none;
 }
-
-#eventorganiser_event_detail tr .eo-label{
-	width:190px;
+input#venue_select{
+	background-repeat: no-repeat;
+	background-position: right center;
+	padding-right: 3px;
 }
-/* Venue page address form spacing */
-#venue_address table tr{line-height: 4em;}
+input#venue_select.eo-waiting{
+	background-image: url(images/spinner.gif);
+}
+#venuemap{height:300px; width:100%;float:right;margin: 10px 0 10px -300px}
 
-/* Venue map on venue page*/
+/* Events page: */
+.post-type-event .tablenav.top .alignleft.actions select[name="m"]{display: none; }
+
+/* Venue edit page*/
 #venue_address.postbox #venuemap{height: 335px;margin: 0 0 0 -60%;width: 60%;}
 
 @media only screen and (max-width: 860px) {
@@ -23,7 +95,6 @@
 		clear: both;
 	}
 }
-
 
 @media only screen and (max-width: 1320px) {
 	#post-body.columns-2 #venuemap{
@@ -59,18 +130,30 @@
 #eo_venue_form #venue_address .inside{padding:0;margin:0;}
 
 /* Calendar View*/
+.fc-basic-view tbody .fc-row { min-height: 7em; }
 .fc-header-dropdown{margin-top: 2px;display: inline-block;}
 .fc-text-arrow{line-height:0;}
 .fc-button-prev .ui-button-text, .fc-button-next .ui-button-text {padding-top: 0.5em;}
 .fc-button{height: 2.2em;line-height: 2.2em;}
 .event.past-event{opacity:0.5;}
 form.eo_cal .ui-autocomplete-input{width:220px;}
+#eo_admin_calendar .fc-bg{ background: white; }
+#calendar-view .view-button{float:right;height: 30px;line-height: 28px;margin-top: 3px;padding: 0 11px;}
+#calendar-view{clear: both;height: 34px;margin-bottom: 15px;border-bottom: 1px solid #dfdfdf;padding-right: 100px;position: relative;}
+#calendar-view .nav-tab{ font-size: 15px }
+#calendar-view #loading{position:absolute;bottom:0;font-size: 16px;line-height: 16px;margin-bottom: 5px;}
+#calendar-view #loading:before {content: url("images/loading-image.gif");padding-right: 5px;}
+/*For the blocks of colour*/
+.cat .ui-selectmenu-item-icon { height: 14px; width: 14px; border:1px solid #dfdfdf;border-radius: 4px;}
+.cat .ui-selectmenu-item-icon{ background-image:none!important; }
+.event_page_calendar .ui-widget-overlay{ z-index:99999!important;}
+
 /* Table on event details calendar view*/
 .eo-cal-meta .form-table th {width:50px;}
 /*Drop down filters*/
 #eo_admin_calendar select { min-width:180px; width:auto}
 .ui-widget-overlay{z-index:1000;}
-.eo-admin-calendar-dialog{z-index:2000;}
+.eo-admin-calendar-dialog{z-index:100000!important;}
 /*.eo-admin-calendar-dialog.ui-dialog .ui-dialog-titlebar-close span {margin: -8px;}*/
 #eo-dialog-tabs, #events-meta {border: none;padding: 0}
 
@@ -119,13 +202,18 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
     overflow-x: hidden;
 }
 
-#eo_occurrence_datepicker .ui-datepicker .eo-op-date-not-selected a,
-#eo_occurrence_datepicker .ui-widget-content .ui-datepicker-current-day a{
+#eo-occurrence-datepicker .ui-datepicker .eo-op-date-not-selected a,
+#eo-occurrence-datepicker .ui-widget-content .ui-datepicker-current-day a{
 	background: #ececec;
 }
-#eo_occurrence_datepicker .ui-datepicker .eo-op-date-selected a{
+#eo-occurrence-datepicker .ui-datepicker .eo-op-date-selected a{
 color:#FFF;
 background: #1e8cbe;
+}
+
+.ui-timepicker-table tbody .ui-state-hover,
+.ui-datepicker-calendar tbody .ui-state-hover{
+	outline: 2px solid #1e8cbe !important;
 }
 
 
@@ -201,150 +289,48 @@ a.eo-inline-help img {
 	z-index:300005!important;
 	direction: ltr;
 }
+.qtip-content{
+	position: relative;
+	padding: 5px 9px;
+	overflow: hidden;
+	font-size: 11px;
+	text-align: left;
+	word-wrap: break-word;
+	background-color: rgb(247, 247, 247);
+}
+.qtip-titlebar{
+	position: relative;
+	padding: 5px 35px 5px 10px;
+	overflow: hidden;
+	border-width: 0 0 1px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #21759B;
+}
 
-	.qtip-content{
-		position: relative;
-		padding: 5px 9px;
-		overflow: hidden;
-		font-size: 11px;
-		text-align: left;
-		word-wrap: break-word;
-		background-color: rgb(247, 247, 247);
-	}
-
-	.qtip-titlebar{
-		position: relative;
-		padding: 5px 35px 5px 10px;
-		overflow: hidden;
-		border-width: 0 0 1px;
-		font-weight: bold;
-		font-size: 14px;
-		color: #21759B;
-	}
-
-	.qtip-titlebar + .qtip-content{ border-top-width: 0 !important; }
-
-	/* Default close button class */
-	.qtip-close{
-		position: absolute;
-		right: -9px; top: -9px;
-
-		cursor: pointer;
-		outline: medium none;
-
-		border-width: 1px;
-		border-style: solid;
-		border-color: transparent;
-	}
-
-		.qtip-titlebar .qtip-close{
-			right: 4px; top: 50%;
-			margin-top: -9px;
-		}
-	
-		* html .qtip-titlebar .qtip-close{ top: 16px; } /* IE fix */
-
-		.qtip-titlebar .ui-icon,
-		.qtip-icon .ui-icon{
-			display: block;
-			text-indent: -1000em;
-			direction: ltr;
-			vertical-align: middle;
-		}
-
-		.qtip-icon, .qtip-icon .ui-icon{
-			-moz-border-radius: 3px;
-			-webkit-border-radius: 3px;
-			border-radius: 3px;
-			text-decoration: none;
-		}
-
-			.qtip-icon .ui-icon{
-				width: 18px;
-				height: 14px;
-
-				text-align: center;
-				text-indent: 0;
-				font: normal bold 10px/13px Tahoma,sans-serif;
-
-				color: inherit;
-				background: transparent none no-repeat -100em -100em;
-			}
-
+.qtip-titlebar + .qtip-content{ border-top-width: 0 !important; }
 
 /* Default tooltip style */
 .qtip-default{
 	border-width: 1px;
 	border-style: solid;
 	border-color: #F1D031;
-
 	background-color: #FFFFA3;
 	color: #555;
 }
+.qtip-default .qtip-titlebar{
+	background-color: #FFEF93;
+}
 
-	.qtip-default .qtip-titlebar{
-		background-color: #FFEF93;
-	}
-
-	.qtip-default .qtip-icon{
-		border-color: #CCC;
-		background: #F1F1F1;
-		color: #777;
-	}
-	
-	.qtip-default .qtip-titlebar .qtip-close{
-		border-color: #AAA;
-		color: #111;
-	}
-
-
-/*! Light tooltip style */
-.qtip-light{
+/*! eo tooltip style */
+.qtip-eo{
 	background-color: white;
 	border-color: #E2E2E2;
 	color: #454545;
 }
-
-	.qtip-light .qtip-titlebar{
-		background-color: rgb(247, 247, 247);
-	}
-
-
-/*! Dark tooltip style */
-.qtip-dark{
-	background-color: #505050;
-	border-color: #303030;
-	color: #f3f3f3;
+.qtip-eo .qtip-titlebar{
+	background-color: rgb(247, 247, 247);
 }
-
-	.qtip-dark .qtip-titlebar{
-		background-color: #404040;
-	}
-
-	.qtip-dark .qtip-icon{
-		border-color: #444;
-	}
-
-	.qtip-dark .qtip-titlebar .ui-state-hover{
-		border-color: #303030;
-	}
-
-
-/*! Cream tooltip style */
-.qtip-cream{
-	background-color: #FBF7AA;
-	border-color: #F9E98E;
-	color: #A27D35;
-}
-
-	.qtip-cream .qtip-titlebar{
-		background-color: #F0DE7D;
-	}
-
-	.qtip-cream .qtip-close .qtip-icon{
-		background-position: -82px 0;
-	}
-
 
 /* Fluid class for determining actual width in IE */
 .ui-tooltip-fluid{display:block; visibility:hidden; position:static !important; float:left !important}
@@ -352,46 +338,102 @@ a.eo-inline-help img {
 .ui-tooltip-titlebar{position:relative; min-height:14px; padding:5px 35px 5px 10px; overflow:hidden; border-width:0 0 1px; font-weight:bold}
 .ui-tooltip-titlebar+.ui-tooltip-content{border-top-width:0 !important}
 
-/* Default close button class */
-.ui-tooltip-titlebar .ui-state-default{position:absolute; right:4px; top:50%; margin-top:-9px; cursor:pointer; outline:medium none; border-width:1px; border-style:solid}
-* html .ui-tooltip-titlebar .ui-state-default{top:16px}/* IE fix */
-.ui-tooltip-titlebar .ui-icon, 
-.ui-tooltip-icon .ui-icon{display:block; text-indent:-1000em; direction:ltr}
-.ui-tooltip-icon, .ui-tooltip-icon .ui-icon{-moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; text-decoration:none}
-.ui-tooltip-icon .ui-icon{width:18px; height:14px; text-align:center; text-indent:0; font:normal bold 10px/13px Tahoma,sans-serif; color:inherit; background:transparent none no-repeat -100em -100em}
-
 /* Add shadows to your tooltips in:FF3+, Chrome 2+, Opera 10.6+, IE9+, Safari 2+*/
 .ui-tooltip-shadow{-webkit-box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15); -moz-box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15); box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15)}
-
-/* Add rounded corners to your tooltips in:FF3+, Chrome 2+, Opera 10.6+, IE9+, Safari 2+*/
-.ui-tooltip-rounded, 
-.ui-tooltip-tipsy, 
-.ui-tooltip-bootstrap{-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px}
-
-/* jQuery TOOLS Tooltip style */
-.ui-tooltip-jtools{background:#232323; background:rgba(0,0,0,0.7); background-image:-webkit-gradient(linear,left top,left bottom,from(#717171),to(#232323)); background-image:-moz-linear-gradient(top,#717171,#232323); background-image:-webkit-linear-gradient(top,#717171,#232323); background-image:-ms-linear-gradient(top,#717171,#232323); background-image:-o-linear-gradient(top,#717171,#232323); border:2px solid #ddd; border:2px solid rgba(241,241,241,1); -moz-border-radius:2px; -webkit-border-radius:2px; border-radius:2px; -webkit-box-shadow:0 0 12px #333; -moz-box-shadow:0 0 12px #333; box-shadow:0 0 12px #333}
-
-/* IE Specific */
-.ui-tooltip-jtools .ui-tooltip-titlebar{background-color:transparent; filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#717171,endColorstr=#4A4A4A); -ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#717171,endColorstr=#4A4A4A)"}
-.ui-tooltip-jtools .ui-tooltip-content{filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4A4A4A,endColorstr=#232323); -ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#4A4A4A,endColorstr=#232323)"}
-
-.ui-tooltip-jtools .ui-tooltip-titlebar, 
-.ui-tooltip-jtools .ui-tooltip-content{background:transparent; color:white; border:0 dashed transparent}
-.ui-tooltip-jtools .ui-tooltip-icon{border-color:#555}
-.ui-tooltip-jtools .ui-tooltip-titlebar .ui-state-hover{border-color:#333}
-
-/* Tipped style */
-.ui-tooltip-tipped{border:3px solid #959FA9; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; background-color:#F9F9F9; color:#454545; font-weight:normal; font-family:serif}
-.ui-tooltip-tipped .ui-tooltip-titlebar{border-bottom-width:0; color:white; background:#3A79B8; background-image:-webkit-gradient(linear,left top,left bottom,from(#3A79B8),to(#2E629D)); background-image:-webkit-linear-gradient(top,#3A79B8,#2E629D); background-image:-moz-linear-gradient(top,#3A79B8,#2E629D); background-image:-ms-linear-gradient(top,#3A79B8,#2E629D); background-image:-o-linear-gradient(top,#3A79B8,#2E629D); filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#3A79B8,endColorstr=#2E629D); -ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr=#3A79B8,endColorstr=#2E629D)"}
-.ui-tooltip-tipped .ui-tooltip-icon{border:2px solid #285589; background:#285589}
-.ui-tooltip-tipped .ui-tooltip-icon .ui-icon{background-color:#FBFBFB; color:#555}
 
 /* IE9 fix - removes all filters */
 .ui-tooltip:not(.ie9haxors) div.ui-tooltip-content, 
 .ui-tooltip:not(.ie9haxors) div.ui-tooltip-titlebar{filter:none; -ms-filter:none}
 
-/* Tips plugin */
-.ui-tooltip .ui-tooltip-tip{margin:0 auto; overflow:hidden; z-index:10}
-.ui-tooltip .ui-tooltip-tip, 
-.ui-tooltip .ui-tooltip-tip *{position:absolute; line-height:0.1px !important; font-size:0.1px !important; color:#123456; background:transparent; border:0 dashed transparent}
-.ui-tooltip .ui-tooltip-tip canvas{top:0; left:0}
+/*** Admin Calendar Page ***/
+/* Flatten header of admin calendar */
+#eo_admin_calendar tbody th,
+#eo_admin_calendar thead th {
+	background: #E4E4E4;
+	padding: 5px 0!important;
+}
+/* Flatten buttons */
+#eo-event-venue-button,
+#eo-event-cat-button,
+.fc-header-goto button,
+.fc-button{
+	background:white;
+	max-width: 300px;
+}
+/* Hover colour of buttons */
+#eo-event-venue-button:hover,
+#eo-event-cat-button:hover,
+.fc-header-goto button:hover,
+.fc-button:hover{
+	color:#0074A2;
+}
+/* Hover colour of option */
+#eo-event-cat-menu .ui-widget-content .ui-state-hover,
+#eo-event-cat-menu .ui-state-hover,
+#eo-event-venue-menu .ui-widget-content .ui-state-hover,
+#eo-event-venue-menu .ui-state-hover,
+.eo-admin-calendar-dialog .ui-autocomplete .ui-menu-item a.ui-state-focus{
+	background: #EEE;
+}
+
+
+/* Calendar dialog */
+.eo-admin-calendar-dialog{
+	border-radius: 0;
+}
+.eo-admin-calendar-dialog .ui-dialog-titlebar{
+	background: white;
+	border: none;
+	border-radius: 0;
+	font-size: 16px;
+}
+.eo-admin-calendar-dialog .ui-dialog-titlebar span{
+	color: #444;
+}
+.eo-admin-calendar-dialog .ui-dialog-titlebar-close:focus,
+.eo-admin-calendar-dialog .ui-dialog-titlebar-close{
+	border:none;
+	background: none;
+}
+
+/* Keyboard shortcuts dialog */
+#eo-keyboard-shortcuts .eo-sc-key{
+	text-align: right;
+	padding: 0px 10px;
+	display: inline-block;
+	width: 100px;
+}
+#eo-keyboard-shortcuts kbd{
+	display: inline-block;
+	padding: 3px 5px;
+	font-size: 11px;
+	line-height: 10px;
+	color: #555;
+	vertical-align: middle;
+	background-color: #fcfcfc;
+	border: solid 1px #ccc;
+	border-bottom-color: #bbb;
+	border-radius: 3px;
+	box-shadow: inset 0 -1px 0 #bbb;
+}
+
+/* Calendar dialog tabs*/
+#eo-dialog-tabs ul{
+	position: relative;
+	background: #FFF;
+	border: none;
+	border-bottom: 1px solid #DFDFDF;
+	border-radius: 0;
+}
+#eo-dialog-tabs ul li{
+	background: none;
+	border: none;
+}
+#eo-dialog-tabs ul li.ui-tabs-active{
+	background: white;
+	border: 1px solid #DFDFDF;
+	border-bottom: none;
+}
+
+/**Add-ons page: for contrast**/
+#eo-addons-wrap .eo-addon{ background: white; }

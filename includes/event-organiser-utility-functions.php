@@ -79,17 +79,233 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
  * @param string $format How to format the date. DATETIMEOBJ for datetime object.
  * @return string|dateTime The formatted date
 */
-function eo_format_date($dateString='',$format='d-m-Y'){
+function eo_format_date( $dateString = '', $format = 'd-m-Y' ) {
 
-	if($format!=''&& $dateString!=''){
-		$datetime = new DateTime($dateString, eo_get_blog_timezone());
-		$formated =  eo_format_datetime($datetime,$format);
-		return $formated;
+	if ( $format != '' && $dateString != '' ) {
+		$datetime  = new DateTime( $dateString, eo_get_blog_timezone() );
+		$formatted = eo_format_datetime( $datetime, $format );
+		$formatted = apply_filters( 'eventorganiser_format_datetime_string', $formatted , $dateString, $format, $datetime );
+		return $formatted;
 	}
 	return false;
 }
 
 /**
+ * Formats two DateTime objects according to a specified format by "spliting"
+ *
+ * The function uses a single formatting string to generate a range string like
+ * 16th-17th February by intelligtently inserting a seperator where the DateTimes
+ * differ according to the specified format.
+ *
+ * If the formatted dates are identical then no seperator is added the behaviour is
+ * is the same as eo_format_datetime().
+ *
+ * @since 3.0.0
+ * @link http://php.net/manual/en/function.date.php PHP Date
+ *
+ * @param dateTime $datetime1 The first datetime object
+ * @param dateTime $datetime2 The second datetime object
+ * @param string $format How to format the date range, see http://php.net/manual/en/function.date.php
+ * @param string $seperator A string used to seperate differing parts of the formatted DateTimes
+ * @param bool $is_rtl Whether the formatted date should be written right-to-left. Defaults to is_rtl().
+ * @return string|dateTime The formatted date range
+ */
+
+function eo_format_datetime_range( $datetime1, $datetime2, $format, $seperator = ' &ndash; ', $is_rtl = null ){
+	$fragment = _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl );
+	return is_array( $fragment ) ? implode( $seperator, $fragment ) : $fragment;
+}
+
+/**
+ * Formats the start/end date/time of an occurrence.
+ *
+ * This function uses date format for all-day events and appends the time format for all 
+ * other events. It then splits this format intelligently by inserting the $seperator
+ * where the formatted start/end datetimes differ.
+ * 
+ * It will optionally wrap the start & end dates with microdata.
+ * 
+ * Note: for all-day, non-multi-day events, this will return just the start date.
+ *
+ * @since 3.0.0
+ * @link http://php.net/manual/en/function.date.php PHP Date
+ * @uses _eo_format_datetime_range
+ * 
+ * @param int $event_id The event ID. Defaults to the current event if not provided.
+ * @param int $occurrence_id The occurrence ID.  Defaults to the current occurrence if not provided.
+ * @param string $date_format How to format the date part of the occurrence's datetime.
+ * @param string $time_format How to format the time part of the occurrence's datetime.
+ * @param string $seperator A string used to seperate differing parts of the formatted start/end datetimes.
+ * @param bool $microdata Whether to wrap the formatted start/end datetimes in microdata
+ * @return string|dateTime The formatted occurrence start/end date range
+ */
+function eo_format_event_occurrence( $event_id = false, $occurrence_id = false, $date_format = false, $time_format = false, $seperator = ' &ndash; ', $microdata = true ){
+
+	global $post;
+	
+	$event_id      = $event_id ? intval( $event_id ) : get_the_ID(); 
+	$occurrence_id = $occurrence_id ? intval( $occurrence_id ) : intval( $post->occurrence_id );
+	
+	$format        = eo_get_event_datetime_format( $event_id, $date_format, $time_format );
+	$microformat   = eo_is_all_day( $event_id ) ? 'Y-m-d' : 'c';
+
+	$start = eo_get_the_start( DATETIMEOBJ, $event_id, null, $occurrence_id );
+	$end   = eo_get_the_end( DATETIMEOBJ, $event_id, null, $occurrence_id );
+	
+	$start_formatted = eo_format_datetime( $start, $format );
+	$end_formatted   = eo_format_datetime( $end, $format );
+	
+	if( $start_formatted == $end_formatted ){
+		$end_formatted = false;
+		
+	}else{
+		$fragment = _eo_format_datetime_range( $start, $end, $format, is_rtl() );
+		$start_formatted = is_rtl() ? $fragment['right'] : $fragment['left'];
+		$end_formatted   = is_rtl() ? $fragment['left'] : $fragment['right'];
+	}
+
+	if( $microdata ){
+		$start_formatted = sprintf(
+			'<time itemprop="startDate" datetime="%s">%s</time>',
+			$start->format( $microformat ),
+			$start_formatted
+		);
+		
+		if( $end_formatted ){
+			$end_formatted = sprintf(
+				'<time itemprop="endDate" datetime="%s">%s</time>',
+				$end->format( $microformat ),
+				$end_formatted
+			);
+		}
+	}
+	
+	$formatted = $start_formatted;
+	
+	if( $end_formatted ){
+		$formatted = is_rtl() ? $end_formatted . $seperator . $start_formatted : $start_formatted . $seperator . $end_formatted;
+	}
+	
+	return $formatted;
+}
+
+/**
+ * Helper function used by `eo_format_datetime_range()` and `eo_format_event_occurrence()` to format
+ * a datetime range given a format.
+ * 
+ * @access private
+ * @since 3.0.0
+ * @used-by eo_format_datetime_range()
+ * @used-by eo_format_event_occurrence()
+ *  
+ * @param dateTime $datetime1 The first datetime object
+ * @param dateTime $datetime2 The second datetime object
+ * @param string $format How to format the date range, see http://php.net/manual/en/function.date.php
+ * @param string $seperator A string used to seperate differing parts of the formatted DateTimes
+ * @param bool $is_rtl Whether the formatted date should be written right-to-left. Defaults to is_rtl().
+ * @return string|dateTime The formatted date range
+ */
+function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = null ){
+	
+	if( is_null( $is_rtl ) ){
+		$is_rtl = is_rtl();
+	}
+
+	$formatted1 = eo_format_datetime( $datetime1, $format );
+	$formatted2 = eo_format_datetime( $datetime2, $format );
+	
+	if( $formatted1 === $formatted2 ){
+		return $formatted1;
+	}
+	
+	//we include jS as a token to ensure correct positioning of suffix: 4th-5th not 4-5th
+	$date = array(
+		'jS', 'j', 'd', 'D', 'l', 'S', 'w', 'N', 'z',//Day
+		'W', //Week
+		'F', 'm', 'M', 'n', 't', //Month
+		'Y', 'y', 'o', 'L', //Year
+		'e', 'P', 'O', 'T', 'Z', 'I', //Timezone
+		'c', 'R', 'U', 'u', 'e','r', //Full date time
+	);
+	$time = array(
+		'g', 'G', 'h', 'H', //Hour 
+		'a', 'A', //Meridan
+		'i', //Minute
+		's', 'B', //Second
+	);
+
+	//Include time with (:?) to ensure we don't split at : in time fragment.
+	$regexp  = '/(\\\\\S|' . implode( '(:?)|', $time ) . '(:?)|' . implode( '|', $date ) . '|.)/';
+
+	preg_match_all( $regexp, $format, $matches );
+	$tokens = $matches[0];
+	
+	$left_counter = 0;
+	$right_counter = count( $tokens ) -1;
+	$left    = false;
+	$middle  = false;
+	$middle1 = false;
+	$middle2 = false;
+	$right   = false;
+	
+	while( $left_counter < count( $tokens ) ){
+		
+		$parsed_token_1 = eo_format_datetime( $datetime1, $tokens[$left_counter] );
+		$parsed_token_2 = eo_format_datetime( $datetime2, $tokens[$left_counter] );
+		
+		//We don't want to place a seperator within anyting time related
+		if( $parsed_token_1 != $parsed_token_2 || in_array( trim( $tokens[$left_counter], ':' ), $time ) ){
+			break;
+		}
+		
+		$left .= $parsed_token_1;
+		
+		$left_counter++;
+		
+	}
+	
+	while( $right_counter >= 0 ){
+		
+		$parsed_token_1 = eo_format_datetime( $datetime1, $tokens[$right_counter] );
+		$parsed_token_2 = eo_format_datetime( $datetime2, $tokens[$right_counter] );
+
+		//We don't want to place a seperator within anyting time related
+		if( $parsed_token_1 != $parsed_token_2 ||  in_array( trim( $tokens[$right_counter], ':' ), $time ) ){
+			break;
+		}
+		
+		$right = $parsed_token_1 . $right;
+		
+		$right_counter--;
+	}
+	
+	for( $i = $left_counter; $i <= $right_counter;  $i++ ){
+		
+		$middle1 .= eo_format_datetime( $datetime1, $tokens[$i] );
+		$middle2 .= eo_format_datetime( $datetime2, $tokens[$i] );
+		
+	}
+	
+	$fragment = array(
+		'left'  => $left,
+		'right' => $right,
+	);
+		
+	if( false !== $middle1 ){
+		if( !$is_rtl ){
+			$fragment['left'] .= $middle1;
+			$fragment['right'] = $middle2 . $fragment['right'];
+		}else{
+			$fragment['left'] .= $middle2;
+			$fragment['right'] = $middle1 . $fragment['right'];
+		}
+	}
+
+	return $fragment;
+
+}
+
+/*
  *  Returns the blog timezone
  *
  * Gets timezone settings from the db. If a timezone identifier is used just turns
@@ -101,46 +317,40 @@ function eo_format_date($dateString='',$format='d-m-Y'){
  * @return DateTimeZone The blog timezone
 */
 function eo_get_blog_timezone(){
-	$tzstring = wp_cache_get( 'eventorganiser_timezone' );
+	
+	$tzstring = wp_cache_get( 'eventorganiser_timezone' );	
+	$tzstring = apply_filters( 'eventorganiser_timezone', $tzstring );
 
 	if ( false === $tzstring ) {
 
-		$tzstring =get_option('timezone_string');
-		$offset = get_option('gmt_offset');
+		$tzstring = get_option( 'timezone_string' );
+		$offset   = get_option( 'gmt_offset' );
 
-		// Remove old Etc mappings.  Fallback to gmt_offset.
-		if ( !empty($tz_string) && false !== strpos($tzstring,'Etc/GMT') )
-			$tzstring = '';
-
-		if( empty($tzstring) && $offset!=0 ):
-			//use offset		
-			$offset *= 3600; // convert hour offset to seconds
-			$allowed_zones = timezone_abbreviations_list();
-
-			foreach ($allowed_zones as $abbr):
-				foreach ($abbr as $city):
-					if ($city['offset'] == $offset){
-						$tzstring=$city['timezone_id'];
-						break 2;
-					}
-				endforeach;
-			endforeach;
-		endif;
+		//We should descourage manual offset
+		//@see http://us.php.net/manual/en/timezones.others.php
+		//@see https://bugs.php.net/bug.php?id=45543
+		//@see https://bugs.php.net/bug.php?id=45528
+		//IANA timezone database that provides PHP's timezone support uses (i.e. reversed) POSIX style signs
+		if( empty( $tzstring ) && 0 != $offset && floor( $offset ) == $offset ){
+			$offset_st = $offset > 0 ? "-$offset" : '+'.absint( $offset );
+			$tzstring  = 'Etc/GMT'.$offset_st;
+		}
 
 		//Issue with the timezone selected, set to 'UTC'
-		if( empty($tzstring) ):
+		if( empty( $tzstring ) ){
 			$tzstring = 'UTC';
-		endif;
+		}
 
 		//Cache timezone string not timezone object
 		//Thanks to Ben Huson https://wordpress.org/support/topic/plugin-event-organiser-getting-500-is-error-when-w3-total-cache-is-on
 		wp_cache_set( 'eventorganiser_timezone', $tzstring );
 	} 
 
-	if( $tzstring instanceof DateTimeZone)
+	if( $tzstring instanceof DateTimeZone ){
 		return $tzstring;
+	}
 
-	$timezone = new DateTimeZone($tzstring);
+	$timezone = new DateTimeZone( $tzstring );
 	return $timezone; 
 }
 
@@ -161,7 +371,7 @@ function eo_get_blog_timezone(){
  * @param string $format Used to format the interval. See https://www.php.net/manual/en/dateinterval.format.php
  * @return string Formatted interval.
 */
-function eo_date_interval($_date1,$_date2, $format){
+function eo_date_interval( $_date1, $_date2, $format ) {
 
 	//Calculate R values (signs)
 	$R = ($_date1 <= $_date2 ? '+' : '-');
@@ -172,42 +382,45 @@ function eo_date_interval($_date1,$_date2, $format){
 	$date2 = clone ($_date1 <= $_date2 ? $_date2 : $_date1);
 
 	//Calculate total days difference
-	$total_days = floor(abs($date1->format('U') - $date2->format('U'))/86400);
+	$total_days = floor( abs( $date1->format( 'U' ) - $date2->format( 'U' ) ) / 86400 );
 
-	$periods = array( 'years'=>-1,'months'=>-1,'days'=>-1,'hours'=>-1);
+	$periods = array( 'years' => -1, 'months' => -1, 'days' => -1, 'hours' => -1 );
 
-	foreach ($periods as $period => &$i ){
+	foreach ( $periods as $period => &$i ) {
 
 		$temp_pointer = clone $date1;
-		
-		while( $temp_pointer <= $date2 ){
+
+		while ( $temp_pointer <= $date2 ) {
 			$temp_pointer->modify( "+1 $period" );
 			$i++;
 		}
-		
-		if ( $i > -1 ){
+
+		if ( $i > -1 ) {
 			$date1->modify( "+$i $period" );
-		}else{
+		} else {
 			$date1->modify( "$i $period" );
 		}
-		
 	}
-	extract($periods);
+
+	$years   = $periods['years'];
+	$months  = $periods['months'];
+	$days    = $periods['days'];
+	$hours   = $periods['hours'];
 
 	//Minutes, seconds
-	$seconds = round(abs($date1->format('U') - $date2->format('U')));
-	$minutes = floor($seconds/60);
-	$seconds = $seconds - $minutes*60;
+	$seconds = round( abs( $date1->format( 'U' ) - $date2->format( 'U' ) ) );
+	$minutes = floor( $seconds / 60 );
+	$seconds = $seconds - ( $minutes * 60 );
 
-	$chars = str_split( $format );
+	$chars  = str_split( $format );
 	$length = count( $chars );
-	
-	if( $length == 1 ){
+
+	if ( 1 == $length ) {
 		return $format;
 	}
-	
+
 	$values = array(
-			'%' => "%",
+			'%' => '%',
 			'y' => $years,
 			'Y' => zeroise( $years, 2 ),
 			'm' => $months,
@@ -224,109 +437,101 @@ function eo_date_interval($_date1,$_date2, $format){
 			'r' => $r,
 			'R' => $R,
 	);
-	
-	$result = "";
-	$previous_char_processed =  false;
-	
-	for( $i = 0; $i < $length; $i++ ){
-	
-		if( ( $i > 0 && $chars[$i-1] === '%' ) && !$previous_char_processed ){
-				
-			if( isset( $values[$chars[$i]] ) ){
+
+	$result = '';
+	$previous_char_processed = false;
+
+	for ( $i = 0; $i < $length; $i++ ) {
+
+		if( ( $i > 0 && '%' === $chars[$i-1] ) && ! $previous_char_processed ) {
+
+			if ( isset( $values[$chars[$i]] ) ) {
 				$result .= $values[$chars[$i]];
 				$previous_char_processed = true;
-								
-			}else{
-				$result .= $chars[$i-1].$chars[$i];
+
+			} else {
+				$result .= $chars[$i-1] . $chars[$i];
 				$previous_char_processed = true;
 			}
-			
-					
-		}elseif( $chars[$i] == '%' ){
+		} elseif ( '%' == $chars[$i] ) {
 			$previous_char_processed = false;
-			
-		}else{
+
+		} else {
 			$result .= $chars[$i];
 			$previous_char_processed = true;
 		}
 		//var_dump($result);
 	}
-	
 	return $result;
-}	 
-
-/**
-* Very basic class to convert php date format into xdate date format used for javascript.
-*
-* Takes a php date format and converts it to {@link http://arshaw.com/xdate/#Formatting xdate format} so
-* that it can b used in javascript (notably the fullCalendar).
-*
-* Doesn't support
-* 
-* * L Whether it's a leap year
-* * N ISO-8601 numeric representation of the day of the week (added in PHP 5.1.0)
-* * w Numeric representation of the day of the week (0=sun,...)
-* * z The day of the year (starting from 0)
-* * t Number of days in the given month
-* * B Swatch Internet time
-* * u microseconds
-* * e 	Timezone identifier (added in PHP 5.1.0) 	Examples: UTC, GMT, Atlantic/Azores
-* * I (capital i) 	Whether or not the date is in daylight saving time 	1 if Daylight Saving Time, 0 otherwise.
-* * O  Difference to Greenwich time (GMT) in hours 	Example: +0200
-* * T  Timezone abbreviation 	Examples: EST, MDT ...
-* * Z  Timezone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.
-* * c  ISO 8601 date (added in PHP 5) 	2004-02-12T15:19:21+00:00
-* * r  RFC 2822 formatted date 	Example: Thu, 21 Dec 2000 16:01:07 +0200
-* * U Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) 	See also time()
-*
-* @since 2.1.3
-*
-*@param string $phpformat Format according to https://php.net/manual/en/function.date.php
-*@return string The format translated to xdate format: http://arshaw.com/xdate/#Formatting
-*/
-function eo_php2xdate($phpformat=""){
-	$php2xdate = array(
-		'Y'=>'yyyy','y'=>'yy','L'=>''/*Not Supported*/,'o'=>'I',
-		'j'=>'d','d'=>'dd','D'=>'ddd','l'=>'dddd','N'=>'', /*NS*/ 'S'=>'S',
-		'w'=>'', /*NS*/ 'z'=>'',/*NS*/ 'W'=>'w',
-		'F'=>'MMMM','m'=>'MM','M'=>'MMM','n'=>'M','t'=>'',/*NS*/
-		'a'=>'tt','A'=>'TT',
-		'B'=>'',/*NS*/'g'=>'h','G'=>'H','h'=>'hh','H'=>'HH','u'=>'fff',
-		'i'=>'mm','s'=>'ss',
-		'O'=>'zz ', 'P'=>'zzz',
-		'c'=>'u',
-	);
-		
-	$xdateformat="";
-
-	for($i=0;  $i< strlen($phpformat); $i++){
-
-		//Handle backslash excape
-		if($phpformat[$i]=="\\"){
-			$xdateformat .= "'".$phpformat[$i+1]."'";
-			$i++;
-			continue;
-		}
-
-		if(isset($php2xdate[$phpformat[$i]])){
-			$xdateformat .= $php2xdate[$phpformat[$i]];
-		}else{
-			$xdateformat .= $phpformat[$i];
-		}
-	}
-	return $xdateformat;
 }
 
 /**
- * Very basic class to convert php date format into xdate date format used for javascript.
- * @deprecated 2.1.3
- * @ignore
- * @since 1.4
+ * Converts php date format into Moment.js date format used for javascript.
+ *
+ * **Please note that this function does not conver all tokens**
+ *
+ * @since 3.0.0
+ * @link http://momentjs.com/docs/#/displaying/format/
+ * @param string $phpformat Format according to https://php.net/manual/en/function.date.php
+ * @return string The format translated to Moment.js format: momentjs.com/docs/#/displaying/format/
  */
-function eventorganiser_php2xdate( $phpformat="" ){
-	return eo_php2xdate( $phpformat );
-}
+function eo_php_to_moment( $phpformat ) {
 
+	/* Not supported: N, S, z, W, t, L, o, T, e, I, Z, u, X */
+	$map = array(
+		//Day
+		'j' => 'D', 'd' => 'DD', 'D' => 'ddd', 'l' => 'dddd', 'jS' => 'Do', 'w' => 'd',
+		//Week
+		'W' => 'w',
+		//Month
+		'F' => 'MMMM', 'm' => 'MM', 'M' => 'MMM', 'n' => 'M',
+		//Year
+		'Y' => 'YYYY', 'y' => 'YY', 'o' => 'gggg',
+		//Hour
+		'g' => 'h', 'G' => 'H', 'h' => 'hh', 'H' => 'HH',
+		//Merdian
+		'a' => 'a', 'A' => 'A',
+		//Minute
+		'i' => 'mm',
+		//Second
+		's' => 'ss',
+		'B' => 'SSS',
+		//Timezone
+		'P' => 'Z',
+		'O' => 'ZZ',
+		//Full date time
+		'c' => 'YYYY-MM-DD[T]HH:mm:ssZ',
+		'R' => 'ddd, D MMM YYYY HH:mm:ss ZZ',
+		'U' => 'X',
+	);
+
+	$regexp  = '/(\\\\\S|d|D|jS?|l|N|.)/';
+	$matches = array();
+
+	preg_match_all( $regexp, $phpformat, $matches );
+
+	if ( ! $matches || false === is_array( $matches ) ) {
+		return $format;
+	}
+
+	$php_tokens = array_keys( $map );
+	$moment_format = '';
+
+	foreach ( $matches[0] as $id => $match ) {
+		// if there is a matching php token in token list
+		if ( in_array( $match, $php_tokens ) ) {
+			// use the php token instead
+			$string = $map[$match];
+		} elseif ( preg_match( '/(\\\\\S)/', $match ) ) {
+			$string = '['. substr( $match, 1 ) . ']';
+		} else {
+			$string = $match;
+		}
+		$moment_format .= $string;
+	}
+
+	return $moment_format;
+}
 
 /**
  * Converts php date format into jQuery UI date format.
@@ -549,43 +754,57 @@ function eventorganiser_date_create($datetime_string){
 	return date_create( $datetime_string, eo_get_blog_timezone() );
 }
 
+/**
+ * Converts a datetime string and the intended format to a DateTime object.
+ *
+ * @since 1.9.5
+ * @param string $format The format the date string is given in
+ * @param string $datetime_string The date string to be cast to a DateTime object
+ * @param DateTimeZone $timezone The timezone of the datetime string. Defaults to site timezone.
+ * @return boolean|DateTime
+ */
+function eo_check_datetime( $format, $datetime_string, $timezone = false ) {
 
-function eo_check_datetime( $format, $datetime_string, $timezone = false ){
-	
 	$timezone = ( $timezone instanceof DateTimeZone ) ? $timezone : eo_get_blog_timezone();
-	
+
 	global $wp_locale;
-	
+
 	//Handle localised am/pm
-	$am = $wp_locale->get_meridiem('am');
-	$AM = $wp_locale->get_meridiem('AM');
-	$pm = $wp_locale->get_meridiem('pm');
-	$PM = $wp_locale->get_meridiem('PM');
-	
+	$am = $wp_locale->get_meridiem( 'am' );
+	$AM = $wp_locale->get_meridiem( 'AM' );
+	$pm = $wp_locale->get_meridiem( 'pm' );
+	$PM = $wp_locale->get_meridiem( 'PM' );
+
 	$meridan = array_filter( compact( 'am', 'AM', 'pm', 'PM' ), 'trim' );
 	$meridan = array_filter( $meridan );
-	if( $meridan ){
+	if ( $meridan ) {
 		$datetime_string = str_replace( array_values( $meridan ), array_keys( $meridan ), $datetime_string );
 	}
 
-	if ( version_compare(PHP_VERSION, '5.3.0') >= 0 ){
-    	return date_create_from_format( $format, $datetime_string, $timezone );
-	}elseif( function_exists( 'strptime' ) ){
-		
+	if ( version_compare( PHP_VERSION, '5.3.0' ) >= 0 ) {
+		return date_create_from_format( $format, $datetime_string, $timezone );
+	} elseif ( function_exists( 'strptime' ) ) {
+
 		//Workaround for outdated php versions. Limited support, see conversion array below.
-		
+
 		//Format conversion
 		$format_conversion = array(
-			'Y' => '%Y', 
-			'm'	=> '%m', 'F' => '%B', 
-			'd'	=> '%d', 'j' => '%e',
-			'S' => '%0',
-			'H' => '%H', 'G' => '%H', 'h'=> '%I', 'g' => '%I', 
-			'i' => '%M', 
-			's' => '%S', 
-			'a' => '%p', 'A' => '%P'
+			'Y' => '%Y', //year
+			'm'	=> '%m', //month
+			'F' => '%B',
+			'd'	=> '%d', //day
+			'j' => '%e',
+			'S' => '%0', //suffix
+			'H' => '%H', //hour
+			'G' => '%H',
+			'h' => '%I',
+			'g' => '%I',
+			'i' => '%M', //minute
+			's' => '%S', //second
+			'a' => '%p', //meridan
+			'A' => '%P',
 		);
-		
+
 		$strptime_format = str_replace(
 			array_keys( $format_conversion ),
 			array_values( $format_conversion ),
@@ -594,123 +813,73 @@ function eo_check_datetime( $format, $datetime_string, $timezone = false ){
 
 		$strptime = strptime( $datetime_string, $strptime_format );
 
-		if( false == $strptime || !array_filter( $strptime ) ){
+		if ( false == $strptime || ! array_filter( $strptime ) ) {
 			return false;
 		}
-		
+
 		$ymdhis = sprintf(
-				'%04d-%02d-%02d %02d:%02d:%02d',
-				$strptime['tm_year'] + 1900, 
-				$strptime['tm_mon'] + 1,
-				$strptime['tm_mday'],
-				$strptime['tm_hour'],
-				$strptime['tm_min'],
-				$strptime['tm_sec']
+			'%04d-%02d-%02d %02d:%02d:%02d',
+			$strptime['tm_year'] + 1900,
+			$strptime['tm_mon'] + 1,
+			$strptime['tm_mday'],
+			$strptime['tm_hour'],
+			$strptime['tm_min'],
+			$strptime['tm_sec']
 		);
 
 		try {
 			$date = new DateTime( $ymdhis, $timezone );
 			return $date;
-		} catch (Exception $e) {			
+		} catch ( Exception $e ) {			
 			return false;
 		}
-		
-	}else{
+
+	} else {
 
 		//Workaround for outdated php versions without strptime. Limited support, see conversion array below.
-		
+
 		//Format conversion
 		$format_conversion = array(
-				'Y' => '(?P<year>\d{4})',
-				'm'	=> '(?P<month>\d{1,})', 
-				'd'	=> '(?P<day>\d{1,})', 
-				'H' => '(?P<hour>\d{2})', 
-				'G' => '(?P<hour>\d{1,2})',
-				'h' => '(?P<hour>\d{2})', 
-				'g' => '(?P<hour>\d{1,2})',
-				'i' => '(?P<minute>\d{1,2})',
-				's' => '(?P<second>\d{1,2})',
-				'a' => '(?P<meridan>(am|pm))',
-				'A' => '(?P<meridan>(AM|PM))'
+			'Y' => '(?P<year>\d{4})',
+			'm'	=> '(?P<month>\d{1,})',
+			'd'	=> '(?P<day>\d{1,})',
+			'H' => '(?P<hour>\d{2})',
+			'G' => '(?P<hour>\d{1,2})',
+			'h' => '(?P<hour>\d{2})',
+			'g' => '(?P<hour>\d{1,2})',
+			'i' => '(?P<minute>\d{1,2})',
+			's' => '(?P<second>\d{1,2})',
+			'a' => '(?P<meridan>(am|pm))',
+			'A' => '(?P<meridan>(AM|PM))',
 		);
-		
-		$reg_exp = "/^" . strtr( $format, $format_conversion ) . "$/";
-		
-		if( !preg_match( $reg_exp, $datetime_string, $matches ) ){
+
+		$reg_exp = '/^' . strtr( $format, $format_conversion ) . '$/';
+
+		if ( ! preg_match( $reg_exp, $datetime_string, $matches ) ) {
 			return false;
 		}
-		
+
 		$meridan    = isset( $matches['meridan'] ) ? strtolower( $matches['meridan'] ) : false;
 		$components = eo_array_key_whitelist( $matches, array( 'year', 'month', 'day', 'hour', 'minute', 'second' ) );
 		extract( array_map( 'intval', $components ) );
-		
-		if ( !checkdate( $month, $day, $year ) ){
+
+		if ( ! checkdate( $month, $day, $year ) ) {
 			return false;
 		}
-		
+
 		$datetime = new DateTime( null, $timezone );
 		$datetime->setDate( $year, $month, $day );
-		
-		if( isset( $hour ) && isset( $minute ) ){
-			if( $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 ){
+
+		if ( isset( $hour ) && isset( $minute ) ) {
+			if ( $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 ) {
 				return false;
 			}
-			$hour = ( $meridan === 'pm' && $hour < 12 ) ? $hour + 12 : $hour; //acount for 12 hour time
+			$hour = ( 'pm' === $meridan && $hour < 12 ) ? $hour + 12 : $hour; //acount for 12 hour time
 			$datetime->setTime( $hour, $minute );
 		}
-		
+
 		return $datetime;
-	
 	}
-		
-}
-/**
- * (Private) Utility function checks a date-time string is formatted correctly (according to the options) 
- * @access private
- * @ignore
- * @since 1.0.0
-
- * @param datetime_string - a datetime string 
- * @param string $format - Format of the datetime string. One of 'd-m-Y H:i', 'm-d-Y H:i' and 'Y-m-d H:i'.
- * @return int DateTime| false - the parsed datetime string as a DateTime object or false on error (incorrectly formatted for example)
- */
-function _eventorganiser_check_datetime( $datetime_string = '', $format = null ){
-
-	if( is_null( $format ) )
-		$format = eventorganiser_get_option('dateformat');
-	
-	//Backwards compatible - can probably remove 2.1+
-	if( is_bool( $format ) ){
-		_deprecated_argument('_eventorganiser_check_datetime', '1.8', 'This function no longer accepts a boolean, pass the format of the passed date-time string.');
-		if( true === $format )
-			$format = 'Y-m-d';
-		else
-			$format = eventorganiser_get_option('dateformat');
-	}
-
-	//Get regular expression.
-	if( $format == 'Y-m-d' ){
-		$reg_exp = "/(?P<year>\d{4})[-.\/](?P<month>\d{1,})[-.\/](?P<day>\d{1,}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
-
-	}elseif( $format == 'd-m-Y' ){
-		$reg_exp = "/(?P<day>\d{1,})[-.\/](?P<month>\d{1,})[-.\/](?P<year>\d{4}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
-
-	}else{
-		$reg_exp = "/(?P<month>\d{1,})[-.\/](?P<day>\d{1,})[-.\/](?P<year>\d{4}) (?P<hour>\d{2}):(?P<minute>\d{2})/";
-	}
-
-	if( !preg_match($reg_exp, $datetime_string,$matches) ) 
-		return false;
-
-	extract(array_map('intval',$matches));
-
-	if ( !checkdate($month, $day, $year) || $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 )
-		return false;
-
-	$datetime = new DateTime(null, eo_get_blog_timezone());
-	$datetime->setDate($year, $month, $day);
-	$datetime->setTime($hour, $minute);
-	return $datetime;
 }
 
 /**
@@ -733,15 +902,15 @@ function _eventorganiser_check_datetime( $datetime_string = '', $format = null )
 function eventorganiser_radio_field( $args ){
 
 	$args = wp_parse_args($args,array(
-			'checked'=>'', 'help' => '', 'options'=>'', 'name'=>'', 'echo'=>1,
-			'class'=>'', 'label' => '','label_for'=>''
-			));	
+		'checked' => '', 'help' => '', 'options' => '', 'name' => '', 'echo' => 1,
+		'class' => '', 'label' => '', 'label_for' => '', 'esc_labels' => true,
+	));	
 
 	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$name = isset($args['name']) ?  $args['name'] : '';
 	$checked = $args['checked'];
-	$label = !empty($args['label']) ? '<legend><label>'.esc_html($args['label']).'</label></legend>' : '';
-	$class =  !empty($args['class']) ? 'class="'.sanitize_html_class($args['class']).'"'  : '';
+	$label = !empty( $args['label'] ) ? '<legend><label>'.esc_html( $args['label'] ).'</label></legend>' : '';
+	$class = !empty( $args['class'] ) ? 'class="'.sanitize_html_class( $args['class'] ).'"'  : '';
 
 	$html = sprintf('<fieldset %s> %s', $class, $label);
 	if( !empty($args['options']) ){
@@ -791,22 +960,21 @@ function eventorganiser_select_field($args){
 		'label_for'=>'','class'=>'','disabled'=>false,'multiselect'=>false,
 		'inline_help' => false, 'style' => false, 'data' => false,
 	));	
-	
 
-	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
-	$name = isset($args['name']) ?  $args['name'] : '';
-	$selected = $args['selected'];
-	$classes = array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) );
-	$class = implode( ' ', $classes );
-	$multiselect = ($args['multiselect'] ? 'multiple' : '' );
-	$disabled = ($args['disabled'] ? 'disabled="disabled"' : '' );
-	$style = (  !empty($args['style']) ?  sprintf('style="%s"', $args['style']) : '' );
-	
+	$id          = ( ! empty($args['id']) ? $args['id'] : $args['label_for'] );
+	$name        = isset($args['name']) ?  $args['name'] : '';
+	$selected    = $args['selected'];
+	$classes     = array_map( 'sanitize_html_class', explode( ' ', $args['class'] ) );
+	$class       = implode( ' ', $classes );
+	$multiselect = ( $args['multiselect'] ? 'multiple="multiple"' : '' );
+	$disabled    = disabled( $args['disabled'], true, false );
+	$style       = ( ! empty($args['style']) ? sprintf( 'style="%s"', $args['style'] ) : '' );
+
 	//Custom data-* attributes
 	$data = '';
 	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
 		foreach( $args['data'] as $key => $attr_value ){
-			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+			$data .= sprintf( ' data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
 		}
 	}
 	
@@ -891,13 +1059,13 @@ function eventorganiser_text_field($args){
 	$data = '';
 	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
 		foreach( $args['data'] as $key => $attr_value ){
-			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+			$data .= sprintf( ' data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
 		}
 	}
 	
 	
 
-	$attributes = array_filter( array($min,$max,$size,$placeholder,$disabled, $disabled, $style, $data ) );
+	$attributes = array_filter( array($min,$max,$size,$placeholder,$required, $disabled, $style, $data ) );
 
 	$html = sprintf('<input type="%s" name="%s" class="%s" id="%s" value="%s" autocomplete="off" %s /> %s',
 		esc_attr( $type ), 
@@ -939,64 +1107,75 @@ function eventorganiser_text_field($args){
  * @access private
  * @param $args array The array of arguments
  */
-function eventorganiser_checkbox_field($args=array()){
+function eventorganiser_checkbox_field( $args = array() ) {
 
-	$args = wp_parse_args($args,array(
-		 	 'help' => '','name'=>'', 'class'=>'', 'label_for' => '',
-			'checked'=>'', 'echo'=>true,'multiselect'=>false
-		));
+	$args = wp_parse_args( $args, array(
+		'help' => '', 'name' => '', 'class' => '', 'label_for' => '',
+		'checked' => '', 'echo' => true, 'multiselect' => false, 'data' => false,
+	));
 
-	$id    = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
+	$id    = ( ! empty( $args['id'] ) ? $args['id'] : $args['label_for'] );
 	$name  = isset($args['name']) ?  $args['name'] : '';
-	$class = ( $args['class'] ? "class='".sanitize_html_class($args['class'])."'"  :"" );
-	$attr  = array( $class );
-	
-	/* $options and $checked are either both arrays or they are both strings. */
-	$options =  isset($args['options']) ? $args['options'] : false;
-	$checked =  isset($args['checked']) ? $args['checked'] : 1;
-	
+	$class = ( $args['class'] ? sprintf( 'class="%s" ', sanitize_html_class( $args['class'] ) ) : '' );
+
 	//Custom data-* attributes
-	if( !empty( $args['data'] ) && is_array( $args['data'] ) ){
-		foreach( $args['data'] as $key => $data_value ){
+	$data = '';
+	if ( ! empty( $args['data'] ) && is_array( $args['data'] ) ) {
+		foreach ( $args['data'] as $key => $attr_value ) {
+			$data .= sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
+		}
+	}
+
+	/* $options and $checked are either both arrays or they are both strings. */
+	$options = isset( $args['options'] ) ? $args['options'] : false;
+	$checked = isset( $args['checked'] ) ? $args['checked'] : 1;
+	$attr    = array();
+
+	//Custom data-* attributes
+	if ( ! empty( $args['data'] ) && is_array( $args['data'] ) ) {
+		foreach ( $args['data'] as $key => $data_value ) {
 			$attr[] = sprintf( 'data-%s="%s"', esc_attr( $key ), esc_attr( $data_value ) );
 		}
 	}
-	
-	$attr = implode( " ", array_filter( $attr ) );
 
-	$html ='';
-	if( is_array($options) ){
-		
-		foreach( $options as $value => $opt_label ){
+	$attr = implode( ' ', array_filter( $attr ) );
+
+	$html = '';
+	if ( is_array( $options ) ) {
+
+		foreach ( $options as $value => $opt_label ) {
+
 			$html .= sprintf(
 				'<label for="%1$s">
 					<input type="checkbox" name="%2$s" id="%1$s" value="%3$s" %4$s %5$s> 
 					%6$s </br>
 				</label>',
-				esc_attr( $id.'_'.$value ),
+				esc_attr( $id . '_' . $value ),
 				esc_attr( trim( $name ) . '[]' ),
 				esc_attr( $value ),
-				$attr,
-				checked( in_array( $value, $checked ), true, false ),
+				checked( in_array( $value, $checked ), true, false ) . ' '. $data,
+				$class,
 				esc_attr( $opt_label )
 			);
 		}
-	}else{
-		$html .= sprintf('<input type="checkbox" id="%1$s" name="%2$s" %3$s %4$s value="%5$s">',
+	} else {
+		$html .= sprintf(
+			'<input type="checkbox" id="%1$s" name="%2$s" %3$s %4$s value="%5$s">',
 			esc_attr( $id ),
 			esc_attr( $name ),
-			$attr,
-			checked( $checked, $options, false ),
+			checked( $checked, $options, false ) . ' ' . $data,
+			$class,
 			esc_attr( $options )
 		);
 	}
-	
-	if(!empty($args['help'])){
-		$html .= '<p class="description">'.$args['help'].'</p>';
+
+	if ( ! empty( $args['help'] ) ) {
+		$html .= sprintf( '<p class="description">%s</p>', $args['help'] );
 	}
 
-	if( $args['echo'] )
+	if ( $args['echo'] ) {
 		echo $html;
+	}
 
 	return $html;
 }
@@ -1095,16 +1274,6 @@ function eventorganiser_textarea_field($args){
 /**
  * @ignore
  * @private
- * @param unknown_type $text
- * @return mixed
- */
-function eventorganiser_esc_printf($text){
-	return str_replace('%','%%',$text);
-}
-
-/**
- * @ignore
- * @private
  * @param unknown_type $key
  * @param unknown_type $group
  * @return Ambigous <boolean, mixed>
@@ -1171,31 +1340,33 @@ function eventorganiser_cache_set( $key, $value, $group, $expire = 0 ){
  * @param bool $echo Whether the link HTML should be printed as well as returned.
  * @return string
  */
-function eventorganiser_inline_help( $title, $content, $echo = false, $type = 'help' ){
+function eventorganiser_inline_help( $title, $content, $echo = false, $type = 'help' ) {
 	static $help = array();
-	
+
 	$help[] = array(
-		'title' => $title,
+		'title'   => $title,
 		'content' => $content,
 	);
-	
+
 	wp_localize_script( 'eo-inline-help', 'eoHelp', $help );
 
 	//Ensure style is called after  WP styles
 	add_action( 'admin_footer', '_eventorganiser_enqueue_inline_help_scripts', 100 );
 
-	$id = count($help)-1;
+	$id = count( $help ) - 1;
 	$src = EVENT_ORGANISER_URL."css/images/{$type}-14.png";
-	
-	$link = sprintf( '<a href="#" id="%s" class="eo-inline-help eo-%s-inline"><img src="%s" width="16" height="16"></a>', 
-				'eo-inline-help-' . $id, 
-				$type, 
-				$src 
-			);
-	
-	if( $echo )
+
+	$link = sprintf( '<a href="#" id="%s" class="eo-inline-help eo-%s-inline"><img src="%s" width="16" height="16" alt="%s"></a>',
+		'eo-inline-help-' . $id,
+		$type,
+		$src,
+		esc_attr__( 'Help', 'eventorganiser' )
+	);
+
+	if ( $echo ) {
 		echo $link;
-	
+	}
+
 	return $link;
 }
 
@@ -1235,16 +1406,6 @@ function eo_color_luminance( $hex, $percent ) {
 	}
 
 	return $new_hex;
-}
-
-
-/**
- * Whether the blog's time settings indicates it uses 12 or 24 hour time
- * @deprecated 2.1.3 Use {@see `eo_blog_is_24()`} instead.
- * @see eo_blog_is_24()
- */
-function eventorganiser_blog_is_24(){
-	return eo_blog_is_24();
 }
 
 /**
@@ -1444,25 +1605,27 @@ function eventorganiser_fold_ical_text( $text ){
 }
 
 /**
- * Like wp_list_pluck() but plucks out key and value from each object in the list
- * 
+ * Similar to wp_list_pluck() (4.0+) plucks out key and value from each object in the list
+ *
  * @since 2.2
+ * @link https://core.trac.wordpress.org/ticket/28666
  * @param array $list A list of objects or arrays
  * @param int|string $field A field from the object to used as the key of the entire object
  * @param int|string $field A field from the object to place instead of the entire object
  * @return multitype:unknown NULL
  */
-function eo_list_pluck_key_value( $list, $key_field, $value_field ){
-	
+function eo_list_pluck_key_value( $list, $key_field, $value_field ) {
+
 	$new_list = array();
-	
+
 	foreach ( $list as $key => $value ) {
-		if ( is_object( $value ) )
+		if ( is_object( $value ) ) {
 			$new_list[ $value->$key_field ] = $value->$value_field;
-		else
+		} else {
 			$new_list[ $value[ $key_field ] ] = $value[ $value_field ];
+		}
 	} 
-	
+
 	return $new_list;
 }
 
@@ -1547,52 +1710,26 @@ function eo_get_user_id_by( $field, $value ){
 
 /**
  * This function should be deprecated in favour of wp_dropdown_categories(),
- * but the (required) field_value settng is only in 4.2.0+.  
+ * but the (required) field_value settng is only in 4.2.0+.
  * @ignore
  * @private
  */
-function eo_taxonomy_dropdown( $args ){
+function eo_taxonomy_dropdown( $args ) {
 
 	$defaults = array(
 		'show_option_all' => '',
 		'echo'            => 1,
 		'selected'        => 0,
 		'class'           => 'postform',
+		'value_field'     => 'slug',
+		'walker'          => new EO_Walker_TaxonomyDropdown(),
 	);
-	
+
 	$defaults['selected'] = ( is_tax( $args['taxonomy'] ) ? get_query_var( $args['taxonomy'] ) : 0 );
 	$defaults['name'] = $args['taxonomy'];
 	$defaults['id']   = $args['taxonomy'];
-	
+
 	$args = wp_parse_args( $args, $defaults );
-	$query = $args;
-	// Avoid clashes with the 'name' param of get_terms().
-	unset( $query['name'] );
 
-	$terms = get_terms( $args['taxonomy'], $query );
-
-	$output = sprintf( 
-		'<select style="width:150px" name="%s" id="%s" class="%s" />\n', 
-		esc_attr( $args['name'] ),
-		$args['id'] ? esc_attr( $args['id'] ) : esc_attr( $args['name'] ),
-		esc_attr( $args['class'] )
-	);
-
-	if ( $args['show_option_all'] ) {
-		$output .= '<option '.selected( $args['selected'], 0, false ). ' value="0">' . $args['show_option_all'] . '</option>';
-	}
-	
-	if ( ! empty( $terms ) ) {
-		foreach ( $terms as $term ){
-			$output .= sprintf( '<option value="%s" %s>%s</option>', esc_attr( $term->slug ), selected( $args['selected'], $term->slug, false ), esc_html( $term->name ) );
-		}
-	}
-	$output .= "</select>\n";
-	
-	if ( $args['echo'] ){
-		echo $output;
-	}
-	
-	return $output;
-	
+	return wp_dropdown_categories( $args );
 }

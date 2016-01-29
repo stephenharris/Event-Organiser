@@ -10,23 +10,23 @@
  */
 function eventorganiser_create_event_taxonomies() {
 
-	if( !eventorganiser_get_option( 'prettyurl' ) ){
+	if ( ! eventorganiser_get_option( 'prettyurl' ) ) {
 		$cat_rewrite = $tag_rewrite = $venue_rewrite = false;
 
-	}else{
-		$cat_slug = trim(eventorganiser_get_option('url_cat','events/category'), "/");
+	} else {
+		$cat_slug = trim( eventorganiser_get_option( 'url_cat', 'events/category' ), '/' );
 		$cat_rewrite = array( 'slug' => $cat_slug, 'with_front' => false );
 
-		$tag_slug = trim(eventorganiser_get_option('url_tag','events/tag'), "/");
+		$tag_slug = trim( eventorganiser_get_option( 'url_tag', 'events/tag' ), '/' );
 		$tag_rewrite = array( 'slug' => $tag_slug, 'with_front' => false );
 
-		$venue_slug = trim(eventorganiser_get_option('url_venue','events/venue'), "/");
+		$venue_slug = trim( eventorganiser_get_option( 'url_venue','events/venue' ), '/' );
 		$venue_rewrite = array( 'slug' => $venue_slug, 'with_front' => false );
 	}
-	
+
 	//Register event venue taxonomy
 	$supports = eventorganiser_get_option( 'supports' );
-	if( in_array( 'event-venue', $supports ) ){
+	if ( in_array( 'event-venue', $supports ) ) {
 		$venue_labels = array(
 			'name'                       => __( 'Venues','eventorganiser' ),
 			'singular_name'              => __( 'Venue', 'eventorganiser' ),
@@ -40,42 +40,44 @@ function eventorganiser_create_event_taxonomies() {
 			'not_found'                  => __( 'No venues found', 'eventorganiser' ),
 			'add_or_remove_items'        => __( 'Add or remove venues', 'eventorganiser' ),
 			'separate_items_with_commas' => __( 'Separate venues with commas', 'eventorganiser' ),
+			'items_list_navigation'      => __( 'Event venues list navigation', 'eventorganiser' ),
+			'items_list'                 => __( 'Event venues list', 'eventorganiser' ),
+			'no_terms'                   => __( 'No Venue', 'eventorganiser' ),
 			//non-default wp labels
 			'venue_location'             => __( 'Venue Location', 'eventorganiser' ),
 			'view_all_items'             => __( 'View all venues', 'eventorganiser' ),
 			'singular_name_colon'        => __( 'Venue:', 'eventorganiser' ),
-			'no_item'                    => __( 'No Venue', 'eventorganiser' ),
-  		);
+		);
 
-  		$event_venue_args = array(
+		$event_venue_args = array(
 			'hierarchical'          => false,
 			'labels'                => $venue_labels,
 			'public'                => true,
 			'show_in_nav_menus'     => true,
 			'show_ui'               => false,//Use custom UI
+			'show_admin_column'     => false,//Custom quick edit
 			'update_count_callback' => '_update_post_term_count',
 			'query_var'             => true,
-  			'rewrite'               => $venue_rewrite,
+			'rewrite'               => $venue_rewrite,
 			'capabilities'          => array(
 				'manage_terms' => 'manage_venues',
 				'edit_terms'   => 'manage_venues',
 				'delete_terms' => 'manage_venues',
-				'assign_terms' => 'edit_events'
-  			),
-  		);
-		
-	}else{
-		$event_venue_args = false;		
+				'assign_terms' => 'edit_events',
+			),
+		);
+	} else {
+		$event_venue_args = false;
 	}
 	/**
 	 * Filters the event venue taxonomy properties.
-	 * 
-	 * Allows you to change the properties and labels of the event venue taxonomy. You can 
+	 *
+	 * Allows you to change the properties and labels of the event venue taxonomy. You can
 	 * return `false` to prevent the taxonomy from registering. All labels include those
 	 * supported by `register_taxonomy()`, as well as additional strings:
-	 * 
+	 *
 	 * * venue_location - Venue location metabox title
-	 * * view_all_items - Used in drop-down filters for venues 
+	 * * view_all_items - Used in drop-down filters for venues
 	 * * singular_name_colon - Same as singular_name but with a colon.
 	 * * no_item - Venue selection, when opting no to select a venue for the event.
 	 *
@@ -83,64 +85,67 @@ function eventorganiser_create_event_taxonomies() {
 	 *                                     Does not register the taxonomy if set to false.
 	 */
 	$event_venue_args = apply_filters( 'eventorganiser_register_taxonomy_event-venue', $event_venue_args );
-	if( $event_venue_args ){
-		register_taxonomy( 'event-venue',array('event'), $event_venue_args );	
+	if ( $event_venue_args ) {
+		register_taxonomy( 'event-venue',array( 'event' ), $event_venue_args );
 	}
-	
+
 	//Register event category taxonomy
 	$category_labels = array(
-		'name'              => __( 'Event Categories', 'eventorganiser' ),
-		'singular_name'     => _x( 'Category', 'taxonomy singular name' ),
-		'search_items'      => __( 'Search Categories' ),
-		'all_items'         => __( 'All Categories' ),
-		'parent_item'       => __( 'Parent Category' ),
-		'parent_item_colon' => __( 'Parent Category:' ),
-		'edit_item'         => __( 'Edit Category' ), 
-		'update_item'       => __( 'Update Category' ),
-		'add_new_item'      => __( 'Add New Category' ),
-		'new_item_name'     => __( 'New Category Name' ),
-		'not_found'         => __( 'No categories found' ),
-		'menu_name'         => __( 'Categories' ),
+		'name'                  => __( 'Categories', 'eventorganiser' ),
+		'singular_name'         => _x( 'Category', 'taxonomy singular name' ),
+		'search_items'          => __( 'Search Categories' ),
+		'all_items'             => __( 'All Categories' ),
+		'parent_item'           => __( 'Parent Category' ),
+		'parent_item_colon'     => __( 'Parent Category:' ),
+		'edit_item'             => __( 'Edit Category' ),
+		'update_item'           => __( 'Update Category' ),
+		'add_new_item'          => __( 'Add New Category' ),
+		'new_item_name'         => __( 'New Category Name' ),
+		'not_found'             => __( 'No categories found' ),
+		'menu_name'             => __( 'Categories' ),
+		'items_list_navigation' => __( 'Event categories list navigation', 'eventorganiser' ),
+		'items_list'            => __( 'Event categories list', 'eventorganiser' ),
 		//Non-wp default labels
-		'view_all_items'             => __( 'View all categories', 'eventorganiser' ),
-  	); 	
-  	
-  	$event_category_args = array(
+		'view_all_items'        => __( 'View all categories', 'eventorganiser' ),
+	);
+
+	$event_category_args = array(
 		'hierarchical'          => true,
 		'labels'                => $category_labels,
 		'show_ui'               => true,
-    	'update_count_callback' => '_update_post_term_count',
+		'show_admin_column'     => true,
+		'update_count_callback' => '_update_post_term_count',
 		'query_var'             => true,
-  		'rewrite'               => $cat_rewrite,
-  		'public'                => true,
+		'rewrite'               => $cat_rewrite,
+		'public'                => true,
 		'capabilities' => array(
 			'manage_terms' => 'manage_event_categories',
 			'edit_terms'   => 'manage_event_categories',
 			'delete_terms' => 'manage_event_categories',
-			'assign_terms' => 'edit_events'
-  		),
-  	);
-  	
-  	/**
+			'assign_terms' => 'edit_events',
+		),
+	);
+
+	/**
 	 * Filters the event category taxonomy properties.
-	 * 
-	 * Allows you to change the properties and labels of the event venue taxonomy. You can 
-	 * return `false` to prevent the taxonomy from registering. All labels include those
+	 *
+	 * Allows you to change the properties and labels of the event category taxonomy. You can
+	 *  return `false` to prevent the taxonomy from registering. All labels include those
 	 * supported by `register_taxonomy()`, as well as additional strings:
-	 * 
-	 * * view_all_items - Used in drop-down filters for venues 
+	 *
+	 * * view_all_items - Used in drop-down filters for categories
 	 *
 	 * @param array|bool $event_category_args Settings passed to `register_taxonomy()` in the third argument.
 	 *                                        Does not register the taxonomy if set to false.
 	 */
 	$event_category_args = apply_filters( 'eventorganiser_register_taxonomy_event-category', $event_category_args );
-	
-	if( $event_category_args ){
-		register_taxonomy( 'event-category',array('event'), $event_category_args );	
+
+	if ( $event_category_args ) {
+		register_taxonomy( 'event-category', array( 'event' ), $event_category_args );
 	}
 
 	//Register event tag taxonomy
-	if( eventorganiser_get_option('eventtag') ){
+	if ( eventorganiser_get_option( 'eventtag' ) ) {
 
 		$tag_labels = array(
 			'name'                       => __( 'Event Tags', 'eventorganiser' ),
@@ -157,48 +162,50 @@ function eventorganiser_create_event_taxonomies() {
 			'menu_name'                  => __( 'Tags' ),
 			'add_or_remove_items'        => __( 'Add or remove tags' ),
 			'separate_items_with_commas' => __( 'Separate tags with commas' ),
+			'items_list_navigation'      => __( 'Event tags list navigation', 'eventorganiser' ),
+			'items_list'                 => __( 'Event tags list', 'eventorganiser' ),
 			//Non-wp default labels
 			'view_all_items'             => __( 'View all tags', 'eventorganiser' ),
-  		); 	
+		);
 
-  		$event_tag_args = array(
+		$event_tag_args = array(
 			'hierarchical'          => false,
 			'labels'                => $tag_labels,
 			'show_ui'               => true,
 			'update_count_callback' => '_update_post_term_count',
 			'query_var'             => true,
-  			'public'                => true,
+			'public'                => true,
 			'rewrite'               => $tag_rewrite,
 			'capabilities' => array(
 				'manage_terms' => 'manage_event_categories',
 				'edit_terms'   => 'manage_event_categories',
 				'delete_terms' => 'manage_event_categories',
-				'assign_terms' =>'edit_events'
-  			),
-  		);
-  		
-	}else{
+				'assign_terms' => 'edit_events',
+			),
+		);
+
+	} else {
 		$event_tag_args = false;
 	}
-		
+
 	/**
 	 * Filters the event tag taxonomy properties.
-	 * 
-	 * Allows you to change the properties and labels of the event venue taxonomy. You can 
-	 * return `false` to prevent the taxonomy from registering. All labels include those
+	 *
+	 * Allows you to change the properties and labels of the event tag taxonomy. You can
+	 *  return `false` to prevent the taxonomy from registering. All labels include those
 	 * supported by `register_taxonomy()`, as well as additional strings:
-	 * 
-	 * * view_all_items - Used in drop-down filters for venues 
+	 *
+	 * * view_all_items - Used in drop-down filters for tags
 	 *
 	 * @param array|bool $event_tag_args Settings passed to `register_taxonomy()` in the third argument.
 	 *                                   Does not register the taxonomy if set to false.
 	 */
 	$event_tag_args = apply_filters( 'eventorganiser_register_taxonomy_event-tag', $event_tag_args );
-	
-	if( $event_tag_args ){
-		register_taxonomy( 'event-tag',array( 'event' ), $event_tag_args );	
+
+	if ( $event_tag_args ) {
+		register_taxonomy( 'event-tag',array( 'event' ), $event_tag_args );
 	}
-  		
+
 }
 add_action( 'init', 'eventorganiser_create_event_taxonomies', 1 );
 
@@ -214,44 +221,48 @@ add_action( 'init', 'eventorganiser_create_event_taxonomies', 1 );
 function eventorganiser_cpt_register() {
 
 	$labels = array(
-		'name'               => __( 'Events', 'eventorganiser' ),
-		'singular_name'      => __( 'Event', 'eventorganiser' ),
-		'add_new'            => _x( 'Add New', 'post', 'eventorganiser' ),
-		'add_new_item'       => __( 'Add New Event', 'eventorganiser' ),
-		'edit_item'          => __( 'Edit Event', 'eventorganiser' ),
-		'new_item'           => __( 'New Event', 'eventorganiser' ),
-		'all_items'          => __( 'All events', 'eventorganiser' ),
-		'view_item'          => __( 'View Event', 'eventorganiser' ),
-		'search_items'       => __( 'Search events', 'eventorganiser' ),
-		'not_found'          => __( 'No events found', 'eventorganiser' ),
-		'not_found_in_trash' => __( 'No events found in Trash', 'eventorganiser' ),
-		'parent_item_colon'  => '',
-		'menu_name'          => __( 'Events', 'eventorganiser' ),
+		'name'                  => __( 'Events', 'eventorganiser' ),
+		'singular_name'         => __( 'Event', 'eventorganiser' ),
+		'add_new'               => _x( 'Add New', 'post', 'eventorganiser' ),
+		'add_new_item'          => __( 'Add New Event', 'eventorganiser' ),
+		'edit_item'             => __( 'Edit Event', 'eventorganiser' ),
+		'new_item'              => __( 'New Event', 'eventorganiser' ),
+		'all_items'             => __( 'All events', 'eventorganiser' ),
+		'view_item'             => __( 'View Event', 'eventorganiser' ),
+		'search_items'          => __( 'Search events', 'eventorganiser' ),
+		'not_found'             => __( 'No events found', 'eventorganiser' ),
+		'not_found_in_trash'    => __( 'No events found in Trash', 'eventorganiser' ),
+		'parent_item_colon'     => '',
+		'menu_name'             => __( 'Events', 'eventorganiser' ),
+		'filter_items_list'     => __( 'Filter events list', 'eventorganiser' ),
+		'items_list_navigation' => __( 'Events list navigation', 'eventorganiser' ),
+		'items_list'            => __( 'Events list', 'eventorganiser' ),
+		'archives'              => __( 'Event Archives', 'eventorganiser' ),
+		'insert_into_item'      => __( 'Insert into event', 'eventorganiser' ),
+		'uploaded_to_this_item' => __( 'Uploaded to this event', 'eventorganiser' ),		
 	);
 
 	$exclude_from_search = ( 0 == eventorganiser_get_option( 'excludefromsearch' ) ) ? false : true;
 
-	if( !eventorganiser_get_option( 'prettyurl' ) ){
+	if ( ! eventorganiser_get_option( 'prettyurl' ) ) {
 		$event_rewrite = false;
 		$events_slug = true;
-	}else{
+	} else {
 		$event_slug = trim( eventorganiser_get_option( 'url_event', 'events/event' ), '/' );
 		$events_slug = trim( eventorganiser_get_option( 'url_events', 'events/event' ), '/' );
 		$on = trim( eventorganiser_get_option( 'url_on', 'on' ), '/' );
 		$event_rewrite = array( 'slug' => $event_slug, 'with_front' => false, 'feeds' => true, 'pages' => true );
 
-		/* Workaround for https://core.trac.wordpress.org/ticket/19871 */
-		global $wp_rewrite;  
-		$wp_rewrite->add_rewrite_tag( '%event_ondate%', '([0-9]{4}(?:/[0-9]{2}(?:/[0-9]{2})?)?)','post_type=event&ondate=' ); 
+		add_rewrite_tag( '%event_ondate%', '([0-9]{4}(?:/[0-9]{2}(?:/[0-9]{2})?)?)','post_type=event&ondate=' );
 		add_permastruct( 'event_archive', $events_slug.'/'.$on.'/%event_ondate%', array( 'with_front' => false ) );
 	}
 
 	/**
 	 * Filters the menu position.
-	 * 
+	 *
 	 * This allows you to change where "Events" appears in the admin menu.
-	 * 
-	 * @link https://codex.wordpress.org/Function_Reference/register_post_type register_post_type codex. 
+	 *
+	 * @link https://codex.wordpress.org/Function_Reference/register_post_type register_post_type codex.
 	 * @param int $menu_position Menu position. Defaults to 5.
 	 */
 	$menu_position = apply_filters( 'eventorganiser_menu_position', 5 );
@@ -260,8 +271,8 @@ function eventorganiser_cpt_register() {
 		'public'              => true,
 		'publicly_queryable'  => true,
 		'exclude_from_search' => $exclude_from_search,
-		'show_ui'             => true, 
-		'show_in_menu'        => true, 
+		'show_ui'             => true,
+		'show_in_menu'        => true,
 		'query_var'           => true,
 		'capability_type'     => 'event',
 		'rewrite'             => $event_rewrite,
@@ -276,16 +287,16 @@ function eventorganiser_cpt_register() {
 			'delete_post'         => 'delete_event',
 			'read_post'           => 'read_event',
 		),
-		'has_archive'   => $events_slug, 
+		'has_archive'   => $events_slug,
 		'hierarchical'  => false,
-		'menu_icon'     => ( defined( 'MP6' ) && MP6 ? false : EVENT_ORGANISER_URL.'css/images/eoicon-16.png' ),
+		'menu_icon'     => 'dashicons-calendar',
 		'menu_position' => $menu_position,
 		'supports'      => eventorganiser_get_option( 'supports' ),
 	);
 
 	/**
 	 * Filters the settings used in `register_post_type()` for event post type.
-	 * 
+	 *
 	 * @param array $args Settings passed to `register_post_type()` in the second argument.
 	 */
 	$args = apply_filters( 'eventorganiser_event_properties', $args );
@@ -305,26 +316,37 @@ add_action( 'init', 'eventorganiser_cpt_register' );
 function eventorganiser_messages( $messages ) {
 	global $post, $post_ID;
 
+	$permalink = get_permalink( $post_ID );
+
+	//Inherit post messages
 	$messages['event'] = array(
-    		0 => '', // Unused. Messages start at index 1.
-		1 => sprintf( __('Event updated. <a href="%s">View event</a>','eventorganiser'), esc_url( get_permalink($post_ID) ) ),
-		2 => __('Custom field updated.'),
-		3 => __('Custom field deleted.'),
-		4 => __('Event updated.','eventorganiser'),
+		1 => sprintf( __( 'Event updated. <a href="%s">View event</a>', 'eventorganiser' ), esc_url( $permalink ) ),
+		4 => __( 'Event updated.', 'eventorganiser' ),
 		/* translators: %s: date and time of the revision */
-		5 => isset($_GET['revision']) ? sprintf( __('Event restored to revision from %s','eventorganiser'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-		6 => sprintf( __('Event published. <a href="%s">View event</a>','eventorganiser'), esc_url( get_permalink($post_ID) ) ),
-		7 => __('Event saved.'),
-		8 => sprintf( __('Event submitted. <a target="_blank" href="%s">Preview event</a>','eventorganiser'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-		9 => sprintf( __('Event scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview event</a>','eventorganiser'),
-		 // translators: Publish box date format, see https://php.net/date
-      		date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-		10 => sprintf( __('Event draft updated. <a target="_blank" href="%s">Preview event</a>','eventorganiser'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-		20 => __('This event has been broken from a recurring event.','eventorganiser')
-  	);
+		5 => isset( $_GET['revision'] ) ? sprintf( __( 'Event restored to revision from %s', 'eventorganiser' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+		6 => sprintf( __( 'Event published. <a href="%s">View event</a>', 'eventorganiser' ), esc_url( $permalink ) ),
+		7 => __( 'Event saved.', 'eventorganiser' ),
+		8 => sprintf(
+			__( 'Event submitted. <a target="_blank" href="%s">Preview event</a>', 'eventorganiser' ),
+			esc_url( add_query_arg( 'preview', 'true', $permalink ) )
+		),
+		9 => sprintf(
+			__( 'Event scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview event</a>', 'eventorganiser' ),
+			// translators: Publish box date format, see https://php.net/date
+			date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( $permalink )
+		),
+		10 => sprintf(
+			__( 'Event draft updated. <a target="_blank" href="%s">Preview event</a>', 'eventorganiser' ),
+			esc_url( add_query_arg( 'preview', 'true', $permalink ) )
+		),
+		20 => __( 'This event has been broken from a recurring event.', 'eventorganiser' ),
+	) + $messages['post'];
+
+	ksort( $messages['event'] );
+
 	return $messages;
 }
-add_filter('post_updated_messages', 'eventorganiser_messages');
+add_filter( 'post_updated_messages', 'eventorganiser_messages' );
 
 
 /**
@@ -379,28 +401,8 @@ function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 }
 add_filter( 'map_meta_cap', 'eventorganiser_event_meta_cap', 10, 4 );
 
-
 /**
- * Adds the Event Organiser icon to the page head
- * Hooked onto admin_head
- *
- * @ignore
- * @access private
- * @since 1.0
- */
-function eventorganiser_plugin_header_image() {
-        global $post_type;
-
-	if ((isset($_GET['post_type']) && $_GET['post_type'] == 'event') || ($post_type == 'event')) : ?>
-	<style>
-	#icon-edit { background:transparent url('<?php echo EVENT_ORGANISER_URL.'/css/images/eoicon-32.png';?>') no-repeat; }		
-        </style>
-	<?php endif; 
-}
-add_action('admin_head', 'eventorganiser_plugin_header_image');
-
-/**
- * With appropriate settings we add a menu item of 'post_type_archive' type. 
+ * With appropriate settings we add a menu item of 'post_type_archive' type.
  * WP doesn't understand this so we set the url ourself - hooking just before its saved to db.
  * Hooked onto wp_update_nav_menu_item
  *
@@ -504,32 +506,32 @@ add_filter( 'wp_list_pages', 'eventorganiser_menu_link',10,1 );
  */
 function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) { 
 
-	//The add_help_tab function for screen was introduced in WordPress 3.3. Add it only to event pages.
-	if( ! method_exists($screen, 'add_help_tab') || ! in_array($screen_id, array('event','edit-event','event_page_venues','event_page_calendar')) )
+	if (  ! in_array( $screen_id, array( 'event', 'edit-event', 'event_page_venues', 'event_page_calendar' ) ) ) {
 		return $contextual_help;
+	}
 	
 	switch($screen_id):
 		//Add help for event editing / creating page
-		case ('event'):
+		case 'event':
 			    $screen->add_help_tab( array(
 			        'id'      => 'creating-events', 
 			        'title'   => __('Creating events','eventorganiser'),
         			'content' => '<p>' . __('Creating events:','eventorganiser') . '</p>'.
 			'<ul>' .
-				'<li>' . __('The start date is the date the event starts. If the event is a reoccuring event, this is the start date of the first occurrence.','eventorganiser') . '</li>' .
-				'<li>' . __('The end date is the date the event finishes. If the event is a reoccuring event, this is the end date of the first occurrence.','eventorganiser') . '</li>' .
+				'<li>' . __('The start date is the date the event starts. If the event is a recurring event, this is the start date of the first occurrence.','eventorganiser') . '</li>' .
+				'<li>' . __('The end date is the date the event finishes. If the event is a recurring event, this is the end date of the first occurrence.','eventorganiser') . '</li>' .
 				'<li>' . __('All dates and times must be entered in the specified format. This format can changed in the settings page.','eventorganiser') . '</li>' .
 			'</ul>'
 				));
 			    $screen->add_help_tab( array(
 			        'id'      => 'repeating-events',
 			        'title'   => __('Repeating events','eventorganiser'),
-        			'content' => '<p>' . __('To repeat an event according to some regular pattern, use the reoccurrence dropdown menu to select how the event is to repeat. Further options then appear, ','eventorganiser') . '</p>' .
+        			'content' => '<p>' . __('To repeat an event according to some regular pattern, use the recurrence dropdown menu to select how the event is to repeat. Further options then appear, ','eventorganiser') . '</p>' .
 			'<ul>' .
 				'<li>' . __('Specify how regularly the event should repeat (default 1)','eventorganiser') . '</li>' .
-				'<li>' . __('Choose the reoccurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date.','eventorganiser') . '</li>' .
-				'<li>' . __('If monthly reoccurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) ','eventorganiser') . '</li>' .
-				'<li>' . __('If weekly reoccurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used','eventorganiser') . '</li>' .
+				'<li>' . __('Choose the recurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date.','eventorganiser') . '</li>' .
+				'<li>' . __('If monthly recurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) ','eventorganiser') . '</li>' .
+				'<li>' . __('If weekly recurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used','eventorganiser') . '</li>' .
 			'</ul>'
 				));
 			    $screen->add_help_tab( array(
@@ -544,16 +546,16 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 			break;
 
 		//Add help for event admin table page
-		case ('edit-event'):
+		case 'edit-event':
 
 			$screen->add_help_tab( array(
 				'id'=>'overview',
 			        'title'   => __('Overview'),
-				'content'=>'<p>' . __('This is the list of all saved events. Note that <strong> reoccurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event.','eventorganiser') . '</p>' ));
+				'content'=>'<p>' . __('This is the list of all saved events. Note that <strong> recurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event.','eventorganiser') . '</p>' ));
 			break;
 
 		//Add help for venue admin table page
-		case ('event_page_venues'):
+		case 'event_page_venues':
 			$contextual_help = 
 			'<p>' . __("Hovering over a row in the venues list will display action links that allow you to manage that venue. You can perform the following actions:",'eventorganiser') . '</p>' .
 			'<ul>' .
@@ -564,7 +566,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 			break;
 
 		//Add help for calendar view
-		case ('event_page_calendar'):
+		case 'event_page_calendar':
 			$screen->add_help_tab( array(
 				'id'=>'overview',
 				'title'=>__('Overview'),
@@ -697,17 +699,17 @@ add_action( 'event-category_edit_form_fields', 'eventorganiser_edit_tax_meta', 1
  * @access private
  * @since 1.3
  */
-function eventorganiser_tax_meta_form($colour){
+function eventorganiser_tax_meta_form( $colour ) {
 	?>
-		<th>
-			<label for="tag-description"><?php _e('Color','eventorganiser')?></label>
-		</th>
-		<td> 
-			<input type="text" style="width:100px" name="eo_term_meta[colour]" class="color colour-input" id="color" value="<?php echo $colour; ?>" />
-			<a id="link-color-example" class="color eo-event-category-color-sample hide-if-no-js"></a>
-   			 <div style="z-index: 100; background: none repeat scroll 0% 0% rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); position: absolute;display: none;" id="colorpicker"></div>
-			<p><?php _e('Assign the category a colour.','eventorganiser')?></p>
-		</td>
+	<th>
+		<label for="event-category-color"><?php esc_html_e( 'Color', 'eventorganiser' )?></label>
+	</th>
+	<td> 
+		<input type="text" style="width:100px" name="eo_term_meta[colour]" class="color colour-input" id="event-category-color" value="<?php echo $colour; ?>" aria-describedby="event-category-color-desc" />
+		<a id="link-color-example" class="color eo-event-category-color-sample hide-if-no-js"></a>
+   		<div style="z-index: 100; background: none repeat scroll 0% 0% rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); position: absolute;display: none;" id="colorpicker"></div>
+		<p id="event-category-color-desc"><?php esc_html_e( 'Assign the category a colour.', 'eventorganiser' ); ?></p>
+	</td>
 	<script>
 var farbtastic;(function($){var pickColor=function(a){farbtastic.setColor(a);$('.colour-input').val(a);$('a.color').css('background-color',a)};$(document).ready(function(){farbtastic=$.farbtastic('#colorpicker',pickColor);pickColor($('.colour-input').val());$('.color').click(function(e){e.preventDefault();if($('#colorpicker').is(":visible")){$('#colorpicker').hide()}else{$('#colorpicker').show()}});$('.colour-input').keyup(function(){var a=$('.colour-input').val(),b=a;a=a.replace(/[^a-fA-F0-9]/,'');if('#'+a!==b)$('.colour-input').val(a);if(a.length===3||a.length===6)pickColor('#'+a)});$(document).mousedown(function(){$('#colorpicker').hide()})})})(jQuery);
 	</script>	
@@ -804,34 +806,37 @@ add_filter('get_the_terms','eventorganiser_get_terms_meta');
 /**
  * Retrieve a category term's colour.
  *
+ * This function has only every supported in the 'color' key, and will be removed
+ * when WordPress core term meta is used in place of storing category data in the options table.
+ *
+ * You should not use this function, but intead use {@see eo_get_category_color()}
+ *
+ * @deprecated 3.0.0 Use eo_get_category_color()
  * @since 1.3
  * @param term|slug $term The event category term object, or slug. Can be empty to get colour of term being viewed.
  * @return string The event category colour in Hex format
  */
-function eo_get_category_meta($term='',$key=''){
-	if( $key != 'color' )
+function eo_get_category_meta( $term = '', $key = '' ) {
+
+	if ( 'color' != $key ) {
 		return false;
-
-	if (is_object($term)){
-		if(isset($term->color))
-			return $term->color;
-		else
-			$term = $term->slug;
 	}
 
-	if( !empty($term) ){
-		$term = get_term_by('slug', $term,'event-category');
-		if( isset($term->color))
-			return $term->color;
-
-	}elseif( is_tax('event-category') ){
+	if ( is_object( $term ) && ! isset( $term->color ) ) {
+		$term = get_term( $term->term_id, 'event-category' );
+	} else if ( ! empty( $term ) && is_int( $term ) ) {
+		$term = get_term_by( 'id', $term, 'event-category' );
+	} elseif ( ! empty( $term ) && is_string( $term ) ) {
+		$term = get_term_by( 'slug', $term, 'event-category' );
+	} elseif ( empty( $term ) && is_tax( 'event-category' ) ) {
 		$term = get_queried_object();
-		$term = $term->term_id;
-		$term = get_term( $term, 'event-category' );
-		if( isset($term->color))
-			return $term->color;
+		$term = get_term( $term->term_id, 'event-category' );
 	}
-	
+
+	if ( isset( $term->color ) ) {
+		return $term->color;
+	}
+
 	return false;
 }
 
@@ -851,26 +856,10 @@ add_action( 'plugins_loaded', 'eventorganiser_wpdb_fix', 1 );
 add_action( 'switch_blog', 'eventorganiser_wpdb_fix' );
 
 /**
- * Updates venue meta cache when an event's venue is retrieved..
- * Hooked onto wp_get_object_terms
- *
- * @ignore
- * @access private
- * @since 1.5
- */
-function _eventorganiser_get_event_venue($terms, $post_ids,$taxonomies,$args){
-	//Passes taxonomies as a string inside quotes...
-	$taxonomies = explode(',',trim($taxonomies,"\x22\x27"));
-	return eventorganiser_update_venue_meta_cache( $terms, $taxonomies);
-}
-add_filter('wp_get_object_terms','_eventorganiser_get_event_venue',10,4);
-
-
-/**
  * Updates venue meta cache when event venues are retrieved.
  *
  * For backwards compatibility it adds the venue details to the taxonomy terms.
- * Hooked onto get_terms and get_event-venue
+ * Hooked onto get_terms
  *
  * @ignore
  * @access private
@@ -880,59 +869,38 @@ add_filter('wp_get_object_terms','_eventorganiser_get_event_venue',10,4);
  * @param string $tax Should be (an array containing) 'event-venue'.
  * @param array  Array of event-venue terms,
  */
-function eventorganiser_update_venue_meta_cache( $terms, $tax){
+function eventorganiser_update_venue_meta_cache( $terms, $tax, $args ) {
 
-		if( is_array($tax) && !in_array('event-venue',$tax) ){
-			return $terms;
-		}
-		if( !is_array($tax) && $tax != 'event-venue'){
-			return $terms;
-		}
-
-		$single = false;
-		if( ! is_array($terms) ){
-			$single = true;
-			$terms = array( $terms );
-		}
-
-		if( empty($terms) )
-		       return $terms;
-
-		//Check if its array of terms or term IDs
-		$first_element = reset( $terms );
-		if ( is_object( $first_element ) ){
-			$term_ids = wp_list_pluck( $terms, 'term_id' );
-		} else {
-			$term_ids = $terms;
-		}
-
-   		update_meta_cache('eo_venue',$term_ids);
-
-		//Backwards compatible. Depreciated - use the functions, not properties.
-		foreach ($terms as $term){
-			if( !is_object($term) )
-				continue;
-			$term_id = (int) $term->term_id;
-
-			if( !isset($term->venue_address) ){
-				$address = eo_get_venue_address($term_id);
-				foreach( $address as $key => $value )
-					$term->{'venue_'.$key} = $value;
-			}
-
-			if( !isset($term->venue_lat) || !isset($term->venue_lng) ){
-				$term->venue_lat =  number_format(floatval(eo_get_venue_lat($term_id)), 6);
-				$term->venue_lng =  number_format(floatval(eo_get_venue_lng($term_id)), 6);
-			}
-
-		}
-		
-		if( $single ) return $terms[0];
-
+	if ( empty($terms) ) {
 		return $terms;
-	} 
-add_filter('get_terms','eventorganiser_update_venue_meta_cache',10,2);
-add_filter('get_event-venue','eventorganiser_update_venue_meta_cache',10,2);
+	}
+
+	if ( is_array( $tax ) && ! in_array( 'event-venue', $tax ) ) {
+		return $terms;
+	}
+
+	if ( ! is_array( $tax ) && 'event-venue' != $tax ) {
+		return $terms;
+	}
+
+	//Cast as integer as https://core.trac.wordpress.org/ticket/17646 is only for wp_get_object_terms()
+	$term_ids = array();
+	foreach ( $terms as $key => $term ) {
+		if ( is_object( $term ) ) {
+			$terms[$key] = sanitize_term( $term, $term->taxonomy, 'raw' );
+			$term_ids[] = $terms[$key]->term_id;
+		} else {
+			$term_ids[] = (int) $term;
+		}
+	}
+
+	if ( ! empty( $args['eo_update_venue_cache'] ) ) {
+		update_meta_cache( 'eo_venue', $term_ids );
+	}
+
+	return $terms;
+}
+add_filter( 'get_terms', 'eventorganiser_update_venue_meta_cache', 10, 3 );
 
 
 
@@ -998,50 +966,6 @@ function eventorganiser_edit_venue_link($link, $term_id, $taxonomy){
 }
 add_filter('get_edit_term_link','eventorganiser_edit_venue_link',10,3);
 
-
-/*
- * A walker class to use that extends wp_dropdown_categories and allows it to use the term's slug as a value rather than ID.
-*
-* See https://core.trac.wordpress.org/ticket/13258
-*
-* Usage, as normal:
-* wp_dropdown_categories($args);
-*
-* But specify the custom walker class, and (optionally) a 'id' or 'slug' for the 'value' parameter:
-* $args=array('walker'=> new EO_Walker_TaxonomyDropdown(), 'value'=>'slug', .... );
-* wp_dropdown_categories($args);
-*
-* If the 'value' parameter is not set it will use term ID for categories, and the term's slug for other taxonomies in the value attribute of the term's <option>.
-*/
-
-class EO_Walker_TaxonomyDropdown extends Walker_CategoryDropdown{
-
-	function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
-		$pad = str_repeat('&nbsp;', $depth * 3);
-		/**
-		 * @ignore
-		 */
-		$cat_name = apply_filters('list_cats', $category->name, $category);
-
-		if( !isset($args['value']) ){
-			$args['value'] = ( $category->taxonomy != 'category' ? 'slug' : 'id' );
-		}
-
-		$value = ($args['value']=='slug' ? $category->slug : $category->term_id );
-
-		$output .= "\t<option class=\"level-$depth\" value=\"".$value."\"";
-		if ( $value === (string) $args['selected'] ){
-			$output .= ' selected="selected"';
-		}
-		$output .= '>';
-		$output .= $pad.$cat_name;
-		if ( $args['show_count'] )
-			$output .= '&nbsp;&nbsp;('. $category->count .')';
-
-		$output .= "</option>\n";
-	}
-
-}
 
 /**
  * For this to work you need to add the following to the custom field exceptions on the ThreeWP settings page:
@@ -1272,5 +1196,3 @@ function _eventorganiser_handle_split_shared_terms( $term_id, $new_term_id, $ter
 
 }
 add_action( 'split_shared_term', '_eventorganiser_handle_split_shared_terms', 10, 4 );
-
-?>

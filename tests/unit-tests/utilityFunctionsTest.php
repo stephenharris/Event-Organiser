@@ -3,6 +3,45 @@
 class utilityFunctionsTest extends WP_UnitTestCase
 {
 	
+	public function testPHPToMoment()
+	{
+		//Days
+		$this->assertEquals( "DD", eo_php_to_moment( "d" ) );
+		$this->assertEquals( "ddd", eo_php_to_moment( "D" ) );
+		$this->assertEquals( "D", eo_php_to_moment( "j" ) );
+		$this->assertEquals( "Do", eo_php_to_moment( "jS" ) );
+				
+		//Week
+		$this->assertEquals( "w", eo_php_to_moment( "W" ) );
+		
+		//Month
+		$this->assertEquals( "MMMM", eo_php_to_moment( "F" ) );
+		$this->assertEquals( "MM", eo_php_to_moment( "m" ) );
+		$this->assertEquals( "MMM", eo_php_to_moment( "M" ) );
+		$this->assertEquals( "M", eo_php_to_moment( "n" ) );
+		
+		//Year
+		$this->assertEquals( "YYYY", eo_php_to_moment( "Y" ) );
+		$this->assertEquals( "YY", eo_php_to_moment( "y" ) );
+		$this->assertEquals( "gggg", eo_php_to_moment( "o" ) );
+		
+		//Time
+		$this->assertEquals( "a", eo_php_to_moment( "a" ) );
+		$this->assertEquals( "A", eo_php_to_moment( "A" ) );
+		$this->assertEquals( "h", eo_php_to_moment( "g" ) );
+		$this->assertEquals( "H", eo_php_to_moment( "G" ) );
+		$this->assertEquals( "hh", eo_php_to_moment( "h" ) );
+		$this->assertEquals( "HH", eo_php_to_moment( "H" ) );
+		$this->assertEquals( "mm", eo_php_to_moment( "i" ) );
+		$this->assertEquals( "ss", eo_php_to_moment( "s" ) );
+		
+		$this->assertEquals( "YYYY-MM-DD[T]HH:mm:ssZ", eo_php_to_moment( "c" ) );
+		
+		//Escaping characters
+		$this->assertEquals( "[d][a][y]", eo_php_to_moment( "\d\a\y" ) );
+
+	}
+	
 	public function testPHP2Xdate()
 	{
 
@@ -319,28 +358,34 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		
 	}
 	
-	/**
-	 * TODO eo_get_blog_timezone(): Why does +10 give Asia/Choibalsan timezone.
-	public function testEoGetBlogTimezone()
+	public function testEoGetBlogTimezoneOffset()
 	{
-		$tz = ini_get('date.timezone');
-		$original_tz = get_option( 'timezone_string' );
+		
+		$original_tz     = get_option( 'timezone_string' );
 		$original_offset = get_option( 'gmt_offset' );
 		
 		update_option( 'timezone_string', '' );
-		update_option( 'gmt_offset', 10 );
+		update_option( 'gmt_offset', '10' );
 		$tz = eo_get_blog_timezone();
-		var_dump( $tz );
-		$now = new DateTime( 'now', eo_get_blog_timezone() );
-		var_dump($now->format('Y-m-d H:i:s'));
+		$this->assertEquals( 'Etc/GMT-10', $tz->getName() );
 		
 		update_option( 'timezone_string', $original_tz );
-		update_option( 'gmt_offset', $original_offset );
-		
-		$this->assertTrue(false);
-		wp_die('xx');
-		
+		update_option( 'gmt_offset', $original_offset );		
 	}
-		 */
+
+	public function testEoGetBlogTimezonePartialOffset()
+	{
+	
+		$original_tz     = get_option( 'timezone_string' );
+		$original_offset = get_option( 'gmt_offset' );
+	
+		update_option( 'gmt_offset', '10.5' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+		$tz = eo_get_blog_timezone();
+		$this->assertEquals( 'UTC', $tz->getName() );
+	
+		update_option( 'timezone_string', $original_tz );
+		update_option( 'gmt_offset', $original_offset );
+	}
 }
 

@@ -11,7 +11,7 @@
 *
 * The event data array can contain
 *
-* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the reoccurrence pattern
+* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the recurrence pattern
 * * `schedule_meta` =>
 *   * For monthly schedules,
 *      * (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
@@ -19,7 +19,7 @@
 *   * For weekly schedules,
 *      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
 *      * Can be left blank to repeat weekly from the start date.
-* * `frequency` => (int) positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
+* * `frequency` => (int) positive integer, sets frequency of recurrence (every 2 days, or every 3 days etc)
 * * `all_day` => 1 if its an all day event, 0 if not
 * * `start` =>  start date (of first occurrence)  as a datetime object
 * * `end` => end date (of first occurrence)  as a datetime object
@@ -139,7 +139,7 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 *
 * The event data array can contain
 *
-* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the reoccurrence pattern
+* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the recurrence pattern
 * * `schedule_meta` =>
 *   * For monthly schedules,
 *      * (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
@@ -147,7 +147,7 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 *   * For weekly schedules,
 *      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
 *      * Can be left blank to repeat weekly from the start date.
-* * `frequency` => (int) positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
+* * `frequency` => (int) positive integer, sets frequency of recurrence (every 2 days, or every 3 days etc)
 * * `all_day` => 1 if its an all day event, 0 if not
 * * `start` =>  start date (of first occurrence)  as a datetime object
 * * `end` => end date (of first occurrence)  as a datetime object
@@ -432,9 +432,10 @@ function _eventorganiser_insert_occurrences( $post_id, $event_data ){
 		
 	//Set occurrence cache
 	wp_cache_set( 'eventorganiser_occurrences_'.$post_id, $occurrence_cache );
+	wp_cache_set( 'eventorganiser_all_occurrences_'.$post_id, $occurrence_cache );
 
 	unset( $event_data['occurrences'] );
-	$event_data['_occurrences'] = $occurrence_array;
+	//$event_data['_occurrences'] = $occurrence_array;
 		
 	if( !empty($include) ){
 		$event_data['include'] = array_map('eo_format_datetime', $include, array_fill(0, count($include), 'Y-m-d H:i:s') );
@@ -467,15 +468,15 @@ function _eventorganiser_insert_occurrences( $post_id, $event_data ){
 *
 *  Event details include
 *
-* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the reoccurrence pattern
+* * `schedule` => (custom | once | daily | weekly | monthly | yearly)  -- specifies the recurrence pattern
 * * `schedule_meta` =>
 *   * For monthly schedules,
 *      * (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
 *      * (string) BYDAY=ND. N= 1|2|3|4|-1 (first, second, third, fourth, last). D is day of week SU|MO|TU|WE|TH|FR|SA. E.g. BYDAY=2TU (repeat on second tuesday)
 *   * For weekly schedules,
 *      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
-* * `occurs_by` - For use with monthly schedules: how the event reoccurs: BYDAY or BYMONTHDAY
-* * `frequency` => (int) positive integer, sets frequency of reoccurrence (every 2 days, or every 3 days etc)
+* * `occurs_by` - For use with monthly schedules: how the event recurs: BYDAY or BYMONTHDAY
+* * `frequency` => (int) positive integer, sets frequency of recurrence (every 2 days, or every 3 days etc)
 * * `all_day` => 1 if its an all day event, 0 if not
 * * `start` =>  start date (of first occurrence)  as a datetime object
 * * `end` => end date (of first occurrence)  as a datetime object
@@ -543,10 +544,6 @@ function eo_get_event_schedule( $post_id = 0 ){
 	$event_details['schedule_start']  = clone $event_details['start'];
 	$event_details['schedule_last']   = new DateTime( get_post_meta( $post_id,'_eventorganiser_schedule_last_start', true ), $tz );
 	$event_details['schedule_finish'] = new DateTime( get_post_meta( $post_id,'_eventorganiser_schedule_last_finish', true ), $tz );
-
-	if ( !empty($event_details['_occurrences'] ) ) {
-		$event_details['_occurrences'] = array_map( 'eventorganiser_date_create', $event_details['_occurrences'] );
-	}
 
 	if ( get_post_meta( $post_id,'_eventorganiser_schedule_until', true ) ) {
 		$event_details['until'] = new DateTime( get_post_meta( $post_id,'_eventorganiser_schedule_until', true ), $tz );
@@ -937,10 +934,10 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 
 			case 'monthly':
 				//TODO Account for possible day shifts with timezone set to UTC
-				$reoccurrence_rule = "FREQ=MONTHLY;INTERVAL=".$frequency.";";
-				$reoccurrence_rule.=$schedule_meta.";";
-				$reoccurrence_rule.= "UNTIL=".$schedule_last;
-				return $reoccurrence_rule;
+				$recurrence_rule = "FREQ=MONTHLY;INTERVAL=".$frequency.";";
+				$recurrence_rule .=$schedule_meta.";";
+				$recurrence_rule .= "UNTIL=".$schedule_last;
+				return $recurrence_rule;
 	
 			case 'weekly':
 				
@@ -982,6 +979,57 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 		return false;
 }
 
+function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
+	
+	$vtimezone = "BEGIN:VTIMEZONE\r\n";
+	$vtimezone .= sprintf( "TZID:%s\r\n", $timezone->getName() );
+	
+	//$timezone->getTransitions() doesn't accept any arguments in php 5.2, and would be ineffecient
+	if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
+		return '';
+	}
+	
+	// get all transitions, and (as an estimate) an early one which we skip
+	$transitions = $timezone->getTransitions( $from - YEAR_IN_SECONDS / 2, $to );
+	
+	if ( ! $transitions ) {
+		return '';
+	}
+
+	foreach ( $transitions as $i => $trans ) {
+		
+		$pm      = $trans['offset'] >= 0 ? '+' : '-';
+ 		$hours   = floor( absint( $trans['offset'] ) / HOUR_IN_SECONDS ) % 24;
+		$minutes = ( absint( $trans['offset'] ) - $hours * HOUR_IN_SECONDS ) / MINUTE_IN_SECONDS;
+		
+		$tzto = $pm . str_pad( $hours, 2, '0', STR_PAD_LEFT ) . str_pad( $minutes, 2, '0', STR_PAD_LEFT );
+	
+		// skip the first entry, we just want it for the TZOFFSETFROM value of the next one
+		if ( $i == 0 ) {
+			$tzfrom = $tzto;
+			if ( count( $transitions ) > 1 ) {
+				continue;
+			}
+		}
+		
+		$type = $trans['isdst'] ? 'DAYLIGHT' : 'STANDARD';		
+		$dt   = new DateTime( $trans['time'], $timezone );
+			
+		$vtimezone .= sprintf( "BEGIN:%s\r\n", $type );
+		$vtimezone .= sprintf( "TZOFFSETFROM:%s\r\n", $tzfrom ); //needs formatting
+		$vtimezone .= sprintf( "TZOFFSETTO:%s\r\n", $tzto ); //needs formatting
+		$vtimezone .= sprintf( "DTSTART:%s\r\n",  $dt->format('Ymd\THis') );
+		$vtimezone .= sprintf( "TZNAME:%s\r\n",  $trans['abbr'] ); 
+		$vtimezone .= sprintf( "END:%s\r\n", $type );
+		
+		$tzfrom = $tzto;	
+	}
+	
+	$vtimezone .= 'END:VTIMEZONE';
+	
+	return $vtimezone;
+}
+
 /**
  * Removes a single occurrence and adds it to the event's 'excluded' dates.
  * @access private
@@ -1013,11 +1061,6 @@ function eventorganiser_generate_ics_rrule($post_id=0){
 		}else{
 			//If the date was manually included, just remove it from the included dates
 			unset($event_details['include'][$key]);
-		}
-
-		//Remove the date from the occurrences
-		if( isset($event_details['_occurrences'][$event_id]) ){
-			unset($event_details['_occurrences'][$event_id]);
 		}
 
 		//Update post meta and delete date from events table
@@ -1080,6 +1123,7 @@ function eventorganiser_move_occurrence( $event_id, $occurrence_id, $start, $end
 	);
 	
 	wp_cache_delete( 'eventorganiser_occurrences_'.$event_id );//Important: update DB clear cache
+	wp_cache_delete( 'eventorganiser_all_occurrences_'.$event_id );//Important: update DB clear cache
 
 	//Now update event schedule...
 	

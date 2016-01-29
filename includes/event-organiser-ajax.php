@@ -29,7 +29,7 @@ function eventorganiser_public_fullcalendar() {
 		'event_end_after'    => $_GET['start'],
 	);
 
-	$time_format = !empty( $_GET['timeformat'] ) ? $_GET['timeformat'] : get_option( 'time_format' );
+	$time_format = ! empty( $_GET['timeformat'] ) ? stripslashes( $_GET['timeformat'] ) : get_option( 'time_format' );
 
 	//Restrict by category and/or venue/tag
 	foreach( array( 'category', 'venue', 'tag' ) as $tax ){
@@ -100,12 +100,11 @@ function eventorganiser_public_fullcalendar() {
 	 	*
 	 	* @package fullCalendar
 	 	* @param array  $events_array An array of events (array).
-	 	* @param array  $query        The query as given to eo_get_events() 
+	 	* @param array  $query        The query as given to eo_get_events()
 	 	*/
 		$events_array = apply_filters( 'eventorganiser_fullcalendar', $events_array, $query );
-	
-		echo json_encode( $events_array );
-		exit;
+
+		wp_send_json( $events_array );
 	}
 
 	$query['post_status'] = $post_status;
@@ -160,44 +159,26 @@ function eventorganiser_public_fullcalendar() {
 			//Get Event Start and End date, set timezone to the blog's timzone
 			$event_start    = new DateTime( $post->StartDate.' '.$post->StartTime, $tz );
 			$event_end      = new DateTime( $post->EndDate.' '.$post->FinishTime, $tz );
+			
+			if ( $event['allDay'] ) {
+				$event_end->modify( '+1 minute' );
+			}
+			
 			$event['start'] = $event_start->format( 'Y-m-d\TH:i:s' );
 			$event['end']   = $event_end->format( 'Y-m-d\TH:i:s' );
-
+			
+			if ( $event['allDay'] ) {
+				$event_end->modify( '-1 minute' );
+			}
+				
 			//Don't use get_the_excerpt as this adds a link
 			$excerpt_length = apply_filters('excerpt_length', 55);
 
-			$description = wp_trim_words( strip_shortcodes(get_the_content()), $excerpt_length, '...' );
+			$description = wp_trim_words( strip_shortcodes( get_the_content() ), $excerpt_length, '...' );
 
-			if( $event_start->format('Y-m-d') != $event_end->format('Y-m-d') ){
-				//Start & ends on different days
-
-				if( !eo_is_all_day() ){
-					//Not all day, include time
-					 $date = eo_format_datetime($event_start,'F j '.$time_format).' - '.eo_format_datetime($event_end,'F j '.$time_format);
-				}else{
-					//All day, don't include date
-					if( $event_start->format('Y-m') == $event_end->format('Y-m') ){
-						//Same month
-						 $date = eo_format_datetime($event_start,'F j').' - '.eo_format_datetime($event_end,'j, Y');
-					}else{
-						//Different month
-						 $date = eo_format_datetime($event_start,'F j').' - '.eo_format_datetime($event_end,'F j');
-					}
-				}
-
-			}else{
-				//Start and end on the same day
-							
-				if( !eo_is_all_day() ){
-					//Not all day, include time
-					 $date = eo_format_datetime($event_start,$format="F j, Y $time_format").' - '.eo_format_datetime($event_end,$time_format);
-				}else{
-					//All day
-					 $date = eo_format_datetime($event_start,$format='F j, Y');
-				}
-			}
+			$date = eo_format_event_occurrence( $post->ID, $post->occurrence_id, 'F j, Y ', $time_format, ' - ', false );
 			$description = $date.'</br></br>'.$description;
-			
+
 			/**
 			 * Filters the description of the event as it appears on the calendar tooltip.
 			 * 
@@ -298,8 +279,7 @@ function eventorganiser_public_fullcalendar() {
 	$events_array = apply_filters( 'eventorganiser_fullcalendar', $events_array, $query );
 
 	//Echo result and exit
-	echo json_encode( $events_array );
-	exit;
+	wp_send_json( $events_array );
 }
 
 
@@ -332,11 +312,10 @@ function eventorganiser_admin_calendar() {
 		$calendar = get_transient('eo_full_calendar_admin');
 		$key = $_GET['start'].'--'.$_GET['end'] . 'u='.get_current_user_id();
 
-		if( ( !defined('WP_DEBUG') || !WP_DEBUG ) && $calendar && is_array($calendar) && isset($calendar[$key]) ){
-			echo json_encode($calendar[$key]);
-			exit;
+		if ( ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) && $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ) {
+			wp_send_json( $calendar[$key] );
 		}
-	
+
 		//Create query
 		$query_array = array_merge($presets, $request);	
 		$query = new WP_Query($query_array );
@@ -380,23 +359,34 @@ function eventorganiser_admin_calendar() {
 				}
 
 				//Get author (or organiser)
-				$organiser = get_userdata( $post->post_author)->display_name;
-	
+				$user = get_userdata( $post->post_author );
+				$organiser = $user ? $user->display_name : '';
+
 				//Get Event Start and End date, set timezone to the blog's timzone
 				$event_start = new DateTime($post->StartDate.' '.$post->StartTime, $tz);
 				$event_end = new DateTime($post->EndDate.' '.$post->FinishTime, $tz);
-	
-				$event['start']= $event_start->format('Y-m-d\TH:i:s\Z');
-				$event['end']= $event_end->format('Y-m-d\TH:i:s\Z');
-	
+
+				//fullCalendar API expects end date to be 00:00 of the following day
+				if ( $event['allDay'] ) {
+					$event_end->modify( '+1 minute' );
+				}
+
+				$event['start'] = $event_start->format( 'Y-m-d\TH:i:s\Z' );
+				$event['end']   = $event_end->format( 'Y-m-d\TH:i:s\Z' );
+
+				if ( $event['allDay'] ) {
+					$event_end->modify( '-1 minute' );
+				}
+
 				//Produce summary of event
 				$summary= "<table class='form-table' >"
 							."<tr><th> ".__('Start','eventorganiser').": </th><td> ".eo_format_datetime($event_start,$format)."</td></tr>"
 							."<tr><th> ".__('End','eventorganiser').": </th><td> ".eo_format_datetime($event_end, $format)."</td></tr>";
-				if( eo_is_multi_event_organiser() ){
-					$summary .= "<tr><th> ".__('Organiser','eventorganiser').": </th><td>".$organiser."</td></tr>";
+
+				if ( $organiser && eo_is_multi_event_organiser() ) {
+					$summary .= sprintf( '<tr><th>%s</th><td>%s</td></tr>', esc_html__( 'Organiser:', 'eventorganiser' ), $organiser );
 				}
-	
+
 				$event['className']=array('event');
 
 				 $now = new DateTime(null,$tz);
@@ -430,10 +420,10 @@ function eventorganiser_admin_calendar() {
 	
 				$summary .= "</table><p>";
 							
-				//Include schedule summary if event reoccurrs
+				//Include schedule summary if event recurs
 			
 				if( $schedule['schedule'] != 'once' )
-					$summary .='<em>'.__('This event reoccurs','eventorganiser').' '.eo_get_schedule_summary().'</em>';
+					$summary .='<em>'.__('This event recurs','eventorganiser').' '.eo_get_schedule_summary().'</em>';
 				$summary .='</p>';
 
 				//Include edit link in summary if user has permission
@@ -506,36 +496,35 @@ function eventorganiser_admin_calendar() {
 				/**
 				 * @ignore
 				 */
-				$event = apply_filters('eventorganiser_admin_calendar',$event, $post);
+				$event = apply_filters( 'eventorganiser_admin_calendar', $event, $post );
 				/**
 				 * Filters the event before its sent to the admin calendar.
 				 *
 				 * **Note:** As the calendar is cached, changes made using this filter
 				 * will not take effect immediately. You can clear the cache by
 				 * updating an event.
-				 * 
+				 *
 				 * @package admin-calendar
 				 * @param array $event         The event array.
 				 * @param int   $event_id      The event's post ID.
 				 * @param int   $occurrence_id The event's occurrence ID.
 				 */
-				$event = apply_filters('eventorganiser_admin_fullcalendar_event', $event, $post->ID, $post->occurrence_id );
+				$event = apply_filters( 'eventorganiser_admin_fullcalendar_event', $event, $post->ID, $post->occurrence_id );
 
 				//Add event to array
-				$eventsarray[]=$event;
+				$eventsarray[] = $event;
 			endwhile;
 		endif;
 
-		if( !$calendar || !is_array($calendar) )
+		if ( ! $calendar || ! is_array( $calendar ) ) {
 			$calendar = array();
-	
+		}
+
 		$calendar[$key] = $eventsarray;
 
-		set_transient('eo_full_calendar_admin',$calendar, 60*60*24);
+		set_transient( 'eo_full_calendar_admin', $calendar, 60 * 60 * 24 );
 
-		//Echo result and exit
-		echo json_encode($eventsarray);
-		exit;
+		wp_send_json( $eventsarray );
 }
 
 
@@ -582,8 +571,7 @@ function eventorganiser_widget_cal() {
 		$args['link-to-single'] = (empty($_GET['link-to-single']) ? 0 : 1);
 		$args['show-long'] = (empty($_GET['show-long']) ? 0 : 1);
 
-		echo json_encode(EO_Calendar_Widget::generate_output($month,$args));
-		exit;
+		wp_send_json( EO_Calendar_Widget::generate_output( $month,$args ) );
 	}
 
 
@@ -597,111 +585,99 @@ function eventorganiser_widget_cal() {
  *@ignore
 */
 function eventorganiser_widget_agenda() {
-		global $wpdb;
+		
+	global $wpdb;
 
-		$number = (int) $_GET['instance_number'];
-		$wid = new EO_Events_Agenda_Widget();
-		$settings =  $wid->get_settings();
-		$instance = $settings[$number];
-		$today= new DateTime('now', eo_get_blog_timezone());
-		$query=array();
-		$return_array = array();
+	$number   = (int) $_GET['instance_number'];
+	$wid      = new EO_Events_Agenda_Widget();
+	$settings = $wid->get_settings();
+	$instance = $settings[$number];
+	$today    = new DateTime( 'now', eo_get_blog_timezone() );
+	$query    = array();
+	$return   = array();
 
-		$query['mode'] = !empty($instance['mode']) ? $instance['mode'] : 'day';
-		$query['direction'] = intval($_GET['direction']);
-		$query['date'] = ($query['direction'] <1? $_GET['start'] : $_GET['end']);
-		$query['order'] = ($query['direction'] <1? 'DESC' : 'ASC');
+	$query['mode']      = !empty($instance['mode']) ? $instance['mode'] : 'day';
+	$query['direction'] = intval( $_GET['direction'] );
+	$query['date']      = ( $query['direction'] < 1 ? $_GET['start'] : $_GET['end'] );
+	$query['order']     = ( $query['direction'] < 1 ? 'DESC' : 'ASC' );
 
-		$key = 'eo_ag_'.md5(serialize($query)).get_locale();
-		$agenda = get_transient('eo_widget_agenda');
-		if( $agenda && is_array($agenda) && isset($agenda[$key]) ){
-			echo json_encode($agenda[$key]);
-			exit;
-		}
+	$key    = 'eo_ag_'.md5( serialize( $query ) ) . get_locale();
+	$agenda = get_transient( 'eo_widget_agenda' );
 
-		if( 'day' == $query['mode'] ){		
-			//Day mode
-			$selectDates="SELECT DISTINCT StartDate FROM {$wpdb->eo_events}";
-			$whereDates = " WHERE {$wpdb->eo_events}.StartDate".( $query['order']=='ASC' ? " >= " : " <= ")."%s ";
-			$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
-			$orderlimit = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 4";
-			$dates = $wpdb->get_col($wpdb->prepare($selectDates.$whereDates.$orderlimit, $query['date'],$today->format('Y-m-d')));
-
-			if(!$dates)
-				return false;
-
-			$query['date1']  = min($dates[0],$dates[count($dates)-1]);
-			$query['date2'] = max($dates[0],$dates[count($dates)-1]);
-
-		}elseif( 'week' == $query['mode'] ){		
-			//Week mode - find the week of the next/previous event
-			$selectDates="SELECT DISTINCT StartDate FROM {$wpdb->eo_events}";
-			$whereDates = " WHERE {$wpdb->eo_events}.StartDate".( $query['order']=='ASC' ? " > " : " < ")."%s ";
-			$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
-			$orderlimit = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
-			$date = $wpdb->get_row($wpdb->prepare($selectDates.$whereDates.$orderlimit, $query['date'],$today->format('Y-m-d')));
-
-			if(!$date)
-				return false;
-
-			$datetime = new DateTime($date->StartDate, eo_get_blog_timezone());
-
-			//Get the week day, and the start of the week	
-			$week_start_day = (int) get_option('start_of_week');
-			$event_day = (int) $datetime->format('w');
-			$offset_from_week_start = ($event_day - $week_start_day +7)%7;
-			$week_start_date = clone $datetime;
-			$week_start_date->modify('- '.$offset_from_week_start.' days');
-			$week_end_date = clone $week_start_date;
-			$week_end_date->modify('+6 days');//Query is inclusive.
-
-			$query['date1']  = $week_start_date->format('Y-m-d');
-			$query['date2'] = $week_end_date->format('Y-m-d'); 
-
-		}else{
-			//Month mode - find the month of the next date
-			$selectDates="SELECT DISTINCT StartDate FROM {$wpdb->eo_events}";
-			$whereDates = " WHERE {$wpdb->eo_events}.StartDate".( $query['order']=='ASC' ? " > " : " < ")."%s ";
-			$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
-			$orderlimit = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
-			$date = $wpdb->get_row($wpdb->prepare($selectDates.$whereDates.$orderlimit, $query['date'],$today->format('Y-m-d')));
-
-			if(!$date)
-				return false;
-
-			$datetime = new DateTime($date->StartDate, eo_get_blog_timezone());
-			$query['date1']  = $datetime->format('Y-m-01');
-			$query['date2'] = $datetime->format('Y-m-t'); 
-		}
-
-		$events = eo_get_events(array(
-			'event_start_after'=>$query['date1'],
-			'event_start_before'=>$query['date2']
-		));
-
-		global $post;
-		foreach ($events as $post):
-			$return_array[] = array(
-				'StartDate'=>$post->StartDate,
-				'display'=>eo_get_the_start($instance['group_format']),
-				'time'=> ( ($instance['mode']=='day' && eo_is_all_day())  ? __('All Day','eventorganiser') : eo_get_the_start($instance['item_format']) ),
-				'post_title'=>get_the_title(),
-				'color'=>eo_get_event_color(),
-				'event_url'=>get_permalink(),
-				'link'=>'<a href="'.get_permalink().'">'.__('View','eventorganiser').'</a>',
-				'Glink'=>'<a href="'.eo_get_add_to_google_link().'" target="_blank">'.__('Add To Google Calendar','eventorganiser').'</a>'
-			);
-		endforeach;
-
-		if( !$agenda || !is_array($agenda) )
-			$agenda = array();
+	if ( $agenda && is_array( $agenda ) && isset( $agenda[$key] ) ) {
+		wp_send_json( $agenda[$key] );
+	}
 	
-		$agenda[$key] = $return_array;
+	//Find dates of 'next'/'previous' event
+	$selectDates = "SELECT DISTINCT StartDate FROM {$wpdb->eo_events} LEFT JOIN {$wpdb->posts} ON {$wpdb->eo_events}.post_id = {$wpdb->posts}.ID";
+	$whereDates  = " WHERE {$wpdb->eo_events}.StartDate".( $query['order'] == 'ASC' ? ' > ' : ' < ') . '%s ';
+	$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
+	$whereDates .= " AND {$wpdb->posts}.post_status = 'publish' ";
+	$orderlimit  = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
+	$date        = $wpdb->get_row( $wpdb->prepare( $selectDates . $whereDates . $orderlimit, $query['date'], $today->format( 'Y-m-d' ) ) );
+	
+	if( !$date ){
+		return false;
+	}
+	
+	$datetime = new DateTime( $date->StartDate, eo_get_blog_timezone() );
+	
+	if( 'day' == $query['mode'] ){		
+		//Day mode - events on this day
+		$query['date1'] = $datetime->format( 'Y-m-d' );
+		$query['date2'] = $datetime->format( 'Y-m-d' );
 
-		set_transient('eo_widget_agenda',$agenda, 60*60*24);
+	}elseif( 'week' == $query['mode'] ){		
+		//Month mode - events in this month
+		
+		//Get the week day, and the start of the week	
+		$week_start_day  = (int) get_option( 'start_of_week' );
+		$event_day       = (int) $datetime->format( 'w' );
+		
+		$offset_from_week_start = ( $event_day - $week_start_day +7 ) % 7;
+		
+		$week_start_date = clone $datetime;
+		$week_start_date->modify( '- ' . $offset_from_week_start . ' days' );
+		
+		$week_end_date   = clone $week_start_date;
+		$week_end_date->modify( '+6 days' );//Query is inclusive.
 
-		echo json_encode($return_array);
-		exit;
+		$query['date1'] = $week_start_date->format( 'Y-m-d' );
+		$query['date2'] = $week_end_date->format( 'Y-m-d' ); 
+
+	}else{
+		//Month mode - events on this month
+		$query['date1'] = $datetime->format( 'Y-m-01' );
+		$query['date2'] = $datetime->format( 'Y-m-t' ); 
+	}
+
+	$events = eo_get_events(array(
+		'event_start_after'  => $query['date1'],
+		'event_start_before' => $query['date2'],
+	));
+
+	global $post;
+	foreach( $events as $post ):
+		$return[] = array(
+			'start'       => eo_get_the_start( 'Y-m-d H:i:s', $post->ID, null, $post->occurrence_id ),
+			'end'         => eo_get_the_end( 'Y-m-d H:i:s', $post->ID, null, $post->occurrence_id ),
+			'all_day'     => eo_is_all_day( $post->ID ),
+			'title'       => get_the_title(),
+			'link'        => get_permalink(),
+			'google_link' => eo_get_add_to_google_link(),
+			'color'       => eo_get_event_color()
+		);
+	endforeach;
+
+	if( !$agenda || !is_array( $agenda ) ){
+		$agenda = array();
+	}
+	
+	$agenda[$key] = $return;
+
+	set_transient( 'eo_widget_agenda', $agenda, 60 * 60 * 24 );
+
+	wp_send_json( $return );
 }
 
 
@@ -713,39 +689,32 @@ function eventorganiser_widget_agenda() {
  *@ignore
 */
 function eventorganiser_search_venues() {
-		
-		// Query the venues with the given term
-		$value = trim(esc_attr($_GET["term"]));
-		$venues = eo_get_venues(array('search'=>$value));
 
-		foreach($venues as $venue){
-			$venue_id = (int) $venue->term_id;
+	// Query the venues with the given term
+	$value = trim( $_GET['term'] );
+	$venues = eo_get_venues( array( 'eo_update_venue_cache' => true, 'search' => $value, 'number' => 5 ) );
 
-			if( !isset($term->venue_address) ){
-				/* This is all deprecated - use the API {@link http://codex.wp-event-organiser.com/function-eo_get_venue_address.html} */
-				$address = eo_get_venue_address($venue_id);
-				$venue->venue_address =  isset($address['address']) ? $address['address'] : '';
-				$venue->venue_postal =  isset($address['postcode']) ? $address['postcode'] : ''; 
-				$venue->venue_postcode =  isset($address['postcode']) ? $address['postcode'] : '';
-				$venue->venue_city =  	isset($address['city']) ? $address['city'] : '';
-				$venue->venue_country =  isset($address['country']) ? $address['country'] : '';
-				$venue->venue_state =  isset($address['state']) ? $address['state'] : '';
-			}
+	foreach ( $venues as $venue ) {
+		$venue_id = (int) $venue->term_id;
+		$address  = eo_get_venue_address( $venue_id );
 
-			if( !isset($venue->venue_lat) || !isset($venue->venue_lng) ){
-				$venue->venue_lat =  number_format(floatval(eo_get_venue_lat($venue_id)), 6);
-				$venue->venue_lng =  number_format(floatval(eo_get_venue_lng($venue_id)), 6);
-			}
-		}
-		
-		$tax = get_taxonomy( 'event-venue' );
-		$novenue = array( 'term_id' => 0,'name' => $tax->labels->no_item );
-		$venues =array_merge (array($novenue),$venues);
+		$venue->venue_address  = isset( $address['address'] ) ? $address['address'] : '';
+		$venue->venue_postal   = isset( $address['postcode'] ) ? $address['postcode'] : '';
+		$venue->venue_postcode = isset( $address['postcode'] ) ? $address['postcode'] : '';
+		$venue->venue_city     = isset( $address['city'] ) ? $address['city'] : '';
+		$venue->venue_country  = isset( $address['country'] ) ? $address['country'] : '';
+		$venue->venue_state    = isset( $address['state'] ) ? $address['state'] : '';
 
-		//echo JSON to page  
-		$response = $_GET["callback"] . "(" . json_encode($venues) . ")";  
-		echo $response;  
-		exit;
+		$venue->venue_lat = number_format( floatval( eo_get_venue_lat( $venue_id ) ), 6 );
+		$venue->venue_lng = number_format( floatval( eo_get_venue_lng( $venue_id ) ), 6 );
+	}
+
+	$tax = get_taxonomy( 'event-venue' );
+	$novenue = array( 'term_id' => 0, 'name' => $tax->labels->no_item );
+	$venues  = array_merge( array( $novenue ), $venues );
+
+	//echo JSON to page
+	wp_send_json( $venues );
 }
 
 /**
@@ -796,71 +765,49 @@ function eventorganiser_admin_calendar_edit_date(){
 	$occurrence_id = (int) $_POST['occurrence_id'];
 	$all_day       = eo_is_all_day( $event_id );
 
-	if( 'event' != get_post_type( $event_id ) ){
-		echo json_encode( array(
-			'success' => false,
-			'data' => array(
-				'message' => __( 'Event not found', 'eventorganiser' )	
-			),	
+	if ( 'event' != get_post_type( $event_id ) ) {
+		wp_send_json_error( array(
+			'message' => __( 'Event not found', 'eventorganiser' ),
 		));
-		exit;
 	}
-	
+
 	$edittime = ( defined( 'EVENT_ORGANISER_BETA_FEATURES' ) && EVENT_ORGANISER_BETA_FEATURES );
-	
-	if( !$edittime ){
-		echo json_encode( array(
-			'success' => false,
-			'data' => array(
-				'message' => __( 'Events are not editable via the admin calendar', 'eventorganiser' )
-			),
+
+	if ( ! $edittime ) {
+		wp_send_json_error( array(
+			'message' => __( 'Events are not editable via the admin calendar', 'eventorganiser' ),
+		));
+	}
+
+	if ( ! check_ajax_referer( 'edit_events', false, false ) ) {
+		wp_send_json_error( array(
+			'message' => __( 'Are you sure you want to do this?', 'eventorganiser' ),
 		));
 		exit;
 	}
-	
-	if( !check_ajax_referer( 'edit_events', false, false ) ){
-		echo json_encode( array(
-			'success' => false,
-			'data' => array(
-				'message' => __( 'Are you sure you want to do this?', 'eventorganiser' )
-			),
+
+	if ( ! current_user_can( 'edit_event', $event_id ) ) {
+		wp_send_json_error( array(
+			'message' => __( 'You do not have permission to edit this event', 'eventorganiser' ),
 		));
-		exit;
 	}
-	
-	if( !current_user_can( 'edit_event', $event_id ) ){
-		echo json_encode( array(
-			'success' => false,
-			'data' => array(
-				'message' => __( 'You do not have permission to edit this event', 'eventorganiser' )
-			),
-		));
-		exit;
-	}
-		
+
 	$tz        = eo_get_blog_timezone();
 	$new_start = new DateTime( $_POST['start'], $tz );
-	$new_end   = new DateTime( $_POST['end'], $tz );  
+	$new_end   = new DateTime( $_POST['end'], $tz );
 
 	$re = eventorganiser_move_occurrence( $event_id, $occurrence_id, $new_start, $new_end );
-	
-	if( !is_wp_error( $re ) ){
-		echo json_encode( array(
-			'success' => true,
-		));
-		exit;
-	}else{
-		echo json_encode( array(
-			'success' => false,
-			'data' => array(
-				'message' => sprintf(
-					__( 'Event not created: %s', 'eventorganiser' ),
-					$re->get_error_message()		
-				)
+
+	if ( ! is_wp_error( $re ) ) {
+		wp_send_json_success();
+
+	} else {
+		wp_send_json_error( array(
+			'message' => sprintf(
+				__( 'Event not created: %s', 'eventorganiser' ),
+				$re->get_error_message()
 			),
 		));
-		exit;
 	}
-	
+
 }
-?>

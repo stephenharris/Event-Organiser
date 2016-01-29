@@ -16,6 +16,7 @@ class EO_UnitTest_Factory extends WP_UnitTest_Factory {
 		parent::__construct();
 
 		$this->event = new EO_UnitTest_Factory_For_Event( $this );
+		$this->event_category = new WP_UnitTest_Factory_For_Term( $this, 'event-category' );
 	}
 
 }

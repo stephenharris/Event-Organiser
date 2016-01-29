@@ -317,16 +317,10 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		$ical = new EO_ICAL_Parser();
 		$ical->parse( EO_DIR_TESTDATA . '/ical/timeZoneWithColon.ics' );
 
-		//Check the warning is reported:
-		$code = $ical->warnings[0]->get_error_code();
-		$message = $ical->warnings[0]->get_error_message( $code );
-		$this->assertEquals( 'timezone-parser-warning', $code );
-		$this->assertEquals( '[Line 8] Unknown timezone "(GMT +01:00)" interpreted as "Europe/London".', $message );
-		
 		$event = $ical->events[0];
 		
 		//Check that the timezone has be interpreted as intended
-		$tz = new DateTimeZone( "Europe/London" );
+		$tz = new DateTimeZone( "Etc/GMT-1" );
 		$this->assertEquals( $tz, $event['start']->getTimezone() );
 		
 		//Check that the date/time has been interpeted correctly
@@ -461,7 +455,7 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	$tzid = 'GMT';
     	$expected = new DateTimeZone( 'UTC' );
     	$tz = $ical->parse_timezone( $tzid );
-    	$this->assertEquals( $expected, $tz );
+    	$this->assertEquals( $expected, $tz ); //don't compare names as some servers return GMT as UTC.
     	
     	$tzid = "(GMT+01.00) Amsterdam / Berlin / Bern / Rome / Stockholm / Vienna";
     	$expected = new DateTimeZone( 'Europe/Amsterdam' );
@@ -487,7 +481,7 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	
     	//(GMT +01:00)
     	$tzid = "(GMT +04:00)";
-    	$expected = new DateTimeZone( 'Asia/Baghdad' );
+    	$expected = new DateTimeZone( 'Etc/GMT-4' ); //Reversed sign is intentional
     	$tz = $ical->parse_timezone( $tzid );
     	$this->assertEquals( $expected->getName(), $tz->getName() );
 
@@ -497,7 +491,7 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals( $expected->getName(), $tz->getName() );
     	
     	$tzid = "(GMT -04:00)";
-    	$expected = new DateTimeZone( 'America/Porto_Acre' );
+    	$expected = new DateTimeZone( 'Etc/GMT+4' ); //Reversed sign is intentional
     	$tz = $ical->parse_timezone( $tzid );
     	$this->assertEquals( $expected->getName(), $tz->getName() );
     	
@@ -735,15 +729,123 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		return true;	
 	}
 	
+	public function testAllDayEventWithoutEndDate(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/allDayEventWithoutEndDate.ics' );
+	
+		$expected_end = new DateTime( '2013-10-28 23:59:00' );
+	
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_end, $event['end'] );
+	}
 
+	public function testPartAllDayEventWithoutEndDate(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/partDayEventWithoutEndDate.ics' );
+	
+		$expected_end = new DateTime( '2013-10-28 19:26:00', new DateTimeZone( 'America/New_York' ) );
+	
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_end, $event['end'] );
+	}
 
-	//@TODO
-    public function testPartDayForeignRecurringEvent()
-    {
+	public function testEventWithDuration(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithDuration.ics' );
+		
+		$expected_end = new DateTime( '2013-11-06 22:30:05', new DateTimeZone( 'America/New_York' ) );
+	
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_end, $event['end'] );
+	}
+	
+	public function testEventWithDurationAndEndDate(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithDurationAndEndDate.ics' );
+	
+		$expected_end = new DateTime( '2013-10-28 20:26:00', new DateTimeZone( 'America/New_York' ) );
+		
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_end, $event['end'] );
+	}
+	
+	public function testParseDuration(){
+		
+		$ical = new EO_ICAL_Parser();
+		
+		$duration = '+P5W3D';
+		$expected = '+5 weeks +3 days';
+		$this->assertEquals( $expected, $ical->parse_duration( $duration ) );
 
-    	//@see testPartDayForeignWeeklyEvent()
-    	//This shouldn't be fixed here - but in eo_insert/update_event
-    	
+		$duration = '+P15DT5H0M20S';
+		$expected = '+15 days +5 hours +20 seconds';
+		$this->assertEquals( $expected, $ical->parse_duration( $duration ) );
+		
+		$duration = 'P7W';
+		$expected = '+7 weeks';
+		$this->assertEquals( $expected, $ical->parse_duration( $duration ) );
+
+		$duration = '-P1WT2H';
+		$expected = '-1 weeks -2 hours';
+		$this->assertEquals( $expected, $ical->parse_duration( $duration ) );
+		
+	}
+	
+	
+	/**
+	 * The iCal specifications state that Date values MUST be specified with VALUE=DATE modifier, e.g.
+	 *     DTSTART;VALUE=DATE:20150921
+	 * implying that
+	 *     DTSTART:20150921
+	 * should be treated as an error. However some iCal feeds do not conform, and this can cause a needless 
+	 * as error as the DATE value type be inferred from the fact a correctly formatted date is given.
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/291 
+	 */
+	public function testEventWithDateWithoutDateModifier(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithDateStartWithoutModifier.ics' );
+	
+		$expected_start = new DateTime( '2015-09-21 00:00:00', eo_get_blog_timezone() );
+		$expected_end   = new DateTime( '2015-09-21 23:59:59', eo_get_blog_timezone() );
+		
+		$event = $ical->events[0];
+		$this->assertEquals( $expected_start, $event['start'] );
+		$this->assertEquals( $expected_end, $event['end'] );
+		$this->assertEquals( 1, $event['all_day'] );
+
+	}
+
+	/**
+	 * This checks that a warning is not emitted when trying to parse a source
+	 * with a webcal:// protocol.
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/319
+	 */
+	public function testWebCalProtocol(){
+		$ical = new EO_ICAL_Parser();
+		$response = $ical->parse( 'webcal://ical.example' );
+		
+		$this->assertTrue( is_wp_error( $response ) );
+		$this->assertEquals( 'http_request_failed', $response->get_error_code() );
+	}
+	
+	/**
+	 * When importing a part day event occurring monthly across a timezone, the day the event 
+	 * repeats on in the feed timezone may be different from the day the event repeats on in 
+	 * the destination (site) timezone. So the schedule meta should be  updated to reflect his.
+	 * E.g. 
+	 *  1. An event occuring monthly on the 5th @10pm in America/New_York would be on the 6th in UTC.
+	 * 
+	 * There are issues with how, for example, an event recurring on the first Monday of each month at 
+	 * 10pm in America/New_York might be 'translated' to UTC. This stems from the fact that strictly 
+	 * speaking these recurrence rules cannot be neatly converted across timezones. Perhaps this is is 
+	 * an argument in favour of allowing events to have a timezone? 
+	 * 
+	 * This should probably be fixed  eo_insert/update_event
+	 * 
+	 * @TODO
+	 */
+    public function testPartDayForeignRecurringEvent() {
+
     	$ical = new EO_ICAL_Parser();
     	$ical->parse( EO_DIR_TESTDATA . '/ical/foreignPartDayRecurringEvent.ics' );
 
@@ -751,11 +853,17 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	//$this->assertEquals( "BYMONTHDAY=4", $ical->events[0]['schedule_meta'] );
     }
     
-	//@TODO
-    public function testPartDayForeignWeeklyEvent()
-    {
+	/**
+	 * When importing a part day event occurring weekly across a timezone, the day the event
+	 * repeats on in the feed timezone may be different from the day the event repeats on
+	 * in the destination (site) timezone. So the schedule meta should be updated to reflect his.
+	 * 
+	 * This should probably be fixed  eo_insert/update_event
+	 * 
+	 * @TODO
+	 */
+    public function testPartDayForeignWeeklyEvent() {
     	//A Monday 10pm event in New York would be a Tuesday event in UTC
-    	//This shouldn't be fixed here - but in eo_insert/update_event
     	
     	$ical = new EO_ICAL_Parser();
     	$ical->parse( EO_DIR_TESTDATA . '/ical/foreignPartDayWeeklyEvent.ics' );

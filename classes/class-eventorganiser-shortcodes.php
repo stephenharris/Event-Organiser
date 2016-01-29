@@ -71,8 +71,8 @@ class EventOrganiser_Shortcodes {
 		return $html;
 	}
 
-	static function handle_subscription_shortcode($atts, $content=null) {
-		extract( shortcode_atts( array(
+	static function handle_subscription_shortcode( $atts, $content = null ) {
+		$atts = shortcode_atts( array(
 			'title' => 'Subscribe to calendar',
 			'type' => 'google',
 			'class' => '',
@@ -80,55 +80,60 @@ class EventOrganiser_Shortcodes {
 			'style' => '',
 			'category' => false,
 			'venue' => false,
-		), $atts, 'eo_subscribe' ) );
-		
-		if( $category ){
+		), $atts, 'eo_subscribe' );
+
+		if ( $atts['category'] ) {
 			$url = eo_get_event_category_feed( $category );
-			
-		}elseif( $venue ){
+
+		} elseif ( $atts['venue'] ) {
 			$url = eo_get_event_venue_feed( $venue );
-		
-		}else{
+
+		} else {
 			$url = eo_get_events_feed();
-		
+
 		}
 
-		$class = $class ? 'class="'.esc_attr($class).'"' : false;
-		$title = $title ? 'title="'.esc_attr($title).'"' : false;
-		$style = $style ? 'style="'.esc_attr($style).'"' : false;
-		$id = $id ? 'id="'.esc_attr($id).'"' : false;
-		
-		if(strtolower($type)=='webcal'):
-			$url = str_replace( 'http://', 'webcal://',$url);
-		elseif( strtolower($type)=='ical' ):
+		$class = $atts['class'] ? 'class="' . esc_attr( $atts['class'] ) . '"' : false;
+		$title = $atts['title'] ? 'title="' . esc_attr( $atts['title'] ) . '"' : false;
+		$style = $atts['style'] ? 'style="' . esc_attr( $atts['style'] ) . '"' : false;
+		$id    = $atts['id']    ? 'id="' . esc_attr( $atts['id'] ) . '"' : false;
+
+		if ( strtolower( $atts['type'] ) == 'webcal' ) {
+			$url = preg_replace( '/^http(s?):/i', 'webcal:', $url );
+		} elseif ( strtolower( $atts['type'] ) == 'ical' ) {
 			//Do nothing
-		else:
-			$url = add_query_arg('cid',urlencode($url),'http://www.google.com/calendar/render');
-		endif;
+		} else {
+			$url = add_query_arg( 'cid', urlencode( $url ), 'http://www.google.com/calendar/render' );
+		}
 
 		$html = '<a href="'.$url.'" target="_blank" '.$class.' '.$title.' '.$id.' '.$style.'>'.$content.'</a>';
 		return $html;
 	}
 
-	static function handle_fullcalendar_shortcode($atts=array()) {
+	static function handle_fullcalendar_shortcode( $atts = array() ) {
 
 		global $wp_locale;
-		
+
 		/* Handle Boolean attributes - this will be passed as strings, we want them as boolean */
 		$bool_atts = array(
-			'key'=>'false',
-			'tooltip'=>'true',
-			'weekends'=>'true',
-			'alldayslot'=>'true',
-			'users_events' => 'false',
-			'theme' => 'true',
-			'isrtl' => $wp_locale->is_rtl() ? 'true' : 'false'
+			'tooltip' => 'true', 'weekends' => 'true', 'alldayslot' => 'true', 'users_events' => 'false',
+			'theme' => 'false', 'isrtl' => $wp_locale->is_rtl() ? 'true' : 'false', 'responsive' => 'true',
+			'compact' => false,
 		);
-		
+
 		$atts = wp_parse_args( $atts, $bool_atts );
 
 		foreach( $bool_atts as $att => $value ){
 			$atts[$att] = ( strtolower( $atts[$att] ) == 'true' ? true : false );
+		}
+		
+		//Backwards compatability, key used to be true/false. Now can be bottom/top
+		if( isset( $atts['key'] ) ){
+			if( 'true' == strtolower( $atts['key'] ) ){
+				$atts['key'] = 'bottom';
+			}elseif( !in_array( strtolower( $atts['key'] ), array( 'bottom', 'top' ) ) ){
+				$atts['key'] = false;
+			}
 		}
 
 		if( isset($atts['venue']) && !isset( $atts['event_venue'] ) ){
@@ -140,6 +145,17 @@ class EventOrganiser_Shortcodes {
 			unset( $atts['category'] );
 		}
 		
+		$date_attributes = array( 
+			'timeformat', 'axisformat', 'titleformatday', 'titleformatweek', 'titleformatmonth',
+			'columnformatmonth', 'columnformatweek', 'columnformatday',
+		);
+		
+		foreach( $date_attributes as $attribute ){
+			if( isset( $atts[$attribute] ) ){
+				$atts[$attribute] = self::_cleanup_format( $atts[$attribute] );
+			}
+		}
+
 		$taxonomies = get_object_taxonomies( 'event' );
 		foreach( $taxonomies as $tax ){
 			//Shortcode attributes can't contain hyphens
@@ -149,44 +165,73 @@ class EventOrganiser_Shortcodes {
 				unset( $atts[$shortcode_attr] ); 
 			}
 		}
+		
+		if( isset( $atts['showdays'] ) ){
+			$atts['showdays'] = explode( ',', $atts['showdays'] );
+		}
 				
 		return eo_get_event_fullcalendar( $atts );
+	}
+	
+	/**
+	 * Prior to 3.0.0, formats could accept operators to deal with ranges.
+	 * Specifically {...} switches to formatting the 2nd date and ((...)) only displays 
+	 * the enclosed format if the current date is different from the alternate date in 
+	 * the same regards.E.g.  M j(( Y)){ '—'(( M)) j Y} produces the following dates: 
+	 * Dec 30 2013 — Jan 5 2014, Jan 6 — 12 2014
+	 * 
+	 * This was removed in 3.0.0, fullCalendar.js will now automatically split the date where
+	 * appropriate. This function removes {...} and all enclosed content and replaces ((...))
+	 * by the content contained within to help prevent an users upgrading from the old version.
+	 * 
+	 * @ignore
+	 */
+	static function _cleanup_format( $format ){
+		$format = preg_replace( '/({.*})/', '', $format );
+		$format = preg_replace_callback( '/\(\((.*)\)\)/', array( __CLASS__ ,'_replace_open_bracket' ), $format );			
+		return $format;
+	}
+	
+	static function _replace_open_bracket( $matches ){
+		return $matches[1];
 	}
 
 	static function handle_venuemap_shortcode($atts) {
 		global $post;
 
-		if( !empty($atts['event_venue']) )
+		if( !empty( $atts['event_venue'] ) ){
 			$atts['venue'] = $atts['event_venue'];
+		}
 
 		//If venue is not set get from the venue being quiered or the post being viewed
 		if( empty($atts['venue']) ){
 			if( eo_is_venue() ){
-				$atts['venue']= esc_attr(get_query_var('term'));
+				$atts['venue'] = esc_attr( get_query_var( 'term' ) );
 			}else{
-				$atts['venue'] = eo_get_venue_slug(get_the_ID());
+				$atts['venue'] = eo_get_venue_slug( get_the_ID() );
 			}
 		}
-	
 
-		$venue_slugs = explode(',',$atts['venue']);
+		$venue_slugs = explode( ',', $atts['venue'] );
 
 		$args = shortcode_atts( array(
-			'zoom' => 15, 'scrollwheel'=>'true','zoomcontrol'=>'true',
-			'rotatecontrol'=>'true','pancontrol'=>'true','overviewmapcontrol'=>'true',
-			'streetviewcontrol'=>'true','maptypecontrol'=>'true','draggable'=>'true',
-			'maptypeid' => 'ROADMAP',
-			'width' => '100%','height' => '200px','class' => '',
-			'tooltip'=>'false'
+			'zoom' => 15, 'zoomcontrol' => 'true', 'minzoom' => 0, 'maxzoom' => null,
+			'scrollwheel' => 'true', 'rotatecontrol' => 'true', 'pancontrol' => 'true',
+			'overviewmapcontrol' => 'true', 'streetviewcontrol' => 'true',
+			'maptypecontrol' => 'true', 'draggable' => 'true', 'maptypeid' => 'ROADMAP',
+			'width' => '100%','height' => '200px','class' => '', 'tooltip' => 'false',
 			), $atts );
 
 		//Cast options as boolean:
-		$bool_options = array('tooltip','scrollwheel','zoomcontrol','rotatecontrol','pancontrol','overviewmapcontrol','streetviewcontrol','draggable','maptypecontrol');
+		$bool_options = array( 
+			'tooltip', 'scrollwheel', 'zoomcontrol', 'rotatecontrol', 'pancontrol',
+			'overviewmapcontrol', 'streetviewcontrol', 'draggable', 'maptypecontrol',
+		);
 		foreach( $bool_options as $option  ){
 			$args[$option] = ( $args[$option] == 'false' ? false : true );
 		}
 
-		return eo_get_venue_map($venue_slugs, $args);
+		return eo_get_venue_map( $venue_slugs, $args );
 	}
 
 
@@ -308,17 +353,15 @@ class EventOrganiser_Shortcodes {
 			case 'event_duration':
 				$start = eo_get_the_start( DATETIMEOBJ );
 				$end   = clone eo_get_the_end( DATETIMEOBJ );
-				if( eo_is_all_day() ){
+				if ( eo_is_all_day() ) {
 					$end->modify( '+1 minute' );
 				}
-
-				if( function_exists( 'date_diff' ) ){
+				if ( function_exists( 'date_diff' ) ) {
 					$duration = date_diff( $start, $end );
 					$replacement = $duration->format( $matches[2] );
-				}else{
+				} else {
 					$replacement = eo_date_interval( $start,$end, $matches[2] );
 				}
-				$replacement = false;
 				break;
 
 			case 'event_tags':
@@ -415,7 +458,7 @@ class EventOrganiser_Shortcodes {
 		$input = str_replace(array("'",'"',"&#8221;","&#8216;", "&#8217;"),'',$input); //remove quotations
 		return $input;
 	}
- 
+
 	static function print_script() {
 
 		if ( ! self::$add_script ) {
@@ -425,37 +468,36 @@ class EventOrganiser_Shortcodes {
 		$terms = get_terms( 'event-category', array( 'hide_empty' => 0 ) );
 
 		$fullcal = (empty(self::$calendars) ? array() : array(
-			'firstDay'=>intval(get_option('start_of_week')),
-			'venues' => get_terms( 'event-venue', array('hide_empty' => 0)),
+			'firstDay'   => intval( get_option( 'start_of_week' ) ),
+			'venues'     => get_terms( 'event-venue', array( 'hide_empty' => 0 ) ),
 			'categories' => $terms,
-			'tags' => get_terms( 'event-tag', array('hide_empty' => 1)),
+			'tags'       => get_terms( 'event-tag', array( 'hide_empty' => 1 ) ),
 		));
-		
+
 		eo_localize_script( 'eo_front', array(
-			'ajaxurl' => admin_url( 'admin-ajax.php'),
-			'calendars' => self::$calendars,
+			'ajaxurl'          => admin_url( 'admin-ajax.php' ),
+			'calendars'        => self::$calendars,
 			'widget_calendars' => self::$widget_calendars,
-			'fullcal' => $fullcal,
-			'map' => self::$map,
-		));	
-		
-		if( !empty(self::$calendars) || !empty(self::$map) || !empty(self::$widget_calendars) ):				
-			wp_enqueue_script( 'eo_qtip2');		
-			wp_enqueue_script( 'eo_front');
+			'fullcal'          => $fullcal,
+			'map'              => self::$map,
+		));
 
-			if( !eventorganiser_get_option( 'disable_css' ) ){
-				wp_enqueue_style( 'eo_front');
-				wp_enqueue_style('eo_calendar-style');
-			}
-		endif;
+		if ( ! empty( self::$calendars ) || ! empty( self::$map ) || ! empty( self::$widget_calendars ) ) {
 
-		if( !empty( self::$map ) ){
+			wp_enqueue_script( 'eo_qtip2' );
+			wp_enqueue_script( 'eo_front' );
+
+			eo_enqueue_style( 'eo_front' );
+			eo_enqueue_style( 'eo_calendar-style' );
+
+		}
+
+		if ( ! empty( self::$map ) ) {
 			wp_enqueue_script( 'eo_GoogleMap' );
 		}
-			
 	}
 }
- 
+
 EventOrganiser_Shortcodes::init();
 
 /**

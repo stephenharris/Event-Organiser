@@ -61,7 +61,7 @@
 *                   '<li><a href="%s"> %s </a> on %s </li>',
 *                   get_permalink($event->ID),
 *                   get_the_title($event->ID),
-*                   eo_get_the_start($format, $event->ID,null,$event->occurrence_id)
+*                   eo_get_the_start( $format, $event->ID, $event->occurrence_id )
 *                );                           
 *           endforeach; 
 *           echo '</ul>'; 
@@ -175,37 +175,37 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
 * If used inside the loop, with no id no set, returns start date of
 * current event occurrence.
 * 
-* **Please note:** This function used to accept 3 arguments, it now accepts 4, but with the third deprecated. 
-* The third argument specified the occurrence (are 3 for the 3rd occurrence of an event). 
-* Instead now use the fourth argument - which specifies the occurrence by ID.
+* **3.0.0 Update:** This function used to accept 4 arguments (versions 1.5.6 - 2.11.1), with 
+* the third (null) argument deprecated. While the old behaviour shall still work, it is recommended 
+* that pass a maximum of three arguments, as shown below, with the third argument (not the fourth)
+* specifying the occurrence ID.
 * 
 * ### Examples
 * Inside the loop, you can output the start date of event (occurrence)
 * <code>
-*       <php echo eo_get_the_start('jS M YY'); ?>
+*       <php echo eo_get_the_start( 'jS M Y' ); ?>
 * </code> 
 * Get the start date of the event with id 7 and occurrence ID 3
 * <code>
-*       <?php $date = eo_get_the_start('jS M YY',7,null, 3); ?>
+*       <?php $date = eo_get_the_start ( 'jS M Y', 7, 3 ); ?>
 * </code>
 * Print a list of upcoming events with their start and end date
 * <code>
 *     //Get upcoming events
 *     $events = eo_get_events(array(
-*          'numberposts'=>5,
-*          'events_start_after'=>'today',
-*          'showpastevents'=>true,//Will be deprecated, but set it to true to play it safe.
+*          'numberposts'        => 5,
+*          'events_start_after' => 'today',
+*          'showpastevents'     => true,
 *       ));
-*
 *
 *     if( $events ){
 *         echo '<ul>';
 *         foreach( $events as $event ){
 *           printf("<li><a href='%s' >%s</a> from %s to %s </li>",
-*                get_the_permalink($post->ID),
-*                get_the_title($post->ID),
-*                eo_get_the_start('jS F Y', $post->ID,null,$post->occurrence_id),
-*                eo_get_the_end('jS F Y', $post->ID,null,$post->occurrence_id)
+*                get_the_permalink( $post->ID ),
+*                get_the_title( $post->ID ),
+*                eo_get_the_start( 'jS F Y', $post->ID, $post->occurrence_id ),
+*                eo_get_the_end( 'jS F Y', $post->ID, $post->occurrence_id )
 *           );
 *          }
 *         echo '</ul>';
@@ -219,41 +219,28 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
 *
 * @param string $format String of format as accepted by PHP date or the constant DATETIMEOBJ to return a DateTime object
 * @param int $post_id Post ID of the event
-* @param int $deprecated The occurrence number. Deprecated. Use $occurrence_id
 * @param int $occurrence_id  The occurrence ID
+* @param int $deprecated (Was) the occurrence id, supply this as the third argument
 * @return string|DateTime the start date formated to given format, as accepted by PHP date or a DateTime object if DATETIMEOBJ is given as format.
  */
-function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occurrence_id = 0 ){
+function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
 	global $post;
 	$event = $post;
 
-	if( !empty($deprecated) ){
-		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->occurrence_id' );
-
-		//Backwards compatiblity
-		if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$deprecated, $occurrence_id);	
-	
-		if(empty($event)) 
-			return false;
-	
-		$date = trim($event->StartDate).' '.trim($event->StartTime);
-
-		if(empty($date)||$date==" ")
-			return false;
-
-		return eo_format_date($date,$format);
+	if( !empty( $deprecated ) && empty( $occurrence_id ) ){
+		//_deprecated_argument( __FUNCTION__, '3.0.0', 'Fourth argument is depreciated. Please use the third argument, the occurrence ID, available from $post->occurrence_id' );
+		$occurrence_id = $deprecated;
 	}
 
 	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
+	$occurrence    = eo_get_the_occurrence( $post_id, $occurrence_id );
 
-	$occurrences = eo_get_the_occurrences_of( $post_id );
-
-	if( !$occurrences || !isset( $occurrences[$occurrence_id] ) ){
+	if ( ! $occurrence ) {
 		return false;
 	}
 
-	$start = $occurrences[$occurrence_id]['start'];
+	$start = $occurrence['start'];
 
 	/**
 	 * Filters the value returned by `eo_get_the_start()`
@@ -266,6 +253,49 @@ function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $oc
 	 */
 	$formatted_date = apply_filters( 'eventorganiser_get_the_start', eo_format_datetime( $start, $format ), $start, $format, $post_id, $occurrence_id );
 	return $formatted_date;
+}
+
+/**
+ * Returns an array contining the start and end datetime of the specified occurrence.
+ * 
+ * The returned array contains two DateTime objects with the keys: 'start' and 'end',
+ *
+ * @since 3.0.0
+ * @package event-date-functions
+ * @param int $event_id
+ * @param int $occurrence_id
+ * @return boolean|array False if the occurrence was not found.
+ */
+function eo_get_the_occurrence( $event_id, $occurrence_id ) {
+
+	global $wpdb;
+	
+	$occurrences = wp_cache_get( 'eventorganiser_occurrences_'.$event_id );
+	
+	if ( ! isset ( $occurrences[$occurrence_id] ) ) {
+		
+		$result = $wpdb->get_row($wpdb->prepare(
+			"SELECT event_id, StartDate,StartTime,EndDate,FinishTime FROM {$wpdb->eo_events} 
+			WHERE {$wpdb->eo_events}.post_id=%d AND {$wpdb->eo_events}.event_id=%d ORDER BY StartDate ASC", 
+			$event_id, 
+			$occurrence_id
+		));
+	
+		if( ! $result ) {
+			return false;
+		}
+	
+		$occurrences[$occurrence_id] = array(
+			'start' => new DateTime($result->StartDate.' '.$result->StartTime, eo_get_blog_timezone()),
+			'end' => new DateTime($result->EndDate.' '.$result->FinishTime, eo_get_blog_timezone())
+		);
+		
+		wp_cache_set( 'eventorganiser_occurrences_'.$event_id, $occurrences );
+		
+	}
+	
+	return $occurrences[$occurrence_id];
+	
 }
 
 /**
@@ -300,18 +330,18 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
 }
 
 /**
-* Echos the start date of occurence of event
+ * Echos the start date of occurrence of event
  * @since 1.0.0
  * @uses eo_get_the_start()
  * @package event-date-functions
  *
-* @param string $format String of format as accepted by PHP date
-* @param int $post_id Post ID of the event
-* @param int $deprecated The occurrence number. Deprecated. Use $occurrence_id instead
-* @param int $occurrence_id  The occurrence ID
+ * @param string $format String of format as accepted by PHP date
+ * @param int $post_id Post ID of the event
+ * @param int $occurrence_id The occurrence ID
+ * @param int $deprecated Deprecated, use the third argument.
  */
-function eo_the_start($format='d-m-Y',$post_id=0,$deprecated=0,$occurrence_id=0){
-	echo eo_get_the_start($format,$post_id,$deprecated, $occurrence_id);
+function eo_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
+	echo eo_get_the_start( $format, $post_id, $occurrence_id, $deprecated );
 }
 
 
@@ -321,37 +351,37 @@ function eo_the_start($format='d-m-Y',$post_id=0,$deprecated=0,$occurrence_id=0)
 * If used inside the loop, with no id no set, returns end date of
 * current event occurrence.
 * 
-* **Please note:** This function used to accept 3 arguments, it now accepts 4, but with the third deprecated. 
-* The third argument specified the occurrence (are 3 for the 3rd occurrence of an event). 
-* Instead now use the fourth argument - which specifies the occurrence by ID.
+* **3.0.0 Update:** This function used to accept 4 arguments (versions 1.5.6 - 2.11.1), with 
+* the third (null) argument deprecated. While the old behaviour shall still work, it is deprecated 
+* so you you should now pass a maximum of three arguments, as shown below, with the third argument
+* specifying the occurrence ID.
 * 
 * ### Examples
 * Inside the loop, you can output the end date of event (occurrence)
 * <code>
-*       <php echo eo_get_the_end('jS M YY'); ?>
+*       <php echo eo_get_the_end( 'jS M Y' ); ?>
 * </code> 
 * Get the end date of the event with id 7 and occurrence ID 3
 * <code>
-*       <?php $date = eo_get_the_end('jS M YY',7,null, 3); ?>
+*       <?php $date = eo_get_the_end( 'jS M Y', 7, 3 ); ?>
 * </code>
 * Print a list of upcoming events with their start and end date
 * <code>
 *     //Get upcoming events
 *     $events = eo_get_events(array(
-*          'numberposts'=>5,
-*          'events_start_after'=>'today',
-*          'showpastevents'=>true,//Will be deprecated, but set it to true to play it safe.
+*          'numberposts'        => 5,
+*          'events_start_after' => 'today',
+*          'showpastevents'     => true,
 *       ));
-*
 *
 *     if( $events ){
 *         echo '<ul>';
 *         foreach( $events as $event ){
 *           printf("<li><a href='%s' >%s</a> from %s to %s </li>",
-*                get_the_permalink($post->ID),
-*                get_the_title($post->ID),
-*                eo_get_the_start('jS F Y', $post->ID,null,$post->occurrence_id),
-*                eo_get_the_end('jS F Y', $post->ID,null,$post->occurrence_id)
+*                get_the_permalink( $post->ID ),
+*                get_the_title( $post->ID ),
+*                eo_get_the_start( 'jS F Y', $post->ID, $post->occurrence_id ),
+*                eo_get_the_end( 'jS F Y', $post->ID, $post->occurrence_id )
 *           );
 *          }
 *         echo '</ul>';
@@ -364,41 +394,28 @@ function eo_the_start($format='d-m-Y',$post_id=0,$deprecated=0,$occurrence_id=0)
 * @package event-date-functions
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id The event (post) ID. Uses current event if empty.
-* @param int $deprecated The occurrence number. Deprecated. Use $occurrence_id instead
 * @param int $occurrence_id  The occurrence ID
+* @param int $deprecated (Was) the occurrence id, supply this as the third argument
 * @return string the end date formated to given format, as accepted by PHP date
  */
-function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occurrence_id = 0 ){
+function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0  ){
 	global $post;
 	$event = $post;
 
-	if( !empty($deprecated) ){
-		_deprecated_argument( __FUNCTION__, '1.5.6', 'Third argument is depreciated. Please use a fourth argument - occurrence ID. Available from $post->occurrence_id' );
-
-		//Backwards compatiblity
-		if( !empty($post_id) ) $event = eo_get_by_postid($post_id,$deprecated, $occurrence_id);	
-	
-		if(empty($event)) 
-			return false;
-	
-		$date = trim($event->EndDate).' '.trim($event->FinishTime);
-
-		if(empty($date)||$date==" ")
-			return false;
-
-		return eo_format_date($date,$format);
+	if( !empty( $deprecated ) && empty( $occurrence_id ) ){
+		//_deprecated_argument( __FUNCTION__, '3.0.0', 'Fourth argument is depreciated. Please use the third argument, the occurrence ID, available from $post->occurrence_id' );
+		$occurrence_id = $deprecated;
 	}
 	
 	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
+	$occurrence    = eo_get_the_occurrence( $post_id, $occurrence_id );
 
-	$occurrences = eo_get_the_occurrences_of( $post_id );
-
-	if( !$occurrences || !isset( $occurrences[$occurrence_id] ) ){
+	if ( ! $occurrence ) {
 		return false;
 	}
 
-	$end = $occurrences[$occurrence_id]['end'];
+	$end = $occurrence['end'];
 
 	/**
 	 * Filters the value returned by `eo_get_the_end()`
@@ -414,18 +431,18 @@ function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $deprecated = 0, $occu
 }
 
 /**
-* Echos the end date of occurence of event
+* Echos the end date of occurrence of event
  * @since 1.0.0
  * @uses eo_get_the_end()
 * @package event-date-functions
  * 
 * @param string $format String of format as accepted by PHP date
 * @param int $post_id Post ID of the event
-* @param int $occurrence The occurrence number. Deprecated. Use $occurrence_id instead
-* @param int $occurrence_id  The occurrence ID
+* @param int $occurrence_id The occurrence ID
+* @param int $occurrence_id Deprecated, use the third argument.
  */
-function eo_the_end($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id=0){
-	echo eo_get_the_end($format,$post_id,$occurrence, $occurrence_id);
+function eo_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
+	echo eo_get_the_end( $format, $post_id, $occurrence_id, $deprecated );
 }
 
 
@@ -435,12 +452,12 @@ function eo_the_end($format='d-m-Y',$post_id=0,$occurrence=0, $occurrence_id=0){
 * ### Examples
 * Inside the loop, you can output the start date of the next occurrence of the current event.
 * <code>
-* <?php $next = eo_get_next_occurrence( 'jS M YY' ); ?>
+* <?php $next = eo_get_next_occurrence( 'jS M Y' ); ?>
 * </code> 
 * 
 * Print the start date of the next occurrence of event with id 7
 * <code>
-* <?php echo eo_get_next_occurrence( 'jS M YY', 7 ); ?>
+* <?php echo eo_get_next_occurrence( 'jS M Y', 7 ); ?>
 * </code>
 *
 * @since 1.0.0
@@ -513,14 +530,14 @@ function eo_get_next_occurrence_of($post_id=0){
 /**
 * Prints the formated date of next occurrence of an event
 * @since 1.0.0
-* @uses eo_get_next_occurence()
+* @uses eo_get_next_occurrence()
 * @package event-date-functions
 *
 * @param string $format The format to use, using PHP Date format
-* @param int $post_id The event (post) ID. Uses current event if empty. 
+* @param int $post_id The event (post) ID. Uses current event if empty.
  */
-function eo_next_occurence($format='',$post_id=0){
-	echo eo_get_next_occurence($format,$post_id);
+function eo_next_occurrence( $format = '', $event_id = 0 ) {
+	echo eo_get_next_occurrence( $format, $event_id );
 }
 
 /**
@@ -580,11 +597,11 @@ function eo_get_current_occurrence_of($post_id=0){
 function eo_is_all_day($post_id=0){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
-	if( empty($post_id) ) 
+	if( empty($post_id) ) {
 		return false;
-
+	}
+	//$schedule = get_post_meta( $post_id,'_eventorganiser_event_schedule', true );
 	$schedule = eo_get_event_schedule($post_id);
-
 	return (bool) $schedule['all_day'];
 }
 
@@ -594,12 +611,12 @@ function eo_is_all_day($post_id=0){
 * ### Examples
 * Inside the loop, you can output the first start date of event
 * <code>
-* <?php echo 'This event will first start on ' . eo_get_schedule_start( 'jS M YY' ); ?>
+* <?php echo 'This event will first start on ' . eo_get_schedule_start( 'jS M Y' ); ?>
 * </code> 
 * 
 * Print the first start date of the event with id 7
 * <code>
-* <?php echo eo_get_schedule_start( 'jS M YY', 7 ); ?>
+* <?php echo eo_get_schedule_start( 'jS M Y', 7 ); ?>
 * </code>
 * 
 * @since 1.0.0
@@ -645,12 +662,12 @@ function eo_schedule_start($format='d-m-Y',$post_id=0){
 * ### Examples
 * Inside the loop, you can output the last start date of event
 * <code>
-* <?php echo 'This event will run or the last time on ' . eo_get_schedule_last( 'jS M YY' ); ?>
+* <?php echo 'This event will run or the last time on ' . eo_get_schedule_last( 'jS M Y' ); ?>
 * </code> 
 * 
 * Print the last start date of the event with id 7
 * <code>
-* <?php echo eo_get_schedule_last( 'jS M YY', 7 ); ?>
+* <?php echo eo_get_schedule_last( 'jS M Y', 7 ); ?>
 * </code>
 * 
 * @since 1.4.0
@@ -693,13 +710,13 @@ function eo_schedule_last($format='d-m-Y',$post_id=0){
 
 
 /**
-* Returns true if event reoccurs or false if it is a one time event.
+* Returns true if event recurs or false if it is a one time event.
 * 
 * ### Examples
-* Display a different message depending on whether the event reoccurs or not, inside the loop.
+* Display a different message depending on whether the event recurs or not, inside the loop.
 * <code>
-*      <?php if( eo_reoccurs() ){ 
-*                  echo 'This event reoccurs'; 
+*      <?php if( eo_recurs() ){ 
+*                  echo 'This event recurs'; 
 *            }else{ 
 *                  echo 'This event is a one-time event'; 
 *            } 
@@ -707,8 +724,8 @@ function eo_schedule_last($format='d-m-Y',$post_id=0){
 * </code>
 * Outside the loop, for event with ID 7:
 * <code>
-*      <?php if( eo_reoccurs(7) ){ 
-*                  echo 'This event reoccurs'; 
+*      <?php if( eo_recurs(7) ){ 
+*                  echo 'This event recurs'; 
 *            }else{ 
 *                  echo 'This event is a one-time event'; 
 *            } 
@@ -716,9 +733,9 @@ function eo_schedule_last($format='d-m-Y',$post_id=0){
 * </code>
 * @since 1.0.0
 * @param int $post_id The event (post) ID. Uses current event if empty.
-* @return bool true if event a reoccurring event
+* @return bool true if event a recurring event
 */
-function eo_reoccurs($post_id=0){
+function eo_recurs($post_id=0){
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
 	if( empty($post_id) ) 
@@ -728,7 +745,6 @@ function eo_reoccurs($post_id=0){
 	
 	return ($schedule['schedule'] != 'once');
 }
-
 
 /**
 * Returns a summary of the events schedule.
@@ -746,99 +762,87 @@ function eo_get_schedule_summary($post_id=0){
 
 	$nth= array(__('last','eventorganiser'),'',__('first','eventorganiser'),__('second','eventorganiser'),__('third','eventorganiser'),__('fourth','eventorganiser'));
 
-	$reoccur = eo_get_event_schedule($post_id);
+	$recur = eo_get_event_schedule($post_id);
 
-	if(empty($reoccur))
+	if(empty($recur))
 		return false;
 
 	$return='';
 
-	if($reoccur['schedule']=='once'){
+	if($recur['schedule']=='once'){
 		$return = __('one time only','eventorganiser');
 
-	}elseif($reoccur['schedule']=='custom'){
-		$return = __('custom reoccurrence','eventorganiser');
+	}elseif($recur['schedule']=='custom'){
+		$return = __('custom recurrence','eventorganiser');
 
 	}else{
-		switch($reoccur['schedule']):
+		switch($recur['schedule']):
 
 			case 'daily':
-				if($reoccur['frequency']==1):
+				if($recur['frequency']==1):
 					$return .=__('every day','eventorganiser');
 				else:
-					$return .=sprintf(__('every %d days','eventorganiser'),$reoccur['frequency']);
+					$return .=sprintf(__('every %d days','eventorganiser'),$recur['frequency']);
 				endif;
 				break;
 
 			case 'weekly':
-				if($reoccur['frequency']==1):
+				if($recur['frequency']==1):
 					$return .=__('every week on','eventorganiser');
 				else:
-					$return .=sprintf(__('every %d weeks on','eventorganiser'),$reoccur['frequency']);
+					$return .=sprintf(__('every %d weeks on','eventorganiser'),$recur['frequency']);
 				endif;
 
-				foreach( $reoccur['schedule_meta'] as $ical_day){
+				foreach( $recur['schedule_meta'] as $ical_day){
 					$days[] =  $ical2day[$ical_day];
 					}
 				$return .=' '.implode(', ',$days);
 				break;
 
 			case 'monthly':
-				if($reoccur['frequency']==1):
+				if($recur['frequency']==1):
 					$return .=__('every month on the','eventorganiser');
 				else:
-					$return .=sprintf(__('every %d months on the','eventorganiser'),$reoccur['frequency']);
+					$return .=sprintf(__('every %d months on the','eventorganiser'),$recur['frequency']);
 				endif;
 				$return .= ' ';
-				$bymonthday =preg_match('/^BYMONTHDAY=(\d{1,2})/' ,$reoccur['schedule_meta'],$matches);
+				$bymonthday =preg_match('/^BYMONTHDAY=(\d{1,2})/' ,$recur['schedule_meta'],$matches);
 
 				if( $bymonthday  ){
 					$d = intval($matches[1]);
-					$m =intval($reoccur['schedule_start']->format('n'));
-					$y =intval($reoccur['schedule_start']->format('Y'));
-					$reoccur['start']->setDate($y,$m,$d);
-					$return .= $reoccur['schedule_start']->format('jS');
+					$m =intval($recur['schedule_start']->format('n'));
+					$y =intval($recur['schedule_start']->format('Y'));
+					$recur['start']->setDate($y,$m,$d);
+					$return .= $recur['schedule_start']->format('jS');
 
-				}elseif($reoccur['schedule_meta']=='date'){
-					$return .= $reoccur['schedule_start']->format('jS');
+				}elseif($recur['schedule_meta']=='date'){
+					$return .= $recur['schedule_start']->format('jS');
 
 				}else{
-					$byday = preg_match('/^BYDAY=(-?\d{1,2})([a-zA-Z]{2})/' ,$reoccur['schedule_meta'],$matches);
+					$byday = preg_match('/^BYDAY=(-?\d{1,2})([a-zA-Z]{2})/' ,$recur['schedule_meta'],$matches);
 					if($byday):
 						$n=intval($matches[1])+1;
 						$return .=$nth[$n].' '.$ical2day[$matches[2]];
 					else:
-						$bydayOLD = preg_match('/^(-?\d{1,2})([a-zA-Z]{2})/' ,$reoccur['schedule_meta'],$matchesOLD);
+						$bydayOLD = preg_match('/^(-?\d{1,2})([a-zA-Z]{2})/' ,$recur['schedule_meta'],$matchesOLD);
 						$n=intval($matchesOLD[1])+1;
 						$return .=$nth[$n].' '.$ical2day[$matchesOLD[2]];
 					endif;
 				}
 				break;
 			case 'yearly':
-				if($reoccur['frequency']==1):
+				if($recur['frequency']==1):
 					$return .=__('every year','eventorganiser');
 				else:
-					$return .=sprintf(__('every %d years','eventorganiser'),$reoccur['frequency']);
+					$return .=sprintf(__('every %d years','eventorganiser'),$recur['frequency']);
 				endif;
 				break;
 
 		endswitch;
-		$return .= ' '.__('until','eventorganiser').' '. eo_format_datetime($reoccur['schedule_last'],'M, jS Y');
+		$return .= ' '.__('until','eventorganiser').' '. eo_format_datetime($recur['schedule_last'],'M, jS Y');
 	}
 	
 	return $return; 
-}
-
-/**
-* Prints a summary of the events schedule.
-* @since 1.0.0
-* @uses eo_get_schedule_summary()
-* @ignore
-*
-* @param int $post_id The event (post) ID. Uses current event if empty.
- */
-function eo_display_reoccurence($post_id=0){
-	echo eo_get_schedule_summary($post_id);
 }
 
 /** 
@@ -850,7 +854,7 @@ function eo_display_reoccurence($post_id=0){
 * @ignore
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
-* @return array Array of arrays of DateTime objects of the start and end date-times of occurences. False if none exist.
+* @return array Array of arrays of DateTime objects of the start and end date-times of occurrences. False if none exist.
  */
 function eo_get_the_future_occurrences_of( $post_id=0 ){
 	global $wpdb;
@@ -918,7 +922,7 @@ function eo_get_the_future_occurrences_of( $post_id=0 ){
 * @package event-date-functions
 *
 * @param int $post_id The event (post) ID. Uses current event if empty.
-* @return array Array of arrays of DateTime objects of the start and end date-times of occurences. False if none exist.
+* @return array Array of arrays of DateTime objects of the start and end date-times of occurrences. False if none exist.
  */
 function eo_get_the_occurrences_of($post_id=0){
 	global $wpdb;
@@ -931,7 +935,7 @@ function eo_get_the_occurrences_of($post_id=0){
 	 //Can't cache datetime objects before 5.3
 	 //@see{https://wordpress.org/support/topic/warning-datetimeformat-functiondatetime-format?replies=7#post-3940247}
 	if( version_compare(PHP_VERSION, '5.3.0') >= 0 ){
-		$occurrences = wp_cache_get( 'eventorganiser_occurrences_'.$post_id );
+		$occurrences = wp_cache_get( 'eventorganiser_all_occurrences_'.$post_id );
 	}else{
 		$occurrences = false;
 	}
@@ -952,7 +956,7 @@ function eo_get_the_occurrences_of($post_id=0){
 				'end' => new DateTime($row->EndDate.' '.$row->FinishTime, eo_get_blog_timezone())
 			);
 		endforeach;
-		wp_cache_set( 'eventorganiser_occurrences_'.$post_id, $occurrences );
+		wp_cache_set( 'eventorganiser_all_occurrences_'.$post_id, $occurrences );
 	}
 
 	/**
@@ -970,11 +974,11 @@ function eo_get_the_occurrences_of($post_id=0){
 
 /**
  * Returns the colour of a category
- * @ignore
- * @access private
+ * @param int|object $term_id The term ID or term object to retrieve the colour of
  */
-function eo_get_category_color($term){
-	return eo_get_category_meta($term,'color');
+function eo_get_category_color( $term_id ) {
+	$term = is_int( $term_id ) ? get_term_by( 'id', $term_id, 'event-category' ) : $term_id;
+	return eo_get_category_meta( $term, 'color' );
 }
 
 /**
@@ -1085,9 +1089,9 @@ function eo_get_event_classes($post_id=0, $occurrence_id=0){
 	}
 
 	//Add 'time' class
-	$start = eo_get_the_start(DATETIMEOBJ, $post_id, null, $occurrence_id);
-	$end = eo_get_the_end(DATETIMEOBJ, $post_id, null, $occurrence_id);
-	$now = new DateTime('now',eo_get_blog_timezone());
+	$start = eo_get_the_start( DATETIMEOBJ, $post_id, $occurrence_id );
+	$end = eo_get_the_end( DATETIMEOBJ, $post_id, $occurrence_id );
+	$now = new DateTime( 'now', eo_get_blog_timezone() );
 	if( $start > $now ){
 		$event_classes[] = 'eo-event-future';
 	}elseif( $end < $now ){
@@ -1252,16 +1256,16 @@ function eo_get_add_to_google_link( $event_id = 0, $occurrence_id = 0 ){
 	
 	setup_postdata( $post );	
 	
-	$start = clone eo_get_the_start( DATETIMEOBJ, $event_id, null, $occurrence_id );
-	$end   = clone eo_get_the_end( DATETIMEOBJ, $event_id, null, $occurrence_id );
+	$start = clone eo_get_the_start( DATETIMEOBJ, $event_id, $occurrence_id );
+	$end   = clone eo_get_the_end( DATETIMEOBJ, $event_id, $occurrence_id );
 	
 	if( eo_is_all_day() ):
-		$end->modify('+1 second');
+		$end->modify( '+1 second' );
 		$format = 'Ymd';
 	else:
 		$format = 'Ymd\THis\Z';
-		$start->setTimezone( new DateTimeZone('UTC') );
-		$end->setTimezone( new DateTimeZone('UTC') );
+		$start->setTimezone( new DateTimeZone( 'UTC' ) );
+		$end->setTimezone( new DateTimeZone( 'UTC' ) );
 	endif;
 	
 	/**
@@ -1292,22 +1296,18 @@ function eo_get_add_to_google_link( $event_id = 0, $occurrence_id = 0 ){
 /**
  * @ignore
 */
-function eo_has_event_started($id='',$occurrence){
-	$tz = eo_get_blog_timezone();
-	$start = new DateTime(eo_get_the_start('d-m-Y H:i',$id,$occurrence), $tz);
-	$now = new DateTime('now', $tz);
-
+function eo_has_event_started( $event_id = false, $occurrence_id = false ) {
+	$start = eo_get_the_start( DATETIMEOBJ, $event_id, $occurrence_id );
+	$now   = new DateTime( 'now', eo_get_blog_timezone() );
 	return ($start <= $now );
 }
 
 /**
  * @ignore
 */
-function eo_has_event_finished($id='',$occurrence=0){
-	$tz = eo_get_blog_timezone();
-	$end = new DateTime(eo_get_the_end('d-m-Y H:i',$id,$occurrence), $tz);
-	$now = new DateTime('now', $tz);
-
+function eo_has_event_finished( $event_id = false, $occurrence_id = false ) {
+	$end = eo_get_the_end( DATETIMEOBJ, $event_id, $occurrence_id );
+	$now = new DateTime( 'now', eo_get_blog_timezone() );
 	return ($end <= $now );
 }
 
@@ -1330,12 +1330,15 @@ function eo_has_event_finished($id='',$occurrence=0){
  * * **tooltip** (bool) Whether to show a tooltips. Default true. Content is filtered by [`eventorganiser_event_tooltip`](http://codex.wp-event-organiser.com/hook-eventorganiser_event_tooltip.html)
  * * **users_events** - (bool) True to show only eents for which the current user is attending
  * * **weekends** (bool) Whether to include weekends in the calendar. Default true.
- * * **mintime** (string) Earliest time to show on week/day views. Default '0',
- * * **maxtime** (string) Latest time to show on week/day views. Default '24',
+ * * **mintime** (string) Earliest time to show on week/day views. Default '00:00',
+ * * **maxtime** (string) Latest time to show on week/day views. Default '24:00',
+ * * **slotDuration** (string) The frequency for displaying time slots in agenda views, default '00:30:00' (30 minutes)
+ * * **nextDayThreshold** (string) If the event starts on a previous day, then the end time of the event must be after this time for it appear on this day on the calendar. Default '06:00:00' (6am)
+ *   e.g. An event 17th October 11pm - 18th October 7am will appear on the 17th and 18th, but an event 17th October 11pm - 18th October 5am will appear only on the 17th.
  * * **alldayslot** (bool) Whether to include an all day slot (week / day views) in the calendar. Default true.
  * * **alldaytext** (string) Text to display in all day slot. Default 'All Day'.
  * * **titleformatmonth** (string) Date format (PHP) for title for month view. Default 'l, M j, Y'
- * * **titleformatweek** (string) Date format (PHP) for title for week view. Default 'M j[ Y]{ '&#8212;'[ M] j Y}.
+ * * **titleformatweek** (string) Date format (PHP) for title for week view. Default 'M j Y'.
  * * **titleformatday** (string) Date format (PHP) for title for day view. Default 'F Y'
  * * **columnformatmonth** (string) Dateformat for month columns. Default 'D'.
  * * **columnformatweek** (string) Dateformat for month columns. Default 'D n/j'.
@@ -1345,31 +1348,59 @@ function eo_has_event_finished($id='',$occurrence=0){
  * * **date** The calendar the date should start on
  *
  * @link http://arshaw.com/fullcalendar/ The fullCalendar (jQuery plug-in)
- * @link http://arshaw.com/fullcalendar/docs/utilities/formatDates/ (Range formats).
  * @link https://github.com/stephenharris/fullcalendar Event Organiser version of fullCalendar
  * @since 1.7
- * @param array $args An array of attributes for the calendar 
+ * @param array $args An array of attributes for the calendar
  * @return string HTML mark-up.
 */
-function eo_get_event_fullcalendar( $args = array() ){
+function eo_get_event_fullcalendar( $args = array() ) {
 
 	global $wp_locale;
 	$defaults = array(
-		'headerleft' => 'title', 'headercenter' => '', 'headerright' => 'prev next today', 'defaultview' => 'month',
-		'event-category' => '', 'event_category' => '', 'event-venue' => '', 'event_venue' => '', 'event-tag' => '', 
+		'headerleft' => 'title', 'headercenter' => '', 'headerright' => 'prev next today',
+		'defaultview' => 'month', 'aspectratio' => false, 'compact' => false,
+		'event-category' => '', 'event_category' => '', 'event-venue' => '', 'event_venue' => '', 'event-tag' => '',
 		'author' => false, 'author_name' => false,
-		'timeformat' => get_option( 'time_format' ), 'axisformat' => get_option( 'time_format' ), 'key' => false,
-		'tooltip' => true, 'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 'alldayslot' => true,
-		'alldaytext' => __( 'All Day', 'eventorganiser' ), 'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
-		'titleformatmonth' => 'F Y', 'titleformatweek' => "M j[ Y]{ '&#8212;'[ M] j, Y}", 'titleformatday' => 'l, M j, Y',
-		'year' => false, 'month' => false, 'date' => false,	'users_events' => false, 'event_occurrence__in' =>array(),
-		'theme' => true, 'isrtl' => $wp_locale->is_rtl(),
+		'timeformat' => get_option( 'time_format' ), 'axisformat' => get_option( 'time_format' ),
+		'key' => false, 'tooltip' => true,
+		'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 'showdays' => array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' ),
+		'slotduration' => '00:30:00',
+		'nextdaythreshold' => '06:00:00',
+		'alldayslot' => true, 'alldaytext' => __( 'All Day', 'eventorganiser' ),
+		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
+		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
+		'year' => false, 'month' => false, 'date' => false, 'defaultdate' => false,	'users_events' => false, 'event_occurrence__in' => array(),
+		'theme' => false, 'reset' => true, 'responsive' => true, 'isrtl' => $wp_locale->is_rtl(),
 	);
-	
+
+	//year/month/day
+	if ( isset( $args['year'] ) ) {
+		$args['month'] = isset( $args['month'] ) ? $args['month'] : '01';
+		$args['date'] = isset( $args['date'] ) ? $args['date'] : '01';
+	}
+	if ( isset( $args['month'] ) ) {
+		$args['year'] = isset( $args['year'] ) ? $args['year'] : date( 'Y' );
+		$args['date'] = isset( $args['date'] ) ? $args['date'] : '01';
+	}
+	if ( isset( $args['date'] ) ) {
+		$args['year'] = isset( $args['year'] ) ? $args['year'] : date( 'Y' );
+		$args['month'] = isset( $args['month'] ) ? $args['month'] : date( 'M' );
+	}
+
+	if ( isset( $args['year'] ) ) {
+		$args['defaultdate'] = $args['year'] . '-' . $args['month'] . '-' . $args['date'];
+	}
+
 	$args = shortcode_atts( $defaults, $args, 'eo_fullcalendar' );
+
+	//Days to show
+	$args['showdays'] = array_map( 'strtoupper', $args['showdays'] );
+	$args['hiddendays'] = array_diff( array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' ), $args['showdays'] );
+	$args['hiddendays'] = array_keys( $args['hiddendays'] );
+	unset( $args['showdays'] );;
 	
 	$key = $args['key'];
-	unset($args['key']);
+	unset( $args['key'] );
 	
 	//Support 'event-category' and 'event-venue'. Backwards compat with 'event_category'/'event_venue'
 	$args['event-category'] = empty( $args['event_category'] ) ? $args['event-category'] : $args['event_category'];
@@ -1383,9 +1414,20 @@ function eo_get_event_fullcalendar( $args = array() ){
 	//Get author ID from author/author_name
 	$args['event_organiser'] = ( $args['author'] ? (int) $args['author'] : eo_get_user_id_by( 'slug', $args['author_name'] ) );
 	
-	//Convert php time format into xDate time format
+	//max/min time MUST be hh:mm format
+	$times = array( 'mintime', 'maxtime' );
+	foreach( $times as $arg ){
+		$args[$arg] = explode( ':', $args[$arg] );
+		if( count( $args[$arg] ) < 2 ){
+			$args[$arg][] = '00';
+		}
+		$args[$arg] = implode( ':', $args[$arg] );
+	}
+
+	//Convert php time format into moment time format
 	$date_attributes = array( 
-		'timeformat', 'axisformat', 'columnformatday', 'columnformatweek', 'columnformatmonth',
+		'timeformat', 'axisformat', 
+		'columnformatday', 'columnformatweek', 'columnformatmonth',
 		'titleformatmonth', 'titleformatday', 'titleformatweek',
 	);
 	$args['timeformatphp'] = $args['timeformat'];
@@ -1393,30 +1435,52 @@ function eo_get_event_fullcalendar( $args = array() ){
 		$args[$date_attribute] = str_replace( '((', '[', $args[$date_attribute] );
 		$args[$date_attribute] = str_replace( '))', ']', $args[$date_attribute] );
 		$args[$date_attribute.'php'] = $args[$date_attribute];
-		$args[$date_attribute] = eventorganiser_php2xdate( $args[$date_attribute] );
+		$args[$date_attribute] = eo_php_to_moment( $args[$date_attribute] );
 	}
-	
+
 	//Month expects 0-11, we ask for 1-12.
 	$args['month'] = ( $args['month'] ? $args['month'] - 1 : false );
 
 	EventOrganiser_Shortcodes::$calendars[] = array_merge( $args );
-	
+
 	EventOrganiser_Shortcodes::$add_script = true;
 	$id = count( EventOrganiser_Shortcodes::$calendars );
 
-	$html = '<div id="eo_fullcalendar_'.$id.'_loading" style="background:white;position:absolute;z-index:5" >';
+	$classes = array( 'eo-fullcalendar', 'eo-fullcalendar-shortcode' );
+
+	if ( $args['reset'] ) {
+		$classes[] = 'eo-fullcalendar-reset';
+	}
+
+	if ( $args['responsive'] ) {
+		$classes[] = 'eo-fullcalendar-responsive';
+	}
+
+	if ( $args['compact'] ) {
+		$classes[] = 'fc-oneline';
+	}
+
+	$html = sprintf( '<div id="eo_fullcalendar_%s_loading" class="eo-fullcalendar-loading" >', $id );
 	$html .= sprintf(
 		'<img src="%1$s" style="vertical-align:middle; padding: 0px 5px 5px 0px;" alt="%2$s" /> %2$s',
 		esc_url( EVENT_ORGANISER_URL . 'css/images/loading-image.gif' ),
 		esc_html__( 'Loading&#8230;', 'eventorganiser' )
 	);
 	$html .= '</div>';
-	$html .= '<div class="eo-fullcalendar eo-fullcalendar-shortcode" id="eo_fullcalendar_'.$id.'"></div>';
 
-	if ( $key ){
+	$html .= sprintf(
+		'<div class="%s" id="eo_fullcalendar_%s"></div>',
+		implode( ' ', $classes ),
+		$id
+	);
+
+	if ( 'top' == strtolower( $key ) ){
 		$args = array( 'orderby' => 'name', 'show_count' => 0, 'hide_empty' => 0 );
-		$html .= eventorganiser_category_key( $args,$id );
+		$html = eventorganiser_category_key( $args, $id ) . $html;
+	}elseif( $key ){
+		$html .= eventorganiser_category_key( $args, $id );
 	}
+
 	return $html;
 }
 
@@ -1607,7 +1671,7 @@ function eo_break_occurrence( $post_id, $occurrence_id ){
 	$tax_input = array();
 	foreach ( array( 'event-category', 'event-tag', 'event-venue' ) as $tax ):
 		$terms = get_the_terms( $post->ID, $tax );
-		if ( $terms &&  !is_wp_error( $terms ) ){
+		if ( $terms && !is_wp_error( $terms ) ){
 			$tax_input[$tax] = array_map( 'intval', wp_list_pluck( $terms, 'term_id' ) );
 		}
 	endforeach;
@@ -1622,10 +1686,10 @@ function eo_break_occurrence( $post_id, $occurrence_id ){
 
 	//Event details
 	$event_array = array(
-		'start' => eo_get_the_start( DATETIMEOBJ, $post_id, null, $occurrence_id ),
-		'end' => eo_get_the_end(DATETIMEOBJ, $post_id, null, $occurrence_id ),
-		'all_day' => ( eo_is_all_day( $post_id )  ? 1 : 0 ),
-		'schedule' => 'once',
+		'start'     => eo_get_the_start( DATETIMEOBJ, $post_id, $occurrence_id ),
+		'end'       => eo_get_the_end( DATETIMEOBJ, $post_id, $occurrence_id ),
+		'all_day'   => ( eo_is_all_day( $post_id )  ? 1 : 0 ),
+		'schedule'  => 'once',
 		'frequency' => 1,
 	);
 
@@ -1710,5 +1774,32 @@ function eo_get_event_uid( $post_id = 0 ){
 	}
 	
 	return $uid;
+}
+
+
+/**
+ * Helper function to generate a datetime format for an event's date.
+ * 
+ * If the event is an all day event, the date format is returned. If it 
+ * is not an all-day event, the time format appended to the time format 
+ * and that is returned.
+ * 
+ * If date/time formats are not provided, the site's settings are used.
+ * Can be used inside the loop.
+ *  
+ * @param int    $event_id
+ * @param string $date_format
+ * @param string $time_format
+ */
+function eo_get_event_datetime_format( $event_id = false, $date_format = false, $time_format = false ){
+	
+	$event_id    = (int) ( empty( $event_id ) ? get_the_ID() : $event_id );
+	
+	$date_format = ( $date_format === false ? trim( get_option( 'date_format' ) ) : $date_format );
+	$time_format = ( $time_format === false ? trim( get_option( 'time_format' ) ) : $time_format );
+
+	$format = ( eo_is_all_day( $event_id ) ? $date_format :  $date_format . ' ' . $time_format );
+	
+	return $format;
 }
 ?>
