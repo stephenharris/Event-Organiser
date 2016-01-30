@@ -338,10 +338,23 @@ function eo_venue_lat($venue_slug_or_id=''){
 *
 * @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
  */
-function eo_venue_lng($venue_slug_or_id=''){
-	echo eo_get_venue_lng($venue_slug_or_id);
+function eo_venue_lng( $venue_slug_or_id = '' ) {
+	echo eo_get_venue_lng( $venue_slug_or_id );
 }
 
+/**
+ * Returns whether a venue has latitude/longitdue values stored.
+ *
+ * @since 3.0.0
+ *
+ * @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
+ */
+function eo_venue_has_latlng( $venue_slug_or_id = '' ) {
+	$latlng = eo_get_venue_latlng( $venue_slug_or_id );
+	$lat = (float) $latlng['lat'];
+	$lng = (float) $latlng['lng'];
+	return ( $lat || $lng );
+}
 
 /**
 * Returns the permalink of a venue
@@ -1005,5 +1018,3 @@ function eventorganiser_venue_dropdown($post_id=0,$args){
 		<?php endforeach;?>
 	</select><?php
 }
-
-?>

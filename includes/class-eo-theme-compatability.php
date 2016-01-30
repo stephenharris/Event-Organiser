@@ -165,8 +165,10 @@ class EO_Theme_Compatabilty {
 			if ( $venue_description = eo_get_venue_description( $venue_id ) ) {
 				$precontent = '<div class="venue-archive-meta">'.$venue_description.'</div>';
 			}
-			$precontent .= eo_get_venue_map( $venue_id, array( 'width' => '100%' ) );
 
+			if ( eo_venue_has_latlng( $venue_id ) ) {
+				$precontent .= eo_get_venue_map( $venue_id, array( 'width' => '100%' ) );
+			}
 		} elseif ( is_tax( 'event-category' ) ) {
 			$title = sprintf(
 				__( 'Event Category: %s', 'eventorganiser' ),

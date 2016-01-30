@@ -99,7 +99,7 @@ class EventOrganiser_Shortcodes {
 		$id    = $atts['id']    ? 'id="' . esc_attr( $atts['id'] ) . '"' : false;
 
 		if ( strtolower( $atts['type'] ) == 'webcal' ) {
-			$url = str_replace( 'http://', 'webcal://', $url );
+			$url = preg_replace( '/^http(s?):/i', 'webcal:', $url );
 		} elseif ( strtolower( $atts['type'] ) == 'ical' ) {
 			//Do nothing
 		} else {
