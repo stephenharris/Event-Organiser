@@ -143,7 +143,7 @@ class EO_Event_List_Widget extends WP_Widget{
 		<p>
   			<label for="<?php echo $this->get_field_id( 'orderby' ); ?>"><?php _e( 'Order by', 'eventorganiser' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>">
-				<option value="eventstart" <?php selected( $instance['orderby'], 'eventstart' ); ?>><?php _e( 'Start date', 'eventorganiser' ); ?></option>
+				<option value="eventstart" <?php selected( $instance['orderby'], 'eventstart' ); ?>><?php _e( 'Start Date', 'eventorganiser' ); ?></option>
 				<option value="title" <?php selected( $instance['orderby'], 'title' );?>><?php _e( 'Title', 'eventorganiser' ); ?></option>
 				<option value="date" <?php selected( $instance['orderby'], 'date' );?>><?php _e( 'Publish date', 'eventorganiser' ); ?></option>
 			</select>
