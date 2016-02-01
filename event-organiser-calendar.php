@@ -366,7 +366,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			<br />
 			
 			<span class="eo-sc-key"><kbd>?</kbd></span>
-			<span class="eo-sc-desc"><?php esc_html_e( 'Open shorcut help', 'eventorganiser' );?></span>
+			<span class="eo-sc-desc"><?php esc_html_e( 'Open shortcut help', 'eventorganiser' );?></span>
 			<br />		
 			
 			</p>
