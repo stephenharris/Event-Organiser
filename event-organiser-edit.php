@@ -157,7 +157,7 @@ function _eventorganiser_details_metabox( $post ) {
  		
 		<div class="eo-grid-row event-date">
 	 		<div class="eo-grid-4">
-				<label for="eo-event-recurrence"><?php esc_html_e( 'Recurrence', 'eventorganiser' ).':'; ?> </label>
+				<label for="eo-event-recurrence"><?php esc_html_e( 'Recurrence:', 'eventorganiser' ).':'; ?> </label>
  			</div>
 	 		<div class="eo-grid-8 event-date">
 				<?php
