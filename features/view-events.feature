@@ -79,7 +79,7 @@ Feature: View events
     	Then I should see "Events"
     	And I should see an ".eo-tc-page" element
 
-	@javascript
+	@javascript @insulated
 	Scenario: Daily event
         When I go to "events/event/daily"
     	Then I should see "Daily"
