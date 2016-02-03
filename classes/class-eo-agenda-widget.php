@@ -132,7 +132,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 		<script type="text/template" id="eo-tmpl-agenda-widget-item">
 		<li class="event">
 			<% if( !this.param.add_to_google ){ %>
-				<a class='eo-agenda-event-permalink' href='<%= event.start %>'>
+				<a class='eo-agenda-event-permalink' href='<%= event.link %>'>
 			<% } %>
 			<span class="cat" style="background:<%= event.color %>"></span>
 			<span><strong>
