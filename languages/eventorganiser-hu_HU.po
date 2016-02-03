@@ -562,7 +562,7 @@ msgid "End Time"
 msgstr "Esemény vége"
 
 #: event-organiser-edit.php:160 event-organiser-manage.php:37
-msgid "Recurrence"
+msgid "Recurrence:"
 msgstr "Ismétlődés"
 
 #: event-organiser-edit.php:165

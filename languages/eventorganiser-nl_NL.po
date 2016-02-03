@@ -569,7 +569,7 @@ msgid "End Time"
 msgstr "Eind Tijd"
 
 #: event-organiser-edit.php:160 event-organiser-manage.php:37
-msgid "Recurrence"
+msgid "Recurrence:"
 msgstr "Herhaling"
 
 #: event-organiser-edit.php:165

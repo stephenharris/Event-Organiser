@@ -571,7 +571,7 @@ msgstr ""
 
 #: event-organiser-edit.php:160 event-organiser-manage.php:37
 #, fuzzy
-msgid "Recurrence"
+msgid "Recurrence:"
 msgstr "özel tekrar"
 
 #: event-organiser-edit.php:165

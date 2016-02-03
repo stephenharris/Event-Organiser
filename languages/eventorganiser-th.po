@@ -562,7 +562,7 @@ msgid "End Time"
 msgstr "สิ้นสุด เวลา"
 
 #: event-organiser-edit.php:160 event-organiser-manage.php:37
-msgid "Recurrence"
+msgid "Recurrence:"
 msgstr "เกิดขึ้นซ้ำ"
 
 #: event-organiser-edit.php:165

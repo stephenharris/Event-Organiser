@@ -573,7 +573,7 @@ msgid "End Time"
 msgstr "Heure de fin"
 
 #: event-organiser-edit.php:160 event-organiser-manage.php:37
-msgid "Recurrence"
+msgid "Recurrence:"
 msgstr "Répétition"
 
 #: event-organiser-edit.php:165

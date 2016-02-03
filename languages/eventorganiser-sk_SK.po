@@ -564,7 +564,7 @@ msgstr ""
 
 #: event-organiser-edit.php:160 event-organiser-manage.php:37
 #, fuzzy
-msgid "Recurrence"
+msgid "Recurrence:"
 msgstr "úprava opätovného opakovania"
 
 #: event-organiser-edit.php:165
