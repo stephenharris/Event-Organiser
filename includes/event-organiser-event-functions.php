@@ -1462,7 +1462,7 @@ function eo_get_event_fullcalendar( $args = array() ) {
 
 	$html = sprintf( '<div id="eo_fullcalendar_%s_loading" class="eo-fullcalendar-loading" >', $id );
 	$html .= sprintf(
-		'<img src="%1$s" style="vertical-align:middle; padding: 0px 5px 5px 0px;" alt="%2$s" /> %2$s',
+		'<img src="%1$s" class="eo-fullcalendar-loading-icon" alt="%2$s" /> %2$s',
 		esc_url( EVENT_ORGANISER_URL . 'css/images/loading-image.gif' ),
 		esc_html__( 'Loading&#8230;', 'eventorganiser' )
 	);
