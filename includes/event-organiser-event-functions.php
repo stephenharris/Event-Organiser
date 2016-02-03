@@ -1474,10 +1474,10 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		$id
 	);
 
-	if ( 'top' == strtolower( $key ) ){
+	if ( 'top' == strtolower( $key ) ) {
 		$args = array( 'orderby' => 'name', 'show_count' => 0, 'hide_empty' => 0 );
 		$html = eventorganiser_category_key( $args, $id ) . $html;
-	}elseif( $key ){
+	} elseif ( $key ) {
 		$html .= eventorganiser_category_key( $args, $id );
 	}
 
@@ -1494,11 +1494,11 @@ function eo_get_event_fullcalendar( $args = array() ) {
  * @param int $post_id The event (post) ID. Uses current event if not supplied
  * @return string|bool HTML mark-up. False if an invalid $post_is provided.
 */
-function eo_get_event_meta_list( $event_id = 0 ){
+function eo_get_event_meta_list( $event_id = 0 ) {
 
 	$event_id = (int) ( empty( $event_id ) ? get_the_ID() : $event_id);
 
-	if( empty( $event_id ) ){ 
+	if ( empty( $event_id ) ) { 
 		return false;
 	}
 
@@ -1517,14 +1517,14 @@ function eo_get_event_meta_list( $event_id = 0 ){
 				</span>
 			</a></li>',
 			$venue->labels->singular_name,
-			eo_get_venue_link( $venue_id ), 
+			eo_get_venue_link( $venue_id ),
 			eo_get_venue_name( $venue_id ),
 			eo_get_venue_lat( $venue_id ),
 			eo_get_venue_lng( $venue_id )
 		);
 	}
 
-	if( get_the_terms( $event_id, 'event-category' ) ){
+	if ( get_the_terms( $event_id, 'event-category' ) ) {
 		$html .= sprintf(
 			'<li><strong>%s:</strong> %s</li>' . "\n",
 			__( 'Categories', 'eventorganiser' ),
@@ -1532,7 +1532,7 @@ function eo_get_event_meta_list( $event_id = 0 ){
 		);
 	}
 
-	if( get_the_terms( $event_id, 'event-tag' ) && !is_wp_error( get_the_terms( $event_id, 'event-tag' ) ) ){
+	if ( get_the_terms( $event_id, 'event-tag' ) && !is_wp_error( get_the_terms( $event_id, 'event-tag' ) ) ) {
 		$html .= sprintf(
 			'<li><strong>%s:</strong> %s</li>' . "\n",
 			__( 'Tags', 'eventorganiser' ),
@@ -1540,7 +1540,7 @@ function eo_get_event_meta_list( $event_id = 0 ){
 		);
 	}
 
-	$html .='</ul>';
+	$html .= '</ul>';
 
 	/**
 	 * Filters mark-up for the event details list.
