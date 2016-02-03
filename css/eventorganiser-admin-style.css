@@ -147,6 +147,8 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .cat .ui-selectmenu-item-icon { height: 14px; width: 14px; border:1px solid #dfdfdf;border-radius: 4px;}
 .cat .ui-selectmenu-item-icon{ background-image:none!important; }
 .event_page_calendar .ui-widget-overlay{ z-index:99999!important;}
+#eo-cal-meta .delete a { color: red;float: right;}
+#eo-cal-meta .break a { color: red;float: right;padding-right:2em;}
 
 /* Table on event details calendar view*/
 .eo-cal-meta .form-table th {width:50px;}
