@@ -16,7 +16,7 @@ function eventorganiser_register_script() {
 
 	/* Moment.js */
 	wp_register_script( 'eo_momentjs', EVENT_ORGANISER_URL."js/moment{$ext}.js", '2.9.0', true );
-	
+
 	/* FullCalendar */
 	wp_register_script( 'eo_fullcalendar', EVENT_ORGANISER_URL."js/fullcalendar{$ext}.js",array(
 		'jquery',
@@ -24,27 +24,29 @@ function eventorganiser_register_script() {
 		'jquery-ui-core',
 		'jquery-ui-widget',
 		'jquery-ui-button',
-	),$version,true);
-	
+	), $version, true );
+
 	/* Google Maps */
 	$protocal = is_ssl() ? 'https://' : 'http://';
 	wp_register_script( 'eo_GoogleMap', $protocal.'maps.googleapis.com/maps/api/js?sensor=false&language='.substr( get_locale(), 0, 2 ) );
-	
+
 	/* Front-end script */
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",array(
-		'jquery','eo_qtip2',
+		'jquery',
+		'eo_qtip2',
 		'jquery-ui-core',
 		'jquery-ui-widget',
 		'jquery-ui-button',
 		'jquery-ui-datepicker',
 		'eo_fullcalendar',
 		'eo-wp-js-hooks',
-	),$version,true);
-	
+	), $version,true);
+
 	/* Add js variables to frontend script */
 	$category = get_taxonomy( 'event-category' );
 	$venue    = get_taxonomy( 'event-venue' );
 	$tag      = get_taxonomy( 'event-tag' );
+
 	wp_localize_script( 'eo_front', 'EOAjaxFront', array(
 		'adminajax' => admin_url( 'admin-ajax.php' ),
 		'locale'    => array(
