@@ -1366,7 +1366,7 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 'showdays' => array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' ),
 		'slotduration' => '00:30:00',
 		'nextdaythreshold' => '06:00:00',
-		'alldayslot' => true, 'alldaytext' => __( 'All Day', 'eventorganiser' ),
+		'alldayslot' => true, 'alldaytext' => __( 'All day', 'eventorganiser' ),
 		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
 		'year' => false, 'month' => false, 'date' => false, 'defaultdate' => false,	'users_events' => false, 'event_occurrence__in' => array(),
