@@ -499,6 +499,14 @@ jQuery(document).ready(function () {
 
     	eventorganiser.agenda_widget = function( param ){ 
     		this.param = param;
+    		moment.locale( EOAjaxFront.locale.locale, {
+    			months: EOAjaxFront.locale.monthNames,
+    			monthsShort: EOAjaxFront.locale.monthAbbrev,
+    			weekdays: EOAjaxFront.locale.dayNames,
+				weekdaysShort: EOAjaxFront.locale.dayAbbrev,
+				weekdaysMin: EOAjaxFront.locale.dayInitial
+    		});
+
     		this.start = moment();
     		this.end   = moment();
     		this.$el   = $( '#' + this.param.id + '_container' );

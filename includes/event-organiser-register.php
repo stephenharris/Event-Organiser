@@ -56,6 +56,7 @@ function eventorganiser_register_script() {
 			'monthAbbrev' => array_values( $wp_locale->month_abbrev ),
 			'dayNames'    => array_values( $wp_locale->weekday ),
 			'dayAbbrev'   => array_values( $wp_locale->weekday_abbrev ),
+			'dayInitial'  => array_values( $wp_locale->weekday_initial ),
 			'ShowMore'    => __( 'Show More', 'eventorganiser' ),
 			'ShowLess'    => __( 'Show Less', 'eventorganiser' ),
 			'today'       => __( 'today', 'eventorganiser' ),
