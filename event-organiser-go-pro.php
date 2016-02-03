@@ -87,7 +87,7 @@ class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
 			<div style="clear:both"></div>
 
 			<p>
-			<strong><a href="http://wp-event-organiser.com/pro-features?aid=7"><?php esc_html_e( 'Find out more&hellip;', 'eventorganiser' )?></a></strong>
+			<strong><a href="http://wp-event-organiser.com/pro-features?aid=7"><?php esc_html_e( 'Find out more &hellip;', 'eventorganiser' )?></a></strong>
 			</p>
 			
 			<hr style="color:#CCC;background-color:#CCC;border:0;border-bottom:1px solid #CCC;">
