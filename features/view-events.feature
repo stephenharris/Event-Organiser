@@ -65,13 +65,7 @@ Feature: View events
         Given event templates are disabled
         When I go to "events/event/single"
     	Then I should see "Single"
-    	And I should not see "Start:"
-
-    Scenario: Single event (with templates enabled)
-        Given event templates are enabled
-        When I go to "events/event/single"
-    	Then I should see "Single"
-    	And I should see "Start: April 30, 2115 1:00 pm"
+    	And I should not see "Date:"
     	
     Scenario: All events (templates enabled)
         Given event templates are enabled
