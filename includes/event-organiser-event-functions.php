@@ -1502,10 +1502,10 @@ function eo_get_event_meta_list( $event_id = 0 ) {
 		return false;
 	}
 
-	$html  = '<ul class="eo-event-meta" style="margin:10px 0px;">';
+	$html  = '<ul class="eo-event-meta">';
 	$venue = get_taxonomy( 'event-venue' );
 
-	if( ( $venue_id = eo_get_venue( $event_id ) ) && $venue ){
+	if ( ( $venue_id = eo_get_venue( $event_id ) ) && $venue ) {
 		$html .= sprintf(
 			'<li><strong>%s:</strong> <a href="%s">
 				<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/Organization">

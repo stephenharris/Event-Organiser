@@ -41,14 +41,18 @@
 	margin-top: 0px;	
 }
 
+.eo-event-meta{
+	margin: 10px 10px;
+}
+
 .eo-tc-event .eo-event-meta{
 	clear:both;
 	list-style:none;
-	margin: 10px 10px;
 	float: none;
 	display: inline-block;
 	padding: 0;
 }
+
 .eo-tc-event .eo-event-content{
     display: inherit;
     float: none;
