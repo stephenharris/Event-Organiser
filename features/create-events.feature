@@ -30,7 +30,7 @@ Feature: Create events
 		    | frequency  | 1                  |
         	| until      | 2015-10-25 10:30pm |
 
-    @javascript
+    @javascript @insulated
     Scenario: Daily event
         Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Daily+Event"

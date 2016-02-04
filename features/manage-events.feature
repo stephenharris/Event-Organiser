@@ -15,7 +15,7 @@ Feature: Manage events
         And I am logged in as "admin" with password "test"
 
 
-    @javascript
+    @javascript @insulated
     Scenario: Hovering over Profiles menu (RQEP.015)
         Given I am on "/wp-admin/index.php"
         When I focus on the element "#menu-posts-event a"
