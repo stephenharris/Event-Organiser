@@ -710,7 +710,7 @@ function eventorganiser_search_venues() {
 	}
 
 	$tax = get_taxonomy( 'event-venue' );
-	$novenue = array( 'term_id' => 0, 'name' => $tax->labels->no_item );
+	$novenue = array( 'term_id' => 0, 'name' => $tax->labels->no_terms );
 	$venues  = array_merge( array( $novenue ), $venues );
 
 	//echo JSON to page
