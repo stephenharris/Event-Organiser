@@ -3,8 +3,8 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
-**Tested up to:** 4.4.1  
-**Stable tag:** 3.0.0  
+**Tested up to:** 4.4.2  
+**Stable tag:** 3.0.1  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -238,14 +238,26 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.0.1 - 4th February 2016 ###
+
+* bugfix: Fixed incorrect 'No Venue' label in venue selection when editing an event
+* bugfix: Update languages
+* bugfix: Addressed some text inconsistancies and typos (See [#329](https://github.com/stephenharris/Event-Organiser/pull/329), [#330](https://github.com/stephenharris/Event-Organiser/pull/330), [#331](https://github.com/stephenharris/Event-Organiser/pull/331), [#333](https://github.com/stephenharris/Event-Organiser/pull/333))
+* bugfix: Fixed bug with agenda widget not translating dates.
+* bugfix: Removed inline styles from the front-end and moved to stylesheet.
+* bugfix: Fixed bug where agenda widget was not linking to event (when 'add to Google' is disabled)
+* bugfix: Agenda widget now opens on todays date if it has an event 
+
+
 ### 3.0.0 - 29th January 2016 ###
 
 **Event Organiser now requires WordPress 3.8.0+ or better**  
 
-fullCalendar  
-* feature: fullCalendar is now responsive, and collapses to a list on mobil view. This can be disabled with `[eo_fullcalendar response=0]`
+fullCalendar
+
+* feature: fullCalendar is now responsive, and collapses to a list on mobile view. This can be disabled with `[eo_fullcalendar responsive=0]`
 * feature: Adds `nextDayThreshold` option. A multi-day event must finish after this time for it appear on that day on the calendar. Default '06:00:00' (6am)
-* feature: You can enable a more compact calendar view, where an event will occupy only one line in the calendar and long event titles are truncated. This can be enabled as follows: `[eo_fullcalendar oneline=true]`
+* feature: You can enable a more compact calendar view, where an event will occupy only one line in the calendar and long event titles are truncated. This can be enabled as follows: `[eo_fullcalendar compact=true]`
 * feature: Improved, and minimalist styling for the calendar, which makes it easier for themes to set the calendar styling.
 * feature: fullCalendar key attribute can now take the value 'top' or 'bottom', e.g. `[eo_fullcalendar key="bottom"]` to configure the location of the category colour key.
 * feature: Adds `aspectratio` attribute to configure the aspect ratio (height/width) of the fullCalendar. Defaults to auto resizing.
@@ -256,19 +268,23 @@ fullCalendar
 * change: Use `defaultdate` attribute (yyyy-mm-dd) instead of year/month/date attributes to specify an opening date for the calendar
 * bugfix: Event categories in the calendar filter now appear in alphabetical order
 
-API  
+API
+
 * change: Removed support for deprecated API (Deprecated in 1.5.6, Sep 2012).
 * change: `eo_event_venue_dropdown()` is deprecated (though still useable). It is recommended that you use use `eo_taxonomy_dropdown()` instead
 * feature: Introduced `eo_format_event_occurrence()`: which will format the date(time) (range, where appropriate) of the event occurrence. E.g. a one day event may appear as 28th November 2pm-3pm, and a two-day all-day event may appear as 28-29th November. The resulting date depends on the date/time format options, and whether the event is multi-day and whether is all-day.
 
-Google map  
+Google map
+
 * Added js-hook `eventorganiser.google_map_loaded`
 * Venue map function and shortcode now support `minzoom` and `maxzoom` properties
 
-Theme compatability  
+Theme compatability
+
 * feature: A 'theme compatability' mode has been introduced to improve compatability with themes. This can be enabled in Settings > Event Organiser > General
  
-Templates  
+Templates
+
 * feature: Added `eo_format_event_occurrence()`, `eo_format_datetime_range()` functions to help format event dates and ranges
 * feature: dateformats in event templates now use the date format settings
 * feature: Added `eventorganiser_stylesheet_src` and `eventorganiser_stylesheet_src_{handle}` filters to filter plug-in stylesheets locations. This allows for themes to map plug-in stylesheets to their own stylesheets.
@@ -278,24 +294,28 @@ Templates
 * change: Single event page, upcoming dates template can now be used on templates with multiple events    
 * change: HTML classes added for the upcoming dates on the single event page for themes
 
-iCal feed  
+iCal feed
+
 * feature: The iCal importer is more forgiving when importing incorrectly formatted iCal feeds
 * feature: When importing a feed, the DURATION attribute is now supported
 * bugfix: Fixes bug with way events without a DTEND specified were interpretted.
 * bugfix: Event dates are not converted to Site's timezone defined in VTIMEZONE (if php 5.3+)
 
-Widget  
+Widget
+
 * change: Agenda widget 'day' mode it behaves like week/month mode and displays only one day at a time
 * feature: Event list widget now allows you to list events in certain scopes (e.g. past events, future events, running events, events on today). Custom 'scopes' can be registered with the `eventorganiser_query_scope` filter.
  
-General  
+General
+
 * feature: improved performance, particularly for sites with long recurring events or large number of venues
 * feature: Added `eventorganiser_timezone` to filter the timezone
 * feature: improved support for UTC-offset timezones, but it is **strongly** recommended you chose a city
 * bufix: Fixes bug where quick editing will cause event start and end cells to disappear
 
-Accessibility  
+Accessibility
 This is an ongoing process, and any bug reports, feature suggestions and pull requests are welcome in this respect.  
+
 * feature: Added a Keyboard shortcuts modal (shift + ?) added (admin calendar page)
 * bugfix: Edit event metabox no longer uses a tabular mark-up. Missing label/description mark-up is added, as well as other minor improvements to the markup.
 * bugfix: The timepicker is now keyboard accessible
@@ -306,12 +326,12 @@ This is an ongoing process, and any bug reports, feature suggestions and pull re
 * bugfix: Improved keyboard accessibility of venue selection on the edit event and calendar screen
 
 
-### 2.13.7 - 9th December 2015
+### 2.13.7 - 9th December 2015 ###
 * Fixes a bug with the event list widgets on WordPress 4.4
 * Ensures categories in the category fullCalendar shortcode are listed alphabetically
 * Replaces deprecated `.below-h2` with `.inline` notice classes
 * Updated translations and Lithuaniun
-###
+
 ### 2.13.6 - 9th August 2015 ###
 * Fixes incompatability with WordPress 4.3 on venue admin screen 
 
