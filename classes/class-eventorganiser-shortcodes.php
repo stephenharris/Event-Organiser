@@ -83,14 +83,13 @@ class EventOrganiser_Shortcodes {
 		), $atts, 'eo_subscribe' );
 
 		if ( $atts['category'] ) {
-			$url = eo_get_event_category_feed( $category );
+			$url = eo_get_event_category_feed( $atts['category'] );
 
 		} elseif ( $atts['venue'] ) {
-			$url = eo_get_event_venue_feed( $venue );
+			$url = eo_get_event_venue_feed( $atts['venue'] );
 
 		} else {
 			$url = eo_get_events_feed();
-
 		}
 
 		$class = $atts['class'] ? 'class="' . esc_attr( $atts['class'] ) . '"' : false;

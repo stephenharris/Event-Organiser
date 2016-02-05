@@ -56,7 +56,30 @@ Feature: View events
     	Then I should see "Events"
     	And I should see an ".eo-tc-page" element
 
-	@javascript
+    Scenario: All events
+        When I go to "events/event"
+    	Then I should see "Events"
+    	And I should see an ".eo-tc-page" element
+    	
+    Scenario: Single event (with templates disabled)
+        Given event templates are disabled
+        When I go to "events/event/single"
+    	Then I should see "Single"
+    	And I should not see "Date:"
+    	
+    Scenario: All events (templates enabled)
+        Given event templates are enabled
+        When I go to "events/event"
+    	Then I should see "Events"
+    	And I should not see an ".eo-tc-page" element
+    	
+    Scenario: All events (templates enabled)
+        Given theme compatability is enabled
+        When I go to "events/event"
+    	Then I should see "Events"
+    	And I should see an ".eo-tc-page" element
+
+	@javascript @insulated
 	Scenario: Daily event
         When I go to "events/event/daily"
     	Then I should see "Daily"

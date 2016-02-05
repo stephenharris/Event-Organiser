@@ -448,12 +448,12 @@ function eventorganiser_admin_calendar() {
 					$delete_url  = wp_nonce_url( $delete_url , 'eventorganiser_delete_occurrence_'.$post->occurrence_id );
 
 					$summary .= sprintf(
-						'<span class="delete"><a class="submitdelete" style="color:red;float:right" title="%1$s" href="%2$s">%1$s</a></span>',
+						'<span class="delete"><a class="submitdelete" href="%2$s">%1$s</a></span>',
 						esc_attr__( 'Delete this occurrence', 'eventorganiser' ),
 						$delete_url
 					);
 
-					if( $schedule['schedule'] != 'once' ){
+					if ( 'once' != $schedule['schedule'] ) {
 						$break_url = add_query_arg(array(
 							'post_type' => 'event',
 							'page'      => 'calendar',
@@ -461,11 +461,11 @@ function eventorganiser_admin_calendar() {
 							'event'     => $post->occurrence_id,
 							'action'    => 'break_series',
 						),$admin_url);
-						
+
 						$break_url  = wp_nonce_url( $break_url, 'eventorganiser_break_series_'.$post->occurrence_id );
 
 						$summary .= sprintf(
-							'<span class="break"><a class="submitbreak" style="color:red;float:right;padding-right:2em;" title="%1$s" href="%2$s">%1$s</a></span>',
+							'<span class="break"><a class="submitbreak" href="%2$s">%1$s</a></span>',
 							esc_attr__( 'Break this series', 'eventorganiser' ),
 							$break_url
 						);
@@ -710,7 +710,7 @@ function eventorganiser_search_venues() {
 	}
 
 	$tax = get_taxonomy( 'event-venue' );
-	$novenue = array( 'term_id' => 0, 'name' => $tax->labels->no_item );
+	$novenue = array( 'term_id' => 0, 'name' => $tax->labels->no_terms );
 	$venues  = array_merge( array( $novenue ), $venues );
 
 	//echo JSON to page

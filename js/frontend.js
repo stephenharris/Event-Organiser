@@ -499,8 +499,18 @@ jQuery(document).ready(function () {
 
     	eventorganiser.agenda_widget = function( param ){ 
     		this.param = param;
-    		this.start = moment();
-    		this.end   = moment();
+    		moment.locale( EOAjaxFront.locale.locale, {
+    			months: EOAjaxFront.locale.monthNames,
+    			monthsShort: EOAjaxFront.locale.monthAbbrev,
+    			weekdays: EOAjaxFront.locale.dayNames,
+				weekdaysShort: EOAjaxFront.locale.dayAbbrev,
+				weekdaysMin: EOAjaxFront.locale.dayInitial
+    		});
+
+    		//use yesterday as starting point as when we first fetch events will be looking for the
+    		//first day with events after that point (and we want to include 'today' in that scope)  
+    		this.start = moment().add(-1, 'days');
+    		this.end   = moment().add(-1, 'days');
     		this.$el   = $( '#' + this.param.id + '_container' );
     		this.direction = 1;
     		

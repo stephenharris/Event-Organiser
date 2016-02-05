@@ -1366,7 +1366,7 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		'weekends' => true, 'mintime' => '0', 'maxtime' => '24', 'showdays' => array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' ),
 		'slotduration' => '00:30:00',
 		'nextdaythreshold' => '06:00:00',
-		'alldayslot' => true, 'alldaytext' => __( 'All Day', 'eventorganiser' ),
+		'alldayslot' => true, 'alldaytext' => __( 'All day', 'eventorganiser' ),
 		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
 		'year' => false, 'month' => false, 'date' => false, 'defaultdate' => false,	'users_events' => false, 'event_occurrence__in' => array(),
@@ -1462,7 +1462,7 @@ function eo_get_event_fullcalendar( $args = array() ) {
 
 	$html = sprintf( '<div id="eo_fullcalendar_%s_loading" class="eo-fullcalendar-loading" >', $id );
 	$html .= sprintf(
-		'<img src="%1$s" style="vertical-align:middle; padding: 0px 5px 5px 0px;" alt="%2$s" /> %2$s',
+		'<img src="%1$s" class="eo-fullcalendar-loading-icon" alt="%2$s" /> %2$s',
 		esc_url( EVENT_ORGANISER_URL . 'css/images/loading-image.gif' ),
 		esc_html__( 'Loading&#8230;', 'eventorganiser' )
 	);
@@ -1474,10 +1474,10 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		$id
 	);
 
-	if ( 'top' == strtolower( $key ) ){
+	if ( 'top' == strtolower( $key ) ) {
 		$args = array( 'orderby' => 'name', 'show_count' => 0, 'hide_empty' => 0 );
 		$html = eventorganiser_category_key( $args, $id ) . $html;
-	}elseif( $key ){
+	} elseif ( $key ) {
 		$html .= eventorganiser_category_key( $args, $id );
 	}
 
@@ -1494,18 +1494,18 @@ function eo_get_event_fullcalendar( $args = array() ) {
  * @param int $post_id The event (post) ID. Uses current event if not supplied
  * @return string|bool HTML mark-up. False if an invalid $post_is provided.
 */
-function eo_get_event_meta_list( $event_id = 0 ){
+function eo_get_event_meta_list( $event_id = 0 ) {
 
 	$event_id = (int) ( empty( $event_id ) ? get_the_ID() : $event_id);
 
-	if( empty( $event_id ) ){ 
+	if ( empty( $event_id ) ) { 
 		return false;
 	}
 
-	$html  = '<ul class="eo-event-meta" style="margin:10px 0px;">';
+	$html  = '<ul class="eo-event-meta">';
 	$venue = get_taxonomy( 'event-venue' );
 
-	if( ( $venue_id = eo_get_venue( $event_id ) ) && $venue ){
+	if ( ( $venue_id = eo_get_venue( $event_id ) ) && $venue ) {
 		$html .= sprintf(
 			'<li><strong>%s:</strong> <a href="%s">
 				<span itemprop="location" itemscope itemtype="http://data-vocabulary.org/Organization">
@@ -1517,14 +1517,14 @@ function eo_get_event_meta_list( $event_id = 0 ){
 				</span>
 			</a></li>',
 			$venue->labels->singular_name,
-			eo_get_venue_link( $venue_id ), 
+			eo_get_venue_link( $venue_id ),
 			eo_get_venue_name( $venue_id ),
 			eo_get_venue_lat( $venue_id ),
 			eo_get_venue_lng( $venue_id )
 		);
 	}
 
-	if( get_the_terms( $event_id, 'event-category' ) ){
+	if ( get_the_terms( $event_id, 'event-category' ) ) {
 		$html .= sprintf(
 			'<li><strong>%s:</strong> %s</li>' . "\n",
 			__( 'Categories', 'eventorganiser' ),
@@ -1532,7 +1532,7 @@ function eo_get_event_meta_list( $event_id = 0 ){
 		);
 	}
 
-	if( get_the_terms( $event_id, 'event-tag' ) && !is_wp_error( get_the_terms( $event_id, 'event-tag' ) ) ){
+	if ( get_the_terms( $event_id, 'event-tag' ) && !is_wp_error( get_the_terms( $event_id, 'event-tag' ) ) ) {
 		$html .= sprintf(
 			'<li><strong>%s:</strong> %s</li>' . "\n",
 			__( 'Tags', 'eventorganiser' ),
@@ -1540,7 +1540,7 @@ function eo_get_event_meta_list( $event_id = 0 ){
 		);
 	}
 
-	$html .='</ul>';
+	$html .= '</ul>';
 
 	/**
 	 * Filters mark-up for the event details list.

@@ -57,6 +57,10 @@
 	position:absolute;
 	z-index:5
 }
+.eo-fullcalendar-loading-icon{
+	vertical-align:middle; 
+	padding: 0px 5px 5px 0px;
+}
 
 .eo-fullcalendar-screen-reader-text{
 	position: absolute;

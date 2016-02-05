@@ -172,6 +172,9 @@ module.exports = function(grunt) {
 	phpunit: {
 		classes: {
 			dir: 'tests/unit-tests'
+		},
+                options: {
+			bin: 'vendor/bin/phpunit',
 		}
 	},
 	
