@@ -39,6 +39,9 @@
 	padding:0!important;
 	background: none;
 }
+.eo-fullcalendar-reset.fc-unthemed .fc-today { /* Our reset will over-ride .fc-unthemed .fc-today*/
+        background: #fcf8e3;
+}
 .eo-fullcalendar a{ /* Fix for themes which are over-zealouse with transitions */
    -webkit-transition:none;
    -moz-transition:none; 
