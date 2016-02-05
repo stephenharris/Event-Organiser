@@ -231,7 +231,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * bugfix: Removed inline styles from the front-end and moved to stylesheet.
 * bugfix: Fixed bug where agenda widget was not linking to event (when 'add to Google' is disabled)
 * bugfix: Agenda widget now opens on todays date if it has an event 
-
+* bugfix: Fixed subscribe shortcode when specfying a particular category/venue.
 
 = 3.0.0 - 29th January 2016 =
 
