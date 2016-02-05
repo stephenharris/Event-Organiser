@@ -81,13 +81,13 @@
 ----------------------------------------------- */
 /* .*/
 @media (max-width:512px){
-	.eo-fullcalendar-responsive .fc-month-button, 
-	.eo-fullcalendar-responsive .fc-agendaWeek-button, 
-	.eo-fullcalendar-responsive .fc-agendaDay-button, 
-	.eo-fullcalendar-responsive .fc-week-button, 
-	.eo-fullcalendar-responsive .fc-day-button{
-		display:none;
-	}
+        .eo-fullcalendar-responsive .fc-month-button,
+        .eo-fullcalendar-responsive .fc-agendaWeek-button,
+        .eo-fullcalendar-responsive .fc-agendaDay-button,
+        .eo-fullcalendar-responsive .fc-basicWeek-button,
+        .eo-fullcalendar-responsive .fc-basicDay-button{
+                display:none;
+        }
 	
 	.eo-fullcalendar-responsive .fc-toolbar h2 {
 		text-align:center;
