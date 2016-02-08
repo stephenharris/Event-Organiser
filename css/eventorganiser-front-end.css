@@ -281,6 +281,9 @@ body.single-event .eo-event-meta{
 	background: #eee;/*@eo-fc-datepicker-active-bg;*/
 }
 
+#ui-datepicker-div {
+	display: none;
+}
 
 /*
  * qTip2 - Pretty powerful tooltips - v2.2.1
