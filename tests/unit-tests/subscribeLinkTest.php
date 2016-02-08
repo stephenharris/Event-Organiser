@@ -48,5 +48,27 @@ class subscribeLinkTest extends EO_UnitTestCase
 		$this->assertEquals( $expected, $actual );
 	}
 	
+	public function testCategory()
+	{
+		$cat_id = $this->factory->event_category->create( array(
+			'name' => 'Foo Bar',
+			'slug' => 'foobar',
+		) );
+		$actual   = do_shortcode( '[eo_subscribe type="ical" category="foobar" id="subscribe" class="btn btn-primary" style="float:right" title="Subscribe" ]Subscribe to my calendar[/eo_subscribe]' );
+		$expected = '<a href="http://example.org/?feed=eo-events&amp;event-category=foobar" target="_blank" class="btn btn-primary" title="Subscribe" id="subscribe" style="float:right">Subscribe to my calendar</a>';
+		$this->assertEquals( $expected, $actual );
+	}
+
+
+	public function testVenue()
+	{
+		$cat_id = $this->factory->event_venue->create( array(
+			'name' => 'The Bar',
+			'slug' => 'the-bar',
+		) );
+		$actual   = do_shortcode( '[eo_subscribe type="ical" venue="the-bar" id="subscribe" class="btn btn-primary" style="float:right" title="Subscribe" ]Subscribe to my calendar[/eo_subscribe]' );
+		$expected = '<a href="http://example.org/?feed=eo-events&amp;event-venue=the-bar" target="_blank" class="btn btn-primary" title="Subscribe" id="subscribe" style="float:right">Subscribe to my calendar</a>';
+		$this->assertEquals( $expected, $actual );
+	}
 }
 
