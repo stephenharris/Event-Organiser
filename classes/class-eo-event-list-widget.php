@@ -171,6 +171,7 @@ class EO_Event_List_Widget extends WP_Widget{
 				);
 			?>
 			</label>
+			<input id="<?php echo esc_attr( $this->get_field_id( 'template' ) ); ?>" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'template' ) ); ?>" type="text" value="<?php echo esc_attr( $instance['template'] );?>" />
   		</p>
   
   		<p>
