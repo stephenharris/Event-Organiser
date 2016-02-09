@@ -39,6 +39,9 @@
 	padding:0!important;
 	background: none;
 }
+.eo-fullcalendar-reset.fc-unthemed .fc-today { /* Our reset will over-ride .fc-unthemed .fc-today*/
+        background: #fcf8e3;
+}
 .eo-fullcalendar a{ /* Fix for themes which are over-zealouse with transitions */
    -webkit-transition:none;
    -moz-transition:none; 
@@ -78,13 +81,13 @@
 ----------------------------------------------- */
 /* .*/
 @media (max-width:512px){
-	.eo-fullcalendar-responsive .fc-month-button, 
-	.eo-fullcalendar-responsive .fc-agendaWeek-button, 
-	.eo-fullcalendar-responsive .fc-agendaDay-button, 
-	.eo-fullcalendar-responsive .fc-week-button, 
-	.eo-fullcalendar-responsive .fc-day-button{
-		display:none;
-	}
+        .eo-fullcalendar-responsive .fc-month-button,
+        .eo-fullcalendar-responsive .fc-agendaWeek-button,
+        .eo-fullcalendar-responsive .fc-agendaDay-button,
+        .eo-fullcalendar-responsive .fc-basicWeek-button,
+        .eo-fullcalendar-responsive .fc-basicDay-button{
+                display:none;
+        }
 	
 	.eo-fullcalendar-responsive .fc-toolbar h2 {
 		text-align:center;
