@@ -131,6 +131,7 @@ body.single-event .eo-event-meta{
 
 /* Agenda CSS */
 .eo-agenda-widget ul{list-style:none; margin:0}
+.eo-agenda-widget ul li {list-style: none;}
 .eo-agenda-widget .eo-agenda-widget-nav{overflow:hidden;margin-bottom: 3px;text-align: right;}
 .eo-agenda-widget .eo-agenda-widget-nav-next, 
 .eo-agenda-widget .eo-agenda-widget-nav-prev{
