@@ -691,8 +691,9 @@ function eventorganiser_widget_agenda() {
 function eventorganiser_search_venues() {
 
 	// Query the venues with the given term
-	$value = trim( $_GET['term'] );
-	$venues = eo_get_venues( array( 'eo_update_venue_cache' => true, 'search' => $value, 'number' => 5 ) );
+	$value  = trim( $_GET['term'] );
+	$limit  = empty( $value ) ? null : 10;
+	$venues = eo_get_venues( array( 'eo_update_venue_cache' => true, 'search' => $value, 'number' => $limit ) );
 
 	foreach ( $venues as $venue ) {
 		$venue_id = (int) $venue->term_id;
