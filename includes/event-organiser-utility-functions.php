@@ -477,10 +477,10 @@ function eo_date_interval( $_date1, $_date2, $format ) {
  */
 function eo_php_to_moment( $phpformat ) {
 
-	/* Not supported: N, S, z, W, t, L, o, T, e, I, Z, u, X */
+	/* Not supported: S, B, z, t, L, T, e, I, Z */
 	$map = array(
 		//Day
-		'j' => 'D', 'd' => 'DD', 'D' => 'ddd', 'l' => 'dddd', 'jS' => 'Do', 'w' => 'd',
+		'j' => 'D', 'd' => 'DD', 'D' => 'ddd', 'l' => 'dddd', 'jS' => 'Do', 'w' => 'd', 'N' => 'E',
 		//Week
 		'W' => 'w',
 		//Month
@@ -494,15 +494,15 @@ function eo_php_to_moment( $phpformat ) {
 		//Minute
 		'i' => 'mm',
 		//Second
-		's' => 'ss',
-		'B' => 'SSS',
+		's' => 'ss', 'B' => '',
+		//Microsecond
+		'u' => 'SSSSS',
 		//Timezone
-		'P' => 'Z',
-		'O' => 'ZZ',
+		'P' => 'Z', 'O' => 'ZZ', 'T' => '', 'e' => '', 'Z' => '',
 		//Full date time
-		'c' => 'YYYY-MM-DD[T]HH:mm:ssZ',
-		'R' => 'ddd, D MMM YYYY HH:mm:ss ZZ',
-		'U' => 'X',
+		'c' => 'YYYY-MM-DD[T]HH:mm:ssZ', 'r' => 'ddd, D MMM YYYY HH:mm:ss ZZ', 'U' => 'X',
+		//Other
+		'I' => '', 'L' => '', 't' => '', 'z' => '', 'S' => '',
 	);
 
 	$regexp  = '/(\\\\\S|d|D|jS?|l|N|.)/';

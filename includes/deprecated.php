@@ -127,14 +127,15 @@ function eo_get_reoccurence($post_id=0){
  * @param int $post_id The event (post) ID. Uses current event if empty.
  * @return bool true if event a recurring event
  * @deprecated 3.0.0 use eo_recurs()
+ * @see eo_recurs()
  * @see eo_get_event_schedule()
  *
- * @param int $post_id Optional, the event (post) ID,
- * @return array Schedule information
+ * @param int $event_id Optional, the event (post) ID,
+ * @return bool True if event a recurring event
  */
-function eo_reoccurs($post_id=0){
+function eo_reoccurs( $event_id = 0 ) {
 	//_deprecated_function( __FUNCTION__, '3.0.0', 'eo_recurs()' );
-	return eo_recurs( $post_id );
+	return eo_recurs( $event_id );
 }
 
 

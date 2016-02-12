@@ -1586,11 +1586,14 @@ function eo_get_permalink( $event_id = false, $occurrence_id = false ){
 
 /**
  * Returns an the link for the event archive.
- * 
- * Optionally provide the year , or month or day to get an year/month/day archive link. 
- * To get a month archive you should provide a year. To get a day archive you should 
+ *
+ * Optionally provide the year , or month or day to get an year/month/day archive link.
+ * To get a month archive you should provide a year. To get a day archive you should
  * provide a year and month.
- * 
+ *
+ * You can also just pass one argument: a DateTime object, which used to get the archive
+ * link for that specific date.
+ *
  * ### Example
  * On a year archive page, show  a link to the following year.
  * <code>
@@ -1604,44 +1607,45 @@ function eo_get_permalink( $event_id = false, $occurrence_id = false ){
  *      );
  * }
  * </code>
- *@since 1.7 
+ *@since 1.7.0
  *@package template-functions
- *@param int $year Year in full format, e.g. 2018. Must be provide for date-based archive link.
+ *@param int|DateTime $year Year in full format, e.g. 2018. Or a a DateTime object used to determine the year, month and day. Must be provide for date-based archive link.
  *@param int $month Numeric representation of month. 1 = Jan, 12 = Dec. Must be provide for month or day archive link
  *@param int $day Day of the month 1-31
  *@return string Link to the requested archive
  *
 */
-function eo_get_event_archive_link( $year=false,$month=false, $day=false){
+function eo_get_event_archive_link( $year = false, $month = false, $day = false ) {
 	global $wp_rewrite;
 
-	if( $year instanceof DateTime ){
+	if ( $year instanceof DateTime ) {
 		$day = (int) $year->format( 'd' );
 		$month = (int) $year->format( 'm' );
 		$year = (int) $year->format( 'Y' );
 	}
-	
-	$archive = get_post_type_archive_link('event');
 
-	if( $year == false && $month == false && $day == false )
+	$archive = get_post_type_archive_link( 'event' );
+
+	if ( false == $year && false == $month && false == $day ) {
 		return $archive;
-	
-	$_year = str_pad($year, 4, "0", STR_PAD_LEFT);
-	$_month = str_pad($month, 2, "0", STR_PAD_LEFT);
-	$_day = str_pad($day, 2, "0", STR_PAD_LEFT);
-
-	if( $day ){
-		$date = compact('_year','_month','_day');
-	}elseif( $month ){
-		$date = compact('_year','_month');
-	}else{
-		$date = compact('_year');
 	}
-	
-	if( $archive && $wp_rewrite->using_mod_rewrite_permalinks() && $permastruct = $wp_rewrite->get_extra_permastruct('event_archive') ){
-		$archive = home_url( str_replace('%event_ondate%',implode('/',$date), $permastruct ) );
-	}else{
-		$archive = add_query_arg('ondate',implode('-',$date),$archive);
+
+	$_year  = str_pad( $year, 4, '0', STR_PAD_LEFT );
+	$_month = str_pad( $month, 2, '0', STR_PAD_LEFT );
+	$_day   = str_pad( $day, 2, '0', STR_PAD_LEFT );
+
+	if ( $day ) {
+		$date = compact( '_year', '_month', '_day' );
+	} elseif ( $month ) {
+		$date = compact( '_year', '_month' );
+	} else {
+		$date = compact( '_year' );
+	}
+
+	if ( $archive && $wp_rewrite->using_mod_rewrite_permalinks() && $permastruct = $wp_rewrite->get_extra_permastruct( 'event_archive' ) ) {
+		$archive = home_url( str_replace( '%event_ondate%', implode( '/', $date ), $permastruct ) );
+	} else {
+		$archive = add_query_arg( 'ondate', implode( '-', $date ), $archive );
 	}
 
 	return $archive;
