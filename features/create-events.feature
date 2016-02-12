@@ -74,7 +74,7 @@ Feature: Create events
 		    | frequency  | 1                  |
         	| until      | 2015-01-29 02:15pm |
 
-    @javascript
+    @javascript @insulated
     Scenario: Monthly event (by date)
         Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Monthly+Event+1"
@@ -97,7 +97,7 @@ Feature: Create events
 		    | frequency       | 1                  |
         	| until           | 2016-12-30 01:00pm |
 
-    @javascript
+    @javascript @insulated
     Scenario: Monthly event (by day of the month)
         Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Monthly+Event+2"
@@ -120,7 +120,7 @@ Feature: Create events
 		    | frequency       | 1                  |
         	| until           | 2016-12-31 01:00pm |
 
-    @javascript
+    @javascript @insulated
     Scenario: Yearly event
         Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Yearly+Event"
