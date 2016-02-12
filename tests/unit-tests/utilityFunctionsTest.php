@@ -12,6 +12,7 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		$this->assertEquals( "Do", eo_php_to_moment( "jS" ) );
 		$this->assertEquals( "dddd", eo_php_to_moment( "l" ) );
 		$this->assertEquals( "d", eo_php_to_moment( "w" ) );
+		$this->assertEquals( "", eo_php_to_moment( "S" ) );
 				
 		//Week
 		$this->assertEquals( "w", eo_php_to_moment( "W" ) );
@@ -60,6 +61,9 @@ class utilityFunctionsTest extends WP_UnitTestCase
 
 		//Escaping characters
 		$this->assertEquals( "[d][a][y]", eo_php_to_moment( "\d\a\y" ) );
+		
+		//Combination
+		$this->assertEquals( "Do D  MMMM YYYY [a][t] H:mm ZZ", eo_php_to_moment( 'jS j S F Y \a\t G:i O' ) );
 
 	}
 	
