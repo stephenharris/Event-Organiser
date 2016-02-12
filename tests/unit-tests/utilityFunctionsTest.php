@@ -5,11 +5,13 @@ class utilityFunctionsTest extends WP_UnitTestCase
 	
 	public function testPHPToMoment()
 	{
-		//Days
+		//Day
 		$this->assertEquals( "DD", eo_php_to_moment( "d" ) );
 		$this->assertEquals( "ddd", eo_php_to_moment( "D" ) );
 		$this->assertEquals( "D", eo_php_to_moment( "j" ) );
 		$this->assertEquals( "Do", eo_php_to_moment( "jS" ) );
+		$this->assertEquals( "dddd", eo_php_to_moment( "l" ) );
+		$this->assertEquals( "d", eo_php_to_moment( "w" ) );
 				
 		//Week
 		$this->assertEquals( "w", eo_php_to_moment( "W" ) );
@@ -34,9 +36,28 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		$this->assertEquals( "HH", eo_php_to_moment( "H" ) );
 		$this->assertEquals( "mm", eo_php_to_moment( "i" ) );
 		$this->assertEquals( "ss", eo_php_to_moment( "s" ) );
+		$this->assertEquals( "SSSSS", eo_php_to_moment( "u" ) );
+		$this->assertEquals( "E", eo_php_to_moment( "N" ) );
 		
+		//Timezone - timezone names are not handled, see https://github.com/moment/moment/issues/162
+		$this->assertEquals( "", eo_php_to_moment( "T" ) );
+		$this->assertEquals( "", eo_php_to_moment( "e" ) );
+		$this->assertEquals( "", eo_php_to_moment( "Z" ) );
+		$this->assertEquals( "ZZ", eo_php_to_moment( "O" ) );
+		$this->assertEquals( "Z", eo_php_to_moment( "P" ) );
+		
+		//Timestamp
+		$this->assertEquals( "X", eo_php_to_moment( "U" ) );
 		$this->assertEquals( "YYYY-MM-DD[T]HH:mm:ssZ", eo_php_to_moment( "c" ) );
+		$this->assertEquals( "ddd, D MMM YYYY HH:mm:ss ZZ", eo_php_to_moment( "r" ) );
 		
+		//Other unsupported formats
+		$this->assertEquals( "", eo_php_to_moment( "I" ) );
+		$this->assertEquals( "", eo_php_to_moment( "B" ) );
+		$this->assertEquals( "", eo_php_to_moment( "L" ) );
+		$this->assertEquals( "", eo_php_to_moment( "t" ) );
+		$this->assertEquals( "", eo_php_to_moment( "z" ) );
+
 		//Escaping characters
 		$this->assertEquals( "[d][a][y]", eo_php_to_moment( "\d\a\y" ) );
 
