@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-03 21:26+0000\n"
-"PO-Revision-Date: 2015-09-26 06:00:24+0000\n"
+"POT-Creation-Date: 2016-02-12 10:54+0000\n"
+"PO-Revision-Date: 2016-02-09 18:57:28+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
 "Language: Dutch; Flemish (Netherlands)\n"
@@ -14,7 +14,7 @@ msgstr ""
 
 #: classes/class-eo-agenda-widget.php:12
 msgid "Displays a list of events, grouped by date"
-msgstr "Toon een lijst met evenementen, groeperen op datum"
+msgstr "Toon een lijst met evenementen, gegroepeerd op datum"
 
 #: classes/class-eo-agenda-widget.php:20
 msgid "Events Agenda"
@@ -87,7 +87,8 @@ msgstr "Toon lange evenementen"
 
 #: classes/class-eo-calendar-widget.php:79
 msgid "Link directly to event for days with only one event"
-msgstr "Ga direct naar het evenement voor dagen met slechts een evenement"
+msgstr ""
+"Ga direct naar het evenement voor dagen met slechts &#235;&#235;n evenement"
 
 #: classes/class-eo-calendar-widget.php:91
 #: classes/class-eo-event-list-widget.php:110
@@ -131,7 +132,7 @@ msgstr "Evenementen"
 
 #: classes/class-eo-event-list-widget.php:37
 msgid "No Events"
-msgstr ""
+msgstr "Geen evenementen"
 
 #: classes/class-eo-event-list-widget.php:46 event-organiser-manage.php:157
 msgid "Future events"
@@ -144,19 +145,19 @@ msgstr "Alle evenementen"
 
 #: classes/class-eo-event-list-widget.php:58
 msgid "Running events"
-msgstr ""
+msgstr "Lopende evenementen"
 
 #: classes/class-eo-event-list-widget.php:65
 msgid "Past events"
-msgstr ""
+msgstr "Afgelopen evenementen"
 
 #: classes/class-eo-event-list-widget.php:71
 msgid "Future & running events"
-msgstr ""
+msgstr "Toekomstige en lopende evenementen"
 
 #: classes/class-eo-event-list-widget.php:77
 msgid "Events on today"
-msgstr ""
+msgstr "Evenementen vandaag"
 
 #: classes/class-eo-event-list-widget.php:106
 msgid "Number of events"
@@ -169,7 +170,7 @@ msgstr "Locatie:"
 
 #: classes/class-eo-event-list-widget.php:128
 msgid "Show:"
-msgstr ""
+msgstr "Laat zien:"
 
 #: classes/class-eo-event-list-widget.php:144
 msgid "Order by"
@@ -214,14 +215,14 @@ msgstr ""
 "informatie over het evenement die je wilt weergeven in de widget. <a href="
 "\"%s\" target=\"_blank\"> Meer informatie</a>."
 
-#: classes/class-eo-event-list-widget.php:177
+#: classes/class-eo-event-list-widget.php:178
 msgid "'No events' message"
 msgstr "'Geen evenementen' bericht"
 
 #: classes/class-eo-venue-list-table.php:75
 #, php-format
 msgid "Edit &#8220;%s&#8221;"
-msgstr ""
+msgstr "Wijzig &#8220;%s&#8221;"
 
 #: classes/class-eo-venue-list-table.php:76 templates/single-event.php:71
 msgid "Edit"
@@ -230,7 +231,7 @@ msgstr "Bewerken"
 #: classes/class-eo-venue-list-table.php:82
 #, php-format
 msgid "Delete &#8220;%s&#8221;"
-msgstr ""
+msgstr "Verwijder &#8220;%s&#8221;"
 
 #: classes/class-eo-venue-list-table.php:83
 #: classes/class-eo-venue-list-table.php:143
@@ -240,7 +241,7 @@ msgstr "Verwijderen"
 #: classes/class-eo-venue-list-table.php:89
 #, php-format
 msgid "View &#8220;%s&#8221;"
-msgstr ""
+msgstr "Toon &#8220;%s&#8221;"
 
 #: classes/class-eo-widget-categories.php:10
 msgid "A list or dropdown of event categories"
@@ -292,7 +293,7 @@ msgstr "Locaties"
 msgid "Select Venue"
 msgstr "Selecteer locatie"
 
-#: classes/class-eventorganiser-shortcodes.php:436
+#: classes/class-eventorganiser-shortcodes.php:435
 msgid "There is no excerpt because this is a protected post."
 msgstr "Er is geen samenvatting omdat dit bericht is beveiligd."
 
@@ -361,7 +362,7 @@ msgstr "Gebeurtenis verwijderd."
 
 #: event-organiser-calendar.php:225
 msgid "View keyboard shortcuts"
-msgstr ""
+msgstr "Laat toetsenbord snelkoppelingen zien"
 
 #: event-organiser-calendar.php:230
 msgid "Calendar options"
@@ -407,51 +408,51 @@ msgstr "Annuleer"
 
 #: event-organiser-calendar.php:316
 msgid "Publish Event"
-msgstr "Publiceer"
+msgstr "Publiceer evenement"
 
 #: event-organiser-calendar.php:322
 msgid "Submit for Review"
-msgstr "Wachten op review"
+msgstr "Wachten op beoordeling"
 
 #: event-organiser-calendar.php:333
 msgid "The following keyboard shortcuts are available"
-msgstr ""
+msgstr "De volgende toetsenbord snelkoppelingen zijn beschikbaar"
 
 #: event-organiser-calendar.php:337
 msgid "Navigate to next period"
-msgstr ""
+msgstr "Ga naar de volgende periode"
 
 #: event-organiser-calendar.php:341
 msgid "Navigate to previous period"
-msgstr ""
+msgstr "Ga naar de vorige periode"
 
 #: event-organiser-calendar.php:345
 msgid "Switch to month view"
-msgstr ""
+msgstr "Schakel naar maand view"
 
 #: event-organiser-calendar.php:349
 msgid "Switch to week view"
-msgstr ""
+msgstr "Schakel naar week view"
 
 #: event-organiser-calendar.php:353
 msgid "Switch to day view"
-msgstr ""
+msgstr "Schakel naar dag view"
 
 #: event-organiser-calendar.php:357
 msgid "Jump to today in view"
-msgstr ""
+msgstr "Ga naar vandaag"
 
 #: event-organiser-calendar.php:361
 msgid "Open modal of selected event"
-msgstr ""
+msgstr "Open model voor geselecteerd evenement"
 
 #: event-organiser-calendar.php:365
 msgid "Close modal"
-msgstr ""
+msgstr "Sluit model"
 
 #: event-organiser-calendar.php:369
 msgid "Open shortcut help"
-msgstr ""
+msgstr "Open help"
 
 #: event-organiser-calendar.php:388 event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:32
@@ -460,7 +461,7 @@ msgstr "Evenement gegevens"
 
 #: event-organiser-calendar.php:390
 msgid "Event Detail"
-msgstr "Evenement kenmerk"
+msgstr "Evenement details"
 
 #: event-organiser-debug.php:13 event-organiser-debug.php:14
 #: event-organiser-debug.php:57
@@ -575,7 +576,7 @@ msgstr "Herhaling"
 
 #: event-organiser-edit.php:165
 msgid "none"
-msgstr ""
+msgstr "niets"
 
 #: event-organiser-edit.php:165
 msgid "daily"
@@ -583,7 +584,7 @@ msgstr "ja, dagelijks"
 
 #: event-organiser-edit.php:165
 msgid "weekly"
-msgstr "ja, weekelijks"
+msgstr "ja, wekelijks"
 
 #: event-organiser-edit.php:166
 msgid "monthly"
@@ -603,11 +604,11 @@ msgstr "Herhaal elke"
 
 #: event-organiser-edit.php:182
 msgid "Recurrence frequency"
-msgstr ""
+msgstr "herhalings frequentie"
 
 #: event-organiser-edit.php:189
 msgid "Repeat on days of week:"
-msgstr "week van de maand"
+msgstr "Herhaal op dagen in de week"
 
 #: event-organiser-edit.php:190 templates/shortcode-event-list.php:48
 #: templates/widget-event-list.php:44
@@ -616,7 +617,7 @@ msgstr "op"
 
 #: event-organiser-edit.php:211
 msgid "Select whether to repeat monthly by date or day:"
-msgstr ""
+msgstr "Selecteer om maandelijks te herhalen op datum of dag"
 
 #: event-organiser-edit.php:215
 msgid "date of month"
@@ -634,7 +635,7 @@ msgstr "tot "
 
 #: event-organiser-edit.php:226
 msgid "Repeat this event until:"
-msgstr ""
+msgstr "Herhaal dit evenement tot"
 
 #: event-organiser-edit.php:237
 msgid "Include/Exclude occurrences:"
@@ -642,7 +643,7 @@ msgstr "Gebeurtenissen omvatten/uitsluiten"
 
 #: event-organiser-edit.php:240 includes/event-organiser-register.php:241
 msgid "Show dates"
-msgstr "Toon datums"
+msgstr "Toon data"
 
 #: event-organiser-edit.php:274
 #: includes/event-organiser-venue-functions.php:1015
@@ -691,9 +692,9 @@ msgid ""
 "such as booking places on a course. You can offer multiple tickets, and "
 "customise the booking form to suit your needs."
 msgstr ""
-"Verkoop kaarten voor specifieke data of verkoop kaarten voor alle dagen van "
+"Verkoop tickets voor specifieke data of verkoop tickets voor alle dagen van "
 "een evenement (zoals reserveringsplaatsen van een cursus). U kunt "
-"verscheidene kaarten aanbieden en het boekingsformulier aanpassen naar wens."
+"verscheidene tickets aanbieden en het boekingsformulier aanpassen naar wens."
 
 #: event-organiser-go-pro.php:76
 msgid "Additional shortcodes & improved UI"
@@ -739,7 +740,6 @@ msgid "End Date/Time"
 msgstr "Eind Datum/Tijd"
 
 #: event-organiser-manage.php:37
-#, 
 msgid "Recurrence"
 msgstr "Herhaling"
 
@@ -938,7 +938,7 @@ msgstr ""
 
 #: event-organiser-settings.php:202
 msgid "Are current events past?"
-msgstr "Evenementen op dit moment zijn verledentijd?"
+msgstr "Evenementen op dit moment zijn verleden tijd?"
 
 #: event-organiser-settings.php:211
 msgid ""
@@ -978,7 +978,7 @@ msgstr "Aanvinken indien niet kan worden gezocht op gebeurtenissen "
 
 #: event-organiser-settings.php:242
 msgid "Templates:"
-msgstr ""
+msgstr "Templates:"
 
 #: event-organiser-settings.php:247
 msgid "Disable CSS:"
@@ -1028,40 +1028,44 @@ msgstr "Archief per dag"
 
 #: event-organiser-settings.php:345
 msgid "Enable theme compatability mode (default)"
-msgstr ""
+msgstr "Aanzetten thema compatability modus (default)"
 
 #: event-organiser-settings.php:346
 msgid ""
 "Event Organiser will attempt to ensure compatability with your theme and "
 "apply additional styles."
 msgstr ""
+"Event Organiser zal proberen om compatibiliteit te verzekeren met je thema "
+"en toegevoegde style sheets."
 
 #: event-organiser-settings.php:349
 msgid "Enable template handling"
-msgstr ""
+msgstr "Aanzetten templates"
 
 #: event-organiser-settings.php:350
 msgid ""
 "Event Organiser's page templates will be used if your theme does not provide "
 "appropriate templates."
 msgstr ""
+"Event Organiser's pagina templates zullen worden gebruikt als je thema die "
+"niet support. "
 
 #: event-organiser-settings.php:353
 msgid "Disable template handling"
-msgstr ""
+msgstr "Uitschakelen templates"
 
 #: event-organiser-settings.php:354
 msgid "Event Organiser's page templates will not be used."
-msgstr ""
+msgstr "Event Organiser's pagina templates zullen niet worden gebruikt."
 
 #: event-organiser-settings.php:569
 msgid "Event Settings"
-msgstr ""
+msgstr "Evenement instellingen"
 
 #: event-organiser-settings.php:570
 #, php-format
 msgid "Event Settings: %s"
-msgstr ""
+msgstr "Evenement instellingen: %s"
 
 #: event-organiser-settings.php:629
 msgid ""
@@ -1216,6 +1220,8 @@ msgstr ""
 #: features/bootstrap/FeatureContext.php:410
 msgid "Widgets in this area will be shown on all posts and pages."
 msgstr ""
+"Widgets in deze omgeving zullen in alle berichten en pagina's worden laten "
+"zien"
 
 #: includes/class-eo-admin-notice.php:110
 msgid "Dismiss this notice"
@@ -1275,19 +1281,19 @@ msgstr ""
 #: includes/class-eo-theme-compatability.php:161
 #, php-format
 msgid "Events at %s"
-msgstr ""
+msgstr "Evenementen op %s"
 
 #: includes/class-eo-theme-compatability.php:174
 #: templates/taxonomy-event-category.php:27
 #, php-format
 msgid "Event Category: %s"
-msgstr ""
+msgstr "Evenement categorie"
 
 #: includes/class-eo-theme-compatability.php:184
 #: templates/taxonomy-event-tag.php:27
 #, php-format
 msgid "Event Tag: %s"
-msgstr ""
+msgstr "Evenement tag: %s"
 
 #: includes/class-eo-theme-compatability.php:193
 #: includes/class-eo-theme-compatability.php:195
@@ -1420,7 +1426,7 @@ msgstr "Einde"
 
 #: includes/event-organiser-ajax.php:387
 msgid "Organiser:"
-msgstr ""
+msgstr "Organisator"
 
 #: includes/event-organiser-ajax.php:426
 msgid "This event recurs"
@@ -1438,26 +1444,26 @@ msgstr "Deze gebeurtenis verwijderen"
 msgid "Break this series"
 msgstr "Splits deze serie"
 
-#: includes/event-organiser-ajax.php:770
+#: includes/event-organiser-ajax.php:771
 msgid "Event not found"
-msgstr ""
+msgstr "Evenement niet gevonden"
 
-#: includes/event-organiser-ajax.php:778
+#: includes/event-organiser-ajax.php:779
 msgid "Events are not editable via the admin calendar"
-msgstr ""
+msgstr "Evenementen zijn niet wijzigen via admin kalender"
 
-#: includes/event-organiser-ajax.php:784
+#: includes/event-organiser-ajax.php:785
 msgid "Are you sure you want to do this?"
-msgstr ""
+msgstr "Weet je zeker dat je dit wilt doen?"
 
-#: includes/event-organiser-ajax.php:791
+#: includes/event-organiser-ajax.php:792
 msgid "You do not have permission to edit this event"
-msgstr ""
+msgstr "Je hebt geen toestemming om dit evenement te wijzigen"
 
-#: includes/event-organiser-ajax.php:807
+#: includes/event-organiser-ajax.php:808
 #, php-format
 msgid "Event not created: %s"
-msgstr ""
+msgstr "Evenement niet aangemaakt: %s"
 
 #: includes/event-organiser-cpt.php:32
 msgid "Venue"
@@ -1501,11 +1507,11 @@ msgstr "gebruik komma's om locaties te scheiden"
 
 #: includes/event-organiser-cpt.php:43
 msgid "Event venues list navigation"
-msgstr ""
+msgstr "Evenement locatie lijst navigatie"
 
 #: includes/event-organiser-cpt.php:44
 msgid "Event venues list"
-msgstr ""
+msgstr "Evenement locaties lijst"
 
 #: includes/event-organiser-cpt.php:45
 msgid "No Venue"
@@ -1562,11 +1568,11 @@ msgstr "Geen categorie&#235;n gevonden"
 
 #: includes/event-organiser-cpt.php:106
 msgid "Event categories list navigation"
-msgstr ""
+msgstr "Evenement categorie&#235;n lijst navigatie"
 
 #: includes/event-organiser-cpt.php:107
 msgid "Event categories list"
-msgstr ""
+msgstr "Evenement categorie&#235;n lijst"
 
 #: includes/event-organiser-cpt.php:109
 msgid "View all categories"
@@ -1629,11 +1635,11 @@ msgstr "Zoekwoorden scheiden door komma's"
 
 #: includes/event-organiser-cpt.php:165
 msgid "Event tags list navigation"
-msgstr ""
+msgstr "Evenement zoekwoorden lijst navigatie"
 
 #: includes/event-organiser-cpt.php:166
 msgid "Event tags list"
-msgstr ""
+msgstr "Evenement zoekwoorden lijst"
 
 #: includes/event-organiser-cpt.php:168
 msgid "View all tags"
@@ -1670,27 +1676,27 @@ msgstr "Geen evenementen gevonden in de prullenbak "
 
 #: includes/event-organiser-cpt.php:237
 msgid "Filter events list"
-msgstr ""
+msgstr "Filter evenementenlijst"
 
 #: includes/event-organiser-cpt.php:238
 msgid "Events list navigation"
-msgstr ""
+msgstr "Evenementenlijst navigatie"
 
 #: includes/event-organiser-cpt.php:239
 msgid "Events list"
-msgstr ""
+msgstr "Evenementenlijst"
 
 #: includes/event-organiser-cpt.php:240
 msgid "Event Archives"
-msgstr ""
+msgstr "Evenement archieven"
 
 #: includes/event-organiser-cpt.php:241
 msgid "Insert into event"
-msgstr ""
+msgstr "Invoegen in evenement"
 
 #: includes/event-organiser-cpt.php:242
 msgid "Uploaded to this event"
-msgstr ""
+msgstr "Uploaden naar dit evenement"
 
 #: includes/event-organiser-cpt.php:323
 #, php-format
@@ -2094,21 +2100,25 @@ msgid ""
 "Is this correct? Using a fixed offset from UTC may cause unexpected "
 "behaviour, particular if you observe Daylight Savings Time."
 msgstr ""
+"Is dit correct? Gebruik makend van een vaste offset kan onverwacht gedrag "
+"veroorzaken, specifiek bij Zomer/Wintertijd"
 
 #: includes/event-organiser-register.php:573
 msgid ""
 "It is strongly recommended you select a city instead, even if you don't "
 "observe Daylight Savings Time."
 msgstr ""
+"Het wordt sterk geadviseerd om de woonplaats te selecteren, zelfs als je "
+"Zomer/Wintertijd niet gebruikt"
 
 #: includes/event-organiser-register.php:574
 #, php-format
 msgid "You can <a href='%s'>change your timezone settings here</a>."
-msgstr ""
+msgstr "Je kunt <a href='%s'>tijdzone instellingen hier aanpassen</a>."
 
 #: includes/event-organiser-utility-functions.php:1363
 msgid "Help"
-msgstr ""
+msgstr "Help"
 
 #: includes/event-organiser-venue-functions.php:980
 msgid "Address"
@@ -2116,7 +2126,7 @@ msgstr "Adres"
 
 #: includes/event-organiser-venue-functions.php:981
 msgid "City"
-msgstr "Plaats"
+msgstr "Woonplaats"
 
 #: includes/event-organiser-venue-functions.php:982
 msgid "State / Province"
@@ -2160,7 +2170,7 @@ msgstr "Gebeurtenis niet verwijderd. Gebeurtenis niet gevonden."
 
 #: includes/event.php:1108
 msgid "There is already an occurrence on this date"
-msgstr ""
+msgstr "Er is al een gebeurtenis op deze dag"
 
 #. / TRANSLATORS: This is the description that of the plug-in that appears in the "Plugins" page.
 #: includes/i18n.php:8
@@ -2232,6 +2242,3 @@ msgstr ""
 #, php-format
 msgid "Events at: %s"
 msgstr "Evenementen op locatie: %s"
-
-#~ msgid "All Day"
-#~ msgstr "Duurt hele dag"

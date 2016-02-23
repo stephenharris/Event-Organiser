@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
 Tested up to: 4.4.2
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -221,6 +221,18 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.0.2 - 12th Feburary 2016 =
+
+* enhancement: Clicking the down array in the venue selection field shows all venues. Limit of suggested venues while searching  venues in search suggestion increased to 10.
+* enhancement: Updated Dutch translation
+* bugfix: Fixed and issue with some date formats (such as 'T', 'Z') not rendering correctly on the calendar. Not all formats are supported. 
+* bugfix: Ensured the agenda widget does display bullet points. This fixes compatability issues with some themes.
+* bugfix: Fixed warning when quick editing an event
+* bugfix: Restored missing template field in the event list widget
+* bugfix: Fixed basic week/day buttons not hidden when in responsive list view.
+* bugfix: Fixed calendar not highlighting the current day.
+
 
 = 3.0.1 - 4th February 2016 =
 
