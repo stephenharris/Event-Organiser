@@ -1718,6 +1718,7 @@ function eo_taxonomy_dropdown( $args ) {
 
 	$defaults = array(
 		'show_option_all' => '',
+		'orderby'         => 'name',
 		'echo'            => 1,
 		'selected'        => 0,
 		'class'           => 'postform',
