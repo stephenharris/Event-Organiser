@@ -513,6 +513,8 @@ class EO_ICAL_Parser{
 	 */
 	protected function report_error( $line, $type, $message ){
 
+		do_action( 'eventorganiser_ical_error' );
+		
 		if( is_array( $line ) ){
 			$this->errors[] = new WP_Error(
 				$type,
@@ -538,6 +540,8 @@ class EO_ICAL_Parser{
 	 */
 	protected function report_warning( $line, $type, $message ){
 	
+		do_action( 'eventorganiser_ical_warning' );
+		
 		if( is_array( $line ) ){
 			$this->warnings[] = new WP_Error(
 					$type,
