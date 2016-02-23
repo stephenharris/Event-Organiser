@@ -10062,7 +10062,7 @@ var ListView = fcViews.list = View.extend({
 						date.format('dddd') +
 					'</span>' +
 					'<span class="fc-list-header-right">' +
-						date.format('MMM D, YYYY') +
+						date.format('MMM D') +
 					'</span>' +
 				'</td>';
 		}
