@@ -513,6 +513,12 @@ class EO_ICAL_Parser{
 	 */
 	protected function report_error( $line, $type, $message ){
 
+		// Send an email to the site admin if there are errors
+		$admin_email = get_option( 'admin_email' );
+		$site_name   = get_option( 'blogname' );
+		
+		wp_mail( $admin_email, 'Event Organiser iCal sync error', $site_name . ' has just experienced an Event Organiser iCal syncing error. You should log in and see what went wrong.' );
+		
 		if( is_array( $line ) ){
 			$this->errors[] = new WP_Error(
 				$type,
