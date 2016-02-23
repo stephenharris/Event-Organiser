@@ -106,6 +106,17 @@ function eventorganiser_load_textdomain() {
 }
 add_action( 'plugins_loaded', 'eventorganiser_load_textdomain' );
 
+/**
+ * Initiates the EO_Admin_Notice_Handler singleton
+ *
+ * @since 3.0.3
+ * @ignore
+ */
+function eventorganiser_init_notice_handler() {
+     $notice_handler = EO_Admin_Notice_Handler::get_instance();
+}
+add_action( 'plugins_loaded', 'eventorganiser_init_notice_handler' );
+
 global $eventorganiser_roles;
 $eventorganiser_roles = array(
 	'edit_events' => __( 'Edit Events', 'eventorganiser' ),
