@@ -344,7 +344,7 @@ jQuery(document).ready(function () {
 			locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess};
 			list.less = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.less ); 
 			list.pipe = $('<span class="eo-upcoming-dates-pipe">|</span>');
-			list.more = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.more );
+			list.more = $('<a class="eo-upcoming-dates-show-more" href="#"></a>').text( locale.more );
 			list.el.find('li:gt('+(eobloc-1)+')').hide().end().after( list.less, list.pipe, list.more);
 			list.pipe.hide();
 
