@@ -234,6 +234,12 @@ function eventorganiser_upgradecheck() {
 			_eventorganiser_delete_calendar_cache();
 		}
 
+		if ( version_compare( $installed_ver, '3.0.3', '<' ) ) {
+			//Bug with filtering venues fixed - requires cache to be cleared
+			delete_transient( 'eo_full_calendar_public' );
+			delete_transient( 'eo_full_calendar_public_priv' );
+		}
+
 		update_option( 'eventorganiser_version', $eventorganiser_db_version );
 
 		//Run upgrade checks

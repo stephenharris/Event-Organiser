@@ -208,11 +208,13 @@ function eventorganiser_public_fullcalendar() {
 				$event['className'][] = 'eo-future-event'; //deprecated. use eo-event-future
 				
 			//Include venue if this is set
-			$venue = eo_get_venue($post->ID);
+			$venue = eo_get_venue( $post->ID );
 
-			if($venue && !is_wp_error($venue)){
-				$event['className'][]= 'venue-'.eo_get_venue_slug($post->ID);//deprecated. use eo-event-venue-{slug}
-				$event['venue']=$venue;
+			if ( $venue && ! is_wp_error( $venue ) ) {
+				$slug = eo_get_venue_slug( $post->ID );
+				$event['className'][] = 'venue-' . $slug;//deprecated. use eo-event-venue-{slug}
+				$event['venue']       = $venue;
+				$event['venue_slug']  = $slug;
 			}
 				
 			//Event categories

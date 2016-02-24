@@ -175,7 +175,8 @@ jQuery(document).ready(function () {
 					if (typeof category !== "undefined" && category !== "" && $.inArray( category, event.category) < 0 ) {
 						return false;
 					}
-					if (typeof venue != "undefined" && venue !== "" && venue != event.venue) {
+
+					if (typeof venue != "undefined" && venue !== "" && venue !== event.venue_slug) {
 						return false;
 					}
                         
@@ -337,14 +338,14 @@ jQuery(document).ready(function () {
 	}
 	
 	/* Upcoming dates */
-	$('.eo-upcoming-dates').each(function(index, value){
+	$('#eo-upcoming-dates, .eo-upcoming-dates').each(function(index, value){
 		var list = {el: $(this)};
 		if (list.el.find('li:gt(4)').length > 0 ){
 			var eobloc = 5,
 			locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess};
 			list.less = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.less ); 
 			list.pipe = $('<span class="eo-upcoming-dates-pipe">|</span>');
-			list.more = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.more );
+			list.more = $('<a class="eo-upcoming-dates-show-more" href="#"></a>').text( locale.more );
 			list.el.find('li:gt('+(eobloc-1)+')').hide().end().after( list.less, list.pipe, list.more);
 			list.pipe.hide();
 
