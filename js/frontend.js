@@ -338,7 +338,7 @@ jQuery(document).ready(function () {
 	}
 	
 	/* Upcoming dates */
-	$('.eo-upcoming-dates').each(function(index, value){
+	$('#eo-upcoming-dates, .eo-upcoming-dates').each(function(index, value){
 		var list = {el: $(this)};
 		if (list.el.find('li:gt(4)').length > 0 ){
 			var eobloc = 5,
