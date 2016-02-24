@@ -175,7 +175,8 @@ jQuery(document).ready(function () {
 					if (typeof category !== "undefined" && category !== "" && $.inArray( category, event.category) < 0 ) {
 						return false;
 					}
-					if (typeof venue != "undefined" && venue !== "" && venue != event.venue) {
+
+					if (typeof venue != "undefined" && venue !== "" && venue !== event.venue_slug) {
 						return false;
 					}
                         
