@@ -4,7 +4,7 @@
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
 **Tested up to:** 4.4.2  
-**Stable tag:** 3.0.2  
+**Stable tag:** 3.0.3  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -237,6 +237,17 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+
+### 3.0.3 - 24th Feburary 2016 ###
+
+* enhancement: Removed the year from the list view
+* bugfix: Fixed ordering of terms in the Events admin page filters
+* bugfix: Restore backwards compatability for custom templates using the 'upcoming dates' list show more/less feature
+* bugfix: Fixed venue dropdown not filtering the (frontend)calendar
+* bugfix: Fixed incorrect class name in the 'upcoming dates' list show more/less links
+* bugfix: Fixed timezone warning not dismissable.
+* bugfix: Fixed typo in stylesheet
 
 ### 3.0.2 - 12th Feburary 2016 ###
 
