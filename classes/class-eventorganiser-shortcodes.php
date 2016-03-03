@@ -429,14 +429,14 @@ class EventOrganiser_Shortcodes {
 				$replacement =  implode($meta);
 				break;
 			case 'event_excerpt':
-				$length = ( isset($matches[2]) ? intval($matches[2]) : 55 );
+				$length = ( isset( $matches[2] ) ? intval( $matches[2] ) : 55 );
 				//Using get_the_excerpt adds a link....
-				if ( post_password_required($post) ) {
-					$output = __('There is no excerpt because this is a protected post.');
-				}else{
+				if ( post_password_required( $post ) ) {
+					$output = __( 'There is no excerpt because this is a protected post.', 'eventorganiser' );
+				} else {
 					$output = $post->post_excerpt;
 				}
-				$replacement = eventorganiser_trim_excerpt( $output, $length);
+				$replacement = eventorganiser_trim_excerpt( $output, $length );
 				break;
 			case 'event_content':
 				$replacement = get_the_content();
