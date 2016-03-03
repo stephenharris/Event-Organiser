@@ -51,7 +51,7 @@ class EO_Widget_Venues extends WP_Widget {
 
 		if ( $d ) {
 			$cat_args['walker'] = new EO_Walker_TaxonomyDropdown();
-			$cat_args['field_value'] = 'slug';
+			$cat_args['value_field'] = 'slug';
 			$cat_args['show_option_none'] = __( 'Select Venue', 'eventorganiser' );
 			/**
 			 * Filters the settings for the event venue list drppdown.
