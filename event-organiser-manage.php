@@ -199,7 +199,7 @@ function eventorganiser_quick_bulk_edit_box( $column_name, $post_type ) {
 		$args['show_option_all'] = $tax->labels->no_terms;
 	} else {
 		$args['id']               = 'eventorganiser_venue_bulk';
-		$args['show_option_none'] = __( '&mdash; No Change &mdash;' );
+		$args['show_option_none'] = __( '&mdash; No Change &mdash;', 'eventorganiser' );
 	}
 
 	?>
