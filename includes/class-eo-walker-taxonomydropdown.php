@@ -32,7 +32,7 @@ class EO_Walker_TaxonomyDropdown extends Walker_CategoryDropdown{
 		}
 
 		if ( ! isset( $args['value'] ) ) {
-			$args['value'] = ( $category->taxonomy != 'category' ? 'slug' : 'term_id' );
+			$args['value'] = ( 'category' != $category->taxonomy ? 'slug' : 'term_id' );
 		} else {
 			$args['value'] = ( 'id' == $args['value'] ? 'term_id' : $args['value'] );
 		}
