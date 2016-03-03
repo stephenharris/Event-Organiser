@@ -36,10 +36,10 @@ function _eventorganiser_details_metabox( $post ) {
 	global $wp_locale;
 
 	//Sets the format as php understands it, and textual.
-	$phpFormat = eventorganiser_get_option( 'dateformat' );
-	if ( 'd-m-Y' == $phpFormat ) {
+	$php_format = eventorganiser_get_option( 'dateformat' );
+	if ( 'd-m-Y' == $php_format ) {
 		$format = 'dd &ndash; mm &ndash; yyyy'; //Human form
-	} elseif ( 'Y-m-d' == $phpFormat ) {
+	} elseif ( 'Y-m-d' == $php_format ) {
 		$format = 'yyyy &ndash; mm &ndash; dd'; //Human form
 	} else {
 		$format = 'mm &ndash; dd &ndash; yyyy'; //Human form
@@ -110,7 +110,7 @@ function _eventorganiser_details_metabox( $post ) {
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-start-datetime-label">
 	 		
 	 			<label for="eo-start-date" class="screen-reader-text"><?php esc_html_e( 'Start Date', 'eventorganiser' ); ?></label>
-				<input type="text" id="eo-start-date" aria-describedby="eo-start-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" value="<?php echo $start->format( $phpFormat ); ?>"/>
+				<input type="text" id="eo-start-date" aria-describedby="eo-start-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" value="<?php echo $start->format( $php_format ); ?>"/>
 				<span id="eo-start-date-desc" class="screen-reader-text"><?php echo esc_html( $date_desc );?></span>
 				
 				<label for="eo-start-time" class="screen-reader-text"><?php esc_html_e( 'Start Time', 'eventorganiser' ); ?></label>
@@ -133,7 +133,7 @@ function _eventorganiser_details_metabox( $post ) {
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-end-datetime-label">
 	 		
 	 			<label for="eo-end-date" class="screen-reader-text"><?php esc_html_e( 'End Date', 'eventorganiser' ); ?></label>
-				<input type="text" id="eo-end-date" aria-describedby="eo-end-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" value="<?php echo $end->format( $phpFormat ); ?>"/>
+				<input type="text" id="eo-end-date" aria-describedby="eo-end-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" value="<?php echo $end->format( $php_format ); ?>"/>
 
 				<span id="eo-end-date-desc" class="screen-reader-text"><?php echo esc_html( $date_desc );?></span>
 				<label for="eo-end-time" class="screen-reader-text"><?php esc_html_e( 'End Time', 'eventorganiser' ); ?></label>
@@ -224,7 +224,7 @@ function _eventorganiser_details_metabox( $post ) {
 				<div id="eo-schedule-last-date-wrapper" class="reoccurrence_label">
 					<?php esc_html_e( 'until', 'eventorganiser' );?>
 					<label id="eo-repeat-until-label" for="eo-schedule-last-date" class="screen-reader-text"><?php esc_html_e( 'Repeat this event until:', 'eventorganiser' );?></label> 
-					<input class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="eo-schedule-last-date" size="10" maxlength="10" value="<?php echo $until->format( $phpFormat ); ?>"/>
+					<input class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="eo-schedule-last-date" size="10" maxlength="10" value="<?php echo $until->format( $php_format ); ?>"/>
 				</div>
 
 				<p id="eo-event-summary" role="status" aria-live="polite"></p>

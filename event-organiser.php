@@ -113,7 +113,7 @@ add_action( 'plugins_loaded', 'eventorganiser_load_textdomain' );
  * @ignore
  */
 function eventorganiser_init_notice_handler() {
-     $notice_handler = EO_Admin_Notice_Handler::get_instance();
+	$notice_handler = EO_Admin_Notice_Handler::get_instance();
 }
 add_action( 'plugins_loaded', 'eventorganiser_init_notice_handler' );
 
