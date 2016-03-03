@@ -289,6 +289,7 @@ module.exports = function(grunt) {
 				'!apigen/**',
 				'!documentation/**',
 				'!tests/**',
+				'!features/**',
 				'!vendor/**',
 				'!*~',
 				'!templates/**',
