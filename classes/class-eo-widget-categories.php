@@ -49,8 +49,8 @@ class EO_Widget_Categories extends WP_Widget {
 
 		if ( $d ) {
 			$cat_args['walker'] = new EO_Walker_TaxonomyDropdown();
-			$cat_args['field_value'] = 'slug';
-			$cat_args['show_option_none'] = __( 'Select Category' );
+			$cat_args['value_field'] = 'slug';
+			$cat_args['show_option_none'] = __( 'Select Category', 'eventorganiser' );
 			/**
 			 * Filters the settings for the event category dropdown.
 			 *
@@ -121,14 +121,14 @@ class EO_Widget_Categories extends WP_Widget {
 		$hierarchical = isset( $instance['hierarchical'] ) ? (bool) $instance['hierarchical'] : false;
 		$dropdown     = isset( $instance['dropdown'] ) ? (bool) $instance['dropdown'] : false;
 ?>
-		<p><label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:' ); ?></label>
+		<p><label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:', 'eventorganiser' ); ?></label>
 		<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
 		<p><input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'dropdown' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'dropdown' ) ); ?>"<?php checked( $dropdown ); ?> />
 		<label for="<?php echo esc_attr( $this->get_field_id( 'dropdown' ) ); ?>"><?php esc_html_e( 'Display as dropdown', 'eventorganiser' ); ?></label><br />
 
 		<input type="checkbox" class="checkbox" id="<?php echo esc_attr( $this->get_field_id( 'hierarchical' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'hierarchical' ) ); ?>"<?php checked( $hierarchical ); ?> />
-		<label for="<?php echo esc_attr( $this->get_field_id( 'hierarchical' ) ); ?>"><?php esc_html_e( 'Show hierarchy' ); ?></label></p>
+		<label for="<?php echo esc_attr( $this->get_field_id( 'hierarchical' ) ); ?>"><?php esc_html_e( 'Show hierarchy', 'eventorganiser' ); ?></label></p>
 <?php
 	}
 }

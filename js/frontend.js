@@ -265,10 +265,10 @@ jQuery(document).ready(function () {
                 			request.venue = options.venue;
                 		}
                 		if (typeof options.tag !== "undefined" && options.tag !== "") {
-                			request.venue = options.venue;
+                			request.tag = options.tag;
                 		}
                 		if (typeof options.organiser !== "undefined" && options.organiser !== 0) {
-                			request.venue = options.venue;
+                			request.organiser = options.organiser;
                 		}
 
                 		request = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_request', request, start, end, timezone, options );

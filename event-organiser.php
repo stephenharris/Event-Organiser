@@ -2,7 +2,7 @@
 /*
 Plugin Name: Event Organiser
 Plugin URI: http://www.wp-event-organiser.com
-Version: 3.0.3
+Version: 3.0.4
 Description: Creates a custom post type 'events' with features such as recurring events, venues, Google Maps, calendar views and events and venue pages
 Author: Stephen Harris
 Author URI: http://www.stephenharris.info
@@ -38,7 +38,7 @@ Domain Path: /languages
 /**
  * Set the plug-in database version
  */
-define( 'EVENT_ORGANISER_VER', '3.0.3' );
+define( 'EVENT_ORGANISER_VER', '3.0.4' );
 
 add_action( 'after_setup_theme', '_eventorganiser_set_constants' );
 function _eventorganiser_set_constants() {
@@ -113,7 +113,7 @@ add_action( 'plugins_loaded', 'eventorganiser_load_textdomain' );
  * @ignore
  */
 function eventorganiser_init_notice_handler() {
-     $notice_handler = EO_Admin_Notice_Handler::get_instance();
+	$notice_handler = EO_Admin_Notice_Handler::get_instance();
 }
 add_action( 'plugins_loaded', 'eventorganiser_init_notice_handler' );
 

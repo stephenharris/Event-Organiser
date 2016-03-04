@@ -66,9 +66,9 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 
 	$series_id = ( empty( $post->event_id ) ? $id :'' );
 
-	$phpFormat = 'M, j Y';
+	$php_format = 'M, j Y';
 	if ( ! eo_is_all_day( $series_id ) ) {
-		$phpFormat .= '\<\/\b\r\>'. get_option( 'time_format' );
+		$php_format .= '\<\/\b\r\>'. get_option( 'time_format' );
 	}
 
 	switch ( $column_name ) {
@@ -88,12 +88,12 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 
 		case 'datestart':
 			$schedule = eo_get_event_schedule( $series_id );
-			echo eo_format_datetime( $schedule['start'], $phpFormat );
+			echo eo_format_datetime( $schedule['start'], $php_format );
 			break;
 
 		case 'dateend':
 			$schedule = eo_get_event_schedule( $series_id );
-			echo eo_format_datetime( $schedule['end'], $phpFormat );
+			echo eo_format_datetime( $schedule['end'], $php_format );
 			break;
 
 		case 'reoccurence':
@@ -199,7 +199,7 @@ function eventorganiser_quick_bulk_edit_box( $column_name, $post_type ) {
 		$args['show_option_all'] = $tax->labels->no_terms;
 	} else {
 		$args['id']               = 'eventorganiser_venue_bulk';
-		$args['show_option_none'] = __( '&mdash; No Change &mdash;' );
+		$args['show_option_none'] = __( '&mdash; No Change &mdash;', 'eventorganiser' );
 	}
 
 	?>

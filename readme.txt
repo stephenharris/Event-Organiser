@@ -4,7 +4,7 @@ Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
 Tested up to: 4.4.2
-Stable tag: 3.0.3
+Stable tag: 3.0.4
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -221,6 +221,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.0.4 - 3rd March 2016 =
+* bugfix: Fixed venue and organiser filters were not being applied for calendar shortcode
+* bugfix: Fixed 404 errors with category/venue dropdown widget
 
 
 = 3.0.3 - 24th Feburary 2016 =
