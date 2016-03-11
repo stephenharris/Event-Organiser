@@ -85,8 +85,6 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 
 		public function admin_notices() {
 
-			$installed_plugins = get_plugins();
-
 			echo '<div class="notice notice-success updated">';
 
 			//Display warnings for uninstalled dependencies
@@ -404,10 +402,9 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 				return $code;
 			}
 		}
-
-		public function plugin_info( $check, $action, $args ) {
-
-			if ( isset( $args->slug ) && $args->slug == $this->slug ) {
+		
+		public function plugin_info( $check, $action, $args ){
+			if ( isset( $args->slug ) && basename( $args->slug, '.php' ) == basename( $this->slug, '.php' ) ) {
 				$obj = $this->get_remote_plugin_info( 'plugin_info' );
 				return $obj;
 			}
