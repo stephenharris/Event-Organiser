@@ -9,7 +9,9 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 	abstract class EO_Extension {
 
 		public $slug;
-	
+		
+		public $name = false;
+
 		public $label;
 
 		public $public_url;
@@ -474,6 +476,11 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 			if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
 				//If its the plug-in object, unserialize and store for 12 hours.
 				$plugin_obj = ( 'plugin_info' == $action ? unserialize( $request['body'] ) : $request['body'] );
+				
+				if ( $this->name && empty( $plugin_obj->name ) ) {
+					$plugin_obj->name = $this->name;
+				}
+				
 				set_site_transient( $key, $plugin_obj, 12 * 60 * 60 );
 				return $plugin_obj;
 			}
