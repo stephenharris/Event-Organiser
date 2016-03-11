@@ -750,15 +750,18 @@ add_filter( 'manage_event-category_custom_column', 'eventorganiser_add_color_col
 /**
  * Prints styling to event category admin pages
  */
-function eventorganiser_print_event_cat_admin_styles(){
+function eventorganiser_print_event_cat_admin_styles() {
 	?>
 	<style>
-	/* Category amin page */
+	/* Category admin page */
 	.eo-event-category-color-sample{ border: 1px solid #DFDFDF;border-radius: 4px;margin: 0 7px 0 3px;padding: 4px 14px;line-height: 25px;}
 	th.column-event-color{ width:10%}
 	</style>
 	<?php
 }
+add_action( 'admin_print_styles-term.php', 'eventorganiser_print_event_cat_admin_styles' );
+// Backwards compatability with < 4.5 see https://core.trac.wordpress.org/ticket/34988
+// and https://make.wordpress.org/core/2016/03/07/changes-to-the-term-edit-page-in-wordpress-4-5/
 add_action( 'admin_print_styles-edit-tags.php', 'eventorganiser_print_event_cat_admin_styles' );
 /**
  * Add the colour of the category to the term object.
