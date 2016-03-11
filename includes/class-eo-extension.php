@@ -9,7 +9,7 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 	abstract class EO_Extension {
 
 		public $slug;
-		
+
 		public $name = false;
 
 		public $label;
@@ -294,7 +294,7 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 			if ( isset( $whitelist_options['settings-network'] ) ) {
 				foreach ( $whitelist_options['settings-network'] as $option_name ) {
 					if ( ! isset( $_POST[$option_name] ) ) {
-						continue; 
+						continue;
 					}
 					$value = wp_unslash( $_POST[$option_name] );
 					update_site_option( $option_name, $value );
@@ -402,8 +402,8 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 				return $code;
 			}
 		}
-		
-		public function plugin_info( $check, $action, $args ){
+
+		public function plugin_info( $check, $action, $args ) {
 			if ( isset( $args->slug ) && basename( $args->slug, '.php' ) == basename( $this->slug, '.php' ) ) {
 				$obj = $this->get_remote_plugin_info( 'plugin_info' );
 				return $obj;
@@ -473,11 +473,11 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 			if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
 				//If its the plug-in object, unserialize and store for 12 hours.
 				$plugin_obj = ( 'plugin_info' == $action ? unserialize( $request['body'] ) : $request['body'] );
-				
+
 				if ( $this->name && empty( $plugin_obj->name ) ) {
 					$plugin_obj->name = $this->name;
 				}
-				
+
 				set_site_transient( $key, $plugin_obj, 12 * 60 * 60 );
 				return $plugin_obj;
 			}
