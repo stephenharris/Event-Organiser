@@ -158,6 +158,13 @@ if ( have_posts() ) :
 
 		echo eventorganiser_fold_ical_text( 'URL;VALUE=URI:' . get_permalink() ) . "\r\n";
 
+		if ( has_post_thumbnail( get_the_ID() ) ) {
+			$thumbnail_id        = get_post_thumbnail_id( get_the_ID() );
+			$thumbnail_url       = wp_get_attachment_url( $thumbnail_id );
+			$thumbnail_mime_type = get_post_mime_type( $thumbnail_id );
+			printf( "ATTACH;FMTTYPE=%s:%s\r\n", $thumbnail_mime_type, $thumbnail_url );
+		}
+
 		echo "END:VEVENT\r\n";
 
 	endwhile;
