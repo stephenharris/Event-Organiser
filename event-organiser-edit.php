@@ -317,13 +317,23 @@ function _eventorganiser_details_metabox( $post ) {
 					<input type="hidden" id="eo_venue_Lat" name="eo_venue[latitude]" value="<?php esc_attr( eo_venue_lat( $venue_id ) );?>" />
 					<input type="hidden" id="eo_venue_Lng" name="eo_venue[longtitude]" value="<?php esc_attr( eo_venue_lng( $venue_id ) ); ?>" />
 				</div>
-					
+
 				<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
 				<div class="clear"></div>
  			</div>
  		</div>
 		<?php endif; //endif venue's supported ?>
-		
+
+		<?php
+		/**
+		 * Fires after EO's core event metabox fields have been rendered.
+		 *
+		 * @since 3.1.0
+		 *
+		 * @param WP_Post Post object corresponding to the event currently being edited.
+		 */
+		do_action( 'eventorganiser_metabox_after_core_fields', $post );
+		?>
 	</div>
 	<?php
 
