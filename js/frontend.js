@@ -236,11 +236,12 @@ jQuery(document).ready(function () {
                 height: calendars[i].aspectratio ? false : 'auto',
 				aspectRatio: calendars[i].aspectratio ? calendars[i].aspectratio : false,
                 responsive: calendars[i].responsive,
+                responsiveBreakpoint: calendars[i].responsivebreakpoint,
                 defaultView: ( $(window).width() < 514 && calendars[i].responsive )  ? _eoResponsiveViewMap[calendars[i].defaultview] : calendars[i].defaultview,
                 previousView: calendars[i].defaultview,
                 nextDayThreshold: calendars[i].nextdaythreshold,
                 windowResize: function(view) {
-                	if( view.calendar.options.responsive && $(window).width() < 514 ){
+                	if( view.calendar.options.responsive && $(window).width() < view.calendar.options.responsiveBreakpoint ){
                 		$(this).fullCalendar( 'changeView', _eoResponsiveViewMap[view.calendar.options.previousView] );
                 	} else {
                 		$(this).fullCalendar( 'changeView', view.calendar.options.previousView );
