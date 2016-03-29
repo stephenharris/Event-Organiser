@@ -130,7 +130,7 @@ function eo_register_style( $handle, $src, $deps = array(), $ver = false, $media
  */
 function eo_enqueue_style( $handle ) {
 
-	if ( eventorganiser_get_option( 'disable_css' ) ) {
+	if ( eventorganiser_get_option( 'disable_css' ) || get_theme_support( 'event-organiser' ) ) {
 		return;
 	}
 
