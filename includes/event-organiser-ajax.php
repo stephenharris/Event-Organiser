@@ -576,7 +576,6 @@ function eventorganiser_widget_cal() {
 		wp_send_json( EO_Calendar_Widget::generate_output( $month,$args ) );
 	}
 
-
 /**
  * Ajax response for the agenda widget
 *
@@ -587,7 +586,7 @@ function eventorganiser_widget_cal() {
  *@ignore
 */
 function eventorganiser_widget_agenda() {
-		
+
 	global $wpdb;
 
 	$number   = (int) $_GET['instance_number'];
@@ -598,7 +597,7 @@ function eventorganiser_widget_agenda() {
 	$query    = array();
 	$return   = array();
 
-	$query['mode']      = !empty($instance['mode']) ? $instance['mode'] : 'day';
+	$query['mode']      = ! empty( $instance['mode'] ) ? $instance['mode'] : 'day';
 	$query['direction'] = intval( $_GET['direction'] );
 	$query['date']      = ( $query['direction'] < 1 ? $_GET['start'] : $_GET['end'] );
 	$query['order']     = ( $query['direction'] < 1 ? 'DESC' : 'ASC' );
@@ -609,48 +608,48 @@ function eventorganiser_widget_agenda() {
 	if ( $agenda && is_array( $agenda ) && isset( $agenda[$key] ) ) {
 		wp_send_json( $agenda[$key] );
 	}
-	
+
 	//Find dates of 'next'/'previous' event
-	$selectDates = "SELECT DISTINCT StartDate FROM {$wpdb->eo_events} LEFT JOIN {$wpdb->posts} ON {$wpdb->eo_events}.post_id = {$wpdb->posts}.ID";
-	$whereDates  = " WHERE {$wpdb->eo_events}.StartDate".( $query['order'] == 'ASC' ? ' > ' : ' < ') . '%s ';
-	$whereDates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
-	$whereDates .= " AND {$wpdb->posts}.post_status = 'publish' ";
-	$orderlimit  = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
-	$date        = $wpdb->get_row( $wpdb->prepare( $selectDates . $whereDates . $orderlimit, $query['date'], $today->format( 'Y-m-d' ) ) );
-	
-	if( !$date ){
-		return false;
+	$select_dates = "SELECT DISTINCT StartDate FROM {$wpdb->eo_events} LEFT JOIN {$wpdb->posts} ON {$wpdb->eo_events}.post_id = {$wpdb->posts}.ID";
+	$where_dates  = " WHERE {$wpdb->eo_events}.StartDate".( 'ASC' == $query['order'] ? ' > ' : ' < ') . '%s ';
+	$where_dates .= " AND {$wpdb->eo_events}.StartDate >= %s ";
+	$where_dates .= " AND {$wpdb->posts}.post_status = 'publish' ";
+	$order_limit  = "ORDER BY  {$wpdb->eo_events}.StartDate {$query['order']} LIMIT 1";
+	$date         = $wpdb->get_row( $wpdb->prepare( $select_dates . $where_dates . $order_limit, $query['date'], $today->format( 'Y-m-d' ) ) );
+
+	if ( ! $date ) {
+		wp_send_json( array() );
 	}
-	
+
 	$datetime = new DateTime( $date->StartDate, eo_get_blog_timezone() );
-	
-	if( 'day' == $query['mode'] ){		
+
+	if ( 'day' == $query['mode'] ) {
 		//Day mode - events on this day
 		$query['date1'] = $datetime->format( 'Y-m-d' );
 		$query['date2'] = $datetime->format( 'Y-m-d' );
 
-	}elseif( 'week' == $query['mode'] ){		
+	} elseif ( 'week' == $query['mode'] ) {
 		//Month mode - events in this month
-		
-		//Get the week day, and the start of the week	
+
+		//Get the week day, and the start of the week
 		$week_start_day  = (int) get_option( 'start_of_week' );
 		$event_day       = (int) $datetime->format( 'w' );
-		
-		$offset_from_week_start = ( $event_day - $week_start_day +7 ) % 7;
-		
+
+		$offset_from_week_start = ( $event_day - $week_start_day + 7 ) % 7;
+
 		$week_start_date = clone $datetime;
 		$week_start_date->modify( '- ' . $offset_from_week_start . ' days' );
-		
+
 		$week_end_date   = clone $week_start_date;
 		$week_end_date->modify( '+6 days' );//Query is inclusive.
 
 		$query['date1'] = $week_start_date->format( 'Y-m-d' );
-		$query['date2'] = $week_end_date->format( 'Y-m-d' ); 
+		$query['date2'] = $week_end_date->format( 'Y-m-d' );
 
-	}else{
+	} else {
 		//Month mode - events on this month
 		$query['date1'] = $datetime->format( 'Y-m-01' );
-		$query['date2'] = $datetime->format( 'Y-m-t' ); 
+		$query['date2'] = $datetime->format( 'Y-m-t' );
 	}
 
 	$events = eo_get_events(array(
@@ -659,7 +658,7 @@ function eventorganiser_widget_agenda() {
 	));
 
 	global $post;
-	foreach( $events as $post ):
+	foreach ( $events as $post ) :
 		$return[] = array(
 			'start'       => eo_get_the_start( 'Y-m-d H:i:s', $post->ID, null, $post->occurrence_id ),
 			'end'         => eo_get_the_end( 'Y-m-d H:i:s', $post->ID, null, $post->occurrence_id ),
@@ -667,14 +666,14 @@ function eventorganiser_widget_agenda() {
 			'title'       => get_the_title(),
 			'link'        => get_permalink(),
 			'google_link' => eo_get_add_to_google_link(),
-			'color'       => eo_get_event_color()
+			'color'       => eo_get_event_color(),
 		);
 	endforeach;
 
-	if( !$agenda || !is_array( $agenda ) ){
+	if ( ! $agenda || ! is_array( $agenda ) ) {
 		$agenda = array();
 	}
-	
+
 	$agenda[$key] = $return;
 
 	set_transient( 'eo_widget_agenda', $agenda, 60 * 60 * 24 );

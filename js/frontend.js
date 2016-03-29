@@ -571,6 +571,11 @@ jQuery(document).ready(function () {
                 },
                 success: function( events ) {
                 	var numberEvents = events.length;
+                	
+                	if ( numberEvents === 0 ) {
+                		return;
+                	}
+                	
             		for( var i=0; i< numberEvents; i++ ){
             			events[i].start = moment( events[i].start );
             			events[i].end = moment( events[i].end );
