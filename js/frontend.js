@@ -431,9 +431,9 @@ jQuery(document).ready(function () {
     		settings = typeof settings !== 'undefined' ? settings : {};
     				
     		settings = $.extend( true, {
-				evaluate    : /<%([\s\S]+?)%>/g,
-				interpolate : /<%=([\s\S]+?)%>/g,
-				escape      : /<%-([\s\S]+?)%>/g
+				evaluate:    /<#([\s\S]+?)#>/g,
+				interpolate: /\{\{\{([\s\S]+?)\}\}\}/g,
+				escape      :/\{\{([^\}]+?)\}\}(?!\})/g
     		}, settings );
     		
     		var escapes = {

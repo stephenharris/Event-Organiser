@@ -120,7 +120,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 		?>
 	  	<script type="text/template" id="eo-tmpl-agenda-widget-group">
 		<li class="date">
-			<%= group.start.format(this.param.group_format) %>
+			{{{ group.start.format(this.param.group_format) }}}
 			<ul class="a-date"></ul>
 		</li>
 		</script>
@@ -131,32 +131,32 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 		?>
 		<script type="text/template" id="eo-tmpl-agenda-widget-item">
 		<li class="event">
-			<% if( !this.param.add_to_google ){ %>
-				<a class='eo-agenda-event-permalink' href='<%= event.link %>'>
-			<% } %>
-			<span class="cat" style="background:<%= event.color %>"></span>
+			<# if( !this.param.add_to_google ){ #>
+				<a class='eo-agenda-event-permalink' href='{{{ event.link }}}'>
+			<# } #>
+			<span class="cat" style="background:{{{ event.color }}}"></span>
 			<span><strong>
-				<% if( event.all_day ){ %>
+				<# if( event.all_day ){ #>
 					<?php esc_html_e( 'All day', 'eventorganiser' ); ?>
-				<% }else{ %>
-					<%= event.start.format(this.param.item_format) %>
-				<% } %>
+				<# }else{ #>
+					{{{ event.start.format(this.param.item_format) }}}
+				<# } #>
 			</strong></span>
-			<%= event.title %>		
-			<% if( this.param.add_to_google ){ %>		
+			{{{ event.title }}}		
+			<# if( this.param.add_to_google ){ #>		
 				<div class="meta" style="display:none;">
 					<span>
-						<a href="<%= event.link %>"><?php esc_html_e( 'View', 'eventorganiser' ); ?></a>
+						<a href="{{{ event.link }}}"><?php esc_html_e( 'View', 'eventorganiser' ); ?></a>
 					</span>
 					<span> &nbsp; </span>
 					<span>
-						<a href="<%= event.google_link %>" target="_blank"><?php esc_html_e( 'Add To Google Calendar', 'eventorganiser' ); ?></a>
+						<a href="{{{ event.google_link }}}" target="_blank"><?php esc_html_e( 'Add To Google Calendar', 'eventorganiser' ); ?></a>
 					</span>
 				</div>
-			<% } %>
-			<% if( !this.param.add_to_google ){ %>
+			<# } #>
+			<# if( !this.param.add_to_google ){ #>
 				</a>
-			<% } %>
+			<# } #>
 		</li>
 		</script>
 	 	<?php
