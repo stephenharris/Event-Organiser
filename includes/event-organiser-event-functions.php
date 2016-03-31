@@ -1379,12 +1379,14 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		$args['date'] = isset( $args['date'] ) ? $args['date'] : '01';
 	}
 	if ( isset( $args['month'] ) ) {
-		$args['year'] = isset( $args['year'] ) ? $args['year'] : date( 'Y' );
-		$args['date'] = isset( $args['date'] ) ? $args['date'] : '01';
+		$args['year']  = isset( $args['year'] ) ? $args['year'] : date( 'Y' );
+		$args['date']  = isset( $args['date'] ) ? $args['date'] : '01';
+		$args['month'] = str_pad( $args['month'], 2, '0', STR_PAD_LEFT );
 	}
 	if ( isset( $args['date'] ) ) {
-		$args['year'] = isset( $args['year'] ) ? $args['year'] : date( 'Y' );
+		$args['year']  = isset( $args['year'] ) ? $args['year'] : date( 'Y' );
 		$args['month'] = isset( $args['month'] ) ? $args['month'] : date( 'M' );
+		$args['date']  = str_pad( $args['date'], 2, '0', STR_PAD_LEFT );
 	}
 
 	if ( isset( $args['year'] ) ) {
@@ -1397,49 +1399,51 @@ function eo_get_event_fullcalendar( $args = array() ) {
 	$args['showdays'] = array_map( 'strtoupper', $args['showdays'] );
 	$args['hiddendays'] = array_diff( array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' ), $args['showdays'] );
 	$args['hiddendays'] = array_keys( $args['hiddendays'] );
-	unset( $args['showdays'] );;
-	
+	unset( $args['showdays'] );
+
 	$key = $args['key'];
 	unset( $args['key'] );
-	
+
 	//Support 'event-category' and 'event-venue'. Backwards compat with 'event_category'/'event_venue'
 	$args['event-category'] = empty( $args['event_category'] ) ? $args['event-category'] : $args['event_category'];
 	$args['event-venue'] = empty( $args['event_venue'] ) ? $args['event-venue'] : $args['event_venue'];
-	
+
 	//Convert event_category / event_venue to comma-delimitered strings
 	$args['event_category'] = is_array( $args['event-category'] ) ? implode( ',', $args['event-category'] ) : $args['event-category'];
 	$args['event_venue']    = is_array( $args['event-venue'] )    ? implode( ',', $args['event-venue'] )    : $args['event-venue'];
 	$args['event_tag']      = is_array( $args['event-tag'] )      ? implode( ',', $args['event-tag'] )      : $args['event-tag'];
-	
+
 	//Get author ID from author/author_name
 	$args['event_organiser'] = ( $args['author'] ? (int) $args['author'] : eo_get_user_id_by( 'slug', $args['author_name'] ) );
-	
+
 	//max/min time MUST be hh:mm format
 	$times = array( 'mintime', 'maxtime' );
-	foreach( $times as $arg ){
+	foreach ( $times as $arg ) {
 		$args[$arg] = explode( ':', $args[$arg] );
-		if( count( $args[$arg] ) < 2 ){
+		if ( count( $args[$arg] ) < 2 ) {
 			$args[$arg][] = '00';
 		}
 		$args[$arg] = implode( ':', $args[$arg] );
 	}
 
 	//Convert php time format into moment time format
-	$date_attributes = array( 
-		'timeformat', 'axisformat', 
-		'columnformatday', 'columnformatweek', 'columnformatmonth',
-		'titleformatmonth', 'titleformatday', 'titleformatweek',
+	$date_attributes = array(
+		'timeformat',
+		'axisformat',
+		'columnformatday',
+		'columnformatweek',
+		'columnformatmonth',
+		'titleformatmonth',
+		'titleformatday',
+		'titleformatweek',
 	);
 	$args['timeformatphp'] = $args['timeformat'];
-	foreach ( $date_attributes as $date_attribute ){
+	foreach ( $date_attributes as $date_attribute ) {
 		$args[$date_attribute] = str_replace( '((', '[', $args[$date_attribute] );
 		$args[$date_attribute] = str_replace( '))', ']', $args[$date_attribute] );
 		$args[$date_attribute.'php'] = $args[$date_attribute];
 		$args[$date_attribute] = eo_php_to_moment( $args[$date_attribute] );
 	}
-
-	//Month expects 0-11, we ask for 1-12.
-	$args['month'] = ( $args['month'] ? $args['month'] - 1 : false );
 
 	EventOrganiser_Shortcodes::$calendars[] = array_merge( $args );
 
@@ -1577,7 +1581,7 @@ function eo_get_permalink( $event_id = false, $occurrence_id = false ){
 	
 	$permalink = get_permalink( $event_id );
 	
-	$permalink = apply_filters( 'eventorganiser_get_permalink', $permalink, $event_id, $occurrence );
+	$permalink = apply_filters( 'eventorganiser_get_permalink', $permalink, $event_id, $occurrence_id );
 	
 	return $permalink; 
 	

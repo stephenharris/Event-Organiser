@@ -348,9 +348,10 @@ class EO_Calendar_Widget extends WP_Widget
 						foreach ( $events as $event ) {
 							$class = array_merge( $class, eo_get_event_classes( $event->ID, $event->occurrence_id ) );
 						}
+
 						$class   = array_unique( array_filter( $class ) );
 						$classes = implode( ' ', $class );
-						$titles  = implode( ', ', wp_list_pluck( $events, 'post_title' ) );
+						$titles  = implode( '&#13;&#10;', array_map( 'get_the_title', $events ) );
 
 						$body .= sprintf(
 							"<td $data class='%s'> <a title='%s' href='%s'> %s </a></td>",
