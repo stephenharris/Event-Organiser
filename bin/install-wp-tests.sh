@@ -121,7 +121,7 @@ install_config
 install_test_suite
 install_db
 
-rm -r ${WP_CORE_DIR}wp-content/plugins/*
+rm -rf ${WP_CORE_DIR}wp-content/plugins/*
 
 # Used when waiting for stuff
 NAP_LENGTH=1
