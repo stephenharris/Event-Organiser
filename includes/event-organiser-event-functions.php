@@ -1581,7 +1581,7 @@ function eo_get_permalink( $event_id = false, $occurrence_id = false ){
 	
 	$permalink = get_permalink( $event_id );
 	
-	$permalink = apply_filters( 'eventorganiser_get_permalink', $permalink, $event_id, $occurrence );
+	$permalink = apply_filters( 'eventorganiser_get_permalink', $permalink, $event_id, $occurrence_id );
 	
 	return $permalink; 
 	
