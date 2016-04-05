@@ -57,7 +57,6 @@ module.exports = function(grunt) {
         	report: 'summary',
         	bin: './vendor/bin/phpcs',
         	showSniffCodes: true,
-        	standard: 'codesniff'
         }
     },
   	
@@ -140,6 +139,7 @@ module.exports = function(grunt) {
 		main: {
 			src:  [
 				'**',
+				'!*.xml','!*.log', //any config/log files
 				'!node_modules/**','!Gruntfile.js','!package.json', //npm/Grunt
 				'!assets/**', //wp-org assets
 				'!dist/**', //build directory
@@ -151,7 +151,7 @@ module.exports = function(grunt) {
 				'!.*','!**/*~', //hidden files
 				'!CONTRIBUTING.md',
 				'!readme.md',
-				'!codesniff/**','!phpmd.xml', //CodeSniffer & Mess Detector
+				'!phpcs.xml','!phpmd.xml', //CodeSniffer & Mess Detector
 				'!css/images/**/*.xcf', //source images
 			],
 			dest: 'dist/event-organiser/'

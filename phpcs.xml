@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ruleset name="EventOrganiserPHPCSArguments">
+    <description>WordPress-Core ruleset with a few exceptions</description>
+
+    <!-- Currently we don't use WordPress' standards for JavaScript/CSS -->
+    <exclude-pattern>**/*.js</exclude-pattern>
+    <exclude-pattern>**/*.css</exclude-pattern>
+
+    <!-- Don't parse minified resources -->
+    <exclude-pattern>**/*.min.js</exclude-pattern>
+    <exclude-pattern>**/*.min.css</exclude-pattern>
+
+    <!-- Don't parse tests -->
+    <exclude-pattern>tests/**</exclude-pattern>
+    <exclude-pattern>features/**</exclude-pattern>
+    
+    <!-- Don't parse third-party libraries -->
+    <exclude-pattern>vendors/**</exclude-pattern>
+    
+    <!-- Other directories to ignore -->
+    <exclude-pattern>bin/**</exclude-pattern>
+    <exclude-pattern>languages/**</exclude-pattern>
+
+    <!-- Our rule set -->
+	<rule ref="WordPress-Core">	
+        <!-- ignored rules -->
+        <exclude name="WordPress.Arrays.ArrayKeySpacingRestrictions.NoSpacesAroundArrayKeys"/>
+        <exclude name="WordPress.Arrays.ArrayDeclaration.IndexNoNewline" />
+	</rule>
+	<rule ref="Zend.Files.ClosingTag" />
+
+</ruleset>
