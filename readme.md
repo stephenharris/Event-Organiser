@@ -3,8 +3,8 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
-**Tested up to:** 4.4.2  
-**Stable tag:** 3.0.4  
+**Tested up to:** 4.5.0  
+**Stable tag:** 3.0.5  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -237,6 +237,15 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 3.0.5 - 31st March 2016 ###
+* bugfix: Compatible with WordPress 4.5
+* bugfix: Fixed bug which occurs in firefox when using a single digit for the date/month attribute of the calendar shortcode
+* bugfix: Used alternative 'Mustache' style syntax for the agenda widget to prevent conflicts with servers with ASP tags enabled.
+* bugfix: Used get_the_title rather than post_title property in the calendar widget
+* bugfix: Disabled plug-in's front-end css if theme support is enabled.
+* bugfix: Fixed error in the agenda widget if there are no events to display
+* bugfix: Fixed 'undefined variable' warning in eo_get_permalink
 
 ### 3.0.4 - 3rd March 2016 ###
 * bugfix: Fixed venue and organiser filters were not being applied for calendar shortcode

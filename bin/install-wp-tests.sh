@@ -24,7 +24,6 @@ elif [[ $WP_VERSION == 'nightly' || $WP_VERSION == 'trunk' ]]; then
 else
 	# http serves a single offer, whereas https serves multiple. we only want one
 	wget -nv -O /tmp/wp-latest.json http://api.wordpress.org/core/version-check/1.7/
-	grep '[0-9]+\.[0-9]+(\.[0-9]+)?' /tmp/wp-latest.json
 	LATEST_VERSION=$(grep -o '"version":"[^"]*' /tmp/wp-latest.json | sed 's/"version":"//')
 	if [[ -z "$LATEST_VERSION" ]]; then
 		echo "Latest WordPress version could not be found"
@@ -122,7 +121,7 @@ install_config
 install_test_suite
 install_db
 
-rm -r ${WP_CORE_DIR}wp-content/plugins/*
+rm -rf ${WP_CORE_DIR}wp-content/plugins/*
 
 # Used when waiting for stuff
 NAP_LENGTH=1
