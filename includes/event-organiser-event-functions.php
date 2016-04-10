@@ -276,7 +276,7 @@ function eo_get_the_occurrence( $event_id, $occurrence_id ) {
 		
 		$result = $wpdb->get_row($wpdb->prepare(
 			"SELECT event_id, StartDate,StartTime,EndDate,FinishTime FROM {$wpdb->eo_events} 
-			WHERE {$wpdb->eo_events}.post_id=%d AND {$wpdb->eo_events}.event_id=%d ORDER BY StartDate ASC", 
+			WHERE {$wpdb->eo_events}.post_id=%d AND {$wpdb->eo_events}.event_occurrence=%d ORDER BY StartDate ASC", 
 			$event_id, 
 			$occurrence_id
 		));
