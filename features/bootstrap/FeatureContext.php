@@ -523,6 +523,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			}
 			} catch (Exception $e) {
 			// do nothing
+				echo $e->getMessage();
 			}
 	
 			sleep(1);
