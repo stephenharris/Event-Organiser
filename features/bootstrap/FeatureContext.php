@@ -1,8 +1,6 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface,
-	Behat\Behat\Context\TranslatedContextInterface,
-	Behat\Behat\Context\Context,
+use Behat\Behat\Context\Context,
 	Behat\Behat\Context\SnippetAcceptingContext,
 	Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Testwork\Tester\Result\TestResult;
@@ -556,4 +554,19 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			}
 		}
 	}
+
+    /**
+     * WordPress disables the save/publish buttons when autosaving.
+     * This circumvents that issue.
+     * @When I save the event
+     */
+    public function iSaveTheEvent()
+    {
+		$button = $this->fixStepArgument('save-post');
+        
+    	$this->spin(function($context) use ($button) {
+    		$context->getSession()->getPage()->pressButton($button);
+    		return true;
+    	});
+    }
 }
