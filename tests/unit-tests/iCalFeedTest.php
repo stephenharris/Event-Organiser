@@ -77,6 +77,47 @@ class iCalFeedTest extends EO_UnitTestCase
 		$this->assertEquals( $expected, $actual );
 	}
 	
+	public function testOrganizerWithSpecialCharacters(){
+	
+		$user_id = $this->factory->user->create( array(
+			'user_login'   => 'specialcharacteruser',
+			'user_pass'    => 'password1',
+			'user_email'   => 'specialcharacter@example.org',
+			'display_name' => 's;p,e"c\'a:l'
+		) );
+		
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2013-12-30 21:00', eo_get_blog_timezone() ),
+			'frequency'     => 1,
+			'all_day'       => 0,
+			'schedule'      => 'weekly',
+			'schedule_meta' => array( 'MO' ),
+			'post_title'    => 'The Event Title',
+			'post_content'  => 'My event content',
+			'post_excerpt'  => 'My event excerpt',
+			'post_author'   => $user_id,
+			'post_status'   => 'publish',
+			'post_date'     => '2015-02-18 17:30:00',
+		) );
+	
+		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
+	
+		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
+	
+		//Get actual feed output
+		ob_start();
+		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
+		$actual = ob_get_contents();
+		ob_end_clean();
+	
+		//Get expected feed output
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/organizer-special-characters.ical' );
+			
+		$this->assertEquals( $expected, $actual );
+	}
+	
 	public function testSummary(){
 
 		$event_id = $this->factory->event->create( array(

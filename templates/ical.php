@@ -149,7 +149,9 @@ if ( have_posts() ) :
 		endif;
 		
 		if( get_the_author_meta( 'ID' ) ){
-			$author_name = eventorganiser_escape_ical_text( get_the_author() );
+			$author_name  = eventorganiser_escape_ical_text( get_the_author() );
+			//@see https://github.com/stephenharris/Event-Organiser/issues/362
+			$author_name  = str_replace( '"', '', $author_name );
 			$author_email = eventorganiser_escape_ical_text( get_the_author_meta( 'user_email' ) );
 			echo eventorganiser_fold_ical_text( 'ORGANIZER;CN="' . $author_name . '":MAILTO:' . $author_email ) . "\r\n";
 		}
