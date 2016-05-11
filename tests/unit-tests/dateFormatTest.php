@@ -328,7 +328,7 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 		
 		$datetime1 = new DateTime( '2015-02-16' );
 		$datetime2 = new DateTime( '2015-03-16' );
-		$this->assertEquals( '16th February-March, 2015', eo_format_datetime_range( $datetime1, $datetime2, 'jS F, Y', '-' ) );
+		$this->assertEquals( '16th February - 16th March, 2015', eo_format_datetime_range( $datetime1, $datetime2, 'jS F, Y', ' - ' ) );
 		
 	}
 	
@@ -350,6 +350,24 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 		$datetime2 = new DateTime( '2015-02-17' );
 		//16th-17th not 16-17th 
 		$this->assertEquals( '16th-17th February 2015', eo_format_datetime_range( $datetime1, $datetime2, 'jS F Y', '-' ) );
+	}
+	
+	/**
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/359
+	 */
+	public function testDateSameDateDifferentMonth() {
+	
+		$datetime1 = new DateTime( '2016-04-09' );
+		$datetime2 = new DateTime( '2016-05-09' );
+		$this->assertEquals( 'Saturday, April 9–Monday, May 9, 2016', eo_format_datetime_range( $datetime1, $datetime2, 'l, F j, Y', '–' ) );
+		
+		$datetime1 = new DateTime( '2015-02-11' );
+		$datetime2 = new DateTime( '2015-03-11' );
+		$this->assertEquals( 'Wednesday, February 11–Wednesday, March 11, 2015', eo_format_datetime_range( $datetime1, $datetime2, 'l, F j, Y', '–' ) );
+		
+		$datetime1 = new DateTime( '2015-02-11' );
+		$datetime2 = new DateTime( '2015-02-18' );
+		$this->assertEquals( 'Wednesday 11th – Wednesday 18th, February', eo_format_datetime_range( $datetime1, $datetime2, 'l jS, F', ' – ' ) );
 	}
 	
 	public function testDateRangeFormatTime(){

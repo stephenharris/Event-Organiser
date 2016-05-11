@@ -205,27 +205,27 @@ function eo_format_event_occurrence( $event_id = false, $occurrence_id = false, 
  * @param bool $is_rtl Whether the formatted date should be written right-to-left. Defaults to is_rtl().
  * @return string|dateTime The formatted date range
  */
-function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = null ){
+function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = null ) {
 	
-	if( is_null( $is_rtl ) ){
+	if ( is_null( $is_rtl ) ) {
 		$is_rtl = is_rtl();
 	}
 
 	$formatted1 = eo_format_datetime( $datetime1, $format );
 	$formatted2 = eo_format_datetime( $datetime2, $format );
 	
-	if( $formatted1 === $formatted2 ){
+	if ( $formatted1 === $formatted2 ) {
 		return $formatted1;
 	}
 	
 	//we include jS as a token to ensure correct positioning of suffix: 4th-5th not 4-5th
 	$date = array(
-		'jS', 'j', 'd', 'D', 'l', 'S', 'w', 'N', 'z',//Day
-		'W', //Week
-		'F', 'm', 'M', 'n', 't', //Month
-		'Y', 'y', 'o', 'L', //Year
-		'e', 'P', 'O', 'T', 'Z', 'I', //Timezone
-		'c', 'R', 'U', 'u', 'e','r', //Full date time
+		array( 'c', 'R', 'U', 'u', 'e','r' ), //Full date time
+		array( 'e', 'P', 'O', 'T', 'Z', 'I' ), //Timezone
+		array( 'Y', 'y', 'o', 'L' ), //Year
+		array( 'F', 'm', 'M', 'n', 't' ), //Month
+		array( 'W' ), //Week
+		array( 'jS', 'j', 'd', 'D', 'l', 'S', 'w', 'N', 'z' ),//Day
 	);
 	$time = array(
 		'g', 'G', 'h', 'H', //Hour 
@@ -235,7 +235,7 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 	);
 
 	//Include time with (:?) to ensure we don't split at : in time fragment.
-	$regexp  = '/(\\\\\S|' . implode( '(:?)|', $time ) . '(:?)|' . implode( '|', $date ) . '|.)/';
+	$regexp  = '/(\\\\\S|' . implode( '(:?)|', $time ) . '(:?)|' . implode( '|', call_user_func_array( 'array_merge', $date ) ) . '|.)/';
 
 	preg_match_all( $regexp, $format, $matches );
 	$tokens = $matches[0];
@@ -248,6 +248,16 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 	$middle2 = false;
 	$right   = false;
 	
+	//Collect the tokens which represent entities for which the two dates differ 
+	$break_at_tokens = array();
+	if ( $datetime1->format( 'Y' ) !== $datetime2->format( 'Y' ) ) {
+		$break_at_tokens = call_user_func_array( 'array_merge', array_slice( $date, -4 ) );
+	} elseif ( $datetime1->format( 'Ym' ) !== $datetime2->format( 'Ym' ) ) {
+		$break_at_tokens = call_user_func_array( 'array_merge', array_slice( $date, -3 ) );
+	} elseif ( $datetime1->format( 'Ymd' ) !== $datetime2->format( 'Ymd' ) ) {
+		$break_at_tokens = call_user_func_array( 'array_merge', array_slice( $date, -1 ) );
+	}
+	
 	while( $left_counter < count( $tokens ) ){
 		
 		$parsed_token_1 = eo_format_datetime( $datetime1, $tokens[$left_counter] );
@@ -255,6 +265,13 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 		
 		//We don't want to place a seperator within anyting time related
 		if( $parsed_token_1 != $parsed_token_2 || in_array( trim( $tokens[$left_counter], ':' ), $time ) ){
+			break;
+		}
+		
+		//If token is indicated as representing entity that is different, split even though
+		//they look the same e.g. 'l' with in Saturday 2nd and Saturday 9th
+		//@see https://github.com/stephenharris/Event-Organiser/issues/359
+		if ( in_array( $tokens[$left_counter], $break_at_tokens ) ) {
 			break;
 		}
 		
@@ -271,6 +288,13 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 
 		//We don't want to place a seperator within anyting time related
 		if( $parsed_token_1 != $parsed_token_2 ||  in_array( trim( $tokens[$right_counter], ':' ), $time ) ){
+			break;
+		}
+		
+		//If token is indicated as representing entity that is different, split even though
+		//they look the same e.g. 'l' with in Saturday 2nd and Saturday 9th
+		//@see https://github.com/stephenharris/Event-Organiser/issues/359
+		if ( in_array( $tokens[$right_counter], $break_at_tokens ) ) {
 			break;
 		}
 		
