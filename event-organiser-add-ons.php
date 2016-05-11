@@ -165,9 +165,9 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 			<h3 class="eo-addon-title"><?php echo esc_html( $addon['title'] ); ?> </h3>
 			<div class="img-wrap">
 				<?php if ( $addon['url'] ) : ?>
-				<a href="<?php echo esc_url( $addon['url'] );?>" title="<?php echo esc_attr( $addon['title'] );?>">
+				<a href="<?php echo esc_url( $addon['url'] );?>">
 				<?php endif; ?>
-					<img src="<?php echo esc_url( $addon['thumbnail'] );?>" class="attachment-addon wp-post-image" alt="<?php echo esc_attr( $addon['title'] ); ?>" title="<?php echo esc_attr( $addon['title'] ); ?>">
+					<img src="<?php echo esc_url( $addon['thumbnail'] );?>" class="attachment-addon wp-post-image" alt="<?php echo esc_attr( $addon['title'] ); ?>">
 				<?php if ( $addon['url'] ) : ?>
 				</a>
 				<?php endif; ?>
@@ -180,7 +180,7 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 			
 			<span style="height:20px;display:block"></span>
 			<?php if ( $addon['url'] ) : ?>
-				<a href="<?php echo esc_url( $addon['url'] );?>" title="<?php echo esc_attr( $addon['title'] ); ?>" class="button-secondary">
+				<a href="<?php echo esc_url( $addon['url'] );?>" class="button-secondary">
 					<?php echo ( 'available' == $addon['status'] ) ? 'Get this Add On' : 'Find out more &hellip;'; ?>
 				</a>
 			<?php endif; ?>
