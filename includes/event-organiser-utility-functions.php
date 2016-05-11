@@ -7,14 +7,14 @@
 
 /**
  * Formats a datetime object into a specified format and handles translations.
- * Used by 
+ * Used by
  *
- * * {@see `eo_get_the_start()`} 
+ * * {@see `eo_get_the_start()`}
  * * {@see `eo_get_the_end()`}
  * * {@see `eo_get_schedule_start()`}
  * * {@see `eo_get_schedule_last()`}
  *
- * The constant DATETIMEOBJ can be passed to them to get datetime objects 
+ * The constant DATETIMEOBJ can be passed to them to get datetime objects
  * Applies {@see `eventorganiser_format_datetime`} filter
  *
  * @since 1.2.0
@@ -24,23 +24,31 @@
  * @param string|constant $format How to format the date, see https://php.net/manual/en/function.date.php  or DATETIMEOBJ constant to return the datetime object.
  * @return string|dateTime The formatted date
 */
-
-function eo_format_datetime($datetime,$format='d-m-Y'){
+function eo_format_datetime( $datetime, $format = 'd-m-Y' ) {
 	global  $wp_locale;
 
-	if( DATETIMEOBJ == $format )
+	if ( ! ( $datetime instanceof DateTime ) ) {
+		error_log( 'Formatting non-DateTime object: ' . wp_debug_backtrace_summary() );
+		throw new Exception( sprintf(
+			'Error in formating DateTime object. Expected DateTime, but instead given %s',
+			gettype( $datetime )
+		) );
+	}
+
+	if ( DATETIMEOBJ == $format ) {
 		return $datetime;
+	}
 
 	if ( ( !empty( $wp_locale->month ) ) && ( !empty( $wp_locale->weekday ) ) ) :
 			//Translate
-			$datemonth = $wp_locale->get_month($datetime->format('m'));
-			$datemonth_abbrev = $wp_locale->get_month_abbrev($datemonth);
-			$dateweekday = $wp_locale->get_weekday($datetime->format('w'));
-			$dateweekday_abbrev = $wp_locale->get_weekday_abbrev( $dateweekday );
-			$datemeridiem =  trim($wp_locale->get_meridiem($datetime->format('a')));
-			$datemeridiem_capital =$wp_locale->get_meridiem($datetime->format('A'));
+			$datemonth            = $wp_locale->get_month( $datetime->format( 'm' ) );
+			$datemonth_abbrev     = $wp_locale->get_month_abbrev( $datemonth );
+			$dateweekday          = $wp_locale->get_weekday( $datetime->format( 'w' ) );
+			$dateweekday_abbrev   = $wp_locale->get_weekday_abbrev( $dateweekday );
+			$datemeridiem         = trim($wp_locale->get_meridiem( $datetime->format( 'a' ) ) );
+			$datemeridiem_capital = $wp_locale->get_meridiem( $datetime->format( 'A' ) );
 
-			$datemeridiem = (empty($datemeridiem) ? $datetime->format('a')  : $datemeridiem);
+			$datemeridiem = ( empty( $datemeridiem ) ? $datetime->format( 'a' )  : $datemeridiem );
 	
 			$dateformatstring = ' '.$format;
 			$dateformatstring = preg_replace( "/([^\\\])D/", "\\1" . backslashit( $dateweekday_abbrev ), $dateformatstring );
@@ -50,12 +58,13 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 			$dateformatstring = preg_replace( "/([^\\\])a/", "\\1" . backslashit( $datemeridiem ), $dateformatstring );
 			$dateformatstring = preg_replace( "/([^\\\])A/", "\\1" . backslashit( $datemeridiem_capital ), $dateformatstring );
 			$dateformatstring = substr( $dateformatstring, 1, strlen( $dateformatstring ) -1 );
-	 endif;	
-	$formatted_datetime = $datetime->format($dateformatstring);
-	
+	endif;
+
+	$formatted_datetime = $datetime->format( $dateformatstring );
+
 	/**
 	 * Filters the formatted date (DateTime object).
-	 * 
+	 *
 	 * Formats should be specified using [php date format standards](https://php.net/manual/en/function.date.php).
 	 *
 	 * @link https://php.net/manual/en/function.date.php PHP date formatting standard
@@ -63,7 +72,7 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 	 * @param string $format             The format in which the date should be returned.
 	 * @param string $datetime           The provided DateTime object
 	 */
-	$formatted_datetime = apply_filters('eventorganiser_format_datetime', $formatted_datetime , $format, $datetime);
+	$formatted_datetime = apply_filters( 'eventorganiser_format_datetime', $formatted_datetime , $format, $datetime );
 	return $formatted_datetime;
 }
 
