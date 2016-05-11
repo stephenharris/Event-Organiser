@@ -101,6 +101,7 @@ jQuery(document).ready(function () {
 				venue: calendars[i].event_venue,
 				tag: calendars[i].event_tag,
 				organiser: calendars[i].event_organiser,
+				event_series: calendars[i].event_series,
 
 				customButtons:{
 					category: function(){
@@ -269,6 +270,9 @@ jQuery(document).ready(function () {
                 		}
                 		if (typeof options.organiser !== "undefined" && options.organiser !== 0) {
                 			request.organiser = options.organiser;
+                		}
+                		if (options.event_series) {
+                			request.event_series = options.event_series;
                 		}
 
                 		request = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_request', request, start, end, timezone, options );
