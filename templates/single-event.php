@@ -55,14 +55,12 @@ get_header(); ?>
 			$categories_list = get_the_term_list( get_the_ID(), 'event-category', '', ', ','' );
 
 			if ( '' != $categories_list ) {
-				$utility_text = __( 'This event was posted in %1$s by <a href="%5$s">%4$s</a>. Bookmark the <a href="%2$s" title="Permalink to %3$s" rel="bookmark">permalink</a>.', 'eventorganiser' );
+				$utility_text = __( 'This event was posted in %1$s by <a href="%3$s">%2$s</a>.', 'eventorganiser' );
 			} else {
-				$utility_text = __( 'This event was posted by <a href="%5$s">%4$s</a>. Bookmark the <a href="%2$s" title="Permalink to %3$s" rel="bookmark">permalink</a>.', 'eventorganiser' );
+				$utility_text = __( 'This event was posted by <a href="%3$s">%2$s</a>.', 'eventorganiser' );
 			}
 			printf($utility_text,
 				$categories_list,
-				esc_url( get_permalink() ),
-				the_title_attribute( 'echo=0' ),
 				get_the_author(),
 				esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) )
 			);
