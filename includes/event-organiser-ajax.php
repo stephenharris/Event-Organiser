@@ -431,7 +431,14 @@ function eventorganiser_admin_calendar() {
 				//Include edit link in summary if user has permission
 				if (current_user_can('edit_event', $post->ID)){
 					$edit_link = get_edit_post_link( $post->ID,'');
-					$summary .= "<span class='edit'><a title='Edit this item' href='".$edit_link."'> ".__('Edit Event','eventorganiser')."</a></span>";
+					$summary .= sprintf(
+						"<span class='edit'><a href='".$edit_link."'>
+							<span aria-hidden='true'>%s</span>
+							<span class='screen-reader-text'>%s</span>
+						</a></span>",
+						__( 'Edit Event', 'eventorganiser' ),
+						sprintf( __( 'Edit Event: %s', 'eventorganiser' ), get_the_title() )
+					);
 					$event['url']= $edit_link;
 				}
 
