@@ -903,7 +903,7 @@ function _eventorganiser_generate_occurrences( $event_data ){
 	}
 
 /**
- * Generates the ICS RRULE fromthe event schedule data. 
+ * Generates the ICS RRULE fromthe event schedule data.
  * @access private
  * @ignore
  * @since 1.0.0
@@ -912,71 +912,80 @@ function _eventorganiser_generate_occurrences( $event_data ){
  * @param int $post_id The event (post) ID. Uses current event if empty.
  * @return string The RRULE to be used in an ICS calendar
  */
-function eventorganiser_generate_ics_rrule($post_id=0){
+function eventorganiser_generate_ics_rrule( $post_id = 0 ) {
 
-		$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
+	$post_id = (int) ( empty( $post_id ) ? get_the_ID() : $post_id );
 
-		$rrule = eo_get_event_schedule($post_id);
-		if( !$rrule )
-			return false;
-
-		extract($rrule);
-		
-		$schedule_last->setTimezone( new DateTimeZone('UTC') );
-		$schedule_last = $schedule_last->format( 'Ymd\THis\Z' );
-
-		switch($schedule):
-			case 'once':
-				return false;
-
-			case 'yearly':
-				return "FREQ=YEARLY;INTERVAL=".$frequency.";UNTIL=".$schedule_last;
-
-			case 'monthly':
-				//TODO Account for possible day shifts with timezone set to UTC
-				$recurrence_rule = "FREQ=MONTHLY;INTERVAL=".$frequency.";";
-				$recurrence_rule .=$schedule_meta.";";
-				$recurrence_rule .= "UNTIL=".$schedule_last;
-				return $recurrence_rule;
-	
-			case 'weekly':
-				
-				if( !eo_is_all_day( $post_id ) ){
-					//None all day event, setting event timezone to UTC may cause it to shift days.
-					//E.g. a 9pm Monday event in New York will a Tuesday event in UTC.
-					//We may need to correct the BYDAY attribute to be valid for UTC.
-					
-					$days_of_week = array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' );
-					$UTC = new DateTimeZone('UTC');
-					
-					//Get day shift upon timezone set to UTC
-					$start = eo_get_schedule_start( DATETIMEOBJ, $post_id );
-					$local_day = (int) $start->format( 'w' );
-					$start->setTimezone( $UTC );
-					$utc_day = (int) $start->format( 'w' );
-					$diff = $utc_day - $local_day + 7; //ensure difference is positive (should be 0, +1 or +6).
-					
-					//If there is a shift correct BYDAY
-					if( $diff ){
-						$utc_days = array();
-					
-						foreach( $schedule_meta as $day ){
-							$utc_day_index = ( array_search( $day, $days_of_week ) + $diff ) %7;
-							$utc_days[] = $days_of_week[$utc_day_index];
-						}
-						$schedule_meta = $utc_days;
-					}
-					
-				}
-				
-				return "FREQ=WEEKLY;INTERVAL=".$frequency.";BYDAY=".implode(',',$schedule_meta).";UNTIL=".$schedule_last;
-
-			case 'daily':
-				return "FREQ=DAILY;INTERVAL=".$frequency.";UNTIL=".$schedule_last;
-
-			default:
-		endswitch;
+	$rrule = eo_get_event_schedule( $post_id );
+	if ( ! $rrule ) {
 		return false;
+	}
+
+	$utc = new DateTimeZone( 'UTC' );
+	$rrule['schedule_last']->setTimezone( $utc );
+
+	$rrule_array = array(
+		'FREQ'       => strtoupper( $rrule['schedule'] ),
+		'INTERVAL'   => (int) $rrule['frequency'],
+		'BYDAY'      => null,
+		'BYMONTHDAY' => null,
+		'UNTIL'      => $rrule['schedule_last']->format( 'Ymd\THis\Z' ),
+	);
+
+	switch ( $rrule['schedule'] ) :
+
+		case 'daily':
+		case 'yearly':
+			//Do nothing
+			break;
+
+		case 'monthly':
+			//TODO Account for possible day shifts with timezone set to UTC
+			$schedule_meta = explode( '=', $rrule['schedule_meta'] );//BYMONTHDAY=XXX or BYDAY=XXX
+			$rrule_array[$schedule_meta[0]] = $schedule_meta[1];
+			break;
+
+		case 'weekly':
+			if ( ! eo_is_all_day( $post_id ) ) {
+				//Non-all-day event: setting event timezone to UTC may cause it to shift days.
+				//E.g. a 9pm Monday event in New York will a Tuesday event in UTC.
+				//We may need to correct the BYDAY attribute to be valid for UTC.
+				$days_of_week = array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' );
+
+				//Get day shift upon timezone set to UTC
+				$start     = eo_get_schedule_start( DATETIMEOBJ, $post_id );
+				$local_day = (int) $start->format( 'w' );
+				$start->setTimezone( $utc );
+				$utc_day   = (int) $start->format( 'w' );
+				$diff      = $utc_day - $local_day + 7; //ensure difference is positive (should be 0, +1 or +6).
+
+				//If there is a shift correct BYDAY
+				if ( $diff ) {
+					$utc_days = array();
+
+					foreach ( $rrule['schedule_meta'] as $day ) {
+						$utc_day_index = ( array_search( $day, $days_of_week ) + $diff ) % 7;
+						$utc_days[] = $days_of_week[$utc_day_index];
+					}
+					$rrule['schedule_meta'] = $utc_days;
+				}
+			}
+			$rrule_array['BYDAY'] = implode( ',', $rrule['schedule_meta'] );
+			break;
+		case 'once':
+		case 'custom':
+		default:
+			return false;
+	endswitch;
+
+	$rrule_string = '';
+	foreach ( $rrule_array as $key => $value ) {
+		if ( ! is_null( $value ) ) {
+			$rrule_string .= "$key=$value;";
+		}
+	}
+
+	return rtrim( $rrule_string, ';' );
 }
 
 function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
