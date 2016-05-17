@@ -339,125 +339,125 @@ add_action( 'delete_post', 'eo_delete_event_occurrences', 10 );
 * @param array $event_data Array of event data, including schedule meta (saved as post meta), duration and occurrences
 * @return int $post_id
 */
-function _eventorganiser_insert_occurrences( $post_id, $event_data ){
-	
+function _eventorganiser_insert_occurrences( $post_id, $event_data ) {
+
 	global $wpdb;
-	extract( $event_data );
+
 	$tz = eo_get_blog_timezone();
+
+	$start       = $event_data['start'];
+	$end         = $event_data['end'];
+	$occurrences = $event_data['occurrences'];
 
 	//Don't use date_diff (requires php 5.3+)
 	//Also see https://github.com/stephenharris/Event-Organiser/issues/205
 	//And https://github.com/stephenharris/Event-Organiser/issues/224
 	$duration_str = eo_date_interval( $start, $end, '+%y year +%m month +%d days +%h hours +%i minutes +%s seconds' );
-	
+
 	$event_data['duration_str'] = $duration_str;
 
-	$schedule_last_end = clone $schedule_last;
+	$schedule_last_end = clone $event_data['schedule_last'];
 	$schedule_last_end->modify( $duration_str );
 
 	//Get dates to be deleted / added
 	$current_occurrences = eo_get_the_occurrences( $post_id );
 	$current_occurrences = $current_occurrences ? $current_occurrences : array();
-	
+
 	$delete   = array_udiff( $current_occurrences, $occurrences, '_eventorganiser_compare_dates' );
 	$insert   = array_udiff( $occurrences, $current_occurrences, '_eventorganiser_compare_dates' );
 	$update   = array_uintersect( $occurrences, $current_occurrences, '_eventorganiser_compare_dates' );
 	$update_2 = array_uintersect( $current_occurrences, $update, '_eventorganiser_compare_dates' );
 	$keys     = array_keys( $update_2 );
-	
-	if( $delete ){
+
+	if ( $delete ) {
 		$delete_occurrence_ids = array_keys( $delete );
 		eo_delete_event_occurrences( $post_id, $delete_occurrence_ids );
 	}
-	
+
 	$occurrence_cache = array();
 	$occurrence_array = array();
-	
-	if( $update ){
-		$update   = array_combine( $keys, $update );
-		
-		foreach( $update as $occurrence_id => $occurrence ){
+
+	if ( $update ) {
+		$update = array_combine( $keys, $update );
+
+		foreach ( $update as $occurrence_id => $occurrence ) {
 
 			$occurrence_end = clone $occurrence;
-			$occurrence_end->modify($duration_str);
-			
+			$occurrence_end->modify( $duration_str );
+
 			$occurrence_input = array(
-				'StartDate'        => $occurrence->format('Y-m-d'),
-				'StartTime'        => $occurrence->format('H:i:s'),
-				'EndDate'          => $occurrence_end->format('Y-m-d'),
-				'FinishTime'       => $occurrence_end->format('H:i:s'),
+				'StartDate'        => $occurrence->format( 'Y-m-d' ),
+				'StartTime'        => $occurrence->format( 'H:i:s' ),
+				'EndDate'          => $occurrence_end->format( 'Y-m-d' ),
+				'FinishTime'       => $occurrence_end->format( 'H:i:s' ),
 			);
 
 			$wpdb->update(
-				$wpdb->eo_events, 
-				$occurrence_input,				
+				$wpdb->eo_events,
+				$occurrence_input,
 				array( 'event_id' => $occurrence_id )
 			);
 
-			//Add to occurrence cache: TODO use post meta
-			$occurrence_array[$occurrence_id] = $occurrence->format('Y-m-d H:i:s');
+			$occurrence_array[$occurrence_id] = $occurrence->format( 'Y-m-d H:i:s' );
 			$occurrence_cache[$occurrence_id] = array(
 				'start' => $occurrence,
-				'end'   => new DateTime($occurrence_end->format('Y-m-d').' '.$end->format('H:i:s'), eo_get_blog_timezone())
+				'end'   => new DateTime( $occurrence_end->format( 'Y-m-d' ) . ' ' . $end->format( 'H:i:s' ), eo_get_blog_timezone() ),
 			);
 		}
 	}
-	
-	if( $insert ){
-		foreach( $insert as $counter => $occurrence ):
-			$occurrence_end = clone $occurrence;
-			$occurrence_end->modify($duration_str);
 
-			$occurrence_input =array(
+	if ( $insert ) {
+		foreach ( $insert as $counter => $occurrence ) :
+			$occurrence_end = clone $occurrence;
+			$occurrence_end->modify( $duration_str );
+
+			$occurrence_input = array(
 				'post_id'          => $post_id,
-				'StartDate'        => $occurrence->format('Y-m-d'),
-				'StartTime'        => $occurrence->format('H:i:s'),
-				'EndDate'          => $occurrence_end->format('Y-m-d'),
-				'FinishTime'       => $end->format('H:i:s'),
+				'StartDate'        => $occurrence->format( 'Y-m-d' ),
+				'StartTime'        => $occurrence->format( 'H:i:s' ),
+				'EndDate'          => $occurrence_end->format( 'Y-m-d' ),
+				'FinishTime'       => $end->format( 'H:i:s' ),
 				'event_occurrence' => $counter,
 			);
 
 			$wpdb->insert( $wpdb->eo_events, $occurrence_input );
-			
-			$occurrence_array[$wpdb->insert_id] = $occurrence->format('Y-m-d H:i:s');
 
-			//Add to occurrence cache: TODO use post meta
+			$occurrence_array[$wpdb->insert_id] = $occurrence->format( 'Y-m-d H:i:s' );
 			$occurrence_cache[$wpdb->insert_id] = array(
 				'start' => $occurrence,
-				'end'   => new DateTime($occurrence_end->format('Y-m-d').' '.$end->format('H:i:s'), $tz ),
+				'end'   => new DateTime( $occurrence_end->format( 'Y-m-d' ) . ' ' . $end->format( 'H:i:s' ), $tz ),
 			);
-
 		endforeach;
 	}
-		
+
 	//Set occurrence cache
 	wp_cache_set( 'eventorganiser_occurrences_'.$post_id, $occurrence_cache );
 	wp_cache_set( 'eventorganiser_all_occurrences_'.$post_id, $occurrence_cache );
 
 	unset( $event_data['occurrences'] );
-	//$event_data['_occurrences'] = $occurrence_array;
-		
-	if( !empty($include) ){
-		$event_data['include'] = array_map('eo_format_datetime', $include, array_fill(0, count($include), 'Y-m-d H:i:s') );
+
+	if ( ! empty( $event_data['include'] ) ) {
+		$event_data['include'] = array_map( 'eo_format_datetime', $event_data['include'], array_fill( 0, count( $event_data['include'] ), 'Y-m-d H:i:s' ) );
 	}
-	
-	if( !empty($exclude) ){
-		$event_data['exclude'] = array_map('eo_format_datetime', $exclude, array_fill(0, count($exclude), 'Y-m-d H:i:s') );
+
+	if ( ! empty( $event_data['exclude'] ) ) {
+		$event_data['exclude'] = array_map( 'eo_format_datetime', $event_data['exclude'], array_fill( 0, count( $event_data['exclude'] ), 'Y-m-d H:i:s' ) );
 	}
+
+	update_post_meta( $post_id, '_eventorganiser_schedule_start_start', $start->format( 'Y-m-d H:i:s' ) );
+	update_post_meta( $post_id, '_eventorganiser_schedule_start_finish', $end->format( 'Y-m-d H:i:s' ) );
+	update_post_meta( $post_id, '_eventorganiser_schedule_until', $event_data['until']->format( 'Y-m-d H:i:s' ) );
+	update_post_meta( $post_id, '_eventorganiser_schedule_last_start', $event_data['schedule_last']->format( 'Y-m-d H:i:s' ) );
+	update_post_meta( $post_id, '_eventorganiser_schedule_last_finish', $schedule_last_end->format( 'Y-m-d H:i:s' ) );
 
 	unset( $event_data['start'] );
 	unset( $event_data['end'] );
 	unset( $event_data['schedule_start'] );
 	unset( $event_data['schedule_last'] );
 	unset( $event_data['until'] );
-		
+
 	update_post_meta( $post_id, '_eventorganiser_event_schedule', $event_data );
-	update_post_meta( $post_id, '_eventorganiser_schedule_start_start', $start->format('Y-m-d H:i:s') );
-	update_post_meta( $post_id, '_eventorganiser_schedule_start_finish', $end->format('Y-m-d H:i:s') );
-	update_post_meta( $post_id, '_eventorganiser_schedule_until', $until->format('Y-m-d H:i:s') );
-	update_post_meta( $post_id, '_eventorganiser_schedule_last_start', $schedule_last->format('Y-m-d H:i:s') );
-	update_post_meta( $post_id, '_eventorganiser_schedule_last_finish', $schedule_last_end->format('Y-m-d H:i:s') );
-		
+
 	return $post_id;
 }
 
