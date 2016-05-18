@@ -64,18 +64,33 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 	}
 
 	public function testDateFormatNull() {
-		$this->setExpectedException( 'Exception', 'Error in formating DateTime object. Expected DateTime, but instead given NULL' );
-		eo_format_datetime( null, 'l jS F Y' );
+		try{
+			eo_format_datetime( null, 'l jS F Y' );
+			$this->fail( 'Exception expected. No exception thrown' );
+		} catch ( Exception $e ) {
+			$this->assertEquals( 'Exception', get_class( $e ), 'Failed asserting exception of Exception type' );
+			$this->assertEquals( 'Error in formating DateTime object. Expected DateTime, but instead given NULL', $e->getMessage() );
+		}
 	}
 
 	public function testDateFormatFalse() {
-		$this->setExpectedException( 'Exception', 'Error in formating DateTime object. Expected DateTime, but instead given bool' );
-		eo_format_datetime( false, 'l jS F Y' );
+		try{
+			eo_format_datetime( false, 'l jS F Y' );
+			$this->fail( 'Exception expected. No exception thrown' );
+		} catch ( Exception $e ) {
+			$this->assertEquals( 'Exception', get_class( $e ), 'Failed asserting exception of Exception type' );
+			$this->assertEquals( 'Error in formating DateTime object. Expected DateTime, but instead given bool', $e->getMessage() );
+		}
 	}
 
 	public function testDateFormatString() {
-		$this->setExpectedException( 'Exception', 'Error in formating DateTime object. Expected DateTime, but instead given string' );
-		eo_format_datetime( '', 'l jS F Y' );
+		try{
+			eo_format_datetime( '', 'l jS F Y' );
+			$this->fail( 'Exception expected. No exception thrown' );
+		} catch ( Exception $e ) {
+			$this->assertEquals( 'Exception', get_class( $e ), 'Failed asserting exception of Exception type' );
+			$this->assertEquals( 'Error in formating DateTime object. Expected DateTime, but instead given string', $e->getMessage() );
+		}
 	}
 
 	public function setLocale( $locale = false ){
