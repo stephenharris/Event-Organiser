@@ -28,7 +28,6 @@ function eo_format_datetime( $datetime, $format = 'd-m-Y' ) {
 	global  $wp_locale;
 
 	if ( ! ( $datetime instanceof DateTime ) ) {
-		error_log( 'Formatting non-DateTime object: ' . wp_debug_backtrace_summary() );
 		throw new Exception( sprintf(
 			'Error in formating DateTime object. Expected DateTime, but instead given %s',
 			gettype( $datetime )
