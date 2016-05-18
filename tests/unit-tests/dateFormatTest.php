@@ -80,7 +80,7 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 			$this->fail( 'Exception expected. No exception thrown' );
 		} catch ( Exception $e ) {
 			$this->assertEquals( 'Exception', get_class( $e ), 'Failed asserting exception of Exception type' );
-			$this->assertEquals( 'Error in formating DateTime object. Expected DateTime, but instead given bool', $e->getMessage() );
+			$this->assertEquals( 'Error in formating DateTime object. Expected DateTime, but instead given boolean', $e->getMessage() );
 		}
 	}
 
