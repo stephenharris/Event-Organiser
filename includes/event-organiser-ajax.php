@@ -538,10 +538,10 @@ function eventorganiser_admin_calendar() {
 
 
 /**
- * Ajax response for the widget calendar 
+ * Ajax response for the widget calendar
  *
- *  This gets the month being requested and generates the
- * html code to view that month and its events. 
+ * This gets the month being requested and generates the
+ * html code to view that month and its events.
  *
  *@since 1.0
  *@access private
@@ -549,39 +549,32 @@ function eventorganiser_admin_calendar() {
 */
 function eventorganiser_widget_cal() {
 
-		/*Retrieve the month we are after. $month must be a 
-		DateTime object of the first of that month*/
-		if(isset($_GET['eo_month'])){
-			$month  = new DateTime($_GET['eo_month'].'-01'); 
-		}else{
-			$month = new DateTime('now');
-			$month = date_create($month->format('Y-m-1'));
-		}		
-
-		$args = array();
-
-		//Restrict by category and/or venue
-		foreach( array('event-venue','event-category') as $tax ){
-			if( empty($_GET[$tax]) )
-				continue;
-
-			$terms = explode(',',trim($_GET[$tax]));
-
-			$args['tax_query'][] = array(
-					'taxonomy' => $tax,
-					'field' => 'slug',
-					'terms' => $terms,
-					'operator' => 'IN'
-				);
-		}
-
-		//Options for the calendar
-		$args['showpastevents'] = (empty($_GET['showpastevents']) ? 0 : 1);
-		$args['link-to-single'] = (empty($_GET['link-to-single']) ? 0 : 1);
-		$args['show-long'] = (empty($_GET['show-long']) ? 0 : 1);
-
-		wp_send_json( EO_Calendar_Widget::generate_output( $month,$args ) );
+	/*Retrieve the month we are after. $month must be a
+	DateTime object of the first of that month*/
+	if ( isset( $_GET['eo_month'] ) ) {
+		$month  = new DateTime( $_GET['eo_month'] . '-01' );
+	} else {
+		$month = new DateTime( 'now' );
+		$month = date_create( $month->format( 'Y-m-1' ) );
 	}
+
+	$args = array();
+
+	//Restrict by category and/or venue
+	foreach ( array( 'event-venue', 'event-category' ) as $tax ) {
+		if ( empty( $_GET[$tax] ) ) {
+			continue;
+		}
+		$args[$tax] = implode( ',', array_map( 'sanitize_title', explode( ',', trim( $_GET[$tax] ) ) ) );
+	}
+
+	//Options for the calendar
+	$args['showpastevents'] = ( empty( $_GET['showpastevents'] ) ? 0 : 1 );
+	$args['link-to-single'] = ( empty( $_GET['link-to-single'] ) ? 0 : 1 );
+	$args['show-long']      = ( empty( $_GET['show-long'] ) ? 0 : 1 );
+
+	wp_send_json( EO_Calendar_Widget::generate_output( $month,$args ) );
+}
 
 /**
  * Ajax response for the agenda widget
