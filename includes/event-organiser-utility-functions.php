@@ -45,10 +45,11 @@ function eo_format_datetime( $datetime, $format = 'd-m-Y' ) {
 			$dateweekday          = $wp_locale->get_weekday( $datetime->format( 'w' ) );
 			$dateweekday_abbrev   = $wp_locale->get_weekday_abbrev( $dateweekday );
 			$datemeridiem         = trim($wp_locale->get_meridiem( $datetime->format( 'a' ) ) );
-			$datemeridiem_capital = $wp_locale->get_meridiem( $datetime->format( 'A' ) );
+			$datemeridiem_capital = trim( $wp_locale->get_meridiem( $datetime->format( 'A' ) ) );
 
-			$datemeridiem = ( empty( $datemeridiem ) ? $datetime->format( 'a' )  : $datemeridiem );
-	
+			$datemeridiem         = ( empty( $datemeridiem ) ? $datetime->format( 'a' )  : $datemeridiem );
+			$datemeridiem_capital = ( empty( $datemeridiem_capital ) ? $datetime->format( 'A' )  : $datemeridiem_capital );
+
 			$dateformatstring = ' '.$format;
 			$dateformatstring = preg_replace( "/([^\\\])D/", "\\1" . backslashit( $dateweekday_abbrev ), $dateformatstring );
 			$dateformatstring = preg_replace( "/([^\\\])F/", "\\1" . backslashit( $datemonth ), $dateformatstring );
