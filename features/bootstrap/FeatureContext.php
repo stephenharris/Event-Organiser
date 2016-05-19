@@ -548,13 +548,18 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	{
 
 		if ($this->screenshot_dir && TestResult::FAILED === $scope->getTestResult()->getResultCode()) {
+			
+			$feature  = $scope->getFeature();
+			$scenario = $scope->getScenario();
+			$filename = basename( $feature->getFile(), '.feature' ) . '-' . $scenario->getLine();
+			
 			if ($this->getSession()->getDriver() instanceof \Behat\Mink\Driver\Selenium2Driver) {
 				$screenshot = $this->getSession()->getDriver()->getScreenshot();
-				$feature    = $scope->getFeature();
-				$scenario   = $scope->getScenario();
-				$filename   = basename( $feature->getFile(), '.feature' ) . '-' . $scenario->getLine() . '.png';
-				file_put_contents( $this->screenshot_dir . $filename, $screenshot );
+				file_put_contents( $this->screenshot_dir . $filename . '.png', $screenshot);
 			}
+			
+			//Store HTML markup of the page also - useful for non-js tests
+			file_put_contents( $this->screenshot_dir . $filename . '.html', $this->getSession()->getPage()->getHtml());
 		}
 	}
 
