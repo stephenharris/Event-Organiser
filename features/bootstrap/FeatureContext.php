@@ -20,9 +20,6 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	public function __construct($screenshot_dir=false) {
 		if ( $screenshot_dir ) {
 			$this->screenshot_dir = rtrim( $screenshot_dir, '/' ) . '/';
-			if ( ! is_dir( $this->screenshot ) ) {
-				mkdir( $this->screenshot, 0700, true );
-			}
 		}
 	}
 	
@@ -562,7 +559,16 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
     public function iSaveTheEvent()
     {
 		$button = $this->fixStepArgument('save-post');
-        
+		
+		//If the button is out of view then the window will be scrolled so that it aligns
+		//with the top of the screen. But then it is obscured by the #wpadminbar.
+		//We scroll so that the top of the window is aligned with the button, then move the
+		//view-port up by more than the height of the admin bar so that the button is visible.
+		$this->getSession()->executeScript(
+			'var element = document.getElementById("box");
+			element.scrollIntoView(true);
+			window.scrollBy(0, -50);'
+		);
     	$this->spin(function($context) use ($button) {
     		$context->getSession()->getPage()->pressButton($button);
     		return true;
