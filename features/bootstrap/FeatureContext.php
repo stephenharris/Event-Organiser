@@ -565,7 +565,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		//We scroll so that the top of the window is aligned with the button, then move the
 		//view-port up by more than the height of the admin bar so that the button is visible.
 		$this->getSession()->executeScript(
-			'var element = document.getElementById("box");
+			'var element = document.getElementById("save-post");
 			element.scrollIntoView(true);
 			window.scrollBy(0, -50);'
 		);
