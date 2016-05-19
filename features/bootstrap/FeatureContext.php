@@ -40,6 +40,13 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 					case 'start':
 					case 'end':
 					case 'until':
+						
+						//Support 'relative' placeholders
+						$value = str_replace(
+							array( 'd', 'm', 'Y'),
+							array( date('d'), date('m'), date('Y') 
+						), $value );
+						
 						$postData[$key] = new DateTime( $value, $tz );
 						break;
 				}
