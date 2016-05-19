@@ -18,9 +18,11 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	protected $screenshot_dir = false;
 	
 	public function __construct($screenshot_dir=false) {
-		//TODO What if $screenshot_dir is a valid, albeit non-existing directory 
-		if ( $screenshot_dir && is_dir( $screenshot_dir ) ) {
+		if ( $screenshot_dir ) {
 			$this->screenshot_dir = rtrim( $screenshot_dir, '/' ) . '/';
+			if ( ! is_dir( $this->screenshot ) ) {
+				mkdir( $this->screenshot, 0700, true );
+			}
 		}
 	}
 	
@@ -523,7 +525,6 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			}
 			} catch (Exception $e) {
 			// do nothing
-				echo $e->getMessage();
 			}
 	
 			sleep(1);
@@ -548,10 +549,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 				$feature    = $scope->getFeature();
 				$scenario   = $scope->getScenario();
 				$filename   = basename( $feature->getFile(), '.feature' ) . '-' . $scenario->getLine() . '.png';
-				
-				file_put_contents( '/tmp/' . $filename, $screenshot);
-				file_put_contents( '/tmp/screenshot.png', $screenshot);
-				file_put_contents( $this->screenshot_dir . $filename, $screenshot);
+				file_put_contents( $this->screenshot_dir . $filename, $screenshot );
 			}
 		}
 	}
