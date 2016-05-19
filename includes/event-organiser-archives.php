@@ -320,32 +320,111 @@ function eventorganiser_event_groupby( $groupby, $query ) {
 
 
 /**
-* LEFT JOIN all EVENTS.
-* Joins events table when querying for events
+ * LEFT JOIN all EVENTS.
+ * Joins events table when querying for events
  * Hooked onto posts_join
  *
- *@since 1.0.0
- *@access private
- *@ignore
- *@param string $join JOIN part of the SQL statement
- *@param string $query WP_Query
- *@return string
+ * @since 1.0.0
+ * @access private
+ * @ignore
+ * @param string $join JOIN part of the SQL statement
+ * @param string $query WP_Query
+ * @return string
  */
-function eventorganiser_join_tables( $join, $query ){
+function eventorganiser_join_tables( $join, $query ) {
 	global $wpdb;
 
-	if( eventorganiser_is_event_query( $query, true ) ){
-		if( 'series'== $query->get('group_events_by') ) {
-			$join .= " LEFT JOIN 
-						( SELECT * FROM {$wpdb->eo_events} ORDER BY {$wpdb->eo_events}.StartDate ASC, {$wpdb->eo_events}.StartTime ASC ) 
-						AS {$wpdb->eo_events} ON $wpdb->posts.id = {$wpdb->eo_events}.post_id ";
+	if ( eventorganiser_is_event_query( $query, true ) ) {
 
-		}else{
-			$join .=" LEFT JOIN $wpdb->eo_events ON $wpdb->posts.id = {$wpdb->eo_events}.post_id ";
+		$join .= " LEFT JOIN $wpdb->eo_events ON $wpdb->posts.ID = {$wpdb->eo_events}.post_id ";
+
+		if ( 'series' == $query->get( 'group_events_by' ) ) {
+			//When grouping events, we perform WHERE statement in the subsquery
+			//@see eventorganiser_events_where
+			$_where = _eventorganiser_generate_mysql_where( $query );
+			$where  = $_where ? "WHERE {$_where}" : '';
+			$join .= "INNER JOIN ( SELECT {$wpdb->eo_events}.event_id FROM {$wpdb->eo_events} {$where} ORDER BY {$wpdb->eo_events}.StartDate ASC, {$wpdb->eo_events}.StartTime ASC )
+					AS eoid ON eoid.event_id = {$wpdb->eo_events}.event_id ";
 		}
 	}
 	return $join;
 }
+
+/**
+ *
+ * @access private
+ */
+function _eventorganiser_generate_mysql_where( $query ) {
+
+	global $wpdb;
+
+	$where = array();
+
+	//If we only want events (or occurrences of events) that belong to a particular 'event'
+	//https://core.trac.wordpress.org/ticket/16471
+	if ( isset( $query->query_vars['event_series'] ) ) :
+		$series_id = $query->query_vars['event_series'];
+		$where[]   = $wpdb->prepare( "{$wpdb->eo_events}.post_id =%d ", $series_id );
+	endif;
+
+	//https://core.trac.wordpress.org/ticket/16471
+	if ( isset( $query->query_vars['event_occurrence_id'] ) ) :
+		$occurrence_id = $query->query_vars['event_occurrence_id'];
+		$where[]       = $wpdb->prepare( "{$wpdb->eo_events}.event_id=%d ", $occurrence_id );
+	endif;
+
+	//https://core.trac.wordpress.org/ticket/16471
+	if ( isset( $query->query_vars['event_occurrence__not_in'] ) ) :
+		$occurrence__not_in = implode( ', ', array_map( 'intval', $query->query_vars['event_occurrence__not_in'] ) );
+		$where[]            = "{$wpdb->eo_events}.event_id NOT IN({$occurrence__not_in}) ";
+	endif;
+
+	//https://core.trac.wordpress.org/ticket/16471
+	if ( isset( $query->query_vars['event_occurrence__in'] ) ) :
+		$occurrence__in = implode( ', ', array_map( 'intval', $query->query_vars['event_occurrence__in'] ) );
+		$where[]        = "{$wpdb->eo_events}.event_id IN({$occurrence__in}) ";
+	endif;
+
+	//Check date ranges were are interested in.
+	$date_queries = array(
+		'event_start_after'  => array(
+			'notstrict' => "{$wpdb->eo_events}.StartDate >= %s ",
+			'strict'    => "({$wpdb->eo_events}.StartDate > %s OR ({$wpdb->eo_events}.StartDate = %s AND {$wpdb->eo_events}.StartTime > %s)) ",
+		),
+		'event_start_before' => array(
+			'notstrict' => "{$wpdb->eo_events}.StartDate <= %s ",
+			'strict'    => "({$wpdb->eo_events}.StartDate < %s OR ({$wpdb->eo_events}.StartDate = %s AND {$wpdb->eo_events}.StartTime < %s)) ",
+		),
+		'event_end_after'    => array(
+			'notstrict' => "{$wpdb->eo_events}.EndDate >= %s ",
+			'strict'    => "({$wpdb->eo_events}.EndDate > %s OR ({$wpdb->eo_events}.EndDate = %s AND {$wpdb->eo_events}.FinishTime > %s)) ",
+		),
+		'event_end_before'   => array(
+			'notstrict' => "{$wpdb->eo_events}.EndDate <= %s ",
+			'strict'    => "({$wpdb->eo_events}.EndDate < %s OR ({$wpdb->eo_events}.EndDate = %s AND {$wpdb->eo_events}.FinishTime < %s)) ",
+		),
+	);
+
+	//Construct sql query.
+	foreach ( $date_queries as $prop => $_sql ) {
+		$datetime = $query->get( $prop );
+		if ( ! empty( $datetime ) ) {
+			$date = eo_format_date( $datetime, 'Y-m-d' );
+			$time = eo_format_date( $datetime, 'H:i:s' );
+			if ( '00:00:00' == $time ) {
+				$sql     = $_sql['notstrict'];
+				$where[] = $wpdb->prepare( $sql, $date );
+			} else {
+				$sql     = $_sql['strict'];
+				$where[] = $wpdb->prepare( $sql, $date, $date, $time );
+			}
+		}
+	}
+
+	$where = array_filter( $where );
+	return implode( ' AND ', $where );
+}
+
 
 /**
  * Checks whether a given query is for events
@@ -427,78 +506,20 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
  * Selects posts which satisfy custom WHERE statements
  * Hooked onto posts_where
  *
- *@since 1.0.0
- *@access private
- *@ignore
- *@param string $where WHERE part of the SQL statement
- *@param string $query WP_Query
- *@return string
+ * @since 1.0.0
+ * @access private
+ * @ignore
+ * @param string $where WHERE part of the SQL statement
+ * @param string $query WP_Query
+ * @return string
  */
-function eventorganiser_events_where( $where, $query ){
-	global $wpdb;
-
-	//Only alter event queries
-	if( eventorganiser_is_event_query( $query, true ) ):
-
-		//If we only want events (or occurrences of events) that belong to a particular 'event'
-		//https://core.trac.wordpress.org/ticket/16471
-		if( isset( $query->query_vars['event_series'] ) ):
-			$series_id =$query->query_vars['event_series'];
-			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.post_id =%d ",$series_id);
-		endif;
-
-		//https://core.trac.wordpress.org/ticket/16471
-		if( isset( $query->query_vars['event_occurrence_id'] ) ):
-			$occurrence_id =$query->query_vars['event_occurrence_id'];
-			$where .= $wpdb->prepare(" AND {$wpdb->eo_events}.event_id=%d ",$occurrence_id);
-		endif;
-		
-		//https://core.trac.wordpress.org/ticket/16471
-		if( isset( $query->query_vars['event_occurrence__not_in'] ) ):
-			$occurrence__not_in = implode(', ', array_map( 'intval', $query->query_vars['event_occurrence__not_in'] ) );
-			$where .= " AND {$wpdb->eo_events}.event_id NOT IN({$occurrence__not_in}) ";
-		endif;
-		
-		//https://core.trac.wordpress.org/ticket/16471
-		if( isset( $query->query_vars['event_occurrence__in'] ) ):
-			$occurrence__in = implode(', ', array_map( 'intval', $query->query_vars['event_occurrence__in'] ) );
-			$where .= " AND {$wpdb->eo_events}.event_id IN({$occurrence__in}) ";
-		endif;
-
-		//Check date ranges were are interested in. 
-		$date_queries = array(
-			'event_start_after'=>array(
-				'notstrict' =>" AND {$wpdb->eo_events}.StartDate >= %s ",
-				'strict' => " AND ({$wpdb->eo_events}.StartDate > %s OR ({$wpdb->eo_events}.StartDate = %s AND {$wpdb->eo_events}.StartTime > %s)) "
-			),
-			'event_start_before'=>array(
-				'notstrict' =>" AND {$wpdb->eo_events}.StartDate <= %s ",
-				'strict' => " AND ({$wpdb->eo_events}.StartDate < %s OR ({$wpdb->eo_events}.StartDate = %s AND {$wpdb->eo_events}.StartTime < %s)) "
-			),
-			'event_end_after'=>array(
-				'notstrict' =>" AND {$wpdb->eo_events}.EndDate >= %s ",
-				'strict' => " AND ({$wpdb->eo_events}.EndDate > %s OR ({$wpdb->eo_events}.EndDate = %s AND {$wpdb->eo_events}.FinishTime > %s)) "
-			),
-			'event_end_before'=>array(
-				'notstrict' =>" AND {$wpdb->eo_events}.EndDate <= %s ",
-				'strict' => " AND ({$wpdb->eo_events}.EndDate < %s OR ({$wpdb->eo_events}.EndDate = %s AND {$wpdb->eo_events}.FinishTime < %s)) "
-			)
-		);
-
-		//Construct sql query.
-		foreach ( $date_queries as $prop => $_sql ){
-			$datetime = $query->get($prop);
-			if( !empty( $datetime) ) {
-				$date = eo_format_date($datetime,'Y-m-d');
-				$time = eo_format_date($datetime,'H:i:s');
-				if( $time == '00:00:00' ){
-					$sql = $_sql['notstrict'];
-					$where .= $wpdb->prepare($sql, $date);				
-				}else{
-					$sql = $_sql['strict'];
-					$where .= $wpdb->prepare($sql, $date, $date, $time);				
-				}
-			}
+function eventorganiser_events_where( $where, $query ) {
+	//Only alter event queries. When grouping events we perform the WHERE query in the subquery
+	//@see eventorganiser_join_tables
+	if ( eventorganiser_is_event_query( $query, true ) && 'series' != $query->get( 'group_events_by' ) ) :
+		$_where = _eventorganiser_generate_mysql_where( $query );
+		if ( $_where ) {
+			$where .= " AND {$_where}";
 		}
 	endif;
 

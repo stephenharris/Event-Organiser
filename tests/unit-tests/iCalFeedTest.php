@@ -24,22 +24,83 @@ class iCalFeedTest extends EO_UnitTestCase
 	}
 	
 	
-	public function testRRULE(){
-	
+	public function testRRULEWeeklySchedule(){
 		$event_id = $this->factory->event->create( array(
-				'start'=> new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
-				'end'=> new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
-				'schedule_last'=> new DateTime('2013-12-30 21:00', eo_get_blog_timezone() ),
-				'frequency' => 1,
-				'all_day' => 0,
-				'schedule'=>'weekly',
-				'schedule_meta' => array( 'MO' ),
-				'post_title'=>'The Event Title',
-				'post_content'=>'My event content',
+				'start'         => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
+				'end'           => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
+				'schedule_last' => new DateTime('2013-12-30 21:00', eo_get_blog_timezone() ),
+				'frequency'     => 1,
+				'all_day'       => 0,
+				'schedule'      => 'weekly',
+				'schedule_meta' => array( 'MO', 'WE', 'TH' ),
+				'post_title'    => 'The Event Title',
 		) );
-		 
-		$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;UNTIL=20131230T210000Z", eventorganiser_generate_ics_rrule( $event_id ) );
-		
+
+		$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,TH;UNTIL=20131230T210000Z", eventorganiser_generate_ics_rrule( $event_id ) );
+	}
+
+	public function testRRULEMonthlyByDaySchedule(){
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2016-11-25 04:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2016-11-25 09:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2017-09-22 05:00', eo_get_blog_timezone() ),
+			'frequency'     => 2,
+			'all_day'       => 0,
+			'schedule'      => 'monthly',
+			'schedule_meta' => 'BYDAY=4FR',
+			'post_title'    => 'The Event Title',
+		) );
+
+		$this->assertEquals( "FREQ=MONTHLY;INTERVAL=2;BYDAY=4FR;UNTIL=20170922T040000Z", eventorganiser_generate_ics_rrule( $event_id ) );
+	}
+
+	public function testRRULEMonthlyByMonthDaySchedule(){
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2016-05-13 09:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2016-05-13 13:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2017-02-13 09:00', eo_get_blog_timezone() ),
+			'frequency'     => 3,
+			'all_day'       => 0,
+			'schedule'      => 'monthly',
+			'schedule_meta' => 'BYMONTHDAY=13',
+			'post_title'    => 'The Event Title',
+		) );
+
+		$this->assertEquals( "FREQ=MONTHLY;INTERVAL=3;BYMONTHDAY=13;UNTIL=20170213T090000Z", eventorganiser_generate_ics_rrule( $event_id ) );
+	}
+
+	public function testRRULEYearlySchedule(){
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2016-02-21 09:45', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2016-02-21 13:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2020-02-21 09:45', eo_get_blog_timezone() ),
+			'schedule'      => 'yearly',
+			'post_title'    => 'The Event Title',
+		) );
+
+		$this->assertEquals( "FREQ=YEARLY;INTERVAL=1;UNTIL=20200221T094500Z", eventorganiser_generate_ics_rrule( $event_id ) );
+	}
+
+	public function testRRULEOnceSchedule(){
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
+			'post_title'    => 'The Event Title',
+		) );
+
+		$this->assertEquals( false, eventorganiser_generate_ics_rrule( $event_id ) );
+	}
+
+	public function testRRULECustomSchedule(){
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
+			'schedule'      => 'custom',
+			'include'       => array ( new DateTime('2014-01-17 21:30', eo_get_blog_timezone() ) ),
+			'post_title'    => 'The Event Title',
+		) );
+
+		$this->assertEquals( false, eventorganiser_generate_ics_rrule( $event_id ) );
 	}
 	
 
@@ -208,14 +269,14 @@ class iCalFeedTest extends EO_UnitTestCase
 	
 		$this->assertEquals( $expected, $actual );
 	}
-	
-	
-	public function testRRULE_all_day(){
+
+
+	public function testRRULEAllDayWeekly(){
 		global $wpdb;
 		$wpdb->db_connect();
-		
+
 		wp_cache_set( 'eventorganiser_timezone', 'America/New_York' );
-	
+
 		//Event recurrs every Monday evening in New York but is all day, so day should remain on Monday in UTC
     	$event_id = eo_insert_event( array(
 			'start'         => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
@@ -229,14 +290,14 @@ class iCalFeedTest extends EO_UnitTestCase
 			'post_content'  => 'My event content',
     		'post_date'     => '2015-02-18 17:30:00',
 		) );
-		
+
 		$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;UNTIL=20131231T020000Z", eventorganiser_generate_ics_rrule( $event_id ) );
 
 		wp_cache_delete( 'eventorganiser_timezone' );
-		
+
 	}
-	
-    public function testTimezoneChangeRRULE(){
+
+    public function testRRULECustomTimezone(){
     	
     	//When day changes when start date is converted to UTC timezone (for iCal feed)
     	//Remember to correct [day] the 'reccurs weekly by [day]', so thats true for UTC timezone.

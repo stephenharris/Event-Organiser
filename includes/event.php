@@ -339,125 +339,125 @@ add_action( 'delete_post', 'eo_delete_event_occurrences', 10 );
 * @param array $event_data Array of event data, including schedule meta (saved as post meta), duration and occurrences
 * @return int $post_id
 */
-function _eventorganiser_insert_occurrences( $post_id, $event_data ){
-	
+function _eventorganiser_insert_occurrences( $post_id, $event_data ) {
+
 	global $wpdb;
-	extract( $event_data );
+
 	$tz = eo_get_blog_timezone();
+
+	$start       = $event_data['start'];
+	$end         = $event_data['end'];
+	$occurrences = $event_data['occurrences'];
 
 	//Don't use date_diff (requires php 5.3+)
 	//Also see https://github.com/stephenharris/Event-Organiser/issues/205
 	//And https://github.com/stephenharris/Event-Organiser/issues/224
 	$duration_str = eo_date_interval( $start, $end, '+%y year +%m month +%d days +%h hours +%i minutes +%s seconds' );
-	
+
 	$event_data['duration_str'] = $duration_str;
 
-	$schedule_last_end = clone $schedule_last;
+	$schedule_last_end = clone $event_data['schedule_last'];
 	$schedule_last_end->modify( $duration_str );
 
 	//Get dates to be deleted / added
 	$current_occurrences = eo_get_the_occurrences( $post_id );
 	$current_occurrences = $current_occurrences ? $current_occurrences : array();
-	
+
 	$delete   = array_udiff( $current_occurrences, $occurrences, '_eventorganiser_compare_dates' );
 	$insert   = array_udiff( $occurrences, $current_occurrences, '_eventorganiser_compare_dates' );
 	$update   = array_uintersect( $occurrences, $current_occurrences, '_eventorganiser_compare_dates' );
 	$update_2 = array_uintersect( $current_occurrences, $update, '_eventorganiser_compare_dates' );
 	$keys     = array_keys( $update_2 );
-	
-	if( $delete ){
+
+	if ( $delete ) {
 		$delete_occurrence_ids = array_keys( $delete );
 		eo_delete_event_occurrences( $post_id, $delete_occurrence_ids );
 	}
-	
+
 	$occurrence_cache = array();
 	$occurrence_array = array();
-	
-	if( $update ){
-		$update   = array_combine( $keys, $update );
-		
-		foreach( $update as $occurrence_id => $occurrence ){
+
+	if ( $update ) {
+		$update = array_combine( $keys, $update );
+
+		foreach ( $update as $occurrence_id => $occurrence ) {
 
 			$occurrence_end = clone $occurrence;
-			$occurrence_end->modify($duration_str);
-			
+			$occurrence_end->modify( $duration_str );
+
 			$occurrence_input = array(
-				'StartDate'        => $occurrence->format('Y-m-d'),
-				'StartTime'        => $occurrence->format('H:i:s'),
-				'EndDate'          => $occurrence_end->format('Y-m-d'),
-				'FinishTime'       => $occurrence_end->format('H:i:s'),
+				'StartDate'        => $occurrence->format( 'Y-m-d' ),
+				'StartTime'        => $occurrence->format( 'H:i:s' ),
+				'EndDate'          => $occurrence_end->format( 'Y-m-d' ),
+				'FinishTime'       => $occurrence_end->format( 'H:i:s' ),
 			);
 
 			$wpdb->update(
-				$wpdb->eo_events, 
-				$occurrence_input,				
+				$wpdb->eo_events,
+				$occurrence_input,
 				array( 'event_id' => $occurrence_id )
 			);
 
-			//Add to occurrence cache: TODO use post meta
-			$occurrence_array[$occurrence_id] = $occurrence->format('Y-m-d H:i:s');
+			$occurrence_array[$occurrence_id] = $occurrence->format( 'Y-m-d H:i:s' );
 			$occurrence_cache[$occurrence_id] = array(
 				'start' => $occurrence,
-				'end'   => new DateTime($occurrence_end->format('Y-m-d').' '.$end->format('H:i:s'), eo_get_blog_timezone())
+				'end'   => new DateTime( $occurrence_end->format( 'Y-m-d' ) . ' ' . $end->format( 'H:i:s' ), eo_get_blog_timezone() ),
 			);
 		}
 	}
-	
-	if( $insert ){
-		foreach( $insert as $counter => $occurrence ):
-			$occurrence_end = clone $occurrence;
-			$occurrence_end->modify($duration_str);
 
-			$occurrence_input =array(
+	if ( $insert ) {
+		foreach ( $insert as $counter => $occurrence ) :
+			$occurrence_end = clone $occurrence;
+			$occurrence_end->modify( $duration_str );
+
+			$occurrence_input = array(
 				'post_id'          => $post_id,
-				'StartDate'        => $occurrence->format('Y-m-d'),
-				'StartTime'        => $occurrence->format('H:i:s'),
-				'EndDate'          => $occurrence_end->format('Y-m-d'),
-				'FinishTime'       => $end->format('H:i:s'),
+				'StartDate'        => $occurrence->format( 'Y-m-d' ),
+				'StartTime'        => $occurrence->format( 'H:i:s' ),
+				'EndDate'          => $occurrence_end->format( 'Y-m-d' ),
+				'FinishTime'       => $end->format( 'H:i:s' ),
 				'event_occurrence' => $counter,
 			);
 
 			$wpdb->insert( $wpdb->eo_events, $occurrence_input );
-			
-			$occurrence_array[$wpdb->insert_id] = $occurrence->format('Y-m-d H:i:s');
 
-			//Add to occurrence cache: TODO use post meta
+			$occurrence_array[$wpdb->insert_id] = $occurrence->format( 'Y-m-d H:i:s' );
 			$occurrence_cache[$wpdb->insert_id] = array(
 				'start' => $occurrence,
-				'end'   => new DateTime($occurrence_end->format('Y-m-d').' '.$end->format('H:i:s'), $tz ),
+				'end'   => new DateTime( $occurrence_end->format( 'Y-m-d' ) . ' ' . $end->format( 'H:i:s' ), $tz ),
 			);
-
 		endforeach;
 	}
-		
+
 	//Set occurrence cache
 	wp_cache_set( 'eventorganiser_occurrences_'.$post_id, $occurrence_cache );
 	wp_cache_set( 'eventorganiser_all_occurrences_'.$post_id, $occurrence_cache );
 
 	unset( $event_data['occurrences'] );
-	//$event_data['_occurrences'] = $occurrence_array;
-		
-	if( !empty($include) ){
-		$event_data['include'] = array_map('eo_format_datetime', $include, array_fill(0, count($include), 'Y-m-d H:i:s') );
+
+	if ( ! empty( $event_data['include'] ) ) {
+		$event_data['include'] = array_map( 'eo_format_datetime', $event_data['include'], array_fill( 0, count( $event_data['include'] ), 'Y-m-d H:i:s' ) );
 	}
-	
-	if( !empty($exclude) ){
-		$event_data['exclude'] = array_map('eo_format_datetime', $exclude, array_fill(0, count($exclude), 'Y-m-d H:i:s') );
+
+	if ( ! empty( $event_data['exclude'] ) ) {
+		$event_data['exclude'] = array_map( 'eo_format_datetime', $event_data['exclude'], array_fill( 0, count( $event_data['exclude'] ), 'Y-m-d H:i:s' ) );
 	}
+
+	update_post_meta( $post_id, '_eventorganiser_schedule_start_start', $start->format( 'Y-m-d H:i:s' ) );
+	update_post_meta( $post_id, '_eventorganiser_schedule_start_finish', $end->format( 'Y-m-d H:i:s' ) );
+	update_post_meta( $post_id, '_eventorganiser_schedule_until', $event_data['until']->format( 'Y-m-d H:i:s' ) );
+	update_post_meta( $post_id, '_eventorganiser_schedule_last_start', $event_data['schedule_last']->format( 'Y-m-d H:i:s' ) );
+	update_post_meta( $post_id, '_eventorganiser_schedule_last_finish', $schedule_last_end->format( 'Y-m-d H:i:s' ) );
 
 	unset( $event_data['start'] );
 	unset( $event_data['end'] );
 	unset( $event_data['schedule_start'] );
 	unset( $event_data['schedule_last'] );
 	unset( $event_data['until'] );
-		
+
 	update_post_meta( $post_id, '_eventorganiser_event_schedule', $event_data );
-	update_post_meta( $post_id, '_eventorganiser_schedule_start_start', $start->format('Y-m-d H:i:s') );
-	update_post_meta( $post_id, '_eventorganiser_schedule_start_finish', $end->format('Y-m-d H:i:s') );
-	update_post_meta( $post_id, '_eventorganiser_schedule_until', $until->format('Y-m-d H:i:s') );
-	update_post_meta( $post_id, '_eventorganiser_schedule_last_start', $schedule_last->format('Y-m-d H:i:s') );
-	update_post_meta( $post_id, '_eventorganiser_schedule_last_finish', $schedule_last_end->format('Y-m-d H:i:s') );
-		
+
 	return $post_id;
 }
 
@@ -589,321 +589,334 @@ function eo_get_event_schedule( $post_id = 0 ){
 * @param array $event_data - Array containing the event's schedule data
 * @return array $event_data - Array containing the event's schedule data including 'occurrences', an array of DateTimes
 */
-function _eventorganiser_generate_occurrences( $event_data ){
+function _eventorganiser_generate_occurrences( $schedule ) {
 
 	$event_defaults = array(
 		'start' => '', 'end' => '', 'all_day' => 0,
-		'schedule' => 'once', 'schedule_meta' => '', 'frequency' => 1, 'schedule_last' => '', 
+		'schedule' => 'once', 'schedule_meta' => '', 'frequency' => 1, 'schedule_last' => '',
 		'until' => '', 'number_occurrences' => 0, 'exclude' => array(), 'include' => array(),
 	);
 
-	extract( wp_parse_args( $event_data, $event_defaults ) );
-		
-		$occurrences =array(); //occurrences array	
+	$schedule = wp_parse_args( $schedule, $event_defaults );
+	$start    = $schedule['start'];
+	$end      = $schedule['end'];
+	$until    = $schedule['until'];
+	$schedule_meta = $schedule['schedule_meta'];
 
-		$exclude = array_filter( (array) $exclude );
-		$include = array_filter( (array) $include );
-		
-		$exclude = array_udiff($exclude, $include, '_eventorganiser_compare_datetime');
-		$include = array_udiff($include, $exclude, '_eventorganiser_compare_datetime');
-		
-		//White list schedule
-		if( !in_array($schedule, array('once','daily','weekly','monthly','yearly','custom')) )
-			return new WP_Error('eo_error',__('Schedule not recognised.','eventorganiser'));
-		
-		//Ensure event frequency is a positive integer. Else set to 1.
-		$frequency = max(absint($frequency),1);
-		$all_day = (int) $all_day;
-		$number_occurrences = absint( $number_occurrences );
-		
-		//Check dates are supplied and are valid
-		if( !($start instanceof DateTime) )
-			return new WP_Error('eo_error',__('Start date not provided.','eventorganiser'));
+	$occurrences = array(); //occurrences array
 
-		if( !($end instanceof DateTime) )
-			$end = clone $start;
-		
-		//If use 'number_occurrences' to limit recurring event, set dummy 'schedule_last' date.
-		if( !($until instanceof DateTime) && $number_occurrences && in_array( $schedule, array( 'daily','weekly','monthly','yearly' ) ) ){
-			//Set dummy "last occurrance" date.
-			$until = clone $start;
-		}else{
-			$number_occurrences = 0;
-		}
+	$exclude = array_filter( (array) $schedule['exclude'] );
+	$include = array_filter( (array) $schedule['include'] );
 
-		if( 'once' == $schedule || !($until instanceof DateTime) )
-			$until = clone $start;
+	$exclude = array_udiff( $exclude, $include, '_eventorganiser_compare_datetime' );
+	$include = array_udiff( $include, $exclude, '_eventorganiser_compare_datetime' );
 
-		//Check dates are in chronological order
-		if($end < $start)
-			return new WP_Error('eo_error',__('Start date occurs after end date.','eventorganiser'));
-		
-		if($until < $start)
-			return new WP_Error('eo_error',__('Schedule end date is before is before the start date.','eventorganiser'));
-
-		//Now set timezones
-		$timezone = eo_get_blog_timezone();
-		$start->setTimezone( $timezone );
-		$end->setTimezone( $timezone );
-		$until->setTimezone( $timezone );
-		$H = intval( $start->format( 'H' ) );
-		$i = intval( $start->format( 'i' ) );
-
-		$start_days =array();
-		$workaround='';
-		$icaldays = array('SU','MO','TU','WE','TH','FR','SA');
-		$weekdays = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'); 
-		$ical2day = array('SU'=>'Sunday','MO'=>'Monday','TU'=>'Tuesday','WE'=>'Wednesday','TH'=>'Thursday','FR'=>'Friday','SA'=>'Saturday');
-
-		//Set up schedule
-		switch( $schedule ) :
-			case 'once':
-			case 'custom':
-				$frequency =1;
-				$schedule_meta ='';
-				$schedule_start = clone $start;
-				$until = clone $start;
-				$start_days[] = clone $start;
-				$workaround = 'once';//Not strictly a workaround.
-				break;
-
-			case 'daily':
-				$interval = "+".$frequency."day";
-				$start_days[] = clone $start;
-				break;	
-
-			case 'weekly':
-				$schedule_meta = ( $schedule_meta ? array_filter($schedule_meta) : array() );
-				if( !empty($schedule_meta) && is_array($schedule_meta) ):
-					foreach ($schedule_meta as $day):
-						$start_day = clone $start;
-						$start_day->modify($ical2day[$day]);
-						$start_days[] = $start_day;
-					endforeach;
-				else:
-					$schedule_meta = array( $icaldays[ $start->format('w') ] );
-					$start_days[] = clone $start;
-				endif;
-
-				$interval = "+".$frequency."week";
-				break;
-
-			case 'monthly':
-				$start_days[] = clone $start;
-				$rule_value = explode('=',$schedule_meta,2);
-				$rule =$rule_value[0];
-				$values = !empty( $rule_value[1] ) ? explode(',',$rule_value[1]) : array();//Should only be one value, but may support more in future
-				$values =  array_filter( $values );
-				
-				if( $rule=='BYMONTHDAY' ):
-					$date = (int) $start_days[0]->format('d');
-					$interval = "+".$frequency."month";
-					
-					if($date >= 29)
-						$workaround = 'short months';	//This case deals with 29/30/31 of month
-
-					$schedule_meta = 'BYMONTHDAY='.$date;
-
-				else:
-					if( empty($values) ){
-						$date = (int) $start_days[0]->format('d');
-						$n = ceil($date/7); // nth weekday of month.
-						$day_num = intval($start_days[0]->format('w')); //0 (Sun) - 6(Sat)
-
-					}else{
-						//expect e.g. array( 2MO )
-						preg_match('/^(-?\d{1,2})([a-zA-Z]{2})/' ,$values[0],$matches);
-						$n=(int) $matches[1];
-						$day_num = array_search($matches[2],$icaldays);//(Sun) - 6(Sat)
-					}
-
-					if($n==5) $n= -1; //If 5th, interpret it as last.
-					$ordinal = array('1'=>"first",'2'=>"second",'3'=>"third",'4'=>"fourth",'-1'=>"last");
-
-					if( !isset($ordinal[$n]) )
-						return new WP_Error('eo_error',__('Invalid monthly schedule (invalid ordinal)','eventorganiser'));
-
-					$ical_day = $icaldays[$day_num];  //ical day from day_num (SU - SA)
-					$day = $weekdays[$day_num];//Full day name from day_num (Sunday -Monday)
-					$schedule_meta = 'BYDAY='.$n.$ical_day; //E.g. BYDAY=2MO
-					$interval = $ordinal[$n].' '.$day.' of +'.$frequency.' month'; //E.g. second monday of +1 month
-					
-					//Work around for PHP <5.3
-					if(!function_exists('date_diff')){
-						$workaround = 'php5.2';
-					}
-				endif;
-				break;
-	
-			case 'yearly':
-				$start_days[] = clone $start;
-				if( '29-02' == $start_days[0]->format('d-m') )
-					$workaround = 'leap year';
-				
-				$interval = "+".$frequency."year";
-				break;
-		endswitch; //End $schedule switch
-
-
-		//Now we have setup and validated the schedules - loop through and generate occurrences
-		foreach($start_days as $index => $start_day):
-			$current = clone $start_day;
-			$occurrence_n = 0;
-			
-			switch($workaround):
-				//Not really a workaround. Just add the occurrence and finish.
-				case 'once':
-					$current->setTime($H,$i );
-					$occurrences[] = clone $current;
-					break;
-				
-				//Loops for monthly events that require php5.3 functionality
-				case 'php5.2':
-					while( $current <= $until || $occurrence_n < $number_occurrences ):
-						$current->setTime($H,$i );
-						$occurrences[] = clone $current;	
-						$current = _eventorganiser_php52_modify($current,$interval);
-						$occurrence_n++;
-					endwhile; 
-					break;
-
-				//Loops for monthly events on the 29th/30th/31st
-				case 'short months':
-					 $day_int =intval($start_day->format('d'));
-	
-					//Set the first month
-					$current_month= clone $start_day;
-					$current_month = date_create($current_month->format('Y-m-1'));
-				
-					while( $current_month <= $until || $occurrence_n < $number_occurrences ):
-						$month_int = intval($current_month->format('m'));		
-						$year_int = intval($current_month->format('Y'));		
-
-						if( checkdate($month_int , $day_int , $year_int) ){
-							$current = new DateTime($day_int.'-'.$month_int.'-'.$year_int, $timezone);
-							$current->setTime($H,$i );
-							$occurrences[] = 	clone $current;
-							$occurrence_n++;
-						}
-						$current_month->modify($interval);
-					endwhile;	
-					break;
-
-				//To be used for yearly events occuring on Feb 29
-				case 'leap year':
-					$current_year = clone $current;
-					$current_year->modify('-1 day');
-
-					while( $current_year <= $until || $occurrence_n < $number_occurrences  ):	
-						$is_leap_year = (int) $current_year->format('L');
-
-						if( $is_leap_year ){
-							$current = clone $current_year;
-							$current->modify('+1 day');
-							$current->setTime($H,$i );
-							$occurrences[] = clone $current;
-							$occurrence_n++;
-						}
-
-						$current_year->modify( $interval );
-					endwhile;
-					break;
-			
-				default:
-					while( $current <= $until || $occurrence_n < $number_occurrences  ):
-						$current->setTime($H,$i );
-						$occurrences[] = clone $current;	
-						$current->modify( $interval );
-						$occurrence_n++;
-					endwhile;
-					break;
-
-				endswitch;//End 'workaround' switch;
-		endforeach;
-
-		//Now schedule meta is set up and occurrences are generated.
-		if( $number_occurrences > 0 ){
-			//If recurrence is limited by #occurrences. Do that here.
-			sort( $occurrences );
-			$occurrences =  array_slice( $occurrences, 0, $number_occurrences );
-			$until = end( $occurrences );
-		}
-		
-		//Cast includes/exclude to timezone
-		$tz = eo_get_blog_timezone();
-		if( $include ){
-			foreach( $include as $included_date ){
-				$included_date->setTimezone( $tz );
-			}
-		}
-		if( $exclude ){
-			foreach( $exclude as $excluded_date ){
-				$excluded_date->setTimezone( $tz );
-			}
-		}
-		
-		//Add inclusions, removes exceptions and duplicates
-		if( defined( 'WP_DEBUG' ) && WP_DEBUG ){
-			//Make sure 'included' dates doesn't appear in generate date
-			$include = array_udiff( $include, $occurrences, '_eventorganiser_compare_datetime' );
-		}
-		$occurrences = array_merge($occurrences, $include); 
-		$occurrences = array_udiff( $occurrences, $exclude, '_eventorganiser_compare_datetime') ;
-		$occurrences = _eventorganiser_remove_duplicates($occurrences);
-
-		//Sort occurrences
-		sort($occurrences);
-		
-		if( empty( $occurrences ) || !$occurrences[0] || !( $occurrences[0] instanceof DateTime ) ){
-			return new WP_Error('eo_error',__('Event does not contain any dates.','eventorganiser'));
-		}
-		$schedule_start = clone $occurrences[0];
-		$schedule_last = clone end( $occurrences );
-
-		$_event_data = array(
-			'start'          => $start,
-			'end'            => $end,
-			'all_day'        => $all_day,
-			'schedule'       => $schedule,
-			'schedule_meta'  => $schedule_meta,
-			'frequency'      => $frequency,
-			'until'          => $until,
-			'schedule_start' => $schedule_start,
-			'schedule_last'  => $schedule_last,
-			'exclude'        => $exclude,
-			'include'        => $include,
-			'occurrences'    => $occurrences,
-		);
-		
-		/**
-		 * Filters the event schedule after its dates has been generated by a given schedule.
-		 * 
-		 * The filtered array is an array of occurrences generated from a 
-		 * schedule which may include:
-		 * 
-		 * * **start** (DateTime) -  when the event starts
-		 * * **end** (DateTime) - when the event ends
-		 * * **all_day** (Bool) - If the event is all day or no
-		 * * **all_day** (Bool) - If the event is all day or not
-		 * * **schedule** (String) - One of once|weekl|daily|monthly|yearly|custom
-		 * * **schedule_meta** (Array|String) - See documentation for `eo_insert_event()`
-		 * * **frequency** (int) - The frequency of which the event repeats
-		 * * **until** (DateTime) - date the schedule repeats until
-		 * * **schedule_last** (DateTime) - date of last occurrence of event
-		 * * **number_occurrences** (int) - number of times the event should repeat (if `until` is not specified).
-		 * * **exclude** (array) - Array of DateTime objects  to exclude from the schedule
-		 * * **include** (array) - Array of DateTime objects to include in the schedule
-		 * * **occurrences** (array) - Array of DateTime objects generated from the above schedule.
-		 * 
-		 * @param array $_event_data The event schedule with generated occurrences.
-		 * @param array $event_data The original event schedule (without occurrences).  
-		 */
-		$_event_data = apply_filters( 'eventorganiser_generate_occurrences', $_event_data, $event_data );
-		return $_event_data;
+	//White list schedule
+	if ( ! in_array( $schedule['schedule'], array( 'once', 'daily', 'weekly', 'monthly', 'yearly', 'custom' ) ) ) {
+		return new WP_Error( 'eo_error', __( 'Schedule not recognised.', 'eventorganiser' ) );
 	}
 
+	//Ensure event frequency is a positive integer. Else set to 1.
+	$frequency          = max( absint( $schedule['frequency'] ), 1 );
+	$all_day            = (int) $schedule['all_day'];
+	$number_occurrences = absint( $schedule['number_occurrences'] );
+
+	//Check dates are supplied and are valid
+	if ( ! ( $start instanceof DateTime ) ) {
+		return new WP_Error( 'eo_error', __( 'Start date not provided.', 'eventorganiser' ) );
+	}
+
+	if ( ! ( $end instanceof DateTime ) ) {
+		$end = clone $start;
+	}
+
+	//If use 'number_occurrences' to limit recurring event, set dummy 'schedule_last' date.
+	if ( ! ( $until instanceof DateTime ) && $number_occurrences && in_array( $schedule['schedule'], array( 'daily', 'weekly', 'monthly', 'yearly' ) ) ) {
+		//Set dummy "last occurrance" date.
+		$until = clone $start;
+	} else {
+		$number_occurrences = 0;
+	}
+
+	if ( 'once' == $schedule['schedule'] || ! ( $until instanceof DateTime ) ) {
+		$until = clone $start;
+	}
+
+	//Check dates are in chronological order
+	if ( $end < $start ) {
+		return new WP_Error( 'eo_error', __( 'Start date occurs after end date.', 'eventorganiser' ) );
+	}
+
+	if ( $until < $start ) {
+		return new WP_Error( 'eo_error', __( 'Schedule end date is before is before the start date.', 'eventorganiser' ) );
+	}
+
+	//Now set timezones
+	$timezone = eo_get_blog_timezone();
+	$start->setTimezone( $timezone );
+	$end->setTimezone( $timezone );
+	$until->setTimezone( $timezone );
+	$hour = intval( $start->format( 'H' ) );
+	$min  = intval( $start->format( 'i' ) );
+
+	$start_days = array();
+	$workaround = '';
+	$icaldays = array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' );
+	$weekdays = array( 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' );
+	$ical2day = array( 'SU' => 'Sunday', 'MO' => 'Monday', 'TU' => 'Tuesday', 'WE' => 'Wednesday', 'TH' => 'Thursday', 'FR' => 'Friday', 'SA' => 'Saturday' );
+
+	//Set up schedule
+	switch ( $schedule['schedule'] ) :
+		case 'once':
+		case 'custom':
+			$frequency = 1;
+			$schedule_meta = '';
+			$until = clone $start;
+			$start_days[] = clone $start;
+			$workaround = 'once';//Not strictly a workaround.
+			break;
+
+		case 'daily':
+			$interval = sprintf( '+%d day', $frequency );
+			$start_days[] = clone $start;
+			break;
+
+		case 'weekly':
+			$schedule_meta = ( $schedule_meta ? array_filter( $schedule_meta ) : array() );
+			if ( ! empty( $schedule_meta ) && is_array( $schedule_meta ) ) :
+				foreach ( $schedule_meta as $day ) :
+					$start_day = clone $start;
+					$start_day->modify( $ical2day[$day] );
+					$start_days[] = $start_day;
+				endforeach;
+			else :
+				$schedule_meta = array( $icaldays[ $start->format( 'w' ) ] );
+				$start_days[] = clone $start;
+			endif;
+
+			$interval = sprintf( '+%d week', $frequency );
+			break;
+
+		case 'monthly':
+			$start_days[] = clone $start;
+			$rule_value = explode( '=', $schedule_meta, 2 );
+			$rule   = $rule_value[0];
+			$values = ! empty( $rule_value[1] ) ? explode( ',', $rule_value[1] ) : array();//Should only be one value, but may support more in future
+			$values = array_filter( $values );
+
+			if ( 'BYMONTHDAY' == $rule ) :
+				$date     = (int) $start_days[0]->format( 'd' );
+				$interval = sprintf( '+%d month', $frequency );
+
+				if ( $date >= 29 ) {
+					$workaround = 'short months';    //This case deals with 29/30/31 of month
+				}
+
+				$schedule_meta = 'BYMONTHDAY='.$date;
+
+			else :
+				if ( empty( $values ) ) {
+					$date    = (int) $start_days[0]->format( 'd' );
+					$n       = ceil( $date / 7 ); // nth weekday of month.
+					$day_num = intval( $start_days[0]->format( 'w' ) ); //0 (Sun) - 6(Sat)
+
+				} else {
+					//expect e.g. array( 2MO )
+					preg_match( '/^(-?\d{1,2})([a-zA-Z]{2})/', $values[0], $matches );
+					$n = (int) $matches[1];
+					$day_num = array_search( $matches[2], $icaldays );//(Sun) - 6(Sat)
+				}
+
+				if ( 5 == $n ) {
+					$n = -1;//If 5th, interpret it as last.
+				}
+				$ordinal = array( '1' => 'first', '2' => 'second', '3' => 'third' , '4' => 'fourth', '-1' => 'last' );
+
+				if ( ! isset( $ordinal[$n] ) ) {
+					return new WP_Error( 'eo_error', __( 'Invalid monthly schedule (invalid ordinal)', 'eventorganiser' ) );
+				}
+
+				$ical_day = $icaldays[$day_num];  //ical day from day_num (SU - SA)
+				$day = $weekdays[$day_num];//Full day name from day_num (Sunday -Monday)
+				$schedule_meta = 'BYDAY='.$n.$ical_day; //E.g. BYDAY=2MO
+				$interval = $ordinal[$n].' '.$day.' of +'.$frequency.' month'; //E.g. second monday of +1 month
+
+				//Work around for PHP <5.3
+				if ( ! function_exists( 'date_diff' ) ) {
+					$workaround = 'php5.2';
+				}
+			endif;
+			break;
+
+		case 'yearly':
+			$start_days[] = clone $start;
+			if ( '29-02' == $start_days[0]->format( 'd-m' ) ) {
+				$workaround = 'leap year';
+			}
+			$interval = sprintf( '+%d year', $frequency );
+			break;
+	endswitch; //End $schedule['schedule'] switch
+
+	//Now we have setup and validated the schedules - loop through and generate occurrences
+	foreach ( $start_days as $index => $start_day ) :
+		$current = clone $start_day;
+		$occurrence_n = 0;
+
+		switch ( $workaround ) :
+			//Not really a workaround. Just add the occurrence and finish.
+			case 'once':
+				$current->setTime( $hour, $min );
+				$occurrences[] = clone $current;
+				break;
+
+			//Loops for monthly events that require php5.3 functionality
+			case 'php5.2':
+				while ( $current <= $until || $occurrence_n < $number_occurrences ) :
+					$current->setTime( $hour, $min );
+					$occurrences[] = clone $current;
+					$current = _eventorganiser_php52_modify( $current, $interval );
+					$occurrence_n++;
+				endwhile;
+				break;
+
+			//Loops for monthly events on the 29th/30th/31st
+			case 'short months':
+				$day_int = intval( $start_day->format( 'd' ) );
+
+				//Set the first month
+				$current_month = clone $start_day;
+				$current_month = date_create( $current_month->format( 'Y-m-1' ) );
+
+				while ( $current_month <= $until || $occurrence_n < $number_occurrences ) :
+					$month_int = intval( $current_month->format( 'm' ) );
+					$year_int  = intval( $current_month->format( 'Y' ) );
+
+					if ( checkdate( $month_int , $day_int , $year_int ) ) {
+						$current = new DateTime( $day_int . '-' . $month_int . '-' . $year_int, $timezone );
+						$current->setTime( $hour, $min );
+						$occurrences[] = clone $current;
+						$occurrence_n++;
+					}
+					$current_month->modify( $interval );
+				endwhile;
+				break;
+
+			//To be used for yearly events occuring on Feb 29
+			case 'leap year':
+				$current_year = clone $current;
+				$current_year->modify( '-1 day' );
+
+				while ( $current_year <= $until || $occurrence_n < $number_occurrences  ) :
+					$is_leap_year = (int) $current_year->format( 'L' );
+
+					if ( $is_leap_year ) {
+						$current = clone $current_year;
+						$current->modify( '+1 day' );
+						$current->setTime( $hour, $min );
+						$occurrences[] = clone $current;
+						$occurrence_n++;
+					}
+
+					$current_year->modify( $interval );
+				endwhile;
+				break;
+
+			default:
+				while ( $current <= $until || $occurrence_n < $number_occurrences  ) :
+					$current->setTime( $hour, $min );
+					$occurrences[] = clone $current;
+					$current->modify( $interval );
+					$occurrence_n++;
+				endwhile;
+				break;
+
+		endswitch;//End 'workaround' switch;
+	endforeach;
+
+	//Now schedule meta is set up and occurrences are generated.
+	if ( $number_occurrences > 0 ) {
+		//If recurrence is limited by #occurrences. Do that here.
+		sort( $occurrences );
+		$occurrences = array_slice( $occurrences, 0, $number_occurrences );
+		$until = end( $occurrences );
+	}
+
+	//Cast includes/exclude to timezone
+	$tz = eo_get_blog_timezone();
+	if ( $include ) {
+		foreach ( $include as $included_date ) {
+			$included_date->setTimezone( $tz );
+		}
+	}
+	if ( $exclude ) {
+		foreach ( $exclude as $excluded_date ) {
+			$excluded_date->setTimezone( $tz );
+		}
+	}
+
+	//Add inclusions, removes exceptions and duplicates
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		//Make sure 'included' dates doesn't appear in generate date
+		$include = array_udiff( $include, $occurrences, '_eventorganiser_compare_datetime' );
+	}
+	$occurrences = array_merge( $occurrences, $include );
+	$occurrences = array_udiff( $occurrences, $exclude, '_eventorganiser_compare_datetime' );
+	$occurrences = _eventorganiser_remove_duplicates( $occurrences );
+
+	//Sort occurrences
+	sort( $occurrences );
+
+	if ( empty( $occurrences ) || ! $occurrences[0] || ! ( $occurrences[0] instanceof DateTime ) ) {
+		return new WP_Error( 'eo_error', __( 'Event does not contain any dates.', 'eventorganiser' ) );
+	}
+
+	$schedule_start = clone $occurrences[0];
+	$schedule_last  = clone end( $occurrences );
+
+	$_event_data = array(
+		'start'          => $start,
+		'end'            => $end,
+		'all_day'        => $all_day,
+		'schedule'       => $schedule['schedule'],
+		'schedule_meta'  => $schedule_meta,
+		'frequency'      => $frequency,
+		'until'          => $until,
+		'schedule_start' => $schedule_start,
+		'schedule_last'  => $schedule_last,
+		'exclude'        => $exclude,
+		'include'        => $include,
+		'occurrences'    => $occurrences,
+	);
+
+	/**
+	 * Filters the event schedule after its dates has been generated by a given schedule.
+	 *
+	 * The filtered array is an array of occurrences generated from a
+	 * schedule which may include:
+	 *
+	 * * **start** (DateTime) -  when the event starts
+	 * * **end** (DateTime) - when the event ends
+	 * * **all_day** (Bool) - If the event is all day or no
+	 * * **all_day** (Bool) - If the event is all day or not
+	 * * **schedule** (String) - One of once|weekl|daily|monthly|yearly|custom
+	 * * **schedule_meta** (Array|String) - See documentation for `eo_insert_event()`
+	 * * **frequency** (int) - The frequency of which the event repeats
+	 * * **until** (DateTime) - date the schedule repeats until
+	 * * **schedule_last** (DateTime) - date of last occurrence of event
+	 * * **number_occurrences** (int) - number of times the event should repeat (if `until` is not specified).
+	 * * **exclude** (array) - Array of DateTime objects  to exclude from the schedule
+	 * * **include** (array) - Array of DateTime objects to include in the schedule
+	 * * **occurrences** (array) - Array of DateTime objects generated from the above schedule.
+	 *
+	 * @param array $_event_data The event schedule with generated occurrences.
+	 * @param array $event_data The original event schedule (without occurrences).
+	 */
+	$_event_data = apply_filters( 'eventorganiser_generate_occurrences', $_event_data, $schedule );
+	return $_event_data;
+}
+
 /**
- * Generates the ICS RRULE fromthe event schedule data. 
+ * Generates the ICS RRULE fromthe event schedule data.
  * @access private
  * @ignore
  * @since 1.0.0
@@ -912,71 +925,80 @@ function _eventorganiser_generate_occurrences( $event_data ){
  * @param int $post_id The event (post) ID. Uses current event if empty.
  * @return string The RRULE to be used in an ICS calendar
  */
-function eventorganiser_generate_ics_rrule($post_id=0){
+function eventorganiser_generate_ics_rrule( $post_id = 0 ) {
 
-		$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
+	$post_id = (int) ( empty( $post_id ) ? get_the_ID() : $post_id );
 
-		$rrule = eo_get_event_schedule($post_id);
-		if( !$rrule )
-			return false;
-
-		extract($rrule);
-		
-		$schedule_last->setTimezone( new DateTimeZone('UTC') );
-		$schedule_last = $schedule_last->format( 'Ymd\THis\Z' );
-
-		switch($schedule):
-			case 'once':
-				return false;
-
-			case 'yearly':
-				return "FREQ=YEARLY;INTERVAL=".$frequency.";UNTIL=".$schedule_last;
-
-			case 'monthly':
-				//TODO Account for possible day shifts with timezone set to UTC
-				$recurrence_rule = "FREQ=MONTHLY;INTERVAL=".$frequency.";";
-				$recurrence_rule .=$schedule_meta.";";
-				$recurrence_rule .= "UNTIL=".$schedule_last;
-				return $recurrence_rule;
-	
-			case 'weekly':
-				
-				if( !eo_is_all_day( $post_id ) ){
-					//None all day event, setting event timezone to UTC may cause it to shift days.
-					//E.g. a 9pm Monday event in New York will a Tuesday event in UTC.
-					//We may need to correct the BYDAY attribute to be valid for UTC.
-					
-					$days_of_week = array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' );
-					$UTC = new DateTimeZone('UTC');
-					
-					//Get day shift upon timezone set to UTC
-					$start = eo_get_schedule_start( DATETIMEOBJ, $post_id );
-					$local_day = (int) $start->format( 'w' );
-					$start->setTimezone( $UTC );
-					$utc_day = (int) $start->format( 'w' );
-					$diff = $utc_day - $local_day + 7; //ensure difference is positive (should be 0, +1 or +6).
-					
-					//If there is a shift correct BYDAY
-					if( $diff ){
-						$utc_days = array();
-					
-						foreach( $schedule_meta as $day ){
-							$utc_day_index = ( array_search( $day, $days_of_week ) + $diff ) %7;
-							$utc_days[] = $days_of_week[$utc_day_index];
-						}
-						$schedule_meta = $utc_days;
-					}
-					
-				}
-				
-				return "FREQ=WEEKLY;INTERVAL=".$frequency.";BYDAY=".implode(',',$schedule_meta).";UNTIL=".$schedule_last;
-
-			case 'daily':
-				return "FREQ=DAILY;INTERVAL=".$frequency.";UNTIL=".$schedule_last;
-
-			default:
-		endswitch;
+	$rrule = eo_get_event_schedule( $post_id );
+	if ( ! $rrule ) {
 		return false;
+	}
+
+	$utc = new DateTimeZone( 'UTC' );
+	$rrule['schedule_last']->setTimezone( $utc );
+
+	$rrule_array = array(
+		'FREQ'       => strtoupper( $rrule['schedule'] ),
+		'INTERVAL'   => (int) $rrule['frequency'],
+		'BYDAY'      => null,
+		'BYMONTHDAY' => null,
+		'UNTIL'      => $rrule['schedule_last']->format( 'Ymd\THis\Z' ),
+	);
+
+	switch ( $rrule['schedule'] ) :
+
+		case 'daily':
+		case 'yearly':
+			//Do nothing
+			break;
+
+		case 'monthly':
+			//TODO Account for possible day shifts with timezone set to UTC
+			$schedule_meta = explode( '=', $rrule['schedule_meta'] );//BYMONTHDAY=XXX or BYDAY=XXX
+			$rrule_array[$schedule_meta[0]] = $schedule_meta[1];
+			break;
+
+		case 'weekly':
+			if ( ! eo_is_all_day( $post_id ) ) {
+				//Non-all-day event: setting event timezone to UTC may cause it to shift days.
+				//E.g. a 9pm Monday event in New York will a Tuesday event in UTC.
+				//We may need to correct the BYDAY attribute to be valid for UTC.
+				$days_of_week = array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' );
+
+				//Get day shift upon timezone set to UTC
+				$start     = eo_get_schedule_start( DATETIMEOBJ, $post_id );
+				$local_day = (int) $start->format( 'w' );
+				$start->setTimezone( $utc );
+				$utc_day   = (int) $start->format( 'w' );
+				$diff      = $utc_day - $local_day + 7; //ensure difference is positive (should be 0, +1 or +6).
+
+				//If there is a shift correct BYDAY
+				if ( $diff ) {
+					$utc_days = array();
+
+					foreach ( $rrule['schedule_meta'] as $day ) {
+						$utc_day_index = ( array_search( $day, $days_of_week ) + $diff ) % 7;
+						$utc_days[] = $days_of_week[$utc_day_index];
+					}
+					$rrule['schedule_meta'] = $utc_days;
+				}
+			}
+			$rrule_array['BYDAY'] = implode( ',', $rrule['schedule_meta'] );
+			break;
+		case 'once':
+		case 'custom':
+		default:
+			return false;
+	endswitch;
+
+	$rrule_string = '';
+	foreach ( $rrule_array as $key => $value ) {
+		if ( ! is_null( $value ) ) {
+			$rrule_string .= "$key=$value;";
+		}
+	}
+
+	return rtrim( $rrule_string, ';' );
 }
 
 function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {

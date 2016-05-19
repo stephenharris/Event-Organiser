@@ -18,8 +18,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	protected $screenshot_dir = false;
 	
 	public function __construct($screenshot_dir=false) {
-		//TODO What if $screenshot_dir is a valid, albeit non-existing directory 
-		if ( $screenshot_dir && is_dir( $screenshot_dir ) ) {
+		if ( $screenshot_dir ) {
 			$this->screenshot_dir = rtrim( $screenshot_dir, '/' ) . '/';
 		}
 	}
@@ -523,7 +522,6 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			}
 			} catch (Exception $e) {
 			// do nothing
-				echo $e->getMessage();
 			}
 	
 			sleep(1);
@@ -548,10 +546,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 				$feature    = $scope->getFeature();
 				$scenario   = $scope->getScenario();
 				$filename   = basename( $feature->getFile(), '.feature' ) . '-' . $scenario->getLine() . '.png';
-				
-				file_put_contents( '/tmp/' . $filename, $screenshot);
-				file_put_contents( '/tmp/screenshot.png', $screenshot);
-				file_put_contents( $this->screenshot_dir . $filename, $screenshot);
+				file_put_contents( $this->screenshot_dir . $filename, $screenshot );
 			}
 		}
 	}
@@ -564,7 +559,16 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
     public function iSaveTheEvent()
     {
 		$button = $this->fixStepArgument('save-post');
-        
+		
+		//If the button is out of view then the window will be scrolled so that it aligns
+		//with the top of the screen. But then it is obscured by the #wpadminbar.
+		//We scroll so that the top of the window is aligned with the button, then move the
+		//view-port up by more than the height of the admin bar so that the button is visible.
+		$this->getSession()->executeScript(
+			'var element = document.getElementById("save-post");
+			element.scrollIntoView(true);
+			window.scrollBy(0, -50);'
+		);
     	$this->spin(function($context) use ($button) {
     		$context->getSession()->getPage()->pressButton($button);
     		return true;

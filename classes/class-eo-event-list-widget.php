@@ -207,6 +207,8 @@ class EO_Event_List_Widget extends WP_Widget{
 		$instance = array_merge( array(
 			'no_events' => '',
 			'template'  => '',
+			'title'     => '',
+			'scope'     => 'future',
 		), $instance );
 
 		//Backwards compatability with show past events option

@@ -2,7 +2,8 @@ default:
   suites:
     default:
       contexts:
-        - FeatureContext
+        - FeatureContext:
+            screenshot_dir: '%paths.base%/failed-scenerios/'
         - WordPressAdminContext
         - WordPressPostListContext
   extensions:
