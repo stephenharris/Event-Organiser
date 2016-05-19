@@ -97,18 +97,24 @@ class EO_Admin_Notice_Handler {
 
 			$class = 'error' == $notice['type'] ? 'notice-error error' : 'notice-success updated';
 
-			printf("<div class='notice %s-notice {$class}' id='%s'>%s<p> <a class='%s' href='%s' title='%s'><strong>%s</strong></a></p></div>",
+			printf(
+				'<div class="notice %1$s-notice %6$s" id="%1$s-notice-%2$s">
+					<form action="" method="post">
+						%3$s
+						<button type="submit" class="notice-dismiss %1$s-dismiss">
+							<span class="screen-reader-text">%4$s</span>
+						</button>
+						<input type="hidden" name="action" value="%1$s-dismiss-notice" />
+						<input type="hidden" name="_wpnonce" value="%5$s" />
+						<input type="hidden" name="notice" value="%2$s" />
+					</form>
+				</div>',
 				esc_attr( self::$prefix ),
-				esc_attr( self::$prefix.'-notice-'.$id ),
+				esc_attr( $id ),
 				$notice['message'],
-				esc_attr( self::$prefix.'-dismiss' ),
-				esc_url(add_query_arg(array(
-					'action'   => self::$prefix.'-dismiss-notice',
-					'notice'   => $id,
-					'_wpnonce' => wp_create_nonce( self::$prefix.'-dismiss-'.$id ),
-				))),
 				esc_html__( 'Dismiss this notice','eventorganiser' ),
-				esc_html__( 'Dismiss','eventorganiser' )
+				wp_create_nonce( self::$prefix.'-dismiss-'.$id ),
+				esc_attr( $class )
 			);
 			add_action( 'admin_print_footer_scripts', array( __CLASS__, 'print_footer_scripts' ), 11 );
 		}
@@ -168,6 +174,54 @@ class EO_Admin_Notice_Handler {
 	 */
 	static function print_footer_scripts() {
 		?>
+		<style>
+			.eventorganiser-notice {position: relative;}
+			/* Backwards compatability with 4.1 and earlier */ 
+			/* @see https://core.trac.wordpress.org/ticket/31233 */
+			.eventorganiser-dismiss:before {
+				background: none;
+				color: #b4b9be;
+				content: "\f153";
+				display: block;
+				font: normal 16px/20px dashicons;
+				speak: none;
+				height: 20px;
+				text-align: center;
+				width: 20px;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+
+			.eventorganiser-dismiss {
+				position: absolute;
+				top: 0;
+				right: 1px;
+				border: none;
+				margin: 0;
+				padding: 9px;
+				background: none;
+				color: #b4b9be;
+				cursor: pointer;
+			}
+
+			.eventorganiser-dismiss:hover:before,
+			.eventorganiser-dismiss:active:before,
+			.eventorganiser-dismiss:focus:before {
+				color: #c00;
+			}
+
+			.eventorganiser-dismiss:focus {
+				outline: none;
+				-webkit-box-shadow: 0 0 0 1px #5b9dd9, 0 0 2px 1px rgba(30, 140, 190, .8);
+				box-shadow: 0 0 0 1px #5b9dd9, 0 0 2px 1px rgba(30, 140, 190, .8);
+			}
+
+			.ie8 .eventorganiser-dismiss:focus {outline: 1px solid #5b9dd9;}
+
+			@media screen and ( max-width: 782px ) {
+				.eventorganiser-dismiss {padding: 13px;}
+			}
+		</style>
 		<script type="text/javascript">
 		jQuery(document).ready(function ($){
 			var dismissClass = '<?php echo esc_js( self::$prefix.'-dismiss' );?>';
@@ -178,7 +232,7 @@ class EO_Admin_Notice_Handler {
 			jQuery('.'+dismissClass).click(function(e){
 				e.preventDefault();
 				var noticeID= $(this).parents('.'+noticeClass).attr('id').substring(noticeClass.length+1);
-
+				$('#'+noticeClass+'-'+noticeID).fadeOut('slow');
 				$.post(ajaxurl, 
 					{
 						action: ajaxaction,
@@ -186,10 +240,8 @@ class EO_Admin_Notice_Handler {
 						_wpnonce: _wpnonce
 					}, 
 					function (response) {
-						if ('1' === response) {
-							$('#'+noticeClass+'-'+noticeID).fadeOut('slow');
-						} else {
-							$('#'+noticeClass+'-'+noticeID).removeClass('updated notice-success').addClass('notice-error error');
+						if ('1' !== response) {
+							$('#'+noticeClass+'-'+noticeID).removeClass('updated notice-success').addClass('notice-error error').show();
 						}
 					}
 				);
