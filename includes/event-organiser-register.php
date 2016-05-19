@@ -551,7 +551,7 @@ function _eventorganiser_upgrade_admin_notice() {
 	$notice_handler = EO_Admin_Notice_Handler::get_instance();
 
 	$message = __(
-		"<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post<a/>.",
+		"<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post</a>.",
 		'eventorganiser'
 	);
 	$notice_handler->add_notice( 'changedtemplate17', '', $message , 'alert' );
