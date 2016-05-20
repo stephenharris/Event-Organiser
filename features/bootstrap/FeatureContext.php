@@ -574,4 +574,66 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
     		return true;
     	});
     }
+
+    /**
+     * @Given I include past events
+     */
+    public function iIncludePastEvents()
+    {
+		$options = eventorganiser_get_option( false );
+		$options['showpast'] = 1;
+		update_option( 'eventorganiser_options', $options );
+    }
+
+    /**
+     * @Given I have an event calendar widget in :arg1
+     */
+	public function iHaveAnEventCalendarWidgetIn($sidebar, TableNode $table)
+	{
+		//Register sidebar. TODO Why is this necessary?
+		register_sidebar( array(
+			'name'           => __( 'Main Sidebar', 'theme-slug' ),
+			'id'            => 'sidebar-1',
+			'description'   => __( 'Widgets in this area will be shown on all posts and pages.', 'theme-slug' ),
+			'before_widget' => '<li id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</li>',
+			'before_title'  => '<h2 class="widgettitle">',
+			'after_title'   => '</h2>',
+		) );
+
+		//Get sidebar
+		$sidebar_id = $this->_findSidebar( $sidebar );
+
+		//Compile widget settings
+		$values = $table->getRow( 1 ); //we only support one widget for now
+		$args   = array();
+
+		foreach ( $table->getRow( 0 ) as $index => $key ) {
+
+			$key = strtolower( $key );
+			switch( $key ) {
+				case 'event categories':
+					$args['event-category'] = $values[$index];
+					break;
+				case 'event venue':
+					$args['event-venue'] = $values[$index];
+					break;
+				case 'include past events':
+					$args['showpastevents'] = $values[$index];
+					break;
+				case 'show-long':
+					$args['show-long'] = $values[$index];
+					break;
+				case 'link-to-single':
+					$args['link-to-single'] = $values[$index];
+					break;
+				case 'show-long':
+					$args[$key] = $values[$index];
+					break;
+			}
+		}
+		$args = wp_parse_args( $args, EO_Calendar_Widget::$w_arg ); //merge in default values
+		$this->_addWidgetToSidbar( $sidebar_id, 'EO_Calendar_Widget', $args );
+	}
+
 }
