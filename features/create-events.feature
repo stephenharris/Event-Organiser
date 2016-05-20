@@ -52,7 +52,7 @@ Feature: Create events
 		    | frequency  | 2                  |
         	| until      | 2014-11-13 10:00pm |
 
-    @javascript
+    @javascript @insulated
     Scenario: Weekly event
         Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Weekly+Event"
