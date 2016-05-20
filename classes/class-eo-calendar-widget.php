@@ -5,7 +5,10 @@
 class EO_Calendar_Widget extends WP_Widget
 {
 
-	var $w_arg = array(
+	/*
+	 * Array of default settings
+	 */
+	public static $w_arg = array(
 		'title'          => '',
 		'showpastevents' => 1,
 		'event-category' => '',
