@@ -16,7 +16,7 @@ Feature: Calendar of events
             | post_title | start            | end              | post_status | all_day | schedule | schedule_meta | frequency | until            |
             | Single     | Y-m-14 13:00     | Y-m-14 13:40     | publish     | 0       | once     |               |           |                  |
             | Daily      | Y-m-10           | Y-m-10           | publish     | 1       | daily    |               | 1         | Y-m-15           |
-            | Past Event | 2016-04-01 19:30 | 2016-04-01 21:30 | publish     | 0       | weekly   |               | 1         | 2016-04-30 21:30 |
+            | Past Event | 2016-03-01 19:30 | 2016-03-01 21:30 | publish     | 0       | weekly   |               | 1         | 2016-03-30 21:30 |
 	
 	@javascript @insulated
   	Scenario: Viewing events of the current month in the calendar
