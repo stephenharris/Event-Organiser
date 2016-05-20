@@ -642,6 +642,9 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 				case 'show-long':
 					$args[$key] = $values[$index];
 					break;
+				default:
+					$args[$key] = $values[$index];
+					break;
 			}
 		}
 		$args = wp_parse_args( $args, EO_Calendar_Widget::$w_arg ); //merge in default values
