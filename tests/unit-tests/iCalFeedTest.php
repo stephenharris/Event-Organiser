@@ -543,6 +543,7 @@ class iCalFeedTest extends EO_UnitTestCase
 		
 		//Don't use year/month folders to make uploads directory a known constant
 		add_filter ( 'pre_option_uploads_use_yearmonth_folders', '__return_null' );
+		wp_upload_dir( null, false, true );//clear cache
 		$file = EO_DIR_TESTDATA . '/images/cirali.jpg';
 		$attachment_id = $this->factory->attachment->create_upload_object( $file, $event_id, array(
 			'post_mime_type' => 'image/jpeg',
