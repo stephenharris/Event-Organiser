@@ -45,7 +45,6 @@ matrix:
 
 install:
 - sh -c "if [ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '5.2' ]; then pecl install timezonedb; fi"
-- if [[ 5.5 == ${TRAVIS_PHP_VERSION:0:3} ]]; then composer install; fi
 - npm install grunt-cli
 - npm install
   
@@ -55,6 +54,5 @@ before_script:
 
 script: 
 - phpunit
-- if [[ 5.5 == ${TRAVIS_PHP_VERSION:0:3} && ${WP_VERSION} != '3.8.11' ]]; then vendor/bin/behat; fi
 
 
