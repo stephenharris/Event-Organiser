@@ -678,4 +678,15 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		}
 	}
 
+
+    /**
+     * @When the calendar finishes loading
+     */
+    public function theCalendarFinishesLoading()
+    {
+    	$this->spin(function($context){
+    		$context->assertSession()->pageTextNotContains('Loading');
+    		return true;
+    	});
+    }
 }

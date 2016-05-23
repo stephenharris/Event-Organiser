@@ -24,6 +24,7 @@ Feature: Calendar of events
             | post_title  | post_content      | post_status | post_author |
             | Calendar    | [eo_fullcalendar] | publish     | 1           |
     	When I go to "calendar"
+    	And the calendar finishes loading
     	Then I should see "Single"
     	And I should see "Daily"
     	But I should not see "Past Event"
@@ -34,6 +35,7 @@ Feature: Calendar of events
             | post_title  | post_content                                             | post_status | post_author |
             | Calendar    | [eo_fullcalendar event_series="{{id of event "Daily"}}"] | publish     | 1           |
     	When I go to "calendar"
+    	And the calendar finishes loading
     	Then I should see "Daily"
     	But I should not see "Single"
     	And I should not see "Past Event"
