@@ -366,9 +366,7 @@ class iCalTest extends PHPUnit_Framework_TestCase
     public function testIndefinitelyRecurringEventFiltered()
     {
     	
-    	add_filter( 'eventorganiser_indefinitely_recurring_event_last_date', function(){
-    		return new DateTime( '2999-12-31', eo_get_blog_timezone() );
-    	});
+    	add_filter( 'eventorganiser_indefinitely_recurring_event_last_date', array( $this, '_returnDateTime29991231' ) );
     	$ical = new EO_ICAL_Parser();
     	$ical->parse( EO_DIR_TESTDATA . '/ical/indefinitelyRecurringEvent.ics' );
     
@@ -387,6 +385,10 @@ class iCalTest extends PHPUnit_Framework_TestCase
     	$event = $ical->events[0];
     	$this->assertInstanceOf('DateTime', $event['until']);
     	$this->assertEquals( new DateTime( '2999-12-31 00:00:00' ), $event['until'] );
+    }
+    
+    public function _returnDateTime29991231( ) {
+    	return new DateTime( '2999-12-31', eo_get_blog_timezone() );
     }
     
     public function testRecurringEventWithCount()
