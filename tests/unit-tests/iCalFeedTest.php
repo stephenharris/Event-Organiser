@@ -525,7 +525,7 @@ class iCalFeedTest extends EO_UnitTestCase
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
 			$this->markTestSkipped(
 				'This test is skipped on php 5.2 becase the VTIMEZONE block is not generated'
-				);
+			);
 		}
 		
 		$event_id = $this->factory->event->create( array(
@@ -545,9 +545,7 @@ class iCalFeedTest extends EO_UnitTestCase
 		add_filter ( 'pre_option_uploads_use_yearmonth_folders', '__return_null' );
 		wp_upload_dir( null, false, true );//clear cache
 		$file = EO_DIR_TESTDATA . '/images/cirali.jpg';
-		$attachment_id = $this->factory->attachment->create_upload_object( $file, $event_id, array(
-			'post_mime_type' => 'image/jpeg',
-		) );
+		$attachment_id = $this->create_upload_object( $file, $event_id );
 		set_post_thumbnail( $event_id, $attachment_id );
 		
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
@@ -569,6 +567,7 @@ class iCalFeedTest extends EO_UnitTestCase
 		remove_filter ( 'pre_option_uploads_use_yearmonth_folders', '__return_null' );
 		
 	}
+	
 	
 	/**
 	 * If the event is an all-day event then no timezone information should be present

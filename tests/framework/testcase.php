@@ -75,4 +75,39 @@ class EO_UnitTestCase extends WP_UnitTestCase {
 	public function set_current_user( $user_id ) {
 		wp_set_current_user( $user_id );
 	}
+	
+	/**
+	 * Backwards compatability for 4.3 and earlier
+	 * Method introduced for Attachment factory in 33641
+	 * @see https://core.trac.wordpress.org/ticket/33641
+	 * @return unknown
+	 */
+	function create_upload_object( $file, $parent = 0 ) {
+		$contents = file_get_contents($file);
+		$upload = wp_upload_bits(basename($file), null, $contents);
+	
+		$type = '';
+		if ( ! empty($upload['type']) ) {
+			$type = $upload['type'];
+		} else {
+			$mime = wp_check_filetype( $upload['file'] );
+			if ($mime)
+				$type = $mime['type'];
+		}
+	
+		$attachment = array(
+			'post_title' => basename( $upload['file'] ),
+			'post_content' => '',
+			'post_type' => 'attachment',
+			'post_parent' => $parent,
+			'post_mime_type' => $type,
+			'guid' => $upload[ 'url' ],
+		);
+	
+		// Save the data
+		$id = wp_insert_attachment( $attachment, $upload[ 'file' ], $parent );
+		wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $upload['file'] ) );
+	
+		return $id;
+	}
 }
