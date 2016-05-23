@@ -650,5 +650,32 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		$args = wp_parse_args( $args, EO_Calendar_Widget::$w_arg ); //merge in default values
 		$this->_addWidgetToSidbar( $sidebar_id, 'EO_Calendar_Widget', $args );
 	}
+	
+	
+	/**
+	 * Add these posts to this wordpress installation
+	 *
+	 * @see wp_insert_post
+	 *
+	 * @override /^there are posts$/
+	 */
+	public function thereArePosts(TableNode $table)
+	{
+		foreach ($table->getHash() as $postData) {
+			//We add this step to allow IDs to be implicitly referenced:
+			//{{id of event "My Event Title"}}
+			$postData['post_content'] = preg_replace_callback( '/{{id of ([^}]*) "([^}"]*)"}}/i', function($match){
+				$event = get_page_by_title( $match[2], 'OBJECT', $match[1] );
+				if ( $event ) {
+					return $event->ID;
+				}
+				return '';
+			}, $postData['post_content'] );
+
+			if (!is_int(wp_insert_post($postData))) {
+				throw new \InvalidArgumentException("Invalid post information schema.");
+			}
+		}
+	}
 
 }

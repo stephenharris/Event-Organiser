@@ -27,3 +27,14 @@ Feature: Calendar of events
     	Then I should see "Single"
     	And I should see "Daily"
     	But I should not see "Past Event"
+    	
+    @javascript @insulated
+  	Scenario: Viewing occurrences of a particular event
+    	Given there are posts
+            | post_title  | post_content                                             | post_status | post_author |
+            | Calendar    | [eo_fullcalendar event_series="{{id of event "Daily"}}"] | publish     | 1           |
+    	When I go to "calendar"
+    	Then I should see "Daily"
+    	But I should not see "Single"
+    	And I should not see "Past Event"
+    	
