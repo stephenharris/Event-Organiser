@@ -1,0 +1,22 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Test Blog//NONSGML Events//EN
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Test Blog - Events
+X-ORIGINAL-URL:http://example.org/?post_type=event
+X-WR-CALDESC:Test Blog - Events
+BEGIN:VEVENT
+UID:unit-test
+STATUS:CONFIRMED
+DTSTAMP:19930202T110000Z
+CREATED:20160101T173000Z
+LAST-MODIFIED:20160101T173000Z
+DTSTART:20160312T004000Z
+DTEND:20160312T010000Z
+SUMMARY: Event with thumbnail
+DESCRIPTION: Event excerpt
+X-ALT-DESC;FMTTYPE=text/html: <p>Event content</p>
+URL;VALUE=URI:http://example.org/?event=event-with-thumbnail
+ATTACH;FMTTYPE=image/jpeg:http://example.org/wp-content/uploads/cirali.jpg
+END:VEVENT
+END:VCALENDAR

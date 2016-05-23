@@ -520,6 +520,55 @@ class iCalFeedTest extends EO_UnitTestCase
 	
 	}
 	
+	public function testEventWithThumbnail(){
+		
+		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
+			$this->markTestSkipped(
+				'This test is skipped on php 5.2 becase the VTIMEZONE block is not generated'
+				);
+		}
+		
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2016-03-12 00:40', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2016-03-12 01:00', eo_get_blog_timezone() ),
+			'all_day'       => 0,
+			'frequency'     => 1,
+			'post_title'    => 'Event with thumbnail',
+			'post_content'  => 'Event content',
+			'post_excerpt'  => 'Event excerpt',
+			'post_date'     => '2016-01-01 17:30:00',
+		) );
+		//Get it a predictable UID
+		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
+		
+		//Don't use year/month folders to make uploads directory a known constant
+		add_filter ( 'pre_option_uploads_use_yearmonth_folders', '__return_null' );
+		$file = EO_DIR_TESTDATA . '/images/cirali.jpg';
+		$attachment_id = $this->factory->attachment->create_upload_object( $file, $event_id, array(
+			'post_mime_type' => 'image/jpeg',
+		) );
+		set_post_thumbnail( $event_id, $attachment_id );
+		
+		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
+		
+		//Get actual feed output
+		ob_start();
+		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
+		$actual = ob_get_contents();
+		ob_end_clean();
+		
+		//Get expected feed output
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/event-with-thumbnail.ical' );
+		
+		$this->assertEquals( $expected, $actual );
+		
+		//Delete the event first to ensure that we can fullyl remove the attachment
+		wp_delete_post( $event_id, true );
+		wp_delete_attachment( $attachment_id, true );
+		remove_filter ( 'pre_option_uploads_use_yearmonth_folders', '__return_null' );
+		
+	}
+	
 	/**
 	 * If the event is an all-day event then no timezone information should be present
 	 * in the dtstart, dtend, exdate or rdate values.
