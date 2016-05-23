@@ -1231,7 +1231,7 @@ function eo_get_event_venue_feed( $venue_slug_or_id ){
  *    <?php 
  *      //Inside the loop 
  *      $url = eo_get_add_to_google_link();
- *      echo '<a href="'.esc_url($url).'" title="Click to add this event to a Google calendar"> Add to Google </a>'; 
+ *      echo '<a href="'.esc_url($url).'"> Add to Google </a>'; 
  *      ?>
  * </code>
  * @since 2.3
@@ -1369,8 +1369,10 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		'alldayslot' => true, 'alldaytext' => __( 'All day', 'eventorganiser' ),
 		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
-		'year' => false, 'month' => false, 'date' => false, 'defaultdate' => false,	'users_events' => false, 'event_occurrence__in' => array(),
-		'theme' => false, 'reset' => true, 'responsive' => true, 'isrtl' => $wp_locale->is_rtl(),
+		'year' => false, 'month' => false, 'date' => false, 'defaultdate' => false,	'users_events' => false,
+		'event_series' => false, 'event_occurrence__in' => array(),
+		'theme' => false, 'reset' => true, 'isrtl' => $wp_locale->is_rtl(),
+		'responsive' => true, 'responsivebreakpoint' => 514,
 	);
 
 	//year/month/day

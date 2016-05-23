@@ -5,7 +5,10 @@
 class EO_Calendar_Widget extends WP_Widget
 {
 
-	var $w_arg = array(
+	/*
+	 * Array of default settings
+	 */
+	public static $w_arg = array(
 		'title'          => '',
 		'showpastevents' => 1,
 		'event-category' => '',
@@ -203,8 +206,8 @@ class EO_Calendar_Widget extends WP_Widget
 		}
 
 		//Parse defaults
-		$args['show-long']  = isset( $args['show-long'] ) ? $args['show-long']  : false;
-		$args['link-to-single']  = isset( $args['link-to-single'] ) ? $args['link-to-single']  : false;
+		$args['show-long']      = isset( $args['show-long'] ) ? $args['show-long']  : false;
+		$args['link-to-single'] = isset( $args['link-to-single'] ) ? $args['link-to-single']  : false;
 
 		//Month details
 		$first_day_of_month = intval( $month->format( 'N' ) ); //0=sun,...,6=sat
@@ -333,6 +336,11 @@ class EO_Calendar_Widget extends WP_Widget
 								$current_date->format( 'm' ),
 								$current_date->format( 'd' )
 							);
+							$query_args = array_filter( array(
+								'event-venue'    => $args['event-venue'],
+								'event-category' => $args['event-category'],
+							) );
+							$link = add_query_arg( $query_args, $link );
 						}
 						$link = esc_url( $link );
 

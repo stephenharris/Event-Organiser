@@ -144,8 +144,8 @@ echo 'start php';
 php -S localhost:8000 -t /tmp/wordpress -d disable_functions=mail > /dev/null 2>&1 &
 
 # Start Selenium
-wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
-java -jar selenium-server-standalone-2.46.0.jar -p $SELENIUM_PORT > /dev/null 2>&1 &
+wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
+java -jar selenium-server-standalone-2.53.0.jar -p $SELENIUM_PORT > /dev/null 2>&1 &
 
 # Wait for Selenium, if necessary
 wait_for_port $SELENIUM_PORT

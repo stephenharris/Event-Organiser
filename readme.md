@@ -3,8 +3,8 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
-**Tested up to:** 4.5.0  
-**Stable tag:** 3.0.5  
+**Tested up to:** 4.5.2  
+**Stable tag:** 3.1.0  
 **License:** GPLv3  
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -237,6 +237,24 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+
+### 3.1.0 - 23rd May 2016 ###
+* enhancement: Improved performance when grouping by event series
+* enhancement: Added `event_series` attribute for calendar shortcode. Display only occurrences in Event with ID5: `[eo_fullcalendar event_series="5"]`
+* enhancement: Add event-category / event-url query parameters to the URLs on the calendar widgt if filtering by category / venue.
+* enhancement: iCal feeds now include the featured image
+* enhancement: Added `eventorganiser_indefinitely_recurring_event_last_date` filter to change 'recur until date' for indefinitely recurring events imported from an iCal feed.
+* enhancement: Added `eventorganiser_metabox_after_core_fields` action after core fields in Event metabox
+* enhancement: Add setting to configure calendar shortcode's mobile breakpoint
+* enhancement: Calling `eo_format_datetime()` with a non DateTime object throws an exception
+* bugfix: Fix a bug with formatting date-range when two tokens look the same (e.g. day of the week) bug refer to different dates. (See [#359](https://github.com/stephenharris/Event-Organiser/pull/359))
+* bugfix: Improved a11y of venue address metabox
+* bugfix: Improve a11y of notices and remove title attribute #323
+* bugfix: Removed unnecessary title attributes, and 'bookmark' link from templates and elsewhere
+* bugfix: Fixed bug were uppercase meridian was being removed for languages which don't have a translation (should instead retain the English default, as is the case with lowercase meridian). Adds tests
+* bugfix: Double quotes now stripped from the ORGANISER CN parameter in iCal feeds
+* bugfix: Remove date from venue page title when viewing events in a venue in given year/month or on a given date
+* bugfix: Fixed notice markup containing incorrect closing anchor tag
 
 ### 3.0.5 - 31st March 2016 ###
 * bugfix: Compatible with WordPress 4.5

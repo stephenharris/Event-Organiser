@@ -1,8 +1,6 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface,
-	Behat\Behat\Context\TranslatedContextInterface,
-	Behat\Behat\Context\Context,
+use Behat\Behat\Context\Context,
 	Behat\Behat\Context\SnippetAcceptingContext,
 	Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Testwork\Tester\Result\TestResult;
@@ -20,8 +18,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	protected $screenshot_dir = false;
 	
 	public function __construct($screenshot_dir=false) {
-		//TODO What if $screenshot_dir is a valid, albeit non-existing directory 
-		if ( $screenshot_dir && is_dir( $screenshot_dir ) ) {
+		if ( $screenshot_dir ) {
 			$this->screenshot_dir = rtrim( $screenshot_dir, '/' ) . '/';
 		}
 	}
@@ -43,6 +40,13 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 					case 'start':
 					case 'end':
 					case 'until':
+						
+						//Support 'relative' placeholders
+						$value = str_replace(
+							array( 'd', 'm', 'Y'),
+							array( date('d'), date('m'), date('Y') 
+						), $value );
+						
 						$postData[$key] = new DateTime( $value, $tz );
 						break;
 				}
@@ -544,16 +548,145 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	{
 
 		if ($this->screenshot_dir && TestResult::FAILED === $scope->getTestResult()->getResultCode()) {
+			
+			$feature  = $scope->getFeature();
+			$scenario = $scope->getScenario();
+			$filename = basename( $feature->getFile(), '.feature' ) . '-' . $scenario->getLine();
+			
 			if ($this->getSession()->getDriver() instanceof \Behat\Mink\Driver\Selenium2Driver) {
 				$screenshot = $this->getSession()->getDriver()->getScreenshot();
-				$feature    = $scope->getFeature();
-				$scenario   = $scope->getScenario();
-				$filename   = basename( $feature->getFile(), '.feature' ) . '-' . $scenario->getLine() . '.png';
-				
-				file_put_contents( '/tmp/' . $filename, $screenshot);
-				file_put_contents( '/tmp/screenshot.png', $screenshot);
-				file_put_contents( $this->screenshot_dir . $filename, $screenshot);
+				file_put_contents( $this->screenshot_dir . $filename . '.png', $screenshot);
+			}
+			
+			//Store HTML markup of the page also - useful for non-js tests
+			file_put_contents( $this->screenshot_dir . $filename . '.html', $this->getSession()->getPage()->getHtml());
+		}
+	}
+
+    /**
+     * WordPress disables the save/publish buttons when autosaving.
+     * This circumvents that issue.
+     * @When I save the event
+     */
+    public function iSaveTheEvent()
+    {
+		$button = $this->fixStepArgument('save-post');
+		
+		//If the button is out of view then the window will be scrolled so that it aligns
+		//with the top of the screen. But then it is obscured by the #wpadminbar.
+		//We scroll so that the top of the window is aligned with the button, then move the
+		//view-port up by more than the height of the admin bar so that the button is visible.
+		$this->getSession()->executeScript(
+			'var element = document.getElementById("save-post");
+			element.scrollIntoView(true);
+			window.scrollBy(0, -50);'
+		);
+    	$this->spin(function($context) use ($button) {
+    		$context->getSession()->getPage()->pressButton($button);
+    		return true;
+    	});
+    }
+
+    /**
+     * @Given I include past events
+     */
+    public function iIncludePastEvents()
+    {
+		$options = eventorganiser_get_option( false );
+		$options['showpast'] = 1;
+		update_option( 'eventorganiser_options', $options );
+    }
+
+    /**
+     * @Given I have an event calendar widget in :arg1
+     */
+	public function iHaveAnEventCalendarWidgetIn($sidebar, TableNode $table)
+	{
+		//Register sidebar. TODO Why is this necessary?
+		register_sidebar( array(
+			'name'           => __( 'Main Sidebar', 'theme-slug' ),
+			'id'            => 'sidebar-1',
+			'description'   => __( 'Widgets in this area will be shown on all posts and pages.', 'theme-slug' ),
+			'before_widget' => '<li id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</li>',
+			'before_title'  => '<h2 class="widgettitle">',
+			'after_title'   => '</h2>',
+		) );
+
+		//Get sidebar
+		$sidebar_id = $this->_findSidebar( $sidebar );
+
+		//Compile widget settings
+		$values = $table->getRow( 1 ); //we only support one widget for now
+		$args   = array();
+
+		foreach ( $table->getRow( 0 ) as $index => $key ) {
+
+			$key = strtolower( $key );
+			switch( $key ) {
+				case 'event categories':
+					$args['event-category'] = $values[$index];
+					break;
+				case 'event venue':
+					$args['event-venue'] = $values[$index];
+					break;
+				case 'include past events':
+					$args['showpastevents'] = $values[$index];
+					break;
+				case 'show-long':
+					$args['show-long'] = $values[$index];
+					break;
+				case 'link-to-single':
+					$args['link-to-single'] = $values[$index];
+					break;
+				case 'show-long':
+					$args[$key] = $values[$index];
+					break;
+				default:
+					$args[$key] = $values[$index];
+					break;
+			}
+		}
+		$args = wp_parse_args( $args, EO_Calendar_Widget::$w_arg ); //merge in default values
+		$this->_addWidgetToSidbar( $sidebar_id, 'EO_Calendar_Widget', $args );
+	}
+	
+	
+	/**
+	 * Add these posts to this wordpress installation
+	 *
+	 * @see wp_insert_post
+	 *
+	 * @override /^there are posts$/
+	 */
+	public function thereArePosts(TableNode $table)
+	{
+		foreach ($table->getHash() as $postData) {
+			//We add this step to allow IDs to be implicitly referenced:
+			//{{id of event "My Event Title"}}
+			$postData['post_content'] = preg_replace_callback( '/{{id of ([^}]*) "([^}"]*)"}}/i', function($match){
+				$event = get_page_by_title( $match[2], 'OBJECT', $match[1] );
+				if ( $event ) {
+					return $event->ID;
+				}
+				return '';
+			}, $postData['post_content'] );
+
+			if (!is_int(wp_insert_post($postData))) {
+				throw new \InvalidArgumentException("Invalid post information schema.");
 			}
 		}
 	}
+
+
+    /**
+     * @When the calendar finishes loading
+     */
+    public function theCalendarFinishesLoading()
+    {
+    	$this->spin(function($context){
+    		$context->assertSession()->pageTextNotContains('Loading');
+    		return true;
+    	});
+    }
 }

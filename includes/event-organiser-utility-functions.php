@@ -7,14 +7,14 @@
 
 /**
  * Formats a datetime object into a specified format and handles translations.
- * Used by 
+ * Used by
  *
- * * {@see `eo_get_the_start()`} 
+ * * {@see `eo_get_the_start()`}
  * * {@see `eo_get_the_end()`}
  * * {@see `eo_get_schedule_start()`}
  * * {@see `eo_get_schedule_last()`}
  *
- * The constant DATETIMEOBJ can be passed to them to get datetime objects 
+ * The constant DATETIMEOBJ can be passed to them to get datetime objects
  * Applies {@see `eventorganiser_format_datetime`} filter
  *
  * @since 1.2.0
@@ -24,24 +24,32 @@
  * @param string|constant $format How to format the date, see https://php.net/manual/en/function.date.php  or DATETIMEOBJ constant to return the datetime object.
  * @return string|dateTime The formatted date
 */
-
-function eo_format_datetime($datetime,$format='d-m-Y'){
+function eo_format_datetime( $datetime, $format = 'd-m-Y' ) {
 	global  $wp_locale;
 
-	if( DATETIMEOBJ == $format )
+	if ( ! ( $datetime instanceof DateTime ) ) {
+		throw new Exception( sprintf(
+			'Error in formating DateTime object. Expected DateTime, but instead given %s',
+			gettype( $datetime )
+		) );
+	}
+
+	if ( DATETIMEOBJ == $format ) {
 		return $datetime;
+	}
 
 	if ( ( !empty( $wp_locale->month ) ) && ( !empty( $wp_locale->weekday ) ) ) :
 			//Translate
-			$datemonth = $wp_locale->get_month($datetime->format('m'));
-			$datemonth_abbrev = $wp_locale->get_month_abbrev($datemonth);
-			$dateweekday = $wp_locale->get_weekday($datetime->format('w'));
-			$dateweekday_abbrev = $wp_locale->get_weekday_abbrev( $dateweekday );
-			$datemeridiem =  trim($wp_locale->get_meridiem($datetime->format('a')));
-			$datemeridiem_capital =$wp_locale->get_meridiem($datetime->format('A'));
+			$datemonth            = $wp_locale->get_month( $datetime->format( 'm' ) );
+			$datemonth_abbrev     = $wp_locale->get_month_abbrev( $datemonth );
+			$dateweekday          = $wp_locale->get_weekday( $datetime->format( 'w' ) );
+			$dateweekday_abbrev   = $wp_locale->get_weekday_abbrev( $dateweekday );
+			$datemeridiem         = trim($wp_locale->get_meridiem( $datetime->format( 'a' ) ) );
+			$datemeridiem_capital = trim( $wp_locale->get_meridiem( $datetime->format( 'A' ) ) );
 
-			$datemeridiem = (empty($datemeridiem) ? $datetime->format('a')  : $datemeridiem);
-	
+			$datemeridiem         = ( empty( $datemeridiem ) ? $datetime->format( 'a' )  : $datemeridiem );
+			$datemeridiem_capital = ( empty( $datemeridiem_capital ) ? $datetime->format( 'A' )  : $datemeridiem_capital );
+
 			$dateformatstring = ' '.$format;
 			$dateformatstring = preg_replace( "/([^\\\])D/", "\\1" . backslashit( $dateweekday_abbrev ), $dateformatstring );
 			$dateformatstring = preg_replace( "/([^\\\])F/", "\\1" . backslashit( $datemonth ), $dateformatstring );
@@ -50,12 +58,13 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 			$dateformatstring = preg_replace( "/([^\\\])a/", "\\1" . backslashit( $datemeridiem ), $dateformatstring );
 			$dateformatstring = preg_replace( "/([^\\\])A/", "\\1" . backslashit( $datemeridiem_capital ), $dateformatstring );
 			$dateformatstring = substr( $dateformatstring, 1, strlen( $dateformatstring ) -1 );
-	 endif;	
-	$formatted_datetime = $datetime->format($dateformatstring);
-	
+	endif;
+
+	$formatted_datetime = $datetime->format( $dateformatstring );
+
 	/**
 	 * Filters the formatted date (DateTime object).
-	 * 
+	 *
 	 * Formats should be specified using [php date format standards](https://php.net/manual/en/function.date.php).
 	 *
 	 * @link https://php.net/manual/en/function.date.php PHP date formatting standard
@@ -63,7 +72,7 @@ function eo_format_datetime($datetime,$format='d-m-Y'){
 	 * @param string $format             The format in which the date should be returned.
 	 * @param string $datetime           The provided DateTime object
 	 */
-	$formatted_datetime = apply_filters('eventorganiser_format_datetime', $formatted_datetime , $format, $datetime);
+	$formatted_datetime = apply_filters( 'eventorganiser_format_datetime', $formatted_datetime , $format, $datetime );
 	return $formatted_datetime;
 }
 
@@ -205,27 +214,27 @@ function eo_format_event_occurrence( $event_id = false, $occurrence_id = false, 
  * @param bool $is_rtl Whether the formatted date should be written right-to-left. Defaults to is_rtl().
  * @return string|dateTime The formatted date range
  */
-function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = null ){
+function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = null ) {
 	
-	if( is_null( $is_rtl ) ){
+	if ( is_null( $is_rtl ) ) {
 		$is_rtl = is_rtl();
 	}
 
 	$formatted1 = eo_format_datetime( $datetime1, $format );
 	$formatted2 = eo_format_datetime( $datetime2, $format );
 	
-	if( $formatted1 === $formatted2 ){
+	if ( $formatted1 === $formatted2 ) {
 		return $formatted1;
 	}
 	
 	//we include jS as a token to ensure correct positioning of suffix: 4th-5th not 4-5th
 	$date = array(
-		'jS', 'j', 'd', 'D', 'l', 'S', 'w', 'N', 'z',//Day
-		'W', //Week
-		'F', 'm', 'M', 'n', 't', //Month
-		'Y', 'y', 'o', 'L', //Year
-		'e', 'P', 'O', 'T', 'Z', 'I', //Timezone
-		'c', 'R', 'U', 'u', 'e','r', //Full date time
+		array( 'c', 'R', 'U', 'u', 'e','r' ), //Full date time
+		array( 'e', 'P', 'O', 'T', 'Z', 'I' ), //Timezone
+		array( 'Y', 'y', 'o', 'L' ), //Year
+		array( 'F', 'm', 'M', 'n', 't' ), //Month
+		array( 'W' ), //Week
+		array( 'jS', 'j', 'd', 'D', 'l', 'S', 'w', 'N', 'z' ),//Day
 	);
 	$time = array(
 		'g', 'G', 'h', 'H', //Hour 
@@ -235,7 +244,7 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 	);
 
 	//Include time with (:?) to ensure we don't split at : in time fragment.
-	$regexp  = '/(\\\\\S|' . implode( '(:?)|', $time ) . '(:?)|' . implode( '|', $date ) . '|.)/';
+	$regexp  = '/(\\\\\S|' . implode( '(:?)|', $time ) . '(:?)|' . implode( '|', call_user_func_array( 'array_merge', $date ) ) . '|.)/';
 
 	preg_match_all( $regexp, $format, $matches );
 	$tokens = $matches[0];
@@ -248,6 +257,16 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 	$middle2 = false;
 	$right   = false;
 	
+	//Collect the tokens which represent entities for which the two dates differ 
+	$break_at_tokens = array();
+	if ( $datetime1->format( 'Y' ) !== $datetime2->format( 'Y' ) ) {
+		$break_at_tokens = call_user_func_array( 'array_merge', array_slice( $date, -4 ) );
+	} elseif ( $datetime1->format( 'Ym' ) !== $datetime2->format( 'Ym' ) ) {
+		$break_at_tokens = call_user_func_array( 'array_merge', array_slice( $date, -3 ) );
+	} elseif ( $datetime1->format( 'Ymd' ) !== $datetime2->format( 'Ymd' ) ) {
+		$break_at_tokens = call_user_func_array( 'array_merge', array_slice( $date, -1 ) );
+	}
+	
 	while( $left_counter < count( $tokens ) ){
 		
 		$parsed_token_1 = eo_format_datetime( $datetime1, $tokens[$left_counter] );
@@ -255,6 +274,13 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 		
 		//We don't want to place a seperator within anyting time related
 		if( $parsed_token_1 != $parsed_token_2 || in_array( trim( $tokens[$left_counter], ':' ), $time ) ){
+			break;
+		}
+		
+		//If token is indicated as representing entity that is different, split even though
+		//they look the same e.g. 'l' with in Saturday 2nd and Saturday 9th
+		//@see https://github.com/stephenharris/Event-Organiser/issues/359
+		if ( in_array( $tokens[$left_counter], $break_at_tokens ) ) {
 			break;
 		}
 		
@@ -271,6 +297,13 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 
 		//We don't want to place a seperator within anyting time related
 		if( $parsed_token_1 != $parsed_token_2 ||  in_array( trim( $tokens[$right_counter], ':' ), $time ) ){
+			break;
+		}
+		
+		//If token is indicated as representing entity that is different, split even though
+		//they look the same e.g. 'l' with in Saturday 2nd and Saturday 9th
+		//@see https://github.com/stephenharris/Event-Organiser/issues/359
+		if ( in_array( $tokens[$right_counter], $break_at_tokens ) ) {
 			break;
 		}
 		

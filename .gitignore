@@ -3,6 +3,7 @@
 .settings
 .buildpath
 .metadata
+.idea
 apigen
 documentation
 dist

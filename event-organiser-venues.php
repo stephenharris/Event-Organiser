@@ -304,7 +304,10 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 					<div id="post-body-content">
 						<div id="titlediv"><?php eventorganiser_venue_title( $venue ); ?></div>
 						<div class="postbox " id="venue_address">
-							<div class="handlediv" title="Click to toggle"><br></div>
+							<button type="button" class="handlediv button-link" aria-expanded="true">
+								<span class="screen-reader-text"><?php esc_html_e( 'Toggle panel: Location' );?></span>
+								<span class="toggle-indicator" aria-hidden="true"></span>
+							</button>
 							<h3 class="hndle"><span><?php echo esc_html( $tax->labels->venue_location ); ?></span></h3>
 							<div class="inside"><?php eventorganiser_venue_location( $venue ); ?></div>
 						</div><!-- .postbox -->

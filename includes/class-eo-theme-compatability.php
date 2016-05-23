@@ -158,7 +158,7 @@ class EO_Theme_Compatabilty {
 		if ( is_tax( 'event-venue' ) ) {
 			$venue_id = get_queried_object_id();
 			$title = sprintf(
-				__( 'Events at %s','eventorganiser' ).' '.eo_get_event_archive_date( 'jS F Y' ),
+				__( 'Events at %s','eventorganiser' ),
 				'<span>' . eo_get_venue_name( $venue_id ) . '</span>'
 			);
 

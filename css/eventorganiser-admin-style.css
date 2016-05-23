@@ -87,6 +87,7 @@ input#venue_select.eo-waiting{
 .post-type-event .tablenav.top .alignleft.actions select[name="m"]{display: none; }
 
 /* Venue edit page*/
+#venue_address{margin-top: 20px;}
 #venue_address.postbox #venuemap{height: 335px;margin: 0 0 0 -60%;width: 60%;}
 
 @media only screen and (max-width: 860px) {
@@ -94,6 +95,20 @@ input#venue_select.eo-waiting{
 		width: 100%;
 		clear: both;
 	}
+}
+
+/* Metabox collapse arrow indicators */
+.js #venue_address.postbox .toggle-indicator:before {
+	content: "\f142";
+	display: inline-block;
+	font: normal 20px/1 dashicons;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-decoration: none !important;
+}
+.js #venue_address.postbox.closed .handlediv .toggle-indicator:before {
+	content: "\f140";
 }
 
 @media only screen and (max-width: 1320px) {
@@ -442,3 +457,28 @@ a.eo-inline-help img {
 
 /**Add-ons page: for contrast**/
 #eo-addons-wrap .eo-addon{ background: white; }
+
+
+/* Backwards compatability with 4.3 and earlier */
+/* @see https://core.trac.wordpress.org/ticket/34242 */
+.wp-core-ui .button-link:focus {
+	border-color: #5b9dd9;
+	-webkit-box-shadow: 0 0 3px rgba( 0, 115, 170, .8 );
+	box-shadow: 0 0 3px rgba( 0, 115, 170, .8 );
+}
+.wp-core-ui .button-link {
+	margin: 0;
+	padding: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
+	background: none;
+	outline: none;
+	cursor: pointer;
+}
+.wp-core-ui .button-link:focus {
+	outline: #5b9dd9 solid 1px;
+}
+

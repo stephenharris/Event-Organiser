@@ -43,7 +43,7 @@ Feature: Create events
 		And I fill in "eo-recurrence-frequency" with "2"
 		And I fill in "eo-schedule-last-date" with "13-11-2014"
 		Then the event summary should read "This event will repeat every 2 days until November 13th 2014"  
-		When I press "save-post"
+		When I save the event
 		Then I should see "Event draft updated"
 		And the event "Daily Event" should have the following schedule
 		    | start      | 2014-11-06 10:00pm |
@@ -52,7 +52,7 @@ Feature: Create events
 		    | frequency  | 2                  |
         	| until      | 2014-11-13 10:00pm |
 
-    @javascript
+    @javascript @insulated
     Scenario: Weekly event
         Given I am logged in as "admin" with password "test"
         When I go to "wp-admin/post-new.php?post_type=event&post_title=Weekly+Event"
@@ -65,7 +65,7 @@ Feature: Create events
 		And I check "day-Sat"
 		And I fill in "eo-schedule-last-date" with "29-01-2015"
 		Then the event summary should read "This event will repeat every week on Thursday, Saturday until January 29th 2015"  
-		When I press "save-post"
+		When I save the event
 		Then I should see "Event draft updated"
 		And the event "Weekly Event" should have the following schedule
 		    | start      | 2015-01-01 02:15pm |
@@ -87,7 +87,7 @@ Feature: Create events
 		And I select "BYMONTHDAY=" from "eo_input[schedule_meta]"
 		And I fill in "eo-schedule-last-date" with "30-12-2016"
 		Then the event summary should read "This event will repeat every month on the 30th until December 30th 2016"  
-		When I press "save-post"
+		When I save the event
 		Then I should see "Event draft updated"
 		And the event "Monthly Event 1" should have the following schedule
 		    | start           | 2016-01-30 01:00pm |
@@ -110,7 +110,7 @@ Feature: Create events
 		And I select "BYDAY=" from "eo_input[schedule_meta]"
 		And I fill in "eo-schedule-last-date" with "31-12-2016"
 		Then the event summary should read "This event will repeat every month on the last Saturday until December 31st 2016"  
-		When I press "save-post"
+		When I save the event
 		Then I should see "Event draft updated"
 		And the event "Monthly Event 2" should have the following schedule
 		    | start           | 2016-01-30 01:00pm |
@@ -132,7 +132,7 @@ Feature: Create events
 		And I select "yearly" from "eo-event-recurrence"
 		And I fill in "eo-schedule-last-date" with "29-02-2024"
 		Then the event summary should read "This event will repeat every year on the February 29th until February 29th 2024"  
-		When I press "save-post"
+		When I save the event
 		Then I should see "Event draft updated"
 		And the event "Yearly Event" should have the following schedule
 		    | start           | 2016-02-29 05:00pm |

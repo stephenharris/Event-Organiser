@@ -353,15 +353,42 @@ class iCalTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( 1, count( $ical->events ) );
 		
 		//Check the warning is reported:
-		//No errors / warnings
-		$this->assertEquals( 1, count( $ical->warnings ) );
-		$this->assertEquals( 0, count( $ical->errors ) );
+		$this->assertEquals( 1, count( $ical->warnings ), 'There should be one warning' );
+		$this->assertEquals( 0, count( $ical->errors ), 'There should be no errors' );
 		$this->assertEquals( 'indefinitely-recurring-event', $ical->warnings[0]->get_error_code() );
 
-		//Check that the timezone has "fallen back" to the blog
+		//Check that the recur until date is as expected
 		$event = $ical->events[0];
-		$this->assertInstanceOf('DateTime', $event['schedule_last']);
-		$this->assertEquals( new DateTime( '2038-01-19 00:00:00' ), $event['schedule_last'] );
+		$this->assertInstanceOf('DateTime', $event['until']);
+		$this->assertEquals( new DateTime( '2038-01-19 00:00:00' ), $event['until'] );
+    }
+    
+    public function testIndefinitelyRecurringEventFiltered()
+    {
+    	
+    	add_filter( 'eventorganiser_indefinitely_recurring_event_last_date', array( $this, '_returnDateTime29991231' ) );
+    	$ical = new EO_ICAL_Parser();
+    	$ical->parse( EO_DIR_TESTDATA . '/ical/indefinitelyRecurringEvent.ics' );
+    
+    	$tz = eo_get_blog_timezone();
+    
+    	//Check the number of events have imported correctly
+    	$this->assertEquals( 1, count( $ical->events ) );
+    
+    	//Check the warning is reported:
+    	//No errors / warnings
+    	$this->assertEquals( 1, count( $ical->warnings ), 'There should be one warning' );
+    	$this->assertEquals( 0, count( $ical->errors ), 'There should be no errors' );
+    	$this->assertEquals( 'indefinitely-recurring-event', $ical->warnings[0]->get_error_code() );
+
+    	//Check that the recur until date is as expected
+    	$event = $ical->events[0];
+    	$this->assertInstanceOf('DateTime', $event['until']);
+    	$this->assertEquals( new DateTime( '2999-12-31 00:00:00' ), $event['until'] );
+    }
+    
+    public function _returnDateTime29991231( ) {
+    	return new DateTime( '2999-12-31', eo_get_blog_timezone() );
     }
     
     public function testRecurringEventWithCount()
