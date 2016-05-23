@@ -84,7 +84,11 @@ define( 'DATETIMEOBJ', 'DATETIMEOBJ', true );
  */
 function eventorganiser_load_textdomain() {
 	$domain = 'eventorganiser';
-
+	/****** Rest API ******/
+	require_once( EVENT_ORGANISER_DIR . 'includes/rest-api/class-wp-rest-events-controller.php' );
+	require_once( EVENT_ORGANISER_DIR . 'includes/rest-api/class-wp-rest-event-occurrences-controller.php' );
+	require_once( EVENT_ORGANISER_DIR . 'includes/rest-api/class-wp-rest-event-venues-controller.php' );
+	require_once( EVENT_ORGANISER_DIR . 'includes/rest-api/class-wp-rest-event-categories-controller.php' );
 	/**
 	 *@ignore
 	 */
@@ -253,3 +257,9 @@ require_once( EVENT_ORGANISER_DIR.'classes/class-eo-calendar-widget.php' );
 require_once( EVENT_ORGANISER_DIR.'classes/class-eo-widget-categories.php' );
 require_once( EVENT_ORGANISER_DIR.'classes/class-eo-widget-venues.php' );
 require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-shortcodes.php' );
+
+
+add_action( 'rest_api_init', function(){	
+	$controller = new WP_REST_Event_Occurrences_Controller();
+	$controller->register_routes();
+}, 50 );

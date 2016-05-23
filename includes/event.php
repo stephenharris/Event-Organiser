@@ -81,7 +81,11 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 
 	if( !empty($post_data) ){
 		$post_data['ID'] = $post_id;		
-		wp_update_post( $post_data );
+		$post_id = wp_update_post( $post_data, true );
+	}
+	
+	if ( is_wp_error( $post_id ) ) {
+		return $post_id;
 	}
 
 	/**
@@ -248,8 +252,9 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 	$post_id = wp_insert_post($post_input, true);
 
 	//Did the event insert correctly? 
-	if ( is_wp_error( $post_id) ) 
-			return $post_id;
+	if ( is_wp_error( $post_id) ) {
+		return $post_id;
+	}
 
 	_eventorganiser_insert_occurrences($post_id, $event_data);
 			

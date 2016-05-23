@@ -53,6 +53,8 @@ function eventorganiser_create_event_taxonomies() {
 			'hierarchical'          => false,
 			'labels'                => $venue_labels,
 			'public'                => true,
+			'show_in_rest'          => true,
+			'rest_controller_class' => 'WP_REST_Event_Venues_Controller',
 			'show_in_nav_menus'     => true,
 			'show_ui'               => false,//Use custom UI
 			'show_admin_column'     => false,//Custom quick edit
@@ -112,6 +114,8 @@ function eventorganiser_create_event_taxonomies() {
 	$event_category_args = array(
 		'hierarchical'          => true,
 		'labels'                => $category_labels,
+		'show_in_rest'          => true,
+		'rest_controller_class' => 'WP_REST_Event_Categories_Controller',
 		'show_ui'               => true,
 		'show_admin_column'     => true,
 		'update_count_callback' => '_update_post_term_count',
@@ -171,6 +175,7 @@ function eventorganiser_create_event_taxonomies() {
 		$event_tag_args = array(
 			'hierarchical'          => false,
 			'labels'                => $tag_labels,
+			'show_in_rest'          => true,
 			'show_ui'               => true,
 			'update_count_callback' => '_update_post_term_count',
 			'query_var'             => true,
@@ -267,16 +272,18 @@ function eventorganiser_cpt_register() {
 	 */
 	$menu_position = apply_filters( 'eventorganiser_menu_position', 5 );
 	$args = array(
-		'labels'              => $labels,
-		'public'              => true,
-		'publicly_queryable'  => true,
-		'exclude_from_search' => $exclude_from_search,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'query_var'           => true,
-		'capability_type'     => 'event',
-		'rewrite'             => $event_rewrite,
-		'capabilities'        => array(
+		'labels'                => $labels,
+		'public'                => true,
+		'publicly_queryable'    => true,
+		'exclude_from_search'   => $exclude_from_search,
+		'show_in_rest'          => true,
+		'rest_controller_class' => 'WP_REST_Events_Controller',
+		'show_ui'               => true,
+		'show_in_menu'          => true,
+		'query_var'             => true,
+		'capability_type'       => 'event',
+		'rewrite'               => $event_rewrite,
+		'capabilities'          => array(
 			'publish_posts'       => 'publish_events',
 			'edit_posts'          => 'edit_events',
 			'edit_others_posts'   => 'edit_others_events',
