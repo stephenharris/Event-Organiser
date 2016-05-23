@@ -1371,7 +1371,8 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
 		'year' => false, 'month' => false, 'date' => false, 'defaultdate' => false,	'users_events' => false,
 		'event_series' => false, 'event_occurrence__in' => array(),
-		'theme' => false, 'reset' => true, 'responsive' => true, 'isrtl' => $wp_locale->is_rtl(),
+		'theme' => false, 'reset' => true, 'isrtl' => $wp_locale->is_rtl(),
+		'responsive' => true, 'responsivebreakpoint' => 514,
 	);
 
 	//year/month/day
