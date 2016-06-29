@@ -558,7 +558,7 @@ function _eventorganiser_upgrade_admin_notice() {
 		"<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post</a>.",
 		'eventorganiser'
 	);
-	$notice_handler->add_notice( 'changedtemplate17', '', $message , 'alert' );
+	$notice_handler->add_notice( 'changedtemplate17', '', $message , 'warning' );
 
 	if ( ! get_option( 'timezone_string' ) && current_user_can( 'manage_options' ) && get_option( 'gmt_offset' ) ) {
 		$offset = (float) get_option( 'gmt_offset' );
@@ -581,12 +581,11 @@ function _eventorganiser_upgrade_admin_notice() {
 		$notice_handler->add_notice( 'timezone', '', $message , 'warning' );
 	}
 
-
 	if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() ) {
 
 		if ( wp_count_terms( 'event-venue' ) > 0 || 'event_page_venues' == get_current_screen()->id ) {
 			$message = sprintf(
-				"<h4>" . sprintf( esc_html__( 'Enter a Google Maps API', 'eventorganiser' ), "<em>{$tzstring}</em>" ). '</h4>'
+				'<h4>' . esc_html__( 'Enter a Google Maps API key', 'eventorganiser' ) . '</h4>'
 				. sprintf(
 					'<p>' . esc_html__( 'Google Maps now requires you register for an API key. If you wish to use maps on your site, %splease enter your key%s.', 'eventorganiser' ) . '</p>',
 					sprintf( '<a href="%s">', esc_url ( admin_url( 'options-general.php?page=event-settings' ).'#google_api_key' ) ),
