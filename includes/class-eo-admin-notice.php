@@ -95,7 +95,17 @@ class EO_Admin_Notice_Handler {
 				continue;
 			}
 
-			$class = 'error' == $notice['type'] ? 'notice-error error' : 'notice-success updated';
+			switch ( strtolower( $notice['type'] ) ) {
+
+				case 'error':
+					$class = 'notice-error error';
+					break;
+				case 'warning':
+					$class = 'notice-warning';
+					break;
+				default:
+					$class = 'notice-success updated';
+			}
 
 			printf(
 				'<div class="notice %1$s-notice %6$s" id="%1$s-notice-%2$s">
