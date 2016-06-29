@@ -396,7 +396,7 @@ function eo_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $dep
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @param int $occurrence_id  The occurrence ID
 * @param int $deprecated (Was) the occurrence id, supply this as the third argument
-* @return string the end date formated to given format, as accepted by PHP date
+* @return string|DateTime the end date formated to given format, as accepted by PHP date
  */
 function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0  ){
 	global $post;
