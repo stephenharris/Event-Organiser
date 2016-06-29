@@ -1767,3 +1767,20 @@ function eo_taxonomy_dropdown( $args ) {
 
 	return wp_dropdown_categories( $args );
 }
+
+/**
+ * A helper function which can be used to retrieve the Google Maps API
+ * key 
+ * 
+ * The key is stored either as a constant or in the site options 
+ * 
+ * @return string|bool The API key for this site, or false if none is set 
+ */
+function eventorganiser_get_google_maps_api_key() {
+	
+	if ( defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) ) {
+		return EVENTORGANISER_GOOGLE_MAPS_API_KEY;
+	}
+	
+	return eventorganiser_get_option( 'google_api_key', false );
+}

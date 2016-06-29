@@ -28,7 +28,11 @@ function eventorganiser_register_script() {
 
 	/* Google Maps */
 	$protocal = is_ssl() ? 'https://' : 'http://';
-	wp_register_script( 'eo_GoogleMap', $protocal.'maps.googleapis.com/maps/api/js?sensor=false&language='.substr( get_locale(), 0, 2 ) );
+	$url      = add_query_arg( array(
+		'key'      => eventorganiser_get_google_maps_api_key(),
+		'language' => substr( get_locale(), 0, 2 )
+	), "{$protocal}maps.googleapis.com/maps/api/js");
+	wp_register_script( 'eo_GoogleMap', $url );
 
 	/* Front-end script */
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",array(
