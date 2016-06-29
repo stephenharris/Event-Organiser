@@ -202,19 +202,18 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 
 				//Break Cache!
 				_eventorganiser_delete_calendar_cache();
-
+				
 				if ( is_wp_error( $response ) ){
 					$EO_Errors = $response;
 				} else {
-					$EO_Errors = new WP_Error( 'eo_notice', '<strong>'.__( 'Occurrence deleted.', 'eventorganiser' ).'</strong>' );
 					
-					/**
-					 * Triggered when occurrence is delete via the admin calendar. 
-					 * If you use this, send a message here: wp-event-organiser.com/contact. It may be removed.
-					 * @ignore
-					 */
-					do_action( 'eventorganiser_admin_calendar_occurrence_deleted', $post_id, $event_id );
 
+					if ( ! eo_get_the_occurrences_of( $post_id ) ) {
+						wp_delete_post( $post_id, true );
+						$EO_Errors = new WP_Error( 'eo_notice', '<strong>'.__( 'Event deleted.', 'eventorganiser' ).'</strong>' );
+					} else {
+						$EO_Errors = new WP_Error( 'eo_notice', '<strong>'.__( 'Occurrence deleted.', 'eventorganiser' ).'</strong>' );
+					}
 				}
 			endif;
 		}
