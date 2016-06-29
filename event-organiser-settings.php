@@ -74,8 +74,11 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					register_setting( 'eventorganiser_'.$tab_id, 'eventorganiser_options', array( $this, 'validate' ) );
 					add_settings_section( $tab_id.'_licence', __( 'Add-on Licence keys', 'eventorganiser' ), array( $this, 'display_licence_keys' ), 'eventorganiser_'.$tab_id );
 					add_settings_section( $tab_id,__( 'General', 'eventorganiser' ), '__return_false',  'eventorganiser_'.$tab_id);
-					if( !get_theme_support( 'event-organiser' ) ){
-						add_settings_section( $tab_id.'_templates',__( 'Templates', 'eventorganiser' ), array( $this, 'template_settings' ),  'eventorganiser_'.$tab_id);
+					if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) ) {
+						add_settings_section( $tab_id .'_google_maps' , __( 'Google Maps', 'eventorganiser' ), '__return_false',  'eventorganiser_'.$tab_id );
+					}
+					if ( ! get_theme_support( 'event-organiser' ) ) {
+						add_settings_section( $tab_id . '_templates', __( 'Templates', 'eventorganiser' ), array( $this, 'template_settings' ),  'eventorganiser_' . $tab_id );
 					}
 					break;
 				case 'permissions':
@@ -237,6 +240,14 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'checked' => eventorganiser_get_option( 'excludefromsearch' ),
 				) );
 
+				add_settings_field( 'google_api_key',  __( 'Google API key:', 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_' . $tab_id, $tab_id . '_google_maps',
+					array(
+						'label_for' => 'google_api_key',
+						'name'      => 'eventorganiser_options[google_api_key]',
+						'value'     => eventorganiser_get_option( 'google_api_key' ),
+					)
+				);
+
 				add_settings_field( 
 					'templates',
 					__( 'Templates:', 'eventorganiser' ),
@@ -389,7 +400,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		switch ( $tab ){
 			case 'general':
 				$checkboxes  = array( 'showpast', 'excludefromsearch', 'deleteexpired', 'feed', 'group_events', 'disable_css' );
-				$text = array( 'navtitle', 'dateformat', 'runningisnotpast', 'addtomenu' );
+				$text = array( 'navtitle', 'dateformat', 'runningisnotpast', 'addtomenu', 'google_api_key' );
 
 				foreach ( $checkboxes as $cb ){
 

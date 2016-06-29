@@ -578,7 +578,23 @@ function _eventorganiser_upgrade_admin_notice() {
 			."<p>" . __( "You can <a href='%s'>change your timezone settings here</a>.",'eventorganiser') . '</p>',
 			admin_url( 'options-general.php' ).'#default_role'
 		);
-		$notice_handler->add_notice( 'timezone', '', $message , 'alert' );
+		$notice_handler->add_notice( 'timezone', '', $message , 'warning' );
+	}
+
+
+	if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() ) {
+
+		if ( wp_count_terms( 'event-venue' ) > 0 || 'event_page_venues' == get_current_screen()->id ) {
+			$message = sprintf(
+				"<h4>" . sprintf( esc_html__( 'Enter a Google Maps API', 'eventorganiser' ), "<em>{$tzstring}</em>" ). '</h4>'
+				. sprintf(
+					'<p>' . esc_html__( 'Google Maps now requires you register for an API key. If you wish to use maps on your site, %splease enter your key%s.', 'eventorganiser' ) . '</p>',
+					sprintf( '<a href="%s">', esc_url ( admin_url( 'options-general.php?page=event-settings' ).'#google_api_key' ) ),
+					'</a>'
+				)
+			);
+			$notice_handler->add_notice( 'google_maps_api', '', $message , 'warning' );
+		}
 	}
 
 }
