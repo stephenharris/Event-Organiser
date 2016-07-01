@@ -245,6 +245,11 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'label_for' => 'google_api_key',
 						'name'      => 'eventorganiser_options[google_api_key]',
 						'value'     => eventorganiser_get_option( 'google_api_key' ),
+						'help'      => sprintf(
+							esc_html__( 'To use Google Maps you need to regiser an API key with Google. You can register for a free API key by %sfollowing these instructions%s.', 'eventorganiser' ),
+							'<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/get-api-key">',
+							'</a>'
+						)
 					)
 				);
 
