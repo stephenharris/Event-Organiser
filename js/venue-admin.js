@@ -21,26 +21,26 @@ jQuery(document).ready(function ($) {
         lng: eo_venue_Lng,
         zoom: zoom,
         draggable: true,
-        onDrag: function( evt ) {
+		onDrag: function( evt ) {
         	this.dragging = true;
-        	var latlng = evt.latLng.lat().toFixed(6) + ', ' + evt.latLng.lng().toFixed(6);
-        	$("#eo-venue-latllng-text").text( latlng );
+        	$("#eo-venue-latllng-text").text( evt.target.latlng.lat + ', ' + evt.target.latlng.lng );
         },
         onDragend: function( evt ) {
         	this.dragging = false;
-        	this.setPosition( this.position );
+			evt.target.map.setCenter( evt.target.latlng );
         },
-        onPositionchanged: function (){
+        onPositionchanged: function ( evt ){
+
         	if( !this.dragging ){
-        		var latLng    = this.getPosition();
-        		var latlngStr = latLng.lat().toFixed(6) + ', ' + latLng.lng().toFixed(6);
+				console.log( 'onPositionchanged' );
+        		var latlngStr = evt.target.latlng.lat + ', ' + evt.target.latlng.lng;
         		
-        		$("#eo_venue_Lat").val( latLng.lat().toFixed(6) );
-        		$("#eo_venue_Lng").val( latLng.lng().toFixed(6) );
+        		$("#eo_venue_Lat").val( evt.target.latlng.lat );
+        		$("#eo_venue_Lng").val( evt.target.latlng.lng );
         		$("#eo-venue-latllng-text").text( latlngStr );
-        		                
-        		this.getMap().setCenter( latLng );
-        		this.getMap().setZoom( 15 );
+
+				evt.target.map.setCenter( evt.target.latlng );
+				evt.target.map.setZoom( 15 );
         	}
         },
 	});
@@ -50,10 +50,9 @@ jQuery(document).ready(function ($) {
 		$(".eo_addressInput").each(function () {
 			address.push($(this).val());
 		});
-            
 		eovenue.geocode( address.join(', '), function( latlng ){
 			if( latlng ){
-				eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
+				eovenue.get_map( 'venuemap' ).marker[0].setPosition( { lat: latlng.lat(), lng: latlng.lng() } );
 			}
 		});
 	});
@@ -72,7 +71,7 @@ jQuery(document).ready(function ($) {
 				$(this).data( 'eo-lat', lat );
 				$(this).data( 'eo-lng', lng );
 				var latlng = new google.maps.LatLng( lat, lng );
-					eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
+					eovenue.get_map( 'venuemap' ).marker[0].setPosition( { lat: latlng.lat(), lng: latlng.lng() } );
 				}
 		}else{
 			//Not valid...

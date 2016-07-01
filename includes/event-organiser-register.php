@@ -33,6 +33,8 @@ function eventorganiser_register_script() {
 		'language' => substr( get_locale(), 0, 2 )
 	), "{$protocal}maps.googleapis.com/maps/api/js");
 	wp_register_script( 'eo_GoogleMap', $url );
+	wp_register_script( 'eo-open-source-map', "{$protocal}cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js" );
+	wp_register_style( 'eo-open-source-map', "{$protocal}cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" );
 
 	/* Front-end script */
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",array(
@@ -104,8 +106,10 @@ function eventorganiser_register_scripts(){
 	/*  Venue (map) utility script */
 	wp_register_script( 'eo-venue-util', EVENT_ORGANISER_URL."js/venue-util{$ext}.js",array(
 		'jquery',
+		'eo-open-source-map',
 		'eo_GoogleMap'
 	),$version,true);
+	wp_enqueue_style( 'eo-open-source-map' );
 	
 	/*  Venue script for venue edit */
 	wp_register_script( 'eo-venue-admin', EVENT_ORGANISER_URL."js/venue-admin{$ext}.js",array(
