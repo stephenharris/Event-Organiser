@@ -554,7 +554,7 @@ function _eventorganiser_upgrade_admin_notice() {
 		"<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post</a>.",
 		'eventorganiser'
 	);
-	$notice_handler->add_notice( 'changedtemplate17', '', $message , 'alert' );
+	$notice_handler->add_notice( 'changedtemplate17', '', $message , 'warning' );
 
 	if ( ! get_option( 'timezone_string' ) && current_user_can( 'manage_options' ) && get_option( 'gmt_offset' ) ) {
 		$offset = (float) get_option( 'gmt_offset' );
@@ -574,7 +574,7 @@ function _eventorganiser_upgrade_admin_notice() {
 			."<p>" . __( "You can <a href='%s'>change your timezone settings here</a>.",'eventorganiser') . '</p>',
 			admin_url( 'options-general.php' ).'#default_role'
 		);
-		$notice_handler->add_notice( 'timezone', '', $message , 'alert' );
+		$notice_handler->add_notice( 'timezone', '', $message , 'warning' );
 	}
 
 }
