@@ -102,6 +102,10 @@ class EventOrganiser_Shortcodes {
 		} elseif ( strtolower( $atts['type'] ) == 'ical' ) {
 			//Do nothing
 		} else {
+			//Google doesn't support https:// protocols for the cid value
+			//@see https://github.com/stephenharris/Event-Organiser/issues/328
+			//@link  http://stackoverflow.com/a/21218052/932391
+			$url = preg_replace( '/^https:/i', 'http:', $url );
 			$url = add_query_arg( 'cid', urlencode( $url ), 'http://www.google.com/calendar/render' );
 		}
 

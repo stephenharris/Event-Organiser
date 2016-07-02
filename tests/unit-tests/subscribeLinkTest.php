@@ -39,8 +39,29 @@ class subscribeLinkTest extends EO_UnitTestCase
 		$expected = '<a href="http://www.google.com/calendar/render?cid=http%3A%2F%2Fexample.org%2F%3Ffeed%3Deo-events" target="_blank"  title="Subscribe to calendar"  >Subscribe</a>';
 		$this->assertEquals( $expected, $actual );
 	}
-	
-	
+
+	/**
+	 * Google doesn't support https urls in its cid parameter, so
+	 * we have to strip them out. These should represent a low risk as no
+	 * credentials are sent, and only Google should be attempting to use the
+	 * http:// protocol.
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/328
+	 * @link  http://stackoverflow.com/a/21218052/932391
+	 */
+	public function testGoogleSubscribeSSL()
+	{
+		//Enable SSL
+		$_SERVER['HTTPS'] = 'on';
+		$actual   = do_shortcode( '[eo_subscribe type="google"]Subscribe[/eo_subscribe]' );
+
+		$expected = '<a href="http://www.google.com/calendar/render?cid=http%3A%2F%2Fexample.org%2F%3Ffeed%3Deo-events" target="_blank"  title="Subscribe to calendar"  >Subscribe</a>';
+
+		//Disable SSL again
+		$_SERVER['HTTPS'] = 'off';
+
+		$this->assertEquals( $expected, $actual );
+	}
+
 	public function testAttributes()
 	{	
 		$actual   = do_shortcode( '[eo_subscribe type="ical" id="subscribe" class="btn btn-primary" style="float:right" title="Subscribe" ]Subscribe to my calendar[/eo_subscribe]' );
