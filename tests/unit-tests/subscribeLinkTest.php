@@ -36,7 +36,7 @@ class subscribeLinkTest extends EO_UnitTestCase
 	public function testGoogleSubscribe()
 	{
 		$actual   = do_shortcode( '[eo_subscribe type="google"]Subscribe[/eo_subscribe]' );
-		$expected = '<a href="http://www.google.com/calendar/render?cid=http%3A%2F%2Fexample.org%2F%3Ffeed%3Deo-events" target="_blank"  title="Subscribe to calendar"  >Subscribe</a>';
+		$expected = '<a href="httphttps://www.google.com/calendar/render?cid=http%3A%2F%2Fexample.org%2F%3Ffeed%3Deo-events" target="_blank"  title="Subscribe to calendar"  >Subscribe</a>';
 		$this->assertEquals( $expected, $actual );
 	}
 
@@ -54,7 +54,7 @@ class subscribeLinkTest extends EO_UnitTestCase
 		$_SERVER['HTTPS'] = 'on';
 		$actual   = do_shortcode( '[eo_subscribe type="google"]Subscribe[/eo_subscribe]' );
 
-		$expected = '<a href="http://www.google.com/calendar/render?cid=http%3A%2F%2Fexample.org%2F%3Ffeed%3Deo-events" target="_blank"  title="Subscribe to calendar"  >Subscribe</a>';
+		$expected = '<a href="httphttps://www.google.com/calendar/render?cid=http%3A%2F%2Fexample.org%2F%3Ffeed%3Deo-events" target="_blank"  title="Subscribe to calendar"  >Subscribe</a>';
 
 		//Disable SSL again
 		$_SERVER['HTTPS'] = 'off';
