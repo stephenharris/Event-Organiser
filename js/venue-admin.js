@@ -27,32 +27,33 @@ jQuery(document).ready(function ($) {
         },
         onDragend: function( evt ) {
         	this.dragging = false;
+			var latlngStr = evt.target.latlng.lat + ', ' + evt.target.latlng.lng;
+			$("#eo_venue_Lat").val( evt.target.latlng.lat );
+			$("#eo_venue_Lng").val( evt.target.latlng.lng );
+			$("#eo-venue-latllng-text").text( latlngStr );
 			evt.target.map.setCenter( evt.target.latlng );
-        },
+		},
         onPositionchanged: function ( evt ){
 
         	if( !this.dragging ){
-				console.log( 'onPositionchanged' );
-        		var latlngStr = evt.target.latlng.lat + ', ' + evt.target.latlng.lng;
-        		
+				var latlngStr = evt.target.latlng.lat + ', ' + evt.target.latlng.lng;
         		$("#eo_venue_Lat").val( evt.target.latlng.lat );
         		$("#eo_venue_Lng").val( evt.target.latlng.lng );
         		$("#eo-venue-latllng-text").text( latlngStr );
-
 				evt.target.map.setCenter( evt.target.latlng );
-				evt.target.map.setZoom( 15 );
         	}
         },
 	});
         
 	$(".eo_addressInput").change(function () {
-		var address = [];
+		var address = {};
 		$(".eo_addressInput").each(function () {
-			address.push($(this).val());
+			var component = $(this).attr('id').replace(/^eo-venue-/, '');
+			address[component] = $(this).val() ? $(this).val() : null;
 		});
-		eovenue.geocode( address.join(', '), function( latlng ){
+		eovenue.geocode( address, function( latlng ){
 			if( latlng ){
-				eovenue.get_map( 'venuemap' ).marker[0].setPosition( { lat: latlng.lat(), lng: latlng.lng() } );
+				eovenue.get_map( 'venuemap' ).marker[0].setPosition( { lat: latlng.lat, lng: latlng.lng } );
 			}
 		});
 	});
@@ -70,9 +71,8 @@ jQuery(document).ready(function ($) {
 			if( lat != old_lat || lng != old_lng ){
 				$(this).data( 'eo-lat', lat );
 				$(this).data( 'eo-lng', lng );
-				var latlng = new google.maps.LatLng( lat, lng );
-					eovenue.get_map( 'venuemap' ).marker[0].setPosition( { lat: latlng.lat(), lng: latlng.lng() } );
-				}
+				eovenue.get_map( 'venuemap' ).marker[0].setPosition( { lat: lat, lng: lng } );
+			}
 		}else{
 			//Not valid...
 			$(this).text( old_lat + ", " + old_lng );

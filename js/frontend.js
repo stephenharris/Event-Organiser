@@ -1,6 +1,7 @@
 /*jshint -W054 */
 if ( typeof EO_SCRIPT_DEBUG === 'undefined') { EO_SCRIPT_DEBUG = true;}
 
+console.log( eventorganiser );
 var eventorganiser = eventorganiser || {};
 
 (function ($) {
@@ -639,224 +640,8 @@ function eveorg_getParameterByName(a, b) {
     else return decodeURIComponent(e[1].replace(/\+/g, " "));
 }
 
-
-/**
- * Google Maps Adapter class
- * Dynamic Prototype Pattern, Adapter
- */
-eventorganiser.EOGoogleMapAdapter = function ( elementID, args) {
-
-	this.elementID = elementID;
-	this.args = args;
-	var mapArgs = {
-		zoom: args.zoom,
-		scrollwheel: args.scrollwheel,
-		zoomControl: args.zoomcontrol,
-		rotateControl: args.rotatecontrol,
-		panControl: args.pancontrol,
-		overviewMapControl: args.overviewmapcontrol,
-		streetViewControl: args.streetviewcontrol,
-		draggable: args.draggable,
-		mapTypeControl: args.maptypecontrol,
-		mapTypeId: google.maps.MapTypeId[args.maptypeid],
-		styles: args.styles,
-		minZoom: args.minzoom,
-		maxZoom: args.maxzoom,
-		locations: args.locations
-	};
-
-	this._markers = {};
-
-	mapArgs = wp.hooks.applyFilters( 'eventorganiser.google_map_options', mapArgs, this.args );
-	this._map = new google.maps.Map( document.getElementById( this.elementID ), mapArgs );
-
-	// constructor prototype to share properties and methods
-	if ( typeof this.setCenter !== "function" ) {
-
-		eventorganiser.EOGoogleMapAdapter.prototype.setCenter = function( location ) {
-			var latlng = new google.maps.LatLng(location.lat, location.lng );
-			this._map.setCenter( latlng );
-		};
-
-		eventorganiser.EOGoogleMapAdapter.prototype.fitLocations = function( locations ) {
-			var bounds = new google.maps.LatLngBounds();
-			for( var j = 0; j < locations.length; j++ ) {
-
-				var lat = locations[j].lat;
-				var lng = locations[j].lng;
-
-				if (lat === undefined || lng === undefined) {
-					continue;
-				}
-
-				var latlng = new google.maps.LatLng(lat, lng);
-				bounds.extend(latlng);
-			}
-			this._map.fitBounds( bounds );
-		};
-
-		eventorganiser.EOGoogleMapAdapter.prototype.addMarker = function( location ) {
-
-			if (location.lat === undefined || location.lng === undefined) {
-				return;
-			}
-
-			var marker_options = wp.hooks.applyFilters( 'eventorganiser.venue_marker_options', {
-				venue_id: location.venue_id,
-				position: { lat: location.lat, lng: location.lng },
-				map: this._map,
-				content: location.tooltipContent,
-				icon: location.icon
-			});
-			var latlng =  new google.maps.LatLng( marker_options.position.lat, marker_options.position.lng );
-
-			marker_options.position = latlng;
-			var marker = new google.maps.Marker(marker_options);
-			this._markers[location.venue_id] = marker;
-
-			var infowindow = new google.maps.InfoWindow({
-				content: marker_options.content
-			});
-
-			if( this.args.tooltip ){
-				google.maps.event.addListener(marker, 'click', function() {
-					infowindow.open(this._map,marker);
-				});
-			}
-			return marker;
-		};
-
-		eventorganiser.EOGoogleMapAdapter.prototype.on( object, evt, callback ) {
-			google.maps.event.addListener(object, evt, callback );
-		}
-	}
-
-	for( var j = 0; j < this.args.locations.length; j++ ){
-		this.addMarker( this.args.locations[j] );
-	}
-
-	if ( this.args.locations.length > 1 ) {
-		this.fitLocations( this.args.locations );
-	} else {
-		this.setCenter( this.args.locations[0] );
-	}
-
-	wp.hooks.doAction( 'eventorganiser.google_map_loaded', this );
-
-}
-
-
-/**
- * OSM Adapter class
- * Dynamic Prototype Pattern, Adapter
- */
-eventorganiser.EOpenSourceMapAdapter = function( elementID, args) {
-
-	this.elementID = elementID;
-	this.args = args;
-	console.log(args);
-	var mapArgs = {
-		zoom: 12,//args.zoom,
-		minZoom: 0,//args.minzoom,
-		maxZoom: 20,//args.maxzoom,
-		locations: args.locations,
-		draggable: args.draggable,
-		zoomControl: args.zoomcontrol,//whether to display +/- for zooming;
-		scrollWheelZoom: args.scrollwheel,//zoom using scroll wheel
-		tiles: {
-			url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-			attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-		},
-		worldCopyJump: true
-	};
-	//Google only?
-	//rotateControl: args.rotatecontrol,
-	//panControl: args.pancontrol,
-	//overviewMapControl: args.overviewmapcontrol,
-	//streetViewControl: args.streetviewcontrol,
-	//mapTypeControl: args.maptypecontrol,
-	//mapTypeId: google.maps.MapTypeId[args.maptypeid],
-	//styles: args.styles
-	this._markers = {};
-
-	mapArgs = wp.hooks.applyFilters( 'eventorganiser.leaflet_map_options', mapArgs, this.args );
-	this._map = L.map( document.getElementById( this.elementID ), mapArgs );
-	L.tileLayer( mapArgs.tiles.url, mapArgs.tiles).addTo(this._map);
-
-	// constructor prototype to share properties and methods
-	if ( typeof this.setCenter !== "function" ) {
-
-		eventorganiser.EOpenSourceMapAdapter.prototype.setCenter = function( location ) {
-			console.log( location );
-			var latlng = L.latLng(location.lat, location.lng);
-			this._map.setView( latlng, args.zoom );
-		};
-
-		eventorganiser.EOpenSourceMapAdapter.prototype.fitLocations = function( locations ) {
-			var bounds = new L.LatLngBounds();
-			for( var j = 0; j < locations.length; j++ ) {
-
-				var lat = locations[j].lat;
-				var lng = locations[j].lng;
-
-				if (lat === undefined || lng === undefined) {
-					continue;
-				}
-				var latlng = L.latLng(lat, lng);
-				bounds.extend(latlng);
-			}
-			this._map.fitBounds( bounds );
-		};
-
-		eventorganiser.EOpenSourceMapAdapter.prototype.addMarker = function( location ) {
-			console.log( location );
-			if (location.lat === undefined || location.lng === undefined) {
-				return;
-			}
-
-			var marker_options = wp.hooks.applyFilters( 'eventorganiser.venue_marker_options', {
-				venue_id: location.venue_id,
-				position: { lat: location.lat, lng: location.lng },
-				map: this._map,
-				content: location.tooltipContent,
-				//TODO icon: location.icon
-			});
-
-			var latlng = L.latLng(marker_options.position.lat, marker_options.position.lng);
-			marker_options.position = latlng;
-
-			var marker = L.marker(latlng,marker_options);
-			marker.addTo(this._map)
-			this._markers[location.venue_id] = marker;
-
-			if( this.args.tooltip ){
-				marker.bindPopup( location.tooltipContent )
-			}
-			return marker;
-		};
-
-		eventorganiser.EOpenSourceMapAdapter.prototype.on = function( object, evt, callback ) {
-			object.on(evt, callback);
-		}
-	}
-
-	for( var j = 0; j < this.args.locations.length; j++ ){
-		this.addMarker( this.args.locations[j] );
-	}
-
-	if ( this.args.locations.length > 1 ) {
-		console.log( this.args.locations );
-		this.fitLocations( this.args.locations );
-	} else {
-		this.setCenter( this.args.locations[0] );
-	}
-
-	wp.hooks.doAction( 'eventorganiser.google_map_loaded', this );
-
-}
-
 jQuery(document).ready(function(){
-	
+
 	if ( ! ( 'map' in eventorganiser ) ) {
 		return;
 	}
@@ -868,9 +653,18 @@ jQuery(document).ready(function(){
 		    continue;
 
 		var param = maps[i];
-		var map   = new eventorganiser.EOpenSourceMapAdapter( "eo_venue_map-" + (i + 1), param );
-		//var map   = new eventorganiser.EOGoogleMapAdapter( "eo_venue_map-" + (i + 1), param );
-		eventorganiser.map[i].markers = map.markers;
+		console.log( 'map' );
+		var map   = new eventorganiserMaps.EOOpenStreetMapAdapter( "eo_venue_map-" + (i + 1), param );
+		//var map   = new eventorganiserMaps.EOGoogleMapAdapter( "eo_venue_map-" + (i + 1), param );
+		for ( i=0; i < param.locations.length; i++ ) {
+			param.locations[i].position = {
+				lat: param.locations[i].lat,
+				lng: param.locations[i].lng
+			}
+			map.addMarker(param.locations[i]);
+		}
+
+		//eventorganiser.map[i].markers = map.markers;
 	
 	}//Foreach map
 });

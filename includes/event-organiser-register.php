@@ -36,6 +36,17 @@ function eventorganiser_register_script() {
 	wp_register_script( 'eo-open-source-map', "{$protocal}cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js" );
 	wp_register_style( 'eo-open-source-map', "{$protocal}cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" );
 
+	wp_register_script( 'eo-google-map-adapters', EVENT_ORGANISER_URL."js/maps/google-map-adapters.js",array(
+		'jquery',
+		'eo_GoogleMap'
+	),$version,true);
+
+	wp_register_script( 'eo-open-street-map-adapters', EVENT_ORGANISER_URL."js/maps/open-street-map-adapters.js",array(
+		'jquery',
+		'eo-open-source-map'
+	),$version,true);
+	wp_enqueue_style( 'eo-open-source-map' );
+
 	/* Front-end script */
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",array(
 		'jquery',
@@ -46,6 +57,8 @@ function eventorganiser_register_script() {
 		'jquery-ui-datepicker',
 		'eo_fullcalendar',
 		'eo-wp-js-hooks',
+		'eo-google-map-adapters',
+		'eo-open-street-map-adapters'
 	), $version,true);
 
 	/* Add js variables to frontend script */
@@ -103,13 +116,13 @@ function eventorganiser_register_scripts(){
 	$ext = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 	$rtl = is_rtl() ? '-rtl' : '';
 
+
 	/*  Venue (map) utility script */
 	wp_register_script( 'eo-venue-util', EVENT_ORGANISER_URL."js/venue-util{$ext}.js",array(
 		'jquery',
-		'eo-open-source-map',
-		'eo_GoogleMap'
+		'eo-google-map-adapters',
+		//'eo-open-street-map-adapters'
 	),$version,true);
-	wp_enqueue_style( 'eo-open-source-map' );
 	
 	/*  Venue script for venue edit */
 	wp_register_script( 'eo-venue-admin', EVENT_ORGANISER_URL."js/venue-admin{$ext}.js",array(
