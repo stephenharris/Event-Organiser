@@ -1,7 +1,6 @@
 /*jshint -W054 */
 if ( typeof EO_SCRIPT_DEBUG === 'undefined') { EO_SCRIPT_DEBUG = true;}
 
-console.log( eventorganiser );
 var eventorganiser = eventorganiser || {};
 
 (function ($) {
@@ -648,14 +647,13 @@ jQuery(document).ready(function(){
 	
 	var maps = eventorganiser.map;
 	for (var i = 0; i < maps.length; i++) {
-	
-		if ( null === document.getElementById( "eo_venue_map-" + (i + 1) ) )
+
+		if ( null === document.getElementById( "eo_venue_map-" + (i + 1) ) ) {
 		    continue;
+		}
 
 		var param = maps[i];
-		console.log( 'map' );
-		var map   = new eventorganiserMaps.EOOpenStreetMapAdapter( "eo_venue_map-" + (i + 1), param );
-		//var map   = new eventorganiserMaps.EOGoogleMapAdapter( "eo_venue_map-" + (i + 1), param );
+		var map   = new eventorganiserMapsAdapter.google.map( "eo_venue_map-" + (i + 1), param );
 		for ( i=0; i < param.locations.length; i++ ) {
 			param.locations[i].position = {
 				lat: param.locations[i].lat,
@@ -664,7 +662,5 @@ jQuery(document).ready(function(){
 			map.addMarker(param.locations[i]);
 		}
 
-		//eventorganiser.map[i].markers = map.markers;
-	
-	}//Foreach map
+	}
 });

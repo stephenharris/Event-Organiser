@@ -1,21 +1,28 @@
-var eventorganiserMaps = eventorganiserMaps || {};
+var eventorganiserMapsAdapter = eventorganiserMapsAdapter || {};
+eventorganiserMapsAdapter.openstreetmap = eventorganiserMapsAdapter.openstreetmap || {};
 
 /**
  * OSM Adapter class
  * Dynamic Prototype Pattern, Adapter
+ *
+ * @param string elementID A DOM ID of the container for the map
+ * @param object args Properties of the map
  */
-eventorganiserMaps.EOOpenStreetMapAdapter = function( elementID, args) {
+eventorganiserMapsAdapter.openstreetmap.map = function( elementID, args) {
 
     this.elementID = elementID;
-    this.args = args;
+    this.args = jQuery.extend({
+        zoom: 12,
+        minZoom: 0,
+        maxZoom: 20,
+    }, args );
     var mapArgs = {
-        zoom: 12,//args.zoom,
-        minZoom: 0,//args.minzoom,
-        maxZoom: 20,//args.maxzoom,
-        locations: args.locations,
-        draggable: args.draggable,
-        zoomControl: args.zoomcontrol,//whether to display +/- for zooming;
-        scrollWheelZoom: args.scrollwheel,//zoom using scroll wheel
+        zoom: this.args.zoom,
+        minZoom: this.args.minZoom,
+        maxZoom: this.args.maxZoom,
+        draggable: this.args.draggable,
+        zoomControl: this.args.zoomcontrol,//whether to display +/- for zooming;
+        scrollWheelZoom: this.args.scrollwheel,//zoom using scroll wheel
         tiles: {
             url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -24,25 +31,33 @@ eventorganiserMaps.EOOpenStreetMapAdapter = function( elementID, args) {
     };
     this._markers = {};
 
-    //mapArgs = wp.hooks.applyFilters( 'eventorganiserMaps.leaflet_map_options', mapArgs, this.args );
     this._map = L.map( document.getElementById( this.elementID ), mapArgs );
     L.tileLayer( mapArgs.tiles.url, mapArgs.tiles).addTo(this._map);
 
-    var mapAdapter = this;
-
     // constructor prototype to share properties and methods
     if ( typeof this.setCenter !== "function" ) {
-
-        eventorganiserMaps.EOOpenStreetMapAdapter.prototype.setCenter = function( location ) {
+        /**
+         * Set the center of the map to the specified location
+         * @param object location With properties 'lat' and 'lng'
+         */
+        eventorganiserMapsAdapter.openstreetmap.map.prototype.setCenter = function( location ) {
             var latlng = L.latLng(location.lat, location.lng);
             this._map.setView( latlng, args.zoom );
         };
 
-        eventorganiserMaps.EOOpenStreetMapAdapter.prototype.setZoom = function( zoom ) {
+        /**
+         * Set the zoom level of the map
+         * @param int zoom
+         */
+        eventorganiserMapsAdapter.openstreetmap.map.prototype.setZoom = function( zoom ) {
             this._map.setZoom( zoom );
         };
 
-        eventorganiserMaps.EOOpenStreetMapAdapter.prototype.fitLocations = function( locations ) {
+        /**
+         * Set the zoom level of the map to fit the array of locations
+         * @param array locations Array of objects with properties 'lat' and 'lng'
+         */
+        eventorganiserMapsAdapter.openstreetmap.map.prototype.fitLocations = function( locations ) {
             var bounds = new L.LatLngBounds();
             for( var j = 0; j < locations.length; j++ ) {
 
@@ -58,9 +73,14 @@ eventorganiserMaps.EOOpenStreetMapAdapter = function( elementID, args) {
             this._map.fitBounds( bounds );
         };
 
-        eventorganiserMaps.EOOpenStreetMapAdapter.prototype.addMarker = function( location ) {
+        /**
+         * Add a marker to the location
+         * A location has an ID (venue_id), location (lat, lng) and, optional, tooltip content (tooltipContent)
+         * @param object location
+         */
+        eventorganiserMapsAdapter.openstreetmap.map.prototype.addMarker = function( location ) {
             location.map = this;
-            var marker = new eventorganiserMaps.EOOpenStreetMarkerAdapter( location );
+            var marker = new eventorganiserMapsAdapter.openstreetmap.marker( location );
             this._markers[location.venue_id] = marker;
             return marker;
         };
@@ -72,11 +92,15 @@ eventorganiserMaps.EOOpenStreetMapAdapter = function( elementID, args) {
         this.setCenter( this.args.locations[0] );
     }
 
-    //wp.hooks.doAction( 'eventorganiserMaps.google_map_loaded', this );
-
 };
 
-eventorganiserMaps.EOOpenStreetMarkerAdapter = function ( args ) {
+/**
+ * A marker instance tied to a specific location
+ * Argument must include the properties: map (a map adapter instance), position (lat/lng object),
+ * venue_id (location ID), tooltipContent (optional, content for tooltip), icon (optional icon image URL)
+ * @param object args
+ */
+eventorganiserMapsAdapter.openstreetmap.marker = function ( args ) {
 
     this.map = args.map;
 
@@ -86,7 +110,7 @@ eventorganiserMaps.EOOpenStreetMarkerAdapter = function ( args ) {
     this._marker = L.marker([args.position.lat, args.position.lng], marker_options);
     this._marker.addTo(this.map._map);
 
-    if( args.tooltip ){
+    if( args.tooltipContent ){
         this._marker.bindPopup( args.tooltipContent )
     }
 
@@ -94,10 +118,21 @@ eventorganiserMaps.EOOpenStreetMarkerAdapter = function ( args ) {
 
     // constructor prototype to share properties and methods
     if ( typeof this.setCenter !== "function" ) {
-        eventorganiserMaps.EOOpenStreetMarkerAdapter.prototype.setPosition = function( latLng ) {
+        /**
+         * Set the location of the marker
+         * @param object latLng with properties lat and lng
+         */
+        eventorganiserMapsAdapter.openstreetmap.marker.prototype.setPosition = function( latLng ) {
             this._marker.setLatLng( [latLng.lat, latLng.lng ]  );
         };
-        eventorganiserMaps.EOOpenStreetMarkerAdapter.prototype.on = function( eventName, callback ) {
+
+        /**
+         * Event handler for the marker
+         * Only explicitly supported events: drag, dragEnd, move
+         * @param eventName Event to listen to
+         * @param callback Callback to be triggered when event occurs
+         */
+        eventorganiserMapsAdapter.openstreetmap.marker.prototype.on = function( eventName, callback ) {
             //TODO store callbacks to we can support removing them
             this._marker.on( eventName, function( evt ){
                 var proxyEvt = {
@@ -115,9 +150,18 @@ eventorganiserMaps.EOOpenStreetMarkerAdapter = function ( args ) {
 
 }
 
-eventorganiserMaps.EOOpenStreetGeocoderAdapter = function( ) {
+/**
+ * A geocoder
+ * Accepts an address and passes latitude/longtitude co-ordinates to  the callback
+ */
+eventorganiserMapsAdapter.openstreetmap.geocoder = function( ) {
     if ( typeof this.geocode !== "function" ) {
-        eventorganiserMaps.EOOpenStreetGeocoderAdapter.prototype.geocode = function ( address, callback ) {
+        /**
+         * Look up address and pass latitude/longtitude co-ordinates to callback
+         * @param object address - with keys such as 'address' (street address), 'city', 'state', 'postcode' etc
+         * @param callable callback
+         */
+        eventorganiserMapsAdapter.openstreetmap.geocoder.prototype.geocode = function ( address, callback ) {
             jQuery.ajax({
                 url: 'https://nominatim.openstreetmap.org/search',
                 data: {

@@ -29,8 +29,7 @@ eovenue = {
 			locations:[ location ]
 	    };
 
-		var map = new eventorganiser.EOGoogleMapAdapter( fieldID, map_options );
-		//var map = new eventorganiser.EOOpenStreetMapAdapter( fieldID, map_options );
+		var map = new eventorganiserMapsAdapter.google.map( fieldID, map_options );
 
 		var marker = map.addMarker({
 			position:  { lat: lat, lng: lng },
@@ -60,8 +59,7 @@ eovenue = {
 	},
 	
 	geocode: function( address, callback ){
-		var geocoder = new eventorganiser.EOGoogleGeocoderAdapter();
-		//var geocoder = new eventorganiser.EOOpenStreetGeocoderAdapter();
+		var geocoder = new eventorganiserMapsAdapter.google.geocoder();
 		geocoder.geocode( address, callback );
 	},
 		

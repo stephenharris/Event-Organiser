@@ -1,11 +1,14 @@
-var eventorganiserMaps = eventorganiserMaps || {};
+var eventorganiserMapsAdapter = eventorganiserMapsAdapter || {};
+eventorganiserMapsAdapter.google = eventorganiserMapsAdapter.google || {};
 /**
  * Google Maps Adapter class
  * Dynamic Prototype Pattern, Adapter
+ *
+ * @param string elementID A DOM ID of the container for the map
+ * @param object args Properties of the map
  */
-eventorganiserMaps.EOGoogleMapAdapter = function ( elementID, args) {
+eventorganiserMapsAdapter.google.map = function ( elementID, args) {
 
-    this._proxiedCallbacks = {};
     this.elementID = elementID;
     this.args = args;
     var mapArgs = {
@@ -23,87 +26,94 @@ eventorganiserMaps.EOGoogleMapAdapter = function ( elementID, args) {
         styles: args.styles,
         minZoom: args.minzoom,
         maxZoom: args.maxzoom,
-        locations: args.locations
     };
 
+    mapArgs = wp.hooks.applyFilters( 'eventorganiser.google_map_options', mapArgs, this.args )
+
     this._markers = {};
-
-    //mapArgs = wp.hooks.applyFilters( 'eventorganiserMaps.google_map_options', mapArgs, this.args );
-    this._map = new google.maps.Map( document.getElementById( this.elementID ), mapArgs );
-
-    var mapAdapter = this;
+    this._map     = new google.maps.Map( document.getElementById( this.elementID ), mapArgs );
 
     // constructor prototype to share properties and methods
     if ( typeof this.setCenter !== "function" ) {
-
-        eventorganiserMaps.EOGoogleMapAdapter.prototype.setCenter = function( location ) {
-            var latlng = new google.maps.LatLng(location.lat, location.lng );
-            this._map.setCenter( latlng );
+        /**
+         * Set the center of the map to the specified location
+         * @param object location With properties 'lat' and 'lng'
+         */
+        eventorganiserMapsAdapter.google.map.prototype.setCenter = function( location ) {
+            this._map.setCenter( { lat: parseFloat( location.lat ), lng: parseFloat( location.lng ) } );
         };
 
-        eventorganiserMaps.EOGoogleMapAdapter.prototype.setZoom = function( zoom ) {
+        /**
+         * Set the zoom level of the map
+         * @param int zoom
+         */
+        eventorganiserMapsAdapter.google.map.prototype.setZoom = function( zoom ) {
             this._map.setZoom( zoom );
         };
 
-        eventorganiserMaps.EOGoogleMapAdapter.prototype.fitLocations = function( locations ) {
+        /**
+         * Set the zoom level of the map to fit the array of locations
+         * @param array locations Array of objects with properties 'lat' and 'lng'
+         */
+        eventorganiserMapsAdapter.google.map.prototype.fitLocations = function( locations ) {
             var bounds = new google.maps.LatLngBounds();
-            for( var j = 0; j < locations.length; j++ ) {
-
-                var lat = locations[j].lat;
-                var lng = locations[j].lng;
-
-                if (lat === undefined || lng === undefined) {
-                    continue;
-                }
-
-                var latlng = new google.maps.LatLng(lat, lng);
+            for ( var j = 0; j < locations.length; j++ ) {
+                var latlng = { lat: parseFloat( locations[j].lat ), lng: parseFloat( locations[j].lng ) };
                 bounds.extend(latlng);
             }
             this._map.fitBounds( bounds );
         };
 
-        eventorganiserMaps.EOGoogleMapAdapter.prototype.addMarker = function( location ) {
+        /**
+         * Add a marker to the location
+         * A location has an ID (venue_id), location (lat, lng) and, optional, tooltip content (tooltipContent)
+         * @param object location
+         */
+        eventorganiserMapsAdapter.google.map.prototype.addMarker = function( location ) {
             location.map = this;
-            var marker = new eventorganiserMaps.EOGoogleMarkerAdapter( location );
+            var marker = new eventorganiserMapsAdapter.google.marker( location );
             this._markers[location.venue_id] = marker;
             return marker;
         };
-
     }
 
+    //Add the locations
     if ( this.args.locations.length > 1 ) {
         this.fitLocations( this.args.locations );
     } else {
         this.setCenter( this.args.locations[0] );
     }
 
-    //wp.hooks.doAction( 'eventorganiserMaps.google_map_loaded', this );
-
+    wp.hooks.doAction( 'eventorganiser.google_map_loaded', this );
 };
 
-eventorganiserMaps.EOGoogleMarkerAdapter = function ( args ) {
+/**
+ * A marker instance tied to a specific location
+ * Argument must include the properties: map (a map adapter instance), position (lat/lng object),
+ * venue_id (location ID), tooltipContent (optional, content for tooltip), icon (optional icon image URL)
+ * @param object args
+ */
+eventorganiserMapsAdapter.google.marker = function ( args ) {
 
     this.map = args.map;
-    args.map = this.map._map;
 
-    var latlng =  new google.maps.LatLng( args.position.lat, args.position.lng );
     var marker_options = jQuery.extend({}, args, {
         venue_id: args.venue_id,
-        position: latlng,
-        content: args.tooltipContent,
-        position: latlng,
-        icon: args.icon
+        position: { lat: parseFloat( args.position.lat ), lng: parseFloat( args.position.lng ) },
+        icon: args.icon,
+        map: this.map._map
     });
 
-    this._marker = new google.maps.Marker(marker_options);
+    //Store the google instance of the marker
+    this._marker = new google.maps.Marker( marker_options );
 
-    var infowindow = new google.maps.InfoWindow({
-        content: marker_options.content
-    });
-
-    if( args.tooltip ){
-        google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(args.map,marker);
+    if ( args.tooltipContent ) {
+        var infowindow = new google.maps.InfoWindow({
+            content: marker_options.tooltipContent
+        });
+        var _marker = this._marker;
+        google.maps.event.addListener(this._marker, 'click', function() {
+            infowindow.open( marker_options.map, _marker );
         });
     }
 
@@ -113,18 +123,25 @@ eventorganiserMaps.EOGoogleMarkerAdapter = function ( args ) {
 
     // constructor prototype to share properties and methods
     if ( typeof this.setPosition !== "function" ) {
-        eventorganiserMaps.EOGoogleMarkerAdapter.prototype.setPosition = function( latLng ) {
-            //TODO
-            this._marker.setPosition( {lat: latLng.lat, lng: latLng.lng } );
+        /**
+         * Set the location of the marker
+         * @param object latLng with properties lat and lng
+         */
+        eventorganiserMapsAdapter.google.marker.prototype.setPosition = function( latLng ) {
+            this._marker.setPosition( latLng );
         };
 
-        eventorganiserMaps.EOGoogleMarkerAdapter.prototype.on = function( eventName, callback ) {
+        /**
+         * Event handler for the marker
+         * Only explicitly supported events: drag, dragEnd, move
+         * @param eventName Event to listen to
+         * @param callback Callback to be triggered when event occurs
+         */
+        eventorganiserMapsAdapter.google.marker.prototype.on = function( eventName, callback ) {
             var eventNameMapped;
-
-            //TODO store callbacks to we can support removing them
-            switch(eventName) {
+            switch( eventName ) {
                 case 'move':
-                    eventNameMapped = 'position_changed';
+                    eventNameMapped = 'position_changed';//event name according to Google
                     break;
                 default:
                     eventNameMapped = eventName;
@@ -159,12 +176,20 @@ eventorganiserMaps.EOGoogleMarkerAdapter = function ( args ) {
     }
 }
 
-eventorganiserMaps.EOGoogleGeocoderAdapter = function( ) {
+/**
+ * A geocoder
+ * Accepts an address and passes latitude/longtitude co-ordinates to  the callback
+ */
+eventorganiserMapsAdapter.google.geocoder = function( ) {
     this._geocoder = new google.maps.Geocoder();
-    // constructor prototype to share properties and methods
     if ( typeof this.geocode !== "function" ) {
-        eventorganiserMaps.EOGoogleGeocoderAdapter.prototype.geocode = function ( address, callback ) {
-            console.log( 'google geocoder' );
+        /**
+         * Look up address and pass latitude/longtitude co-ordinates to callback
+         * @param object address - with keys such as 'address' (street address), 'city', 'state', 'postcode' etc
+         * @param callable callback
+         */
+        eventorganiserMapsAdapter.google.geocoder.prototype.geocode = function ( address, callback ) {
+
             //Comma delimitate the address
             var addressString = "";
             for (var i in address) {
@@ -187,6 +212,3 @@ eventorganiserMaps.EOGoogleGeocoderAdapter = function( ) {
         };
     }
 }
-
-
-

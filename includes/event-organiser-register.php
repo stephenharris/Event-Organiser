@@ -121,7 +121,7 @@ function eventorganiser_register_scripts(){
 	wp_register_script( 'eo-venue-util', EVENT_ORGANISER_URL."js/venue-util{$ext}.js",array(
 		'jquery',
 		'eo-google-map-adapters',
-		//'eo-open-street-map-adapters'
+		'eo-open-street-map-adapters'
 	),$version,true);
 	
 	/*  Venue script for venue edit */
