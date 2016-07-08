@@ -343,7 +343,7 @@ function eventorganiser_join_tables( $join, $query ) {
 			//@see eventorganiser_events_where
 			$_where = _eventorganiser_generate_mysql_where( $query );
 			$where  = $_where ? "WHERE {$_where}" : '';
-			$join .= "INNER JOIN ( SELECT {$wpdb->eo_events}.event_id FROM {$wpdb->eo_events} {$where} ORDER BY {$wpdb->eo_events}.StartDate ASC, {$wpdb->eo_events}.StartTime ASC )
+			$join .= "LEFT JOIN ( SELECT {$wpdb->eo_events}.event_id FROM {$wpdb->eo_events} {$where} ORDER BY {$wpdb->eo_events}.StartDate ASC, {$wpdb->eo_events}.StartTime ASC )
 					AS eoid ON eoid.event_id = {$wpdb->eo_events}.event_id ";
 		}
 	}
