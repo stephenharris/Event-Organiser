@@ -1767,3 +1767,20 @@ function eo_taxonomy_dropdown( $args ) {
 
 	return wp_dropdown_categories( $args );
 }
+
+/**
+ * Returns either ”, a 3 or 6 digit hex color (with #), or nothing.
+ *
+ * This function will be removed when the below trac ticket is resolved for all
+ * supported WP versions.
+ * @trac https://core.trac.wordpress.org/ticket/27583
+ * @private
+ */
+function eo_sanitize_hex_color( $color ) {
+	if ( '' === $color )
+		return '';
+
+	// 3 or 6 hex digits, or the empty string.
+	if ( preg_match('|^#([A-Fa-f0-9]{3}){1,2}$|', $color ) )
+		return $color;
+}

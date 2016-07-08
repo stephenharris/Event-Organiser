@@ -623,21 +623,15 @@ add_action( 'admin_menu', 'eventorganiser_colour_scripts' );
  * @since 1.3
  */
 function eventorganiser_save_event_cat_meta( $term_id ) {
-	if ( isset( $_POST['eo_term_meta'] ) ):
-		$term_meta = get_option( "eo-event-category_$term_id");
-		$cat_keys = array_keys($_POST['eo_term_meta']);
-
-		foreach ($cat_keys as $key):
-			if (isset($_POST['eo_term_meta'][$key]))
-				$term_meta[$key] = $_POST['eo_term_meta'][$key];
-		endforeach;
-
-	        //save the option array
-	        update_option( "eo-event-category_$term_id", $term_meta );
-	endif;
+	if ( isset( $_POST['eo_term_meta'] ) &&  isset( $_POST['eo_term_meta']['colour'] ) ) {
+		$term_meta           = get_option( "eo-event-category_{$term_id}", array() );
+		//@see https://core.trac.wordpress.org/ticket/27583
+		$term_meta['colour'] = eo_sanitize_hex_color( $_POST['eo_term_meta']['colour'] );
+		update_option( "eo-event-category_{$term_id}", $term_meta );
+	}
 }
-add_action('created_event-category', 'eventorganiser_save_event_cat_meta', 10, 2);
-add_action( 'edited_event-category', 'eventorganiser_save_event_cat_meta', 10, 2);
+add_action( 'created_event-category', 'eventorganiser_save_event_cat_meta', 10, 2 );
+add_action( 'edited_event-category', 'eventorganiser_save_event_cat_meta', 10, 2 );
 
 /**
  * When a category is deleted, delete the saved colour (saved in options table).
