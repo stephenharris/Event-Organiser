@@ -172,24 +172,27 @@ jQuery(document).ready(function () {
 					var category = $(view.calendar.options.id).find(".eo-fc-filter-category").val();
 					var venue    = $(view.calendar.options.id).find(".eo-fc-filter-venue").val();
 					var tag      = $(view.calendar.options.id).find(".eo-fc-filter-tag").val();
-					
+					var render   = true;
+
 					if (typeof category !== "undefined" && category !== "" && $.inArray( category, event.category) < 0 ) {
-						return false;
+						render = false;
 					}
 
 					if (typeof venue != "undefined" && venue !== "" && venue !== event.venue_slug) {
-						return false;
+						render = false;
 					}
-                        
+
 					if (typeof tag !== "undefined" && tag !== "" && $.inArray(tag, event.tags) < 0 ) {
+						render = false;
+					}
+
+					render = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_render_event', render, event, element, view );
+
+					if ( ! render ) {
 						return false;
 					}
-                        
-					if( !wp.hooks.applyFilters( 'eventorganiser.fullcalendar_render_event', true, event, element, view ) ){
-						return false;
-					}
-                        	
-					if ( !view.calendar.options.tooltip ) {
+
+					if ( ! view.calendar.options.tooltip ) {
 						return;
 					}
 

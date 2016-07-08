@@ -3,8 +3,8 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 4.5.2
-Stable tag: 3.1.0
+Tested up to: 4.5.3
+Stable tag: 3.1.1
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
@@ -221,6 +221,14 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.1.1 - 8th July 2016 =
+* bugfix: Allows Google Maps API to be used via a setting or constant. Please see http://wp-event-organiser.com/blog/announcements/google-maps-now-requires-api-key/ for details [#365](https://github.com/stephenharris/Event-Organiser/pull/365)
+* bugfix: Fixes bug where deleting all the occurrences of an event via the admin calendar does not properly delete the event. [#367](https://github.com/stephenharris/Event-Organiser/pull/367)
+* bugfix: Sanitize hex codes for event category colours.
+* bugfix: Fixed bug where the subscribe to calendar (in Google) shortcode did not work on sites using SSL certificates. [#328](https://github.com/stephenharris/Event-Organiser/issues/328)
+* enhancement: Refactor event render filter for the calendar so that it always fires [#366](https://github.com/stephenharris/Event-Organiser/pull/366)
+* bugfix: Fixes a bug where events without any dates did not appear in the Events admin. [#367](https://github.com/stephenharris/Event-Organiser/pull/367)
 
 = 3.1.0 - 23rd May 2016 =
 * enhancement: Improved performance when grouping by event series

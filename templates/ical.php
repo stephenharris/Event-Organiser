@@ -25,11 +25,6 @@ if ( have_posts() ) :
 
 		global $post;
 
-		// If event has no corresponding row in events table then skip it
-		if ( ! isset( $post->event_id ) || $post->event_id == -1 ) {
-			continue;
-		}
-
 		$start         = eo_get_the_start( DATETIMEOBJ );
 		$end           = eo_get_the_end( DATETIMEOBJ );
 		$created_date  = get_post_time( 'Ymd\THis\Z',true );
@@ -150,7 +145,7 @@ if ( have_posts() ) :
 			echo 'GEO:' . implode( ';', eo_get_venue_latlng( $venue ) ) . "\r\n";
 		endif;
 
-		if( get_the_author_meta( 'ID' ) ){
+		if ( get_the_author_meta( 'ID' ) ) {
 			$author_name  = eventorganiser_escape_ical_text( get_the_author() );
 			//@see https://github.com/stephenharris/Event-Organiser/issues/362
 			$author_name  = str_replace( '"', '', $author_name );
