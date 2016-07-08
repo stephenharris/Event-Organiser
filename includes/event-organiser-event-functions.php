@@ -396,7 +396,7 @@ function eo_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $dep
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @param int $occurrence_id  The occurrence ID
 * @param int $deprecated (Was) the occurrence id, supply this as the third argument
-* @return string the end date formated to given format, as accepted by PHP date
+* @return string|DateTime the end date formated to given format, as accepted by PHP date
  */
 function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0  ){
 	global $post;
@@ -1271,25 +1271,24 @@ function eo_get_add_to_google_link( $event_id = 0, $occurrence_id = 0 ){
 	/**
 	 * @ignore
 	 */
-	$excerpt = apply_filters('the_excerpt_rss', get_the_excerpt());
-	
-	$url = add_query_arg( array(
-			'text' => get_the_title(),
-			'dates' => $start->format($format).'/'.$end->format($format),
-			'trp' => false,
-			'details' => esc_html($excerpt),
-			'sprop' => get_bloginfo('name')
-	),'http://www.google.com/calendar/event?action=TEMPLATE');
-	
+	$excerpt = apply_filters( 'the_excerpt_rss', get_the_excerpt() );
 
+	$venue    = false;
 	$venue_id = eo_get_venue();
-	if( $venue_id ):
+	if ( $venue_id ) {
 		$venue = eo_get_venue_name( $venue_id ) . ", " . implode( ', ', eo_get_venue_address( $venue_id ) );
-		$url = add_query_arg( 'location', $venue, $url );
-	endif;
-	
+	}
+
+	$url = add_query_arg( array(
+			'text'     => get_the_title(),
+			'dates'    => $start->format( $format ) . '/' . $end->format( $format ),
+			'details'  => esc_html( $excerpt ),
+			'sprop'    => get_bloginfo( 'name' ),
+			'location' => $venue,
+	), 'http://www.google.com/calendar/event?action=TEMPLATE' );
+
 	wp_reset_postdata();
-	return $url;
+	return esc_url_raw( $url );
 }
 
 

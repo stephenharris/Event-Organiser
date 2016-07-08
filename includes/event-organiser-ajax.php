@@ -460,11 +460,19 @@ function eventorganiser_admin_calendar() {
 
 					$delete_url  = wp_nonce_url( $delete_url , 'eventorganiser_delete_occurrence_'.$post->occurrence_id );
 
-					$summary .= sprintf(
-						'<span class="delete"><a class="submitdelete" href="%2$s">%1$s</a></span>',
-						esc_attr__( 'Delete this occurrence', 'eventorganiser' ),
-						$delete_url
-					);
+					if ( eo_recurs() ) {
+						$summary .= sprintf(
+							'<span class="delete"><a class="submitdelete" href="%2$s">%1$s</a></span>',
+							esc_attr__( 'Delete this occurrence', 'eventorganiser' ),
+							$delete_url
+						);
+					} else {
+						$summary .= sprintf(
+							'<span class="delete"><a class="submitdelete" href="%2$s">%1$s</a></span>',
+							esc_attr__( 'Delete this event', 'eventorganiser' ),
+							$delete_url
+						);
+					}
 
 					if ( 'once' != $schedule['schedule'] ) {
 						$break_url = add_query_arg(array(
