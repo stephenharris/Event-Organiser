@@ -313,6 +313,17 @@ function _eventorganiser_details_metabox( $post ) {
 		<div class="eo-grid-row venue_row <?php if ( ! $venue_id ) { echo 'novenue'; }?>">
 	 		<div class="eo-grid-4"></div>
 	 		<div class="eo-grid-8">
+
+				<?php
+				if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() ) {
+					printf(
+						'<p>' . esc_html__( 'Google Maps now requires you register for an API key. If you wish to use maps on your site, %splease enter your key%s.', 'eventorganiser' ) . '</p>',
+						sprintf( '<a href="%s">', esc_url ( admin_url( 'options-general.php?page=event-settings' ).'#google_api_key' ) ),
+						'</a>'
+					);
+				}
+				?>
+
 				<div id="eventorganiser_venue_meta" style="display:none;">
 					<input type="hidden" id="eo_venue_Lat" name="eo_venue[latitude]" value="<?php esc_attr( eo_venue_lat( $venue_id ) );?>" />
 					<input type="hidden" id="eo_venue_Lng" name="eo_venue[longtitude]" value="<?php esc_attr( eo_venue_lng( $venue_id ) ); ?>" />

@@ -28,7 +28,11 @@ function eventorganiser_register_script() {
 
 	/* Google Maps */
 	$protocal = is_ssl() ? 'https://' : 'http://';
-	wp_register_script( 'eo_GoogleMap', $protocal.'maps.googleapis.com/maps/api/js?sensor=false&language='.substr( get_locale(), 0, 2 ) );
+	$url      = add_query_arg( array(
+		'key'      => eventorganiser_get_google_maps_api_key(),
+		'language' => substr( get_locale(), 0, 2 )
+	), "{$protocal}maps.googleapis.com/maps/api/js");
+	wp_register_script( 'eo_GoogleMap', $url );
 
 	/* Front-end script */
 	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",array(
@@ -575,6 +579,21 @@ function _eventorganiser_upgrade_admin_notice() {
 			admin_url( 'options-general.php' ).'#default_role'
 		);
 		$notice_handler->add_notice( 'timezone', '', $message , 'warning' );
+	}
+
+	if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() ) {
+
+		if ( wp_count_terms( 'event-venue' ) > 0 || 'event_page_venues' == get_current_screen()->id ) {
+			$message = sprintf(
+				'<h4>' . esc_html__( 'Enter a Google Maps API key', 'eventorganiser' ) . '</h4>'
+				. sprintf(
+					'<p>' . esc_html__( 'Google Maps now requires you register for an API key. If you wish to use maps on your site, %splease enter your key%s.', 'eventorganiser' ) . '</p>',
+					sprintf( '<a href="%s">', esc_url ( admin_url( 'options-general.php?page=event-settings' ).'#google_api_key' ) ),
+					'</a>'
+				)
+			);
+			$notice_handler->add_notice( 'google_maps_api', '', $message , 'warning' );
+		}
 	}
 
 }
