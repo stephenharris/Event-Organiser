@@ -58,7 +58,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 	
 		<p>
 		<label for="<?php echo $this->get_field_id( 'add_to_google' ); ?>"><?php _e( 'Include \'Add To Google\' link','eventorganiser' ); ?>: </label>
-		<input id="<?php echo $this->get_field_id( 'add_to_google' ); ?>" name="<?php echo $this->get_field_name( 'add_to_google' ); ?>" type="checkbox" value="1" <?php checked( $instance['add_to_google'], 1 );?>" />
+		<input id="<?php echo $this->get_field_id( 'add_to_google' ); ?>" name="<?php echo $this->get_field_name( 'add_to_google' ); ?>" type="checkbox" value="1" <?php checked( $instance['add_to_google'], 1 );?> />
 		</p>
 		<?php
 	}
