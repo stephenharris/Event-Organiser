@@ -39,7 +39,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 	
 		<p>
 		<label for="<?php echo $this->get_field_id( 'mode' ); ?>"><?php _e( 'Group by', 'eventorganiser' ); ?>: </label>
-		<select id="<?php echo $this->get_field_id( 'mode' ); ?>" name="<?php echo $this->get_field_name( 'mode' ); ?>" type="text">
+		<select id="<?php echo $this->get_field_id( 'mode' ); ?>" name="<?php echo $this->get_field_name( 'mode' ); ?>" >
 			<option value="day" <?php selected( $instance['mode'], '' ); ?>><?php _e( 'Day','eventorganiser' ); ?> </option>
 			<option value="week" <?php selected( $instance['mode'], 'week' ); ?>><?php _e( 'Week', 'eventorganiser' ); ?> </option>
 			<option value="month" <?php selected( $instance['mode'], 'month' ); ?>><?php _e( 'Month', 'eventorganiser' ); ?> </option>
