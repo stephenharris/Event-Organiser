@@ -21,7 +21,7 @@
 	<header class="eo-event-header entry-header">
 
 		<h2 class="eo-event-title entry-title">
-			<a href="<?php the_permalink(); ?>" itemprop="url">
+			<a href="<?php echo eo_get_permalink(); ?>" itemprop="url">
 				<span itemprop="summary"><?php the_title() ?></span>
 			</a>
 		</h2>

@@ -425,7 +425,7 @@ class EventOrganiser_Shortcodes {
 				$replacement = get_the_post_thumbnail(get_the_ID(),$size, $attr);
 				break;
 			case 'event_url':
-				$replacement =get_permalink();
+				$replacement = eo_get_permalink();
 				break;
 			case 'event_custom_field':
 				$field = $matches[2];
