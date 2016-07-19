@@ -235,6 +235,8 @@ class EO_Calendar_Widget extends WP_Widget
 		$required = array(
 			'numberposts' => -1,
 			'showrepeats' => 1,
+			'post_status' => array( 'publish', 'private' ),
+			'perm'        => 'readable',
 		);
 
 		if ( $args['show-long'] ) {
