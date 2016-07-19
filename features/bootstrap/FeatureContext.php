@@ -694,7 +694,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
      * @Then /^I should see a link "([^"]*)"$/
      */
     public function iShouldSeeALink($text) {
-			$link = $this->findLink($text);
+			$link = $this->getSession()->getPage()->findLink($text);
 			if (null === $link) {
 					throw new ElementNotFoundException($this->getDriver(), 'link', 'id|title|alt|text', $text);
 			}
@@ -704,7 +704,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		 * @Then /^I should not see a link "([^"]*)"$/
 		 */
 		public function iShouldNotSeeALink($text) {
-			$link = $this->findLink($text);
+			$link = $this->getSession()->getPage()->findLink($text);
 			if (null !== $link) {
 					throw new ElementHtmlException(
 						sprintf( 'Link "%s" exists but it should not', $text ),
