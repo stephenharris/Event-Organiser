@@ -6,6 +6,8 @@ use Behat\Behat\Context\Context,
 use Behat\Testwork\Tester\Result\TestResult;
 use Behat\Gherkin\Node\TableNode;
 use Johnbillion\WordPressExtension\Context\WordPressContext;
+use Behat\Mink\Exception\ElementNotFoundException,
+	Behat\Mink\Exception\ElementHtmlException;
 
 //TODO fix sendmail
 
