@@ -1,11 +1,35 @@
 module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
-	
+
+	grunt.registerTask('gittag', 'Get the tag pointing to this commit.', function () {
+		var done = this.async();
+				//work = function () {
+					grunt.util.spawn(
+						{
+							cmd  : 'git',
+							args : [ 'tag', '-l', '--points-at', 'HEAD'],
+						},
+						function (err, result) {
+							if ( result ) {
+								var tags = result.stdout.split("\n");
+								if ( tags.length != 1 ) {
+									grunt.warn( 'Tags found: ' + tags.length );
+								}
+								tag = ( tags.length > 0 ? tags[0] : null );
+								grunt.config.set('gittag', tag );
+							}
+							done();
+						}
+					);
+				//},
+        //work();
+    });
+
   // Project configuration.
   grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
-	
+
 	uglify: {
 		options: {
 			compress: {
@@ -154,7 +178,15 @@ module.exports = function(grunt) {
 				'!phpcs.xml','!phpmd.xml', //CodeSniffer & Mess Detector
 				'!css/images/**/*.xcf', //source images
 			],
-			dest: 'dist/event-organiser/'
+			dest: 'dist/event-organiser/',
+			options: {
+				processContent: function (content, srcpath) {
+					if ( srcpath == 'readme.txt' ) {
+						var content = content.replace( /{{version}}/,  grunt.config.get('gittag') );
+					}
+					return content;
+				},
+			},
 		}
 	},
 
