@@ -228,13 +228,14 @@ module.exports = function(grunt) {
 
     wp_deploy: {
     	deploy:{
-            options: {
-        		svn_user: 'stephenharris',
-        		plugin_slug: 'event-organiser',
-        		build_dir: 'dist/event-organiser/',
-        		assets_dir: 'assets/',
-        		max_buffer: 1024*1024
-            },
+        options: {
+        	svn_user: 'jenkinspress',
+        	plugin_slug: 'event-organiser',
+        	build_dir: 'dist/event-organiser/',
+        	assets_dir: 'assets/',
+        	max_buffer: 1024*1024,
+					skip_confirmation: true
+        },
     	}
     },
 
@@ -247,10 +248,10 @@ module.exports = function(grunt) {
 
     pot: {
     	options:{
-        	text_domain: 'eventorganiser',
-        	dest: 'languages/',
-        	msgmerge: true,
-			keywords: ['__:1',
+        text_domain: 'eventorganiser',
+        dest: 'languages/',
+        msgmerge: true,
+				keywords: ['__:1',
 			           '_e:1',
 			           '_x:1,2c',
 			           'esc_html__:1',
@@ -266,21 +267,21 @@ module.exports = function(grunt) {
 			           '_nx_noop:1,2,3c',
 			           'ngettext:1,2'
 			          ],
+    		},
+    		files:{
+    			src:  [
+    		  	'**/*.php',
+    		  	'!node_modules/**',
+    		  	'!dist/**',
+    		  	'!apigen/**',
+  	  		  '!documentation/**',
+    			  '!tests/**',
+    			  '!vendor/**',
+    			  '!*~',
+    			],
+    			expand: true,
+    		}
     	},
-    	files:{
-    		src:  [
-    		  '**/*.php',
-    		  '!node_modules/**',
-    		  '!dist/**',
-    		  '!apigen/**',
-    		  '!documentation/**',
-    		  '!tests/**',
-    		  '!vendor/**',
-    		  '!*~',
-    		],
-    		expand: true,
-    	}
-    },
 
     checktextdomain: {
     	options:{
@@ -330,6 +331,6 @@ grunt.registerTask( 'test_build', [ 'gittag', 'clean', 'uglify', 'cssjanus', 'cs
 
 grunt.registerTask( 'build', [ 'gittag', 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
 
-grunt.registerTask( 'deploy', [ 'checkbranch:master', 'build', 'wp_deploy',  'compress' ] );
+grunt.registerTask( 'deploy', [ 'checkbranch:master', 'build', 'wp_deploy' ] );
 
 };
