@@ -38,7 +38,7 @@ class EO_Calendar_Widget extends WP_Widget
 
 	function form( $instance ) {
 
-		$instance = wp_parse_args( (array) $instance, $this->w_arg );
+		$instance = wp_parse_args( (array) $instance, self::$w_arg );
 
 		printf(
 			'<p>
