@@ -699,7 +699,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			$link = $this->getSession()->getPage()->findLink($text);
 			if (null === $link) {
 					throw new ElementNotFoundException(
-						$this->getSession()->->getDriver(),
+						$this->getSession()->getDriver(),
 						'link', 'id|title|alt|text',
 						$text
 					);
@@ -714,7 +714,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			if (null !== $link) {
 					throw new ExpectationException(
 						sprintf( 'Link "%s" exists but it should not', $text ),
-						$this->getSession()->->getDriver()
+						$this->getSession()->getDriver()
 					);
 			}
 		}
