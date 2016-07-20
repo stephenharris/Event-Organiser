@@ -25,6 +25,11 @@ if ( have_posts() ) :
 
 		global $post;
 
+		// If event has no corresponding row in events table then skip it
+		if ( ! isset( $post->event_id ) || $post->event_id == -1 ) {
+			continue;
+		}
+
 		$start         = eo_get_the_start( DATETIMEOBJ );
 		$end           = eo_get_the_end( DATETIMEOBJ );
 		$created_date  = get_post_time( 'Ymd\THis\Z',true );

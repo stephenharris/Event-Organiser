@@ -660,7 +660,7 @@ add_action('delete_event-category','eventorganiser_tax_term_deleted',10,2);
 function eventorganiser_add_tax_meta($taxonomy){
 	?>
 	<div class="form-field"><?php eventorganiser_tax_meta_form('');?></div>
-	<p> &nbsp; </br>&nbsp; </p>
+	<p> &nbsp; <br>&nbsp; </p>
 <?php
 }
 add_action('event-category_add_form_fields', 'eventorganiser_add_tax_meta',10,1);

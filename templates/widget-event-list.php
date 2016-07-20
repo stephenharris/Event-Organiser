@@ -41,7 +41,7 @@ $classes = $eo_event_loop_args['class'];
 			?>
 
 			<li class="<?php echo esc_attr( implode( ' ',$eo_event_classes ) ); ?>" >
-				<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a> <?php echo __( 'on','eventorganiser' ) . ' '.eo_get_the_start( $format ); ?>
+				<a href="<?php echo eo_get_permalink(); ?>"><?php the_title(); ?></a> <?php echo __( 'on','eventorganiser' ) . ' '.eo_get_the_start( $format ); ?>
 			</li>
 
 		<?php endwhile; ?>
