@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 					grunt.util.spawn(
 						{
 							cmd  : 'git',
-							args : [ 'describe', '--tags' ],
+							args : [ 'describe', '--tags', '--long' ],
 						},
 						function (err, result) {
 							if ( result ) {
