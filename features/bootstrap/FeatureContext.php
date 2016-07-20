@@ -7,7 +7,7 @@ use Behat\Testwork\Tester\Result\TestResult;
 use Behat\Gherkin\Node\TableNode;
 use Johnbillion\WordPressExtension\Context\WordPressContext;
 use Behat\Mink\Exception\ElementNotFoundException,
-	Behat\Mink\Exception\ElementHtmlException;
+	Behat\Mink\Exception\ExpectationException;
 
 //TODO fix sendmail
 
@@ -698,7 +698,11 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
     public function iShouldSeeALink($text) {
 			$link = $this->getSession()->getPage()->findLink($text);
 			if (null === $link) {
-					throw new ElementNotFoundException($this->getDriver(), 'link', 'id|title|alt|text', $text);
+					throw new ElementNotFoundException(
+						$this->getSession()->->getDriver(),
+						'link', 'id|title|alt|text',
+						$text
+					);
 			}
     }
 
@@ -708,10 +712,9 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		public function iShouldNotSeeALink($text) {
 			$link = $this->getSession()->getPage()->findLink($text);
 			if (null !== $link) {
-					throw new ElementHtmlException(
+					throw new ExpectationException(
 						sprintf( 'Link "%s" exists but it should not', $text ),
-						$this->getDriver(),
-						$link
+						$this->getSession()->->getDriver()
 					);
 			}
 		}
