@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 					grunt.util.spawn(
 						{
 							cmd  : 'git',
-							args : [ 'describe', '--tags' ],
+							args : [ 'describe', '--tags', '--long' ],
 						},
 						function (err, result) {
 							if ( result ) {
@@ -179,6 +179,7 @@ module.exports = function(grunt) {
 			],
 			dest: 'dist/event-organiser/',
 			options: {
+				processContentExclude: ['**/*.{png,gif,jpg,ico,mo}'],
 				processContent: function (content, srcpath) {
 					if ( srcpath == 'readme.txt' ) {
 						var content = content.replace( /{{version}}/,  grunt.config.get('gittag') );
