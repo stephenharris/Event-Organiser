@@ -500,7 +500,7 @@ msgstr "Sim"
 #: event-organiser-debug.php:177 event-organiser-debug.php:181
 #: event-organiser-debug.php:185 event-organiser-settings.php:211
 msgid "No"
-msgstr "Não\n"
+msgstr "Não"
 
 #: event-organiser-debug.php:253
 msgid ""

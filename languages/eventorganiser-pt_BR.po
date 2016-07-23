@@ -1161,7 +1161,7 @@ msgstr "Você não possui permissão para edtiar este local."
 
 #: event-organiser-venues.php:59
 msgid "Venue <strong>was not</strong> updated"
-msgstr "Local <strong>não foi atualizado</strong>\n"
+msgstr "Local <strong>não foi atualizado</strong>"
 
 #: event-organiser-venues.php:96
 msgid "Venue <strong>was not</strong> created"
