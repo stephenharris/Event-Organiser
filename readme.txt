@@ -222,6 +222,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.1.3 - 23rd July 2016 =
+* bugfix: Fixed tranlsation (.mo files)
+* bugfix: Fixed image files
+* enhancement: Updated translations
+
 = 3.1.2 - 20th July 2016 =
 * enhancement: Uses `eo_get_permalink()` rather than `get_permalink()`` in default templates.
 * bugfix: Fixes private events not displayed in the calendar widget for those who can view private events
