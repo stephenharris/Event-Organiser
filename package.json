@@ -12,6 +12,7 @@
     "url": "https://github.com/stephenharris/Event-Organiser/issues"
   },
   "devDependencies": {
+    "async": "^2.0.1",
     "grunt": "~0.4.3",
     "grunt-checkbranch": "~0.2.2",
     "grunt-checktextdomain": "~0.1.0",
