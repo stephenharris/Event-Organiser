@@ -179,6 +179,7 @@ module.exports = function(grunt) {
 			],
 			dest: 'dist/event-organiser/',
 			options: {
+				processContentExclude: ['**/*.{png,gif,jpg,ico,mo}'],
 				processContent: function (content, srcpath) {
 					if ( srcpath == 'readme.txt' ) {
 						var content = content.replace( /{{version}}/,  grunt.config.get('gittag') );
