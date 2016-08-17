@@ -1,6 +1,6 @@
 <?php
 
-class iCalFeedTest extends EO_UnitTestCase
+class iCalGenerateFeedTest extends EO_UnitTestCase
 {
 	
 	public function setUp() {
