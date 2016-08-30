@@ -826,6 +826,37 @@ class eventTest extends EO_UnitTestCase
 
 	}
 
+	/**
+	 * A weekly event on Thursdays, early in the morning in Perth, Austrialia occurs on a Wednesday in Europe/London.
+	 */
+	function testWeeklyEventMetaFromForeignTimezone(){
+
+		//Set the site timezone to America/New_York
+		$original_tz     = get_option( 'timezone_string' );
+		update_option( 'timezone_string', 'Europe/London' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+		$perth_tz = new DateTimeZone( 'Australia/Perth' );
+
+		$event_id = eo_insert_event( array(
+			'start'         => new DateTime( '2016-09-01 05:00:00', $perth_tz ),
+			'end'           => new DateTime( '2016-09-01 06:00:00', $perth_tz ),
+			'schedule'      => 'weekly',
+			'schedule_meta' => array( 'TH' ),
+			'schedule_last' => new DateTime( '2016-09-29 05:00:00', $perth_tz ),
+		) );
+
+		//Event runs every month on the 1st in Australia/Perth timezone?
+		//But what about in Europe/London?
+		$schedule = eo_get_event_schedule( $event_id );
+		$this->assertEquals( array( 'WE' ), $schedule['schedule_meta'] );
+
+		//Reset
+		update_option( 'timezone_string', $original_tz );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+	}
+
     /**
      * @see https://github.com/stephenharris/Event-Organiser/issues/242 
      */
