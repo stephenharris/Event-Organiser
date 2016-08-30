@@ -718,6 +718,114 @@ class eventTest extends EO_UnitTestCase
 		wp_cache_delete( 'eventorganiser_timezone' );
 
 	}
+
+	/**
+	 * A monthly event early on the 1st in Perth, Austrialia occurs on the day before in Europe/London
+	 * How does that recurrence definition convert?
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/377
+	 */
+	function testMonthlyByDateEventMetaFromForeignTimezone(){
+
+		$this->markTestIncomplete( 'Expected behaviour is not yet well defined' );
+
+		//Set the site timezone to America/New_York
+		$original_tz     = get_option( 'timezone_string' );
+		update_option( 'timezone_string', 'Europe/London' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+		$perth_tz = new DateTimeZone( 'Australia/Perth' );
+
+		$event_id = eo_insert_event( array(
+			'start'         => new DateTime( '2016-09-01 05:00:00', $perth_tz ),
+			'end'           => new DateTime( '2016-09-01 06:00:00', $perth_tz ),
+			'schedule'      => 'monthly',
+			'schedule_meta' => 'BYMONTHDAY=1',
+			'schedule_last' => new DateTime( '2016-11-01 05:00:00', $perth_tz ),
+		) );
+
+		//Event runs every month on the 1st in Australia/Perth timezone
+		//But what about in Europe/London?
+		$schedule = eo_get_event_schedule( $event_id );
+		$this->assertEquals( NULL, $schedule['schedule_meta'] );
+
+		//Reset
+		update_option( 'timezone_string', $original_tz );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+	}
+
+	/**
+	 * A monthly event early on the first Thursday in Perth, Austrialia occurs on the day before in Europe/London
+	 * How does that recurrence definition convert? (The first occurrence is not on the first Wednesday)
+	 * Simlarly for the last Thursday
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/377
+	 */
+	function testMonthlyEventMetaFromForeignTimezone(){
+
+		$this->markTestIncomplete( 'Expected behaviour is not yet well defined' );
+
+		//Set the site timezone to America/New_York
+		$original_tz     = get_option( 'timezone_string' );
+		update_option( 'timezone_string', 'Europe/London' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+		$perth_tz = new DateTimeZone( 'Australia/Perth' );
+
+		$event_id = eo_insert_event( array(
+			'start'         => new DateTime( '2016-09-01 05:00:00', $perth_tz ),
+			'end'           => new DateTime( '2016-09-01 06:00:00', $perth_tz ),
+			'schedule'      => 'monthly',
+			'schedule_meta' => 'BYDAY=1TH',
+			'schedule_last' => new DateTime( '2016-11-01 05:00:00', $perth_tz ),
+		) );
+
+		//Event runs every month on the first Thursday in Australia/Perth timezone
+		//But what about in Europe/London?
+		$schedule = eo_get_event_schedule( $event_id );
+		$this->assertEquals( NULL, $schedule['schedule_meta'] );
+
+		//Reset
+		update_option( 'timezone_string', $original_tz );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+	}
+
+	/**
+	 * A monthly event early on the first Thursday in Perth, Austrialia occurs on the day before in Europe/London
+	 * How does that recurrence definition convert? (The first occurrence is not on the first Wednesday)
+	 * Simlarly for the last Thursday
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/377
+	 */
+	function testYearlyEventMetaFromForeignTimezone(){
+
+		$this->markTestIncomplete( 'Expected behaviour is not yet well defined' );
+
+		//Set the site timezone to America/New_York
+		$original_tz     = get_option( 'timezone_string' );
+		update_option( 'timezone_string', 'Europe/London' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+		$perth_tz = new DateTimeZone( 'Australia/Perth' );
+
+		$event_id = eo_insert_event( array(
+			'start'         => new DateTime( '2016-02-29 05:00:00', $perth_tz ),
+			'end'           => new DateTime( '2016-02-29 06:00:00', $perth_tz ),
+			'schedule'      => 'yearly',
+			'schedule_last' => new DateTime( '2024-02-29 06:00:00', $perth_tz ),
+		) );
+
+		//If this event is updated, with this schedule and in the Europe/London timezone, it will cause
+		//additional dates to be created corresponding to the skipped leap-days in Perth, Australia
+		// Europe/London --> Austriali/Perth
+		// 2016-02-28 -> 2016-02-29
+		// 2017-02-28 -> 2016-03-01 //Date did not exist originally
+
+		//Reset
+		update_option( 'timezone_string', $original_tz );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+	}
+
     /**
      * @see https://github.com/stephenharris/Event-Organiser/issues/242 
      */
