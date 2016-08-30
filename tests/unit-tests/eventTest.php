@@ -669,7 +669,55 @@ class eventTest extends EO_UnitTestCase
     	wp_cache_delete( 'eventorganiser_timezone' );
     	
     }
-   
+
+	/**
+	 * When defining an event in a 'foreign' timezone to the blog we should account for differences
+	 * in Daylight Saving Times.
+	 *
+	 * In this example the last date-time occurs outside DST in Europe/London but Australia/Perth does not observe
+	 * any DST, so the last DateTime should be different in Europe/London.
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/377
+	 */
+	function testRecurringEventForeignTimezone(){
+
+		//Set the site timezone to America/New_York
+		$original_tz     = get_option( 'timezone_string' );
+		update_option( 'timezone_string', 'Europe/London' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+		$perth_tz = new DateTimeZone( 'Australia/Perth' );
+
+		$event_id = eo_insert_event( array(
+			'start'         => new DateTime( '2016-09-02 05:00:00', $perth_tz ),
+			'end'           => new DateTime( '2016-09-02 06:00:00', $perth_tz ),
+			'schedule'      => 'monthly',
+			'schedule_meta' => 'BYMONTHDAY=1',
+			'schedule_last' => new DateTime( '2016-11-01 21:00:00', new DateTimeZone( 'UTC' ) ),
+		) );
+
+		$actual = array_values( eo_get_the_occurrences_of( $event_id ) );
+
+		$expected = array(
+			array(
+				'start' => new DateTime( '2016-09-01 22:00:00', eo_get_blog_timezone() ),
+				'end'   => new DateTime( '2016-09-01 23:00:00', eo_get_blog_timezone() )
+			),
+			array(
+				'start' => new DateTime( '2016-10-01 22:00:00', eo_get_blog_timezone() ),
+				'end'   => new DateTime( '2016-10-01 23:00:00', eo_get_blog_timezone() )
+			),
+			array(
+				'start' => new DateTime( '2016-11-01 21:00:00', eo_get_blog_timezone() ),
+				'end'   => new DateTime( '2016-11-01 22:00:00', eo_get_blog_timezone() )
+			)
+		);
+		$this->assertEquals( $expected, $actual );
+
+		//Reset
+		update_option( 'timezone_string', $original_tz );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+	}
     /**
      * @see https://github.com/stephenharris/Event-Organiser/issues/242 
      */

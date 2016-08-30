@@ -651,11 +651,7 @@ function _eventorganiser_generate_occurrences( $schedule ) {
 		return new WP_Error( 'eo_error', __( 'Schedule end date is before is before the start date.', 'eventorganiser' ) );
 	}
 
-	//Now set timezones
-	$timezone = eo_get_blog_timezone();
-	$start->setTimezone( $timezone );
-	$end->setTimezone( $timezone );
-	$until->setTimezone( $timezone );
+	$event_timezone = $start->getTimezone();
 	$hour = intval( $start->format( 'H' ) );
 	$min  = intval( $start->format( 'i' ) );
 
@@ -792,7 +788,7 @@ function _eventorganiser_generate_occurrences( $schedule ) {
 					$year_int  = intval( $current_month->format( 'Y' ) );
 
 					if ( checkdate( $month_int , $day_int , $year_int ) ) {
-						$current = new DateTime( $day_int . '-' . $month_int . '-' . $year_int, $timezone );
+						$current = new DateTime( $day_int . '-' . $month_int . '-' . $year_int, $event_timezone );
 						$current->setTime( $hour, $min );
 						$occurrences[] = clone $current;
 						$occurrence_n++;
@@ -832,6 +828,13 @@ function _eventorganiser_generate_occurrences( $schedule ) {
 
 		endswitch;//End 'workaround' switch;
 	endforeach;
+
+	$timezone = eo_get_blog_timezone();
+	$start->setTimezone( $timezone );
+	$end->setTimezone( $timezone );
+	foreach ( $occurrences as $occurrence ) {
+		$occurrence->setTimezone( $timezone );
+	}
 
 	//Now schedule meta is set up and occurrences are generated.
 	if ( $number_occurrences > 0 ) {
