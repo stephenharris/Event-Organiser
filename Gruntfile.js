@@ -2,32 +2,16 @@ module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
 
-	grunt.registerTask('gittag', 'Get the tag pointing to this commit.', function () {
-		var done = this.async();
-				//work = function () {
-					grunt.util.spawn(
-						{
-							cmd  : 'git',
-							args : [ 'describe', '--tags', '--long' ],
-						},
-						function (err, result) {
-							if ( result ) {
-								var parts = result.stdout.split("-");
-								parts.pop();
-								parts.pop();
-								var tag = parts.join('-');
-								grunt.config.set('gittag', tag );
-							}
-							done();
-						}
-					);
-				//},
-        //work();
-    });
-
   // Project configuration.
   grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
+
+	gitinfo: {
+		commands: {
+			'local.tag.current.name' : ['name-rev', '--tags', '--name-only', 'HEAD'],
+			'local.tag.current.nameLong' : ['describe', '--tags', '--long']
+		}
+	},
 
 	uglify: {
 		options: {
@@ -37,7 +21,7 @@ module.exports = function(grunt) {
 				},
 				dead_code: true
       			},
-			banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd HH:MM") %> */\n'
+			banner: '/*! <%= pkg.name %> <%= gitinfo.local.tag.current.nameLong %> <%= grunt.template.today("yyyy-mm-dd HH:MM") %> */\n'
 		},
 		build: {
 			files: [{
@@ -141,7 +125,7 @@ module.exports = function(grunt) {
 		version: {
 			options: {
 				mode: 'zip',
-				archive: './dist/event-organiser-<%= pkg.version %>.zip'
+				archive: './dist/event-organiser-<%= gitinfo.local.tag.current.name %>.zip'
 			},
 			expand: true,
 			cwd: 'dist/event-organiser/',
@@ -181,8 +165,12 @@ module.exports = function(grunt) {
 			options: {
 				processContentExclude: ['**/*.{png,gif,jpg,ico,mo}'],
 				processContent: function (content, srcpath) {
-					if ( srcpath == 'readme.txt' ) {
-						var content = content.replace( /{{version}}/,  grunt.config.get('gittag') );
+					if ( srcpath == 'readme.txt' || srcpath == 'event-organiser.php' ) {
+						if ( grunt.config.get('gitinfo').local.tag.current.name !== 'undefined' ) {
+							content = content.replace( '{{version}}', grunt.config.get('gitinfo').local.tag.current.name );
+						} else {
+							content = content.replace( '{{version}}', grunt.config.get('gitinfo').local.tag.current.nameLong );
+						}
 					}
 					return content;
 				},
@@ -249,10 +237,10 @@ module.exports = function(grunt) {
 
     pot: {
     	options:{
-        text_domain: 'eventorganiser',
-        dest: 'languages/',
-        msgmerge: true,
-				keywords: ['__:1',
+        	text_domain: 'eventorganiser',
+        	dest: 'languages/',
+        	msgmerge: true,
+        	keywords: ['__:1',
 			           '_e:1',
 			           '_x:1,2c',
 			           'esc_html__:1',
@@ -268,21 +256,28 @@ module.exports = function(grunt) {
 			           '_nx_noop:1,2,3c',
 			           'ngettext:1,2'
 			          ],
-    		},
-    		files:{
-    			src:  [
-    		  	'**/*.php',
+    	},
+    	files:{
+        	src:  [
+				'**/*.php',
     		  	'!node_modules/**',
     		  	'!dist/**',
     		  	'!apigen/**',
-  	  		  '!documentation/**',
-    			  '!tests/**',
-    			  '!vendor/**',
-    			  '!*~',
-    			],
-    			expand: true,
-    		}
-    	},
+				'!documentation/**',
+				'!tests/**',
+				'!vendor/**',
+				'!*~'
+			],
+			expand: true,
+		}
+	},
+
+    checkrepo: {
+    	deploy: {
+			tagged: true, // Check that the last commit (HEAD) is tagged
+			clean: true   // Check that working directory is clean
+    	}
+    },
 
     checktextdomain: {
     	options:{
@@ -328,10 +323,10 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'test_build', [ 'gittag', 'clean', 'uglify', 'cssjanus', 'cssmin', 'copy' ] );
+grunt.registerTask( 'test_build', [ 'gitinfo', 'clean', 'uglify', 'cssjanus', 'cssmin', 'copy' ] );
 
-grunt.registerTask( 'build', [ 'gittag', 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
+grunt.registerTask( 'build', [ 'gitinfo', 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
 
-grunt.registerTask( 'deploy', [ 'checkbranch:master', 'build', 'wp_deploy' ] );
+grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo', 'build', 'wp_deploy' ] );
 
 };
