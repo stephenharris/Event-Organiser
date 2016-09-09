@@ -510,7 +510,7 @@ msgstr ""
 #: event-organiser-debug.php:424
 #, php-format
 msgid "%s has only been tested up to %s %s"
-msgstr "%s je bil preizkušen le do %s %s\n"
+msgstr "%s je bil preizkušen le do %s %s"
 
 #. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
 #: event-organiser-debug.php:437
@@ -1695,7 +1695,7 @@ msgstr ""
 #: includes/event-organiser-cpt.php:323
 #, php-format
 msgid "Event updated. <a href=\"%s\">View event</a>"
-msgstr "Dogodek posodobljen. <a href=\"%s\">Poglej dogodek</a>\n"
+msgstr "Dogodek posodobljen. <a href=\"%s\">Poglej dogodek</a>"
 
 #: includes/event-organiser-cpt.php:324
 msgid "Event updated."

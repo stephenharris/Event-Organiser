@@ -1370,7 +1370,7 @@ msgid ""
 "imported in to other calendar applications such as Google Calendar."
 msgstr ""
 "El botó d'exportació inferior genera un arxiu ICS dels esdeveniments que es "
-"poden importar a altres aplicacions de calendari com Google Calendar.\n"
+"poden importar a altres aplicacions de calendari com Google Calendar."
 
 #: includes/class-event-organiser-im-export.php:97
 msgid "Download Export File"

@@ -1877,7 +1877,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:342
 msgid "This event has been broken from a recurring event."
-msgstr "Questo evento è stato interrotto da un errore ripetuto\n"
+msgstr "Questo evento è stato interrotto da un errore ripetuto"
 
 #: includes/event-organiser-cpt.php:518
 msgid "Creating events"

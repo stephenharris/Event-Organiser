@@ -53,7 +53,7 @@ msgstr "Begivenhed dato/tidspunkt-format"
 
 #: classes/class-eo-agenda-widget.php:60
 msgid "Include 'Add To Google' link"
-msgstr "Inkluder 'Add To Google' link\n"
+msgstr "Inkluder 'Add To Google' link"
 
 #: classes/class-eo-agenda-widget.php:140 event-organiser-edit.php:151
 #: includes/event-organiser-event-functions.php:1368
