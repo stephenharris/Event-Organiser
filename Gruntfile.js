@@ -1,11 +1,34 @@
 module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
-	
+
+	grunt.registerTask('gittag', 'Get the tag pointing to this commit.', function () {
+		var done = this.async();
+				//work = function () {
+					grunt.util.spawn(
+						{
+							cmd  : 'git',
+							args : [ 'describe', '--tags', '--long' ],
+						},
+						function (err, result) {
+							if ( result ) {
+								var parts = result.stdout.split("-");
+								parts.pop();
+								parts.pop();
+								var tag = parts.join('-');
+								grunt.config.set('gittag', tag );
+							}
+							done();
+						}
+					);
+				//},
+        //work();
+    });
+
   // Project configuration.
   grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
-	
+
 	uglify: {
 		options: {
 			compress: {
@@ -24,7 +47,7 @@ module.exports = function(grunt) {
 			}]
 		}
 	},
-	
+
 	jshint: {
 		options: {
 			reporter: require('jshint-stylish'),
@@ -38,7 +61,7 @@ module.exports = function(grunt) {
 		},
 		all: [ 'js/*.js', '!js/*.min.js', '!*/moment.js', '!*/time-picker.js', '!*/jquery-ui-eo-timepicker.js', '!*/fullcalendar.js', '!*/venues.js', '!*/qtip2.js' ]
   	},
-  	
+
     phpcs: {
         application: {
             src: [
@@ -59,18 +82,18 @@ module.exports = function(grunt) {
         	showSniffCodes: true,
         }
     },
-  	
+
     phpmd: {
   		application: {
   			dir: 'includes,classes'
   	    },
   	    options: {
   	    	reportFormat: 'text',
-  	    	bin: './vendor/bin/phpmd', 
+  	    	bin: './vendor/bin/phpmd',
   	    	rulesets: 'phpmd.xml'
   	    }
   	},
-  	
+
 	cssjanus: {
 		core: {
 			options: {
@@ -84,7 +107,7 @@ module.exports = function(grunt) {
 			src: [ 'css/*.css', '!**/*.min.css', '!**/*-rtl.css', '!**/fullcalendar.css' ]
 		}
 	},
-  	
+
 	cssmin: {
 		minify: {
 			expand: true,
@@ -93,7 +116,7 @@ module.exports = function(grunt) {
 		    extDot: 'last'
 		}
 	},
-  	
+
 	shell: {
 		makeDocs: {
 			options: {
@@ -124,14 +147,14 @@ module.exports = function(grunt) {
 			cwd: 'dist/event-organiser/',
 			src: ['**/*'],
 			dest: 'event-organiser/'
-		}	
+		}
 	},
 
 	clean: {
 		main: ['dist/event-organiser'],//Clean up build folder
 		css: [ 'css/*.min.css', 'css/*-rtl.css' ],
 		js: [ 'js/*.min.js' ],
-		i18n: [ 'languages/*.mo', 'languages/*.pot' ] 
+		i18n: [ 'languages/*.mo', 'languages/*.pot' ]
 	},
 
 	copy: {
@@ -154,7 +177,16 @@ module.exports = function(grunt) {
 				'!phpcs.xml','!phpmd.xml', //CodeSniffer & Mess Detector
 				'!css/images/**/*.xcf', //source images
 			],
-			dest: 'dist/event-organiser/'
+			dest: 'dist/event-organiser/',
+			options: {
+				processContentExclude: ['**/*.{png,gif,jpg,ico,mo}'],
+				processContent: function (content, srcpath) {
+					if ( srcpath == 'readme.txt' ) {
+						var content = content.replace( /{{version}}/,  grunt.config.get('gittag') );
+					}
+					return content;
+				},
+			},
 		}
 	},
 
@@ -177,17 +209,7 @@ module.exports = function(grunt) {
 			bin: 'vendor/bin/phpunit',
 		}
 	},
-	
-    checkrepo: {
-    	deploy: {
-            tag: {
-                eq: '<%= pkg.version %>',    // Check if highest repo tag is equal to pkg.version
-            },
-            tagged: true, // Check if last repo commit (HEAD) is not tagged
-            clean: true,   // Check if the repo working directory is clean
-        }
-    },
-    
+
     watch: {
     	readme: {
     	    files: ['readme.txt'],
@@ -204,19 +226,20 @@ module.exports = function(grunt) {
     	    },
     	  },
     },
-    
+
     wp_deploy: {
     	deploy:{
-            options: {
-        		svn_user: 'stephenharris',
-        		plugin_slug: 'event-organiser',
-        		build_dir: 'dist/event-organiser/',
-        		assets_dir: 'assets/',
-        		max_buffer: 1024*1024
-            },
+        options: {
+        	svn_user: 'jenkinspress',
+        	plugin_slug: 'event-organiser',
+        	build_dir: 'dist/event-organiser/',
+        	assets_dir: 'assets/',
+        	max_buffer: 1024*1024,
+					skip_confirmation: true
+        },
     	}
     },
-    
+
     po2mo: {
     	files: {
         	src: 'languages/*.po',
@@ -226,40 +249,40 @@ module.exports = function(grunt) {
 
     pot: {
     	options:{
-        	text_domain: 'eventorganiser',
-        	dest: 'languages/',
-        	msgmerge: true,
-			keywords: ['__:1',
+        text_domain: 'eventorganiser',
+        dest: 'languages/',
+        msgmerge: true,
+				keywords: ['__:1',
 			           '_e:1',
 			           '_x:1,2c',
 			           'esc_html__:1',
 			           'esc_html_e:1',
 			           'esc_html_x:1,2c',
-			           'esc_attr__:1', 
-			           'esc_attr_e:1', 
-			           'esc_attr_x:1,2c', 
+			           'esc_attr__:1',
+			           'esc_attr_e:1',
+			           'esc_attr_x:1,2c',
 			           '_ex:1,2c',
-			           '_n:1,2,4d', 
+			           '_n:1,2,4d',
 			           '_nx:1,2,4c',
 			           '_n_noop:1,2',
 			           '_nx_noop:1,2,3c',
 			           'ngettext:1,2'
 			          ],
+    		},
+    		files:{
+    			src:  [
+    		  	'**/*.php',
+    		  	'!node_modules/**',
+    		  	'!dist/**',
+    		  	'!apigen/**',
+  	  		  '!documentation/**',
+    			  '!tests/**',
+    			  '!vendor/**',
+    			  '!*~',
+    			],
+    			expand: true,
+    		}
     	},
-    	files:{
-    		src:  [
-    		  '**/*.php',
-    		  '!node_modules/**',
-    		  '!dist/**',
-    		  '!apigen/**',
-    		  '!documentation/**',
-    		  '!tests/**',
-    		  '!vendor/**',
-    		  '!*~',
-    		],
-    		expand: true,
-    	}
-    },
 
     checktextdomain: {
     	options:{
@@ -270,12 +293,12 @@ module.exports = function(grunt) {
 			           'esc_html__:1,2d',
 			           'esc_html_e:1,2d',
 			           'esc_html_x:1,2c,3d',
-			           'esc_attr__:1,2d', 
-			           'esc_attr_e:1,2d', 
-			           'esc_attr_x:1,2c,3d', 
+			           'esc_attr__:1,2d',
+			           'esc_attr_e:1,2d',
+			           'esc_attr_x:1,2c,3d',
 			           '_ex:1,2c,3d',
 			           '_x:1,2c,3d',
-			           '_n:1,2,4d', 
+			           '_n:1,2,4d',
 			           '_nx:1,2,4c,5d',
 			           '_n_noop:1,2,3d',
 			           '_nx_noop:1,2,3c,4d'
@@ -305,10 +328,10 @@ grunt.registerTask( 'docs', ['shell:makeDocs']);
 
 grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
 
-grunt.registerTask( 'test_build', [ 'clean', 'uglify', 'cssjanus', 'cssmin', 'copy' ] );
+grunt.registerTask( 'test_build', [ 'gittag', 'clean', 'uglify', 'cssjanus', 'cssmin', 'copy' ] );
 
-grunt.registerTask( 'build', [ 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
+grunt.registerTask( 'build', [ 'gittag', 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy' ] );
 
-grunt.registerTask( 'deploy', [ 'checkbranch:master', 'checkrepo:deploy', 'build', 'wp_deploy',  'compress' ] );
+grunt.registerTask( 'deploy', [ 'checkbranch:master', 'build', 'wp_deploy' ] );
 
 };

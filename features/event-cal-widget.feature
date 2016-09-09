@@ -79,3 +79,25 @@ Feature: Event Calendar Widget
         And I should not see "Weekly"
         And I should not see "Daily"
 
+    Scenario: Private events should not be visible for logged-out users
+		    Given I have an event calendar widget in "Main Sidebar"
+				    | Title      | Include past events | Event categories | Event venue |
+				    | All Events | 1                   |                  |             |
+		    And there are events
+				    | post_title   | post_author | start        | end          | post_status | all_day | schedule |
+			    	| Private      | 1           | Y-m-13 19:30 | Y-m-13 21:30 | private     | 0       | once     |
+				When I go to "/"
+				Then I should see "All Events"
+				And I should not see a link "13"
+
+		Scenario: Private events should be visible for logged-in users
+		    Given I have an event calendar widget in "Main Sidebar"
+				    | Title      | Include past events | Event categories | Event venue |
+				    | All Events | 1                   |                  |             |
+				And I am logged in as "admin" with password "test"
+				And there are events
+				    | post_title   | start        | end          | post_status | all_day | schedule |
+			    	| Private      | Y-m-13 19:30 | Y-m-13 21:30 | private     | 0       | once     |
+				When I go to "/"
+				Then I should see "All Events"
+				And I should see a link "13"

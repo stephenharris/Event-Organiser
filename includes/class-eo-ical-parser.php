@@ -152,7 +152,7 @@ class EO_ICAL_Parser{
 		 *			'CONFIRMED' => 'publish',
 		 *			'CANCELLED' => 'trash',
 		 *			'TENTATIVE' => 'draft',
-				);
+		 *     );
 		 *     </code></pre>
 		 *  - `default_status` - the status to use for the event if the iCal feed does not provide a status#
 		 *  - `parse_html` - whether to parse a HTML version of event descriptions if provided 

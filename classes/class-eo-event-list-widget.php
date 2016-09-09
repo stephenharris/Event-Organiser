@@ -126,7 +126,7 @@ class EO_Event_List_Widget extends WP_Widget{
 		<?php } ?>
 		<p>
   			<label for="<?php echo $this->get_field_id( 'scope' ); ?>"><?php _e( 'Show:', 'eventorganiser' ); ?></label>
-			<select id="<?php echo $this->get_field_id( 'scope' ); ?>" name="<?php echo $this->get_field_name( 'scope' ); ?>" type="text">
+			<select id="<?php echo $this->get_field_id( 'scope' ); ?>" name="<?php echo $this->get_field_name( 'scope' ); ?>" >
 				<?php
 				foreach ( $this->get_event_intervals() as $scope_id => $scope ) {
 					printf(
@@ -147,7 +147,7 @@ class EO_Event_List_Widget extends WP_Widget{
 				<option value="title" <?php selected( $instance['orderby'], 'title' );?>><?php _e( 'Title', 'eventorganiser' ); ?></option>
 				<option value="date" <?php selected( $instance['orderby'], 'date' );?>><?php _e( 'Publish date', 'eventorganiser' ); ?></option>
 			</select>
-			<select id="<?php echo $this->get_field_id( 'order' ); ?>" name="<?php echo $this->get_field_name( 'order' ); ?>" type="text">
+			<select id="<?php echo $this->get_field_id( 'order' ); ?>" name="<?php echo $this->get_field_name( 'order' ); ?>" >
 				<option value="asc" <?php selected( $instance['order'], 'asc' ); ?>><?php _e( 'ASC', 'eventorganiser' ); ?> </option>
 				<option value="desc" <?php selected( $instance['order'], 'desc' );?>><?php _e( 'DESC', 'eventorganiser' ); ?> </option>
 			</select>
