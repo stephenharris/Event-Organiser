@@ -26,7 +26,7 @@ if ( have_posts() ) :
 		global $post;
 
 		// If event has no corresponding row in events table then skip it
-		if ( ! isset( $post->event_id ) || $post->event_id == -1 ) {
+		if ( ! isset( $post->event_id ) || -1 == $post->event_id ) {
 			continue;
 		}
 

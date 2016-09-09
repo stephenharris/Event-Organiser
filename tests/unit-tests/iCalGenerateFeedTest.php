@@ -1,6 +1,6 @@
 <?php
 
-class iCalFeedTest extends EO_UnitTestCase
+class iCalGenerateFeedTest extends EO_UnitTestCase
 {
 	
 	public function setUp() {
@@ -297,57 +297,131 @@ class iCalFeedTest extends EO_UnitTestCase
 
 	}
 
-    public function testRRULECustomTimezone(){
-    	
-    	//When day changes when start date is converted to UTC timezone (for iCal feed)
-    	//Remember to correct [day] the 'reccurs weekly by [day]', so thats true for UTC timezone.
-    	wp_cache_set( 'eventorganiser_timezone', 'America/New_York' );
+	/**
+	 * Since 3.0.0 https://github.com/stephenharris/Event-Organiser/issues/293 Event Organiser tries to keep the
+	 * the start/end dates in the appropriate timezone. The by-day (and other) properties should be be in the timezone
+	 * of the start date.
+	 *
+	 * If we are using a recognisable timezone, we should **not** be converting the BYDAY property. The counterpart to
+	 * this is when using a UTC offset, when we do:
+	 *
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/376
+	 * @see testRRULEOffsetTimezone
+	 */
+	public function testRRULEForeignTimezone(){
 
-    	//Event recurrs every Monday evening in New York (event recurs every Tuesday in UTC)
+		$original_timezone = get_option( 'timezone_string' );
+		$original_offset   = get_option( 'gmt_offset' );
+		update_option( 'timezone_string', 'America/New_York' );
+		update_option( 'gmt_offset', '' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+		//Event recurs every Monday evening in New York (event recurs every Tuesday in UTC)
 		$event_id = $this->factory->event->create( array(
-			'start'=> new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
-			'end'=> new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
-			'schedule_last'=> new DateTime('2013-12-30 21:00', eo_get_blog_timezone() ),
-			'frequency' => 1,
-			'all_day' => 0,
-			'schedule'=>'weekly',
+			'start'         => new DateTime( '2013-12-02 21:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime( '2013-12-02 23:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime( '2013-12-30 21:00', eo_get_blog_timezone() ),
+			'frequency'     => 1,
+			'all_day'       => 0,
+			'schedule'      => 'weekly',
 			'schedule_meta' => array( 'MO' ),
-			'post_title'=>'The Event Title',
-			'post_content'=>'My event content',
+			'post_title'    => 'The Event Title',
+			'post_content'  => 'My event content',
 		) );
-    	
-    	$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=TU;UNTIL=20131231T020000Z", eventorganiser_generate_ics_rrule( $event_id ) );
-    	
-    	wp_cache_delete( 'eventorganiser_timezone' );
-    	
-    	
-    	//Now try it the other direction....
-    	wp_cache_set( 'eventorganiser_timezone', 'Europe/Moscow' );
 
-    	//Event recurrs every Monday morning in Moscow (event recurs very Sunday in UTC)
+		//BYDAY property should be in New York timezone (i.e. Monday );
+		$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;UNTIL=20131231T020000Z", eventorganiser_generate_ics_rrule( $event_id ) );
+
+
+		//Now try it the other direction....
+		update_option( 'timezone_string', 'Australia/Perth' );
+		update_option( 'gmt_offset', '' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+		//Event recurs every Thursday morning in Perth, Australia (event recurs every Wednesday in UTC)
 		$event_id = $this->factory->event->create( array(
-    		'start'         => new DateTime('2013-12-02 01:00', eo_get_blog_timezone() ),
-    		'end'           => new DateTime('2013-12-02 02:00', eo_get_blog_timezone() ),
-    		'schedule_last' => new DateTime('2013-12-30 01:00', eo_get_blog_timezone() ),
-    		'frequency'     => 1,
-    		'all_day'       => 0,
-    		'schedule'      =>'weekly',
-    		'schedule_meta' => array( 'MO' ),
-    		'post_title'    =>'The Event Title',
-    		'post_content'  =>'My event content',
-    	) );
+			'start'         => new DateTime( '2015-06-25 07:30:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime( '2015-06-25 08:30:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime( '2016-12-29 07:30:00', eo_get_blog_timezone() ),
+			'frequency'     => 1,
+			'all_day'       => 0,
+			'schedule'      => 'weekly',
+			'schedule_meta' => array( 'TH' ),
+			'post_title'    => 'The Event Title',
+			'post_content'  => 'My event content',
+		) );
 
-		//This is a bit of a hack, some php5.2 instances will have an out of date Europe/Moscow timezone details
-		//but cannot install the pecl.php.net/timezonedb package. We therefore can't hardcode the until date string
-		//as it may be 21:00 or 22:00
-		$utc = new DateTimeZone( 'UTC' );
-		$until = new DateTime( '2013-12-30 01:00', eo_get_blog_timezone() );
-		$until->setTimezone( $utc );
-		$until_string = $until->format( 'Ymd\THis\Z'); //Probably 20131229T210000Z or 20131229T220000Z
-    	$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=SU;UNTIL={$until_string}", eventorganiser_generate_ics_rrule( $event_id ) );
-    	 
-    	wp_cache_delete( 'eventorganiser_timezone' );
-    }
+		//BYDAY property should be in Austrial/Perth timezone (i.e. Thursday );
+		$this->assertEquals( 'FREQ=WEEKLY;INTERVAL=1;BYDAY=TH;UNTIL=20161228T233000Z', eventorganiser_generate_ics_rrule( $event_id ) );
+
+
+		update_option( 'timezone_string', $original_timezone );
+		update_option( 'gmt_offset', $original_offset );
+		wp_cache_delete( 'eventorganiser_timezone' );
+	}
+
+
+	/**
+	 * Since 3.0.0 https://github.com/stephenharris/Event-Organiser/issues/293 Event Organiser tries to keep the
+	 * the start/end dates in the appropriate timezone. But if an off-set timezone is selected it will convert the
+	 * datetimes to UTC. The by-day (and other) properties should be in the timezone of the start date, and so also
+	 * converted
+	 *
+	 * The counterpart to this is when we are using a recognisable timezone, if so we should **not** be converting the
+	 * BYDAY property.
+	 *
+	 * @see https://github.com/stephenharris/Event-Organiser/issues/376
+	 * @see testRRULEForeignTimezone
+	 */
+	public function testRRULEOffsetTimezone(){
+
+		$original_timezone = get_option( 'timezone_string' );
+		$original_offset   = get_option( 'gmt_offset' );
+		update_option( 'timezone_string', '' );
+		update_option( 'gmt_offset', 'UTC-4' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+		//Event recurrs every Monday evening in UTC-4 (event recurs every Tuesday in UTC)
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2013-12-30 21:00', eo_get_blog_timezone() ),
+			'frequency'     => 1,
+			'all_day'       => 0,
+			'schedule'      => 'weekly',
+			'schedule_meta' => array( 'MO' ),
+			'post_title'    => 'The Event Title',
+			'post_content'  => 'My event content',
+		) );
+
+		$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=TU;UNTIL=20131231T010000Z", eventorganiser_generate_ics_rrule( $event_id ) );
+
+
+		//Now try it the other direction....
+		update_option( 'timezone_string', '' );
+		update_option( 'gmt_offset', 'UTC+3' );
+		wp_cache_delete( 'eventorganiser_timezone' );
+
+		//Event recurrs every Monday morning in UTC+3 (event recurs very Sunday in UTC)
+		$event_id = $this->factory->event->create( array(
+			'start'         => new DateTime('2013-12-02 01:00', eo_get_blog_timezone() ),
+			'end'           => new DateTime('2013-12-02 02:00', eo_get_blog_timezone() ),
+			'schedule_last' => new DateTime('2013-12-30 01:00', eo_get_blog_timezone() ),
+			'frequency'     => 1,
+			'all_day'       => 0,
+			'schedule'      =>'weekly',
+			'schedule_meta' => array( 'MO' ),
+			'post_title'    =>'The Event Title',
+			'post_content'  =>'My event content',
+		) );
+
+		$this->assertEquals( "FREQ=WEEKLY;INTERVAL=1;BYDAY=SU;UNTIL=20131229T220000Z", eventorganiser_generate_ics_rrule( $event_id ) );
+
+
+		update_option( 'timezone_string', $original_timezone );
+		update_option( 'gmt_offset', $original_offset );
+		wp_cache_delete( 'eventorganiser_timezone' );
+	}
 
 	public function testIcalFolding(){
 		
