@@ -222,6 +222,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.1.4 - 9th September 2016 =
+* Tested up to 4.6.1
+* bugfix: In the iCal field don't change the BYDAY property when a city is used as a timezone (i.e. instead of a UTC offset). Fixes [#376](https://github.com/stephenharris/Event-Organiser/issues/376)
+
 = 3.1.3 - 23rd July 2016 =
 * bugfix: Fixed tranlsation (.mo files)
 * bugfix: Fixed image files
