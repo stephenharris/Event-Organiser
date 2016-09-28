@@ -226,6 +226,59 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 
 
 	/**
+	 * @Then the admin menu should appear as
+	 */
+	public function theAdminMenuShouldAppearAs( TableNode $table ) {
+
+		$menu_items = $this->getSession()->getPage()->findAll( 'css', '#adminmenu > li a .wp-menu-name' );
+
+		foreach ( $menu_items as $index => $element ) {
+			try {
+				if ( ! $element->isVisible() ) {
+					unset( $menu_items[$index] );
+				}
+			} catch ( \Exception $e ) {
+				//do nothing.
+			}
+		}
+
+		foreach ( $menu_items as $n => $element ) {
+			$actual[] = array( $menu_items[$n]->getText() );
+		}
+		$actual_table = new TableNode( $actual );
+
+		try {
+			$this->assertColumnIsLike( $table, $actual_table, 0 );
+		} catch ( \Exception $e ) {
+			throw new \Exception( sprintf(
+				"Found elements:\n%s",
+				$actual_table->getTableAsString()
+			) . "\n" . $e->getMessage() );
+		}
+
+	}
+
+	protected function assertColumnIsLike( $table, $actual_table, $column ) {
+		$expected = $table->getColumn($column);
+		$actual   = $actual_table->getColumn($column);
+
+		if ( count( $expected ) != count( $actual ) ) {
+			throw new \Exception( 'Number of rows do not match' );
+		}
+
+		foreach( $actual as $row => $actual_value ) {
+			$expected_value = $expected[$row];
+			if ( ! preg_match( "/$expected_value/", $actual_value ) ) {
+				throw new \Exception(sprintf(
+					'Expected "%s" but found "%s"',
+					$expected_value,
+					$actual_value
+				));
+			}
+		}
+	}
+
+	/**
 	 * @Then I should see the following in the repeated :element element
 	 */
 	public function iShouldSeeTheFollowingInTheRepeatedElementWithinTheContextOfTheElement2( $element, TableNode $table ) {
