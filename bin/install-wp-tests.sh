@@ -39,7 +39,7 @@ set -ex
 install_wp() {
 	mkdir -p $WP_CORE_DIR
 
-	if [ $WP_VERSION == 'latest' ]; then 
+	if [ $WP_VERSION == 'latest' ]; then
 		wget -nv -O /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz
 		tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
 	elif [ $WP_VERSION == 'nightly' ]; then
@@ -50,7 +50,7 @@ install_wp() {
 		tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
 	fi
 
-	wget -nv -O $WP_CORE_DIR/wp-content/db.php https://raw.github.com/markoheijnen/wp-mysqli/master/db.php	
+	wget -nv -O $WP_CORE_DIR/wp-content/db.php https://raw.github.com/markoheijnen/wp-mysqli/master/db.php
 }
 
 install_db() {
@@ -86,7 +86,7 @@ install_config() {
 	fi
 
 	cp "$WP_CORE_DIR/wp-config-sample.php" "$WP_CORE_DIR/wp-config.php"
-	
+
 	sed $ioption "s:dirname(__FILE__) . '/':'$WP_CORE_DIR':" "$WP_CORE_DIR/wp-config.php"
 	sed $ioption "s/database_name_here/$DB_NAME/" "$WP_CORE_DIR/wp-config.php"
 	sed $ioption "s/username_here/$DB_USER/" "$WP_CORE_DIR/wp-config.php"
@@ -122,6 +122,7 @@ install_test_suite
 install_db
 
 rm -rf ${WP_CORE_DIR}wp-content/plugins/*
+rsync -av --exclude=".*" $WORKSPACE/build/event-organiser ${WP_CORE_DIR}/wp-content/plugins/
 
 # Used when waiting for stuff
 NAP_LENGTH=1
