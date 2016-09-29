@@ -122,7 +122,7 @@ install_test_suite
 install_db
 
 rm -rf ${WP_CORE_DIR}wp-content/plugins/*
-rsync -av --exclude=".*" $WORKSPACE/dist/event-organiser ${WP_CORE_DIR}wp-content/plugins/
+ln -s $WORKSPACE/dist/event-organiser ${WP_CORE_DIR}/wp-content/plugins/event-organiser
 
 # Used when waiting for stuff
 NAP_LENGTH=1
