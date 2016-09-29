@@ -9,12 +9,12 @@ require_once $_tests_dir . '/includes/functions.php';
 echo "Using WordPress test library at ". $_tests_dir . PHP_EOL;
 
 //Install and activate plug-ins
-function _manually_load_plugin() {	
-	require dirname( __FILE__ ) . '/../event-organiser.php';
+function _manually_load_plugin() {
+	require_once dirname( __FILE__ ) . '/../dist/event-organiser/event-organiser.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
-function _manually_activate() {	
+function _manually_activate() {
 	eventorganiser_install();
 }
 tests_add_filter( 'init', '_manually_activate' );
