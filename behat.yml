@@ -14,6 +14,8 @@ default:
         db: 'wordpress_test'
         username: 'root'
         password: ''
+      mail:
+        directory: '/tmp/mail'
     Behat\MinkExtension:
       base_url:    'http://localhost:8000'
       goutte: ~
