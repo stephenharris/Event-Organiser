@@ -1999,12 +1999,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/stephenharris/WordPressBehatExtension.git",
-                "reference": "7c81d070d430af970247ced367fb09047e31bc7a"
+                "reference": "f22e14f2e6f7cbf523e5bfdec2f67a22c27be0a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stephenharris/WordPressBehatExtension/zipball/7c81d070d430af970247ced367fb09047e31bc7a",
-                "reference": "7c81d070d430af970247ced367fb09047e31bc7a",
+                "url": "https://api.github.com/repos/stephenharris/WordPressBehatExtension/zipball/f22e14f2e6f7cbf523e5bfdec2f67a22c27be0a9",
+                "reference": "f22e14f2e6f7cbf523e5bfdec2f67a22c27be0a9",
                 "shasum": ""
             },
             "require": {
@@ -2056,7 +2056,7 @@
                 "source": "https://github.com/stephenharris/WordPressBehatExtension/tree/develop",
                 "issues": "https://github.com/stephenharris/WordPressBehatExtension/issues"
             },
-            "time": "2016-09-28 14:52:59"
+            "time": "2016-09-29 15:55:52"
         },
         {
             "name": "symfony/browser-kit",
