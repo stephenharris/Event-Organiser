@@ -13,6 +13,8 @@ default:
         db: 'wordpress_test'
         username: 'root'
         password: ''
+      mail:
+        directory: '/tmp/mail'
       symlink:
         from: '%paths.base%/dist/event-organiser'
         to: '/tmp/wordpress/wp-content/plugins/event-organiser'
