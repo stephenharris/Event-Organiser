@@ -209,8 +209,12 @@ class EO_Calendar_Widget extends WP_Widget
 		}
 
 		//Parse defaults
-		$args['show-long']      = isset( $args['show-long'] ) ? $args['show-long']  : false;
-		$args['link-to-single'] = isset( $args['link-to-single'] ) ? $args['link-to-single']  : false;
+		$args = array_merge( array(
+			'show-long'      => false,
+			'link-to-single' => false,
+			'event-venue'    => false,
+			'event-category' => false,
+		), $args );
 
 		//Month details
 		$first_day_of_month = intval( $month->format( 'N' ) ); //0=sun,...,6=sat
