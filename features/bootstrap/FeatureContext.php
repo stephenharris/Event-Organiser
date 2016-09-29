@@ -5,7 +5,7 @@ use Behat\Behat\Context\Context,
 	Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Testwork\Tester\Result\TestResult;
 use Behat\Gherkin\Node\TableNode;
-use Johnbillion\WordPressExtension\Context\WordPressContext;
+use StephenHarris\WordPressBehatExtension\Context\WordPressContext;
 use Behat\Mink\Exception\ElementNotFoundException,
 	Behat\Mink\Exception\ExpectationException;
 
@@ -220,60 +220,6 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		foreach ( $this->getSession()->getPage()->findAll( 'css', $selector ) as $element ) {
 			if ( strpos( strtolower( $text ), strtolower( $element->getText() ) !== false ) ) {
 				throw new \Exception( "Text '{$text}' is found in the '{$selector}' element." );
-			}
-		}
-	}
-
-
-	/**
-	 * @Then the admin menu should appear as
-	 */
-	public function theAdminMenuShouldAppearAs( TableNode $table ) {
-
-		$menu_items = $this->getSession()->getPage()->findAll( 'css', '#adminmenu > li a .wp-menu-name' );
-
-		foreach ( $menu_items as $index => $element ) {
-			try {
-				if ( ! $element->isVisible() ) {
-					unset( $menu_items[$index] );
-				}
-			} catch ( \Exception $e ) {
-				//do nothing.
-			}
-		}
-
-		foreach ( $menu_items as $n => $element ) {
-			$actual[] = array( $menu_items[$n]->getText() );
-		}
-		$actual_table = new TableNode( $actual );
-
-		try {
-			$this->assertColumnIsLike( $table, $actual_table, 0 );
-		} catch ( \Exception $e ) {
-			throw new \Exception( sprintf(
-				"Found elements:\n%s",
-				$actual_table->getTableAsString()
-			) . "\n" . $e->getMessage() );
-		}
-
-	}
-
-	protected function assertColumnIsLike( $table, $actual_table, $column ) {
-		$expected = $table->getColumn($column);
-		$actual   = $actual_table->getColumn($column);
-
-		if ( count( $expected ) != count( $actual ) ) {
-			throw new \Exception( 'Number of rows do not match' );
-		}
-
-		foreach( $actual as $row => $actual_value ) {
-			$expected_value = $expected[$row];
-			if ( ! preg_match( "/$expected_value/", $actual_value ) ) {
-				throw new \Exception(sprintf(
-					'Expected "%s" but found "%s"',
-					$expected_value,
-					$actual_value
-				));
 			}
 		}
 	}

@@ -6,16 +6,14 @@ default:
             screenshot_dir: '%paths.base%/failed-scenerios/'
         - WordPressAdminContext
         - WordPressPostListContext
+        - \StephenHarris\WordPressBehatExtension\Context\WordPressMailContext
   extensions:
-    Johnbillion\WordPressExtension:
+    StephenHarris\WordPressBehatExtension:
       path: '/tmp/wordpress'
       connection:
         db: 'wordpress_test'
         username: 'root'
         password: ''
-      symlink:
-        from: '%paths.base%/dist/event-organiser'
-        to: '/tmp/wordpress/wp-content/plugins/event-organiser'
     Behat\MinkExtension:
       base_url:    'http://localhost:8000'
       goutte: ~
