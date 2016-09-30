@@ -68,7 +68,7 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 
 	$php_format = 'M, j Y';
 	if ( ! eo_is_all_day( $series_id ) ) {
-		$php_format .= '\<\/\b\r\>'. get_option( 'time_format' );
+		$php_format .= '\<\b\r\>' . get_option( 'time_format' );
 	}
 
 	switch ( $column_name ) {
