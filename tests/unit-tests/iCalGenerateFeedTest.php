@@ -524,6 +524,9 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 	
 	/**
 	 * If the site has a non-offset timezone, then this should displayed in the dstart/dtend and includes/excludes
+	 *
+	 * VTIMEZONEs are skipped on php5.2 because of performance concerns
+	 * @requires PHP 5.3.0
 	 */
 	public function testEventTimezone(){
 	
@@ -532,13 +535,7 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 				'This test is skipped on HHVM because of timezone definition issues'	
 			);
 		}
-		
-		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-			$this->markTestSkipped(
-				'This test is skipped on php 5.2 because the VTIMEZONE block is not generated'
-			);
-		}
-		
+
 		$original_timezone = get_option( 'timezone_string' );
 		update_option( 'timezone_string', 'Europe/Zurich' );
 		wp_cache_delete( 'eventorganiser_timezone' );
@@ -634,15 +631,13 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 		$this->assertEquals( $expected, $actual );
 	
 	}
-	
+
+	/**
+	 * VTIMEZONEs are skipped on php5.2 because of performance concerns
+	 * @requires PHP 5.3.0
+	 */
 	public function testEventWithThumbnail(){
-		
-		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-			$this->markTestSkipped(
-				'This test is skipped on php 5.2 becase the VTIMEZONE block is not generated'
-			);
-		}
-		
+
 		$event_id = $this->factory->event->create( array(
 			'start'         => new DateTime('2016-03-12 00:40', eo_get_blog_timezone() ),
 			'end'           => new DateTime('2016-03-12 01:00', eo_get_blog_timezone() ),
@@ -687,14 +682,12 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 	/**
 	 * If the event is an all-day event then no timezone information should be present
 	 * in the dtstart, dtend, exdate or rdate values.
+	 *
+	 * VTIMEZONEs are skipped on php5.2 because of performance concerns
+	 *
+	 * @requires PHP 5.3.0
 	 */
 	public function testAllDayEvent(){
-	
-		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-			$this->markTestSkipped(
-				'This test is skipped on php 5.2 becase the VTIMEZONE block is not generated'
-			);
-		}
 		
 		$original_timezone = get_option( 'timezone_string' );
 		update_option( 'timezone_string', 'Europe/Zurich' );
@@ -866,6 +859,10 @@ END:VTIMEZONE";
 	/**
 	 * If a named timezone is used, then we should see a VTIMEZONE which appropriate DAYLIGHT and
 	 * STANDARD timezone components spanning the period in which events occur.
+	 *
+	 * VTIMEZONEs are skipped on php5.2 because of performance concerns
+	 *
+	 * @requires PHP 5.3.0
 	 */
 	public function testVTimezonePeriod(){
 		
@@ -873,13 +870,6 @@ END:VTIMEZONE";
 			$this->markTestSkipped(
 				'This test is skipped on HHVM because of timezone definition issues'
 			);
-		}
-		
-		//VTIMEZONEs are skipped on php5.2 because of performance concerns
-		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-			$this->markTestSkipped(
-    			'This test is skipped on php 5.2.'
-    		);
 		}
 	
 		$original_timezone = get_option( 'timezone_string' );
