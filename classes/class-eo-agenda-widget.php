@@ -2,7 +2,7 @@
 /**
  * Class used to create the event calendar widget
  */
-class EO_Events_Agenda_Widget extends WP_Widget{
+class EO_Events_Agenda_Widget extends WP_Widget {
 
 	var $w_arg = array();
 
@@ -106,14 +106,14 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 
 	static function print_main_template() {
 		?>
-  		<script type="text/template" id="eo-tmpl-agenda-widget">
+		<script type="text/template" id="eo-tmpl-agenda-widget">
 		<div class='eo-agenda-widget-nav'>
 			<span class="eo-agenda-widget-nav-prev"><</span>
 			<span class="eo-agenda-widget-nav-next">></span>
 		</div>
 		<ul class='dates'></ul>
 		</script>
-  		<?php
+		<?php
 	}
 
 	static function print_group_template() {

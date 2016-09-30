@@ -14,15 +14,14 @@ if ( ! class_exists( 'EventOrganiser_Admin_Page' ) ) {
  * @package event organiser
  * @ignore
  */
-class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
-{
+class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page {
 	/**
 	 * This sets the calendar page variables
 	 */
 	function set_constants() {
 		$this->hook  = 'edit.php?post_type=event';
-		$this->title = __( 'Get Event Organiser Pro Add-On','eventorganiser' );
-		$this->menu  = __( 'Go Pro','eventorganiser' );
+		$this->title = __( 'Get Event Organiser Pro Add-On', 'eventorganiser' );
+		$this->menu  = __( 'Go Pro', 'eventorganiser' );
 		$this->permissions = 'manage_options';
 		$this->slug  = 'eo-pro';
 	}
