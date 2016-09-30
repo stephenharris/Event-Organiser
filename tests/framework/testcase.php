@@ -127,9 +127,11 @@ class EO_UnitTestCase extends WP_UnitTestCase {
 		foreach ( $annotations['requires'] as $required ) {
 			if ( $target = $this->requiresWordPressVersion( $required ) ) {
 				if ( ! version_compare( get_bloginfo( 'version' ), $target['version'], $target['operator'] ) ) {
-					$this->markTestSkipped(
-						sprintf( 'Requires WordPress %s %s; Running %s.', $target['operator'], $target['version'], get_bloginfo( 'version' ) )
-					);
+					$message = sprintf( 'Requires WordPress %s %s; Running %s.', $target['operator'], $target['version'], get_bloginfo( 'version' ) );
+					if ( $target['message'] ) {
+						$message .= "\n" . $target['message'];
+					}
+					$this->markTestSkipped( $message );
 				}
 			}
 		}
@@ -138,14 +140,14 @@ class EO_UnitTestCase extends WP_UnitTestCase {
 
 
 	protected function requiresWordPressVersion( $string ) {
-		preg_match( '/WordPress (?P<operator><|lt|<=|le|>|gt|>=|ge|==|=|eq|!=|<>|ne)?\s*(?P<version>\d+\.\d+(\.\d+)?(-(stable|beta|b|RC|alpha|a|patch|pl|p))?)/', $string, $matches );
+		preg_match( '/WordPress (?P<operator><|lt|<=|le|>|gt|>=|ge|==|=|eq|!=|<>|ne)?\s*(?P<version>\d+\.\d+(\.\d+)?(-(stable|beta|b|RC|alpha|a|patch|pl|p))?)\s*(?P<message>.*)?/', $string, $matches );
 
 		if ( ! $matches ) {
 			return;
 		}
 
 		$operator = ! empty( $matches['operator'] ) ? $matches['operator'] : '>=';
-		return array( 'version' => $matches['version'], 'operator' => $operator );
+		return array( 'version' => $matches['version'], 'operator' => $operator, 'message' => $matches['message'] );
 	}
 
 }
