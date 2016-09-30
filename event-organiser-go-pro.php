@@ -3,7 +3,7 @@
  * Calendar Admin Page
  */
 if ( ! class_exists( 'EventOrganiser_Admin_Page' ) ) {
-	require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+	require_once( EVENT_ORGANISER_DIR . 'classes/class-eventorganiser-admin-page.php' );
 }
 /**
  * Calendar Admin Page
@@ -56,7 +56,7 @@ class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
 				echo '<p>' . esc_html__( "But that's not all &hellip;", 'eventorganiser' ) . '</p>'; ?>
 			</div>
 
-			<div class="event-organiser-logo" style="background: url('<?php echo EVENT_ORGANISER_URL.'css/images/eobadge.png';?>');height: 134px;width: 130px;color: #666;font-weight: bold;font-size: 14px;text-align: center;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);margin: 0 -5px;position: absolute;top: 0;right: 0;"></div>
+			<div class="event-organiser-logo" style="background: url('<?php echo EVENT_ORGANISER_URL . 'css/images/eobadge.png';?>');height: 134px;width: 130px;color: #666;font-weight: bold;font-size: 14px;text-align: center;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);margin: 0 -5px;position: absolute;top: 0;right: 0;"></div>
 
 			<hr style="color:#CCC;background-color:#CCC;border:0;border-bottom:1px solid #CCC;">
 			
@@ -103,7 +103,7 @@ class EventOrganiser_Pro_Page extends EventOrganiser_Admin_Page
 	static function print_feature( $title, $content, $img ) {
 		?>
 		<div class="eo-feature-section images-stagger-right">
-			<img src="<?php echo esc_url( EVENT_ORGANISER_URL.'css/images/'.$img );?>" alt="">
+			<img src="<?php echo esc_url( EVENT_ORGANISER_URL . 'css/images/' . $img );?>" alt="">
 			<?php echo '<h4>' . esc_html( $title ) . '</h4>'; ?>
 			<p><?php echo esc_html( $content ); ?></p>
 		</div>

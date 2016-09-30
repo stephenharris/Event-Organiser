@@ -99,7 +99,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 			echo $args['before_title'] . esc_html( $widget_title ) . $args['after_title'];
 		}
 
-		echo '<div data-eo-agenda-widget-id="'.esc_attr( $args['widget_id'] ).'" id="' . esc_attr( $args['widget_id'] ) . '_container' . '" class="eo-agenda-widget"></div>';
+		printf( '<div data-eo-agenda-widget-id="%1$s" id="%1$s_container" class="eo-agenda-widget"></div>', esc_attr( $args['widget_id'] ) );
 
 		echo $args['after_widget'];
 	}

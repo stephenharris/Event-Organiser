@@ -50,7 +50,7 @@ function _eventorganiser_set_constants() {
 		define( 'EVENT_ORGANISER_URL', plugin_dir_url( __FILE__ ) );
 	}
 
-	require_once( EVENT_ORGANISER_DIR.'event-organiser-add-ons.php' );
+	require_once( EVENT_ORGANISER_DIR . 'event-organiser-add-ons.php' );
 
 	if ( ! defined( 'EVENT_ORGANISER_BETA_FEATURES' ) ) {
 		define( 'EVENT_ORGANISER_BETA_FEATURES', false );
@@ -102,7 +102,7 @@ function eventorganiser_load_textdomain() {
 
 	//If we got this far, fallback to the plug-in language folder.
 	//We could use load_textdomain - but this avoids touching any more constants.
-	load_plugin_textdomain( 'eventorganiser', false, basename( dirname( __FILE__ ) ).'/languages' );
+	load_plugin_textdomain( 'eventorganiser', false, basename( dirname( __FILE__ ) ) . '/languages' );
 }
 add_action( 'plugins_loaded', 'eventorganiser_load_textdomain' );
 
@@ -198,59 +198,59 @@ function eventorganiser_get_option( $option = false, $default = false ) {
 
 
 /****** Register event post type and event taxonomy******/
-require_once( EVENT_ORGANISER_DIR.'includes/event-organiser-cpt.php' );
-require_once( EVENT_ORGANISER_DIR.'includes/class-eo-walker-taxonomydropdown.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/event-organiser-cpt.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/class-eo-walker-taxonomydropdown.php' );
 
 /****** Register scripts, styles and actions******/
-require_once( EVENT_ORGANISER_DIR.'includes/event-organiser-register.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/event-organiser-register.php' );
 
 /****** Deals with the queries******/
-require_once( EVENT_ORGANISER_DIR.'includes/event-organiser-archives.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/event-organiser-archives.php' );
 
 /****** Deals with importing/exporting & subscriptions******/
-require_once( EVENT_ORGANISER_DIR.'includes/class-event-organiser-im-export.php' );
-require_once( EVENT_ORGANISER_DIR.'includes/class-eo-ical-parser.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/class-event-organiser-im-export.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/class-eo-ical-parser.php' );
 
 if ( is_admin() ) :
-	require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+	require_once( EVENT_ORGANISER_DIR . 'classes/class-eventorganiser-admin-page.php' );
 
 	/****** event editing pages******/
-	require_once( EVENT_ORGANISER_DIR.'event-organiser-edit.php' );
-	require_once( EVENT_ORGANISER_DIR.'event-organiser-manage.php' );
+	require_once( EVENT_ORGANISER_DIR . 'event-organiser-edit.php' );
+	require_once( EVENT_ORGANISER_DIR . 'event-organiser-manage.php' );
 
 	/****** settings, venue and calendar pages******/
-	require_once( EVENT_ORGANISER_DIR.'event-organiser-settings.php' );
-	require_once( EVENT_ORGANISER_DIR.'event-organiser-venues.php' );
-	require_once( EVENT_ORGANISER_DIR.'event-organiser-calendar.php' );
+	require_once( EVENT_ORGANISER_DIR . 'event-organiser-settings.php' );
+	require_once( EVENT_ORGANISER_DIR . 'event-organiser-venues.php' );
+	require_once( EVENT_ORGANISER_DIR . 'event-organiser-calendar.php' );
 
-	require_once( EVENT_ORGANISER_DIR.'event-organiser-debug.php' );
+	require_once( EVENT_ORGANISER_DIR . 'event-organiser-debug.php' );
 
-	require_once( EVENT_ORGANISER_DIR.'event-organiser-go-pro.php' );
+	require_once( EVENT_ORGANISER_DIR . 'event-organiser-go-pro.php' );
 
 endif;
 
 if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 	/****** Ajax actions ******/
-	require_once( EVENT_ORGANISER_DIR.'includes/event-organiser-ajax.php' );
+	require_once( EVENT_ORGANISER_DIR . 'includes/event-organiser-ajax.php' );
 }
 
 /****** Functions ******/
-require_once( EVENT_ORGANISER_DIR.'includes/event-organiser-event-functions.php' );
-require_once( EVENT_ORGANISER_DIR.'includes/event-organiser-venue-functions.php' );
-require_once( EVENT_ORGANISER_DIR.'includes/event-organiser-utility-functions.php' );
-require_once( EVENT_ORGANISER_DIR.'includes/class-eo-admin-notice.php' );
-require_once( EVENT_ORGANISER_DIR.'includes/deprecated.php' );
-require_once( EVENT_ORGANISER_DIR.'includes/event.php' );
-require_once( EVENT_ORGANISER_DIR.'includes/class-eo-extension.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/event-organiser-event-functions.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/event-organiser-venue-functions.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/event-organiser-utility-functions.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/class-eo-admin-notice.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/deprecated.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/event.php' );
+require_once( EVENT_ORGANISER_DIR . 'includes/class-eo-extension.php' );
 
 /****** Templates - note some plug-ins will require this to included admin-side too ******/
 require_once( 'includes/event-organiser-templates.php' );
 require_once( 'includes/class-eo-theme-compatability.php' );
 
 /****** Widgets and Shortcodes ******/
-require_once( EVENT_ORGANISER_DIR.'classes/class-eo-agenda-widget.php' );
-require_once( EVENT_ORGANISER_DIR.'classes/class-eo-event-list-widget.php' );
-require_once( EVENT_ORGANISER_DIR.'classes/class-eo-calendar-widget.php' );
-require_once( EVENT_ORGANISER_DIR.'classes/class-eo-widget-categories.php' );
-require_once( EVENT_ORGANISER_DIR.'classes/class-eo-widget-venues.php' );
-require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-shortcodes.php' );
+require_once( EVENT_ORGANISER_DIR . 'classes/class-eo-agenda-widget.php' );
+require_once( EVENT_ORGANISER_DIR . 'classes/class-eo-event-list-widget.php' );
+require_once( EVENT_ORGANISER_DIR . 'classes/class-eo-calendar-widget.php' );
+require_once( EVENT_ORGANISER_DIR . 'classes/class-eo-widget-categories.php' );
+require_once( EVENT_ORGANISER_DIR . 'classes/class-eo-widget-venues.php' );
+require_once( EVENT_ORGANISER_DIR . 'classes/class-eventorganiser-shortcodes.php' );

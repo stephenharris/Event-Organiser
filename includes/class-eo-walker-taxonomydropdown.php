@@ -17,7 +17,7 @@
  * @link https://core.trac.wordpress.org/ticket/13258
  * @link https://core.trac.wordpress.org/ticket/30306
  */
-class EO_Walker_TaxonomyDropdown extends Walker_CategoryDropdown{
+class EO_Walker_TaxonomyDropdown extends Walker_CategoryDropdown {
 
 	function start_el( &$output, $category, $depth = 0, $args = array(), $id = 0 ) {
 		$pad = str_repeat( '&nbsp;', $depth * 3 );
@@ -45,9 +45,9 @@ class EO_Walker_TaxonomyDropdown extends Walker_CategoryDropdown{
 			esc_attr( $value ),
 			selected( (string) $args['selected'], $value, false )
 		);
-		$output .= $pad.$cat_name;
+		$output .= $pad . $cat_name;
 		if ( $args['show_count'] ) {
-			$output .= '&nbsp;&nbsp;('. $category->count .')';
+			$output .= '&nbsp;&nbsp;(' . $category->count . ')';
 		}
 		$output .= "</option>\n";
 	}

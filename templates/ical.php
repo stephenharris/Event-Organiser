@@ -63,8 +63,8 @@ if ( have_posts() ) :
 			echo 'DTEND;VALUE=DATE:' . $end->format( 'Ymd' ) . "\r\n";
 		} elseif ( $timezone ) {
 			//Non-all-day event with timezone
-			echo 'DTSTART;TZID=' . eo_get_blog_timezone()->getName().':' . $start->format( 'Ymd\THis' ) . "\r\n";
-			echo 'DTEND;TZID=' . eo_get_blog_timezone()->getName().':' . $end->format( 'Ymd\THis' ) . "\r\n";
+			echo 'DTSTART;TZID=' . eo_get_blog_timezone()->getName() . ':' . $start->format( 'Ymd\THis' ) . "\r\n";
+			echo 'DTEND;TZID=' . eo_get_blog_timezone()->getName() . ':' . $end->format( 'Ymd\THis' ) . "\r\n";
 		} else {
 			//Non-all-day event without timezone or with GMT offset
 			$start->setTimezone( $utc_timezone );
@@ -135,7 +135,7 @@ if ( have_posts() ) :
 		$description = str_replace( "\r\n", '', $description ); //Remove new lines
 		$description = str_replace( "\n", '', $description );
 		$description = eventorganiser_escape_ical_text( $description );
-		echo eventorganiser_fold_ical_text( "X-ALT-DESC;FMTTYPE=text/html: $description" ). "\r\n";
+		echo eventorganiser_fold_ical_text( "X-ALT-DESC;FMTTYPE=text/html: $description" ) . "\r\n";
 
 		$cats = get_the_terms( get_the_ID(), 'event-category' );
 		if ( $cats && ! is_wp_error( $cats ) ) :

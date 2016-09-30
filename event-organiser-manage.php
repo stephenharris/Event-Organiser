@@ -205,7 +205,7 @@ function eventorganiser_quick_bulk_edit_box( $column_name, $post_type ) {
 	?>
 	<fieldset class="inline-edit-col-left">
 	<div class="inline-edit-col">
-		<?php wp_nonce_field( 'eventorganiser_event_quick_edit_'.get_current_blog_id(), '_eononce' );?>
+		<?php wp_nonce_field( 'eventorganiser_event_quick_edit_' . get_current_blog_id(), '_eononce' );?>
 		<label class="">
 			<span class="title"><?php echo esc_html( $tax->labels->singular_name ); ?></span>
 			<?php wp_dropdown_categories( $args ); ?>
@@ -227,7 +227,7 @@ function eventorganiser_quick_edit_save( $post_id ) {
 	$request = array_merge( $_GET, $_POST );
 
 	//make sure data came from our quick/bulk box
-	if ( ! isset( $request['_eononce'] ) || ! wp_verify_nonce( $request['_eononce'], 'eventorganiser_event_quick_edit_'.get_current_blog_id() ) ) {
+	if ( ! isset( $request['_eononce'] ) || ! wp_verify_nonce( $request['_eononce'], 'eventorganiser_event_quick_edit_' . get_current_blog_id() ) ) {
 		return;
 	}
 

@@ -29,13 +29,13 @@ get_header(); ?>
 		<?php
 		if ( eo_is_event_archive( 'day' ) ) {
 			//Viewing date archive
-			echo __( 'Events: ','eventorganiser' ).' '.eo_get_event_archive_date( 'jS F Y' );
+			echo __( 'Events: ','eventorganiser' ) . ' ' . eo_get_event_archive_date( 'jS F Y' );
 		} elseif ( eo_is_event_archive( 'month' ) ) {
 			//Viewing month archive
-			echo __( 'Events: ','eventorganiser' ).' '.eo_get_event_archive_date( 'F Y' );
+			echo __( 'Events: ','eventorganiser' ) . ' ' . eo_get_event_archive_date( 'F Y' );
 		} elseif ( eo_is_event_archive( 'year' ) ) {
 			//Viewing year archive
-			echo __( 'Events: ','eventorganiser' ).' '.eo_get_event_archive_date( 'Y' );
+			echo __( 'Events: ','eventorganiser' ) . ' ' . eo_get_event_archive_date( 'Y' );
 		} else {
 			_e( 'Events', 'eventorganiser' );
 		}

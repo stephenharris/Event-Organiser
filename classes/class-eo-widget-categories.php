@@ -71,7 +71,7 @@ class EO_Widget_Categories extends WP_Widget {
 	var event_dropdown = document.getElementById("eo-event-cat");
 	function eventorganiserDropdownChange() {
 		if ( event_dropdown.options[event_dropdown.selectedIndex].value != -1 ) {
-			location.href = "<?php echo home_url().'/?event-category=';?>"+event_dropdown.options[event_dropdown.selectedIndex].value;
+			location.href = "<?php echo home_url() . '/?event-category=';?>"+event_dropdown.options[event_dropdown.selectedIndex].value;
 		}
 	}
 	event_dropdown.onchange = eventorganiserDropdownChange;

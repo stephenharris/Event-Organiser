@@ -2,8 +2,7 @@
 /**
  * Class used to create the event calendar widget
  */
-class EO_Calendar_Widget extends WP_Widget
-{
+class EO_Calendar_Widget extends WP_Widget {
 
 	/*
 	 * Array of default settings
@@ -202,7 +201,7 @@ class EO_Calendar_Widget extends WP_Widget
 		//Ensure a different cache key for those who can and cannot see private blogs
 		$args['_priv'] = current_user_can( 'read_private_events' ) ? '_priv' : false;
 
-		$key = $month->format( 'YM' ) . serialize( $args ).get_locale().$today->format( 'Y-m-d' );
+		$key = $month->format( 'YM' ) . serialize( $args ) . get_locale() . $today->format( 'Y-m-d' );
 		$calendar = get_transient( 'eo_widget_calendar' );
 		if ( ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) && $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ) {
 			return $calendar[$key];
@@ -399,7 +398,7 @@ class EO_Calendar_Widget extends WP_Widget
 			$calendar = array();
 		}
 
-		$calendar[$key] = $before.$title.$head.$foot.$body.$after;
+		$calendar[$key] = $before . $title . $head . $foot . $body . $after;
 
 		set_transient( 'eo_widget_calendar', $calendar, DAY_IN_SECONDS );
 		return $calendar[$key];
