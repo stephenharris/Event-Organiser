@@ -133,7 +133,6 @@ class EO_UnitTestCase extends WP_UnitTestCase {
 				}
 			}
 		}
-
 	}
 
 

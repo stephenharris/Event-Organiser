@@ -178,8 +178,12 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 			
 		$this->assertEquals( $expected, $actual );
 	}
-	
-	public function testSummary(){
+
+	/**
+	 * @requires WordPress < 4.7-alpha
+	 * @see iCalGenerateFeedTest::testSummary() for post 4.7.0 behaviour
+	 */
+	public function testSummaryPre470(){
 
 		$event_id = $this->factory->event->create( array(
 			'start'        => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
@@ -205,8 +209,45 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 		ob_end_clean();
 		
 		//Get expected feed output
-		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/description.ical' );
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/description-pre470.ical' );
 		
+		$this->assertEquals( $expected, $actual );
+	}
+
+	/**
+	 * This test expects the summary to be correctly wrapped in p-tags.
+	 * Prior to WordPress 4.7.0 there was a bug which resulted in malformed HTML (unclosed <p> tag).
+	 * @requires WordPress >= 4.7-alpha
+	 * @link https://core.trac.wordpress.org/ticket/4857
+	 */
+	public function testSummary(){
+
+		$event_id = $this->factory->event->create( array(
+			'start'        => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
+			'end'          => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
+			'post_title'   => 'The Event Title',
+			'post_content' => "This is a <strong>bold line.</strong> \n\n This is a <span style='text-decoration: underline'> underlined line </span>"
+								. "<span style='color: #ff0000'>This is red.</span>\n"
+								. "<em>This is a new line in italics</em>"
+								. "<p style='color:#0000ff;text-align:right;'>Aligned right and blue</p>",
+			'post_excerpt' => false,
+			'post_status'  => 'publish',
+			'post_date'    => '2015-02-18 17:30:00',
+		) );
+
+		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
+
+		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
+
+		//Get actual feed output
+		ob_start();
+		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
+		$actual = ob_get_contents();
+		ob_end_clean();
+
+		//Get expected feed output
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/description.ical' );
+
 		$this->assertEquals( $expected, $actual );
 	}
 	
