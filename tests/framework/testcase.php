@@ -110,4 +110,43 @@ class EO_UnitTestCase extends WP_UnitTestCase {
 	
 		return $id;
 	}
+
+	protected function checkRequirements() {
+		parent::checkRequirements();
+
+		$annotations = $this->getAnnotations();
+		//$this->getAnnotations returns an array indexed by 'class' and 'method'
+		//with annotations for the class and method respectively. We don't care about the location of the annotation
+		//so we just merge them:
+		$annotations = array_merge( $annotations['class'], $annotations['method'] );
+
+		if ( empty($annotations['requires']) ) {
+			return;
+		}
+
+		foreach ( $annotations['requires'] as $required ) {
+			if ( $target = $this->requiresWordPressVersion( $required ) ) {
+				if ( ! version_compare( get_bloginfo( 'version' ), $target['version'], $target['operator'] ) ) {
+					$this->markTestSkipped(
+						sprintf( 'Requires WordPress %s %s; Running %s.', $target['operator'], $target['version'], get_bloginfo( 'version' ) )
+					);
+				}
+			}
+		}
+
+	}
+
+
+
+	protected function requiresWordPressVersion( $string ) {
+		preg_match( '/WordPress (?P<operator><|lt|<=|le|>|gt|>=|ge|==|=|eq|!=|<>|ne)?\s*(?P<version>\d+\.\d+(\.\d+)?(-(stable|beta|b|RC|alpha|a|patch|pl|p))?)/', $string, $matches );
+
+		if ( ! $matches ) {
+			return;
+		}
+
+		$operator = ! empty( $matches['operator'] ) ? $matches['operator'] : '>=';
+		return array( 'version' => $matches['version'], 'operator' => $operator );
+	}
+
 }
