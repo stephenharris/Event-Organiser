@@ -183,7 +183,7 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
 * ### Examples
 * Inside the loop, you can output the start date of event (occurrence)
 * <code>
-*       <php echo eo_get_the_start( 'jS M Y' ); ?>
+*       <?php echo eo_get_the_start( 'jS M Y' ); ?>
 * </code> 
 * Get the start date of the event with id 7 and occurrence ID 3
 * <code>
