@@ -1562,6 +1562,7 @@ function eo_get_event_meta_list( $event_id = 0 ) {
 
 /**
  * Retrieves the occurrence ID of the 'current' (global) event ($post)
+ * @since 2.13
  * @return int The current event's occurrence ID.
  */
 function eo_get_the_occurrence_id(){
@@ -1571,6 +1572,7 @@ function eo_get_the_occurrence_id(){
 
 /**
  * A helper function which can replace get_permalinks() to be occurrence-aware
+ * @since 2.13
  * @param int $event_id      The event ID. Uses current event if not provided.
  * @param int $occurrence_id The occurrence ID. Uses current event if not provided.
  * @return string The event permalink
