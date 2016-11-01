@@ -214,6 +214,8 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
  *     }
  * </code>
  *
+ * @since 3.0.0 Third argument repurposed for the occurrence ID. Fourth argument can still be used, but discouraged.
+ * @since 1.5.6 Third argument deprecated, use fourth argument to pass occurrence ID.
  * @since 1.0.0
  * @package event-date-functions
  *
@@ -223,7 +225,7 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
  * @param int $deprecated (Was) the occurrence id, supply this as the third argument
  * @return string|DateTime the start date formated to given format, as accepted by PHP date or a DateTime object if DATETIMEOBJ is given as format.
  */
-function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
+function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ) {
 	global $post;
 	$event = $post;
 
@@ -331,6 +333,9 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
 
 /**
  * Echos the start date of occurrence of event
+ *
+ * @since 3.0.0 Third argument repurposed for the occurrence ID. Fourth argument can still be used, but discouraged.
+ * @since 1.5.6 Third argument deprecated, use fourth argument to pass occurrence ID.
  * @since 1.0.0
  * @uses eo_get_the_start()
  * @package event-date-functions
@@ -340,65 +345,67 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
  * @param int $occurrence_id The occurrence ID
  * @param int $deprecated Deprecated, use the third argument.
  */
-function eo_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
+function eo_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ) {
 	echo eo_get_the_start( $format, $post_id, $occurrence_id, $deprecated );
 }
 
 
 /**
-* Returns the end date of occurrence of event. 
-* 
-* If used inside the loop, with no id no set, returns end date of
-* current event occurrence.
-* 
-* **3.0.0 Update:** This function used to accept 4 arguments (versions 1.5.6 - 2.11.1), with 
-* the third (null) argument deprecated. While the old behaviour shall still work, it is deprecated 
-* so you you should now pass a maximum of three arguments, as shown below, with the third argument
-* specifying the occurrence ID.
-* 
-* ### Examples
-* Inside the loop, you can output the end date of event (occurrence)
-* <code>
-*       <php echo eo_get_the_end( 'jS M Y' ); ?>
-* </code> 
-* Get the end date of the event with id 7 and occurrence ID 3
-* <code>
-*       <?php $date = eo_get_the_end( 'jS M Y', 7, 3 ); ?>
-* </code>
-* Print a list of upcoming events with their start and end date
-* <code>
-*     //Get upcoming events
-*     $events = eo_get_events(array(
-*          'numberposts'        => 5,
-*          'events_start_after' => 'today',
-*          'showpastevents'     => true,
-*       ));
-*
-*     if( $events ){
-*         echo '<ul>';
-*         foreach( $events as $event ){
-*           printf("<li><a href='%s' >%s</a> from %s to %s </li>",
-*                get_the_permalink( $post->ID ),
-*                get_the_title( $post->ID ),
-*                eo_get_the_start( 'jS F Y', $post->ID, $post->occurrence_id ),
-*                eo_get_the_end( 'jS F Y', $post->ID, $post->occurrence_id )
-*           );
-*          }
-*         echo '</ul>';
-*     }else{
-*         echo 'No Upcoming Events';
-*     }
-* </code>
-* 
-* @since 1.0.0
-* @package event-date-functions
-* @param string $format String of format as accepted by PHP date
-* @param int $post_id The event (post) ID. Uses current event if empty.
-* @param int $occurrence_id  The occurrence ID
-* @param int $deprecated (Was) the occurrence id, supply this as the third argument
-* @return string|DateTime the end date formated to given format, as accepted by PHP date
+ * Returns the end date of occurrence of event.
+ *
+ * If used inside the loop, with no id no set, returns end date of
+ * current event occurrence.
+ *
+ * **3.0.0 Update:** This function used to accept 4 arguments (versions 1.5.6 - 2.11.1), with
+ * the third (null) argument deprecated. While the old behaviour shall still work, it is deprecated
+ * so you you should now pass a maximum of three arguments, as shown below, with the third argument
+ * specifying the occurrence ID.
+ *
+ * ### Examples
+ * Inside the loop, you can output the end date of event (occurrence)
+ * <code>
+ *       <?php echo eo_get_the_end( 'jS M Y' ); ?>
+ * </code>
+ * Get the end date of the event with id 7 and occurrence ID 3
+ * <code>
+ *       <?php $date = eo_get_the_end( 'jS M Y', 7, 3 ); ?>
+ * </code>
+ * Print a list of upcoming events with their start and end date
+ * <code>
+ *     //Get upcoming events
+ *     $events = eo_get_events(array(
+ *          'numberposts'        => 5,
+ *          'events_start_after' => 'today',
+ *          'showpastevents'     => true,
+ *       ));
+ *
+ *     if( $events ){
+ *         echo '<ul>';
+ *         foreach( $events as $event ){
+ *           printf("<li><a href='%s' >%s</a> from %s to %s </li>",
+ *                get_the_permalink( $post->ID ),
+ *                get_the_title( $post->ID ),
+ *                eo_get_the_start( 'jS F Y', $post->ID, $post->occurrence_id ),
+ *                eo_get_the_end( 'jS F Y', $post->ID, $post->occurrence_id )
+ *           );
+ *          }
+ *         echo '</ul>';
+ *     }else{
+ *         echo 'No Upcoming Events';
+ *     }
+ * </code>
+ *
+ * @since 3.0.0 Third argument repurposed for the occurrence ID. Fourth argument can still be used, but discouraged.
+ * @since 1.5.6 Third argument deprecated, use fourth argument to pass occurrence ID.
+ * @since 1.0.0
+ * @package event-date-functions
+ * @param string $format String of format as accepted by PHP date
+ * @param int $post_id The event (post) ID. Uses current event if empty.
+ * @param int $occurrence_id  The occurrence ID
+ * @param int $deprecated (Was) the occurrence id, supply this as the third argument
+ * @return string|DateTime the end date formated to given format, as accepted by PHP date
  */
-function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0  ){
+function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0  ) {
 	global $post;
 	$event = $post;
 
@@ -431,17 +438,19 @@ function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $d
 }
 
 /**
-* Echos the end date of occurrence of event
+ * Echos the end date of occurrence of event
+ * @since 3.0.0 Third argument repurposed for the occurrence ID. Fourth argument can still be used, but discouraged.
+ * @since 1.5.6 Third argument deprecated, use fourth argument to pass occurrence ID.
  * @since 1.0.0
  * @uses eo_get_the_end()
-* @package event-date-functions
- * 
-* @param string $format String of format as accepted by PHP date
-* @param int $post_id Post ID of the event
-* @param int $occurrence_id The occurrence ID
-* @param int $occurrence_id Deprecated, use the third argument.
+ * @package event-date-functions
+ *
+ * @param string $format String of format as accepted by PHP date
+ * @param int $post_id Post ID of the event
+ * @param int $occurrence_id The occurrence ID
+ * @param int $occurrence_id Deprecated, use the third argument.
  */
-function eo_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
+function eo_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ) {
 	echo eo_get_the_end( $format, $post_id, $occurrence_id, $deprecated );
 }
 
