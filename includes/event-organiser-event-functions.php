@@ -666,31 +666,31 @@ function eo_schedule_start($format='d-m-Y',$post_id=0){
 
 
 /**
-* Returns the formated date of the last occurrence of an event
-* 
-* ### Examples
-* Inside the loop, you can output the last start date of event
-* <code>
-* <?php echo 'This event will run or the last time on ' . eo_get_schedule_last( 'jS M Y' ); ?>
-* </code> 
-* 
-* Print the last start date of the event with id 7
-* <code>
-* <?php echo eo_get_schedule_last( 'jS M Y', 7 ); ?>
-* </code>
-* 
-* @since 1.4.0
-* @package event-date-functions
-*
-* @param string $format The format to use, using PHP Date format
-* @param int $post_id The event (post) ID. Uses current event if empty.
-* @return string The formatted date 
+ * Returns the formated date of the last occurrence of an event
+ *
+ * ### Examples
+ * Inside the loop, you can output the last start date of event
+ * <code>
+ * <?php echo 'This event will run for the last time on ' . eo_get_schedule_last( 'jS M Y' ); ?>
+ * </code>
+ *
+ * Print the last start date of the event with id 7
+ * <code>
+ * <?php echo eo_get_schedule_last( 'jS M Y', 7 ); ?>
+ * </code>
+ *
+ * @since 1.4.0
+ * @package event-date-functions
+ *
+ * @param string $format The format to use, using PHP Date format
+ * @param int $post_id The event (post) ID. Uses current event if empty.
+ * @return string The formatted date
  */
-function eo_get_schedule_last($format='d-m-Y',$post_id=0){
-	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
-	$schedule = eo_get_event_schedule($post_id);
+function eo_get_schedule_last( $format = 'd-m-Y', $post_id = 0 ) {
+	$post_id = (int) ( empty( $post_id ) ? get_the_ID() : $post_id );
+	$schedule = eo_get_event_schedule( $post_id );
 	$schedule_last = $schedule['schedule_last'];
-	
+
 	/**
 	 * Filters the value returned by `eo_get_schedule_last()`
 	 *
@@ -699,7 +699,7 @@ function eo_get_schedule_last($format='d-m-Y',$post_id=0){
 	 * @param string $format The format the date should be returned in
 	 * @param int $post_id Post ID of the event
 	 */
-	$formatted_date = apply_filters('eventorganiser_get_schedule_last', eo_format_datetime( $schedule_last, $format ), $schedule_last, $format, $post_id );
+	$formatted_date = apply_filters( 'eventorganiser_get_schedule_last', eo_format_datetime( $schedule_last, $format ), $schedule_last, $format, $post_id );
 	return $formatted_date;
 }
 
