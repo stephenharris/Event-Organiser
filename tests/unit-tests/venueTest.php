@@ -97,16 +97,11 @@ class venueTest extends EO_UnitTestCase
 	/**
 	 * This test checks that the callback to the split_shared_term
 	 * hook (handles venues being split is doing its job.
+	 *
+	 * @requires WordPress >= 4.2-alpha Term splitting did not happen before 4.2
 	 */
 	public function testPreSplitTerms() {
 		global $wpdb;
-		
-		if( version_compare( get_bloginfo( 'version' ), '4.2-alpha-31007-src', '<' ) ){
-			$this->markTestSkipped(
-				sprintf( 'This test applies only to 4.2-alpha-31007-src+, running %s', get_bloginfo( 'version' ) )
-			);
-			return;
-		}
 	
 		register_taxonomy( 'wptests_tax', 'event' );
 
@@ -151,17 +146,12 @@ class venueTest extends EO_UnitTestCase
 	/**
 	 * Check that the upgrade routine run for users updating EO after
 	 * updating to WP 4.2 is able to recover 'lost' data.
+	 *
+	 * @requires WordPress >= 4.2-alpha Testing post-WP-4.2 upgrade routine
 	 */
 	public function testPostSplitTermsUpgrade() {
 		global $wpdb;
-	
-		if( version_compare( get_bloginfo( 'version' ), '4.2-alpha-31007-src', '<' ) ){
-			$this->markTestSkipped(
-					sprintf( 'This test applies only to 4.2-alpha-31007-src+, running %s', get_bloginfo( 'version' ) )
-			);
-			return;
-		}
-		
+
 		remove_action( 'split_shared_term', '_eventorganiser_handle_split_shared_terms', 10 );
 	
 		register_taxonomy( 'wptests_tax', 'event' );

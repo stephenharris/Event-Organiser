@@ -9,8 +9,7 @@ if ( ! class_exists( 'EventOrganiser_Admin_Page' ) ) {
 /**
  * @ignore
  */
-class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
-{
+class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page {
 	/**
 	 * This sets the calendar page variables
 	 */
@@ -24,9 +23,9 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 
 	function add_page() {
 		$this->page = add_submenu_page( $this->hook, $this->title, $this->menu, $this->permissions, $this->slug, array( $this, 'render_page' ), 10 );
-		add_action( 'load-'.$this->page, array( $this, 'page_actions' ), 9 );
-		add_action( 'admin_print_scripts-'.$this->page, array( $this, 'page_styles' ), 10 );
-		add_action( 'admin_print_styles-'.$this->page, array( $this, 'page_scripts' ), 10 );
+		add_action( 'load-' . $this->page, array( $this, 'page_actions' ), 9 );
+		add_action( 'admin_print_scripts-' . $this->page, array( $this, 'page_styles' ), 10 );
+		add_action( 'admin_print_styles-' . $this->page, array( $this, 'page_scripts' ), 10 );
 
 		if ( eventorganiser_get_option( 'hide_addon_page' ) ) {
 			remove_submenu_page( 'edit.php?post_type=event', $this->slug );
@@ -86,8 +85,6 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 	}
 
 	function display() {
-		$plugins = get_plugins();
-		$plugin = $plugins['event-organiser/event-organiser.php'];
 		?>
 		<div class="wrap">  
 			
@@ -95,7 +92,7 @@ class EventOrganiser_Add_Ons_Page extends EventOrganiser_Admin_Page
 
 			<div class="eo-addon-text">
 				<?php
-				echo '<p>'.esc_html__( 'Event Organiser offers a range of extension which add additional features to the plug-in.', 'eventorganiser' ) . '</p>';
+				echo '<p>' . esc_html__( 'Event Organiser offers a range of extension which add additional features to the plug-in.', 'eventorganiser' ) . '</p>';
 				$settings_link = esc_url( admin_url( 'options-general.php?page=event-settings' ) );
 				?>
 				<label><input type="checkbox" id="eo-submenu-toggle" <?php checked( eventorganiser_get_option( 'hide_addon_page' ), 1 );?>/>
