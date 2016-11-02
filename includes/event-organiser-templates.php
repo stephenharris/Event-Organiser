@@ -117,7 +117,7 @@ function eo_locate_template( $template_names, $load = false, $require_once = tru
  */
 function eo_register_style( $handle, $src, $deps = array(), $ver = false, $media = 'all' ) {
 	$src = apply_filters( 'eventorganiser_stylesheet_src', $src, $handle );
-	$src = apply_filters( 'eventorganiser_stylesheet_src_'.$handle, $src );
+	$src = apply_filters( 'eventorganiser_stylesheet_src_' . $handle, $src );
 	return wp_register_style( $handle, $src, $deps, $ver, $media );
 }
 
@@ -175,11 +175,11 @@ function eo_is_event_archive( $type = false ) {
 
 	switch ( $type ) {
 		case 'year':
-			return ( preg_match( '/\d{4}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate.'-01-01' ) );
+			return ( preg_match( '/\d{4}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate . '-01-01' ) );
 			break;
 
 		case 'month':
-			return ( preg_match( '/^\d{4}-\d{2}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate.'-01' ) );
+			return ( preg_match( '/^\d{4}-\d{2}$/', $ondate ) && eo_check_datetime( 'Y-m-d', $ondate . '-01' ) );
 			break;
 
 		case 'day':
@@ -329,5 +329,5 @@ function _eventorganiser_single_event_content( $content ) {
 	 */
 	$event_details = apply_filters( 'eventorganiser_pre_event_content', $event_details, $content );
 
-	return $event_details.$content;
+	return $event_details . $content;
 }

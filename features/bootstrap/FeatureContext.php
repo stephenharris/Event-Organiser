@@ -5,7 +5,7 @@ use Behat\Behat\Context\Context,
 	Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Testwork\Tester\Result\TestResult;
 use Behat\Gherkin\Node\TableNode;
-use Johnbillion\WordPressExtension\Context\WordPressContext;
+use StephenHarris\WordPressBehatExtension\Context\WordPressContext;
 use Behat\Mink\Exception\ElementNotFoundException,
 	Behat\Mink\Exception\ExpectationException;
 
@@ -223,7 +223,6 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			}
 		}
 	}
-
 
 	/**
 	 * @Then I should see the following in the repeated :element element

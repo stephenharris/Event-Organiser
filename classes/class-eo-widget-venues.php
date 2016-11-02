@@ -74,7 +74,7 @@ class EO_Widget_Venues extends WP_Widget {
 	function eventorganiserVenueDropdownChange() {
 		console.log( event_venue_dropdown.options[event_venue_dropdown.selectedIndex].value);
 		if ( event_venue_dropdown.options[event_venue_dropdown.selectedIndex].value != -1 ) {
-			location.href = "<?php echo home_url().'/?event-venue=';?>"+event_venue_dropdown.options[event_venue_dropdown.selectedIndex].value;
+			location.href = "<?php echo home_url() . '/?event-venue=';?>"+event_venue_dropdown.options[event_venue_dropdown.selectedIndex].value;
 		}
 	}
 	event_venue_dropdown.onchange = eventorganiserVenueDropdownChange;

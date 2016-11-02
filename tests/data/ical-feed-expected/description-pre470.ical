@@ -19,8 +19,8 @@ DESCRIPTION: This is a bold line. This is a underlined line This is red. Th
 X-ALT-DESC;FMTTYPE=text/html: <p>This is a <strong>bold line.</strong> </p>
  <p> This is a <span style='text-decoration: underline'> underlined line </s
  pan><span style='color: #ff0000'>This is red.</span><br /><em>This is a new
-  line in italics</em></p><p style='color:#0000ff\;text-align:right'>Aligned
-  right and blue</p>
+  line in italics</em><p style='color:#0000ff\;text-align:right'>Aligned rig
+ ht and blue</p>
 URL;VALUE=URI:http://example.org/?event=the-event-title
 END:VEVENT
 END:VCALENDAR

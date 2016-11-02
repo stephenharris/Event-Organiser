@@ -6,7 +6,7 @@ use Behat\Behat\Context\ClosuredContextInterface,
 	Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\TableNode;
 
-class WordPressAdminContext extends Johnbillion\WordPressExtension\Context\WordPressAdminContext implements Context, SnippetAcceptingContext {
+class WordPressAdminContext extends StephenHarris\WordPressBehatExtension\Context\WordPressAdminContext implements Context, SnippetAcceptingContext {
 
 	/**
 	 * @Then the event summary should read :summary

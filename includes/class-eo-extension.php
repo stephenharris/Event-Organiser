@@ -250,7 +250,7 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 
 		public function plugin_update_message( $plugin_data, $r ) {
 
-			if ( is_wp_error( $this->is_valid( get_site_option( $this->id.'_license' ) ) ) ) {
+			if ( is_wp_error( $this->is_valid( get_site_option( $this->id . '_license' ) ) ) ) {
 				printf(
 					'<br> The license key you have entered is invalid.
 				<a href="%s"> Purchase a license key </a> or enter a valid license key <a href="%s">here</a>',
@@ -262,12 +262,12 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 
 		public function add_multisite_field() {
 
-			register_setting( 'settings-network', $this->id.'_license' );
+			register_setting( 'settings-network', $this->id . '_license' );
 
 			add_settings_section( 'eo-ntw-settings', 'Event Organiser Extension Licenses', '__return_false', 'settings-network' );
 
 			add_settings_field(
-				$this->id.'_license',
+				$this->id . '_license',
 				$this->label,
 				array( $this, 'field_callback' ),
 				'settings-network',
@@ -305,7 +305,7 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 
 		public function add_field() {
 
-			register_setting( 'eventorganiser_general', $this->id.'_license' );
+			register_setting( 'eventorganiser_general', $this->id . '_license' );
 
 			if ( self::eo_is_after( '2.3' ) ) {
 				$section_id = 'general_licence';
@@ -314,7 +314,7 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 			}
 
 			add_settings_field(
-				$this->id.'_license',
+				$this->id . '_license',
 				$this->label,
 				array( $this, 'field_callback' ),
 				'eventorganiser_general',
@@ -325,7 +325,7 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 
 		public function field_callback() {
 
-			$key = get_site_option( $this->id.'_license' );
+			$key = get_site_option( $this->id . '_license' );
 			$check = $this->is_valid( $key );
 			$valid = ! is_wp_error( $check );
 
@@ -369,12 +369,12 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 			}
 
 			eventorganiser_text_field( array(
-				'label_for' => $this->id.'_license',
-				'value' => $key,
-				'name' => $this->id.'_license',
-				'style' => $valid ? 'background:#D7FFD7' : 'background:#FFEBE8',
-				'class' => 'regular-text',
-				'help' => $message,
+				'label_for' => $this->id . '_license',
+				'value'     => $key,
+				'name'      => $this->id . '_license',
+				'style'     => $valid ? 'background:#D7FFD7' : 'background:#FFEBE8',
+				'class'     => 'regular-text',
+				'help'      => $message,
 			) );
 
 		}
@@ -454,7 +454,7 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 		 */
 		public function get_remote_plugin_info( $action = 'plugin_info' ) {
 
-			$key = wp_hash( 'plm_'.$this->id . '_' . $action . '_' . $this->slug );
+			$key = wp_hash( 'plm_' . $this->id . '_' . $action . '_' . $this->slug );
 			if ( false !== ( $plugin_obj = get_site_transient( $key ) ) && ! $this->force_request() ) {
 				return $plugin_obj;
 			}
@@ -464,7 +464,7 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 				'timeout' => 45,
 				'body' => array(
 					'plm-action' => $action,
-					'license'    => get_site_option( $this->id.'_license' ),
+					'license'    => get_site_option( $this->id . '_license' ),
 					'product'    => $this->slug,
 					'domain'     => isset( $_SERVER['SERVER_NAME'] ) ? $_SERVER['SERVER_NAME'] : false,
 				),

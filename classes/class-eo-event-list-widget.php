@@ -2,7 +2,7 @@
 /**
  * Class used to create the event list widget
  */
-class EO_Event_List_Widget extends WP_Widget{
+class EO_Event_List_Widget extends WP_Widget {
 
 	/*
 	 * Array of default settings
@@ -102,18 +102,18 @@ class EO_Event_List_Widget extends WP_Widget{
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'eventorganiser' ); ?>: </label>
 			<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />	
 		</p>
-  		<p>
-  			<label for="<?php echo $this->get_field_id( 'numberposts' ); ?>"><?php _e( 'Number of events', 'eventorganiser' );?>:   </label>
+			<p>
+				<label for="<?php echo $this->get_field_id( 'numberposts' ); ?>"><?php _e( 'Number of events', 'eventorganiser' );?>:   </label>
 	  		<input id="<?php echo $this->get_field_id( 'numberposts' ); ?>" name="<?php echo $this->get_field_name( 'numberposts' ); ?>" type="number" size="3" value="<?php echo intval( $instance['numberposts'] );?>" />
 		</p>
-  		<p>
-  			<label for="<?php echo $this->get_field_id( 'event-category' ); ?>"><?php _e( 'Event categories', 'eventorganiser' ); ?>:   </label>
+			<p>
+				<label for="<?php echo $this->get_field_id( 'event-category' ); ?>"><?php _e( 'Event categories', 'eventorganiser' ); ?>:   </label>
 	  		<input  id="<?php echo $this->get_field_id( 'event-category' ); ?>" class="widefat" name="<?php echo $this->get_field_name( 'event-category' ); ?>" type="text" value="<?php echo esc_attr( $instance['event-category'] );?>" />
-   			<em><?php _e( 'List category slug(s), seperate by comma. Leave blank for all', 'eventorganiser' ); ?></em>
+				<em><?php _e( 'List category slug(s), seperate by comma. Leave blank for all', 'eventorganiser' ); ?></em>
 		</p>
 		<?php
 		if ( taxonomy_exists( 'event-venue' ) ) { ?>
-  			<p>
+				<p>
 	  			<label for="<?php echo $this->get_field_id( 'venue' ); ?>"><?php _e( 'Venue:', 'eventorganiser' ); ?></label>
 				<?php $venues = get_terms( 'event-venue', array( 'hide_empty' => false ) );?>
 				<select id="<?php echo $this->get_field_id( 'venue' ); ?>" name="<?php echo $this->get_field_name( 'venue' ); ?>" type="text">
@@ -125,7 +125,7 @@ class EO_Event_List_Widget extends WP_Widget{
 			</p>
 		<?php } ?>
 		<p>
-  			<label for="<?php echo $this->get_field_id( 'scope' ); ?>"><?php _e( 'Show:', 'eventorganiser' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'scope' ); ?>"><?php _e( 'Show:', 'eventorganiser' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'scope' ); ?>" name="<?php echo $this->get_field_name( 'scope' ); ?>" >
 				<?php
 				foreach ( $this->get_event_intervals() as $scope_id => $scope ) {
@@ -141,7 +141,7 @@ class EO_Event_List_Widget extends WP_Widget{
 		</p>
 		      
 		<p>
-  			<label for="<?php echo $this->get_field_id( 'orderby' ); ?>"><?php _e( 'Order by', 'eventorganiser' ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'orderby' ); ?>"><?php _e( 'Order by', 'eventorganiser' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'orderby' ); ?>" name="<?php echo $this->get_field_name( 'orderby' ); ?>">
 				<option value="eventstart" <?php selected( $instance['orderby'], 'eventstart' ); ?>><?php _e( 'Start date', 'eventorganiser' ); ?></option>
 				<option value="title" <?php selected( $instance['orderby'], 'title' );?>><?php _e( 'Title', 'eventorganiser' ); ?></option>
@@ -172,12 +172,12 @@ class EO_Event_List_Widget extends WP_Widget{
 			?>
 			</label>
 			<input id="<?php echo esc_attr( $this->get_field_id( 'template' ) ); ?>" class="widefat" name="<?php echo esc_attr( $this->get_field_name( 'template' ) ); ?>" type="text" value="<?php echo esc_attr( $instance['template'] );?>" />
-  		</p>
-  
-  		<p>
-    		<label for="<?php echo $this->get_field_id( 'no_events' ); ?>"><?php _e( "'No events' message", 'eventorganiser' ); ?>  </label>
+			</p>
+	
+			<p>
+			<label for="<?php echo $this->get_field_id( 'no_events' ); ?>"><?php _e( "'No events' message", 'eventorganiser' ); ?>  </label>
 	  		<input  id="<?php echo $this->get_field_id( 'no_events' ); ?>" class="widefat" name="<?php echo $this->get_field_name( 'no_events' ); ?>" type="text" value="<?php echo esc_attr( $instance['no_events'] );?>" />
-  		</p>
+			</p>
 		<?php
 	}
 
@@ -299,7 +299,7 @@ function eventorganiser_list_events( $query, $args = array(), $echo = 1 ) {
 	if ( $template_file || empty( $template ) ) {
 		ob_start();
 		if ( empty( $template_file ) ) {
-			$template_file = eo_locate_template( array( $eo_event_loop_args['type'].'-event-list.php', 'event-list.php' ), true, false );
+			$template_file = eo_locate_template( array( $eo_event_loop_args['type'] . '-event-list.php', 'event-list.php' ), true, false );
 		} else {
 			require( $template_file );
 		}
@@ -311,8 +311,8 @@ function eventorganiser_list_events( $query, $args = array(), $echo = 1 ) {
 		//Using the 'placeholder' template
 		$no_events = isset( $args['no_events'] ) ? $args['no_events'] : '';
 
-		$id        = ( ! empty( $args['id'] ) ? 'id="'.esc_attr( $args['id'] ).'"' : '' );
-		$container = '<ul '.$id.' class="%2$s">%1$s</ul>';
+		$id        = ( ! empty( $args['id'] ) ? 'id="' . esc_attr( $args['id'] ) . '"' : '' );
+		$container = '<ul ' . $id . ' class="%2$s">%1$s</ul>';
 
 		$html = '';
 		if ( $eo_event_loop->have_posts() ) {

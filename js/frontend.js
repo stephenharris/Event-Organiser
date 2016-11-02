@@ -5,7 +5,7 @@ var eventorganiser = eventorganiser || {};
 
 (function ($) {
 jQuery(document).ready(function () {
-	
+
 	function _eventorganiser_get_where( collection, field, value ) {
 		var object;
 		for (  object in collection ){
@@ -18,26 +18,26 @@ jQuery(document).ready(function () {
 
 	/* Fullcalendar */
 	function eventorganiser_filter_markup( options ){
-		
-		//Are we whitelisting categories 
-		var whitelist = ( typeof options.whitelist !== "undefined" && options.whitelist ? options.whitelist.split(',') : false );   
-		
+
+		//Are we whitelisting categories
+		var whitelist = ( typeof options.whitelist !== "undefined" && options.whitelist ? options.whitelist.split(',') : false );
+
 		var html="<select class='eo-fc-filter eo-fc-filter-"+options.type+"' data-filter-type='"+options.type+"'>";
 		html+="<option value=''>"+options.select_none+"</option>";
-		
+
 		var term;
 		for ( var term_id in options.terms ){
-			
+
 			term = options.terms[term_id];
-			
+
 			//If whitelist check term (or ancestor of) belongs to white list.
 			if( whitelist ){
 				var include_in_dropdown = false;
-				
+
 				if( $.inArray( term.slug, whitelist ) !== -1 ){
 					include_in_dropdown = true;
 				}
-				
+
 				//Check ancestors
 				var parent = term;
 				while( !include_in_dropdown && parent.parent > 0 ){
@@ -46,29 +46,29 @@ jQuery(document).ready(function () {
 						include_in_dropdown = true;
 					}
 				}
-				
+
 				if( !include_in_dropdown ){
 					continue;
 				}
 			}
-			
+
 			html+= "<option value='"+term.slug+"'>"+term.name+"</option>";
 		}
 		html+="</select>";
 
 		var element = $("<span class='fc-header-dropdown filter-'"+options.type+"></span>");
 		element.append(html);
-		return element;	
+		return element;
 	}
-	
+
 	$(".eo-fullcalendar").on( 'change', '.eo-fc-filter', function () {
 		$(".eo-fullcalendar").fullCalendar( 'rerenderEvents' );
 	});
-	
+
 	function eventorganiser_mini_calendar(){
 		return $("<span class='fc-header-goto'><input type='hidden' class='eo-mini-calendar'/></span>");
 	}
-			
+
 	if ($(".eo-fullcalendar").length > 0) {
 		var loadingTimeOut;
 		var calendars = eventorganiser.calendars;
@@ -91,12 +91,12 @@ jQuery(document).ready(function () {
 			if (typeof calendars[i].venue === "undefined") {
 				calendars[i].venue ='';
 			}
-			
+
 			var args = {
 				id: calendar,
-				
+
 				defaultDate: calendars[i].defaultdate ? calendars[i].defaultdate : undefined,
-				
+
 				category: calendars[i].event_category,
 				venue: calendars[i].event_venue,
 				tag: calendars[i].event_tag,
@@ -130,7 +130,7 @@ jQuery(document).ready(function () {
 					},
 					'goto': 	eventorganiser_mini_calendar
 				},
-				
+
 				theme: calendars[i].theme,
 				isRTL: calendars[i].isrtl,
 				editable: false,
@@ -147,7 +147,7 @@ jQuery(document).ready(function () {
 				minTime: calendars[i].mintime,
 				maxTime:calendars[i].maxtime,
 				eventColor: "#1e8cbe",
-				
+
 				timeFormatphp: calendars[i].timeformatphp,
 				timeFormat: calendars[i].timeformat,
 				columnFormat: {
@@ -160,15 +160,15 @@ jQuery(document).ready(function () {
 					week: calendars[i].titleformatweek,
 					day: calendars[i].titleformatday
 				},
-				
+
 				header: {
 					left: calendars[i].headerleft,
 					center: calendars[i].headercenter,
 					right: calendars[i].headerright
 				},
-				
+
 				eventRender: function ( event, element, view ) {
-						
+
 					var category = $(view.calendar.options.id).find(".eo-fc-filter-category").val();
 					var venue    = $(view.calendar.options.id).find(".eo-fc-filter-venue").val();
 					var tag      = $(view.calendar.options.id).find(".eo-fc-filter-tag").val();
@@ -226,7 +226,7 @@ jQuery(document).ready(function () {
                         }
 					});
 				},
-				
+
 				buttonText: {
                     today: 	EOAjaxFront.locale.today,
                     month: 	EOAjaxFront.locale.month,
@@ -251,9 +251,9 @@ jQuery(document).ready(function () {
                 		$(this).fullCalendar( 'changeView', view.calendar.options.previousView );
                 	}
                 },
-                	
+
                 lazyFetching: "true",
-                events: 
+                events:
                 	function (start, end, timezone, callback) {
                 		var options = this.options;
                 		var request = {
@@ -280,7 +280,7 @@ jQuery(document).ready(function () {
                 		}
 
                 		request = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_request', request, start, end, timezone, options );
-                			
+
                 		$.ajax({
                 			url: eventorganiser.ajaxurl + "?action=eventorganiser-fullcal",
                 			dataType: "JSON",
@@ -288,20 +288,20 @@ jQuery(document).ready(function () {
                 			complete: function( r, status ){
                 				if ( EO_SCRIPT_DEBUG ) {
                 					if( status == "error" ){
-                						 
+
                 					}else if( status == "parsererror" ){
                 						if( window.console ){
-                							console.log( "Response is not valid JSON. This is usually caused by error notices from WordPress or other plug-ins" ); 
+                							console.log( "Response is not valid JSON. This is usually caused by error notices from WordPress or other plug-ins" );
                 							console.log( "Response reads: " + r.responseText );
                 						}
                   						alert( "An error has occurred in parsing the response. Please inspect console log for details" );
-                					} 
+                					}
                 				}
                 			},
                 			success: callback,
                 		});
                 	},
-                	
+
                 	loading: function ( is_loading ) {
                 		var loading = $("#" + $(this).attr("id") + "_loading");
                 		if ( is_loading ) {
@@ -314,7 +314,7 @@ jQuery(document).ready(function () {
                 	},
             	};
             	args = wp.hooks.applyFilters( 'eventorganiser.fullcalendar_options', args, calendars[i] );
-            	
+
             	$(calendar).fullCalendar(args);
 			}
 	}
@@ -344,14 +344,14 @@ jQuery(document).ready(function () {
 			}
 		});
 	}
-	
+
 	/* Upcoming dates */
 	$('#eo-upcoming-dates, .eo-upcoming-dates').each(function(index, value){
 		var list = {el: $(this)};
 		if (list.el.find('li:gt(4)').length > 0 ){
 			var eobloc = 5,
 			locale = { more : EOAjaxFront.locale.ShowMore, less : EOAjaxFront.locale.ShowLess};
-			list.less = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.less ); 
+			list.less = $('<a class="eo-upcoming-dates-show-less" href="#"></a>').text( locale.less );
 			list.pipe = $('<span class="eo-upcoming-dates-pipe">|</span>');
 			list.more = $('<a class="eo-upcoming-dates-show-more" href="#"></a>').text( locale.more );
 			list.el.find('li:gt('+(eobloc-1)+')').hide().end().after( list.less, list.pipe, list.more);
@@ -384,7 +384,7 @@ jQuery(document).ready(function () {
 			});
 		}
 	});
-	
+
 	if ($(".eo-widget-cal-wrap").length > 0 ) {
 
         	$(".eo-widget-cal-wrap").on("click", 'tfoot a', function (a) {
@@ -393,10 +393,10 @@ jQuery(document).ready(function () {
         		if ( $(this).data('eo-widget-cal-disabled' ) ) {
         			return;
         		}
-        		
+
         		var $calEl = $(this).closest(".eo-widget-cal-wrap");
         		var calID = $calEl.data("eo-widget-cal-id");
-        		
+
         		$calEl.find( 'tfoot a').data('eo-widget-cal-disabled',1);
 
         		//Defaults
@@ -404,7 +404,7 @@ jQuery(document).ready(function () {
 
         		//Shortcode widget calendar
         		if( typeof eventorganiser.widget_calendars !== "undefined" && typeof eventorganiser.widget_calendars[calID] !== "undefined" ){
-        			cal = eventorganiser.widget_calendars[calID];	
+        			cal = eventorganiser.widget_calendars[calID];
         		}
         		//Widget calendar
         		if( typeof eo_widget_cal !== "undefined" && typeof eo_widget_cal[calID] !== "undefined" ){
@@ -413,37 +413,50 @@ jQuery(document).ready(function () {
 
                 //Set month
                 cal.eo_month = eveorg_getParameterByName("eo_month", $(this).attr("href"));
-                
+
                 $calEl.addClass( 'eo-widget-cal-loading' );
                 $("#" + calID + "_overlay").remove();
                 $("#" + calID + "_content").prepend( '<div class="eo-widget-cal-overlay" id="' + calID + '_overlay"><div class="eo-widget-cal-spinner"/></div>' );
 
-                $.getJSON(EOAjaxFront.adminajax + "?action=eo_widget_cal", cal,function (a) {
-                	$("#" + calID + "_content").html(a);
-                	$calEl.removeClass( 'eo-widget-cal-loading' );
-                });
+                $.getJSON(
+									eventorganiser.add_query_arg( 'action', 'eo_widget_cal', EOAjaxFront.adminajax ),
+									cal,
+									function (a) {
+										$("#" + calID + "_content").html(a);
+										$calEl.removeClass( 'eo-widget-cal-loading' );
+                	});
         	});
         }
 
 });
 
+eventorganiser.add_query_arg = function( key, value, uri ){
+	var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+	var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+	if (uri.match(re)) {
+		return uri.replace(re, '$1' + key + "=" + value + '$2');
+	}else {
+		return uri + separator + key + "=" + value;
+	}
+};
+
 		/**
-		 * Lifted from underscore.js 
+		 * Lifted from underscore.js
 		 * @see http://underscorejs.org/
 		 * @license MIT
 		 */
     	eventorganiser.template = function( text, data, settings ){
 
     		var escaper = /\\|'|\r|\n|\t|\u2028|\u2029/g;
-    		
+
     		settings = typeof settings !== 'undefined' ? settings : {};
-    				
+
     		settings = $.extend( true, {
 				evaluate:    /<#([\s\S]+?)#>/g,
 				interpolate: /\{\{\{([\s\S]+?)\}\}\}/g,
 				escape      :/\{\{([^\}]+?)\}\}(?!\})/g
     		}, settings );
-    		
+
     		var escapes = {
     				"'":      "'",
     				'\\':     '\\',
@@ -453,7 +466,7 @@ jQuery(document).ready(function () {
     				'\u2028': 'u2028',
     				'\u2029': 'u2029'
     		};
-    		
+
     		var render;
 
     		//Combine delimiters into one regular expression via alternation.
@@ -462,7 +475,7 @@ jQuery(document).ready(function () {
                   (settings.interpolate ).source,
                   (settings.evaluate ).source
                   ].join('|') + '|$', 'g');
-    		
+
     		//Compile the template source, escaping string literals appropriately.
     		var index = 0;
     		var source = "__p+='";
@@ -485,7 +498,7 @@ jQuery(document).ready(function () {
 
     		//If a variable is not specified, place data values in local scope.
     		if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
-    		 
+
     		source = "var __t,__p='',__j=Array.prototype.join," +
     			"print=function(){__p+=__j.call(arguments,'');};\n" +
     			source + "return __p;\n";
@@ -502,11 +515,11 @@ jQuery(document).ready(function () {
     		var template = function( data ) {
     			return render.call( this, data );
     		};
-    		
+
     		return template;
     	};
 
-    	eventorganiser.agenda_widget = function( param ){ 
+    	eventorganiser.agenda_widget = function( param ){
     		this.param = param;
     		moment.locale( EOAjaxFront.locale.locale, {
     			months: EOAjaxFront.locale.monthNames,
@@ -517,42 +530,42 @@ jQuery(document).ready(function () {
     		});
 
     		//use yesterday as starting point as when we first fetch events will be looking for the
-    		//first day with events after that point (and we want to include 'today' in that scope)  
+    		//first day with events after that point (and we want to include 'today' in that scope)
     		this.start = moment().add(-1, 'days');
     		this.end   = moment().add(-1, 'days');
     		this.$el   = $( '#' + this.param.id + '_container' );
     		this.direction = 1;
-    		
+
     		this.eventTemplate = eventorganiser.template( $('#eo-tmpl-agenda-widget-item').html(), null, {variable: 'event'} );
     		this.groupTemplate = eventorganiser.template( $('#eo-tmpl-agenda-widget-group').html(), null, {variable: 'group'} );
     	};
-    	
+
     	eventorganiser.agenda_widget.prototype.group_change = function( previous, current ){
-    		
+
     		if( previous === false ){
     			return true;
     		}
-    		
+
     		if( this.param.mode !== 'day' ){
     			return false;
     		}
-    		
+
     		return previous.format( 'YYYY-MM-DD' ) !== current.format( 'YYYY-MM-DD' );
     	};
-    	
+
     	eventorganiser.agenda_widget.prototype.init = function(){
-    		
+
     		this.$el.html( eventorganiser.template( $('#eo-tmpl-agenda-widget').html(), {}, {variable: 'data'} ) );
     		this.$datesEl = this.$el.find( '.dates' );
     		this.load_events();
-    		
-    		//Actions 
+
+    		//Actions
     		if( this.param.add_to_google ){
     			this.$el.on( "click", '.event', function(){
     				$(this).find(".meta").toggle("400");
     			});
     		}
-    		
+
     		var self = this;
 			this.$el.on( "click", '.eo-agenda-widget-nav-prev,.eo-agenda-widget-nav-next', function(){
 				if( $(this).hasClass( 'eo-agenda-widget-nav-prev' ) ){
@@ -562,7 +575,7 @@ jQuery(document).ready(function () {
 				}
 				self.load_events();
 			});
-    		    
+
     	};
 
     	eventorganiser.agenda_widget.prototype.load_events = function(){
@@ -579,11 +592,11 @@ jQuery(document).ready(function () {
                 },
                 success: function( events ) {
                 	var numberEvents = events.length;
-                	
+
                 	if ( numberEvents === 0 ) {
                 		return;
                 	}
-                	
+
             		for( var i=0; i< numberEvents; i++ ){
             			events[i].start = moment( events[i].start );
             			events[i].end = moment( events[i].end );
@@ -594,32 +607,32 @@ jQuery(document).ready(function () {
                 }
             });
     	};
-    	
+
     	eventorganiser.agenda_widget.prototype.insert_events = function( events ){
     		this.$datesEl.html( "" );
-    		
+
     		var numberEvents = events.length;
     		var previous = false, $group = false, $events = false;
-    		
+
     		for( var i=0; i< numberEvents; i++ ){
-    		
+
     			if( this.group_change( previous, events[i].start ) ){
     				this.$datesEl.append( $group );
-    				var group = { 
+    				var group = {
     					start: events[i].start,
     				};
     				$group = $( this.groupTemplate( group ) );
     				$events = $group.find( '.a-date' );
     			}
-    			
+
     			$events.append( this.eventTemplate( events[i] ) );
-    			
+
     			previous = events[i].start;
     		}
-    		
+
     		this.$datesEl.append( $group );
     	};
-    	
+
     	jQuery(document).ready(function($){
     		if( $('.eo-agenda-widget').length > 0 ) {
     			for (var agenda in eo_widget_agenda) {
@@ -628,7 +641,7 @@ jQuery(document).ready(function () {
     			}
     		}
     	});
-    	
+
 })(jQuery);
 
 
@@ -645,12 +658,12 @@ function eveorg_getParameterByName(a, b) {
 /**
  * Google map
  */
-eventorganiser.google_map = function( param ){ 
+eventorganiser.google_map = function( param ){
 	this.param = param;
 	this.markers = {};
 	this.map = null;
 };
-eventorganiser.google_map.prototype.load = function(){    
+eventorganiser.google_map.prototype.load = function(){
 	var args = {
         zoom: this.param.zoom,
 		scrollwheel: this.param.scrollwheel,
@@ -666,26 +679,26 @@ eventorganiser.google_map.prototype.load = function(){
 		minZoom: this.param.minzoom,
 		maxZoom: this.param.maxzoom,
     };
-	
+
 	args = wp.hooks.applyFilters( 'eventorganiser.google_map_options', args, this.param );
 	this.map = new google.maps.Map( document.getElementById( this.param.id ), args );
-	
+
 	//  Create a new viewpoint bound
 	var bounds = new google.maps.LatLngBounds();
 
 	var LatLngList = [];
 	for( var j = 0; j < this.param.locations.length; j++ ){
-		
+
 		var lat = this.param.locations[j].lat;
     	var lng = this.param.locations[j].lng;
-    	
+
     	if (lat === undefined || lng === undefined) {
     		continue;
     	}
-    			
+
     	LatLngList.push( new google.maps.LatLng(lat, lng) );
     	bounds.extend( LatLngList[j] );
-		  	
+
 		 var marker_options = wp.hooks.applyFilters( 'eventorganiser.venue_marker_options', {
 		  	venue_id: this.param.locations[j].venue_id,
 		  	position: LatLngList[j],
@@ -693,8 +706,8 @@ eventorganiser.google_map.prototype.load = function(){
 		  	content: this.param.locations[j].tooltipContent,
 		  	icon: this.param.locations[j].icon
 		 });
-		  
-		 var marker = new google.maps.Marker(marker_options);				
+
+		 var marker = new google.maps.Marker(marker_options);
 		 this.markers[this.param.locations[j].venue_id] = marker;
 
 		if( this.param.tooltip ){
@@ -702,13 +715,13 @@ eventorganiser.google_map.prototype.load = function(){
 		}
 	}
 
-	if( this.param.locations.length > 1 ){	
+	if( this.param.locations.length > 1 ){
 		//  Fit these bounds to the map
 		this.map.fitBounds( bounds );
 	}else{
 		this.map.setCenter( LatLngList[0] );
 	}
-	
+
 	wp.hooks.doAction( 'eventorganiser.google_map_loaded', this );
 };
 
@@ -716,13 +729,13 @@ eventorganiser.google_map.prototype.tooltip = function(){
 	// Grab marker position: convert world point into pixel point
 	var map        = this.getMap();
 	var pixel      = this.getMap().getProjection().fromLatLngToPoint(this.position);
-	var topRight   = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast()); 
-	var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest()); 
-    var scale      = Math.pow(2,map.getZoom()); 
+	var topRight   = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
+	var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
+    var scale      = Math.pow(2,map.getZoom());
 	pixel          = new google.maps.Point((pixel.x- bottomLeft.x)*scale,(pixel.y-topRight.y)*scale);
 
 	wp.hooks.doAction( 'eventorganiser.venue_marker_clicked', this );
-	
+
 	//var pixel = LatLngToPixel.fromLatLngToContainerPixel(this.position);
 	var pos = [ pixel.x, pixel.y ];
 
@@ -731,7 +744,7 @@ eventorganiser.google_map.prototype.tooltip = function(){
 		this.tooltip.qtip('show');
 		return;
 	}
-	
+
 	jQuery(this.getMap().getDiv()).css({overflow: 'visible'});
 
 	// Create the tooltip on a dummy div and store it on the marker
@@ -761,25 +774,25 @@ eventorganiser.google_map.prototype.tooltip = function(){
 		hide: {
 			event: 'mouseleave unfocus'
 		}
-	 });	
+	 });
 };
 jQuery(document).ready(function(){
-	
+
 	if ( ! ( 'map' in eventorganiser ) ) {
 		return;
 	}
-	
+
 	var maps = eventorganiser.map;
 	for (var i = 0; i < maps.length; i++) {
-	
+
 		if ( null === document.getElementById( "eo_venue_map-" + (i + 1) ) )
 		    continue;
-		
+
 		var param = maps[i];
 		param.id  = "eo_venue_map-" + (i + 1);
 		var map   = new eventorganiser.google_map( param );
 		map.load();
 		eventorganiser.map[i].markers = map.markers;
-	
+
 	}//Foreach map
 });
