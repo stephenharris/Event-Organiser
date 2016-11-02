@@ -79,7 +79,7 @@ function _eventorganiser_details_metabox( $post ) {
 			'<label for="eo-event-recurrring-notice">%s</label>',
 			__( 'This is a recurring event. Check to edit this event and its recurrences', 'eventorganiser' )
 		)
-		.' <input type="checkbox" id="eo-event-recurrring-notice" name="eo_input[AlterRe]" value="yes">';
+		. ' <input type="checkbox" id="eo-event-recurrring-notice" name="eo_input[AlterRe]" value="yes">';
 	} else {
 		$notices = '';
 	}
@@ -93,7 +93,7 @@ function _eventorganiser_details_metabox( $post ) {
 	$notices = apply_filters( 'eventorganiser_event_metabox_notice', $notices, $post );
 	if ( $notices ) {
 		//updated class used for backwards compatability see https://core.trac.wordpress.org/ticket/27418
-		echo '<div class="notice notice-success updated inline"><p>'.$notices.'</p></div>';
+		echo '<div class="notice notice-success updated inline"><p>' . $notices . '</p></div>';
 	}
 
 	$date_desc = sprintf( __( 'Enter date in %s format', 'eventorganiser' ), $format );
@@ -317,8 +317,8 @@ function _eventorganiser_details_metabox( $post ) {
 				<?php
 				if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() ) {
 					printf(
-						'<p>' . esc_html__( 'Google Maps now requires you register for an API key. If you wish to use maps on your site, %splease enter your key%s.', 'eventorganiser' ) . '</p>',
-						sprintf( '<a href="%s">', esc_url ( admin_url( 'options-general.php?page=event-settings' ).'#google_api_key' ) ),
+						'<p>' . esc_html__( 'Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%1$s.', 'eventorganiser' ) . '</p>',
+						sprintf( '<a href="%s">', esc_url( admin_url( 'options-general.php?page=event-settings' ) . '#google_api_key' ) ),
 						'</a>'
 					);
 				}
@@ -349,7 +349,7 @@ function _eventorganiser_details_metabox( $post ) {
 	<?php
 
 	// create a custom nonce for submit verification later
-	wp_nonce_field( 'eventorganiser_event_update_'.get_the_ID().'_'.get_current_blog_id(), '_eononce' );
+	wp_nonce_field( 'eventorganiser_event_update_' . get_the_ID() . '_' . get_current_blog_id(), '_eononce' );
 }
 
 
@@ -365,7 +365,7 @@ function _eventorganiser_details_metabox( $post ) {
 function eventorganiser_details_save( $post_id ) {
 
 	//make sure data came from our meta box and prevent CSRF
-	if ( ! isset( $_POST['_eononce'] ) || ! wp_verify_nonce( $_POST['_eononce'], 'eventorganiser_event_update_'.$post_id.'_'.get_current_blog_id() ) ) {
+	if ( ! isset( $_POST['_eononce'] ) || ! wp_verify_nonce( $_POST['_eononce'], 'eventorganiser_event_update_' . $post_id . '_' . get_current_blog_id() ) ) {
 		return;
 	}
 

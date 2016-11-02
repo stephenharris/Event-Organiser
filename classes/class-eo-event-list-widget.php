@@ -299,7 +299,7 @@ function eventorganiser_list_events( $query, $args = array(), $echo = 1 ) {
 	if ( $template_file || empty( $template ) ) {
 		ob_start();
 		if ( empty( $template_file ) ) {
-			$template_file = eo_locate_template( array( $eo_event_loop_args['type'].'-event-list.php', 'event-list.php' ), true, false );
+			$template_file = eo_locate_template( array( $eo_event_loop_args['type'] . '-event-list.php', 'event-list.php' ), true, false );
 		} else {
 			require( $template_file );
 		}
@@ -311,8 +311,8 @@ function eventorganiser_list_events( $query, $args = array(), $echo = 1 ) {
 		//Using the 'placeholder' template
 		$no_events = isset( $args['no_events'] ) ? $args['no_events'] : '';
 
-		$id        = ( ! empty( $args['id'] ) ? 'id="'.esc_attr( $args['id'] ).'"' : '' );
-		$container = '<ul '.$id.' class="%2$s">%1$s</ul>';
+		$id        = ( ! empty( $args['id'] ) ? 'id="' . esc_attr( $args['id'] ) . '"' : '' );
+		$container = '<ul ' . $id . ' class="%2$s">%1$s</ul>';
 
 		$html = '';
 		if ( $eo_event_loop->have_posts() ) {

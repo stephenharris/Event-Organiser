@@ -1,7 +1,7 @@
 <?php
 /****** DEBUG PAGE ******/
 if ( ! class_exists( 'EventOrganiser_Admin_Page' ) ) {
-	require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+	require_once( EVENT_ORGANISER_DIR . 'classes/class-eventorganiser-admin-page.php' );
 }
 /**
  * @ignore
@@ -388,7 +388,7 @@ class EventOrganiser_Debugger {
 
 	function table_exists( $table ) {
 		global $wpdb;
-		return $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix.$table ) ) == $wpdb->prefix.$table;
+		return $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . $table ) ) == $wpdb->prefix . $table;
 	}
 
 	function database_charset_check() {
@@ -484,7 +484,7 @@ class EventOrganiser_Debugger {
 			foreach ( $this->db_tables as $db_table ) {
 
 				if ( $this->table_exists( $db_table ) ) {
-					$db_table = '**'.$db_table.'**';
+					$db_table = '**' . $db_table . '**';
 				}
 				$db_tables[] = $db_table;
 			}
@@ -507,7 +507,7 @@ class EventOrganiser_Debugger {
 		 */
 		$options = apply_filters( 'eventorganiser_export_settings', $options );
 
-		$filename = 'event-organiser-system-info-'.get_bloginfo( 'name' ).'.md';
+		$filename = 'event-organiser-system-info-' . get_bloginfo( 'name' ) . '.md';
 		$filename = sanitize_file_name( $filename );
 
 		header( 'Content-type: text/plain' );
@@ -519,9 +519,9 @@ class EventOrganiser_Debugger {
 
 		echo '### Site Information ###' . "\n";
 		echo "\n";
-		echo 'Site url' . "\t\t\t".site_url()."\n";
-		echo 'Home url' . "\t\t\t".home_url()."\n";
-		echo 'Multisite' ."\t\t\t".( is_multisite() ? 'Yes' : 'No' )."\n";
+		echo 'Site url' . "\t\t\t" . site_url() . "\n";
+		echo 'Home url' . "\t\t\t" . home_url() . "\n";
+		echo 'Multisite' . "\t\t\t" . ( is_multisite() ? 'Yes' : 'No' ) . "\n";
 		echo 'Permalink' . "\t\t\t" . get_option( 'permalink_structure' ) . "\n";
 
 		echo "\n";
@@ -533,38 +533,38 @@ class EventOrganiser_Debugger {
 		if ( $this->jquery_version ) {
 			echo 'jQuery Version' . "\t\t" . $this->jquery_version . "\n";
 		}
-		echo 'WordPress' . "\t\t\t" . get_bloginfo( 'version' ) ."\n";
-		echo 'PHP Version' . "\t\t\t" . PHP_VERSION ."\n";
+		echo 'WordPress' . "\t\t\t" . get_bloginfo( 'version' ) . "\n";
+		echo 'PHP Version' . "\t\t\t" . PHP_VERSION . "\n";
 		global $wpdb;
 		$ver = empty( $wpdb->use_mysqli ) ? mysql_get_server_info() : mysqli_get_server_info( $wpdb->dbh );
-		echo 'MySQL Version' . "\t\t" . $ver ."\n";
+		echo 'MySQL Version' . "\t\t" . $ver . "\n";
 
 		echo "\n";
 		echo "\n";
 		echo '### Server Information ###' . "\n";
 		echo "\n";
-		echo 'Web Server' ."\t\t\t" . $_SERVER['SERVER_SOFTWARE'] ."\n";
-		echo 'PHP Memory Usage' ."\t" . $this->get_memory_usage( 'percent' ) . '%' ."\n";
-		echo 'PHP Memory Limit' ."\t" . ini_get( 'memory_limit' ) ."\n";
-		echo 'PHP Upload Max Size' ."\t" . ini_get( 'post_max_size' ) ."\n";
-		echo 'PHP FSOCKOPEN support' ."\t" . ( function_exists( 'fsockopen' )  ? 'Yes' : 'No' ) ."\n";
-		echo 'PHP cURL support' ."\t" . ( function_exists( 'curl_init' )  ? 'Yes' : 'No' ) ."\n";
-		echo 'PHP openSSL support' ."\t" . ( function_exists( 'openssl_verify' )  ? 'Yes' : 'No' ) ."\n";
+		echo 'Web Server' . "\t\t\t" . $_SERVER['SERVER_SOFTWARE'] . "\n";
+		echo 'PHP Memory Usage' . "\t" . $this->get_memory_usage( 'percent' ) . '%' . "\n";
+		echo 'PHP Memory Limit' . "\t" . ini_get( 'memory_limit' ) . "\n";
+		echo 'PHP Upload Max Size' . "\t" . ini_get( 'post_max_size' ) . "\n";
+		echo 'PHP FSOCKOPEN support' . "\t" . ( function_exists( 'fsockopen' )  ? 'Yes' : 'No' ) . "\n";
+		echo 'PHP cURL support' . "\t" . ( function_exists( 'curl_init' )  ? 'Yes' : 'No' ) . "\n";
+		echo 'PHP openSSL support' . "\t" . ( function_exists( 'openssl_verify' )  ? 'Yes' : 'No' ) . "\n";
 
 		echo "\n";
 		echo "\n";
 		echo '### Plug-ins & Themes ###' . "\n";
 		echo "\n";
-		echo 'Active Plug-ins' ."\n\t-\t" . implode( "\n\t-\t", $active_plugins ) . "\n";
-		echo 'Theme' . "\n\t-\t" . $theme->get( 'Name' ).' ('.$theme->get( 'Version' ).')' . "\n";
+		echo 'Active Plug-ins' . "\n\t-\t" . implode( "\n\t-\t", $active_plugins ) . "\n";
+		echo 'Theme' . "\n\t-\t" . $theme->get( 'Name' ) . ' (' . $theme->get( 'Version' ) . ')' . "\n";
 
 		echo "\n";
 		echo "\n";
 		echo '### Database ###' . "\n";
 		echo "\n";
-		echo 'Database Prefix'."\t\t\t" . $wpdb->prefix . "\n";
-		echo 'Database tables'."\t\t\t" . implode( ', ', $db_tables ). "\n";
-		echo 'Database character set'."\t" . ( $this->database_charset_check() ? DB_CHARSET : '**'.DB_CHARSET.'**' ) . "\n";
+		echo 'Database Prefix' . "\t\t\t" . $wpdb->prefix . "\n";
+		echo 'Database tables' . "\t\t\t" . implode( ', ', $db_tables ) . "\n";
+		echo 'Database character set' . "\t" . ( $this->database_charset_check() ? DB_CHARSET : '**' . DB_CHARSET . '**' ) . "\n";
 
 		echo "\n";
 		echo "\n";
@@ -582,7 +582,7 @@ class EventOrganiser_Debugger {
 			if ( is_array( $value ) ) {
 				$value = implode( ', ', $value );
 			}
-			echo "\n\t-\t**".esc_html( $option ).":**\t " . $value;
+			echo "\n\t-\t**" . esc_html( $option ) . ":**\t " . $value;
 		}
 
 		echo "\n";
