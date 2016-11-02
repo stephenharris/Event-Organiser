@@ -222,6 +222,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.1.5 - 2nd November 2016 =
+* bugfix: Fixed conflict, affecting widget the calendar, with some tranlsation plugins. This resulted in not being able to naviage through the calendar.
+* bugfix: Fixed inline documentation
+* bugfix: Fixed `<br>` tag being used as a closing tag
+
 = 3.1.4 - 9th September 2016 =
 * Tested up to 4.6.1
 * bugfix: In the iCal field don't change the BYDAY property when a city is used as a timezone (i.e. instead of a UTC offset). Fixes [#376](https://github.com/stephenharris/Event-Organiser/issues/376)
