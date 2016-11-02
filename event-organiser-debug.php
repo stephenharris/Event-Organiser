@@ -6,8 +6,8 @@ if ( ! class_exists( 'EventOrganiser_Admin_Page' ) ) {
 /**
  * @ignore
  */
-class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
-{
+class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page {
+
 	function set_constants() {
 		$this->hook  = 'edit.php?post_type=event';
 		$this->title = __( 'System Info', 'eventorganiser' );
@@ -53,15 +53,15 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 	function display() {
 	?>
 	<div class="wrap">
-		
+
 		<h2><?php esc_html_e( 'System Info','eventorganiser' );?> </h2>
-		
+
 		<?php $eo_debugger = $this->debugger; ?>
-		
+
 		<p>
 		<?php
 		printf(
-			esc_html__( "This page highlights useful information for debugging. If you're reporting a bug, please include this information. The 'system info' link in under the Events admin tab is only visible to admins and only when %s is set to %s.", 'eventorganiser' ),
+			esc_html__( 'This page highlights useful information for debugging. If you\'re reporting a bug, please include this information. The \'system info\' link in under the Events admin tab is only visible to admins and only when %1$s is set to %1$s.', 'eventorganiser' ),
 			'<code>WP_DEBUG</code>',
 			'<code>true</code>'
 		);
@@ -72,7 +72,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 		esc_html_e( 'Most bugs arise from theme or plug-in conflicts. You can check this by disabling all other plug-ins and switching to TwentyTweleve. To help speed things along, if you report a bug please indicate if you have done so. Once the plug-in or theme has been identified it is often easy to resolve the issue. Below any <strong>known</strong> plug-in and theme conflicts are highlighted in red.', 'eventorganiser' );
 		?>
 		</p>
-		
+
 		<?php
 			printf(
 				'<p><a href="%s" data-eo-debug="downloadurl" class="button secondary">%s</a></p>',
@@ -80,7 +80,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				esc_html__( 'Download system information file', 'eventorganiser' )
 			);
 		?>
-				
+
 		<table class="widefat">
 				<tr>
 					<th> Site url </th>
@@ -94,7 +94,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 					<th> Multisite </th>
 					<td><?php echo is_multisite() ? 'Yes' : 'No' ?></td>
 				</tr>
-				
+
 				<tr>
 					<th> Permalink </th>
 					<td>
@@ -111,7 +111,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 					<?php $eo_debugger->verbose_prequiste_check( 'WordPress', get_bloginfo( 'version' ) );?>
 					</td>
 				</tr>
-				
+
 				<tr>
 					<th> jQuery Version </th>
 					<td>
@@ -120,7 +120,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				</tr>
 				<script>
 				jQuery(document).ready( function($) {
-					var eventorganiser = eventorganiser || {}; 
+					var eventorganiser = eventorganiser || {};
 					eventorganiser.add_query_arg = function( key, value, uri ) {
 						  var re = new RegExp("([?|&])" + key + "=.*?(&|$)", "i");
 						  separator = uri.indexOf('?') !== -1 ? "&" : "?";
@@ -130,44 +130,44 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 						    return uri + separator + key + "=" + value;
 						  }
 						}
-					
+
 				    $('[data-eo-debug="jqueryversion"]').each(function() {
-						
+
 						var version	= $().jquery;
 						$(this).text( version);
 
 						$('[data-eo-debug="downloadurl"]').each(function(){
 							var new_url = eventorganiser.add_query_arg( 'data[jqueryv]', version, $(this).attr('href') );
 							$(this).attr('href',new_url);
-						}); 
+						});
 				    });
 				});
 				</script>
-				
+
 				<tr>
 					<th> PHP Version </th>
 					<td> <?php echo esc_html( PHP_VERSION ); ?></td>
 				</tr>
 				<tr>
 					<th> MySQL Version </th>
-					<td> 
+					<td>
 					<?php
 						global $wpdb;
 						echo empty( $wpdb->use_mysqli ) ? esc_html( mysql_get_server_info() ) : esc_html( mysqli_get_server_info( $wpdb->dbh ) );
 					?></td>
-				</tr>    
+				</tr>
 				<tr>
 					<th> Web Server </th>
 					<td> <?php echo esc_html( $_SERVER['SERVER_SOFTWARE'] ); ?></td>
-				</tr>      
+				</tr>
 				<tr>
 					<th> PHP Memory Usage </th>
 					<th><?php echo $eo_debugger->verbose_memory_check(); ?>
-				</tr>   
+				</tr>
 				<tr>
 					<th> PHP Post Max Size </th>
 					<td><?php echo esc_html( ini_get( 'post_max_size' ) ); ?></td>
-				</tr>   
+				</tr>
 				<tr>
 					<th> PHP Upload Max Size </th>
 					<td><?php echo esc_html( ini_get( 'upload_max_filesize' ) ); ?></td>
@@ -254,7 +254,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 			);
 		?>
 	</div><!--End .wrap -->
-    <?php
+	<?php
 	}
 }
 $venues_page = new EventOrganiser_Debug_Page();
@@ -421,7 +421,7 @@ class EventOrganiser_Debugger {
 				esc_html( $v ),
 				esc_html( sprintf(
 					/// TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
-					__( '%s has only been tested up to %s %s', 'eventorganiser' ),
+					__( '%1$s has only been tested up to %1$s %1$s', 'eventorganiser' ),
 					$this->plugin,
 					$requirement,
 					$versions['max']
@@ -434,7 +434,7 @@ class EventOrganiser_Debugger {
 				esc_html( $v ),
 				esc_html( sprintf(
 					/// TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
-					__( '%s requires %s version %s or higher', 'eventorganiser' ),
+					__( '%1$s requires %1$s version %1$s or higher', 'eventorganiser' ),
 					$this->plugin,
 					$requirement,
 					$versions['min']

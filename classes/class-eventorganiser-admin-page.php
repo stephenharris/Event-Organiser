@@ -2,7 +2,7 @@
 /**
  * @ignore
  */
-class EventOrganiser_Admin_Page{
+class EventOrganiser_Admin_Page {
 
 	var $hook;
 	var $title;
@@ -12,11 +12,11 @@ class EventOrganiser_Admin_Page{
 	var $page;
 
 	function __construct() {
-		add_action('init', array($this,'set_constants'));
-		add_action('init', array($this,'hooks_init'));
+		add_action( 'init', array( $this, 'set_constants' ) );
+		add_action( 'init', array( $this, 'hooks_init' ) );
 	}
-	
-	function hooks_init(){
+
+	function hooks_init() {
 		add_action( 'admin_menu', array( $this, 'add_page' ) );
 	}
 
@@ -39,13 +39,13 @@ class EventOrganiser_Admin_Page{
 	* Actions to be taken prior to page loading. This is after headers have been set.
         * @uses load-$hook
 	*/
-	function page_actions(){
+	function page_actions() {
 	}
 
-	function page_styles(){
+	function page_styles() {
 	}
 
-	function current_action(){
+	function current_action() {
 
 		$request = array_merge( $_GET, $_POST );
 
@@ -60,13 +60,13 @@ class EventOrganiser_Admin_Page{
 		return false;
 	}
 
-	function init(){
+	function init() {
 	}
 
-	function render_page(){
+	function render_page() {
 		$this->init();
 		$this->display();
 	}
-	function display(){
+	function display() {
 	}
 }

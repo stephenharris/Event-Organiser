@@ -101,12 +101,12 @@ function _eventorganiser_details_metabox( $post ) {
 	?>
 	<div class="eo-grid <?php echo ( $sche_once ? 'onetime': 'reoccurence' );?>">
 	
- 		<div class="eo-grid-row">
+			<div class="eo-grid-row">
 	 		<div class="eo-grid-4">
 				<span class="eo-label" id="eo-start-datetime-label">
 					<?php esc_html_e( 'Start Date/Time:', 'eventorganiser' ); ?> 
 				</span>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-start-datetime-label">
 	 		
 	 			<label for="eo-start-date" class="screen-reader-text"><?php esc_html_e( 'Start Date', 'eventorganiser' ); ?></label>
@@ -121,15 +121,15 @@ function _eventorganiser_details_metabox( $post ) {
 				);
 				?>
 				<span id="eo-start-time-desc" class="screen-reader-text"><?php echo esc_html( $time_desc );?></span>
- 			</div>
- 		</div>
- 		
+				</div>
+			</div>
+			
 		<div class="eo-grid-row">
 	 		<div class="eo-grid-4">
 				<span class="eo-label" id="eo-end-datetime-label">
 					<?php esc_html_e( 'End Date/Time:', 'eventorganiser' ); ?> 
 				</span>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-end-datetime-label">
 	 		
 	 			<label for="eo-end-date" class="screen-reader-text"><?php esc_html_e( 'End Date', 'eventorganiser' ); ?></label>
@@ -152,13 +152,13 @@ function _eventorganiser_details_metabox( $post ) {
 					</label>
 				</span>
 
- 			</div>
- 		</div>
- 		
+				</div>
+			</div>
+			
 		<div class="eo-grid-row event-date">
 	 		<div class="eo-grid-4">
 				<label for="eo-event-recurrence"><?php esc_html_e( 'Recurrence:', 'eventorganiser' ); ?> </label>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8 event-date">
 				<?php
 				$recurrence_schedules = array(
@@ -171,10 +171,10 @@ function _eventorganiser_details_metabox( $post ) {
 						<option value="<?php echo esc_attr( $value )?>" <?php selected( $schedule, $value );?>><?php echo esc_html( $label );?></option>
 					<?php endforeach; ?>
 				</select>
- 			</div>
- 		</div>
- 		
- 		<div class="eo-grid-row event-date reocurrence_row">
+				</div>
+			</div>
+			
+			<div class="eo-grid-row event-date reocurrence_row">
 	 		<div class="eo-grid-4"></div>
 	 		<div class="eo-grid-8 event-date">
 				<div id="eo-recurrence-frequency-wrapper">
@@ -229,13 +229,13 @@ function _eventorganiser_details_metabox( $post ) {
 
 				<p id="eo-event-summary" role="status" aria-live="polite"></p>
 				
- 			</div>
- 		</div>
+				</div>
+			</div>
 
 		<div id="eo_occurrence_picker_row" class="eo-grid-row event-date">
 	 		<div class="eo-grid-4">
 				<?php esc_html_e( 'Include/Exclude occurrences:', 'eventorganiser' ); ?>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8 event-date">
 				<?php submit_button( __( 'Show dates', 'eventorganiser' ), 'hide-if-no-js eo_occurrence_toggle button small', 'eo_date_toggle', false ); ?>
 						
@@ -258,8 +258,8 @@ function _eventorganiser_details_metabox( $post ) {
 				}?>
 				<input type="hidden" name="eo_input[exclude]" id="eo-occurrence-excludes" value="<?php echo $exclude_str; ?>"/>
 	 		
- 			</div>
- 		</div>
+				</div>
+			</div>
 
 		<?php
 		$tax = get_taxonomy( 'event-venue' );
@@ -268,7 +268,7 @@ function _eventorganiser_details_metabox( $post ) {
 		<div class="eo-grid-row eo-venue-combobox-select">
 	 		<div class="eo-grid-4">
 				<label for="venue_select"><?php echo esc_html( $tax->labels->singular_name_colon ); ?></label>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8">
 				<select size="50" id="venue_select" name="eo_input[event-venue]">
 					<option><?php esc_html_e( 'Select a venue', 'eventorganiser' );?></option>
@@ -276,17 +276,17 @@ function _eventorganiser_details_metabox( $post ) {
 						<option <?php  selected( $venue->term_id, $venue_id );?> value="<?php echo intval( $venue->term_id );?>"><?php echo esc_html( $venue->name ); ?></option>
 					<?php endforeach;?>
 				</select>
- 			</div>
- 		</div>
- 
- 		<!-- Add New Venue --> 
- 		<div class="eo-grid-row eo-add-new-venue">
+				</div>
+			</div>
+	
+			<!-- Add New Venue --> 
+			<div class="eo-grid-row eo-add-new-venue">
 	 		<div class="eo-grid-4">
 				<label for="eo_venue_name"><?php esc_html_e( 'Venue Name', 'eventorganiser' ); ?></label>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8">
 				<input type="text" name="eo_venue[name]" id="eo_venue_name"  value=""/>
- 			</div>			
+				</div>			
 			
 			<?php
 			$address_fields = _eventorganiser_get_venue_address_fields();
@@ -307,8 +307,8 @@ function _eventorganiser_details_metabox( $post ) {
 			<div class="eo-grid-4"></div>
 	 		<div class="eo-grid-8 event-date">
 				<a class="button eo-add-new-venue-cancel" href="#"><?php esc_html_e( 'Cancel','eventorganiser' );?> </a>
- 			</div>
- 		</div>
+				</div>
+			</div>
 				
 		<div class="eo-grid-row venue_row <?php if ( ! $venue_id ) { echo 'novenue'; }?>">
 	 		<div class="eo-grid-4"></div>
@@ -331,8 +331,8 @@ function _eventorganiser_details_metabox( $post ) {
 
 				<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
 				<div class="clear"></div>
- 			</div>
- 		</div>
+				</div>
+			</div>
 		<?php endif; //endif venue's supported ?>
 
 		<?php
