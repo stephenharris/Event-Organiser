@@ -272,6 +272,96 @@ class eventFunctionsTest extends EO_UnitTestCase
 		
 		$this->assertEquals( $tomorrow->format(  'Y-m-d H:i' ), $actual );
 	}
-	
+
+	public function testNextOccurrenceDoesNotExit(){
+
+		$start = new DateTime( '-5 days' );
+		$end = clone $start;
+		$end->modify( '+1 hour' );
+
+		$event_id = $this->factory->event->create(
+			array(
+				'start'     => $start,
+				'end'       => $end,
+				'all_day'   => 0,
+				'schedule'  => 'daily',
+				'frequency' => 2,
+				'until'     =>  new DateTime( '-1 day' )
+			)
+		);
+
+		$actual = eo_get_next_occurrence_of( $event_id );
+
+		$this->assertEquals( false, $actual );
+	}
+
+	public function testCurrentOccurrence(){
+
+		$now = new DateTime( 'now' );
+		$hour_ago = new DateTime( '-1 hour' );
+		$hour_ago->setTime ( $hour_ago->format("H"), $hour_ago->format("i"), 0 );
+
+		$start = clone $hour_ago;
+		$start->modify( '-2 days' );
+		$start->setTime( $hour_ago->format('H'), $hour_ago->format('i'), 0 );
+		$end = clone $start;
+		$end->modify( '+2 hours' );
+
+		$tomorrow = clone $now;
+		$tomorrow->modify( '+1 day' );
+
+		$event_id = $this->factory->event->create(
+			array(
+				'start'     => $start,
+				'end'       => $end,
+				'all_day'   => 0,
+				'schedule'  => 'daily',
+				'frequency' => 1,
+				'until'     =>  new DateTime( '+3 days' )
+			)
+		);
+
+		$occurrence = eo_get_current_occurrence_of( $event_id );
+
+		$this->assertInstanceOf('DateTime', $occurrence['start']);
+		$this->assertInstanceOf('DateTime', $occurrence['end']);
+
+		$this->assertEquals( $hour_ago, $occurrence['start'] );
+	}
+
+	public function testCurrentOccurrenceDoesNotExit(){
+
+		$now = new DateTime( 'now' );
+		$in_one_hour = new DateTime( '+1 hour' );
+
+		$start = clone $in_one_hour;
+		$start->modify( '-2 days' );
+		$start->setTime( $in_one_hour->format('H'), $in_one_hour->format('i'), 0 );
+		$end = clone $start;
+		$end->modify( '+2 hours' );
+
+		$tomorrow = clone $now;
+		$tomorrow->modify( '+1 day' );
+
+		$event_id = $this->factory->event->create(
+			array(
+				'start'     => $start,
+				'end'       => $end,
+				'all_day'   => 0,
+				'schedule'  => 'daily',
+				'frequency' => 1,
+				'until'     =>  new DateTime( '+3 days' )
+			)
+		);
+
+		$occurrence = eo_get_current_occurrence_of( $event_id );
+
+		$this->assertEquals(
+			false,
+			$occurrence,
+			'A current occurrence found when an occurrence shouldn\'t be running'
+		);
+	}
+
 }
 
