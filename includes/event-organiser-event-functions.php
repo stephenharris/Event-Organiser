@@ -456,30 +456,31 @@ function eo_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $depre
 
 
 /**
-* Gets the formated date of next occurrence of an event
-* 
-* ### Examples
-* Inside the loop, you can output the start date of the next occurrence of the current event.
-* <code>
-* <?php $next = eo_get_next_occurrence( 'jS M Y' ); ?>
-* </code> 
-* 
-* Print the start date of the next occurrence of event with id 7
-* <code>
-* <?php echo eo_get_next_occurrence( 'jS M Y', 7 ); ?>
-* </code>
-*
-* @since 1.0.0
-* @package event-date-functions
-* @param string $format The format to use, using PHP Date format
-* @param int $post_id The event (post) ID, 
-* @return string The formatted date or false if no date exists
+ * Gets the formated date of next occurrence of an event
+ *
+ * ### Examples
+ * Inside the loop, you can output the start date of the next occurrence of the current event.
+ * <code>
+ * <?php $next = eo_get_next_occurrence( 'jS M Y' ); ?>
+ * </code>
+ *
+ * Print the start date of the next occurrence of event with id 7
+ * <code>
+ * <?php echo eo_get_next_occurrence( 'jS M Y', 7 ); ?>
+ * </code>
+ *
+ * @since 1.0.0
+ * @package event-date-functions
+ * @param string $format The format to use, using PHP Date format
+ * @param int $post_id The event (post) ID,
+ * @return string The formatted date or false if no date exists
  */
-function eo_get_next_occurrence($format='d-m-Y',$post_id=0){
-	$next_occurrence = eo_get_next_occurrence_of($post_id);
+function eo_get_next_occurrence( $format = 'd-m-Y', $post_id = 0 ) {
+	$next_occurrence = eo_get_next_occurrence_of( $post_id );
 
-	if( !$next_occurrence )
+	if ( ! $next_occurrence ) {
 		return false;
+	}
 
 	$next = $next_occurrence['start'];
 	/**
@@ -490,31 +491,33 @@ function eo_get_next_occurrence($format='d-m-Y',$post_id=0){
 	 * @param string $format The format the date should be returned in
 	 * @param int $post_id Post ID of the event
 	 */
-	$formatted_date = apply_filters('eventorganiser_get_next_occurrence', eo_format_datetime( $next, $format ), $next, $format, $post_id );
+	$formatted_date = apply_filters( 'eventorganiser_get_next_occurrence', eo_format_datetime( $next, $format ), $next, $format, $post_id );
 	return $formatted_date;
 }
 
 /**
-* Returns an array of datetimes (start and end) corresponding to the next occurrence of an event
-* {@see eo_get_next_occurrence()} on the other hand returns a formated datetime of the start date.
-* To get the current occurrence {@see eo_get_current_occurrence_of()}
-*
-* @package event-date-functions
-* @since 1.6
-*
-* @param int $post_id The event (post) ID. Uses current event if empty.
-* @return array Array with keys 'start' and 'end', with corresponding datetime objects
+ * Returns an array of datetimes (start and end) corresponding to the next occurrence of an event
+ * {@see eo_get_next_occurrence()} on the other hand returns a formated datetime of the start date.
+ *
+ * 'Next occurrence' means next occurrence that starts, and so will not be a currently running occurrence. To get
+ * the currently running occurrence use {@see eo_get_current_occurrence_of()}
+ *
+ * @package event-date-functions
+ * @since 1.6
+ *
+ * @param int $post_id The event (post) ID. Uses current event if empty.
+ * @return bool|array Array with keys 'start', 'end' and 'occurrence_id', with corresponding datetime objects / occurrence ID or false if there are no future dates.
  */
-function eo_get_next_occurrence_of($post_id=0){
+function eo_get_next_occurrence_of( $post_id = 0 ) {
 	global $wpdb;
-	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
-	
+	$post_id = (int) ( empty( $post_id ) ? get_the_ID() : $post_id );
+
 	//Retrieve the blog's local time and create the date part
 	$tz = eo_get_blog_timezone();
-	$blog_now = new DateTime(null, $tz );
-	$now_date =$blog_now->format('Y-m-d');
-	$now_time =$blog_now->format('H:i:s');
-	
+	$blog_now = new DateTime( null, $tz );
+	$now_date = $blog_now->format( 'Y-m-d' );
+	$now_time = $blog_now->format( 'H:i:s' );
+
 	$nextoccurrence  = $wpdb->get_row($wpdb->prepare("
 		SELECT event_id as occurrence_id, StartDate, StartTime, EndDate, FinishTime
 		FROM  {$wpdb->eo_events}
@@ -523,27 +526,28 @@ function eo_get_next_occurrence_of($post_id=0){
 			({$wpdb->eo_events}.StartDate > %s) OR
 			({$wpdb->eo_events}.StartDate = %s AND {$wpdb->eo_events}.StartTime >= %s))
 		ORDER BY {$wpdb->eo_events}.StartDate ASC
-		LIMIT 1",$post_id,$now_date,$now_date,$now_time));
+		LIMIT 1", $post_id, $now_date, $now_date, $now_time ) );
 
-	if( ! $nextoccurrence )
+	if ( ! $nextoccurrence ) {
 		return false;
+	}
 
-	$start = new DateTime($nextoccurrence->StartDate.' '.$nextoccurrence->StartTime, $tz);
-	$end = new DateTime($nextoccurrence->EndDate.' '.$nextoccurrence->FinishTime, $tz);
+	$start = new DateTime( $nextoccurrence->StartDate . ' ' . $nextoccurrence->StartTime, $tz );
+	$end = new DateTime( $nextoccurrence->EndDate . ' ' . $nextoccurrence->FinishTime, $tz );
 	$occurrence_id = $nextoccurrence->occurrence_id;
 
-	return compact( 'start', 'end', 'occurrence_id');
+	return compact( 'start', 'end', 'occurrence_id' );
 }
 
 
 /**
-* Prints the formated date of next occurrence of an event
-* @since 1.0.0
-* @uses eo_get_next_occurrence()
-* @package event-date-functions
-*
-* @param string $format The format to use, using PHP Date format
-* @param int $post_id The event (post) ID. Uses current event if empty.
+ * Prints the formated date of next occurrence of an event
+ * @since 1.0.0
+ * @uses eo_get_next_occurrence()
+ * @package event-date-functions
+ *
+ * @param string $format The format to use, using PHP Date format
+ * @param int $post_id The event (post) ID. Uses current event if empty.
  */
 function eo_next_occurrence( $format = '', $event_id = 0 ) {
 	echo eo_get_next_occurrence( $format, $event_id );
