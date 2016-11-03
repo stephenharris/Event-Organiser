@@ -273,7 +273,40 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$this->assertEquals( $tomorrow->format(  'Y-m-d H:i' ), $actual );
 	}
 
-	public function testNextOccurrenceDoesNotExit(){
+	public function testNextOccurrenceOf(){
+
+		$now = new DateTime( 'now' );
+
+		$start = clone $now;
+		$start->modify( '-5 days' );
+		$end = clone $start;
+		$end->modify( '+1 hour' );
+
+		$tomorrow = clone $now;
+		$tomorrow->modify( '+1 day' );
+		$tomorrow->setTime ( $tomorrow->format("H"), $tomorrow->format("i"), 0 );
+
+		$event_id = $this->factory->event->create(
+			array(
+				'start'     => $start,
+				'end'       => $end,
+				'all_day'   => 0,
+				'schedule'  => 'daily',
+				'frequency' => 2,
+				'until'     =>  new DateTime( '+3 days' )
+			)
+		);
+
+		$occurrence = eo_get_next_occurrence_of( $event_id );
+
+		$this->assertInstanceOf('DateTime', $occurrence['start']);
+		$this->assertInstanceOf('DateTime', $occurrence['end']);
+		$this->assertInternalType('int', $occurrence['occurrence_id']);
+
+		$this->assertEquals( $tomorrow, $occurrence['start'] );
+	}
+
+	public function testNextOccurrenceOfDoesNotExist(){
 
 		$start = new DateTime( '-5 days' );
 		$end = clone $start;
@@ -329,7 +362,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$this->assertEquals( $hour_ago, $occurrence['start'] );
 	}
 
-	public function testCurrentOccurrenceDoesNotExit(){
+	public function testCurrentOccurrenceDoesNotExist(){
 
 		$now = new DateTime( 'now' );
 		$in_one_hour = new DateTime( '+1 hour' );

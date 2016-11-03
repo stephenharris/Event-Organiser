@@ -534,7 +534,7 @@ function eo_get_next_occurrence_of( $post_id = 0 ) {
 
 	$start = new DateTime( $nextoccurrence->StartDate . ' ' . $nextoccurrence->StartTime, $tz );
 	$end = new DateTime( $nextoccurrence->EndDate . ' ' . $nextoccurrence->FinishTime, $tz );
-	$occurrence_id = $nextoccurrence->occurrence_id;
+	$occurrence_id = (int) $nextoccurrence->occurrence_id;
 
 	return compact( 'start', 'end', 'occurrence_id' );
 }
