@@ -378,6 +378,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 		foreach ( $datetimes as $datetime ) {
 			$formatted[] = $datetime->format( $format );
 		}
+		return $formatted;
 	}
 
 	public function testCurrentOccurrenceDoesNotExist(){
