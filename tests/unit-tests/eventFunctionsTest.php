@@ -373,7 +373,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$this->assertEquals( $hour_ago, $occurrence['start'] );
 	}
 
-	private function format_datetimes( $occurrences, $format ) {
+	private function format_datetime_ranges( $occurrences, $format ) {
 		$formatted = array();
 		foreach ( $occurrences as $occurrence ) {
 			$formatted[] = eo_format_datetime_range( $occurrence['start'], $occurrence['end'], $format );
