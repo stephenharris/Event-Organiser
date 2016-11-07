@@ -576,19 +576,19 @@ function eo_get_current_occurrence_of( $post_id = 0 ) {
 	$now_time = $blog_now->format( 'H:i:s' );
 
 	//Get the current occurrence. May be multiple (overlapping) occurrences. Pick the latest.
-	$current_occurrence  = $wpdb->get_row($wpdb->prepare("
+	$current_occurrence  = $wpdb->get_row( $wpdb->prepare("
 		SELECT StartDate, StartTime, EndDate, FinishTime
 		FROM  {$wpdb->eo_events}
 		WHERE {$wpdb->eo_events}.post_id=%d
-		AND ( 
+		AND (
 			({$wpdb->eo_events}.StartDate < %s) OR
 			({$wpdb->eo_events}.StartDate = %s AND {$wpdb->eo_events}.StartTime <= %s)
 		)AND(
 			({$wpdb->eo_events}.EndDate > %s) OR
-			({$wpdb->eo_events}.EndDate = %s AND {$wpdb->eo_events}.EndDate >= %s)
+			({$wpdb->eo_events}.EndDate = %s AND {$wpdb->eo_events}.FinishTime >= %s)
 		)
 		ORDER BY {$wpdb->eo_events}.StartDate DESC
-		LIMIT 1",$post_id,$now_date,$now_date,$now_time, $now_date,$now_date,$now_time));
+		LIMIT 1", $post_id, $now_date, $now_date, $now_time, $now_date, $now_date, $now_time ) );
 
 	if ( ! $current_occurrence ) {
 		return false;
