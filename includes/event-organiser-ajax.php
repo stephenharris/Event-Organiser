@@ -129,25 +129,25 @@ function eventorganiser_public_fullcalendar() {
 			//Title and url
 			$event['title']=html_entity_decode(get_the_title($post->ID),ENT_QUOTES,'UTF-8');
 			$link = esc_js(get_permalink( $post->ID));
-			
+
 			/**
 			 * Filters the link to the event's page on the admin calendar.
-			 * 
+			 *
 			 * **Note:** As the calendar is cached, changes made using this filter
-			 * will not take effect immediately. You can clear the cache by 
+			 * will not take effect immediately. You can clear the cache by
 			 * updating an event.
-			 * 
+			 *
 			 * ### Example
-			 * 
-			 *    //Remove link if from calendar if event has no content
-			 *    add_filter('eventorganiser_calendar_event_link','myprefix_maybe_no_calendar_link',10,3);
- 			 *    function myprefix_maybe_no_calendar_link( $link, $event_id, $occurrence_id ){
- 			 *        $the_post = get_post($post_id);
- 			 *        if( empty($the_post->post_content) ){
- 			 *            return false;
- 			 *        }
- 			 *        return $link;
- 			 *    }
+			 *
+			 *     //Remove link if from calendar if event has no content
+			 *     add_filter('eventorganiser_calendar_event_link','myprefix_maybe_no_calendar_link',10,3);
+			 *     function myprefix_maybe_no_calendar_link( $link, $event_id, $occurrence_id ){
+			 *         $the_post = get_post($post_id);
+			 *         if( empty($the_post->post_content) ){
+			 *             return false;
+			 *         }
+			 *         return $link;
+			 *     }
 			 *
 			 * @package fullCalendar
 			 * @param string $link          The url the event points to on the calendar.
