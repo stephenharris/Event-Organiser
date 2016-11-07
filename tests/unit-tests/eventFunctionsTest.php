@@ -244,7 +244,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 
 	public function testNextOccurrence(){
 
-		$now = new DateTime( 'now' );
+		$now = new DateTime( 'now', eo_get_blog_timezone() );
 
 		$start = clone $now;
 		$start->modify( '-5 days' );
@@ -261,7 +261,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 				'all_day'   => 0,
 				'schedule'  => 'daily',
 				'frequency' => 2,
-				'until'     =>  new DateTime( '+3 days' )
+				'until'     =>  new DateTime( '+3 days', eo_get_blog_timezone() )
 			)
 		);
 
@@ -275,7 +275,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 
 	public function testNextOccurrenceOf(){
 
-		$now = new DateTime( 'now' );
+		$now = new DateTime( 'now', eo_get_blog_timezone() );
 
 		$start = clone $now;
 		$start->modify( '-5 days' );
@@ -293,7 +293,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 				'all_day'   => 0,
 				'schedule'  => 'daily',
 				'frequency' => 2,
-				'until'     =>  new DateTime( '+3 days' )
+				'until'     =>  new DateTime( '+3 days', eo_get_blog_timezone() )
 			)
 		);
 
@@ -308,7 +308,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 
 	public function testNextOccurrenceOfDoesNotExist(){
 
-		$start = new DateTime( '-5 days' );
+		$start = new DateTime( '-5 days', eo_get_blog_timezone() );
 		$end = clone $start;
 		$end->modify( '+1 hour' );
 
@@ -319,7 +319,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 				'all_day'   => 0,
 				'schedule'  => 'daily',
 				'frequency' => 2,
-				'until'     =>  new DateTime( '-1 day' )
+				'until'     =>  new DateTime( '-1 day', eo_get_blog_timezone() )
 			)
 		);
 
@@ -330,8 +330,8 @@ class eventFunctionsTest extends EO_UnitTestCase
 
 	public function testCurrentOccurrence(){
 
-		$now = new DateTime( 'now' );
-		$hour_ago = new DateTime( '-1 hour' );
+		$now = new DateTime( 'now', eo_get_blog_timezone() );
+		$hour_ago = new DateTime( '-1 hour', eo_get_blog_timezone() );
 		$hour_ago->setTime ( $hour_ago->format("H"), $hour_ago->format("i"), 0 );
 
 		$start = clone $hour_ago;
@@ -350,14 +350,14 @@ class eventFunctionsTest extends EO_UnitTestCase
 				'all_day'   => 0,
 				'schedule'  => 'daily',
 				'frequency' => 1,
-				'until'     =>  new DateTime( '+3 days' )
+				'until'     =>  new DateTime( '+3 days', eo_get_blog_timezone() )
 			)
 		);
 
 		$occurrence = eo_get_current_occurrence_of( $event_id );
 
-		$occurrences = eo_get_the_occurrences( $event_id );
-		$formatted_occurrences = $this->format_datetimes( $occurrences, 'Y-m-d H:i:s' );
+		$occurrences = eo_get_the_occurrences_of( $event_id );
+		$formatted_occurrences = $this->format_datetime_ranges( $occurrences, 'Y-m-d H:i:s' );
 
 		$this->assertInstanceOf(
 			'DateTime',
@@ -373,18 +373,18 @@ class eventFunctionsTest extends EO_UnitTestCase
 		$this->assertEquals( $hour_ago, $occurrence['start'] );
 	}
 
-	private function format_datetimes( $datetimes, $format ) {
+	private function format_datetimes( $occurrences, $format ) {
 		$formatted = array();
-		foreach ( $datetimes as $datetime ) {
-			$formatted[] = $datetime->format( $format );
+		foreach ( $occurrences as $occurrence ) {
+			$formatted[] = eo_format_datetime_range( $occurrence['start'], $occurrence['end'], $format );
 		}
 		return $formatted;
 	}
 
 	public function testCurrentOccurrenceDoesNotExist(){
 
-		$now = new DateTime( 'now' );
-		$in_one_hour = new DateTime( '+1 hour' );
+		$now = new DateTime( 'now', eo_get_blog_timezone() );
+		$in_one_hour = new DateTime( '+1 hour', eo_get_blog_timezone() );
 
 		$start = clone $in_one_hour;
 		$start->modify( '-2 days' );
