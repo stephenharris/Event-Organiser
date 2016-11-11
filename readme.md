@@ -238,6 +238,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.1.6 - 11th November 2016
+ * Fix bug causing edit event admin page to link to the settings page.
+ * Fix bug in `eo_get_current_occurrence_of()`
+ * Ensure `occurrence_id` value returned by `eo_get_next_occurrence_of()` is an integer not a string.
+###
 ### 3.1.5 - 2nd November 2016 ###
 * bugfix: Fixed conflict, affecting widget the calendar, with some tranlsation plugins. This resulted in not being able to naviage through the calendar.
 * bugfix: Fixed inline documentation

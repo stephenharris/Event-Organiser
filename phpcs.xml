@@ -29,6 +29,10 @@
         <exclude name="WordPress.Arrays.ArrayDeclaration.IndexNoNewline" />
         <exclude name="WordPress.DB.RestrictedFunctions" />
         <exclude name="WordPress.DB.RestrictedClasses" />
+
+				<!-- Some column names are not snake_case -->
+				<exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar" />
+
     </rule>
     <rule ref="Zend.Files.ClosingTag" />
 
