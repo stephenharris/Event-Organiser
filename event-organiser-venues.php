@@ -304,7 +304,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 					<div id="post-body-content">
 						<div id="titlediv"><?php eventorganiser_venue_title( $venue ); ?></div>
 						<div class="postbox " id="venue_address">
-							<button type="button" class="handlediv button-link" aria-expanded="true">
+							<button type="button" class="handlediv eo-button-link" aria-expanded="true">
 								<span class="screen-reader-text"><?php esc_html_e( 'Toggle panel: Location' );?></span>
 								<span class="toggle-indicator" aria-hidden="true"></span>
 							</button>

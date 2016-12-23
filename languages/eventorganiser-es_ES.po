@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Organiser\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-23 17:05+0100\n"
+"POT-Creation-Date: 2016-11-26 00:20+0000\n"
 "PO-Revision-Date: 2016-02-03 19:29:15+0000\n"
 "Last-Translator: stephenharris <stephenh1988@gmail.com>\n"
 "Language-Team: \n"
@@ -21,7 +21,7 @@ msgid "Events Agenda"
 msgstr "Agenda de Eventos"
 
 #: classes/class-eo-agenda-widget.php:36
-#: classes/class-eo-calendar-widget.php:49
+#: classes/class-eo-calendar-widget.php:48
 #: classes/class-eo-event-list-widget.php:102
 #: classes/class-eo-event-list-widget.php:147
 msgid "Title"
@@ -56,7 +56,7 @@ msgid "Include 'Add To Google' link"
 msgstr "Incluir enlace 'Adicionar A Google'"
 
 #: classes/class-eo-agenda-widget.php:140 event-organiser-edit.php:151
-#: includes/event-organiser-event-functions.php:1368
+#: includes/event-organiser-event-functions.php:1382
 msgid "All day"
 msgstr "Todo el día"
 
@@ -69,52 +69,52 @@ msgstr "Ver"
 msgid "Add To Google Calendar"
 msgstr "Adicionar a Google Calendar"
 
-#: classes/class-eo-calendar-widget.php:25
+#: classes/class-eo-calendar-widget.php:24
 msgid "Displays a calendar of your events"
 msgstr "Muestra un calendario de sus eventos"
 
-#: classes/class-eo-calendar-widget.php:27 event-organiser-calendar.php:249
+#: classes/class-eo-calendar-widget.php:26 event-organiser-calendar.php:249
 msgid "Events Calendar"
 msgstr "Calendario de Eventos"
 
-#: classes/class-eo-calendar-widget.php:60
+#: classes/class-eo-calendar-widget.php:59
 msgid "Include past events"
 msgstr "Incluir eventos pasados"
 
-#: classes/class-eo-calendar-widget.php:71
+#: classes/class-eo-calendar-widget.php:70
 msgid "Show long events"
 msgstr "Mostrar eventos largos"
 
-#: classes/class-eo-calendar-widget.php:82
+#: classes/class-eo-calendar-widget.php:81
 msgid "Link directly to event for days with only one event"
 msgstr "Enlazar directamente a evento para días con un solo evento"
 
-#: classes/class-eo-calendar-widget.php:94
+#: classes/class-eo-calendar-widget.php:93
 #: classes/class-eo-event-list-widget.php:110
 msgid "Event categories"
 msgstr "Categorías de evento"
 
-#: classes/class-eo-calendar-widget.php:97
+#: classes/class-eo-calendar-widget.php:96
 #: classes/class-eo-event-list-widget.php:112
 msgid "List category slug(s), seperate by comma. Leave blank for all"
 msgstr ""
 "Listar alia(s) de categoría, separada por coma. Dejar en blanco para todas"
 
-#: classes/class-eo-calendar-widget.php:106
+#: classes/class-eo-calendar-widget.php:105
 msgid "Event venue"
 msgstr "Lugar de encuentro del evento"
 
-#: classes/class-eo-calendar-widget.php:110
+#: classes/class-eo-calendar-widget.php:109
 #: classes/class-eo-event-list-widget.php:120
 #: includes/event-organiser-cpt.php:34
 msgid "All Venues"
 msgstr "Todos los lugares de encuentro"
 
-#: classes/class-eo-calendar-widget.php:293
+#: classes/class-eo-calendar-widget.php:296
 msgid "Previous month"
 msgstr "Mes pasado"
 
-#: classes/class-eo-calendar-widget.php:296
+#: classes/class-eo-calendar-widget.php:299
 msgid "Next month"
 msgstr "Mes próximo"
 
@@ -253,7 +253,7 @@ msgstr "Categorías de evento"
 
 #: classes/class-eo-widget-categories.php:25
 #: includes/event-organiser-cpt.php:94 includes/event-organiser-cpt.php:105
-#: includes/event-organiser-event-functions.php:1535
+#: includes/event-organiser-event-functions.php:1549
 #: templates/event-meta-event-single.php:62
 msgid "Categories"
 msgstr "Categorías"
@@ -297,15 +297,15 @@ msgstr "Seleccionar lugar de encuentro"
 msgid "There is no excerpt because this is a protected post."
 msgstr "No hay extracto porque esto es un post protegido."
 
-#: event-organiser-add-ons.php:19 event-organiser-add-ons.php:94
+#: event-organiser-add-ons.php:18 event-organiser-add-ons.php:91
 msgid "Event Organiser Extensions"
 msgstr "Extensiones de Event Organiser"
 
-#: event-organiser-add-ons.php:20
+#: event-organiser-add-ons.php:19
 msgid "Extensions"
 msgstr "Extensiones "
 
-#: event-organiser-add-ons.php:98
+#: event-organiser-add-ons.php:95
 msgid ""
 "Event Organiser offers a range of extension which add additional features to "
 "the plug-in."
@@ -313,7 +313,7 @@ msgstr ""
 "Event Organiser ofrece un rango de extensiones que adiciona características "
 "adicionales al plugin."
 
-#: event-organiser-add-ons.php:130 event-organiser-go-pro.php:90
+#: event-organiser-add-ons.php:127 event-organiser-go-pro.php:89
 msgid "Find out more &hellip;"
 msgstr "Descubra más &hellip; "
 
@@ -378,7 +378,7 @@ msgid "24 hour time"
 msgstr "Tiempo de 24 horas"
 
 #: event-organiser-calendar.php:256
-#: includes/event-organiser-event-functions.php:1472
+#: includes/event-organiser-event-functions.php:1486
 msgid "Loading&#8230;"
 msgstr "Cargando&#8230; "
 
@@ -478,7 +478,7 @@ msgstr "Información del Sistema"
 msgid ""
 "This page highlights useful information for debugging. If you're reporting a "
 "bug, please include this information. The 'system info' link in under the "
-"Events admin tab is only visible to admins and only when %s is set to %s."
+"Events admin tab is only visible to admins and only when %1$s is set to %1$s."
 msgstr ""
 
 #: event-organiser-debug.php:72
@@ -515,14 +515,14 @@ msgstr ""
 
 #. / TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
 #: event-organiser-debug.php:424
-#, php-format
-msgid "%s has only been tested up to %s %s"
+#, fuzzy, php-format
+msgid "%1$s has only been tested up to %1$s %1$s"
 msgstr "%s solo ha sido probado hasta %s %s"
 
 #. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
 #: event-organiser-debug.php:437
-#, php-format
-msgid "%s requires %s version %s or higher"
+#, fuzzy, php-format
+msgid "%1$s requires %1$s version %1$s or higher"
 msgstr "%s requiere la %s versión %s o superior"
 
 #: event-organiser-debug.php:462
@@ -633,7 +633,7 @@ msgid "day of week"
 msgstr "día de la semana"
 
 #: event-organiser-edit.php:225
-#: includes/event-organiser-event-functions.php:842
+#: includes/event-organiser-event-functions.php:856
 #: includes/event-organiser-register.php:268
 msgid "until"
 msgstr "hasta"
@@ -659,30 +659,30 @@ msgstr "Seleccionar un lugar de encuentro"
 msgid "Venue Name"
 msgstr "Nombre del Lugar de Encuentro"
 
-#: event-organiser-edit.php:320 includes/event-organiser-register.php:590
+#: event-organiser-edit.php:320
 #, php-format
 msgid ""
 "Google Maps now requires you register for an API key. If you wish to use "
-"maps on your site, %splease enter your key%s."
+"maps on your site, %1$splease enter your key%2$s."
 msgstr ""
 
 #: event-organiser-edit.php:492
 msgid "Event dates were not saved."
 msgstr "Las fechas del evento no fueron salvadas."
 
-#: event-organiser-go-pro.php:24
+#: event-organiser-go-pro.php:23
 msgid "Get Event Organiser Pro Add-On"
 msgstr "Obtener el Add-on de Event Organiser Pro"
 
-#: event-organiser-go-pro.php:25
+#: event-organiser-go-pro.php:24
 msgid "Go Pro"
 msgstr "Obtener la version Pro"
 
-#: event-organiser-go-pro.php:52
+#: event-organiser-go-pro.php:51
 msgid "Get Event Organiser Pro"
 msgstr "Obtener Event Organiser Pro"
 
-#: event-organiser-go-pro.php:55
+#: event-organiser-go-pro.php:54
 msgid ""
 "Event Organiser Pro is a premium add-on bringing advanced booking management "
 "to Event Organiser."
@@ -690,15 +690,15 @@ msgstr ""
 "Event Organiser Pro es un add-on premium que brinda gestión avanzada de "
 "Event Organiser."
 
-#: event-organiser-go-pro.php:56
+#: event-organiser-go-pro.php:55
 msgid "But that's not all &hellip;"
 msgstr "Pero eso no es todo &hellip;"
 
-#: event-organiser-go-pro.php:71
+#: event-organiser-go-pro.php:70
 msgid "Flexible Booking Options"
 msgstr "Opciones Flexibles de Booking"
 
-#: event-organiser-go-pro.php:72
+#: event-organiser-go-pro.php:71
 msgid ""
 "Sell tickets for specific dates or sell tickets for all dates of an event - "
 "such as booking places on a course. You can offer multiple tickets, and "
@@ -709,11 +709,11 @@ msgstr ""
 "ofrecer múltiples tickets, y personalizar el formulario del booking para "
 "satisfacer sus necesidades."
 
-#: event-organiser-go-pro.php:76
+#: event-organiser-go-pro.php:75
 msgid "Additional shortcodes & improved UI"
 msgstr "Códigos cortos adicionales y UI mejorada"
 
-#: event-organiser-go-pro.php:77
+#: event-organiser-go-pro.php:76
 msgid ""
 "Give your users the ability to search and filter through your events with "
 "the event search shortcode. Event Organiser Pro also adds a text editor "
@@ -724,11 +724,11 @@ msgstr ""
 "botón de editor de texto para hacer la inserción y la configuración de sus "
 "códigos cortos así de fácil."
 
-#: event-organiser-go-pro.php:81
+#: event-organiser-go-pro.php:80
 msgid "Venue custom fields & thumbnails"
 msgstr "Campos personalizados y miniaturas de lugares de encuentros"
 
-#: event-organiser-go-pro.php:82
+#: event-organiser-go-pro.php:81
 msgid ""
 "Add information on your venue pages with venue custom fields, or give your "
 "venues more attentioned with their own 'featured image'"
@@ -737,7 +737,7 @@ msgstr ""
 "personalizados de lugares de encuentro, o darle a sus lugares de encuentro "
 "más atención con su propia 'imagen destacada'"
 
-#: event-organiser-go-pro.php:96
+#: event-organiser-go-pro.php:95
 msgid "Go to Event Organiser settings"
 msgstr "Ir a ajustes de Event Organiser"
 
@@ -1246,13 +1246,13 @@ msgstr "Obtener Enlace"
 msgid "Slug"
 msgstr "Alias"
 
-#: features/bootstrap/FeatureContext.php:414
-#: features/bootstrap/FeatureContext.php:609
+#: features/bootstrap/FeatureContext.php:413
+#: features/bootstrap/FeatureContext.php:608
 msgid "Main Sidebar"
 msgstr ""
 
-#: features/bootstrap/FeatureContext.php:416
-#: features/bootstrap/FeatureContext.php:611
+#: features/bootstrap/FeatureContext.php:415
+#: features/bootstrap/FeatureContext.php:610
 msgid "Widgets in this area will be shown on all posts and pages."
 msgstr ""
 
@@ -1664,7 +1664,7 @@ msgid "Choose from the most used tags"
 msgstr "Escoger de las etiquetas más usadas"
 
 #: includes/event-organiser-cpt.php:162
-#: includes/event-organiser-event-functions.php:1543
+#: includes/event-organiser-event-functions.php:1557
 #: templates/event-meta-event-single.php:66
 msgid "Tags"
 msgstr "Etiquetas"
@@ -1995,77 +1995,77 @@ msgstr "Color"
 msgid "Assign the category a colour."
 msgstr "Asignar a la categoría un color"
 
-#: includes/event-organiser-event-functions.php:763
+#: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:274
 msgid "last"
 msgstr "último"
 
-#: includes/event-organiser-event-functions.php:763
+#: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:270
 msgid "first"
 msgstr "primero"
 
-#: includes/event-organiser-event-functions.php:763
+#: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:271
 msgid "second"
 msgstr "segundo"
 
-#: includes/event-organiser-event-functions.php:763
+#: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:272
 msgid "third"
 msgstr "tercero"
 
-#: includes/event-organiser-event-functions.php:763
+#: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:273
 msgid "fourth"
 msgstr "cuarto"
 
-#: includes/event-organiser-event-functions.php:773
+#: includes/event-organiser-event-functions.php:787
 msgid "one time only"
 msgstr "una sola vez"
 
-#: includes/event-organiser-event-functions.php:776
+#: includes/event-organiser-event-functions.php:790
 msgid "custom recurrence"
 msgstr "recurrencia personalizada"
 
-#: includes/event-organiser-event-functions.php:783
+#: includes/event-organiser-event-functions.php:797
 #: includes/event-organiser-register.php:259
 msgid "every day"
 msgstr "cada día"
 
-#: includes/event-organiser-event-functions.php:785
+#: includes/event-organiser-event-functions.php:799
 #: includes/event-organiser-register.php:260
 #, php-format
 msgid "every %d days"
 msgstr "cada %d días"
 
-#: includes/event-organiser-event-functions.php:791
+#: includes/event-organiser-event-functions.php:805
 #: includes/event-organiser-register.php:261
 msgid "every week on"
 msgstr "cada semana en"
 
-#: includes/event-organiser-event-functions.php:793
+#: includes/event-organiser-event-functions.php:807
 #: includes/event-organiser-register.php:262
 #, php-format
 msgid "every %d weeks on"
 msgstr "cada %d semanas en"
 
-#: includes/event-organiser-event-functions.php:804
+#: includes/event-organiser-event-functions.php:818
 #: includes/event-organiser-register.php:263
 msgid "every month on the"
 msgstr "cada mes en el"
 
-#: includes/event-organiser-event-functions.php:806
+#: includes/event-organiser-event-functions.php:820
 #: includes/event-organiser-register.php:264
 #, php-format
 msgid "every %d months on the"
 msgstr "cada %d meses en el"
 
-#: includes/event-organiser-event-functions.php:835
+#: includes/event-organiser-event-functions.php:849
 msgid "every year"
 msgstr "cada año"
 
-#: includes/event-organiser-event-functions.php:837
+#: includes/event-organiser-event-functions.php:851
 #, php-format
 msgid "every %d years"
 msgstr "cada %d años"
@@ -2167,6 +2167,13 @@ msgstr ""
 msgid "Enter a Google Maps API key"
 msgstr ""
 
+#: includes/event-organiser-register.php:590
+#, php-format
+msgid ""
+"Google Maps now requires you register for an API key. If you wish to use "
+"maps on your site, %splease enter your key%s."
+msgstr ""
+
 #: includes/event-organiser-utility-functions.php:1396
 msgid "Help"
 msgstr ""
@@ -2215,11 +2222,11 @@ msgstr "Programación mensual inválida (ordinal inválido)"
 msgid "Event does not contain any dates."
 msgstr "El evento no contiene ningunas fechas."
 
-#: includes/event.php:1074
+#: includes/event.php:1080
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr "La ocurrencia no fue borrada. La ocurrencia no fue encontrada."
 
-#: includes/event.php:1130
+#: includes/event.php:1136
 msgid "There is already an occurrence on this date"
 msgstr ""
 
