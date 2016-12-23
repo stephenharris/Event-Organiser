@@ -53,8 +53,6 @@ module.exports = function(grunt) {
                     '**/*.php',
                     '!node_modules/**',
                     '!dist/**',
-                    '!apigen/**',
-                    '!documentation/**',
                     '!tests/**',
                     '!features/**',
                     '!vendor/**',
@@ -152,7 +150,6 @@ module.exports = function(grunt) {
                     '!assets/**', //wp-org assets
                     '!dist/**', //build directory
                     '!.git/**', //version control
-                    '!apigen/**', '!documentation/**', //docs
                     '!tests/**', '!bin/**', '!phpunit.xml', //unit test
                     '!features/**', '!behat.yml', //behat test
                     '!vendor/**', '!composer.lock', '!composer.phar', '!composer.json', //composer
@@ -264,8 +261,6 @@ module.exports = function(grunt) {
                     '**/*.php',
                     '!node_modules/**',
                     '!dist/**',
-                    '!apigen/**',
-                    '!documentation/**',
                     '!tests/**',
                     '!vendor/**',
                     '!*~'
@@ -322,8 +317,6 @@ module.exports = function(grunt) {
                     '**/*.php',
                     '!node_modules/**',
                     '!dist/**',
-                    '!apigen/**',
-                    '!documentation/**',
                     '!tests/**',
                     '!features/**',
                     '!vendor/**',
