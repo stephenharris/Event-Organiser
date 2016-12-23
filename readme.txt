@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 4.6.1
+Tested up to: 4.7.0
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.1.7 - 23rd December 2016
+* bugfix: Remove icon was not visible when editing galleries on the event admin page
 
 = 3.1.6 - 11th November 2016
  * Fix bug causing edit event admin page to link to the settings page.
