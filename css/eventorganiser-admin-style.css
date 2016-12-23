@@ -461,12 +461,13 @@ a.eo-inline-help img {
 
 /* Backwards compatability with 4.3 and earlier */
 /* @see https://core.trac.wordpress.org/ticket/34242 */
-.wp-core-ui .button-link:focus {
+.eo-button-link:focus {
 	border-color: #5b9dd9;
 	-webkit-box-shadow: 0 0 3px rgba( 0, 115, 170, .8 );
 	box-shadow: 0 0 3px rgba( 0, 115, 170, .8 );
+	outline: #5b9dd9 solid 1px;
 }
-.wp-core-ui .button-link {
+.eo-button-link {
 	margin: 0;
 	padding: 0;
 	-webkit-box-shadow: none;
@@ -478,7 +479,3 @@ a.eo-inline-help img {
 	outline: none;
 	cursor: pointer;
 }
-.wp-core-ui .button-link:focus {
-	outline: #5b9dd9 solid 1px;
-}
-
