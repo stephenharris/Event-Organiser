@@ -387,7 +387,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('docs', ['shell:makeDocs']);
 
-    grunt.registerTask('test', ['phpunit', 'jsh-int']);
+    grunt.registerTask('test', ['phpunit', 'jshint']);
 
     grunt.registerTask('test_build', ['gitinfo', 'clean', 'uglify', 'cssjanus', 'cssmin', 'copy']);
 
