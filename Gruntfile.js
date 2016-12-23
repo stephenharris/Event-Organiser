@@ -259,18 +259,33 @@ module.exports = function(grunt) {
     	},
     	files:{
         	src:  [
-				'**/*.php',
+			    	'**/*.php',
     		  	'!node_modules/**',
     		  	'!dist/**',
     		  	'!apigen/**',
-				'!documentation/**',
-				'!tests/**',
-				'!vendor/**',
-				'!*~'
-			],
-			expand: true,
-		}
-	},
+				    '!documentation/**',
+    				'!tests/**',
+		    		'!vendor/**',
+				    '!*~'
+			    ],
+			    expand: true,
+		  }
+    },
+
+		upload_pot: {
+			options: {
+				pot: 'languages/eventorganiser.pot',
+				catalogueID: 10,
+				consumer: {
+					key: process.env.POPRESS_CONSUMER_KEY,
+					secret: process.env.POPRESS_CONSUMER_SECRET
+				},
+				access: {
+					key: process.env.POPRESS_ACCESS_KEY,
+					secret: process.env.POPRESS_ACCESS_SECRET
+				}
+			}
+		},
 
     checkrepo: {
     	deploy: {
@@ -319,9 +334,64 @@ module.exports = function(grunt) {
 
 });
 
+/**
+ * Uploading a POT file i18n.wp-event-organiser.com
+*/
+grunt.registerTask( 'upload_pot', function(){
+	var request = require('request');
+	var OAuth   = require('oauth-1.0a');
+	var crypto  = require('crypto');
+	var fs = require("fs");
+
+	var options = this.options();
+
+	if ( ! grunt.file.exists( options.pot ) ) {
+		grunt.fatal( 'POT file "' + options.pot + '" does not exist.' );
+	}
+
+	var oauth = OAuth({
+			consumer: options.consumer,
+			signature_method: 'HMAC-SHA1',
+			hash_function: function(base_string, key) {
+				return crypto.createHmac('sha1', key).update(base_string).digest('base64');
+		}
+	});
+
+	var request_data = {
+		method: 'POST',
+		url: 'http://i18n.wp-event-organiser.com/wp-json/popress/v1/catalogue/' + options.catalogueID + '/pot',
+		formData: {
+			'popress-file-upload': {
+				value: fs.createReadStream(options.pot),
+				options: {
+					filename: 'event-organiser.pot',
+					contentType: null
+				}
+			}
+		}
+	};
+
+	var headers = oauth.toHeader(oauth.authorize(request_data,options.access));
+	headers['content-type'] = 'multipart/form-data; boundary=---011000010111000001101001';
+	headers['cache-control'] = 'no-cache';
+	request_data['headers'] = headers;
+	var done = this.async();
+	request(request_data, function(error, response, body) {
+		if ( 200 !== response.statusCode ) {
+			grunt.fail.warn( 'POT file not uploaded. (' + response.statusCode + ') ' + body );
+		} else {
+			response = JSON.parse(body);
+			grunt.log.ok( 'There are ' + response.messages + ' translatable strings.' );
+		}
+		done();
+	});
+
+	return;
+});
+
 grunt.registerTask( 'docs', ['shell:makeDocs']);
 
-grunt.registerTask( 'test', [ 'phpunit', 'jshint' ] );
+grunt.registerTask( 'test', [ 'phpunit', 'jsh-int' ] );
 
 grunt.registerTask( 'test_build', [ 'gitinfo', 'clean', 'uglify', 'cssjanus', 'cssmin', 'copy' ] );
 
