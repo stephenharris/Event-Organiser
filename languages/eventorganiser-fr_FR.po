@@ -1008,6 +1008,8 @@ msgid ""
 "To use Google Maps you need to register an API key with Google. You can "
 "register for a free API key by %sfollowing these instructions%s."
 msgstr ""
+"Pour utiliser Google Maps vous devez enregistrer une clé API de Google."
+"%sSuivez les instruction%s pour obtenir une clé API gratuite par Google."
 
 #: event-organiser-settings.php:258
 msgid "Templates:"
@@ -1062,14 +1064,15 @@ msgid "Day archive"
 msgstr "Archive quotidienne"
 
 #: event-organiser-settings.php:361
-msgid "Enable theme compatability mode (default)"
-msgstr ""
+msgid "Enable theme compatibility mode (default)"
+msgstr "Activer le mode de compatibilité des thèmes (par défaut)"
 
 #: event-organiser-settings.php:362
 msgid ""
-"Event Organiser will attempt to ensure compatability with your theme and "
+"Event Organiser will attempt to ensure compatibility with your theme and "
 "apply additional styles."
-msgstr ""
+msgstr "Event Organiser essaiera d'assurer la compatibilité avec votre thème et "
+"d'appliquer les styles supplémentaires."
 
 #: event-organiser-settings.php:365
 msgid "Enable template handling"
@@ -1106,6 +1109,11 @@ msgid ""
 "it will use its own default template. You can disable this below. WordPress "
 "will then decide which template from your theme's folder to use."
 msgstr ""
+"Pour chaque page, le template correspondant est utilisé. Pour utiliser votre "
+"template placer simplement un fichier avec le même nom dans le dossier de votre thème."
+"Par défaut, Si Event Organiser ne trouve pas de template dans le dossier de votre thème, "
+"le template par défaut est utilisé. Vous pouvez les désactiver. WordPress "
+"décidera alors du template à utiliser dans le dossier de votre thème."
 
 #: event-organiser-settings.php:652
 msgid "Events archives:"
