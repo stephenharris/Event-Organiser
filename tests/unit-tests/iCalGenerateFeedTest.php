@@ -312,8 +312,7 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 	}
 
 	/**
-	 * If the excerpt contains HTML entities these should be encoded,
-	 * @see http://wp-event-organiser.com/forums/topic/ical-feed-and-html-encoding/
+	 * If the excerpt contains ampersands these should not be encoded.
 	 */
 	public function testAmpersand(){
 
