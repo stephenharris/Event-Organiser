@@ -118,12 +118,11 @@ if ( have_posts() ) :
 		) . "\r\n";
 
 		$description = wp_strip_all_tags( html_entity_decode( get_the_excerpt(), ENT_COMPAT, 'UTF-8' ) );
-		$description = ent2ncr( convert_chars( $description ) );
 		/**
-	 	* Filters the description of the event as it appears in the iCal feed.
-	 	*
-	 	* @param string $description The event description
-	 	*/
+		 * Filters the description of the event as it appears in the iCal feed.
+		 *
+		 * @param string $description The event description
+		 */
 		$description = apply_filters( 'eventorganiser_ical_description', $description );
 		$description = eventorganiser_escape_ical_text( $description );
 

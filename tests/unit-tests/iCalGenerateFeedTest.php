@@ -311,6 +311,38 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 		$this->assertEquals( $expected, $actual );
 	}
 
+	/**
+	 * If the excerpt contains HTML entities these should be encoded,
+	 * @see http://wp-event-organiser.com/forums/topic/ical-feed-and-html-encoding/
+	 */
+	public function testAmpersand(){
+
+		$event_id = $this->factory->event->create( array(
+			'start'        => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
+			'end'          => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
+			'post_title'   => 'Testing ampersands & &amp; &#038; and &#38;',
+			'post_content' => 'Testing ampersands & &amp; &#038; and &#38;',
+			'post_excerpt' => false,
+			'post_status'  => 'publish',
+			'post_date'    => '2015-02-18 17:30:00',
+		) );
+
+		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
+
+		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
+
+		//Get actual feed output
+		ob_start();
+		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
+		$actual = ob_get_contents();
+		ob_end_clean();
+
+		//Get expected feed output
+		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/ampersands.ical' );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
 
 	public function testRRULEAllDayWeekly(){
 		global $wpdb;
