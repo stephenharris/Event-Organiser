@@ -422,7 +422,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					$clean[$txt] = $this->validate_text( $option[$txt] );
 				}
 
-				$clean['templates'] = in_array( $option['templates'], array( 1, 0, 'themecompat' ) ) ? $option['templates'] : 1; 
+				$clean['templates'] = isset( $option['templates'] ) && in_array( $option['templates'], array( 1, 0, 'themecompat' ) ) ? $option['templates'] : 1;
 				
 				//Group events is handled differently
 				$clean['group_events'] = ( !empty( $clean['group_events'] ) ? 'series' : '' );
