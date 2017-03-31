@@ -222,8 +222,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
-= 3.1.8 - 31st March 2017
+= 3.1.9 - 31st March 2017
 * Removed development tool
+* Updated French, Italian and Japanese translations
 
 = 3.1.8 - 30th March 2017
 
