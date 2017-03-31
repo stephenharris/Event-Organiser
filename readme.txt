@@ -222,6 +222,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.1.8 - 31st March 2017
+* Removed development tool
+
 = 3.1.8 - 30th March 2017
 
 * Handle 767 byte index size limit in MySQL. See [#404](https://github.com/stephenharris/Event-Organiser/issues/404)
