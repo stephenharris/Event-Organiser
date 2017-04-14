@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2016-11-27T01:17:21+00:00\n"
+"PO-Revision-Date: 2017-04-14T23:01:46+00:00\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -47,10 +47,6 @@ msgctxt "post"
 msgid "Add New"
 msgstr "Neuer Termin"
 
-#: event-organiser-edit.php:320
-msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%1$s."
-msgstr ""
-
 #: includes/event.php:870
 msgid "Event does not contain any dates."
 msgstr "Der Termin enthält keine Datumsangaben."
@@ -72,6 +68,10 @@ msgstr "jeden Monat am"
 #: event-organiser-venues.php:465
 msgid "Slug"
 msgstr "Titelform"
+
+#: event-organiser-edit.php:320
+msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%2$s."
+msgstr ""
 
 #: includes/event-organiser-cpt.php:35
 msgid "View Venue"
@@ -401,6 +401,14 @@ msgstr "heute"
 msgid "Add or remove venues"
 msgstr "Hinzufügen oder entfernen von Veranstaltungsorten"
 
+#. //docs.wp-event-organiser.com/theme-integration for more information
+#. *
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. ***************** NOTICE: *****************
+#. * @package Event Organiser (plug-in)
+#. * @since 1.0.0
+#. 
+#. Call the template header
 #: templates/taxonomy-event-venue.php:30
 #, php-format
 msgid "Events at: %s"
@@ -705,6 +713,14 @@ msgstr "Permalink:"
 msgid "End Date/Time:"
 msgstr "Datum Ende/Zeit"
 
+#. //docs.wp-event-organiser.com/theme-integration for more information
+#. *
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. ***************** NOTICE: *****************
+#. * @package Event Organiser (plug-in)
+#. * @since 1.0.0
+#. 
+#. Call the template header
 #: includes/class-eo-theme-compatability.php:174
 #: templates/taxonomy-event-category.php:27
 msgid "Event Category: %s"
@@ -1173,7 +1189,7 @@ msgstr "Kalenderansicht"
 #: includes/class-event-organiser-im-export.php:61
 #, php-format
 msgid "File Error encountered: %d"
-msgstr "Dateifehler aufgetreten: % d"
+msgstr "Dateifehler aufgetreten: %d"
 
 #: event-organiser-settings.php:715
 msgid "Please note to enable these structures you must first have pretty permalinks enabled on WordPress in Settings > Permalinks."
@@ -1539,6 +1555,18 @@ msgstr "Minute"
 msgid "Choose from the most used tags"
 msgstr "Aus den meist verwendeten Terminschlagworten auswählen"
 
+#. //codex.wp-event-organiser.com
+#. *
+#. ***************** NOTICE: *****************
+#. *  Do not make changes to this file. Any changes made to this file
+#. * will be overwritten if the plug-in is updated.
+#. * To overwrite this template with your own
+#.  make a copy of it (with the same name)
+#. * in your theme directory. See http://docs.wp-event-organiser.com/theme-integration for more information
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. * @package Event Organiser (plug-in)
+#. * @since 1.7
+#. 
 #: event-organiser-calendar.php:387
 #: event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:32
@@ -1991,11 +2019,20 @@ msgstr "Wechsle in die Wochenansicht"
 msgid "Jump to today in view"
 msgstr "Springe zum heutigen Tag"
 
+#. //docs.wp-event-organiser.com/theme-integration for more information
+#. *
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. ***************** NOTICE: *****************
+#. * @package Event Organiser (plug-in)
+#. * @since 1.2.0
+#. 
+#. Call the template header
 #: includes/class-eo-theme-compatability.php:184
 #: templates/taxonomy-event-tag.php:27
 msgid "Event Tag: %s"
-msgstr "Termin Tag:"
+msgstr "Termin Tag: %s"
 
+#. //php.net/date
 #: includes/event-organiser-cpt.php:336
 msgid "M j, Y @ G:i"
 msgstr "M j, Y @ G:i"
