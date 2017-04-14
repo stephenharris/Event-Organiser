@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-04-10T14:21:09+00:00\n"
+"PO-Revision-Date: 2017-04-14T22:57:25+00:00\n"
 "Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -89,7 +89,7 @@ msgstr "Risultati della ricerca per &#8220;%s&#8221;"
 #: includes/event-organiser-cpt.php:586
 #, php-format
 msgid "See the <a %s> documentation</a>"
-msgstr "Guarda la <a href=\"%s\">documentazione</a>"
+msgstr "Guarda la <a %s>documentazione</a>"
 
 #: includes/event-organiser-register.php:254
 msgid "weeks"
@@ -1029,9 +1029,7 @@ msgstr "C'è già un evento in questa data"
 
 #: includes/event-organiser-cpt.php:342
 msgid "This event has been broken from a recurring event."
-msgstr ""
-"Questo evento è stato interrotto da un errore ripetuto\n"
-""
+msgstr "Questo evento è stato interrotto da un errore ripetuto"
 
 #: includes/event-organiser-cpt.php:107
 #, fuzzy

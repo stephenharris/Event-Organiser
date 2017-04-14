@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-03-19T16:16:38+00:00\n"
+"PO-Revision-Date: 2017-04-14T22:59:50+00:00\n"
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 
@@ -91,7 +91,7 @@ msgstr "Résultats de recherche pour &#8220;%s&#8221;"
 #: includes/event-organiser-cpt.php:586
 #, php-format
 msgid "See the <a %s> documentation</a>"
-msgstr "Voir la <a%s>documentation</a>"
+msgstr "Voir la <a %s>documentation</a>"
 
 #: includes/event-organiser-register.php:254
 msgid "weeks"
@@ -1544,9 +1544,9 @@ msgstr "Création d'événements"
 msgid "Event management permissions"
 msgstr "Permissions de gestion d'événements"
 
-#: includes/event-organiser-ajax.php:798
-msgid "Are you sure you want to do this?"
-msgstr "Êtes-vous sûr de vouloir continuer ?"
+#: event-organiser-venues.php:194
+msgid "Venue <strong>updated</strong>"
+msgstr "Lieu <strong>mis à jour</strong"
 
 #: event-organiser-calendar.php:213
 #, fuzzy
@@ -1687,9 +1687,9 @@ msgstr "chaque année le"
 msgid "Save Draft"
 msgstr "Sauvegarder le brouillon"
 
-#: includes/event-organiser-cpt.php:159
-msgid "New Tag Name"
-msgstr "Nom du nouveau mot-clef"
+#: event-organiser-venues.php:443
+msgid "Get Link"
+msgstr "Voir le lien"
 
 #: templates/single-event.php:60
 #, php-format
