@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-04-16T22:44:11+00:00\n"
+"PO-Revision-Date: 2017-04-16T23:07:18+00:00\n"
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -243,9 +243,9 @@ msgid "Venue Location"
 msgstr "Ubicació del Lloc"
 
 #: includes/event-organiser-cpt.php:326
-#, php-format
+#, php-format,fuzzy
 msgid "Event restored to revision from %s"
-msgstr "Esdeveniment restaurat a la revisió de % s"
+msgstr "Esdeveniment restaurat a la revisió de %s"
 
 #: event-organiser-settings.php:180
 msgid "dd-mm-yyyy"
