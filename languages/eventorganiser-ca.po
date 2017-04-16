@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-04-16T23:07:18+00:00\n"
+"PO-Revision-Date: 2017-04-16T23:21:14+00:00\n"
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -1872,7 +1872,7 @@ msgstr "Agenda d'esdeveniments"
 #: templates/event-meta-event-single.php:41
 #, php-format
 msgid "This event is running from %1$s until %2$s. It is next occurring on %3$s"
-msgstr "Aquest esdeveniment s'està executant des de %1$s fins a %2$s. La propera ocurrència serà %3$"
+msgstr "Aquest esdeveniment s'està executant des de %1$s fins a %2$s. La propera ocurrència serà %3$s"
 
 #: classes/class-eo-event-list-widget.php:144
 msgid "Order by"
@@ -1907,8 +1907,6 @@ msgstr "anys"
 #: includes/class-eo-ical-parser.php:193
 msgid "There was an error detecting iCal source."
 msgstr ""
-"El botó d'exportació inferior genera un arxiu ICS dels esdeveniments que es poden importar a altres aplicacions de calendari com Google Calendar.\n"
-""
 
 #: event-organiser-debug.php:253
 msgid "Known plug-in & theme conflicts, highlighted in red, may be minor or have a simple resolution. Please contact support."
