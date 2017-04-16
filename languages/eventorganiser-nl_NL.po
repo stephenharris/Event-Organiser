@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-04-16T22:59:03+00:00\n"
+"PO-Revision-Date: 2017-04-16T23:08:03+00:00\n"
 "Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -726,7 +726,7 @@ msgstr "Eind Datum/Tijd"
 #: templates/taxonomy-event-category.php:27
 #, php-format
 msgid "Event Category: %s"
-msgstr "Evenement categorie"
+msgstr "Evenement categorie: %s"
 
 #: includes/event-organiser-register.php:252
 msgid "days"

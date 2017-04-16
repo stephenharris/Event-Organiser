@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2016-11-27T01:17:44+00:00\n"
+"PO-Revision-Date: 2017-04-16T23:10:48+00:00\n"
 "Language: af\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -350,6 +350,7 @@ msgid "End Date/Time"
 msgstr "Eind Datum/Tyd"
 
 #: event-organiser-settings.php:249
+#, fuzzy
 msgid "To use Google Maps you need to register an API key with Google. You can register for a free API key by %sfollowing these instructions%s."
 msgstr "Om Google karate te gebruik, moet U API sleutel registreer by Google."
 
