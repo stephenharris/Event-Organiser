@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-03-13T20:46:24+00:00\n"
+"PO-Revision-Date: 2017-04-16T22:59:03+00:00\n"
 "Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -371,7 +371,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:554
 msgid "This is the list of all saved events. Note that <strong> recurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event."
-msgstr "Dit is de lijst van alle evenementen. Terugkerende evenementen staan op een enkele regel bij elkaar. In de tabel staat de start- en einddatum van de eerste gebeurtenis. Klik op het evenement om het terugkeerpatroon te bekijken."
+msgstr "Dit is de lijst van alle evenementen. <strong>Terugkerende evenementen staan op een enkele regel bij elkaar</strong>. In de tabel staat de start- en einddatum van de eerste gebeurtenis. Klik op het evenement om het terugkeerpatroon te bekijken."
 
 #: event-organiser-settings.php:361
 msgid "Enable theme compatability mode (default)"

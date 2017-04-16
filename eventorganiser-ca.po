@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2016-11-27T01:17:35+00:00\n"
+"PO-Revision-Date: 2017-04-16T22:44:11+00:00\n"
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -47,10 +47,6 @@ msgctxt "post"
 msgid "Add New"
 msgstr ""
 
-#: event-organiser-edit.php:320
-msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%1$s."
-msgstr ""
-
 #: includes/event.php:870
 msgid "Event does not contain any dates."
 msgstr "L'esdeveniment no te dates."
@@ -72,6 +68,10 @@ msgstr "cada mes a"
 #: event-organiser-venues.php:465
 msgid "Slug"
 msgstr "Slug"
+
+#: event-organiser-edit.php:320
+msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%2$s."
+msgstr ""
 
 #: includes/event-organiser-cpt.php:35
 msgid "View Venue"
@@ -403,6 +403,14 @@ msgstr "avui"
 msgid "Add or remove venues"
 msgstr "Afefeix o elimina llocs"
 
+#. //docs.wp-event-organiser.com/theme-integration for more information
+#. *
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. ***************** NOTICE: *****************
+#. * @package Event Organiser (plug-in)
+#. * @since 1.0.0
+#. 
+#. Call the template header
 #: templates/taxonomy-event-venue.php:30
 #, php-format
 msgid "Events at: %s"
@@ -706,6 +714,14 @@ msgstr "Permalinks:"
 msgid "End Date/Time:"
 msgstr ""
 
+#. //docs.wp-event-organiser.com/theme-integration for more information
+#. *
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. ***************** NOTICE: *****************
+#. * @package Event Organiser (plug-in)
+#. * @since 1.0.0
+#. 
+#. Call the template header
 #: includes/class-eo-theme-compatability.php:174
 #: templates/taxonomy-event-category.php:27
 #, php-format
@@ -937,7 +953,7 @@ msgstr "Mostra esdeveniments de llarga duració"
 
 #: event-organiser-venues.php:154
 msgid "Venue(s) <strong>were not </strong> deleted"
-msgstr "Lloc(s)"
+msgstr ""
 
 #: event-organiser-edit.php:80
 msgid "This is a recurring event. Check to edit this event and its recurrences"
@@ -1543,6 +1559,18 @@ msgstr "Minut"
 msgid "Choose from the most used tags"
 msgstr "Trieu entre les etiquetes més utilitzades"
 
+#. //codex.wp-event-organiser.com
+#. *
+#. ***************** NOTICE: *****************
+#. *  Do not make changes to this file. Any changes made to this file
+#. * will be overwritten if the plug-in is updated.
+#. * To overwrite this template with your own
+#.  make a copy of it (with the same name)
+#. * in your theme directory. See http://docs.wp-event-organiser.com/theme-integration for more information
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. * @package Event Organiser (plug-in)
+#. * @since 1.7
+#. 
 #: event-organiser-calendar.php:387
 #: event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:32
@@ -1672,7 +1700,7 @@ msgstr "Arxiu diari"
 
 #: event-organiser-venues.php:193
 msgid "Venue <strong>created</strong>"
-msgstr "Lloc creat"
+msgstr "Lloc <strong>creat</strong>"
 
 #: event-organiser-settings.php:155
 #: event-organiser-settings.php:342
@@ -1865,9 +1893,7 @@ msgstr "No hi ha resum perquè aquesta és una entrada protegida."
 
 #: includes/class-event-organiser-im-export.php:94
 msgid "The export button below generates an ICS file of your events that can be imported in to other calendar applications such as Google Calendar."
-msgstr ""
-"El botó d'exportació inferior genera un arxiu ICS dels esdeveniments que es poden importar a altres aplicacions de calendari com Google Calendar.\n"
-""
+msgstr "El botó d'exportació inferior genera un arxiu ICS dels esdeveniments que es poden importar a altres aplicacions de calendari com Google Calendar."
 
 #: classes/class-eo-widget-categories.php:11
 #: event-organiser-settings.php:333
@@ -1881,6 +1907,8 @@ msgstr "anys"
 #: includes/class-eo-ical-parser.php:193
 msgid "There was an error detecting iCal source."
 msgstr ""
+"El botó d'exportació inferior genera un arxiu ICS dels esdeveniments que es poden importar a altres aplicacions de calendari com Google Calendar.\n"
+""
 
 #: event-organiser-debug.php:253
 msgid "Known plug-in & theme conflicts, highlighted in red, may be minor or have a simple resolution. Please contact support."
@@ -1999,12 +2027,21 @@ msgstr ""
 msgid "Jump to today in view"
 msgstr ""
 
+#. //docs.wp-event-organiser.com/theme-integration for more information
+#. *
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. ***************** NOTICE: *****************
+#. * @package Event Organiser (plug-in)
+#. * @since 1.2.0
+#. 
+#. Call the template header
 #: includes/class-eo-theme-compatability.php:184
 #: templates/taxonomy-event-tag.php:27
 #, php-format
 msgid "Event Tag: %s"
 msgstr ""
 
+#. //php.net/date
 #: includes/event-organiser-cpt.php:336
 msgid "M j, Y @ G:i"
 msgstr "I, j M Y @ G:i"
