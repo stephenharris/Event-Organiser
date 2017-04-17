@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-04-16T23:23:32+00:00\n"
+"PO-Revision-Date: 2017-04-17T13:14:47+00:00\n"
 "Language: sl_SI\n"
 "Plural-Forms: nplurals=4; plural=(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3));\n"
 
@@ -99,9 +99,7 @@ msgstr "tedni"
 #: includes/event-organiser-cpt.php:323
 #, php-format
 msgid "Event updated. <a href=\"%s\">View event</a>"
-msgstr ""
-"Dogodek posodobljen. <a href=\"%s\">Poglej dogodek</a>\n"
-""
+msgstr "Dogodek posodobljen. <a href=\"%s\">Poglej dogodek</a>"
 
 #: includes/event.php:651
 msgid "Schedule end date is before is before the start date."
