@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-02-28T21:40:43+00:00\n"
+"PO-Revision-Date: 2017-04-16T23:29:26+00:00\n"
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=3; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2);\n"
 
@@ -315,9 +315,9 @@ msgid "Search Categories"
 msgstr "Искать в категориях"
 
 #: event-organiser-edit.php:99
-#, php-format
+#, php-format,fuzzy
 msgid "Enter date in %s format"
-msgstr "Формат даты/времени события"
+msgstr "Формат даты/времени события: %s"
 
 #: includes/class-event-organiser-im-export.php:107
 msgid "Import categories"
@@ -541,7 +541,7 @@ msgstr "Все события"
 #: classes/class-eo-event-list-widget.php:168
 #, php-format
 msgid "You can use specified tags as placeholders for event information which you want to appear in the widget. <a href=\"%s\" target=\"_blank\"> Find out more</a>."
-msgstr "Указанные теги можно использовать как заглушки для информации о события, которая должны показываться в виджете. <a href=\\\"%s\\\" target=\\\"_blank\\\"> Как это делается</a>."
+msgstr "Указанные теги можно использовать как заглушки для информации о события, которая должны показываться в виджете. <a href=\"%s\" target=\"_blank\"> Как это делается</a>."
 
 #: event-organiser-settings.php:226
 msgid "Enable events ICAL feed:"
@@ -1193,7 +1193,7 @@ msgstr "В виде календаря"
 #: includes/class-event-organiser-im-export.php:61
 #, php-format
 msgid "File Error encountered: %d"
-msgstr "Произошла ошибка файла: % d"
+msgstr "Произошла ошибка файла: %d"
 
 #: event-organiser-settings.php:715
 msgid "Please note to enable these structures you must first have pretty permalinks enabled on WordPress in Settings > Permalinks."
@@ -1612,9 +1612,9 @@ msgid "View will take you to the venue's page"
 msgstr "Нажав 'Посмотреть' вы попадете на страницу места"
 
 #: includes/event-organiser-ajax.php:444
-#, php-format
+#, php-format,fuzzy
 msgid "Edit Event: %s"
-msgstr "Редактировать событие"
+msgstr "Редактировать событие: %s"
 
 #: event-organiser-calendar.php:344
 msgid "Switch to month view"
