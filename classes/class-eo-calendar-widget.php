@@ -398,7 +398,7 @@ class EO_Calendar_Widget extends WP_Widget {
 			$calendar = array();
 		}
 
-		$calendar[$key] = $before . $title . $head . $foot . $body . $after;
+		$calendar[$key] = $before . $title . $head . $body . $foot . $after;
 
 		set_transient( 'eo_widget_calendar', $calendar, DAY_IN_SECONDS );
 		return $calendar[$key];
