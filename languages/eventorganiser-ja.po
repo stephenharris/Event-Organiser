@@ -545,7 +545,7 @@ msgstr ""
 
 #: event-organiser-edit.php:107
 msgid "Start Date/Time:"
-msgstr ""
+msgstr "開始日時"
 
 #: event-organiser-edit.php:112
 msgid "Start Date"
@@ -557,7 +557,7 @@ msgstr "開始時"
 
 #: event-organiser-edit.php:130
 msgid "End Date/Time:"
-msgstr ""
+msgstr "終了日時"
 
 #: event-organiser-edit.php:135
 msgid "End Date"
@@ -573,7 +573,7 @@ msgstr "繰り返し"
 
 #: event-organiser-edit.php:165
 msgid "none"
-msgstr ""
+msgstr "なし"
 
 #: event-organiser-edit.php:165
 msgid "daily"
