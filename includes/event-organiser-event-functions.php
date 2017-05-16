@@ -264,22 +264,22 @@ function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, 
  *
  * @since 3.0.0
  * @package event-date-functions
- * @param int $event_id
+ * @param int $post_id
  * @param int $occurrence_id
  * @return boolean|array False if the occurrence was not found.
  */
-function eo_get_the_occurrence( $event_id, $occurrence_id ) {
+function eo_get_the_occurrence( $post_id, $occurrence_id ) {
 
 	global $wpdb;
 	
-	$occurrences = wp_cache_get( 'eventorganiser_occurrences_'.$event_id );
+	$occurrences = wp_cache_get( 'eventorganiser_occurrences_' . $post_id );
 	
 	if ( ! isset ( $occurrences[$occurrence_id] ) ) {
 		
 		$result = $wpdb->get_row($wpdb->prepare(
 			"SELECT event_id, StartDate,StartTime,EndDate,FinishTime FROM {$wpdb->eo_events} 
-			WHERE {$wpdb->eo_events}.post_id=%d AND {$wpdb->eo_events}.event_id=%d ORDER BY StartDate ASC", 
-			$event_id, 
+			WHERE {$wpdb->eo_events}.post_id=%d AND {$wpdb->eo_events}.event_occurrence=%d ORDER BY StartDate ASC", 
+			$post_id,
 			$occurrence_id
 		));
 	
@@ -292,7 +292,7 @@ function eo_get_the_occurrence( $event_id, $occurrence_id ) {
 			'end' => new DateTime($result->EndDate.' '.$result->FinishTime, eo_get_blog_timezone())
 		);
 		
-		wp_cache_set( 'eventorganiser_occurrences_'.$event_id, $occurrences );
+		wp_cache_set( 'eventorganiser_occurrences_' . $post_id, $occurrences );
 		
 	}
 	
