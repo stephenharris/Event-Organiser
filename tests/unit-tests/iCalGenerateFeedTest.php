@@ -2,7 +2,7 @@
 
 class iCalGenerateFeedTest extends EO_UnitTestCase
 {
-	
+
 	public function setUp() {
 		add_filter( 'eventorganiser_format_datetime_string', array( $this, 'groundhogDay' ), 10, 4 );
 		parent::setUp();
@@ -13,7 +13,7 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 		remove_filter( 'eventorganiser_format_datetime_string', array( $this, 'groundhogDay' ) );
 		parent::tearDown();
 	}
-	
+
 	public function groundhogDay( $formatted_datetime, $datetime_string, $format ) {
 		if ( 'now' == $datetime_string ) {
 			//Hardcode 'now' for unit tests.
@@ -22,8 +22,8 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 		}
 		return $formatted_datetime;
 	}
-	
-	
+
+
 	public function testRRULEWeeklySchedule(){
 		$event_id = $this->factory->event->create( array(
 				'start'         => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
@@ -102,7 +102,7 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 
 		$this->assertEquals( false, eventorganiser_generate_ics_rrule( $event_id ) );
 	}
-	
+
 
 	public function testOrganizer(){
 
@@ -121,32 +121,32 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 			'post_status' => 'publish',
 			'post_date'   => '2015-02-18 17:30:00',
 		) );
-		
+
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
-				
-		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) ); 
+
+		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
 
 		//Get actual feed output
 		ob_start();
 		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
 		$actual = ob_get_contents();
 		ob_end_clean();
-		
+
 		//Get expected feed output
 		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/organizer.ical' );
-				 
+
 		$this->assertEquals( $expected, $actual );
 	}
-	
+
 	public function testOrganizerWithSpecialCharacters(){
-	
+
 		$user_id = $this->factory->user->create( array(
 			'user_login'   => 'specialcharacteruser',
 			'user_pass'    => 'password1',
 			'user_email'   => 'specialcharacter@example.org',
 			'display_name' => 's;p,e"c\'a:l'
 		) );
-		
+
 		$event_id = $this->factory->event->create( array(
 			'start'         => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
 			'end'           => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
@@ -162,20 +162,20 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 			'post_status'   => 'publish',
 			'post_date'     => '2015-02-18 17:30:00',
 		) );
-	
+
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
-	
+
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
-	
+
 		//Get actual feed output
 		ob_start();
 		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
 		$actual = ob_get_contents();
 		ob_end_clean();
-	
+
 		//Get expected feed output
 		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/organizer-special-characters.ical' );
-			
+
 		$this->assertEquals( $expected, $actual );
 	}
 
@@ -197,20 +197,20 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 			'post_status'  => 'publish',
 			'post_date'    => '2015-02-18 17:30:00',
 		) );
-		
+
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
-				
-		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) ); 
+
+		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
 
 		//Get actual feed output
 		ob_start();
 		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
 		$actual = ob_get_contents();
 		ob_end_clean();
-		
+
 		//Get expected feed output
 		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/description-pre470.ical' );
-		
+
 		$this->assertEquals( $expected, $actual );
 	}
 
@@ -250,7 +250,7 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 
 		$this->assertEquals( $expected, $actual );
 	}
-	
+
 	public function testEscapedCharacters(){
 
 		$event_id = $this->factory->event->create( array(
@@ -264,27 +264,27 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 		) );
 
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
-				
-		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) ); 
+
+		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
 
 		//Get actual feed output
 		ob_start();
 		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
 		$actual = ob_get_contents();
 		ob_end_clean();
-		
+
 		//Get expected feed output
 		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/escaped.ical' );
-		
+
 		$this->assertEquals( $expected, $actual );
 	}
-	
+
 	/**
 	 * If the excerpt contains HTML entities these should be encoded,
 	 * @see http://wp-event-organiser.com/forums/topic/ical-feed-and-html-encoding/
 	 */
 	public function testHTMLEntities(){
-	
+
 		$event_id = $this->factory->event->create( array(
 			'start'        => new DateTime('2013-12-02 21:00', eo_get_blog_timezone() ),
 			'end'          => new DateTime('2013-12-02 23:00', eo_get_blog_timezone() ),
@@ -296,18 +296,18 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 		) );
 
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
-	
+
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
-	
+
 		//Get actual feed output
 		ob_start();
 		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
 		$actual = ob_get_contents();
 		ob_end_clean();
-	
+
 		//Get expected feed output
 		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/htmlentities.ical' );
-	
+
 		$this->assertEquals( $expected, $actual );
 	}
 
@@ -496,45 +496,45 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 	}
 
 	public function testIcalFolding(){
-		
+
 		$str_75 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ012346789abcdefghijklmnopqrstuvwxyz012346789'%CDE";
-		
+
 		$string = $str_75.$str_75;
-		
+
 		//var_dump( eventorganiser_fold_ical_text( $string ) );
 		$this->assertEquals( "$str_75\r\n $str_75", eventorganiser_fold_ical_text( $string ) );
-		
-		
+
+
 	}
 
 	public function testMultibyteFolding(){
-		
+
 		$str_75 = "This string ends in 6 multibyte characters. It has a mb_strlen of 75 žšč£££";
 		//but strlen of 81
 
 		//We expect no folding
 		$this->assertEquals( $str_75, eventorganiser_fold_ical_text( $str_75 ) );
-		
-		
+
+
 	}
-	
+
 	public function testFoldingWithNewLines(){
-		
+
 		$str_75 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ012346789abcdefghijklmnopqrstuvwxyz012346789^%CDE";
-		
-		
+
+
 		//New lines with \r\n
 		$string = 'ABCDEF\n abcdef\n'. $str_75.$str_75.'\nHello world';
 		$expected = 'ABCDEF\n abcdef\nABCDEFGHIJKLMNOPQRSTUVWXYZ012346789abcdefghijklmnopqrstuvw'
 			."\r\n " . 'xyz012346789^%CDEABCDEFGHIJKLMNOPQRSTUVWXYZ012346789abcdefghijklmnopqrstuvw'
 			."\r\n " . 'xyz012346789^%CDE\nHello world';
-		
+
 		$this->assertEquals( $expected, eventorganiser_fold_ical_text( $string ) );
-		
+
 	}
-	
+
 	public function testIcalNewLineEscape(){
-		
+
 		//Test with \n
 		$intentional_newline = "Foo\nBar";
 		$this->assertEquals( 'Foo\nBar', eventorganiser_escape_ical_text( $intentional_newline ) );
@@ -542,17 +542,17 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 		//Test with \r\n
 		$intentional_newline = "Foo\r\nBar";
 		$this->assertEquals( 'Foo\nBar', eventorganiser_escape_ical_text( $intentional_newline ) );
-		
+
 	}
-	
+
 	public function testIcalEscape(){
-		
+
 		$escape   = 'Backslash \ Semicolon ; Colon : Comma ,';
 		$expected = 'Backslash \\\ Semicolon \; Colon : Comma \,'; //colons are safe!
 		$this->assertEquals( $expected, eventorganiser_escape_ical_text( $escape ) );
-		
+
 	}
-	
+
 	/**
 	 * If the site has a non-offset timezone, then this should displayed in the dstart/dtend and includes/excludes
 	 *
@@ -560,17 +560,17 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 	 * @requires PHP 5.3.0
 	 */
 	public function testEventTimezone(){
-	
+
 		if ( defined( 'HHVM_VERSION' ) ) {
 			$this->markTestSkipped(
-				'This test is skipped on HHVM because of timezone definition issues'	
+				'This test is skipped on HHVM because of timezone definition issues'
 			);
 		}
 
 		$original_timezone = get_option( 'timezone_string' );
 		update_option( 'timezone_string', 'Europe/Zurich' );
 		wp_cache_delete( 'eventorganiser_timezone' );
-		
+
 		$event_id = $this->factory->event->create( array(
 			'start'         => new DateTime('2015-09-05 17:00', eo_get_blog_timezone() ),
 			'end'           => new DateTime('2015-09-05 18:00', eo_get_blog_timezone() ),
@@ -581,7 +581,7 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 			'post_title'    => 'Event with timezone',
 			'post_content'  => 'Event with timezone content',
 			'post_excerpt'  => 'Event with timezone excerpt',
-			'include'      => array( 
+			'include'      => array(
 				new DateTime('2015-09-22 17:00', eo_get_blog_timezone() ),
 				new DateTime('2015-09-23 17:00', eo_get_blog_timezone() )
 			),
@@ -590,38 +590,38 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 			),
 			'post_date'     => '2015-02-18 17:30:00',
 		) );
-		
+
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
-		
+
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
-		
+
 		//Get actual feed output
 		ob_start();
 		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
 		$actual = ob_get_contents();
 		ob_end_clean();
-		
+
 		//Get expected feed output
 		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/event-with-timezone.ical' );
-	
-		update_option( 'timezone_string', $original_timezone );		
+
+		update_option( 'timezone_string', $original_timezone );
 		wp_cache_delete( 'eventorganiser_timezone' );
-		
+
 		$this->assertEquals( $expected, $actual );
-	
+
 	}
-	
+
 	/**
 	 * If the site has an offset timezone, then the event dates should be converted to UTC
 	 */
 	public function testEventWithOffsetTimezone(){
-	
+
 		$original_timezone = get_option( 'timezone_string' );
 		$original_offset   = get_option( 'gmt_offset' );
 		update_option( 'timezone_string', '' );
 		update_option( 'gmt_offset', -1 );
 		wp_cache_delete( 'eventorganiser_timezone' );
-	
+
 		$event_id = $this->factory->event->create( array(
 			'start'         => new DateTime('2015-11-05 17:00', eo_get_blog_timezone() ),
 			'end'           => new DateTime('2015-11-05 18:00', eo_get_blog_timezone() ),
@@ -641,26 +641,26 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 			),
 			'post_date'     => '2015-02-18 17:30:00',
 		) );
-	
+
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
-	
+
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
-	
+
 		//Get actual feed output
 		ob_start();
 		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
 		$actual = ob_get_contents();
 		ob_end_clean();
-	
+
 		//Get expected feed output
 		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/event-with-offset.ical' );
 
 		update_option( 'timezone_string', $original_timezone );
 		update_option( 'gmt_offset', $original_offset );
 		wp_cache_delete( 'eventorganiser_timezone' );
-	
+
 		$this->assertEquals( $expected, $actual );
-	
+
 	}
 
 	/**
@@ -681,35 +681,35 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 		) );
 		//Get it a predictable UID
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
-		
+
 		//Don't use year/month folders to make uploads directory a known constant
 		add_filter ( 'pre_option_uploads_use_yearmonth_folders', '__return_null' );
 		wp_upload_dir( null, false, true );//clear cache
 		$file = EO_DIR_TESTDATA . '/images/cirali.jpg';
 		$attachment_id = $this->create_upload_object( $file, $event_id );
 		set_post_thumbnail( $event_id, $attachment_id );
-		
+
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
-		
+
 		//Get actual feed output
 		ob_start();
 		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
 		$actual = ob_get_contents();
 		ob_end_clean();
-		
+
 		//Get expected feed output
 		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/event-with-thumbnail.ical' );
-		
+
 		$this->assertEquals( $expected, $actual );
-		
+
 		//Delete the event first to ensure that we can fullyl remove the attachment
 		wp_delete_post( $event_id, true );
 		wp_delete_attachment( $attachment_id, true );
 		remove_filter ( 'pre_option_uploads_use_yearmonth_folders', '__return_null' );
-		
+
 	}
-	
-	
+
+
 	/**
 	 * If the event is an all-day event then no timezone information should be present
 	 * in the dtstart, dtend, exdate or rdate values.
@@ -719,11 +719,11 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 	 * @requires PHP 5.3.0
 	 */
 	public function testAllDayEvent(){
-		
+
 		$original_timezone = get_option( 'timezone_string' );
 		update_option( 'timezone_string', 'Europe/Zurich' );
 		wp_cache_delete( 'eventorganiser_timezone' );
-			
+
 		$event_id = $this->factory->event->create( array(
 			'start'         => new DateTime('2015-11-05 00:00', eo_get_blog_timezone() ),
 			'end'           => new DateTime('2015-11-05 23:59', eo_get_blog_timezone() ),
@@ -744,32 +744,32 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 			),
 			'post_date'     => '2015-02-18 17:30:00',
 		) );
-	
+
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test' );
-	
+
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
-	
+
 		//Get actual feed output
 		ob_start();
 		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
 		$actual = ob_get_contents();
 		ob_end_clean();
-	
+
 		//Get expected feed output
 		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/all-day-event.ical' );
-	
-		update_option( 'timezone_string', $original_timezone );		
+
+		update_option( 'timezone_string', $original_timezone );
 		wp_cache_delete( 'eventorganiser_timezone' );
-			
+
 		$this->assertEquals( $expected, $actual );
-	
+
 	}
-	
+
 	public function testVTimezone() {
 		$timezone = new DateTimeZone( 'Europe/London' );
 		$time1 = strtotime( '2015-01-01' );
 		$time2 = strtotime( '2015-12-31' );
-		
+
 		$expected = "BEGIN:VTIMEZONE\r
 TZID:Europe/London\r
 BEGIN:STANDARD\r
@@ -791,24 +791,24 @@ DTSTART:20151025T010000\r
 TZNAME:GMT\r
 END:STANDARD\r
 END:VTIMEZONE";
-		
+
 		$actual = eventorganiser_ical_vtimezone( $timezone, $time1, $time2 );
-		
+
 		//VTIMEZONEs are skipped on php5.2 because of performance concerns
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
 			$this->assertEquals( '', $actual );
 		} else {
 			$this->assertEquals( $expected, $actual );
 		}
-		
+
 	}
-	
-	
+
+
 	public function testVTimezoneNegativeOffset() {
 		$timezone = new DateTimeZone( 'America/New_York' );
 		$time1 = strtotime( '2015-01-01' );
 		$time2 = strtotime( '2015-12-31' );
-				
+
 		$expected = "BEGIN:VTIMEZONE\r
 TZID:America/New_York\r
 BEGIN:STANDARD\r
@@ -830,9 +830,9 @@ DTSTART:20151101T060000\r
 TZNAME:EST\r
 END:STANDARD\r
 END:VTIMEZONE";
-	
+
 		$actual = eventorganiser_ical_vtimezone( $timezone, $time1, $time2 );
-	
+
 		//VTIMEZONEs are skipped on php5.2 because of performance concerns
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
 			$this->assertEquals( '', $actual );
@@ -840,20 +840,20 @@ END:VTIMEZONE";
 			$this->assertEquals( $expected, $actual );
 		}
 	}
-	
-	
+
+
 	public function testVTimezoneNonIntegerOffset() {
-		
-		if ( defined( 'HHVM_VERSION' ) ) {
+
+		if ( defined( 'HHVM_VERSION' ) || version_compare( PHP_VERSION, '7.0', '>=' ) ) {
 			$this->markTestSkipped(
-				'This test is skipped on HHVM because of timezone definition issues'
+				'This test is skipped on HHVM and PHP 7.0+ because of timezone definition issues'
 			);
 		}
-		
+
 		$timezone = new DateTimeZone( 'Asia/Tehran' );
 		$time1 = strtotime( '2015-01-01' );
 		$time2 = strtotime( '2015-12-31' );
-	
+
 		$expected = "BEGIN:VTIMEZONE\r
 TZID:Asia/Tehran\r
 BEGIN:STANDARD\r
@@ -875,9 +875,9 @@ DTSTART:20150921T193000\r
 TZNAME:IRST\r
 END:STANDARD\r
 END:VTIMEZONE";
-	
+
 		$actual = eventorganiser_ical_vtimezone( $timezone, $time1, $time2 );
-	
+
 		//VTIMEZONEs are skipped on php5.2 because of performance concerns
 		if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
 			$this->assertEquals( '', $actual );
@@ -885,8 +885,8 @@ END:VTIMEZONE";
 			$this->assertEquals( $expected, $actual );
 		}
 	}
-	
-	
+
+
 	/**
 	 * If a named timezone is used, then we should see a VTIMEZONE which appropriate DAYLIGHT and
 	 * STANDARD timezone components spanning the period in which events occur.
@@ -896,19 +896,19 @@ END:VTIMEZONE";
 	 * @requires PHP 5.3.0
 	 */
 	public function testVTimezonePeriod(){
-		
+
 		if ( defined( 'HHVM_VERSION' ) ) {
 			$this->markTestSkipped(
 				'This test is skipped on HHVM because of timezone definition issues'
 			);
 		}
-	
+
 		$original_timezone = get_option( 'timezone_string' );
 		update_option( 'timezone_string', 'Europe/Paris' );
 		wp_cache_delete( 'eventorganiser_timezone' );
-	
+
 		$events = array();
-		
+
 		//A standard recurring event
 		$event_id = $this->factory->event->create( array(
 			'start'         => new DateTime('2015-10-01 17:00', eo_get_blog_timezone() ),
@@ -924,7 +924,7 @@ END:VTIMEZONE";
 		) );
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test-1' );
 		$events[] = $event_id;
-		
+
 		//A recurring event with some includes to extend the period of interest
 		$event_id = $this->factory->event->create( array(
 			'start'         => new DateTime('2015-09-01 13:00', eo_get_blog_timezone() ),
@@ -943,8 +943,8 @@ END:VTIMEZONE";
 		) );
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test-2' );
 		$events[] = $event_id;
-	
-		
+
+
 		//A single outlying event
 		$event_id = $this->factory->event->create( array(
 			'start'         => new DateTime('2014-05-01 03:00', eo_get_blog_timezone() ),
@@ -956,33 +956,33 @@ END:VTIMEZONE";
 		) );
 		update_post_meta( $event_id, '_eventorganiser_uid', 'unit-test-3' );
 		$events[] = $event_id;
-		
+
 		query_posts( array( 'post__in' => $events, 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
-	
+
 		//Get actual feed output
 		ob_start();
 		include( EVENT_ORGANISER_DIR . 'templates/ical.php' );
 		$actual = ob_get_contents();
 		ob_end_clean();
-	
+
 		//Get expected feed output
 		$expected = $this->_readExpectedIcal( EO_DIR_TESTDATA .'/ical-feed-expected/multiple-events-with-timezone.ical' );
-		
+
 		update_option( 'timezone_string', $original_timezone );
 		wp_cache_delete( 'eventorganiser_timezone' );
-	
+
 		$this->assertEquals( $expected, $actual );
-	
+
 	}
-	
-	
+
+
 	public function _readExpectedIcal( $file ) {
 		$now = new DateTime();
 		ob_start();
 		include( $file );
 		$expected = ob_get_contents();
 		ob_end_clean();
-		return $expected;		
+		return $expected;
 	}
-	
+
 }

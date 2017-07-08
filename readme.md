@@ -3,7 +3,7 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
-**Tested up to:** 4.6.1  
+**Tested up to:** 4.7.3  
 **Stable tag:** {{version}}  
 **License:** GPLv3  
 
@@ -238,6 +238,23 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.1.10 - 8th July 2017
+* Updated 'Tested up to' version (WordPress 4.8)
+* Updated Afrikaan, Catalan, Croatian, Czech, Dutch, French, German, Greek,
+  Hungarian, Portuguese, Russian, Slovenian, Spanish and Turkish translations.
+###
+### 3.1.9 - 31st March 2017
+* Removed development tool
+* Updated French, Italian and Japanese translations
+###
+### 3.1.8 - 30th March 2017
+
+* Handle 767 byte index size limit in MySQL. See [#404](https://github.com/stephenharris/Event-Organiser/issues/404)
+* Fix handling of ampersands in the iCal feed
+###
+### 3.1.7 - 23rd December 2016
+* bugfix: Remove icon was not visible when editing galleries on the event admin page
+###
 ### 3.1.6 - 11th November 2016
  * Fix bug causing edit event admin page to link to the settings page.
  * Fix bug in `eo_get_current_occurrence_of()`

@@ -1,0 +1,7 @@
+src: .
+tests:
+  - stephenharris\PoTest\Test\LinkTest
+  - stephenharris\PoTest\Test\HtmlStructureTest
+  - stephenharris\PoTest\Test\NewLineTest
+  - stephenharris\PoTest\Test\PlaceholderTest
+report: stephenharris\PoTest\Reports\Summary
