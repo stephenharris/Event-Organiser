@@ -7,18 +7,18 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2016-11-27T01:17:09+00:00\n"
-"Language: es_PE\n"
+"POT-Creation-Date: 2016-07-14T20:03:40+00:00\n"
+"PO-Revision-Date: 2016-11-26T14:51:57+00:00\n"
+"Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: event-organiser-settings.php:370
 msgid "Event Organiser's page templates will not be used."
-msgstr ""
+msgstr "Event Organiser's page templates will not be used."
 
 #: event-organiser-settings.php:652
 msgid "Events archives:"
-msgstr ""
+msgstr "Event archives:"
 
 #: event-organiser-calendar.php:75
 #: includes/event-organiser-register.php:69
@@ -78,17 +78,14 @@ msgid "View Venue"
 msgstr ""
 
 #: includes/class-eo-theme-compatability.php:161
-#, php-format
 msgid "Events at %s"
 msgstr ""
 
 #: event-organiser-venues.php:244
-#, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:586
-#, php-format
 msgid "See the <a %s> documentation</a>"
 msgstr ""
 
@@ -97,7 +94,6 @@ msgid "weeks"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:323
-#, php-format
 msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr ""
 
@@ -167,7 +163,6 @@ msgid "Delete this event"
 msgstr ""
 
 #: includes/class-eo-ical-parser.php:279
-#, php-format
 msgid "There was an error fetching the feed. Response code: %s."
 msgstr ""
 
@@ -196,7 +191,6 @@ msgid "Events within 1 month"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:327
-#, php-format
 msgid "Event published. <a href=\"%s\">View event</a>"
 msgstr ""
 
@@ -225,7 +219,6 @@ msgid "Event (single)"
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:271
-#, php-format
 msgid "%d events were successfully imported"
 msgstr ""
 
@@ -243,7 +236,6 @@ msgid "Venue Location"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:326
-#, php-format
 msgid "Event restored to revision from %s"
 msgstr ""
 
@@ -297,7 +289,6 @@ msgid "Events within 1 week"
 msgstr ""
 
 #: includes/class-eo-ical-parser.php:1039
-#, php-format
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
 msgstr ""
 
@@ -314,7 +305,6 @@ msgid "Search Categories"
 msgstr ""
 
 #: event-organiser-edit.php:99
-#, php-format
 msgid "Enter date in %s format"
 msgstr ""
 
@@ -404,7 +394,6 @@ msgid "Add or remove venues"
 msgstr ""
 
 #: templates/taxonomy-event-venue.php:30
-#, php-format
 msgid "Events at: %s"
 msgstr ""
 
@@ -417,7 +406,6 @@ msgid "Edit takes you to the editing screen for that venue. You can also reach t
 msgstr ""
 
 #: includes/event-organiser-cpt.php:330
-#, php-format
 msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 
@@ -450,7 +438,6 @@ msgid "Warning:"
 msgstr ""
 
 #: event-organiser-manage.php:163
-#, php-format
 msgid "Events within %d months"
 msgstr ""
 
@@ -530,7 +517,6 @@ msgid "All events"
 msgstr ""
 
 #: classes/class-eo-event-list-widget.php:168
-#, php-format
 msgid "You can use specified tags as placeholders for event information which you want to appear in the widget. <a href=\"%s\" target=\"_blank\"> Find out more</a>."
 msgstr ""
 
@@ -539,12 +525,10 @@ msgid "Enable events ICAL feed:"
 msgstr ""
 
 #: includes/event-organiser-ajax.php:821
-#, php-format
 msgid "Event not created: %s"
 msgstr ""
 
 #: event-organiser-settings.php:232
-#, php-format
 msgid "If selected, visitors can subscribe to your events with the url: %s"
 msgstr ""
 
@@ -616,7 +600,6 @@ msgid "Year archive"
 msgstr ""
 
 #: includes/class-eo-ical-parser.php:1077
-#, php-format
 msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss format."
 msgstr ""
 
@@ -656,7 +639,7 @@ msgstr ""
 #: event-organiser-debug.php:14
 #: event-organiser-debug.php:57
 msgid "System Info"
-msgstr "Información de sistema"
+msgstr ""
 
 #: includes/event-organiser-register.php:257
 msgid "year"
@@ -668,7 +651,7 @@ msgstr ""
 
 #: event-organiser-debug.php:462
 msgid "unknown"
-msgstr "desconocido"
+msgstr ""
 
 #: event-organiser-edit.php:274
 #: includes/event-organiser-venue-functions.php:1015
@@ -695,7 +678,7 @@ msgstr ""
 #: event-organiser-debug.php:185
 #: event-organiser-settings.php:212
 msgid "Yes"
-msgstr "Si"
+msgstr ""
 
 #: event-organiser-venues.php:436
 msgid "Permalink:"
@@ -707,7 +690,6 @@ msgstr ""
 
 #: includes/class-eo-theme-compatability.php:174
 #: templates/taxonomy-event-category.php:27
-#, php-format
 msgid "Event Category: %s"
 msgstr ""
 
@@ -753,7 +735,6 @@ msgstr ""
 
 #: includes/event-organiser-event-functions.php:807
 #: includes/event-organiser-register.php:262
-#, php-format
 msgid "every %d weeks on"
 msgstr ""
 
@@ -814,7 +795,6 @@ msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up 
 msgstr ""
 
 #: event-organiser-manage.php:161
-#, php-format
 msgid "Events within %d weeks"
 msgstr ""
 
@@ -836,7 +816,6 @@ msgstr ""
 
 #: includes/event-organiser-event-functions.php:820
 #: includes/event-organiser-register.php:264
-#, php-format
 msgid "every %d months on the"
 msgstr ""
 
@@ -913,7 +892,6 @@ msgid "Close modal"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:851
-#, php-format
 msgid "every %d years"
 msgstr ""
 
@@ -1005,7 +983,6 @@ msgstr ""
 
 #: includes/event-organiser-event-functions.php:799
 #: includes/event-organiser-register.php:260
-#, php-format
 msgid "every %d days"
 msgstr ""
 
@@ -1018,7 +995,6 @@ msgid "Repeat every"
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:277
-#, php-format
 msgid "%d venues were created"
 msgstr ""
 
@@ -1039,7 +1015,6 @@ msgstr ""
 
 #: includes/class-eo-ical-parser.php:556
 #: includes/class-eo-ical-parser.php:581
-#, php-format
 msgid "[Line %1$d]"
 msgstr ""
 
@@ -1048,7 +1023,6 @@ msgid "Publish date"
 msgstr ""
 
 #: includes/event-organiser-register.php:266
-#, php-format
 msgid "every %d years on the"
 msgstr ""
 
@@ -1057,7 +1031,7 @@ msgstr ""
 #: event-organiser-debug.php:185
 #: event-organiser-settings.php:211
 msgid "No"
-msgstr "No"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:38
 msgid "Add New Venue"
@@ -1068,7 +1042,6 @@ msgid "The start date is the date the event starts. If the event is a recurring 
 msgstr ""
 
 #: includes/event-organiser-cpt.php:339
-#, php-format
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 
@@ -1118,7 +1091,6 @@ msgstr ""
 
 #: includes/class-eo-ical-parser.php:549
 #: includes/class-eo-ical-parser.php:574
-#, php-format
 msgid "[Lines %1$d-%2$d]"
 msgstr ""
 
@@ -1171,7 +1143,6 @@ msgid "Calendar View"
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:61
-#, php-format
 msgid "File Error encountered: %d"
 msgstr ""
 
@@ -1202,12 +1173,10 @@ msgid "Future events"
 msgstr ""
 
 #: includes/event-organiser-register.php:575
-#, php-format
 msgid "Your site timezone is %s"
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:284
-#, php-format
 msgid "%d categories were created"
 msgstr ""
 
@@ -1348,7 +1317,6 @@ msgid "day of week"
 msgstr ""
 
 #: event-organiser-settings.php:658
-#, php-format
 msgid "For more information see documentation <a href='%s'>on editing the templates</a>"
 msgstr ""
 
@@ -1595,7 +1563,6 @@ msgid "Event Settings"
 msgstr ""
 
 #: templates/event-meta-event-single.php:45
-#, php-format
 msgid "This event finished on %s"
 msgstr ""
 
@@ -1711,12 +1678,10 @@ msgid "New Venue Name"
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:73
-#, php-format
 msgid "File size: %s. File type: %s"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:334
-#, php-format
 msgid "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview event</a>"
 msgstr ""
 
@@ -1839,7 +1804,6 @@ msgid "Events Agenda"
 msgstr ""
 
 #: templates/event-meta-event-single.php:41
-#, php-format
 msgid "This event is running from %1$s until %2$s. It is next occurring on %3$s"
 msgstr ""
 
@@ -1879,7 +1843,7 @@ msgstr ""
 
 #: event-organiser-debug.php:253
 msgid "Known plug-in & theme conflicts, highlighted in red, may be minor or have a simple resolution. Please contact support."
-msgstr "Los conflictos conocidos de plug-in y tema, resaltados en rojo, pueden ser menores o tener una resolución simple. Por favor contactar a soporte."
+msgstr ""
 
 #: event-organiser-calendar.php:125
 msgid "You do not have sufficient permissions to create events. "
@@ -1928,7 +1892,6 @@ msgid "%1$s has only been tested up to %1$s %1$s"
 msgstr ""
 
 #: includes/event-organiser-register.php:578
-#, php-format
 msgid "You can <a href='%s'>change your timezone settings here</a>."
 msgstr ""
 
@@ -1995,7 +1958,6 @@ msgstr ""
 
 #: includes/class-eo-theme-compatability.php:184
 #: templates/taxonomy-event-tag.php:27
-#, php-format
 msgid "Event Tag: %s"
 msgstr ""
 
