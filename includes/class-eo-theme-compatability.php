@@ -153,12 +153,15 @@ class EO_Theme_Compatabilty {
 			return $template;
 		}
 
+		// Get the labels for the event post type:
+		$labels = get_post_type_labels( get_post_type_object( 'event' ) );
+
 		//Set the title, and where appropriate, pre-content (term description, venue map etc).
 		$precontent = false;
 		if ( is_tax( 'event-venue' ) ) {
 			$venue_id = get_queried_object_id();
 			$title = sprintf(
-				__( 'Events at %s','eventorganiser' ),
+				$labels->events_at_venue,
 				'<span>' . eo_get_venue_name( $venue_id ) . '</span>'
 			);
 
@@ -171,7 +174,7 @@ class EO_Theme_Compatabilty {
 			}
 		} elseif ( is_tax( 'event-category' ) ) {
 			$title = sprintf(
-				__( 'Event Category: %s', 'eventorganiser' ),
+				$labels->events_in_cat,
 				'<span>' . single_cat_title( '', false ) . '</span>'
 			);
 
@@ -181,7 +184,7 @@ class EO_Theme_Compatabilty {
 			}
 		} elseif ( is_tax( 'event-tag' ) ) {
 			$title = sprintf(
-				__( 'Event Tag: %s', 'eventorganiser' ),
+				$labels->events_in_tag,
 				'<span>' . single_cat_title( '', false ) . '</span>'
 			);
 
@@ -190,13 +193,13 @@ class EO_Theme_Compatabilty {
 				$precontent = apply_filters( 'category_archive_meta', '<div class="category-archive-meta">' . $tag_description . '</div>' );
 			}
 		} elseif ( eo_is_event_archive( 'day' ) ) {
-			$title = __( 'Events: ','eventorganiser' ) . ' ' . eo_get_event_archive_date( 'jS F Y' );
+			$title = sprintf( $labels->events_on_date, eo_get_event_archive_date( 'jS F Y' ) );
 		} elseif ( eo_is_event_archive( 'month' ) ) {
-			$title = __( 'Events: ','eventorganiser' ) . ' ' . eo_get_event_archive_date( 'F Y' );
+			$title = sprintf( $labels->events_in_month, eo_get_event_archive_date( 'F Y' ) );
 		} elseif ( eo_is_event_archive( 'year' ) ) {
-			$title = __( 'Events: ','eventorganiser' ) . ' ' . eo_get_event_archive_date( 'Y' );
+			$title = sprintf( $labels->events_in_year, eo_get_event_archive_date( 'Y' ) );
 		} else {
-			$title = __( 'Events','eventorganiser' );
+			$title =  $labels->name;
 		}
 
 		//Set the content - this is just the events loop.

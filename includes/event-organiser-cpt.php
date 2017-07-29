@@ -239,7 +239,14 @@ function eventorganiser_cpt_register() {
 		'items_list'            => __( 'Events list', 'eventorganiser' ),
 		'archives'              => __( 'Event Archives', 'eventorganiser' ),
 		'insert_into_item'      => __( 'Insert into event', 'eventorganiser' ),
-		'uploaded_to_this_item' => __( 'Uploaded to this event', 'eventorganiser' ),		
+		'uploaded_to_this_item' => __( 'Uploaded to this event', 'eventorganiser' ),
+		//non-default wp labels
+		'events_at_venue'       => __( 'Events at %s','eventorganiser' ),
+		'events_in_cat'         => __( 'Event Category: %s', 'eventorganiser' ),
+		'events_in_tag'         => __( 'Event Tag: %s', 'eventorganiser' ),
+		'events_on_date'        => __( 'Events: %s','eventorganiser' ),
+		'events_in_month'       => __( 'Events: %s','eventorganiser' ),
+		'events_in_year'        => __( 'Events: %s','eventorganiser' ),
 	);
 
 	$exclude_from_search = ( 0 == eventorganiser_get_option( 'excludefromsearch' ) ) ? false : true;
