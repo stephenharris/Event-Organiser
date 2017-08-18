@@ -1543,7 +1543,7 @@ function eo_get_event_meta_list( $event_id = 0 ) {
 		);
 	}
 
-	if ( get_the_terms( $event_id, 'event-category' ) ) {
+	if ( get_the_terms( $event_id, 'event-category' ) && !is_wp_error( get_the_terms( $event_id, 'event-category' ) ) ) {
 		$html .= sprintf(
 			'<li><strong>%s:</strong> %s</li>' . "\n",
 			__( 'Categories', 'eventorganiser' ),
