@@ -4,7 +4,9 @@ echo "BEGIN:VCALENDAR\r\n";
 echo "VERSION:2.0\r\n";
 echo 'PRODID:-//' . get_bloginfo( 'name' ) . "//NONSGML Events//EN\r\n";
 echo "CALSCALE:GREGORIAN\r\n";
-echo 'X-WR-CALNAME:' . get_bloginfo( 'name' ) . " - Events\r\n";
+if( !is_single() ){
+	echo 'X-WR-CALNAME:' . get_bloginfo( 'name' ) . " - Events\r\n";
+}
 echo 'X-ORIGINAL-URL:' . get_post_type_archive_link( 'event' ) . "\r\n";
 echo 'X-WR-CALDESC:' . get_bloginfo( 'name' ) . " - Events\r\n";
 
