@@ -8,17 +8,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-04-17T19:58:04+00:00\n"
+"PO-Revision-Date: 2017-06-24T09:29:56+00:00\n"
 "Language: sl_SI\n"
 "Plural-Forms: nplurals=4; plural=(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : ((n % 100 == 3 || n % 100 == 4) ? 2 : 3));\n"
 
 #: event-organiser-settings.php:370
 msgid "Event Organiser's page templates will not be used."
-msgstr ""
+msgstr "Predloga ne bo uporabljena"
 
 #: event-organiser-settings.php:652
 msgid "Events archives:"
-msgstr ""
+msgstr "Arhiv dogodkov"
 
 #: event-organiser-calendar.php:75
 #: includes/event-organiser-register.php:69
@@ -32,7 +32,7 @@ msgstr "Vse Oznake"
 
 #: event-organiser-manage.php:159
 msgid "Events within 24 hours"
-msgstr "Dogodki v 24 urah"
+msgstr "Dogodki zadnjih 24 urah"
 
 #: event-organiser-go-pro.php:70
 msgid "Flexible Booking Options"
@@ -45,7 +45,7 @@ msgstr "Naslov Dogodka"
 #: includes/event-organiser-cpt.php:226
 msgctxt "post"
 msgid "Add New"
-msgstr ""
+msgstr "Dodaj nov dogodek"
 
 #: includes/event.php:870
 msgid "Event does not contain any dates."
@@ -75,7 +75,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:35
 msgid "View Venue"
-msgstr ""
+msgstr "Poglej lokacijo"
 
 #: includes/class-eo-theme-compatability.php:161
 #, php-format
@@ -128,7 +128,7 @@ msgstr ""
 
 #: event-organiser-settings.php:317
 msgid "Month archive"
-msgstr ""
+msgstr "Mesečni arhiv"
 
 #: event-organiser-edit.php:237
 msgid "Include/Exclude occurrences:"
@@ -156,15 +156,15 @@ msgstr ""
 
 #: event-organiser-edit.php:285
 msgid "Venue Name"
-msgstr ""
+msgstr "Ime lokacije"
 
 #: event-organiser-settings.php:152
 msgid "Custom Fields"
-msgstr ""
+msgstr "Izbrana polja"
 
 #: includes/event-organiser-ajax.php:472
 msgid "Delete this event"
-msgstr ""
+msgstr "Izbriši dogodek"
 
 #: includes/class-eo-ical-parser.php:279
 #, php-format
@@ -185,11 +185,11 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:40
 msgid "No venues found"
-msgstr ""
+msgstr "Lokacije nismo našli"
 
 #: classes/class-eo-event-list-widget.php:128
 msgid "Show:"
-msgstr ""
+msgstr "Prikaži"
 
 #: event-organiser-manage.php:162
 msgid "Events within 1 month"
@@ -222,7 +222,7 @@ msgstr "Izvozi Dogodke"
 
 #: event-organiser-settings.php:288
 msgid "Event (single)"
-msgstr ""
+msgstr "Dogodek"
 
 #: includes/class-event-organiser-im-export.php:271
 #, php-format
@@ -240,7 +240,7 @@ msgstr "Izbriši to ponavljanje"
 
 #: includes/event-organiser-cpt.php:47
 msgid "Venue Location"
-msgstr ""
+msgstr "Naslov lokacije"
 
 #: includes/event-organiser-cpt.php:326
 #, php-format
@@ -270,7 +270,7 @@ msgstr ""
 
 #: includes/event-organiser-ajax.php:784
 msgid "Event not found"
-msgstr ""
+msgstr "Dogodka nismo našli"
 
 #: includes/event-organiser-cpt.php:522
 msgid "The end date is the date the event finishes. If the event is a recurring event, this is the end date of the first occurrence."
@@ -562,7 +562,7 @@ msgstr ""
 
 #: event-organiser-settings.php:78
 msgid "Google Maps"
-msgstr ""
+msgstr "Google zemljevid"
 
 #: event-organiser-edit.php:116
 msgid "Start Time"
@@ -583,11 +583,11 @@ msgstr "Uvozi Dogodke"
 #: includes/event-organiser-cpt.php:539
 #: includes/event-organiser-cpt.php:540
 msgid "Selecting a venue"
-msgstr ""
+msgstr "Izberite lokacijo"
 
 #: classes/class-eo-agenda-widget.php:55
 msgid "Event date/time format"
-msgstr ""
+msgstr "Datum dogodka/časovni format"
 
 #: classes/class-eo-venue-list-table.php:82
 #, php-format
@@ -631,11 +631,11 @@ msgstr ""
 
 #: event-organiser-edit.php:139
 msgid "End Time"
-msgstr "Konec Ura"
+msgstr "Konec dogodka"
 
 #: event-organiser-settings.php:297
 msgid "Events page"
-msgstr ""
+msgstr "Stran dogodka"
 
 #: templates/eo-events-nav.php:6
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
@@ -692,7 +692,7 @@ msgstr "Nalaganje..."
 #: event-organiser-calendar.php:286
 #: includes/event-organiser-ajax.php:406
 msgid "Where"
-msgstr "Kje"
+msgstr "Kraj"
 
 #: classes/class-eo-venue-list-table.php:76
 #: templates/single-event.php:69
@@ -712,7 +712,7 @@ msgstr ""
 
 #: event-organiser-edit.php:130
 msgid "End Date/Time:"
-msgstr ""
+msgstr "Končni datum/čas"
 
 #. //docs.wp-event-organiser.com/theme-integration for more information
 #. *
@@ -793,7 +793,7 @@ msgstr "Dogodek skranjen."
 
 #: includes/event-organiser-cpt.php:99
 msgid "Parent Category:"
-msgstr ""
+msgstr "Glavna kategorija"
 
 #: event-organiser-settings.php:149
 msgid "Author"
@@ -801,7 +801,7 @@ msgstr "Avtor"
 
 #: includes/event-organiser-cpt.php:109
 msgid "View all categories"
-msgstr ""
+msgstr "Poglej vse kategorije"
 
 #: includes/event-organiser-cpt.php:165
 msgid "Event tags list navigation"
@@ -809,7 +809,7 @@ msgstr ""
 
 #: event-organiser-settings.php:258
 msgid "Templates:"
-msgstr ""
+msgstr "Predloge"
 
 #: includes/event-organiser-cpt.php:229
 msgid "New Event"

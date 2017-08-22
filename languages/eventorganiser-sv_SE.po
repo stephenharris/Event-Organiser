@@ -8,13 +8,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2016-11-27T01:15:19+00:00\n"
+"PO-Revision-Date: 2017-07-05T19:32:07+00:00\n"
 "Language: sv_SE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: event-organiser-settings.php:370
 msgid "Event Organiser's page templates will not be used."
-msgstr ""
+msgstr "Event Organisers sidmallar kommer inte att användas."
 
 #: event-organiser-settings.php:652
 msgid "Events archives:"
@@ -36,7 +36,7 @@ msgstr "Evenemang inom 24 timmar"
 
 #: event-organiser-go-pro.php:70
 msgid "Flexible Booking Options"
-msgstr ""
+msgstr "Flexsibla bokningsval"
 
 #: event-organiser-calendar.php:279
 msgid "Event Title"
@@ -46,10 +46,6 @@ msgstr "Evenemangstitel"
 msgctxt "post"
 msgid "Add New"
 msgstr "Lägg till ny"
-
-#: event-organiser-edit.php:320
-msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%1$s."
-msgstr ""
 
 #: includes/event.php:870
 msgid "Event does not contain any dates."
@@ -73,6 +69,10 @@ msgstr "varje månade den"
 msgid "Slug"
 msgstr "Slug"
 
+#: event-organiser-edit.php:320
+msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%2$s."
+msgstr "Google Maps kräver nu att då måste registrera dig för en API-nyckel. Om du önskar använda kartor på din sida, %1$sskriv in din nyckel%2$s."
+
 #: includes/event-organiser-cpt.php:35
 msgid "View Venue"
 msgstr "Visa lokal"
@@ -80,7 +80,7 @@ msgstr "Visa lokal"
 #: includes/class-eo-theme-compatability.php:161
 #, php-format
 msgid "Events at %s"
-msgstr ""
+msgstr "Evenemang den %s"
 
 #: event-organiser-venues.php:244
 #, php-format
@@ -107,7 +107,7 @@ msgstr "Slutdatum är innan startdatum"
 
 #: event-organiser-calendar.php:340
 msgid "Navigate to previous period"
-msgstr ""
+msgstr "Navigera till föregående period"
 
 #: includes/event-organiser-cpt.php:705
 msgid "Assign the category a colour."
@@ -120,11 +120,11 @@ msgstr "Översikt"
 
 #: templates/single-event.php:58
 msgid "This event was posted in %1$s by <a href=\"%3$s\">%2$s</a>."
-msgstr ""
+msgstr "Det här evenemanget var publicerat i %1$s av <a href=\"%3$s\">%2$s</a>."
 
 #: includes/event-organiser-cpt.php:587
 msgid "Debugging Event Organiser"
-msgstr ""
+msgstr "Debugga Event Organiser"
 
 #: event-organiser-settings.php:317
 msgid "Month archive"
@@ -164,12 +164,12 @@ msgstr "Anpassade fält"
 
 #: includes/event-organiser-ajax.php:472
 msgid "Delete this event"
-msgstr ""
+msgstr "Ta bort det här evenemanget"
 
 #: includes/class-eo-ical-parser.php:279
 #, php-format
 msgid "There was an error fetching the feed. Response code: %s."
-msgstr ""
+msgstr "Det uppstod problem att läsa feeden.Returkod: %s."
 
 #: event-organiser-edit.php:160
 msgid "Recurrence:"
@@ -177,7 +177,7 @@ msgstr "Återkommande"
 
 #: event-organiser-go-pro.php:24
 msgid "Go Pro"
-msgstr ""
+msgstr "Välj Pro"
 
 #: classes/class-eo-agenda-widget.php:60
 msgid "Include 'Add To Google' link"
@@ -189,7 +189,7 @@ msgstr "Inga lokaler hittades"
 
 #: classes/class-eo-event-list-widget.php:128
 msgid "Show:"
-msgstr ""
+msgstr "Visa:"
 
 #: event-organiser-manage.php:162
 msgid "Events within 1 month"
@@ -202,7 +202,7 @@ msgstr "Evenemang publicerat. <a href=\"%s\">Visa evenemang</a>"
 
 #: event-organiser-edit.php:100
 msgid "Enter time in 12-hour hh colon mm am or pm format"
-msgstr ""
+msgstr "Skriv klockslaget i 12-timmarsformat tt kolon mm am eller pm"
 
 #: includes/event-organiser-event-functions.php:790
 msgid "custom recurrence"
@@ -266,11 +266,11 @@ msgstr "sista"
 
 #: event-organiser-debug.php:64
 msgid "This page highlights useful information for debugging. If you're reporting a bug, please include this information. The 'system info' link in under the Events admin tab is only visible to admins and only when %1$s is set to %1$s."
-msgstr ""
+msgstr "Den här sidan belyser användbar information för debugging. Om du rapporterar en bug, vänligen inkludera denna informationen. 'System info' länken under Evenamngs admin fliken är bara synlig för administratörer och bara när %1$ är satt till %1$s."
 
 #: includes/event-organiser-ajax.php:784
 msgid "Event not found"
-msgstr ""
+msgstr "Evenemanget hittas inte"
 
 #: includes/event-organiser-cpt.php:522
 msgid "The end date is the date the event finishes. If the event is a recurring event, this is the end date of the first occurrence."
@@ -290,7 +290,7 @@ msgstr "Du har inte rätt att ta bort detta evenemang"
 
 #: event-organiser-go-pro.php:76
 msgid "Give your users the ability to search and filter through your events with the event search shortcode. Event Organiser Pro also adds a text editor button to make inserting and configuring your shortcodes that bit easier. "
-msgstr ""
+msgstr "Ge dina användare möjlighet att söka och filtrera genom dina händelser med snabbkoder. Event Organiser Pro lägger också till en textredigerarknapp för att förenkla skapandet och konfigurationen av dina snabbkoder."
 
 #: event-organiser-manage.php:160
 msgid "Events within 1 week"
@@ -314,9 +314,9 @@ msgid "Search Categories"
 msgstr "Sök kategorier"
 
 #: event-organiser-edit.php:99
-#, fuzzy,php-format
+#, php-format
 msgid "Enter date in %s format"
-msgstr "Evenemang-datum/tid-format"
+msgstr "Skriv datum i %s format"
 
 #: includes/class-event-organiser-im-export.php:107
 msgid "Import categories"
@@ -328,7 +328,7 @@ msgstr "Slutdatum/tid"
 
 #: event-organiser-settings.php:249
 msgid "To use Google Maps you need to register an API key with Google. You can register for a free API key by %sfollowing these instructions%s."
-msgstr ""
+msgstr "För att använda Google Maps behöver du registrera en API nyckel hos Google. Du kan registrera en gratis API nyckel genom att %sfölja denna instruktion%s."
 
 #: includes/event.php:1080
 msgid "Occurrence not deleted. Occurrence not found."
@@ -340,7 +340,7 @@ msgstr "Skyddad"
 
 #: includes/event-organiser-register.php:577
 msgid "It is strongly recommended you select a city instead, even if you don't observe Daylight Savings Time."
-msgstr ""
+msgstr "Det rekommenderas starkt att du väljer en stad i stället, även om du använder sommartid."
 
 #: includes/class-event-organiser-im-export.php:103
 msgid "Import an ICS file."
@@ -354,11 +354,11 @@ msgstr "Visa genomförda evenemang i kalendrar, evenemansglistor och arkiv (dett
 #. / TRANSLATORS: This is the description that of the plug-in that appears in the "Plugins" page.
 #: includes/i18n.php:8
 msgid "Creates a custom post type 'events' with features such as recurring events, venues, Google Maps, calendar views and events and venue pages"
-msgstr ""
+msgstr "Skapa en anpassad typ av 'evenemang' med funktioner som återkommande händelser, lokaler, Google Maps, kalendrars vyer och evenemangsvy- och lokalvyssidor"
 
 #: event-organiser-settings.php:269
 msgid "Check this option to prevent any stylesheets from Event Organiser being loaded on the front-end"
-msgstr ""
+msgstr "Kryssa i detta val för att förhindra någon stilmall från Event Organiser att ladda i front-end"
 
 #: includes/event-organiser-ajax.php:443
 #: includes/event-organiser-cpt.php:228
@@ -367,7 +367,7 @@ msgstr "Redigera evenemang"
 
 #: event-organiser-settings.php:645
 msgid "For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. You can disable this below. WordPress will then decide which template from your theme's folder to use."
-msgstr ""
+msgstr "För var och en av sidorna används motsvarande mall. För att använda din egen mall ger du bara samma namn och lagrar du i temamappen (theme). Som standard kan Event Organiser inte hitta en mall i din temamapp, den använder sin egen standardmall. Du kan inaktivera det nedan. WordPress kommer sedan bestämma vilken mall från din temamapp den kommer att använda."
 
 #: includes/event-organiser-cpt.php:554
 msgid "This is the list of all saved events. Note that <strong> recurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event."
@@ -375,7 +375,7 @@ msgstr "Detta är listan av alla sparade evenemang. Notera att <strong> återkom
 
 #: event-organiser-settings.php:361
 msgid "Enable theme compatability mode (default)"
-msgstr ""
+msgstr "Slå på temakompatiblitetsläge (standard)"
 
 #: includes/event-organiser-register.php:246
 msgid "Hide dates"
@@ -403,6 +403,14 @@ msgstr "idag"
 msgid "Add or remove venues"
 msgstr "Lägg till eller ta bort lokaler"
 
+#. //docs.wp-event-organiser.com/theme-integration for more information
+#. *
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. ***************** NOTICE: *****************
+#. * @package Event Organiser (plug-in)
+#. * @since 1.0.0
+#. 
+#. Call the template header
 #: templates/taxonomy-event-venue.php:30
 #, php-format
 msgid "Events at: %s"
@@ -431,7 +439,7 @@ msgstr "dagligen"
 
 #: event-organiser-calendar.php:368
 msgid "Open shortcut help"
-msgstr ""
+msgstr "Öppna genvägshjälp"
 
 #: classes/class-eo-calendar-widget.php:59
 msgid "Include past events"
@@ -443,11 +451,11 @@ msgstr "Inga kategorier hittades"
 
 #: includes/event-organiser-cpt.php:241
 msgid "Insert into event"
-msgstr ""
+msgstr "Lägg till i evenemanget"
 
 #: includes/class-event-organiser-im-export.php:263
 msgid "Warning:"
-msgstr ""
+msgstr "Varning:"
 
 #: event-organiser-manage.php:163
 #, php-format
@@ -466,7 +474,7 @@ msgstr "Skapa ny kategori"
 
 #: includes/event-organiser-cpt.php:588
 msgid "Go Pro!"
-msgstr ""
+msgstr "Välj Pro!"
 
 #: event-organiser-settings.php:51
 #: event-organiser.php:127
@@ -481,7 +489,7 @@ msgstr "tredje"
 
 #: classes/class-eo-event-list-widget.php:71
 msgid "Future & running events"
-msgstr ""
+msgstr "Framtida & pågående evenemang"
 
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:271
@@ -502,11 +510,11 @@ msgstr "En lista eller en 'dropdown' på evenemangplatser"
 
 #: event-organiser-go-pro.php:55
 msgid "But that's not all &hellip;"
-msgstr ""
+msgstr "Men det är inte alla &hellip;"
 
 #: includes/event-organiser-cpt.php:44
 msgid "Event venues list"
-msgstr ""
+msgstr "Evenemangslokallista"
 
 #: includes/event-organiser-cpt.php:533
 msgid "If monthly recurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) "
@@ -541,7 +549,7 @@ msgstr "Aktivera ICAL feed för evenemang:"
 #: includes/event-organiser-ajax.php:821
 #, php-format
 msgid "Event not created: %s"
-msgstr ""
+msgstr "Evenemanget skapades inte: %s"
 
 #: event-organiser-settings.php:232
 #, php-format
@@ -554,7 +562,7 @@ msgstr "Avbryt denna serie"
 
 #: event-organiser-settings.php:78
 msgid "Google Maps"
-msgstr ""
+msgstr "Google Maps"
 
 #: event-organiser-edit.php:116
 msgid "Start Time"
@@ -562,7 +570,7 @@ msgstr "Starttid"
 
 #: event-organiser-go-pro.php:54
 msgid "Event Organiser Pro is a premium add-on bringing advanced booking management to Event Organiser."
-msgstr ""
+msgstr "Event Organiser Pro är ett premiumtillägg som ger avancerad bokningshantering till Event Organiser."
 
 #: includes/event-organiser-venue-functions.php:981
 msgid "City"
@@ -584,7 +592,7 @@ msgstr "Evenemang-datum/tid-format"
 #: classes/class-eo-venue-list-table.php:82
 #, php-format
 msgid "Delete &#8220;%s&#8221;"
-msgstr ""
+msgstr "Ta bort &#8220;%s&#8221;"
 
 #: classes/class-eo-calendar-widget.php:296
 msgid "Previous month"
@@ -597,7 +605,7 @@ msgstr "Lista slug(s) för kategorier, separera med komma. Lämna tom för alla.
 
 #: event-organiser-venues.php:308
 msgid "Toggle panel: Location"
-msgstr ""
+msgstr "Slå på panel: Plats"
 
 #: includes/class-eo-admin-notice.php:125
 msgid "Dismiss this notice"
@@ -617,9 +625,9 @@ msgid "Year archive"
 msgstr "Årsarkiv"
 
 #: includes/class-eo-ical-parser.php:1077
-#, php-format
+#, php-format,fuzzy
 msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss format."
-msgstr ""
+msgstr "Ogiltigt datum/tid \"%s\". Datum ska skriva enligt format ÅÅÅÅMMDDTTTiissZ eller ÅÅÅÅMMDDTHHiiss."
 
 #: event-organiser-edit.php:139
 msgid "End Time"
@@ -643,11 +651,11 @@ msgstr "Specificera hur evenemanget ska återkomma (förinställning 1)"
 
 #: event-organiser-calendar.php:360
 msgid "Open modal of selected event"
-msgstr ""
+msgstr "Öppna modalt av valda evenemang"
 
 #: includes/event-organiser-cpt.php:237
 msgid "Filter events list"
-msgstr ""
+msgstr "Filtrera evenemangslistan"
 
 #: event-organiser-settings.php:653
 msgid "Event page:"
@@ -704,13 +712,21 @@ msgstr "Permalink;"
 
 #: event-organiser-edit.php:130
 msgid "End Date/Time:"
-msgstr ""
+msgstr "Slutdatum/tid"
 
+#. //docs.wp-event-organiser.com/theme-integration for more information
+#. *
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. ***************** NOTICE: *****************
+#. * @package Event Organiser (plug-in)
+#. * @since 1.0.0
+#. 
+#. Call the template header
 #: includes/class-eo-theme-compatability.php:174
 #: templates/taxonomy-event-category.php:27
 #, php-format
 msgid "Event Category: %s"
-msgstr ""
+msgstr "Evenemangskategori: %s"
 
 #: includes/event-organiser-register.php:252
 msgid "days"
@@ -735,7 +751,7 @@ msgstr "Nuvarande datum/tid"
 
 #: includes/class-eo-ical-parser.php:428
 msgid "Feed contains an indefinitely recurring event. This event will recurr until %s."
-msgstr ""
+msgstr "Flödet innehåller ett återkommande evenemang utan sluttid. Evenemanget kommer återkomma till och med %s."
 
 #: event-organiser-settings.php:52
 #: event-organiser.php:128
@@ -746,7 +762,7 @@ msgstr "Administrera lokaler"
 #: classes/class-eo-event-list-widget.php:117
 #: includes/event-organiser-cpt.php:49
 msgid "Venue:"
-msgstr "Plats"
+msgstr "Plats:"
 
 #: event-organiser-settings.php:223
 msgid "If selected the event will be automatically trashed 24 hours after the last occurrence finishes."
@@ -756,12 +772,12 @@ msgstr "Om detta väljs kommer evenemanget att tas bort 24 timmar efter det sist
 #: includes/event-organiser-register.php:262
 #, php-format
 msgid "every %d weeks on"
-msgstr "va %d vecka på "
+msgstr "var %d vecka på"
 
 #: classes/class-eo-venue-list-table.php:75
 #, php-format
 msgid "Edit &#8220;%s&#8221;"
-msgstr ""
+msgstr "Redigera &#8220;%s&#8221;"
 
 #: event-organiser-settings.php:169
 msgid "Add an 'events' link to the navigation menu:"
@@ -789,11 +805,11 @@ msgstr "Visa alla kategorier"
 
 #: includes/event-organiser-cpt.php:165
 msgid "Event tags list navigation"
-msgstr ""
+msgstr "Evenemangs etikettslistenavigering"
 
 #: event-organiser-settings.php:258
 msgid "Templates:"
-msgstr ""
+msgstr "Mallar:"
 
 #: includes/event-organiser-cpt.php:229
 msgid "New Event"
@@ -813,7 +829,7 @@ msgstr "Du har inte behörighet att ta bort denna lokal"
 
 #: includes/event-organiser-register.php:558
 msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post</a>."
-msgstr ""
+msgstr "<h4>Defaultmallen har ändrats</h4>Ingen panik! Om du har skapat egna mallar i ditt tema kommer du inte märka någon förändring.</br>Om du inte har gjort det och vill ha de gamla mallarna tillbaka, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>läs detta inlägg</a>."
 
 #: event-organiser-manage.php:161
 #, php-format
@@ -834,7 +850,7 @@ msgstr "Lokal"
 
 #: includes/event-organiser-register.php:576
 msgid "Is this correct? Using a fixed offset from UTC may cause unexpected behaviour, particular if you observe Daylight Savings Time."
-msgstr ""
+msgstr "Är detta rätt? Att använda en fast förskjutning av tiden från UTC-tid kan orsaka oväntat beteende, särskilt om man tar hänsyn till sommartid."
 
 #: includes/event-organiser-event-functions.php:820
 #: includes/event-organiser-register.php:264
@@ -861,7 +877,7 @@ msgstr "Evenemangdetaljer"
 
 #: includes/event-organiser-cpt.php:238
 msgid "Events list navigation"
-msgstr ""
+msgstr "Evenemangslistenavigering"
 
 #: classes/class-eo-widget-categories.php:25
 #: includes/event-organiser-cpt.php:94
@@ -882,7 +898,7 @@ msgstr "Kategorisida för evenemang"
 #: features/bootstrap/FeatureContext.php:413
 #: features/bootstrap/FeatureContext.php:608
 msgid "Main Sidebar"
-msgstr ""
+msgstr "Huvudsidofält"
 
 #: includes/event.php:736
 msgid "Invalid monthly schedule (invalid ordinal)"
@@ -908,11 +924,11 @@ msgstr "Välj ett slutdatum för återkommande evenemang. Inga fler evenemanget 
 
 #: event-organiser-edit.php:182
 msgid "Recurrence frequency"
-msgstr ""
+msgstr "Frekvens på återkommande"
 
 #: event-organiser-calendar.php:364
 msgid "Close modal"
-msgstr ""
+msgstr "Stäng modal"
 
 #: includes/event-organiser-event-functions.php:851
 #, php-format
@@ -925,7 +941,7 @@ msgstr "Redigera kategori"
 
 #: event-organiser-edit.php:165
 msgid "none"
-msgstr ""
+msgstr "ingen"
 
 #: classes/class-eo-calendar-widget.php:105
 msgid "Event venue"
@@ -961,7 +977,7 @@ msgstr "Ändra rättigheter för evenemang och lokalhantering"
 
 #: classes/class-eo-event-list-widget.php:65
 msgid "Past events"
-msgstr ""
+msgstr "Passerade evenemang"
 
 #: classes/class-eo-agenda-widget.php:36
 #: classes/class-eo-calendar-widget.php:48
@@ -991,19 +1007,19 @@ msgstr "Avbryt"
 
 #: includes/class-event-organiser-im-export.php:253
 msgid "Error:"
-msgstr ""
+msgstr "Fel:"
 
 #: includes/event.php:1136
 msgid "There is already an occurrence on this date"
-msgstr ""
+msgstr "Det finns redan återkommande detta datum"
 
 #: includes/event-organiser-cpt.php:342
 msgid "This event has been broken from a recurring event."
-msgstr ""
+msgstr "Det här evenemanget är utbrutet ur ett återkommande evenemang."
 
 #: includes/event-organiser-cpt.php:107
 msgid "Event categories list"
-msgstr ""
+msgstr "Evenemangskategorilista"
 
 #: includes/event-organiser-event-functions.php:799
 #: includes/event-organiser-register.php:260
@@ -1043,7 +1059,7 @@ msgstr "Evenemang inom 1 år"
 #: includes/class-eo-ical-parser.php:581
 #, php-format
 msgid "[Line %1$d]"
-msgstr ""
+msgstr "[Rad %1$d]"
 
 #: classes/class-eo-event-list-widget.php:148
 msgid "Publish date"
@@ -1102,7 +1118,7 @@ msgstr "Organisatör"
 
 #: event-organiser-go-pro.php:71
 msgid "Sell tickets for specific dates or sell tickets for all dates of an event - such as booking places on a course. You can offer multiple tickets, and customise the booking form to suit your needs."
-msgstr ""
+msgstr "Sälj biljetter för ett specifikt datum eller sälj biljetter för alla datum för ett evenemang - som att boka platser till en kurs. Du kan erbjuda flera biljetter, och anpassa bokningsformuläret för att passa dina behov."
 
 #: event-organiser-settings.php:41
 msgid "Event Organiser"
@@ -1122,7 +1138,7 @@ msgstr "Slutdatum"
 #: includes/class-eo-ical-parser.php:574
 #, php-format
 msgid "[Lines %1$d-%2$d]"
-msgstr ""
+msgstr "[Rad %1$d-%2$d]"
 
 #: event-organiser-settings.php:50
 #: event-organiser.php:126
@@ -1132,7 +1148,7 @@ msgstr "Ta bort andras evenemang"
 
 #: includes/event-organiser-cpt.php:166
 msgid "Event tags list"
-msgstr ""
+msgstr "Evenemangsetikettslista"
 
 #: includes/class-eo-theme-compatability.php:193
 #: includes/class-eo-theme-compatability.php:195
@@ -1145,7 +1161,7 @@ msgstr "Evenemang:"
 
 #: event-organiser-go-pro.php:75
 msgid "Additional shortcodes & improved UI"
-msgstr ""
+msgstr "Ytterligare kortkoder & förbättrat användargränssnitt"
 
 #: event-organiser-edit.php:492
 msgid "Event dates were not saved."
@@ -1206,7 +1222,7 @@ msgstr "Framtida evenemang"
 #: includes/event-organiser-register.php:575
 #, php-format
 msgid "Your site timezone is %s"
-msgstr ""
+msgstr "Din sidas tidszon är %s"
 
 #: includes/class-event-organiser-im-export.php:284
 #, php-format
@@ -1220,12 +1236,12 @@ msgstr "Du har inte rätt att redigera denna lokal"
 
 #: event-organiser-edit.php:107
 msgid "Start Date/Time:"
-msgstr ""
+msgstr "Startdatum/tid"
 
 #: features/bootstrap/FeatureContext.php:415
 #: features/bootstrap/FeatureContext.php:610
 msgid "Widgets in this area will be shown on all posts and pages."
-msgstr ""
+msgstr "Widgets i detta område kommer att visas på alla inlägg och sidor."
 
 #: event-organiser-settings.php:756
 msgid "Page list (fallback)"
@@ -1238,7 +1254,7 @@ msgstr "Generella"
 
 #: classes/class-eo-event-list-widget.php:77
 msgid "Events on today"
-msgstr ""
+msgstr "Dagens evenemang"
 
 #: includes/class-event-organiser-im-export.php:68
 msgid "No file detected."
@@ -1254,7 +1270,7 @@ msgstr "Länk direkt till evenemang som varar endast en dag"
 
 #: event-organiser-settings.php:366
 msgid "Event Organiser's page templates will be used if your theme does not provide appropriate templates."
-msgstr ""
+msgstr "Event Organisers sidmallar kommer att användas om ditt tema inte tillhandahåller passande sidmallar."
 
 #: includes/event-organiser-cpt.php:534
 msgid "If weekly recurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used"
@@ -1275,7 +1291,7 @@ msgstr "Tagg"
 
 #: includes/event-organiser-ajax.php:792
 msgid "Events are not editable via the admin calendar"
-msgstr ""
+msgstr "Evenemang är inte ändringsbara via adminkalendern"
 
 #: event-organiser-calendar.php:76
 #: includes/event-organiser-register.php:70
@@ -1297,7 +1313,7 @@ msgstr "Visar en lista med evenemang"
 
 #: includes/event-organiser-cpt.php:239
 msgid "Events list"
-msgstr ""
+msgstr "Evenemangslista"
 
 #: event-organiser-manage.php:202
 msgid "&mdash; No Change &mdash;"
@@ -1329,7 +1345,7 @@ msgstr "Evenemang uppdaterat. "
 
 #: includes/event-organiser-ajax.php:393
 msgid "Organiser:"
-msgstr ""
+msgstr "Organisatör:"
 
 #: event-organiser-calendar.php:73
 #: includes/event-organiser-register.php:67
@@ -1352,11 +1368,11 @@ msgstr "dag i veckan"
 #: event-organiser-settings.php:658
 #, php-format
 msgid "For more information see documentation <a href='%s'>on editing the templates</a>"
-msgstr ""
+msgstr "För mer information se dokumentationen <a href='%s'>on editing the templates</a>"
 
 #: event-organiser-edit.php:100
 msgid "Enter time in 24-hour hh colon mm format"
-msgstr ""
+msgstr "Skriv tiden i 24-timmarsformat tt kolon mm"
 
 #: event-organiser-settings.php:205
 msgid "Are current events past?"
@@ -1399,7 +1415,7 @@ msgstr "1 lokal skapades"
 #. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
 #: event-organiser-debug.php:437
 msgid "%1$s requires %1$s version %1$s or higher"
-msgstr ""
+msgstr "%1$s kräver %1$s version %1$s eller högre"
 
 #: event-organiser-settings.php:716
 msgid "You may also need to go to WordPress Settings > Permalinks and click 'Save Changes' before any changes will take effect."
@@ -1419,7 +1435,7 @@ msgstr "Om 'nej' väljs kommer ett evenemangstillfälle anses vara genomfört n�
 
 #: event-organiser-calendar.php:332
 msgid "The following keyboard shortcuts are available"
-msgstr ""
+msgstr "tillgänglig"
 
 #: event-organiser-manage.php:19
 #: includes/event-organiser-cpt.php:225
@@ -1444,7 +1460,7 @@ msgstr "Om att evenemanget ska återkomma enligt ett mönster använd dropdown-m
 
 #: event-organiser-settings.php:263
 msgid "Disable CSS:"
-msgstr ""
+msgstr "Inaktivera CSS:"
 
 #: classes/class-eo-widget-categories.php:128
 #: classes/class-eo-widget-venues.php:129
@@ -1486,11 +1502,11 @@ msgstr "Grupptillfällen"
 
 #: event-organiser-go-pro.php:23
 msgid "Get Event Organiser Pro Add-On"
-msgstr ""
+msgstr "Skaffa Event Organiser Pro Add-On"
 
 #: event-organiser-settings.php:243
 msgid "Google API key:"
-msgstr ""
+msgstr "Google API nyckel:"
 
 #: event-organiser-venues.php:195
 msgid "Venue(s) <strong>deleted</strong>"
@@ -1506,12 +1522,12 @@ msgstr "Visa alla lokaler"
 
 #: includes/event-organiser-cpt.php:106
 msgid "Event categories list navigation"
-msgstr ""
+msgstr "Evenemangskategorinavigering"
 
 #: event-organiser-settings.php:586
 #, php-format
 msgid "Event Settings: %s"
-msgstr ""
+msgstr "Evenemangsinställningar: %s"
 
 #: includes/event-organiser-cpt.php:518
 msgid "Creating events"
@@ -1519,15 +1535,15 @@ msgstr "Skapa evenemang"
 
 #: event-organiser-settings.php:668
 msgid "Event management permissions"
-msgstr ""
+msgstr "Evenemangsadministrationsbehörigheter"
 
 #: includes/event-organiser-ajax.php:798
 msgid "Are you sure you want to do this?"
-msgstr ""
+msgstr "Är du säker på att du vill göra detta?"
 
 #: event-organiser-calendar.php:213
 msgid "Event deleted."
-msgstr ""
+msgstr "Evenemanget borttaget."
 
 #: event-organiser-calendar.php:74
 #: includes/event-organiser-register.php:68
@@ -1543,6 +1559,18 @@ msgstr "Minut"
 msgid "Choose from the most used tags"
 msgstr "Välj bland de vanligaste etiketterna"
 
+#. //codex.wp-event-organiser.com
+#. *
+#. ***************** NOTICE: *****************
+#. *  Do not make changes to this file. Any changes made to this file
+#. * will be overwritten if the plug-in is updated.
+#. * To overwrite this template with your own
+#.  make a copy of it (with the same name)
+#. * in your theme directory. See http://docs.wp-event-organiser.com/theme-integration for more information
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. * @package Event Organiser (plug-in)
+#. * @since 1.7
+#. 
 #: event-organiser-calendar.php:387
 #: event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:32
@@ -1559,7 +1587,7 @@ msgstr "Roll"
 
 #: includes/event-organiser-utility-functions.php:1396
 msgid "Help"
-msgstr ""
+msgstr "Hjälp"
 
 #: classes/class-eo-event-list-widget.php:14
 #: classes/class-eo-event-list-widget.php:28
@@ -1583,11 +1611,11 @@ msgstr "Visa tar dig till lokalens sida"
 
 #: includes/event-organiser-ajax.php:444
 msgid "Edit Event: %s"
-msgstr ""
+msgstr "Ändra evenemang: %s"
 
 #: event-organiser-calendar.php:344
 msgid "Switch to month view"
-msgstr ""
+msgstr "Byt till månadsvy"
 
 #: event-organiser-venues.php:443
 msgid "Get Link"
@@ -1595,12 +1623,12 @@ msgstr "Hämta länk"
 
 #: event-organiser-settings.php:585
 msgid "Event Settings"
-msgstr ""
+msgstr "Evenemangsinställningar"
 
 #: templates/event-meta-event-single.php:45
 #, php-format
 msgid "This event finished on %s"
-msgstr "Detta evenemang slutade på %s"
+msgstr "Detta evenemang slutade den %s"
 
 #: includes/event-organiser-register.php:390
 msgid "Settings"
@@ -1616,11 +1644,11 @@ msgstr "Startdatum ej uppgivet."
 
 #: includes/event-organiser-ajax.php:805
 msgid "You do not have permission to edit this event"
-msgstr ""
+msgstr "Du har inte behörighet att ändra detta evenemang"
 
 #: event-organiser-settings.php:369
 msgid "Disable template handling"
-msgstr ""
+msgstr "Inaktivera mallhantering"
 
 #: event-organiser-debug.php:80
 msgid "Download system information file"
@@ -1632,11 +1660,11 @@ msgstr "ICal-filen kan ej läsas"
 
 #: event-organiser-edit.php:211
 msgid "Select whether to repeat monthly by date or day:"
-msgstr ""
+msgstr "Välj datum eller dag för månatligt återkommande:"
 
 #: event-organiser-calendar.php:336
 msgid "Navigate to next period"
-msgstr ""
+msgstr "Navigera till nästa period"
 
 #: event-organiser-edit.php:166
 msgid "yearly"
@@ -1656,11 +1684,11 @@ msgstr "Nytt etikettnamn"
 
 #: templates/single-event.php:60
 msgid "This event was posted by <a href=\"%3$s\">%2$s</a>."
-msgstr ""
+msgstr "Det här evenemanget var publicerat av <a href=\"%3$s\">%2$s</a>."
 
 #: includes/event-organiser-register.php:590
 msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %splease enter your key%s."
-msgstr ""
+msgstr "Google Maps kräver nu att du registrerar dig för en API nyckel. Om du önskar använda kartor på din sida, %svänligen skriv din nyckel%s."
 
 #: event-organiser-settings.php:714
 msgid "Choose a custom permalink structure for events, venues, event categories and event tags."
@@ -1682,7 +1710,7 @@ msgstr "Evenemangsetiketter"
 
 #: includes/event-organiser-cpt.php:242
 msgid "Uploaded to this event"
-msgstr ""
+msgstr "Uppladdat till detta evenemang"
 
 #: includes/class-eo-ical-parser.php:208
 msgid "Feed not found"
@@ -1690,7 +1718,7 @@ msgstr "Flödet hittades inte"
 
 #: event-organiser-debug.php:72
 msgid "Most bugs arise from theme or plug-in conflicts. You can check this by disabling all other plug-ins and switching to TwentyTweleve. To help speed things along, if you report a bug please indicate if you have done so. Once the plug-in or theme has been identified it is often easy to resolve the issue. Below any <strong>known</strong> plug-in and theme conflicts are highlighted in red."
-msgstr ""
+msgstr "De flesta fel uppstår från temat (theme) eller plug-in konflikter. Du kan kontrollera detta genom att inaktivera alla andra plugin-program och byta till TwentyTweleve. Om du vill rapportera ett fel ber vi dig meddela om du testat det. Det kommer snabba upp felsökningen. När plug-in eller temat har identifierats är det ofta lätt att lösa problemet. Nedan visas <strong> kända </strong> plug-in och temakonflikter i rött."
 
 #: event-organiser-edit.php:240
 #: includes/event-organiser-register.php:245
@@ -1729,7 +1757,7 @@ msgstr "Startdatum/tid"
 
 #: event-organiser-settings.php:365
 msgid "Enable template handling"
-msgstr ""
+msgstr "Aktivera mallhantering"
 
 #: includes/event-organiser-venue-functions.php:984
 msgid "Country"
@@ -1763,7 +1791,7 @@ msgstr "Populära etiketter"
 
 #: event-organiser-calendar.php:224
 msgid "View keyboard shortcuts"
-msgstr ""
+msgstr "Visa tangentbortsgenvägar"
 
 #: includes/event-organiser-cpt.php:153
 msgid "Search Tags"
@@ -1777,7 +1805,7 @@ msgstr "Lägg till licenskoden / Licence keys"
 #: templates/shortcode-event-list.php:48
 #: templates/widget-event-list.php:44
 msgid "on"
-msgstr "på"
+msgstr "den"
 
 #: includes/class-event-organiser-im-export.php:268
 msgid "1 event was successfully imported"
@@ -1797,7 +1825,7 @@ msgstr "1 kategori skapades"
 
 #: event-organiser-calendar.php:352
 msgid "Switch to day view"
-msgstr ""
+msgstr "Byt till dagvy"
 
 #: event-organiser-manage.php:156
 msgid "View all events"
@@ -1894,15 +1922,15 @@ msgstr "Latitude/Longitude:"
 
 #: classes/class-eo-event-list-widget.php:58
 msgid "Running events"
-msgstr ""
+msgstr "Pågående evenemang"
 
 #: event-organiser-go-pro.php:81
 msgid "Add information on your venue pages with venue custom fields, or give your venues more attentioned with their own 'featured image'"
-msgstr ""
+msgstr "Lägg till information på dina sidor med platser med egna användarfält, eller ge dina platser mer uppmärksamhet med sin egna \"utvalda bild\""
 
 #: event-organiser-settings.php:362
 msgid "Event Organiser will attempt to ensure compatability with your theme and apply additional styles."
-msgstr ""
+msgstr "Event Organiser kommer försöka säkerställa kompatibilitet med ditt tema (theme) och tillämpa ytterligare stilar (styles)."
 
 #: classes/class-eo-calendar-widget.php:93
 #: classes/class-eo-event-list-widget.php:110
@@ -1928,12 +1956,12 @@ msgstr "mm-dd-åååå"
 #. / TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
 #: event-organiser-debug.php:424
 msgid "%1$s has only been tested up to %1$s %1$s"
-msgstr ""
+msgstr "%1$s har bara blivit testat upp till %1$s %1$s"
 
 #: includes/event-organiser-register.php:578
 #, php-format
 msgid "You can <a href='%s'>change your timezone settings here</a>."
-msgstr ""
+msgstr "Du kan <a href='%s'>ändra dina tidzonsinställningar här</a>."
 
 #: classes/class-eo-event-list-widget.php:151
 msgid "ASC"
@@ -1945,16 +1973,16 @@ msgstr "Senare evenemang <span class=\"meta-nav\">&rarr;</span>"
 
 #: templates/event-meta-event-single.php:53
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: includes/event-organiser-cpt.php:43
 msgid "Event venues list navigation"
-msgstr ""
+msgstr "Evenemangslokalslistenavigation"
 
 #: classes/class-eo-venue-list-table.php:89
 #, php-format
 msgid "View &#8220;%s&#8221;"
-msgstr ""
+msgstr "Visa &#8220;%s&#8221;"
 
 #: includes/event-organiser-cpt.php:227
 msgid "Add New Event"
@@ -1991,25 +2019,34 @@ msgstr "Exportera"
 
 #: event-organiser-calendar.php:348
 msgid "Switch to week view"
-msgstr ""
+msgstr "Byt till veckovy"
 
 #: event-organiser-calendar.php:356
 msgid "Jump to today in view"
-msgstr ""
+msgstr "Gå till idag"
 
+#. //docs.wp-event-organiser.com/theme-integration for more information
+#. *
+#. * WordPress will automatically prioritise the template in your theme directory.
+#. ***************** NOTICE: *****************
+#. * @package Event Organiser (plug-in)
+#. * @since 1.2.0
+#. 
+#. Call the template header
 #: includes/class-eo-theme-compatability.php:184
 #: templates/taxonomy-event-tag.php:27
 #, php-format
 msgid "Event Tag: %s"
-msgstr ""
+msgstr "Evenemangsetikett: %s"
 
+#. //php.net/date
 #: includes/event-organiser-cpt.php:336
 msgid "M j, Y @ G:i"
 msgstr "j M Y @ G:i"
 
 #: event-organiser-add-ons.php:95
 msgid "Event Organiser offers a range of extension which add additional features to the plug-in."
-msgstr ""
+msgstr "Event Organiser erbjuder ett flertal tillägg som erbjuder funktionalitet till plug-in."
 
 #: includes/event-organiser-cpt.php:578
 msgid "Add Event"
@@ -2043,7 +2080,7 @@ msgstr "Vecka"
 
 #: includes/event-organiser-register.php:588
 msgid "Enter a Google Maps API key"
-msgstr ""
+msgstr "Skriv en Google Maps API nyckel"
 
 #: includes/event-organiser-cpt.php:42
 msgid "Separate venues with commas"
@@ -2055,7 +2092,7 @@ msgstr "anpassad"
 
 #: classes/class-eo-event-list-widget.php:37
 msgid "No Events"
-msgstr ""
+msgstr "Inga evenemang"
 
 #: classes/class-eo-agenda-widget.php:153
 msgid "Add To Google Calendar"
@@ -2083,11 +2120,11 @@ msgstr "Föräldrakategori"
 
 #: event-organiser-go-pro.php:51
 msgid "Get Event Organiser Pro"
-msgstr ""
+msgstr "Skaffa Event Organiser Pro"
 
 #: includes/event-organiser-cpt.php:240
 msgid "Event Archives"
-msgstr ""
+msgstr "Evenemangsarkiv"
 
 #: includes/event-organiser-cpt.php:168
 msgid "View all tags"

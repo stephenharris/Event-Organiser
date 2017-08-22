@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 4.7.3
+Tested up to: 4.8.1
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,15 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.2.0 23rd August 2017
+* Updated 'Tested up to' version (WordPress 4.8.1)
+* Update Czech, Indonesian, French, Japanese, Dutch, Portuguese, 
+  Norwegian, Slovenian and Swedish.
+* Default event page names are now filterable via `eventorganiser_event_properties`.
+* Remove X-WR-CALNAME from iCal feed for single event feeds. See [#413](https://github.com/stephenharris/Event-Organiser/issues/413).
+* Fixes errors if event-category tax is disabled. See [#414](https://github.com/stephenharris/Event-Organiser/issues/414).
+* Fixes mark-up error in calendar widget: tbody must occur before tfoot
 
 = 3.1.10 - 8th July 2017
 * Updated 'Tested up to' version (WordPress 4.8)
