@@ -222,6 +222,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.1.10 - 8th July 2017
+* Updated 'Tested up to' version (WordPress 4.8)
+* Updated Afrikaan, Catalan, Croatian, Czech, Dutch, French, German, Greek,
+  Hungarian, Portuguese, Russian, Slovenian, Spanish and Turkish translations.
+
 = 3.1.9 - 31st March 2017
 * Removed development tool
 * Updated French, Italian and Japanese translations
