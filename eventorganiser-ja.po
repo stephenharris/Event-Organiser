@@ -8,13 +8,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-03-05T04:25:54+00:00\n"
+"PO-Revision-Date: 2017-05-02T14:20:11+00:00\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: event-organiser-settings.php:370
 msgid "Event Organiser's page templates will not be used."
-msgstr ""
+msgstr "Event Organiserのテンプレートは使用しません。"
 
 #: event-organiser-settings.php:652
 msgid "Events archives:"
@@ -36,7 +36,7 @@ msgstr "24時間以内のイベント"
 
 #: event-organiser-go-pro.php:70
 msgid "Flexible Booking Options"
-msgstr ""
+msgstr "フレキシブル予約オプション"
 
 #: event-organiser-calendar.php:279
 msgid "Event Title"
@@ -71,7 +71,7 @@ msgstr "スラッグ"
 
 #: event-organiser-edit.php:320
 msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%2$s."
-msgstr ""
+msgstr "Googleマップの使用にはAPIキーの登録が必要です。あなたのサイト%1$sでGoogleマップを使用する場合は、 %2$s キーを入力してください。"
 
 #: includes/event-organiser-cpt.php:35
 msgid "View Venue"
@@ -80,7 +80,7 @@ msgstr "会場を見る"
 #: includes/class-eo-theme-compatability.php:161
 #, php-format
 msgid "Events at %s"
-msgstr ""
+msgstr "%s のイベント"
 
 #: event-organiser-venues.php:244
 #, php-format
@@ -107,7 +107,7 @@ msgstr "スケジュール終了日より開始日が後に設定されていま
 
 #: event-organiser-calendar.php:340
 msgid "Navigate to previous period"
-msgstr ""
+msgstr "前の期間に移動する"
 
 #: includes/event-organiser-cpt.php:705
 msgid "Assign the category a colour."
@@ -120,7 +120,7 @@ msgstr "概要"
 
 #: templates/single-event.php:58
 msgid "This event was posted in %1$s by <a href=\"%3$s\">%2$s</a>."
-msgstr ""
+msgstr "このイベントは  %1$s に投稿されました。<a href=\"%3$s\">%2$s</a>."
 
 #: includes/event-organiser-cpt.php:587
 msgid "Debugging Event Organiser"
@@ -132,7 +132,7 @@ msgstr "月アーカイブ"
 
 #: event-organiser-edit.php:237
 msgid "Include/Exclude occurrences:"
-msgstr "繰り返し日を追加／削除"
+msgstr "繰り返しイベントを追加／削除"
 
 #: classes/class-eo-calendar-widget.php:109
 #: classes/class-eo-event-list-widget.php:120
@@ -163,14 +163,13 @@ msgid "Custom Fields"
 msgstr "カスタムフィールド"
 
 #: includes/event-organiser-ajax.php:472
-#, fuzzy
 msgid "Delete this event"
 msgstr "このイベントを削除"
 
 #: includes/class-eo-ical-parser.php:279
 #, php-format
 msgid "There was an error fetching the feed. Response code: %s."
-msgstr ""
+msgstr "フィードを取得中にエラーが発生しました。レスポンスコード：%s."
 
 #: event-organiser-edit.php:160
 msgid "Recurrence:"
@@ -190,7 +189,7 @@ msgstr "会場が見つかりません"
 
 #: classes/class-eo-event-list-widget.php:128
 msgid "Show:"
-msgstr ""
+msgstr "表示:"
 
 #: event-organiser-manage.php:162
 msgid "Events within 1 month"
@@ -203,7 +202,7 @@ msgstr "イベントが公開されました。<a href=\"%s\">表示する</a>"
 
 #: event-organiser-edit.php:100
 msgid "Enter time in 12-hour hh colon mm am or pm format"
-msgstr ""
+msgstr "12時間表示(hh:mm am/pm)の形式で時間を入力"
 
 #: includes/event-organiser-event-functions.php:790
 msgid "custom recurrence"
@@ -237,7 +236,7 @@ msgstr "色"
 
 #: includes/event-organiser-ajax.php:466
 msgid "Delete this occurrence"
-msgstr "この回を削除"
+msgstr "この繰り返しイベントを削除"
 
 #: includes/event-organiser-cpt.php:47
 msgid "Venue Location"
@@ -267,15 +266,15 @@ msgstr "最後の"
 
 #: event-organiser-debug.php:64
 msgid "This page highlights useful information for debugging. If you're reporting a bug, please include this information. The 'system info' link in under the Events admin tab is only visible to admins and only when %1$s is set to %1$s."
-msgstr ""
+msgstr "このページでは、デバッグに役立つインフォメーションを案内します。バグを報告している場合は、この情報を含めてください。 [イベント管理]タブの[システム情報]リンクは、管理者のみに表示され、また%1$sが%1$sに設定されている場合のみ表示されます。"
 
 #: includes/event-organiser-ajax.php:784
 msgid "Event not found"
-msgstr ""
+msgstr "イベントは見つかりませんでした"
 
 #: includes/event-organiser-cpt.php:522
 msgid "The end date is the date the event finishes. If the event is a recurring event, this is the end date of the first occurrence."
-msgstr ""
+msgstr "終了日は、イベントが終了した日です。繰り返しイベントの場合は、こちらが最初の繰り返しイベントの最終日です。"
 
 #: includes/event-organiser-ajax.php:347
 msgid "Private"
@@ -291,7 +290,7 @@ msgstr "このイベントを削除できる権限がありません"
 
 #: event-organiser-go-pro.php:76
 msgid "Give your users the ability to search and filter through your events with the event search shortcode. Event Organiser Pro also adds a text editor button to make inserting and configuring your shortcodes that bit easier. "
-msgstr ""
+msgstr "イベント検索のショートコードを使用すると、イベントをフィルタリングして検索できるようなります。 Event Organizer Proでは、テキストエディタボタンが追加され、簡単にショートコードを挿入して設定することができます。"
 
 #: event-organiser-manage.php:160
 msgid "Events within 1 week"
@@ -315,9 +314,8 @@ msgid "Search Categories"
 msgstr "カテゴリを検索"
 
 #: event-organiser-edit.php:99
-#, fuzzy
 msgid "Enter date in %s format"
-msgstr "イベント日時の形式"
+msgstr "イベント日時の%s 形式"
 
 #: includes/class-event-organiser-im-export.php:107
 msgid "Import categories"
@@ -329,11 +327,11 @@ msgstr "終了日時"
 
 #: event-organiser-settings.php:249
 msgid "To use Google Maps you need to register an API key with Google. You can register for a free API key by %sfollowing these instructions%s."
-msgstr ""
+msgstr "Googleマップの使用にはAPIキーの登録が必要です。APIキーの登録%sこちらを参考にしてください%s"
 
 #: includes/event.php:1080
 msgid "Occurrence not deleted. Occurrence not found."
-msgstr ""
+msgstr "繰り返しイベントは削除されませんでした。繰り返しイベントが見つかりません。"
 
 #: includes/event-organiser-ajax.php:345
 msgid "Protected"
@@ -341,7 +339,7 @@ msgstr "保護"
 
 #: includes/event-organiser-register.php:577
 msgid "It is strongly recommended you select a city instead, even if you don't observe Daylight Savings Time."
-msgstr ""
+msgstr "都市を選択することをお勧めします。"
 
 #: includes/class-event-organiser-im-export.php:103
 msgid "Import an ICS file."
@@ -355,7 +353,7 @@ msgstr "カレンダーやイベントリスト、アーカイブにて、過去
 #. / TRANSLATORS: This is the description that of the plug-in that appears in the "Plugins" page.
 #: includes/i18n.php:8
 msgid "Creates a custom post type 'events' with features such as recurring events, venues, Google Maps, calendar views and events and venue pages"
-msgstr ""
+msgstr "定期的なイベント、会場、Googleマップ、カレンダーの表示、イベントページ、会場ページなどの機能を備えたカスタムの投稿タイプ 「イベント」を作成します。"
 
 #: event-organiser-settings.php:269
 msgid "Check this option to prevent any stylesheets from Event Organiser being loaded on the front-end"
@@ -368,15 +366,15 @@ msgstr "イベントを編集"
 
 #: event-organiser-settings.php:645
 msgid "For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. You can disable this below. WordPress will then decide which template from your theme's folder to use."
-msgstr ""
+msgstr "各ページについて、対応するテンプレートが使用されます。独自のテンプレートを使用するには、同じ名前を付けてテーマフォルダに保存してください。デフォルトでEvent Organizerがテーマディレクトリ内のテンプレートを見つけることができない場合、独自のデフォルトテンプレートが使用されます。これを無効にすることができます。無効にした場合は、WordPressがテーマフォルダから使用するテンプレートを決定します。"
 
 #: includes/event-organiser-cpt.php:554
 msgid "This is the list of all saved events. Note that <strong> recurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event."
-msgstr ""
+msgstr "このリストは保存されたすべてのイベントリストです。表に<strong>繰り返しイベントが1行で表示されます</ strong>、またそのイベントの開始日と終了日は最初の繰り返しイベントを参照します。"
 
 #: event-organiser-settings.php:361
 msgid "Enable theme compatability mode (default)"
-msgstr ""
+msgstr "テーマ互換モードを有効にする（デフォルト）"
 
 #: includes/event-organiser-register.php:246
 msgid "Hide dates"
@@ -423,7 +421,7 @@ msgstr "イベントカテゴリのリスト／ドロップダウン"
 
 #: includes/event-organiser-cpt.php:562
 msgid "Edit takes you to the editing screen for that venue. You can also reach that screen by clicking on the venue title."
-msgstr ""
+msgstr "編集は会場の編集画面に移動します。会場のタイトルをクリックして編集画面にアクセスすることもできます。"
 
 #: includes/event-organiser-cpt.php:330
 #, php-format
@@ -440,7 +438,7 @@ msgstr "日ごと"
 
 #: event-organiser-calendar.php:368
 msgid "Open shortcut help"
-msgstr ""
+msgstr "ショートカットのヘルプを開く"
 
 #: classes/class-eo-calendar-widget.php:59
 msgid "Include past events"
@@ -451,7 +449,6 @@ msgid "No categories found"
 msgstr "カテゴリが見つかりません"
 
 #: includes/event-organiser-cpt.php:241
-#, fuzzy
 msgid "Insert into event"
 msgstr "イベントに追加"
 
@@ -491,7 +488,7 @@ msgstr "3回"
 
 #: classes/class-eo-event-list-widget.php:71
 msgid "Future & running events"
-msgstr ""
+msgstr "未来／開催中のイベント"
 
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:271
@@ -512,19 +509,19 @@ msgstr "イベント会場のリスト／ドロップダウン"
 
 #: event-organiser-go-pro.php:55
 msgid "But that's not all &hellip;"
-msgstr ""
+msgstr "これだけではありません。"
 
 #: includes/event-organiser-cpt.php:44
 msgid "Event venues list"
-msgstr ""
+msgstr "イベント会場のリスト"
 
 #: includes/event-organiser-cpt.php:533
 msgid "If monthly recurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) "
-msgstr ""
+msgstr "毎月の定期的開催が選択されている場合は、その月の日付（たとえば24日）またはその月の日（たとえば3番目の火曜日）にこれを繰り返すかどうかを選択します。"
 
 #: includes/event-organiser-cpt.php:523
 msgid "All dates and times must be entered in the specified format. This format can changed in the settings page."
-msgstr ""
+msgstr "すべての日付と時刻は、指定された形式で入力する必要があります。このフォーマットは、設定ページで変更できます。"
 
 #: event-organiser-calendar.php:236
 msgid "24 hour time"
@@ -542,7 +539,7 @@ msgstr "すべてのイベント"
 #: classes/class-eo-event-list-widget.php:168
 #, php-format
 msgid "You can use specified tags as placeholders for event information which you want to appear in the widget. <a href=\"%s\" target=\"_blank\"> Find out more</a>."
-msgstr ""
+msgstr "指定したタグは、ウィジェットに表示するイベント情報のプレースホルダとして使用できます。<a href=\"%s\" target=\"_blank\">詳細をご覧ください</a>。"
 
 #: event-organiser-settings.php:226
 msgid "Enable events ICAL feed:"
@@ -551,7 +548,7 @@ msgstr "iCal フィードを利用:"
 #: includes/event-organiser-ajax.php:821
 #, php-format
 msgid "Event not created: %s"
-msgstr ""
+msgstr "イベントが作成されていません: %s"
 
 #: event-organiser-settings.php:232
 #, php-format
@@ -564,7 +561,7 @@ msgstr "このシリーズを消去する"
 
 #: event-organiser-settings.php:78
 msgid "Google Maps"
-msgstr ""
+msgstr "グーグルマップ"
 
 #: event-organiser-edit.php:116
 msgid "Start Time"
@@ -594,7 +591,7 @@ msgstr "イベント日時の形式"
 #: classes/class-eo-venue-list-table.php:82
 #, php-format
 msgid "Delete &#8220;%s&#8221;"
-msgstr ""
+msgstr "削除 &#8220;%s&#8221;"
 
 #: classes/class-eo-calendar-widget.php:296
 msgid "Previous month"
@@ -603,11 +600,11 @@ msgstr "先月"
 #: classes/class-eo-calendar-widget.php:96
 #: classes/class-eo-event-list-widget.php:112
 msgid "List category slug(s), seperate by comma. Leave blank for all"
-msgstr ""
+msgstr "リストカテゴリスラッグは、カンマで区切ってください。全て空白のままにしてください。"
 
 #: event-organiser-venues.php:308
 msgid "Toggle panel: Location"
-msgstr ""
+msgstr "トグルパネル：場所"
 
 #: includes/class-eo-admin-notice.php:125
 msgid "Dismiss this notice"
@@ -649,15 +646,15 @@ msgstr "カテゴリを選択"
 
 #: includes/event-organiser-cpt.php:531
 msgid "Specify how regularly the event should repeat (default 1)"
-msgstr ""
+msgstr "イベントをどのくらい定期的に繰り返すかを指定する（デフォルトは1）"
 
 #: event-organiser-calendar.php:360
 msgid "Open modal of selected event"
-msgstr ""
+msgstr "選択したイベントのモーダルを開く"
 
 #: includes/event-organiser-cpt.php:237
 msgid "Filter events list"
-msgstr ""
+msgstr "フィルタイベントリスト"
 
 #: event-organiser-settings.php:653
 msgid "Event page:"
@@ -728,7 +725,7 @@ msgstr "終了日時"
 #: templates/taxonomy-event-category.php:27
 #, php-format
 msgid "Event Category: %s"
-msgstr ""
+msgstr "イベントカテゴリ: %s"
 
 #: includes/event-organiser-register.php:252
 msgid "days"
@@ -741,7 +738,7 @@ msgstr "Event Organiser 追加機能"
 
 #: includes/event-organiser-cpt.php:573
 msgid "This page shows all (occurrances of) events. You can view the summary of an event by clicking on it. If you have the necessary permissions, a link to the event's edit page will appear also."
-msgstr ""
+msgstr "このページには、すべての（オカレンスの）イベントが表示されます。イベントの概要をクリックすると表示できます。必要な権限がある場合は、イベントの編集ページへのリンクも表示されます。"
 
 #: event-organiser-settings.php:202
 msgid "If selected only one occurrence of an event will be displayed on event lists and archives (this can be over-ridden by shortcode attributes and widget options."
@@ -753,7 +750,7 @@ msgstr "現在の日時"
 
 #: includes/class-eo-ical-parser.php:428
 msgid "Feed contains an indefinitely recurring event. This event will recurr until %s."
-msgstr ""
+msgstr "フィードには無限に繰り返されるイベントが含まれています。このイベントは%sまで繰り返されます。"
 
 #: event-organiser-settings.php:52
 #: event-organiser.php:128
@@ -779,7 +776,7 @@ msgstr "%d週ごと"
 #: classes/class-eo-venue-list-table.php:75
 #, php-format
 msgid "Edit &#8220;%s&#8221;"
-msgstr ""
+msgstr "編集 &#8220;%s&#8221;"
 
 #: event-organiser-settings.php:169
 msgid "Add an 'events' link to the navigation menu:"
@@ -795,7 +792,7 @@ msgstr "イベントが保存されました。"
 
 #: includes/event-organiser-cpt.php:99
 msgid "Parent Category:"
-msgstr ""
+msgstr "親カテゴリ:"
 
 #: event-organiser-settings.php:149
 msgid "Author"
@@ -807,11 +804,11 @@ msgstr "全てのカテゴリ"
 
 #: includes/event-organiser-cpt.php:165
 msgid "Event tags list navigation"
-msgstr ""
+msgstr "イベントタグリストのナビゲーション"
 
 #: event-organiser-settings.php:258
 msgid "Templates:"
-msgstr ""
+msgstr "テンプレート:"
 
 #: includes/event-organiser-cpt.php:229
 msgid "New Event"
@@ -831,7 +828,7 @@ msgstr "会場を削除する権限がありません"
 
 #: includes/event-organiser-register.php:558
 msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post</a>."
-msgstr ""
+msgstr "<h4>デフォルトのテンプレートは変更されています</h4>パニックに陥らないでください！テーマに独自のテンプレートを設定した場合は、変更に気付かないでしょう。 </br>古いテンプレートに戻したくない場合は、<a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>こちらをご覧ください投稿</a>してください。"
 
 #: event-organiser-manage.php:161
 #, php-format
@@ -852,7 +849,7 @@ msgstr "会場"
 
 #: includes/event-organiser-register.php:576
 msgid "Is this correct? Using a fixed offset from UTC may cause unexpected behaviour, particular if you observe Daylight Savings Time."
-msgstr ""
+msgstr "正しく設定されていますか？ UTCからの固定オフセットを使用すると、予期しない動作が発生する可能性があります（特に夏時間の場合）。"
 
 #: includes/event-organiser-event-functions.php:820
 #: includes/event-organiser-register.php:264
@@ -879,7 +876,7 @@ msgstr "イベント詳細"
 
 #: includes/event-organiser-cpt.php:238
 msgid "Events list navigation"
-msgstr ""
+msgstr "イベントリストのナビゲーション"
 
 #: classes/class-eo-widget-categories.php:25
 #: includes/event-organiser-cpt.php:94
@@ -900,11 +897,11 @@ msgstr "イベントカテゴリページ:"
 #: features/bootstrap/FeatureContext.php:413
 #: features/bootstrap/FeatureContext.php:608
 msgid "Main Sidebar"
-msgstr ""
+msgstr "メインサイドバー"
 
 #: includes/event.php:736
 msgid "Invalid monthly schedule (invalid ordinal)"
-msgstr ""
+msgstr "無効な月間スケジュール（無効な序数）"
 
 #: event-organiser-settings.php:278
 msgid "Enable event pretty permalinks:"
@@ -922,15 +919,15 @@ msgstr "なし"
 
 #: includes/event-organiser-cpt.php:532
 msgid "Choose the recurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date."
-msgstr ""
+msgstr "繰り返しイベントの終了日を選択します。この日付の後に追加の繰り返しイベントは追加されませんが、前に開始する繰り返しイベントはこの日付の後に終了することがあります。"
 
 #: event-organiser-edit.php:182
 msgid "Recurrence frequency"
-msgstr ""
+msgstr "繰り返しの頻度"
 
 #: event-organiser-calendar.php:364
 msgid "Close modal"
-msgstr ""
+msgstr "モーダルを閉じる"
 
 #: includes/event-organiser-event-functions.php:851
 #, php-format
@@ -979,7 +976,7 @@ msgstr "イベントと会場の管理権限を設定します"
 
 #: classes/class-eo-event-list-widget.php:65
 msgid "Past events"
-msgstr ""
+msgstr "過去のイベント"
 
 #: classes/class-eo-agenda-widget.php:36
 #: classes/class-eo-calendar-widget.php:48
@@ -1013,15 +1010,15 @@ msgstr "エラー:"
 
 #: includes/event.php:1136
 msgid "There is already an occurrence on this date"
-msgstr ""
+msgstr "この日には既に繰り返しイベントがあります"
 
 #: includes/event-organiser-cpt.php:342
 msgid "This event has been broken from a recurring event."
-msgstr ""
+msgstr "このイベントは繰り返しのイベントから壊れています。"
 
 #: includes/event-organiser-cpt.php:107
 msgid "Event categories list"
-msgstr ""
+msgstr "イベントカテゴリリスト"
 
 #: includes/event-organiser-event-functions.php:799
 #: includes/event-organiser-register.php:260
@@ -1085,7 +1082,7 @@ msgstr "新しい会場を追加"
 
 #: includes/event-organiser-cpt.php:521
 msgid "The start date is the date the event starts. If the event is a recurring event, this is the start date of the first occurrence."
-msgstr ""
+msgstr "開始日は、イベントが開始される日付です。イベントが繰り返しイベントの場合は、これが最初の繰り返しイベントの開始日です。"
 
 #: includes/event-organiser-cpt.php:339
 #, php-format
@@ -1120,7 +1117,7 @@ msgstr "主催"
 
 #: event-organiser-go-pro.php:71
 msgid "Sell tickets for specific dates or sell tickets for all dates of an event - such as booking places on a course. You can offer multiple tickets, and customise the booking form to suit your needs."
-msgstr ""
+msgstr "特定の日付のチケットを販売するか、コースの予約場所など、イベントのすべての日付のチケットを販売します。複数のチケットを提供したり、ニーズに合わせて予約フォームをカスタマイズすることもできます。"
 
 #: event-organiser-settings.php:41
 msgid "Event Organiser"
@@ -1150,7 +1147,7 @@ msgstr "その他のイベントの削除"
 
 #: includes/event-organiser-cpt.php:166
 msgid "Event tags list"
-msgstr ""
+msgstr "イベントタグリスト"
 
 #: includes/class-eo-theme-compatability.php:193
 #: includes/class-eo-theme-compatability.php:195
@@ -1163,7 +1160,7 @@ msgstr "イベント:"
 
 #: event-organiser-go-pro.php:75
 msgid "Additional shortcodes & improved UI"
-msgstr ""
+msgstr "追加ショートカットとUIの改善"
 
 #: event-organiser-edit.php:492
 msgid "Event dates were not saved."
@@ -1197,7 +1194,7 @@ msgstr "ファイルにてエラー発生: %d"
 
 #: event-organiser-settings.php:715
 msgid "Please note to enable these structures you must first have pretty permalinks enabled on WordPress in Settings > Permalinks."
-msgstr ""
+msgstr "これらのパーマリンク構造を有効にするには、まず、「設定」→ 「パーマリンク」でパーマリンクを有効にする必要があります。"
 
 #: classes/class-eo-widget-categories.php:131
 msgid "Show hierarchy"
@@ -1224,7 +1221,7 @@ msgstr "開催予定のイベント"
 #: includes/event-organiser-register.php:575
 #, php-format
 msgid "Your site timezone is %s"
-msgstr ""
+msgstr "あなたのタイムゾーンは %s"
 
 #: includes/class-event-organiser-im-export.php:284
 #, php-format
@@ -1243,10 +1240,9 @@ msgstr "開始日時"
 #: features/bootstrap/FeatureContext.php:415
 #: features/bootstrap/FeatureContext.php:610
 msgid "Widgets in this area will be shown on all posts and pages."
-msgstr ""
+msgstr "このエリアのウィジェットはすべての投稿とページに表示されます。"
 
 #: event-organiser-settings.php:756
-#, fuzzy
 msgid "Page list (fallback)"
 msgstr "ページリスト（フォールバック）"
 
@@ -1257,7 +1253,7 @@ msgstr "基本"
 
 #: classes/class-eo-event-list-widget.php:77
 msgid "Events on today"
-msgstr ""
+msgstr "本日のイベント"
 
 #: includes/class-event-organiser-im-export.php:68
 msgid "No file detected."
@@ -1269,15 +1265,15 @@ msgstr "開始"
 
 #: classes/class-eo-calendar-widget.php:81
 msgid "Link directly to event for days with only one event"
-msgstr ""
+msgstr "1つのイベントのみでイベントに直接リンクする"
 
 #: event-organiser-settings.php:366
 msgid "Event Organiser's page templates will be used if your theme does not provide appropriate templates."
-msgstr ""
+msgstr "あなたのテーマが適切なテンプレートでない場合、Event Organizerのページテンプレートが使用されます。"
 
 #: includes/event-organiser-cpt.php:534
 msgid "If weekly recurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used"
-msgstr ""
+msgstr "毎週の繰り返しが選択されている場合は、イベントを繰り返す曜日を選択します。日数が選択されていない場合は、開始日の日が使用されます。"
 
 #: includes/event-organiser-cpt.php:158
 msgid "Add New Tag"
@@ -1290,11 +1286,11 @@ msgstr "会場名"
 #: includes/event-organiser-cpt.php:152
 msgctxt "taxonomy singular name"
 msgid "Tag"
-msgstr ""
+msgstr "タグ（タクソノミー名）"
 
 #: includes/event-organiser-ajax.php:792
 msgid "Events are not editable via the admin calendar"
-msgstr ""
+msgstr "管理カレンダーでイベントを編集することはできません。"
 
 #: event-organiser-calendar.php:76
 #: includes/event-organiser-register.php:70
@@ -1316,7 +1312,7 @@ msgstr "イベントリストを表示する"
 
 #: includes/event-organiser-cpt.php:239
 msgid "Events list"
-msgstr ""
+msgstr "イベントリスト"
 
 #: event-organiser-manage.php:202
 msgid "&mdash; No Change &mdash;"
@@ -1348,7 +1344,7 @@ msgstr "イベントが更新されました。"
 
 #: includes/event-organiser-ajax.php:393
 msgid "Organiser:"
-msgstr ""
+msgstr "オーガナイザー:"
 
 #: event-organiser-calendar.php:73
 #: includes/event-organiser-register.php:67
@@ -1366,7 +1362,7 @@ msgstr "ファイルが正しくありません。'text/calendar'タイプのICS
 
 #: event-organiser-edit.php:219
 msgid "day of week"
-msgstr ""
+msgstr "曜日"
 
 #: event-organiser-settings.php:658
 #, php-format
@@ -1375,7 +1371,7 @@ msgstr "詳細については<a href='%s'>テンプレートの編集</a>をご�
 
 #: event-organiser-edit.php:100
 msgid "Enter time in 24-hour hh colon mm format"
-msgstr ""
+msgstr "24時間表示(hh:mm)の形式で時間を入力"
 
 #: event-organiser-settings.php:205
 msgid "Are current events past?"
@@ -1384,7 +1380,7 @@ msgstr "進行中のイベントは過去と見なしますか？"
 #: includes/event-organiser-cpt.php:95
 msgctxt "taxonomy singular name"
 msgid "Category"
-msgstr ""
+msgstr "カテゴリー（タクソノミー名）"
 
 #: includes/event-organiser-event-functions.php:797
 #: includes/event-organiser-register.php:259
@@ -1393,7 +1389,7 @@ msgstr "毎日"
 
 #: includes/event-organiser-cpt.php:542
 msgid "Use the venues input field to search for existing venues"
-msgstr ""
+msgstr "会場の入力欄を使用して既存の会場を検索する"
 
 #: includes/event-organiser-cpt.php:233
 msgid "No events found"
@@ -1405,7 +1401,7 @@ msgstr "イベントを検索"
 
 #: includes/event-organiser-cpt.php:579
 msgid "You can create an event on this Calendar, by clicking on day or dragging over multiple days (in Month view) or multiple times (in Week and Day view). You can give the event a title, specify a venue and provide a descripton. The event can be immediately published or saved as a draft. In any case, the event is created and you are forwarded to that event's edit page."
-msgstr ""
+msgstr "このカレンダーでは、曜日をクリックするか、または複数の日（月間表示）または複数回（週および日表示）にドラッグしてイベントを作成できます。イベントにタイトルを付けたり、会場を指定したり、ディスクリプションを提供したりすることができます。このイベントはすぐに公開することも、ドラフトとして保存することもできます。いずれの場合も、イベントが作成され、そのイベントの編集ページに移行します。"
 
 #: includes/event-organiser-cpt.php:164
 msgid "Separate tags with commas"
@@ -1418,11 +1414,11 @@ msgstr "1件の会場が作成されました"
 #. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
 #: event-organiser-debug.php:437
 msgid "%1$s requires %1$s version %1$s or higher"
-msgstr ""
+msgstr "%1$sには%1$sバージョンまたは%1$s以上が必要です"
 
 #: event-organiser-settings.php:716
 msgid "You may also need to go to WordPress Settings > Permalinks and click 'Save Changes' before any changes will take effect."
-msgstr ""
+msgstr "変更内容を有効にするには、「設定」→「パーマリンク」で「変更を保存」をクリックする必要があります。"
 
 #: includes/event-organiser-register.php:267
 msgid "This event will repeat"
@@ -1438,7 +1434,7 @@ msgstr "「いいえ」の場合、イベントが終了したら過去となり
 
 #: event-organiser-calendar.php:332
 msgid "The following keyboard shortcuts are available"
-msgstr ""
+msgstr "次のキーボードショートカットを利用できます"
 
 #: event-organiser-manage.php:19
 #: includes/event-organiser-cpt.php:225
@@ -1455,11 +1451,11 @@ msgstr "毎年"
 
 #: event-organiser-calendar.php:215
 msgid "Occurrence deleted."
-msgstr ""
+msgstr "繰り返しイベントは削除されました。"
 
 #: includes/event-organiser-cpt.php:529
 msgid "To repeat an event according to some regular pattern, use the recurrence dropdown menu to select how the event is to repeat. Further options then appear, "
-msgstr ""
+msgstr "定期的なパターンに従ってイベントを繰り返すには、繰り返しドロップダウンメニューを使用して、イベントの繰り返し方法を選択します。さらにオプションが表示され、"
 
 #: event-organiser-settings.php:263
 msgid "Disable CSS:"
@@ -1492,7 +1488,7 @@ msgstr "まで"
 
 #: event-organiser-edit.php:189
 msgid "Repeat on days of week:"
-msgstr ""
+msgstr "週の曜日を繰り返し："
 
 #: classes/class-eo-event-list-widget.php:152
 msgid "DESC"
@@ -1509,7 +1505,7 @@ msgstr "Event Organiser Pro Add-Onを入手する"
 
 #: event-organiser-settings.php:243
 msgid "Google API key:"
-msgstr ""
+msgstr "Google API key:"
 
 #: event-organiser-venues.php:195
 msgid "Venue(s) <strong>deleted</strong>"
@@ -1525,12 +1521,12 @@ msgstr "全ての会場"
 
 #: includes/event-organiser-cpt.php:106
 msgid "Event categories list navigation"
-msgstr ""
+msgstr "イベントカテゴリリストのナビゲーション"
 
 #: event-organiser-settings.php:586
 #, php-format
 msgid "Event Settings: %s"
-msgstr ""
+msgstr "イベント設定: %s"
 
 #: includes/event-organiser-cpt.php:518
 msgid "Creating events"
@@ -1542,11 +1538,11 @@ msgstr "イベント管理権限"
 
 #: includes/event-organiser-ajax.php:798
 msgid "Are you sure you want to do this?"
-msgstr ""
+msgstr "あなたは本当にこれを実行しますか？"
 
 #: event-organiser-calendar.php:213
 msgid "Event deleted."
-msgstr ""
+msgstr "イベントが削除されました。"
 
 #: event-organiser-calendar.php:74
 #: includes/event-organiser-register.php:68
@@ -1590,7 +1586,7 @@ msgstr "役割"
 
 #: includes/event-organiser-utility-functions.php:1396
 msgid "Help"
-msgstr ""
+msgstr "ヘルプ"
 
 #: classes/class-eo-event-list-widget.php:14
 #: classes/class-eo-event-list-widget.php:28
@@ -1606,19 +1602,19 @@ msgstr "イベント"
 
 #: includes/event-organiser-cpt.php:563
 msgid "Delete will permanently remove the venue"
-msgstr ""
+msgstr "削除すると会場は完全に削除されます"
 
 #: includes/event-organiser-cpt.php:564
 msgid "View will take you to the venue's page"
-msgstr ""
+msgstr "ビューで会場のページに移動します"
 
 #: includes/event-organiser-ajax.php:444
 msgid "Edit Event: %s"
-msgstr ""
+msgstr "イベントの編集: %s"
 
 #: event-organiser-calendar.php:344
 msgid "Switch to month view"
-msgstr ""
+msgstr "月表示に切り替える"
 
 #: event-organiser-venues.php:443
 msgid "Get Link"
@@ -1626,7 +1622,7 @@ msgstr "リンクを取得"
 
 #: event-organiser-settings.php:585
 msgid "Event Settings"
-msgstr ""
+msgstr "イベント設定"
 
 #: templates/event-meta-event-single.php:45
 #, php-format
@@ -1647,11 +1643,11 @@ msgstr "開始日は設定されていません。"
 
 #: includes/event-organiser-ajax.php:805
 msgid "You do not have permission to edit this event"
-msgstr ""
+msgstr "このイベントを編集する権限がありません"
 
 #: event-organiser-settings.php:369
 msgid "Disable template handling"
-msgstr ""
+msgstr "テンプレート処理を無効にする"
 
 #: event-organiser-debug.php:80
 msgid "Download system information file"
@@ -1663,11 +1659,11 @@ msgstr "iCal ファイルが読み込めませんでした"
 
 #: event-organiser-edit.php:211
 msgid "Select whether to repeat monthly by date or day:"
-msgstr ""
+msgstr "日付または日ごとに毎月繰り返すかどうかを選択します。"
 
 #: event-organiser-calendar.php:336
 msgid "Navigate to next period"
-msgstr ""
+msgstr "次の期間に移動する"
 
 #: event-organiser-edit.php:166
 msgid "yearly"
@@ -1687,15 +1683,15 @@ msgstr "新しいタグ名"
 
 #: templates/single-event.php:60
 msgid "This event was posted by <a href=\"%3$s\">%2$s</a>."
-msgstr ""
+msgstr "このイベントは <a href=\"%3$s\">%2$s</a>に投稿されました。"
 
 #: includes/event-organiser-register.php:590
 msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %splease enter your key%s."
-msgstr ""
+msgstr "Googleマップの使用にはAPIキーの登録が必要です。サイトで地図を使用する場合は%sキーを入力してください。"
 
 #: event-organiser-settings.php:714
 msgid "Choose a custom permalink structure for events, venues, event categories and event tags."
-msgstr ""
+msgstr "イベント、会場、イベントカテゴリ、イベントタグのカスタムパーマリンク構造を選択します。"
 
 #: event-organiser-settings.php:318
 msgid "Day archive"
@@ -1713,7 +1709,7 @@ msgstr "イベントタグ"
 
 #: includes/event-organiser-cpt.php:242
 msgid "Uploaded to this event"
-msgstr ""
+msgstr "このイベントにアップロードされました"
 
 #: includes/class-eo-ical-parser.php:208
 msgid "Feed not found"
@@ -1721,7 +1717,7 @@ msgstr "フィードが見つかりません"
 
 #: event-organiser-debug.php:72
 msgid "Most bugs arise from theme or plug-in conflicts. You can check this by disabling all other plug-ins and switching to TwentyTweleve. To help speed things along, if you report a bug please indicate if you have done so. Once the plug-in or theme has been identified it is often easy to resolve the issue. Below any <strong>known</strong> plug-in and theme conflicts are highlighted in red."
-msgstr ""
+msgstr "ほとんどのバグは、テーマやプラグインの競合から発生します。これは他のすべてのプラグインを無効にしてTwentyTweleveに切り替えることで確認できます。もしバグを報告する場合は、何を実行したかも含めて報告してください。問題のプラグインまたはテーマが特定できれば、問題解決を容易にできます。 <strong>既知の</ strong>プラグインの下に、テーマの競合が赤で強調表示されます。"
 
 #: event-organiser-edit.php:240
 #: includes/event-organiser-register.php:245
@@ -1747,12 +1743,12 @@ msgstr "新しい会場名"
 #: includes/class-event-organiser-im-export.php:73
 #, php-format
 msgid "File size: %s. File type: %s"
-msgstr ""
+msgstr "ファイルサイズ: %s. ファイルタイプ: %s"
 
 #: includes/event-organiser-cpt.php:334
 #, php-format
 msgid "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview event</a>"
-msgstr ""
+msgstr "予定されているイベント：<strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">イベントのプレビュー</a>"
 
 #: event-organiser-manage.php:35
 msgid "Start Date/Time"
@@ -1760,7 +1756,7 @@ msgstr "開始日時"
 
 #: event-organiser-settings.php:365
 msgid "Enable template handling"
-msgstr ""
+msgstr "テンプレート処理を有効にする"
 
 #: includes/event-organiser-venue-functions.php:984
 msgid "Country"
@@ -1794,7 +1790,7 @@ msgstr "人気のタグ"
 
 #: event-organiser-calendar.php:224
 msgid "View keyboard shortcuts"
-msgstr ""
+msgstr "キーボードショートカットを表示する"
 
 #: includes/event-organiser-cpt.php:153
 msgid "Search Tags"
@@ -1808,7 +1804,7 @@ msgstr "ライセンスキーを追加する"
 #: templates/shortcode-event-list.php:48
 #: templates/widget-event-list.php:44
 msgid "on"
-msgstr ""
+msgstr "オン"
 
 #: includes/class-event-organiser-im-export.php:268
 msgid "1 event was successfully imported"
@@ -1828,7 +1824,7 @@ msgstr "1件のカテゴリが作成されました"
 
 #: event-organiser-calendar.php:352
 msgid "Switch to day view"
-msgstr ""
+msgstr "日表示に切り替える"
 
 #: event-organiser-manage.php:156
 msgid "View all events"
@@ -1858,11 +1854,11 @@ msgstr "イベントの公開"
 
 #: includes/event-organiser-cpt.php:560
 msgid "Hovering over a row in the venues list will display action links that allow you to manage that venue. You can perform the following actions:"
-msgstr ""
+msgstr "会場リストの行にカーソルを合わせると、その会場を管理できるようにするアクションリンクが表示されます。次の操作を実行できます。"
 
 #: includes/event-organiser-cpt.php:574
 msgid "By clicking the relevant tab, you can view events in Month, Week or Day mode. You can also filter the events by events by category and venue. The 'go to date' button allows you to quickly jump to a specific date."
-msgstr ""
+msgstr "関連するタブをクリックすると、月、週、または日のモードでイベントを表示できます。また、カテゴリ別、会場別、イベント別にイベントをフィルタリングすることもできます。 「日付を指定」ボタンを使用すると、特定の日付にすばやくジャンプできます。"
 
 #: classes/class-eo-event-list-widget.php:166
 msgid "Event list widget placeholders"
@@ -1913,7 +1909,7 @@ msgstr "iCal ファイルにてエラーがありました。"
 
 #: event-organiser-debug.php:253
 msgid "Known plug-in & theme conflicts, highlighted in red, may be minor or have a simple resolution. Please contact support."
-msgstr ""
+msgstr "赤で強調表示されている既知のプラグインとテーマの競合が発生した場合はプラグイン開発元のサポートまでご連絡ください。"
 
 #: event-organiser-calendar.php:125
 msgid "You do not have sufficient permissions to create events. "
@@ -1921,19 +1917,19 @@ msgstr "イベントを作成できる権限がありません"
 
 #: event-organiser-venues.php:402
 msgid "Latitude/Longitude:"
-msgstr ""
+msgstr "緯度/経度:"
 
 #: classes/class-eo-event-list-widget.php:58
 msgid "Running events"
-msgstr ""
+msgstr "開催中のイベント"
 
 #: event-organiser-go-pro.php:81
 msgid "Add information on your venue pages with venue custom fields, or give your venues more attentioned with their own 'featured image'"
-msgstr ""
+msgstr "会場のカスタムフィールドを使用して会場のページに情報を追加するか、会場のイメージ画像を追加して注意喚起を行う"
 
 #: event-organiser-settings.php:362
 msgid "Event Organiser will attempt to ensure compatability with your theme and apply additional styles."
-msgstr ""
+msgstr "Event Organiserはあなたのテーマとの互換性を確保し、追加のスタイルを適用しようとします。"
 
 #: classes/class-eo-calendar-widget.php:93
 #: classes/class-eo-event-list-widget.php:110
@@ -1950,7 +1946,7 @@ msgstr "タグを編集"
 
 #: event-organiser-edit.php:215
 msgid "date of month"
-msgstr ""
+msgstr "月の日付"
 
 #: event-organiser-settings.php:181
 msgid "mm-dd-yyyy"
@@ -1959,12 +1955,12 @@ msgstr "月-日-年（mm-dd-yyyy）"
 #. / TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
 #: event-organiser-debug.php:424
 msgid "%1$s has only been tested up to %1$s %1$s"
-msgstr ""
+msgstr "%1$sは最大%1$s %1$sにしかテストされていません"
 
 #: includes/event-organiser-register.php:578
 #, php-format
 msgid "You can <a href='%s'>change your timezone settings here</a>."
-msgstr ""
+msgstr "<a href='%s'>ここであなたのタイムゾーン設定を変更できます</a>。"
 
 #: classes/class-eo-event-list-widget.php:151
 msgid "ASC"
@@ -1976,16 +1972,16 @@ msgstr "過去のイベント <span class=\"meta-nav\">&rarr;</span>"
 
 #: templates/event-meta-event-single.php:53
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #: includes/event-organiser-cpt.php:43
 msgid "Event venues list navigation"
-msgstr ""
+msgstr "イベント会場リストのナビゲーション"
 
 #: classes/class-eo-venue-list-table.php:89
 #, php-format
 msgid "View &#8220;%s&#8221;"
-msgstr ""
+msgstr "表示 &#8220;%s&#8221;"
 
 #: includes/event-organiser-cpt.php:227
 msgid "Add New Event"
@@ -2022,11 +2018,11 @@ msgstr "書き出し"
 
 #: event-organiser-calendar.php:348
 msgid "Switch to week view"
-msgstr ""
+msgstr "週表示に切り替える"
 
 #: event-organiser-calendar.php:356
 msgid "Jump to today in view"
-msgstr ""
+msgstr "今日のビューにジャンプ"
 
 #. //docs.wp-event-organiser.com/theme-integration for more information
 #. *
@@ -2040,7 +2036,7 @@ msgstr ""
 #: templates/taxonomy-event-tag.php:27
 #, php-format
 msgid "Event Tag: %s"
-msgstr ""
+msgstr "イベントタグ: %s"
 
 #. //php.net/date
 #: includes/event-organiser-cpt.php:336
@@ -2083,7 +2079,7 @@ msgstr "週"
 
 #: includes/event-organiser-register.php:588
 msgid "Enter a Google Maps API key"
-msgstr ""
+msgstr "GoogleマップAPIキーを入力"
 
 #: includes/event-organiser-cpt.php:42
 msgid "Separate venues with commas"
@@ -2095,7 +2091,7 @@ msgstr "カスタム"
 
 #: classes/class-eo-event-list-widget.php:37
 msgid "No Events"
-msgstr ""
+msgstr "イベント無し"
 
 #: classes/class-eo-agenda-widget.php:153
 msgid "Add To Google Calendar"
@@ -2127,7 +2123,7 @@ msgstr "Event Organiser Proを入手する"
 
 #: includes/event-organiser-cpt.php:240
 msgid "Event Archives"
-msgstr ""
+msgstr "イベントアーカイブ"
 
 #: includes/event-organiser-cpt.php:168
 msgid "View all tags"
