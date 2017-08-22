@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-04-15T17:47:30+00:00\n"
+"PO-Revision-Date: 2017-08-19T03:46:46+00:00\n"
 "Language: id_ID\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
@@ -1530,14 +1530,8 @@ msgstr "Membuat agenda"
 msgid "Event management permissions"
 msgstr ""
 
-#: includes/event-organiser-cpt.php:161
-msgid "Choose from the most used tags"
-msgstr "Pilih kata-kata kunci yang sering digunakan"
-
-#: event-organiser-calendar.php:387
-#: event-organiser-edit.php:14
-#: templates/event-meta-event-single.php:32
-msgid "Event Details"
+#: includes/event-organiser-ajax.php:798
+msgid "Are you sure you want to do this?"
 msgstr ""
 
 #: event-organiser-calendar.php:213

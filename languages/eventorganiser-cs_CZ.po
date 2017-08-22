@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-04-15T17:49:28+00:00\n"
+"PO-Revision-Date: 2017-05-16T11:27:21+00:00\n"
 "Language: cs_CZ\n"
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n >= 2 && n <= 4) ? 1 : 2);\n"
 
@@ -17,28 +17,34 @@ msgid "Event Organiser's page templates will not be used."
 msgstr ""
 
 #: event-organiser-settings.php:652
+#, fuzzy
 msgid "Events archives:"
 msgstr "Archiv událostí:"
 
 #: event-organiser-calendar.php:75
 #: includes/event-organiser-register.php:69
 #: includes/event-organiser-register.php:255
+#, fuzzy
 msgid "month"
 msgstr "měsíc"
 
 #: includes/event-organiser-cpt.php:154
+#, fuzzy
 msgid "All Tags"
 msgstr "Všechny štítky"
 
 #: event-organiser-manage.php:159
+#, fuzzy
 msgid "Events within 24 hours"
 msgstr "Události v následujících 24 hodinách"
 
 #: event-organiser-go-pro.php:70
+#, fuzzy
 msgid "Flexible Booking Options"
 msgstr "Flexibilní možnosti rezervací"
 
 #: event-organiser-calendar.php:279
+#, fuzzy
 msgid "Event Title"
 msgstr "Název události"
 
@@ -48,24 +54,29 @@ msgid "Add New"
 msgstr ""
 
 #: includes/event.php:870
+#, fuzzy
 msgid "Event does not contain any dates."
 msgstr "Událost neobsahuje žádná data"
 
 #: classes/class-eo-agenda-widget.php:45
 #: event-organiser-calendar.php:253
+#, fuzzy
 msgid "Month"
 msgstr "Měsíc"
 
 #: includes/event-organiser-register.php:65
+#, fuzzy
 msgid "Show Less"
 msgstr "Ukázat méně"
 
 #: includes/event-organiser-event-functions.php:818
 #: includes/event-organiser-register.php:263
+#, fuzzy
 msgid "every month on the"
 msgstr "každý měsíc v"
 
 #: event-organiser-venues.php:465
+#, fuzzy
 msgid "Slug"
 msgstr "Slug"
 
@@ -74,6 +85,7 @@ msgid "Google Maps now requires you register for an API key. If you wish to use 
 msgstr ""
 
 #: includes/event-organiser-cpt.php:35
+#, fuzzy
 msgid "View Venue"
 msgstr "Ukázat místo"
 
@@ -83,25 +95,27 @@ msgid "Events at %s"
 msgstr ""
 
 #: event-organiser-venues.php:244
-#, php-format
+#, php-format,fuzzy
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Výsledky hledání pro “%s”"
 
 #: includes/event-organiser-cpt.php:586
-#, php-format
+#, php-format,fuzzy
 msgid "See the <a %s> documentation</a>"
 msgstr "otevřít <a %s> dokumentaci</a>"
 
 #: includes/event-organiser-register.php:254
+#, fuzzy
 msgid "weeks"
 msgstr "týdny"
 
 #: includes/event-organiser-cpt.php:323
-#, php-format
+#, php-format,fuzzy
 msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr "Událost upravena. <a href=\"%s\">Zobrazit</a>"
 
 #: includes/event.php:651
+#, fuzzy
 msgid "Schedule end date is before is before the start date."
 msgstr "Naplánované datum konce události je před jeho počátečním datem."
 
@@ -110,11 +124,13 @@ msgid "Navigate to previous period"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:705
+#, fuzzy
 msgid "Assign the category a colour."
 msgstr "Přířadit barvu kategorii."
 
 #: includes/event-organiser-cpt.php:553
 #: includes/event-organiser-cpt.php:572
+#, fuzzy
 msgid "Overview"
 msgstr "Přehled"
 
@@ -123,42 +139,51 @@ msgid "This event was posted in %1$s by <a href=\"%3$s\">%2$s</a>."
 msgstr ""
 
 #: includes/event-organiser-cpt.php:587
+#, fuzzy
 msgid "Debugging Event Organiser"
 msgstr "Debug Event Organiseru"
 
 #: event-organiser-settings.php:317
+#, fuzzy
 msgid "Month archive"
 msgstr "Měsíční archiv"
 
 #: event-organiser-edit.php:237
+#, fuzzy
 msgid "Include/Exclude occurrences:"
 msgstr "Přidat/Ubrat opakování"
 
 #: classes/class-eo-calendar-widget.php:109
 #: classes/class-eo-event-list-widget.php:120
 #: includes/event-organiser-cpt.php:34
+#, fuzzy
 msgid "All Venues"
 msgstr "Všechna místa"
 
 #: includes/event-organiser-event-functions.php:787
+#, fuzzy
 msgid "one time only"
 msgstr "jen jednou"
 
 #: classes/class-eo-agenda-widget.php:140
 #: event-organiser-edit.php:151
 #: includes/event-organiser-event-functions.php:1382
+#, fuzzy
 msgid "All day"
 msgstr "Celý den"
 
 #: event-organiser-calendar.php:321
+#, fuzzy
 msgid "Submit for Review"
 msgstr "Poslat k revizi"
 
 #: event-organiser-edit.php:285
+#, fuzzy
 msgid "Venue Name"
 msgstr "Název místa"
 
 #: event-organiser-settings.php:152
+#, fuzzy
 msgid "Custom Fields"
 msgstr "Uživatelská pole"
 
@@ -167,23 +192,27 @@ msgid "Delete this event"
 msgstr ""
 
 #: includes/class-eo-ical-parser.php:279
-#, php-format
+#, php-format,fuzzy
 msgid "There was an error fetching the feed. Response code: %s."
 msgstr "Nastala chyba při záskávání feedu. Kód odpovědi: %s."
 
 #: event-organiser-edit.php:160
+#, fuzzy
 msgid "Recurrence:"
 msgstr "Opakování"
 
 #: event-organiser-go-pro.php:24
+#, fuzzy
 msgid "Go Pro"
 msgstr "Jít Pro"
 
 #: classes/class-eo-agenda-widget.php:60
+#, fuzzy
 msgid "Include 'Add To Google' link"
 msgstr "Zahrnout odkaz 'Přidat do Googlu'"
 
 #: includes/event-organiser-cpt.php:40
+#, fuzzy
 msgid "No venues found"
 msgstr "Nenalezena žádná místa"
 
@@ -192,11 +221,12 @@ msgid "Show:"
 msgstr ""
 
 #: event-organiser-manage.php:162
+#, fuzzy
 msgid "Events within 1 month"
 msgstr "Události v následujícím měsíci"
 
 #: includes/event-organiser-cpt.php:327
-#, php-format
+#, php-format,fuzzy
 msgid "Event published. <a href=\"%s\">View event</a>"
 msgstr "Událost publikována. <a href=\"%s\">Zobrazit</a>"
 
@@ -205,62 +235,74 @@ msgid "Enter time in 12-hour hh colon mm am or pm format"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:790
+#, fuzzy
 msgid "custom recurrence"
 msgstr "ručně nastavené opakování"
 
 #: includes/event.php:647
+#, fuzzy
 msgid "Start date occurs after end date."
 msgstr "Počáteční datum je po datu konce."
 
 #: includes/class-event-organiser-im-export.php:162
+#, fuzzy
 msgid "You do not have sufficient permissions to import events."
 msgstr "Nemáte dostatečné oprávnění k importování událostí."
 
 #: includes/class-event-organiser-im-export.php:91
+#, fuzzy
 msgid "Export Events"
 msgstr "Exportovat události"
 
 #: event-organiser-settings.php:288
+#, fuzzy
 msgid "Event (single)"
 msgstr "Událost (příspěvek)"
 
 #: includes/class-event-organiser-im-export.php:271
-#, php-format
+#, php-format,fuzzy
 msgid "%d events were successfully imported"
 msgstr "%d událostí bylo úspěšně importováno"
 
 #: includes/event-organiser-cpt.php:699
 #: includes/event-organiser-cpt.php:722
+#, fuzzy
 msgid "Color"
 msgstr "Barva"
 
 #: includes/event-organiser-ajax.php:466
+#, fuzzy
 msgid "Delete this occurrence"
 msgstr "Smazat toto opakování"
 
 #: includes/event-organiser-cpt.php:47
+#, fuzzy
 msgid "Venue Location"
 msgstr "Adresa místa"
 
 #: includes/event-organiser-cpt.php:326
-#, php-format
+#, php-format,fuzzy
 msgid "Event restored to revision from %s"
 msgstr "Událost upravena do verze z %s"
 
 #: event-organiser-settings.php:180
+#, fuzzy
 msgid "dd-mm-yyyy"
 msgstr "dd.mm.yyyy"
 
 #: includes/event-organiser-cpt.php:97
+#, fuzzy
 msgid "All Categories"
 msgstr "Všechny kategorie"
 
 #: event-organiser-settings.php:150
+#, fuzzy
 msgid "Thumbnail"
 msgstr "Náhled"
 
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:274
+#, fuzzy
 msgid "last"
 msgstr "poslední"
 
@@ -273,43 +315,52 @@ msgid "Event not found"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:522
+#, fuzzy
 msgid "The end date is the date the event finishes. If the event is a recurring event, this is the end date of the first occurrence."
 msgstr "Datum konce je datum, kdy událost končí. Pokud se jedná o opakující se událost, je toto konec prvního výskytu."
 
 #: includes/event-organiser-ajax.php:347
+#, fuzzy
 msgid "Private"
 msgstr "Privátní"
 
 #: includes/event-organiser-ajax.php:349
+#, fuzzy
 msgid "Draft"
 msgstr "Koncept"
 
 #: event-organiser-calendar.php:199
+#, fuzzy
 msgid "You do not have sufficient permissions to delete this event. "
 msgstr "Pro smazání události nemáte dostatečná proprávnění"
 
 #: event-organiser-go-pro.php:76
+#, fuzzy
 msgid "Give your users the ability to search and filter through your events with the event search shortcode. Event Organiser Pro also adds a text editor button to make inserting and configuring your shortcodes that bit easier. "
 msgstr "Dát vašim uživatelům možnost vyhledávat a filtrovat události s pomocí shortcodu pro vyhledávání. Event Organiser Pro také přidává tlačítko textového editoru pro zlehčení vkládání a konfigurace shortcodů."
 
 #: event-organiser-manage.php:160
+#, fuzzy
 msgid "Events within 1 week"
 msgstr "Události v následujícím týdnu"
 
 #: includes/class-eo-ical-parser.php:1039
-#, php-format
+#, php-format,fuzzy
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
 msgstr "Neplatné datum \"%s\". Datum očekáváno v YYYYMMDD formátu."
 
 #: classes/class-eo-agenda-widget.php:12
+#, fuzzy
 msgid "Displays a list of events, grouped by date"
 msgstr "Zobrazí seznam událostí seskupených podle data"
 
 #: event-organiser-settings.php:284
+#, fuzzy
 msgid "If you have pretty permalinks enabled, select to have pretty premalinks for events."
 msgstr "Pokud máte zanuty pěkné trvalé odkazy, zaškrtněte, abyste měli pěkné trvalé odkazy pro události."
 
 #: includes/event-organiser-cpt.php:96
+#, fuzzy
 msgid "Search Categories"
 msgstr "Prohledat kategorie"
 
@@ -319,10 +370,12 @@ msgid "Enter date in %s format"
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:107
+#, fuzzy
 msgid "Import categories"
 msgstr "Import kategorií"
 
 #: event-organiser-manage.php:36
+#, fuzzy
 msgid "End Date/Time"
 msgstr "Datum/čas ukončení"
 
@@ -331,10 +384,12 @@ msgid "To use Google Maps you need to register an API key with Google. You can r
 msgstr ""
 
 #: includes/event.php:1080
+#, fuzzy
 msgid "Occurrence not deleted. Occurrence not found."
 msgstr "Výskyt nesmazán. Výskyt nenalezen."
 
 #: includes/event-organiser-ajax.php:345
+#, fuzzy
 msgid "Protected"
 msgstr "Chráněno"
 
@@ -343,11 +398,13 @@ msgid "It is strongly recommended you select a city instead, even if you don't o
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:103
+#, fuzzy
 msgid "Import an ICS file."
 msgstr "Importova ICS soubor."
 
 #: event-organiser-settings.php:166
 #: event-organiser-settings.php:193
+#, fuzzy
 msgid "Display past events on calendars, event lists and archives (this can be over-ridden by shortcode attributes and widget options)."
 msgstr "Zobrazit minulé události v kalendáři, seznamu událostí a archivu (toto je možné změnit parametry shortcodu a nastaveném widgetu)."
 
@@ -357,11 +414,13 @@ msgid "Creates a custom post type 'events' with features such as recurring event
 msgstr ""
 
 #: event-organiser-settings.php:269
+#, fuzzy
 msgid "Check this option to prevent any stylesheets from Event Organiser being loaded on the front-end"
 msgstr "Zaškrtněte tuto možnost pro zabránění nahrání jakéhokoliv stylesheetu z Event organizeru do front-endu"
 
 #: includes/event-organiser-ajax.php:443
 #: includes/event-organiser-cpt.php:228
+#, fuzzy
 msgid "Edit Event"
 msgstr "Upravit událost"
 
@@ -370,6 +429,7 @@ msgid "For each of the pages, the corresponding template is used. To use your ow
 msgstr ""
 
 #: includes/event-organiser-cpt.php:554
+#, fuzzy
 msgid "This is the list of all saved events. Note that <strong> recurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event."
 msgstr "Toto je seznam všech uložených událostí. Berte na vědomí, že <strong> opakující se události se ukazují jako jeden řádek </strong> v tabulce a že datum začátku a konce odpovídá prvnímu výskytu dané události."
 
@@ -378,28 +438,34 @@ msgid "Enable theme compatability mode (default)"
 msgstr ""
 
 #: includes/event-organiser-register.php:246
+#, fuzzy
 msgid "Hide dates"
 msgstr "Skrýt data"
 
 #: includes/event-organiser-cpt.php:543
+#, fuzzy
 msgid "Only pre-existing venues can be selected. To add a venue, go to the venues page."
 msgstr "Lze vybrat pouze již existující místa. Pro přidání místa jděte na stránku míst."
 
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:273
+#, fuzzy
 msgid "fourth"
 msgstr "čtvrtý"
 
 #: event-organiser-settings.php:154
+#, fuzzy
 msgid "Revisions"
 msgstr "Revize"
 
 #: event-organiser-calendar.php:72
 #: includes/event-organiser-register.php:66
+#, fuzzy
 msgid "today"
 msgstr "dnes"
 
 #: includes/event-organiser-cpt.php:41
+#, fuzzy
 msgid "Add or remove venues"
 msgstr "Přidat/odebrat místa"
 
@@ -412,28 +478,32 @@ msgstr "Přidat/odebrat místa"
 #. 
 #. Call the template header
 #: templates/taxonomy-event-venue.php:30
-#, php-format
+#, php-format,fuzzy
 msgid "Events at: %s"
 msgstr "Události v místě: %s"
 
 #: classes/class-eo-widget-categories.php:10
+#, fuzzy
 msgid "A list or dropdown of event categories"
 msgstr "Seznam nebo rozbalovací menu kategorií událostí"
 
 #: includes/event-organiser-cpt.php:562
+#, fuzzy
 msgid "Edit takes you to the editing screen for that venue. You can also reach that screen by clicking on the venue title."
 msgstr "Editace vás vezme na editační obrazovku pro dané místo. Té můžete také dosáhnout kliknutím na název místa."
 
 #: includes/event-organiser-cpt.php:330
-#, php-format
+#, php-format,fuzzy
 msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr "Událost odeslána. <a target=\"_blank\" href=\"%s\">Zobrazit náhled</a>"
 
 #: classes/class-eo-agenda-widget.php:50
+#, fuzzy
 msgid "Group date format"
 msgstr "Formát data skupiny."
 
 #: event-organiser-edit.php:165
+#, fuzzy
 msgid "daily"
 msgstr "denně"
 
@@ -442,10 +512,12 @@ msgid "Open shortcut help"
 msgstr ""
 
 #: classes/class-eo-calendar-widget.php:59
+#, fuzzy
 msgid "Include past events"
 msgstr "Včetně minulých událostí"
 
 #: includes/event-organiser-cpt.php:104
+#, fuzzy
 msgid "No categories found"
 msgstr "Kategorie nenalezeny"
 
@@ -454,36 +526,42 @@ msgid "Insert into event"
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:263
+#, fuzzy
 msgid "Warning:"
 msgstr "Varování:"
 
 #: event-organiser-manage.php:163
-#, php-format
+#, php-format,fuzzy
 msgid "Events within %d months"
 msgstr "Události v následujících %d měsících"
 
 #: event-organiser-settings.php:49
 #: event-organiser.php:125
 #: includes/event-organiser-install.php:119
+#, fuzzy
 msgid "Edit Others' Events"
 msgstr "Upravit cizí události"
 
 #: includes/event-organiser-cpt.php:102
+#, fuzzy
 msgid "Add New Category"
 msgstr "Přidat novou kategorii"
 
 #: includes/event-organiser-cpt.php:588
+#, fuzzy
 msgid "Go Pro!"
 msgstr "Jít Pro!"
 
 #: event-organiser-settings.php:51
 #: event-organiser.php:127
 #: includes/event-organiser-install.php:121
+#, fuzzy
 msgid "Read Private Events"
 msgstr "Číst soukromé události"
 
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:272
+#, fuzzy
 msgid "third"
 msgstr "třetí"
 
@@ -493,22 +571,27 @@ msgstr ""
 
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:271
+#, fuzzy
 msgid "second"
 msgstr "druhý"
 
 #: includes/event-organiser-cpt.php:45
+#, fuzzy
 msgid "No Venue"
 msgstr "Žádné místo"
 
 #: includes/event-organiser-cpt.php:234
+#, fuzzy
 msgid "No events found in Trash"
 msgstr "V koši není žádná událost"
 
 #: classes/class-eo-widget-venues.php:11
+#, fuzzy
 msgid "A list or dropdown of event venues"
 msgstr "Seznam nebo výběr míst událostí."
 
 #: event-organiser-go-pro.php:55
+#, fuzzy
 msgid "But that's not all &hellip;"
 msgstr "Ale to není vše..."
 
@@ -517,23 +600,28 @@ msgid "Event venues list"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:533
+#, fuzzy
 msgid "If monthly recurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) "
 msgstr "Pokud je vybráno měsíční opakování události, vyberte, zda se má událost opakovat v dané datum (např. 24) nebo v daný den měsíce (např. třetí čtvrtek)"
 
 #: includes/event-organiser-cpt.php:523
+#, fuzzy
 msgid "All dates and times must be entered in the specified format. This format can changed in the settings page."
 msgstr "Všechna data a časy musí být vloženy v daném formátu. Tento formát může být změněn na stránce nastavení."
 
 #: event-organiser-calendar.php:236
+#, fuzzy
 msgid "24 hour time"
 msgstr "24 hodinový čas"
 
 #: includes/event-organiser-venue-functions.php:983
+#, fuzzy
 msgid "Post Code"
 msgstr "PSČ"
 
 #: classes/class-eo-event-list-widget.php:52
 #: includes/event-organiser-cpt.php:230
+#, fuzzy
 msgid "All events"
 msgstr "Všechny události"
 
@@ -2057,24 +2145,29 @@ msgid "Venue custom fields & thumbnails"
 msgstr "Vlastní pole a náhledy míst"
 
 #: event-organiser-calendar.php:181
+#, fuzzy
 msgid "You do not have sufficient permissions to edit this event. "
 msgstr "Pro upravení události nemáte dostatečná proprávnění"
 
 #: classes/class-eo-venue-list-table.php:83
 #: classes/class-eo-venue-list-table.php:143
+#, fuzzy
 msgid "Delete"
 msgstr "Smazat"
 
 #: event-organiser-venues.php:96
+#, fuzzy
 msgid "Venue <strong>was not</strong> created"
 msgstr "Místo <strong>nebylo</strong> vytvořeno"
 
 #: event-organiser-manage.php:37
+#, fuzzy
 msgid "Recurrence"
 msgstr "Opakování"
 
 #: classes/class-eo-agenda-widget.php:44
 #: event-organiser-calendar.php:253
+#, fuzzy
 msgid "Week"
 msgstr "Týden"
 
@@ -2083,10 +2176,12 @@ msgid "Enter a Google Maps API key"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:42
+#, fuzzy
 msgid "Separate venues with commas"
 msgstr "Místa od sebe oddělte čárkou"
 
 #: event-organiser-edit.php:166
+#, fuzzy
 msgid "custom"
 msgstr "ručně"
 
@@ -2095,30 +2190,37 @@ msgid "No Events"
 msgstr ""
 
 #: classes/class-eo-agenda-widget.php:153
+#, fuzzy
 msgid "Add To Google Calendar"
 msgstr "Přidat do Google kalendáře"
 
 #: classes/class-eo-event-list-widget.php:164
+#, fuzzy
 msgid "Template (leave blank for default)"
 msgstr "Šablona (ponechejte prázdné pro výchozí)"
 
 #: includes/class-event-organiser-im-export.php:244
+#, fuzzy
 msgid "No events were imported."
 msgstr "Nebyla importována žádná místa."
 
 #: includes/event-organiser-cpt.php:36
+#, fuzzy
 msgid "Edit Venue"
 msgstr "Upravit místa"
 
 #: event-organiser-settings.php:153
+#, fuzzy
 msgid "Comments"
 msgstr "Komentáře"
 
 #: includes/event-organiser-cpt.php:98
+#, fuzzy
 msgid "Parent Category"
 msgstr "Nadřízená kategorie"
 
 #: event-organiser-go-pro.php:51
+#, fuzzy
 msgid "Get Event Organiser Pro"
 msgstr "Získat Event Organiser Pro"
 
@@ -2140,5 +2242,6 @@ msgstr "Datum začátku"
 
 #: event-organiser-add-ons.php:127
 #: event-organiser-go-pro.php:89
+#, fuzzy
 msgid "Find out more &hellip;"
 msgstr "Zjistit více..."

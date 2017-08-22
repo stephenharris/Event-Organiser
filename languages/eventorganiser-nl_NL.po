@@ -8,17 +8,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-04-16T23:08:03+00:00\n"
+"PO-Revision-Date: 2017-07-10T14:28:48+00:00\n"
 "Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: event-organiser-settings.php:370
 msgid "Event Organiser's page templates will not be used."
-msgstr "Event Organiser's pagina templates zullen niet worden gebruikt."
+msgstr "Event Organiser's paginatemplates zullen niet worden gebruikt."
 
 #: event-organiser-settings.php:652
 msgid "Events archives:"
-msgstr "Evenementen Archief:"
+msgstr "Evenementenarchief:"
 
 #: event-organiser-calendar.php:75
 #: includes/event-organiser-register.php:69
@@ -36,11 +36,11 @@ msgstr "Evenementen binnen 24 uur"
 
 #: event-organiser-go-pro.php:70
 msgid "Flexible Booking Options"
-msgstr "Flexibele Reserverings Opties"
+msgstr "Flexibele Reserveringsopties"
 
 #: event-organiser-calendar.php:279
 msgid "Event Title"
-msgstr "Evenement Titel"
+msgstr "Evenementtitel"
 
 #: includes/event-organiser-cpt.php:226
 msgctxt "post"
@@ -49,7 +49,7 @@ msgstr "Nieuw evenement"
 
 #: includes/event.php:870
 msgid "Event does not contain any dates."
-msgstr "Evenement bevat geen enkele datum"
+msgstr "Evenement bevat geen enkele datum."
 
 #: classes/class-eo-agenda-widget.php:45
 #: event-organiser-calendar.php:253
@@ -67,11 +67,11 @@ msgstr "elke maand op de"
 
 #: event-organiser-venues.php:465
 msgid "Slug"
-msgstr "URL naam"
+msgstr "URL-naam"
 
 #: event-organiser-edit.php:320
 msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%2$s."
-msgstr ""
+msgstr "Google Maps vereist dat je een API-sleutel aanvraagt. Als je Google Maps wil gebruiken op je site, %1$sgeef je sleutel in a.u.b.%2$s."
 
 #: includes/event-organiser-cpt.php:35
 msgid "View Venue"
@@ -164,7 +164,7 @@ msgstr "Aangepaste velden"
 
 #: includes/event-organiser-ajax.php:472
 msgid "Delete this event"
-msgstr ""
+msgstr "Verwijder dit evenement"
 
 #: includes/class-eo-ical-parser.php:279
 #, php-format
@@ -227,7 +227,7 @@ msgstr "Evenement"
 #: includes/class-event-organiser-im-export.php:271
 #, php-format
 msgid "%d events were successfully imported"
-msgstr "Er zijn %d gebeurtenissen geimporteerd"
+msgstr "Er zijn %d gebeurtenissen geïmporteerd"
 
 #: includes/event-organiser-cpt.php:699
 #: includes/event-organiser-cpt.php:722
@@ -240,7 +240,7 @@ msgstr "Deze gebeurtenis verwijderen"
 
 #: includes/event-organiser-cpt.php:47
 msgid "Venue Location"
-msgstr "Lokatie"
+msgstr "Locatie"
 
 #: includes/event-organiser-cpt.php:326
 #, php-format
@@ -267,6 +267,9 @@ msgstr "laatste"
 #: event-organiser-debug.php:64
 msgid "This page highlights useful information for debugging. If you're reporting a bug, please include this information. The 'system info' link in under the Events admin tab is only visible to admins and only when %1$s is set to %1$s."
 msgstr ""
+"Deze pagina geeft nuttige informatie weer voor het debuggen. Als u een foutmelding rapporteert, gelieve deze gegevens in te vullen. De\n"
+" link 'systeeminfo' op het tabblad Events admin is alleen zichtbaar voor\n"
+" beheerders en alleen wanneer %1$s is ingesteld op %1$s."
 
 #: includes/event-organiser-ajax.php:784
 msgid "Event not found"
@@ -290,7 +293,7 @@ msgstr "U heeft geen toestemming om dit evenement te verwijderen."
 
 #: event-organiser-go-pro.php:76
 msgid "Give your users the ability to search and filter through your events with the event search shortcode. Event Organiser Pro also adds a text editor button to make inserting and configuring your shortcodes that bit easier. "
-msgstr "Geef uw bezoekers de mogelijkheid te zoeken naar uw evenementen te zoeken of te filteren d.m.v. de evenementen zoek shortcodes. Event Organiser Pro voegt daarnaast een tekst bewerker knop toe om het configuren van shortcodes eenvoudiger te maken."
+msgstr "Geef uw bezoekers de mogelijkheid te zoeken naar uw evenementen te zoeken of te filteren d.m.v. de evenementen zoek shortcodes. Event Organiser Pro voegt daarnaast een tekstbewerkingsknop toe om het configureren van shortcodes eenvoudiger te maken."
 
 #: event-organiser-manage.php:160
 msgid "Events within 1 week"
@@ -314,9 +317,9 @@ msgid "Search Categories"
 msgstr "Categorie&#235;n doorzoeken"
 
 #: event-organiser-edit.php:99
-#, fuzzy,php-format
+#, php-format
 msgid "Enter date in %s format"
-msgstr "Evenement datum/tijd opmaak"
+msgstr "Voer een datum in met het %s format"
 
 #: includes/class-event-organiser-im-export.php:107
 msgid "Import categories"
@@ -324,11 +327,11 @@ msgstr "importeer categorieën"
 
 #: event-organiser-manage.php:36
 msgid "End Date/Time"
-msgstr "Eind Datum/Tijd"
+msgstr "Einddatum/-tijd"
 
 #: event-organiser-settings.php:249
 msgid "To use Google Maps you need to register an API key with Google. You can register for a free API key by %sfollowing these instructions%s."
-msgstr ""
+msgstr "Om Google Maps te gebruiken dien je een API-sleutel te registreren bij Google. Je kunt een gratis API sleutel aanvragen door %sdeze instructies te volgen%s."
 
 #: includes/event.php:1080
 msgid "Occurrence not deleted. Occurrence not found."
@@ -367,7 +370,7 @@ msgstr "Evenement bewerken"
 
 #: event-organiser-settings.php:645
 msgid "For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. You can disable this below. WordPress will then decide which template from your theme's folder to use."
-msgstr ""
+msgstr "Voor elke pagina wordt de corresponderende template gebruikt. Om je eigen template te gebruiken kun je deze  dezelfde naam geven en in de Thema folder opslaan. Als Event Organiser geen template vind in de Thema folder dan zal de standaard template gebruikt worden. Dit kun je hieronder uitschakelen. Wordpress zal dan kiezen welke template te gebruiken van je Themas folder."
 
 #: includes/event-organiser-cpt.php:554
 msgid "This is the list of all saved events. Note that <strong> recurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event."
@@ -480,7 +483,7 @@ msgstr "Ga voor Pro!"
 #: event-organiser.php:127
 #: includes/event-organiser-install.php:121
 msgid "Read Private Events"
-msgstr "Prive evenementen lezen"
+msgstr "Privé-evenementen lezen"
 
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:272
@@ -514,11 +517,11 @@ msgstr "Maar dat is nog niet alles ..."
 
 #: includes/event-organiser-cpt.php:44
 msgid "Event venues list"
-msgstr "Evenement locaties lijst"
+msgstr "Evenementenlocatielijst"
 
 #: includes/event-organiser-cpt.php:533
 msgid "If monthly recurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) "
-msgstr "Wanneer het evenement maandelijks terugkeerd, dan kunt u kiezen voor een vaste datum (b.v. iedere 24e van de maand) of een vaste dag (b.v. iedere 3e dinsdag) "
+msgstr "Wanneer het evenement maandelijks terugkeert, dan kunt u kiezen voor een vaste datum (b.v. iedere 24e van de maand) of een vaste dag (b.v. iedere 3e dinsdag)"
 
 #: includes/event-organiser-cpt.php:523
 msgid "All dates and times must be entered in the specified format. This format can changed in the settings page."
@@ -562,15 +565,15 @@ msgstr "Splits deze serie"
 
 #: event-organiser-settings.php:78
 msgid "Google Maps"
-msgstr ""
+msgstr "Google Maps"
 
 #: event-organiser-edit.php:116
 msgid "Start Time"
-msgstr "Start Tijd"
+msgstr "Starttijd"
 
 #: event-organiser-go-pro.php:54
 msgid "Event Organiser Pro is a premium add-on bringing advanced booking management to Event Organiser."
-msgstr "Event Organiser Pro is een hoogwaardige extensie met vergevorderde reserveringsbeheer mogelijkheden als uitbreiding op Event Organizer. "
+msgstr "Event Organiser Pro is een hoogwaardige extensie met uitgebreid reserveringsbeheer voor Event Organizer."
 
 #: includes/event-organiser-venue-functions.php:981
 msgid "City"
@@ -587,7 +590,7 @@ msgstr "Locatie selecteren"
 
 #: classes/class-eo-agenda-widget.php:55
 msgid "Event date/time format"
-msgstr "Evenement datum/tijd opmaak"
+msgstr "Evenementdatum/-tijdopmaak"
 
 #: classes/class-eo-venue-list-table.php:82
 #, php-format
@@ -601,11 +604,11 @@ msgstr "Vorige maand"
 #: classes/class-eo-calendar-widget.php:96
 #: classes/class-eo-event-list-widget.php:112
 msgid "List category slug(s), seperate by comma. Leave blank for all"
-msgstr "Toon categorie slug(s), gescheiden door komma. Leeg laten voor alle."
+msgstr "Toon categorie-slug(s), gescheiden door komma. Leeg laten voor alle."
 
 #: event-organiser-venues.php:308
 msgid "Toggle panel: Location"
-msgstr ""
+msgstr "Locatie"
 
 #: includes/class-eo-admin-notice.php:125
 msgid "Dismiss this notice"
@@ -614,7 +617,7 @@ msgstr "Deze melding sluiten"
 #: classes/class-eo-calendar-widget.php:26
 #: event-organiser-calendar.php:249
 msgid "Events Calendar"
-msgstr "Evenementen Kalender"
+msgstr "Evenementenkalender"
 
 #: includes/class-event-organiser-im-export.php:97
 msgid "Download Export File"
@@ -627,15 +630,15 @@ msgstr "Archief per jaar"
 #: includes/class-eo-ical-parser.php:1077
 #, php-format
 msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss format."
-msgstr "Ongeldige datumtijd notatie \"%s\". Datum formaat YYYYMMDDHHiissZ or YYYYMMDDTHHiiss wordt verwacht."
+msgstr "Ongeldige datum-/tijdnotatie \"%s\". Datumformaat YYYYMMDDHHiissZ or YYYYMMDDTHHiiss wordt verwacht."
 
 #: event-organiser-edit.php:139
 msgid "End Time"
-msgstr "Eind Tijd"
+msgstr "Eindtijd"
 
 #: event-organiser-settings.php:297
 msgid "Events page"
-msgstr "Evenementen pagina"
+msgstr "Evenementenpagina"
 
 #: templates/eo-events-nav.php:6
 msgid " <span class=\"meta-nav\">&larr;</span> Newer events"
@@ -651,7 +654,7 @@ msgstr "Hoe vaak moet het evenement herhalen (standaard 1)"
 
 #: event-organiser-calendar.php:360
 msgid "Open modal of selected event"
-msgstr "Open model voor geselecteerd evenement"
+msgstr "Open modaal voor geselecteerd evenement"
 
 #: includes/event-organiser-cpt.php:237
 msgid "Filter events list"
@@ -659,13 +662,13 @@ msgstr "Filter evenementenlijst"
 
 #: event-organiser-settings.php:653
 msgid "Event page:"
-msgstr "Evenement pagina:"
+msgstr "Evenementpagina:"
 
 #: event-organiser-debug.php:13
 #: event-organiser-debug.php:14
 #: event-organiser-debug.php:57
 msgid "System Info"
-msgstr "Systeem Informatie"
+msgstr "Systeeminformatie"
 
 #: includes/event-organiser-register.php:257
 msgid "year"
@@ -712,7 +715,7 @@ msgstr "Permalink:"
 
 #: event-organiser-edit.php:130
 msgid "End Date/Time:"
-msgstr "Eind Datum/Tijd"
+msgstr "Einddatum/-tijd"
 
 #. //docs.wp-event-organiser.com/theme-integration for more information
 #. *
@@ -726,7 +729,7 @@ msgstr "Eind Datum/Tijd"
 #: templates/taxonomy-event-category.php:27
 #, php-format
 msgid "Event Category: %s"
-msgstr "Evenement categorie: %s"
+msgstr "Evenementcategorie: %s"
 
 #: includes/event-organiser-register.php:252
 msgid "days"
@@ -785,7 +788,7 @@ msgstr "Een 'Evenementen' Link toevoegen aan menu:"
 
 #: classes/class-eo-event-list-widget.php:178
 msgid "'No events' message"
-msgstr "'Geen evenementen' bericht"
+msgstr "'Geen evenementen'-bericht"
 
 #: includes/event-organiser-cpt.php:328
 msgid "Event saved."
@@ -805,7 +808,7 @@ msgstr "Alle categorie&#235;n"
 
 #: includes/event-organiser-cpt.php:165
 msgid "Event tags list navigation"
-msgstr "Evenement zoekwoorden lijst navigatie"
+msgstr "Evenementzoekwoordennavigatie"
 
 #: event-organiser-settings.php:258
 msgid "Templates:"
@@ -842,7 +845,7 @@ msgstr "Zoekwoord bijwerken"
 
 #: classes/class-eo-widget-venues.php:12
 msgid "Event Venues"
-msgstr "Evenement locaties"
+msgstr "Evenementlocaties"
 
 #: includes/event-organiser-cpt.php:32
 msgid "Venue"
@@ -869,15 +872,15 @@ msgstr "Bekijken"
 
 #: event-organiser-calendar.php:229
 msgid "Calendar options"
-msgstr "Kalender opties"
+msgstr "Kalenderopties"
 
 #: event-organiser-calendar.php:389
 msgid "Event Detail"
-msgstr "Evenement details"
+msgstr "Evenementdetails"
 
 #: includes/event-organiser-cpt.php:238
 msgid "Events list navigation"
-msgstr "Evenementenlijst navigatie"
+msgstr "Evenementenlijstnavigatie"
 
 #: classes/class-eo-widget-categories.php:25
 #: includes/event-organiser-cpt.php:94
@@ -893,12 +896,12 @@ msgstr "Afgelopen evenementen"
 
 #: event-organiser-settings.php:655
 msgid "Events Category page:"
-msgstr "Evenement categorie pagina:"
+msgstr "Evenementcategorie-pagina:"
 
 #: features/bootstrap/FeatureContext.php:413
 #: features/bootstrap/FeatureContext.php:608
 msgid "Main Sidebar"
-msgstr ""
+msgstr "Hoofdmenu"
 
 #: includes/event.php:736
 msgid "Invalid monthly schedule (invalid ordinal)"
@@ -912,7 +915,7 @@ msgstr "Activeer mooie permalinks:"
 #: event-organiser.php:129
 #: includes/event-organiser-install.php:123
 msgid "Manage Event Categories & Tags"
-msgstr "Evenement categorie&#235;n en zoekwoorden bewerken"
+msgstr "Evenementcategorieën en zoekwoorden bewerken"
 
 #: event-organiser-settings.php:685
 msgid "None"
@@ -924,11 +927,11 @@ msgstr "Kies de einddatum voor het terugkeerpatroon. Er zullen geen nieuwe evene
 
 #: event-organiser-edit.php:182
 msgid "Recurrence frequency"
-msgstr "herhalings frequentie"
+msgstr "herhalingsfrekwentie"
 
 #: event-organiser-calendar.php:364
 msgid "Close modal"
-msgstr "Sluit model"
+msgstr "Sluit modaal"
 
 #: includes/event-organiser-event-functions.php:851
 #, php-format
@@ -1019,7 +1022,7 @@ msgstr "Dit evenement is losgekoppeld van een terugkerende gebeurtenis."
 
 #: includes/event-organiser-cpt.php:107
 msgid "Event categories list"
-msgstr "Evenement categorie&#235;n lijst"
+msgstr "Evenementcategorieënlijst"
 
 #: includes/event-organiser-event-functions.php:799
 #: includes/event-organiser-register.php:260
@@ -1029,7 +1032,7 @@ msgstr "elke %d dagen"
 
 #: event-organiser-settings.php:40
 msgid "Event Organiser Settings"
-msgstr "Event Organiser instellingen"
+msgstr "Event Organiser-instellingen"
 
 #: event-organiser-edit.php:181
 msgid "Repeat every"
@@ -1049,7 +1052,7 @@ msgstr "Locaties"
 
 #: event-organiser-go-pro.php:95
 msgid "Go to Event Organiser settings"
-msgstr "Ga naar de Evenementen Beheer instellingen"
+msgstr "Ga naar de Evenementen-beheerinstellingen"
 
 #: event-organiser-manage.php:164
 msgid "Events within 1 year"
@@ -1088,7 +1091,7 @@ msgstr "De startdatum is de datum waarop het evenement begint. Bij evenementen d
 #: includes/event-organiser-cpt.php:339
 #, php-format
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
-msgstr "Evenement concept bijgewerkt. <a target=\"_blank\" href=\"%s\">Bekijk evenement</a>"
+msgstr "Evenement-concept bijgewerkt. <a target=\"_blank\" href=\"%s\">Bekijk evenement</a>"
 
 #: templates/eo-loop-events.php:41
 msgid "Apologies, but no results were found for the requested archive. "
@@ -1100,7 +1103,7 @@ msgstr "Locaties doorzoeken"
 
 #: event-organiser-settings.php:184
 msgid "This alters the default format for inputting dates."
-msgstr "Dit past de standaard datum weergave aan."
+msgstr "Dit past de standaard datumweergave aan."
 
 #: includes/event-organiser-cpt.php:585
 msgid "For more information"
@@ -1108,7 +1111,7 @@ msgstr "Voor meer informatie"
 
 #: event-organiser-settings.php:174
 msgid "Date Format:"
-msgstr "Datum instelling:"
+msgstr "Datumformaat:"
 
 #: event-organiser-edit.php:21
 #: event-organiser-manage.php:23
@@ -1132,7 +1135,7 @@ msgstr "Zoekwoorden"
 
 #: event-organiser-edit.php:135
 msgid "End Date"
-msgstr "Eind Datum/"
+msgstr "Einddatum"
 
 #: includes/class-eo-ical-parser.php:549
 #: includes/class-eo-ical-parser.php:574
@@ -1148,7 +1151,7 @@ msgstr "Evenementen van anderen verwijderen"
 
 #: includes/event-organiser-cpt.php:166
 msgid "Event tags list"
-msgstr "Evenement zoekwoorden lijst"
+msgstr "Evenementzoekwoordenlijst"
 
 #: includes/class-eo-theme-compatability.php:193
 #: includes/class-eo-theme-compatability.php:195
@@ -1181,7 +1184,7 @@ msgstr "Volgende maand"
 
 #: includes/event-organiser-cpt.php:103
 msgid "New Category Name"
-msgstr "Nieuwe categorie naam"
+msgstr "Nieuwe categorienaam"
 
 #: event-organiser-calendar.php:21
 #: event-organiser-calendar.php:22
@@ -1222,7 +1225,7 @@ msgstr "Toekomstige evenementen"
 #: includes/event-organiser-register.php:575
 #, php-format
 msgid "Your site timezone is %s"
-msgstr ""
+msgstr "De timezone van jouw site is %s"
 
 #: includes/class-event-organiser-im-export.php:284
 #, php-format
@@ -1270,11 +1273,11 @@ msgstr "Ga direct naar het evenement voor dagen met slechts &#235;&#235;n evenem
 
 #: event-organiser-settings.php:366
 msgid "Event Organiser's page templates will be used if your theme does not provide appropriate templates."
-msgstr "Event Organiser's pagina templates zullen worden gebruikt als je thema die niet support. "
+msgstr "Event Organiser's paginatemplates zullen worden gebruikt als je thema die niet voorziet."
 
 #: includes/event-organiser-cpt.php:534
 msgid "If weekly recurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used"
-msgstr "Wanneer het evenement wekelijks terugkeerd, kies dan de dagen van de week waarop het evenement zich herhaald. Indien geen dag wordt gekozen, dan wordt standaard de dag van de startdatum gebruikt."
+msgstr "Wanneer het evenement wekelijks terugkeert, kies dan de dagen van de week waarop het evenement zich herhaald. Indien geen dag wordt gekozen, dan wordt standaard de dag van de startdatum gebruikt."
 
 #: includes/event-organiser-cpt.php:158
 msgid "Add New Tag"
@@ -1282,7 +1285,7 @@ msgstr "Zoekwoord toevoegen"
 
 #: event-organiser-venues.php:430
 msgid "Venue name"
-msgstr "Locatie naam"
+msgstr "Locatienaam"
 
 #: includes/event-organiser-cpt.php:152
 msgctxt "taxonomy singular name"
@@ -1291,7 +1294,7 @@ msgstr "Zoekwoord"
 
 #: includes/event-organiser-ajax.php:792
 msgid "Events are not editable via the admin calendar"
-msgstr "Evenementen zijn niet wijzigen via admin kalender"
+msgstr "Evenementen zijn niet te wijzigen via admin-kalender"
 
 #: event-organiser-calendar.php:76
 #: includes/event-organiser-register.php:70
@@ -1372,7 +1375,7 @@ msgstr "Voor meer informatie zie documentatie <a href='%s'>on editing the templa
 
 #: event-organiser-edit.php:100
 msgid "Enter time in 24-hour hh colon mm format"
-msgstr ""
+msgstr "Voer een 24-uurs tijd in volgens  het format: hh dubbele punt mm"
 
 #: event-organiser-settings.php:205
 msgid "Are current events past?"
@@ -1390,7 +1393,7 @@ msgstr "elke dag"
 
 #: includes/event-organiser-cpt.php:542
 msgid "Use the venues input field to search for existing venues"
-msgstr "Gebruik het input veld om te kiezen uit reeds aangemaakte locaties"
+msgstr "Gebruik het inputveld om te kiezen uit reeds aangemaakte locaties"
 
 #: includes/event-organiser-cpt.php:233
 msgid "No events found"
@@ -1415,7 +1418,7 @@ msgstr "Er is 1 locatie aangemaakt"
 #. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
 #: event-organiser-debug.php:437
 msgid "%1$s requires %1$s version %1$s or higher"
-msgstr ""
+msgstr "%1$s vereist %1$s versie %1$s of hoger"
 
 #: event-organiser-settings.php:716
 msgid "You may also need to go to WordPress Settings > Permalinks and click 'Save Changes' before any changes will take effect."
@@ -1435,7 +1438,7 @@ msgstr "Indien 'nee' is gekozen, dan zal een gebeurtenis pas na afloop van het e
 
 #: event-organiser-calendar.php:332
 msgid "The following keyboard shortcuts are available"
-msgstr "De volgende toetsenbord snelkoppelingen zijn beschikbaar"
+msgstr "De volgende toetsenbord-snelkoppelingen zijn beschikbaar"
 
 #: event-organiser-manage.php:19
 #: includes/event-organiser-cpt.php:225
@@ -1506,7 +1509,7 @@ msgstr "Verkrijg de Event Organiser Pro Extensie"
 
 #: event-organiser-settings.php:243
 msgid "Google API key:"
-msgstr ""
+msgstr "Google API sleutel:"
 
 #: event-organiser-venues.php:195
 msgid "Venue(s) <strong>deleted</strong>"
@@ -1522,12 +1525,12 @@ msgstr "Alle locaties"
 
 #: includes/event-organiser-cpt.php:106
 msgid "Event categories list navigation"
-msgstr "Evenement categorie&#235;n lijst navigatie"
+msgstr "Evenementcategorieën-navigatie"
 
 #: event-organiser-settings.php:586
 #, php-format
 msgid "Event Settings: %s"
-msgstr "Evenement instellingen: %s"
+msgstr "Evenementinstellingen: %s"
 
 #: includes/event-organiser-cpt.php:518
 msgid "Creating events"
@@ -1543,7 +1546,7 @@ msgstr "Weet je zeker dat je dit wilt doen?"
 
 #: event-organiser-calendar.php:213
 msgid "Event deleted."
-msgstr ""
+msgstr "Evenement is verwijderd."
 
 #: event-organiser-calendar.php:74
 #: includes/event-organiser-register.php:68
@@ -1575,7 +1578,7 @@ msgstr "Kies uit de meest gebruikte zoekwoorden"
 #: event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:32
 msgid "Event Details"
-msgstr "Evenement gegevens"
+msgstr "Evenementgegevens"
 
 #: includes/event-organiser-register.php:249
 msgid "Hour"
@@ -1611,11 +1614,11 @@ msgstr "Door te klikken op bekijken komt u op de locatie-pagina."
 
 #: includes/event-organiser-ajax.php:444
 msgid "Edit Event: %s"
-msgstr ""
+msgstr "Bewerk evenement: %s"
 
 #: event-organiser-calendar.php:344
 msgid "Switch to month view"
-msgstr "Schakel naar maand view"
+msgstr "Schakel naar maandweergave"
 
 #: event-organiser-venues.php:443
 msgid "Get Link"
@@ -1623,7 +1626,7 @@ msgstr "Link tonen"
 
 #: event-organiser-settings.php:585
 msgid "Event Settings"
-msgstr "Evenement instellingen"
+msgstr "Evenementinstellingen"
 
 #: templates/event-meta-event-single.php:45
 #, php-format
@@ -1652,7 +1655,7 @@ msgstr "Uitschakelen templates"
 
 #: event-organiser-debug.php:80
 msgid "Download system information file"
-msgstr "Download bestand met systeem informatie"
+msgstr "Download bestand met systeeminformatie"
 
 #: includes/class-eo-ical-parser.php:201
 msgid "Unable to read iCal file"
@@ -1680,19 +1683,19 @@ msgstr "Opslaan"
 
 #: includes/event-organiser-cpt.php:159
 msgid "New Tag Name"
-msgstr "Nieuwe zoekwoord naam"
+msgstr "Nieuwe zoekwoordnaam"
 
 #: templates/single-event.php:60
 msgid "This event was posted by <a href=\"%3$s\">%2$s</a>."
-msgstr ""
+msgstr "Dit evenement is gemaakt door <a href=\"%3$s\">%2$s</a>."
 
 #: includes/event-organiser-register.php:590
 msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %splease enter your key%s."
-msgstr ""
+msgstr "Google Maps vereist een geregistreerde API-sleutel. Als je Google Maps op je site wilt gebruiken, %svoer dan hier je API-sleutel in%s."
 
 #: event-organiser-settings.php:714
 msgid "Choose a custom permalink structure for events, venues, event categories and event tags."
-msgstr "Kies een mooie permalink voor de onderstaande pagina soorten."
+msgstr "Kies een aangepaste permalinkstructuur voor evenementen, locaties, gebeurteniscategorieën en event tags."
 
 #: event-organiser-settings.php:318
 msgid "Day archive"
@@ -1706,7 +1709,7 @@ msgstr "Locatie <strong>aangemaakt</strong>"
 #: event-organiser-settings.php:342
 #: includes/event-organiser-cpt.php:151
 msgid "Event Tags"
-msgstr "Evenement zoekwoorden"
+msgstr "Evenement-zoekwoorden"
 
 #: includes/event-organiser-cpt.php:242
 msgid "Uploaded to this event"
@@ -1739,7 +1742,7 @@ msgstr "Publiceer evenement"
 
 #: includes/event-organiser-cpt.php:39
 msgid "New Venue Name"
-msgstr "Nieuwe locatie naam"
+msgstr "Nieuwe locatienaam"
 
 #: includes/class-event-organiser-im-export.php:73
 #, php-format
@@ -1753,7 +1756,7 @@ msgstr "Evenement gepland voor: <strong>%1$s</strong>. <a target=\"_blank\" href
 
 #: event-organiser-manage.php:35
 msgid "Start Date/Time"
-msgstr "Start Datum/Tijd"
+msgstr "Startdatum/-tijd"
 
 #: event-organiser-settings.php:365
 msgid "Enable template handling"
@@ -1791,7 +1794,7 @@ msgstr "Populaire zoekwoorden"
 
 #: event-organiser-calendar.php:224
 msgid "View keyboard shortcuts"
-msgstr "Laat toetsenbord snelkoppelingen zien"
+msgstr "Laat toetsenbordsnelkoppelingen zien"
 
 #: includes/event-organiser-cpt.php:153
 msgid "Search Tags"
@@ -1799,7 +1802,7 @@ msgstr "Zoekwoorden zoeken"
 
 #: event-organiser-settings.php:75
 msgid "Add-on Licence keys"
-msgstr "Licentie sleutels van extensies"
+msgstr "Licentiesleutels van extensies"
 
 #: event-organiser-edit.php:190
 #: templates/shortcode-event-list.php:48
@@ -1809,7 +1812,7 @@ msgstr "op"
 
 #: includes/class-event-organiser-im-export.php:268
 msgid "1 event was successfully imported"
-msgstr "Er is 1 evenement geimporteerd"
+msgstr "Er is 1 evenement geïmporteerd"
 
 #: event-organiser-settings.php:31
 msgid "Permalinks"
@@ -1825,7 +1828,7 @@ msgstr "1 categorie aangemaakt"
 
 #: event-organiser-calendar.php:352
 msgid "Switch to day view"
-msgstr "Schakel naar dag view"
+msgstr "Schakel naar dagweergave"
 
 #: event-organiser-manage.php:156
 msgid "View all events"
@@ -1837,7 +1840,7 @@ msgstr "Evenement (datum archief)"
 
 #: event-organiser-settings.php:654
 msgid "Venue page:"
-msgstr "Locatie pagina:"
+msgstr "Locatiepagina:"
 
 #: includes/event-organiser-cpt.php:101
 msgid "Update Category"
@@ -1859,7 +1862,7 @@ msgstr "Bij bewegen van de muis over de lijst met locaties verschijnen er actie-
 
 #: includes/event-organiser-cpt.php:574
 msgid "By clicking the relevant tab, you can view events in Month, Week or Day mode. You can also filter the events by events by category and venue. The 'go to date' button allows you to quickly jump to a specific date."
-msgstr "Door te klikken op het juiste tabblad kunt u evenementen bekijken in dag, week of maand weergave. U kunt evenementen filteren op evenement, op categorie en op locatie. Met de 'ga naar datum'-knop kunt u snel naar een bepaalde datum gaan."
+msgstr "Door te klikken op het juiste tabblad kunt u evenementen bekijken in dag-, week- of maandweergave. U kunt evenementen filteren op evenement, op categorie en op locatie. Met de 'ga naar datum'-knop kunt u snel naar een bepaalde datum gaan."
 
 #: classes/class-eo-event-list-widget.php:166
 msgid "Event list widget placeholders"
@@ -1867,7 +1870,7 @@ msgstr "Plaatsaanduidingen evenementenlijst widget"
 
 #: classes/class-eo-agenda-widget.php:20
 msgid "Events Agenda"
-msgstr "Evenementen Agenda"
+msgstr "Evenementenagenda"
 
 #: templates/event-meta-event-single.php:41
 #, php-format
@@ -1898,7 +1901,7 @@ msgstr "De onderstaande Export-knop genereert een ICS bestand van de evenementen
 #: classes/class-eo-widget-categories.php:11
 #: event-organiser-settings.php:333
 msgid "Event Categories"
-msgstr "Evenement categorie&#235;n"
+msgstr "Evenementencategorieën"
 
 #: includes/event-organiser-register.php:258
 msgid "years"
@@ -1906,11 +1909,11 @@ msgstr "jaren"
 
 #: includes/class-eo-ical-parser.php:193
 msgid "There was an error detecting iCal source."
-msgstr "Een error is opgetreden tijdens het detecteren van de iCal bestandsbron. "
+msgstr "Een fout is opgetreden tijdens het detecteren van de iCal bestandsbron."
 
 #: event-organiser-debug.php:253
 msgid "Known plug-in & theme conflicts, highlighted in red, may be minor or have a simple resolution. Please contact support."
-msgstr "Bekende plug-in & thema conflicten, in rood gemarkeerd, kunnen klein zijn of hebben wellicht een eenvoudige oplossing. Neem contact op met support."
+msgstr "Bekende plug-in- & themaconflicten, in rood gemarkeerd, kunnen klein zijn of hebben wellicht een eenvoudige oplossing. Neem contact op met support."
 
 #: event-organiser-calendar.php:125
 msgid "You do not have sufficient permissions to create events. "
@@ -1926,7 +1929,7 @@ msgstr "Lopende evenementen"
 
 #: event-organiser-go-pro.php:81
 msgid "Add information on your venue pages with venue custom fields, or give your venues more attentioned with their own 'featured image'"
-msgstr "Voeg informatie op uw locatie pagina's d.m.v. speciale locatie velden, of trek meer aandacht d.m.v. een geselecteerde afbeelding"
+msgstr "Voeg informatie op uw locatiepagina's d.m.v. aangepaste locatievelden, of trek meer aandacht d.m.v. een geselecteerde afbeelding"
 
 #: event-organiser-settings.php:362
 msgid "Event Organiser will attempt to ensure compatability with your theme and apply additional styles."
@@ -1935,7 +1938,7 @@ msgstr "Event Organiser zal proberen om compatibiliteit te verzekeren met je the
 #: classes/class-eo-calendar-widget.php:93
 #: classes/class-eo-event-list-widget.php:110
 msgid "Event categories"
-msgstr "Evenement categorie&#235;n"
+msgstr "Evenementencategorieën"
 
 #: event-organiser-settings.php:151
 msgid "Excerpt"
@@ -1947,7 +1950,7 @@ msgstr "Zoekwoord aanpassen"
 
 #: event-organiser-edit.php:215
 msgid "date of month"
-msgstr "dag van de maand"
+msgstr "datum van de maand"
 
 #: event-organiser-settings.php:181
 msgid "mm-dd-yyyy"
@@ -1956,7 +1959,7 @@ msgstr "dd-mm-jjj"
 #. / TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
 #: event-organiser-debug.php:424
 msgid "%1$s has only been tested up to %1$s %1$s"
-msgstr ""
+msgstr "%1$s is alleen getest tot %1$s %1$s"
 
 #: includes/event-organiser-register.php:578
 #, php-format
@@ -1973,11 +1976,11 @@ msgstr "Latere evenementen <span class=\"meta-nav\">&rarr;</span>"
 
 #: templates/event-meta-event-single.php:53
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: includes/event-organiser-cpt.php:43
 msgid "Event venues list navigation"
-msgstr "Evenement locatie lijst navigatie"
+msgstr "Evenementlocatielijst"
 
 #: classes/class-eo-venue-list-table.php:89
 #, php-format
@@ -2011,7 +2014,7 @@ msgstr "Sjablonen"
 
 #: includes/class-event-organiser-im-export.php:111
 msgid "Upload ICS file"
-msgstr "Upload ICS bestand"
+msgstr "Upload ICS-bestand"
 
 #: event-organiser-settings.php:32
 msgid "Export"
@@ -2019,7 +2022,7 @@ msgstr "Export"
 
 #: event-organiser-calendar.php:348
 msgid "Switch to week view"
-msgstr "Schakel naar week view"
+msgstr "Schakel naar weekweergave"
 
 #: event-organiser-calendar.php:356
 msgid "Jump to today in view"
@@ -2037,7 +2040,7 @@ msgstr "Ga naar vandaag"
 #: templates/taxonomy-event-tag.php:27
 #, php-format
 msgid "Event Tag: %s"
-msgstr "Evenement tag: %s"
+msgstr "Evenement-tag: %s"
 
 #. //php.net/date
 #: includes/event-organiser-cpt.php:336
@@ -2046,7 +2049,7 @@ msgstr "j M, Y - G:i"
 
 #: event-organiser-add-ons.php:95
 msgid "Event Organiser offers a range of extension which add additional features to the plug-in."
-msgstr "Event Organiser bied een assortiment van extensies die extra functionaliteit bieden aan de plug-in Event Organiser"
+msgstr "Event Organiser bied een assortiment van extensies die extra functionaliteit bieden aan de plug-in."
 
 #: includes/event-organiser-cpt.php:578
 msgid "Add Event"
@@ -2054,7 +2057,7 @@ msgstr "Evenement toevoegen"
 
 #: event-organiser-go-pro.php:80
 msgid "Venue custom fields & thumbnails"
-msgstr "Speciale locatie velden en thumbnails"
+msgstr "Speciale locatievelden en miniaturen"
 
 #: event-organiser-calendar.php:181
 msgid "You do not have sufficient permissions to edit this event. "
@@ -2080,7 +2083,7 @@ msgstr "Week"
 
 #: includes/event-organiser-register.php:588
 msgid "Enter a Google Maps API key"
-msgstr ""
+msgstr "Voer een Google Maps API-sleutel in"
 
 #: includes/event-organiser-cpt.php:42
 msgid "Separate venues with commas"
@@ -2104,7 +2107,7 @@ msgstr "Sjabloon (laat leeg voor standaard)"
 
 #: includes/class-event-organiser-im-export.php:244
 msgid "No events were imported."
-msgstr "Er zijn geen evenementen geimporteerd."
+msgstr "Er zijn geen evenementen geïmporteerd."
 
 #: includes/event-organiser-cpt.php:36
 msgid "Edit Venue"
@@ -2124,7 +2127,7 @@ msgstr "Verkrijg Event Organiser Pro"
 
 #: includes/event-organiser-cpt.php:240
 msgid "Event Archives"
-msgstr "Evenement archieven"
+msgstr "Evenementarchieven"
 
 #: includes/event-organiser-cpt.php:168
 msgid "View all tags"
