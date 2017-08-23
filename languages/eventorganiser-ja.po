@@ -370,7 +370,7 @@ msgstr "各ページについて、対応するテンプレートが使用され
 
 #: includes/event-organiser-cpt.php:554
 msgid "This is the list of all saved events. Note that <strong> recurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event."
-msgstr "このリストは保存されたすべてのイベントリストです。表に<strong>繰り返しイベントが1行で表示されます</ strong>、またそのイベントの開始日と終了日は最初の繰り返しイベントを参照します。"
+msgstr "このリストは保存されたすべてのイベントリストです。表に<strong>繰り返しイベントが1行で表示されます</strong>、またそのイベントの開始日と終了日は最初の繰り返しイベントを参照します。"
 
 #: event-organiser-settings.php:361
 msgid "Enable theme compatability mode (default)"
@@ -1717,7 +1717,7 @@ msgstr "フィードが見つかりません"
 
 #: event-organiser-debug.php:72
 msgid "Most bugs arise from theme or plug-in conflicts. You can check this by disabling all other plug-ins and switching to TwentyTweleve. To help speed things along, if you report a bug please indicate if you have done so. Once the plug-in or theme has been identified it is often easy to resolve the issue. Below any <strong>known</strong> plug-in and theme conflicts are highlighted in red."
-msgstr "ほとんどのバグは、テーマやプラグインの競合から発生します。これは他のすべてのプラグインを無効にしてTwentyTweleveに切り替えることで確認できます。もしバグを報告する場合は、何を実行したかも含めて報告してください。問題のプラグインまたはテーマが特定できれば、問題解決を容易にできます。 <strong>既知の</ strong>プラグインの下に、テーマの競合が赤で強調表示されます。"
+msgstr "ほとんどのバグは、テーマやプラグインの競合から発生します。これは他のすべてのプラグインを無効にしてTwentyTweleveに切り替えることで確認できます。もしバグを報告する場合は、何を実行したかも含めて報告してください。問題のプラグインまたはテーマが特定できれば、問題解決を容易にできます。 <strong>既知の</strong>プラグインの下に、テーマの競合が赤で強調表示されます。"
 
 #: event-organiser-edit.php:240
 #: includes/event-organiser-register.php:245
