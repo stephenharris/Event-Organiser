@@ -288,6 +288,7 @@ class EventOrganiser_Shortcodes {
 			'/%(event_venue_country)%/',
 			'/%(event_venue_state)%/',
 			'/%(event_venue_city)%/',
+			'/%(event_organiser)%/',
 			'/%(schedule_start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
 			'/%(schedule_last)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
 			'/%(schedule_end)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
@@ -367,12 +368,17 @@ class EventOrganiser_Shortcodes {
 				}
 				break;
 
+			case 'event_organiser':
+				$event = get_post();
+				$event_organiser = get_user_by( 'id', (int) $event->post_author );
+				$replacement = $event_organiser->display_name;
+				break;
 			case 'event_tags':
-				$replacement = get_the_term_list( get_the_ID(), 'event-tag', '', ', ',''); 
+				$replacement = get_the_term_list( get_the_ID(), 'event-tag', '', ', ','');
 				break;
 
 			case 'event_cats':
-				$replacement = get_the_term_list( get_the_ID(), 'event-category', '', ', ',''); 
+				$replacement = get_the_term_list( get_the_ID(), 'event-category', '', ', ','');
 				break;
 
 			case 'event_venue':
