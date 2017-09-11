@@ -276,8 +276,15 @@ class EventOrganiser_Shortcodes {
 	static function read_template($template){
 		$patterns = array(
 			'/%(event_title)%/',
-			'/%(start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
-			'/%(end)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
+			'/%(start)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(end)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(end)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(end)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(end)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(schedule_start)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(schedule_last)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(schedule_end)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(event_range)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
 			'/%(event_venue)%/',
 			'/%(event_venue_url)%/',
 			'/%(event_cats)%/',
@@ -289,9 +296,6 @@ class EventOrganiser_Shortcodes {
 			'/%(event_venue_state)%/',
 			'/%(event_venue_city)%/',
 			'/%(event_organiser)%/',
-			'/%(schedule_start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
-			'/%(schedule_last)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
-			'/%(schedule_end)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
 			'/%(event_thumbnail)(?:{([^{}]+)})?(?:{([^{}]+)})?%/',
 			'/%(event_url)%/',
 			'/%(event_custom_field){([^{}]+)}%/',
@@ -314,28 +318,18 @@ class EventOrganiser_Shortcodes {
 			case 'event_title':
 				$replacement = get_the_title();
 				break;
-				
+
 			case 'start':
 			case 'end':
 			case 'schedule_start':
 			case 'schedule_last':
 			case 'schedule_end':
-				switch(count($matches)):
-					case 2:
-						$dateFormat = get_option('date_format');
-						$dateTime = get_option('time_format');
-						break;
-					case 3:
-						$dateFormat =  self::eo_clean_input($matches[2]);
-						$dateTime='';
-						break;
-					case 5:
-						$dateFormat =  self::eo_clean_input($matches[3]);
-						$dateTime =  self::eo_clean_input($matches[4]);
-						break;
-				endswitch;
-		
-				$format = eo_is_all_day(get_the_ID()) ? $dateFormat : $dateFormat . $dateTime;
+				$defaults = array(
+					'date' => get_option('date_format'),
+					'time' => get_option('time_format'),
+				);
+				$formats = array_merge( $defaults, $matches );
+				$format = eo_get_event_datetime_format( get_the_ID(), $formats['date'], $formats['time'] );
 
 				switch( $matches[1] ):
 					case 'start':
@@ -347,14 +341,36 @@ class EventOrganiser_Shortcodes {
 					case 'schedule_start':
 						$replacement = eo_get_schedule_start( $format );
 					break;
-          				case 'schedule_last':
-          				case 'schedule_end':
+					case 'schedule_last':
+					case 'schedule_end':
 						$replacement = eo_get_schedule_end( $format );
 					break;
 				endswitch;
-
 				break;
+
 			case 'event_duration':
+				$start = eo_get_the_start( DATETIMEOBJ );
+				$end   = clone eo_get_the_end( DATETIMEOBJ );
+				if ( eo_is_all_day() ) {
+					$end->modify( '+1 minute' );
+				}
+				if ( function_exists( 'date_diff' ) ) {
+					$duration = date_diff( $start, $end );
+					$replacement = $duration->format( $matches[2] );
+				} else {
+					$replacement = eo_date_interval( $start,$end, $matches[2] );
+				}
+				break;
+
+			case 'event_range':
+				$defaults = array(
+					'date' => get_option('date_format'),
+					'time' => get_option('time_format'),
+				);
+				$formats = array_merge( $defaults, $matches );
+				$replacement = eo_format_event_occurrence( get_the_ID(), eo_get_the_occurrence_id(), $formats['date'], $formats['time'] );
+				break;
+
 				$start = eo_get_the_start( DATETIMEOBJ );
 				$end   = clone eo_get_the_end( DATETIMEOBJ );
 				if ( eo_is_all_day() ) {
