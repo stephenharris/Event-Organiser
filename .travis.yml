@@ -5,6 +5,8 @@ node_js:
 
 sudo: false
 
+dist: precise
+
 php:
 - 5.2
 - 5.3

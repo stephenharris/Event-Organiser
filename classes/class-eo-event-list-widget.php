@@ -100,7 +100,7 @@ class EO_Event_List_Widget extends WP_Widget {
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'eventorganiser' ); ?>: </label>
-			<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />	
+			<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 		</p>
 			<p>
 				<label for="<?php echo $this->get_field_id( 'numberposts' ); ?>"><?php _e( 'Number of events', 'eventorganiser' );?>:   </label>
@@ -192,7 +192,7 @@ class EO_Event_List_Widget extends WP_Widget {
 			'scope'           => isset( $new_inst['scope'] ) && in_array( $new_inst['scope'], $intervals ) ? $new_inst['scope'] : 'future',
 			'order'           => ( 'asc' == $new_inst['order'] ? 'asc' : 'desc' ),
 			'orderby'         => in_array( $new_inst['orderby'],  array( 'title', 'eventstart', 'date' ) ) ? $new_inst['orderby'] : 'eventstart',
-			'group_events_by' => isset( $new_inst['group_events_by'] ) && ( 'series' == $new_inst['group_events_by'] ? 'series' : '' ),
+			'group_events_by' => ( isset( $new_inst['group_events_by'] ) && ( 'series' == $new_inst['group_events_by'] ) ) ? 'series' : '',
 			'template'        => $new_inst['template'],
 			'no_events'       => $new_inst['no_events'],
 		);

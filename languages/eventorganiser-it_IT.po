@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-04-14T22:57:25+00:00\n"
+"PO-Revision-Date: 2017-08-23T05:39:57+00:00\n"
 "Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -119,8 +119,9 @@ msgid "Overview"
 msgstr "Panoramica"
 
 #: templates/single-event.php:58
+#, fuzzy
 msgid "This event was posted in %1$s by <a href=\"%3$s\">%2$s</a>."
-msgstr ""
+msgstr "Questo evento è stato postato in %1$s da <a href=\"%3$s\">%2$s</a>."
 
 #: includes/event-organiser-cpt.php:587
 #, fuzzy
@@ -267,8 +268,9 @@ msgid "last"
 msgstr "ultimo"
 
 #: event-organiser-debug.php:64
+#, fuzzy
 msgid "This page highlights useful information for debugging. If you're reporting a bug, please include this information. The 'system info' link in under the Events admin tab is only visible to admins and only when %1$s is set to %1$s."
-msgstr ""
+msgstr "Questa pagina evidenzia informazioni utili per il debug. Se stai segnalando un bug, includi queste informazioni. Il  link 'system info' nella scheda di amministrazione degli Eventi è visibile solo agli amministratori e solo quando %1$s è impostato su %1$s."
 
 #: includes/event-organiser-ajax.php:784
 #, fuzzy
@@ -331,7 +333,7 @@ msgstr "Data/Ora fine"
 
 #: event-organiser-settings.php:249
 msgid "To use Google Maps you need to register an API key with Google. You can register for a free API key by %sfollowing these instructions%s."
-msgstr ""
+msgstr "Per usare Google Maps hai bisogno di registrare una API key con Google. Puoi registrare una API key gratuita %sseguendo queste istruzioni%s."
 
 #: includes/event.php:1080
 msgid "Occurrence not deleted. Occurrence not found."
@@ -567,7 +569,7 @@ msgstr "Spezza questa serie"
 
 #: event-organiser-settings.php:78
 msgid "Google Maps"
-msgstr ""
+msgstr "Google Maps"
 
 #: event-organiser-edit.php:116
 msgid "Start Time"
@@ -610,7 +612,7 @@ msgstr "Lista delle categorie slug, separate da virgola. Lasciare bianco per 'tu
 
 #: event-organiser-venues.php:308
 msgid "Toggle panel: Location"
-msgstr ""
+msgstr "Menu a tendina: Posizione"
 
 #: includes/class-eo-admin-notice.php:125
 msgid "Dismiss this notice"
@@ -757,7 +759,7 @@ msgstr "Data/ora attuale"
 
 #: includes/class-eo-ical-parser.php:428
 msgid "Feed contains an indefinitely recurring event. This event will recurr until %s."
-msgstr ""
+msgstr "Il feed contiene un evento indefinitamente ricorrente. Questo evento si ripeterà fino a %s."
 
 #: event-organiser-settings.php:52
 #: event-organiser.php:128
@@ -767,7 +769,6 @@ msgstr "Modifica luogo"
 
 #: classes/class-eo-event-list-widget.php:117
 #: includes/event-organiser-cpt.php:49
-#, fuzzy
 msgid "Venue:"
 msgstr "Luogo:"
 
@@ -837,7 +838,7 @@ msgstr "Non hai i permessi per cancellare questo luogo"
 
 #: includes/event-organiser-register.php:558
 msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up your own templates in your theme you won't notice any change. </br> If you haven't and want the old templates back, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>see this post</a>."
-msgstr ""
+msgstr "<h4>I Templates di Default Sono Cambiati</h4>Niente panico! Se hai impostato i tuoi templates nel tuo tema non noterai alcun cambiamento. </br> Se non l'hai fatto e rivuoi i vecchi templates, <a href='http://wp-event-organiser.com/blog/new-default-templates-in-1-7'>leggi questo post</a>."
 
 #: event-organiser-manage.php:161
 #, php-format
@@ -1438,8 +1439,9 @@ msgstr "È stato creato 1 luogo"
 
 #. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
 #: event-organiser-debug.php:437
+#, fuzzy
 msgid "%1$s requires %1$s version %1$s or higher"
-msgstr ""
+msgstr "%1$s richiede %1$s la versione %1$s o superiore"
 
 #: event-organiser-settings.php:716
 msgid "You may also need to go to WordPress Settings > Permalinks and click 'Save Changes' before any changes will take effect."
@@ -1530,7 +1532,7 @@ msgstr "Ottieni Event Organiser Pro Add-On"
 
 #: event-organiser-settings.php:243
 msgid "Google API key:"
-msgstr ""
+msgstr "Google API key:"
 
 #: event-organiser-venues.php:195
 msgid "Venue(s) <strong>deleted</strong>"
@@ -1549,9 +1551,8 @@ msgid "Event categories list navigation"
 msgstr "Visualizzazione lista delle categorie evento"
 
 #: event-organiser-settings.php:586
-#, fuzzy
 msgid "Event Settings: %s"
-msgstr "Impostazioni evento: %s"
+msgstr "Impostazioni Evento: %s"
 
 #: includes/event-organiser-cpt.php:518
 msgid "Creating events"
@@ -1648,9 +1649,8 @@ msgid "Get Link"
 msgstr "Apri il link"
 
 #: event-organiser-settings.php:585
-#, fuzzy
 msgid "Event Settings"
-msgstr "Impostazioni evento"
+msgstr "Impostazioni Evento"
 
 #: templates/event-meta-event-single.php:45
 #, php-format
@@ -1713,12 +1713,13 @@ msgid "New Tag Name"
 msgstr "Nuovo tag"
 
 #: templates/single-event.php:60
+#, fuzzy
 msgid "This event was posted by <a href=\"%3$s\">%2$s</a>."
-msgstr ""
+msgstr "Questo evento è stato postato da <a href=\"%3$s\">%2$s</a>."
 
 #: includes/event-organiser-register.php:590
 msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %splease enter your key%s."
-msgstr ""
+msgstr "Google Maps ora richiede che tu registri una API key. Se vuoi usare le mappe sul tuo sito, %sinserisci la tua key%s."
 
 #: event-organiser-settings.php:714
 msgid "Choose a custom permalink structure for events, venues, event categories and event tags."
@@ -1865,7 +1866,6 @@ msgid "View all events"
 msgstr "Visualizza tutti gli eventi"
 
 #: event-organiser-settings.php:310
-#, fuzzy
 msgid "Event (date archive)"
 msgstr "Evento (archivio per data)"
 
@@ -1992,7 +1992,7 @@ msgstr "mm-gg-aaaa"
 #. / TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
 #: event-organiser-debug.php:424
 msgid "%1$s has only been tested up to %1$s %1$s"
-msgstr ""
+msgstr "%1$s è stato  testato solo fino alla %1$s %1$s"
 
 #: includes/event-organiser-register.php:578
 #, fuzzy
@@ -2008,7 +2008,6 @@ msgid "Later events <span class=\"meta-nav\">&rarr;</span>"
 msgstr "Eventi successivi <span class\"meta-nav\">&rarr;</span>"
 
 #: templates/event-meta-event-single.php:53
-#, fuzzy
 msgid "Date"
 msgstr "Data"
 
@@ -2119,7 +2118,7 @@ msgstr "Settimana"
 
 #: includes/event-organiser-register.php:588
 msgid "Enter a Google Maps API key"
-msgstr ""
+msgstr "Inserisci una API key di Google Maps"
 
 #: includes/event-organiser-cpt.php:42
 msgid "Separate venues with commas"
@@ -2130,7 +2129,6 @@ msgid "custom"
 msgstr "personalizzato"
 
 #: classes/class-eo-event-list-widget.php:37
-#, fuzzy
 msgid "No Events"
 msgstr "Nessun evento"
 
@@ -2165,7 +2163,7 @@ msgstr "Ottieni Event Organiser Pro"
 #: includes/event-organiser-cpt.php:240
 #, fuzzy
 msgid "Event Archives"
-msgstr "Archivio eventi"
+msgstr "Archivio Eventi"
 
 #: includes/event-organiser-cpt.php:168
 msgid "View all tags"

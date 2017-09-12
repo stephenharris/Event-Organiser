@@ -227,7 +227,7 @@ function eventorganiser_cpt_register() {
 		'add_new_item'          => __( 'Add New Event', 'eventorganiser' ),
 		'edit_item'             => __( 'Edit Event', 'eventorganiser' ),
 		'new_item'              => __( 'New Event', 'eventorganiser' ),
-		'all_items'             => __( 'All events', 'eventorganiser' ),
+		'all_items'             => __( 'All Events', 'eventorganiser' ),
 		'view_item'             => __( 'View Event', 'eventorganiser' ),
 		'search_items'          => __( 'Search events', 'eventorganiser' ),
 		'not_found'             => __( 'No events found', 'eventorganiser' ),
