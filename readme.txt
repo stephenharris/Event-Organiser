@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 4.8.1
+Tested up to: 4.8.2
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.4.0 25th September 2017
+
+* Tested up to 4.8.2
+* added: `weeknumbers` attribute for the calendar shortcode: `[eo_fullcalendar weeknumbers=true]`
 
 = 3.3.0 12th September 2017
 
