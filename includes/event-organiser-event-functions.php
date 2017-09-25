@@ -1382,6 +1382,7 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		'alldayslot' => true, 'alldaytext' => __( 'All day', 'eventorganiser' ),
 		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
+		'weeknumbers' => false,
 		'year' => false, 'month' => false, 'date' => false, 'defaultdate' => false,	'users_events' => false,
 		'event_series' => false, 'event_occurrence__in' => array(),
 		'theme' => false, 'reset' => true, 'isrtl' => $wp_locale->is_rtl(),
@@ -1459,6 +1460,9 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		$args[$date_attribute.'php'] = $args[$date_attribute];
 		$args[$date_attribute] = eo_php_to_moment( $args[$date_attribute] );
 	}
+
+	//Week numbers
+	$args['weeknumbers'] = ! empty( $args['weeknumbers'] );
 
 	EventOrganiser_Shortcodes::$calendars[] = array_merge( $args );
 

@@ -146,6 +146,8 @@ jQuery(document).ready(function () {
 				axisFormat: calendars[i].axisformat,
 				minTime: calendars[i].mintime,
 				maxTime:calendars[i].maxtime,
+				weekNumbers: calendars[i].weeknumbers,
+				weekNumbersWithinDays: calendars[i].weeknumberswithindays,
 				eventColor: "#1e8cbe",
 
 				timeFormatphp: calendars[i].timeformatphp,
