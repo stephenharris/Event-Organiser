@@ -238,6 +238,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.4.0 25th September 2017
+
+* Tested up to 4.8.2###
+* added: `weeknumbers` attribute for the calendar shortcode: `[eo_fullcalendar weeknumbers=true]`
+
 ### 3.3.0 12th September 2017
 
 * added: `%event_range{date-format}{time-format}%` placeholder for the event list shortcode / widget
