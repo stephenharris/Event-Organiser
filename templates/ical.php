@@ -32,8 +32,9 @@ if ( have_posts() ) :
 			continue;
 		}
 
-		$start         = eo_get_the_start( DATETIMEOBJ );
-		$end           = eo_get_the_end( DATETIMEOBJ );
+		$occurrences   = eo_get_the_occurrences_of();
+		$start         = reset( $occurrences )['start'];
+		$end           = reset( $occurrences )['end'];
 		$created_date  = get_post_time( 'Ymd\THis\Z',true );
 		$modified_date = get_post_modified_time( 'Ymd\THis\Z',true );
 		$schedule_data = eo_get_event_schedule();
