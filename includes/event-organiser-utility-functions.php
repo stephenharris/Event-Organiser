@@ -417,6 +417,18 @@ function eo_date_interval( $_date1, $_date2, $format ) {
 	//Calculate total days difference
 	$total_days = floor( abs( $date1->format( 'U' ) - $date2->format( 'U' ) ) / 86400 );
 
+	// $total_days doesn't handle day light savings very well, so we may need to
+	// manually adjust it.
+	$temp_pointer = clone $date1;
+	if ( $total_days > 0 ) {
+		$temp_pointer->modify("+{$total_days} days");
+		while( $temp_pointer <= $date2 ) {
+			$temp_pointer->modify("+1 day");
+			$total_days++;
+		}
+		$total_days--;
+	}
+
 	$periods = array( 'years' => -1, 'months' => -1, 'days' => -1, 'hours' => -1 );
 
 	foreach ( $periods as $period => &$i ) {
