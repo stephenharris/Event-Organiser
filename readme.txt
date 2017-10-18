@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 4.8.2
+Tested up to: 4.9.0-beta-2
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,12 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.4.1 18th October 2017
+
+* Tested up to 4.9.0-beta-2
+* Fixed a bug with the calculation of long occurrences
+* Updated Czech translation
 
 = 3.4.0 25th September 2017
 

@@ -352,7 +352,7 @@ function _eventorganiser_insert_occurrences( $post_id, $event_data ) {
 	//Don't use date_diff (requires php 5.3+)
 	//Also see https://github.com/stephenharris/Event-Organiser/issues/205
 	//And https://github.com/stephenharris/Event-Organiser/issues/224
-	$duration_str = eo_date_interval( $start, $end, '+%y year +%m month +%d days +%h hours +%i minutes +%s seconds' );
+	$duration_str = eo_date_interval( $start, $end, '+%a days +%h hours +%i minutes +%s seconds' );
 
 	$event_data['duration_str'] = $duration_str;
 
