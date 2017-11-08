@@ -490,14 +490,44 @@ class EventOrganiser_Shortcodes {
 			return;
 		}
 
-		$terms = get_terms( 'event-category', array( 'hide_empty' => 0 ) );
+		$load_users = $load_venues = $load_categories = $load_tags = false;
 
-		$fullcal = (empty(self::$calendars) ? array() : array(
-			'firstDay'   => intval( get_option( 'start_of_week' ) ),
-			'venues'     => get_terms( 'event-venue', array( 'hide_empty' => 0 ) ),
-			'categories' => $terms,
-			'tags'       => get_terms( 'event-tag', array( 'hide_empty' => 1 ) ),
+		if ( self::$calendars ) {
+			foreach( self::$calendars as $calendar ) {
+				if ( self::calendarHeadersContainCaseInsensitive( 'organiser', $calendar ) ) {
+					$load_users = true;
+				}
+				if ( self::calendarHeadersContainCaseInsensitive( 'venue', $calendar ) ) {
+					$load_venues = true;
+				}
+				if ( self::calendarHeadersContainCaseInsensitive( 'category', $calendar ) ) {
+					$load_categories = true;
+				}
+				if ( self::calendarHeadersContainCaseInsensitive( 'tag', $calendar ) ) {
+					$load_tags = true;
+				}
+			}
+		}
+
+		$fullcal = ( empty( self::$calendars ) ? array() : array(
+			'firstDay' => intval( get_option( 'start_of_week' ) ),
 		));
+
+		if ( $load_venues ) {
+			$fullcal['venues'] = get_terms( 'event-venue', array( 'hide_empty' => 0 ) );
+		}
+
+		if ( $load_categories ) {
+			$fullcal['categories'] = get_terms( 'event-category', array( 'hide_empty' => 0 ) );
+		}
+
+		if ( $load_tags ) {
+			$fullcal['tags'] = get_terms( 'event-tag', array( 'hide_empty' => 1 ) );
+		}
+
+		if ( $load_users ) {
+			$fullcal['users'] = wp_list_pluck( get_users(), 'display_name', 'ID' );
+		}
 
 		eo_localize_script( 'eo_front', array(
 			'ajaxurl'          => admin_url( 'admin-ajax.php' ),
@@ -521,13 +551,23 @@ class EventOrganiser_Shortcodes {
 			wp_enqueue_script( 'eo_GoogleMap' );
 		}
 	}
+
+	private static function calendarHeadersContainCaseInsensitive( $key, $calendar ) {
+		foreach( array( 'headerleft', 'headerright', 'headercenter' ) as $header ) {
+			$headers = array_map( 'strtolower', explode( ' ' , $calendar[$header] ) );
+			if ( in_array( strtolower( $key ), $headers ) ) {
+				return true;
+			}
+		}
+		return false;
+  }
 }
 
 EventOrganiser_Shortcodes::init();
 
 /**
  * @ignore
- */	
+ */
 function eventorganiser_category_key($args=array(),$id=1){
 		$args['taxonomy'] ='event-category';
 

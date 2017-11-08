@@ -56,10 +56,28 @@ jQuery(document).ready(function () {
 		}
 		html+="</select>";
 
-		var element = $("<span class='fc-header-dropdown filter-'"+options.type+"></span>");
+		var element = $("<span class='fc-header-dropdown filter-"+options.type+"'></span>");
 		element.append(html);
 		return element;
 	}
+
+	function eventorganiser_organiser_filter_markup( options ){
+		console.log(options);
+		var html="<select class='eo-fc-filter eo-fc-filter-organiser' data-filter-type='organiser'>";
+		html+="<option value=''>"+options.select_none+"</option>";
+
+		var display_name;
+		for ( var user_id in options.users ){
+			display_name = options.users[user_id];
+			html+= "<option value='"+user_id+"'>"+display_name+"</option>";
+		}
+		html+="</select>";
+
+		var element = $("<span class='fc-header-dropdown filter-organiser'></span>");
+		element.append(html);
+		return element;
+	}
+
 
 	$(".eo-fullcalendar").on( 'change', '.eo-fc-filter', function () {
 		$(".eo-fullcalendar").fullCalendar( 'rerenderEvents' );
@@ -128,6 +146,12 @@ jQuery(document).ready(function () {
 							type: 'tag'
 						});
 					},
+					organiser: function(){
+						return eventorganiser_organiser_filter_markup( {
+							users: eventorganiser.fullcal.users,
+							select_none: EOAjaxFront.locale.view_all_organisers
+						});
+					},
 					'goto': 	eventorganiser_mini_calendar
 				},
 
@@ -174,6 +198,7 @@ jQuery(document).ready(function () {
 					var category = $(view.calendar.options.id).find(".eo-fc-filter-category").val();
 					var venue    = $(view.calendar.options.id).find(".eo-fc-filter-venue").val();
 					var tag      = $(view.calendar.options.id).find(".eo-fc-filter-tag").val();
+					var organiser= $(view.calendar.options.id).find(".eo-fc-filter-organiser").val();
 					var render   = true;
 
 					if (typeof category !== "undefined" && category !== "" && $.inArray( category, event.category) < 0 ) {
@@ -185,6 +210,10 @@ jQuery(document).ready(function () {
 					}
 
 					if (typeof tag !== "undefined" && tag !== "" && $.inArray(tag, event.tags) < 0 ) {
+						render = false;
+					}
+
+					if (typeof organiser !== "undefined" && organiser !== "" && organiser != event.organiser) {
 						render = false;
 					}
 
