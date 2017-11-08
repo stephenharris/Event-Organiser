@@ -78,6 +78,7 @@ function eventorganiser_register_script() {
 			'cat'         => $category ? $category->labels->view_all_items : false,
 			'venue'       => $venue    ? $venue->labels->view_all_items    : false,
 			'tag'         => $tag      ? $tag->labels->view_all_items      : false,
+			'view_all_organisers' => __( 'View all organisers', 'eventorganiser' ),
 			//Allow themes to over-ride juqery ui styling and not use images
 			'nextText' => '>',
 			'prevText' => '<',

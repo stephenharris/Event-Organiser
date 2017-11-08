@@ -196,17 +196,18 @@ function eventorganiser_public_fullcalendar() {
 			 */
 			$description = apply_filters('eventorganiser_event_tooltip', $description, $post->ID,$post->occurrence_id,$post);
 			$event['description'] = $description;
-			
+
+			$event['organiser'] = (int) $post->post_author;
 			$event['className']   = eo_get_event_classes();
 			$event['className'][] = 'eo-event';
-			
+
 			//Colour past events
 			$now = new DateTime(null,$tz);
 			if($event_start <= $now)
 				$event['className'][] = 'eo-past-event'; //deprecated. use eo-event-past or eo-event-running
 			else
 				$event['className'][] = 'eo-future-event'; //deprecated. use eo-event-future
-				
+
 			//Include venue if this is set
 			$venue = eo_get_venue( $post->ID );
 

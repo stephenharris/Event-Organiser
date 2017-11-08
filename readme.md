@@ -238,6 +238,15 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.5.0 8th November 2017
+
+* Added 'organiser' option to calendar shortcode's headerLeft/headerCenter/headerRight attributes - allows
+  filting of the event calendar by event organiser (author).
+* Improved effeciency of calendar page load time by lazy loading required data
+* Updated French and Dutch translations
+* Tested up to 4.9.0-beta-4
+
+###
 ### 3.4.1 18th October 2017
 
 * Tested up to 4.9.0-beta-2
