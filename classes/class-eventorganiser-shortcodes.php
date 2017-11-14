@@ -554,7 +554,7 @@ class EventOrganiser_Shortcodes {
 
 	private static function calendarHeadersContainCaseInsensitive( $key, $calendar ) {
 		foreach( array( 'headerleft', 'headerright', 'headercenter' ) as $header ) {
-			$headers = array_map( 'strtolower', explode( ' ' , $calendar[$header] ) );
+			$headers = array_map( 'strtolower',  preg_split( "/(,|\s)/", $calendar[$header] ) );
 			if ( in_array( strtolower( $key ), $headers ) ) {
 				return true;
 			}
