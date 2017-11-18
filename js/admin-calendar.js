@@ -72,6 +72,8 @@ eventorganiser.versionCompare = function(left, right) {
 		eventDurationEditable: false,
 		eventStartEditable: EO_Ajax.edit_time,
 		durationEditable: false,
+		snapDuration:'00:05:00',
+		slotDuration:'00:15:00',
 		eventDrop: function( event, dayDelta, revertFunc, jsEvent, ui, view ) {
 			
 			if ( ! event.end ) {
