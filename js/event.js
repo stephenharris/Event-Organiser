@@ -685,36 +685,42 @@ eventOrganiserSchedule = {
 	        		summary = summary + " " + $.datepicker.formatDate("MM d", this.start, options) + this.start.eoGetOrdinal();
 	        	break;
 	        }
-	        
+
 	        if ( this.schedule_last !== null ) {
 	            summary = summary + " " + locale.until + " " + $.datepicker.formatDate("MM d'" + this.schedule_last.eoGetOrdinal() + "' yy", this.schedule_last, options);
 	        }
-	        
+
 	        return summary;
 	    },
-	    
-	    
+
+
 	    //Is given date an occurrence of the event?
 	    is_date_eventful: function(date) {
-	        var index = $.inArray(date, eventOrganiserSchedule.dates_by_rule);
+					var index = $.inArray(date, eventOrganiserSchedule.dates_by_rule);
+					var excludedIndex = $.inArray(date, eventOrganiserSchedule.exclude);
+					var includedIndex = $.inArray(date, eventOrganiserSchedule.include);
 
-	        if (index > -1) {
-	            //Occurs by rule - is it excluded manually?
-	            var excluded = $.inArray(date, eventOrganiserSchedule.exclude);
-	            if (excluded > -1) {
-	                return [false, excluded];
-	            } else {
-	                return [true, -1];
-	            }
-	        } else {
-	            //Doesn't occurs by rule - is it included manually?
-	            var included = $.inArray(date, eventOrganiserSchedule.include);
-	            if (included > -1) {
-	                return [true, included];
-	            } else {
-	                return [false, -1];
-	            }
-	        }
+					if (index > -1) {
+							// This date occurs by recurrence rule, but might be excluded manually.
+							// However, it might also be included manually as well, in the case that
+							// the occurrence has moved time within the same day
+							if ( excludedIndex > -1 && includedIndex == -1 ) {
+									//Excluded
+									return [false, excludedIndex];
+							} else if (  excludedIndex > -1 && includedIndex > -1 ) {
+									// Occurrence has moved time within same date
+									return [true, includedIndex];
+							}
+
+							// Not excluded manually
+							return [true, -1];
+					} else {
+							//Doesn't occurs by rule - is it included manually?
+							if (includedIndex > -1) {
+									return [true, includedIndex];
+							}
+							return [false, -1];
+					}
 	    },
 
 	    //When a date is selected, add or remove it based on current state
