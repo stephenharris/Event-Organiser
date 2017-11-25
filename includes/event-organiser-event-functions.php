@@ -1430,7 +1430,17 @@ function eo_get_event_fullcalendar( $args = array() ) {
 	$args['event_tag']      = is_array( $args['event-tag'] )      ? implode( ',', $args['event-tag'] )      : $args['event-tag'];
 
 	//Get author ID from author/author_name
-	$args['event_organiser'] = ( $args['author'] ? (int) $args['author'] : eo_get_user_id_by( 'slug', $args['author_name'] ) );
+	if ( $args['author'] ) {
+		$args['event_organiser'] =  array_map( 'intval', explode( ',', $args['author'] ) );
+	} else {
+		$args['event_organiser'] = array();
+		$authors = explode( ',', $args['author_name'] );
+		foreach( $authors as $index => $author_name ) {
+			$args['event_organiser'][] =  eo_get_user_id_by( 'slug', $author_name );
+		}
+	}
+
+	$args['event_organiser'] = array_filter( $args['event_organiser'] );
 
 	//max/min time MUST be hh:mm format
 	$times = array( 'mintime', 'maxtime' );

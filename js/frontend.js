@@ -212,8 +212,7 @@ jQuery(document).ready(function () {
 					if (typeof tag !== "undefined" && tag !== "" && $.inArray(tag, event.tags) < 0 ) {
 						render = false;
 					}
-
-					if (typeof organiser !== "undefined" && organiser !== "" && organiser != event.organiser) {
+					if (typeof organiser !== "undefined" && organiser !== "" && parseInt(organiser,10) !== event.organiser) {
 						render = false;
 					}
 
