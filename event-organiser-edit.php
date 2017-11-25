@@ -448,6 +448,7 @@ function eventorganiser_details_save( $post_id ) {
 
 	//Parse included and exclude dates
 	$in_ex = array();
+	$orig_schedule = eo_get_event_schedule( $post_id );
 	foreach ( array( 'include', 'exclude' ) as $key ) :
 
 		$in_ex[$key] = array();
@@ -462,11 +463,13 @@ function eventorganiser_details_save( $post_id ) {
 				}
 			}
 
-			/* see https://github.com/stephenharris/Event-Organiser/issues/260
-			if( $orig = array_uintersect( $orig_schedule[$key], $in_ex[$key], '_eventorganiser_compare_dates' ) ){
-				$in_ex[$key] = array_merge( $orig, $in_ex[$key] );
-				$in_ex[$key] = _eventorganiser_remove_duplicates( $in_ex[$key] );
-			}*/
+			//see https://github.com/stephenharris/Event-Organiser/issues/260
+			if ( $start == $orig_schedule['start'] && $end == $orig_schedule['end'] ) {
+				if( $orig = array_uintersect( $orig_schedule[$key], $in_ex[$key], '_eventorganiser_compare_dates' ) ){
+					$in_ex[$key] = array_merge( $orig, array_udiff( $in_ex[$key], $orig_schedule[$key], '_eventorganiser_compare_dates' ) );
+					$in_ex[$key] = _eventorganiser_remove_duplicates( $in_ex[$key] );
+				}
+			}
 		}
 	endforeach;
 

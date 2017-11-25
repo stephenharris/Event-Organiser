@@ -32,11 +32,11 @@ if ( have_posts() ) :
 			continue;
 		}
 
-		$start         = eo_get_the_start( DATETIMEOBJ );
-		$end           = eo_get_the_end( DATETIMEOBJ );
+		$schedule_data = eo_get_event_schedule();
+		$start = $schedule_data['start'];
+		$end = $schedule_data['end'];
 		$created_date  = get_post_time( 'Ymd\THis\Z',true );
 		$modified_date = get_post_modified_time( 'Ymd\THis\Z',true );
-		$schedule_data = eo_get_event_schedule();
 
 		if ( $timezone ) {
 			$earliest_date = $earliest_date ? min( eo_get_schedule_start( DATETIMEOBJ ), $earliest_date ) : eo_get_schedule_start( DATETIMEOBJ );

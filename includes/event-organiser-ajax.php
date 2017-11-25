@@ -44,7 +44,7 @@ function eventorganiser_public_fullcalendar() {
 	}
 
 	if ( ! empty( $_GET['organiser'] ) ) {
-		$request['author'] = (int) $_GET['organiser'];
+		$request['author__in'] = is_array( $_GET['organiser'] ) ? array_map( 'intval', $_GET['organiser'] ) : array( (int) $_GET['organiser'] );
 	}
 
 	if ( ! empty( $_GET['users_events'] ) && 'false' != $_GET['users_events'] ) {

@@ -62,13 +62,16 @@ jQuery(document).ready(function () {
 	}
 
 	function eventorganiser_organiser_filter_markup( options ){
-		console.log(options);
+		var whitelist = ( typeof options.whitelist !== "undefined" && options.whitelist.length > 0 ? options.whitelist : false );
 		var html="<select class='eo-fc-filter eo-fc-filter-organiser' data-filter-type='organiser'>";
 		html+="<option value=''>"+options.select_none+"</option>";
 
 		var display_name;
 		for ( var user_id in options.users ){
 			display_name = options.users[user_id];
+			if ( whitelist && $.inArray( parseInt(user_id,10), whitelist ) == -1 ) {
+				continue;
+			}
 			html+= "<option value='"+user_id+"'>"+display_name+"</option>";
 		}
 		html+="</select>";
@@ -149,7 +152,8 @@ jQuery(document).ready(function () {
 					organiser: function(){
 						return eventorganiser_organiser_filter_markup( {
 							users: eventorganiser.fullcal.users,
-							select_none: EOAjaxFront.locale.view_all_organisers
+							select_none: EOAjaxFront.locale.view_all_organisers,
+							whitelist: calendars[i].event_organiser,
 						});
 					},
 					'goto': 	eventorganiser_mini_calendar
@@ -212,8 +216,7 @@ jQuery(document).ready(function () {
 					if (typeof tag !== "undefined" && tag !== "" && $.inArray(tag, event.tags) < 0 ) {
 						render = false;
 					}
-
-					if (typeof organiser !== "undefined" && organiser !== "" && organiser != event.organiser) {
+					if (typeof organiser !== "undefined" && organiser !== "" && parseInt(organiser,10) !== event.organiser) {
 						render = false;
 					}
 

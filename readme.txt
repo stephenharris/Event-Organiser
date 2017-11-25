@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 4.9.0-beta-4
+Tested up to: 4.9.0
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,18 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.6.0 25th November 2017
+
+* added: Ability to specify multiple event authors (organiser) in the fullcalendar author/author_name attribute
+  by using a comma seperate lised e.g: [eo_fullcalendar author="1,2"]
+* bugfix: The "organiser" full calendar filter only displays users included in the author/author_name attribute 
+  if supplied.
+* bugfix: Occurrences which have changed time still appear in the include/excludes datepicker
+* bugfix: iCal feed will display correct DSTART & DTEND values even when the initial occurrence is excluded from 
+  the query driving the feed.
+* changed: The admin calendar week/day views display 15-minute intervals. If dragging of occurrences is enabled
+  this can be done in 5 minute intervals.
 
 = 3.5.1 14th November 2017 
 
