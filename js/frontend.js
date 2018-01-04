@@ -275,7 +275,7 @@ jQuery(document).ready(function () {
 				aspectRatio: calendars[i].aspectratio ? calendars[i].aspectratio : false,
                 responsive: calendars[i].responsive,
                 responsiveBreakpoint: calendars[i].responsivebreakpoint,
-                defaultView: ( $(window).width() < 514 && calendars[i].responsive )  ? _eoResponsiveViewMap[calendars[i].defaultview] : calendars[i].defaultview,
+                defaultView: ( $(window).width() < view.calendar.options.responsiveBreakpoint && calendars[i].responsive )  ? _eoResponsiveViewMap[calendars[i].defaultview] : calendars[i].defaultview,
                 previousView: calendars[i].defaultview,
                 nextDayThreshold: calendars[i].nextdaythreshold,
                 windowResize: function(view) {
