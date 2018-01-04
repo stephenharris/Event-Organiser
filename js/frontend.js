@@ -779,8 +779,6 @@ eventorganiser.google_map.prototype.tooltip = function(){
 		return;
 	}
 
-	jQuery(this.getMap().getDiv()).css({overflow: 'visible'});
-
 	// Create the tooltip on a dummy div and store it on the marker
 	 this.tooltip = jQuery('<div />').qtip({
 		 content: {
