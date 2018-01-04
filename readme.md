@@ -3,7 +3,7 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
-**Tested up to:** 4.9.0  
+**Tested up to:** 4.9.1  
 **Stable tag:** {{version}}  
 **License:** GPLv3  
 
@@ -238,6 +238,12 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.6.1 4th January 2018
+
+* bugfix: Bug where static value is used for calendar breakpoint on initial load
+* bugfix: Ensure venue tooltip is moved to fit within viewport
+* bugfix: Bug where clicking on the venue tooltip could cause the map to overflow the container
+###
 ### 3.6.0 25th November 2017
 
 * added: Ability to specify multiple event authors (organiser) in the fullcalendar author/author_name attribute###

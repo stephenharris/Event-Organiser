@@ -275,7 +275,7 @@ jQuery(document).ready(function () {
 				aspectRatio: calendars[i].aspectratio ? calendars[i].aspectratio : false,
                 responsive: calendars[i].responsive,
                 responsiveBreakpoint: calendars[i].responsivebreakpoint,
-                defaultView: ( $(window).width() < 514 && calendars[i].responsive )  ? _eoResponsiveViewMap[calendars[i].defaultview] : calendars[i].defaultview,
+                defaultView: ( $(window).width() < view.calendar.options.responsiveBreakpoint && calendars[i].responsive )  ? _eoResponsiveViewMap[calendars[i].defaultview] : calendars[i].defaultview,
                 previousView: calendars[i].defaultview,
                 nextDayThreshold: calendars[i].nextdaythreshold,
                 windowResize: function(view) {
@@ -779,8 +779,6 @@ eventorganiser.google_map.prototype.tooltip = function(){
 		return;
 	}
 
-	jQuery(this.getMap().getDiv()).css({overflow: 'visible'});
-
 	// Create the tooltip on a dummy div and store it on the marker
 	 this.tooltip = jQuery('<div />').qtip({
 		 content: {
@@ -798,7 +796,8 @@ eventorganiser.google_map.prototype.tooltip = function(){
 			at: "right center",
 			my: "top center",
 			target: pos,
-			container: jQuery(this.getMap().getDiv())
+			viewport: true,
+			container: jQuery(this.getMap().getDiv()),
 		},
 		show: {
 			ready: true,
