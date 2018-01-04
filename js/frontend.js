@@ -798,7 +798,8 @@ eventorganiser.google_map.prototype.tooltip = function(){
 			at: "right center",
 			my: "top center",
 			target: pos,
-			container: jQuery(this.getMap().getDiv())
+			viewport: true,
+			container: jQuery(this.getMap().getDiv()),
 		},
 		show: {
 			ready: true,
