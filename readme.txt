@@ -222,6 +222,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.6.2 5th January 2018
+
+* bugfix: Fixed reference error in calendar shortcode introduced in 3.6.1
+
 = 3.6.1 4th January 2018
 
 * bugfix: Bug where static value is used for calendar breakpoint on initial load
