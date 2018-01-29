@@ -289,23 +289,20 @@ function eventorganiser_event_fields( $select, $query ){
 
 
 /**
-* GROUP BY Event (occurrence) ID
-* Event posts do not want to be grouped by post, but by occurrence - unless otherwise specified.
- * Hooked onto posts_groupby
+ * GROUP BY Event (occurrence) ID
+ * Event posts do not want to be grouped by post, but by occurrence. When grouping
+ * by series we do not use GROUP BY because we cannot be sure of the record that
+ * is selected for the group.
  *
- *@since 1.0.0
- *@access private
- *@ignore
- *@param string $groupby GROUP BY part of the SQL statement
- *@param string $query WP_Query
- *@return string
+ * @since 1.0.0
+ * @access private
+ * @ignore
+ * @param string $groupby GROUP BY part of the SQL statement
+ * @param string $query WP_Query
+ * @return string
  */
 function eventorganiser_event_groupby( $groupby, $query ) {
 	global $wpdb;
-
-	if ( $query->get( 'group_events_by' ) == 'series' ) {
-		return "{$wpdb->posts}.ID";
-	}
 
 	if ( eventorganiser_is_event_query( $query, true ) ) {
 		if ( empty( $groupby ) ) {
@@ -339,17 +336,14 @@ function eventorganiser_join_tables( $join, $query ) {
 		$join .= " LEFT JOIN $wpdb->eo_events ON $wpdb->posts.ID = {$wpdb->eo_events}.post_id ";
 
 		if ( 'series' == $query->get( 'group_events_by' ) ) {
-			//When grouping events, we perform WHERE statement in the subsquery
-			//@see eventorganiser_events_where
-			$_where = _eventorganiser_generate_mysql_where( $query );
-
-			if ( '' == $_where ) {
-				return $join;
-			}
-
-			$where  = $_where ? "WHERE {$_where}" : '';
-			$join .= "INNER JOIN ( SELECT {$wpdb->eo_events}.event_id FROM {$wpdb->eo_events} {$where} ORDER BY {$wpdb->eo_events}.StartDate ASC, {$wpdb->eo_events}.StartTime ASC )
-					AS eoid ON eoid.event_id = {$wpdb->eo_events}.event_id ";
+			//@link https://github.com/stephenharris/Event-Organiser/issues/430
+			$where = _eventorganiser_generate_mysql_where( $query );
+			$where  = $where ? "WHERE {$where}" : '';
+			$join .= " LEFT JOIN
+				(SELECT post_id, StartDate, StartTime FROM {$wpdb->eo_events} $where) AS {$wpdb->eo_events}2
+				ON {$wpdb->eo_events}.post_id = {$wpdb->eo_events}2.post_id
+				AND TIMESTAMP({$wpdb->eo_events}.StartDate,{$wpdb->eo_events}.StartTime)
+				> TIMESTAMP({$wpdb->eo_events}2.StartDate,{$wpdb->eo_events}2.StartTime)";
 		}
 	}
 	return $join;
@@ -519,14 +513,15 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
  * @return string
  */
 function eventorganiser_events_where( $where, $query ) {
-	//Only alter event queries. When grouping events we perform the WHERE query in the subquery
-	//@see eventorganiser_join_tables
-	if ( eventorganiser_is_event_query( $query, true ) && 'series' != $query->get( 'group_events_by' ) ) :
-		$_where = _eventorganiser_generate_mysql_where( $query );
-		if ( $_where ) {
-			$where .= " AND {$_where}";
-		}
-	endif;
+	global $wpdb;
+
+	$_where = _eventorganiser_generate_mysql_where( $query );
+	if ( $_where ) {
+		$where .= " AND {$_where}";
+	}
+	if('series' == $query->get( 'group_events_by' )){
+		$where .= " AND {$wpdb->eo_events}2.StartDate is NULL";
+	}
 
 	return $where;
 }
