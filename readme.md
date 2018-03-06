@@ -238,6 +238,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.6.3 6th March 2018
+
+* bugfix: Fixed bug with grouping occurrences, effecting some MySQL versions. Fixes [#430](https://github.com/stephenharris/Event-Organiser/issues/430)
+###
 ### 3.6.2 5th January 2018
 
 * bugfix: Fixed reference error in calendar shortcode introduced in 3.6.1
