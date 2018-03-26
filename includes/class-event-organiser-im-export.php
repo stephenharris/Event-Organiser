@@ -28,7 +28,7 @@ class Event_Organiser_Im_Export  {
 
 		return self :: $classobj;
 	}
-	
+
 	public function __construct() {
 		global $pagenow, $EO_Errors;
 
@@ -39,21 +39,21 @@ class Event_Organiser_Im_Export  {
 		}
 
 		//If importing / exporting events make sure we a logged in and check nonces.
-		if ( is_admin() && !empty($_POST['eventorganiser_download_events']) && check_admin_referer( 'eventorganiser_download_events' ) 
+		if ( is_admin() && !empty($_POST['eventorganiser_download_events']) && check_admin_referer( 'eventorganiser_download_events' )
 			&& current_user_can('manage_options') ):
 			//Exporting events
 			//mmm... maybe finally a legitimate use of query_posts
 			query_posts(array(
 				'post_type'=>'event',
 				'showpastevents'=>true,
-				'group_events_by'=>'series',
+				'group_events_by'=>'series_indeterminate',
 				'posts_per_page'=>-1,
 			));
 			$this->get_export_file();
 
-		elseif ( is_admin() && !empty($_POST['eventorganiser_import_events']) && check_admin_referer( 'eventorganiser_import_events') 
+		elseif ( is_admin() && !empty($_POST['eventorganiser_import_events']) && check_admin_referer( 'eventorganiser_import_events')
 			&& current_user_can('manage_options') ):
-			//Importing events	
+			//Importing events
 
 			//Perform checks on file:
 			if ( in_array($_FILES["ics"]["type"], array("text/calendar","application/octet-stream")) && ($_FILES["ics"]["size"] < 2097152) ):
@@ -77,13 +77,13 @@ class Event_Organiser_Im_Export  {
 
 		endif;
 
-		add_action( 'eventorganiser_event_settings_imexport', array( $this, 'get_im_export_markup' ) );						
+		add_action( 'eventorganiser_event_settings_imexport', array( $this, 'get_im_export_markup' ) );
 	}
 
 
 	/**
 	 * Get markup for ex- and import on settings page
-	 * 
+	 *
 	 * @since 1.0.0
 	 */
 	public function get_im_export_markup() {
@@ -96,7 +96,7 @@ class Event_Organiser_Im_Export  {
 				<input type="hidden" name="eventorganiser_download_events" value="true" />
 				<?php submit_button(  __( 'Download Export File', 'eventorganiser' )." &raquo;", 'secondary',  'eventorganiser_download_events' ); ?>
 			</form>
-			
+
 			<h3 class="title"><?php _e('Import Events', 'eventorganiser'); ?></h3>
 			<form method="post" action="" enctype="multipart/form-data">
 				<div class="inside">
@@ -111,7 +111,7 @@ class Event_Organiser_Im_Export  {
 					<?php submit_button(  __( 'Upload ICS file', 'eventorganiser' )." &raquo;", 'secondary',  'eventorganiser_import_events' ); ?>
 				</div>
 			</form>
-		<?php 
+		<?php
 	}
 
 	/**
@@ -129,8 +129,8 @@ class Event_Organiser_Im_Export  {
 	* @param string filename - the name of the file to be created
 	* @param string filetype - the type of the file ('text/calendar')
 	*/
-	public function export_events( $filename, $filetype ){ 
-		//Collect output 
+	public function export_events( $filename, $filetype ){
+		//Collect output
 		ob_start();
 
 		// File header
@@ -142,12 +142,12 @@ class Event_Organiser_Im_Export  {
 
 		eo_locate_template( 'ical.php', true,false );
 
-		//Collect output and echo 
+		//Collect output and echo
 		$eventsical = ob_get_contents();
 		ob_end_clean();
 		echo $eventsical;
 		exit();
-	}	
+	}
 
 
 	/**
@@ -163,36 +163,36 @@ class Event_Organiser_Im_Export  {
 
 		$ical = new EO_ICAL_Parser();
 		$ical->parse( $ical_file );
-		
+
 		$import_venues = ( isset($_POST['eo_import_venue'] ) ? true : false);
 		$import_cats = ( isset($_POST['eo_import_cat'] ) ? true : false);
-		
+
 		$events_imported = 0;
 		$events_updated = 0;
 		$venues_imported = 0;
 		$categories_imported = 0;
-				
+
 		if( $import_venues && $ical->venues ){
 
 			foreach( $ical->venues as $venue ){
 				if( !eo_get_venue_by( 'name', $venue ) ){
 					$args = array();
-					
+
 					//If lat/lng meta data is set, include that
 					if( isset( $ical->venue_meta[$venue]['latitude'] ) && isset( $ical->venue_meta[$venue]['longtitude'] ) ){
 						$args['latitude'] = $ical->venue_meta[$venue]['latitude'];
 						$args['longtitude'] = $ical->venue_meta[$venue]['longtitude'];
 					}
-						
+
 					$new_venue = eo_insert_venue( $venue, $args );
 					if( !is_wp_error( $new_venue ) && $new_venue ){
 						$venues_imported++;
 					}
 				}
 			}
-			
+
 		}
-		
+
 		if( $import_cats && $ical->categories ){
 
 			foreach( $ical->categories as $category ){
@@ -203,24 +203,24 @@ class Event_Organiser_Im_Export  {
 					}
 				}
 			}
-			
+
 		}
-		
+
 		foreach( $ical->events as $event ){
 			//TODO refactor eo_insert_event & eo_update_event...
-		
+
 			$uid = !empty( $event['uid'] ) ? $event['uid'] : false;
 
 			//TODO Check if event already exists
 			//$found_event = eo_get_event_by_uid( $uid );
-			
+
 			//Create event
 			if( !empty( $event['event-venue'] ) ){
 				$venue = eo_get_venue_by( 'name', $event['event-venue'] );
 				if( $venue )
 					$event['tax_input']['event-venue'][] =  intval( $venue->term_id );
 			}
-			
+
 			if( !empty( $event['event-category'] ) ){
 
 				$event['tax_input']['event-category'] = array();
@@ -230,20 +230,20 @@ class Event_Organiser_Im_Export  {
 						$event['tax_input']['event-category'][] =  intval( $cat->term_id );
 				}
 			}
-			
+
 			$event_id = eo_insert_event( $event );
 			if( is_wp_error( $event_id ) ){
 				$ical->errors[] = $event_id;
 			}else{
 				$events_updated++;
 			}
-	
+
 		}
-		
+
 		if( $events_updated == 0 )
 			$EO_Errors->add( 'eo_error', __( "No events were imported.", 'eventorganiser' ) );
-	
-		
+
+
 		if( count( $ical->errors ) > 0 ){
 			foreach( $ical->errors as $error ){
 				$codes = $error->get_error_codes();
@@ -255,38 +255,38 @@ class Event_Organiser_Im_Export  {
 				}
 			}
 		}
-		
+
 		$message = array();
-		
+
 		if( $ical->warnings ){
 			foreach( $ical->warnings as $warning ){
 				$message[] = '<strong>' . __( 'Warning:', 'eventorganiser' ) . '</strong> ' . $warning->get_error_message();
 			}
 		}
-		
+
 		if( count( $ical->events ) == 1 )
 			$message[] = __( "1 event was successfully imported", 'eventorganiser' );
-		
+
 		elseif( count( $ical->events ) > 1 )
 			$message[] = sprintf( __( "%d events were successfully imported",'eventorganiser'), count( $ical->events ) ).".";
-		
+
 		if( $venues_imported == 1 ){
 			$message[] = __("1 venue was created",'eventorganiser');
-			
+
 		}elseif( $venues_imported > 1 ){
 			$message[] = sprintf( __( "%d venues were created",'eventorganiser' ), $venues_imported );
 		}
-		
+
 		if( $categories_imported == 1 ){
 			$message[] = __( "1 category was created", 'eventorganiser' );
-			
+
 		}elseif( $categories_imported > 1 ){
 			$message[] = sprintf( __("%d categories were created",'eventorganiser'), $categories_imported );
 		}
-					
+
 		$EO_Errors->add( 'eo_notice', implode( '<br/>', $message ) );
-			
-		
+
+
 	}
 
 } // end class
