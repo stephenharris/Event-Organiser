@@ -3,7 +3,7 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
-**Tested up to:** 4.9.1  
+**Tested up to:** 4.9.4  
 **Stable tag:** {{version}}  
 **License:** GPLv3  
 
@@ -238,6 +238,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.6.4 26th March 2018
+
+* bugfix: Addressed issue where grouping occurrences might error depending on MySQL configuration. Fixes [#432](https://github.com/stephenharris/Event-Organiser/issues/432)
+###
 ### 3.6.3 6th March 2018
 
 * bugfix: Fixed bug with grouping occurrences, effecting some MySQL versions. Fixes [#430](https://github.com/stephenharris/Event-Organiser/issues/430)
