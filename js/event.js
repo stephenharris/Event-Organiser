@@ -682,12 +682,25 @@ eventOrganiserSchedule = {
 	                } else {
 	                	summary += locale.yearSingle;
 	                }
-	        		summary = summary + " " + $.datepicker.formatDate("MM d", this.start, options) + this.start.eoGetOrdinal();
+
+							var formattedDate;
+							if(locale.isUsingOrdinal){
+								formattedDate = $.datepicker.formatDate("MM d", this.start, options) + this.start.eoGetOrdinal();
+							} else {
+								formattedDate = $.datepicker.formatDate("MM d", this.start, options);
+							}
+	        		summary = summary + " " + formattedDate;
 	        	break;
 	        }
 
 	        if ( this.schedule_last !== null ) {
-	            summary = summary + " " + locale.until + " " + $.datepicker.formatDate("MM d'" + this.schedule_last.eoGetOrdinal() + "' yy", this.schedule_last, options);
+							var formattedUntilDate;
+							if(locale.isUsingOrdinal){
+									formattedUntilDate = $.datepicker.formatDate("MM d'" + this.schedule_last.eoGetOrdinal() + "' yy", this.schedule_last, options);
+							} else {
+									formattedUntilDate = $.datepicker.formatDate("MM d yy", this.schedule_last, options);
+							}
+	            summary = summary + " " + locale.until + " " + formattedUntilDate;
 	        }
 
 	        return summary;
