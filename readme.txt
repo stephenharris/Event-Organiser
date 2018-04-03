@@ -222,6 +222,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.6.5 3rd April 2018 =
+
+* bugfix: Only use date ordinal suffix (st,nd,rd,th) if the site's date format setting includes it
+
 = 3.6.4 26th March 2018
 
 * bugfix: Addressed issue where grouping occurrences might error depending on MySQL configuration. Fixes [#432](https://github.com/stephenharris/Event-Organiser/issues/432)
