@@ -207,16 +207,17 @@ class utilityFunctionsTest extends WP_UnitTestCase
 	*/
 	public function testBlogIsUsingOrdinal($format, $usingOrdinal)
 	{
-		//24 hour time formats
 		update_option( 'date_format', $format );
 		$this->assertEquals( $usingOrdinal, eo_blog_is_using_ordinal() );
 
 		//Filters
 		add_filter( 'eventorganiser_blog_is_using_ordinal', '__return_false' );
 		$this->assertFalse( eo_blog_is_using_ordinal() );
+		remove_filter( 'eventorganiser_blog_is_using_ordinal', '__return_false' );
 
 		add_filter( 'eventorganiser_blog_is_using_ordinal', '__return_true' );
 		$this->assertTrue( eo_blog_is_using_ordinal() );
+		remove_filter( 'eventorganiser_blog_is_using_ordinal', '__return_true' );
 
 	}
 
@@ -224,7 +225,7 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		return array(
 			'uppercase S' => array('jS F Y', true),
 			'no S' => array('Y-m-d', false),
-			'lowercase S' => array('Y-m-d', false),
+			'lowercase S' => array('js F Y', false),
 		);
 	}
 
