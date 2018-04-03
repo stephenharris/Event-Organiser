@@ -207,7 +207,6 @@ class utilityFunctionsTest extends WP_UnitTestCase
 	*/
 	public function testBlogIsUsingOrdinal($format, $usingOrdinal)
 	{
-		//24 hour time formats
 		update_option( 'date_format', $format );
 		$this->assertEquals( $usingOrdinal, eo_blog_is_using_ordinal() );
 
@@ -226,7 +225,7 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		return array(
 			'uppercase S' => array('jS F Y', true),
 			'no S' => array('Y-m-d', false),
-			'lowercase S' => array('Y-m-d', false),
+			'lowercase S' => array('js F Y', false),
 		);
 	}
 
