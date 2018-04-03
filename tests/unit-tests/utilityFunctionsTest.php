@@ -214,9 +214,11 @@ class utilityFunctionsTest extends WP_UnitTestCase
 		//Filters
 		add_filter( 'eventorganiser_blog_is_using_ordinal', '__return_false' );
 		$this->assertFalse( eo_blog_is_using_ordinal() );
+		remove_filter( 'eventorganiser_blog_is_using_ordinal', '__return_false' );
 
 		add_filter( 'eventorganiser_blog_is_using_ordinal', '__return_true' );
 		$this->assertTrue( eo_blog_is_using_ordinal() );
+		remove_filter( 'eventorganiser_blog_is_using_ordinal', '__return_true' );
 
 	}
 
