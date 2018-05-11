@@ -1,7 +1,7 @@
 (function($) {
 
 eovenue = {
-		
+
 	maps: {},
 
 	/**
@@ -17,7 +17,7 @@ eovenue = {
 	    var fieldID    = ( options.hasOwnProperty( 'fieldID' ) ? options.fieldID : id );
 	    var draggable  = ( options.hasOwnProperty( 'draggable' ) ? options.draggable : false );
 	    var markerIcon = ( options.hasOwnProperty( 'markerIcon' ) ? options.markerIcon : null );
-	    	
+
 	    var lat      = ( options.hasOwnProperty( 'lat' ) ? options.lat : 0 );
 	    var lng      = ( options.hasOwnProperty( 'lng' ) ? options.lng : 0 );
 	    var location = { lat: lat, lng: lng, venue_id: 0 };
@@ -29,7 +29,7 @@ eovenue = {
 			locations:[ location ]
 	    };
 
-		var map = new eventorganiserMapsAdapter.google.map( fieldID, map_options );
+		var map = new eventorganiserMapsAdapter.provider.map( fieldID, map_options );
 
 		var marker = map.addMarker({
 			position:  { lat: lat, lng: lng },
@@ -47,25 +47,25 @@ eovenue = {
 	    if( options.hasOwnProperty( 'onDrag' ) && options.onDrag ){
 			marker.on( 'drag', options.onDrag );
 	    }
-	    
+
 	    if( options.hasOwnProperty( 'onDragend' ) && options.onDragend ){
 			marker.on( 'dragend', options.onDragend );
 	    }
-	    
+
 	    if( options.hasOwnProperty( 'onPositionchanged' ) && options.onPositionchanged ){
 			marker.on( 'move', options.onPositionchanged );
 	    }
-	    
+
 	},
-	
+
 	geocode: function( address, callback ){
-		var geocoder = new eventorganiserMapsAdapter.google.geocoder();
+		var geocoder = new eventorganiserMapsAdapter.provider.geocoder();
 		geocoder.geocode( address, callback );
 	},
-		
+
 	get_map: function( id ){
 		return this.maps[id];
 	}
-				
+
 };
 })(jQuery);

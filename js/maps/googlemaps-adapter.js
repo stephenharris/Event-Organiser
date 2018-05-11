@@ -1,5 +1,6 @@
 var eventorganiserMapsAdapter = eventorganiserMapsAdapter || {};
-eventorganiserMapsAdapter.google = eventorganiserMapsAdapter.google || {};
+eventorganiserMapsAdapter.googlemaps = eventorganiserMapsAdapter.googlemaps || {};
+eventorganiserMapsAdapter.provider = eventorganiserMapsAdapter.googlemaps;
 /**
  * Google Maps Adapter class
  * Dynamic Prototype Pattern, Adapter
@@ -7,7 +8,7 @@ eventorganiserMapsAdapter.google = eventorganiserMapsAdapter.google || {};
  * @param string elementID A DOM ID of the container for the map
  * @param object args Properties of the map
  */
-eventorganiserMapsAdapter.google.map = function ( elementID, args) {
+eventorganiserMapsAdapter.googlemaps.map = function ( elementID, args) {
 
     this.elementID = elementID;
     this.args = args;
@@ -39,7 +40,7 @@ eventorganiserMapsAdapter.google.map = function ( elementID, args) {
          * Set the center of the map to the specified location
          * @param object location With properties 'lat' and 'lng'
          */
-        eventorganiserMapsAdapter.google.map.prototype.setCenter = function( location ) {
+        eventorganiserMapsAdapter.googlemaps.map.prototype.setCenter = function( location ) {
             this._map.setCenter( { lat: parseFloat( location.lat ), lng: parseFloat( location.lng ) } );
         };
 
@@ -47,7 +48,7 @@ eventorganiserMapsAdapter.google.map = function ( elementID, args) {
          * Set the zoom level of the map
          * @param int zoom
          */
-        eventorganiserMapsAdapter.google.map.prototype.setZoom = function( zoom ) {
+        eventorganiserMapsAdapter.googlemaps.map.prototype.setZoom = function( zoom ) {
             this._map.setZoom( zoom );
         };
 
@@ -55,7 +56,7 @@ eventorganiserMapsAdapter.google.map = function ( elementID, args) {
          * Set the zoom level of the map to fit the array of locations
          * @param array locations Array of objects with properties 'lat' and 'lng'
          */
-        eventorganiserMapsAdapter.google.map.prototype.fitLocations = function( locations ) {
+        eventorganiserMapsAdapter.googlemaps.map.prototype.fitLocations = function( locations ) {
             var bounds = new google.maps.LatLngBounds();
             for ( var j = 0; j < locations.length; j++ ) {
                 var latlng = { lat: parseFloat( locations[j].lat ), lng: parseFloat( locations[j].lng ) };
@@ -69,9 +70,9 @@ eventorganiserMapsAdapter.google.map = function ( elementID, args) {
          * A location has an ID (venue_id), location (lat, lng) and, optional, tooltip content (tooltipContent)
          * @param object location
          */
-        eventorganiserMapsAdapter.google.map.prototype.addMarker = function( location ) {
+        eventorganiserMapsAdapter.googlemaps.map.prototype.addMarker = function( location ) {
             location.map = this;
-            var marker = new eventorganiserMapsAdapter.google.marker( location );
+            var marker = new eventorganiserMapsAdapter.googlemaps.marker( location );
             this._markers[location.venue_id] = marker;
             return marker;
         };
@@ -93,7 +94,7 @@ eventorganiserMapsAdapter.google.map = function ( elementID, args) {
  * venue_id (location ID), tooltipContent (optional, content for tooltip), icon (optional icon image URL)
  * @param object args
  */
-eventorganiserMapsAdapter.google.marker = function ( args ) {
+eventorganiserMapsAdapter.googlemaps.marker = function ( args ) {
 
     this.map = args.map;
 
@@ -127,7 +128,7 @@ eventorganiserMapsAdapter.google.marker = function ( args ) {
          * Set the location of the marker
          * @param object latLng with properties lat and lng
          */
-        eventorganiserMapsAdapter.google.marker.prototype.setPosition = function( latLng ) {
+        eventorganiserMapsAdapter.googlemaps.marker.prototype.setPosition = function( latLng ) {
             this._marker.setPosition( latLng );
         };
 
@@ -137,7 +138,7 @@ eventorganiserMapsAdapter.google.marker = function ( args ) {
          * @param eventName Event to listen to
          * @param callback Callback to be triggered when event occurs
          */
-        eventorganiserMapsAdapter.google.marker.prototype.on = function( eventName, callback ) {
+        eventorganiserMapsAdapter.googlemaps.marker.prototype.on = function( eventName, callback ) {
             var eventNameMapped;
             switch( eventName ) {
                 case 'move':
@@ -180,7 +181,7 @@ eventorganiserMapsAdapter.google.marker = function ( args ) {
  * A geocoder
  * Accepts an address and passes latitude/longtitude co-ordinates to  the callback
  */
-eventorganiserMapsAdapter.google.geocoder = function( ) {
+eventorganiserMapsAdapter.googlemaps.geocoder = function( ) {
     this._geocoder = new google.maps.Geocoder();
     if ( typeof this.geocode !== "function" ) {
         /**
@@ -188,7 +189,7 @@ eventorganiserMapsAdapter.google.geocoder = function( ) {
          * @param object address - with keys such as 'address' (street address), 'city', 'state', 'postcode' etc
          * @param callable callback
          */
-        eventorganiserMapsAdapter.google.geocoder.prototype.geocode = function ( address, callback ) {
+        eventorganiserMapsAdapter.googlemaps.geocoder.prototype.geocode = function ( address, callback ) {
 
             //Comma delimitate the address
             var addressString = "";

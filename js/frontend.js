@@ -703,7 +703,7 @@ jQuery(document).ready(function(){
 		}
 
 		var param = maps[i];
-		var map   = new eventorganiserMapsAdapter.google.map( "eo_venue_map-" + (i + 1), param );
+		var map   = new eventorganiserMapsAdapter.provider.map( "eo_venue_map-" + (i + 1), param );
 		for ( i=0; i < param.locations.length; i++ ) {
 			param.locations[i].position = {
 				lat: param.locations[i].lat,

@@ -163,6 +163,7 @@ function eventorganiser_get_option( $option = false, $default = false ) {
 		'hide_addon_page' => 0,
 		'disable_css' => 0,
 		'google_api_key' => false,
+		'map_provider' => 'openstreetmap'
 	);
 	$options = get_option( 'eventorganiser_options', $defaults );
 	$options = wp_parse_args( $options, $defaults );

@@ -26,36 +26,45 @@ function eventorganiser_register_script() {
 		'jquery-ui-button',
 	), $version, true );
 
-	/* Google Maps */
 	$protocal = is_ssl() ? 'https://' : 'http://';
-	$url      = add_query_arg( array(
-		'key'      => eventorganiser_get_google_maps_api_key(),
-		'language' => substr( get_locale(), 0, 2 )
-	), "{$protocal}maps.googleapis.com/maps/api/js");
+	$map_provider = eventorganiser_get_option( 'map_provider' );
 
-	/**
-	 * Filters the URL for Google Maps
-	 *
-	 * @param string The URL of Google Maps
-	 */
-	$url = apply_filters( 'eventorganiser_google_maps_url', $url );
-	wp_register_script( 'eo_GoogleMap', $url );
-	wp_register_script( 'eo-open-source-map', "{$protocal}cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js" );
-	wp_register_style( 'eo-open-source-map', "{$protocal}cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" );
+	if( 'googlemaps' === $map_provider ) {
+		/* Google Maps */
+		$url      = add_query_arg( array(
+			'key'      => eventorganiser_get_google_maps_api_key(),
+			'language' => substr( get_locale(), 0, 2 )
+		), "{$protocal}maps.googleapis.com/maps/api/js" );
 
-	wp_register_script( 'eo-google-map-adapters', EVENT_ORGANISER_URL."js/maps/google-map-adapters.js",array(
-		'jquery',
-		'eo_GoogleMap'
-	),$version,true);
+		/**
+		 * Filters the URL for Google Maps
+		 *
+		 * @param string The URL of Google Maps
+		 */
+		$url = apply_filters( 'eventorganiser_google_maps_url', $url );
+		wp_register_script( 'eo_GoogleMap', $url );
 
-	wp_register_script( 'eo-open-street-map-adapters', EVENT_ORGANISER_URL."js/maps/open-street-map-adapters.js",array(
-		'jquery',
-		'eo-open-source-map'
-	),$version,true);
-	wp_enqueue_style( 'eo-open-source-map' );
+		wp_register_script( 'eo-googlemaps-adapter', EVENT_ORGANISER_URL."js/maps/googlemaps-adapter.js", array(
+			'jquery',
+			'eo-wp-js-hooks',
+			'eo_GoogleMap'
+		), $version, true );
+
+	} elseif( 'openstreetmap' === $map_provider ) {
+		wp_register_script( 'eo-leaflet.js', "{$protocal}cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js" );
+		wp_register_style( 'eo-leaflet.js', "{$protocal}cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" );
+
+		wp_register_script( 'eo-openstreetmap-adapter', EVENT_ORGANISER_URL."js/maps/openstreetmap-adapter.js", array(
+			'jquery',
+			'eo-leaflet.js'
+		), $version, true );
+		wp_enqueue_style( 'eo-leaflet.js' );
+		wp_add_inline_style( 'eo-leaflet.js', ".leaflet-popup-close-button{box-shadow:none!important;}" );
+
+	}
 
 	/* Front-end script */
-	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",array(
+	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",  array(
 		'jquery',
 		'eo_qtip2',
 		'jquery-ui-core',
@@ -64,9 +73,8 @@ function eventorganiser_register_script() {
 		'jquery-ui-datepicker',
 		'eo_fullcalendar',
 		'eo-wp-js-hooks',
-		'eo-google-map-adapters',
-		'eo-open-street-map-adapters'
-	), $version,true);
+		"eo-{$map_provider}-adapter"
+	), $version, true );
 
 	/* Add js variables to frontend script */
 	$category = get_taxonomy( 'event-category' );
@@ -124,19 +132,19 @@ function eventorganiser_register_scripts(){
 	$ext = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 	$rtl = is_rtl() ? '-rtl' : '';
 
+	$map_provider = eventorganiser_get_option( 'map_provider' );
 
 	/*  Venue (map) utility script */
-	wp_register_script( 'eo-venue-util', EVENT_ORGANISER_URL."js/venue-util{$ext}.js",array(
+	wp_register_script( 'eo-venue-util', EVENT_ORGANISER_URL."js/venue-util{$ext}.js", array(
 		'jquery',
-		'eo-google-map-adapters',
-		'eo-open-street-map-adapters'
-	),$version,true);
+		"eo-{$map_provider}-adapter"
+	), $version, true );
 
 	/*  Venue script for venue edit */
 	wp_register_script( 'eo-venue-admin', EVENT_ORGANISER_URL."js/venue-admin{$ext}.js",array(
 		'jquery',
 		'eo-venue-util'
-	),$version,true);
+	), $version, true );
 
 	/*  Script for event edit page. (Legacy version) */
 	wp_register_script( 'eo-time-picker', EVENT_ORGANISER_URL."js/time-picker{$ext}.js",array(

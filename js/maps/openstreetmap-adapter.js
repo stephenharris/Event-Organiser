@@ -1,5 +1,6 @@
 var eventorganiserMapsAdapter = eventorganiserMapsAdapter || {};
 eventorganiserMapsAdapter.openstreetmap = eventorganiserMapsAdapter.openstreetmap || {};
+eventorganiserMapsAdapter.provider = eventorganiserMapsAdapter.openstreetmap;
 
 /**
  * OSM Adapter class
