@@ -1,6 +1,6 @@
 <?php
 
-class iCalTest extends PHPUnit_Framework_TestCase
+class iCalParseTest extends PHPUnit_Framework_TestCase
 {
 
 	public function testSingleEvent(){

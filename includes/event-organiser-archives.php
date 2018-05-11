@@ -79,7 +79,7 @@ function eventorganiser_pre_get_posts( $query ) {
 				$query->set('ondate',false);
 			}
 		}
-	
+
 		$query->set( 'post_type', 'event' );
 		$query->set( 'event_start_before', $ondate_end );
 		$query->set( 'event_end_after', $ondate_start );
@@ -93,10 +93,10 @@ function eventorganiser_pre_get_posts( $query ) {
 	//@see https://github.com/stephenharris/Event-Organiser/issues/30
 	if( $query->is_main_query() ){
 		if( eo_is_event_archive( 'day' ) || eo_is_event_archive( 'month' ) || eo_is_event_archive( 'year' ) ){
-			$query->set( 'showpastevents', true );  
+			$query->set( 'showpastevents', true );
 		}
-	}   
-		
+	}
+
 	$blog_now = new DateTime(null, eo_get_blog_timezone());
 
 	//Determine whether or not to show past events and each occurrence. //If not set, use options
@@ -121,7 +121,8 @@ function eventorganiser_pre_get_posts( $query ) {
 		if( $query->is_main_query() &&  (is_admin() || is_single() || $query->is_feed('eo-events') ) ){
 
 			//If in admin or single page - we probably don't want to see duplicates of (recurrent) events - unless specified otherwise.
-			$query->set('group_events_by','series');
+			//but neither do we care which date component is selected.
+			$query->set('group_events_by','series_indeterminate');
 
 		}elseif( eventorganiser_get_option('group_events') == 'series' ){
 			//In other instances (archives, shortcode listing) if showrepeats option is false display only the next event.
@@ -180,7 +181,7 @@ function eventorganiser_pre_get_posts( $query ) {
 				$cutoff = clone $blog_now;
 				$cutoff->modify( $intervals[ $query->get( 'eo_interval' ) ] );
 
-				if( is_admin() && 'series' == $query->get('group_events_by') ){
+				if( is_admin() && 'series_indeterminate' == $query->get('group_events_by') ){
 					//On admin we want to show the **first** occurrence of a recurring event which has an occurrence in the interval
 					global $wpdb;
 					$post_ids = $wpdb->get_results($wpdb->prepare(
@@ -277,9 +278,9 @@ function wp17853_eventorganiser_workaround( $limit ){
  */
 function eventorganiser_event_fields( $select, $query ){
 	global $wpdb;
-	
+
 	$q_fields = $query->get( 'fields' );
-	
+
 	if( eventorganiser_is_event_query( $query, true ) && 'ids' != $q_fields && 'id=>parent' != $q_fields ){
 		$et =$wpdb->eo_events;
 		$select .= ", {$et}.event_id, {$et}.event_id AS occurrence_id, {$et}.StartDate, {$et}.StartTime, {$et}.EndDate, {$et}.FinishTime, {$et}.event_occurrence ";
@@ -289,25 +290,27 @@ function eventorganiser_event_fields( $select, $query ){
 
 
 /**
-* GROUP BY Event (occurrence) ID
-* Event posts do not want to be grouped by post, but by occurrence - unless otherwise specified.
- * Hooked onto posts_groupby
+ * GROUP BY Event (occurrence) ID
+ * Event posts do not want to be grouped by post, but by occurrence. When grouping
+ * by series we do not use GROUP BY because we cannot be sure of the record that
+ * is selected for the group.
  *
- *@since 1.0.0
- *@access private
- *@ignore
- *@param string $groupby GROUP BY part of the SQL statement
- *@param string $query WP_Query
- *@return string
+ * @since 1.0.0
+ * @access private
+ * @ignore
+ * @param string $groupby GROUP BY part of the SQL statement
+ * @param string $query WP_Query
+ * @return string
  */
 function eventorganiser_event_groupby( $groupby, $query ) {
 	global $wpdb;
 
-	if ( $query->get( 'group_events_by' ) == 'series' ) {
-		return "{$wpdb->posts}.ID";
-	}
-
 	if ( eventorganiser_is_event_query( $query, true ) ) {
+
+		if ( 'series_indeterminate' == $query->get( 'group_events_by' ) ) {
+			return "{$wpdb->eo_events}.post_id";
+		}
+
 		if ( empty( $groupby ) ) {
 			return $groupby;
 		}
@@ -339,12 +342,20 @@ function eventorganiser_join_tables( $join, $query ) {
 		$join .= " LEFT JOIN $wpdb->eo_events ON $wpdb->posts.ID = {$wpdb->eo_events}.post_id ";
 
 		if ( 'series' == $query->get( 'group_events_by' ) ) {
-			//When grouping events, we perform WHERE statement in the subsquery
-			//@see eventorganiser_events_where
-			$_where = _eventorganiser_generate_mysql_where( $query );
-			$where  = $_where ? "WHERE {$_where}" : '';
-			$join .= "LEFT JOIN ( SELECT {$wpdb->eo_events}.event_id FROM {$wpdb->eo_events} {$where} ORDER BY {$wpdb->eo_events}.StartDate ASC, {$wpdb->eo_events}.StartTime ASC )
-					AS eoid ON eoid.event_id = {$wpdb->eo_events}.event_id ";
+
+			//This could potentially be a big select - use 'series_indeterminate' if
+			//you don't care how the occurrence is selected - it's a lot cheaper.
+			//@link https://github.com/stephenharris/Event-Organiser/issues/432
+			$wpdb->query("SET SQL_BIG_SELECTS=1;");
+
+			//@link https://github.com/stephenharris/Event-Organiser/issues/430
+			$where = _eventorganiser_generate_mysql_where( $query );
+			$where  = $where ? "WHERE {$where}" : '';
+			$join .= " LEFT JOIN
+				(SELECT post_id, StartDate, StartTime FROM {$wpdb->eo_events} $where) AS {$wpdb->eo_events}2
+				ON {$wpdb->eo_events}.post_id = {$wpdb->eo_events}2.post_id
+				AND TIMESTAMP({$wpdb->eo_events}.StartDate,{$wpdb->eo_events}.StartTime)
+				> TIMESTAMP({$wpdb->eo_events}2.StartDate,{$wpdb->eo_events}2.StartTime)";
 		}
 	}
 	return $join;
@@ -434,29 +445,29 @@ function _eventorganiser_generate_mysql_where( $query ) {
  * @return bool True if the query is an event query. False otherwise.
  */
 function eventorganiser_is_event_query( $query, $exclusive = false ){
-		
+
 	$post_types = $query->get( 'post_type' );
 
 	if( 'any' == $post_types ){
 		$post_types = get_post_types( array('exclude_from_search' => false) );
-	}	
-	
+	}
+
 	if( 'event' == $post_types || array( 'event' ) == $post_types ){
 		$bool = true;
-	
+
 	}elseif( ( $query && $query->is_feed( 'eo-events' ) ) || is_feed( 'eo-events' ) ){
 		$bool = true;
-		
+
 	}elseif( empty( $post_types ) && eo_is_event_taxonomy( $query ) ){
-		
+
 		//Querying by taxonomy - check if 'event' is the only post type
 		$post_types = array();
 		$taxonomies = wp_list_pluck( $query->tax_query->queries, 'taxonomy' );
-		
+
 		foreach ( get_post_types() as $pt ) {
-			
+
 			$object_taxonomies = ( $pt === 'attachment' ? get_taxonomies_for_attachments() : get_object_taxonomies( $pt ) );
-			
+
 			if ( array_intersect( $taxonomies, $object_taxonomies ) ) {
 				$post_types[] = $pt;
 			}
@@ -476,27 +487,27 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 		}
 	}elseif( $exclusive ){
 		$bool = false;
-		
+
 	}elseif( ( is_array( $post_types ) && in_array( 'event', $post_types ) ) ){
-		
+
 		$bool = true;
-		
+
 	}else{
 		$bool = false;
-		
+
 	}
 
 	/**
 	 * Filters whether the query is an event query.
-	 * 
-	 * This should be `true` if the query is for events, `false` otherwise. The 
-	 * third parameter, `$exclusive` qualifies if this means 'query exclusively 
-	 * for events' or not. If `true` then this filter should return `true` only 
+	 *
+	 * This should be `true` if the query is for events, `false` otherwise. The
+	 * third parameter, `$exclusive` qualifies if this means 'query exclusively
+	 * for events' or not. If `true` then this filter should return `true` only
 	 * if the query is exclusively for events.
-	 * 
+	 *
 	 * @param bool     $bool      Whether the query is an event query.
 	 * @param WP_Query $query     The WP_Query instance to check.
-	 * @param bool     $exclusive Whether the check if for queries exclusively for events. 
+	 * @param bool     $exclusive Whether the check if for queries exclusively for events.
 	 */
 	return apply_filters( 'eventorganiser_is_event_query', $bool, $query, $exclusive );
 }
@@ -514,14 +525,15 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
  * @return string
  */
 function eventorganiser_events_where( $where, $query ) {
-	//Only alter event queries. When grouping events we perform the WHERE query in the subquery
-	//@see eventorganiser_join_tables
-	if ( eventorganiser_is_event_query( $query, true ) && 'series' != $query->get( 'group_events_by' ) ) :
-		$_where = _eventorganiser_generate_mysql_where( $query );
-		if ( $_where ) {
-			$where .= " AND {$_where}";
-		}
-	endif;
+	global $wpdb;
+
+	$_where = _eventorganiser_generate_mysql_where( $query );
+	if ( $_where ) {
+		$where .= " AND {$_where}";
+	}
+	if('series' == $query->get( 'group_events_by' )){
+		$where .= " AND {$wpdb->eo_events}2.StartDate is NULL";
+	}
 
 	return $where;
 }
@@ -584,7 +596,7 @@ function eo_is_venue(){
 
 
 function _eventorganiser_update_event_dates_cache( $events, $query ){
-	
+
 	// No point in doing all this work if we didn't match any posts.
 	if ( ! $events ) {
 		return $events;
@@ -594,7 +606,7 @@ function _eventorganiser_update_event_dates_cache( $events, $query ){
 	if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
 		return $events;
 	}
-	
+
 	//TODO do we need to check if $events is an array of WP_Post objects?
 	//TODO allow this to be skipped?
 
@@ -603,25 +615,25 @@ function _eventorganiser_update_event_dates_cache( $events, $query ){
 	}
 
 	$tz = eo_get_blog_timezone();
-	
+
 	foreach ( $events as $event ) {
-		
+
 		$id = $event->ID;
 		$cached_event = wp_cache_get( 'eventorganiser_occurrences_'.$id );
-		
+
 		if ( isset( $cached_event[$event->occurrence_id] ) ) {
 			continue;
 		}
-		
+
 		$cached_event[$event->occurrence_id] = 	array(
 			'start' => new DateTime($event->StartDate.' '.$event->StartTime, $tz ),
 			'end'   => new DateTime($event->EndDate.' '.$event->FinishTime, $tz ),
 		);
-		
+
 		wp_cache_set( 'eventorganiser_occurrences_'.$id, $cached_event );
-		
+
 	}
-	
+
 	return $events;
 }
 

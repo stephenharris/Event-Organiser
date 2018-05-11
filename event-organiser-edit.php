@@ -79,7 +79,7 @@ function _eventorganiser_details_metabox( $post ) {
 			'<label for="eo-event-recurrring-notice">%s</label>',
 			__( 'This is a recurring event. Check to edit this event and its recurrences', 'eventorganiser' )
 		)
-		.' <input type="checkbox" id="eo-event-recurrring-notice" name="eo_input[AlterRe]" value="yes">';
+		. ' <input type="checkbox" id="eo-event-recurrring-notice" name="eo_input[AlterRe]" value="yes">';
 	} else {
 		$notices = '';
 	}
@@ -93,7 +93,7 @@ function _eventorganiser_details_metabox( $post ) {
 	$notices = apply_filters( 'eventorganiser_event_metabox_notice', $notices, $post );
 	if ( $notices ) {
 		//updated class used for backwards compatability see https://core.trac.wordpress.org/ticket/27418
-		echo '<div class="notice notice-success updated inline"><p>'.$notices.'</p></div>';
+		echo '<div class="notice notice-success updated inline"><p>' . $notices . '</p></div>';
 	}
 
 	$date_desc = sprintf( __( 'Enter date in %s format', 'eventorganiser' ), $format );
@@ -101,12 +101,12 @@ function _eventorganiser_details_metabox( $post ) {
 	?>
 	<div class="eo-grid <?php echo ( $sche_once ? 'onetime': 'reoccurence' );?>">
 	
- 		<div class="eo-grid-row">
+			<div class="eo-grid-row">
 	 		<div class="eo-grid-4">
 				<span class="eo-label" id="eo-start-datetime-label">
 					<?php esc_html_e( 'Start Date/Time:', 'eventorganiser' ); ?> 
 				</span>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-start-datetime-label">
 	 		
 	 			<label for="eo-start-date" class="screen-reader-text"><?php esc_html_e( 'Start Date', 'eventorganiser' ); ?></label>
@@ -121,15 +121,15 @@ function _eventorganiser_details_metabox( $post ) {
 				);
 				?>
 				<span id="eo-start-time-desc" class="screen-reader-text"><?php echo esc_html( $time_desc );?></span>
- 			</div>
- 		</div>
- 		
+				</div>
+			</div>
+			
 		<div class="eo-grid-row">
 	 		<div class="eo-grid-4">
 				<span class="eo-label" id="eo-end-datetime-label">
 					<?php esc_html_e( 'End Date/Time:', 'eventorganiser' ); ?> 
 				</span>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-end-datetime-label">
 	 		
 	 			<label for="eo-end-date" class="screen-reader-text"><?php esc_html_e( 'End Date', 'eventorganiser' ); ?></label>
@@ -152,13 +152,13 @@ function _eventorganiser_details_metabox( $post ) {
 					</label>
 				</span>
 
- 			</div>
- 		</div>
- 		
+				</div>
+			</div>
+			
 		<div class="eo-grid-row event-date">
 	 		<div class="eo-grid-4">
 				<label for="eo-event-recurrence"><?php esc_html_e( 'Recurrence:', 'eventorganiser' ); ?> </label>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8 event-date">
 				<?php
 				$recurrence_schedules = array(
@@ -171,10 +171,10 @@ function _eventorganiser_details_metabox( $post ) {
 						<option value="<?php echo esc_attr( $value )?>" <?php selected( $schedule, $value );?>><?php echo esc_html( $label );?></option>
 					<?php endforeach; ?>
 				</select>
- 			</div>
- 		</div>
- 		
- 		<div class="eo-grid-row event-date reocurrence_row">
+				</div>
+			</div>
+			
+			<div class="eo-grid-row event-date reocurrence_row">
 	 		<div class="eo-grid-4"></div>
 	 		<div class="eo-grid-8 event-date">
 				<div id="eo-recurrence-frequency-wrapper">
@@ -229,13 +229,13 @@ function _eventorganiser_details_metabox( $post ) {
 
 				<p id="eo-event-summary" role="status" aria-live="polite"></p>
 				
- 			</div>
- 		</div>
+				</div>
+			</div>
 
 		<div id="eo_occurrence_picker_row" class="eo-grid-row event-date">
 	 		<div class="eo-grid-4">
 				<?php esc_html_e( 'Include/Exclude occurrences:', 'eventorganiser' ); ?>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8 event-date">
 				<?php submit_button( __( 'Show dates', 'eventorganiser' ), 'hide-if-no-js eo_occurrence_toggle button small', 'eo_date_toggle', false ); ?>
 						
@@ -258,8 +258,8 @@ function _eventorganiser_details_metabox( $post ) {
 				}?>
 				<input type="hidden" name="eo_input[exclude]" id="eo-occurrence-excludes" value="<?php echo $exclude_str; ?>"/>
 	 		
- 			</div>
- 		</div>
+				</div>
+			</div>
 
 		<?php
 		$tax = get_taxonomy( 'event-venue' );
@@ -268,7 +268,7 @@ function _eventorganiser_details_metabox( $post ) {
 		<div class="eo-grid-row eo-venue-combobox-select">
 	 		<div class="eo-grid-4">
 				<label for="venue_select"><?php echo esc_html( $tax->labels->singular_name_colon ); ?></label>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8">
 				<select size="50" id="venue_select" name="eo_input[event-venue]">
 					<option><?php esc_html_e( 'Select a venue', 'eventorganiser' );?></option>
@@ -276,17 +276,17 @@ function _eventorganiser_details_metabox( $post ) {
 						<option <?php  selected( $venue->term_id, $venue_id );?> value="<?php echo intval( $venue->term_id );?>"><?php echo esc_html( $venue->name ); ?></option>
 					<?php endforeach;?>
 				</select>
- 			</div>
- 		</div>
- 
- 		<!-- Add New Venue --> 
- 		<div class="eo-grid-row eo-add-new-venue">
+				</div>
+			</div>
+	
+			<!-- Add New Venue --> 
+			<div class="eo-grid-row eo-add-new-venue">
 	 		<div class="eo-grid-4">
 				<label for="eo_venue_name"><?php esc_html_e( 'Venue Name', 'eventorganiser' ); ?></label>
- 			</div>
+				</div>
 	 		<div class="eo-grid-8">
 				<input type="text" name="eo_venue[name]" id="eo_venue_name"  value=""/>
- 			</div>			
+				</div>			
 			
 			<?php
 			$address_fields = _eventorganiser_get_venue_address_fields();
@@ -307,8 +307,8 @@ function _eventorganiser_details_metabox( $post ) {
 			<div class="eo-grid-4"></div>
 	 		<div class="eo-grid-8 event-date">
 				<a class="button eo-add-new-venue-cancel" href="#"><?php esc_html_e( 'Cancel','eventorganiser' );?> </a>
- 			</div>
- 		</div>
+				</div>
+			</div>
 				
 		<div class="eo-grid-row venue_row <?php if ( ! $venue_id ) { echo 'novenue'; }?>">
 	 		<div class="eo-grid-4"></div>
@@ -317,8 +317,8 @@ function _eventorganiser_details_metabox( $post ) {
 				<?php
 				if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() ) {
 					printf(
-						'<p>' . esc_html__( 'Google Maps now requires you register for an API key. If you wish to use maps on your site, %splease enter your key%s.', 'eventorganiser' ) . '</p>',
-						sprintf( '<a href="%s">', esc_url ( admin_url( 'options-general.php?page=event-settings' ).'#google_api_key' ) ),
+						'<p>' . esc_html__( 'Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%2$s.', 'eventorganiser' ) . '</p>',
+						sprintf( '<a href="%s">', esc_url( admin_url( 'options-general.php?page=event-settings' ) . '#google_api_key' ) ),
 						'</a>'
 					);
 				}
@@ -331,8 +331,8 @@ function _eventorganiser_details_metabox( $post ) {
 
 				<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
 				<div class="clear"></div>
- 			</div>
- 		</div>
+				</div>
+			</div>
 		<?php endif; //endif venue's supported ?>
 
 		<?php
@@ -349,7 +349,7 @@ function _eventorganiser_details_metabox( $post ) {
 	<?php
 
 	// create a custom nonce for submit verification later
-	wp_nonce_field( 'eventorganiser_event_update_'.get_the_ID().'_'.get_current_blog_id(), '_eononce' );
+	wp_nonce_field( 'eventorganiser_event_update_' . get_the_ID() . '_' . get_current_blog_id(), '_eononce' );
 }
 
 
@@ -365,7 +365,7 @@ function _eventorganiser_details_metabox( $post ) {
 function eventorganiser_details_save( $post_id ) {
 
 	//make sure data came from our meta box and prevent CSRF
-	if ( ! isset( $_POST['_eononce'] ) || ! wp_verify_nonce( $_POST['_eononce'], 'eventorganiser_event_update_'.$post_id.'_'.get_current_blog_id() ) ) {
+	if ( ! isset( $_POST['_eononce'] ) || ! wp_verify_nonce( $_POST['_eononce'], 'eventorganiser_event_update_' . $post_id . '_' . get_current_blog_id() ) ) {
 		return;
 	}
 
@@ -448,6 +448,7 @@ function eventorganiser_details_save( $post_id ) {
 
 	//Parse included and exclude dates
 	$in_ex = array();
+	$orig_schedule = eo_get_event_schedule( $post_id );
 	foreach ( array( 'include', 'exclude' ) as $key ) :
 
 		$in_ex[$key] = array();
@@ -462,11 +463,13 @@ function eventorganiser_details_save( $post_id ) {
 				}
 			}
 
-			/* see https://github.com/stephenharris/Event-Organiser/issues/260
-			if( $orig = array_uintersect( $orig_schedule[$key], $in_ex[$key], '_eventorganiser_compare_dates' ) ){
-				$in_ex[$key] = array_merge( $orig, $in_ex[$key] );
-				$in_ex[$key] = _eventorganiser_remove_duplicates( $in_ex[$key] );
-			}*/
+			//see https://github.com/stephenharris/Event-Organiser/issues/260
+			if ( $start == $orig_schedule['start'] && $end == $orig_schedule['end'] ) {
+				if( $orig = array_uintersect( $orig_schedule[$key], $in_ex[$key], '_eventorganiser_compare_dates' ) ){
+					$in_ex[$key] = array_merge( $orig, array_udiff( $in_ex[$key], $orig_schedule[$key], '_eventorganiser_compare_dates' ) );
+					$in_ex[$key] = _eventorganiser_remove_duplicates( $in_ex[$key] );
+				}
+			}
 		}
 	endforeach;
 

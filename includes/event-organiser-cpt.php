@@ -227,7 +227,7 @@ function eventorganiser_cpt_register() {
 		'add_new_item'          => __( 'Add New Event', 'eventorganiser' ),
 		'edit_item'             => __( 'Edit Event', 'eventorganiser' ),
 		'new_item'              => __( 'New Event', 'eventorganiser' ),
-		'all_items'             => __( 'All events', 'eventorganiser' ),
+		'all_items'             => __( 'All Events', 'eventorganiser' ),
 		'view_item'             => __( 'View Event', 'eventorganiser' ),
 		'search_items'          => __( 'Search events', 'eventorganiser' ),
 		'not_found'             => __( 'No events found', 'eventorganiser' ),
@@ -239,7 +239,14 @@ function eventorganiser_cpt_register() {
 		'items_list'            => __( 'Events list', 'eventorganiser' ),
 		'archives'              => __( 'Event Archives', 'eventorganiser' ),
 		'insert_into_item'      => __( 'Insert into event', 'eventorganiser' ),
-		'uploaded_to_this_item' => __( 'Uploaded to this event', 'eventorganiser' ),		
+		'uploaded_to_this_item' => __( 'Uploaded to this event', 'eventorganiser' ),
+		//non-default wp labels
+		'events_at_venue'       => __( 'Events at %s','eventorganiser' ),
+		'events_in_cat'         => __( 'Event Category: %s', 'eventorganiser' ),
+		'events_in_tag'         => __( 'Event Tag: %s', 'eventorganiser' ),
+		'events_on_date'        => __( 'Events: %s','eventorganiser' ),
+		'events_in_month'       => __( 'Events: %s','eventorganiser' ),
+		'events_in_year'        => __( 'Events: %s','eventorganiser' ),
 	);
 
 	$exclude_from_search = ( 0 == eventorganiser_get_option( 'excludefromsearch' ) ) ? false : true;
@@ -623,21 +630,15 @@ add_action( 'admin_menu', 'eventorganiser_colour_scripts' );
  * @since 1.3
  */
 function eventorganiser_save_event_cat_meta( $term_id ) {
-	if ( isset( $_POST['eo_term_meta'] ) ):
-		$term_meta = get_option( "eo-event-category_$term_id");
-		$cat_keys = array_keys($_POST['eo_term_meta']);
-
-		foreach ($cat_keys as $key):
-			if (isset($_POST['eo_term_meta'][$key]))
-				$term_meta[$key] = $_POST['eo_term_meta'][$key];
-		endforeach;
-
-	        //save the option array
-	        update_option( "eo-event-category_$term_id", $term_meta );
-	endif;
+	if ( isset( $_POST['eo_term_meta'] ) &&  isset( $_POST['eo_term_meta']['colour'] ) ) {
+		$term_meta           = get_option( "eo-event-category_{$term_id}", array() );
+		//@see https://core.trac.wordpress.org/ticket/27583
+		$term_meta['colour'] = eo_sanitize_hex_color( $_POST['eo_term_meta']['colour'] );
+		update_option( "eo-event-category_{$term_id}", $term_meta );
+	}
 }
-add_action('created_event-category', 'eventorganiser_save_event_cat_meta', 10, 2);
-add_action( 'edited_event-category', 'eventorganiser_save_event_cat_meta', 10, 2);
+add_action( 'created_event-category', 'eventorganiser_save_event_cat_meta', 10, 2 );
+add_action( 'edited_event-category', 'eventorganiser_save_event_cat_meta', 10, 2 );
 
 /**
  * When a category is deleted, delete the saved colour (saved in options table).
@@ -666,7 +667,7 @@ add_action('delete_event-category','eventorganiser_tax_term_deleted',10,2);
 function eventorganiser_add_tax_meta($taxonomy){
 	?>
 	<div class="form-field"><?php eventorganiser_tax_meta_form('');?></div>
-	<p> &nbsp; </br>&nbsp; </p>
+	<p> &nbsp; <br>&nbsp; </p>
 <?php
 }
 add_action('event-category_add_form_fields', 'eventorganiser_add_tax_meta',10,1);

@@ -6,7 +6,7 @@ use Behat\Behat\Context\ClosuredContextInterface,
 	Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\TableNode;
 
-class WordPressPostListContext extends Johnbillion\WordPressExtension\Context\WordPressPostListContext implements Context, SnippetAcceptingContext {
+class WordPressPostListContext extends StephenHarris\WordPressBehatExtension\Context\WordPressPostListContext implements Context, SnippetAcceptingContext {
 
 	/**
 	 * @When I sort events by :column :order

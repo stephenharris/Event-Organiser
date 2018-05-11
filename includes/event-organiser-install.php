@@ -53,6 +53,12 @@ function eventorganiser_site_install() {
 		$charset_collate .= " COLLATE $wpdb->collate";
 	}
 
+	/*
+	 * Handling maximum index size of 767 bytes.
+	 * See wp_get_db_schema() function in wp-admin/includes/schema.php for more details.
+	 */
+	$max_index_length = 191;
+
 	//Events table
 	$sql_events_table = "CREATE TABLE {$wpdb->eo_events} (
 		event_id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -75,7 +81,7 @@ function eventorganiser_site_install() {
 		meta_value longtext,
 		PRIMARY KEY  (meta_id),
 		KEY eo_venue_id (eo_venue_id),
-		KEY meta_key (meta_key)
+		KEY meta_key (meta_key($max_index_length))
 		) $charset_collate; ";
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );

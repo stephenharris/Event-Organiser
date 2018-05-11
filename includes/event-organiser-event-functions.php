@@ -170,60 +170,62 @@ function eo_get_by_postid($post_id,$deprecated=0, $occurrence_id=0){
 
 
 /**
-* Returns the start date of occurrence of event.
-* 
-* If used inside the loop, with no id no set, returns start date of
-* current event occurrence.
-* 
-* **3.0.0 Update:** This function used to accept 4 arguments (versions 1.5.6 - 2.11.1), with 
-* the third (null) argument deprecated. While the old behaviour shall still work, it is recommended 
-* that pass a maximum of three arguments, as shown below, with the third argument (not the fourth)
-* specifying the occurrence ID.
-* 
-* ### Examples
-* Inside the loop, you can output the start date of event (occurrence)
-* <code>
-*       <php echo eo_get_the_start( 'jS M Y' ); ?>
-* </code> 
-* Get the start date of the event with id 7 and occurrence ID 3
-* <code>
-*       <?php $date = eo_get_the_start ( 'jS M Y', 7, 3 ); ?>
-* </code>
-* Print a list of upcoming events with their start and end date
-* <code>
-*     //Get upcoming events
-*     $events = eo_get_events(array(
-*          'numberposts'        => 5,
-*          'events_start_after' => 'today',
-*          'showpastevents'     => true,
-*       ));
-*
-*     if( $events ){
-*         echo '<ul>';
-*         foreach( $events as $event ){
-*           printf("<li><a href='%s' >%s</a> from %s to %s </li>",
-*                get_the_permalink( $post->ID ),
-*                get_the_title( $post->ID ),
-*                eo_get_the_start( 'jS F Y', $post->ID, $post->occurrence_id ),
-*                eo_get_the_end( 'jS F Y', $post->ID, $post->occurrence_id )
-*           );
-*          }
-*         echo '</ul>';
-*     }else{
-*         echo 'No Upcoming Events';
-*     }
-* </code>
-*
-* @since 1.0.0
-* @package event-date-functions
-*
-* @param string $format String of format as accepted by PHP date or the constant DATETIMEOBJ to return a DateTime object
-* @param int $post_id Post ID of the event
-* @param int $occurrence_id  The occurrence ID
-* @param int $deprecated (Was) the occurrence id, supply this as the third argument
-* @return string|DateTime the start date formated to given format, as accepted by PHP date or a DateTime object if DATETIMEOBJ is given as format.
+ * Returns the start date of occurrence of event.
+ *
+ * If used inside the loop, with no id no set, returns start date of
+ * current event occurrence.
+ *
+ * **3.0.0 Update:** This function used to accept 4 arguments (versions 1.5.6 - 2.11.1), with
+ * the third (null) argument deprecated. While the old behaviour shall still work, it is recommended
+ * that pass a maximum of three arguments, as shown below, with the third argument (not the fourth)
+ * specifying the occurrence ID.
+ *
+ * ### Examples
+ * Inside the loop, you can output the start date of event (occurrence)
+ * <code>
+ *       <?php echo eo_get_the_start( 'jS M Y' ); ?>
+ * </code>
+ * Get the start date of the event with id 7 and occurrence ID 3
+ * <code>
+ *       <?php $date = eo_get_the_start ( 'jS M Y', 7, 3 ); ?>
+ * </code>
+ * Print a list of upcoming events with their start and end date
+ * <code>
+ *     //Get upcoming events
+ *     $events = eo_get_events(array(
+ *          'numberposts'        => 5,
+ *          'events_start_after' => 'today',
+ *          'showpastevents'     => true,
+ *       ));
+ *
+ *     if( $events ){
+ *         echo '<ul>';
+ *         foreach( $events as $event ){
+ *           printf("<li><a href='%s' >%s</a> from %s to %s </li>",
+ *                get_the_permalink( $post->ID ),
+ *                get_the_title( $post->ID ),
+ *                eo_get_the_start( 'jS F Y', $post->ID, $post->occurrence_id ),
+ *                eo_get_the_end( 'jS F Y', $post->ID, $post->occurrence_id )
+ *           );
+ *          }
+ *         echo '</ul>';
+ *     }else{
+ *         echo 'No Upcoming Events';
+ *     }
+ * </code>
+ *
+ * @since 3.0.0 Third argument repurposed for the occurrence ID. Fourth argument can still be used, but discouraged.
+ * @since 1.5.6 Third argument deprecated, use fourth argument to pass occurrence ID.
+ * @since 1.0.0
+ * @package event-date-functions
+ *
+ * @param string $format String of format as accepted by PHP date or the constant DATETIMEOBJ to return a DateTime object
+ * @param int $post_id Post ID of the event
+ * @param int $occurrence_id  The occurrence ID
+ * @param int $deprecated (Was) the occurrence id, supply this as the third argument
+ * @return string|DateTime the start date formated to given format, as accepted by PHP date or a DateTime object if DATETIMEOBJ is given as format.
  */
-function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
+function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ) {
 	global $post;
 	$event = $post;
 
@@ -331,6 +333,9 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
 
 /**
  * Echos the start date of occurrence of event
+ *
+ * @since 3.0.0 Third argument repurposed for the occurrence ID. Fourth argument can still be used, but discouraged.
+ * @since 1.5.6 Third argument deprecated, use fourth argument to pass occurrence ID.
  * @since 1.0.0
  * @uses eo_get_the_start()
  * @package event-date-functions
@@ -340,65 +345,67 @@ function eo_get_the_occurrence_start($format='d-m-Y',$occurrence_id){
  * @param int $occurrence_id The occurrence ID
  * @param int $deprecated Deprecated, use the third argument.
  */
-function eo_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
+function eo_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ) {
 	echo eo_get_the_start( $format, $post_id, $occurrence_id, $deprecated );
 }
 
 
 /**
-* Returns the end date of occurrence of event. 
-* 
-* If used inside the loop, with no id no set, returns end date of
-* current event occurrence.
-* 
-* **3.0.0 Update:** This function used to accept 4 arguments (versions 1.5.6 - 2.11.1), with 
-* the third (null) argument deprecated. While the old behaviour shall still work, it is deprecated 
-* so you you should now pass a maximum of three arguments, as shown below, with the third argument
-* specifying the occurrence ID.
-* 
-* ### Examples
-* Inside the loop, you can output the end date of event (occurrence)
-* <code>
-*       <php echo eo_get_the_end( 'jS M Y' ); ?>
-* </code> 
-* Get the end date of the event with id 7 and occurrence ID 3
-* <code>
-*       <?php $date = eo_get_the_end( 'jS M Y', 7, 3 ); ?>
-* </code>
-* Print a list of upcoming events with their start and end date
-* <code>
-*     //Get upcoming events
-*     $events = eo_get_events(array(
-*          'numberposts'        => 5,
-*          'events_start_after' => 'today',
-*          'showpastevents'     => true,
-*       ));
-*
-*     if( $events ){
-*         echo '<ul>';
-*         foreach( $events as $event ){
-*           printf("<li><a href='%s' >%s</a> from %s to %s </li>",
-*                get_the_permalink( $post->ID ),
-*                get_the_title( $post->ID ),
-*                eo_get_the_start( 'jS F Y', $post->ID, $post->occurrence_id ),
-*                eo_get_the_end( 'jS F Y', $post->ID, $post->occurrence_id )
-*           );
-*          }
-*         echo '</ul>';
-*     }else{
-*         echo 'No Upcoming Events';
-*     }
-* </code>
-* 
-* @since 1.0.0
-* @package event-date-functions
-* @param string $format String of format as accepted by PHP date
-* @param int $post_id The event (post) ID. Uses current event if empty.
-* @param int $occurrence_id  The occurrence ID
-* @param int $deprecated (Was) the occurrence id, supply this as the third argument
-* @return string|DateTime the end date formated to given format, as accepted by PHP date
+ * Returns the end date of occurrence of event.
+ *
+ * If used inside the loop, with no id no set, returns end date of
+ * current event occurrence.
+ *
+ * **3.0.0 Update:** This function used to accept 4 arguments (versions 1.5.6 - 2.11.1), with
+ * the third (null) argument deprecated. While the old behaviour shall still work, it is deprecated
+ * so you you should now pass a maximum of three arguments, as shown below, with the third argument
+ * specifying the occurrence ID.
+ *
+ * ### Examples
+ * Inside the loop, you can output the end date of event (occurrence)
+ * <code>
+ *       <?php echo eo_get_the_end( 'jS M Y' ); ?>
+ * </code>
+ * Get the end date of the event with id 7 and occurrence ID 3
+ * <code>
+ *       <?php $date = eo_get_the_end( 'jS M Y', 7, 3 ); ?>
+ * </code>
+ * Print a list of upcoming events with their start and end date
+ * <code>
+ *     //Get upcoming events
+ *     $events = eo_get_events(array(
+ *          'numberposts'        => 5,
+ *          'events_start_after' => 'today',
+ *          'showpastevents'     => true,
+ *       ));
+ *
+ *     if( $events ){
+ *         echo '<ul>';
+ *         foreach( $events as $event ){
+ *           printf("<li><a href='%s' >%s</a> from %s to %s </li>",
+ *                get_the_permalink( $post->ID ),
+ *                get_the_title( $post->ID ),
+ *                eo_get_the_start( 'jS F Y', $post->ID, $post->occurrence_id ),
+ *                eo_get_the_end( 'jS F Y', $post->ID, $post->occurrence_id )
+ *           );
+ *          }
+ *         echo '</ul>';
+ *     }else{
+ *         echo 'No Upcoming Events';
+ *     }
+ * </code>
+ *
+ * @since 3.0.0 Third argument repurposed for the occurrence ID. Fourth argument can still be used, but discouraged.
+ * @since 1.5.6 Third argument deprecated, use fourth argument to pass occurrence ID.
+ * @since 1.0.0
+ * @package event-date-functions
+ * @param string $format String of format as accepted by PHP date
+ * @param int $post_id The event (post) ID. Uses current event if empty.
+ * @param int $occurrence_id  The occurrence ID
+ * @param int $deprecated (Was) the occurrence id, supply this as the third argument
+ * @return string|DateTime the end date formated to given format, as accepted by PHP date
  */
-function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0  ){
+function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0  ) {
 	global $post;
 	$event = $post;
 
@@ -431,46 +438,49 @@ function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $d
 }
 
 /**
-* Echos the end date of occurrence of event
+ * Echos the end date of occurrence of event
+ * @since 3.0.0 Third argument repurposed for the occurrence ID. Fourth argument can still be used, but discouraged.
+ * @since 1.5.6 Third argument deprecated, use fourth argument to pass occurrence ID.
  * @since 1.0.0
  * @uses eo_get_the_end()
-* @package event-date-functions
- * 
-* @param string $format String of format as accepted by PHP date
-* @param int $post_id Post ID of the event
-* @param int $occurrence_id The occurrence ID
-* @param int $occurrence_id Deprecated, use the third argument.
+ * @package event-date-functions
+ *
+ * @param string $format String of format as accepted by PHP date
+ * @param int $post_id Post ID of the event
+ * @param int $occurrence_id The occurrence ID
+ * @param int $occurrence_id Deprecated, use the third argument.
  */
-function eo_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ){
+function eo_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $deprecated = 0 ) {
 	echo eo_get_the_end( $format, $post_id, $occurrence_id, $deprecated );
 }
 
 
 /**
-* Gets the formated date of next occurrence of an event
-* 
-* ### Examples
-* Inside the loop, you can output the start date of the next occurrence of the current event.
-* <code>
-* <?php $next = eo_get_next_occurrence( 'jS M Y' ); ?>
-* </code> 
-* 
-* Print the start date of the next occurrence of event with id 7
-* <code>
-* <?php echo eo_get_next_occurrence( 'jS M Y', 7 ); ?>
-* </code>
-*
-* @since 1.0.0
-* @package event-date-functions
-* @param string $format The format to use, using PHP Date format
-* @param int $post_id The event (post) ID, 
-* @return string The formatted date or false if no date exists
+ * Gets the formated date of next occurrence of an event
+ *
+ * ### Examples
+ * Inside the loop, you can output the start date of the next occurrence of the current event.
+ * <code>
+ * <?php $next = eo_get_next_occurrence( 'jS M Y' ); ?>
+ * </code>
+ *
+ * Print the start date of the next occurrence of event with id 7
+ * <code>
+ * <?php echo eo_get_next_occurrence( 'jS M Y', 7 ); ?>
+ * </code>
+ *
+ * @since 1.0.0
+ * @package event-date-functions
+ * @param string $format The format to use, using PHP Date format
+ * @param int $post_id The event (post) ID,
+ * @return string The formatted date or false if no date exists
  */
-function eo_get_next_occurrence($format='d-m-Y',$post_id=0){
-	$next_occurrence = eo_get_next_occurrence_of($post_id);
+function eo_get_next_occurrence( $format = 'd-m-Y', $post_id = 0 ) {
+	$next_occurrence = eo_get_next_occurrence_of( $post_id );
 
-	if( !$next_occurrence )
+	if ( ! $next_occurrence ) {
 		return false;
+	}
 
 	$next = $next_occurrence['start'];
 	/**
@@ -481,31 +491,33 @@ function eo_get_next_occurrence($format='d-m-Y',$post_id=0){
 	 * @param string $format The format the date should be returned in
 	 * @param int $post_id Post ID of the event
 	 */
-	$formatted_date = apply_filters('eventorganiser_get_next_occurrence', eo_format_datetime( $next, $format ), $next, $format, $post_id );
+	$formatted_date = apply_filters( 'eventorganiser_get_next_occurrence', eo_format_datetime( $next, $format ), $next, $format, $post_id );
 	return $formatted_date;
 }
 
 /**
-* Returns an array of datetimes (start and end) corresponding to the next occurrence of an event
-* {@see eo_get_next_occurrence()} on the other hand returns a formated datetime of the start date.
-* To get the current occurrence {@see eo_get_current_occurrence_of()}
-*
-* @package event-date-functions
-* @since 1.6
-*
-* @param int $post_id The event (post) ID. Uses current event if empty.
-* @return array Array with keys 'start' and 'end', with corresponding datetime objects
+ * Returns an array of datetimes (start and end) corresponding to the next occurrence of an event
+ * {@see eo_get_next_occurrence()} on the other hand returns a formated datetime of the start date.
+ *
+ * 'Next occurrence' means next occurrence that starts, and so will not be a currently running occurrence. To get
+ * the currently running occurrence use {@see eo_get_current_occurrence_of()}
+ *
+ * @package event-date-functions
+ * @since 1.6
+ *
+ * @param int $post_id The event (post) ID. Uses current event if empty.
+ * @return bool|array Array with keys 'start', 'end' and 'occurrence_id', with corresponding datetime objects / occurrence ID or false if there are no future dates.
  */
-function eo_get_next_occurrence_of($post_id=0){
+function eo_get_next_occurrence_of( $post_id = 0 ) {
 	global $wpdb;
-	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
-	
+	$post_id = (int) ( empty( $post_id ) ? get_the_ID() : $post_id );
+
 	//Retrieve the blog's local time and create the date part
 	$tz = eo_get_blog_timezone();
-	$blog_now = new DateTime(null, $tz );
-	$now_date =$blog_now->format('Y-m-d');
-	$now_time =$blog_now->format('H:i:s');
-	
+	$blog_now = new DateTime( null, $tz );
+	$now_date = $blog_now->format( 'Y-m-d' );
+	$now_time = $blog_now->format( 'H:i:s' );
+
 	$nextoccurrence  = $wpdb->get_row($wpdb->prepare("
 		SELECT event_id as occurrence_id, StartDate, StartTime, EndDate, FinishTime
 		FROM  {$wpdb->eo_events}
@@ -514,76 +526,78 @@ function eo_get_next_occurrence_of($post_id=0){
 			({$wpdb->eo_events}.StartDate > %s) OR
 			({$wpdb->eo_events}.StartDate = %s AND {$wpdb->eo_events}.StartTime >= %s))
 		ORDER BY {$wpdb->eo_events}.StartDate ASC
-		LIMIT 1",$post_id,$now_date,$now_date,$now_time));
+		LIMIT 1", $post_id, $now_date, $now_date, $now_time ) );
 
-	if( ! $nextoccurrence )
+	if ( ! $nextoccurrence ) {
 		return false;
+	}
 
-	$start = new DateTime($nextoccurrence->StartDate.' '.$nextoccurrence->StartTime, $tz);
-	$end = new DateTime($nextoccurrence->EndDate.' '.$nextoccurrence->FinishTime, $tz);
-	$occurrence_id = $nextoccurrence->occurrence_id;
+	$start = new DateTime( $nextoccurrence->StartDate . ' ' . $nextoccurrence->StartTime, $tz );
+	$end = new DateTime( $nextoccurrence->EndDate . ' ' . $nextoccurrence->FinishTime, $tz );
+	$occurrence_id = (int) $nextoccurrence->occurrence_id;
 
-	return compact( 'start', 'end', 'occurrence_id');
+	return compact( 'start', 'end', 'occurrence_id' );
 }
 
 
 /**
-* Prints the formated date of next occurrence of an event
-* @since 1.0.0
-* @uses eo_get_next_occurrence()
-* @package event-date-functions
-*
-* @param string $format The format to use, using PHP Date format
-* @param int $post_id The event (post) ID. Uses current event if empty.
+ * Prints the formated date of next occurrence of an event
+ * @since 1.0.0
+ * @uses eo_get_next_occurrence()
+ * @package event-date-functions
+ *
+ * @param string $format The format to use, using PHP Date format
+ * @param int $post_id The event (post) ID. Uses current event if empty.
  */
 function eo_next_occurrence( $format = '', $event_id = 0 ) {
 	echo eo_get_next_occurrence( $format, $event_id );
 }
 
 /**
-* Returns an array of datetimes (start and end) corresponding to the current occurrence of an event.
-* If the event has multiple overlapping occurrences currently running, returns the one with the latest start date.
-* To get the next occurrence{@see `eo_get_next_occurrence_of()`}
-*
-* @since 1.7
-* @package event-date-functions
-*
-* @param int $post_id The event (post) ID. Uses current event if empty.
-* @return array Array with keys 'start' and 'end', with corresponding datetime objects
+ * Returns an array of datetimes (start and end) corresponding to the current occurrence of an event.
+ * If the event has multiple overlapping occurrences currently running, returns the one with the latest start date.
+ * To get the next occurrence{@see `eo_get_next_occurrence_of()`}
+ *
+ * @since 1.7
+ * @package event-date-functions
+ *
+ * @param int $post_id The event (post) ID. Uses current event if empty.
+ * @return array Array with keys 'start' and 'end', with corresponding datetime objects
  */
-function eo_get_current_occurrence_of($post_id=0){
+function eo_get_current_occurrence_of( $post_id = 0 ) {
 	global $wpdb;
 
-	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
-	
+	$post_id = (int) ( empty( $post_id ) ? get_the_ID() : $post_id );
+
 	//Retrieve the blog's local time and create the date part
 	$tz = eo_get_blog_timezone();
-	$blog_now = new DateTime(null, $tz );
-	$now_date =$blog_now->format('Y-m-d');
-	$now_time =$blog_now->format('H:i:s');
-	
+	$blog_now = new DateTime( null, $tz );
+	$now_date = $blog_now->format( 'Y-m-d' );
+	$now_time = $blog_now->format( 'H:i:s' );
+
 	//Get the current occurrence. May be multiple (overlapping) occurrences. Pick the latest.
-	$current_occurrence  = $wpdb->get_row($wpdb->prepare("
+	$current_occurrence  = $wpdb->get_row( $wpdb->prepare("
 		SELECT StartDate, StartTime, EndDate, FinishTime
 		FROM  {$wpdb->eo_events}
 		WHERE {$wpdb->eo_events}.post_id=%d
-		AND ( 
+		AND (
 			({$wpdb->eo_events}.StartDate < %s) OR
 			({$wpdb->eo_events}.StartDate = %s AND {$wpdb->eo_events}.StartTime <= %s)
 		)AND(
 			({$wpdb->eo_events}.EndDate > %s) OR
-			({$wpdb->eo_events}.EndDate = %s AND {$wpdb->eo_events}.EndDate >= %s)
+			({$wpdb->eo_events}.EndDate = %s AND {$wpdb->eo_events}.FinishTime >= %s)
 		)
 		ORDER BY {$wpdb->eo_events}.StartDate DESC
-		LIMIT 1",$post_id,$now_date,$now_date,$now_time, $now_date,$now_date,$now_time));
+		LIMIT 1", $post_id, $now_date, $now_date, $now_time, $now_date, $now_date, $now_time ) );
 
-	if( ! $current_occurrence )
+	if ( ! $current_occurrence ) {
 		return false;
+	}
 
-	$start = new DateTime($current_occurrence->StartDate.' '.$current_occurrence->StartTime, $tz);
-	$end = new DateTime($current_occurrence->EndDate.' '.$current_occurrence->FinishTime, $tz);
+	$start = new DateTime( $current_occurrence->StartDate . ' ' . $current_occurrence->StartTime, $tz );
+	$end = new DateTime( $current_occurrence->EndDate . ' ' . $current_occurrence->FinishTime, $tz );
 
-	return compact('start','end');
+	return compact( 'start', 'end' );
 }
 
 
@@ -657,31 +671,31 @@ function eo_schedule_start($format='d-m-Y',$post_id=0){
 
 
 /**
-* Returns the formated date of the last occurrence of an event
-* 
-* ### Examples
-* Inside the loop, you can output the last start date of event
-* <code>
-* <?php echo 'This event will run or the last time on ' . eo_get_schedule_last( 'jS M Y' ); ?>
-* </code> 
-* 
-* Print the last start date of the event with id 7
-* <code>
-* <?php echo eo_get_schedule_last( 'jS M Y', 7 ); ?>
-* </code>
-* 
-* @since 1.4.0
-* @package event-date-functions
-*
-* @param string $format The format to use, using PHP Date format
-* @param int $post_id The event (post) ID. Uses current event if empty.
-* @return string The formatted date 
+ * Returns the formated date of the last occurrence of an event
+ *
+ * ### Examples
+ * Inside the loop, you can output the last start date of event
+ * <code>
+ * <?php echo 'This event will run for the last time on ' . eo_get_schedule_last( 'jS M Y' ); ?>
+ * </code>
+ *
+ * Print the last start date of the event with id 7
+ * <code>
+ * <?php echo eo_get_schedule_last( 'jS M Y', 7 ); ?>
+ * </code>
+ *
+ * @since 1.4.0
+ * @package event-date-functions
+ *
+ * @param string $format The format to use, using PHP Date format
+ * @param int $post_id The event (post) ID. Uses current event if empty.
+ * @return string The formatted date
  */
-function eo_get_schedule_last($format='d-m-Y',$post_id=0){
-	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
-	$schedule = eo_get_event_schedule($post_id);
+function eo_get_schedule_last( $format = 'd-m-Y', $post_id = 0 ) {
+	$post_id = (int) ( empty( $post_id ) ? get_the_ID() : $post_id );
+	$schedule = eo_get_event_schedule( $post_id );
 	$schedule_last = $schedule['schedule_last'];
-	
+
 	/**
 	 * Filters the value returned by `eo_get_schedule_last()`
 	 *
@@ -690,7 +704,7 @@ function eo_get_schedule_last($format='d-m-Y',$post_id=0){
 	 * @param string $format The format the date should be returned in
 	 * @param int $post_id Post ID of the event
 	 */
-	$formatted_date = apply_filters('eventorganiser_get_schedule_last', eo_format_datetime( $schedule_last, $format ), $schedule_last, $format, $post_id );
+	$formatted_date = apply_filters( 'eventorganiser_get_schedule_last', eo_format_datetime( $schedule_last, $format ), $schedule_last, $format, $post_id );
 	return $formatted_date;
 }
 
@@ -1368,6 +1382,7 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		'alldayslot' => true, 'alldaytext' => __( 'All day', 'eventorganiser' ),
 		'columnformatmonth' => 'D', 'columnformatweek' => 'D n/j', 'columnformatday' => 'l n/j',
 		'titleformatmonth' => 'F Y', 'titleformatweek' => 'M j, Y', 'titleformatday' => 'l, M j, Y',
+		'weeknumbers' => false,
 		'year' => false, 'month' => false, 'date' => false, 'defaultdate' => false,	'users_events' => false,
 		'event_series' => false, 'event_occurrence__in' => array(),
 		'theme' => false, 'reset' => true, 'isrtl' => $wp_locale->is_rtl(),
@@ -1415,7 +1430,17 @@ function eo_get_event_fullcalendar( $args = array() ) {
 	$args['event_tag']      = is_array( $args['event-tag'] )      ? implode( ',', $args['event-tag'] )      : $args['event-tag'];
 
 	//Get author ID from author/author_name
-	$args['event_organiser'] = ( $args['author'] ? (int) $args['author'] : eo_get_user_id_by( 'slug', $args['author_name'] ) );
+	if ( $args['author'] ) {
+		$args['event_organiser'] =  array_map( 'intval', explode( ',', $args['author'] ) );
+	} else {
+		$args['event_organiser'] = array();
+		$authors = explode( ',', $args['author_name'] );
+		foreach( $authors as $index => $author_name ) {
+			$args['event_organiser'][] =  eo_get_user_id_by( 'slug', $author_name );
+		}
+	}
+
+	$args['event_organiser'] = array_filter( $args['event_organiser'] );
 
 	//max/min time MUST be hh:mm format
 	$times = array( 'mintime', 'maxtime' );
@@ -1445,6 +1470,9 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		$args[$date_attribute.'php'] = $args[$date_attribute];
 		$args[$date_attribute] = eo_php_to_moment( $args[$date_attribute] );
 	}
+
+	//Week numbers
+	$args['weeknumbers'] = ! empty( $args['weeknumbers'] );
 
 	EventOrganiser_Shortcodes::$calendars[] = array_merge( $args );
 
@@ -1529,7 +1557,7 @@ function eo_get_event_meta_list( $event_id = 0 ) {
 		);
 	}
 
-	if ( get_the_terms( $event_id, 'event-category' ) ) {
+	if ( get_the_terms( $event_id, 'event-category' ) && !is_wp_error( get_the_terms( $event_id, 'event-category' ) ) ) {
 		$html .= sprintf(
 			'<li><strong>%s:</strong> %s</li>' . "\n",
 			__( 'Categories', 'eventorganiser' ),
@@ -1562,6 +1590,7 @@ function eo_get_event_meta_list( $event_id = 0 ) {
 
 /**
  * Retrieves the occurrence ID of the 'current' (global) event ($post)
+ * @since 2.13
  * @return int The current event's occurrence ID.
  */
 function eo_get_the_occurrence_id(){
@@ -1571,6 +1600,7 @@ function eo_get_the_occurrence_id(){
 
 /**
  * A helper function which can replace get_permalinks() to be occurrence-aware
+ * @since 2.13
  * @param int $event_id      The event ID. Uses current event if not provided.
  * @param int $occurrence_id The occurrence ID. Uses current event if not provided.
  * @return string The event permalink

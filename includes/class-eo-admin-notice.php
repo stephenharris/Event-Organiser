@@ -46,7 +46,7 @@ class EO_Admin_Notice_Handler {
 	static function load() {
 		add_action( 'admin_notices', array( __CLASS__, 'admin_notice' ) );
 		add_action( 'admin_init',array( __CLASS__, 'dismiss_handler' ) );
-		add_action( 'wp_ajax_'.self::$prefix.'-dismiss-notice', array( __CLASS__, 'dismiss_handler' ) );
+		add_action( 'wp_ajax_' . self::$prefix . '-dismiss-notice', array( __CLASS__, 'dismiss_handler' ) );
 	}
 
 	function add_notice( $id, $screen_id, $message, $type = 'alert' ) {
@@ -77,7 +77,7 @@ class EO_Admin_Notice_Handler {
 			return;
 		}
 
-		$seen_notices = get_option( self::$prefix.'_admin_notices', array() );
+		$seen_notices = get_option( self::$prefix . '_admin_notices', array() );
 
 		foreach ( self::$notices as $id => $notice ) {
 			$id = sanitize_key( $id );
@@ -123,7 +123,7 @@ class EO_Admin_Notice_Handler {
 				esc_attr( $id ),
 				$notice['message'],
 				esc_html__( 'Dismiss this notice','eventorganiser' ),
-				wp_create_nonce( self::$prefix.'-dismiss-'.$id ),
+				wp_create_nonce( self::$prefix . '-dismiss-' . $id ),
 				esc_attr( $class )
 			);
 			add_action( 'admin_print_footer_scripts', array( __CLASS__, 'print_footer_scripts' ), 11 );
@@ -143,20 +143,20 @@ class EO_Admin_Notice_Handler {
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			//Ajax dismiss handler
-			if ( empty( $request['notice'] )  || empty( $request['_wpnonce'] )  || $request['action'] !== self::$prefix.'-dismiss-notice' ) {
+			if ( empty( $request['notice'] )  || empty( $request['_wpnonce'] )  || $request['action'] !== self::$prefix . '-dismiss-notice' ) {
 				return;
 			}
 
-			if ( ! wp_verify_nonce( $request['_wpnonce'],self::$prefix.'-ajax-dismiss' ) ) {
+			if ( ! wp_verify_nonce( $request['_wpnonce'],self::$prefix . '-ajax-dismiss' ) ) {
 				return;
 			}
 		} else {
 			//Fallback dismiss handler
-			if ( empty( $request['action'] ) || empty( $request['notice'] )  || empty( $request['_wpnonce'] )  || $request['action'] !== self::$prefix.'-dismiss-notice' ) {
+			if ( empty( $request['action'] ) || empty( $request['notice'] )  || empty( $request['_wpnonce'] )  || $request['action'] !== self::$prefix . '-dismiss-notice' ) {
 				return;
 			}
 
-			if ( ! wp_verify_nonce( $request['_wpnonce'],self::$prefix.'-dismiss-'.$notice ) ) {
+			if ( ! wp_verify_nonce( $request['_wpnonce'],self::$prefix . '-dismiss-' . $notice ) ) {
 				return;
 			}
 		}
@@ -173,10 +173,10 @@ class EO_Admin_Notice_Handler {
 	 *@param string $notice The notice (ID) to dismiss
 	 */
 	static function dismiss_notice( $notice ) {
-		$seen_notices   = get_option( self::$prefix.'_admin_notices', array() );
+		$seen_notices   = get_option( self::$prefix . '_admin_notices', array() );
 		$seen_notices[] = $notice;
 		$seen_notices   = array_unique( $seen_notices );
-		update_option( self::$prefix.'_admin_notices', $seen_notices );
+		update_option( self::$prefix . '_admin_notices', $seen_notices );
 	}
 
 	/**
@@ -234,10 +234,10 @@ class EO_Admin_Notice_Handler {
 		</style>
 		<script type="text/javascript">
 		jQuery(document).ready(function ($){
-			var dismissClass = '<?php echo esc_js( self::$prefix.'-dismiss' );?>';
-			var ajaxaction   = '<?php echo esc_js( self::$prefix.'-dismiss-notice' ); ?>';
-			var _wpnonce     = '<?php echo wp_create_nonce( self::$prefix.'-ajax-dismiss' )?>';
-			var noticeClass  = '<?php echo esc_js( self::$prefix.'-notice' );?>';
+			var dismissClass = '<?php echo esc_js( self::$prefix . '-dismiss' );?>';
+			var ajaxaction   = '<?php echo esc_js( self::$prefix . '-dismiss-notice' ); ?>';
+			var _wpnonce     = '<?php echo wp_create_nonce( self::$prefix . '-ajax-dismiss' )?>';
+			var noticeClass  = '<?php echo esc_js( self::$prefix . '-notice' );?>';
 
 			jQuery('.'+dismissClass).click(function(e){
 				e.preventDefault();

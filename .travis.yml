@@ -5,14 +5,16 @@ node_js:
 
 sudo: false
 
+dist: precise
+
 php:
 - 5.2
 - 5.3
 - 5.4
 - 5.5
 - 5.6
-- hhvm
-- 7
+- 7.0
+- 7.1
 
 branches:
   only:
@@ -22,6 +24,8 @@ branches:
 env:
 - WP_VERSION=nightly
 - WP_VERSION=latest
+- WP_VERSION=4.6.1
+- WP_VERSION=4.5.4
 - WP_VERSION=4.4.3
 - WP_VERSION=4.3.4
 - WP_VERSION=4.2.8
@@ -42,6 +46,16 @@ matrix:
       env: WP_VERSION=4.1.11
     - php: 7
       env: WP_VERSION=4.2.8
+    - php: 7.1
+      env: WP_VERSION=3.8.14
+    - php: 7.1
+      env: WP_VERSION=3.9.12
+    - php: 7.1
+      env: WP_VERSION=4.0.11
+    - php: 7.1
+      env: WP_VERSION=4.1.11
+    - php: 7.1
+      env: WP_VERSION=4.2.8
   allow_failures:
     - env: WP_VERSION=nightly
 
@@ -49,12 +63,22 @@ install:
 - sh -c "if [ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '5.2' ]; then pecl install timezonedb; fi"
 - npm install grunt-cli
 - npm install
-  
+
 before_script:
+- export PATH="$HOME/.composer/vendor/bin:$PATH"
+- |
+  if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then
+    composer global require "phpunit/phpunit=5.7.*"
+  elif [[ ${TRAVIS_PHP_VERSION:0:3} != "5.2" ]]; then
+    composer global require "phpunit/phpunit=4.8.*"
+  fi
+- mysql --version
+- php --version
+- npm --version
+- node --version
+- phpunit --version
 - node_modules/grunt-cli/bin/grunt test_build
 - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
-script: 
+script:
 - phpunit
-
-

@@ -5,7 +5,9 @@ use Behat\Behat\Context\Context,
 	Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Testwork\Tester\Result\TestResult;
 use Behat\Gherkin\Node\TableNode;
-use Johnbillion\WordPressExtension\Context\WordPressContext;
+use StephenHarris\WordPressBehatExtension\Context\WordPressContext;
+use Behat\Mink\Exception\ElementNotFoundException,
+	Behat\Mink\Exception\ExpectationException;
 
 //TODO fix sendmail
 
@@ -16,13 +18,13 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	 * @var string|bool
 	 */
 	protected $screenshot_dir = false;
-	
+
 	public function __construct($screenshot_dir=false) {
 		if ( $screenshot_dir ) {
 			$this->screenshot_dir = rtrim( $screenshot_dir, '/' ) . '/';
 		}
 	}
-	
+
 	/**
 	 * Add these events to this wordpress installation
 	 *
@@ -34,41 +36,41 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	{
 		$tz = eo_get_blog_timezone();
 		foreach ($table->getHash() as $postData) {
-			
+
 			foreach ( $postData as $key => $value ) {
 				switch( $key ) {
 					case 'start':
 					case 'end':
 					case 'until':
-						
+
 						//Support 'relative' placeholders
 						$value = str_replace(
 							array( 'd', 'm', 'Y'),
-							array( date('d'), date('m'), date('Y') 
+							array( date('d'), date('m'), date('Y')
 						), $value );
-						
+
 						$postData[$key] = new DateTime( $value, $tz );
 						break;
 				}
 			}
-			
+
 			$event_id = eo_insert_event($postData);
 
 			if (!is_int($event_id)) {
-				
+
 				$message = 'Invalid event information schema';
-				
+
 				if (is_wp_error($event_id)) {
-					$message .= ': ' . $event_id->get_error_message();	
+					$message .= ': ' . $event_id->get_error_message();
 				}
 				throw new \InvalidArgumentException( $message );
 			}
 		}
 	}
-	
+
 	/**
 	 * @Given there are venues
-	 * 
+	 *
 	 * @see eo_insert_venue
 	 */
 	public function thereAreVenues(TableNode $venues)
@@ -80,32 +82,32 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * @Then the event :title should have the following schedule
 	 */
 	public function theEventShouldHaveTheFollowingSchedule($title, TableNode $fields)
 	{
-		
+
 		$event = get_page_by_title( $title, OBJECT, 'event' );
 		if ( ! $event ) {
 			throw new \InvalidArgumentException( sprintf( 'Event "%s" was  not found', $title ) );
 		}
-		
+
 		$correct = true;
-		
+
 		$schedule = eo_get_event_schedule( $event->ID );
 		$tz       = eo_get_blog_timezone();
 		$actual   = array();
-		
+
 		foreach ( $fields->getRowsHash() as $field => $value ) {
-			
+
 			switch( $field ) {
 				case 'start':
 				case 'end':
 				case 'until':
-					$actual_value = $schedule[$field]->format( 'Y-m-d h:ia' );	
+					$actual_value = $schedule[$field]->format( 'Y-m-d h:ia' );
 					break;
 				case 'recurrence':
 					$actual_value = $schedule['schedule'];
@@ -121,16 +123,16 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			}
 			$actual[] = array( $field, $actual_value );
 		}
-		
+
 		$actual_table = new TableNode( $actual );
-		
+
 		if ( $actual_table->getTableAsString() != $fields->getTableAsString() ) {
 			throw new \Exception( sprintf(
 				"Actual schedule:\n %s",
 				$actual_table->getTableAsString()
 			) );
 		}
-	
+
 	}
 
 	/**
@@ -221,7 +223,6 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			}
 		}
 	}
-
 
 	/**
 	 * @Then I should see the following in the repeated :element element
@@ -347,7 +348,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		// ok, let's hover it
 		$element->focus();
 	}
-	
+
 	/**
 	 * @Then the Event List Widget should display
 	 */
@@ -369,7 +370,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			) );
 		}
 	}
-	
+
 	/**
 	 * @Given event templates are enabled
 	 */
@@ -379,7 +380,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		$options['templates'] = 1;
 		update_option( 'eventorganiser_options', $options );
 	}
-		
+
 	/**
 	 * @Given event templates are disabled
 	 */
@@ -389,7 +390,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		$options['templates'] = 0;
 		update_option( 'eventorganiser_options', $options );
 	}
-	
+
 	/**
 	 * @Given theme compatability is enabled
 	 */
@@ -399,15 +400,15 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		$options['templates'] = 'themecompat';
 		update_option( 'eventorganiser_options', $options );
 	}
-	
+
 	/**
 	 * @Given I have an event list widget in :sidebar
 	 */
 	public function iHaveAnEventListWidgetIn($sidebar, TableNode $table)
 	{
 		$widget = 'EO_Event_List_Widget';
-		
-		//Register sidebar. TODO Why is this necessary?		
+
+		//Register sidebar. TODO Why is this necessary?
 		register_sidebar( array(
 			'name' => __( 'Main Sidebar', 'theme-slug' ),
 			'id' => 'sidebar-1',
@@ -420,7 +421,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 
 		//Get sidebar
 		$sidebar_id = $this->_findSidebar( $sidebar );
-		
+
 		//Compile widget settings
 		$values = $table->getRow( 1 ); //we only support one widget for now
 		$args   = array();
@@ -429,13 +430,13 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 
 			$key = strtolower( $key );
 			switch( $key ) {
-				
+
 				case 'no. of events':
 					$args['numberposts'] = $values[$index];
 					break;
 				case 'group events':
 					$args['group_events_by'] = ! empty ( $values[$index] ) ? 'series' : false;
-					break;	
+					break;
 				case 'venue':
 					$venue = get_term_by( 'name', $values[$index], 'event-venue' );
 					$args['venue'] = $venue->slug;
@@ -456,12 +457,12 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		$this->_addWidgetToSidbar( $sidebar_id, $widget, $args );
 	}
 
-	private function _findSidebar($sidebar) 
+	private function _findSidebar($sidebar)
 	{
 		global $wp_registered_sidebars;
-		
+
 		$sidebar_id = null;
-		
+
 		if ( ! isset( $wp_registered_sidebars[$sidebar] ) ) {
 			foreach( $wp_registered_sidebars as $_sidebar_id => $_sidebar ) {
 				if ( $sidebar == $_sidebar['name'] ) {
@@ -472,15 +473,15 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		} else {
 			$sidebar_id = $sidebar;
 		}
-		
+
 		if ( is_null( $sidebar_id ) ) {
 			throw new \Exception( sprintf( 'Sidebar "%s" does not exist', $sidebar ) );
 		}
-		
+
 		return $sidebar_id;
 	}
 
-	
+
 	private function _addWidgetToSidbar($sidebar_id, $widget, $args)
 	{
 
@@ -488,19 +489,19 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		$widget           = strtolower( $widget );
 		$existing_widgets = get_option( 'widget_' . $widget , array() );
 		$counter          = count( $existing_widgets ) + 1;
-		
+
 		//Store widget settings
 		$existing_widgets[$counter] = $args;
 		update_option( 'widget_' . $widget , $existing_widgets );
-		
+
 		// Add widget to sidebar
 		$active_widgets = get_option( 'sidebars_widgets', array() );
 		$active_widgets[ $sidebar_id ] = isset( $active_widgets[ $sidebar_id ] ) ? $active_widgets[ $sidebar_id ] : array();
 		array_unshift( $active_widgets[ $sidebar_id ], $widget . '-' . $counter );
 		update_option( 'sidebars_widgets', $active_widgets );
-		
+
 	}
-	
+
 	/**
 	 * Fills in form field with specified id|name|label|value.
 	 *
@@ -512,13 +513,13 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	{
 		$field = $this->fixStepArgument($field);
 		$value = $this->fixStepArgument($value);
-		
+
 		$this->spin(function($context) use ($field, $value) {
 			$context->getSession()->getPage()->fillField($field, $value);
 			return true;
 		});
 	}
-	
+
 	public function spin ($lambda, $wait = 60)
 	{
 		for ($i = 0; $i < $wait; $i++)
@@ -530,17 +531,17 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 			} catch (Exception $e) {
 			// do nothing
 			}
-	
+
 			sleep(1);
 		}
-	
+
 		$backtrace = debug_backtrace();
-	
+
 			throw new Exception(
 				"Timeout thrown by " . $backtrace[1]['class'] . "::" . $backtrace[1]['function'] . "()\n"
 	        );
 	}
-	
+
 	/**
 	 * @AfterScenario
 	 */
@@ -548,16 +549,16 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	{
 
 		if ($this->screenshot_dir && TestResult::FAILED === $scope->getTestResult()->getResultCode()) {
-			
+
 			$feature  = $scope->getFeature();
 			$scenario = $scope->getScenario();
 			$filename = basename( $feature->getFile(), '.feature' ) . '-' . $scenario->getLine();
-			
+
 			if ($this->getSession()->getDriver() instanceof \Behat\Mink\Driver\Selenium2Driver) {
 				$screenshot = $this->getSession()->getDriver()->getScreenshot();
 				file_put_contents( $this->screenshot_dir . $filename . '.png', $screenshot);
 			}
-			
+
 			//Store HTML markup of the page also - useful for non-js tests
 			file_put_contents( $this->screenshot_dir . $filename . '.html', $this->getSession()->getPage()->getHtml());
 		}
@@ -571,7 +572,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
     public function iSaveTheEvent()
     {
 		$button = $this->fixStepArgument('save-post');
-		
+
 		//If the button is out of view then the window will be scrolled so that it aligns
 		//with the top of the screen. But then it is obscured by the #wpadminbar.
 		//We scroll so that the top of the window is aligned with the button, then move the
@@ -650,8 +651,8 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		$args = wp_parse_args( $args, EO_Calendar_Widget::$w_arg ); //merge in default values
 		$this->_addWidgetToSidbar( $sidebar_id, 'EO_Calendar_Widget', $args );
 	}
-	
-	
+
+
 	/**
 	 * Add these posts to this wordpress installation
 	 *
@@ -689,4 +690,31 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
     		return true;
     	});
     }
+
+		/**
+     * @Then /^I should see a link "([^"]*)"$/
+     */
+    public function iShouldSeeALink($text) {
+			$link = $this->getSession()->getPage()->findLink($text);
+			if (null === $link) {
+					throw new ElementNotFoundException(
+						$this->getSession()->getDriver(),
+						'link', 'id|title|alt|text',
+						$text
+					);
+			}
+    }
+
+		/**
+		 * @Then /^I should not see a link "([^"]*)"$/
+		 */
+		public function iShouldNotSeeALink($text) {
+			$link = $this->getSession()->getPage()->findLink($text);
+			if (null !== $link) {
+					throw new ExpectationException(
+						sprintf( 'Link "%s" exists but it should not', $text ),
+						$this->getSession()->getDriver()
+					);
+			}
+		}
 }

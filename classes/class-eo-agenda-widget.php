@@ -2,7 +2,7 @@
 /**
  * Class used to create the event calendar widget
  */
-class EO_Events_Agenda_Widget extends WP_Widget{
+class EO_Events_Agenda_Widget extends WP_Widget {
 
 	var $w_arg = array();
 
@@ -39,7 +39,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 	
 		<p>
 		<label for="<?php echo $this->get_field_id( 'mode' ); ?>"><?php _e( 'Group by', 'eventorganiser' ); ?>: </label>
-		<select id="<?php echo $this->get_field_id( 'mode' ); ?>" name="<?php echo $this->get_field_name( 'mode' ); ?>" type="text">
+		<select id="<?php echo $this->get_field_id( 'mode' ); ?>" name="<?php echo $this->get_field_name( 'mode' ); ?>" >
 			<option value="day" <?php selected( $instance['mode'], '' ); ?>><?php _e( 'Day','eventorganiser' ); ?> </option>
 			<option value="week" <?php selected( $instance['mode'], 'week' ); ?>><?php _e( 'Week', 'eventorganiser' ); ?> </option>
 			<option value="month" <?php selected( $instance['mode'], 'month' ); ?>><?php _e( 'Month', 'eventorganiser' ); ?> </option>
@@ -58,7 +58,7 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 	
 		<p>
 		<label for="<?php echo $this->get_field_id( 'add_to_google' ); ?>"><?php _e( 'Include \'Add To Google\' link','eventorganiser' ); ?>: </label>
-		<input id="<?php echo $this->get_field_id( 'add_to_google' ); ?>" name="<?php echo $this->get_field_name( 'add_to_google' ); ?>" type="checkbox" value="1" <?php checked( $instance['add_to_google'], 1 );?>" />
+		<input id="<?php echo $this->get_field_id( 'add_to_google' ); ?>" name="<?php echo $this->get_field_name( 'add_to_google' ); ?>" type="checkbox" value="1" <?php checked( $instance['add_to_google'], 1 );?> />
 		</p>
 		<?php
 	}
@@ -99,21 +99,21 @@ class EO_Events_Agenda_Widget extends WP_Widget{
 			echo $args['before_title'] . esc_html( $widget_title ) . $args['after_title'];
 		}
 
-		echo '<div data-eo-agenda-widget-id="'.esc_attr( $args['widget_id'] ).'" id="' . esc_attr( $args['widget_id'] ) . '_container' . '" class="eo-agenda-widget"></div>';
+		printf( '<div data-eo-agenda-widget-id="%1$s" id="%1$s_container" class="eo-agenda-widget"></div>', esc_attr( $args['widget_id'] ) );
 
 		echo $args['after_widget'];
 	}
 
 	static function print_main_template() {
 		?>
-  		<script type="text/template" id="eo-tmpl-agenda-widget">
+		<script type="text/template" id="eo-tmpl-agenda-widget">
 		<div class='eo-agenda-widget-nav'>
 			<span class="eo-agenda-widget-nav-prev"><</span>
 			<span class="eo-agenda-widget-nav-next">></span>
 		</div>
 		<ul class='dates'></ul>
 		</script>
-  		<?php
+		<?php
 	}
 
 	static function print_group_template() {

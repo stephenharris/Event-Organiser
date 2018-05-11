@@ -7,18 +7,18 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2016-11-26T22:15:47+00:00\n"
-"PO-Revision-Date: 2017-08-19T03:46:46+00:00\n"
-"Language: id_ID\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"POT-Creation-Date: 2016-07-14T20:03:40+00:00\n"
+"PO-Revision-Date: 2016-11-26T14:51:57+00:00\n"
+"Language: en_GB\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: event-organiser-settings.php:370
 msgid "Event Organiser's page templates will not be used."
-msgstr ""
+msgstr "Event Organiser's page templates will not be used."
 
 #: event-organiser-settings.php:652
 msgid "Events archives:"
-msgstr ""
+msgstr "Event archives:"
 
 #: event-organiser-calendar.php:75
 #: includes/event-organiser-register.php:69
@@ -28,7 +28,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:154
 msgid "All Tags"
-msgstr "Semua Kata-kata Kunci"
+msgstr ""
 
 #: event-organiser-manage.php:159
 msgid "Events within 24 hours"
@@ -47,6 +47,10 @@ msgctxt "post"
 msgid "Add New"
 msgstr ""
 
+#: event-organiser-edit.php:320
+msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%1$s."
+msgstr ""
+
 #: includes/event.php:870
 msgid "Event does not contain any dates."
 msgstr ""
@@ -58,19 +62,15 @@ msgstr ""
 
 #: includes/event-organiser-register.php:65
 msgid "Show Less"
-msgstr "Tampilkan sedikit"
+msgstr ""
 
 #: includes/event-organiser-event-functions.php:818
 #: includes/event-organiser-register.php:263
 msgid "every month on the"
-msgstr "tiap bulan pada"
+msgstr ""
 
 #: event-organiser-venues.php:465
 msgid "Slug"
-msgstr ""
-
-#: event-organiser-edit.php:320
-msgid "Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%2$s."
 msgstr ""
 
 #: includes/event-organiser-cpt.php:35
@@ -78,31 +78,28 @@ msgid "View Venue"
 msgstr ""
 
 #: includes/class-eo-theme-compatability.php:161
-#, php-format
 msgid "Events at %s"
 msgstr ""
 
 #: event-organiser-venues.php:244
-#, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:586
 msgid "See the <a %s> documentation</a>"
-msgstr "Lihat <a %s>dokumentasi</a>"
+msgstr ""
 
 #: includes/event-organiser-register.php:254
 msgid "weeks"
-msgstr "minggu"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:323
-#, php-format
 msgid "Event updated. <a href=\"%s\">View event</a>"
 msgstr ""
 
 #: includes/event.php:651
 msgid "Schedule end date is before is before the start date."
-msgstr "Jadwal tanggal selesai adalah sebelum adalah sebelum tanggal mulai"
+msgstr ""
 
 #: event-organiser-calendar.php:340
 msgid "Navigate to previous period"
@@ -110,7 +107,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:705
 msgid "Assign the category a colour."
-msgstr "Menambah warna pada category"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:553
 #: includes/event-organiser-cpt.php:572
@@ -123,7 +120,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:587
 msgid "Debugging Event Organiser"
-msgstr "Debug Event Organizer"
+msgstr ""
 
 #: event-organiser-settings.php:317
 msgid "Month archive"
@@ -137,11 +134,11 @@ msgstr ""
 #: classes/class-eo-event-list-widget.php:120
 #: includes/event-organiser-cpt.php:34
 msgid "All Venues"
-msgstr "Semua Tempat/Lokasi"
+msgstr ""
 
 #: includes/event-organiser-event-functions.php:787
 msgid "one time only"
-msgstr "satu kali saja"
+msgstr ""
 
 #: classes/class-eo-agenda-widget.php:140
 #: event-organiser-edit.php:151
@@ -166,7 +163,6 @@ msgid "Delete this event"
 msgstr ""
 
 #: includes/class-eo-ical-parser.php:279
-#, php-format
 msgid "There was an error fetching the feed. Response code: %s."
 msgstr ""
 
@@ -184,7 +180,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:40
 msgid "No venues found"
-msgstr "Tempat/Lokasi tidak ditemukan"
+msgstr ""
 
 #: classes/class-eo-event-list-widget.php:128
 msgid "Show:"
@@ -208,7 +204,7 @@ msgstr ""
 
 #: includes/event.php:647
 msgid "Start date occurs after end date."
-msgstr "Tanggal mulai terjadi setelah tanggal selesai"
+msgstr ""
 
 #: includes/class-event-organiser-im-export.php:162
 msgid "You do not have sufficient permissions to import events."
@@ -223,14 +219,13 @@ msgid "Event (single)"
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:271
-#, php-format
 msgid "%d events were successfully imported"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:699
 #: includes/event-organiser-cpt.php:722
 msgid "Color"
-msgstr "warna"
+msgstr ""
 
 #: includes/event-organiser-ajax.php:466
 msgid "Delete this occurrence"
@@ -241,7 +236,6 @@ msgid "Venue Location"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:326
-#, php-format
 msgid "Event restored to revision from %s"
 msgstr ""
 
@@ -251,7 +245,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:97
 msgid "All Categories"
-msgstr "Semua Kategori"
+msgstr ""
 
 #: event-organiser-settings.php:150
 msgid "Thumbnail"
@@ -260,7 +254,7 @@ msgstr ""
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:274
 msgid "last"
-msgstr "terakhir"
+msgstr ""
 
 #: event-organiser-debug.php:64
 msgid "This page highlights useful information for debugging. If you're reporting a bug, please include this information. The 'system info' link in under the Events admin tab is only visible to admins and only when %1$s is set to %1$s."
@@ -280,7 +274,7 @@ msgstr ""
 
 #: includes/event-organiser-ajax.php:349
 msgid "Draft"
-msgstr "Konsep"
+msgstr ""
 
 #: event-organiser-calendar.php:199
 msgid "You do not have sufficient permissions to delete this event. "
@@ -295,7 +289,6 @@ msgid "Events within 1 week"
 msgstr ""
 
 #: includes/class-eo-ical-parser.php:1039
-#, php-format
 msgid "Invalid date \"%s\". Date expected in YYYYMMDD format."
 msgstr ""
 
@@ -309,10 +302,9 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:96
 msgid "Search Categories"
-msgstr "Cari Kategori"
+msgstr ""
 
 #: event-organiser-edit.php:99
-#, php-format
 msgid "Enter date in %s format"
 msgstr ""
 
@@ -361,7 +353,7 @@ msgstr ""
 #: includes/event-organiser-ajax.php:443
 #: includes/event-organiser-cpt.php:228
 msgid "Edit Event"
-msgstr "Sunting agenda"
+msgstr ""
 
 #: event-organiser-settings.php:645
 msgid "For each of the pages, the corresponding template is used. To use your own template simply give it the same name and store in your theme folder. By default, if Event Organiser cannot find a template in your theme directory, it will use its own default template. You can disable this below. WordPress will then decide which template from your theme's folder to use."
@@ -377,7 +369,7 @@ msgstr ""
 
 #: includes/event-organiser-register.php:246
 msgid "Hide dates"
-msgstr "Sembunyikan tanggal"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:543
 msgid "Only pre-existing venues can be selected. To add a venue, go to the venues page."
@@ -386,7 +378,7 @@ msgstr ""
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:273
 msgid "fourth"
-msgstr "keempat"
+msgstr ""
 
 #: event-organiser-settings.php:154
 msgid "Revisions"
@@ -399,18 +391,9 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:41
 msgid "Add or remove venues"
-msgstr "Tambah atau hapus tempat/lokasi"
+msgstr ""
 
-#. //docs.wp-event-organiser.com/theme-integration for more information
-#. *
-#. * WordPress will automatically prioritise the template in your theme directory.
-#. ***************** NOTICE: *****************
-#. * @package Event Organiser (plug-in)
-#. * @since 1.0.0
-#. 
-#. Call the template header
 #: templates/taxonomy-event-venue.php:30
-#, php-format
 msgid "Events at: %s"
 msgstr ""
 
@@ -423,7 +406,6 @@ msgid "Edit takes you to the editing screen for that venue. You can also reach t
 msgstr ""
 
 #: includes/event-organiser-cpt.php:330
-#, php-format
 msgid "Event submitted. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 
@@ -445,7 +427,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:104
 msgid "No categories found"
-msgstr "Kategori tidak ditemukan"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:241
 msgid "Insert into event"
@@ -456,7 +438,6 @@ msgid "Warning:"
 msgstr ""
 
 #: event-organiser-manage.php:163
-#, php-format
 msgid "Events within %d months"
 msgstr ""
 
@@ -468,11 +449,11 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:102
 msgid "Add New Category"
-msgstr "Tambah Kategori Baru"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:588
 msgid "Go Pro!"
-msgstr "Go Pro!"
+msgstr ""
 
 #: event-organiser-settings.php:51
 #: event-organiser.php:127
@@ -483,7 +464,7 @@ msgstr ""
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:272
 msgid "third"
-msgstr "ketiga"
+msgstr ""
 
 #: classes/class-eo-event-list-widget.php:71
 msgid "Future & running events"
@@ -492,15 +473,15 @@ msgstr ""
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:271
 msgid "second"
-msgstr "kedua"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:45
 msgid "No Venue"
-msgstr "Tidak ada tempat/lokasi"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:234
 msgid "No events found in Trash"
-msgstr "Tidak ada agenda di tempat sampah"
+msgstr ""
 
 #: classes/class-eo-widget-venues.php:11
 msgid "A list or dropdown of event venues"
@@ -528,15 +509,14 @@ msgstr ""
 
 #: includes/event-organiser-venue-functions.php:983
 msgid "Post Code"
-msgstr "Kode Pos"
+msgstr ""
 
 #: classes/class-eo-event-list-widget.php:52
 #: includes/event-organiser-cpt.php:230
 msgid "All events"
-msgstr "Semua Agenda"
+msgstr ""
 
 #: classes/class-eo-event-list-widget.php:168
-#, php-format
 msgid "You can use specified tags as placeholders for event information which you want to appear in the widget. <a href=\"%s\" target=\"_blank\"> Find out more</a>."
 msgstr ""
 
@@ -545,12 +525,10 @@ msgid "Enable events ICAL feed:"
 msgstr ""
 
 #: includes/event-organiser-ajax.php:821
-#, php-format
 msgid "Event not created: %s"
 msgstr ""
 
 #: event-organiser-settings.php:232
-#, php-format
 msgid "If selected, visitors can subscribe to your events with the url: %s"
 msgstr ""
 
@@ -572,7 +550,7 @@ msgstr ""
 
 #: includes/event-organiser-venue-functions.php:981
 msgid "City"
-msgstr "Kota"
+msgstr ""
 
 #: includes/class-event-organiser-im-export.php:100
 msgid "Import Events"
@@ -589,7 +567,7 @@ msgstr ""
 
 #: classes/class-eo-venue-list-table.php:82
 msgid "Delete &#8220;%s&#8221;"
-msgstr "Hapus &#8220;%s&#8221;"
+msgstr ""
 
 #: classes/class-eo-calendar-widget.php:296
 msgid "Previous month"
@@ -606,7 +584,7 @@ msgstr ""
 
 #: includes/class-eo-admin-notice.php:125
 msgid "Dismiss this notice"
-msgstr "Akhiri pemberitahuan ini"
+msgstr ""
 
 #: classes/class-eo-calendar-widget.php:26
 #: event-organiser-calendar.php:249
@@ -622,7 +600,6 @@ msgid "Year archive"
 msgstr ""
 
 #: includes/class-eo-ical-parser.php:1077
-#, php-format
 msgid "Invalid datetime \"%s\". Date expected in YYYYMMDDTHHiissZ or YYYYMMDDTHHiiss format."
 msgstr ""
 
@@ -666,7 +643,7 @@ msgstr ""
 
 #: includes/event-organiser-register.php:257
 msgid "year"
-msgstr "tahun"
+msgstr ""
 
 #: includes/class-event-organiser-im-export.php:105
 msgid "Import venues"
@@ -709,25 +686,16 @@ msgstr ""
 
 #: event-organiser-edit.php:130
 msgid "End Date/Time:"
-msgstr "Tanggal/Waktu berakhir"
+msgstr ""
 
-#. //docs.wp-event-organiser.com/theme-integration for more information
-#. *
-#. * WordPress will automatically prioritise the template in your theme directory.
-#. ***************** NOTICE: *****************
-#. * @package Event Organiser (plug-in)
-#. * @since 1.0.0
-#. 
-#. Call the template header
 #: includes/class-eo-theme-compatability.php:174
 #: templates/taxonomy-event-category.php:27
-#, php-format
 msgid "Event Category: %s"
 msgstr ""
 
 #: includes/event-organiser-register.php:252
 msgid "days"
-msgstr "hari"
+msgstr ""
 
 #: event-organiser-add-ons.php:18
 #: event-organiser-add-ons.php:91
@@ -768,10 +736,9 @@ msgstr ""
 #: includes/event-organiser-event-functions.php:807
 #: includes/event-organiser-register.php:262
 msgid "every %d weeks on"
-msgstr "setiap %d minggu pada"
+msgstr ""
 
 #: classes/class-eo-venue-list-table.php:75
-#, php-format
 msgid "Edit &#8220;%s&#8221;"
 msgstr ""
 
@@ -785,7 +752,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:328
 msgid "Event saved."
-msgstr "Agenda tersimpan"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:99
 msgid "Parent Category:"
@@ -809,7 +776,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:229
 msgid "New Event"
-msgstr "Agenda Baru"
+msgstr ""
 
 #: event-organiser-venues.php:59
 msgid "Venue <strong>was not</strong> updated"
@@ -828,17 +795,16 @@ msgid "<h4>The Default Templates Have Changed</h4>Don't panic! If you've set up 
 msgstr ""
 
 #: event-organiser-manage.php:161
-#, php-format
 msgid "Events within %d weeks"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:157
 msgid "Update Tag"
-msgstr "Perbarui Kata Kunci"
+msgstr ""
 
 #: classes/class-eo-widget-venues.php:12
 msgid "Event Venues"
-msgstr "Tempat/Lokasi Agenda"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:32
 msgid "Venue"
@@ -851,7 +817,7 @@ msgstr ""
 #: includes/event-organiser-event-functions.php:820
 #: includes/event-organiser-register.php:264
 msgid "every %d months on the"
-msgstr "tiap %d bulan pada"
+msgstr ""
 
 #: event-organiser-venues.php:46
 msgid "You do not have permission to manage venues"
@@ -860,7 +826,7 @@ msgstr ""
 #: classes/class-eo-agenda-widget.php:149
 #: classes/class-eo-venue-list-table.php:90
 msgid "View"
-msgstr "Lihat"
+msgstr ""
 
 #: event-organiser-calendar.php:229
 msgid "Calendar options"
@@ -926,13 +892,12 @@ msgid "Close modal"
 msgstr ""
 
 #: includes/event-organiser-event-functions.php:851
-#, php-format
 msgid "every %d years"
-msgstr "tiap %d tahun"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:100
 msgid "Edit Category"
-msgstr "Sunting Kategori"
+msgstr ""
 
 #: event-organiser-edit.php:165
 msgid "none"
@@ -1019,7 +984,7 @@ msgstr ""
 #: includes/event-organiser-event-functions.php:799
 #: includes/event-organiser-register.php:260
 msgid "every %d days"
-msgstr "setiap %d hari"
+msgstr ""
 
 #: event-organiser-settings.php:40
 msgid "Event Organiser Settings"
@@ -1030,9 +995,8 @@ msgid "Repeat every"
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:277
-#, php-format
 msgid "%d venues were created"
-msgstr "%d lokasi sudah dibuat"
+msgstr ""
 
 #: classes/class-eo-widget-venues.php:29
 #: event-organiser-settings.php:323
@@ -1051,7 +1015,6 @@ msgstr ""
 
 #: includes/class-eo-ical-parser.php:556
 #: includes/class-eo-ical-parser.php:581
-#, php-format
 msgid "[Line %1$d]"
 msgstr ""
 
@@ -1061,7 +1024,7 @@ msgstr ""
 
 #: includes/event-organiser-register.php:266
 msgid "every %d years on the"
-msgstr "setiap %d tahun pada"
+msgstr ""
 
 #: event-organiser-debug.php:177
 #: event-organiser-debug.php:181
@@ -1079,7 +1042,6 @@ msgid "The start date is the date the event starts. If the event is a recurring 
 msgstr ""
 
 #: includes/event-organiser-cpt.php:339
-#, php-format
 msgid "Event draft updated. <a target=\"_blank\" href=\"%s\">Preview event</a>"
 msgstr ""
 
@@ -1097,7 +1059,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:585
 msgid "For more information"
-msgstr "Untuk informasi lebih lanjut"
+msgstr ""
 
 #: event-organiser-settings.php:174
 msgid "Date Format:"
@@ -1129,7 +1091,6 @@ msgstr ""
 
 #: includes/class-eo-ical-parser.php:549
 #: includes/class-eo-ical-parser.php:574
-#, php-format
 msgid "[Lines %1$d-%2$d]"
 msgstr ""
 
@@ -1174,7 +1135,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:103
 msgid "New Category Name"
-msgstr "Nama Kategori baru"
+msgstr ""
 
 #: event-organiser-calendar.php:21
 #: event-organiser-calendar.php:22
@@ -1182,7 +1143,6 @@ msgid "Calendar View"
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:61
-#, php-format
 msgid "File Error encountered: %d"
 msgstr ""
 
@@ -1205,7 +1165,7 @@ msgstr ""
 #: includes/event-organiser-event-functions.php:805
 #: includes/event-organiser-register.php:261
 msgid "every week on"
-msgstr "setiap minggu pada"
+msgstr ""
 
 #: classes/class-eo-event-list-widget.php:46
 #: event-organiser-manage.php:157
@@ -1213,12 +1173,10 @@ msgid "Future events"
 msgstr ""
 
 #: includes/event-organiser-register.php:575
-#, php-format
 msgid "Your site timezone is %s"
 msgstr ""
 
 #: includes/class-event-organiser-im-export.php:284
-#, php-format
 msgid "%d categories were created"
 msgstr ""
 
@@ -1255,7 +1213,7 @@ msgstr ""
 
 #: includes/event-organiser-ajax.php:389
 msgid "Start"
-msgstr "Mulai"
+msgstr ""
 
 #: classes/class-eo-calendar-widget.php:81
 msgid "Link directly to event for days with only one event"
@@ -1271,7 +1229,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:158
 msgid "Add New Tag"
-msgstr "Tambah Kata Kunci Baru"
+msgstr ""
 
 #: event-organiser-venues.php:430
 msgid "Venue name"
@@ -1318,15 +1276,15 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:163
 msgid "Add or remove tags"
-msgstr "Tambah atau hapus kata-kata kunci"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:231
 msgid "View Event"
-msgstr "Lihat Agenda"
+msgstr ""
 
 #: includes/event.php:616
 msgid "Schedule not recognised."
-msgstr "Jadwal tidak dikenal"
+msgstr ""
 
 #: templates/eo-loop-events.php:37
 msgid "Nothing Found"
@@ -1334,7 +1292,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:324
 msgid "Event updated."
-msgstr "Pembaruan agenda"
+msgstr ""
 
 #: includes/event-organiser-ajax.php:393
 msgid "Organiser:"
@@ -1348,7 +1306,7 @@ msgstr ""
 
 #: includes/event-organiser-ajax.php:390
 msgid "End"
-msgstr "Berakhir"
+msgstr ""
 
 #: includes/class-event-organiser-im-export.php:71
 msgid "Invalid file uploaded. The file must be a ics calendar file of type 'text/calendar', no larger than 2MB."
@@ -1359,7 +1317,6 @@ msgid "day of week"
 msgstr ""
 
 #: event-organiser-settings.php:658
-#, php-format
 msgid "For more information see documentation <a href='%s'>on editing the templates</a>"
 msgstr ""
 
@@ -1379,7 +1336,7 @@ msgstr ""
 #: includes/event-organiser-event-functions.php:797
 #: includes/event-organiser-register.php:259
 msgid "every day"
-msgstr "setiap hari"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:542
 msgid "Use the venues input field to search for existing venues"
@@ -1387,23 +1344,23 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:233
 msgid "No events found"
-msgstr "Agenda tidak ditemukan"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:232
 msgid "Search events"
-msgstr "Cari agenda"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:579
 msgid "You can create an event on this Calendar, by clicking on day or dragging over multiple days (in Month view) or multiple times (in Week and Day view). You can give the event a title, specify a venue and provide a descripton. The event can be immediately published or saved as a draft. In any case, the event is created and you are forwarded to that event's edit page."
-msgstr "Anda dapat membuat event di Calendar ini, dengan klik pada  hari atau dragging melalui beberapa hari (dalam sebulan kalendar) atau beberapa waktu (dalam minggu san hari). Anda memberi Judul event, memberikan spesifikasi Venue dan memberika deskripsi. Event dapat segera dipublikasikan atau disimpan (save) sebagai draft. Dalam kasus tertentu, Event dibuat dan Anda diteruskan pada halaman edit event tersebut."
+msgstr ""
 
 #: includes/event-organiser-cpt.php:164
 msgid "Separate tags with commas"
-msgstr "Pisahkan kata kunci (tag) dengan tanda koma"
+msgstr ""
 
 #: includes/class-event-organiser-im-export.php:274
 msgid "1 venue was created"
-msgstr "1 lokasi sudah dibuat"
+msgstr ""
 
 #. / TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
 #: event-organiser-debug.php:437
@@ -1416,11 +1373,11 @@ msgstr ""
 
 #: includes/event-organiser-register.php:267
 msgid "This event will repeat"
-msgstr "Event ini akan diulang"
+msgstr ""
 
 #: includes/event-organiser-register.php:64
 msgid "Show More"
-msgstr "Tampilkan lebih banyak"
+msgstr ""
 
 #: event-organiser-settings.php:214
 msgid "If 'no' is selected, an occurrence of an event is only past when it has finished. Otherwise, an occurrence is considered 'past' as soon as it starts."
@@ -1441,7 +1398,7 @@ msgstr ""
 
 #: includes/event-organiser-event-functions.php:849
 msgid "every year"
-msgstr "tiap tahun"
+msgstr ""
 
 #: event-organiser-calendar.php:215
 msgid "Occurrence deleted."
@@ -1518,13 +1475,12 @@ msgid "Event categories list navigation"
 msgstr ""
 
 #: event-organiser-settings.php:586
-#, php-format
 msgid "Event Settings: %s"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:518
 msgid "Creating events"
-msgstr "Membuat agenda"
+msgstr ""
 
 #: event-organiser-settings.php:668
 msgid "Event management permissions"
@@ -1546,24 +1502,12 @@ msgstr ""
 
 #: includes/event-organiser-register.php:250
 msgid "Minute"
-msgstr "Menit"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:161
 msgid "Choose from the most used tags"
-msgstr "Pilih kata-kata kunci yang sering digunakan"
+msgstr ""
 
-#. //codex.wp-event-organiser.com
-#. *
-#. ***************** NOTICE: *****************
-#. *  Do not make changes to this file. Any changes made to this file
-#. * will be overwritten if the plug-in is updated.
-#. * To overwrite this template with your own
-#.  make a copy of it (with the same name)
-#. * in your theme directory. See http://docs.wp-event-organiser.com/theme-integration for more information
-#. * WordPress will automatically prioritise the template in your theme directory.
-#. * @package Event Organiser (plug-in)
-#. * @since 1.7
-#. 
 #: event-organiser-calendar.php:387
 #: event-organiser-edit.php:14
 #: templates/event-meta-event-single.php:32
@@ -1572,7 +1516,7 @@ msgstr ""
 
 #: includes/event-organiser-register.php:249
 msgid "Hour"
-msgstr "Jam"
+msgstr ""
 
 #: event-organiser-settings.php:674
 msgid "Role"
@@ -1596,11 +1540,11 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:563
 msgid "Delete will permanently remove the venue"
-msgstr "Menghapus akan membuang Venue secara permanen"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:564
 msgid "View will take you to the venue's page"
-msgstr "Lihat (View) akan membawa anda pada Halaman Venue"
+msgstr ""
 
 #: includes/event-organiser-ajax.php:444
 msgid "Edit Event: %s"
@@ -1619,13 +1563,12 @@ msgid "Event Settings"
 msgstr ""
 
 #: templates/event-meta-event-single.php:45
-#, php-format
 msgid "This event finished on %s"
 msgstr ""
 
 #: includes/event-organiser-register.php:390
 msgid "Settings"
-msgstr "Pengaturan"
+msgstr ""
 
 #: event-organiser-edit.php:165
 msgid "weekly"
@@ -1633,7 +1576,7 @@ msgstr ""
 
 #: includes/event.php:626
 msgid "Start date not provided."
-msgstr "Tanggal mulai belum diberikan"
+msgstr ""
 
 #: includes/event-organiser-ajax.php:805
 msgid "You do not have permission to edit this event"
@@ -1665,7 +1608,7 @@ msgstr ""
 
 #: includes/event-organiser-register.php:265
 msgid "every year on the"
-msgstr "tiap tahun pada"
+msgstr ""
 
 #: event-organiser-calendar.php:311
 msgid "Save Draft"
@@ -1673,7 +1616,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:159
 msgid "New Tag Name"
-msgstr "Kata Kunci Baru"
+msgstr ""
 
 #: templates/single-event.php:60
 msgid "This event was posted by <a href=\"%3$s\">%2$s</a>."
@@ -1732,15 +1675,13 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:39
 msgid "New Venue Name"
-msgstr "Tempat/Lokasi baru"
+msgstr ""
 
 #: includes/class-event-organiser-im-export.php:73
-#, php-format
 msgid "File size: %s. File type: %s"
 msgstr ""
 
 #: includes/event-organiser-cpt.php:334
-#, php-format
 msgid "Event scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview event</a>"
 msgstr ""
 
@@ -1754,7 +1695,7 @@ msgstr ""
 
 #: includes/event-organiser-venue-functions.php:984
 msgid "Country"
-msgstr "Negara"
+msgstr ""
 
 #: event-organiser-settings.php:46
 #: event-organiser.php:122
@@ -1768,19 +1709,19 @@ msgstr ""
 
 #: includes/event-organiser-venue-functions.php:980
 msgid "Address"
-msgstr "Alamat"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:519
 msgid "Creating events:"
-msgstr "Membuat agenda"
+msgstr ""
 
 #: includes/event-organiser-venue-functions.php:982
 msgid "State / Province"
-msgstr "Propinsi"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:155
 msgid "Popular Tags"
-msgstr "Kata-kata Kunci Populer"
+msgstr ""
 
 #: event-organiser-calendar.php:224
 msgid "View keyboard shortcuts"
@@ -1788,7 +1729,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:153
 msgid "Search Tags"
-msgstr "Pencarian Kata-kata Kunci"
+msgstr ""
 
 #: event-organiser-settings.php:75
 msgid "Add-on Licence keys"
@@ -1802,7 +1743,7 @@ msgstr ""
 
 #: includes/class-event-organiser-im-export.php:268
 msgid "1 event was successfully imported"
-msgstr "1 agenda berhasil diimpor"
+msgstr ""
 
 #: event-organiser-settings.php:31
 msgid "Permalinks"
@@ -1814,7 +1755,7 @@ msgstr ""
 
 #: includes/class-event-organiser-im-export.php:281
 msgid "1 category was created"
-msgstr "1 kategori sudah dibuat"
+msgstr ""
 
 #: event-organiser-calendar.php:352
 msgid "Switch to day view"
@@ -1834,7 +1775,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:101
 msgid "Update Category"
-msgstr "Perbarui Kategori"
+msgstr ""
 
 #: templates/event-meta-event-single.php:81
 msgid "Upcoming Dates"
@@ -1863,7 +1804,6 @@ msgid "Events Agenda"
 msgstr ""
 
 #: templates/event-meta-event-single.php:41
-#, php-format
 msgid "This event is running from %1$s until %2$s. It is next occurring on %3$s"
 msgstr ""
 
@@ -1878,7 +1818,7 @@ msgstr ""
 #: includes/event-organiser-event-functions.php:777
 #: includes/event-organiser-register.php:270
 msgid "first"
-msgstr "pertama"
+msgstr ""
 
 #: classes/class-eventorganiser-shortcodes.php:439
 msgid "There is no excerpt because this is a protected post."
@@ -1895,7 +1835,7 @@ msgstr ""
 
 #: includes/event-organiser-register.php:258
 msgid "years"
-msgstr "tahun"
+msgstr ""
 
 #: includes/class-eo-ical-parser.php:193
 msgid "There was an error detecting iCal source."
@@ -1936,7 +1876,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:156
 msgid "Edit Tag"
-msgstr "Sunting Kata Kunci"
+msgstr ""
 
 #: event-organiser-edit.php:215
 msgid "date of month"
@@ -1952,7 +1892,6 @@ msgid "%1$s has only been tested up to %1$s %1$s"
 msgstr ""
 
 #: includes/event-organiser-register.php:578
-#, php-format
 msgid "You can <a href='%s'>change your timezone settings here</a>."
 msgstr ""
 
@@ -1974,15 +1913,15 @@ msgstr ""
 
 #: classes/class-eo-venue-list-table.php:89
 msgid "View &#8220;%s&#8221;"
-msgstr "Lihat &#8220;%s&#8221;"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:227
 msgid "Add New Event"
-msgstr "Tambah Agenda Baru"
+msgstr ""
 
 #: includes/event-organiser-cpt.php:160
 msgid "No tags found"
-msgstr "Kata kunci tidak ditemukan"
+msgstr ""
 
 #: event-organiser-settings.php:160
 #: event-organiser-settings.php:187
@@ -1995,7 +1934,7 @@ msgstr ""
 
 #: includes/event-organiser-register.php:256
 msgid "months"
-msgstr "bulan"
+msgstr ""
 
 #: event-organiser-settings.php:81
 msgid "Templates"
@@ -2017,21 +1956,11 @@ msgstr ""
 msgid "Jump to today in view"
 msgstr ""
 
-#. //docs.wp-event-organiser.com/theme-integration for more information
-#. *
-#. * WordPress will automatically prioritise the template in your theme directory.
-#. ***************** NOTICE: *****************
-#. * @package Event Organiser (plug-in)
-#. * @since 1.2.0
-#. 
-#. Call the template header
 #: includes/class-eo-theme-compatability.php:184
 #: templates/taxonomy-event-tag.php:27
-#, php-format
 msgid "Event Tag: %s"
 msgstr ""
 
-#. //php.net/date
 #: includes/event-organiser-cpt.php:336
 msgid "M j, Y @ G:i"
 msgstr ""
@@ -2042,7 +1971,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:578
 msgid "Add Event"
-msgstr "Tambah Event"
+msgstr ""
 
 #: event-organiser-go-pro.php:80
 msgid "Venue custom fields & thumbnails"
@@ -2076,7 +2005,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:42
 msgid "Separate venues with commas"
-msgstr "Pisahkan tempat/lokasi dengan tanda koma"
+msgstr ""
 
 #: event-organiser-edit.php:166
 msgid "custom"
@@ -2088,7 +2017,7 @@ msgstr ""
 
 #: classes/class-eo-agenda-widget.php:153
 msgid "Add To Google Calendar"
-msgstr "Tambahkan ke kalender google"
+msgstr ""
 
 #: classes/class-eo-event-list-widget.php:164
 msgid "Template (leave blank for default)"
@@ -2108,7 +2037,7 @@ msgstr ""
 
 #: includes/event-organiser-cpt.php:98
 msgid "Parent Category"
-msgstr "Kategori Induk"
+msgstr ""
 
 #: event-organiser-go-pro.php:51
 msgid "Get Event Organiser Pro"

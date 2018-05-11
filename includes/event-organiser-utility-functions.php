@@ -128,18 +128,18 @@ function eo_format_datetime_range( $datetime1, $datetime2, $format, $seperator =
 /**
  * Formats the start/end date/time of an occurrence.
  *
- * This function uses date format for all-day events and appends the time format for all 
+ * This function uses date format for all-day events and appends the time format for all
  * other events. It then splits this format intelligently by inserting the $seperator
  * where the formatted start/end datetimes differ.
- * 
+ *
  * It will optionally wrap the start & end dates with microdata.
- * 
+ *
  * Note: for all-day, non-multi-day events, this will return just the start date.
  *
  * @since 3.0.0
  * @link http://php.net/manual/en/function.date.php PHP Date
  * @uses _eo_format_datetime_range
- * 
+ *
  * @param int $event_id The event ID. Defaults to the current event if not provided.
  * @param int $occurrence_id The occurrence ID.  Defaults to the current occurrence if not provided.
  * @param string $date_format How to format the date part of the occurrence's datetime.
@@ -151,22 +151,22 @@ function eo_format_datetime_range( $datetime1, $datetime2, $format, $seperator =
 function eo_format_event_occurrence( $event_id = false, $occurrence_id = false, $date_format = false, $time_format = false, $seperator = ' &ndash; ', $microdata = true ){
 
 	global $post;
-	
-	$event_id      = $event_id ? intval( $event_id ) : get_the_ID(); 
+
+	$event_id      = $event_id ? intval( $event_id ) : get_the_ID();
 	$occurrence_id = $occurrence_id ? intval( $occurrence_id ) : intval( $post->occurrence_id );
-	
+
 	$format        = eo_get_event_datetime_format( $event_id, $date_format, $time_format );
 	$microformat   = eo_is_all_day( $event_id ) ? 'Y-m-d' : 'c';
 
 	$start = eo_get_the_start( DATETIMEOBJ, $event_id, null, $occurrence_id );
 	$end   = eo_get_the_end( DATETIMEOBJ, $event_id, null, $occurrence_id );
-	
+
 	$start_formatted = eo_format_datetime( $start, $format );
 	$end_formatted   = eo_format_datetime( $end, $format );
-	
+
 	if( $start_formatted == $end_formatted ){
 		$end_formatted = false;
-		
+
 	}else{
 		$fragment = _eo_format_datetime_range( $start, $end, $format, is_rtl() );
 		$start_formatted = is_rtl() ? $fragment['right'] : $fragment['left'];
@@ -179,7 +179,7 @@ function eo_format_event_occurrence( $event_id = false, $occurrence_id = false, 
 			$start->format( $microformat ),
 			$start_formatted
 		);
-		
+
 		if( $end_formatted ){
 			$end_formatted = sprintf(
 				'<time itemprop="endDate" datetime="%s">%s</time>',
@@ -188,25 +188,25 @@ function eo_format_event_occurrence( $event_id = false, $occurrence_id = false, 
 			);
 		}
 	}
-	
+
 	$formatted = $start_formatted;
-	
+
 	if( $end_formatted ){
 		$formatted = is_rtl() ? $end_formatted . $seperator . $start_formatted : $start_formatted . $seperator . $end_formatted;
 	}
-	
+
 	return $formatted;
 }
 
 /**
  * Helper function used by `eo_format_datetime_range()` and `eo_format_event_occurrence()` to format
  * a datetime range given a format.
- * 
+ *
  * @access private
  * @since 3.0.0
  * @used-by eo_format_datetime_range()
  * @used-by eo_format_event_occurrence()
- *  
+ *
  * @param dateTime $datetime1 The first datetime object
  * @param dateTime $datetime2 The second datetime object
  * @param string $format How to format the date range, see http://php.net/manual/en/function.date.php
@@ -215,18 +215,18 @@ function eo_format_event_occurrence( $event_id = false, $occurrence_id = false, 
  * @return string|dateTime The formatted date range
  */
 function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = null ) {
-	
+
 	if ( is_null( $is_rtl ) ) {
 		$is_rtl = is_rtl();
 	}
 
 	$formatted1 = eo_format_datetime( $datetime1, $format );
 	$formatted2 = eo_format_datetime( $datetime2, $format );
-	
+
 	if ( $formatted1 === $formatted2 ) {
 		return $formatted1;
 	}
-	
+
 	//we include jS as a token to ensure correct positioning of suffix: 4th-5th not 4-5th
 	$date = array(
 		array( 'c', 'R', 'U', 'u', 'e','r' ), //Full date time
@@ -237,7 +237,7 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 		array( 'jS', 'j', 'd', 'D', 'l', 'S', 'w', 'N', 'z' ),//Day
 	);
 	$time = array(
-		'g', 'G', 'h', 'H', //Hour 
+		'g', 'G', 'h', 'H', //Hour
 		'a', 'A', //Meridan
 		'i', //Minute
 		's', 'B', //Second
@@ -248,7 +248,7 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 
 	preg_match_all( $regexp, $format, $matches );
 	$tokens = $matches[0];
-	
+
 	$left_counter = 0;
 	$right_counter = count( $tokens ) -1;
 	$left    = false;
@@ -256,8 +256,8 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 	$middle1 = false;
 	$middle2 = false;
 	$right   = false;
-	
-	//Collect the tokens which represent entities for which the two dates differ 
+
+	//Collect the tokens which represent entities for which the two dates differ
 	$break_at_tokens = array();
 	if ( $datetime1->format( 'Y' ) !== $datetime2->format( 'Y' ) ) {
 		$break_at_tokens = call_user_func_array( 'array_merge', array_slice( $date, -4 ) );
@@ -266,32 +266,32 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 	} elseif ( $datetime1->format( 'Ymd' ) !== $datetime2->format( 'Ymd' ) ) {
 		$break_at_tokens = call_user_func_array( 'array_merge', array_slice( $date, -1 ) );
 	}
-	
+
 	while( $left_counter < count( $tokens ) ){
-		
+
 		$parsed_token_1 = eo_format_datetime( $datetime1, $tokens[$left_counter] );
 		$parsed_token_2 = eo_format_datetime( $datetime2, $tokens[$left_counter] );
-		
+
 		//We don't want to place a seperator within anyting time related
 		if( $parsed_token_1 != $parsed_token_2 || in_array( trim( $tokens[$left_counter], ':' ), $time ) ){
 			break;
 		}
-		
+
 		//If token is indicated as representing entity that is different, split even though
 		//they look the same e.g. 'l' with in Saturday 2nd and Saturday 9th
 		//@see https://github.com/stephenharris/Event-Organiser/issues/359
 		if ( in_array( $tokens[$left_counter], $break_at_tokens ) ) {
 			break;
 		}
-		
+
 		$left .= $parsed_token_1;
-		
+
 		$left_counter++;
-		
+
 	}
-	
+
 	while( $right_counter >= 0 ){
-		
+
 		$parsed_token_1 = eo_format_datetime( $datetime1, $tokens[$right_counter] );
 		$parsed_token_2 = eo_format_datetime( $datetime2, $tokens[$right_counter] );
 
@@ -299,31 +299,31 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
 		if( $parsed_token_1 != $parsed_token_2 ||  in_array( trim( $tokens[$right_counter], ':' ), $time ) ){
 			break;
 		}
-		
+
 		//If token is indicated as representing entity that is different, split even though
 		//they look the same e.g. 'l' with in Saturday 2nd and Saturday 9th
 		//@see https://github.com/stephenharris/Event-Organiser/issues/359
 		if ( in_array( $tokens[$right_counter], $break_at_tokens ) ) {
 			break;
 		}
-		
+
 		$right = $parsed_token_1 . $right;
-		
+
 		$right_counter--;
 	}
-	
+
 	for( $i = $left_counter; $i <= $right_counter;  $i++ ){
-		
+
 		$middle1 .= eo_format_datetime( $datetime1, $tokens[$i] );
 		$middle2 .= eo_format_datetime( $datetime2, $tokens[$i] );
-		
+
 	}
-	
+
 	$fragment = array(
 		'left'  => $left,
 		'right' => $right,
 	);
-		
+
 	if( false !== $middle1 ){
 		if( !$is_rtl ){
 			$fragment['left'] .= $middle1;
@@ -350,8 +350,8 @@ function _eo_format_datetime_range( $datetime1, $datetime2, $format, $is_rtl = n
  * @return DateTimeZone The blog timezone
 */
 function eo_get_blog_timezone(){
-	
-	$tzstring = wp_cache_get( 'eventorganiser_timezone' );	
+
+	$tzstring = wp_cache_get( 'eventorganiser_timezone' );
 	$tzstring = apply_filters( 'eventorganiser_timezone', $tzstring );
 
 	if ( false === $tzstring ) {
@@ -377,26 +377,26 @@ function eo_get_blog_timezone(){
 		//Cache timezone string not timezone object
 		//Thanks to Ben Huson https://wordpress.org/support/topic/plugin-event-organiser-getting-500-is-error-when-w3-total-cache-is-on
 		wp_cache_set( 'eventorganiser_timezone', $tzstring );
-	} 
+	}
 
 	if( $tzstring instanceof DateTimeZone ){
 		return $tzstring;
 	}
 
 	$timezone = new DateTimeZone( $tzstring );
-	return $timezone; 
+	return $timezone;
 }
 
 
 /**
  * Calculates and formats an interval between two days, passed in any order.
  * It's a PHP 5.2 workaround for {@link https://www.php.net/manual/en/dateinterval.format.php date interval format}
- * 
- * This does not correctly handle DST but instead mimics the same buggy behaviour exphibted by PHP's date interval. 
+ *
+ * This does not correctly handle DST but instead mimics the same buggy behaviour exphibted by PHP's date interval.
  * See https://bugs.php.net/bug.php?id=63953
- * 
+ *
  * @see https://bugs.php.net/bug.php?id=63953
- * 
+ *
  * @since 1.5
  *
  * @param dateTime $_date1 One date to compare
@@ -416,6 +416,18 @@ function eo_date_interval( $_date1, $_date2, $format ) {
 
 	//Calculate total days difference
 	$total_days = floor( abs( $date1->format( 'U' ) - $date2->format( 'U' ) ) / 86400 );
+
+	// $total_days doesn't handle day light savings very well, so we may need to
+	// manually adjust it.
+	$temp_pointer = clone $date1;
+	if ( $total_days > 0 ) {
+		$temp_pointer->modify("+{$total_days} days");
+		while( $temp_pointer <= $date2 ) {
+			$temp_pointer->modify("+1 day");
+			$total_days++;
+		}
+		$total_days--;
+	}
 
 	$periods = array( 'years' => -1, 'months' => -1, 'days' => -1, 'hours' => -1 );
 
@@ -571,7 +583,7 @@ function eo_php_to_moment( $phpformat ) {
  *
  * Takes a php date format and converts it to {@link http://docs.jquery.com/UI/Datepicker/formatDate} so
  * that it can b used in javascript (i.e. by the datepicker).
- * 
+ *
  * **Please note that this function does not convert time formats**
  *
  * @since 2.1.3
@@ -591,19 +603,19 @@ function eo_php2jquerydate( $phpformat ){
 		//Full date
 		'U' => '@',
 	);
-	
+
 	$regexp  = '/(j|d|D|l|z|F|m|M|n|Y|y|o|U|.)/';
 	$matches = array();
-	
+
 	preg_match_all( $regexp, $phpformat, $matches );
-	
+
 	if ( !$matches || false === is_array( $matches ) ){
 		return $format;
 	}
-	
+
 	$php_tokens = array_keys( $map );
 	$jquery_format = '';
-	
+
 	foreach ( $matches[0] as $id => $match ){
 		// if there is a matching php token in token list
 		if ( in_array( $match, $php_tokens ) ){
@@ -614,7 +626,7 @@ function eo_php2jquerydate( $phpformat ){
 		}
 		$jquery_format .= $string;
 	}
-	
+
 	return $jquery_format;
 }
 
@@ -641,13 +653,13 @@ function _eventorganiser_remove_duplicates( $array=array() ){
         }
 
         return $unique;
-} 
+}
 
 
 /**
- * Utility function Compares two DateTime object, 
+ * Utility function Compares two DateTime object,
  * Returns +1 if the first date is after, -1 if its before or 0 if they're the same
- * Note: does not compare *times*. 
+ * Note: does not compare *times*.
  * Used to filter occurrances with udiff
  *
  * @access private
@@ -668,7 +680,7 @@ function _eventorganiser_compare_dates( $date1, $date2 ){
 }
 
 /**
- * Utility function Compares two DateTime object. 
+ * Utility function Compares two DateTime object.
  *
  * Returns +1 if the first date is after, -1 if its before or 0 if they're the same
  *
@@ -680,7 +692,7 @@ function _eventorganiser_compare_dates( $date1, $date2 ){
  * @return int 1 | 0 | -1
  */
 function _eventorganiser_compare_datetime( $date1, $date2 ){
-	
+
 	if ( $date1 == $date2 ) {
 		return 0;
 	} elseif ( $date1 > $date2 ) {
@@ -688,7 +700,7 @@ function _eventorganiser_compare_datetime( $date1, $date2 ){
 	} else {
 		return -1;
 	}
-	
+
 }
 
 
@@ -707,7 +719,7 @@ function _eventorganiser_compare_datetime( $date1, $date2 ){
  * @return dateTime the modified dateTime object. DateTime is set to blog tz.
  */
 function _eventorganiser_php52_modify($date='',$modify=''){
-	
+
 	//Expect e.g. 'Second Monday of +2 month
 	$pattern = '/([a-zA-Z]+)\s([a-zA-Z]+) of ([\+|-]?\d+) month/i';
 	preg_match($pattern, $modify, $matches);
@@ -722,7 +734,7 @@ function _eventorganiser_php52_modify($date='',$modify=''){
 	//first day of +$freq months
 	$date->modify('+'.$freq.' month');
 
-	//Calculate offset to day of week	
+	//Calculate offset to day of week
 	if($ordinal >0):
 		$offset = ($day-intval($date->format('w')) +7)%7;//Offset to first weekday of that month (e.g. first Monday)
 		$d =($offset) +7*($ordinal-1) +1; //If wanting to get second, third or fourth monday add multiples of 7.
@@ -863,7 +875,7 @@ function eo_check_datetime( $format, $datetime_string, $timezone = false ) {
 		try {
 			$date = new DateTime( $ymdhis, $timezone );
 			return $date;
-		} catch ( Exception $e ) {			
+		} catch ( Exception $e ) {
 			return false;
 		}
 
@@ -937,7 +949,7 @@ function eventorganiser_radio_field( $args ){
 	$args = wp_parse_args($args,array(
 		'checked' => '', 'help' => '', 'options' => '', 'name' => '', 'echo' => 1,
 		'class' => '', 'label' => '', 'label_for' => '', 'esc_labels' => true,
-	));	
+	));
 
 	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$name = isset($args['name']) ?  $args['name'] : '';
@@ -992,7 +1004,7 @@ function eventorganiser_select_field($args){
 		'selected'=>'', 'help' => null, 'options'=>'', 'name'=>'', 'echo'=>1,
 		'label_for'=>'','class'=>'','disabled'=>false,'multiselect'=>false,
 		'inline_help' => false, 'style' => false, 'data' => false,
-	));	
+	));
 
 	$id          = ( ! empty($args['id']) ? $args['id'] : $args['label_for'] );
 	$name        = isset($args['name']) ?  $args['name'] : '';
@@ -1010,7 +1022,7 @@ function eventorganiser_select_field($args){
 			$data .= sprintf( ' data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
 		}
 	}
-	
+
 	$html = sprintf('<select %s name="%s" id="%s" %s>',
 		!empty( $class ) ? 'class="'.$class.'"'  : '',
 			esc_attr($name),
@@ -1070,7 +1082,7 @@ function eventorganiser_text_field($args){
 			 'size'=>false, 'min' => false, 'max' => false, 'style'=>false, 'echo'=>true, 'data'=>false,
 			'class' => false, 'required' => false,
 			)
-		);		
+		);
 
 	$id = ( !empty($args['id']) ? $args['id'] : $args['label_for']);
 	$name = isset($args['name']) ?  $args['name'] : '';
@@ -1086,7 +1098,7 @@ function eventorganiser_text_field($args){
 	$placeholder = ( !empty( $args['placeholder'] ) || is_numeric( $args['placeholder'] ) ) ? sprintf('placeholder="%s"', $args['placeholder']) : '';
 	$disabled = ( !empty($args['disabled']) ? 'disabled="disabled"' : '' );
 	$required = ( !empty($args['required']) ? 'required="required"' : '' );
-	
+
 
 	//Custom data-* attributes
 	$data = '';
@@ -1095,13 +1107,13 @@ function eventorganiser_text_field($args){
 			$data .= sprintf( ' data-%s="%s"', esc_attr( $key ), esc_attr( $attr_value ) );
 		}
 	}
-	
-	
+
+
 
 	$attributes = array_filter( array($min,$max,$size,$placeholder,$required, $disabled, $style, $data ) );
 
 	$html = sprintf('<input type="%s" name="%s" class="%s" id="%s" value="%s" autocomplete="off" %s /> %s',
-		esc_attr( $type ), 
+		esc_attr( $type ),
 		esc_attr( $name ),
 		$class,
 		esc_attr( $id ),
@@ -1119,7 +1131,7 @@ function eventorganiser_text_field($args){
 
 	return $html;
 }
-	
+
 
 /**
  * Utility function for printing/returning text field
@@ -1180,7 +1192,7 @@ function eventorganiser_checkbox_field( $args = array() ) {
 
 			$html .= sprintf(
 				'<label for="%1$s">
-					<input type="checkbox" name="%2$s" id="%1$s" value="%3$s" %4$s %5$s> 
+					<input type="checkbox" name="%2$s" id="%1$s" value="%3$s" %4$s %5$s>
 					%6$s </br>
 				</label>',
 				esc_attr( $id . '_' . $value ),
@@ -1260,7 +1272,7 @@ function eventorganiser_textarea_field($args){
 	$attributes = array_filter( array( $rows, $cols, $readonly, $data ) );
 
 	$html = '';
-	
+
 	if( $args['tinymce'] ){
 		ob_start();
 
@@ -1270,19 +1282,19 @@ function eventorganiser_textarea_field($args){
 				'media_buttons' => false,
 				'textarea_rows' => intval( $args['rows'] ),
 		), $tinymce_args );
-		
+
 		wp_editor( $value, esc_attr( $id ) ,$tinymce_args );
-		
+
 		$html .= ob_get_contents();
-		
+
 		if( $data ){
-			$html = str_replace( 
+			$html = str_replace(
 				'<div id="wp-' . $id . '-editor-container"',
 				'<div id="wp-' . $id . '-editor-container" '.$data.' ',
 				$html
 			);
 		}
-		
+
 		ob_end_clean();
 	}else{
 		$html .= sprintf('<textarea %s name="%s" class="%s" id="%s">%s</textarea>',
@@ -1334,13 +1346,13 @@ function eventorganiser_clear_cache( $group, $key = false ){
 	if( $key == false ){
 		//If a key is not specified clear entire group by incrementing name space
 		return wp_cache_incr( 'eventorganiser_'.$group.'_key' );
-		
+
 	}elseif( $ns_key = wp_cache_get( 'eventorganiser_'.$group.'_key' ) ){
 		//If key is specified - clear particular key from the group
 		return wp_cache_delete( "eo_".$ns_key."_".$key, $group );
 	}
 }
-	
+
 /**
  * @ignore
  * @private
@@ -1362,10 +1374,10 @@ function eventorganiser_cache_set( $key, $value, $group, $expire = 0 ){
 
 /**
  * Display inline help via a qTip2 tooltip.
- * 
- * The function handles the javascript/css loading and generates the link HTML which will trigger the tooltip. 
- * The HTML can be returned or printed using the fourth argument. 
- * 
+ *
+ * The function handles the javascript/css loading and generates the link HTML which will trigger the tooltip.
+ * The HTML can be returned or printed using the fourth argument.
+ *
  * @private
  * @ignore
  * @param string $title The title of the tooltip that will appear
@@ -1413,7 +1425,7 @@ function _eventorganiser_enqueue_inline_help_scripts(){
 
 /**
  * Darken or lighten a colour (hex) by a given percent (as a decimal)
- * 
+ *
  * @param string $hex
  * @param float $percent Percent as a decimal. E.g. 75% = 0.75
  * @return string The generated colour as a hexedecimal
@@ -1426,7 +1438,7 @@ function eo_color_luminance( $hex, $percent ) {
 
 	if( !$hex )
 		return false;
-	
+
 	if ( strlen( $hex ) < 6 ) {
 		$hex = $hex[0] + $hex[0] + $hex[1] + $hex[1] + $hex[2] + $hex[2];
 	}
@@ -1444,9 +1456,9 @@ function eo_color_luminance( $hex, $percent ) {
 /**
  * Whether the blog's time settings indicates it uses 12 or 24 hour time
  *
- * If uses meridian (am/pm) it is 12 hour. Otherwise if it uses 'H' as the 
+ * If uses meridian (am/pm) it is 12 hour. Otherwise if it uses 'H' as the
  * time format it is 24 hour. Otherwise assumed to be 12 hour.
- * 
+ *
  */
 function eo_blog_is_24(){
 
@@ -1455,7 +1467,7 @@ function eo_blog_is_24(){
 	//Check for meridian
 	if( preg_match( '~\b(A.)\b|([^\\\\]A)~i', $time, $matches ) ){
 		$is_24 = false;
-		
+
 	//Check for 24 hour format
 	}elseif( strpos( $time, 'H' ) > -1 || strpos( $time, 'G' ) > -1  ){
 		$is_24 = true;
@@ -1467,33 +1479,57 @@ function eo_blog_is_24(){
 
 	/**
 	 * Filters whether your site's time format is 12 hour or 24 hour.
-	 * 
-	 * This does not affect anything on the front-end, but it is used to determine 
-	 * the format in which times are entered admin-side. If `true` then 24 hour time 
+	 *
+	 * This does not affect anything on the front-end, but it is used to determine
+	 * the format in which times are entered admin-side. If `true` then 24 hour time
 	 * is used, otherwise 12 hour time is used.
-	 * 
+	 *
 	 * By default this value is a 'best guess' based on your site's time format
 	 * option in *Settings > General*.
-	 * 
+	 *
 	 * ### Example
-	 * 
+	 *
 	 *     //If you want input time to be forced to 12 hour format
 	 *     add_filter( 'eventorganiser_blog_is_24', '__return_false' );
 	 *     //If you want input time to be forced to 24 hour format
 	 *     add_filter( 'eventorganiser_blog_is_24', '__return_true' );
-	 * 
-	 * @param bool $is_24 Is the site's time format option using 12 hour or 24 hour time. 
+	 *
+	 * @param bool $is_24 Is the site's time format option using 12 hour or 24 hour time.
 	 */
 	$is_24 = apply_filters( 'eventorganiser_blog_is_24', $is_24 );
 	return $is_24;
 }
 
 /**
- * Wrapper for `wp_localize_script`. 
- * 
+ * Whether the blog's date settings indicates it uses a date suffix
+ * @return boolean True if an ordinal is used, false otherwise.
+ *
+ */
+function eo_blog_is_using_ordinal(){
+
+	$date_format = get_option( 'date_format');
+
+	//Check for unescaped use of 'S' in date format
+	$use_ordinal = (bool) preg_match( '~\b(S.)\b|([^\\\\]S)~', $date_format, $matches );
+
+	/**
+	 * Filters whether your site's date format uses the date suffix 'S'
+	 *
+   * This is used to determine whether not to format some dates in the admin
+	 * with an ordinal suffix.
+	 *
+	 * @param bool $use_ordinal Is the site's time format option using 12 hour or 24 hour time.
+	 */
+	$use_ordinal = apply_filters( 'eventorganiser_blog_is_using_ordinal', $use_ordinal );
+	return $use_ordinal;
+}
+
+/**
+ * Wrapper for `wp_localize_script`.
+ *
  * Allows additional arguments to added to a js variable before its printed. By contrast
  * wp_localize_script() over-rides prevous calls to the same handle-object pair.
- * 
+ *
  * This allows (most) Event Organiser js-variables to live under the namespace 'eventorganiser'
  *
  * @since 2.1
@@ -1505,21 +1541,21 @@ function eo_blog_is_24(){
  */
 function eo_localize_script( $handle, $obj ){
 	static $eventorganiser_localise_obj = array();
-	
+
 	$eventorganiser_localise_obj = eo_array_merge_recursive_distinct( $eventorganiser_localise_obj, $obj );
 
-	wp_localize_script( $handle, 'eventorganiser', $eventorganiser_localise_obj );	
+	wp_localize_script( $handle, 'eventorganiser', $eventorganiser_localise_obj );
 }
 
 /**
- * Recursively merge two or more arrays. 
- * 
+ * Recursively merge two or more arrays.
+ *
  * Unlike `array_merge_recursive()` the datatype is not altered. Values override existing values. If its an array,
  * Matching keys' values in a latter array overwrite those in the earlier arrays.
- * 
+ *
  * @param array1 array Initial array to merge.
- * @param array2 array Second array to merge  
- *  
+ * @param array2 array Second array to merge
+ *
  * @since 2.1
  * @ignore
  * @see https://www.php.net/manual/en/function.array-merge-recursive.php#91049
@@ -1529,10 +1565,10 @@ function eo_localize_script( $handle, $obj ){
  * @return array the resulting array.
  */
 function &eo_array_merge_recursive_distinct ( array $array1, array $array2 /* array 3, array 4 */  ){
-	
+
 	$aArrays = func_get_args();
 	$aMerged = $aArrays[0];
-	
+
 	for($i = 1; $i < count($aArrays); $i++){
 		if ( is_array( $aArrays[$i] ) ){
 			foreach ($aArrays[$i] as $key => $val){
@@ -1548,14 +1584,14 @@ function &eo_array_merge_recursive_distinct ( array $array1, array $array2 /* ar
 			}
 		}
 	}
-	
+
 	return $aMerged;
 }
 
 
 /**
  * Add $dep (script handle) to the array of dependencies for $handle
- * 
+ *
  * @since 2.1
  * @ignore
  * @access private
@@ -1565,24 +1601,24 @@ function &eo_array_merge_recursive_distinct ( array $array1, array $array2 /* ar
  */
 function eventorganiser_append_dependency( $handle, $dep ){
 	global $wp_scripts;
-	
+
 	$script = $wp_scripts->query( $handle, 'registered');
 	if( !$script )
 		return false;
-	
+
 	if( !in_array( $dep, $script->deps ) ){
 		$script->deps[] = $dep;
 	}
-	
+
 	return true;
 }
 
 
 /**
- * Escapes a string so it safe for use in ICAL template. 
- * 
+ * Escapes a string so it safe for use in ICAL template.
+ *
  * Commas, semicolons, newlines and backslashes are escaped.
- * 
+ *
  * @ignore
  * @see http://www.ietf.org/rfc/rfc2445.txt
  * @since 2.1
@@ -1590,7 +1626,7 @@ function eventorganiser_append_dependency( $handle, $dep ){
  * @return string The escaped string.
  */
 function eventorganiser_escape_ical_text( $text ){
-	
+
 	$text = str_replace( "\\", "\\\\", $text );
 	$text = str_replace( ",", "\,", $text );
 	$text = str_replace( ";", "\;", $text );
@@ -1603,17 +1639,17 @@ function eventorganiser_escape_ical_text( $text ){
 	 */
 	$text = str_replace( "\r\n", "\n", $text );
 	$text = str_replace( "\n", "\\n", $text );
-	
+
 	return $text;
 }
 
 /**
  * Fold text as per [iCal specifications](http://www.ietf.org/rfc/rfc2445.txt)
- * 
+ *
  * Lines of text SHOULD NOT be longer than 75 octets, excluding the line
  * break. Long content lines SHOULD be split into a multiple line
  * representations using a line "folding" technique. That is, a long
- * line can be split between any two characters by inserting a CRLF 
+ * line can be split between any two characters by inserting a CRLF
  * immediately followed by a single linear white space character (i.e.,
  * SPACE, US-ASCII decimal 32 or HTAB, US-ASCII decimal 9). Any sequence
  * of CRLF followed immediately by a single linear white space character
@@ -1629,7 +1665,7 @@ function eventorganiser_fold_ical_text( $text ){
 	$text_arr = array();
 
 	$lines = ceil( mb_strlen( $text ) / 75 );
-	
+
 	for( $i = 0; $i < $lines; $i++ ){
 		$text_arr[$i] = mb_substr( $text, $i * 75, 75 );
 	}
@@ -1657,15 +1693,15 @@ function eo_list_pluck_key_value( $list, $key_field, $value_field ) {
 		} else {
 			$new_list[ $value[ $key_field ] ] = $value[ $value_field ];
 		}
-	} 
+	}
 
 	return $new_list;
 }
 
 /**
- * Given an array, it returns only the values whose key exists in 
+ * Given an array, it returns only the values whose key exists in
  * a given key whitelist.
- * 
+ *
  * @param array $array The array for which we wish to weed out non whitelisted values.
  * @param array $whitelist An array of permissable keys.
  * @return array The original array with non-permissable keys removed
@@ -1703,33 +1739,33 @@ function eo_is_multi_event_organiser() {
 }
 
 /**
- * Combines two arrays by joining them by their key. 
- * 
+ * Combines two arrays by joining them by their key.
+ *
  * This is similar to array_combine, but rather than combining
- * by index, the array is combined by key. Any keys not found 
+ * by index, the array is combined by key. Any keys not found
  * in both are ignored.
- * 
- * @param array $key_array   Array whose values form the keys of the returned array 
+ *
+ * @param array $key_array   Array whose values form the keys of the returned array
  * @param array $value_array Array whose values form the values of the returned array
  * @return array The combined array
  */
 function eo_array_combine_assoc( $key_array, $value_array ) {
-	
+
 	$output = array();
 	$keys = array_keys( array_intersect_key( $key_array, $value_array ) );
-	
+
 	if( $keys ){
 		foreach( $keys as $key ){
-			$output[$key_array[$key]] = $value_array[$key]; 
+			$output[$key_array[$key]] = $value_array[$key];
 		}
 	}
-	
+
 	return $output;
 }
 
 /**
  * Wrapper for {@see get_user_by()}. Returns the user ID instead of the object.
- * 
+ *
  * @since 2.12.0
  * @uses get_user_by();
  * @param string $field The field to retrieve the user with. id | slug | email | login
@@ -1769,18 +1805,35 @@ function eo_taxonomy_dropdown( $args ) {
 }
 
 /**
+ * Returns either ”, a 3 or 6 digit hex color (with #), or nothing.
+ *
+ * This function will be removed when the below trac ticket is resolved for all
+ * supported WP versions.
+ * @trac https://core.trac.wordpress.org/ticket/27583
+ * @private
+ */
+function eo_sanitize_hex_color( $color ) {
+	if ( '' === $color )
+		return '';
+
+	// 3 or 6 hex digits, or the empty string.
+	if ( preg_match('|^#([A-Fa-f0-9]{3}){1,2}$|', $color ) )
+		return $color;
+}
+
+/**
  * A helper function which can be used to retrieve the Google Maps API
- * key 
- * 
- * The key is stored either as a constant or in the site options 
- * 
- * @return string|bool The API key for this site, or false if none is set 
+ * key
+ *
+ * The key is stored either as a constant or in the site options
+ *
+ * @return string|bool The API key for this site, or false if none is set
  */
 function eventorganiser_get_google_maps_api_key() {
-	
+
 	if ( defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) ) {
 		return EVENTORGANISER_GOOGLE_MAPS_API_KEY;
 	}
-	
+
 	return eventorganiser_get_option( 'google_api_key', false );
 }

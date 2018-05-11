@@ -40,36 +40,34 @@ function eventorganiser_public_fullcalendar() {
 				'terms'    => explode( ',', esc_attr( $_GET[$tax] ) ),
 				'operator' => 'IN',
 			);
-		}	
+		}
 	}
-	
+
 	if ( ! empty( $_GET['organiser'] ) ) {
-		$request['author'] = (int) $_GET['organiser'];
+		$request['author__in'] = is_array( $_GET['organiser'] ) ? array_map( 'intval', $_GET['organiser'] ) : array( (int) $_GET['organiser'] );
 	}
 
 	if ( ! empty( $_GET['users_events'] ) && 'false' != $_GET['users_events'] ) {
-		$request['bookee_id'] = get_current_user_id();	
+		$request['bookee_id'] = get_current_user_id();
 	}
-	
+
 	if ( ! empty( $_GET['event_occurrence__in'] ) ) {
 		$request['event_occurrence__in'] = $_GET['event_occurrence__in'];
 	}
-	
+
 	if ( ! empty( $_GET['event_series'] ) ) {
 		$request['event_series'] = (int) $_GET['event_series'];
 	}
 
-	$presets = array( 'numberposts' => -1, 'group_events_by' => '', 'showpastevents' => true );
-	
-	if( current_user_can( 'read_private_events' ) ){
-		$priv = '_priv';
-		$post_status = array( 'publish', 'private' );
-	}else{
-		$priv = false;
-		$post_status = array( 'publish' );
-	}
+	$presets = array(
+		'numberposts' => -1,
+		'group_events_by' => '',
+		'showpastevents' => true,
+		'perm' => 'readable',
+		'post_status' => array( 'publish', 'private' )
+	);
 
-	//Retrieve events		
+	//Retrieve events
 	$query = array_merge( $request, $presets );
 
 	/**
@@ -84,22 +82,22 @@ function eventorganiser_public_fullcalendar() {
 	 * @param array  $query An query array (as given to `eo_get_events()`)
 	 */
 	$query = apply_filters( 'eventorganiser_fullcalendar_query', $query );
-	
+
 	//In case polylang is enabled with events as translatable. Include locale in cache key.
 	$options = get_option( 'polylang' );
 	if( defined( 'POLYLANG_VERSION' ) && !empty( $options['post_types']  ) && in_array( 'event', $options['post_types'] ) ){
-		$key = 'eo_fc_'.md5( serialize( $query ). $time_format . get_locale() );
+		$key = 'eo_fc_'.md5( serialize( $query ). $time_format . get_locale() . get_current_user_id() );
 	}else{
-		$key = 'eo_fc_'.md5( serialize( $query ). $time_format );
+		$key = 'eo_fc_'.md5( serialize( $query ). $time_format . get_current_user_id() );
 	}
-	
-	$calendar = get_transient( "eo_full_calendar_public{$priv}" );
+
+	$calendar = get_transient( "eo_full_calendar_public" );
 	if( $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ){
 		$events_array = $calendar[$key];
 		/**
-	 	* Filters the event before it is sent to the calendar. 
+	 	* Filters the event before it is sent to the calendar.
 	 	*
-	 	* **Note:** This filters the response immediately before sending, and after 
+	 	* **Note:** This filters the response immediately before sending, and after
 	 	* the cache is saved/retrieved. Changes made on this filter are not cached.
 	 	*
 	 	* @package fullCalendar
@@ -111,8 +109,6 @@ function eventorganiser_public_fullcalendar() {
 		wp_send_json( $events_array );
 	}
 
-	$query['post_status'] = $post_status;
-	
 	$events = eo_get_events( $query );
 	$events_array = array();
 
@@ -129,25 +125,25 @@ function eventorganiser_public_fullcalendar() {
 			//Title and url
 			$event['title']=html_entity_decode(get_the_title($post->ID),ENT_QUOTES,'UTF-8');
 			$link = esc_js(get_permalink( $post->ID));
-			
+
 			/**
 			 * Filters the link to the event's page on the admin calendar.
-			 * 
+			 *
 			 * **Note:** As the calendar is cached, changes made using this filter
-			 * will not take effect immediately. You can clear the cache by 
+			 * will not take effect immediately. You can clear the cache by
 			 * updating an event.
-			 * 
+			 *
 			 * ### Example
-			 * 
-			 *    //Remove link if from calendar if event has no content
-			 *    add_filter('eventorganiser_calendar_event_link','myprefix_maybe_no_calendar_link',10,3);
- 			 *    function myprefix_maybe_no_calendar_link( $link, $event_id, $occurrence_id ){
- 			 *        $the_post = get_post($post_id);
- 			 *        if( empty($the_post->post_content) ){
- 			 *            return false;
- 			 *        }
- 			 *        return $link;
- 			 *    }
+			 *
+			 *     //Remove link if from calendar if event has no content
+			 *     add_filter('eventorganiser_calendar_event_link','myprefix_maybe_no_calendar_link',10,3);
+			 *     function myprefix_maybe_no_calendar_link( $link, $event_id, $occurrence_id ){
+			 *         $the_post = get_post($post_id);
+			 *         if( empty($the_post->post_content) ){
+			 *             return false;
+			 *         }
+			 *         return $link;
+			 *     }
 			 *
 			 * @package fullCalendar
 			 * @param string $link          The url the event points to on the calendar.
@@ -200,17 +196,18 @@ function eventorganiser_public_fullcalendar() {
 			 */
 			$description = apply_filters('eventorganiser_event_tooltip', $description, $post->ID,$post->occurrence_id,$post);
 			$event['description'] = $description;
-			
+
+			$event['organiser'] = (int) $post->post_author;
 			$event['className']   = eo_get_event_classes();
 			$event['className'][] = 'eo-event';
-			
+
 			//Colour past events
 			$now = new DateTime(null,$tz);
 			if($event_start <= $now)
 				$event['className'][] = 'eo-past-event'; //deprecated. use eo-event-past or eo-event-running
 			else
 				$event['className'][] = 'eo-future-event'; //deprecated. use eo-event-future
-				
+
 			//Include venue if this is set
 			$venue = eo_get_venue( $post->ID );
 
@@ -277,11 +274,11 @@ function eventorganiser_public_fullcalendar() {
 
 	if( !$calendar || !is_array($calendar) )
 		$calendar = array();
-	
+
 	$calendar[$key] = $events_array;
 
-	set_transient( "eo_full_calendar_public{$priv}",$calendar, 60*60*24);
-	
+	set_transient( "eo_full_calendar_public",$calendar, 60*60*24);
+
 	$events_array = apply_filters( 'eventorganiser_fullcalendar', $events_array, $query );
 
 	//Echo result and exit

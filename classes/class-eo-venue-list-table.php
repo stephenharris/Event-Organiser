@@ -47,7 +47,7 @@ class EO_Venue_List_Table extends WP_List_Table {
 			default:
 				$key = str_replace( 'venue_', '', $column_name );
 
-				if ( 'venue_'.$key == $column_name && isset( $address[$key] ) ) {
+				if ( 'venue_' . $key == $column_name && isset( $address[$key] ) ) {
 					return esc_html( $address[$key] );
 				}
 				//TODO Hook for extra columns?
@@ -77,7 +77,7 @@ class EO_Venue_List_Table extends WP_List_Table {
 			),
 			'delete' => sprintf(
 				'<a href="%s" aria-label="%s">%s</a>',
-				esc_url( wp_nonce_url( $delete_url, 'eventorganiser_delete_venue_'.$item->slug ) ),
+				esc_url( wp_nonce_url( $delete_url, 'eventorganiser_delete_venue_' . $item->slug ) ),
 				/* translators: %s: venue name */
 				esc_attr( sprintf( __( 'Delete &#8220;%s&#8221;', 'event-organiser' ), $name ) ),
 				esc_html__( 'Delete', 'eventorganiser' )

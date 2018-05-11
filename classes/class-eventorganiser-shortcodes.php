@@ -102,7 +102,11 @@ class EventOrganiser_Shortcodes {
 		} elseif ( strtolower( $atts['type'] ) == 'ical' ) {
 			//Do nothing
 		} else {
-			$url = add_query_arg( 'cid', urlencode( $url ), 'http://www.google.com/calendar/render' );
+			//Google doesn't support https:// protocols for the cid value
+			//@see https://github.com/stephenharris/Event-Organiser/issues/328
+			//@link  http://stackoverflow.com/a/21218052/932391
+			$url = preg_replace( '/^https:/i', 'http:', $url );
+			$url = add_query_arg( 'cid', urlencode( $url ), 'https://www.google.com/calendar/render' );
 		}
 
 		$html = '<a href="'.$url.'" target="_blank" '.$class.' '.$title.' '.$id.' '.$style.'>'.$content.'</a>';
@@ -272,8 +276,15 @@ class EventOrganiser_Shortcodes {
 	static function read_template($template){
 		$patterns = array(
 			'/%(event_title)%/',
-			'/%(start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
-			'/%(end)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
+			'/%(start)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(end)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(end)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(end)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(end)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(schedule_start)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(schedule_last)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(schedule_end)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
+			'/%(event_range)({(?P<date>[^{}]*)})?({(?P<time>[^{}]*)})?%/',
 			'/%(event_venue)%/',
 			'/%(event_venue_url)%/',
 			'/%(event_cats)%/',
@@ -284,9 +295,7 @@ class EventOrganiser_Shortcodes {
 			'/%(event_venue_country)%/',
 			'/%(event_venue_state)%/',
 			'/%(event_venue_city)%/',
-			'/%(schedule_start)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
-			'/%(schedule_last)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
-			'/%(schedule_end)({([^{}]*)}{([^{}]*)}|{[^{}]*})?%/',
+			'/%(event_organiser)%/',
 			'/%(event_thumbnail)(?:{([^{}]+)})?(?:{([^{}]+)})?%/',
 			'/%(event_url)%/',
 			'/%(event_custom_field){([^{}]+)}%/',
@@ -309,28 +318,18 @@ class EventOrganiser_Shortcodes {
 			case 'event_title':
 				$replacement = get_the_title();
 				break;
-				
+
 			case 'start':
 			case 'end':
 			case 'schedule_start':
 			case 'schedule_last':
 			case 'schedule_end':
-				switch(count($matches)):
-					case 2:
-						$dateFormat = get_option('date_format');
-						$dateTime = get_option('time_format');
-						break;
-					case 3:
-						$dateFormat =  self::eo_clean_input($matches[2]);
-						$dateTime='';
-						break;
-					case 5:
-						$dateFormat =  self::eo_clean_input($matches[3]);
-						$dateTime =  self::eo_clean_input($matches[4]);
-						break;
-				endswitch;
-		
-				$format = eo_is_all_day(get_the_ID()) ? $dateFormat : $dateFormat . $dateTime;
+				$defaults = array(
+					'date' => get_option('date_format'),
+					'time' => get_option('time_format'),
+				);
+				$formats = array_merge( $defaults, $matches );
+				$format = eo_get_event_datetime_format( get_the_ID(), $formats['date'], $formats['time'] );
 
 				switch( $matches[1] ):
 					case 'start':
@@ -342,13 +341,13 @@ class EventOrganiser_Shortcodes {
 					case 'schedule_start':
 						$replacement = eo_get_schedule_start( $format );
 					break;
-          				case 'schedule_last':
-          				case 'schedule_end':
+					case 'schedule_last':
+					case 'schedule_end':
 						$replacement = eo_get_schedule_end( $format );
 					break;
 				endswitch;
-
 				break;
+
 			case 'event_duration':
 				$start = eo_get_the_start( DATETIMEOBJ );
 				$end   = clone eo_get_the_end( DATETIMEOBJ );
@@ -363,12 +362,39 @@ class EventOrganiser_Shortcodes {
 				}
 				break;
 
+			case 'event_range':
+				$defaults = array(
+					'date' => get_option('date_format'),
+					'time' => get_option('time_format'),
+				);
+				$formats = array_merge( $defaults, $matches );
+				$replacement = eo_format_event_occurrence( get_the_ID(), eo_get_the_occurrence_id(), $formats['date'], $formats['time'] );
+				break;
+
+				$start = eo_get_the_start( DATETIMEOBJ );
+				$end   = clone eo_get_the_end( DATETIMEOBJ );
+				if ( eo_is_all_day() ) {
+					$end->modify( '+1 minute' );
+				}
+				if ( function_exists( 'date_diff' ) ) {
+					$duration = date_diff( $start, $end );
+					$replacement = $duration->format( $matches[2] );
+				} else {
+					$replacement = eo_date_interval( $start,$end, $matches[2] );
+				}
+				break;
+
+			case 'event_organiser':
+				$event = get_post();
+				$event_organiser = get_user_by( 'id', (int) $event->post_author );
+				$replacement = $event_organiser->display_name;
+				break;
 			case 'event_tags':
-				$replacement = get_the_term_list( get_the_ID(), 'event-tag', '', ', ',''); 
+				$replacement = get_the_term_list( get_the_ID(), 'event-tag', '', ', ','');
 				break;
 
 			case 'event_cats':
-				$replacement = get_the_term_list( get_the_ID(), 'event-category', '', ', ',''); 
+				$replacement = get_the_term_list( get_the_ID(), 'event-category', '', ', ','');
 				break;
 
 			case 'event_venue':
@@ -421,7 +447,7 @@ class EventOrganiser_Shortcodes {
 				$replacement = get_the_post_thumbnail(get_the_ID(),$size, $attr);
 				break;
 			case 'event_url':
-				$replacement =get_permalink();
+				$replacement = eo_get_permalink();
 				break;
 			case 'event_custom_field':
 				$field = $matches[2];
@@ -464,14 +490,44 @@ class EventOrganiser_Shortcodes {
 			return;
 		}
 
-		$terms = get_terms( 'event-category', array( 'hide_empty' => 0 ) );
+		$load_users = $load_venues = $load_categories = $load_tags = false;
 
-		$fullcal = (empty(self::$calendars) ? array() : array(
-			'firstDay'   => intval( get_option( 'start_of_week' ) ),
-			'venues'     => get_terms( 'event-venue', array( 'hide_empty' => 0 ) ),
-			'categories' => $terms,
-			'tags'       => get_terms( 'event-tag', array( 'hide_empty' => 1 ) ),
+		if ( self::$calendars ) {
+			foreach( self::$calendars as $calendar ) {
+				if ( self::calendarHeadersContainCaseInsensitive( 'organiser', $calendar ) ) {
+					$load_users = true;
+				}
+				if ( self::calendarHeadersContainCaseInsensitive( 'venue', $calendar ) ) {
+					$load_venues = true;
+				}
+				if ( self::calendarHeadersContainCaseInsensitive( 'category', $calendar ) ) {
+					$load_categories = true;
+				}
+				if ( self::calendarHeadersContainCaseInsensitive( 'tag', $calendar ) ) {
+					$load_tags = true;
+				}
+			}
+		}
+
+		$fullcal = ( empty( self::$calendars ) ? array() : array(
+			'firstDay' => intval( get_option( 'start_of_week' ) ),
 		));
+
+		if ( $load_venues ) {
+			$fullcal['venues'] = get_terms( 'event-venue', array( 'hide_empty' => 0 ) );
+		}
+
+		if ( $load_categories ) {
+			$fullcal['categories'] = get_terms( 'event-category', array( 'hide_empty' => 0 ) );
+		}
+
+		if ( $load_tags ) {
+			$fullcal['tags'] = get_terms( 'event-tag', array( 'hide_empty' => 1 ) );
+		}
+
+		if ( $load_users ) {
+			$fullcal['users'] = wp_list_pluck( get_users(), 'display_name', 'ID' );
+		}
 
 		eo_localize_script( 'eo_front', array(
 			'ajaxurl'          => admin_url( 'admin-ajax.php' ),
@@ -497,13 +553,23 @@ class EventOrganiser_Shortcodes {
 			wp_enqueue_style( 'eo-open-source-map' );
 		}
 	}
+
+	private static function calendarHeadersContainCaseInsensitive( $key, $calendar ) {
+		foreach( array( 'headerleft', 'headerright', 'headercenter' ) as $header ) {
+			$headers = array_map( 'strtolower',  preg_split( "/(,|\s)/", $calendar[$header] ) );
+			if ( in_array( strtolower( $key ), $headers ) ) {
+				return true;
+			}
+		}
+		return false;
+  }
 }
 
 EventOrganiser_Shortcodes::init();
 
 /**
  * @ignore
- */	
+ */
 function eventorganiser_category_key($args=array(),$id=1){
 		$args['taxonomy'] ='event-category';
 

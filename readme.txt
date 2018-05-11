@@ -3,20 +3,20 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 4.5.2
-Stable tag: 3.1.0
+Tested up to: 4.9.4
+Stable tag: {{version}}
 License: GPLv3
 
 Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
 
-== Description == 
+== Description ==
 
 Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows you to view your events in the familiar WordPress list or in a calendar page in the amin area.
 
-[**User Docs**](http://docs.wp-event-organiser.com/) 
-| [**Function Reference**](http://codex.wp-event-organiser.com/)  
+[**User Docs**](http://docs.wp-event-organiser.com/)
+| [**Function Reference**](http://codex.wp-event-organiser.com/)
 | [**Forums**](http://wp-event-organiser.com/forums/)
-| [**Demo**](http://wp-event-organiser.com/demo/) 
+| [**Demo**](http://wp-event-organiser.com/demo/)
 | [**Booking Add-on**](http://wp-event-organiser.com/pro-features?aid=7)
 
 = Available Extensions =
@@ -83,7 +83,7 @@ A big thank you to those who have provided translations for Event Organiser. If 
 * Arabic - Layla, Mohamed Nazir
 * Bulgarian - Parvan Voynov
 * Catalan - jordioniric, marc.antje
-* Chinese - sdsunqian 
+* Chinese - sdsunqian
 * Czech - Jan Kupsa
 * Croatian - Branimir
 * Danish - Intox Studio, Malthe, Morten Lyng
@@ -102,7 +102,7 @@ A big thank you to those who have provided translations for Event Organiser. If 
 * Japanese - ogawa, tkj, takeshi terai, haya.
 * Latvian - Kristaps
 * Lithuaniun - Stephan Siegi
-* Macedonian - Aleksandar 
+* Macedonian - Aleksandar
 * Norwegian - Erlend Birkedal
 * Norweign (Bokmål) - DagC
 * Persian (Iran, Islamic Republic of) -
@@ -117,7 +117,7 @@ A big thank you to those who have provided translations for Event Organiser. If 
 * Spanish (Peru) - Pedro Valverde
 * Swedish - Sofia BrÃ¥vander, Urban Norlander
 * Thai - Nibhon, Wuttichai Songprapai
-* Turkish - Gökhan DAMGACI 
+* Turkish - Gökhan DAMGACI
 * Ukranian - Максим Кобєлєв
 
 
@@ -125,7 +125,7 @@ A big thank you to those who have provided translations for Event Organiser. If 
 
 == Installation ==
 
-Installation is standard and straight forward. 
+Installation is standard and straight forward.
 
 1. Upload `event-organiser` folder (and all it's contents!) to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
@@ -138,7 +138,7 @@ Installation is standard and straight forward.
 
 Events behave very similarly to standard posts. To create a event, select the 'Add New' submenu from 'Events' menu. The chief difference between events and post is the 'Event Details' metabox which sets the date and venue data related to the event.
 
-You can also add events in the Calendar view in a manner similiar to Google Calendar. By selecting one (or multiple) days (in month mode) or times (in week/day mode) you can create an event that spans the selected period. 
+You can also add events in the Calendar view in a manner similiar to Google Calendar. By selecting one (or multiple) days (in month mode) or times (in week/day mode) you can create an event that spans the selected period.
 
 = The Event Pages Don't Look Right =
 
@@ -178,7 +178,7 @@ If the calendar *does* appear, but gets stuck loading, the cause is usually the 
 
 = I cannot navigate between months on the widget calendar =
 
-If clicking on the 'next' month causes the page to reload - the javascript has not been loaded. This is usually because the theme does not call [`wp_footer`](https://codex.wordpress.org/Function_Reference/wp_footer) in the footer. 
+If clicking on the 'next' month causes the page to reload - the javascript has not been loaded. This is usually because the theme does not call [`wp_footer`](https://codex.wordpress.org/Function_Reference/wp_footer) in the footer.
 
 If the calendar simply does not respond this is usually because your theme does not allow widgets to add their own ID and classes. Somewhere in the theme folder your theme will make use of `register_sidebar()` (probably in `functions.php`. It should look something like:
 
@@ -191,13 +191,13 @@ If the calendar simply does not respond this is usually because your theme does 
       'before_widget' => '<div id="%1$s" class="widget %2$s">',
       'after_widget' => '</div>',
     ));
-    
-Notice the `%1$s` and `%2$s` in the `before_widget` argument. These allow the widget to add their own ID and classes to the widget. If your theme does not use `class="widget %2$s"` (they should!) the month navigation for the widget calendar will not work. 
+
+Notice the `%1$s` and `%2$s` in the `before_widget` argument. These allow the widget to add their own ID and classes to the widget. If your theme does not use `class="widget %2$s"` (they should!) the month navigation for the widget calendar will not work.
 
 If you are still unable to determine the cause of the problem, or how to fix, please use the plug-in forums with a link to your site and I'll take a look.
 
 
-= What ShortCodes are available? = 
+= What ShortCodes are available? =
 
 Event Organiser provides the following shortcodes:
 
@@ -221,6 +221,136 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.6.5 3rd April 2018 =
+
+* bugfix: Only use date ordinal suffix (st,nd,rd,th) if the site's date format setting includes it
+
+= 3.6.4 26th March 2018
+
+* bugfix: Addressed issue where grouping occurrences might error depending on MySQL configuration. Fixes [#432](https://github.com/stephenharris/Event-Organiser/issues/432)
+
+= 3.6.3 6th March 2018
+
+* bugfix: Fixed bug with grouping occurrences, effecting some MySQL versions. Fixes [#430](https://github.com/stephenharris/Event-Organiser/issues/430)
+
+= 3.6.2 5th January 2018
+
+* bugfix: Fixed reference error in calendar shortcode introduced in 3.6.1
+
+= 3.6.1 4th January 2018
+
+* bugfix: Bug where static value is used for calendar breakpoint on initial load
+* bugfix: Ensure venue tooltip is moved to fit within viewport
+* bugfix: Bug where clicking on the venue tooltip could cause the map to overflow the container
+
+= 3.6.0 25th November 2017
+
+* added: Ability to specify multiple event authors (organiser) in the fullcalendar author/author_name attribute
+  by using a comma seperate lised e.g: [eo_fullcalendar author="1,2"]
+* bugfix: The "organiser" full calendar filter only displays users included in the author/author_name attribute 
+  if supplied.
+* bugfix: Occurrences which have changed time still appear in the include/excludes datepicker
+* bugfix: iCal feed will display correct DSTART & DTEND values even when the initial occurrence is excluded from 
+  the query driving the feed.
+* changed: The admin calendar week/day views display 15-minute intervals. If dragging of occurrences is enabled
+  this can be done in 5 minute intervals.
+
+= 3.5.1 14th November 2017 
+
+* Fix bug where multiple filters are used in fullcalendar shortcode, seperated by a comma
+
+= 3.5.0 8th November 2017
+
+* Added 'organiser' option to calendar shortcode's headerLeft/headerCenter/headerRight attributes - allows
+  filting of the event calendar by event organiser (author).
+* Improved effeciency of calendar page load time by lazy loading required data
+* Updated French and Dutch translations
+* Tested up to 4.9.0-beta-4
+
+
+= 3.4.1 18th October 2017
+
+* Tested up to 4.9.0-beta-2
+* Fixed a bug with the calculation of long occurrences
+* Updated Czech translation
+
+= 3.4.0 25th September 2017
+
+* Tested up to 4.8.2
+* added: `weeknumbers` attribute for the calendar shortcode: `[eo_fullcalendar weeknumbers=true]`
+
+= 3.3.0 12th September 2017
+
+* added: `%event_range{date-format}{time-format}%` placeholder for the event list shortcode / widget
+* added: `%event_organiser%` placeholder for the event list shortcode / widget
+* added: `eventorganiser_google_maps_url` hook
+* updated: Spanish, Finish and Italian translations
+* bugfix: private events authored by the current user are now visible in the admin calendar
+* bugfix: Fix casing in 'All events'
+* bugfix: Fix bug in event list widget settings: `group_occurrences` checkbox is not checked, even when enabled.
+
+
+= 3.2.0 23rd August 2017
+* Updated 'Tested up to' version (WordPress 4.8.1)
+* Update Czech, Indonesian, French, Japanese, Dutch, Portuguese, 
+  Norwegian, Slovenian and Swedish.
+* Default event page names are now filterable via `eventorganiser_event_properties`.
+* Remove X-WR-CALNAME from iCal feed for single event feeds. See [#413](https://github.com/stephenharris/Event-Organiser/issues/413).
+* Fixes errors if event-category tax is disabled. See [#414](https://github.com/stephenharris/Event-Organiser/issues/414)
+* Fixes mark-up error in calendar widget: tbody must occur before tfoot
+
+= 3.1.10 - 8th July 2017
+* Updated 'Tested up to' version (WordPress 4.8)
+* Updated Afrikaan, Catalan, Croatian, Czech, Dutch, French, German, Greek,
+  Hungarian, Portuguese, Russian, Slovenian, Spanish and Turkish translations.
+
+= 3.1.9 - 31st March 2017
+* Removed development tool
+* Updated French, Italian and Japanese translations
+
+= 3.1.8 - 30th March 2017
+
+* Handle 767 byte index size limit in MySQL. See [#404](https://github.com/stephenharris/Event-Organiser/issues/404)
+* Fix handling of ampersands in the iCal feed
+
+= 3.1.7 - 23rd December 2016
+* bugfix: Remove icon was not visible when editing galleries on the event admin page
+
+= 3.1.6 - 11th November 2016
+ * Fix bug causing edit event admin page to link to the settings page.
+ * Fix bug in `eo_get_current_occurrence_of()`
+ * Ensure `occurrence_id` value returned by `eo_get_next_occurrence_of()` is an integer not a string.
+
+= 3.1.5 - 2nd November 2016 =
+* bugfix: Fixed conflict, affecting widget the calendar, with some tranlsation plugins. This resulted in not being able to naviage through the calendar.
+* bugfix: Fixed inline documentation
+* bugfix: Fixed `<br>` tag being used as a closing tag
+
+= 3.1.4 - 9th September 2016 =
+* Tested up to 4.6.1
+* bugfix: In the iCal field don't change the BYDAY property when a city is used as a timezone (i.e. instead of a UTC offset). Fixes [#376](https://github.com/stephenharris/Event-Organiser/issues/376)
+
+= 3.1.3 - 23rd July 2016 =
+* bugfix: Fixed tranlsation (.mo files)
+* bugfix: Fixed image files
+* enhancement: Updated translations
+
+= 3.1.2 - 20th July 2016 =
+* enhancement: Uses `eo_get_permalink()` rather than `get_permalink()`` in default templates.
+* bugfix: Fixes private events not displayed in the calendar widget for those who can view private events
+* bugfix: Fixes warnings in calendar widget settings
+* bugfix: Fixes invalid HTML mark-up in widget settings. Ref #370
+* bugfix: Fixes an edge case bug where the iCal feed errored
+* bugfix: Fixes a typo in google maps help text
+
+= 3.1.1 - 8th July 2016 =
+* bugfix: Allows Google Maps API to be used via a setting or constant. Please see http://wp-event-organiser.com/blog/announcements/google-maps-now-requires-api-key/ for details [#365](https://github.com/stephenharris/Event-Organiser/pull/365)
+* bugfix: Fixes bug where deleting all the occurrences of an event via the admin calendar does not properly delete the event. [#367](https://github.com/stephenharris/Event-Organiser/pull/367)
+* bugfix: Sanitize hex codes for event category colours.
+* bugfix: Fixed bug where the subscribe to calendar (in Google) shortcode did not work on sites using SSL certificates. [#328](https://github.com/stephenharris/Event-Organiser/issues/328)
+* enhancement: Refactor event render filter for the calendar so that it always fires [#366](https://github.com/stephenharris/Event-Organiser/pull/366)
+* bugfix: Fixes a bug where events without any dates did not appear in the Events admin. [#367](https://github.com/stephenharris/Event-Organiser/pull/367)
 
 = 3.1.0 - 23rd May 2016 =
 * enhancement: Improved performance when grouping by event series
@@ -268,7 +398,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 * enhancement: Clicking the down array in the venue selection field shows all venues. Limit of suggested venues while searching  venues in search suggestion increased to 10.
 * enhancement: Updated Dutch translation
-* bugfix: Fixed and issue with some date formats (such as 'T', 'Z') not rendering correctly on the calendar. Not all formats are supported. 
+* bugfix: Fixed and issue with some date formats (such as 'T', 'Z') not rendering correctly on the calendar. Not all formats are supported.
 * bugfix: Ensured the agenda widget does display bullet points. This fixes compatability issues with some themes.
 * bugfix: Fixed warning when quick editing an event
 * bugfix: Restored missing template field in the event list widget
@@ -284,12 +414,12 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * bugfix: Fixed bug with agenda widget not translating dates.
 * bugfix: Removed inline styles from the front-end and moved to stylesheet.
 * bugfix: Fixed bug where agenda widget was not linking to event (when 'add to Google' is disabled)
-* bugfix: Agenda widget now opens on todays date if it has an event 
+* bugfix: Agenda widget now opens on todays date if it has an event
 * bugfix: Fixed subscribe shortcode when specfying a particular category/venue.
 
 = 3.0.0 - 29th January 2016 =
 
-**Event Organiser now requires WordPress 3.8.0+ or better**  
+**Event Organiser now requires WordPress 3.8.0+ or better**
 
 fullCalendar
 
@@ -320,7 +450,7 @@ Google map
 Theme compatability
 
 * feature: A 'theme compatability' mode has been introduced to improve compatability with themes. This can be enabled in Settings > Event Organiser > General
- 
+
 Templates
 
 * feature: Added `eo_format_event_occurrence()`, `eo_format_datetime_range()` functions to help format event dates and ranges
@@ -329,7 +459,7 @@ Templates
 * feature: Added `eo_enqueue_style()` function, which filters the handle of front-facing CSS files with `eventorganiser_stylesheet_handle_{handle}`. This allows themes/plugins to map a CSS file to a different one.
 * change: Removed generic `entry-meta` class from `event-meta-event-single.php` template as this was causing theme compatability issues
 * change: Events pages (events, venue, category tag pages) now display the event's start and end time as a range, e.g. 20th January 2016, 8pm-9pm
-* change: Single event page, upcoming dates template can now be used on templates with multiple events    
+* change: Single event page, upcoming dates template can now be used on templates with multiple events
 * change: HTML classes added for the upcoming dates on the single event page for themes
 
 iCal feed
@@ -343,7 +473,7 @@ Widget
 
 * change: Agenda widget 'day' mode it behaves like week/month mode and displays only one day at a time
 * feature: Event list widget now allows you to list events in certain scopes (e.g. past events, future events, running events, events on today). Custom 'scopes' can be registered with the `eventorganiser_query_scope` filter.
- 
+
 General
 
 * feature: improved performance, particularly for sites with long recurring events or large number of venues
@@ -352,7 +482,7 @@ General
 * bufix: Fixes bug where quick editing will cause event start and end cells to disappear
 
 Accessibility
-This is an ongoing process, and any bug reports, feature suggestions and pull requests are welcome in this respect.  
+This is an ongoing process, and any bug reports, feature suggestions and pull requests are welcome in this respect.
 
 * feature: Added a Keyboard shortcuts modal (shift + ?) added (admin calendar page)
 * bugfix: Edit event metabox no longer uses a tabular mark-up. Missing label/description mark-up is added, as well as other minor improvements to the markup.
@@ -371,7 +501,7 @@ This is an ongoing process, and any bug reports, feature suggestions and pull re
 * Updated translations and Lithuaniun
 
 = 2.13.6 - 9th August 2015 =
-* Fixes incompatability with WordPress 4.3 on venue admin screen 
+* Fixes incompatability with WordPress 4.3 on venue admin screen
 
 = 2.13.5 - 25th July 2015 =
 * Register database tables early
@@ -381,7 +511,7 @@ This is an ongoing process, and any bug reports, feature suggestions and pull re
 * Correct escaped characters in time format not being displayed as literal text. Fixes [#273](https://github.com/stephenharris/Event-Organiser/issues/273).
 
 = 2.13.3 - 2nd June 2015 =
-* Fixed incomptability with WordPress 3.4. **Please note that from Event Organiser 3.0.0 onwards, the minimum requirement is being increased to WordPress 3.8**  
+* Fixed incomptability with WordPress 3.4. **Please note that from Event Organiser 3.0.0 onwards, the minimum requirement is being increased to WordPress 3.8**
 
 = 2.13.2 - 23rd May 2015 =
 * Fixed a bug with the drop-down venue/category filters on the events admin screen with WordPress 4.2.
@@ -389,7 +519,7 @@ This is an ongoing process, and any bug reports, feature suggestions and pull re
 * The times of newly created events are now rounded (forward) to the half hour. Props to @r-a-y.
 * Reoccurence label is changed from 'once' to 'none'. Props to @r-a-y.
 * Updated translations.
- 
+
 
 = 2.13.1 - 7th May 2015 =
 * Fixes bug where use of `%event_duration%` tag modifies end date
@@ -404,9 +534,9 @@ This is an ongoing process, and any bug reports, feature suggestions and pull re
 * `schedule_last` argument for `eo_insert_event()` and `eo_update_event()` deprecated in favour of `until`. (`schedule_last` is still
   supported)
 * Fixed bug where including/excluding dates may change 'until' recurrence date.
-* Fixed bug with importing included/excluded dates in 'foreign' timezone to site timezone 
+* Fixed bug with importing included/excluded dates in 'foreign' timezone to site timezone
 * Bump fullCalendar CSS to 1.6.4 inline with fullcalendar.js. Fixes issue with event overlap in week view
-* Fix bug in iCal parsing with feeds containing weekly events without a byday component to the RRule 
+* Fix bug in iCal parsing with feeds containing weekly events without a byday component to the RRule
 
 = 2.12.5 - 21st April 2015 =
 * Fixes XSS vulnerability
@@ -415,7 +545,7 @@ This is an ongoing process, and any bug reports, feature suggestions and pull re
 
 = 2.12.4 - 19th March 2015 =
 * Fixes bug with incorrect "Invalid datetime" errors when parsing iCal exdate or rdate dates
-* Decode HTML entities for X-ALT-DESC 
+* Decode HTML entities for X-ALT-DESC
 
 = 2.12.3 - 13th March 2015 =
 * Fixes bug with iCal parser not correctly handling excluded date-times (bug introduced 2.12.0)
@@ -426,16 +556,16 @@ This is an ongoing process, and any bug reports, feature suggestions and pull re
 * Fixes fatal error on events pages when displaying event tag (bug introduced 2.12.1).
 * Fixes `eo_get_event_meta_list()` for use outside the loop.
 * Uses taxonomy labels array for category drop-dropdown labels.
-* Updates Romanian & Slovak translations. 
+* Updates Romanian & Slovak translations.
 
 = 2.12.1 - 2nd March 2015 =
 * Fix bug which disabled adding events via the admin calendar
 * Fixed typo with enabling beta feature of changing an occurrence's time via the admin calendar
 * Added php 5.2 to Travis CI tests
- 
+
 
 = 2.12.0 - 20th February 2015 =
-*You are strongly recommended to update to 2.12.0 before updating to **WordPress 4.2** (to be released). 
+*You are strongly recommended to update to 2.12.0 before updating to **WordPress 4.2** (to be released).
 Please see this [post](http://wp-event-organiser.com/blog/announcements/event-organiser-wordpress-4-2)*
 
 * Includes fix for WordPress 4.2 "term splitting".
@@ -456,7 +586,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 = 2.11.1 - 28th January 2015 =
 * Fixes UI issue with adding/removing occurences
 * Improves highlight of "active" components
-* Sets max-width of venue/category drop-downs so long venue/category names don't break the admin calendar layout 
+* Sets max-width of venue/category drop-downs so long venue/category names don't break the admin calendar layout
 
 = 2.11.0 - 24th January 2015 =
 * Update jQuery UI stylesheet
@@ -464,12 +594,12 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Adds a fix for fullcalendar with themes setting max-width of links
 * Add 'sanity check' for datetime instances in event class function
 * Add comment_status & context to eo_insert_event / eo_update_event post data
-* Updated Spanish, French, Latvian, Swedish & Turkish translations. 
+* Updated Spanish, French, Latvian, Swedish & Turkish translations.
 * Added Macedonian translation.
 
 = 2.10.0 - 22nd December 2014 =
 * Tested against WordPress 4.1
-* Allow google map styles to be set via API 
+* Allow google map styles to be set via API
 * Added `eventorganiser_venue_map_options` filter
 * Support RTL languages (added stylesheet)
 * Added `eventorganiser_ical_property_{property_lowercased}` action
@@ -494,7 +624,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Allow latitdue/longtitude co-ordinates of venue to be edited.
 * Update timepicker and prevent invalid date/time selection for event start/end dates.
 * Add filters for event taxonomy properties: `eventorganiser_register_taxonomy_{taxonomy}`
-* Filter response to fullCalendar: `eventorganiser_fullcalendar` 
+* Filter response to fullCalendar: `eventorganiser_fullcalendar`
 * Minify css and use minified resources when not in debug mode.
 * Adds eo-multi-day class if an event starts and ends on different days (fullCalendar)
 * Fix bug with rich snippet item type (Geo/Organisation)
@@ -518,14 +648,14 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Fix bug where the last date of long, non-all-day events do not appear on the widget calendar when the start time is after the end time. [See thread](https://wordpress.org/support/topic/calendar-widget-not-showing-last-day-of-event).
 * Fixes UI bug with venue selection on the calendar view
 * Added Latvian translation
-* Updated translations: Arabic, Czech, Danish, Spanish, Finnish & French. 
+* Updated translations: Arabic, Czech, Danish, Spanish, Finnish & French.
 
 = 2.8.4 - 14th August 2014 =
 * Adds fix for themes which apply transitions to anchor tags
 * Fixes bug where event's "schedule_last" is incorrectly set to the last event date update/inserted
 * Ensure next/prev links in widget calendar use home url as a base
 * Do not use `<style>` tags with `wp_add_inline_style()` on WP 3.7+
-* Fix styling being applied to event venue pages 
+* Fix styling being applied to event venue pages
 * Updated CONTRIBUTING.md, please make PRs on develop branch
 * Fixes bug with "timeformat" included in event query which can affect results returned to fullCalendar. [See thread](https://wordpress.org/support/topic/full-calendar-shortcode-doesnt-show-events).
 
@@ -534,7 +664,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Don't use `date_diff`, can result in buggy behaviour. Fixes [Fixes #205](https://github.com/stephenharris/Event-Organiser/issues/205).
 * If 'new' venue already exists, use pre-existing venue's ID. [Fixes #202](https://github.com/stephenharris/Event-Organiser/issues/202).
 * Clone DateTime objects before altering them (e.g. timezone). [Fixes #203)(https://github.com/stephenharris/Event-Organiser/issues/203).
-* Don't display category/venue filters if there are no terms. 
+* Don't display category/venue filters if there are no terms.
 * Check if `$strptime` is an empty array (suggests incorrect/empty date). Fixes bug with PHP5.2 installs. See [forum post](https://wordpress.org/support/topic/strange-date-repeat).
 
 = 2.8.2 - 26th June 2014 =
@@ -542,7 +672,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Check if array is empty before using array_combine (throws error on PHP 5.3 and older).
 
 = 2.8.1 - 24th June 2014 =
-* Fixes bug with 2.8.0 where updating only the time of an event, is not reflected. 
+* Fixes bug with 2.8.0 where updating only the time of an event, is not reflected.
 
 = 2.8 - 18th June 2014 =
 * Support `show_long` and `link_to_single` attributes for the (widget) calendar shortcode.
@@ -555,7 +685,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Fixes errors in Czech translation, thanks to coubeatczech. [Fixes #188](https://github.com/stephenharris/Event-Organiser/issues/188)
 * Fixes bug where relative queries with `eo_get_events()` return uintended results. The function previously ignored the time part.
 * Fix datepicker css (particuarly on firefox).
- 
+
 = 2.7.5 =
 * Ensure jquery-dialog is loaded (thanks to PunchRockgroin).
 
@@ -566,13 +696,13 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Fixes X-ALT-DESC (HTML) tag in iCal feed
 * Add prefix to ensure the (post) date filter is removed *only* on the event admin screen
 * Remove 'large-text' class added to textarea with the textarea utility function
-* Fixes bug in textarea utility function where multiple class attributes are merged. 
+* Fixes bug in textarea utility function where multiple class attributes are merged.
 
 = 2.7.3 =
 * Fixes bug experienced under some environments with PHP5.2 where event dates cannot save
 * Ensures obsolete event table column is removed (can cause errors on Microsft servers)
 * Set time of included date to the time of the event. [Fixes #175](https://github.com/stephenharris/Event-Organiser/issues/175)
-* Correct eo_blog_is_24(). ('G' is 12 hour, 'h' is 24 hour). 
+* Correct eo_blog_is_24(). ('G' is 12 hour, 'h' is 24 hour).
 
 = 2.7.2 =
 * Fixes bug (2.7) where some translations cannot update events: [https://wordpress.org/support/topic/event-not-updating-dates](https://wordpress.org/support/topic/event-not-updating-dates).
@@ -613,7 +743,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 
 = 2.5.1 =
 * Fix js error (variable not defined) introduced in 2.5.
-* Fix "delete occurrence" from admin calendar not working. 
+* Fix "delete occurrence" from admin calendar not working.
 * Recompiled .po files (should fix some text not being translated).
 
 = 2.5 =
@@ -626,7 +756,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Added class `eo-datepicker` to all front-end jQuery UI datepickers.
 * Fixes bug with long events in the widget calendar. [See #159](https://github.com/stephenharris/Event-Organiser/issues/159).
 * Added Catalan translation, thanks to jordioniric, marc.antje.
-* Updated Dutch translation, thanks to roel. 
+* Updated Dutch translation, thanks to roel.
 * Updated Portugese (Brazil) translation, thanks to rafaelkvidal.
 * Updated Spanish translation, thanks to jagarre.
 
@@ -644,13 +774,13 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Add filter `eventorganiser_blog_is_24` (determines whether time-input should be 12 hour or 24 hour).
 * Schedule meta for weekly schedule now optional (defaults to 'start' date)
 * Unit tests added (largely for date generation & iCal parsing/generation)
-* Fixes venues not appearing in Appearance > Menus 
+* Fixes venues not appearing in Appearance > Menus
 * Fixes bug with importing events that have no dates
 * Fixes bug with importing all-day events across timezones
 * Fixes bug with occurrence picker
 * Fixes bug with modal overlay
 * Code refactoring (old iCal parser removed)
-* Updated translations: Arabic, Czech, Danish, German, Greek, Persian, 
+* Updated translations: Arabic, Czech, Danish, German, Greek, Persian,
 * Added translations: Indonesian
 
 = 2.3.2 =
@@ -660,14 +790,14 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Add support for 'no_events' argument for event list shortcode
 * Fixes "is event query" check
 
-= 2.3.1 = 
+= 2.3.1 =
 * Fixes bug (introduced in 2.3) with creating events from the calendar. [See #128](https://github.com/stephenharris/Event-Organiser/pull/#128).
 * Fixes translations.
 * Adds Greek translation
 * Updates .pot file
 
 = 2.3 =
-* iCal Sync & Venue Marker extensions released. 
+* iCal Sync & Venue Marker extensions released.
 * Adds option to disable front-end stylesheets
 * Set event text colour (fullCalendar) according to event colour. Thanks to @mperry2. [See #108](https://github.com/stephenharris/Event-Organiser/pull/#108).
 * Adds data attributes to widget calendar
@@ -683,7 +813,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Added package.json for Grunt
 
 = 2.2.2 =
-* Fixes WP3.6 issues with dialogs and admin calendar 
+* Fixes WP3.6 issues with dialogs and admin calendar
 * Fixes js issues with WP3.3-3.4.
 * Fix WP3.6 strict error messages (in debug mode)
 * Ensures category colour CSS is printed in script debug mode
@@ -692,7 +822,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Fixes bug introduced in 2.2 where styling is not loaded for admin calendar if there are no categories. [See #110](https://github.com/stephenharris/Event-Organiser/pull/110)
 * Fixes bug with sort order and grouping events. [See #115](https://github.com/stephenharris/Event-Organiser/issues/115)
 * Filter `eventorganiser_admin_fullcalendar_event` added for naming consistancy ( `eventorganiser_admin_fullcalendar_event` and `eventorganiser_fullcalendar_event` for admin/front-end fullCalendars)
-* Corrected inline documentation 
+* Corrected inline documentation
 * Fixed events with no event data becoming hidden. [#111](https://github.com/stephenharris/Event-Organiser/issues/111)
 * Fixes 3.6 strict errors (in debug mode)
 * Fixes jQuery UI bugs (venue selection). Retains backwards compatibility for WP 3.3 & 3.4.
@@ -718,7 +848,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 = 2.1.6 =
 * Fixes IE 7/8 error with admin calendar
 * Now compatible with Scribu's [Posts 2 Posts](https://wordpress.org/plugins/posts-to-posts/) plug-in. Thanks to Simon Wheatley. [Ticket #99](https://github.com/stephenharris/Event-Organiser/issues/99)
-* Fixes errors in ICAL parser API 
+* Fixes errors in ICAL parser API
 * Fixes orderby setting not taking effect in Event list widget
 * Removed extra forward slash in line 1241 for the 'loading' gif. [Ticket #100](https://github.com/stephenharris/Event-Organiser/pull/100)
 * Updated translations. Added Norwegian, Thai and Turkish translations.
@@ -1035,7 +1165,7 @@ A special thanks to **kuemerle** and **csaba-erdei**.
 * (Optionally) automatically delete expired events
 * Custom permalink structure
 * Added `eo_subscribe` shortcode to create a subscribe link
-* Agenda widget 
+* Agenda widget
 * Venue descriptions now support shortcodes
 * Custom navigation menu title for events
 * Option to decide when event is past
@@ -1070,7 +1200,7 @@ Minor bug fixes and readme update.
 = 1.0.0 =
 Initial release
 
-== Upgrade Notice == 
+== Upgrade Notice ==
 
 = 2.13.7 =
 This fixes a bug with the event list widget on WordPress 4.4

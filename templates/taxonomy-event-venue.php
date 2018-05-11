@@ -27,12 +27,12 @@ get_header(); ?>
 		<?php $venue_id = get_queried_object_id(); ?>
 		
 		<h1 class="page-title">
-			<?php printf( __( 'Events at: %s', 'eventorganiser' ), '<span>' .eo_get_venue_name( $venue_id ). '</span>' );?>
+			<?php printf( __( 'Events at: %s', 'eventorganiser' ), '<span>' . eo_get_venue_name( $venue_id ) . '</span>' );?>
 		</h1>
 	
 		<?php
 		if ( $venue_description = eo_get_venue_description( $venue_id ) ) {
-			echo '<div class="venue-archive-meta">'.$venue_description.'</div>';
+			echo '<div class="venue-archive-meta">' . $venue_description . '</div>';
 		}
 		?>
 

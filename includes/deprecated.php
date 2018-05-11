@@ -8,13 +8,13 @@
  * a google calendar. Must be used inside the loop.
  *
  * @since 1.2.0
- * @deprecated 2.3.0
+ * @deprecated 2.3.0 eo_get_add_to_google_link
  * @see eo_get_add_to_google_link()
  *
  * @param int $post_id Optional, the event (post) ID,
  * @return string Url which adds event to a google calendar
  */
-function eo_get_the_GoogleLink(){
+function eo_get_the_GoogleLink() {
 	_deprecated_function( __FUNCTION__, '2.3', 'eo_get_add_to_google_link()' );
 	return eo_get_add_to_google_link();
 }

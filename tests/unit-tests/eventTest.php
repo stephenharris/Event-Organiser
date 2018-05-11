@@ -669,7 +669,37 @@ class eventTest extends EO_UnitTestCase
     	wp_cache_delete( 'eventorganiser_timezone' );
     	
     }
-   
+
+		/**
+		 * If an occurrence lasts 7 weeks, and is repeated, each occurrence should
+		 * be 7 weeks, and not 1 month and 4 days because that can result in occurrences
+		 * of different durations.
+		 */
+		function testLongRecurringEvent() {
+			$event_id = eo_insert_event( array(
+					'start'         => new DateTime( '2018-01-17' ),
+					'end'           => new DateTime( '2018-03-07' ),
+					'all_day'       => true,
+					'schedule'      => 'custom',
+					'include'       => array( new DateTime( '2018-06-13' ) ),
+			) );
+
+			$actual = array_values( eo_get_the_occurrences_of( $event_id ) );
+
+			$expected = array(
+				array(
+					'start' => new DateTime( '2018-01-17 00:00:00', eo_get_blog_timezone() ),
+					'end'   => new DateTime( '2018-03-07 00:00:00', eo_get_blog_timezone() )
+				),
+				array(
+					'start' => new DateTime( '2018-06-13 00:00:00', eo_get_blog_timezone() ),
+					'end'   => new DateTime( '2018-08-01 00:00:00', eo_get_blog_timezone() )
+				)
+			);
+
+			$this->assertEquals( $expected, $actual );
+		}
+
     /**
      * @see https://github.com/stephenharris/Event-Organiser/issues/242 
      */

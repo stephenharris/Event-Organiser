@@ -106,8 +106,56 @@ class dateIntervalTest extends PHPUnit_Framework_TestCase
 		//@see https://bugs.php.net/bug.php?id=51051
 		$this->assertEquals( '3', eo_date_interval( $date_1, $date_2, '%h' ) );
 	}
-	
-	
+
+	public function testDateIntervalDSTDayCount() {
+
+		// Because of DST These dates differ by just over 96 hours, but we would consider
+		// it to last 3 days.
+		$date_1 = new DateTime( "2013-10-25 00:00:00", new DateTimeZone( "Europe/Berlin" ) );
+		$date_2 = new DateTime( "2013-10-28 23:59:00", new DateTimeZone( "Europe/Berlin" ) );
+
+		$this->assertEquals( '3', eo_date_interval( $date_1, $date_2, '%d' ) );
+		$this->assertEquals( '3', eo_date_interval( $date_1, $date_2, '%a' ) );
+
+		// Now going the other way... because of DST these dates differ by 71 hours,
+		// but we would still consider it to last 3 days.
+		$date_1 = new DateTime( "2017-03-25 00:00:00", new DateTimeZone( "Europe/Berlin" ) );
+		$date_2 = new DateTime( "2017-03-28 00:00:00 ", new DateTimeZone( "Europe/Berlin" ) );
+
+		$this->assertEquals( '3', eo_date_interval( $date_1, $date_2, '%d' ) );
+		$this->assertEquals( '3', eo_date_interval( $date_1, $date_2, '%a' ) );
+	}
+
+	/**
+	 * @dataProvider datesProvider
+	 */
+	public function testDurationString($date_1, $date_2) {
+		$duration_str = eo_date_interval( $date_1, $date_2, '+%a days +%h hours +%i minutes +%s seconds' );
+		$date_1->modify($duration_str);
+		$this->assertEquals($date_1, $date_2);
+	}
+
+	public function datesProvider() {
+		return array(
+			array(
+				new DateTime( "2013-10-25 00:00:00", new DateTimeZone( "Europe/Berlin" ) ),
+				new DateTime( "2013-10-28 23:59:00", new DateTimeZone( "Europe/Berlin" ) )
+			),
+			array(
+				new DateTime( "2017-03-25 00:00:00", new DateTimeZone( "Europe/Berlin" ) ),
+				new DateTime( "2017-03-28 00:01:00", new DateTimeZone( "Europe/Berlin" ) )
+			),
+			array(
+				new DateTime( "2018-01-17 00:00:00", new DateTimeZone( "Europe/Berlin" ) ),
+				new DateTime( "2018-03-07 23:59:00", new DateTimeZone( "Europe/Berlin" ) )
+			),
+			array(
+				new DateTime( "2017-10-16 16:30:00", new DateTimeZone( "Europe/Berlin" ) ),
+				new DateTime( "2017-10-16 17:30:00", new DateTimeZone( "Europe/Berlin" ) )
+			),
+		);
+	}
+
 	public function testDateIntervalLeapYear()
 	{
 		$date_1 = new DateTime( "2012-02-28 00:00:00");

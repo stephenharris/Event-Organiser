@@ -2,8 +2,7 @@
 /**
  * Class used to create the event calendar widget
  */
-class EO_Calendar_Widget extends WP_Widget
-{
+class EO_Calendar_Widget extends WP_Widget {
 
 	/*
 	 * Array of default settings
@@ -38,7 +37,7 @@ class EO_Calendar_Widget extends WP_Widget
 
 	function form( $instance ) {
 
-		$instance = wp_parse_args( (array) $instance, $this->w_arg );
+		$instance = wp_parse_args( (array) $instance, self::$w_arg );
 
 		printf(
 			'<p>
@@ -199,15 +198,22 @@ class EO_Calendar_Widget extends WP_Widget
 
 		$today = new DateTime( 'now', eo_get_blog_timezone() );
 
-		$key = $month->format( 'YM' ) . serialize( $args ).get_locale().$today->format( 'Y-m-d' );
+		//Ensure a different cache key for those who can and cannot see private blogs
+		$args['_priv'] = current_user_can( 'read_private_events' ) ? '_priv' : false;
+
+		$key = $month->format( 'YM' ) . serialize( $args ) . get_locale() . $today->format( 'Y-m-d' );
 		$calendar = get_transient( 'eo_widget_calendar' );
 		if ( ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) && $calendar && is_array( $calendar ) && isset( $calendar[$key] ) ) {
 			return $calendar[$key];
 		}
 
 		//Parse defaults
-		$args['show-long']      = isset( $args['show-long'] ) ? $args['show-long']  : false;
-		$args['link-to-single'] = isset( $args['link-to-single'] ) ? $args['link-to-single']  : false;
+		$args = array_merge( array(
+			'show-long'      => false,
+			'link-to-single' => false,
+			'event-venue'    => false,
+			'event-category' => false,
+		), $args );
 
 		//Month details
 		$first_day_of_month = intval( $month->format( 'N' ) ); //0=sun,...,6=sat
@@ -235,6 +241,8 @@ class EO_Calendar_Widget extends WP_Widget
 		$required = array(
 			'numberposts' => -1,
 			'showrepeats' => 1,
+			'post_status' => array( 'publish', 'private' ),
+			'perm'        => 'readable',
 		);
 
 		if ( $args['show-long'] ) {
@@ -390,7 +398,7 @@ class EO_Calendar_Widget extends WP_Widget
 			$calendar = array();
 		}
 
-		$calendar[$key] = $before.$title.$head.$foot.$body.$after;
+		$calendar[$key] = $before . $title . $head . $body . $foot . $after;
 
 		set_transient( 'eo_widget_calendar', $calendar, DAY_IN_SECONDS );
 		return $calendar[$key];

@@ -68,7 +68,7 @@ function eventorganiser_event_fill_columns( $column_name, $id ) {
 
 	$php_format = 'M, j Y';
 	if ( ! eo_is_all_day( $series_id ) ) {
-		$php_format .= '\<\/\b\r\>'. get_option( 'time_format' );
+		$php_format .= '\<\b\r\>' . get_option( 'time_format' );
 	}
 
 	switch ( $column_name ) {
@@ -205,7 +205,7 @@ function eventorganiser_quick_bulk_edit_box( $column_name, $post_type ) {
 	?>
 	<fieldset class="inline-edit-col-left">
 	<div class="inline-edit-col">
-		<?php wp_nonce_field( 'eventorganiser_event_quick_edit_'.get_current_blog_id(), '_eononce' );?>
+		<?php wp_nonce_field( 'eventorganiser_event_quick_edit_' . get_current_blog_id(), '_eononce' );?>
 		<label class="">
 			<span class="title"><?php echo esc_html( $tax->labels->singular_name ); ?></span>
 			<?php wp_dropdown_categories( $args ); ?>
@@ -227,7 +227,7 @@ function eventorganiser_quick_edit_save( $post_id ) {
 	$request = array_merge( $_GET, $_POST );
 
 	//make sure data came from our quick/bulk box
-	if ( ! isset( $request['_eononce'] ) || ! wp_verify_nonce( $request['_eononce'], 'eventorganiser_event_quick_edit_'.get_current_blog_id() ) ) {
+	if ( ! isset( $request['_eononce'] ) || ! wp_verify_nonce( $request['_eononce'], 'eventorganiser_event_quick_edit_' . get_current_blog_id() ) ) {
 		return;
 	}
 
@@ -265,15 +265,15 @@ function eventorganiser_quick_edit_save( $post_id ) {
 add_action( 'admin_head-edit.php', 'eventorganiser_quick_edit_script' );
 function eventorganiser_quick_edit_script() {
 	?>
-    <script type="text/javascript">
-    jQuery(document).ready(function() {
-        jQuery( '#the-list' ).on( 'click', 'a.editinline', function() {
+	<script type="text/javascript">
+	jQuery(document).ready(function() {
+		jQuery( '#the-list' ).on( 'click', 'a.editinline', function() {
 			jQuery( '#eventorganiser_venue option' ).attr("selected", false);
 			var id = inlineEditPost.getId(this);
 			var val = parseInt(jQuery( '#post-' + id + ' td.column-venue input' ).val() );
 			jQuery( '#eventorganiser_venue option[value="'+val+'"]' ).attr( 'selected', 'selected' );
-        });
-    });
-    </script>
-    <?php
+		});
+	});
+	</script>
+	<?php
 }

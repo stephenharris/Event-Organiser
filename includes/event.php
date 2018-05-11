@@ -352,7 +352,7 @@ function _eventorganiser_insert_occurrences( $post_id, $event_data ) {
 	//Don't use date_diff (requires php 5.3+)
 	//Also see https://github.com/stephenharris/Event-Organiser/issues/205
 	//And https://github.com/stephenharris/Event-Organiser/issues/224
-	$duration_str = eo_date_interval( $start, $end, '+%y year +%m month +%d days +%h hours +%i minutes +%s seconds' );
+	$duration_str = eo_date_interval( $start, $end, '+%a days +%h hours +%i minutes +%s seconds' );
 
 	$event_data['duration_str'] = $duration_str;
 
@@ -960,27 +960,33 @@ function eventorganiser_generate_ics_rrule( $post_id = 0 ) {
 
 		case 'weekly':
 			if ( ! eo_is_all_day( $post_id ) ) {
-				//Non-all-day event: setting event timezone to UTC may cause it to shift days.
-				//E.g. a 9pm Monday event in New York will a Tuesday event in UTC.
-				//We may need to correct the BYDAY attribute to be valid for UTC.
-				$days_of_week = array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' );
 
-				//Get day shift upon timezone set to UTC
-				$start     = eo_get_schedule_start( DATETIMEOBJ, $post_id );
-				$local_day = (int) $start->format( 'w' );
-				$start->setTimezone( $utc );
-				$utc_day   = (int) $start->format( 'w' );
-				$diff      = $utc_day - $local_day + 7; //ensure difference is positive (should be 0, +1 or +6).
+				$timezone = ( get_option( 'timezone_string' ) ? eo_get_blog_timezone() : false );
 
-				//If there is a shift correct BYDAY
-				if ( $diff ) {
-					$utc_days = array();
+				if ( ! $timezone ) {
+					// We are using a UTC offset.
+					// Start dates are converted to UTC (@see https://github.com/stephenharris/Event-Organiser/issues/293),
+					// which may cause it to shift *day*. E.g. a 10pm Monday event in UTC-4 will a Tuesday event in UTC.
+					// We may need to correct the BYDAY attribute to be valid for UTC.
+					$days_of_week = array( 'SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA' );
 
-					foreach ( $rrule['schedule_meta'] as $day ) {
-						$utc_day_index = ( array_search( $day, $days_of_week ) + $diff ) % 7;
-						$utc_days[] = $days_of_week[$utc_day_index];
+					//Get day shift upon timezone set to UTC
+					$start     = eo_get_schedule_start( DATETIMEOBJ, $post_id );
+					$local_day = (int) $start->format( 'w' );
+					$start->setTimezone( $utc );
+					$utc_day   = (int) $start->format( 'w' );
+					$diff      = $utc_day - $local_day + 7; //ensure difference is positive (should be 0, +1 or +6).
+
+					//If there is a shift correct BYDAY
+					if ( $diff ) {
+						$utc_days = array();
+
+						foreach ( $rrule['schedule_meta'] as $day ) {
+							$utc_day_index = ( array_search( $day, $days_of_week ) + $diff ) % 7;
+							$utc_days[] = $days_of_week[$utc_day_index];
+						}
+						$rrule['schedule_meta'] = $utc_days;
 					}
-					$rrule['schedule_meta'] = $utc_days;
 				}
 			}
 			$rrule_array['BYDAY'] = implode( ',', $rrule['schedule_meta'] );

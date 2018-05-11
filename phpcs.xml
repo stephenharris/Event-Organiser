@@ -13,20 +13,27 @@
     <!-- Don't parse tests -->
     <exclude-pattern>tests/**</exclude-pattern>
     <exclude-pattern>features/**</exclude-pattern>
-    
+
     <!-- Don't parse third-party libraries -->
-    <exclude-pattern>vendors/**</exclude-pattern>
-    
+    <exclude-pattern>vendor/**</exclude-pattern>
+    <exclude-pattern>node_modules/**</exclude-pattern>
+
     <!-- Other directories to ignore -->
     <exclude-pattern>bin/**</exclude-pattern>
     <exclude-pattern>languages/**</exclude-pattern>
 
     <!-- Our rule set -->
-	<rule ref="WordPress-Core">	
+    <rule ref="WordPress-Core">
         <!-- ignored rules -->
         <exclude name="WordPress.Arrays.ArrayKeySpacingRestrictions.NoSpacesAroundArrayKeys"/>
         <exclude name="WordPress.Arrays.ArrayDeclaration.IndexNoNewline" />
-	</rule>
-	<rule ref="Zend.Files.ClosingTag" />
+        <exclude name="WordPress.DB.RestrictedFunctions" />
+        <exclude name="WordPress.DB.RestrictedClasses" />
+
+				<!-- Some column names are not snake_case -->
+				<exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar" />
+
+    </rule>
+    <rule ref="Zend.Files.ClosingTag" />
 
 </ruleset>

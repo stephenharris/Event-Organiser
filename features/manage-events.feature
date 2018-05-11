@@ -29,18 +29,18 @@ Feature: Manage events
 
     Scenario: Events menu placement
         When I go to "/wp-admin/index.php"
-        And I should see the following in the repeated "#adminmenu > li a .wp-menu-name" element
-            | Dashboard  |
-            | Posts      |
-            | Events     |            
-            | Media      |
-            | Pages      |
-            | Comments 0 |
-            | Appearance |
-            | Plugins 0  |
-            | Users      |
-            | Tools      |
-            | Settings   |
+        And the admin menu should appear as
+            | Dashboard      |
+            | Posts          |
+            | Events         |
+            | Media          |
+            | Pages          |
+            | Comments (\d+) |
+            | Appearance     |
+            | Plugins (\d+)  |
+            | Users          |
+            | Tools          |
+            | Settings       |
 
     Scenario: Navigating to All Events screen
         When I go to "/wp-admin/index.php"

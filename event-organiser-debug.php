@@ -1,13 +1,13 @@
 <?php
 /****** DEBUG PAGE ******/
 if ( ! class_exists( 'EventOrganiser_Admin_Page' ) ) {
-	require_once( EVENT_ORGANISER_DIR.'classes/class-eventorganiser-admin-page.php' );
+	require_once( EVENT_ORGANISER_DIR . 'classes/class-eventorganiser-admin-page.php' );
 }
 /**
  * @ignore
  */
-class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
-{
+class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page {
+
 	function set_constants() {
 		$this->hook  = 'edit.php?post_type=event';
 		$this->title = __( 'System Info', 'eventorganiser' );
@@ -53,15 +53,15 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 	function display() {
 	?>
 	<div class="wrap">
-		
+
 		<h2><?php esc_html_e( 'System Info','eventorganiser' );?> </h2>
-		
+
 		<?php $eo_debugger = $this->debugger; ?>
-		
+
 		<p>
 		<?php
 		printf(
-			esc_html__( "This page highlights useful information for debugging. If you're reporting a bug, please include this information. The 'system info' link in under the Events admin tab is only visible to admins and only when %s is set to %s.", 'eventorganiser' ),
+			esc_html__( 'This page highlights useful information for debugging. If you\'re reporting a bug, please include this information. The \'system info\' link in under the Events admin tab is only visible to admins and only when %1$s is set to %1$s.', 'eventorganiser' ),
 			'<code>WP_DEBUG</code>',
 			'<code>true</code>'
 		);
@@ -72,7 +72,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 		esc_html_e( 'Most bugs arise from theme or plug-in conflicts. You can check this by disabling all other plug-ins and switching to TwentyTweleve. To help speed things along, if you report a bug please indicate if you have done so. Once the plug-in or theme has been identified it is often easy to resolve the issue. Below any <strong>known</strong> plug-in and theme conflicts are highlighted in red.', 'eventorganiser' );
 		?>
 		</p>
-		
+
 		<?php
 			printf(
 				'<p><a href="%s" data-eo-debug="downloadurl" class="button secondary">%s</a></p>',
@@ -80,7 +80,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				esc_html__( 'Download system information file', 'eventorganiser' )
 			);
 		?>
-				
+
 		<table class="widefat">
 				<tr>
 					<th> Site url </th>
@@ -94,7 +94,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 					<th> Multisite </th>
 					<td><?php echo is_multisite() ? 'Yes' : 'No' ?></td>
 				</tr>
-				
+
 				<tr>
 					<th> Permalink </th>
 					<td>
@@ -111,7 +111,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 					<?php $eo_debugger->verbose_prequiste_check( 'WordPress', get_bloginfo( 'version' ) );?>
 					</td>
 				</tr>
-				
+
 				<tr>
 					<th> jQuery Version </th>
 					<td>
@@ -120,7 +120,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 				</tr>
 				<script>
 				jQuery(document).ready( function($) {
-					var eventorganiser = eventorganiser || {}; 
+					var eventorganiser = eventorganiser || {};
 					eventorganiser.add_query_arg = function( key, value, uri ) {
 						  var re = new RegExp("([?|&])" + key + "=.*?(&|$)", "i");
 						  separator = uri.indexOf('?') !== -1 ? "&" : "?";
@@ -130,44 +130,44 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 						    return uri + separator + key + "=" + value;
 						  }
 						}
-					
+
 				    $('[data-eo-debug="jqueryversion"]').each(function() {
-						
+
 						var version	= $().jquery;
 						$(this).text( version);
 
 						$('[data-eo-debug="downloadurl"]').each(function(){
 							var new_url = eventorganiser.add_query_arg( 'data[jqueryv]', version, $(this).attr('href') );
 							$(this).attr('href',new_url);
-						}); 
+						});
 				    });
 				});
 				</script>
-				
+
 				<tr>
 					<th> PHP Version </th>
 					<td> <?php echo esc_html( PHP_VERSION ); ?></td>
 				</tr>
 				<tr>
 					<th> MySQL Version </th>
-					<td> 
+					<td>
 					<?php
 						global $wpdb;
 						echo empty( $wpdb->use_mysqli ) ? esc_html( mysql_get_server_info() ) : esc_html( mysqli_get_server_info( $wpdb->dbh ) );
 					?></td>
-				</tr>    
+				</tr>
 				<tr>
 					<th> Web Server </th>
 					<td> <?php echo esc_html( $_SERVER['SERVER_SOFTWARE'] ); ?></td>
-				</tr>      
+				</tr>
 				<tr>
 					<th> PHP Memory Usage </th>
 					<th><?php echo $eo_debugger->verbose_memory_check(); ?>
-				</tr>   
+				</tr>
 				<tr>
 					<th> PHP Post Max Size </th>
 					<td><?php echo esc_html( ini_get( 'post_max_size' ) ); ?></td>
-				</tr>   
+				</tr>
 				<tr>
 					<th> PHP Upload Max Size </th>
 					<td><?php echo esc_html( ini_get( 'upload_max_filesize' ) ); ?></td>
@@ -254,7 +254,7 @@ class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page
 			);
 		?>
 	</div><!--End .wrap -->
-    <?php
+	<?php
 	}
 }
 $venues_page = new EventOrganiser_Debug_Page();
@@ -388,7 +388,7 @@ class EventOrganiser_Debugger {
 
 	function table_exists( $table ) {
 		global $wpdb;
-		return $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix.$table ) ) == $wpdb->prefix.$table;
+		return $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . $table ) ) == $wpdb->prefix . $table;
 	}
 
 	function database_charset_check() {
@@ -421,7 +421,7 @@ class EventOrganiser_Debugger {
 				esc_html( $v ),
 				esc_html( sprintf(
 					/// TRANSLATORS: [this plugin] has only been tested up to [required plugin] [required plugin version]
-					__( '%s has only been tested up to %s %s', 'eventorganiser' ),
+					__( '%1$s has only been tested up to %1$s %1$s', 'eventorganiser' ),
 					$this->plugin,
 					$requirement,
 					$versions['max']
@@ -434,7 +434,7 @@ class EventOrganiser_Debugger {
 				esc_html( $v ),
 				esc_html( sprintf(
 					/// TRANSLATORS: [this plugin] requires [required plugin] version [required plugin version] or higher
-					__( '%s requires %s version %s or higher', 'eventorganiser' ),
+					__( '%1$s requires %1$s version %1$s or higher', 'eventorganiser' ),
 					$this->plugin,
 					$requirement,
 					$versions['min']
@@ -484,7 +484,7 @@ class EventOrganiser_Debugger {
 			foreach ( $this->db_tables as $db_table ) {
 
 				if ( $this->table_exists( $db_table ) ) {
-					$db_table = '**'.$db_table.'**';
+					$db_table = '**' . $db_table . '**';
 				}
 				$db_tables[] = $db_table;
 			}
@@ -507,7 +507,7 @@ class EventOrganiser_Debugger {
 		 */
 		$options = apply_filters( 'eventorganiser_export_settings', $options );
 
-		$filename = 'event-organiser-system-info-'.get_bloginfo( 'name' ).'.md';
+		$filename = 'event-organiser-system-info-' . get_bloginfo( 'name' ) . '.md';
 		$filename = sanitize_file_name( $filename );
 
 		header( 'Content-type: text/plain' );
@@ -519,9 +519,9 @@ class EventOrganiser_Debugger {
 
 		echo '### Site Information ###' . "\n";
 		echo "\n";
-		echo 'Site url' . "\t\t\t".site_url()."\n";
-		echo 'Home url' . "\t\t\t".home_url()."\n";
-		echo 'Multisite' ."\t\t\t".( is_multisite() ? 'Yes' : 'No' )."\n";
+		echo 'Site url' . "\t\t\t" . site_url() . "\n";
+		echo 'Home url' . "\t\t\t" . home_url() . "\n";
+		echo 'Multisite' . "\t\t\t" . ( is_multisite() ? 'Yes' : 'No' ) . "\n";
 		echo 'Permalink' . "\t\t\t" . get_option( 'permalink_structure' ) . "\n";
 
 		echo "\n";
@@ -533,38 +533,38 @@ class EventOrganiser_Debugger {
 		if ( $this->jquery_version ) {
 			echo 'jQuery Version' . "\t\t" . $this->jquery_version . "\n";
 		}
-		echo 'WordPress' . "\t\t\t" . get_bloginfo( 'version' ) ."\n";
-		echo 'PHP Version' . "\t\t\t" . PHP_VERSION ."\n";
+		echo 'WordPress' . "\t\t\t" . get_bloginfo( 'version' ) . "\n";
+		echo 'PHP Version' . "\t\t\t" . PHP_VERSION . "\n";
 		global $wpdb;
 		$ver = empty( $wpdb->use_mysqli ) ? mysql_get_server_info() : mysqli_get_server_info( $wpdb->dbh );
-		echo 'MySQL Version' . "\t\t" . $ver ."\n";
+		echo 'MySQL Version' . "\t\t" . $ver . "\n";
 
 		echo "\n";
 		echo "\n";
 		echo '### Server Information ###' . "\n";
 		echo "\n";
-		echo 'Web Server' ."\t\t\t" . $_SERVER['SERVER_SOFTWARE'] ."\n";
-		echo 'PHP Memory Usage' ."\t" . $this->get_memory_usage( 'percent' ) . '%' ."\n";
-		echo 'PHP Memory Limit' ."\t" . ini_get( 'memory_limit' ) ."\n";
-		echo 'PHP Upload Max Size' ."\t" . ini_get( 'post_max_size' ) ."\n";
-		echo 'PHP FSOCKOPEN support' ."\t" . ( function_exists( 'fsockopen' )  ? 'Yes' : 'No' ) ."\n";
-		echo 'PHP cURL support' ."\t" . ( function_exists( 'curl_init' )  ? 'Yes' : 'No' ) ."\n";
-		echo 'PHP openSSL support' ."\t" . ( function_exists( 'openssl_verify' )  ? 'Yes' : 'No' ) ."\n";
+		echo 'Web Server' . "\t\t\t" . $_SERVER['SERVER_SOFTWARE'] . "\n";
+		echo 'PHP Memory Usage' . "\t" . $this->get_memory_usage( 'percent' ) . '%' . "\n";
+		echo 'PHP Memory Limit' . "\t" . ini_get( 'memory_limit' ) . "\n";
+		echo 'PHP Upload Max Size' . "\t" . ini_get( 'post_max_size' ) . "\n";
+		echo 'PHP FSOCKOPEN support' . "\t" . ( function_exists( 'fsockopen' )  ? 'Yes' : 'No' ) . "\n";
+		echo 'PHP cURL support' . "\t" . ( function_exists( 'curl_init' )  ? 'Yes' : 'No' ) . "\n";
+		echo 'PHP openSSL support' . "\t" . ( function_exists( 'openssl_verify' )  ? 'Yes' : 'No' ) . "\n";
 
 		echo "\n";
 		echo "\n";
 		echo '### Plug-ins & Themes ###' . "\n";
 		echo "\n";
-		echo 'Active Plug-ins' ."\n\t-\t" . implode( "\n\t-\t", $active_plugins ) . "\n";
-		echo 'Theme' . "\n\t-\t" . $theme->get( 'Name' ).' ('.$theme->get( 'Version' ).')' . "\n";
+		echo 'Active Plug-ins' . "\n\t-\t" . implode( "\n\t-\t", $active_plugins ) . "\n";
+		echo 'Theme' . "\n\t-\t" . $theme->get( 'Name' ) . ' (' . $theme->get( 'Version' ) . ')' . "\n";
 
 		echo "\n";
 		echo "\n";
 		echo '### Database ###' . "\n";
 		echo "\n";
-		echo 'Database Prefix'."\t\t\t" . $wpdb->prefix . "\n";
-		echo 'Database tables'."\t\t\t" . implode( ', ', $db_tables ). "\n";
-		echo 'Database character set'."\t" . ( $this->database_charset_check() ? DB_CHARSET : '**'.DB_CHARSET.'**' ) . "\n";
+		echo 'Database Prefix' . "\t\t\t" . $wpdb->prefix . "\n";
+		echo 'Database tables' . "\t\t\t" . implode( ', ', $db_tables ) . "\n";
+		echo 'Database character set' . "\t" . ( $this->database_charset_check() ? DB_CHARSET : '**' . DB_CHARSET . '**' ) . "\n";
 
 		echo "\n";
 		echo "\n";
@@ -582,7 +582,7 @@ class EventOrganiser_Debugger {
 			if ( is_array( $value ) ) {
 				$value = implode( ', ', $value );
 			}
-			echo "\n\t-\t**".esc_html( $option ).":**\t " . $value;
+			echo "\n\t-\t**" . esc_html( $option ) . ":**\t " . $value;
 		}
 
 		echo "\n";
