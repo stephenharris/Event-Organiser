@@ -236,6 +236,12 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 ![Events list (using TwentySixteen)](assets/screenshot-8.png)
 
 
+## Special thanks  ##
+
+A special thanks to [BrowserStack](http://browserstack.com/) who have provided a free license.
+
+![BrowserStack](https://p14.zdusercontent.com/attachment/1015988/XjCcW57HMxJM9kJ6wQ8fK2npX?token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..0Ddh0qglNG6N9SCLBcV1rQ.DQovYRdQ07pjD8_AAyTWmsTaBytRMV3D27uLIjZmM1DBEPXZGA0eewy6Ab5L5d5HmrUChuJytEseVnoqj0lJ8Fx1Ot79IBlwolNXfpzh3qrFtn54aiF4ixJGj4ML5kOYYOw1RhnxlFmG6l0vY9hPZiJ6H0JE7XjkbsqZq9dOkOUo_3ZJWLAb0t3cT3kz-r7SphWIUUDuvGU0jLnZC1r98J3HmMXbfG4jCga7pPO0-Zwqua6T0CQRUhuQ3h5c7rnR7mlRFSKWTgICgjmJ3JUH5lA7v1UwmyemoBzs5P5kRDs.lZhWUtixtAko1K4ojS9o1Q)
+
 ## Changelog ##
 
 ### 3.6.5 3rd April 2018 ###
@@ -264,15 +270,15 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 * added: Ability to specify multiple event authors (organiser) in the fullcalendar author/author_name attribute###
   by using a comma seperate lised e.g: [eo_fullcalendar author="1,2"]
-* bugfix: The "organiser" full calendar filter only displays users included in the author/author_name attribute 
+* bugfix: The "organiser" full calendar filter only displays users included in the author/author_name attribute
   if supplied.
 * bugfix: Occurrences which have changed time still appear in the include/excludes datepicker
-* bugfix: iCal feed will display correct DSTART & DTEND values even when the initial occurrence is excluded from 
+* bugfix: iCal feed will display correct DSTART & DTEND values even when the initial occurrence is excluded from
   the query driving the feed.
 * changed: The admin calendar week/day views display 15-minute intervals. If dragging of occurrences is enabled
   this can be done in 5 minute intervals.
 
-### 3.5.1 14th November 2017 
+### 3.5.1 14th November 2017
 
 * Fix bug where multiple filters are used in fullcalendar shortcode, seperated by a comma
 ###
@@ -309,7 +315,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 ###
 ### 3.2.0 23rd August 2017
 * Updated 'Tested up to' version (WordPress 4.8.1)
-* Update Czech, Indonesian, French, Japanese, Dutch, Portuguese, 
+* Update Czech, Indonesian, French, Japanese, Dutch, Portuguese,
   Norwegian, Slovenian and Swedish.
 * Default event page names are now filterable via `eventorganiser_event_properties`.
 * Remove X-WR-CALNAME from iCal feed for single event feeds. See [#413](https://github.com/stephenharris/Event-Organiser/issues/413).
