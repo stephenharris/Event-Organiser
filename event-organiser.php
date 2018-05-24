@@ -38,7 +38,7 @@ Domain Path: /languages
 /**
  * Set the plug-in database version
  */
-define( 'EVENT_ORGANISER_VER', '3.6.5' );
+define( 'EVENT_ORGANISER_VER', '3.7.0' );
 
 add_action( 'after_setup_theme', '_eventorganiser_set_constants' );
 function _eventorganiser_set_constants() {
@@ -163,6 +163,7 @@ function eventorganiser_get_option( $option = false, $default = false ) {
 		'hide_addon_page' => 0,
 		'disable_css' => 0,
 		'google_api_key' => false,
+		'map_provider' => 'openstreetmap'
 	);
 	$options = get_option( 'eventorganiser_options', $defaults );
 	$options = wp_parse_args( $options, $defaults );

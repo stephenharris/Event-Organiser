@@ -1,13 +1,13 @@
 var eventorganiser = eventorganiser || {};
 /**
  * Simply compares two string version values.
- * 
+ *
  * Example:
  * versionCompare('1.1', '1.2') => -1
  * versionCompare('1.1', '1.1') =>  0
  * versionCompare('1.2', '1.1') =>  1
  * versionCompare('2.23.3', '2.22.3') => 1
- * 
+ *
  * Returns:
  * -1 = left is LOWER than right
  *  0 = they are equal
@@ -24,9 +24,9 @@ var eventorganiser = eventorganiser || {};
 eventorganiser.versionCompare = function(left, right) {
 	if (typeof left + typeof right != 'stringstring')
 		return false;
-	    
+
 	var a = left.split('.'), b = right.split('.'), len = Math.max(a.length, b.length);
-	        
+
 	for ( var i = 0; i < len; i++) {
 		if ((a[i] && !b[i] && parseInt(a[i],10) > 0) || (parseInt(a[i],10) > parseInt(b[i],10))) {
 			return 1;
@@ -34,7 +34,7 @@ eventorganiser.versionCompare = function(left, right) {
 			return -1;
 		}
 	}
-	    
+
 	return 0;
 };
 
@@ -82,15 +82,15 @@ eovenue.init_map( 'venuemap', {
 	lat: $("#eo_venue_Lat").val(),
 	lng: $("#eo_venue_Lng").val(),
 	draggable: false,
-	onPositionchanged: function (){
-		var latLng = this.getPosition();
-		
-		jQuery("#eo_venue_Lat").val( latLng.lat().toFixed(6) );
-		jQuery("#eo_venue_Lng").val( latLng.lng().toFixed(6) );
-        
-		this.getMap().setCenter( latLng );
-		google.maps.event.trigger(eovenue.get_map( 'venuemap' ).map,'resize');
-		this.getMap().setZoom( 15 );
+	onPositionchanged: function (evt){
+		var latlngStr = evt.target.latlng.lat + ', ' + evt.target.latlng.lng;
+
+		jQuery("#eo_venue_Lat").val( evt.target.latlng.lat);
+		jQuery("#eo_venue_Lng").val( evt.target.latlng.lng );
+
+		evt.target.map.setCenter( evt.target.latlng );
+		//google.maps.event.trigger(eovenue.get_map( 'venuemap' ).map,'resize');
+		evt.target.map.setZoom( 15 );
 	},
 });
 
@@ -121,9 +121,10 @@ $.widget("ui.combobox", {
 					$(".venue_row").show();
 					$("#eventorganiser_detail .eo-add-new-venue").hide();
 				}
-					
-				var latlng = new google.maps.LatLng( b.item.venue_lat, b.item.venue_lng );
-				eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
+
+				eovenue.get_map( 'venuemap' ).marker[0].setPosition( {
+					'lat': b.item.venue_lat, 'lng': b.item.venue_lng
+				} );
 			}
 			$hiddenEl.val( b.item.term_id );
 		}
@@ -134,7 +135,7 @@ $.widget("ui.combobox", {
 	/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
 	var jquery_ui_version = $.ui ? $.ui.version || 0 : -1;
 	var ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete' : 'autocomplete' );
-		
+
 	//Apend venue address to drop-down
 	input.data( ac_namespace )._renderItem = function (a, venue ) {
 		if ( parseInt( venue.term_id, 10 ) === 0 ) {
@@ -143,7 +144,7 @@ $.widget("ui.combobox", {
 		//Clean address
 		var address_array = [venue.venue_address, venue.venue_city, venue.venue_state,venue.venue_postcode,venue.venue_country];
 		var address = $.grep(address_array,function(n){return(n);}).join(', ');
-			
+
 		/* Backwards compat with WP 3.3-3.5 (UI 1.8.16-1.9.2)*/
 		var li_ac_namespace = ( eventorganiser.versionCompare( jquery_ui_version, '1.10' ) >= 0 ? 'ui-autocomplete-item' : 'item.autocomplete' );
 
@@ -181,9 +182,9 @@ $.widget("ui.combobox", {
 			text: false
 		}).removeClass("ui-corner-all").addClass("eo-ui-button ui-corner-right add-new-venue ui-combobox-button").click(function (ev) {
 			ev.preventDefault();
-			$("#eventorganiser_detail .eo-add-new-venue").show();			
+			$("#eventorganiser_detail .eo-add-new-venue").show();
 			$(".venue_row").show();
-				
+
 			//Store existing venue details in case the user cancels creating a new one
 			eo_venue_obj={
 				id: $("[name='eo_input[event-venue]']").val(),
@@ -198,32 +199,32 @@ $.widget("ui.combobox", {
 			//Use selected timezone to 'guess' a new address, so we don't get a blank map instead.
 			var address = EO_Ajax_Event.location;
 			if( address ){
-				address = address.split("/");					
-				eovenue.geocode( address[address.length-1], function( latlng ){
+				address = address.split("/");
+				eovenue.geocode( {'city': address[address.length-1]}, function( latlng ){
 					if( latlng ){
 						eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
 					}
 				});
 			}else{
-				var latlng = new google.maps.LatLng( 0, 0 );
-				eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
+				eovenue.get_map( 'venuemap' ).marker[0].setPosition( {'lat':0,'lng':0} );
 				eovenue.get_map( 'venuemap' ).map.setZoom( 1 );
 			}
 			$("#eventorganiser_detail .eo-add-new-venue input").first().focus();
 		});
-	}	
+	}
 }
 });
 
 $("#venue_select").combobox();
 
 $(".eo_addressInput").change(function () {
-    var address = [];
+    var address = {};
     $(".eo_addressInput").each(function () {
-    	address.push(jQuery(this).val());
+			var key = $(this).attr('id').replace('eo_venue_add-','');
+			address[key] = $(this).val();
     });
-    
-    eovenue.geocode( address.join(', '), function( latlng ){
+
+    eovenue.geocode( address, function( latlng ){
     	if( latlng ){
         	eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
         }
@@ -237,10 +238,9 @@ $('.eo-add-new-venue-cancel').click(function(e){
 	$('.eo-add-new-venue input').val('');
 
 	//Restore old venue details
-	var latlng = new google.maps.LatLng( eo_venue_obj.lat, eo_venue_obj.lng );
-	eovenue.get_map( 'venuemap' ).marker[0].setPosition( latlng );
+	eovenue.get_map( 'venuemap' ).marker[0].setPosition( {'lat': eo_venue_obj.lat, 'lng': eo_venue_obj.lng} );
 	$("[name='eo_input[event-venue]']").val( eo_venue_obj.id );
 	$(".eo-venue-input input").val( eo_venue_obj.label );
-	$("#eventorganiser_detail .eo-add-new-venue").hide();	
+	$("#eventorganiser_detail .eo-add-new-venue").hide();
 });
 });

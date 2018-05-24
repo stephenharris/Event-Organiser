@@ -106,8 +106,9 @@ function eventorganiser_site_install() {
 		'navtitle'          => __( 'Events', 'eventorganiser' ),
 		'eventtag'          => 1,
 		'feed'              => 1,
-		'runningisnotpast' => 0,
-		'deleteexpired'    => 0,
+		'runningisnotpast'  => 0,
+		'deleteexpired'     => 0,
+		'map_provider'      => 'openstreetmap'
 	);
 	add_option( 'eventorganiser_options', $eventorganiser_options );
 
@@ -246,6 +247,16 @@ function eventorganiser_upgradecheck() {
 			delete_transient( 'eo_full_calendar_public_priv' );
 		}
 
+		if ( version_compare( $installed_ver, '3.7.0', '<' ) ) {
+			$options = get_option( 'eventorganiser_options' );
+			//Sites installed before 3.7.0 should have 'googlemaps' as the map map_provider
+			//unless otherwise specified.
+			if ( empty( $options['map_provider'] ) ) {
+				$options['map_provider'] = 'googlemaps';
+				update_option( 'eventorganiser_options', $options );
+			}
+		}
+
 		update_option( 'eventorganiser_version', $eventorganiser_db_version );
 
 		//Run upgrade checks
@@ -282,7 +293,7 @@ function eventorganiser_021200_update() {
 			}
 		}
 	}
-	
+
 	//Categories
 	$category_options = $wpdb->get_col( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE 'eo-event-category\_%'" );
 	if( $category_options ){
@@ -294,11 +305,11 @@ function eventorganiser_021200_update() {
 					$value = get_option( "eo-event-category_{$old_cat_id}" );
 					update_option( "eo-event-category_{$new_cat_id}", $value );
 					delete_option( "eo-event-category_{$old_cat_id}" );
-				}				
+				}
 			}
 		}
 	}
-	
+
 }
 
 /**
@@ -448,24 +459,24 @@ function eventorganiser_uninstall_site(){
 		$role = $wp_roles->get_role($role_name);
 		foreach($eventorganiser_roles as $eo_role=>$eo_role_display):
 			$role->remove_cap($eo_role);
-		endforeach;  
-	endforeach; 
-	
+		endforeach;
+	endforeach;
+
 	eventorganiser_clear_cron_jobs();
 
-	//Drop tables    
+	//Drop tables
 	$wpdb->query("DROP TABLE IF EXISTS $wpdb->eo_events");
 	$eventorganiser_venue_table = $wpdb->prefix."eo_venues";
 	$wpdb->query("DROP TABLE IF EXISTS $eventorganiser_venue_table");
 	$wpdb->query("DROP TABLE IF EXISTS $wpdb->eo_venuemeta");
 
 	//Remove user-meta-data:
-	$meta_keys = array('metaboxhidden_event','closedpostboxes_event','wp_event_page_venues_per_page','manageedit-eventcolumnshidden');	
+	$meta_keys = array('metaboxhidden_event','closedpostboxes_event','wp_event_page_venues_per_page','manageedit-eventcolumnshidden');
 	$sql =$wpdb->prepare("DELETE FROM $wpdb->usermeta WHERE ");
 	foreach($meta_keys as $key):
 		$sql .= $wpdb->prepare("meta_key = %s OR ",$key);
 	endforeach;
 	$sql.=" 1=0 "; //Deal with final 'OR', must be something false!
-	$re =$wpdb->get_results( $sql);	
+	$re =$wpdb->get_results( $sql);
 	flush_rewrite_rules();
     }

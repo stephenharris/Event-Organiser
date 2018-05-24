@@ -549,6 +549,8 @@ class EventOrganiser_Shortcodes {
 
 		if ( ! empty( self::$map ) ) {
 			wp_enqueue_script( 'eo_GoogleMap' );
+			wp_enqueue_script( 'eo-open-source-map' );
+			wp_enqueue_style( 'eo-open-source-map' );
 		}
 	}
 
