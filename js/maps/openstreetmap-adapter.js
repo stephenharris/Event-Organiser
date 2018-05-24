@@ -89,7 +89,7 @@ eventorganiserMapsAdapter.openstreetmap.map = function( elementID, args) {
 
     if ( this.args.locations.length > 1 ) {
         this.fitLocations( this.args.locations );
-    } else {
+    } else if( this.args.locations.length > 0) {
         this.setCenter( this.args.locations[0] );
     }
 
