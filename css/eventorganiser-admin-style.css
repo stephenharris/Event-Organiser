@@ -54,7 +54,7 @@
 /* Event edit page */
 .eo-days-of-week li{
 	display: inline-block;
-	margin-right: 8px;	
+	margin-right: 8px;
 }
 .eo-days-of-week li input[type="checkbox"] {
 	margin-right: 2px;
@@ -64,7 +64,7 @@
 	margin-right:10px;
 }
 #eo-recurrence-frequency-wrapper{
-	margin: 0 0 1em 0;	
+	margin: 0 0 1em 0;
 }
 #eo-day-of-month-repeat,
 #eo-schedule-last-date-wrapper{
@@ -179,7 +179,7 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .ui-selectmenu { display: block; display: inline-block; position: relative; height: 2.2em; vertical-align: middle; text-decoration: none; overflow: hidden; zoom: 1; }
 .ui-selectmenu-icon { position:absolute; right:6px; margin-top:-8px; top: 50%; }
 .ui-selectmenu-menu { padding:0; margin:0; position:absolute; top: 0; display: none; z-index: 1005;} /* z-index: 1005 to make selectmenu work with dialog */
-.ui-selectmenu-menu  ul { padding:0; margin:0; list-style:none; position: relative; overflow: auto; overflow-y: auto ; overflow-x: hidden;} 
+.ui-selectmenu-menu  ul { padding:0; margin:0; list-style:none; position: relative; overflow: auto; overflow-y: auto ; overflow-x: hidden;}
 .ui-selectmenu-open { display: block; }
 .ui-selectmenu-menu-popup { margin-top: -1px; }
 .ui-selectmenu-menu li { padding:0; margin:0; display: block; border-top: 1px dotted transparent; border-bottom: 1px dotted transparent; border-right-width: 0 !important; border-left-width: 0 !important; font-weight: normal !important; }
@@ -211,9 +211,8 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .ui-combobox-input {margin: 0;padding: 0.3em;}
 .eo-venue-combobox-buttons{position: absolute;width:4.5em;}
 .ui-autocomplete { max-height: 250px; overflow-y: auto;/* prevent horizontal scrollbar */overflow-x: hidden;}
-* html .ui-autocomplete { height: 250px; } //IE6
-
-
+* html .ui-autocomplete { height: 250px; }
+.ui-front {z-index: 400!important;}
 .eo-admin-calendar-dialog .ui-autocomplete {
 	max-height: 100px;
 	max-width:220px;
@@ -240,7 +239,7 @@ background: #1e8cbe;
 /*
  * Timepicker stylesheet
  * Highly inspired from datepicker
- * FG - Nov 2010 - Web3R 
+ * FG - Nov 2010 - Web3R
  */
 .ui-timepicker-inline{display:inline}
 #ui-timepicker-div{background-color:#fff;padding:.2em}
@@ -303,7 +302,7 @@ a.eo-inline-help img {
 
 	max-width: 280px;
 	min-width: 50px;
-	
+
 	font-size: 10.5px;
 	line-height: 12px;
 	z-index:300005!important;
@@ -362,7 +361,7 @@ a.eo-inline-help img {
 .ui-tooltip-shadow{-webkit-box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15); -moz-box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15); box-shadow:1px 1px 3px 1px rgba(0,0,0,0.15)}
 
 /* IE9 fix - removes all filters */
-.ui-tooltip:not(.ie9haxors) div.ui-tooltip-content, 
+.ui-tooltip:not(.ie9haxors) div.ui-tooltip-content,
 .ui-tooltip:not(.ie9haxors) div.ui-tooltip-titlebar{filter:none; -ms-filter:none}
 
 /*** Admin Calendar Page ***/
