@@ -132,6 +132,10 @@ eventorganiserMapsAdapter.googlemaps.marker = function ( args ) {
             this._marker.setPosition( latLng );
         };
 
+				eventorganiserMapsAdapter.googlemaps.marker.prototype.setIcon = function( url ) {
+						this._marker.setIcon( url );
+				};
+
         /**
          * Event handler for the marker
          * Only explicitly supported events: drag, dragEnd, move

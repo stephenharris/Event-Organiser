@@ -127,6 +127,20 @@ eventorganiserMapsAdapter.openstreetmap.marker = function ( args ) {
             this._marker.setLatLng( [latLng.lat, latLng.lng ]  );
         };
 
+				eventorganiserMapsAdapter.openstreetmap.marker.prototype.setIcon = function( url ) {
+						var markerInst = this._marker;
+						jQuery("<img/>",{
+							load : function(){
+								markerInst.setIcon(L.icon({
+									iconUrl: url,
+									iconSize: [this.width, this.height],
+									iconAnchor: [this.width/2, this.height]
+								}));
+							},
+							src  : url
+						});
+				};
+
         /**
          * Event handler for the marker
          * Only explicitly supported events: drag, dragEnd, move
@@ -147,6 +161,12 @@ eventorganiserMapsAdapter.openstreetmap.marker = function ( args ) {
                 callback.call( mapAdapter, proxyEvt );
             } );
         }
+
+
+				if(args.icon){
+					this.setIcon(args.icon);
+				}
+
     }
 
 }
