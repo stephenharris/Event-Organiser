@@ -1,13 +1,13 @@
 var eo_venue = eo_venue || { marker: false };
 
 jQuery(document).ready(function ($) {
-	
+
 	postboxes.add_postbox_toggles( pagenow );
-				
+
 	var eo_venue_Lat = $("#eo_venue_Lat").val();
 	var eo_venue_Lng = $("#eo_venue_Lng").val();
 	var zoom = 15;
-        
+
 	if( eo_venue_Lat === 0 && eo_venue_Lng === 0 ){
 		var address = [];
 		$(".eo_addressInput").each(function (){ address.push($(this).val());});
@@ -18,9 +18,10 @@ jQuery(document).ready(function ($) {
 
 	eovenue.init_map( 'venuemap', {
 		lat: eo_venue_Lat,
-        lng: eo_venue_Lng,
-        zoom: zoom,
-        draggable: true,
+		lng: eo_venue_Lng,
+		zoom: zoom,
+		draggable: true,
+		markerIcon: eo_venue.marker,
 		onDrag: function( evt ) {
         	this.dragging = true;
         	$("#eo-venue-latllng-text").text( evt.target.latlng.lat + ', ' + evt.target.latlng.lng );
@@ -44,7 +45,7 @@ jQuery(document).ready(function ($) {
         	}
         },
 	});
-        
+
 	$(".eo_addressInput").change(function () {
 		var address = {};
 		$(".eo_addressInput").each(function () {
@@ -57,17 +58,17 @@ jQuery(document).ready(function ($) {
 			}
 		});
 	});
-	
+
 	$('#eo-venue-latllng-text').blur(function() {
 		var text    = $(this).text().trim().replace(/ /g,'');
 		var match   = text.match(/^(-?[0-9]{1,3}\.[0-9]+),(-?[0-9]{1,3}\.[0-9]+)$/);
 		var old_lat = $(this).data('eo-lat');
 		var old_lng = $(this).data('eo-lng');
-		
+
 		if( match ){
 			var lat = match[1];
 			var lng = match[2];
-			
+
 			if( lat != old_lat || lng != old_lng ){
 				$(this).data( 'eo-lat', lat );
 				$(this).data( 'eo-lng', lng );
@@ -78,12 +79,12 @@ jQuery(document).ready(function ($) {
 			$(this).text( old_lat + ", " + old_lng );
 		}
 	});
-	
+
 	$('#eo-venue-latllng-text').keydown( function( evt ){
 		//On enter leave the latitude/longtitude
 		if( 13 === evt.which ){
-			$(this).blur();	
+			$(this).blur();
 		}
 	});
-			
+
 });
