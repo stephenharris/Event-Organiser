@@ -14,17 +14,17 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	 * Initialises the tabs.
 	 */
 	function setup_tabs(){
-		
+
 		/**
 		 * Filters an array of tabs that appear in *Settings > Event Organiser*
 		 *
-		 * Allows extensions to add additional tabs. The array is indexed by a 
+		 * Allows extensions to add additional tabs. The array is indexed by a
 		 * unique tab identifier, with the tab label as the value.
 		 *
 		 * @param array $tabs Array of tabs to display on the settings page.
 		 */
-		$tabs = apply_filters( 
-			'eventorganiser_settings_tabs', 
+		$tabs = apply_filters(
+			'eventorganiser_settings_tabs',
 			array(
 				'general' => __( 'General', 'eventorganiser' ),
 				'permissions' => __( 'Permissions', 'eventorganiser' ),
@@ -41,7 +41,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		$this->menu = __( 'Event Organiser', 'eventorganiser' );
 		$this->permissions = 'manage_options';
 		$this->slug = 'event-settings';
-		
+
 		self::$eventorganiser_roles = array(
 				'edit_events' => __( 'Edit Events', 'eventorganiser' ),
 				'publish_events' => __( 'Publish Events', 'eventorganiser' ),
@@ -56,27 +56,26 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		if( !in_array( 'event-venue', $supports ) ){
 			unset( self::$eventorganiser_roles['manage_venues'] );
 		}
-		
+
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 	}
 
 	function register_settings(){
-		
+
 		register_setting( 'eventorganiser_options', 'eventorganiser_options', array( $this, 'validate' ) );
-		
+
 		//Initialise the tab array
 		$this->tabs = $this->setup_tabs();
-		
+
 		foreach ( $this->tabs as $tab_id => $label ){
 			//Add sections to each tabbed page
 			switch ( $tab_id){
 				case 'general':
 					register_setting( 'eventorganiser_'.$tab_id, 'eventorganiser_options', array( $this, 'validate' ) );
-					add_settings_section( $tab_id.'_licence', __( 'Add-on Licence keys', 'eventorganiser' ), array( $this, 'display_licence_keys' ), 'eventorganiser_'.$tab_id );
-					add_settings_section( $tab_id,__( 'General', 'eventorganiser' ), '__return_false',  'eventorganiser_'.$tab_id);
-					if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) ) {
-						add_settings_section( $tab_id .'_google_maps' , __( 'Google Maps', 'eventorganiser' ), '__return_false',  'eventorganiser_'.$tab_id );
-					}
+					add_settings_section( $tab_id . '_licence', __( 'Add-on Licence keys', 'eventorganiser' ), array( $this, 'display_licence_keys' ), 'eventorganiser_' . $tab_id );
+					add_settings_section( $tab_id, __( 'General', 'eventorganiser' ), '__return_false',  'eventorganiser_' . $tab_id );
+					add_settings_section( $tab_id .'_maps', __( 'Maps', 'eventorganiser' ), array( $this, 'maps_section' ),  'eventorganiser_' . $tab_id );
+
 					if ( ! get_theme_support( 'event-organiser' ) ) {
 						add_settings_section( $tab_id . '_templates', __( 'Templates', 'eventorganiser' ), array( $this, 'template_settings' ),  'eventorganiser_' . $tab_id );
 					}
@@ -94,24 +93,24 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 					add_settings_section( $tab_id, '',array( $this, 'display_imexport' ),  'eventorganiser_'.$tab_id );
 					break;
 			}
-			
+
 			/**
 			 * Triggered after a settings tab has been registered.
-			 * 
-			 * The `$tab_id` in the hook name is the tab identifier 
+			 *
+			 * The `$tab_id` in the hook name is the tab identifier
 			 * corresponding to the appropriate tabl.
-			 * 
+			 *
 			 * Use this hook to register settings on a particular tab
 			 * using `'eventorganiser_'.$tab_id` as the fourth argument
 			 * of `add_settings_section()`.
-			 * 
+			 *
 			 * @link https://codex.wordpress.org/Function_Reference/add_settings_section `add_settings_section()` codex
 			 * @param string $tab_id Tab identifier.
 			 */
 			do_action("eventorganiser_register_tab_{$tab_id}", $tab_id );
 		}
 	}
-	
+
 	function page_actions(){
 		//Register options
 		add_action( 'eventorganiser_event_settings_permalinks', 'flush_rewrite_rules' );
@@ -120,7 +119,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			//Add sections to each tabbed page
 			$this->add_fields( $tab_id );
 		}
-		
+
 		if( !empty( $_GET['export-settings'] ) && $_GET['export-settings'] == 1 && current_user_can( 'manage_options' ) ){
 			$this->export_settings();
 		}
@@ -130,8 +129,8 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 	/**
 	 * This is called in the register_settings method.
 	 * Once the tabs have been registered, and sections added to each tabbed page, we now add the fields for each section
-	 * A section should have the form {tab_id}._{identifer} (e.g. general_main, or gateways_google). 
-	 * 
+	 * A section should have the form {tab_id}._{identifer} (e.g. general_main, or gateways_google).
+	 *
 	 * @param $tab_id - the string identifer for the tab (given in $this->tabs as the key).
 	 * @uses add_settings_field
 	 */
@@ -139,7 +138,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 
 		switch( $tab_id){
 			case 'general':
-				
+
 				/* General - main */
 				add_settings_field( 'supports', __( 'Select which features events should support', 'eventorganiser' ), 'eventorganiser_checkbox_field', 'eventorganiser_'.$tab_id, $tab_id,
 					array(
@@ -200,7 +199,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'options' => 'series',
 						'checked' => eventorganiser_get_option( 'group_events' ),
 						'help' => __("If selected only one occurrence of an event will be displayed on event lists and archives (this can be over-ridden by shortcode attributes and widget options.", 'eventorganiser' )
-				) );				
+				) );
 
 				add_settings_field( 'runningisnotpast',  __("Are current events past?", 'eventorganiser' ), 'eventorganiser_select_field' , 'eventorganiser_'.$tab_id, $tab_id,
 					array(
@@ -240,26 +239,40 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'checked' => eventorganiser_get_option( 'excludefromsearch' ),
 				) );
 
-				add_settings_field( 'google_api_key',  __( 'Google API key:', 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_' . $tab_id, $tab_id . '_google_maps',
+				add_settings_field( 'map_provider', __( 'Map provider:', 'eventorganiser' ), 'eventorganiser_select_field' , 'eventorganiser_' . $tab_id, $tab_id . '_maps',
 					array(
-						'label_for' => 'google_api_key',
-						'name'      => 'eventorganiser_options[google_api_key]',
-						'value'     => eventorganiser_get_option( 'google_api_key' ),
-						'help'      => sprintf(
-							esc_html__( 'To use Google Maps you need to register an API key with Google. You can register for a free API key by %sfollowing these instructions%s.', 'eventorganiser' ),
-							'<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/get-api-key">',
-							'</a>'
-						)
+						'label_for' => 'map_provider',
+						'name'      => 'eventorganiser_options[map_provider]',
+						'selected'  => eventorganiser_get_option( 'map_provider' ),
+						'options'   => array(
+							'openstreetmap' => __( 'OpenStreetMap', 'eventorganiser' ),
+							'googlemaps'    => __( 'Google Maps', 'eventorganiser' ),
+						),
 					)
 				);
 
-				add_settings_field( 
+				if( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) ) {
+					add_settings_field( 'google_api_key',  __( 'Google API key:', 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_' . $tab_id, $tab_id . '_maps',
+						array(
+							'label_for' => 'google_api_key',
+							'name'      => 'eventorganiser_options[google_api_key]',
+							'value'     => eventorganiser_get_option( 'google_api_key' ),
+							'help'      => sprintf(
+								esc_html__( 'To use Google Maps you need to register an API key with Google. You can register for a free API key by %sfollowing these instructions%s.', 'eventorganiser' ),
+								'<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/get-api-key">',
+								'</a>'
+							)
+						)
+					);
+				}
+
+				add_settings_field(
 					'templates',
 					__( 'Templates:', 'eventorganiser' ),
-					array( $this, '_render_template_options' ), 
+					array( $this, '_render_template_options' ),
 					'eventorganiser_'.$tab_id, $tab_id.'_templates'
 				);
-						
+
 				add_settings_field( 'disable_css',  __("Disable CSS:", 'eventorganiser' ), 'eventorganiser_checkbox_field' , 'eventorganiser_'.$tab_id, $tab_id.'_templates',
 					array(
 						'label_for' => 'disable_css',
@@ -302,11 +315,11 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'value' => eventorganiser_get_option( 'url_events' ),
 						'help' => "<code>{$home_url}/<strong>".eventorganiser_get_option( 'url_events' )."</strong></code>"
 				) );
-				
+
 				$now = new DateTime();
 
 				$base_url = eventorganiser_get_option( 'url_events' )."/<strong>".eventorganiser_get_option( 'url_on' )."</strong>";
-				
+
 				add_settings_field( 'url_on', __("Event (date archive)", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
 					array(
 						'label_for' => 	'url_on',
@@ -317,7 +330,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 										."<code>{$home_url}/{$base_url}/{$now->format('Y/m')}</code>".__('Month archive', 'eventorganiser').'<br>'
 										."<code>{$home_url}/{$base_url}/{$now->format('Y/m/d')}</code>".__('Day archive', 'eventorganiser')
 					) );
-	
+
 				$supports = eventorganiser_get_option( 'supports' );
 				if( in_array( 'event-venue', $supports ) ){
 					add_settings_field( 'url_venue', __("Venues", 'eventorganiser' ), 'eventorganiser_text_field' , 'eventorganiser_'.$tab_id, $tab_id,
@@ -375,7 +388,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		foreach ( $options as $value => $option ) {
 			printf(
 				'<label for="%1$s">
-					<input type="radio" id="%1$s" name="eventorganiser_options[templates]" value="%3$s" %2$s> 
+					<input type="radio" id="%1$s" name="eventorganiser_options[templates]" value="%3$s" %2$s>
 					%4$s
 					<p class="description">%5$s</p>
 				</label><br>',
@@ -399,31 +412,31 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		} else {
 			$tab = false;
 		}
-		
+
 		$clean = array();
-		
+
 		switch ( $tab ){
 			case 'general':
 				$checkboxes  = array( 'showpast', 'excludefromsearch', 'deleteexpired', 'feed', 'group_events', 'disable_css' );
-				$text = array( 'navtitle', 'dateformat', 'runningisnotpast', 'addtomenu', 'google_api_key' );
+				$text = array( 'navtitle', 'dateformat', 'runningisnotpast', 'addtomenu', 'google_api_key', 'map_provider' );
 
 				foreach ( $checkboxes as $cb ){
 
 					//Empty checkboxes send no data..
 					$value = isset( $option[$cb] ) ? $option[$cb] : 0;
-				
+
 					$clean[$cb] = $this->validate_checkbox( $value );
 				}
 
 				foreach ( $text as $txt ){
 					if ( !isset( $option[$txt] ) )
 						continue;
-				
+
 					$clean[$txt] = $this->validate_text( $option[$txt] );
 				}
 
 				$clean['templates'] = isset( $option['templates'] ) && in_array( $option['templates'], array( 1, 0, 'themecompat' ) ) ? $option['templates'] : 1;
-				
+
 				//Group events is handled differently
 				$clean['group_events'] = ( !empty( $clean['group_events'] ) ? 'series' : '' );
 
@@ -444,17 +457,17 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 
 			case 'permalinks':
 				$permalinks = array( 'url_event', 'url_events', 'url_venue', 'url_cat', 'url_tag', 'url_on' );
-				
+
 				foreach ( $permalinks as $permalink ){
 					if ( !isset( $option[$permalink] ) )
 						continue;
-			
+
 					$value = $this->validate_permalink( $option[$permalink] );
 
 					if ( !empty( $value) )
 						$clean[$permalink] = $value;
 				}
-			
+
 				$clean['prettyurl'] = isset( $option['prettyurl'] ) ? $this->validate_checkbox( $option['prettyurl'] ) : 0;
 			break;
 
@@ -464,17 +477,17 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 				$permissions = (isset( $option['permissions'] ) ? $option['permissions'] : array() );
 				$this->update_roles( $permissions );
 			break;
-			
+
 			default:
 				$keys = array( 'hide_addon_page' );
 				foreach( $keys as $key ){
 					if( !isset( $option[$key] ) )
 						continue;
-					
+
 					$clean[$key] = (int) $option[$key];
-					
+
 				}
-			
+
 			break;
 		}
 
@@ -505,7 +518,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 
 		//Get existing menu item
 		$menu_item_db_id = (int) eventorganiser_get_option( 'menu_item_db_id' );
-	
+
 		//Validate exiting menu item ID
 		if ( !is_nav_menu_item( $menu_item_db_id ) ){
 			$menu_item_db_id = 0;
@@ -521,7 +534,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		//If the $menu is an int > 1, we are adding/updating an item (post type) so that it has term set to $menu_id
 		if ( ( !empty( $menu_id ) && $menu_id != '1' ) ){
 			$menu_item_data = array();
-			
+
 			//Validate menu ID
 			$menu_obj = wp_get_nav_menu_object( $menu_id );
 			$menu_id = ( $menu_obj ? $menu_obj->term_id : 0 );
@@ -529,14 +542,14 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			//Set status
 			$status = ( $menu_id == 0 ? '' : 'publish' );
 
-			$menu_item_data = array(	
+			$menu_item_data = array(
 				'menu-item-title' => $menu_item_title,
 				'menu-item-url' => get_post_type_archive_link( 'event' ),
 				'menu-item-object' => 'event',
 				'menu-item-status' => $status,
 				'menu-item-type' => 'post_type_archive',
 			);
-			
+
 			//If we're updating preserve parent and position
 			if( is_nav_menu_item( $menu_item_db_id ) ){
 				$menu_item = wp_setup_nav_menu_item( get_post( $menu_item_db_id ) );
@@ -567,9 +580,9 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			//Foreach custom role, add or remove option.
 			foreach ( self::$eventorganiser_roles as $eo_role => $eo_role_display ):
 				if ( isset( $permissions[$role_name][$eo_role] ) && $permissions[$role_name][$eo_role] == 1 ){
-					$role->add_cap( $eo_role );		
+					$role->add_cap( $eo_role );
 				} else {
-					$role->remove_cap( $eo_role );		
+					$role->remove_cap( $eo_role );
 				}
 			endforeach; //End foreach $eventRoles
 		endforeach; //End foreach $editable_roles
@@ -580,7 +593,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		$active_tab = ( isset( $_GET['tab'] ) &&  isset( $this->tabs[$_GET['tab']] ) ? $_GET['tab'] : 'general' );
 		$label      = $this->tabs[$active_tab];
 		?>
-    	<div class="wrap">  
+    	<div class="wrap">
       		<h1>
       			<span aria-hidden=true><?php esc_html_e( 'Event Settings', 'eventorganiser' );?></span>
       			<span class="screen-reader-text"><?php printf( esc_html__( 'Event Settings: %s', 'eventorganiser' ), $label ); ?></span>
@@ -619,7 +632,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 				do_action( 'eventorganiser_event_settings_imexport' );
 			}
 			?>
-		</div><!-- /.wrap -->  
+		</div><!-- /.wrap -->
 
 	<?php
 	}
@@ -635,10 +648,28 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		}else{
 			if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section_id] ) ){
 				echo "<p> You do not have any add-ons activated. You can view the <a href='".$addon_link."'>available add-ons here</a>.</p>";
-			}else{ 
+			}else{
 				echo "<p> Below are the add-ons you have activated. You can find a full list of <a href='".$addon_link."'>available add-ons here</a>. </p>";
-			}	
-		} 
+			}
+		}
+	}
+
+
+	function maps_section() {
+		?>
+		<script>
+		jQuery('document').ready(function($){
+			var $google_maps_key_row = $('#google_api_key').parents('tr');
+			var $map_provider = $('#map_provider');
+			$map_provider.on('change', function(){
+				if($google_maps_key_row.length > 0){
+					$google_maps_key_row.toggle('googlemaps' == $(this).val());
+				}
+			});
+			$map_provider.trigger('change');
+		});
+		</script>
+		<?php
 	}
 
 	function template_settings() {
@@ -667,16 +698,16 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		?>
 		<h4><?php esc_html_e( 'Event management permissions', 'eventorganiser' ); ?></h4>
 		<p><?php esc_html_e( 'Set permissions for events and venue management', 'eventorganiser' ); ?></p>
-		
+
 		<table class="widefat fixed posts">
 			<thead>
 			<tr>
 				<th><?php esc_html_e( 'Role', 'eventorganiser' ); ?></th>
 				<?php foreach ( self::$eventorganiser_roles as $eo_role => $eo_role_display ) : ?>
 					<th><?php echo esc_html( $eo_role_display );?></th>
-				<?php endforeach; ?> 
+				<?php endforeach; ?>
 			</tr>
-			</thead>		
+			</thead>
 		<tbody id="the-list">
 			<?php
 			$array_index = 0;
@@ -716,12 +747,12 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			esc_html__( "You may also need to go to WordPress Settings > Permalinks and click 'Save Changes' before any changes will take effect.", 'eventorganiser' )
 		);
 	}
-	
+
 	function export_settings(){
-		
+
 		$options = array();
 		$options['event-organiser'] = eventorganiser_get_option( false );
-		
+
 		/**
 		 * Settings to include in an export.
 		 *
@@ -735,10 +766,10 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		 * @param array $options Array of user settings, indexed by plug-in/extension.
 		 */
 		$options = apply_filters( 'eventorganiser_export_settings', $options );
-		
-		$filename = 'event-organiser-settings-'.get_bloginfo( 'name' ).'.json'; 
+
+		$filename = 'event-organiser-settings-'.get_bloginfo( 'name' ).'.json';
 		$filename = sanitize_file_name( $filename );
-		
+
 		header('Content-disposition: attachment; filename=' . $filename );
 		header('Content-type: application/json');
 		echo json_encode( $options );
@@ -757,7 +788,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 			</select>
 
 			<?php printf( '<input type="hidden" name ="eventorganiser_options[menu_item_db_id]" value="%d" />',eventorganiser_get_option( 'menu_item_db_id' ) ); ?>
-			<?php printf( '<input type="text" name="eventorganiser_options[navtitle]" value="%s" />',eventorganiser_get_option( 'navtitle' ) ); 
+			<?php printf( '<input type="text" name="eventorganiser_options[navtitle]" value="%s" />',eventorganiser_get_option( 'navtitle' ) );
 	}
 }
 $settings_page = new EventOrganiser_Settings_Page();
