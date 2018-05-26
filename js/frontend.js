@@ -708,7 +708,7 @@ jQuery(document).ready(function(){
 			param.locations[i].position = {
 				lat: param.locations[i].lat,
 				lng: param.locations[i].lng
-			}
+			};
 			map.addMarker(param.locations[i]);
 		}
 
