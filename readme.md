@@ -1,17 +1,17 @@
 # Event Organiser #
 **Contributors:** [stephenharris](https://profiles.wordpress.org/stephenharris)  
 **Donate link:** http://www.wp-event-organiser.com/donate  
-**Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, widget, venues, maps, gigs, shows,  
+**Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
-**Tested up to:** 4.9.4  
+**Tested up to:** 4.9.6  
 **Stable tag:** {{version}}  
 **License:** GPLv3  
 
-Create and maintain events, including complex reoccurring patterns, venue management (with Google maps), calendars and customisable event lists
+Create and maintain events, including complex reoccurring patterns, venue management (with Google Maps or OpenStreetMap), calendars and customisable event lists
 
 ## Description ##
 
-Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows you to view your events in the familiar WordPress list or in a calendar page in the amin area.
+Event Organiser adds event management that integrates well with your WordPress site. By using WordPress' in-built 'custom post type', this plug-in allows you to create events that have the same functionality as posts, while adding further features that allow you to manage your events. This includes the possibility of repeating your event according to complex schedules and assign your events to venues. This can all be done through an intuitive user interface, which allows you to view your events in the familiar WordPress list or in a calendar page in the admin area.
 
 [**User Docs**](http://docs.wp-event-organiser.com/)
 | [**Function Reference**](http://codex.wp-event-organiser.com/)
@@ -34,10 +34,10 @@ A full list of available extensions can be found [here](http://wp-event-organise
 
 ### For the user ###
 
-* Create one-time events or reoccuring events.
-* Allows complex reoccuring patterns for events. You can create events that last an arbirtary time, and repeat over a specified period. Supports complex schedules such as *On the third Tuesday of every fourth month* or *Every month on the 16th*.
+* Create one-time events or recurring events.
+* Allows complex recurring patterns for events. You can create events that last an arbitrary time, and repeat over a specified period. Supports complex schedules such as *On the third Tuesday of every fourth month* or *Every month on the 16th*.
 * Ability to add or remove specific dates to an event
-* **Event functions** available which extend the post functions (e.g. `the_title()`,`get_the_author()`, `the_author()`) to ouput or return event data (the start date-time, the venue etc). For examples of their use see the [documentation](http://www.wp-event-organiser.com/documentation/function-reference/) or the included template files.
+* **Event functions** available which extend the post functions (e.g. `the_title()`,`get_the_author()`, `the_author()`) to output or return event data (the start date-time, the venue etc). For examples of their use see the [documentation](http://www.wp-event-organiser.com/documentation/function-reference/) or the included template files.
 * Create and maintain venues for your events, with **Google maps** support and a fully-featured content editor.
 * **Widgets**:
   * Calendar widget - displays a calendar (identical to the standard WordPress Calendar)
@@ -53,7 +53,7 @@ A full list of available extensions can be found [here](http://wp-event-organise
   * Subscribe to event feeds
 * **Relative date queries** (for example, query events that finished in the last 24 hours, or events starting in the coming week).
 * Assign events to categories and tags, and view events by category or tag.
-* Color-coded event categories.
+* Colour-coded event categories.
 * **Custom permissions** allow to specifiy which roles have the ability to create, edit and delete events or manage venues.
 * Venue pages, to view events by venue.
 * **Export/import** events to and from ICAL files.
@@ -243,6 +243,9 @@ A special thanks to [BrowserStack](http://browserstack.com/) who have provided a
 ![BrowserStack](https://p14.zdusercontent.com/attachment/1015988/XjCcW57HMxJM9kJ6wQ8fK2npX?token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..0Ddh0qglNG6N9SCLBcV1rQ.DQovYRdQ07pjD8_AAyTWmsTaBytRMV3D27uLIjZmM1DBEPXZGA0eewy6Ab5L5d5HmrUChuJytEseVnoqj0lJ8Fx1Ot79IBlwolNXfpzh3qrFtn54aiF4ixJGj4ML5kOYYOw1RhnxlFmG6l0vY9hPZiJ6H0JE7XjkbsqZq9dOkOUo_3ZJWLAb0t3cT3kz-r7SphWIUUDuvGU0jLnZC1r98J3HmMXbfG4jCga7pPO0-Zwqua6T0CQRUhuQ3h5c7rnR7mlRFSKWTgICgjmJ3JUH5lA7v1UwmyemoBzs5P5kRDs.lZhWUtixtAko1K4ojS9o1Q)
 
 ## Changelog ##
+
+### 3.7.0 - 25th May 2018 ###
+* Added support for OpenStreetMap. New installations default to OpenStreetMap.
 
 ### 3.6.5 3rd April 2018 ###
 
