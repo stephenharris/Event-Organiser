@@ -222,6 +222,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.7.1 - 31st May 2018 =
+* bugfix: fixed admin calendar modal appearing behind overlay
+* bugfix: fixed venues with apostrophes not appearing in the venue search/autocomplete.
+
 = 3.7.0 - 25th May 2018 =
 * Added support for OpenStreetMap. New installations default to OpenStreetMap.
 
