@@ -67,8 +67,9 @@ eventorganiserMapsAdapter.googlemaps.map = function ( elementID, args) {
 
         /**
          * Add a marker to the location
-         * A location has an ID (venue_id), location (lat, lng) and, optional, tooltip content (tooltipContent)
-         * @param object location
+         * A location has an ID (venue_id), position ({lat:<lat>, lng:<lng>}) and,
+				 * optional, tooltip content (tooltipContent), icon URL
+         * @param object location, with position property (with lat, lng properties)
          */
         eventorganiserMapsAdapter.googlemaps.map.prototype.addMarker = function( location ) {
             location.map = this;

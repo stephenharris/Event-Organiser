@@ -3,12 +3,12 @@
 * Deals with the plug-in's AJAX requests
 */
 
-add_action( 'wp_ajax_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' ); 
-add_action( 'wp_ajax_nopriv_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' ); 
+add_action( 'wp_ajax_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' );
+add_action( 'wp_ajax_nopriv_eventorganiser-fullcal', 'eventorganiser_public_fullcalendar' );
 add_action( 'wp_ajax_event-admin-cal', 'eventorganiser_admin_calendar' );
-add_action( 'wp_ajax_eofc-edit-date', 'eventorganiser_admin_calendar_edit_date' ); 
-add_action( 'wp_ajax_eofc-format-time', 'eventorganiser_admin_cal_time_format' ); 
-add_action( 'wp_ajax_eo-search-venue', 'eventorganiser_search_venues' ); 
+add_action( 'wp_ajax_eofc-edit-date', 'eventorganiser_admin_calendar_edit_date' );
+add_action( 'wp_ajax_eofc-format-time', 'eventorganiser_admin_cal_time_format' );
+add_action( 'wp_ajax_eo-search-venue', 'eventorganiser_search_venues' );
 add_action( 'wp_ajax_nopriv_eo_widget_agenda', 'eventorganiser_widget_agenda' );
 add_action( 'wp_ajax_eo_widget_agenda', 'eventorganiser_widget_agenda' );
 add_action( 'wp_ajax_nopriv_eo_widget_cal', 'eventorganiser_widget_cal' );
@@ -117,7 +117,7 @@ function eventorganiser_public_fullcalendar() {
 
 	//Loop through events
 	global $post;
-	if ($events) : 
+	if ($events) :
 		foreach  ($events as $post) :
 			setup_postdata( $post );
 			$event=array();
@@ -152,25 +152,25 @@ function eventorganiser_public_fullcalendar() {
 			 */
 			$link = apply_filters( 'eventorganiser_calendar_event_link', $link, $post->ID, $post->occurrence_id );
 			$event['url'] = $link;
-			
+
 			//All day or not?
 			$event['allDay'] = eo_is_all_day();
-	
+
 			//Get Event Start and End date, set timezone to the blog's timzone
 			$event_start    = new DateTime( $post->StartDate.' '.$post->StartTime, $tz );
 			$event_end      = new DateTime( $post->EndDate.' '.$post->FinishTime, $tz );
-			
+
 			if ( $event['allDay'] ) {
 				$event_end->modify( '+1 minute' );
 			}
-			
+
 			$event['start'] = $event_start->format( 'Y-m-d\TH:i:s' );
 			$event['end']   = $event_end->format( 'Y-m-d\TH:i:s' );
-			
+
 			if ( $event['allDay'] ) {
 				$event_end->modify( '-1 minute' );
 			}
-				
+
 			//Don't use get_the_excerpt as this adds a link
 			$excerpt_length = apply_filters('excerpt_length', 55);
 
@@ -181,13 +181,13 @@ function eventorganiser_public_fullcalendar() {
 
 			/**
 			 * Filters the description of the event as it appears on the calendar tooltip.
-			 * 
+			 *
 			 * **Note:** As the calendar is cached, changes made using this filter
-			 * will not take effect immediately. You can clear the cache by 
+			 * will not take effect immediately. You can clear the cache by
 			 * updating an event.
 			 *
 			 * @link https://gist.github.com/stephenh1988/4040699 Including venue name in tooltip.
-			 * 
+			 *
 			 * @package fullCalendar
 			 * @param string  $description   The event's tooltip description.
 			 * @param int     $event_id      The event's post ID.
@@ -217,7 +217,7 @@ function eventorganiser_public_fullcalendar() {
 				$event['venue']       = $venue;
 				$event['venue_slug']  = $slug;
 			}
-				
+
 			//Event categories
 			$terms = get_the_terms( $post->ID, 'event-category' );
 			$event['category']=array();
@@ -227,7 +227,7 @@ function eventorganiser_public_fullcalendar() {
 					$event['className'][]='category-'.$term->slug;//deprecated. use eo-event-cat-{slug}
 				endforeach;
 			endif;
-			
+
 			//Event tags
 			if( eventorganiser_get_option('eventtag') ){
 				$terms = get_the_terms( $post->ID, 'event-tag' );
@@ -249,7 +249,7 @@ function eventorganiser_public_fullcalendar() {
 
 			//Add event to array
 			/**
-			 * Filters the event before it is sent to the calendar. 
+			 * Filters the event before it is sent to the calendar.
 			 *
 			 * The event is an array with various key/values, which is seralised and sent
 			 * to the calendar.
@@ -287,10 +287,10 @@ function eventorganiser_public_fullcalendar() {
 
 
 /**
- * Ajax response for the admin full calendar. 
+ * Ajax response for the admin full calendar.
  *
  * This gets events and generates summaries for events to be displayed.
- * in the admin 'calendar view'. 
+ * in the admin 'calendar view'.
  * Applies 'eventorganiser_admin_cal_summary' to event summary
  * Applies eventorganiser_admin_calendar to the event array
  *
@@ -306,7 +306,7 @@ function eventorganiser_admin_calendar() {
 		);
 
 		//Presets
-		$presets = array( 
+		$presets = array(
 			'posts_per_page'=>-1,
 			'post_type'=>'event',
 			'group_events_by'=>'',
@@ -320,10 +320,10 @@ function eventorganiser_admin_calendar() {
 		}
 
 		//Create query
-		$query_array = array_merge($presets, $request);	
+		$query_array = array_merge($presets, $request);
 		$query = new WP_Query($query_array );
 
-		//Retrieve events		
+		//Retrieve events
 		$query->get_posts();
 		$eventsarray = array();
 
@@ -332,8 +332,8 @@ function eventorganiser_admin_calendar() {
 
 		//Loop through events
 		global $post;
-		if ( $query->have_posts() ) : 
-			while ( $query->have_posts() ) : $query->the_post(); 
+		if ( $query->have_posts() ) :
+			while ( $query->have_posts() ) : $query->the_post();
 				$event=array();
 				$colour='';
 				//Get title, append status if applicable
@@ -346,9 +346,9 @@ function eventorganiser_admin_calendar() {
 					$title.=' - '.__('Draft');
 				}
 				$event['title']= html_entity_decode ($title,ENT_QUOTES,'UTF-8');
-				
+
 				$event['event_id']      = $post->ID;
-				$event['occurrence_id'] = $post->occurrence_id;  
+				$event['occurrence_id'] = $post->occurrence_id;
 
 				$schedule = eo_get_event_schedule($post->ID);
 
@@ -406,7 +406,7 @@ function eventorganiser_admin_calendar() {
 				}
 
 				/**
-				 * Filters the summary of the event as it appears in the admin 
+				 * Filters the summary of the event as it appears in the admin
 				 * calendar's modal.
 				 *
 				 * **Note:** As the calendar is cached, changes made using this filter
@@ -420,11 +420,11 @@ function eventorganiser_admin_calendar() {
 				 * @param WP_Post $post          The event (post) object.
 				 */
 				$summary = apply_filters('eventorganiser_admin_cal_summary',$summary,$post->ID,$post->occurrence_id,$post);
-	
+
 				$summary .= "</table><p>";
-							
+
 				//Include schedule summary if event recurs
-			
+
 				if( $schedule['schedule'] != 'once' )
 					$summary .='<em>'.__('This event recurs','eventorganiser').' '.eo_get_schedule_summary().'</em>';
 				$summary .='</p>';
@@ -701,7 +701,7 @@ function eventorganiser_widget_agenda() {
 function eventorganiser_search_venues() {
 
 	// Query the venues with the given term
-	$value  = trim( $_GET['term'] );
+	$value  = stripslashes( trim( $_GET['term'] ) );
 	$limit  = empty( $value ) ? null : 10;
 	$venues = eo_get_venues( array( 'eo_update_venue_cache' => true, 'search' => $value, 'number' => $limit ) );
 
@@ -750,10 +750,10 @@ function eventorganiser_admin_cal_time_format(){
  *@ignore
 */
 function eventorganiser_ajax_toggle_addon_page(){
-	
+
 	if( !isset( $_POST['hide_addon_page'] ) || !current_user_can( 'manage_options' ) )
 		exit();
-	
+
 	$hide = (int) ( strtolower( $_POST['hide_addon_page'] ) == 'true' );
 	$options = eventorganiser_get_option( false );
 	$options['hide_addon_page'] = $hide;
@@ -764,14 +764,14 @@ function eventorganiser_ajax_toggle_addon_page(){
 
 /**
  * Ajax response to event occurrence being moved.
- * 
- * TODO Prevent two occurrences from the same event 
- * occuring on the same *date*. 
- * 
+ *
+ * TODO Prevent two occurrences from the same event
+ * occuring on the same *date*.
+ *
  * @ignore
  */
 function eventorganiser_admin_calendar_edit_date(){
-	
+
 	$event_id      = (int) $_POST['event_id'];
 	$occurrence_id = (int) $_POST['occurrence_id'];
 	$all_day       = eo_is_all_day( $event_id );

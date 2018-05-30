@@ -170,7 +170,7 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 /*Drop down filters*/
 #eo_admin_calendar select { min-width:180px; width:auto}
 .ui-widget-overlay{z-index:1000;}
-.eo-admin-calendar-dialog{z-index:100000!important;}
+.eo-admin-calendar-dialog{z-index:1000000!important;}
 /*.eo-admin-calendar-dialog.ui-dialog .ui-dialog-titlebar-close span {margin: -8px;}*/
 #eo-dialog-tabs, #events-meta {border: none;padding: 0}
 
@@ -212,7 +212,7 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 .eo-venue-combobox-buttons{position: absolute;width:4.5em;}
 .ui-autocomplete { max-height: 250px; overflow-y: auto;/* prevent horizontal scrollbar */overflow-x: hidden;}
 * html .ui-autocomplete { height: 250px; }
-.ui-front {z-index: 400!important;}
+.ui-front {z-index: 100000!important;}
 .eo-admin-calendar-dialog .ui-autocomplete {
 	max-height: 100px;
 	max-width:220px;
