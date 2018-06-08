@@ -87,7 +87,7 @@ function eo_locate_template( $template_names, $load = false, $require_once = tru
 		foreach ( $stack as $template_stack ) {
 			if ( file_exists( trailingslashit( $template_stack ) . $template_name ) ) {
 				$located = trailingslashit( $template_stack ) . $template_name;
-				break;
+				break 2;
 			}
 		}
 	}
