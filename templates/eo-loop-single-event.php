@@ -16,8 +16,8 @@
  * @since 3.0.0
  */
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope itemtype="http://data-vocabulary.org/Event">
-					
+<article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope itemtype="http://schema.org/Event">
+
 	<header class="eo-event-header entry-header">
 
 		<h2 class="eo-event-title entry-title">
@@ -26,17 +26,17 @@
 			</a>
 		</h2>
 
-		<div class="eo-event-date"> 
+		<div class="eo-event-date">
 			<?php
 				//Formats the start & end date of the event
 				echo eo_format_event_occurrence();
 			?>
 		</div>
-			
+
 	</header><!-- .entry-header -->
-	
+
 	<div class="eo-event-details event-entry-meta">
-			
+
 		<?php
 		//If it has one, display the thumbnail
 		if ( has_post_thumbnail() ) {
@@ -46,12 +46,12 @@
 		//A list of event details: venue, categories, tags.
 		echo eo_get_event_meta_list();
 		?>
-			
+
 	</div><!-- .event-entry-meta -->
 
 	<!-- Show Event text as 'the_excerpt' or 'the_content' -->
 	<div class="eo-event-content" itemprop="description"><?php the_excerpt(); ?></div>
-			
+
 	<div style="clear:both;"></div>
 
 </article>

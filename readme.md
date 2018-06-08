@@ -244,6 +244,12 @@ A special thanks to [BrowserStack](http://browserstack.com/) who have provided a
 
 ## Changelog ##
 
+### 3.7.2 - 8th June 2018 ###
+* bugfix: Fixed maps bug which affected users with Yoast's SEO Plugin installed
+* bugfix: Replaced data-vocabulary.org with schema.org
+* bugfix: Fixed higher-priority template being overridden by lower priority template in
+  `eo_locate_template()` when multiple template names are given. See [#434](https://github.com/stephenharris/Event-Organiser/issues/434)
+
 ### 3.7.1 - 31st May 2018 ###
 * bugfix: fixed admin calendar modal appearing behind overlay
 * bugfix: fixed venues with apostrophes not appearing in the venue search/autocomplete.

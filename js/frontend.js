@@ -704,12 +704,12 @@ jQuery(document).ready(function(){
 
 		var param = maps[i];
 		var map   = new eventorganiserMapsAdapter.provider.map( "eo_venue_map-" + (i + 1), param );
-		for ( i=0; i < param.locations.length; i++ ) {
-			param.locations[i].position = {
-				lat: param.locations[i].lat,
-				lng: param.locations[i].lng
+		for (var j=0; j < param.locations.length; j++ ) {
+			param.locations[j].position = {
+				lat: param.locations[j].lat,
+				lng: param.locations[j].lng
 			};
-			map.addMarker(param.locations[i]);
+			map.addMarker(param.locations[j]);
 		}
 
 	}
