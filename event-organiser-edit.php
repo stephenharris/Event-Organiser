@@ -100,19 +100,19 @@ function _eventorganiser_details_metabox( $post ) {
 	$time_desc = $is24 ? __( 'Enter time in 24-hour hh colon mm format', 'eventorganiser' ) : __( 'Enter time in 12-hour hh colon mm am or pm format', 'eventorganiser' );
 	?>
 	<div class="eo-grid <?php echo ( $sche_once ? 'onetime': 'reoccurence' );?>">
-	
+
 			<div class="eo-grid-row">
 	 		<div class="eo-grid-4">
 				<span class="eo-label" id="eo-start-datetime-label">
-					<?php esc_html_e( 'Start Date/Time:', 'eventorganiser' ); ?> 
+					<?php esc_html_e( 'Start Date/Time:', 'eventorganiser' ); ?>
 				</span>
 				</div>
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-start-datetime-label">
-	 		
+
 	 			<label for="eo-start-date" class="screen-reader-text"><?php esc_html_e( 'Start Date', 'eventorganiser' ); ?></label>
 				<input type="text" id="eo-start-date" aria-describedby="eo-start-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[StartDate]" size="10" maxlength="10" value="<?php echo $start->format( $php_format ); ?>"/>
 				<span id="eo-start-date-desc" class="screen-reader-text"><?php echo esc_html( $date_desc );?></span>
-				
+
 				<label for="eo-start-time" class="screen-reader-text"><?php esc_html_e( 'Start Time', 'eventorganiser' ); ?></label>
 				<?php
 				printf(
@@ -123,15 +123,15 @@ function _eventorganiser_details_metabox( $post ) {
 				<span id="eo-start-time-desc" class="screen-reader-text"><?php echo esc_html( $time_desc );?></span>
 				</div>
 			</div>
-			
+
 		<div class="eo-grid-row">
 	 		<div class="eo-grid-4">
 				<span class="eo-label" id="eo-end-datetime-label">
-					<?php esc_html_e( 'End Date/Time:', 'eventorganiser' ); ?> 
+					<?php esc_html_e( 'End Date/Time:', 'eventorganiser' ); ?>
 				</span>
 				</div>
 	 		<div class="eo-grid-8 event-date" role="group" aria-labelledby="eo-end-datetime-label">
-	 		
+
 	 			<label for="eo-end-date" class="screen-reader-text"><?php esc_html_e( 'End Date', 'eventorganiser' ); ?></label>
 				<input type="text" id="eo-end-date" aria-describedby="eo-end-date-desc" class="ui-widget-content ui-corner-all" name="eo_input[EndDate]" size="10" maxlength="10" value="<?php echo $end->format( $php_format ); ?>"/>
 
@@ -154,7 +154,7 @@ function _eventorganiser_details_metabox( $post ) {
 
 				</div>
 			</div>
-			
+
 		<div class="eo-grid-row event-date">
 	 		<div class="eo-grid-4">
 				<label for="eo-event-recurrence"><?php esc_html_e( 'Recurrence:', 'eventorganiser' ); ?> </label>
@@ -173,22 +173,22 @@ function _eventorganiser_details_metabox( $post ) {
 				</select>
 				</div>
 			</div>
-			
+
 			<div class="eo-grid-row event-date reocurrence_row">
 	 		<div class="eo-grid-4"></div>
 	 		<div class="eo-grid-8 event-date">
 				<div id="eo-recurrence-frequency-wrapper">
 					<?php esc_html_e( 'Repeat every', 'eventorganiser' );?>
-					<label for="eo-recurrence-frequency" class="screen-reader-text"><?php esc_html_e( 'Recurrence frequency', 'eventorganiser' );?></label> 
-					<input type="number" id="eo-recurrence-frequency" class="ui-widget-content ui-corner-all" name="eo_input[event_frequency]"  min="1" max="365" maxlength="4" size="4" value="<?php echo intval( $frequency );?>" /> 
+					<label for="eo-recurrence-frequency" class="screen-reader-text"><?php esc_html_e( 'Recurrence frequency', 'eventorganiser' );?></label>
+					<input type="number" id="eo-recurrence-frequency" class="ui-widget-content ui-corner-all" name="eo_input[event_frequency]"  min="1" max="365" maxlength="4" size="4" value="<?php echo intval( $frequency );?>" />
 					<span id="eo-recurrence-schedule-label"></span>
 				</div>
 
 				<div id="eo-day-of-week-repeat">
-				
+
 					<span id="eo-days-of-week-label" class="screen-reader-text"><?php esc_html_e( 'Repeat on days of week:', 'eventorganiser' );?></span>
 					<span class="eo-days-of-week-text"><?php esc_html_e( 'on', 'eventorganiser' );?></span>
-					<ul class="eo-days-of-week" role="group" aria-labelledby="eo-days-of-week-label">	
+					<ul class="eo-days-of-week" role="group" aria-labelledby="eo-days-of-week-label">
 						<?php
 						for ( $i = 0; $i <= 6; $i++ ) :
 							$d = ($start_day + $i) % 7;
@@ -209,9 +209,9 @@ function _eventorganiser_details_metabox( $post ) {
 
 				<div id="eo-day-of-month-repeat">
 					<span id="eo-days-of-month-label" class="screen-reader-text"><?php esc_html_e( 'Select whether to repeat monthly by date or day:', 'eventorganiser' );?></span>
-					<div class="eo-days-of-month" role="group" aria-labelledby="eo-days-of-month-label">	
+					<div class="eo-days-of-month" role="group" aria-labelledby="eo-days-of-month-label">
 						<label for="eo-by-month-day" >
-							<input type="radio" id="eo-by-month-day" name="eo_input[schedule_meta]" <?php checked( $occurs_by, 'BYMONTHDAY' ); ?> value="BYMONTHDAY=" /> 
+							<input type="radio" id="eo-by-month-day" name="eo_input[schedule_meta]" <?php checked( $occurs_by, 'BYMONTHDAY' ); ?> value="BYMONTHDAY=" />
 							<?php esc_html_e( 'date of month', 'eventorganiser' );?>
 						</label>
 						<label for="eo-by-day" >
@@ -223,12 +223,12 @@ function _eventorganiser_details_metabox( $post ) {
 
 				<div id="eo-schedule-last-date-wrapper" class="reoccurrence_label">
 					<?php esc_html_e( 'until', 'eventorganiser' );?>
-					<label id="eo-repeat-until-label" for="eo-schedule-last-date" class="screen-reader-text"><?php esc_html_e( 'Repeat this event until:', 'eventorganiser' );?></label> 
+					<label id="eo-repeat-until-label" for="eo-schedule-last-date" class="screen-reader-text"><?php esc_html_e( 'Repeat this event until:', 'eventorganiser' );?></label>
 					<input class="ui-widget-content ui-corner-all" name="eo_input[schedule_end]" id="eo-schedule-last-date" size="10" maxlength="10" value="<?php echo $until->format( $php_format ); ?>"/>
 				</div>
 
 				<p id="eo-event-summary" role="status" aria-live="polite"></p>
-				
+
 				</div>
 			</div>
 
@@ -238,7 +238,7 @@ function _eventorganiser_details_metabox( $post ) {
 				</div>
 	 		<div class="eo-grid-8 event-date">
 				<?php submit_button( __( 'Show dates', 'eventorganiser' ), 'hide-if-no-js eo_occurrence_toggle button small', 'eo_date_toggle', false ); ?>
-						
+
 				<div id="eo-occurrence-datepicker"></div>
 				<?php
 				if ( ! empty( $include ) ) {
@@ -257,14 +257,14 @@ function _eventorganiser_details_metabox( $post ) {
 					$exclude_str = '';
 				}?>
 				<input type="hidden" name="eo_input[exclude]" id="eo-occurrence-excludes" value="<?php echo $exclude_str; ?>"/>
-	 		
+
 				</div>
 			</div>
 
 		<?php
 		$tax = get_taxonomy( 'event-venue' );
-		if ( taxonomy_exists( 'event-venue' ) ) : ?>	
-		
+		if ( taxonomy_exists( 'event-venue' ) ) : ?>
+
 		<div class="eo-grid-row eo-venue-combobox-select">
 	 		<div class="eo-grid-4">
 				<label for="venue_select"><?php echo esc_html( $tax->labels->singular_name_colon ); ?></label>
@@ -278,16 +278,16 @@ function _eventorganiser_details_metabox( $post ) {
 				</select>
 				</div>
 			</div>
-	
-			<!-- Add New Venue --> 
+
+			<!-- Add New Venue -->
 			<div class="eo-grid-row eo-add-new-venue">
 	 		<div class="eo-grid-4">
 				<label for="eo_venue_name"><?php esc_html_e( 'Venue Name', 'eventorganiser' ); ?></label>
 				</div>
 	 		<div class="eo-grid-8">
 				<input type="text" name="eo_venue[name]" id="eo_venue_name"  value=""/>
-				</div>			
-			
+				</div>
+
 			<?php
 			$address_fields = _eventorganiser_get_venue_address_fields();
 			foreach ( $address_fields as $key => $label ) {
@@ -303,13 +303,13 @@ function _eventorganiser_details_metabox( $post ) {
 				);
 			}
 			?>
-			
+
 			<div class="eo-grid-4"></div>
 	 		<div class="eo-grid-8 event-date">
 				<a class="button eo-add-new-venue-cancel" href="#"><?php esc_html_e( 'Cancel','eventorganiser' );?> </a>
 				</div>
 			</div>
-				
+
 		<div class="eo-grid-row venue_row <?php if ( ! $venue_id ) { echo 'novenue'; }?>">
 	 		<div class="eo-grid-4"></div>
 	 		<div class="eo-grid-8">
@@ -326,7 +326,7 @@ function _eventorganiser_details_metabox( $post ) {
 
 				<div id="eventorganiser_venue_meta" style="display:none;">
 					<input type="hidden" id="eo_venue_Lat" name="eo_venue[latitude]" value="<?php esc_attr( eo_venue_lat( $venue_id ) );?>" />
-					<input type="hidden" id="eo_venue_Lng" name="eo_venue[longtitude]" value="<?php esc_attr( eo_venue_lng( $venue_id ) ); ?>" />
+					<input type="hidden" id="eo_venue_Lng" name="eo_venue[longitude]" value="<?php esc_attr( eo_venue_lng( $venue_id ) ); ?>" />
 				</div>
 
 				<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>

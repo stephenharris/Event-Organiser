@@ -81,7 +81,7 @@ jQuery(document).ready(function ($) {
 	});
 
 	$('#eo-venue-latllng-text').keydown( function( evt ){
-		//On enter leave the latitude/longtitude
+		//On enter leave the latitude/longitude
 		if( 13 === evt.which ){
 			$(this).blur();
 		}

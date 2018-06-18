@@ -5,29 +5,29 @@
 
 /**
  * Parses a local or remote ICAL file
- * 
+ *
  * Example usage
  * <code>
  *      $ical = new EO_ICAL_Parser();
  *      $ical->parse( 'http://www.dol.govt.nz/er/holidaysandleave/publicholidays/publicholidaydates/ical/auckland.ics' );
- *      
+ *
  *      $ical->events; //Array of events
  *      $ical->venues; //Array of venue names
  *      $ical->categories; //Array of category names
  *      $ical->errors; //Array of WP_Error errors
  *      $ical->warnings; //Array of WP_Error 'warnings'. This are "non-fatal" errors (e.g. warnings about timezone 'guessing').
  * </code>
- * 
+ *
  * You can configire default settings by passing an array to the class constructor.
  * <code>
  *      $ical = new EO_ICAL_Parser( array( ..., 'default_status' => 'published', ... ) );
  * </code>
  * Available settings include:
- * 
+ *
  *  *  **status_map** - How to interpret the ICAL STATUS property.
  *  *  **default_status** - Default status of posts (unless otherwise specified by STATUS). Default is 'draft'
- * 
- * @link http://www.ietf.org/rfc/rfc2445.txt ICAL Specification 
+ *
+ * @link http://www.ietf.org/rfc/rfc2445.txt ICAL Specification
  * @link http://www.kanzaki.com/docs/ical/ ICAL Specification excerpts
  * @author stephen
  * @package ical-functions
@@ -40,93 +40,93 @@ class EO_ICAL_Parser{
 	 * @var array
 	 */
 	var $events = array();
-	
+
 	/**
 	 * Array of venues present in the feed
 	 * @var array
 	*/
 	var $venues = array();
-	
+
 	/**
 	 * Array of venue metadata present in the feed
 	 * @var array
 	*/
 	var $venue_meta = array();
-	
+
 	/**
 	 * Array of categories present in the feed
 	 * @var array
 	*/
 	var $categories = array();
-	
+
 	/**
 	 * Number of events parsed.
 	 * @var int
 	 */
 	var $events_parsed = 0;
-	
+
 	/**
 	 * Number of venues parsed.
 	 * @var int
 	 */
 	var $venue_parsed = 0;
-	
+
 	/**
 	 * Number of categories parsed.
 	 * @var int
 	 */
 	var $categories_parsed = 0;
-	
+
 	/**
 	 * Timeout for remote fetching (in seconds)
-	 * @var int 
+	 * @var int
 	 */
 	var $remote_timeout = 10;
-	
+
 
 	/**
 	 * Array of WP_Error objects. These are errors which abort the parsing.
 	 * @var array
 	 */
 	var $errors = array();
-	
+
 	/**
 	 * Array of WP_Error objects. These are soft-errors which the parser tries to deal with
 	 * @var array
 	 */
 	var $warnings = array();
 
-	
+
 	/**
 	 * The current event being parsed. Stores data retrieved so far in the parsing.
 	 * @var array
 	 */
 	var $current_event = array();
-		
+
 	/**
 	 * Indicates which line in the feed we are at
 	 * @var int
 	 */
 	var $line = 0; //Current line being parsed
-	
+
 	/**
 	 * Keeps track of where we are in the feed.
 	 * @var string
 	 */
 	var $state = "NONE";
-	
-	
+
+
 	/**
 	 * Option to toggle whether a HTML description should be used (if present).
 	 * @var bool
 	 */
 	var $parse_html = true; //If description is given in HTML, try to use that.
 
-	
+
 	/**
 	 * Constructor with settings passed as arguments
 	 * Available options include 'status_map' and 'default_status'.
-	 * 
+	 *
 	 * @param array $args
 	 */
 	function __construct( $args = array() ){
@@ -140,12 +140,12 @@ class EO_ICAL_Parser{
 			'default_status' => 'draft',
 			'parse_html'     => true,
 		), $args );
-		
+
 		/**
 		 * Filters the options for the iCal parser class
-		 * 
+		 *
 		 * `$args` is an array with keys:
-		 * 
+		 *
 		 *  - `status_map` - mapping iCal status to WordPress status. By default
 		 *     <pre><code>
 		 *     array(
@@ -155,19 +155,19 @@ class EO_ICAL_Parser{
 		 *     );
 		 *     </code></pre>
 		 *  - `default_status` - the status to use for the event if the iCal feed does not provide a status#
-		 *  - `parse_html` - whether to parse a HTML version of event descriptions if provided 
+		 *  - `parse_html` - whether to parse a HTML version of event descriptions if provided
 		 *
 		 * @param array $args Options for the iCal Parser
 		 * @param EO_ICAL_Parser $ical_parser The iCal parser object
 		 */
 		$args = apply_filters_ref_array( 'eventorganiser_ical_parser_args', array( $args, &$this ) );
-		
+
 		$this->calendar_timezone = eo_get_blog_timezone();
-		
+
 		$this->default_status = $args['default_status'];
 		$this->status_map = $args['status_map'];
 		$this->parse_html = $args['parse_html'];
-		
+
 	}
 
 
@@ -186,7 +186,7 @@ class EO_ICAL_Parser{
 		//Local file
 		} elseif ( @is_file( $file ) && @file_exists( $file )  ) {
 			$this->ical_array = $this->file_to_array( $file );
-			
+
 		} else {
 			$this->ical_array =  new WP_Error(
 				'invalid-ical-source',
@@ -196,32 +196,32 @@ class EO_ICAL_Parser{
 
 		if( is_wp_error( $this->ical_array ) )
 			return $this->ical_array;
-		
+
 		if( empty( $this->ical_array ) ){
 			return new WP_Error( 'unable-to-read', __( 'Unable to read iCal file', 'eventorganiser' ) );
 		}
 
 		//Go through array and parse events
 		$result = $this->parse_ical_array();
-		
+
 		if( "NONE" == $this->state ){
 			return new WP_Error( 'unable-to-fetch', __( 'Feed not found', 'eventorganiser' ) );
 		}
-		
+
 		if( !empty( $this->errors ) ){
 			return $this->errors[0];
 		}
-		
+
 		$this->events_parsed = count( $this->events );
 		$this->venue_parsed = count( $this->venues );
 		$this->categories_parsed = count( $this->categories );
-		
+
 		/**
 		 * Filter the feed class by reference.
-		 * 
+		 *
 		 * This filter allows you to view and modify all events, venues and categories from
 		 * a parsed iCal feed. The example below adds all events to the category 'imported'
-		 * 
+		 *
 		 * <pre><code>
 		 * add_action( 'eventorganiser_ical_feed_parsed', 'my_auto_assign_event_cat_to_feed' );
 		 * function my_auto_assign_event_cat_to_feed( $ical_parser ){
@@ -232,18 +232,18 @@ class EO_ICAL_Parser{
 		 *      }
 		 * }
 		 * </code></pre>
-		 * 
+		 *
 		 * @since 2.7
 		 * @param EO_ICAL_Parser $EO_ICAL_Parser The feed parser object containing parsed events/venues/categories.
 		 */
 		do_action_ref_array( 'eventorganiser_ical_feed_parsed', array( &$this ) );
-		
+
 		return true;
 	}
 
 	/**
 	 * Fetches ICAL calendar from a feed url and returns its contents as an array.
-	 * 
+	 *
 	 * @ignore
 	 * @param sring $url The url of the ICAL feed
 	 * @return array|bool Array of line in ICAL feed, false on error
@@ -260,7 +260,7 @@ class EO_ICAL_Parser{
 
 		if( is_wp_error( $response ) )
 			return $response;
-		
+
 		if( $response_code != 200 ){
 			return new WP_Error( 'unable-to-fetch',
 				sprintf(
@@ -269,13 +269,13 @@ class EO_ICAL_Parser{
 					$response_code
 			));
 		}
-		
+
 		if( $contents )
 			return explode( "\n", $contents );
-		
-		
-		return new WP_Error( 'unable-to-fetch', 
-			sprintf( 
+
+
+		return new WP_Error( 'unable-to-fetch',
+			sprintf(
 				__( 'There was an error fetching the feed. Response code: %s.', 'eventorganiser' ),
 				$response_code
 			));
@@ -294,8 +294,8 @@ class EO_ICAL_Parser{
 		$lines = array();
 
 		if( !$file_handle )
-			return new WP_Error( 
-						'unable-to-open', 
+			return new WP_Error(
+						'unable-to-open',
 					__( 'There was an error opening the ICAL file.', 'eventorganiser' )
 					);
 
@@ -311,34 +311,34 @@ class EO_ICAL_Parser{
 	}
 
 	/**
-	 * Modifies the ical_array to unfold multi-line entries into a single line. 
+	 * Modifies the ical_array to unfold multi-line entries into a single line.
 	 * Preserves the original line numbering so that line numbers in error messages
-	 * match up with the line numbers when viewing the (unfolded) iCal file in a 
-	 * text editor.  
+	 * match up with the line numbers when viewing the (unfolded) iCal file in a
+	 * text editor.
 	 */
 	function unfold_lines( $lines ) {
-		
+
 		$unfolded_lines = array();
 
 		$i = 0;
-		
+
 		while( $i < count ( $lines ) ) {
-			
+
 			$unfolded_lines[$i] = rtrim( $lines[$i], "\n\r" );
-			
+
 			$j = $i+1;
-			
+
 			while( isset( $lines[$j] ) && strlen( $lines[$j] ) > 0 && ( $lines[$j]{0} == ' ' || $lines[$j]{0} == "\t" )) {
 				$unfolded_lines[$i] .= rtrim( substr( $lines[$j], 1 ), "\n\r" );
 				$j++;
 			}
-			
+
 			$i = ($j-1) + 1;
 		}
-		
+
 		return $unfolded_lines;
 	}
-	
+
 
 	/**
 	 * Parses through an array of lines (of an ICAL file)
@@ -347,16 +347,16 @@ class EO_ICAL_Parser{
 	protected function parse_ical_array(){
 
 		$this->ical_array = $this->unfold_lines( $this->ical_array );
-		
+
 		$this->state = "NONE";//Initial state
 		$this->line = 1;
 
 		//Read through each line
 		foreach ( $this->ical_array as $index => $line_content ):
-		
+
 			if( !empty( $this->errors ) )
 				break;
-		
+
 			$this->line = $index + 1;
 			$buff = trim( $line_content );
 
@@ -370,48 +370,48 @@ class EO_ICAL_Parser{
 
 				//If we are in EVENT state
 				if ( $this->state == "VEVENT" ) {
-					
+
 					if( $property == "BEGIN" && $value == 'VALARM' ){
 						//In state VEVENT > VALARM
 						$this->state = "VEVENT:VALARM";
-						
-						
+
+
 					//If END:VEVENT, add event to parsed events and clear $event
 					}elseif( $property == 'END' && $value =='VEVENT' ){
 						$this->state = "VCALENDAR";
-						
+
 						$this->current_event['_lines']['end'] = $this->line;
-						
+
 						//If not dtend was given, set it appropriately
 						//@see https://github.com/stephenharris/Event-Organiser/issues/292
 						if ( ! isset( $this->current_event['end'] ) && isset( $this->current_event['start'] ) ) {
-							
+
 							$end = clone $this->current_event['start'];
 							if ( ! empty( $this->current_event['duration'] ) ) {
-								
+
 								$end->modify( $this->current_event['duration'] );
 								unset( $this->current_event['duration'] );
-								
+
 							} else if ( ! empty( $this->current_event['all_day'] ) ) {
 								//event is assumed to have a duration of 1 day, for us that means
 								//same date as start date, but with a time of 23:59
 								$end->setTime( 23, 59 );
 							}
 							$this->current_event['end'] = $end;
-							
+
 						}
-						
+
 						//If importing indefinately recurring: recurr up to some large point in time.
 						if ( array_key_exists( 'until', $this->current_event ) && is_null( $this->current_event['until'] ) && empty( $this->current_event['number_occurrences'] ) ) {
-							
+
 							$until = new DateTime( '2038-01-19 00:00:00', eo_get_blog_timezone() );
-							
+
 							/**
 							 * When parsing an iCal feed the 'until' date to assign to indefinitely recurrring events
 							 * Event Organiser doesn't support indefinitely recurring events. When it encounters them
 							 * in an iCal feed it assigns them an arbitrary date in the future. This filter allows
 							 * you to change that date
-							 * 
+							 *
 							 * @since 3.1.0
 							 * @param DateTime       $until          Occurrences will be created for this event up until this date
 							 * @param array          $event          The event as imported from the iCal feed
@@ -424,62 +424,64 @@ class EO_ICAL_Parser{
 							$this->report_warning(
 								$this->line,
 								'indefinitely-recurring-event',
-								sprintf( 
+								sprintf(
 									__( 'Feed contains an indefinitely recurring event. This event will recurr until %s.', 'eventorganiser' ),
 									$this->current_event['until']->format( get_option( 'date_format' ) )
 								)
 							);
 						}
-						
+
 						//Now we've finished passing the event, move venue data to $this->venue_meta
 						if( isset( $this->current_event['geo'] ) && !empty( $this->current_event['event-venue'] ) ){
 							$venue = $this->current_event['event-venue'];
 							$this->venue_meta[$venue]['latitude'] = $this->current_event['geo']['lat'];
+							$this->venue_meta[$venue]['longitude'] = $this->current_event['geo']['lng'];
+							//backwards compatability 3.7.2 and earlier
 							$this->venue_meta[$venue]['longtitude'] = $this->current_event['geo']['lng'];
 							unset( $this->current_event['geo'] );
 						}
-						
+
 						if( empty( $this->current_event['uid'] ) ){
-							$this->report_warning( 
-									$this->current_event['_lines'], 
+							$this->report_warning(
+									$this->current_event['_lines'],
 									'event-no-uid',
 									"Event does not have a unique identifier (UID) property."
 							);
 						}
-						
+
 						if( empty( $this->current_event['sequence'] ) ){
 							$this->current_event['sequence'] = 0;
 						}
-						
-						//Check to see if an event has already been parsed with this UID 
+
+						//Check to see if an event has already been parsed with this UID
 						$index = isset( $this->current_event['uid'] ) ? 'uid:'.$this->current_event['uid'] : count( $this->events );
 						if( isset( $this->events[$index] ) ){
-			
+
 							if( $this->current_event['sequence'] > $this->events[$index]['sequence'] ){
 								$this->events[$index] = $this->current_event;
-								
+
 							}elseif( isset( $this->events[$index]['recurrence-id'] ) ){
 								//This event has recurrence ID - replace it.
 								$this->events[$index] = $this->current_event;
-								
+
 							}elseif( isset( $this->current_event['recurrence-id'] ) ){
 								//Ignore this event - keep existing
-								
+
 							}elseif( $this->current_event['sequence'] == $this->events[$index]['sequence'] ){
-								$this->report_warning( 
-									$this->current_event['_lines'], 
+								$this->report_warning(
+									$this->current_event['_lines'],
 									'duplicate-id',
-									sprintf( 
+									sprintf(
 										"Duplicate UID (%s) found in feed. UIDs must be unique.",
 										$this->current_event['uid']
 									)
 								);
 							}
-				
+
 						}else{
 							$this->events[$index] = $this->current_event;
 						}
-						
+
 						$this->current_event = array();
 
 					//Otherwise, parse event property
@@ -490,7 +492,7 @@ class EO_ICAL_Parser{
 								$value .= substr( $this->ical_array[$this->line-1], 1 );
 								$this->line++;
 							}
-						
+
 							$this->parse_event_property( $property, $value, $modifiers );
 
 						}catch( Exception $e ){
@@ -499,15 +501,15 @@ class EO_ICAL_Parser{
 						}
 					}
 
-					
+
 				//We are in a VEVENT > VALARM stte
 				}elseif( $this->state == "VEVENT:VALARM" ){
-					
+
 					//We ignore VALARMs...
 					if ( $property=='END' && $value=='VALARM')
 						$this->state = "VEVENT";
-					
-					
+
+
 				// If we are in CALENDAR state
 				}elseif ($this->state == "VCALENDAR") {
 
@@ -518,7 +520,7 @@ class EO_ICAL_Parser{
 
 					}elseif ( $property=='END' && $value=='VCALENDAR'){
 						$this->state = "ENDCALENDAR";
-		
+
 					}elseif($property=='X-WR-TIMEZONE'){
 						$this->calendar_timezone = $this->parse_timezone($value);
 					}
@@ -529,7 +531,7 @@ class EO_ICAL_Parser{
 				}
 			endif; //If line is not empty
 		endforeach; //For each line
-		
+
 		$this->events = array_values( $this->events );
 	}
 
@@ -549,7 +551,7 @@ class EO_ICAL_Parser{
 				sprintf( __( '[Lines %1$d-%2$d]', 'eventorganiser' ), $line['start'], $line['end'] ).' '.$message,
 				array( 'line' => $line )
 			);
-			
+
 		}else{
 			$this->errors[] = new WP_Error(
 					$type,
@@ -558,7 +560,7 @@ class EO_ICAL_Parser{
 			);
 		}
 	}
-	
+
 	/**
 	 * Report an warnings with an iCal file
 	 * @ignore
@@ -567,14 +569,14 @@ class EO_ICAL_Parser{
 	 * @param string $message Verbose error message
 	 */
 	protected function report_warning( $line, $type, $message ){
-	
+
 		if( is_array( $line ) ){
 			$this->warnings[] = new WP_Error(
 					$type,
 					sprintf( __( '[Lines %1$d-%2$d]', 'eventorganiser' ), $line['start'], $line['end'] ).' '.$message,
 					array( 'line' => $line )
 			);
-				
+
 		}else{
 			$this->warnings[] = new WP_Error(
 					$type,
@@ -593,7 +595,7 @@ class EO_ICAL_Parser{
 		if( !empty( $modifiers ) ):
 			foreach( $modifiers as $modifier ):
 				if ( stristr( $modifier, 'TZID' ) ){
-			
+
 					$date_tz = $this->parse_timezone( substr( $modifier, 5 ) );
 
 				}elseif( stristr( $modifier, 'VALUE' ) ){
@@ -612,21 +614,21 @@ class EO_ICAL_Parser{
 		/**
 		 * Action before iCal property has been parsed. It also allows you to prevent
 		 * the default parsing of the property value.
-		 * 
+		 *
 		 * More details can bee found on the docs for `eventorganiser_ical_property_{property}` hook
-		 * 
+		 *
 		 * <pre><code>
 		 * add_filter( 'eventorganiser_pre_ical_property_summary', 'my_alter_parsed_title', 10, 5 );
 		 * function my_alter_parsed_title( $skip, $title, $modifiers, $ical_parser, $property ){
-		 *     
+		 *
 		 *     //Prepend "imported: " to title
 		 *     $ical_parser->current_event['post_title'] = "imported: " . $ical_parser->parse_ical_text( $title );
-		 *  
+		 *
 		 *     //Stop default behaviour
 		 *     return true;
 		 * }
 		 * </code></pre>
-		 * 
+		 *
 		 * @since 2.10
 		 * @param bool   $skip      Whether to skip default parsing of property.
 		 * @param string $value     The raw value parsed from the iCal feed
@@ -635,23 +637,23 @@ class EO_ICAL_Parser{
 		 * @param string $propery   The property name
 		 */
 		$skip = apply_filters( 'eventorganiser_pre_ical_property_'. $property_lowercase, $skip, $value, $modifiers, $this, $property );
-			
+
 		if( !$skip ){
 			switch( $property ):
 				case 'UID':
 				$this->current_event['uid'] = $value;
 				break;
-		
+
 				case 'SEQUENCE':
-				$this->current_event['sequence'] = $value; 
+				$this->current_event['sequence'] = $value;
 				break;
-				
+
 				case 'RECURRENCE-ID':
 				//This is not properly implemented yet but is used to detect
 				//when feed entries may share a UID.
 				$this->current_event['recurrence-id'] = $value;
 				break;
-		
+
 				case 'CREATED':
 				case 'DTSTART':
 				case 'DTEND':
@@ -663,7 +665,7 @@ class EO_ICAL_Parser{
 						$date = $this->parse_ical_datetime( $value, $date_tz );
 						$allday = 0;
 					} catch ( Exception $datetime_exception ) {
-						
+
 						try{
 							$date = $this->parse_ical_date( $value );
 							$allday = 1;
@@ -671,7 +673,7 @@ class EO_ICAL_Parser{
 							throw $datetime_exception;
 						}
 					}
-					
+
 				endif;
 
 				if( empty( $date ) )
@@ -696,7 +698,7 @@ class EO_ICAL_Parser{
 
 				endswitch;
 				break;
-				
+
 				case 'DURATION':
 					$this->current_event['duration'] = $this->parse_duration( $value );
 				break;
@@ -708,14 +710,14 @@ class EO_ICAL_Parser{
 
 					//Note, we only consider the Date part and ignore the time
 					foreach( $value_array as $date ):
-						
+
 						if( isset( $meta ) && 'DATE' == $meta ){
 							$date = $this->parse_ical_date( $date );
 						}else{
 							try{
 								$date = $this->parse_ical_datetime( $date, $date_tz );
 							} catch ( Exception $datetime_exception ) {
-							
+
 								try{
 									$date = $this->parse_ical_date( $date );
 								} catch ( Exception $date_exception ) {
@@ -723,7 +725,7 @@ class EO_ICAL_Parser{
 								}
 							}
 						}
-					
+
 						if( 'EXDATE' == $property ){
 							$this->current_event['exclude'][] = $date;
 						}else{
@@ -748,14 +750,14 @@ class EO_ICAL_Parser{
 					$this->current_event['post_content'] = $this->parse_ical_text( $value );
 				}
 				break;
-		
+
 				//Description, in alternative format
 				case 'X-ALT-DESC':
 				if( $this->parse_html && !empty( $modifiers[0] ) && in_array( $modifiers[0], array( "FMTTYPE=text/html", "ALTREP=text/html" ) ) ){
-					$this->current_event['post_content'] = $this->parse_ical_html( $value );	
-				}	
+					$this->current_event['post_content'] = $this->parse_ical_html( $value );
+				}
 				break;
-		
+
 				//Event venues, assign to existing venue - or if set, create new one
 				case 'LOCATION':
 				if( !empty( $value ) ):
@@ -768,17 +770,17 @@ class EO_ICAL_Parser{
 
 				case 'CATEGORIES':
 				$cats = explode( ',', $value );
-			
+
 				if( !empty( $cats ) ):
 					foreach ($cats as $cat_name):
 						$cat_name = trim($cat_name);
 
 						if( !isset( $this->categories[$cat_name] ) )
 							$this->categories[$cat_name] = $cat_name;
-				
+
 						if( !isset($this->current_event['event-category']) || !in_array( $cat_name, $this->current_event['event-category']) )
 							$this->current_event['event-category'][] = $cat_name;
-				
+
 					endforeach;
 				endif;
 				break;
@@ -796,35 +798,35 @@ class EO_ICAL_Parser{
 					$this->current_event['geo'] = array_combine( $keys, $lat_lng );
 				}
 				break;
-			
+
 				//An url associated with the event
 				case 'URL':
 				$this->current_event['url'] = $value;
 				break;
-			
+
 			endswitch;
 		}
 		/**
 		 * Action after iCal property has been parsed.
-		 * 
-		 * This hook is of the form `eventorganiser_ical_property_{property}`, where 
+		 *
+		 * This hook is of the form `eventorganiser_ical_property_{property}`, where
 		 * `{property}` should be replaced by the lower-cased property name being
-		 * targed. For example. after "DTSTART" for an event is parsed, 
-		 * `eventorganiser_ical_property_dtstart` is triggered.  
-		 * 
-		 * Note that the value is 'raw' in that it is exactly as it appears in the feed. You may 
+		 * targed. For example. after "DTSTART" for an event is parsed,
+		 * `eventorganiser_ical_property_dtstart` is triggered.
+		 *
+		 * Note that the value is 'raw' in that it is exactly as it appears in the feed. You may
 		 * need to 'unescape' and 'unfold' the text. {@see EO_ICAL_Parser::parse_ical_text}
-		 * 
+		 *
 		 * <pre><code>
 		 * add_action( 'eventorganiser_ical_property_summary', 'my_alter_parsed_title', 10, 3 );
 		 * function my_alter_parsed_title( $title, $modifiers, $ical_parser ){
-		 *     
+		 *
 		 *     //Prepend "imported: " to title
 		 *     $ical_parser->current_event['post_title'] = "imported: " . $ical_parser->parse_ical_text( $title );
-		 *     
+		 *
 		 * }
 		 * </code></pre>
-		 * 
+		 *
 		 * @since 2.10
 		 * @param string $value     The raw value parsed from the iCal feed
 		 * @param string $modifiers Array of modifiers of the property (e.g. VALUE or TZID)
@@ -835,19 +837,19 @@ class EO_ICAL_Parser{
 	}
 
 	protected function parse_ical_html( $text ){
-		
+
 		$text = $this->parse_ical_text( $text );
-		
+
 		if( preg_match( "/<body>(.+)<\/body>/i", $text, $matches ) ){
 			$text = $matches[1];
 		}
-		
+
 		return $text;
 	}
 
 	/**
 	 * Takes escaped text and returns the text unescaped.
-	 * 
+	 *
 	 * @see https://github.com/fruux/sabre-vobject/blob/219935b414c24ce89acd32d509966d44f04f4012/lib/Parser/MimeDir.php#L469:L513
 	 * @ignore
 	 * @param string $text - the escaped test
@@ -862,12 +864,12 @@ class EO_ICAL_Parser{
 		//Replace any intended new lines with PHP_EOL
 		//$text = str_replace( '\n', "<br>", $text );
 		$text = nl2br( $text );
-				
+
 		$regex = '#  (?: (\\\\ (?: \\\\ | N | n | ; | , ) ) ) #x';
         $matches = preg_split( $regex, $text, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
 
         $result = '';
-        
+
         foreach( $matches as $match ) {
 
             switch ( $match ) {
@@ -902,43 +904,43 @@ class EO_ICAL_Parser{
 	 * @return DateTimeZone - the timezone with the given identifier or false if it isn't recognised
 	 */
 	public function parse_timezone( $tzid ){
-		
+
 		$tzid = str_replace( '-', '/', $tzid );
 		$tzid = trim( $tzid, '\'"' );
 
 		if( 'GMT' == $tzid ){
 			$tzid = 'UTC';
 		}
-		
+
 		//Try just using the passed timezone ID
 		try{
 			$tz = new DateTimeZone( $tzid );
 		}catch( exception $e ){
 			$tz = null;
 		}
-		
+
 		$trigger_warning = false; //Set this to true if we make a 'guess'.
 
 		//If we have something like (GMT+01.00) Amsterdam / Berlin / Bern / Rome / Stockholm / Vienna lets try the cities
 		if( is_null( $tz ) && preg_match( '/GMT(?P<offset>.+)\)(?P<cities>.+)?/', $tzid, $matches ) ){
-			
+
 			if( !empty( $matches['cities'] ) ){
 				$parts = explode( '/', $matches['cities'] );
 				$tz_cities = array_map( 'trim', $parts );
 				$identifiers = timezone_identifiers_list();
-			
+
 				foreach( $tz_cities as $tz_city ){
-			
+
 					$tz_city = ucfirst( strtolower( $tz_city ) );
-			
+
 					foreach( $identifiers as $identifier ){
-			
+
 						$parts = explode('/', $identifier );
 						$city = array_pop( $parts );
-							
+
 						if( $city != $tz_city )
 							continue;
-			
+
 						try{
 							$tz = new DateTimeZone( $identifier );
 							break 2;
@@ -948,11 +950,11 @@ class EO_ICAL_Parser{
 					}
 				}
 			}
-			
+
 			if( $tz == null && $matches['offset'] ){
-				
+
 				$offset = (int) str_replace( '/', '-',  trim( $matches['offset'] ) );
-				
+
 				if( 0 == $offset ){
 					$tz = new DateTimeZone( 'UTC' );
 
@@ -962,10 +964,10 @@ class EO_ICAL_Parser{
 					//@see http://us.php.net/manual/en/timezones.others.php
 					$offset_string = $offset > 0 ? "-$offset" : '+'.absint( $offset );
 					$tz = new DateTimeZone( 'Etc/GMT'.$offset_string );
-					
+
 				}else{
 					$trigger_warning = true; //We're guessing based on timezone offset.
-					
+
 					$offset *= 3600; // convert hour offset to seconds
 					$allowed_zones = timezone_abbreviations_list();
 
@@ -983,8 +985,8 @@ class EO_ICAL_Parser{
 					endforeach;
 				}
 			}
-		}	
-		
+		}
+
 		//If we have something like /mozilla.org/20070129_1/Europe/Berlin
 		if( is_null( $tz ) && preg_match( '#(/?)mozilla.org/([\d_]+)/(?P<tzid>.+)#', $tzid, $matches ) ){
 			try{
@@ -997,33 +999,33 @@ class EO_ICAL_Parser{
 		//Let plugins over-ride this
 		/**
 		 * Filters the DateTimeZone object parsed from a timezone ID in an iCal feed.
-		 * 
+		 *
 		 * @param DateTimeZone $tz The timezone interpreted from a given string ID
 		 * @param string $tzid The give timezone ID
 		 */
 		$tz = apply_filters( 'eventorganiser_ical_timezone', $tz, $tzid );
-		
+
 		if ( ! ($tz instanceof DateTimeZone ) ) {
 			$tz = eo_get_blog_timezone();
 			$trigger_warning = true;
 		}
-		
+
 		if( $tz->getName() != $tzid && $trigger_warning ){
-			$this->report_warning( 
-				$this->line, 
-				'timezone-parser-warning', 
+			$this->report_warning(
+				$this->line,
+				'timezone-parser-warning',
 				sprintf( 'Unknown timezone "%s" interpreted as "%s".', $tzid, $tz->getName() )
 			);
 		}
-		
+
 		return $tz;
 	}
 
 
-	
+
 	/**
 	 * Takes a date in ICAL and returns a datetime object
-	 * 
+	 *
 	 * Expects date in yyyymmdd format
 	 * @ignore
 	 * @param string $ical_date - date in ICAL format
@@ -1049,20 +1051,20 @@ class EO_ICAL_Parser{
 
 	/**
 	 * Takes a date-time in ICAL and returns a datetime object
-	 * 
-	 * It returns the datetime in the specified 
-	 * 
+	 *
+	 * It returns the datetime in the specified
+	 *
 	 * Expects
 	 *  * utc:  YYYYMMDDTHHiissZ
 	 *  * local:  YYYYMMDDTHHiiss
-	 *  
+	 *
 	 * @ignores
 	 * @param string $ical_date - date-time in ICAL format
 	 * @param DateTimeZone $tz - Timezone 'local' is interpreted as
 	 * @return DateTime - the $ical_date as DateTime object
 	 */
 	public function parse_ical_datetime( $ical_date, $tz ){
-		
+
 		preg_match('/^((\d{8}T\d{6})(Z)?)/', $ical_date, $matches);
 
 		if( count( $matches ) == 3 ){
@@ -1084,29 +1086,29 @@ class EO_ICAL_Parser{
 
 		return $datetime;
 	}
-	
+
 	public function parse_duration( $duration_str ) {
-		
+
 		preg_match(
-			"/(?<sign>\+|-)?P(?:(?<weeks>\d+)W)?(?:(?<days>\d+)D)?(?:T(?:(?:(?<hours>\d+)H)?(?:(?<minutes>\d+)M)?(?:(?<seconds>\d+)S)?))?/", 
+			"/(?<sign>\+|-)?P(?:(?<weeks>\d+)W)?(?:(?<days>\d+)D)?(?:T(?:(?:(?<hours>\d+)H)?(?:(?<minutes>\d+)M)?(?:(?<seconds>\d+)S)?))?/",
 			$duration_str, $matches );
-		
+
 		if ( ! $matches ) {
 			throw new Exception( 'Invalid duration: "' . $duration_str . '"' );
 		}
-		
+
 		$keys = array( 'weeks', 'days', 'hours', 'minutes', 'seconds' );
-		
+
 		$duration_array = array_filter( array_intersect_key( $matches, array_flip( $keys ) ) );
 		$sign           = $matches['sign'] ? $matches['sign'] : '+';
-		
+
 		$duration_str = '';
 		foreach( $duration_array as $period => $length ) {
 			$duration_str .= "{$sign}{$length} {$period} ";
 		}
-		
+
 		return trim( $duration_str );
-				
+
 	}
 
 	/**
@@ -1163,7 +1165,7 @@ class EO_ICAL_Parser{
 				case 'BYMONTHDAY':
 					$bymonthday = $value;
 				break;
-			
+
 				//Not supported with warning
 				case 'BYSECOND':
 				case 'BYMINUTE':
@@ -1176,41 +1178,41 @@ class EO_ICAL_Parser{
 						'unsupported-recurrence-rule',
 						sprintf(
 							'Feed contains unrecognised recurrence rule: "%s" and may have not been imported correctly.',
-							$property 
+							$property
 						)
 					);
 				break;
-			
+
 				//Not supported without warning
 				case 'WKST':
 				break;
-				
+
 			endswitch;
 		endforeach;
 
 		//Meta-data for Weekly and Monthly schedules
 		if( 'monthly' == $rule_array['schedule'] ){
-			
+
 			if( isset( $byday ) ){
 				preg_match_all( '/(-?\d+)([a-zA-Z]+)/', $byday, $matches );
-				
+
 				if ( count( $matches[0] ) > 1 ){
 					$this->report_warning(
 						$this->line,
 						'unsupported-recurrence-rule',
 						sprintf(
 							'Feed contains unsupported value for "%s" and may have not been imported correctly.',
-							$property 
+							$property
 						)
 					);
 				}
-				
+
 				$rule_array['schedule_meta'] ='BYDAY='.$matches[0][0];
 
 			}elseif( isset( $bymonthday ) ){
-				
+
 				$days = explode( ',', $bymonthday );
-				
+
 				if ( count( $days ) > 1 ){
 					$this->report_warning(
 						$this->line,
@@ -1221,14 +1223,14 @@ class EO_ICAL_Parser{
 						)
 					);
 				}
-				
+
 				$rule_array['schedule_meta'] ='BYMONTHDAY='.$days[0];
 
 			}else{
 				throw new Exception( 'Incomplete scheduling information' );
 			}
 		}elseif( 'weekly' == $rule_array['schedule'] ){
-			
+
 			if( isset( $byday ) ){
 				preg_match( '/([a-zA-Z,]+)/', $byday, $matches );
 				$rule_array['schedule_meta'] = explode( ',', $matches[1] );
@@ -1246,16 +1248,16 @@ class EO_ICAL_Parser{
 
 	/**
 	 * Responsible for splitting an iCal line into Property and Value
-	 * 
+	 *
 	 * E.g. `BEGIN:VEVENT` to `BEGIN` and `VEVENT`. Special care needs to be taken
 	 * when dealing with values such as `DTSTART;TZID="(GMT +01:00)":20140712T100000`
-	 * 
+	 *
 	 * @see http://wp-event-organiser.com/forums/topic/error-while-sync-ical-feed/#post-11087
 	 * @param string $line A line in an iCal feed
 	 * @return array Array containing the property part and value part of $line
 	 */
 	function _split_line( $line ){
-		
+
 		//"Escape" colons in quotation marks
 		$escaped_line = preg_replace( '/"([^"]+)(:)([^"]+)"/', '"$1{{colon}}$3"', $line );
 		$line_parts = explode( ':', $escaped_line );
@@ -1278,6 +1280,6 @@ class EO_ICAL_Parser{
  *  - Importing blog has New York Time Zone (UTC -4/5).
  *  - Then event recurs every month on the **1st** at 22:00 (10pm) New York Time
  *  - The **2nd** is not corrected to **1st**.
- *  
+ *
  *  * Known issue (2): cannot import events with a recurrence schedule EO doesn't understand.
  */
