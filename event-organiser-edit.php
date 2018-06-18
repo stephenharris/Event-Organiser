@@ -315,7 +315,7 @@ function _eventorganiser_details_metabox( $post ) {
 	 		<div class="eo-grid-8">
 
 				<?php
-				if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() ) {
+				if ( 'googlemaps' === eventorganiser_get_option( 'map_provider' ) && ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() ) {
 					printf(
 						'<p>' . esc_html__( 'Google Maps now requires you register for an API key. If you wish to use maps on your site, %1$splease enter your key%2$s.', 'eventorganiser' ) . '</p>',
 						sprintf( '<a href="%s">', esc_url( admin_url( 'options-general.php?page=event-settings' ) . '#google_api_key' ) ),
