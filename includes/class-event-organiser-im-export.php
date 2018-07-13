@@ -179,9 +179,9 @@ class Event_Organiser_Im_Export  {
 					$args = array();
 
 					//If lat/lng meta data is set, include that
-					if( isset( $ical->venue_meta[$venue]['latitude'] ) && isset( $ical->venue_meta[$venue]['longtitude'] ) ){
+					if( isset( $ical->venue_meta[$venue]['latitude'] ) && isset( $ical->venue_meta[$venue]['longitude'] ) ){
 						$args['latitude'] = $ical->venue_meta[$venue]['latitude'];
-						$args['longtitude'] = $ical->venue_meta[$venue]['longtitude'];
+						$args['longitude'] = $ical->venue_meta[$venue]['longitude'];
 					}
 
 					$new_venue = eo_insert_venue( $venue, $args );

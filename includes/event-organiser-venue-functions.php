@@ -14,7 +14,7 @@
 * This function can be used inside the Loop to return the venue ID of the current event
 * <code>
 *    $current_events_venue_id = eo_get_venue();
-* </code>  
+* </code>
 * To obtain the venue ID of event 23:
 * <code>
 *    $venue_id = eo_get_venue(23);
@@ -43,7 +43,7 @@ function eo_get_venue($event_id=''){
 
 	$venue = array_pop($venue);
 
-	return (int) $venue->term_id;	
+	return (int) $venue->term_id;
 }
 
 
@@ -52,17 +52,17 @@ function eo_get_venue($event_id=''){
 *
 * When used without an argument it uses the event specified in the global $post (e.g. current event in the loop).
 * Can be used inside the loop to output the venue id of the current event.
-* 
+*
 * ### Examples
 * Inside the loop, you can output the current event's venue
 * <code>
-*   <?php echo eo_get_venue_slug(); ?> 
-* </code>    
+*   <?php echo eo_get_venue_slug(); ?>
+* </code>
 * Get the last start date of event with id 7
 * <code>
 *   <?php $venue_slug = eo_get_venue_slug(7); ?>
 * </code>
-* 
+*
 * @since 1.0.0
 * @param int $post_id The event (post) ID. Uses current event if empty.
 * @return int The corresponding venue (event-venue term) slug
@@ -112,7 +112,7 @@ function eo_get_venue_id_by_slugorid($venue_slug_or_id=''){
 
 	if( $venue )
 		return (int) $venue->term_id;
-	
+
 	return false;
 }
 
@@ -121,13 +121,13 @@ function eo_get_venue_id_by_slugorid($venue_slug_or_id=''){
  * Get all venue data from database by venue field and data. This acts as a simple wrapper for  {@see `get_term_by()`}
  *
  * Warning: `$value` is not escaped for 'name' `$field`. You must do it yourself, if required.
- * 
+ *
  * If `$value` does not exist for that `$field`, the return value will be false other the term will be returned.
  *
  * ###Example
  * Get the venue ID by slug (A better way is to use {@see `eo_get_venue_id_by_slugorid()`}
  * <code>
- *     $venue = eo_get_venue_by('slug','my-venue-slug'); 
+ *     $venue = eo_get_venue_by('slug','my-venue-slug');
  *     if( $venue )
  *          $venue_id = (int) $venue->term_id;
  *</code>
@@ -158,12 +158,12 @@ function eo_get_venue_by($field,$value,$output = OBJECT, $filter = 'raw' ){
 * Inside the loop, you can output the current event's venue
 * <code>
 *      <?php echo eo_get_venue_name(); ?>
-* </code>   
+* </code>
 * To get the name of event with id 7, you can use `eo_get_venue` to obtain the venue ID of the event.
 * <code>
-*      <?php 
-*         $venue_id = eo_get_venue(7); 
-*         $venue_name = eo_get_venue_name(%venue_id); 
+*      <?php
+*         $venue_id = eo_get_venue(7);
+*         $venue_name = eo_get_venue_name(%venue_id);
 *       ?>
 * </code>
 * @since 1.0.0
@@ -173,7 +173,7 @@ function eo_get_venue_by($field,$value,$output = OBJECT, $filter = 'raw' ){
 function eo_get_venue_name($venue_slug_or_id=''){
 	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
 	$venue = get_term($venue_id,'event-venue');
-	
+
 	if ( empty($venue) || is_wp_error( $venue ) )
 		return false;
 
@@ -197,19 +197,19 @@ function eo_venue_name($venue_slug_or_id=''){
 * Returns the description of the description of an event.
 * If used with any arguments uses the venue of the current event.
 *
-* Returns the description of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If specifying the 
+* Returns the description of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If specifying the
 * venue by ID, **the ID must be an integer**.
 *
 * ###Example
 * <code>
-*     <?php 
+*     <?php
 *     $event_id = 7;
 *     $venue_id = eo_get_venue( $event_id );
 *     echo eo_get_venue_description( $venue_id );
-*     
+*
 *     //The following displays the description for the venue with **ID** '12'
 *     echo eo_get_venue_description( 12 );
-*     
+*
 *     //The following displays the description for the venue with **slug** '12'
 *     echo eo_get_venue_description( '12' );
 *     ?>
@@ -232,7 +232,7 @@ function eo_get_venue_description($venue_slug_or_id=''){
 
 /**
 * Prints the name of the description of an event.
-* Can be used inside the loop to output the 
+* Can be used inside the loop to output the
 * venue id of the current event.
 * @since 1.0.0
 * @uses eo_get_venue_description()
@@ -254,7 +254,7 @@ function eo_get_venue_excerpt( $venue_slug_or_id='', $excerpt_length = 55 ){
 
 	$excerpt_length = apply_filters( 'excerpt_length', $excerpt_length );
 	$excerpt_more   = apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
-		
+
 	$text = wp_trim_words( $text, $excerpt_length, $excerpt_more );
 
 	return apply_filters( 'eventorganiser_venue_excerpt', $text, $venue_id );
@@ -264,19 +264,19 @@ function eo_get_venue_excerpt( $venue_slug_or_id='', $excerpt_length = 55 ){
 
 
 /**
-* Returns an latitude-longtitude array (keys 'lat', 'lng')
+* Returns an latitude-longitude array (keys 'lat', 'lng')
 * If used with any arguments uses the venue of the current event.
 *
-* Returns a latitude-longitude array of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If 
+* Returns a latitude-longitude array of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If
 * specifying the venue by ID, **the ID must be an integer**.
 * @since 1.0.0
 *
 * @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
 * @return array Array with keys 'lat' and 'lng' with corresponding float values.
  */
-function eo_get_venue_latlng($venue_slug_or_id=''){	
+function eo_get_venue_latlng($venue_slug_or_id=''){
 	$lat = eo_get_venue_lat($venue_slug_or_id);
-	$lng = eo_get_venue_lng($venue_slug_or_id);	
+	$lng = eo_get_venue_lng($venue_slug_or_id);
 	return array('lat'=>$lat,'lng'=>$lng);
 }
 
@@ -284,7 +284,7 @@ function eo_get_venue_latlng($venue_slug_or_id=''){
 * Returns the latitude co-ordinate of a venue.
 * If used with any arguments uses the venue of the current event.
 *
-* Returns the latitude of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If specifying the 
+* Returns the latitude of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If specifying the
 * specifying the venue by ID, **the ID must be an integer**.
 * @since 1.0.0
 *
@@ -299,15 +299,15 @@ function eo_get_venue_lat($venue_slug_or_id=''){
 }
 
 /**
-* Returns the longtitude co-ordinate of a venue.
+* Returns the longitude co-ordinate of a venue.
 * If used with any arguments uses the venue of the current event.
 *
-* Returns the longtitude of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If specifying the 
+* Returns the longitude of a venue specified by it's slug or ID. When used without an argument it uses the event specified in the `global $post` (i.e. the current event in the Loop). If specifying the
 * specifying the venue by ID, **the ID must be an integer**.
 * @since 1.0.0
 *
 * @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
-* @return float The longtitude of the venue as a float. 0 If it doesn't exist.
+* @return float The longitude of the venue as a float. 0 If it doesn't exist.
  */
 function eo_get_venue_lng($venue_slug_or_id=''){
 	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
@@ -331,7 +331,7 @@ function eo_venue_lat($venue_slug_or_id=''){
 
 
 /**
-* Prints the longtitude co-ordinate of a venue.
+* Prints the longitude co-ordinate of a venue.
 * If used with any arguments uses the venue of the current event.
 * @uses eo_get_venue_lng()
 * @since 1.0.0
@@ -396,30 +396,30 @@ function eo_venue_link($venue_slug_or_id=''){
 * * 'country'
 *
 * If used without any arguments uses the venue of the current event.
-* 
+*
 * ### Examples
 * Return the details of venue 16. **(Please note when using the ID it must be an integer - that is 16 not '16').**
 * <code>
-*     $address_details = eo_get_venue_address(16); 
+*     $address_details = eo_get_venue_address(16);
 *     //$address_details = eo_get_venue_address('16'); This method is incorrect.
-* </code>   
+* </code>
 * Print the post-code of venue 'my-venue-slug'
 * <code>
-*     $address_details = eo_get_venue_address('my-venue-slug'); 
-*     echo "The post code of 'my-venue-slug' is: ".$address_details['postcode']; 
-* </code>   
+*     $address_details = eo_get_venue_address('my-venue-slug');
+*     echo "The post code of 'my-venue-slug' is: ".$address_details['postcode'];
+* </code>
 * Return the details of the venue of event 23 we can use `{@see eo_get_venue()}` to obtain the venue ID.
 * <code>
-*   $venue_id = eo_get_venue(23); 
-*    $address_details = eo_get_venue_address($venue_id); 
-* </code>   
-* 
+*   $venue_id = eo_get_venue(23);
+*    $address_details = eo_get_venue_address($venue_id);
+* </code>
+*
 * @since 1.0.0
 * @param int|string $venue_slug_or_id The venue ID (as an integer) or slug (as a string). Uses venue of current event if empty.
 * @return array Array of venue address details
  */
 function eo_get_venue_address($venue_slug_or_id=''){
-	$address=array();	
+	$address=array();
 	$venue_id =  eo_get_venue_id_by_slugorid($venue_slug_or_id);
 	$address_keys = array_keys(_eventorganiser_get_venue_address_fields());
 	foreach( $address_keys as $meta_key ){
@@ -435,7 +435,7 @@ function eo_get_venue_address($venue_slug_or_id=''){
  *
  * The list of arguments that `$args` can contain, which will overwrite the defaults:
  *
- * * **orderby** - Default is 'name'. Can be name, count, slug, city, state, country, postcode, address 
+ * * **orderby** - Default is 'name'. Can be name, count, slug, city, state, country, postcode, address
  * or distance (when used with a {@link http://wp-event-organiser.com/pro-features/event-venue-queries/ proximity-query})
  * * **order** - ASC|DESC Default is ASC.
  * * **hide_empty** - Default is 0 (false)
@@ -454,17 +454,17 @@ function eo_get_venue_address($venue_slug_or_id=''){
  *
  * ###Example
  * <code>
- *     $venues = eo_get_venues(); 
- *     
+ *     $venues = eo_get_venues();
+ *
  *     if( $venues ){
- *          echo '<ul>'; 
- *          foreach($venues as $venue): 
+ *          echo '<ul>';
+ *          foreach($venues as $venue):
  *		  $venue_id = (int) $venue->term_id;
  *               printf('<li> <a href="%s">%s</a>', eo_get_venue_link($venue_id), esc_html($venue->name));
- *          endforeach; 
+ *          endforeach;
  *          echo '</ul>';
  *     }
- * </code>        
+ * </code>
  * The retreive all venues within 10 miles of Windsor Castle
  * <code>
  *      $meta_query = array(
@@ -473,12 +473,12 @@ function eo_get_venue_address($venue_slug_or_id=''){
  *					'distance' => 10,
  *					'unit' => 'miles',
  *					'compare' => '<='
- *			),	
+ *			),
  *      );
  *
  *      $venues = eo_get_venues( array( 'meta_query' => $meta_query ) );
  * </code>
- * See {@link http://wp-event-organiser.com/pro-features/event-venue-queries/ documentation on venue meta queries}.    
+ * See {@link http://wp-event-organiser.com/pro-features/event-venue-queries/ documentation on venue meta queries}.
  *
  * @uses get_terms()
  * @see eo_remote_geocode()
@@ -498,12 +498,12 @@ function eo_get_venues($args=array()){
 
 
 /**
- * Updates new venue in the database. 
+ * Updates new venue in the database.
  *
  * Calls {@see `wp_insert_term()`} to update the taxonomy term
  * Updates venue meta data to database (for 'core' meta keys)
  * The $args is an array - the same as that accepted by {@link https://codex.wordpress.org/Function_Reference/wp_update_term wp_update_term()}
- * The $args array can also accept the following keys: 
+ * The $args array can also accept the following keys:
  *
  * * description
  * * address
@@ -512,7 +512,7 @@ function eo_get_venues($args=array()){
  * * postcode
  * * country
  * * latitude
- * * longtitude
+ * * longitude
  *
  * @since 1.4.0
  *
@@ -525,8 +525,13 @@ function eo_get_venues($args=array()){
  */
 	function eo_update_venue($venue_id, $args=array()){
 
+		//Backwards compatability for 3.7.2 and earlier
+		if(isset($args['longtitude']) && !isset($args['longitude'])) {
+			$args['longitude'] = $args['longtitude'];
+		}
+
 		$term_args = array_intersect_key($args, array('name'=>'','term_id'=>'','term_group'=>'','term_taxonomy_id'=>'','alias_of'=>'','parent'=>0,'slug'=>'','count'=>''));
-		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','city'=>'','state'=>'','country'=>'','latitude'=>'','longtitude'=>''));
+		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','city'=>'','state'=>'','country'=>'','latitude'=>'','longitude'=>''));
 		$venue_id = (int) $venue_id;
 
 
@@ -544,7 +549,7 @@ function eo_get_venues($args=array()){
 				case 'latitude':
 					$meta_key = '_lat';
 					break;
-				case 'longtitude':
+				case 'longitude':
 					$meta_key = '_lng';
 					break;
 				default:
@@ -554,11 +559,11 @@ function eo_get_venues($args=array()){
 
 			$validated_value = eventorganiser_sanitize_meta($meta_key, $value);
 
-			update_metadata('eo_venue', $venue_id, $meta_key, $validated_value);		
+			update_metadata('eo_venue', $venue_id, $meta_key, $validated_value);
 		}
 		/**
 		 * Triggered when a venue is created / updated.
-		 * 
+		 *
 		 * @param int $venue_id The (term) ID of the venue.
 		 */
 		do_action('eventorganiser_save_venue',$venue_id);
@@ -568,13 +573,13 @@ function eo_get_venues($args=array()){
 
 
 /**
- * Adds a new venue to the database. 
+ * Adds a new venue to the database.
  *
  * Calls {@see `wp_insert_term()`} to create the taxonomy term
  * Adds venue meta data to database (for 'core' meta keys)
  *
  * The $args is an array - the same as that accepted by {@link https://codex.wordpresss.org/Function_Reference/wp_update_term wp_update_term()}
- * The $args array can also accept the following keys: 
+ * The $args array can also accept the following keys:
  *
  * * description
  * * address
@@ -583,7 +588,7 @@ function eo_get_venues($args=array()){
  * * postcode
  * * country
  * * latitude
- * * longtitude
+ * * longitude
  *
  * @since 1.4.0
  *
@@ -597,9 +602,15 @@ function eo_get_venues($args=array()){
  * @return array|WP_Error Array of term ID and term-taxonomy ID or a WP_Error on error
  */
 	function eo_insert_venue($name, $args=array()){
+
+		//Backwards compatability for 3.7.2 and earlier
+		if(isset($args['longtitude']) && !isset($args['longitude'])) {
+			$args['longitude'] = $args['longtitude'];
+		}
+
 		$term_args = array_intersect_key($args, array('name'=>'','term_id'=>'','term_group'=>'','term_taxonomy_id'=>'','alias_of'=>'','parent'=>0,'slug'=>'','count'=>''));
-		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','city'=>'','state'=>'','country'=>'','latitude'=>'','longtitude'=>''));
-	
+		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','city'=>'','state'=>'','country'=>'','latitude'=>'','longitude'=>''));
+
 		$resp = wp_insert_term($name,'event-venue',$term_args);
 
 		if(is_wp_error($resp)){
@@ -613,7 +624,7 @@ function eo_get_venues($args=array()){
 				case 'latitude':
 					$meta_key = '_lat';
 					break;
-				case 'longtitude':
+				case 'longitude':
 					$meta_key = '_lng';
 					break;
 				default:
@@ -624,16 +635,16 @@ function eo_get_venues($args=array()){
 			$validated_value = eventorganiser_sanitize_meta($meta_key, $value);
 
 			if( !empty($validated_value) )
-				add_metadata('eo_venue', $venue_id, $meta_key, $validated_value, true);		
+				add_metadata('eo_venue', $venue_id, $meta_key, $validated_value, true);
 		}
-	
+
 		/**
 		 * Triggered when a venue is created.
 		 *
 		 * @param int $venue_id The (term) ID of the venue.
 		 */
 		do_action('eventorganiser_insert_venue',$venue_id);
-		
+
 		/**
 		 * Triggered when a venue is created / updated.
 		 *
@@ -645,11 +656,11 @@ function eo_get_venues($args=array()){
 	}
 
 /**
- * Deletes a venue in the database. 
+ * Deletes a venue in the database.
  *
  * Calls {@see `wp_delete_term()`} to delete the taxonomy term
- * Deletes all the venue's meta 
- * 
+ * Deletes all the venue's meta
+ *
  * @since 1.4.0
  *
  * @uses wp_delete_term to delete venue (taxonomy) term
@@ -670,13 +681,13 @@ function eo_get_venues($args=array()){
 			$in_venue_meta_ids = "'" . implode("', '", $venue_meta_ids) . "'";
 			$wpdb->query( "DELETE FROM $wpdb->eo_venuemeta WHERE meta_id IN($in_venue_meta_ids)" );
 		}
-		
+
 		/**
-		 * @ignore 
+		 * @ignore
 		 * This should probably be triggered *before* venue is deleted.
 		 */
 		do_action('eventorganiser_delete_venue',$venue_id);
-		
+
 		/**
 		 * Triggered when a venue is deleted
 		 *
@@ -690,10 +701,10 @@ function eo_get_venues($args=array()){
 /**
  * Returns the mark-up for a Google map of the venue (and enqueues scripts).
  * Accepts an arguments array corresponding to the attributes supported by the shortcode.
- * 
+ *
  * ### Examples
  * <code>
- *   // Display map of two venues 
+ *   // Display map of two venues
  *   <?php echo eo_get_venue_map(array('london-eye','edinburgh-castle')); ?>
  * </code>
  * @since 1.6
@@ -719,7 +730,7 @@ function eo_get_venue_map( $venue_slug_or_id = '', $args = array() ){
 
 		//Map properties
 		$args = shortcode_atts( array(
-			'zoom' => 15, 'minzoom' => 0, 'maxzoom' => null, 'zoomcontrol' => true, 
+			'zoom' => 15, 'minzoom' => 0, 'maxzoom' => null, 'zoomcontrol' => true,
 			'scrollwheel' => true, 'rotatecontrol' => true, 'maptypecontrol' => true,
 			'pancontrol' => true, 'overviewmapcontrol' => true, 'streetviewcontrol' => true,
 			'draggable' => true, 'maptypeid' => 'ROADMAP',
@@ -728,8 +739,8 @@ function eo_get_venue_map( $venue_slug_or_id = '', $args = array() ){
 			), $args );
 
 		//Cast zoom as integer
-		$args['zoom'] = (int) $args['zoom']; 
-		
+		$args['zoom'] = (int) $args['zoom'];
+
 		//Escape attributes
 		$width = esc_attr($args['width']);
 		$height = esc_attr($args['height']);
@@ -750,7 +761,7 @@ function eo_get_venue_map( $venue_slug_or_id = '', $args = array() ){
 
 		if( empty($venue_ids) )
 			return false;
-		
+
 		//Set up venue locations for map
 		foreach( $venue_ids as $venue_id ){
 
@@ -762,26 +773,26 @@ function eo_get_venue_map( $venue_slug_or_id = '', $args = array() ){
 			$address = array_filter(eo_get_venue_address($venue_id));
 			if( !empty($address) )
 				$tooltip_content .='<br />'.implode(', ',$address);
-			
+
 			/**
 			 * Filters the tooltip content for a venue.
-			 * 
+			 *
 			 * ### Example
-			 * 
+			 *
 			 *    //Adds a link to the venue page to the tooltip
 			 *    add_filter( 'eventorganiser_venue_tooltip', 'my_venue_tooltip_content_link_to_venue', 10, 2 );
 			 *    function my_venue_tooltip_content_link_to_venue( $description, $venue_id ){
     		 *        $description .= sprintf('<p><a href="%s"> Visit the venue page! </a> </p>', eo_get_venue_link($venue_id));
 			 *        return $description;
 			 *    }
-			 * 
-			 * @link https://gist.github.com/stephenharris/4988307 Add upcoming events to the the tooltip 
+			 *
+			 * @link https://gist.github.com/stephenharris/4988307 Add upcoming events to the the tooltip
 			 * @param string $tooltip_content The HTML content for the venue tooltip.
 			 * @param int $venue_id The ID of the venue.
 			 * @param array $args An array of map options. See documentation for `eo_get_venue_map()`.
 			 */
 			$tooltip_content = apply_filters( 'eventorganiser_venue_tooltip', $tooltip_content, $venue_id, $args );
-			
+
 			/**
 			 * Filters the url of the venue map marker. Set to `null` for default.
 			 *
@@ -791,35 +802,35 @@ function eo_get_venue_map( $venue_slug_or_id = '', $args = array() ){
 			 * @param array $args An array of map options. See documentation for `eo_get_venue_map()`.
 			 */
 			$icon = apply_filters( 'eventorganiser_venue_marker', null, $venue_id, $args );
-	
-			$locations[] =array( 
+
+			$locations[] =array(
 					'venue_id' => $venue_id,
-					'lat'=>$latlng['lat'], 
-					'lng'=>$latlng['lng'], 
-					'tooltipContent'=>$tooltip_content, 
+					'lat'=>$latlng['lat'],
+					'lng'=>$latlng['lng'],
+					'tooltipContent'=>$tooltip_content,
 					'icon' => $icon );
 		}
 
 		$map = array_merge($args, array('locations'=>$locations) );
-		
+
 		/**
 		 * Filters the tooltip content for a venue.
-		 * 
+		 *
 		 * ### Example
-		 * 
+		 *
 		 *    //Styles your google map
 		 *    add_filter( 'eventorganiser_venue_map_options', 'style_my_google_map', 10 );
 		 *    function style_my_google_map( $map_args ){
     	 *        $map_args['styles'] = {set styles};;
 		 *        return $map_args;
 		 *    }
-		 *    
+		 *
 		 * @link https://developers.google.com/maps/documentation/javascript/styling#styling_the_default_map
-		 * @param array $map Array of map properties, including the key 'location' (array of locations) 
+		 * @param array $map Array of map properties, including the key 'location' (array of locations)
 		 *                   height, width, zoom and styles.
 		 */
 		$map = apply_filters( 'eventorganiser_venue_map_options', $map );
-		
+
 		//This could be improved
 		EventOrganiser_Shortcodes::$map[] = $map;
 		EventOrganiser_Shortcodes::$add_script = true;
@@ -850,8 +861,8 @@ function eo_get_venue_map( $venue_slug_or_id = '', $args = array() ){
  * @return mixed Will be an array if $single is false. Will be value of meta data field if $single
  *  is true.
  */
-function eo_get_venue_meta($venue_id, $key ='', $single=true){	
-	return get_metadata('eo_venue', $venue_id, $key, $single); 
+function eo_get_venue_meta($venue_id, $key ='', $single=true){
+	return get_metadata('eo_venue', $venue_id, $key, $single);
 }
 
 
@@ -866,8 +877,8 @@ function eo_get_venue_meta($venue_id, $key ='', $single=true){
  * * _state
  * * _postcode
  * * _country
- * * _latitude
- * * _longtitude
+ * * _lat
+ * * _lng
  *
  * It is **strongly** recommended that you prefix your keys with and underscore.
  *
@@ -900,8 +911,8 @@ function eo_add_venue_meta($venue_id, $key, $value, $unique = false ){
  * * _state
  * * _postcode
  * * _country
- * * _latitude
- * * _longtitude
+ * * _lat
+ * * _lng
  *
  * It is **strongly** recommended that you prefix your keys with and underscore.
  *
@@ -939,7 +950,7 @@ function eo_delete_venue_meta($venue_id, $key, $value = '', $delete_all = false 
 
 /**
  * Sanitizes (or validates) the metadata (expects raw) before being inserted into the databse.
- * 
+ *
  * @since 1.4.0
  * @access private
  * @ignore
@@ -986,11 +997,11 @@ function _eventorganiser_get_venue_address_fields(){
 
 	/**
 	 * Filters fields used for the address of a venue.
-	 * 
+	 *
 	 * This filter allows you to remove address components you don't need or add-ones
 	 * you do. The array is indexed by meta-key which **must** be prefixed by an
 	 * underscore (`_`), The value is the label of the address component.
-	 * 
+	 *
 	 * Added fields will appear in the address metabox on the admin venue screen.
 	 *
 	 * @param array $address_fields An array of address components
@@ -1006,7 +1017,7 @@ function _eventorganiser_get_venue_address_fields(){
  */
 function eventorganiser_venue_dropdown($post_id=0,$args){
 	$venues = get_terms('event-venue', array('hide_empty'=>false));
-	$current = (int) eo_get_venue($post_id); 
+	$current = (int) eo_get_venue($post_id);
 
 	$id = (!empty($args['id']) ? 'id="'.esc_attr($args['id']).'"' : '');
 	$name = (!empty($args['name']) ? 'name="'.esc_attr($args['name']).'"' : '');

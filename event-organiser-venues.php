@@ -8,9 +8,9 @@ if ( !class_exists( 'EventOrganiser_Admin_Page' ) ){
  * @ignore
  */
 class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
-	
+
 	function set_constants(){
-		
+
 		$tax = get_taxonomy( 'event-venue' );
 		if( $tax ){
 			$this->hook        = 'edit.php?post_type=event';
@@ -20,7 +20,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 			$this->slug        = 'venues';
 		}
 	}
-	
+
 	function hooks_init(){
 		if( taxonomy_exists( 'event-venue' ) ){
 			add_action( 'admin_menu', array( $this, 'add_page' ) );
@@ -60,14 +60,14 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 					} else{
 						$term_id = (int) $return['term_id'];
 						$venue = get_term( $term_id, 'event-venue' );
-						$url = add_query_arg( 
+						$url = add_query_arg(
 							array(
 								'page'        => 'venues',
 								'action'      => 'edit',
 								'event-venue' => $venue->slug,
 								'message'     => 2,
-						    ), 
-							admin_url( 'edit.php?post_type=event' ) 
+						    ),
+							admin_url( 'edit.php?post_type=event' )
 						);
 
 						wp_redirect( esc_url_raw( $url ) );
@@ -82,7 +82,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 
 					$args = $_POST['eo_venue'];
 					$name = isset( $args['name'] ) ?  $args['name'] : '';
-	
+
 					//Venue may already exist in database since it may have been added via ajax (by pro plug-in);
 					if ( !empty( $args['venue_id'] ) && $_venue = eo_get_venue_by( 'id', $args['venue_id'] ) ){
 						//Since we're updating, need to explicitly provide slug to update it. Slug will be 'new-venue'.
@@ -105,15 +105,15 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 								'action'      => 'edit',
 								'event-venue' => $venue->slug,
 								'message'     => 1,
-							), 
-							admin_url( 'edit.php?post_type=event' ) 
+							),
+							admin_url( 'edit.php?post_type=event' )
 						);
 
 						wp_redirect( esc_url_raw( $url ) );
 						exit();
 					}
 					break;
-	
+
 
 				case 'delete':
 					if ( is_array( $request['event-venue'] ) ) {
@@ -139,14 +139,14 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 							$deleted++;
 						}
 					endforeach;
-		
+
 					if ( $deleted > 0 ){
 						$url = add_query_arg(
 							array(
 								'page'    => 'venues',
 								'message' => 3,
-							), 
-							admin_url( 'edit.php?post_type=event' ) 
+							),
+							admin_url( 'edit.php?post_type=event' )
 						);
 						wp_redirect( esc_url_raw( $url ) );
 						exit();
@@ -162,21 +162,21 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 		if ( in_array( $action, array( 'edit', 'update', 'create' ) ) ){
 			$venue = ( isset( $request['event-venue'] ) ? $request['event-venue'] : false );
 
-			//Venued edit page	
+			//Venued edit page
 			add_meta_box( 'submitdiv', __( 'Save', 'eventorganiser' ), 'eventorganiser_venue_submit', 'event_page_venues', 'side', 'high' );
-			
+
 			/**
  			 * Fires after all built-in meta boxes for venues have been added.
  			 *
  			 * @param Object $venue Venue (term object)
  			 */
 			do_action( 'add_meta_boxes_event_page_venues', $venue );
-			
+
 			/**
 			 * @ignore
 			 */
 		 	do_action( 'add_meta_boxes', 'event_page_venues', $venue );
-		 	
+
 			add_screen_option( 'layout_columns', array( 'max' => 2, 'default' => 2 ) );
 		} else{
 			//Venue admin list
@@ -209,48 +209,48 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 			wp_localize_script( 'eo-venue-admin', 'EO_Venue', array( 'location' => get_option( 'timezone_string' ), 'draggable' => true, 'screen_id' => $screen->id) );
 			wp_enqueue_style( 'eventorganiser-style' );
 			wp_enqueue_script( 'media-upload' );
-			wp_enqueue_script( 'postbox' ); 
-			add_thickbox();	
+			wp_enqueue_script( 'postbox' );
+			add_thickbox();
 		endif;
 	}
 
 	function display(){
-		
+
 		$tax    = get_taxonomy( 'event-venue' );
 		$action = $this->current_action();
 		$venue  = ( isset( $_GET['event-venue'] ) ? $_GET['event-venue'] : false );
 	?>
 	<div class="wrap">
 
-		<?php	
+		<?php
 			if ( ( ( $action == 'edit' || $action == 'update' ) && $venue )  || $action == 'create' ):
 				$this->edit_form( $venue );
-	
-			else: 
 
-				//Else we are not creating or editing. Display table  
+			else:
+
+				//Else we are not creating or editing. Display table
 				$venue_table = new EO_Venue_List_Table();
-			    $venue_table->prepare_items();    
-	
+			    $venue_table->prepare_items();
+
 				//Check if we have searched the venues
 				$search_term = ( isset( $_GET['s'] ) ?  esc_attr( $_GET['s'] ) : '' );?>
 
 				<h2>
 					<?php ?>
 					<?php echo esc_html( $tax->labels->name ) ?>
-					 <a href="edit.php?post_type=event&page=venues&action=create" class="add-new-h2"><?php echo esc_html( $tax->labels->add_new_item ); ?></a> 
+					 <a href="edit.php?post_type=event&page=venues&action=create" class="add-new-h2"><?php echo esc_html( $tax->labels->add_new_item ); ?></a>
 					<?php
 					if ( $search_term ){
 						printf( '<span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;' ) . '</span>', $search_term );
-					} 
+					}
 					?>
 				</h2>
-  
+
 		       	 <form id="eo-venue-table" method="get">
 					<!-- Ensure that the form posts back to our current page -->
 					<input type="hidden" name="page" value="venues" />
 					<input type="hidden" name="post_type" value="event" />
-	
+
 	       		     <!-- Now we can render the completed list table -->
 					<?php $venue_table->search_box( $tax->labels->search_items, 's' ); ?>
 					<?php $venue_table->display(); ?>
@@ -268,7 +268,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 	 */
 	function edit_form( $venue = false ){
 
-		$tax     = get_taxonomy( 'event-venue' ); 
+		$tax     = get_taxonomy( 'event-venue' );
 		$venue   = get_term_by( 'slug', $venue, 'event-venue' );
 		$term_id = isset( $venue->term_id ) ? (int) $venue->term_id : 0;
 		$do      = ( $this->current_action() == 'edit' ? 'update' : 'add' );
@@ -281,20 +281,20 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 			</h2>
 		<?php else: ?>
 			<h2>
-				<?php echo esc_html( $tax->labels->add_new_item ); ?> 
+				<?php echo esc_html( $tax->labels->add_new_item ); ?>
 			</h2>
 		<?php endif; ?>
 
 		<form name="venuedetails" id="eo_venue_form" method="post" action="<?php echo admin_url( 'edit.php?post_type=event&page=venues' ); ?>" <?php do_action( 'eventorganiser_venue_edit_form_tag', $venue ); ?> >
-			<input type="hidden" name="action" value="<?php echo $do; ?>"> 
-			<input type="hidden" id="eo_venue_id" name="eo_venue[venue_id]" value="<?php echo $term_id;?>">  
-			<input type="hidden" name="event-venue" value="<?php echo ( isset( $venue->slug ) ? $venue->slug : '' ) ;?>">  
+			<input type="hidden" name="action" value="<?php echo $do; ?>">
+			<input type="hidden" id="eo_venue_id" name="eo_venue[venue_id]" value="<?php echo $term_id;?>">
+			<input type="hidden" name="event-venue" value="<?php echo ( isset( $venue->slug ) ? $venue->slug : '' ) ;?>">
 
 			<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 			<?php wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
 			<?php wp_nonce_field( $nonce ); ?>
 
-			<?php 
+			<?php
 			$columns = (1 == get_current_screen()->get_columns() ? '1' : '2' );
 			?>
 			<div id="poststuff">
@@ -318,7 +318,7 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 
 					<div id="postbox-container-1" class="postbox-container">
 						<?php do_meta_boxes( '', 'side', $venue ); ?>
-					</div>	
+					</div>
 
 					<div id="postbox-container-2" class="postbox-container">
 						<?php do_meta_boxes( '', 'normal', $venue );  ?>
@@ -326,10 +326,10 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 		 			</div>
 
 		 		</div><!-- #post-body -->
-				<br class="clear"> 
+				<br class="clear">
 
 			</div><!-- #poststuff -->
-		</form> 	
+		</form>
 	<?php
 	}
 }
@@ -353,7 +353,7 @@ function eo_get_venue_permastructure(){
 
 //Submit metabox
 function eventorganiser_venue_submit( $venue ){
-	
+
 	$tax   = get_taxonomy( 'event-venue' );
 	$value = $venue ? $tax->labels->update_item : $tax->labels->add_new_item ?>
 
@@ -361,7 +361,7 @@ function eventorganiser_venue_submit( $venue ){
 		<div id="save-action">
 			<p>
 				<input type="submit" class="button button-primary" id="save-venue" name="eo_venue[Submit]" value="<?php echo esc_attr( $value ); ?>" />
-			</p>  
+			</p>
 		</div>
 		<div class="clear"></div>
 	</div>
@@ -369,13 +369,13 @@ function eventorganiser_venue_submit( $venue ){
 <?php
 }
 
-//Location metabox - called directly. Is not movable. 
+//Location metabox - called directly. Is not movable.
 function eventorganiser_venue_location( $venue ){
 	$term_id = isset( $venue->term_id ) ? (int) $venue->term_id : 0;
 	$address = eo_get_venue_address( $term_id );?>
 
 	<div class="address-fields">
-	
+
 		<table>
 			<tbody>
 			<?php
@@ -396,30 +396,30 @@ function eventorganiser_venue_location( $venue ){
 			?>
 			</tbody>
 		</table>
-	
+
 		<?php $latlng = eo_get_venue_latlng( $term_id ); ?>
 		<small>
 			<?php esc_html_e( 'Latitude/Longitude:', 'eventorganiser' ); ?>
-			<span id="eo-venue-latllng-text" 
-				data-eo-lat="<?php echo esc_attr( $latlng['lat'] );?>" 
-				data-eo-lng="<?php echo esc_attr( $latlng['lng'] );?>" 
+			<span id="eo-venue-latllng-text"
+				data-eo-lat="<?php echo esc_attr( $latlng['lat'] );?>"
+				data-eo-lng="<?php echo esc_attr( $latlng['lng'] );?>"
 				contenteditable="true">
 				<?php echo esc_html( implode( ',', $latlng ) );?>
 			</span>
 		</small>
-		
+
 	</div>
-	
+
 	<div id="venuemap"></div>
-	
+
 	<div class="clear"></div>
 
 	<input type="hidden" name="eo_venue[latitude]" id="eo_venue_Lat"  value="<?php echo esc_attr( eo_get_venue_lat( $term_id ) ); ?>"/>
-	<input type="hidden" name="eo_venue[longtitude]" id="eo_venue_Lng"  value="<?php echo esc_attr( eo_get_venue_lng( $term_id ) ); ?>"/>
+	<input type="hidden" name="eo_venue[longitude]" id="eo_venue_Lng"  value="<?php echo esc_attr( eo_get_venue_lng( $term_id ) ); ?>"/>
 	<?php
 }
 
-//Venue title input 
+//Venue title input
 function eventorganiser_venue_title( $venue ){
 	
 	$tax     = get_taxonomy( 'event-venue' );
@@ -433,16 +433,16 @@ function eventorganiser_venue_title( $venue ){
 	<div class="inside">
 		<div id="edit-slug-box">
 		<?php if ( $venue ): ?>
-			<strong><?php _e( 'Permalink:' );?></strong> 
+			<strong><?php _e( 'Permalink:' );?></strong>
 			<span id="sample-permalink">
 				<?php echo eo_get_venue_permastructure();?>
 				<input type="text" name="eo_venue[slug]"value="<?php echo ( isset( $venue->slug ) ? esc_attr( $venue->slug ) : '' ) ;?>" id="<?php echo $term_id; ?>-slug">
-			</span> 
-	
+			</span>
+
 			<input type="hidden" value="<?php echo get_term_link( $venue, 'event-venue' ); ?>" id="shortlink">
-			<a onclick="prompt( 'URL:', jQuery( '#shortlink' ).val() ); return false;" class="button" href=""><?php _e( 'Get Link', 'eventorganiser' );?></a>	
+			<a onclick="prompt( 'URL:', jQuery( '#shortlink' ).val() ); return false;" class="button" href=""><?php _e( 'Get Link', 'eventorganiser' );?></a>
 			<span id='view-post-btn'><a href="<?php echo get_term_link( $venue, 'event-venue' ); ?>" class='button' target='_blank'><?php echo esc_html( $tax->labels->view_item );?></a></span>
-		<?php endif;?>					
+		<?php endif;?>
 		</div><!-- #edit-slug-box -->
 	</div> <!-- .inside -->
 	<?php
@@ -450,9 +450,9 @@ function eventorganiser_venue_title( $venue ){
 
 
 function eventorganiser_venue_admin_columns( $columns ){
-	
+
 	$tax = get_taxonomy( 'event-venue' );
-	
+
 	$columns = array(
 		'cb'   => '<input type="checkbox" />', //Render a checkbox instead of text
 		'name' => esc_html( $tax->labels->singular_name ),
@@ -466,5 +466,5 @@ function eventorganiser_venue_admin_columns( $columns ){
 		'posts'      => __( 'Events', 'eventorganiser' ),
 	);
 
-	return $columns;	
+	return $columns;
 }

@@ -173,12 +173,12 @@ eventorganiserMapsAdapter.openstreetmap.marker = function ( args ) {
 
 /**
  * A geocoder
- * Accepts an address and passes latitude/longtitude co-ordinates to  the callback
+ * Accepts an address and passes latitude/longitude co-ordinates to  the callback
  */
 eventorganiserMapsAdapter.openstreetmap.geocoder = function( ) {
     if ( typeof this.geocode !== "function" ) {
         /**
-         * Look up address and pass latitude/longtitude co-ordinates to callback
+         * Look up address and pass latitude/longitude co-ordinates to callback
          * @param object address - with keys such as 'address' (street address), 'city', 'state', 'postcode' etc
          * @param callable callback
          */
