@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 4.9.6
+Tested up to: 4.9.7
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.7.3 - 13th July 2018 =
+* bugfix: Fix Google Maps API key notice appearing when Open Street Maps is selected
+* bugfix: Corrected spelling error in venue arguments ("longtitude" corrected to "longitude")
 
 = 3.7.2 - 8th June 2018 =
 * bugfix: Fixed maps bug which affected users with Yoast's SEO Plugin installed
