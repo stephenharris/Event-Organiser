@@ -3,7 +3,7 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
-**Tested up to:** 4.9.6  
+**Tested up to:** 4.9.8  
 **Stable tag:** {{version}}  
 **License:** GPLv3  
 
@@ -243,6 +243,13 @@ A special thanks to [BrowserStack](http://browserstack.com/) who have provided a
 ![BrowserStack](https://p14.zdusercontent.com/attachment/1015988/XjCcW57HMxJM9kJ6wQ8fK2npX?token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..0Ddh0qglNG6N9SCLBcV1rQ.DQovYRdQ07pjD8_AAyTWmsTaBytRMV3D27uLIjZmM1DBEPXZGA0eewy6Ab5L5d5HmrUChuJytEseVnoqj0lJ8Fx1Ot79IBlwolNXfpzh3qrFtn54aiF4ixJGj4ML5kOYYOw1RhnxlFmG6l0vY9hPZiJ6H0JE7XjkbsqZq9dOkOUo_3ZJWLAb0t3cT3kz-r7SphWIUUDuvGU0jLnZC1r98J3HmMXbfG4jCga7pPO0-Zwqua6T0CQRUhuQ3h5c7rnR7mlRFSKWTgICgjmJ3JUH5lA7v1UwmyemoBzs5P5kRDs.lZhWUtixtAko1K4ojS9o1Q)
 
 ## Changelog ##
+
+### 3.7.4 - 26th August 2018 ###
+* bugfix: Fix bug with venue map shortcode when used without attributes
+
+### 3.7.3 - 13th July 2018 ###
+* bugfix: Fix Google Maps API key notice appearing when Open Street Maps is selected
+* bugfix: Corrected spelling error in venue arguments ("longtitude" corrected to "longitude")
 
 ### 3.7.2 - 8th June 2018 ###
 * bugfix: Fixed maps bug which affected users with Yoast's SEO Plugin installed
@@ -656,7 +663,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * Fixes event updated failing on cron jobs. (Fixes conflict with wp-cron-control https://wordpress.org/support/topic/clashes-with-events-plug-in)
 
 ### 2.9.0 - 16th September 2014 ###
-* Allow latitdue/longtitude co-ordinates of venue to be edited.
+* Allow latitude/longitude co-ordinates of venue to be edited.
 * Update timepicker and prevent invalid date/time selection for event start/end dates.
 * Add filters for event taxonomy properties: `eventorganiser_register_taxonomy_{taxonomy}`
 * Filter response to fullCalendar: `eventorganiser_fullcalendar`
@@ -755,7 +762,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
 * When restricting a calendar by category(ies). Only those categories appear in the category drop-down, if this is added.
 * Added event tag to fullCalendar filters (`[eo_fullcalendar headerRight="tag"]`).
 * Included HTML description in iCal feed. ("alternative text representation" tag).
-* Included latitude/longtitude co-ordinates in iCal feed.
+* Included latitude/longitude co-ordinates in iCal feed.
 * Fix bugs with line wrapping in iCal feed.
 * Fixes bug where "am"/"pm" are translated in time input.
 * Fixes bug with `eo_date_interval()`.
@@ -802,7 +809,7 @@ Please see this [post](http://wp-event-organiser.com/blog/announcements/event-or
  - Support for 'COUNT' property
  - Improved error & warning feedback
  - Handle GEO tag
- - Import venue latitude/longtitude
+ - Import venue latitude/longitude
 * Themes can switch off plug-in template handling from functions.php with `add_theme_support( 'event-organiser' )`
 * Added support for `event_occurrence__not_in` in `eo_get_events()` and `WP_Query()`
 * Improved MP6 compatability

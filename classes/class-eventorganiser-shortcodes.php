@@ -21,8 +21,8 @@ class EventOrganiser_Shortcodes {
 		add_action('wp_footer', array(__CLASS__, 'print_script'));
 	}
  
-	static function handle_calendar_shortcode($atts=array()) {
-
+	static function handle_calendar_shortcode($atts = array()) {
+		$atts = (array) $atts;
 		/* Shortcodes don't accept hyphens, so convert taxonomy names */
 		$taxs = array('category','tag','venue');
 		foreach ($taxs as $tax){
@@ -199,8 +199,10 @@ class EventOrganiser_Shortcodes {
 		return $matches[1];
 	}
 
-	static function handle_venuemap_shortcode($atts) {
+	static function handle_venuemap_shortcode($atts = array()) {
 		global $post;
+
+		$atts = (array) $atts;
 
 		if( !empty( $atts['event_venue'] ) ){
 			$atts['venue'] = $atts['event_venue'];
@@ -240,6 +242,7 @@ class EventOrganiser_Shortcodes {
 
 
 	static function handle_eventlist_shortcode($atts=array(),$content=null) {
+		$atts = (array) $atts;
 		$taxs = array('category','tag','venue');
 		foreach ($taxs as $tax){
 			if(isset($atts['event_'.$tax])){
