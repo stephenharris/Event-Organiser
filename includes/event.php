@@ -5,7 +5,7 @@
  */
 /**
 * This functions updates a post of event type, with data given in the $post_data
-* and event data given in $event_data. Returns the post_id. 
+* and event data given in $event_data. Returns the post_id.
 *
 * Triggers {@see `eventorganiser_save_event`} passing event (post) ID
 *
@@ -17,7 +17,7 @@
 *      * (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
 *      * (string) BYDAY=ND. N= 1|2|3|4|-1 (first, second, third, fourth, last). D is day of week SU|MO|TU|WE|TH|FR|SA. E.g. BYDAY=2TU (repeat on second tuesday)
 *   * For weekly schedules,
-*      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
+*      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays.
 *      * Can be left blank to repeat weekly from the start date.
 * * `frequency` => (int) positive integer, sets frequency of recurrence (every 2 days, or every 3 days etc)
 * * `all_day` => 1 if its an all day event, 0 if not
@@ -25,7 +25,7 @@
 * * `end` => end date (of first occurrence)  as a datetime object
 * * `until` =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
 * * `schedule_last` =>  Alias of until. Deprecated 2.13.0, use until.
-* * `number_occurrences` => Instead of specifying `until` you can specify the number of occurrence a recurring event should have. 
+* * `number_occurrences` => Instead of specifying `until` you can specify the number of occurrence a recurring event should have.
 * This is only used if `until` is not, and for daily, weekly, monthly or yearly recurring events.
 * * `include` => array of datetime objects to include in the schedule
 * * `exclude` => array of datetime objects to exclude in the schedule
@@ -41,9 +41,9 @@
 function eo_update_event( $post_id, $event_data = array(), $post_data = array() ){
 
 	$post_id = (int) $post_id;
-	
+
 	$input = array_merge( $post_data, $event_data );
-	
+
 	//Backwards compat:
 	if( !empty( $input['venue'] ) ){
 		$input['tax_input']['event-venue'] = $input['venue'];
@@ -51,25 +51,25 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 	if( !empty( $input['category'] ) ){
 		$input['tax_input']['event-category'] = $input['category'];
 	}
-	
-	$event_keys = array_flip( array( 
-		'start', 'end', 'schedule', 'schedule_meta', 'frequency', 
+
+	$event_keys = array_flip( array(
+		'start', 'end', 'schedule', 'schedule_meta', 'frequency',
 		'all_day', 'until', 'schedule_last', 'include', 'exclude', 'occurs_by', 'number_occurrences',
 	) );
-	
+
 	$post_keys = array_flip( array(
-		'post_title','post_content','post_status', 'post_type','post_author','ping_status','post_parent','menu_order', 
+		'post_title','post_content','post_status', 'post_type','post_author','ping_status','post_parent','menu_order',
 		'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id', 'tax_input',
 		'comment_status', 'context', 'post_date', 'post_date_gmt',
 	) );
-	
+
 	$event_data = array_intersect_key( $input, $event_keys );
 	$post_data = array_intersect_key( $input, $post_keys ) + $post_data;
-	 
+
 	if( empty( $post_id ) ){
 		return new WP_Error( 'eo_error', 'Empty post ID.' );
 	}
-		
+
 	/**
 	 *@ignore
 	 */
@@ -80,7 +80,7 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 	$post_data = apply_filters( 'eventorganiser_update_event_post_data', $post_data, $post_id, $post_data, $event_data );
 
 	if( !empty($post_data) ){
-		$post_data['ID'] = $post_id;		
+		$post_data['ID'] = $post_id;
 		wp_update_post( $post_data );
 	}
 
@@ -94,7 +94,7 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 		}
 		unset( $event_data['schedule_last'] );
 	}
-	
+
 	//Get previous data, parse with data to be updated
 	$prev = eo_get_event_schedule( $post_id );
 	$event_data = wp_parse_args( $event_data, $prev );
@@ -103,7 +103,7 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 	if( ( empty($event_data['schedule']) || 'once' == $event_data['schedule'] ) && !empty($event_data['include']) ){
 		$event_data['schedule'] = 'custom';
 	}
-	
+
 	$event_data = _eventorganiser_generate_occurrences( $event_data );
 
 	if( is_wp_error( $event_data ) ){
@@ -145,7 +145,7 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 *      * (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
 *      * (string) BYDAY=ND. N= 1|2|3|4|-1 (first, second, third, fourth, last). D is day of week SU|MO|TU|WE|TH|FR|SA. E.g. BYDAY=2TU (repeat on second tuesday)
 *   * For weekly schedules,
-*      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
+*      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays.
 *      * Can be left blank to repeat weekly from the start date.
 * * `frequency` => (int) positive integer, sets frequency of recurrence (every 2 days, or every 3 days etc)
 * * `all_day` => 1 if its an all day event, 0 if not
@@ -153,7 +153,7 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 * * `end` => end date (of first occurrence)  as a datetime object
 * * `until` =>  **START** date of last occurrence (or upper-bound thereof) as a datetime object
 * * `schedule_last` =>  Alias of until. Deprecated 2.13.0, use until.
-* * `number_occurrences` => Instead of specifying `until` you can specify the number of occurrence a recurring event should have. 
+* * `number_occurrences` => Instead of specifying `until` you can specify the number of occurrence a recurring event should have.
 * This is only used if `until` is not, and for daily, weekly, monthly or yearly recurring events.
 * * `include` => array of datetime objects to include in the schedule
 * * `exclude` => array of datetime objects to exclude in the schedule
@@ -176,13 +176,13 @@ function eo_update_event( $post_id, $event_data = array(), $post_data = array() 
 *
 *    $e = eo_insert_event($post_data,$event_data);
 * </code>
-* 
+*
 * ### Tutorial
 * See this <a href="http://www.stephenharris.info/2012/front-end-event-posting/">tutorial</a> or <a href="https://gist.github.com/3867194">this Gist</a> on front-end event posting.
 *
 * @since 1.5
 * @link http://www.stephenharris.info/2012/front-end-event-posting/ Tutorial on front-end event posting
-* @uses wp_insert_post() 
+* @uses wp_insert_post()
 *
 * @param array $post_data array of data to be used by wp_insert_post.
 * @param array $event_data array of event data
@@ -192,7 +192,7 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 	global $wpdb;
 
 	$input = array_merge( $post_data, $event_data );
-	
+
 	//Backwards compat:
 	if( !empty( $input['venue'] ) ){
 		$input['tax_input']['event-venue'] = $input['venue'];
@@ -200,26 +200,26 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 	if( !empty( $input['category'] ) ){
 		$input['tax_input']['event-category'] = $input['category'];
 	}
-	
+
 	$event_keys = array_flip( array(
-		'start', 'end', 'schedule', 'schedule_meta', 'frequency', 'all_day', 
-		'until', 'schedule_last', 'include', 'exclude', 'occurs_by', 'number_occurrences', 
+		'start', 'end', 'schedule', 'schedule_meta', 'frequency', 'all_day',
+		'until', 'schedule_last', 'include', 'exclude', 'occurs_by', 'number_occurrences',
 	) );
-	
+
 	$post_keys = array_flip( array(
-		'post_title','post_content','post_status', 'post_type','post_author','ping_status','post_parent','menu_order', 
+		'post_title','post_content','post_status', 'post_type','post_author','ping_status','post_parent','menu_order',
 		'to_ping', 'pinged', 'post_password', 'guid', 'post_content_filtered', 'post_excerpt', 'import_id', 'tax_input',
 		'comment_status', 'context',  'post_date', 'post_date_gmt',
 	) );
-	
+
 	$event_data = array_intersect_key( $input, $event_keys ) + $event_data;
 	$post_data = array_intersect_key( $input, $post_keys );
-		
+
 	//If schedule is 'once' and dates are included - set to 'custom':
 	if( ( empty($event_data['schedule']) || 'once' == $event_data['schedule'] ) && !empty($event_data['include']) ){
 		$event_data['schedule'] = 'custom';
 	}
-	
+
 	if( !empty( $event_data['schedule_last'] ) ){
 		if( !isset( $event_data['until'] ) ){
 			$event_data['until'] = clone $event_data['schedule_last'];
@@ -228,7 +228,7 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 	}
 
 	$event_data = _eventorganiser_generate_occurrences( $event_data );
-		
+
 	if( is_wp_error( $event_data ) ){
 		return $event_data;
 	}
@@ -237,27 +237,27 @@ function eo_insert_event( $post_data = array(), $event_data = array() ){
 	 *@ignore
 	 */
 	$event_data = apply_filters( 'eventorganiser_insert_event_event_data', $event_data, $post_data, $event_data );
-	
+
 	/**
 	 *@ignore
 	 */
 	$post_data = apply_filters( 'eventorganiser_insert_event_post_data', $post_data, $post_data, $event_data );
-		
+
 	//Finally we create event (first create the post in WP)
-	$post_input = array_merge(array('post_title'=>'untitled event'), $post_data, array('post_type'=>'event'));			
+	$post_input = array_merge(array('post_title'=>'untitled event'), $post_data, array('post_type'=>'event'));
 	$post_id = wp_insert_post($post_input, true);
 
-	//Did the event insert correctly? 
-	if ( is_wp_error( $post_id) ) 
+	//Did the event insert correctly?
+	if ( is_wp_error( $post_id) )
 			return $post_id;
 
 	_eventorganiser_insert_occurrences($post_id, $event_data);
-			
+
 	//Action used to break cache & trigger Pro actions (& by other plug-ins?)
 	/**
 	 * Triggered after an event has been updated.
-	 * 
-	 * @param int $post_id The ID of the event 
+	 *
+	 * @param int $post_id The ID of the event
 	 */
 	do_action( 'eventorganiser_save_event', $post_id );
 
@@ -287,46 +287,46 @@ add_action( 'dp_duplicate_post', '_eventorganiser_maybe_duplicate_post', 50, 2 )
  *
  * This function does not update any of the event schedule details.
  * **Don't call this unless you know what you're doing**.
- * 
+ *
  * @since 1.5
  * @access private
  * @param int $post_id the event's (post) ID to be deleted
  * @param int|array $occurrence_ids Occurrence ID (or array of IDs) for specificaly occurrences to delete. If empty/false, deletes all.
- * 
+ *
  */
 function eo_delete_event_occurrences( $event_id, $occurrence_ids = false ){
 	global $wpdb;
 	//TODO use this in break/remove occurrence
-	
+
 	//Let's just ensure empty is cast as false
 	$occurrence_ids = ( empty( $occurrence_ids ) ? false : $occurrence_ids );
-	
+
 	if( $occurrence_ids !== false ){
 		$occurrence_ids = (array) $occurrence_ids;
 		$occurrence_ids = array_map( 'absint', $occurrence_ids );
 		$occurrence_ids_in = implode( ', ', $occurrence_ids );
-		
+
 		$raw_sql = "DELETE FROM $wpdb->eo_events WHERE post_id=%d AND event_id IN( $occurrence_ids_in )";
 
 	}else{
 		$raw_sql = "DELETE FROM $wpdb->eo_events WHERE post_id=%d";
 	}
-	
+
 	/**
 	 * @ignore
 	 */
 	do_action( 'eventorganiser_delete_event', $event_id, $occurrence_ids ); //Deprecated - do not use!
-	
+
 	/**
 	 * Triggers just before the specified occurrences for the event are deleted.
-	 * 
+	 *
 	 * @param int $event_id The (post) ID of the event of which we're deleting occurrences.
 	 * @param array|false $occurrence_ids An array of occurrences to be delete. If `false`, all occurrences are to be removed.
 	 */
 	do_action( 'eventorganiser_delete_event_occurrences', $event_id, $occurrence_ids );
-	
+
 	$del = $wpdb->get_results( $wpdb->prepare(  $raw_sql, $event_id ) );
-	
+
 }
 add_action( 'delete_post', 'eo_delete_event_occurrences', 10 );
 
@@ -474,14 +474,14 @@ function _eventorganiser_insert_occurrences( $post_id, $event_data ) {
 *      * (string) BYMONTHDAY=XX to repeat on XXth day of month, e.g. BYMONTHDAY=01 to repeat on the first of every month.
 *      * (string) BYDAY=ND. N= 1|2|3|4|-1 (first, second, third, fourth, last). D is day of week SU|MO|TU|WE|TH|FR|SA. E.g. BYDAY=2TU (repeat on second tuesday)
 *   * For weekly schedules,
-*      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays. 
+*      * (array) Days to repeat on: (SU,MO,TU,WE,TH,FR,SA). e.g. set to array('SU','TU') to repeat on Tuesdays & Sundays.
 * * `occurs_by` - For use with monthly schedules: how the event recurs: BYDAY or BYMONTHDAY
 * * `frequency` => (int) positive integer, sets frequency of recurrence (every 2 days, or every 3 days etc)
 * * `all_day` => 1 if its an all day event, 0 if not
 * * `start` =>  start date (of first occurrence)  as a datetime object
 * * `end` => end date (of first occurrence)  as a datetime object
 * * `until` => For recurring events, the date they repeat until. Note that this may not be equal to `schedule_last` if
-*              dates are included/excluded. 
+*              dates are included/excluded.
 * * `schedule_last` =>  **START** date of last occurrence as a datetime object
 * * `include` => array of datetime objects to include in the schedule
 * * `exclude` => array of datetime objects to exclude in the schedule
@@ -493,7 +493,7 @@ function eo_get_event_schedule( $post_id = 0 ){
 
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
-	if( empty( $post_id ) ){ 
+	if( empty( $post_id ) ){
 		return false;
 	}
 
@@ -519,16 +519,16 @@ function eo_get_event_schedule( $post_id = 0 ){
 	} else {
 		// No start time, so set a default start time to next half-hour
 		$now = new DateTime( 'now', $tz );
-		
+
 		$minute = $now->format( 'i' ) > 30 ? 0 : 30;
-		
+
 		$now->setTime( $now->format( 'G' ), $minute );
-		
+
 		if( 0 === $minute ){
 			$now->modify( '+1 hour' );
 		}
-		
-		$event_details['start'] = $now; 
+
+		$event_details['start'] = $now;
 	}
 
 	// Get end time
@@ -551,7 +551,7 @@ function eo_get_event_schedule( $post_id = 0 ){
 		$event_details['until'] = clone $event_details['schedule_last'];
 		update_post_meta( $post_id, '_eventorganiser_schedule_until', $event_details['until']->format( 'Y-m-d H:i:s' ) );
 	}
-	
+
 	if ( ! empty( $event_details['include'] ) ) {
 		$event_details['include'] = array_map( 'eventorganiser_date_create', $event_details['include'] );
 	}
@@ -570,7 +570,7 @@ function eo_get_event_schedule( $post_id = 0 ){
 
 	/**
 	 * Filters the schedule metadata for an event (as returned by `eo_get_event_schedule()`.
-	 * 
+	 *
 	 * See documentation on `eo_get_event_schedule()` for more details.
 	 *
 	 * @param array $event_details Details of the event's dates and recurrence pattern
@@ -1008,30 +1008,30 @@ function eventorganiser_generate_ics_rrule( $post_id = 0 ) {
 }
 
 function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
-	
+
 	$vtimezone = "BEGIN:VTIMEZONE\r\n";
 	$vtimezone .= sprintf( "TZID:%s\r\n", $timezone->getName() );
-	
+
 	//$timezone->getTransitions() doesn't accept any arguments in php 5.2, and would be ineffecient
 	if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
 		return '';
 	}
-	
+
 	// get all transitions, and (as an estimate) an early one which we skip
-	$transitions = $timezone->getTransitions( $from - YEAR_IN_SECONDS / 2, $to );
-	
+	$transitions = $timezone->getTransitions( intval( $from - YEAR_IN_SECONDS / 2 ), (int) $to );
+
 	if ( ! $transitions ) {
 		return '';
 	}
 
 	foreach ( $transitions as $i => $trans ) {
-		
+
 		$pm      = $trans['offset'] >= 0 ? '+' : '-';
  		$hours   = floor( absint( $trans['offset'] ) / HOUR_IN_SECONDS ) % 24;
 		$minutes = ( absint( $trans['offset'] ) - $hours * HOUR_IN_SECONDS ) / MINUTE_IN_SECONDS;
-		
+
 		$tzto = $pm . str_pad( $hours, 2, '0', STR_PAD_LEFT ) . str_pad( $minutes, 2, '0', STR_PAD_LEFT );
-	
+
 		// skip the first entry, we just want it for the TZOFFSETFROM value of the next one
 		if ( $i == 0 ) {
 			$tzfrom = $tzto;
@@ -1039,22 +1039,22 @@ function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
 				continue;
 			}
 		}
-		
-		$type = $trans['isdst'] ? 'DAYLIGHT' : 'STANDARD';		
+
+		$type = $trans['isdst'] ? 'DAYLIGHT' : 'STANDARD';
 		$dt   = new DateTime( $trans['time'], $timezone );
-			
+
 		$vtimezone .= sprintf( "BEGIN:%s\r\n", $type );
 		$vtimezone .= sprintf( "TZOFFSETFROM:%s\r\n", $tzfrom ); //needs formatting
 		$vtimezone .= sprintf( "TZOFFSETTO:%s\r\n", $tzto ); //needs formatting
 		$vtimezone .= sprintf( "DTSTART:%s\r\n",  $dt->format('Ymd\THis') );
-		$vtimezone .= sprintf( "TZNAME:%s\r\n",  $trans['abbr'] ); 
+		$vtimezone .= sprintf( "TZNAME:%s\r\n",  $trans['abbr'] );
 		$vtimezone .= sprintf( "END:%s\r\n", $type );
-		
-		$tzfrom = $tzto;	
+
+		$tzfrom = $tzto;
 	}
-	
+
 	$vtimezone .= 'END:VTIMEZONE';
-	
+
 	return $vtimezone;
 }
 
@@ -1072,8 +1072,8 @@ function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
 		global $wpdb;
 
 		$remove = $wpdb->get_row($wpdb->prepare(
-			"SELECT {$wpdb->eo_events}.StartDate, {$wpdb->eo_events}.StartTime  
-			FROM {$wpdb->eo_events} 
+			"SELECT {$wpdb->eo_events}.StartDate, {$wpdb->eo_events}.StartTime
+			FROM {$wpdb->eo_events}
 			WHERE post_id=%d AND event_id=%d",$post_id,$event_id));
 
 		if( !$remove )
@@ -1092,7 +1092,7 @@ function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
 		}
 
 		//Update post meta and delete date from events table
-		update_post_meta( $post_id,'_eventorganiser_event_schedule',$event_details);		
+		update_post_meta( $post_id,'_eventorganiser_event_schedule',$event_details);
 		eo_delete_event_occurrences( $post_id, $event_id );
 
 		//Clear cache
@@ -1101,16 +1101,16 @@ function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
 		return true;
 	}
 
-	
+
 /**
- * Updates a specific occurrence, and preserves the occurrence ID. 
- * 
+ * Updates a specific occurrence, and preserves the occurrence ID.
+ *
  * Currently two occurrences cannot occupy the same date.
- * 
+ *
  * @ignore
  * @access private
  * @since 2.12.0
- * 
+ *
  * @param int $event_id      ID of the event whose occurrence we're moving
  * @param int $occurrence_id ID of the occurrence we're moving
  * @param DateTime $start    New start DateTime of the occurrence
@@ -1120,42 +1120,42 @@ function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
 function eventorganiser_move_occurrence( $event_id, $occurrence_id, $start, $end ){
 
 	global $wpdb;
-		
+
 	$old_start = eo_get_the_start( DATETIMEOBJ, $event_id, null, $occurrence_id );
 	$schedule  = eo_get_event_schedule( $event_id );
-	
+
 	if( $start == $old_start ){
 		return true;
 	}
-	
+
 	$current_occurrences = eo_get_the_occurrences( $event_id );
 	unset( $current_occurrences[$occurrence_id] );
 	$current_occurrences = array_map( 'eo_format_datetime', $current_occurrences );
-	
+
 	if( in_array( $start->format( 'd-m-Y' ), $current_occurrences ) ){
-		return new WP_Error( 'events-cannot-share-date', __( 'There is already an occurrence on this date', 'eventorganiser' ) );		
+		return new WP_Error( 'events-cannot-share-date', __( 'There is already an occurrence on this date', 'eventorganiser' ) );
 	}
-	
+
 	//We update the date directly in the DB first so the occurrence is not deleted and recreated,
-	//but simply updated. 
-	
+	//but simply updated.
+
 	$wpdb->update(
-		$wpdb->eo_events, 
+		$wpdb->eo_events,
 		array(
 			'StartDate'  => $start->format( 'Y-m-d' ),
 			'StartTime'  => $start->format( 'H:i:s' ),
 			'EndDate'    => $end->format( 'Y-m-d' ),
 			'FinishTime' => $end->format( 'H:i:s' ),
-		),				
+		),
 		array( 'event_id' => $occurrence_id )
 	);
-	
+
 	wp_cache_delete( 'eventorganiser_occurrences_'.$event_id );//Important: update DB clear cache
 	wp_cache_delete( 'eventorganiser_all_occurrences_'.$event_id );//Important: update DB clear cache
 
 	//Now update event schedule...
-	
-	//If date being removed was manually included remove it, 
+
+	//If date being removed was manually included remove it,
 	//otherwise add it to exclude. Then add new date as include.
 	if( false === ( $index = array_search( $old_start, $schedule['include'] ) ) ){
 		$schedule['exclude'][] = $old_start;
@@ -1165,11 +1165,11 @@ function eventorganiser_move_occurrence( $event_id, $occurrence_id, $start, $end
 	$schedule['include'][] = $start;
 
 	$re = eo_update_event( $event_id, $schedule );
-	
+
 	if( $re && !is_wp_error( $re ) ){
 		return true;
 	}
-	
+
 	return $re;
 }
 ?>
