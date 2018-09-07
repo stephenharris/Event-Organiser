@@ -233,11 +233,13 @@ function eventorganiser_pre_get_posts( $query ) {
 	}
 
 	//Add the posts_* filters to modify the query
-	add_filter('posts_fields', 'eventorganiser_event_fields',10,2);
-	add_filter('posts_join', 'eventorganiser_join_tables',10,2);
-	add_filter('posts_where','eventorganiser_events_where',10,2);
-	add_filter('posts_orderby','eventorganiser_sort_events',10,2);
-	add_filter('posts_groupby', 'eventorganiser_event_groupby',10,2);
+	if ( ! is_admin() ) {
+		add_filter('posts_fields', 'eventorganiser_event_fields',10,2);
+		add_filter('posts_join', 'eventorganiser_join_tables',10,2);
+		add_filter('posts_where','eventorganiser_events_where',10,2);
+		add_filter('posts_orderby','eventorganiser_sort_events',10,2);
+		add_filter('posts_groupby', 'eventorganiser_event_groupby',10,2);
+	}
 }
 add_action( 'pre_get_posts', 'eventorganiser_pre_get_posts', 11 );
 
