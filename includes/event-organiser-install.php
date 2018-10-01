@@ -431,6 +431,8 @@ function eventorganiser_uninstall( $is_networkwide = false ){
 function eventorganiser_uninstall_site(){
 	global $wpdb,$eventorganiser_roles, $wp_roles,$wp_taxonomies;
 
+	eventorganiser_wpdb_fix();
+
 	eventorganiser_clear_cron_jobs();
 	eventorganiser_create_event_taxonomies();
 
