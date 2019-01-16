@@ -221,7 +221,7 @@ function eventorganiser_public_fullcalendar() {
 			//Event categories
 			$terms = get_the_terms( $post->ID, 'event-category' );
 			$event['category']=array();
-			if( ! is_wp_error( $terms ) ) :
+			if ( $terms && ! is_wp_error( $terms ) ) :
 				foreach ($terms as $term):
 					$event['category'][]= $term->slug;
 					$event['className'][]='category-'.$term->slug;//deprecated. use eo-event-cat-{slug}
