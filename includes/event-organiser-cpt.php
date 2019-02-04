@@ -58,6 +58,7 @@ function eventorganiser_create_event_taxonomies() {
 			'show_admin_column'     => false,//Custom quick edit
 			'update_count_callback' => '_update_post_term_count',
 			'query_var'             => true,
+			'show_in_rest'			=> true,
 			'rewrite'               => $venue_rewrite,
 			'capabilities'          => array(
 				'manage_terms' => 'manage_venues',
@@ -175,6 +176,7 @@ function eventorganiser_create_event_taxonomies() {
 			'update_count_callback' => '_update_post_term_count',
 			'query_var'             => true,
 			'public'                => true,
+			'show_in_rest'			=> true,
 			'rewrite'               => $tag_rewrite,
 			'capabilities' => array(
 				'manage_terms' => 'manage_event_categories',
@@ -368,7 +370,7 @@ function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 	/* If editing, deleting, or reading a event, get the post and post type object. */
 	if ( 'edit_event' == $cap || 'delete_event' == $cap || 'read_event' == $cap ) {
 		$post = get_post( $args[0] );
-		$post_type = get_post_type_object( $post->post_type );	
+		$post_type = get_post_type_object( $post->post_type );
 
 		/* Set an empty array for the caps. */
 		$caps = array();
@@ -443,14 +445,14 @@ function eventorganiser_make_item_current($items,$args){
 				continue;
 
 			$item->classes[] = 'current-menu-item';
-	
+
 			$_anc_id = (int) $item->db_id;
 			$active_ancestor_item_ids=array();
 			while(( $_anc_id = get_post_meta( $_anc_id, '_menu_item_menu_item_parent', true ) ) &&
 				! in_array( $_anc_id, $active_ancestor_item_ids )  ){
 					$active_ancestor_item_ids[] = $_anc_id;
 			}
-		
+
 			//Loop through ancestors and give them 'ancestor' or 'parent' class
 			foreach ($items as $key=>$parent_item){
               	      $classes = (array) $parent_item->classes;
@@ -494,7 +496,7 @@ function eventorganiser_menu_link($items) {
 
 	if(is_post_type_archive('event')|| is_singular('event')|| eo_is_event_taxonomy())
 		$class = 'current_page_item';
-	
+
 	$items .= sprintf('<li class="%s"><a href="%s" > %s </a></li>',
 						$class,
 						get_post_type_archive_link('event'),
@@ -511,17 +513,17 @@ add_filter( 'wp_list_pages', 'eventorganiser_menu_link',10,1 );
  * @access private
  * @since 1.0
  */
-function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) { 
+function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 
 	if (  ! in_array( $screen_id, array( 'event', 'edit-event', 'event_page_venues', 'event_page_calendar' ) ) ) {
 		return $contextual_help;
 	}
-	
+
 	switch($screen_id):
 		//Add help for event editing / creating page
 		case 'event':
 			    $screen->add_help_tab( array(
-			        'id'      => 'creating-events', 
+			        'id'      => 'creating-events',
 			        'title'   => __('Creating events','eventorganiser'),
         			'content' => '<p>' . __('Creating events:','eventorganiser') . '</p>'.
 			'<ul>' .
@@ -542,7 +544,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 			'</ul>'
 				));
 			    $screen->add_help_tab( array(
-			        'id'      => 'selecting-venues', 
+			        'id'      => 'selecting-venues',
 			        'title'   => __('Selecting a venue','eventorganiser'),
         			'content' => '<p>' . __('Selecting a venue','eventorganiser') . '</p>' .
 					'<ul>' .
@@ -563,7 +565,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 
 		//Add help for venue admin table page
 		case 'event_page_venues':
-			$contextual_help = 
+			$contextual_help =
 			'<p>' . __("Hovering over a row in the venues list will display action links that allow you to manage that venue. You can perform the following actions:",'eventorganiser') . '</p>' .
 			'<ul>' .
 				'<li>' . __('Edit takes you to the editing screen for that venue. You can also reach that screen by clicking on the venue title.','eventorganiser') . '</li>' .
@@ -578,7 +580,7 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 				'id'=>'overview',
 				'title'=>__('Overview'),
 				'content'=>'<p>' . __("This page shows all (occurrances of) events. You can view the summary of an event by clicking on it. If you have the necessary permissions, a link to the event's edit page will appear also.",'eventorganiser'). '</p>' .
-			'<p>' . __("By clicking the relevant tab, you can view events in Month, Week or Day mode. You can also filter the events by events by category and venue. The 'go to date' button allows you to quickly jump to a specific date.",'eventorganiser'). '</p>' 
+			'<p>' . __("By clicking the relevant tab, you can view events in Month, Week or Day mode. You can also filter the events by events by category and venue. The 'go to date' button allows you to quickly jump to a specific date.",'eventorganiser'). '</p>'
 			));
 			$screen->add_help_tab( array(
 				'id'=>'add-event',
@@ -588,9 +590,9 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 	endswitch;
 
 	//Add a link to Event Organiser documentation on every EO page
-	$screen->set_help_sidebar( 
+	$screen->set_help_sidebar(
 		'<p> <strong>'. __('For more information','eventorganiser').'</strong></br>'
-			.sprintf(__('See the <a %s> documentation</a>','eventorganiser'),'target="_blank" href="http://docs.wp-event-organiser.com/"').'</p>' 
+			.sprintf(__('See the <a %s> documentation</a>','eventorganiser'),'target="_blank" href="http://docs.wp-event-organiser.com/"').'</p>'
 			.sprintf('<p><strong><a href="%s">%s</a></strong></p>', admin_url('edit.php?post_type=event&page=debug'),__('Debugging Event Organiser','eventorganiser' ) )
 			.sprintf('<p><strong><a href="%s">%s</a></strong></p>', admin_url('index.php?page=eo-pro'),__('Go Pro!','eventorganiser'))
 	);
@@ -658,7 +660,7 @@ add_action('delete_event-category','eventorganiser_tax_term_deleted',10,2);
  * Add the colour picker forms to main taxonomy page: (This one needs stuff wrapped in Divs)
  * uses eventorganiser_tax_meta_form to display the guts of the form.
  * Hooked onto event-category_add_form_fields
- * @uses eventorganiser_tax_meta_form 
+ * @uses eventorganiser_tax_meta_form
  *
  * @ignore
  * @access private
@@ -705,7 +707,7 @@ function eventorganiser_tax_meta_form( $colour ) {
 	<th>
 		<label for="event-category-color"><?php esc_html_e( 'Color', 'eventorganiser' )?></label>
 	</th>
-	<td> 
+	<td>
 		<input type="text" style="width:100px" name="eo_term_meta[colour]" class="color colour-input" id="event-category-color" value="<?php echo $colour; ?>" aria-describedby="event-category-color-desc" />
 		<a id="link-color-example" class="color eo-event-category-color-sample hide-if-no-js"></a>
    		<div style="z-index: 100; background: none repeat scroll 0% 0% rgb(238, 238, 238); border: 1px solid rgb(204, 204, 204); position: absolute;display: none;" id="colorpicker"></div>
@@ -713,7 +715,7 @@ function eventorganiser_tax_meta_form( $colour ) {
 	</td>
 	<script>
 var farbtastic;(function($){var pickColor=function(a){farbtastic.setColor(a);$('.colour-input').val(a);$('a.color').css('background-color',a)};$(document).ready(function(){farbtastic=$.farbtastic('#colorpicker',pickColor);pickColor($('.colour-input').val());$('.color').click(function(e){e.preventDefault();if($('#colorpicker').is(":visible")){$('#colorpicker').hide()}else{$('#colorpicker').show()}});$('.colour-input').keyup(function(){var a=$('.colour-input').val(),b=a;a=a.replace(/[^a-fA-F0-9]/,'');if('#'+a!==b)$('.colour-input').val(a);if(a.length===3||a.length===6)pickColor('#'+a)});$(document).mousedown(function(){$('#colorpicker').hide()})})})(jQuery);
-	</script>	
+	</script>
 <?php
 }
 
@@ -730,7 +732,7 @@ function eventorganiser_add_color_column_header( $columns ) {
 			array_slice( $columns, $offset, null )
 		);
 }
-add_filter( 'manage_edit-event-category_columns', 'eventorganiser_add_color_column_header' );  
+add_filter( 'manage_edit-event-category_columns', 'eventorganiser_add_color_column_header' );
 
 
 /**
@@ -798,7 +800,7 @@ function eventorganiser_get_terms_meta($terms){
 				$term_meta = get_option( "eo-event-category_{$term->term_id}");
 				$colour = (isset($term_meta['colour']) ? $term_meta['colour'] : '');
 				$term->color = $colour;
-			}	
+			}
 		endforeach;
 	endif;
 	return $terms;
@@ -985,7 +987,7 @@ add_filter('get_edit_term_link','eventorganiser_edit_venue_link',10,3);
  *
 */
 function eventorganiser_threeWP( $activity ){
-	
+
 
 	if( isset( $activity['activity_id'] ) && $activity['activity_id'] == '3broadcast_broadcasted' && 'event' == get_post_type( get_the_ID() ) ){
 
@@ -1013,12 +1015,12 @@ function eventorganiser_threeWP( $activity ){
 			$venue_thumbnail = compact( 'filename_path' , 'file', 'filename_base', 'post_title', 'guid', 'menu_order', 'post_excerpt' );
 			unset( $venue_meta['_eventorganiser_thumbnail_id'] );
 		}
-	
+
 		foreach( $details as $broadcast ){
 			$blog_id = $broadcast['blog_id'];
 			$post_id = $broadcast['post_id'];
 			switch_to_blog( $blog_id );
-			
+
 			$event_data = array ( 'force_regenerate_dates' => true );
 			eo_update_event($post_id, $event_data );
 
@@ -1071,7 +1073,7 @@ function eventorganiser_threeWP( $activity ){
 						'post_status' => 'inherit',
 					);
 					$attachment_id = wp_insert_attachment( $attachment, $file_path, 0 );
-		
+
 					// Now to handle the metadata.
 					require_once(ABSPATH . "wp-admin" . '/includes/image.php' );
 					$attach_data = wp_generate_attachment_metadata( $attachment_id, $file_path );
@@ -1080,7 +1082,7 @@ function eventorganiser_threeWP( $activity ){
 
 				eo_update_venue_meta( $venue_id, '_eventorganiser_thumbnail_id', $attachment_id );
 			}//If original file exists
-			
+
 		}//Foreach blog
 		switch_to_blog( $current_blog_id );
 	}//If broadcasting
@@ -1124,7 +1126,7 @@ function eventorganiser_event_shortlink( $shortlink, $id, $context ) {
 	if( 'event' == get_post_type( $event_id )  ){
 		$shortlink = home_url( '?p=' . $event_id );
 	}
-	
+
 	return $shortlink;
 }
 add_filter( 'pre_get_shortlink', 'eventorganiser_event_shortlink', 10, 3 );
@@ -1178,19 +1180,19 @@ add_action( 'admin_bar_menu', '_eventorganiser_add_venue_admin_bar_edit_menu', 8
  * @param string $taxonomy Taxonomy for the split term.
  */
 function _eventorganiser_handle_split_shared_terms( $term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
-	
+
 	switch( $taxonomy ){
-		
+
 		case 'event-venue':
 			global $wpdb;
-			 
-			$wpdb->update( 
-				$wpdb->eo_venuemeta, 
-				array( 'eo_venue_id' => $new_term_id ), 
+
+			$wpdb->update(
+				$wpdb->eo_venuemeta,
+				array( 'eo_venue_id' => $new_term_id ),
 				array( 'eo_venue_id' => $term_id )
 			);
 			break;
-			
+
 		case 'event-category':
 			$value = get_option( "eo-event-category_{$term_id}" );
 			update_option( "eo-event-category_{$new_term_id}", $value );
