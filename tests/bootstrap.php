@@ -10,7 +10,7 @@ echo "Using WordPress test library at ". $_tests_dir . PHP_EOL;
 
 //Install and activate plug-ins
 function _manually_load_plugin() {
-	require_once dirname( __FILE__ ) . '/../dist/event-organiser/event-organiser.php';
+	require_once dirname( __FILE__ ) . '/../event-organiser.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 

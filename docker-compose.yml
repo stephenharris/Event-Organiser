@@ -1,0 +1,38 @@
+version: '3.1'
+
+services:
+
+  wordpress:
+    build:
+      context: docker
+      args:
+        WP_VERSION : 5.0.3
+        PHP_VERSION : 7.1
+    container_name: eventorg_php
+    volumes:
+      - .:/var/www/html/wp-content/plugins/event-organiser
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: eventorg_mysql
+      WORDPRESS_DB_USER: admin
+      WORDPRESS_DB_PASSWORD: password
+      WORDPRESS_DB_NAME: wordpress
+
+  db:
+    image: mysql:5.7
+    container_name: eventorg_mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+
+  browser:
+    hostname: eventorg_browser
+    container_name: eventorg_browser
+    image: selenium/standalone-chrome:2.53.0
+    #image: selenium/standalone-firefox
+
