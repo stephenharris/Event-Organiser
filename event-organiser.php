@@ -66,7 +66,7 @@ define( 'EVENT_ORGANISER_DIR', plugin_dir_path( __FILE__ ) );
 /**
  * For use in datetime formats. To return a datetime object rather than formatted string
  */
-define( 'DATETIMEOBJ', 'DATETIMEOBJ', true );
+define( 'DATETIMEOBJ', 'DATETIMEOBJ' );
 
 
 /**
