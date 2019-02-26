@@ -608,10 +608,14 @@ function eo_get_venues($args=array()){
 			$args['longitude'] = $args['longtitude'];
 		}
 
+		$args['name'] = $name;
+
+		$args = apply_filters('eventorganiser_pre_insert_venue', $args);
+
 		$term_args = array_intersect_key($args, array('name'=>'','term_id'=>'','term_group'=>'','term_taxonomy_id'=>'','alias_of'=>'','parent'=>0,'slug'=>'','count'=>''));
 		$meta_args = array_intersect_key($args, array('description'=>'','address'=>'','postcode'=>'','city'=>'','state'=>'','country'=>'','latitude'=>'','longitude'=>''));
 
-		$resp = wp_insert_term($name,'event-venue',$term_args);
+		$resp = wp_insert_term($args['name'], 'event-venue', $term_args);
 
 		if(is_wp_error($resp)){
 			return $resp;
