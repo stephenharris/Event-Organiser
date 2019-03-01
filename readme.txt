@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 4.9.8
+Tested up to: 5.1
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,15 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.7.5 - 1st March 2019
+* feature: Added eventorganiser_pre_insert_venue filter
+* bugfix: Use case-sensitive constants for PHP 7.3 [#454](https://github.com/stephenharris/Event-Organiser/issues/454)
+* bugfix: Fix issue if event categories are invalid [#455](https://github.com/stephenharris/Event-Organiser/issues/455)
+* bugfix: Fix user_events option for calendar not working
+* bugfix: Ensure table names are reigstered before removing tables. Fixes [#444](https://github.com/stephenharris/Event-Organiser/issues/444)
+* bugfix: Fix warning for PHP 7+ where string is passed, not integer
+* bugfix: Fix typo
 
 = 3.7.4 - 26th August 2018 =
 * bugfix: Fix bug with venue map shortcode when used without attributes
