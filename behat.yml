@@ -4,19 +4,41 @@ default:
       contexts:
         - FeatureContext:
             screenshot_dir: '%paths.base%/failed-scenerios/'
+        - FeatureContext
         - WordPressAdminContext
         - WordPressPostListContext
+        - \StephenHarris\WordPressBehatExtension\Context\WordPressContext
         - \StephenHarris\WordPressBehatExtension\Context\WordPressMailContext
+        - \StephenHarris\WordPressBehatExtension\Context\Plugins\WordPressPluginContext
+        - \StephenHarris\WordPressBehatExtension\Context\WordPressLoginContext
+        - \StephenHarris\WordPressBehatExtension\Context\WordPressAdminContext
+        - \StephenHarris\WordPressBehatExtension\Context\Terms\WordPressTermContext
+        - \StephenHarris\WordPressBehatExtension\Context\Options\WordPressOptionContext
+        - \Behat\MinkExtension\Context\MinkContext
+
   extensions:
     StephenHarris\WordPressBehatExtension:
-      path: '/tmp/wordpress'
+      path: '/var/www/html'
+      site_url: 'http://wordpress'
       connection:
-        db: 'wordpress_test'
-        username: 'root'
-        password: ''
+        db: 'wordpress'
+        username: 'admin'
+        password: 'password'
+        host: 'eventorg_mysql'
       mail:
         directory: '/tmp/mail'
     Behat\MinkExtension:
-      base_url:    'http://localhost:8000'
+      base_url:    'http://wordpress'
       goutte: ~
       selenium2: ~
+      # Use goutte (basic PHP browser, super fast) as the default driver.
+      default_session: goutte
+      # For real browser testing and tests requiring JS use selenium2 driver.
+      # Tag features/scenarious with @javascript to use the selenium2 driver.
+      javascript_session: selenium2
+      # Configure browser to be used. Browser must be available on wd_host.
+      # Stick with chrome by default. It's 2x faster than firefox or phantomjs (your results may vary).
+      browser_name: chrome
+      selenium2:
+        wd_host: http://eventorg_browser:4444/wd/hub
+        capabilities: { "browser": "chrome", "version": "*" }

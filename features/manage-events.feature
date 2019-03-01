@@ -4,7 +4,7 @@ Feature: Manage events
     I need to be able to see the events admin page in the dashboard
 
     Background:
-        Given I have a vanilla wordpress installation
+        Given I have a vanilla WordPress installation
             | name          | email                   | username | password |
             | BDD WordPress | test.user@wordpress.dev | admin    | test     |
 
@@ -35,9 +35,9 @@ Feature: Manage events
             | Events         |
             | Media          |
             | Pages          |
-            | Comments (\d+) |
+            | Comments       |
             | Appearance     |
-            | Plugins (\d+)  |
+            | Plugins        |
             | Users          |
             | Tools          |
             | Settings       |

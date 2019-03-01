@@ -38,7 +38,7 @@ Domain Path: /languages
 /**
  * Set the plug-in database version
  */
-define( 'EVENT_ORGANISER_VER', '3.7.4' );
+define( 'EVENT_ORGANISER_VER', '3.7.5' );
 
 add_action( 'after_setup_theme', '_eventorganiser_set_constants' );
 function _eventorganiser_set_constants() {
@@ -66,7 +66,7 @@ define( 'EVENT_ORGANISER_DIR', plugin_dir_path( __FILE__ ) );
 /**
  * For use in datetime formats. To return a datetime object rather than formatted string
  */
-define( 'DATETIMEOBJ', 'DATETIMEOBJ', true );
+define( 'DATETIMEOBJ', 'DATETIMEOBJ' );
 
 
 /**

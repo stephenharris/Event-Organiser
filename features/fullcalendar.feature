@@ -4,7 +4,7 @@ Feature: Calendar of events
     I need to be able to display my events in a calendar
 
     Background:
-        Given I have a vanilla wordpress installation
+        Given I have a vanilla WordPress installation
             | name          | email                   | username | password |
             | BDD WordPress | test.user@wordpress.dev | admin    | test     |
 
@@ -22,7 +22,7 @@ Feature: Calendar of events
   	Scenario: Viewing events of the current month in the calendar
     	Given there are posts
             | post_title  | post_content      | post_status | post_author |
-            | Calendar    | [eo_fullcalendar] | publish     | 1           |
+            | Calendar    | [eo_fullcalendar] | publish     | admin       |
     	When I go to "calendar"
     	And the calendar finishes loading
     	Then I should see "Single"
@@ -33,7 +33,7 @@ Feature: Calendar of events
   	Scenario: Viewing occurrences of a particular event
     	Given there are posts
             | post_title  | post_content                                             | post_status | post_author |
-            | Calendar    | [eo_fullcalendar event_series="{{id of event "Daily"}}"] | publish     | 1           |
+            | Calendar    | [eo_fullcalendar event_series="{{id of event "Daily"}}"] | publish     | admin       |
     	When I go to "calendar"
     	And the calendar finishes loading
     	Then I should see "Daily"

@@ -294,7 +294,7 @@ jQuery(document).ready(function () {
                 				start: start.format( "YYYY-MM-DD" ),
                 				end: end.format( "YYYY-MM-DD" ),
                 				timeformat: options.timeFormatphp,
-                				users_events: 0,
+                				users_events: options.users_events,
                 		};
 
                 		if (typeof options.category !== "undefined" && options.category !== "") {

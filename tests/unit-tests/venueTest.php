@@ -405,4 +405,47 @@ class venueTest extends EO_UnitTestCase
 		$this->assertEquals(123, eo_get_venue_lng($venue_id['term_id']));
 	}
 
+	public function testPreInsertVenueFilter()
+	{
+		add_filter('eventorganiser_pre_insert_venue', array($this, 'pre_insert_venue_callback'));
+
+		$venue1 = array(
+			'name'        => 'Test Venue',
+			'description' => 'Description',
+			'address'     => '1 Test Road',
+			'city'        => 'Testville',
+			'state'       => 'Testas',
+			'country'     => 'United States of Tests',
+			'latitude'    => 0,
+			'longitude'  => 0,
+		);
+		$venue_ids = eo_insert_venue( $venue1['name'], $venue1 );
+		
+		$venue1 = eo_get_venue_by( 'id', $venue_ids['term_id'] );
+		$this->assertEquals('test-venue-testville', $venue1->slug);
+
+		$venue2 = array(
+			'name'        => 'Test Venue',
+			'description' => 'Description',
+			'address'     => '1 Test Road',
+			'city'        => 'AnotherCity',
+			'state'       => 'Testas',
+			'country'     => 'United States of Tests',
+			'latitude'    => 0,
+			'longitude'  => 0,
+		);
+
+		$venue_ids = eo_insert_venue( $venue2['name'], $venue2 );
+		
+		$venue2 = eo_get_venue_by( 'id', $venue_ids['term_id'] );
+		$this->assertEquals('test-venue-anothercity', $venue2->slug);
+
+		remove_filter('eventorganiser_pre_insert_venue', array($this, 'pre_insert_venue_callback'));
+	}
+
+	public function pre_insert_venue_callback($args){
+		$args['slug'] = sanitize_title($args['name'] . ' ' . $args['city']);
+		return $args;
+	}
+
 }

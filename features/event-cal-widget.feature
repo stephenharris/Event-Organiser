@@ -4,7 +4,7 @@ Feature: Event Calendar Widget
     I need to be able to see the events in a calendar widget on the frontend
 
     Background:
-        Given I have a vanilla wordpress installation
+        Given I have a vanilla WordPress installation
             | name          | email                   | username | password |
             | BDD WordPress | test.user@wordpress.dev | admin    | test     |
 
