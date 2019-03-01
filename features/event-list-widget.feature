@@ -4,7 +4,7 @@ Feature: Event List Widget
     I need to be able to see the events admin page in the dashboard
 
     Background:
-        Given I have a vanilla wordpress installation
+        Given I have a vanilla WordPress installation
             | name          | email                   | username | password |
             | BDD WordPress | test.user@wordpress.dev | admin    | test     |
 
@@ -122,8 +122,8 @@ Feature: Event List Widget
         When I go to "/"
         Then I should see "Events at Akva"
         And the Event List Widget should display
-            | 7th @Akva, Edinburgh for 2 hours |
-			| 14th @Akva, Edinburgh for 2 hours |
-            | 21st @Akva, Edinburgh for 2 hours |
-			| 28th @Akva, Edinburgh for 2 hours |
+            | 7th 7:30 pm @Akva, Edinburgh for 2 hours |
+			| 14th 7:30 pm @Akva, Edinburgh for 2 hours |
+            | 21st 7:30 pm @Akva, Edinburgh for 2 hours |
+			| 28th 7:30 pm @Akva, Edinburgh for 2 hours |
             

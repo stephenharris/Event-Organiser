@@ -4,7 +4,7 @@ Feature: Events admin list
     I need to be able to see a list my events in the admin
 
     Background:
-        Given I have a vanilla wordpress installation
+        Given I have a vanilla WordPress installation
             | name          | email                   | username | password |
             | BDD WordPress | test.user@wordpress.dev | admin    | test     |
 

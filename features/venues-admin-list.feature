@@ -4,7 +4,7 @@ Feature: Venues admin list
     I need to be able to see a list my events in the admin
 
     Background:
-        Given I have a vanilla wordpress installation
+        Given I have a vanilla WordPress installation
             | name          | email                   | username | password |
             | BDD WordPress | test.user@wordpress.dev | admin    | test     |
 
@@ -35,10 +35,9 @@ Feature: Venues admin list
     	When I go to "/wp-admin/edit.php?post_type=event&page=venues"
     	Then the post list table looks like
 	      | Venue       | Address            | City      | State / Province | Post Code | Country        | Slug        | Events |
-	      | Akva        | 129 Fountainbridge | Edinburgh |                  | EH3 9QG   | United Kingdom | akva        | 2      |
-	      | Living Room | 113-115 George St  | Edinburgh |                  | EH2 4JN   | United Kingdom | living-room | 1      |
 	      | Dragonfly   | 52 West Port       | Edinburgh |                  | EH1 2LD   | United Kingdom | dragonfly   | 0      |
-
+		| Living Room | 113-115 George St  | Edinburgh |                  | EH2 4JN   | United Kingdom | living-room | 1      |
+	      | Akva        | 129 Fountainbridge | Edinburgh |                  | EH3 9QG   | United Kingdom | akva        | 2      |
 
     @admin
 	Scenario: Sorting by name, address and postcode.

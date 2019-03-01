@@ -14,7 +14,7 @@ Install PHPUnit and other development dependencies via [composer](https://github
 
 ### 3. Run the container
 
-    docker-compose build --up
+    docker-compose up --build
 
 
 ### 4. Run the unit tests

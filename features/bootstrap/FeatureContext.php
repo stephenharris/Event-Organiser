@@ -5,14 +5,25 @@ use Behat\Behat\Context\Context,
 	Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Testwork\Tester\Result\TestResult;
 use Behat\Gherkin\Node\TableNode;
-use StephenHarris\WordPressBehatExtension\Context\WordPressContext;
+use StephenHarris\WordPressBehatExtension\Context\WordPressInboxFactoryAwareContext;
 use Behat\Mink\Exception\ElementNotFoundException,
 	Behat\Mink\Exception\ExpectationException;
+use \StephenHarris\WordPressBehatExtension\Context\PostTypes\WordPressPostContext;
+use \Behat\MinkExtension\Context\MinkAwareContext;
+use Behat\Mink\Mink;
 
 //TODO fix sendmail
 
-class FeatureContext extends WordPressContext implements Context, SnippetAcceptingContext {
+class FeatureContext extends WordPressPostContext implements Context, MinkAwareContext, SnippetAcceptingContext {
 
+	use StephenHarris\WordPressBehatExtension\Context\Util\Spin {
+		fillField as spinFillField;
+	}
+	
+	private $mink;
+	
+	private $minkParameters;
+	
 	/**
 	 * Location to store screenshots, or false if none are to be taken
 	 * @var string|bool
@@ -25,6 +36,41 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 		}
 	}
 
+	/**
+     * Sets Mink instance.
+     *
+     * @param Mink $mink Mink session manager
+     */
+    public function setMink(Mink $mink)
+    {
+        $this->mink = $mink;
+    }
+    /**
+     * Returns Mink instance.
+     *
+     * @return Mink
+     */
+    public function getMink()
+    {
+        if (null === $this->mink) {
+            throw new \RuntimeException(
+                'Mink instance has not been set on Mink context class. ' . 
+                'Have you enabled the Mink Extension?'
+            );
+        }
+        return $this->mink;
+	}
+	
+	/**
+     * Sets parameters provided for Mink.
+     *
+     * @param array $parameters
+     */
+    public function setMinkParameters(array $parameters)
+    {
+        $this->minkParameters = $parameters;
+	}
+	
 	/**
 	 * Add these events to this wordpress installation
 	 *
@@ -511,37 +557,10 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 	 */
 	public function fillField($field, $value)
 	{
-		$field = $this->fixStepArgument($field);
-		$value = $this->fixStepArgument($value);
-
-		$this->spin(function($context) use ($field, $value) {
-			$context->getSession()->getPage()->fillField($field, $value);
-			return true;
-		});
+		$this->spinFillField($field, $value);
 	}
 
-	public function spin ($lambda, $wait = 60)
-	{
-		for ($i = 0; $i < $wait; $i++)
-		{
-		try {
-			if ($lambda($this)) {
-			return true;
-			}
-			} catch (Exception $e) {
-			// do nothing
-			}
-
-			sleep(1);
-		}
-
-		$backtrace = debug_backtrace();
-
-			throw new Exception(
-				"Timeout thrown by " . $backtrace[1]['class'] . "::" . $backtrace[1]['function'] . "()\n"
-	        );
-	}
-
+	
 	/**
 	 * @AfterScenario
 	 */
@@ -673,6 +692,7 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
 				return '';
 			}, $postData['post_content'] );
 
+			var_dump($postData);
 			if (!is_int(wp_insert_post($postData))) {
 				throw new \InvalidArgumentException("Invalid post information schema.");
 			}
@@ -685,8 +705,9 @@ class FeatureContext extends WordPressContext implements Context, SnippetAccepti
      */
     public function theCalendarFinishesLoading()
     {
-    	$this->spin(function($context){
-    		$context->assertSession()->pageTextNotContains('Loading');
+		$mink = $this->getMink();
+    	$this->spin(function($context) use ($mink) {
+    		$mink->assertSession()->pageTextNotContains('Loading');
     		return true;
     	});
     }

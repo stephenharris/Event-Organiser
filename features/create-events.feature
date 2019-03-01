@@ -4,7 +4,7 @@ Feature: Create events
     I need to be able to configure events
 
     Background:
-        Given I have a vanilla wordpress installation
+        Given I have a vanilla WordPress installation
             | name          | email                   | username | password |
             | BDD WordPress | test.user@wordpress.dev | admin    | test     |
 
@@ -42,7 +42,7 @@ Feature: Create events
 		And I select "daily" from "eo-event-recurrence"
 		And I fill in "eo-recurrence-frequency" with "2"
 		And I fill in "eo-schedule-last-date" with "13-11-2014"
-		Then the event summary should read "This event will repeat every 2 days until November 13th 2014"  
+		Then the event summary should read "This event will repeat every 2 days until November 13 2014"  
 		When I save the event
 		Then I should see "Event draft updated"
 		And the event "Daily Event" should have the following schedule
@@ -64,7 +64,7 @@ Feature: Create events
 		And I select "weekly" from "eo-event-recurrence"
 		And I check "day-Sat"
 		And I fill in "eo-schedule-last-date" with "29-01-2015"
-		Then the event summary should read "This event will repeat every week on Thursday, Saturday until January 29th 2015"  
+		Then the event summary should read "This event will repeat every week on Thursday, Saturday until January 29 2015"  
 		When I save the event
 		Then I should see "Event draft updated"
 		And the event "Weekly Event" should have the following schedule
@@ -86,7 +86,7 @@ Feature: Create events
 		And I select "monthly" from "eo-event-recurrence"
 		And I select "BYMONTHDAY=" from "eo_input[schedule_meta]"
 		And I fill in "eo-schedule-last-date" with "30-12-2016"
-		Then the event summary should read "This event will repeat every month on the 30th until December 30th 2016"  
+		Then the event summary should read "This event will repeat every month on the 30th until December 30 2016"  
 		When I save the event
 		Then I should see "Event draft updated"
 		And the event "Monthly Event 1" should have the following schedule
@@ -109,7 +109,7 @@ Feature: Create events
 		And I select "monthly" from "eo-event-recurrence"
 		And I select "BYDAY=" from "eo_input[schedule_meta]"
 		And I fill in "eo-schedule-last-date" with "31-12-2016"
-		Then the event summary should read "This event will repeat every month on the last Saturday until December 31st 2016"  
+		Then the event summary should read "This event will repeat every month on the last Saturday until December 31 2016"  
 		When I save the event
 		Then I should see "Event draft updated"
 		And the event "Monthly Event 2" should have the following schedule
@@ -131,7 +131,7 @@ Feature: Create events
         	| eo-end-time   | 06:00pm       |
 		And I select "yearly" from "eo-event-recurrence"
 		And I fill in "eo-schedule-last-date" with "29-02-2024"
-		Then the event summary should read "This event will repeat every year on the February 29th until February 29th 2024"  
+		Then the event summary should read "This event will repeat every year on the February 29 until February 29 2024"  
 		When I save the event
 		Then I should see "Event draft updated"
 		And the event "Yearly Event" should have the following schedule

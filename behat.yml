@@ -4,12 +4,22 @@ default:
       contexts:
         - FeatureContext:
             screenshot_dir: '%paths.base%/failed-scenerios/'
+        - FeatureContext
         - WordPressAdminContext
         - WordPressPostListContext
+        - \StephenHarris\WordPressBehatExtension\Context\WordPressContext
         - \StephenHarris\WordPressBehatExtension\Context\WordPressMailContext
+        - \StephenHarris\WordPressBehatExtension\Context\Plugins\WordPressPluginContext
+        - \StephenHarris\WordPressBehatExtension\Context\WordPressLoginContext
+        - \StephenHarris\WordPressBehatExtension\Context\WordPressAdminContext
+        - \StephenHarris\WordPressBehatExtension\Context\Terms\WordPressTermContext
+        - \StephenHarris\WordPressBehatExtension\Context\Options\WordPressOptionContext
+        - \Behat\MinkExtension\Context\MinkContext
+
   extensions:
     StephenHarris\WordPressBehatExtension:
       path: '/var/www/html'
+      site_url: 'http://wordpress'
       connection:
         db: 'wordpress'
         username: 'admin'
