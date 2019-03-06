@@ -222,7 +222,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
-= 3.7.5 - 1st March 2019
+= 3.7.6 - 6th March 2019 =
+* bugfix: Fixed missing translations
+* bugfix: Fix tags and categories not appearing in Gutenberg 
+
+= 3.7.5 - 1st March 2019 =
 * feature: Added eventorganiser_pre_insert_venue filter
 * bugfix: Use case-sensitive constants for PHP 7.3 [#454](https://github.com/stephenharris/Event-Organiser/issues/454)
 * bugfix: Fix issue if event categories are invalid [#455](https://github.com/stephenharris/Event-Organiser/issues/455)
