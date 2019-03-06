@@ -32,7 +32,7 @@
     "grunt-phpcs": "^0.4.0",
     "grunt-phpmd": "^0.1.1",
     "grunt-phpunit": "~0.3.0",
-    "grunt-po2mo": "~0.1.0",
+    "grunt-po2mo": "stephenharris/grunt-po2mo#bugfix/sync-exec-cannot-create-directory",
     "grunt-pot": "~0.2.0",
     "grunt-shell": "~0.3.1",
     "grunt-wp-deploy": "2.0.0",
