@@ -236,15 +236,13 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 ![Events list (using TwentySixteen)](assets/screenshot-8.png)
 
 
-## Special thanks  ##
-
-A special thanks to [BrowserStack](http://browserstack.com/) who have provided a free license.
-
-![BrowserStack](https://p14.zdusercontent.com/attachment/1015988/XjCcW57HMxJM9kJ6wQ8fK2npX?token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..0Ddh0qglNG6N9SCLBcV1rQ.DQovYRdQ07pjD8_AAyTWmsTaBytRMV3D27uLIjZmM1DBEPXZGA0eewy6Ab5L5d5HmrUChuJytEseVnoqj0lJ8Fx1Ot79IBlwolNXfpzh3qrFtn54aiF4ixJGj4ML5kOYYOw1RhnxlFmG6l0vY9hPZiJ6H0JE7XjkbsqZq9dOkOUo_3ZJWLAb0t3cT3kz-r7SphWIUUDuvGU0jLnZC1r98J3HmMXbfG4jCga7pPO0-Zwqua6T0CQRUhuQ3h5c7rnR7mlRFSKWTgICgjmJ3JUH5lA7v1UwmyemoBzs5P5kRDs.lZhWUtixtAko1K4ojS9o1Q)
-
 ## Changelog ##
 
-### 3.7.5 - 1st March 2019
+### 3.7.6 - 6th March 2019 ###
+* bugfix: Fixed missing translations
+* bugfix: Fix tags and categories not appearing in Gutenberg 
+
+### 3.7.5 - 1st March 2019 ###
 * feature: Added eventorganiser_pre_insert_venue filter
 * bugfix: Use case-sensitive constants for PHP 7.3 [#454](https://github.com/stephenharris/Event-Organiser/issues/454)
 * bugfix: Fix issue if event categories are invalid [#455](https://github.com/stephenharris/Event-Organiser/issues/455)
@@ -252,7 +250,7 @@ A special thanks to [BrowserStack](http://browserstack.com/) who have provided a
 * bugfix: Ensure table names are reigstered before removing tables. Fixes [#444](https://github.com/stephenharris/Event-Organiser/issues/444)
 * bugfix: Fix warning for PHP 7+ where string is passed, not integer
 * bugfix: Fix typo
-###
+
 ### 3.7.4 - 26th August 2018 ###
 * bugfix: Fix bug with venue map shortcode when used without attributes
 
