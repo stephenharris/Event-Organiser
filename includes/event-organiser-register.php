@@ -51,8 +51,8 @@ function eventorganiser_register_script() {
 		), $version, true );
 
 	} elseif( 'openstreetmap' === $map_provider ) {
-		wp_register_script( 'eo-leaflet.js', "{$protocal}cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js" );
-		wp_register_style( 'eo-leaflet.js', "{$protocal}cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" );
+		wp_register_script( 'eo-leaflet.js', EVENT_ORGANISER_URL."lib/leaflet/leaflet.min.js", [],  '1.4.0');
+		wp_register_style( 'eo-leaflet.js', EVENT_ORGANISER_URL . "lib/leaflet/leaflet.min.css", [], '1.4.0');
 
 		wp_register_script( 'eo-openstreetmap-adapter', EVENT_ORGANISER_URL."js/maps/openstreetmap-adapter.js", array(
 			'jquery',
