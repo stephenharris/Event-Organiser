@@ -77,7 +77,7 @@ class EO_Admin_Notice_Handler {
 			return;
 		}
 
-		$seen_notices = get_option( self::$prefix . '_admin_notices', array() );
+		$seen_notices = (array) get_option( self::$prefix . '_admin_notices', array() );
 
 		foreach ( self::$notices as $id => $notice ) {
 			$id = sanitize_key( $id );
