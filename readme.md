@@ -243,7 +243,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 * feature: Added `eventorganiser_ical_summary` filter
 * bugfix: Fixed max zoome for leaflet
 * bugfix: Fixed recurrence notice being removed by 'hide admin notices' plugin
-
+* bugfix: Fixed bug where `[eo_fullcalendar]` shortcode would not display terms in the dropdown filter if they were surrounded by space, e.g. `[eo_fullcalendar event_category="foo, bar"]`
 
 ### 3.7.6 - 6th March 2019 ###
 * bugfix: Fixed missing translations
