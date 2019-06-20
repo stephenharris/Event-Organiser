@@ -238,6 +238,13 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### Develop ###
+* feature: Added `eventorganiser_ical_location` filter
+* feature: Added `eventorganiser_ical_summary` filter
+* bugfix: Fixed max zoome for leaflet
+* bugfix: Fixed recurrence notice being removed by 'hide admin notices' plugin
+
+
 ### 3.7.6 - 6th March 2019 ###
 * bugfix: Fixed missing translations
 * bugfix: Fix tags and categories not appearing in Gutenberg 

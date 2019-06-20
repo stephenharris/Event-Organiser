@@ -52,6 +52,9 @@
 }
 
 /* Event edit page */
+label[for="eo-event-recurrring-notice"] {
+	font-weight: 500;
+}
 .eo-days-of-week li{
 	display: inline-block;
 	margin-right: 8px;
