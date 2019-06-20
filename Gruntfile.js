@@ -391,12 +391,12 @@ module.exports = function(grunt) {
 
     grunt.registerTask('docs', ['shell:makeDocs']);
 
-    grunt.registerTask('test', ['phpunit', 'jshint']);
+    grunt.registerTask('test', ['jshint']);
 
     grunt.registerTask('test_build', ['gitinfo', 'clean', 'uglify', 'cssjanus', 'cssmin', 'copy']);
 
     grunt.registerTask('build', ['gitinfo', 'test', 'clean', 'uglify', 'cssjanus', 'cssmin', 'pot', 'po2mo', 'wp_readme_to_markdown', 'copy']);
 
-    grunt.registerTask('deploy', ['checkbranch:master', 'checkrepo', 'build', 'wp_deploy']);
+    grunt.registerTask('deploy', ['checkbranch:master', 'build', 'wp_deploy']);
 
 };
