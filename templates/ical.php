@@ -115,8 +115,10 @@ if ( have_posts() ) :
 			echo 'RDATE' . $param . ':' . implode( ',',$include_strings ) . "\r\n";
 		endif;
 
+		$event_title = html_entity_decode( get_the_title_rss(), ENT_COMPAT, 'UTF-8' );
+		$event_title = apply_filters( 'eventorganiser_ical_summary', $event_title );
 		echo eventorganiser_fold_ical_text(
-			'SUMMARY: ' . eventorganiser_escape_ical_text( html_entity_decode( get_the_title_rss(), ENT_COMPAT, 'UTF-8' ) )
+			'SUMMARY: ' . eventorganiser_escape_ical_text( $event_title )
 		) . "\r\n";
 
 		$description = wp_strip_all_tags( html_entity_decode( get_the_excerpt(), ENT_COMPAT, 'UTF-8' ) );
@@ -147,8 +149,11 @@ if ( have_posts() ) :
 
 		if ( eo_get_venue() ) :
 			$venue = eo_get_venue_name( eo_get_venue() );
-			echo 'LOCATION:' . eventorganiser_fold_ical_text( eventorganiser_escape_ical_text( $venue ) ) . "\r\n";
-			echo 'GEO:' . implode( ';', eo_get_venue_latlng( $venue ) ) . "\r\n";
+			$venue = apply_filters( 'eventorganiser_ical_location', $venue );
+			if ($venue) {
+				echo 'LOCATION:' . eventorganiser_fold_ical_text( eventorganiser_escape_ical_text( $venue ) ) . "\r\n";
+				echo 'GEO:' . implode( ';', eo_get_venue_latlng( eo_get_venue() ) ) . "\r\n";
+			}
 		endif;
 
 		if ( get_the_author_meta( 'ID' ) ) {

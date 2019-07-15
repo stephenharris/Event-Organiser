@@ -93,7 +93,7 @@ function _eventorganiser_details_metabox( $post ) {
 	$notices = apply_filters( 'eventorganiser_event_metabox_notice', $notices, $post );
 	if ( $notices ) {
 		//updated class used for backwards compatability see https://core.trac.wordpress.org/ticket/27418
-		echo '<div class="notice notice-success updated inline"><p>' . $notices . '</p></div>';
+		echo '<p>' . $notices . '</p>';
 	}
 
 	$date_desc = sprintf( __( 'Enter date in %s format', 'eventorganiser' ), $format );

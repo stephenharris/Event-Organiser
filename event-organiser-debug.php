@@ -393,7 +393,10 @@ class EventOrganiser_Debugger {
 
 	function database_charset_check() {
 		global $wpdb;
-		return $wpdb->query( $wpdb->prepare( 'SHOW CHARACTER SET WHERE LOWER( Charset ) = LOWER( %s )', DB_CHARSET ) );
+		if ( !$wpdb->charset ) {
+			return false;
+		}
+		return $wpdb->query( $wpdb->prepare( 'SHOW CHARACTER SET WHERE LOWER( Charset ) = LOWER( %s )', $wpdb->charset ) );
 	}
 
 	function verbose_database_charset_check() {
@@ -404,8 +407,7 @@ class EventOrganiser_Debugger {
 		} else {
 			$class = $this->warning_class;
 		}
-
-		printf( '<span class="%s"> %s </span></br>', esc_attr( $class ), esc_attr( DB_CHARSET ) );
+		printf( '<span class="%s"> %s </span></br>', esc_attr( $class ), esc_attr( $wpdb->charset) );
 	}
 
 	function verbose_prequiste_check( $requirement, $v ) {

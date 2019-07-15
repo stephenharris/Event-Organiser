@@ -15,7 +15,7 @@ eventorganiserMapsAdapter.openstreetmap.map = function( elementID, args) {
     this.args = jQuery.extend({
         zoom: 12,
         minZoom: 0,
-        maxZoom: 20,
+        maxZoom: 18,
     }, args );
     var mapArgs = {
         zoom: this.args.zoom,
