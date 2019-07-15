@@ -3,7 +3,7 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
-**Tested up to:** 5.1  
+**Tested up to:** 5.2.2  
 **Stable tag:** {{version}}  
 **License:** GPLv3  
 
@@ -238,7 +238,7 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
-### Develop ###
+### 3.8.0 - 15th July 2019 ###
 * feature: Added `eventorganiser_ical_location` filter
 * feature: Added `eventorganiser_ical_summary` filter
 * bugfix: Fixed max zoome for leaflet
