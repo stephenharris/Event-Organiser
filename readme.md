@@ -238,10 +238,14 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.8.1 ###
+* Bumped tested up-to version
+* bugfix: Fixed bug where leaflet map appeared above datepicker in the event edit screen
+
 ### 3.8.0 - 15th July 2019 ###
 * feature: Added `eventorganiser_ical_location` filter
 * feature: Added `eventorganiser_ical_summary` filter
-* bugfix: Fixed max zoome for leaflet
+* bugfix: Fixed max zoom for leaflet
 * bugfix: Fixed recurrence notice being removed by 'hide admin notices' plugin
 * bugfix: Fixed bug where `[eo_fullcalendar]` shortcode would not display terms in the dropdown filter if they were surrounded by space, e.g. `[eo_fullcalendar event_category="foo, bar"]`
 

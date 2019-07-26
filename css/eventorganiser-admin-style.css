@@ -73,6 +73,10 @@ label[for="eo-event-recurrring-notice"] {
 #eo-schedule-last-date-wrapper{
 	margin: 1em 0 1em 0;
 }
+.ui-datepicker.eo-datepicker {
+	/*Ensures datepicker appears above Leaflet (OSM) */
+	z-index:400!important;
+}
 .eo-add-new-venue{
 	display: none;
 }

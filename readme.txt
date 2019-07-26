@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 5.1
+Tested up to: 5.2.2
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,17 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.8.1 =
+* Bumped tested up-to version
+* bugfix: Fixed bug where leaflet map appeared above datepicker in the event edit screen
+
+= 3.8.0 - 15th July 2019 =
+* feature: Added `eventorganiser_ical_location` filter
+* feature: Added `eventorganiser_ical_summary` filter
+* bugfix: Fixed max zoom for leaflet
+* bugfix: Fixed recurrence notice being removed by 'hide admin notices' plugin
+* bugfix: Fixed bug where `[eo_fullcalendar]` shortcode would not display terms in the dropdown filter if they were surrounded by space, e.g. `[eo_fullcalendar event_category="foo, bar"]`
 
 = 3.7.6 - 6th March 2019 =
 * bugfix: Fixed missing translations
