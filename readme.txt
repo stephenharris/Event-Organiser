@@ -222,6 +222,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.8.2 - 6th August 2019 =
+* bugfix: Restored PHP 5.2 compatability
+
 = 3.8.1 - 26th July 2019 =
 * Bumped tested up-to version
 * bugfix: Fixed bug where leaflet map appeared above datepicker in the event edit screen
