@@ -284,8 +284,6 @@ EOPHP
 fi
 
 # Install
-wp  --allow-root core install --url=localhost:8080 --title=Test --admin_user=admin --admin_email=admin@example.com --admin_password=password
-
-install-test-lib.sh
+wp  --allow-root core install --url=localhost --title=Test --admin_user=admin --admin_email=admin@example.com --admin_password=password
 
 exec "$@"
