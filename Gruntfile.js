@@ -147,13 +147,13 @@ module.exports = function(grunt) {
                 src: [
                     '**',
                     '!*.xml', '!*.log', //any config/log files
-                    '!node_modules/**', '!Gruntfile.js', '!package.json', //npm/Grunt
+                    '!node_modules/**', '!Gruntfile.js', '!package.json', '!package-lock.json', //npm/Grunt
                     '!assets/**', //wp-org assets
                     '!dist/**', //build directory
                     '!.git/**', //version control
                     '!docker/**', '!docker-compose.yml', //docker
                     '!tests/**', '!bin/**', '!phpunit.xml', //unit test
-                    '!features/**', '!behat.yml', //behat test
+                    '!features/**', '!behat.yml', '!failed-scenerios/**', //behat test
                     '!vendor/**', '!composer.lock', '!composer.phar', '!composer.json', //composer
                     '!.*', '!**/*~', //hidden files
                     '!CONTRIBUTING.md',
