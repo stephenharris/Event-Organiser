@@ -346,6 +346,9 @@ class EO_ICAL_Parser{
 	 */
 	protected function parse_ical_array(){
 
+		//Remove Byte Order Mark
+		$this->ical_array[0] = str_replace("\xEF\xBB\xBF", '', $this->ical_array[0]);
+
 		$this->ical_array = $this->unfold_lines( $this->ical_array );
 
 		$this->state = "NONE";//Initial state
