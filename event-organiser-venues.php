@@ -410,7 +410,9 @@ function eventorganiser_venue_location( $venue ){
 
 	</div>
 
-	<div id="venuemap"></div>
+	<?php if('none' !== eventorganiser_get_option('map_provider')) { ?>
+		<div id="venuemap"></div>
+	<?php } ?>
 
 	<div class="clear"></div>
 
