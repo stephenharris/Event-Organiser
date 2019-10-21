@@ -40,6 +40,19 @@
     "jshint-stylish": "~0.1.3",
     "load-grunt-tasks": "~0.2.0",
     "oauth-1.0a": "^2.0.0",
-    "request": "^2.79.0"
+    "request": "^2.79.0",
+    "grunt-webpack": "^3.1.3",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": ">= 6.3",
+    "babel-loader": "^8.0.5",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.31.0",
+    "webpack-dev-server": "3.1.14",
+    "webpack-livereload-plugin": "2.2.0"
+  },
+  "dependencies": {
+    "@wordpress/components": "^8.2.0"
   }
 }

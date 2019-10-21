@@ -646,10 +646,14 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 		if( is_multisite() ){
 			printf( "<p>For multisites, license keys should be entered on the <a href='%s'>Network Settings</a> page.</p>", network_admin_url( 'settings.php' ) );
 		}else{
-			if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section_id] ) ){
+			if ( 
+				(! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section_id] ))
+				&& (!method_exists(\EO_Extension::class, 'hasExtensions') || empty(\EO_Extension::hasExtensions()))
+			){
 				echo "<p> You do not have any add-ons activated. You can view the <a href='".$addon_link."'>available add-ons here</a>.</p>";
 			}else{
 				echo "<p> Below are the add-ons you have activated. You can find a full list of <a href='".$addon_link."'>available add-ons here</a>. </p>";
+				echo '<div id="eo-licenses"></div>';
 			}
 		}
 	}

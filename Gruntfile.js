@@ -1,3 +1,6 @@
+var webpackConfig = require( './webpack.config' );
+
+
 module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
@@ -6,6 +9,12 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        webpack: {
+			prod: webpackConfig( { environment: 'production', buildTarget: '.' } ),
+			dev: webpackConfig( { environment: 'development', buildTarget: ',' } ),
+			watch: webpackConfig( { environment: 'development', watch: true } )
+        },
+        
         gitinfo: {
             commands: {
                 'local.tag.current.name': ['name-rev', '--tags', '--name-only', 'HEAD'],
