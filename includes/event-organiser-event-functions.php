@@ -1493,14 +1493,6 @@ function eo_get_event_fullcalendar( $args = array() ) {
 		$classes[] = 'fc-oneline';
 	}
 
-	$html = sprintf( '<div id="eo_fullcalendar_%s_loading" class="eo-fullcalendar-loading" >', $id );
-	$html .= sprintf(
-		'<img src="%1$s" class="eo-fullcalendar-loading-icon" alt="%2$s" /> %2$s',
-		esc_url( EVENT_ORGANISER_URL . 'css/images/loading-image.gif' ),
-		esc_html__( 'Loading&#8230;', 'eventorganiser' )
-	);
-	$html .= '</div>';
-
 	$html .= sprintf(
 		'<div class="%s" id="eo_fullcalendar_%s"></div>',
 		implode( ' ', $classes ),

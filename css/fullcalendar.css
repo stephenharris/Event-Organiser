@@ -55,14 +55,27 @@
 	border-spacing: 0; 
 }
 
-.eo-fullcalendar-loading{
-	background:white;
-	position:absolute;
-	z-index:5
+.eo-fullcalendar-is-loading .fc-view-container:before {
+	content: "Loading...";
+	height: 64px;
+    width: 64px;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: url(images/loading-64.gif);
+    background-size: cover;
+    text-indent: -100px;
+    overflow: hidden;
 }
-.eo-fullcalendar-loading-icon{
-	vertical-align:middle; 
-	padding: 0px 5px 5px 0px;
+.eo-fullcalendar-is-loading .fc-view-container {
+	position: relative;
+}
+.eo-fullcalendar-is-loading .fc-view {
+	opacity: .3
 }
 
 .eo-fullcalendar-screen-reader-text{

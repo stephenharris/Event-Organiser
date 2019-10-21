@@ -163,8 +163,9 @@ form.eo_cal .ui-autocomplete-input{width:220px;}
 #calendar-view .view-button{float:right;height: 30px;line-height: 28px;margin-top: 3px;padding: 0 11px;}
 #calendar-view{clear: both;height: 34px;margin-bottom: 15px;border-bottom: 1px solid #dfdfdf;padding-right: 100px;position: relative;}
 #calendar-view .nav-tab{ font-size: 15px }
-#calendar-view #loading{position:absolute;bottom:0;font-size: 16px;line-height: 16px;margin-bottom: 5px;}
-#calendar-view #loading:before {content: url("images/loading-image.gif");padding-right: 5px;}
+#calendar-view #loading{position:absolute;bottom:0;font-size: 14px;line-height: 14px;margin-bottom: 5px;display: flex;align-items: center;}
+#calendar-view #loading .spinner{margin-top:auto;}
+
 /*For the blocks of colour*/
 .cat .ui-selectmenu-item-icon { height: 14px; width: 14px; border:1px solid #dfdfdf;border-radius: 4px;}
 .cat .ui-selectmenu-item-icon{ background-image:none!important; }

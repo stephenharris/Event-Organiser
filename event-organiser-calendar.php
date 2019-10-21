@@ -253,7 +253,7 @@ class EventOrganiser_Calendar_Page extends EventOrganiser_Admin_Page
 			$views   = array( 'agendaDay' => __( 'Day', 'eventorganiser' ), 'agendaWeek' => __( 'Week', 'eventorganiser' ), 'month' => __( 'Month', 'eventorganiser' ) );
 		?>
 		<div id="calendar-view">
-			<span id='loading' style='display:none'><?php _e( 'Loading&#8230;', 'eventorganiser' );?></span>
+			<span id='loading' style='display:none'><span class="spinner is-active"></span><?php _e( 'Loading&#8230;', 'eventorganiser' );?></span>
 			<ul class="tablist" role="tablist">
 			<?php foreach( $views as $id => $label ) 
 				printf( '<li role="tab"><a href="#" role="tab" class="nav-tab view-button %s" id="%s">%s</a></li>', ( $id == $current ? 'nav-tab-active' : '' ), $id, $label );

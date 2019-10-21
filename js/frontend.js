@@ -337,7 +337,6 @@ jQuery(document).ready(function () {
                 	},
 
                 	loading: function ( is_loading ) {
-                		var loading = $("#" + $(this).attr("id") + "_loading");
                 		if ( is_loading ) {
                 			window.clearTimeout(loadingTimeOut);
                 			loadingTimeOut = window.setTimeout(function () {loading.show();}, 1e3);
