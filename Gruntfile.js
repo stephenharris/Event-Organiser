@@ -147,7 +147,7 @@ module.exports = function(grunt) {
                 src: [
                     '**',
                     '!*.xml', '!*.log', //any config/log files
-                    '!node_modules/**', '!Gruntfile.js', '!package.json', //npm/Grunt
+                    '!node_modules/**', '!Gruntfile.js', '!package.json', '!package-lock.json', //npm/Grunt
                     '!assets/**', //wp-org assets
                     '!dist/**', //build directory
                     '!.git/**', //version control
