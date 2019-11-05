@@ -67,11 +67,13 @@ RUN set -ex; \
 	chown -R www-data:www-data /usr/src/wordpress; \
 	chown -R www-data:www-data /var/www/
 
+
 # Add WP Test library
 ENV WP_TESTS_DIR=/tmp/wordpress-tests-lib
 ENV WP_CORE_DIR=/var/www/html/
-COPY install-test-lib.sh /usr/local/bin/
-RUN chmod ugo+x /usr/local/bin/install-test-lib.sh
+RUN set -ex; \
+	svn co --quiet https://develop.svn.wordpress.org/tags/${WP_VERSION}/tests/phpunit/includes/; \
+	mv includes "${WP_TESTS_DIR}/";
 
 COPY docker-entrypoint.sh /usr/local/bin/
 

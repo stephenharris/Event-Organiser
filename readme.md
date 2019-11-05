@@ -237,6 +237,8 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 
 ## Changelog ##
+### 3.8.3 - 31st August 2019 ###
+* bugfix: Fixed 'Feed not found' when importing a feed with a Byte Order Mark.
 
 ### 3.8.2 - 6th August 2019 ###
 * bugfix: Restored PHP 5.2 compatability

@@ -902,4 +902,18 @@ class iCalParseTest extends PHPUnit_Framework_TestCase
     	//$this->assertEquals( array( 'TU' ), $ical->events[0]['schedule_meta'] );
     }
 
+
+    public function testHiddenCharacters()
+    {
+    	$ical = new EO_ICAL_Parser();
+    	$ical->parse( EO_DIR_TESTDATA . '/ical/hiddenCharacters.ics' );
+
+    	//Check the number of events have imported correctly
+    	$this->assertEquals( 1, count( $ical->events ) );
+
+    	$this->assertEquals( 0, count( $ical->warnings ) );
+
+    	$this->assertEquals( 0, count( $ical->errors ) );
+    }
+
 }
