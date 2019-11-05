@@ -267,7 +267,7 @@ function eventorganiser_quick_edit_script() {
 	?>
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
-		jQuery( '#the-list' ).on( 'click', 'a.editinline', function() {
+		jQuery( '#the-list' ).on( 'click', '.editinline', function() {
 			jQuery( '#eventorganiser_venue option' ).attr("selected", false);
 			var id = inlineEditPost.getId(this);
 			var val = parseInt(jQuery( '#post-' + id + ' td.column-venue input' ).val() );
