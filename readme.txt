@@ -221,6 +221,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+= 3.8.5 - 7th November 2019 =
+* bugfix: Fixed missing Leaflet files for openstreetmap
+
 = 3.8.4 - 5th November 2019 =
 * bugfix: Fixed inline editing event looses venue selection
 
