@@ -455,7 +455,7 @@ function eventorganiser_is_event_query( $query, $exclusive = false ){
 	if( 'event' == $post_types || array( 'event' ) == $post_types ){
 		$bool = true;
 
-	}elseif( ( $query && $query->is_feed( 'eo-events' ) ) || is_feed( 'eo-events' ) ){
+	}elseif( $query && $query->is_feed( 'eo-events' ) ){
 		$bool = true;
 
 	}elseif( empty( $post_types ) && eo_is_event_taxonomy( $query ) ){
