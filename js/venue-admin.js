@@ -72,7 +72,7 @@ jQuery(document).ready(function ($) {
 			if( lat != old_lat || lng != old_lng ){
 				$(this).data( 'eo-lat', lat );
 				$(this).data( 'eo-lng', lng );
-				eovenue.get_map( 'venuemap' ).marker[0].setPosition( { lat: lat, lng: lng } );
+				eovenue.get_map( 'venuemap' ).marker[0].setPosition( { lat: floatVal(lat), lng: floatVal(lng) } );
 			}
 		}else{
 			//Not valid...

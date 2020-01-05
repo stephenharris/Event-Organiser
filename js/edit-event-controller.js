@@ -123,7 +123,7 @@ $.widget("ui.combobox", {
 				}
 
 				eovenue.get_map( 'venuemap' ).marker[0].setPosition( {
-					'lat': b.item.venue_lat, 'lng': b.item.venue_lng
+					'lat': floatVal(b.item.venue_lat), 'lng': floatVal(b.item.venue_lng)
 				} );
 			}
 			$hiddenEl.val( b.item.term_id );
@@ -238,7 +238,7 @@ $('.eo-add-new-venue-cancel').click(function(e){
 	$('.eo-add-new-venue input').val('');
 
 	//Restore old venue details
-	eovenue.get_map( 'venuemap' ).marker[0].setPosition( {'lat': eo_venue_obj.lat, 'lng': eo_venue_obj.lng} );
+	eovenue.get_map( 'venuemap' ).marker[0].setPosition( {'lat': floatVal(eo_venue_obj.lat), 'lng': floatVal(eo_venue_obj.lng)} );
 	$("[name='eo_input[event-venue]']").val( eo_venue_obj.id );
 	$(".eo-venue-input input").val( eo_venue_obj.label );
 	$("#eventorganiser_detail .eo-add-new-venue").hide();
