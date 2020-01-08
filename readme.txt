@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 5.2.4
+Tested up to: 5.3.0
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,12 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+= 3.8.6 - 18th November 2019 =
+* bugfix: Removed call to is_feed(), uses $query->is_feed() instead. Fixes potential warning logged
+
+= 3.8.5 - 7th November 2019 =
+* bugfix: Fixed missing Leaflet files for openstreetmap
+
 = 3.8.4 - 5th November 2019 =
 * bugfix: Fixed inline editing event looses venue selection
 
