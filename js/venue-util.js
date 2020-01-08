@@ -4,6 +4,13 @@ eovenue = {
 
 	maps: {},
 
+	is_map_enabled() {
+		if (typeof eventorganiserMapsAdapter === "undefined") {
+			return false;
+		}
+		return true;
+	},
+
 	/**
 	 * Options
 	 *  - lat
@@ -13,6 +20,10 @@ eovenue = {
 	 *  - onDrag
 	 */
 	init_map: function( id, options ){
+
+		if (!this.is_map_enabled()) {
+			return;
+		}
 
 	    var fieldID    = ( options.hasOwnProperty( 'fieldID' ) ? options.fieldID : id );
 	    var draggable  = ( options.hasOwnProperty( 'draggable' ) ? options.draggable : false );
@@ -59,6 +70,9 @@ eovenue = {
 	},
 
 	geocode: function( address, callback ){
+		if (!this.is_map_enabled()) {
+			return;
+		}
 		var geocoder = new eventorganiserMapsAdapter.provider.geocoder();
 		geocoder.geocode( address, callback );
 	},

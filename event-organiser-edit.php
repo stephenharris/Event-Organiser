@@ -329,7 +329,10 @@ function _eventorganiser_details_metabox( $post ) {
 					<input type="hidden" id="eo_venue_Lng" name="eo_venue[longitude]" value="<?php esc_attr( eo_venue_lng( $venue_id ) ); ?>" />
 				</div>
 
-				<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
+				<?php if('none' !== eventorganiser_get_option('map_provider')) { ?>
+					<div id="venuemap" class="ui-widget-content ui-corner-all gmap3"></div>
+				<?php } ?>
+
 				<div class="clear"></div>
 				</div>
 			</div>
