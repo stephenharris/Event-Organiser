@@ -620,7 +620,7 @@ function _eventorganiser_upgrade_admin_notice() {
 		$notice_handler->add_notice( 'timezone', '', $message , 'warning' );
 	}
 
-	if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() ) {
+	if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() && 'googlemaps' == eventorganiser_get_option('map_provider')) {
 
 		if ( wp_count_terms( 'event-venue' ) > 0 || 'event_page_venues' == get_current_screen()->id ) {
 			$message = sprintf(

@@ -221,6 +221,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+= 3.9.0 - 8th January 2020 =
+* feature: Added option to disable venue maps
+* bugfix: Ensure latitude/longtitude co-ordinates are cast as floats
+
 = 3.8.6 - 18th November 2019 =
 * bugfix: Removed call to is_feed(), uses $query->is_feed() instead. Fixes potential warning logged
 
