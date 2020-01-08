@@ -63,8 +63,7 @@ function eventorganiser_register_script() {
 
 	}
 
-	/* Front-end script */
-	wp_register_script( 'eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js",  array(
+	$deps =  array(
 		'jquery',
 		'eo_qtip2',
 		'jquery-ui-core',
@@ -72,9 +71,14 @@ function eventorganiser_register_script() {
 		'jquery-ui-button',
 		'jquery-ui-datepicker',
 		'eo_fullcalendar',
-		'eo-wp-js-hooks',
-		"eo-{$map_provider}-adapter"
-	), $version, true );
+		'eo-wp-js-hooks'
+	);
+	if ("none" !== $map_provider ) {
+		$deps[] = "eo-{$map_provider}-adapter";
+	}
+
+	/* Front-end script */
+	wp_register_script('eo_front', EVENT_ORGANISER_URL."js/frontend{$ext}.js", $deps, $version, true);
 
 	/* Add js variables to frontend script */
 	$category = get_taxonomy( 'event-category' );
@@ -135,10 +139,11 @@ function eventorganiser_register_scripts(){
 	$map_provider = eventorganiser_get_option( 'map_provider' );
 
 	/*  Venue (map) utility script */
-	wp_register_script( 'eo-venue-util', EVENT_ORGANISER_URL."js/venue-util{$ext}.js", array(
-		'jquery',
-		"eo-{$map_provider}-adapter"
-	), $version, true );
+	$deps = array('jquery');
+	if ("none" !== $map_provider ) {
+		$deps[] = "eo-{$map_provider}-adapter";
+	}
+	wp_register_script( 'eo-venue-util', EVENT_ORGANISER_URL."js/venue-util{$ext}.js", $deps, $version, true );
 
 	/*  Venue script for venue edit */
 	wp_register_script( 'eo-venue-admin', EVENT_ORGANISER_URL."js/venue-admin{$ext}.js",array(
@@ -191,7 +196,7 @@ function eventorganiser_register_scripts(){
 	wp_register_style( 'eventorganiser-jquery-ui-style', EVENT_ORGANISER_URL."css/eventorganiser-jquery-ui{$rtl}{$ext}.css", array(), $version );
 
 	/* Admin styling */
-	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL."css/eventorganiser-admin-style{$rtl}{$ext}.css", array( 'eventorganiser-jquery-ui-style' ), $version );
+	wp_register_style( 'eventorganiser-style', EVENT_ORGANISER_URL."css/eventorganiser-admin-style{$rtl}{$ext}.css", array( 'eventorganiser-jquery-ui-style', 'wp-components' ), $version );
 
 	/* Inline Help */
 	wp_register_script( 'eo-inline-help', EVENT_ORGANISER_URL.'js/inline-help.js',array( 'jquery', 'eo_qtip2' ), $version, true );
@@ -615,7 +620,7 @@ function _eventorganiser_upgrade_admin_notice() {
 		$notice_handler->add_notice( 'timezone', '', $message , 'warning' );
 	}
 
-	if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() ) {
+	if ( ! defined( 'EVENTORGANISER_GOOGLE_MAPS_API_KEY' ) && ! eventorganiser_get_google_maps_api_key() && 'googlemaps' == eventorganiser_get_option('map_provider')) {
 
 		if ( wp_count_terms( 'event-venue' ) > 0 || 'event_page_venues' == get_current_screen()->id ) {
 			$message = sprintf(
