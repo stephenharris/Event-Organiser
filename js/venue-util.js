@@ -4,7 +4,7 @@ eovenue = {
 
 	maps: {},
 
-	is_map_enabled() {
+	is_map_enabled: function() {
 		if (typeof eventorganiserMapsAdapter === "undefined") {
 			return false;
 		}
