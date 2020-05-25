@@ -139,7 +139,7 @@ eventorganiserMapsAdapter.googlemaps.marker = function ( args ) {
         };
 
         //getLatLng
-        eventorganiserMapsAdapter.openstreetmap.marker.prototype.remove = function( ) {
+        eventorganiserMapsAdapter.googlemaps.marker.prototype.remove = function( ) {
             this._marker.setMap(null);
         };
 
