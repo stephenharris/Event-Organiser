@@ -133,9 +133,19 @@ eventorganiserMapsAdapter.googlemaps.marker = function ( args ) {
             this._marker.setPosition( latLng );
         };
 
-				eventorganiserMapsAdapter.googlemaps.marker.prototype.setIcon = function( url ) {
-						this._marker.setIcon( url );
-				};
+        eventorganiserMapsAdapter.googlemaps.marker.prototype.getPosition = function( latLng ) {
+            let position = this._marker.getPosition();
+            return {lat: position.lat(), lng: position.lng()}
+        };
+
+        //getLatLng
+        eventorganiserMapsAdapter.openstreetmap.marker.prototype.remove = function( ) {
+            this._marker.setMap(null);
+        };
+
+        eventorganiserMapsAdapter.googlemaps.marker.prototype.setIcon = function( url ) {
+        	this._marker.setIcon( url );
+        };
 
         /**
          * Event handler for the marker
