@@ -48,9 +48,11 @@
 
 	<ul class="eo-event-meta">
 
-		<?php if ( ! eo_recurs() ) { ?>
+		<?php if ( ! eo_recurs() ) {
+			$schedule = eo_get_event_schedule();
+		 ?>
 			<!-- Single event -->
-			<li><strong><?php esc_html_e( 'Date', 'eventorganiser' );?>:</strong> <?php echo eo_format_event_occurrence();?></li>
+			<li><strong><?php esc_html_e( 'Date', 'eventorganiser' );?>:</strong> <?php echo eo_format_datetime_range( $schedule['start'], $schedule['end'], eo_get_event_datetime_format() );?></li>
 		<?php } ?>
 
 		<?php if ( eo_get_venue() ) {
