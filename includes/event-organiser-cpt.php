@@ -520,88 +520,89 @@ function eventorganiser_cpt_help_text() {
 		return;
 	}
 
-	switch($screen->id):
-		//Add help for event editing / creating page
+	switch( $screen->id ):
+		// Add help for event editing / creating page
 		case 'event':
 			    $screen->add_help_tab( array(
-			        'id'      => 'creating-events',
-			        'title'   => __('Creating events','eventorganiser'),
-        			'content' => '<p>' . __('Creating events:','eventorganiser') . '</p>'.
-			'<ul>' .
-				'<li>' . __('The start date is the date the event starts. If the event is a recurring event, this is the start date of the first occurrence.','eventorganiser') . '</li>' .
-				'<li>' . __('The end date is the date the event finishes. If the event is a recurring event, this is the end date of the first occurrence.','eventorganiser') . '</li>' .
-				'<li>' . __('All dates and times must be entered in the specified format. This format can changed in the settings page.','eventorganiser') . '</li>' .
-			'</ul>'
-				));
+					'id'      => 'creating-events',
+					'title'   => esc_html__( 'Creating events', 'eventorganiser' ),
+					'content' => '<p>' . esc_html__( 'Creating events:', 'eventorganiser' ) . '</p>' .
+						'<ul>' .
+							'<li>' . esc_html__( 'The start date is the date the event starts. If the event is a recurring event, this is the start date of the first occurrence.', 'eventorganiser' ) . '</li>' .
+							'<li>' . esc_html__( 'The end date is the date the event finishes. If the event is a recurring event, this is the end date of the first occurrence.', 'eventorganiser' ) . '</li>' .
+							'<li>' . esc_html__( 'All dates and times must be entered in the specified format. This format can changed in the settings page.', 'eventorganiser' ) . '</li>' .
+						'</ul>'
+				) );
 			    $screen->add_help_tab( array(
-			        'id'      => 'repeating-events',
-			        'title'   => __('Repeating events','eventorganiser'),
-        			'content' => '<p>' . __('To repeat an event according to some regular pattern, use the recurrence dropdown menu to select how the event is to repeat. Further options then appear, ','eventorganiser') . '</p>' .
-			'<ul>' .
-				'<li>' . __('Specify how regularly the event should repeat (default 1)','eventorganiser') . '</li>' .
-				'<li>' . __('Choose the recurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date.','eventorganiser') . '</li>' .
-				'<li>' . __('If monthly recurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) ','eventorganiser') . '</li>' .
-				'<li>' . __('If weekly recurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used','eventorganiser') . '</li>' .
-			'</ul>'
-				));
+					'id'      => 'repeating-events',
+					'title'   => esc_html__( 'Repeating events', 'eventorganiser' ),
+					'content' => '<p>' . esc_html__( 'To repeat an event according to some regular pattern, use the recurrence dropdown menu to select how the event is to repeat. Further options then appear, ', 'eventorganiser' ) . '</p>' .
+						'<ul>' .
+							'<li>' . esc_html__( 'Specify how regularly the event should repeat (default 1)','eventorganiser') . '</li>' .
+							'<li>' . esc_html__( 'Choose the recurrence end date. No further occurrences are added after this date, but an occurrence that starts before may finish after this date.', 'eventorganiser' ) . '</li>' .
+							'<li>' . esc_html__( 'If monthly recurrence is selected, select whether this should repeat on that date of the month (e.g. on the 24th) or on the day of the month (e.g. on the third Tuesday) ', 'eventorganiser' ) . '</li>' .
+							'<li>' . esc_html__( 'If weekly recurrence is selected, select which days of the week the event should be repeated. If no days are selected, the day of the start date is used', 'eventorganiser' ) . '</li>' .
+						'</ul>'
+				) );
 			    $screen->add_help_tab( array(
-			        'id'      => 'selecting-venues',
-			        'title'   => __('Selecting a venue','eventorganiser'),
-        			'content' => '<p>' . __('Selecting a venue','eventorganiser') . '</p>' .
-					'<ul>' .
-						'<li>' . __('Use the venues input field to search for existing venues','eventorganiser') . '</li>' .
-						'<li>' . __('Only pre-existing venues can be selected. To add a venue, go to the venues page.','eventorganiser') . '</li>' .
-					'</ul>'
-				));
+					'id'      => 'selecting-venues',
+					'title'   => esc_html__( 'Selecting a venue', 'eventorganiser' ),
+					'content' => '<p>' . esc_html__( 'Selecting a venue', 'eventorganiser' ) . '</p>' .
+						'<ul>' .
+							'<li>' . esc_html__( 'Use the venues input field to search for existing venues', 'eventorganiser' ) . '</li>' .
+							'<li>' . esc_html__( 'Only pre-existing venues can be selected. To add a venue, go to the venues page.', 'eventorganiser' ) . '</li>' .
+						'</ul>'
+				) );
 			break;
 
-		//Add help for event admin table page
+		// Add help for event admin table page
 		case 'edit-event':
-
 			$screen->add_help_tab( array(
-				'id'=>'overview',
-			        'title'   => __('Overview'),
-				'content'=>'<p>' . __('This is the list of all saved events. Note that <strong> recurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event.','eventorganiser') . '</p>' ));
+				'id'      => 'overview',
+				'title'   => esc_html__( 'Overview', 'eventorganiser' ),
+				'content' => '<p>' . __( 'This is the list of all saved events. Note that <strong> recurring events appear as a single row </strong> in the table and the start and end date refers to the first occurrence of that event.', 'eventorganiser' ) . '</p>'
+			) );
 			break;
 
-		//Add help for venue admin table page
+		// Add help for venue admin table page
 		case 'event_page_venues':
 			$content =
-			'<p>' . __("Hovering over a row in the venues list will display action links that allow you to manage that venue. You can perform the following actions:",'eventorganiser') . '</p>' .
-			'<ul>' .
-				'<li>' . __('Edit takes you to the editing screen for that venue. You can also reach that screen by clicking on the venue title.','eventorganiser') . '</li>' .
-				'<li>' . __('Delete will permanently remove the venue','eventorganiser') . '</li>' .
-				'<li>' . __("View will take you to the venue's page",'eventorganiser') . '</li>' .
-			'</ul>';
+				'<p>' . esc_html__( "Hovering over a row in the venues list will display action links that allow you to manage that venue. You can perform the following actions:", 'eventorganiser' ) . '</p>' .
+				'<ul>' .
+					'<li>' . esc_html__( 'Edit takes you to the editing screen for that venue. You can also reach that screen by clicking on the venue title.', 'eventorganiser' ) . '</li>' .
+					'<li>' . esc_html__( 'Delete will permanently remove the venue', 'eventorganiser' ) . '</li>' .
+					'<li>' . esc_html__( "View will take you to the venue's page", 'eventorganiser' ) . '</li>' .
+				'</ul>';
 
 			$screen->add_help_tab( array(
 				'id'      => 'overview',
-				'title'   => __( 'Overview', 'eventorganiser' ),
+				'title'   => esc_html__( 'Overview', 'eventorganiser' ),
 				'content' => $content
-			));
+			) );
 			break;
 
-		//Add help for calendar view
+		// Add help for calendar view
 		case 'event_page_calendar':
 			$screen->add_help_tab( array(
-				'id'=>'overview',
-				'title'=>__('Overview'),
-				'content'=>'<p>' . __("This page shows all (occurrances of) events. You can view the summary of an event by clicking on it. If you have the necessary permissions, a link to the event's edit page will appear also.",'eventorganiser'). '</p>' .
-			'<p>' . __("By clicking the relevant tab, you can view events in Month, Week or Day mode. You can also filter the events by events by category and venue. The 'go to date' button allows you to quickly jump to a specific date.",'eventorganiser'). '</p>'
-			));
+				'id'      => 'overview',
+				'title'   => esc_html__( 'Overview', 'eventorganiser' ),
+				'content' => '<p>' . esc_html__( "This page shows all (occurrances of) events. You can view the summary of an event by clicking on it. If you have the necessary permissions, a link to the event's edit page will appear also.", 'eventorganiser' ) . '</p>' .
+				'<p>' . __( "By clicking the relevant tab, you can view events in Month, Week or Day mode. You can also filter the events by events by category and venue. The 'go to date' button allows you to quickly jump to a specific date.", 'eventorganiser' ) . '</p>'
+			) );
 			$screen->add_help_tab( array(
-				'id'=>'add-event',
-				'title'=>__('Add Event','eventorganiser'),
-				'content'=>'<p>' . __("You can create an event on this Calendar, by clicking on day or dragging over multiple days (in Month view) or multiple times (in Week and Day view). You can give the event a title, specify a venue and provide a descripton. The event can be immediately published or saved as a draft. In any case, the event is created and you are forwarded to that event's edit page.",'eventorganiser') . '</p>' ));
+				'id'     => 'add-event',
+				'title'  => esc_html__( 'Add Event', 'eventorganiser' ),
+				'content'=> '<p>' . esc_html__( "You can create an event on this Calendar, by clicking on day or dragging over multiple days (in Month view) or multiple times (in Week and Day view). You can give the event a title, specify a venue and provide a descripton. The event can be immediately published or saved as a draft. In any case, the event is created and you are forwarded to that event's edit page.", 'eventorganiser' ) . '</p>'
+			) );
 			break;
 	endswitch;
 
 	//Add a link to Event Organiser documentation on every EO page
 	$screen->set_help_sidebar(
-		'<p> <strong>'. __('For more information','eventorganiser').'</strong></br>'
-			.sprintf(__('See the <a %s> documentation</a>','eventorganiser'),'target="_blank" href="http://docs.wp-event-organiser.com/"').'</p>'
-			.sprintf('<p><strong><a href="%s">%s</a></strong></p>', admin_url('edit.php?post_type=event&page=debug'),__('Debugging Event Organiser','eventorganiser' ) )
-			.sprintf('<p><strong><a href="%s">%s</a></strong></p>', admin_url('index.php?page=eo-pro'),__('Go Pro!','eventorganiser'))
+		'<p> <strong>'. esc_html__( 'For more information', 'eventorganiser' ). '</strong></br>'
+		. sprintf( __( 'See the <a %s> documentation</a>','eventorganiser'), 'target="_blank" href="http://docs.wp-event-organiser.com/"' ) . '</p>'
+		. sprintf( '<p><strong><a href="%s">%s</a></strong></p>', admin_url( 'edit.php?post_type=event&page=debug' ), esc_html__( 'Debugging Event Organiser', 'eventorganiser' ) )
+		. sprintf( '<p><strong><a href="%s">%s</a></strong></p>', admin_url( 'index.php?page=eo-pro' ), esc_html__( 'Go Pro!', 'eventorganiser' ) )
 	);
 }
 add_action( 'admin_enqueue_scripts', 'eventorganiser_cpt_help_text' );
