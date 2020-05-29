@@ -513,13 +513,14 @@ add_filter( 'wp_list_pages', 'eventorganiser_menu_link',10,1 );
  * @access private
  * @since 1.0
  */
-function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
+function eventorganiser_cpt_help_text() {
+	$screen = get_current_screen();
 
-	if (  ! in_array( $screen_id, array( 'event', 'edit-event', 'event_page_venues', 'event_page_calendar' ) ) ) {
-		return $contextual_help;
+	if ( 'event' !== $screen->post_type ) {
+		return;
 	}
 
-	switch($screen_id):
+	switch($screen->id):
 		//Add help for event editing / creating page
 		case 'event':
 			    $screen->add_help_tab( array(
@@ -565,13 +566,19 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 
 		//Add help for venue admin table page
 		case 'event_page_venues':
-			$contextual_help =
+			$content =
 			'<p>' . __("Hovering over a row in the venues list will display action links that allow you to manage that venue. You can perform the following actions:",'eventorganiser') . '</p>' .
 			'<ul>' .
 				'<li>' . __('Edit takes you to the editing screen for that venue. You can also reach that screen by clicking on the venue title.','eventorganiser') . '</li>' .
 				'<li>' . __('Delete will permanently remove the venue','eventorganiser') . '</li>' .
 				'<li>' . __("View will take you to the venue's page",'eventorganiser') . '</li>' .
 			'</ul>';
+
+			$screen->add_help_tab( array(
+				'id'      => 'overview',
+				'title'   => __( 'Overview', 'eventorganiser' ),
+				'content' => $content
+			));
 			break;
 
 		//Add help for calendar view
@@ -596,10 +603,8 @@ function eventorganiser_cpt_help_text($contextual_help, $screen_id, $screen) {
 			.sprintf('<p><strong><a href="%s">%s</a></strong></p>', admin_url('edit.php?post_type=event&page=debug'),__('Debugging Event Organiser','eventorganiser' ) )
 			.sprintf('<p><strong><a href="%s">%s</a></strong></p>', admin_url('index.php?page=eo-pro'),__('Go Pro!','eventorganiser'))
 	);
-
-	return $contextual_help;
 }
-add_action( 'contextual_help', 'eventorganiser_cpt_help_text', 10, 3 );
+add_action( 'admin_enqueue_scripts', 'eventorganiser_cpt_help_text' );
 
 /*
 * The following adds the ability to associate a colour with an event-category.
