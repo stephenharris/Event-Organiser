@@ -239,6 +239,10 @@ function eo_get_the_start( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, 
 	$occurrence    = eo_get_the_occurrence( $post_id, $occurrence_id );
 
 	if ( ! $occurrence ) {
+		$occurrence = eo_get_event_schedule( $post_id );
+	}
+
+	if ( ! $occurrence ) {
 		return false;
 	}
 
@@ -417,6 +421,10 @@ function eo_get_the_end( $format = 'd-m-Y', $post_id = 0, $occurrence_id = 0, $d
 	$post_id       = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 	$occurrence_id = (int) ( empty($occurrence_id) && isset($event->occurrence_id)  ? $event->occurrence_id : $occurrence_id);
 	$occurrence    = eo_get_the_occurrence( $post_id, $occurrence_id );
+
+	if ( ! $occurrence ) {
+		$occurrence = eo_get_event_schedule( $post_id );
+	}
 
 	if ( ! $occurrence ) {
 		return false;
