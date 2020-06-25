@@ -328,7 +328,7 @@ class EO_ICAL_Parser{
 
 			$j = $i+1;
 
-			while( isset( $lines[$j] ) && strlen( $lines[$j] ) > 0 && ( $lines[$j]{0} == ' ' || $lines[$j]{0} == "\t" )) {
+			while( isset( $lines[$j] ) && strlen( $lines[$j] ) > 0 && ( $lines[$j][0] == ' ' || $lines[$j][0] == "\t" )) {
 				$unfolded_lines[$i] .= rtrim( substr( $lines[$j], 1 ), "\n\r" );
 				$j++;
 			}
