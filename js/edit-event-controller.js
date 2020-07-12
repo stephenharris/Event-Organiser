@@ -122,12 +122,11 @@ $.widget("ui.combobox", {
 					$("#eventorganiser_detail .eo-add-new-venue").hide();
 				}
 
-				if (!eovenue.is_map_enabled()) {
-					return;
+				if (eovenue.is_map_enabled()) {
+					eovenue.get_map( 'venuemap' ).marker[0].setPosition( {
+						'lat': parseFloat(b.item.venue_lat), 'lng': parseFloat(b.item.venue_lng)
+					} );
 				}
-				eovenue.get_map( 'venuemap' ).marker[0].setPosition( {
-					'lat': parseFloat(b.item.venue_lat), 'lng': parseFloat(b.item.venue_lng)
-				} );
 			}
 			$hiddenEl.val( b.item.term_id );
 		}

@@ -34,7 +34,8 @@ eovenue = {
 	    var location = { lat: lat, lng: lng, venue_id: 0 };
 
 	    var map_options = {
-	    	zoom: ( options.hasOwnProperty( 'zoom' ) ? options.zoom : 15 ),
+			zoom: ( options.hasOwnProperty( 'zoom' ) ? options.zoom : 15 ),
+			zoomcontrol: true,
 	    	center: location,
 	    	//mapTypeId: google.maps.MapTypeId.ROADMAP,
 			locations:[ location ]

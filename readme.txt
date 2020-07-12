@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 5.3.0
+Tested up to: 5.3.1
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.9.1 - 28th May 2020 =
+* bugfix: Fixed bug where venue can't be changed if maps are disabled
+* feature: Added additonal methods to the maps adapter API
+
 = 3.9.0 - 8th January 2020 =
 * feature: Added option to disable venue maps
 * bugfix: Ensure latitude/longtitude co-ordinates are cast as floats
