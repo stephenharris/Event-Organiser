@@ -17,3 +17,4 @@ node_modules
 *.pot
 !tests/data/languages/*.mo
 phpmd.log
+!lib/**/*

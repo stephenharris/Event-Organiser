@@ -122,9 +122,11 @@ $.widget("ui.combobox", {
 					$("#eventorganiser_detail .eo-add-new-venue").hide();
 				}
 
-				eovenue.get_map( 'venuemap' ).marker[0].setPosition( {
-					'lat': floatVal(b.item.venue_lat), 'lng': floatVal(b.item.venue_lng)
-				} );
+				if (eovenue.is_map_enabled()) {
+					eovenue.get_map( 'venuemap' ).marker[0].setPosition( {
+						'lat': parseFloat(b.item.venue_lat), 'lng': parseFloat(b.item.venue_lng)
+					} );
+				}
 			}
 			$hiddenEl.val( b.item.term_id );
 		}
@@ -196,6 +198,9 @@ $.widget("ui.combobox", {
 			$('.eo-venue-combobox-select').hide();
 			$('.eo-venue-input input').val('');
 
+			if (!eovenue.is_map_enabled()) {
+				return;
+			}
 			//Use selected timezone to 'guess' a new address, so we don't get a blank map instead.
 			var address = EO_Ajax_Event.location;
 			if( address ){
@@ -222,7 +227,11 @@ $(".eo_addressInput").change(function () {
     $(".eo_addressInput").each(function () {
 			var key = $(this).attr('id').replace('eo_venue_add-','');
 			address[key] = $(this).val();
-    });
+	});
+	
+	if (!eovenue.is_map_enabled()) {
+		return;
+	}
 
     eovenue.geocode( address, function( latlng ){
     	if( latlng ){
@@ -237,8 +246,11 @@ $('.eo-add-new-venue-cancel').click(function(e){
 	$('.eo-venue-combobox-select').show().find('input:visible').first().focus();
 	$('.eo-add-new-venue input').val('');
 
+	if (!eovenue.is_map_enabled()) {
+		return;
+	}
 	//Restore old venue details
-	eovenue.get_map( 'venuemap' ).marker[0].setPosition( {'lat': floatVal(eo_venue_obj.lat), 'lng': floatVal(eo_venue_obj.lng)} );
+	eovenue.get_map( 'venuemap' ).marker[0].setPosition( {'lat': parseFloat(eo_venue_obj.lat), 'lng': parseFloat(eo_venue_obj.lng)} );
 	$("[name='eo_input[event-venue]']").val( eo_venue_obj.id );
 	$(".eo-venue-input input").val( eo_venue_obj.label );
 	$("#eventorganiser_detail .eo-add-new-venue").hide();

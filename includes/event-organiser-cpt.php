@@ -514,13 +514,15 @@ add_filter( 'wp_list_pages', 'eventorganiser_menu_link',10,1 );
  * @since 1.0
  */
 function eventorganiser_cpt_help_text() {
+  
 	$screen = get_current_screen();
+	$screen_id = $screen->id;
 
-	if ( 'event' !== $screen->post_type ) {
+	if (  ! in_array( $screen_id, array( 'event', 'edit-event', 'event_page_venues', 'event_page_calendar' ) ) ) {
 		return;
 	}
 
-	switch( $screen->id ):
+	switch( $screen_id ):
 		// Add help for event editing / creating page
 		case 'event':
 			    $screen->add_help_tab( array(
@@ -605,7 +607,7 @@ function eventorganiser_cpt_help_text() {
 		. sprintf( '<p><strong><a href="%s">%s</a></strong></p>', admin_url( 'index.php?page=eo-pro' ), esc_html__( 'Go Pro!', 'eventorganiser' ) )
 	);
 }
-add_action( 'admin_enqueue_scripts', 'eventorganiser_cpt_help_text' );
+add_action( 'admin_head', 'eventorganiser_cpt_help_text' );
 
 /*
 * The following adds the ability to associate a colour with an event-category.

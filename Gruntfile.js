@@ -153,7 +153,7 @@ module.exports = function(grunt) {
                     '!.git/**', //version control
                     '!docker/**', '!docker-compose.yml', //docker
                     '!tests/**', '!bin/**', '!phpunit.xml', //unit test
-                    '!features/**', '!behat.yml', //behat test
+                    '!features/**', '!behat.yml', '!failed-scenerios/**', //behat test
                     '!vendor/**', '!composer.lock', '!composer.phar', '!composer.json', //composer
                     '!.*', '!**/*~', //hidden files
                     '!CONTRIBUTING.md',

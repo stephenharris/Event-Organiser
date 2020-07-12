@@ -247,6 +247,7 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 						'options'   => array(
 							'openstreetmap' => __( 'OpenStreetMap', 'eventorganiser' ),
 							'googlemaps'    => __( 'Google Maps', 'eventorganiser' ),
+							'none'    => __( 'None', 'eventorganiser' ),
 						),
 					)
 				);
