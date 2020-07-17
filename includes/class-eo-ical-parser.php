@@ -489,8 +489,8 @@ class EO_ICAL_Parser{
 						}
 
 						$this->current_event = array(
-							'exclude' => [],
-							'include' => []
+							'exclude' => array(),
+							'include' => array()
 						);
 
 					//Otherwise, parse event property

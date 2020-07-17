@@ -68,18 +68,18 @@ class dateFormatRangeTest extends PHPUnit_Framework_TestCase
 	public function testDateRangeFormatLocale(){
 	
 		//Set locale
-		$original = $this->setLocale();
-		$this->setLocale( 'he_IL' );
+		$original = $this->setWPLocale();
+		$this->setWPLocale( 'he_IL' );
 
 		$datetime1 = new DateTime( '2015-02-16' );
 		$datetime2 = new DateTime( '2015-02-17' );
 		$this->assertEquals( '2015 ' . __( 'February', 'default' ) . ' 17-16', eo_format_datetime_range( $datetime1, $datetime2, 'Y F j', '-' ) );
 			
 		//Reset locale
-		$this->setLocale( $original );
+		$this->setWPLocale( $original );
 	}
 
-	public function setLocale( $locale = false ){
+	public function setWPLocale( $locale = false ){
 		static $current_locale;
 
 		if( is_null( $current_locale ) ){

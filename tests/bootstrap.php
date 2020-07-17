@@ -2,6 +2,8 @@
 //Defines the data location for unit-tests
 define( 'EO_DIR_TESTDATA', dirname( __FILE__ ) . '/data' );
 
+define('WP_TESTS_CONFIG_FILE_PATH', dirname(__FILE__) . '/wp-tests-config.php');
+
 //Load the test library...
 $_tests_dir = getenv('WP_TESTS_DIR');
 if ( !$_tests_dir ) $_tests_dir = '/tmp/wordpress-tests-lib';
@@ -19,8 +21,13 @@ function _manually_activate() {
 }
 tests_add_filter( 'init', '_manually_activate' );
 
+echo "Bootstrap test library";
 require $_tests_dir . '/bootstrap.php';
 
+echo "Activate plugin";
 activate_plugin( 'event-organiser/event-organiser.php' );
 
+echo "Load testcase";
 require dirname( __FILE__ ) . '/framework/testcase.php';
+
+echo "Bootstrap complete.";

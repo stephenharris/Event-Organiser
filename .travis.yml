@@ -1,15 +1,7 @@
 language: php
-
-node_js:
-- "0.10"
-
-sudo: false
-
-dist: precise
+dist: trusty
 
 php:
-- 5.2
-- 5.3
 - 5.4
 - 5.5
 - 5.6
@@ -26,84 +18,85 @@ branches:
 env:
 - WP_VERSION=nightly
 - WP_VERSION=latest
+- WP_VERSION=5.3.3
+- WP_VERSION=5.2.6
+- WP_VERSION=5.1.5
+- WP_VERSION=5.0.9
 - WP_VERSION=4.9.8
 - WP_VERSION=4.8.2
 - WP_VERSION=4.7.5
-- WP_VERSION=4.6.1
-- WP_VERSION=4.5.4
-- WP_VERSION=4.4.3
-- WP_VERSION=4.3.4
-- WP_VERSION=4.2.8
-- WP_VERSION=4.1.11
 
 matrix:
   exclude:
-    - php: 7
-      env: WP_VERSION=4.1.11
-    - php: 7
-      env: WP_VERSION=4.2.8
-    - php: 7.1
-      env: WP_VERSION=4.1.11
-    - php: 7.1
-      env: WP_VERSION=4.2.8
-    - php: 7.2
-      env: WP_VERSION=4.1.11
-    - php: 7.2
-      env: WP_VERSION=4.2.8
-    - php: 7.2
-      env: WP_VERSION=4.3.4
-    - php: 7.2
-      env: WP_VERSION=4.4.3
-    - php: 7.2
-      env: WP_VERSION=4.5.4
-    - php: 7.2
-      env: WP_VERSION=4.6.1
+    # phpunit on php 5.4 & 5. must be <= 4.8, but WP requires phpunit 5.7 for 5.2.6+
+    - php: 5.4
+      env: WP_VERSION=5.2.6
+    - php: 5.5
+      env: WP_VERSION=5.2.6
+    - php: 5.4
+      env: WP_VERSION=5.3.3
+    - php: 5.5
+      env: WP_VERSION=5.3.3
+    - php: 5.4
+      env: WP_VERSION=latest
+    - php: 5.5
+      env: WP_VERSION=latest
+    - php: 5.4
+      env: WP_VERSION=nightly
+    - php: 5.5
+      env: WP_VERSION=nightly
+
+    # Older versions of WP are incompatible with PHP 7.2/7.3
     - php: 7.2
       env: WP_VERSION=4.7.5
     - php: 7.2
       env: WP_VERSION=4.8.2
-    - php: 7.3
-      env: WP_VERSION=4.1.11
-    - php: 7.3
-      env: WP_VERSION=4.2.8
-    - php: 7.3
-      env: WP_VERSION=4.3.4
-    - php: 7.3
-      env: WP_VERSION=4.4.3
-    - php: 7.3
-      env: WP_VERSION=4.5.4
-    - php: 7.3
-      env: WP_VERSION=4.6.1
     - php: 7.3
       env: WP_VERSION=4.7.5
     - php: 7.3
       env: WP_VERSION=4.8.2
     - php: 7.3
       env: WP_VERSION=4.9.8
+      
+    # wp test lib < 5.1 & phpunit 7 incompatability 
+    - php: 7.3
+      env: WP_VERSION=nightly
+    - php: 7.2
+      env: WP_VERSION=4.9.8
+    - php: 7.2
+      env: WP_VERSION=5.0.9
+    - php: 7.3
+      env: WP_VERSION=5.0.9
 
   allow_failures:
     - env: WP_VERSION=nightly
 
+before_install:
+  - nvm install 10
+  - pecl install timezonedb
+  
 install:
-- sh -c "if [ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '5.2' ]; then pecl install timezonedb; fi"
 - npm install grunt-cli
 - npm install
+- composer self-update
 
 before_script:
 - export PATH="$HOME/.composer/vendor/bin:$PATH"
 - |
-  if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then
-    composer global require "phpunit/phpunit=5.7.*"
-  elif [[ ${TRAVIS_PHP_VERSION:0:3} != "5.2" ]]; then
+  if [[ ${TRAVIS_PHP_VERSION:0:3} == "5.4" ]] || [[ ${TRAVIS_PHP_VERSION:0:3} == "5.5" ]]; then
     composer global require "phpunit/phpunit=4.8.*"
+  elif [[ ${TRAVIS_PHP_VERSION:0:3} == "5.6" ]] || [[ ${TRAVIS_PHP_VERSION:0:3} == "7.0" ]]  || [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then
+    composer global require "phpunit/phpunit=5.7.*"
+  else
+    composer global require "phpunit/phpunit=7.5.*"
   fi
 - mysql --version
 - php --version
 - npm --version
 - node --version
-- phpunit --version
+- /home/travis/.config/composer/vendor/bin/phpunit --version
 - node_modules/grunt-cli/bin/grunt test_build
 - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 script:
-- phpunit
+- /home/travis/.config/composer/vendor/bin/phpunit --exclude-group timezone-flakey
