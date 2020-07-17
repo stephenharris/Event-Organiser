@@ -198,7 +198,7 @@ class iCalParseTest extends PHPUnit_Framework_TestCase
 		//$this->assertEquals( 'custom', $event['schedule'] );
 		//$this->assertEquals( 1, $event['frequency'] );
 		$this->assertEquals( $expected_includes, $event['include'] );
-		$this->assertArrayNotHasKey( 'exclude', $event );
+		$this->assertEquals( [], $event['exclude'] );
 		$this->assertEquals( $expected_start, $event['start'] );
 		$this->assertEquals( $expected_end, $event['end'] );
 	}
@@ -670,7 +670,17 @@ class iCalParseTest extends PHPUnit_Framework_TestCase
     {
 
     	$ical = new EO_ICAL_Parser();
-    	$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithRecurrenceID.ics' );
+		$ical->parse( EO_DIR_TESTDATA . '/ical/eventWithRecurrenceID.ics' );
+		
+
+		$expected_includes = array( 
+			new DateTime( '2014-10-18 11:30:00', new \DateTimeZone('Europe/Amsterdam') ),
+			new DateTime( '2014-10-13 11:30:00', new \DateTimeZone('Europe/Amsterdam') )
+		);
+		$expected_excludes = array( 
+			new DateTime( '2014-10-19 11:30:00', new \DateTimeZone('Europe/Amsterdam') ),
+			new DateTime( '2014-10-12 11:30:00', new \DateTimeZone('Europe/Amsterdam') )
+		);
 
     	//Check the number of events have imported correctly
     	$this->assertEquals( 0, count( $ical->warnings ) );
@@ -679,8 +689,44 @@ class iCalParseTest extends PHPUnit_Framework_TestCase
     	//Check event
     	$event = $ical->events[0];
     	$this->assertEquals( 'weekly', $event['schedule'] );
-    	$this->assertEquals( array( 'SU' ), $event['schedule_meta'] );
-    }
+		$this->assertEquals( array( 'SU' ), $event['schedule_meta'] );
+		$this->assertEquals( "This is the standard event", $event['post_title'] );
+
+		$this->assertEquals( $expected_includes, $event['include'] );
+		$this->assertEquals( $expected_excludes, $event['exclude'] );
+	}
+	
+	public function testEventWithRecurrenceID2(){
+		$ical = new EO_ICAL_Parser();
+		$ical->parse( EO_DIR_TESTDATA . '/ical/recurrenceIdEvent.ics' );
+
+		$expected_start = new DateTime( '2020-10-01 09:30:00',  new \DateTimeZone('Europe/Madrid') );
+		$expected_end = new DateTime( '2020-10-01 13:30:00', new \DateTimeZone('Europe/Madrid') );
+		$expected_until = new DateTime( '2021-02-05 22:59:59' );
+
+		$expected_includes = array( 
+			new DateTime( '2020-12-04 09:30:00', new \DateTimeZone('Europe/Madrid') ),
+			new DateTime( '2021-01-08 09:30:00', new \DateTimeZone('Europe/Madrid') ),
+		);
+		$expected_excludes = array( 
+			new DateTime( '2020-12-03 09:30:00', new \DateTimeZone('Europe/Madrid') ),
+			new DateTime( '2021-01-07 09:30:00', new \DateTimeZone('Europe/Madrid') )
+		 );
+		
+		$event = $ical->events[0];
+
+		$this->assertEquals( 0, count( $ical->warnings ) );
+		$this->assertEquals( 0, count( $ical->errors ) );
+		$this->assertEquals( $expected_start, $event['start'] );
+		$this->assertEquals( $expected_end, $event['end'] );
+    	$this->assertEquals( 'monthly', $event['schedule'] );
+		$this->assertEquals( 'BYDAY=1TH', $event['schedule_meta'] );		
+		$this->assertEquals( "Event with RECURRENCE-ID property", $event['post_title'] );
+
+		$this->assertEquals( $expected_includes, $event['include'] );
+		$this->assertEquals( $expected_excludes, $event['exclude'] );
+
+	}
 
 	public function testPropertyParseAction(){
 
@@ -914,6 +960,8 @@ class iCalParseTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals( 0, count( $ical->warnings ) );
 
     	$this->assertEquals( 0, count( $ical->errors ) );
-    }
+	}
+	
+
 
 }

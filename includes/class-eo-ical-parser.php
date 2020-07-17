@@ -460,15 +460,18 @@ class EO_ICAL_Parser{
 						$index = isset( $this->current_event['uid'] ) ? 'uid:'.$this->current_event['uid'] : count( $this->events );
 						if( isset( $this->events[$index] ) ){
 
-							if( $this->current_event['sequence'] > $this->events[$index]['sequence'] ){
-								$this->events[$index] = $this->current_event;
-
-							}elseif( isset( $this->events[$index]['recurrence-id'] ) ){
-								//This event has recurrence ID - replace it.
+							if( isset( $this->events[$index]['recurrence-id'] ) ){
+								$this->current_event['include'] = array_merge($this->current_event['include'], $this->events[$index]['include']);
+								$this->current_event['exclude'] = array_merge($this->current_event['exclude'], $this->events[$index]['exclude']);
 								$this->events[$index] = $this->current_event;
 
 							}elseif( isset( $this->current_event['recurrence-id'] ) ){
-								//Ignore this event - keep existing
+
+								$this->events[$index]['include'] = array_merge($this->events[$index]['include'], $this->current_event['include']);
+								$this->events[$index]['exclude'] = array_merge($this->events[$index]['exclude'], $this->current_event['exclude']);
+
+							}elseif( $this->current_event['sequence'] > $this->events[$index]['sequence'] ){
+								$this->events[$index] = $this->current_event;
 
 							}elseif( $this->current_event['sequence'] == $this->events[$index]['sequence'] ){
 								$this->report_warning(
@@ -485,7 +488,10 @@ class EO_ICAL_Parser{
 							$this->events[$index] = $this->current_event;
 						}
 
-						$this->current_event = array();
+						$this->current_event = array(
+							'exclude' => [],
+							'include' => []
+						);
 
 					//Otherwise, parse event property
 					}else{
@@ -519,7 +525,7 @@ class EO_ICAL_Parser{
 					//Begin event
 					if( $property=='BEGIN' && $value=='VEVENT'){
 						$this->state = "VEVENT";
-						$this->current_event = array( '_lines' => array( 'start' => $this->line ) );
+						$this->current_event = array( '_lines' => array( 'start' => $this->line ), 'include' => array(), 'exclude' => array() );
 
 					}elseif ( $property=='END' && $value=='VCALENDAR'){
 						$this->state = "ENDCALENDAR";
@@ -654,7 +660,23 @@ class EO_ICAL_Parser{
 				case 'RECURRENCE-ID':
 				//This is not properly implemented yet but is used to detect
 				//when feed entries may share a UID.
+				if( isset( $meta ) && $meta == 'DATE' ):
+					$date = $this->parse_ical_date( $value );
+				else:
+					try{
+						$date = $this->parse_ical_datetime( $value, $date_tz );
+					} catch ( Exception $datetime_exception ) {
+						try{
+							$date = $this->parse_ical_date( $value );
+						} catch ( Exception $date_exception ) {
+							throw $datetime_exception;
+						}
+					}
+
+				endif;
 				$this->current_event['recurrence-id'] = $value;
+				$this->current_event['exclude'][] = $date;
+				$this->current_event['include'][] = $this->current_event['start'];
 				break;
 
 				case 'CREATED':
