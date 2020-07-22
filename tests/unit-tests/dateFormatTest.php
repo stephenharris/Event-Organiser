@@ -5,11 +5,11 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 
 	public function setUp(){
 		parent::setUp();
-		$this->original_locale = $this->setLocale();
+		$this->original_locale = $this->setWPLocale();
 	}
 
 	public function tearDown(){
-		$this->setLocale( $this->original_locale );
+		$this->setWPLocale( $this->original_locale );
 		parent::tearDown();
 	}
 
@@ -33,7 +33,7 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 	public function testDateFormatAllLocale() {
 		$this->markTestIncomplete( 'This test fails on some WP installs. Probably due to an out-of sync .mo file in the test data' );
 		$date = new DateTime( '2016-08-07 18:43', new DateTimeZone( 'Europe/London' ) );
-		$this->setLocale( 'fr_FR' );
+		$this->setWPLocale( 'fr_FR' );
 		$this->assertEquals( '07 dim 7th dimanche 7 0 219', eo_format_datetime( $date, 'd D jS l N w z' ) );
 		$this->assertEquals( '31', eo_format_datetime( $date, 'W' ) );
 		$this->assertEquals( 'août 08 Août 8 31', eo_format_datetime( $date, 'F m M n t' ) );
@@ -45,21 +45,21 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 
 	public function testDateFormatLocale() {
 		//Set locale
-		$this->setLocale( 'ru_RU' );
+		$this->setWPLocale( 'ru_RU' );
 		$date = new DateTime( '2016-05-17 18:43' );
 		$this->assertEquals( 'Вторник 17th Май 2016', eo_format_datetime( $date, 'l jS F Y' ) );
 	}
 
 	public function testDateFormatLocaleRTL() {
 		//Set locale
-		$this->setLocale( 'he_IL' );
+		$this->setWPLocale( 'he_IL' );
 		$date = new DateTime( '2016-05-17 18:43' );
 		$this->assertEquals( 'יום שלישי 17th מאי 2016', eo_format_datetime( $date, 'l jS F Y' ) );
 	}
 
 	public function testDateFormatLocaleWithNoAMoPM() {
 		//Set locale
-		$this->setLocale( 'fr_FR' );
+		$this->setWPLocale( 'fr_FR' );
 		$date = new DateTime( '2016-05-17 18:43' );
 		$this->assertEquals( 'mardi 17th mai 2016 6:43pm', eo_format_datetime( $date, 'l jS F Y g:ia' ) );
 	}
@@ -94,7 +94,7 @@ class dateFormatTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
-	public function setLocale( $locale = false ){
+	public function setWPLocale( $locale = false ){
 		static $current_locale;
 
 		if( is_null( $current_locale ) ){

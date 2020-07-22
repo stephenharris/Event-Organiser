@@ -59,8 +59,8 @@ class dateCreateTest extends PHPUnit_Framework_TestCase
 		$date1 = new DateTime( '2013-12-31 4:30pm' );
 
 		//Set locale
-		$original = $this->setLocale();
-		$this->setLocale( 'ru_RU' );
+		$original = $this->setWPLocale();
+		$this->setWPLocale( 'ru_RU' );
 			
 		//Run test
 		$this->assertEquals( $date1, eo_check_datetime( 'Y-m-d g:ia', '2013-12-31 4:30пп' ) );
@@ -73,7 +73,7 @@ class dateCreateTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $date1, eo_check_datetime( 'j F Y g:ia', '31 December 2013 4:30пп' ) );
 		
 		//Reset locale
-		$this->setLocale( $original );		
+		$this->setWPLocale( $original );		
 	}
 	
 	public function testCheckDatetimeLocaleWithoutMeridian(){
@@ -81,8 +81,8 @@ class dateCreateTest extends PHPUnit_Framework_TestCase
 		$date = new DateTime( '2013-12-31 4:30pm' );
 	
 		//Set locale
-		$original = $this->setLocale();
-		$this->setLocale( 'ru_RU' );
+		$original = $this->setWPLocale();
+		$this->setWPLocale( 'ru_RU' );
 			
 		//Run test
 		$this->assertEquals( $date, eo_check_datetime( 'Y-m-d g:ia', '2013-12-31 4:30pm' ) );
@@ -95,7 +95,7 @@ class dateCreateTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $date, eo_check_datetime( 'j F Y g:ia', '31 December 2013 4:30pm' ) );
 	
 		//Reset locale
-		$this->setLocale( $original );
+		$this->setWPLocale( $original );
 	}
 	
 	public function testCheckDatetimeNoSpacesPHP52(){
@@ -110,7 +110,7 @@ class dateCreateTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $date_am, eo_check_datetime( 'Y-m-d G:i', '2013-12-31 3:20' ) );	
 	}	
 	
-	public function setLocale( $locale = false ){
+	public function setWPLocale( $locale = false ){
 		static $current_locale;
 		
 		if( is_null( $current_locale ) ){

@@ -198,7 +198,7 @@ class iCalParseTest extends PHPUnit_Framework_TestCase
 		//$this->assertEquals( 'custom', $event['schedule'] );
 		//$this->assertEquals( 1, $event['frequency'] );
 		$this->assertEquals( $expected_includes, $event['include'] );
-		$this->assertArrayNotHasKey( 'exclude', $event );
+		$this->assertEquals( array(), $event['exclude'] );
 		$this->assertEquals( $expected_start, $event['start'] );
 		$this->assertEquals( $expected_end, $event['end'] );
 	}

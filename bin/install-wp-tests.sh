@@ -104,16 +104,15 @@ install_test_suite() {
 
 	# set up testing suite
 	mkdir -p $WP_TESTS_DIR
-	cd $WP_TESTS_DIR
-
-	svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/includes/
-
-	wget -nv -O wp-tests-config.php https://develop.svn.wordpress.org/${WP_TESTS_TAG}/wp-tests-config-sample.php
-	sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" wp-tests-config.php
-	sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" wp-tests-config.php
-	sed $ioption "s/yourusernamehere/$DB_USER/" wp-tests-config.php
-	sed $ioption "s/yourpasswordhere/$DB_PASS/" wp-tests-config.php
-	sed $ioption "s|localhost|${DB_HOST}|" wp-tests-config.php
+	svn co --quiet https://develop.svn.wordpress.org/${WP_TESTS_TAG}/tests/phpunit/includes/ "${WP_TESTS_DIR}/";
+	ls "${WP_TESTS_DIR}/";
+	
+	wget -nv -O /tmp/wp-tests-config.php https://develop.svn.wordpress.org/${WP_TESTS_TAG}/wp-tests-config-sample.php
+	sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" /tmp/wp-tests-config.php
+	sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" /tmp/wp-tests-config.php
+	sed $ioption "s/yourusernamehere/$DB_USER/" /tmp/wp-tests-config.php
+	sed $ioption "s/yourpasswordhere/$DB_PASS/" /tmp/wp-tests-config.php
+	sed $ioption "s|localhost|${DB_HOST}|" /tmp/wp-tests-config.php
 }
 
 install_wp
@@ -123,3 +122,4 @@ install_db
 
 rm -rf ${WP_CORE_DIR}wp-content/plugins/*
 ln -s $WORKSPACE/dist/event-organiser ${WP_CORE_DIR}/wp-content/plugins/event-organiser
+cp /tmp/wp-tests-config.php tests/wp-tests-config.php

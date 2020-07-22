@@ -6,9 +6,6 @@
 	convertNoticesToExceptions="true"
 	convertWarningsToExceptions="true"
 	>
-	<php>
-        <const name="WP_TESTS_CONFIG_FILE_PATH" value="/var/www/html/wp-content/plugins/event-organiser/tests/wp-tests-config.php" />
-    </php>
 	<testsuites>
 		<testsuite>
 			<directory suffix="Test.php">./tests/unit-tests/</directory>
