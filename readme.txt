@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 5.3.1
+Tested up to: 5.4.2
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,11 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.10.0 - 22nd July 202 =
+* feature: Extended support for RECURRENCE-ID in iCal calendards
+* bugfix: Ensure translated screen help text is escaped
+* bugfix: Replace instances of curly braces for array access (deprecated PHP 7). 
 
 = 3.9.1 - 28th May 2020 =
 * bugfix: Fixed bug where venue can't be changed if maps are disabled
