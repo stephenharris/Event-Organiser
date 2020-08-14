@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 5.4.2
+Tested up to: 5.5.0
 Stable tag: {{version}}
 License: GPLv3
 
@@ -222,7 +222,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
-= 3.10.0 - 22nd July 202 =
+= 3.10.1 - 14th August 2020 =
+* bugfix: Fixed iCal feeds being treated as comment feeds
+
+= 3.10.0 - 22nd July 2020 =
 * feature: Extended support for RECURRENCE-ID in iCal calendards
 * bugfix: Ensure translated screen help text is escaped
 * bugfix: Replace instances of curly braces for array access (deprecated PHP 7). 
