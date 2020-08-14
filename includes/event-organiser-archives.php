@@ -55,6 +55,7 @@ function eventorganiser_pre_get_posts( $query ) {
 	//If the query is for eo-events feed, set post type
 	if ( $query->is_feed( 'eo-events' ) ) {
 		$query->set( 'post_type', 'event' );
+		$query->is_comment_feed = false;
 	}
 
 	//If querying for all events starting on given date, set the date parameters
