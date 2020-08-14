@@ -3,13 +3,6 @@
 class subscribeLinkTest extends EO_UnitTestCase
 {
 
-	public function testWebcal()
-	{
-		$actual   = do_shortcode( '[eo_subscribe type="webcal"]Subscribe[/eo_subscribe]' );
-		$expected = '<a href="webcal://example.org/?feed=eo-events" target="_blank"  title="Subscribe to calendar"  >Subscribe</a>';
-		$this->assertEquals( $expected, $actual );
-	}
-
 	public function testWebcalSSL()
 	{
 		$value = isset( $_SERVER['HTTPS'] ) ? $_SERVER['HTTPS'] : null;
@@ -24,6 +17,13 @@ class subscribeLinkTest extends EO_UnitTestCase
 			unset( $_SERVER['HTTPS'] );
 		}
 
+	}
+
+	public function testWebcal()
+	{
+		$actual   = do_shortcode( '[eo_subscribe type="webcal"]Subscribe[/eo_subscribe]' );
+		$expected = '<a href="webcal://example.org/?feed=eo-events" target="_blank"  title="Subscribe to calendar"  >Subscribe</a>';
+		$this->assertEquals( $expected, $actual );
 	}
 
 	public function testIcalSubscribe()
