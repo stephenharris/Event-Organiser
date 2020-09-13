@@ -722,7 +722,7 @@ function _eventorganiser_generate_occurrences( $schedule ) {
 
 				} else {
 					//expect e.g. array( 2MO )
-					preg_match( '/^(-?\d{1,2})([a-zA-Z]{2})/', $values[0], $matches );
+					preg_match( '/^(-?\d)([a-zA-Z]{2})/', $values[0], $matches );
 					$n = (int) $matches[1];
 					$day_num = array_search( $matches[2], $icaldays );//(Sun) - 6(Sat)
 				}
