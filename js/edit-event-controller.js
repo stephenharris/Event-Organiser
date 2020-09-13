@@ -67,7 +67,7 @@ eventOrganiserSchedulePicker.init({
 	startday: EO_Ajax_Event.startday,
 	schedule: window.eventOrganiserSchedule,
 	locale: EO_Ajax_Event.locale,
-	editable: ( $("#eo-event-recurrence").val() == 'once' )//if recurring set to false
+	editable: ( $("#eo-event-recurrence").val() == 'once' || $("#eo-event-recurrring-notice").is(':checked') )//if recurring set to false
 });
 
 //Edit recurrinng dates

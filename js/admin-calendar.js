@@ -522,7 +522,7 @@ $.widget("ui.selectmenu", {
 			'id' : this.ids[ 1 ],
 			'role': 'button',
 			'href': '#nogo',
-			'tabindex': this.element.attr( 'disabled' ) ? 1 : 0,
+			'tabindex': this.element.prop( 'disabled' ) ? 1 : 0,
 			'aria-haspopup': true,
 			'aria-owns': this.ids[ 2 ]
 		});
@@ -754,9 +754,9 @@ $.widget("ui.selectmenu", {
 			selectOptionData.push({
 				value: opt.attr( 'value' ),
 				text: self._formatText( opt.text(), opt ),
-				selected: opt.attr( 'selected' ),
-				disabled: opt.attr( 'disabled' ),
-				classes: opt.attr( 'class' ),
+				selected: opt.prop( 'selected' ),
+				disabled: opt.prop( 'disabled' ),
+				classes: opt.prop( 'class' ),
 				typeahead: opt.attr( 'typeahead'),
 				parentOptGroup: opt.parent( 'optgroup' ),
 				bgImage: o.bgImage.call( opt )
@@ -837,7 +837,7 @@ $.widget("ui.selectmenu", {
 					if ( this.list.find( 'li.' + optGroupName ).length ) {
 						this.list.find( 'li.' + optGroupName + ':last ul' ).append( thisLi );
 					} else {
-						$( '<li role="presentation" class="ui-selectmenu-group ' + optGroupName + ( selectOptionData[ i ].parentOptGroup.attr( "disabled" ) ? ' ' + 'ui-state-disabled" aria-disabled="true"' : '"' ) + '><span class="ui-selectmenu-group-label">' + selectOptionData[ i ].parentOptGroup.attr( 'label' ) + '</span><ul></ul></li>' )
+						$( '<li role="presentation" class="ui-selectmenu-group ' + optGroupName + ( selectOptionData[ i ].parentOptGroup.prop( "disabled" ) ? ' ' + 'ui-state-disabled" aria-disabled="true"' : '"' ) + '><span class="ui-selectmenu-group-label">' + selectOptionData[ i ].parentOptGroup.attr( 'label' ) + '</span><ul></ul></li>' )
 							.appendTo( this.list )
 							.find( 'ul' )
 							.append( thisLi );

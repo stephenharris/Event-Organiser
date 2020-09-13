@@ -445,7 +445,7 @@ window.eventOrganiserSchedulePicker = {
 	    	schedule_last: $(views.schedule_last_date).datepicker("getDate"),
 	    	start: $(views.start_date).datepicker("getDate"),
 	    	end: $(views.end_date).datepicker("getDate"),
-	    	is_all_day: $(views.is_all_day).attr("checked"),
+	    	is_all_day: $(views.is_all_day).prop("checked"),
 	    	include: $(views.include).length > 0 ? $(views.include).val().split(",") : [],
 	    	exclude: $(views.exclude).length > 0 ? $(views.exclude).val().split(",") : []
 	    };
@@ -454,7 +454,7 @@ window.eventOrganiserSchedulePicker = {
 	    	schedule.schedule_meta = [];
 			if ( $(views.week_repeat+" :checkbox:checked").length === 0) {
 				var day = schedule.start.getDay();
-	        	$(views.week_repeat+" :checkbox[value='" + c[day] + "']").attr("checked", true);
+	        	$(views.week_repeat+" :checkbox[value='" + c[day] + "']").prop("checked", true);
 	        }
 			$(views.week_repeat+" :checkbox:checked").each(function() {
 	    		schedule.schedule_meta.push( $(this).val() );
