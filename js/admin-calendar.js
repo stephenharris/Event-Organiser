@@ -1330,7 +1330,7 @@ $.widget("ui.selectmenu", {
 
 		this.listWrap
 			.removeAttr( 'style' )
-			.zIndex( this.element.zIndex() + 2 )
+			.css( 'zIndex', this.element.css('zIndex') + 2 )
 			.position( $.extend( positionDefault, o.positionOptions ) );
 	}
 });
