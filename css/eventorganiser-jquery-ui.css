@@ -197,6 +197,9 @@ button.ui-button-icons-only {
   padding: .4em;
   text-indent: -9999999px;
 }
+.ui-button-icon-only.eo-ui-button {
+  text-indent: -999999px;
+}
 .ui-button-text-icon-primary .ui-button-text,
 .ui-button-text-icons .ui-button-text {
   padding: .4em 1em .4em 2.1em;
