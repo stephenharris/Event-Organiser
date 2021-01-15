@@ -343,7 +343,7 @@ eventorganiser.versionCompare = function(left, right) {
 			calendar.fullCalendar('gotoDate', new Date(Date.parse(dateText)));
 		}
 	});
-	$('button.ui-datepicker-trigger').button().addClass('fc-button');
+	$('button.ui-datepicker-trigger').button().addClass('fc-button').addClass('fc-state-default');
         
     /* Venue drop-down in modal */
 	$.widget("ui.combobox", {
@@ -1330,7 +1330,7 @@ $.widget("ui.selectmenu", {
 
 		this.listWrap
 			.removeAttr( 'style' )
-			.zIndex( this.element.zIndex() + 2 )
+			.css( 'zIndex', this.element.css('zIndex') + 2 )
 			.position( $.extend( positionDefault, o.positionOptions ) );
 	}
 });
