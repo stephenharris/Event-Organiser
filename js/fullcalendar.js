@@ -7277,7 +7277,7 @@ function Calendar(element, instanceOptions) {
 
 		if (options.handleWindowResize) {
 			windowResizeProxy = debounce(windowResize, options.windowResizeDelay); // prevents rapid calls
-			$(window).resize(windowResizeProxy);
+			$(window).on( "resize", windowResizeProxy)
 		}
 	}
 	
@@ -7900,7 +7900,7 @@ function Header(calendar, options) {
 									innerHtml +
 								'</button>'
 								)
-								.click(function() {
+								.on("click", function() {
 									// don't process clicks for disabled buttons
 									if (!button.hasClass(tm + '-state-disabled')) {
 
@@ -7916,7 +7916,7 @@ function Header(calendar, options) {
 										}
 									}
 								})
-								.mousedown(function() {
+								.on("mousedown", function() {
 									// the *down* effect (mouse pressed in).
 									// only on buttons that are not the "active" tab, or disabled
 									button
@@ -7924,26 +7924,24 @@ function Header(calendar, options) {
 										.not('.' + tm + '-state-disabled')
 										.addClass(tm + '-state-down');
 								})
-								.mouseup(function() {
+								.on("mouseup", function() {
 									// undo the *down* effect
 									button.removeClass(tm + '-state-down');
 								})
-								.hover(
-									function() {
-										// the *hover* effect.
-										// only on buttons that are not the "active" tab, or disabled
-										button
-											.not('.' + tm + '-state-active')
-											.not('.' + tm + '-state-disabled')
-											.addClass(tm + '-state-hover');
-									},
-									function() {
-										// undo the *hover* effect
-										button
-											.removeClass(tm + '-state-hover')
-											.removeClass(tm + '-state-down'); // if mouseleave happens before mouseup
-									}
-								);
+								.on("mouseenter", function() {
+									// the *hover* effect.
+									// only on buttons that are not the "active" tab, or disabled
+									button
+										.not('.' + tm + '-state-active')
+										.not('.' + tm + '-state-disabled')
+										.addClass(tm + '-state-hover');
+								})
+								.on("mouseleave", function() {
+									// undo the *hover* effect
+									button
+										.removeClass(tm + '-state-hover')
+										.removeClass(tm + '-state-down'); // if mouseleave happens before mouseup
+								});
 
 							groupChildren = groupChildren.add(button);
 						}
@@ -7993,14 +7991,14 @@ function Header(calendar, options) {
 	
 	function disableButton(buttonName) {
 		el.find('.fc-' + buttonName + '-button')
-			.attr('disabled', 'disabled')
+			.prop('disabled', true)
 			.addClass(tm + '-state-disabled');
 	}
 	
 	
 	function enableButton(buttonName) {
 		el.find('.fc-' + buttonName + '-button')
-			.removeAttr('disabled')
+			.prop('disabled', false)
 			.removeClass(tm + '-state-disabled');
 	}
 
