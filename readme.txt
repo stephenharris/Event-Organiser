@@ -222,6 +222,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.10.4 - 19th January 2021 =
+* bugfix: Fixed week/day calendar views broken in WP 5.6
+* bugfix: Fixed some jquery-migrate deprecation notices
+
 = 3.10.3 - 15th January 2021 =
 * bugfix: Fixed jQuery errors with WordPress 5.6
 * bugfix: Fixed styling regressions
