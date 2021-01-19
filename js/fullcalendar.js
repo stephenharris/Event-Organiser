@@ -1700,7 +1700,7 @@ var Popover = Class.extend({
 		var _this = this;
 		var options = this.options;
 
-		this.el = $('<div class="fc-popover"/>')
+		this.el = $('<div class="fc-popover"></div>')
 			.addClass(options.className || '')
 			.css({
 				// position initially to the top left to avoid creating scrollbars
@@ -2598,7 +2598,7 @@ var RowRenderer = Class.extend({
 
 	view: null, // a View object
 	isRTL: null, // shortcut to the view's isRTL option
-	cellHtml: '<td/>', // plain default HTML used for a cell when no other is available
+	cellHtml: '<td></td>', // plain default HTML used for a cell when no other is available
 
 
 	constructor: function(view) {
@@ -3193,7 +3193,7 @@ var Grid = fc.Grid = RowRenderer.extend({
 		return '<' + this.fillSegTag +
 			(classes.length ? ' class="' + classes.join(' ') + '"' : '') +
 			(styles ? ' style="' + styles + '"' : '') +
-			' />';
+			'>' + '</' + this.fillSegTag + '>' ;
 	},
 
 
@@ -4552,7 +4552,7 @@ var DayGrid = Grid.extend({
 		// inject each new event skeleton into each associated row
 		this.rowEls.each(function(row, rowNode) {
 			var rowEl = $(rowNode); // the .fc-row
-			var skeletonEl = $('<div class="fc-helper-skeleton"><table/></div>'); // will be absolutely positioned
+			var skeletonEl = $('<div class="fc-helper-skeleton"><table></table</div>'); // will be absolutely positioned
 			var skeletonTop;
 
 			// If there is an original segment, match the top position. Otherwise, put it at the row's top level
@@ -4623,13 +4623,13 @@ var DayGrid = Grid.extend({
 
 		skeletonEl = $(
 			'<div class="fc-' + type.toLowerCase() + '-skeleton">' +
-				'<table><tr/></table>' +
+				'<table><tr></tr></table>' +
 			'</div>'
 		);
 		trEl = skeletonEl.find('tr');
 
 		if (startCol > 0) {
-			trEl.append('<td colspan="' + startCol + '"/>');
+			trEl.append('<td colspan="' + startCol + '"></td>');
 		}
 
 		trEl.append(
@@ -4637,7 +4637,7 @@ var DayGrid = Grid.extend({
 		);
 
 		if (endCol < colCnt) {
-			trEl.append('<td colspan="' + (colCnt - endCol) + '"/>');
+			trEl.append('<td colspan="' + (colCnt - endCol) + '"></td>');
 		}
 
 		this.bookendCells(trEl, type);
@@ -4780,7 +4780,7 @@ DayGrid.mixin({
 						) +
 				'</div>' +
 				(isResizable ?
-					'<div class="fc-resizer"/>' :
+					'<div class="fc-resizer"></div>' :
 					''
 					) +
 			'</a>';
@@ -4793,7 +4793,7 @@ DayGrid.mixin({
 		var colCnt = this.colCnt;
 		var segLevels = this.buildSegLevels(rowSegs); // group into sub-arrays of levels
 		var levelCnt = Math.max(1, segLevels.length); // ensure at least one level
-		var tbody = $('<tbody/>');
+		var tbody = $('<tbody></tbody>');
 		var segMatrix = []; // lookup for which segments are rendered into which level+col cells
 		var cellMatrix = []; // lookup for all <td> elements of the level+col matrix
 		var loneCellMatrix = []; // lookup for <td> elements that only take up a single column
@@ -4815,7 +4815,7 @@ DayGrid.mixin({
 					);
 				}
 				else {
-					td = $('<td/>');
+					td = $('<td></td>');
 					tr.append(td);
 				}
 				cellMatrix[i][col] = td;
@@ -4827,7 +4827,7 @@ DayGrid.mixin({
 		for (i = 0; i < levelCnt; i++) { // iterate through all levels
 			levelSegs = segLevels[i];
 			col = 0;
-			tr = $('<tr/>');
+			tr = $('<tr></tr>');
 
 			segMatrix.push([]);
 			cellMatrix.push([]);
@@ -4842,7 +4842,7 @@ DayGrid.mixin({
 					emptyCellsUntil(seg.leftCol);
 
 					// create a container that occupies or more columns. append the event element.
-					td = $('<td class="fc-event-container"/>').append(seg.el);
+					td = $('<td class="fc-event-container"></td>').append(seg.el);
 					if (seg.leftCol != seg.rightCol) {
 						td.attr('colspan', seg.rightCol - seg.leftCol + 1);
 					}
@@ -5050,7 +5050,7 @@ DayGrid.mixin({
 				if (segsBelow.length) {
 					td = cellMatrix[levelLimit - 1][col];
 					moreLink = _this.renderMoreLink(cell, segsBelow);
-					moreWrap = $('<div/>').append(moreLink);
+					moreWrap = $('<div></div>').append(moreLink);
 					td.append(moreWrap);
 					moreNodes.push(moreWrap[0]);
 				}
@@ -5088,11 +5088,11 @@ DayGrid.mixin({
 
 					// make a replacement <td> for each column the segment occupies. will be one for each colspan
 					for (j = 0; j < colSegsBelow.length; j++) {
-						moreTd = $('<td class="fc-more-cell"/>').attr('rowspan', rowspan);
+						moreTd = $('<td class="fc-more-cell"></td>').attr('rowspan', rowspan);
 						segsBelow = colSegsBelow[j];
 						cell = this.getCell(row, seg.leftCol + j);
 						moreLink = this.renderMoreLink(cell, [ seg ].concat(segsBelow)); // count seg as hidden too
-						moreWrap = $('<div/>').append(moreLink);
+						moreWrap = $('<div></div>').append(moreLink);
 						moreTd.append(moreWrap);
 						segMoreNodes.push(moreTd[0]);
 						moreNodes.push(moreTd[0]);
@@ -5133,7 +5133,7 @@ DayGrid.mixin({
 		var _this = this;
 		var view = this.view;
 
-		return $('<a class="fc-more"/>')
+		return $('<a class="fc-more"></a>')
 			.text(
 				this.getMoreLinkText(hiddenSegs.length)
 			)
@@ -5226,7 +5226,7 @@ DayGrid.mixin({
 				'<span class="fc-title">' +
 					htmlEscape(title) +
 				'</span>' +
-				'<div class="fc-clear"/>' +
+				'<div class="fc-clear"></div>' +
 			'</div>' +
 			'<div class="fc-body ' + view.widgetContentClass + '">' +
 				'<div class="fc-event-container"></div>' +
@@ -5411,7 +5411,7 @@ var TimeGrid = Grid.extend({
 			html +=
 				'<tr ' + (!minutes ? '' : 'class="fc-minor"') + '>' +
 					(!isRTL ? axisHtml : '') +
-					'<td class="' + view.widgetContentClass + '"/>' +
+					'<td class="' + view.widgetContentClass + '"></div>' +
 					(isRTL ? axisHtml : '') +
 				"</tr>";
 
@@ -5722,7 +5722,7 @@ var TimeGrid = Grid.extend({
 			}
 		}
 
-		this.helperEl = $('<div class="fc-helper-skeleton"/>')
+		this.helperEl = $('<div class="fc-helper-skeleton"></div>')
 			.append(tableEl)
 				.appendTo(this.el);
 	},
@@ -5783,17 +5783,17 @@ var TimeGrid = Grid.extend({
 			className = className || type.toLowerCase();
 			skeletonEl = $(
 				'<div class="fc-' + className + '-skeleton">' +
-					'<table><tr/></table>' +
+					'<table><tr></tr></table>' +
 				'</div>'
 			);
 			trEl = skeletonEl.find('tr');
 
 			for (col = 0; col < segCols.length; col++) {
 				colSegs = segCols[col];
-				tdEl = $('<td/>').appendTo(trEl);
+				tdEl = $('<td></td>').appendTo(trEl);
 
 				if (colSegs.length) {
-					containerEl = $('<div class="fc-' + className + '-container"/>').appendTo(tdEl);
+					containerEl = $('<div class="fc-' + className + '-container"></div>').appendTo(tdEl);
 					dayDate = this.colData[col].day;
 
 					for (i = 0; i < colSegs.length; i++) {
@@ -5832,9 +5832,8 @@ TimeGrid.mixin({
 	// Renders the given foreground event segments onto the grid
 	renderFgSegs: function(segs) {
 		segs = this.renderFgSegEls(segs); // returns a subset of the segs. segs that were actually rendered
-
 		this.el.append(
-			this.eventSkeletonEl = $('<div class="fc-content-skeleton"/>')
+			this.eventSkeletonEl = $('<div class="fc-content-skeleton"></div>')
 				.append(this.renderSegTable(segs))
 		);
 
@@ -5854,7 +5853,7 @@ TimeGrid.mixin({
 	// Renders and returns the <table> portion of the event-skeleton.
 	// Returns an object with properties 'tbodyEl' and 'segs'.
 	renderSegTable: function(segs) {
-		var tableEl = $('<table><tr/></table>');
+		var tableEl = $('<table><tr></tr></table>');
 		var trEl = tableEl.find('tr');
 		var segCols;
 		var i, seg;
@@ -5869,7 +5868,7 @@ TimeGrid.mixin({
 			colSegs = segCols[col];
 			placeSlotSegs(colSegs); // compute horizontal coordinates, z-index's, and reorder the array
 
-			containerEl = $('<div class="fc-event-container"/>');
+			containerEl = $('<div class="fc-event-container"></div>');
 
 			// assign positioning CSS and insert into container
 			for (i = 0; i < colSegs.length; i++) {
@@ -5884,7 +5883,7 @@ TimeGrid.mixin({
 				containerEl.append(seg.el);
 			}
 
-			trEl.append($('<td/>').append(containerEl));
+			trEl.append($('<td></td>').append(containerEl));
 		}
 
 		this.bookendCells(trEl, 'eventSkeleton');
@@ -5978,9 +5977,9 @@ TimeGrid.mixin({
 						''
 						) +
 				'</div>' +
-				'<div class="fc-bg"/>' +
+				'<div class="fc-bg"></div>' +
 				(isResizable ?
-					'<div class="fc-resizer"/>' :
+					'<div class="fc-resizer"></div>' :
 					''
 					) +
 			'</a>';
@@ -7266,7 +7265,7 @@ function Calendar(element, instanceOptions) {
 			element.addClass('fc-unthemed');
 		}
 
-		content = $("<div class='fc-view-container'/>").prependTo(element);
+		content = $("<div class='fc-view-container'></div>").prependTo(element);
 
 		header = new Header(t, options);
 		headerElement = header.render();
@@ -7325,7 +7324,7 @@ function Calendar(element, instanceOptions) {
 		// if viewType changed, or the view was never created, create a fresh view
 		if (!currentView && viewType) {
 			currentView = instantiateView(viewType);
-			currentView.el =  $("<div class='fc-view fc-" + viewType + "-view' />").appendTo(content);
+			currentView.el =  $("<div class='fc-view fc-" + viewType + "-view'></div>").appendTo(content);
 			header.activateButton(viewType);
 		}
 
@@ -7811,11 +7810,11 @@ function Header(calendar, options) {
 		tm = options.theme ? 'ui' : 'fc';
 
 		if (sections) {
-			el = $("<div class='fc-toolbar'/>")
+			el = $("<div class='fc-toolbar'></div>")
 				.append(renderSection('left'))
 				.append(renderSection('right'))
 				.append(renderSection('center'))
-				.append('<div class="fc-clear"/>');
+				.append('<div class="fc-clear"></div>');
 
 			return el;
 		}
@@ -7828,7 +7827,7 @@ function Header(calendar, options) {
 	
 	
 	function renderSection(position) {
-		var sectionEl = $('<div class="fc-' + position + '"/>');
+		var sectionEl = $('<div class="fc-' + position + '"></div>');
 		var buttonStr = options.header[position];
 
 		if (buttonStr) {
@@ -7958,7 +7957,7 @@ function Header(calendar, options) {
 				}
 
 				if (groupChildren.length > 1 || isOnlyButtons) {
-					groupEl = $('<div/>');
+					groupEl = $('<div></div>');
 					if (isOnlyButtons) {
 						groupEl.addClass('fc-button-group');
 					}
@@ -9195,7 +9194,7 @@ var BasicView = fcViews.basic = View.extend({
 					'<tr>' +
 						'<td class="' + this.widgetContentClass + '">' +
 							'<div class="fc-day-grid-container">' +
-								'<div class="fc-day-grid"/>' +
+								'<div class="fc-day-grid"></div>' +
 							'</div>' +
 						'</td>' +
 					'</tr>' +
@@ -9258,7 +9257,7 @@ var BasicView = fcViews.basic = View.extend({
 		var classes;
 
 		if (!this.dayNumbersVisible) { // if there are week numbers but not day numbers
-			return '<td/>'; //  will create an empty space above events :(
+			return '<td></td>'; //  will create an empty space above events :(
 		}
 
 		classes = this.dayGrid.getDayClasses(date);
@@ -9562,7 +9561,7 @@ fcViews.agenda = View.extend({ // AgendaView
 		this.timeGrid.render();
 
 		// the <hr> that sometimes displays under the time-grid
-		this.bottomRuleEl = $('<hr class="' + this.widgetHeaderClass + '"/>')
+		this.bottomRuleEl = $('<hr class="' + this.widgetHeaderClass + '"></div>')
 			.appendTo(this.timeGrid.el); // inject it into the time-grid
 
 		if (this.dayGrid) {
@@ -9603,12 +9602,12 @@ fcViews.agenda = View.extend({ // AgendaView
 					'<tr>' +
 						'<td class="' + this.widgetContentClass + '">' +
 							(this.dayGrid ?
-								'<div class="fc-day-grid"/>' +
-								'<hr class="' + this.widgetHeaderClass + '"/>' :
+								'<div class="fc-day-grid"></div>' +
+								'<hr class="' + this.widgetHeaderClass + '"></div>' :
 								''
 								) +
 							'<div class="fc-time-grid-container">' +
-								'<div class="fc-time-grid"/>' +
+								'<div class="fc-time-grid"></div>' +
 							'</div>' +
 						'</td>' +
 					'</tr>' +
@@ -9976,7 +9975,7 @@ var ListView = fcViews.list = View.extend({
 					'<tr>' +
 						'<td class="' + this.widgetContentClass + '">' +
 							'<div class="fc-day-grid-container">' +
-								'<div class="fc-day-grid"/>' +
+								'<div class="fc-day-grid"></div>' +
 							'</div>' +
 						'</td>' +
 					'</tr>' +
@@ -10047,7 +10046,7 @@ var ListView = fcViews.list = View.extend({
 	// The number row will only exist if either day numbers or week numbers are turned on.
 	numberCellHtml: function(cell) {
 		if (this.viewDateOnLeft === true) {
-			return '<td/>';
+			return '<td></td>';
 		}
 		else {
 			var date = cell.start;
