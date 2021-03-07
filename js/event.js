@@ -193,7 +193,7 @@ window.eventOrganiserSchedulePicker = {
 		this.set_up_timepickers();
 
         //On input, update form
-        $(".event-date :input, .eo-all-day-toggle").change(function(o) {
+        $(".event-date :input, .eo-all-day-toggle").on('change', function(o) {
         	self.update_schedule();
         	self.update_form();
             if ( !$(this).hasClass('eo-all-day-toggle') ) {
@@ -324,7 +324,7 @@ window.eventOrganiserSchedulePicker = {
         		},
                 onChangeMonthYear: eventOrganiserSchedule.generate_dates_by_rule
             })
-            .hide().find('.ui-datepicker-inline').click(function(e) {
+            .hide().find('.ui-datepicker-inline').on('click', function(e) {
                     if (!e)
                         e = window.event;
                    e.cancelBubble = true;
@@ -332,14 +332,14 @@ window.eventOrganiserSchedulePicker = {
                        e.stopPropagation();
                });
 
-            $('html').click(function() {
+            $('html').on('click', function() {
                 dp.hide();
                 $(views.occurrence_picker_toggle).val(locale.showDates);
             });
         }
 
         //Show/hide calendar
-        $(views.occurrence_picker_toggle).click(function(e) {
+        $(views.occurrence_picker_toggle).on('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             dp.toggle();

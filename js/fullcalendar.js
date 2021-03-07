@@ -7292,7 +7292,7 @@ function Calendar(element, instanceOptions) {
 		content.remove();
 		element.removeClass('fc fc-ltr fc-rtl fc-unthemed ui-widget');
 
-		$(window).unbind('resize', windowResizeProxy);
+		$(window).off('resize', windowResizeProxy);
 	}
 	
 	

@@ -556,7 +556,7 @@ $.widget("ui.selectmenu", {
 
 		// click toggle for menu visibility
 		this.newelement
-			.bind( 'mousedown.selectmenu', function( event ) {
+			.on( 'mousedown.selectmenu', function( event ) {
 				self._toggle( event, true );
 				// make sure a click won't open/close instantly
 				if ( o.style == "popup" ) {
@@ -566,7 +566,7 @@ $.widget("ui.selectmenu", {
 
 				event.preventDefault();
 			})
-			.bind( 'click.selectmenu', function( event ) {
+			.on( 'click.selectmenu', function( event ) {
 				event.preventDefault();
 			})
 			.bind( "keydown.selectmenu", function( event ) {
@@ -926,17 +926,17 @@ $.widget("ui.selectmenu", {
 		this.element.removeData( this.widgetName )
 			.removeClass( 'ui-selectmenu-disabled' + ' ' + 'ui-state-disabled' )
 			.removeAttr( 'aria-disabled' )
-			.unbind( ".selectmenu" );
+			.off( ".selectmenu" );
 
-		$( window ).unbind( ".selectmenu-" + this.ids[ 0 ] );
-		$( document ).unbind( ".selectmenu-" + this.ids[ 0 ] );
+		$( window ).off( ".selectmenu-" + this.ids[ 0 ] );
+		$( document ).off( ".selectmenu-" + this.ids[ 0 ] );
 
 		this.newelementWrap.remove();
 		this.listWrap.remove();
 
 		// unbind click event and show original select
 		this.element
-			.unbind( ".selectmenu" )
+			.off( ".selectmenu" )
 			.show();
 
 		// call widget destroy function

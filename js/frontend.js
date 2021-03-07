@@ -391,7 +391,7 @@ jQuery(document).ready(function () {
 			list.el.find('li:gt('+(eobloc-1)+')').hide().end().after( list.less, list.pipe, list.more);
 			list.pipe.hide();
 
-			list.less.hide().click(function(e){
+			list.less.hide().on('click',function(e){
 				e.preventDefault();
 				var index = Math.floor( (list.el.find('li:visible').length -1) / eobloc)*eobloc -1;
 				list.el.find('li:gt('+index+')').hide();
@@ -402,7 +402,7 @@ jQuery(document).ready(function () {
 					list.pipe.hide();
 				}
 			});
-			list.more.click(function(e){
+			list.more.on('click', function(e){
 				e.preventDefault();
 				list.less.show();
 				list.pipe.show();

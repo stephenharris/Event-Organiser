@@ -242,8 +242,8 @@
                 inst.append = $('<span class="' + this._appendClass + '">' + appendText + '</span>');
                 input[isRTL ? 'before' : 'after'](inst.append);
             }
-            input.unbind('focus.timepicker', this._showTimepicker);
-            input.unbind('click.timepicker', this._adjustZIndex);
+            input.off('focus.timepicker', this._showTimepicker);
+            input.off('click.timepicker', this._adjustZIndex);
 
             if (inst.trigger) { inst.trigger.remove(); }
 
@@ -439,17 +439,17 @@
             // then letting the browser interpret the inline events)
             // the binding for the minute cells also exists in _updateMinuteDisplay
             .find('.ui-timepicker-minute-cell')
-                .unbind()
+                .off()
                 .bind("click", { fromDoubleClick:false }, $.proxy($.timepicker.selectMinutes, this))
                 .bind("dblclick", { fromDoubleClick:true }, $.proxy($.timepicker.selectMinutes, this))
             .end()
             .find('.ui-timepicker-hour-cell')
-                .unbind()
+                .off()
                 .bind("click", { fromDoubleClick:false }, $.proxy($.timepicker.selectHours, this))
                 .bind("dblclick", { fromDoubleClick:true }, $.proxy($.timepicker.selectHours, this))
             .end()
 			.find('.ui-timepicker td a')
-                .unbind()
+                .off()
 				.bind('mouseout', function () {
 				    $(this).removeClass('ui-state-hover');
 				    if (this.className.indexOf('ui-timepicker-prev') != -1) $(this).removeClass('ui-timepicker-prev-hover');
@@ -800,8 +800,8 @@
                 inst.append.remove();
                 inst.trigger.remove();
                 $target.removeClass(this.markerClassName)
-                    .unbind('focus.timepicker', this._showTimepicker)
-                    .unbind('click.timepicker', this._adjustZIndex);
+                    .off('focus.timepicker', this._showTimepicker)
+                    .off('click.timepicker', this._adjustZIndex);
             } else if (nodeName == 'div' || nodeName == 'span')
                 $target.removeClass(this.markerClassName).empty();
         },
@@ -992,7 +992,7 @@
 
         /* Tidy up after a dialog display. */
         _tidyDialog: function (inst) {
-            inst.tpDiv.removeClass(this._dialogClass).unbind('.ui-timepicker');
+            inst.tpDiv.removeClass(this._dialogClass).off('.ui-timepicker');
         },
 
         /* Retrieve the instance data for the target control.

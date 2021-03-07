@@ -199,12 +199,12 @@
             if (input.hasClass(this.markerClassName)) { return; }
             this._attachments(input, inst);
             input.addClass(this.markerClassName).
-                keydown(this._doKeyDown).
-                keyup(this._doKeyUp).
-                bind("setData.eotimepicker", function (event, key, value) {
+                on('keydown', this._doKeyDown).
+                on('keyup',this._doKeyUp).
+                on("setData.eotimepicker", null, function (event, key, value) {
                     inst.settings[key] = value;
                 }).
-                bind("getData.eotimepicker", function (event, key) {
+                on("getData.eotimepicker", null, function (event, key) {
                     return this._get(inst, key);
                 });
             $.data(target, PROP_NAME, inst);
@@ -394,15 +394,15 @@
                 inst.append = $('<span class="' + this._appendClass + '">' + appendText + '</span>');
                 input[isRTL ? 'before' : 'after'](inst.append);
             }
-            input.unbind('focus.eotimepicker', this._showTimepicker);
-            input.unbind('click.eotimepicker', this._adjustZIndex);
+            input.off('focus.eotimepicker', this._showTimepicker);
+            input.off('click.eotimepicker', this._adjustZIndex);
 
             if (inst.trigger) { inst.trigger.remove(); }
 
             var showOn = this._get(inst, 'showOn');
             if (showOn == 'focus' || showOn == 'both') { // pop-up time picker when in the marked field
-                input.bind("focus.eotimepicker", this._showTimepicker);
-                input.bind("click.eotimepicker", this._adjustZIndex);
+                input.on("focus.eotimepicker", null, this._showTimepicker);
+                input.on("click.eotimepicker", null, this._adjustZIndex);
             }
             if (showOn == 'button' || showOn == 'both') { // pop-up time picker when 'button' element is clicked
                 var button = this._get(inst, 'button');
@@ -413,7 +413,7 @@
                     input.after(button);
                 }
 
-                $(button).bind("click.eotimepicker", function () {
+                $(button).on("click.eotimepicker", null, function () {
                     if ($.eotimepicker._timepickerShowing && $.eotimepicker._lastInput == input[0]) {
                         $.eotimepicker._hideTimepicker();
                     } else if (!inst.input.is(':disabled')) {
@@ -432,9 +432,9 @@
             if (divSpan.hasClass(this.markerClassName))
                 return;
             divSpan.addClass(this.markerClassName).append(inst.tpDiv).
-                bind("setData.eotimepicker", function(event, key, value){
+                on("setData.eotimepicker", null, function(event, key, value){
                     inst.settings[key] = value;
-                }).bind("getData.eotimepicker", function(event, key){
+                }).on("getData.eotimepicker", null, function(event, key){
                     return this._get(inst, key);
                 });
             $.data(target, PROP_NAME, inst);
@@ -547,7 +547,7 @@
                     inst.tpDiv.show((showAnim ? duration : null), postProcess);
                 }
                 if (!showAnim || !duration) { postProcess(); }
-                if (inst.input.is(':visible') && !inst.input.is(':disabled')) { inst.input.focus(); }
+                if (inst.input.is(':visible') && !inst.input.is(':disabled')) { inst.input.trigger('focus'); }
                 $.eotimepicker._curInst = inst;
             }
         },
@@ -605,23 +605,23 @@
             // then letting the browser interpret the inline events)
             // the binding for the minute cells also exists in _updateMinuteDisplay
             .find('.ui-timepicker-minute-cell')
-                .unbind()
-                .bind("click", { fromDoubleClick:false }, $.proxy($.eotimepicker.selectMinutes, this))
-                .bind("dblclick", { fromDoubleClick:true }, $.proxy($.eotimepicker.selectMinutes, this))
+                .off()
+                .on("click", null, { fromDoubleClick:false }, $.proxy($.eotimepicker.selectMinutes, this))
+                .on("dblclick", null, { fromDoubleClick:true }, $.proxy($.eotimepicker.selectMinutes, this))
             .end()
             .find('.ui-timepicker-hour-cell')
-                .unbind()
-                .bind("click", { fromDoubleClick:false }, $.proxy($.eotimepicker.selectHours, this))
-                .bind("dblclick", { fromDoubleClick:true }, $.proxy($.eotimepicker.selectHours, this))
+                .off()
+                .on("click", null, { fromDoubleClick:false }, $.proxy($.eotimepicker.selectHours, this))
+                .on("dblclick", null, { fromDoubleClick:true }, $.proxy($.eotimepicker.selectHours, this))
             .end()
 			.find('.ui-timepicker td a')
-                .unbind()
-				.bind('mouseout', function () {
+                .off()
+				.on('mouseout', null, function () {
 				    $(this).removeClass('ui-state-hover');
 				    if (this.className.indexOf('ui-timepicker-prev') != -1) $(this).removeClass('ui-timepicker-prev-hover');
 				    if (this.className.indexOf('ui-timepicker-next') != -1) $(this).removeClass('ui-timepicker-next-hover');
 				})
-				.bind('mouseover', function () {
+				.on('mouseover', null, function () {
 				    if ( ! self._isDisabledTimepicker(inst.inline ? inst.tpDiv.parent()[0] : inst.input[0])) {
 				        $(this).parents('.ui-timepicker-calendar').find('a').removeClass('ui-state-hover');
 				        $(this).addClass('ui-state-hover');
@@ -633,13 +633,13 @@
 			.find('.' + this._dayOverClass + ' a')
 				.trigger('mouseover')
 			.end()
-            .find('.ui-timepicker-now').bind("click", function(e) {
+            .find('.ui-timepicker-now').on("click", null, function(e) {
                     $.eotimepicker.selectNow(e);
             }).end()
-            .find('.ui-timepicker-deselect').bind("click",function(e) {
+            .find('.ui-timepicker-deselect').on("click", null, function(e) {
                     $.eotimepicker.deselectTime(e);
             }).end()
-            .find('.ui-timepicker-close').bind("click",function(e) {
+            .find('.ui-timepicker-close').on("click", null, function(e) {
                     $.eotimepicker._hideTimepicker();
             }).end();
         },
@@ -790,8 +790,8 @@
                 // then letting the browser interpret the inline events)
                 // yes I know, duplicate code, sorry
 /*                .find('.ui-timepicker-minute-cell')
-                    .bind("click", { fromDoubleClick:false }, $.proxy($.eotimepicker.selectMinutes, this))
-                    .bind("dblclick", { fromDoubleClick:true }, $.proxy($.eotimepicker.selectMinutes, this));
+                    .on("click", null, { fromDoubleClick:false }, $.proxy($.eotimepicker.selectMinutes, this))
+                    .on("dblclick", null, { fromDoubleClick:true }, $.proxy($.eotimepicker.selectMinutes, this));
 */
 
         },
@@ -973,8 +973,8 @@
                 inst.append.remove();
                 inst.trigger.remove();
                 $target.removeClass(this.markerClassName)
-                    .unbind('focus.eotimepicker', this._showTimepicker)
-                    .unbind('click.eotimepicker', this._adjustZIndex);
+                    .off('focus.eotimepicker', this._showTimepicker)
+                    .off('click.eotimepicker', this._adjustZIndex);
             } else if (nodeName == 'div' || nodeName == 'span')
                 $target.removeClass(this.markerClassName).empty();
         },
@@ -1155,7 +1155,7 @@
 
         /* Tidy up after a dialog display. */
         _tidyDialog: function (inst) {
-            inst.tpDiv.removeClass(this._dialogClass).unbind('.ui-timepicker');
+            inst.tpDiv.removeClass(this._dialogClass).off('.ui-timepicker');
         },
 
         /* Retrieve the instance data for the target control.
@@ -1543,7 +1543,7 @@
     $.fn.eotimepicker = function (options) {
         /* Initialise the time picker. */
         if (!$.eotimepicker.initialized) {
-            $(document).mousedown($.eotimepicker._checkExternalClick);
+            $(document).on('mousedown', $.eotimepicker._checkExternalClick);
             $.eotimepicker.initialized = true;
         }
 

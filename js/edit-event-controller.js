@@ -165,15 +165,15 @@ $.widget("ui.combobox", {
 		})
 		.removeClass("ui-corner-all")
 		.addClass("eo-ui-button ui-corner-right ui-combobox-toggle ui-combobox-button")
-		.mousedown(function() {
+		.on('mousedown', function() {
 			wasOpen = input.autocomplete( "widget" ).is( ":visible" );
 		})
-		.click(function (ev) {
+		.on('click', function (ev) {
 			ev.preventDefault();
             if ( wasOpen ) {
                 return;
             }
-			$(this).blur();
+			$(this).trigger('blur');
 			input.autocomplete("search", "").focus();
 		});
 
@@ -222,7 +222,7 @@ $.widget("ui.combobox", {
 
 $("#venue_select").combobox();
 
-$(".eo_addressInput").change(function () {
+$(".eo_addressInput").on('change', function () {
     var address = {};
     $(".eo_addressInput").each(function () {
 			var key = $(this).attr('id').replace('eo_venue_add-','');
