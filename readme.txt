@@ -222,6 +222,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.10.6 - 17th May 2021 =
+* bugfix: Fix bug with Open Street Map & selecting 'no venue'
+
 = 3.10.5 - 7th March 2021 =
 * bugfix: Replace deprecated jQuery methods
 
