@@ -124,7 +124,7 @@ $.widget("ui.combobox", {
 
 				if (eovenue.is_map_enabled()) {
 					eovenue.get_map( 'venuemap' ).marker[0].setPosition( {
-						'lat': parseFloat(b.item.venue_lat), 'lng': parseFloat(b.item.venue_lng)
+						'lat': parseFloat(b.item.venue_lat) || 0, 'lng': parseFloat(b.item.venue_lng) || 0
 					} );
 				}
 			}
