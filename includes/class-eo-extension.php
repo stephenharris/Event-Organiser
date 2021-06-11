@@ -138,7 +138,7 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 				//add_action( 'network_admin_menu', array( 'EO_Extension', 'setup_ntw_settings' ) );
 				add_action( 'network_admin_menu', array( $this, 'add_multisite_field' ) );
 				add_action( 'wpmu_options', array( 'EO_Extension', 'do_ntw_settings' ) );
-				add_action( 'update_wpmu_options', array( 'EO_Extension', 'save_ntw_settings' ) );
+				add_action( 'update_wpmu_options', array( $this, 'save_ntw_settings' ) );
 			} else {
 				add_action( 'eventorganiser_register_tab_general', array( $this, 'add_field' ) );
 			}
@@ -285,22 +285,14 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 			if ( ! current_user_can( 'manage_network_options' ) ) {
 				return false;
 			}
-
 			if ( ! isset( $_POST['_eontwnonce'] ) || ! wp_verify_nonce( $_POST['_eontwnonce'], 'eo-ntw-settings-options' ) ) {
 				return false;
 			}
-
-			$whitelist_options = apply_filters( 'whitelist_options', array() );
-			if ( isset( $whitelist_options['settings-network'] ) ) {
-				foreach ( $whitelist_options['settings-network'] as $option_name ) {
-					if ( ! isset( $_POST[$option_name] ) ) {
-						continue;
-					}
-					$value = wp_unslash( $_POST[$option_name] );
-					update_site_option( $option_name, $value );
-				}
+			$value = wp_unslash($_POST[$this->id . '_license']);
+			
+			if (!empty($value)) {
+				update_site_option( $this->id . '_license', $value );
 			}
-
 		}
 
 		public function add_field() {
