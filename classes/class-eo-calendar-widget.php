@@ -376,9 +376,9 @@ class EO_Calendar_Widget extends WP_Widget {
 							$link,
 							$cell - $offset
 						);
-						if( in_array( 'eo-multi-day', $class ) ){ $mdevent = $calendar_events[$formated_date]; $mdclass = $class; $mdtitle = $titles; }
+						if( in_array( 'eo-multi-day', $class ) ){ $mdevent = $calendar_events[$formated_date]; $mdclass = $class; $mdtitles = $titles; }
 					} elseif ( isset($mdevent) ) {
-						$classes = implode( ' ', $mdclass ); $classes = str_replace( ' eo-multi-day', '', $classes);
+						$classes = implode( ' ', $mdclass );
 						$body .= sprintf( "<td $data class='%s'> <a title='%s' href='%s'> %s </a></td>", esc_attr( $classes ), esc_attr( $mdtitles ), $cell - $offset );
 						if( $mdevent[0]->EndDate==$formated_date ){ unset($mdevent); }
 					} else {
