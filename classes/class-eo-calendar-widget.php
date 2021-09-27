@@ -383,28 +383,28 @@ class EO_Calendar_Widget extends WP_Widget {
 						}
 					} else {
 						if ( isset( $mdevents[0] ) ){
-							$unset = 0;
-							$cnt = count( $mdevents );
+							$unsetevents = array();
+							$cnt = count($mdevents);
 							$class[] = 'event';
 							for( $i = 0; $i < $cnt; $i++ ) {
 								if( $mdevents[$i]->StartDate == $mdevents[$i]->EndDate ) {
-									unset( $mdevents[$i] );
-									$unset = 1;
+									array_splice( $mdevents, $i, 1 );
 								} else {
 									$class = array_merge( $class, eo_get_event_classes( $mdevents[$i]->ID, $mdevents[$i]->occurrence_id ) );
 									if ( $mdevents[$i]->EndDate == $formated_date ) {
-										unset( $mdevents[$i] );
-										$unset = 1;
+										$unsetevents[] = $i;
 									}
 								}
-							}
-							if ( $unset == 1 ) {
-								$mdevents = array_values( $mdevents );
 							}
 							if ( count($class) > 1 ) {
 								$classes = implode( ' ',$class );
 								$titles = implode( '&#13;&#10;', array_map( 'get_the_title', $mdevents ) );
 								$body .= sprintf( "<td $data class='%s'> <a title='%s'> %s </a></td>", esc_attr( $classes ), esc_attr( $titles ), $cell - $offset );
+							}
+							if ( count($unsetevents) > 0 ) {
+								foreach( $unsetevents as $ue ){
+									array_splice( $mdevents, $ue, 1 );
+								}
 							}
 						} else {
 							$classes = implode( ' ',$class );
