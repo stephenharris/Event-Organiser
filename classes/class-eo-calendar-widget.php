@@ -376,31 +376,40 @@ class EO_Calendar_Widget extends WP_Widget {
 							$link,
 							$cell - $offset
 						);
-						if( in_array( 'eo-multi-day', $class ) ){
+						if ( in_array( 'eo-multi-day', $class ) ){
 							$mdevents[] = $calendar_events[$formated_date];
 							$mdclasses[] = $class;
 							$mdtitles[] = $titles;
 						}
-					} elseif ( isset( $mdevents[0] ) ){
-						$unset = 0;
-						$cnt = count($mdevents);
-						for( $i = 0; $i < $cnt; $i++ ){
-							$classes = implode( ' ', $mdclasses[$i] );
-							$titles = $mdtitles[$i];
-							if( $mdevents[$i][0]->EndDate == $formated_date ) {
-								unset( $mdevents[$i], $mdclasses[$i], $mdtitles[$i] );
-								$unset = 1;
-							}
-						}
-						if ( $unset == 1 ) {
-							$mdevents = array_values( $mdevents );
-							$mdclasses = array_values( $mdclasses );
-							$mdtitles = array_values( $mdtitles );
-						}
-						$body .= sprintf( "<td $data class='%s'> <a title='%s' href='%s'> %s </a></td>", esc_attr( $classes ), esc_attr( $titles ), $cell - $offset );
 					} else {
-						$classes = implode( ' ',$class );
-						$body .= sprintf( "<td $data class='%s'> %s </td>", esc_attr( $classes ), $cell - $offset );
+						if ( isset( $mdevents[0] ) ){
+							$unset = 0;
+							$cnt = count( $mdevents );
+							$class[] = 'event';
+							for( $i = 0; $i < $cnt; $i++ ) {
+								if( $mdevents[$i]->StartDate == $mdevents[$i]->EndDate ) {
+									unset( $mdevents[$i] );
+									$unset = 1;
+								} else {
+									$class = array_merge( $class, eo_get_event_classes( $mdevents[$i]->ID, $mdevents[$i]->occurrence_id ) );
+									if ( $mdevents[$i]->EndDate == $formated_date ) {
+										unset( $mdevents[$i] );
+										$unset = 1;
+									}
+								}
+							}
+							if ( $unset == 1 ) {
+								$mdevents = array_values( $mdevents );
+							}
+							if ( count($class) > 1 ) {
+								$classes = implode( ' ',$class );
+								$titles = implode( '&#13;&#10;', array_map( 'get_the_title', $mdevents ) );
+								$body .= sprintf( "<td $data class='%s'> <a title='%s'> %s </a></td>", esc_attr( $classes ), esc_attr( $titles ), $cell - $offset );
+							}
+						} else {
+							$classes = implode( ' ',$class );
+							$body .= sprintf( "<td $data class='%s'> %s </td>", esc_attr( $classes ), $cell - $offset );
+						}
 					}
 
 					//Proceed to next day
