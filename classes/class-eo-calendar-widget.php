@@ -376,9 +376,40 @@ class EO_Calendar_Widget extends WP_Widget {
 							$link,
 							$cell - $offset
 						);
+						if ( in_array( 'eo-multi-day', $class ) ){
+							$mdevents[] = $calendar_events[$formated_date];
+							$mdclasses[] = $class;
+							$mdtitles[] = $titles;
+						}
 					} else {
-						$classes = implode( ' ',$class );
-						$body .= sprintf( "<td $data class='%s'> %s </td>", esc_attr( $classes ), $cell - $offset );
+						if ( isset( $mdevents[0] ) ){
+							$unsetevents = array();
+							$cnt = count($mdevents);
+							$class[] = 'event';
+							for( $i = 0; $i < $cnt; $i++ ) {
+								if( $mdevents[$i]->StartDate == $mdevents[$i]->EndDate ) {
+									array_splice( $mdevents, $i, 1 );
+								} else {
+									$class = array_merge( $class, eo_get_event_classes( $mdevents[$i]->ID, $mdevents[$i]->occurrence_id ) );
+									if ( $mdevents[$i]->EndDate == $formated_date ) {
+										$unsetevents[] = $i;
+									}
+								}
+							}
+							if ( count($class) > 1 ) {
+								$classes = implode( ' ',$class );
+								$titles = implode( '&#13;&#10;', array_map( 'get_the_title', $mdevents ) );
+								$body .= sprintf( "<td $data class='%s'> <a title='%s'> %s </a></td>", esc_attr( $classes ), esc_attr( $titles ), $cell - $offset );
+							}
+							if ( count($unsetevents) > 0 ) {
+								foreach( $unsetevents as $ue ){
+									array_splice( $mdevents, $ue, 1 );
+								}
+							}
+						} else {
+							$classes = implode( ' ',$class );
+							$body .= sprintf( "<td $data class='%s'> %s </td>", esc_attr( $classes ), $cell - $offset );
+						}
 					}
 
 					//Proceed to next day
