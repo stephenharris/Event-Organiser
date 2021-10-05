@@ -115,6 +115,11 @@ eventorganiserMapsAdapter.googlemaps.marker = function ( args ) {
         });
         var _marker = this._marker;
         google.maps.event.addListener(this._marker, 'click', function() {
+
+            if (this.map.openWindow) {
+                this.map.openWindow.close();
+            }
+            this.map.openWindow = infowindow;
             infowindow.open( marker_options.map, _marker );
         });
     }
