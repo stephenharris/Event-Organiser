@@ -1023,7 +1023,7 @@ function _eventorganiser_get_venue_address_fields(){
  *@ignore
  *@access private
  */
-function eventorganiser_venue_dropdown($post_id=0,$args){
+function eventorganiser_venue_dropdown($post_id = 0, $args = array() ){
 	$venues = get_terms('event-venue', array('hide_empty'=>false));
 	$current = (int) eo_get_venue($post_id);
 
