@@ -370,12 +370,12 @@ function eventorganiser_event_meta_cap( $caps, $cap, $user_id, $args ) {
 	/* If editing, deleting, or reading a event, get the post and post type object. */
 	if ( 'edit_event' == $cap || 'delete_event' == $cap || 'read_event' == $cap ) {
 		$post = get_post( $args[0] );
-		$post_type = get_post_type_object( $post->post_type );
-
 		/* Set an empty array for the caps. */
 		$caps = array();
-		if($post->post_type!='event')
+		if ( $post->post_type != 'event' ) {
 			return $caps;
+		}
+		$post_type = get_post_type_object( $post->post_type );
 	}
 
 	/* If editing a event, assign the required capability. */
