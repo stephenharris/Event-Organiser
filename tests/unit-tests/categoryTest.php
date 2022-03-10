@@ -3,7 +3,7 @@
 class categoryTest extends EO_UnitTestCase
 {
 	
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 	
 		global $wpdb;

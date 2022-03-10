@@ -3,14 +3,17 @@
 class iCalGenerateFeedTest extends EO_UnitTestCase
 {
 
-	public function setUp() {
+	protected function setUp(): void {
 		add_filter( 'eventorganiser_format_datetime_string', array( $this, 'groundhogDay' ), 10, 4 );
 		parent::setUp();
 	}
 
 
-	public function tearDown() {
+	protected function tearDown(): void {
 		remove_filter( 'eventorganiser_format_datetime_string', array( $this, 'groundhogDay' ) );
+		if ($this->attachment_id) {
+			wp_delete_attachment($this->attachment_id, true);
+		}
 		parent::tearDown();
 	}
 
@@ -652,8 +655,8 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 		add_filter ( 'pre_option_uploads_use_yearmonth_folders', '__return_null' );
 		wp_upload_dir( null, false, true );//clear cache
 		$file = EO_DIR_TESTDATA . '/images/cirali.jpg';
-		$attachment_id = $this->create_upload_object( $file, $event_id );
-		set_post_thumbnail( $event_id, $attachment_id );
+		$this->attachment_id = $this->create_upload_object( $file, $event_id );
+		set_post_thumbnail( $event_id, $this->attachment_id );
 
 		query_posts( array( 'post__in' => array( $event_id ), 'post_type' => 'event', 'group_events_by' => 'series', 'suppress_filters' => false, 'showpastevents' => true ) );
 
@@ -670,7 +673,7 @@ class iCalGenerateFeedTest extends EO_UnitTestCase
 
 		//Delete the event first to ensure that we can fullyl remove the attachment
 		wp_delete_post( $event_id, true );
-		wp_delete_attachment( $attachment_id, true );
+		wp_delete_attachment( $this->attachment_id, true );
 		remove_filter ( 'pre_option_uploads_use_yearmonth_folders', '__return_null' );
 
 	}

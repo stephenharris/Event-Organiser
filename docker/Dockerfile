@@ -1,10 +1,10 @@
-ARG PHP_VERSION=7.1
-ARG WP_VERSION=5.0.3
+ARG PHP_VERSION=8.1
+ARG WP_VERSION=5.9.1
 
 FROM "php:${PHP_VERSION}-apache"
 
-ARG PHP_VERSION=7.1
-ARG WP_VERSION=5.0.3
+ARG PHP_VERSION=8.1
+ARG WP_VERSION=5.9.1
 
 # install the PHP extensions we need
 RUN set -ex; \
@@ -18,8 +18,8 @@ RUN set -ex; \
                 less \
 		wget \
 	; \
-	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
-	docker-php-ext-install gd mysqli opcache zip; \
+	#docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
+	docker-php-ext-install gd mysqli opcache; \
 	\
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
 	apt-mark auto '.*' > /dev/null; \
@@ -39,7 +39,8 @@ RUN apt-get update; \
 	apt-get install -y --no-install-recommends \
 		wget \
 		subversion \
-	; \
+		zip \
+	;
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
 RUN { \

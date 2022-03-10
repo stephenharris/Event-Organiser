@@ -3,7 +3,7 @@
 class timezoneTest extends EO_UnitTestCase
 {
 
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		wp_cache_delete( 'eventorganiser_timezone' );

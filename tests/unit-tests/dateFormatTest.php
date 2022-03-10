@@ -3,12 +3,12 @@
 class dateFormatTest extends PHPUnit_Framework_TestCase
 {
 
-	public function setUp(){
+	protected function setUp(): void {
 		parent::setUp();
 		$this->original_locale = $this->setWPLocale();
 	}
 
-	public function tearDown(){
+	protected function tearDown(): void {
 		$this->setWPLocale( $this->original_locale );
 		parent::tearDown();
 	}

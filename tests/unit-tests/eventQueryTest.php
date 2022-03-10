@@ -2,7 +2,7 @@
 
 class eventQueryTest extends EO_UnitTestCase
 {
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 	
 		$this->event_ids = array();

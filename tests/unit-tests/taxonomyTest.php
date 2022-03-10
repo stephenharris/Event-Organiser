@@ -3,7 +3,7 @@
 class taxonomyTest extends EO_UnitTestCase
 {
 	
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 	}
 	
@@ -68,7 +68,7 @@ class taxonomyTest extends EO_UnitTestCase
 		) );
 		
 		// Test to see if it returns the default with the category ID.
-		$this->assertContains( 'value="test_category"', $found );
+		$this->assertStringContainsString( 'value="test_category"', $found );
 	}
 
 	public function testEoTaxonomyDropdownValueFieldTermId() {
@@ -87,7 +87,7 @@ class taxonomyTest extends EO_UnitTestCase
 		) );
 
 		// Test to see if it returns the default with the category ID.
-		$this->assertContains( 'value="' . $cat_id . '"', $found );
+		$this->assertStringContainsString( 'value="' . $cat_id . '"', $found );
 	}
 
 	public function testEoTaxonomyDropdownValueFieldSlug() {
@@ -105,7 +105,7 @@ class taxonomyTest extends EO_UnitTestCase
 		) );
 
 		// Test to see if it returns the default with the category slug.
-		$this->assertContains( 'value="'.$cat_id.'"', $found );
+		$this->assertStringContainsString( 'value="'.$cat_id.'"', $found );
 	}
 
 	public function testEoTaxonomyDropdownValueFieldShouldFallBackToTermIdWhenAnInvalidValueIsProvided() {
@@ -122,7 +122,7 @@ class taxonomyTest extends EO_UnitTestCase
 			'value_field' => 'foo',
 		) );
 
-		$this->assertContains( 'value="'.$cat_id.'"', $found );
+		$this->assertStringContainsString( 'value="'.$cat_id.'"', $found );
 	 }
 	
 }

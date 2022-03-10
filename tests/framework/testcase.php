@@ -4,7 +4,7 @@ require dirname( __FILE__ ) . '/factory.php';
 
 class EO_UnitTestCase extends WP_UnitTestCase {
 
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		//Change WP factory to our child factory
@@ -15,7 +15,7 @@ class EO_UnitTestCase extends WP_UnitTestCase {
 		parent::clean_up_global_scope();
 	}
 
-	public function assertPreConditions() {
+	protected function assertPreConditions(): void {
 		parent::assertPreConditions();
 	}
 

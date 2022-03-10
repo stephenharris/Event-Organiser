@@ -3,7 +3,7 @@
 class eventFunctionsTest extends EO_UnitTestCase
 {
 
-	public function setUp() {
+	protected function setUp(): void {
 		parent::setUp();
 
 		$this->event = array(
@@ -301,7 +301,7 @@ class eventFunctionsTest extends EO_UnitTestCase
 
 		$this->assertInstanceOf('DateTime', $occurrence['start']);
 		$this->assertInstanceOf('DateTime', $occurrence['end']);
-		$this->assertInternalType('int', $occurrence['occurrence_id']);
+		$this->assertIsInt( $occurrence['occurrence_id']);
 
 		$this->assertEquals( $tomorrow, $occurrence['start'] );
 	}
