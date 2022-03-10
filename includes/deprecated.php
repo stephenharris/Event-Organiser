@@ -357,7 +357,7 @@ function _eventorganiser_check_datetime( $datetime_string = '', $format = null )
 		return false;
 	}
 
-	$datetime = new DateTime( null, eo_get_blog_timezone() );
+	$datetime = new DateTime( "now", eo_get_blog_timezone() );
 	$datetime->setDate( $year, $month, $day );
 	$datetime->setTime( $hour, $minute );
 	return $datetime;

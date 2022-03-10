@@ -520,7 +520,7 @@ function eo_get_next_occurrence_of( $post_id = 0 ) {
 
 	//Retrieve the blog's local time and create the date part
 	$tz = eo_get_blog_timezone();
-	$blog_now = new DateTime( null, $tz );
+	$blog_now = new DateTime( "now", $tz );
 	$now_date = $blog_now->format( 'Y-m-d' );
 	$now_time = $blog_now->format( 'H:i:s' );
 
@@ -577,7 +577,7 @@ function eo_get_current_occurrence_of( $post_id = 0 ) {
 
 	//Retrieve the blog's local time and create the date part
 	$tz = eo_get_blog_timezone();
-	$blog_now = new DateTime( null, $tz );
+	$blog_now = new DateTime( "now", $tz );
 	$now_date = $blog_now->format( 'Y-m-d' );
 	$now_time = $blog_now->format( 'H:i:s' );
 

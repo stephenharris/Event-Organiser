@@ -98,7 +98,7 @@ function eventorganiser_pre_get_posts( $query ) {
 		}
 	}
 
-	$blog_now = new DateTime(null, eo_get_blog_timezone());
+	$blog_now = new DateTime("now", eo_get_blog_timezone());
 
 	//Determine whether or not to show past events and each occurrence. //If not set, use options
 	//@see https://core.trac.wordpress.org/ticket/16471
