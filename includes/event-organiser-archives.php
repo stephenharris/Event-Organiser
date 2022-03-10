@@ -620,7 +620,7 @@ function _eventorganiser_update_event_dates_cache( $events, $query ){
 	foreach ( $events as $event ) {
 
 		$id = $event->ID;
-		$cached_event = wp_cache_get( 'eventorganiser_occurrences_'.$id );
+		$cached_event = (array) wp_cache_get( 'eventorganiser_occurrences_'.$id );
 
 		if ( isset( $cached_event[$event->occurrence_id] ) ) {
 			continue;

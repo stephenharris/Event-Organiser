@@ -272,7 +272,7 @@ function eo_get_the_occurrence( $event_id, $occurrence_id ) {
 
 	global $wpdb;
 
-	$occurrences = wp_cache_get( 'eventorganiser_occurrences_'.$event_id );
+	$occurrences = (array) wp_cache_get( 'eventorganiser_occurrences_'.$event_id );
 
 	if ( ! isset ( $occurrences[$occurrence_id] ) ) {
 
