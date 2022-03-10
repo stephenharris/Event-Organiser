@@ -1670,7 +1670,7 @@ function eventorganiser_fold_ical_text( $text ){
 		$text_arr[$i] = mb_substr( $text, $i * 75, 75 );
 	}
 
-	return join( $text_arr, "\r\n " );
+	return join( "\r\n ", $text_arr );
 }
 
 /**
