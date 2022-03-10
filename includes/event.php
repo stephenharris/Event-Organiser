@@ -1012,18 +1012,23 @@ function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
 	$vtimezone = "BEGIN:VTIMEZONE\r\n";
 	$vtimezone .= sprintf( "TZID:%s\r\n", $timezone->getName() );
 
-	//$timezone->getTransitions() doesn't accept any arguments in php 5.2, and would be ineffecient
-	if ( version_compare( PHP_VERSION, '5.3.0' ) < 0 ) {
-		return '';
-	}
+	if ( version_compare( PHP_VERSION, '5.3.0' ) >= 0 && version_compare( PHP_VERSION, '8.1.0' ) < 0 ) {
+		// get all transitions, and (as an estimate) an early one which we skip
+		$transitions = $timezone->getTransitions( intval( $from - YEAR_IN_SECONDS ), (int) $to );
 
-	// get all transitions, and (as an estimate) an early one which we skip
-	$transitions = $timezone->getTransitions( intval( $from - YEAR_IN_SECONDS / 2 ), (int) $to );
+	} else {
+		// Workaround for pre-5.3 and bug in PHP 8.1 (https://github.com/php/php-src/issues/7752)
+		$transitions = $timezone->getTransitions();
+		$transitions = array_filter($transitions, function($transition) use ($from, $to) {
+			return $transition['ts'] >= intval( $from - YEAR_IN_SECONDS) && $transition['ts'] <= intval( $to );
+		});
+	}
 
 	if ( ! $transitions ) {
 		return '';
 	}
 
+	$tzfrom = null;
 	foreach ( $transitions as $i => $trans ) {
 
 		$pm      = $trans['offset'] >= 0 ? '+' : '-';
@@ -1033,7 +1038,7 @@ function eventorganiser_ical_vtimezone( $timezone, $from, $to ) {
 		$tzto = $pm . str_pad( $hours, 2, '0', STR_PAD_LEFT ) . str_pad( $minutes, 2, '0', STR_PAD_LEFT );
 
 		// skip the first entry, we just want it for the TZOFFSETFROM value of the next one
-		if ( $i == 0 ) {
+		if ( $tzfrom === null ) {
 			$tzfrom = $tzto;
 			if ( count( $transitions ) > 1 ) {
 				continue;
