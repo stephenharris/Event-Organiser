@@ -223,6 +223,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 == Changelog ==
 
 
+= 3.11.1 - 30th March 2022 =
+* bugfix: Fix "InvalidValueError: setIcon: not a string..." error with Google Maps
+
 = 3.11.0 - 10th March 2022 =
 * bugfix: Add support for PHP 8+
 
