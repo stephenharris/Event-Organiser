@@ -223,6 +223,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 == Changelog ==
 
 
+= 3.12.0 - 30th March 2022 =
+* feat: Add %event_organiser_url% placeholder for event list shortcode (url of the event's organiser)
+
 = 3.11.1 - 30th March 2022 =
 * bugfix: Fix "InvalidValueError: setIcon: not a string..." error with Google Maps
 

@@ -299,6 +299,7 @@ class EventOrganiser_Shortcodes {
 			'/%(event_venue_state)%/',
 			'/%(event_venue_city)%/',
 			'/%(event_organiser)%/',
+			'/%(event_organiser_url)%/',
 			'/%(event_thumbnail)(?:{([^{}]+)})?(?:{([^{}]+)})?%/',
 			'/%(event_url)%/',
 			'/%(event_custom_field){([^{}]+)}%/',
@@ -392,6 +393,13 @@ class EventOrganiser_Shortcodes {
 				$event_organiser = get_user_by( 'id', (int) $event->post_author );
 				$replacement = $event_organiser->display_name;
 				break;
+
+			case 'event_organiser_url':
+				$event = get_post();
+				$event_organiser = get_user_by( 'id', (int) $event->post_author );
+				$replacement = esc_url($event_organiser->user_url);
+				break;
+
 			case 'event_tags':
 				$replacement = get_the_term_list( get_the_ID(), 'event-tag', '', ', ','');
 				break;
