@@ -106,6 +106,12 @@ eventorganiserMapsAdapter.googlemaps.marker = function ( args ) {
         map: this.map._map
     });
 
+    // icon should not be set if its a falsey value otherwise results in:
+    // InvalidValueError: setIcon: not a string; and not an instance of PinView; and no url property; and no path property
+    if( !marker_options['icon']) {
+        delete marker_options['icon']
+    }
+
     //Store the google instance of the marker
     this._marker = new google.maps.Marker( marker_options );
 
