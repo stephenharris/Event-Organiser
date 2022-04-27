@@ -15,7 +15,7 @@
     "async": "^2.0.1",
     "crypto": "0.0.3",
     "fs": "0.0.1-security",
-    "grunt": "^0.4.5",
+    "grunt": "^1.5.2",
     "grunt-checkbranch": "~0.2.2",
     "grunt-checkrepo": "^0.1.0",
     "grunt-checktextdomain": "~0.1.0",
