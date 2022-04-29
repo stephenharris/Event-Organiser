@@ -12,7 +12,7 @@
     "url": "https://github.com/stephenharris/Event-Organiser/issues"
   },
   "devDependencies": {
-    "async": "^2.0.1",
+    "async": "^2.6.4",
     "crypto": "0.0.3",
     "fs": "0.0.1-security",
     "grunt": "^0.4.5",
