@@ -119,7 +119,8 @@ class EventOrganiser_Venues_Page extends EventOrganiser_Admin_Page{
 					if ( is_array( $request['event-venue'] ) ) {
 						$nonce = 'bulk-venues';
 					} else {
-						$nonce = 'eventorganiser_delete_venue_'.$venue;
+						$venue_for_nonce = get_term_by( 'slug', esc_attr( $venue ), 'event-venue' );
+						$nonce = 'eventorganiser_delete_venue_'.$venue_for_nonce->slug;
 					}
 
 					if ( ! check_admin_referer( $nonce ) ) {
