@@ -319,12 +319,9 @@ function eventorganiser_admin_calendar() {
 			wp_send_json( $calendar[$key] );
 		}
 
-		//Create query
+		//Create query and retrieve events
 		$query_array = array_merge($presets, $request);
 		$query = new WP_Query($query_array );
-
-		//Retrieve events
-		$query->get_posts();
 		$eventsarray = array();
 
 		//Blog timezone
