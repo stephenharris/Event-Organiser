@@ -280,7 +280,7 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 			do_settings_sections( 'settings-network' );
 		}
 
-		static function save_ntw_settings() {
+		public function save_ntw_settings() {
 
 			if ( ! current_user_can( 'manage_network_options' ) ) {
 				return false;

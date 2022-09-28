@@ -222,6 +222,8 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.12.1 - 28th September 2022 =
+* fix: static method called dynamically
 
 = 3.12.0 - 30th March 2022 =
 * feat: Add %event_organiser_url% placeholder for event list shortcode (url of the event's organiser)
