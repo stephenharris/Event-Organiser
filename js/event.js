@@ -264,7 +264,7 @@ window.eventOrganiserSchedulePicker = {
                 instance = $(this).data("datepicker"),
                 date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
                 dates.not(this).datepicker("option", option, date);
-                if (this.id == "from_date") {
+                if ('start' == $(this).data('eo-datepicker')) {
                 	//If updating start date, ensure recurrence end falls after this
                 	schedule_last.datepicker("option", "minDate", date);
                 }
