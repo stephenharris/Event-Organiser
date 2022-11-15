@@ -90,6 +90,8 @@ function eventorganiser_pre_get_posts( $query ) {
 	if( ! eventorganiser_is_event_query( $query, true ) )
 		return $query;
 
+	// WP will cast stdClass Object to WP_Object loosing event data if caching is enabled.
+	$query->set('cache_results', false);
 
 	//@see https://github.com/stephenharris/Event-Organiser/issues/30
 	if( $query->is_main_query() ){

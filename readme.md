@@ -3,7 +3,7 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
-**Tested up to:** 5.9.1  
+**Tested up to:** 6.1.1  
 **Stable tag:** {{version}}  
 **License:** GPLv3  
 
@@ -238,6 +238,8 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.12.2 - 15th November 2022 ###
+* fix: bug with admin calendar not rendering correctly in WordPress 6.1
 
 ### 3.12.1 - 28th September 2022 ###
 * fix: static method called dynamically
