@@ -25,7 +25,7 @@
     "grunt-contrib-cssmin": "~0.7.0",
     "grunt-contrib-jshint": "~0.6.3",
     "grunt-contrib-uglify": "~0.2.2",
-    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-watch": "~1.1.0",
     "grunt-cssjanus": "~0.2.2",
     "grunt-gitinfo": "^0.1.8",
     "grunt-newer": "~0.5.4",
