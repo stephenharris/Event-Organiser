@@ -324,6 +324,7 @@ function eventorganiser_list_events( $query, $args = array(), $echo = 1 ) {
 					EventOrganiser_Shortcodes::read_template( $template ),
 					esc_attr( implode( ' ', $event_classes ) )
 				);
+				$html = do_shortcode($html);
 			}
 		} elseif ( $no_events ) {
 			$html .= sprintf( '<li class="%2$s">%1$s</li>', $no_events, 'eo-no-events' );
