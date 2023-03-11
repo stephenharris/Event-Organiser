@@ -238,6 +238,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.12.3 - 11th March 2023 ###
+* fix: integer overflow bug with theme compatbility template handling
+
 ### 3.12.2 - 15th November 2022 ###
 * fix: bug with admin calendar not rendering correctly in WordPress 6.1
 

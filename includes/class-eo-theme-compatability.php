@@ -43,7 +43,7 @@ class EO_Theme_Compatabilty {
 	 * Starts the ball rolling
 	 */
 	public function init() {
-		add_action( 'template_redirect', array( $this, 'setup_hooks' ), $this->highest_priority( 'template_redirect' ) );
+		add_action( 'template_redirect', array( $this, 'setup_hooks' ), PHP_INT_MAX - 1 );
 	}
 
 	function add_filter( $filter, $priority = 10, $accepted_args = 1 ) {
@@ -55,31 +55,11 @@ class EO_Theme_Compatabilty {
 	}
 
 	/**
-	 * Given a tag returns the highest existing callback priority + 1
-	 */
-	function highest_priority( $tag ) {
-		global $wp_filter;
-
-		if ( isset( $wp_filter[$tag] ) ) {
-			if ( is_array( $wp_filter[$tag] ) ) {
-				return max( array_keys( $wp_filter[$tag] ) ) + 1;
-			} elseif ( $wp_filter[$tag] instanceof WP_Hook && is_array( $wp_filter[$tag]->callbacks ) ) {
-				//@see https://core.trac.wordpress.org/ticket/17817
-				return max( array_keys( $wp_filter[$tag]->callbacks ) ) + 1;
-			} else {
-				return 9999;
-			}
-		}
-
-		return 1;
-	}
-
-	/**
 	 * We set up our template_include callback, where most of the work is done.
 	 * We used the template_redirect template to add our callback as late as possible.
 	 */
 	function setup_hooks() {
-		$this->add_filter( 'template_include', $this->highest_priority( 'template_include' ) );
+		$this->add_filter( 'template_include', PHP_INT_MAX - 1 );
 	}
 
 	/**
@@ -203,8 +183,7 @@ class EO_Theme_Compatabilty {
 		}
 
 		//Set the content - this is just the events loop.
-		$priority = max( 10, $this->highest_priority( 'post_class' ) );
-		$this->add_filter( 'post_class', $priority, 10, 3 ); //Injecting our eo-tc-event class
+		$this->add_filter( 'post_class', 10, 3 ); //Injecting our eo-tc-event class
 		ob_start();
 		eo_get_template_part( 'eo-loop-events' );
 		$content = ob_get_clean();
@@ -227,12 +206,12 @@ class EO_Theme_Compatabilty {
 		add_action( 'loop_end',   array( $this, 'restore_content_filters' ),   -9999 );
 
 		//Fallback to ensure the content is as set above
-		add_filter( 'the_content', array( $this, 'replace_page_content' ), $this->highest_priority( 'the_content' ) );
-		add_filter( 'the_excerpt', array( $this, 'replace_page_content' ), $this->highest_priority( 'the_excerpt' ) );
+		add_filter( 'the_content', array( $this, 'replace_page_content' ), PHP_INT_MAX - 1 );
+		add_filter( 'the_excerpt', array( $this, 'replace_page_content' ), PHP_INT_MAX - 1 );
 
 		//Injecting our eo-tc-page class - use (dummy) post and body class as theme might not call one or the other
 		add_filter( 'post_class', array( $this, 'post_class_events_page' ), $priority, 3 );
-		$this->add_filter( 'body_class', $this->highest_priority( 'body_class' ), 2 );
+		$this->add_filter( 'body_class', PHP_INT_MAX - 1, 2 );
 
 		//Load template
 		$template = locate_template( $this->get_theme_compat_templates() );
