@@ -22,6 +22,12 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 
 		public $dependencies = false;
 
+		private $outdated = [];
+
+		private $not_installed = [];
+
+		private $not_activated = [];
+
 		public function __construct() {
 			$this->hooks();
 		}

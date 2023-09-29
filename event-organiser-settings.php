@@ -10,6 +10,8 @@ class EventOrganiser_Settings_Page extends EventOrganiser_Admin_Page{
 
 	static $eventorganiser_roles;
 
+	private $tabs = [];
+
 	/**
 	 * Initialises the tabs.
 	 */
