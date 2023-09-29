@@ -8,6 +8,8 @@ if ( ! class_exists( 'EventOrganiser_Admin_Page' ) ) {
  */
 class EventOrganiser_Debug_Page extends EventOrganiser_Admin_Page {
 
+	private $debugger;
+	
 	function set_constants() {
 		$this->hook  = 'edit.php?post_type=event';
 		$this->title = __( 'System Info', 'eventorganiser' );
@@ -450,21 +452,35 @@ class EventOrganiser_Debugger {
 
 		if ( function_exists( 'memory_get_usage' ) ) {
 			$memory_usage = round( memory_get_usage() / 1024 / 1024, 2 );
-			$percentage = round( $memory_usage / ini_get( 'memory_limit' ) * 100, 0 );
+			$percentage = round( $memory_usage / $this->get_memory_limit() * 100, 0 );
 			printf( '%d / %d   <span class="%s">( %s )</span>',
 				ceil( $memory_usage ),
-				ini_get( 'memory_limit' ),
+				$this->get_memory_limit(),
 				$percentage > 90 ? $this->alert_class : $this->ok_class,
 				esc_html( $percentage . '%' )
 			);
 		} else {
 			printf( ' ? / %d  <span class="%s">( %s )</span>',
-				ini_get( 'memory_limit' ),
+				$this->get_memory_limit(),
 				$this->alert_class,
 				esc_html__( 'unknown', 'eventorganiser' )
 			);
 		}
 
+	}
+
+	private function get_memory_limit() {
+		$val = trim(ini_get( 'memory_limit' ));
+		$last = strtolower($val[strlen($val)-1]);
+		if (!is_numeric($last)) {
+			$val = substr($val,0,strlen($val)-1);
+			switch($last) {
+				case 'g': $val *= 1024;
+				case 'm': $val *= 1024;
+				case 'k': $val *= 1024;
+			}
+		}
+		return $val;
 	}
 
 	public function download_debug_info() {
