@@ -1,10 +1,10 @@
 ARG PHP_VERSION=8.1
-ARG WP_VERSION=6.1.1
+ARG WP_VERSION=6.3.1
 
 FROM "php:${PHP_VERSION}-apache"
 
 ARG PHP_VERSION=8.1
-ARG WP_VERSION=6.1.1
+ARG WP_VERSION=6.3.1
 
 # install the PHP extensions we need
 RUN set -ex; \
