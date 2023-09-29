@@ -912,7 +912,7 @@ function eo_check_datetime( $format, $datetime_string, $timezone = false ) {
 			return false;
 		}
 
-		$datetime = new DateTime( null, $timezone );
+		$datetime = new DateTime( "now", $timezone );
 		$datetime->setDate( $year, $month, $day );
 
 		if ( isset( $hour ) && isset( $minute ) ) {

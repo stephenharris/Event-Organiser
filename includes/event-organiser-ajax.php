@@ -202,7 +202,7 @@ function eventorganiser_public_fullcalendar() {
 			$event['className'][] = 'eo-event';
 
 			//Colour past events
-			$now = new DateTime(null,$tz);
+			$now = new DateTime("now",$tz);
 			if($event_start <= $now)
 				$event['className'][] = 'eo-past-event'; //deprecated. use eo-event-past or eo-event-running
 			else
@@ -392,7 +392,7 @@ function eventorganiser_admin_calendar() {
 
 				$event['className']=array('event');
 
-				 $now = new DateTime(null,$tz);
+				 $now = new DateTime("now",$tz);
 				if($event_start <= $now)
 					$event['className'][]='past-event';
 
