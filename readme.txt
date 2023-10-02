@@ -222,6 +222,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+= 3.12.4 - 2nd October 2023 =
+* fix: php 8.2 warnings
+
 = 3.12.3 - 11th March 2023 =
 * fix: integer overflow bug with theme compatbility template handling
 
