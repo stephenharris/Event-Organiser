@@ -119,6 +119,7 @@ function eventorganiser_create_event_taxonomies() {
 		'query_var'             => true,
 		'rewrite'               => $cat_rewrite,
 		'public'                => true,
+		'show_in_rest'			=> true,
 		'capabilities' => array(
 			'manage_terms' => 'manage_event_categories',
 			'edit_terms'   => 'manage_event_categories',
