@@ -221,6 +221,22 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+= 3.12.5 - 24th February 2024
+* Security patch: Disables cache of public calendars (can be re-enabled with the following code)
+
+    ```
+    add_filter('eventorganiser_cache_expiration_eo_widget_calendar', function(){
+      return DAY_IN_SECONDS;
+    });
+
+    add_filter('eventorganiser_cache_expiration_eo_widget_agenda', function(){
+        return DAY_IN_SECONDS;
+    });
+
+    add_filter('eventorganiser_cache_expiration_eo_full_calendar_public', function(){
+        return DAY_IN_SECONDS;
+    });
+    ```
 
 = 3.12.4 - 2nd October 2023 =
 * fix: php 8.2 warnings

@@ -275,11 +275,14 @@ function eventorganiser_public_fullcalendar() {
 	if( !$calendar || !is_array($calendar) )
 		$calendar = array();
 
-	$calendar[$key] = $events_array;
-
-	set_transient( "eo_full_calendar_public",$calendar, 60*60*24);
-
 	$events_array = apply_filters( 'eventorganiser_fullcalendar', $events_array, $query );
+
+	// Cache result
+	$expiration = apply_filters('eventorganiser_cache_expiration_eo_full_calendar_public', -1, $query, $key, $events_array );
+	if ($expiration >= 0) {
+		$calendar[$key] = $events_array;
+		set_transient( "eo_full_calendar_public",$calendar, $expiration);
+	}
 
 	//Echo result and exit
 	wp_send_json( $events_array );
@@ -683,9 +686,12 @@ function eventorganiser_widget_agenda() {
 		$agenda = array();
 	}
 
-	$agenda[$key] = $return;
-
-	set_transient( 'eo_widget_agenda', $agenda, 60 * 60 * 24 );
+	// Cache result
+	$expiration = apply_filters('eventorganiser_cache_expiration_eo_widget_agenda', -1, $query, $key, $return );
+	if ($expiration >= 0) {
+		$agenda[$key] = $return;
+		set_transient( 'eo_widget_agenda', $agenda, $expiration );
+	}
 
 	wp_send_json( $return );
 }

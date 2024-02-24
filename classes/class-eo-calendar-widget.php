@@ -252,7 +252,9 @@ class EO_Calendar_Widget extends WP_Widget {
 			$args['event_start_before'] = $end;
 			$args['event_start_after']  = $start;
 		}
-		$events = eo_get_events( array_merge( $args, $required ) );
+
+		$query = array_merge( $args, $required );
+		$events = eo_get_events( $query );
 
 		//Populate events array
 		$calendar_events = array();
@@ -398,10 +400,16 @@ class EO_Calendar_Widget extends WP_Widget {
 			$calendar = array();
 		}
 
-		$calendar[$key] = $before . $title . $head . $body . $foot . $after;
+		$return = $before . $title . $head . $body . $foot . $after;
+		$calendar[$key] = $return;
 
-		set_transient( 'eo_widget_calendar', $calendar, DAY_IN_SECONDS );
-		return $calendar[$key];
+		// Cache result
+		$expiration = apply_filters('eventorganiser_cache_expiration_eo_widget_calendar', -1, $query, $key, $return );
+		if ($expiration >= 0) {
+			set_transient( "eo_widget_calendar", $calendar, $expiration);
+		}
+
+		return $return;
 	}
 }
 add_action( 'widgets_init', array( 'EO_Calendar_Widget', 'register' ) );
