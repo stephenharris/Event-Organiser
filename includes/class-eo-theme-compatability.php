@@ -187,7 +187,7 @@ class EO_Theme_Compatabilty {
 		ob_start();
 		eo_get_template_part( 'eo-loop-events' );
 		$content = ob_get_clean();
-		$this->remove_filter( 'post_class', $priority );
+		$this->remove_filter( 'post_class', 10 );
 
 		//Create the dummy post
 		$this->reset_post( array(
@@ -210,7 +210,7 @@ class EO_Theme_Compatabilty {
 		add_filter( 'the_excerpt', array( $this, 'replace_page_content' ), PHP_INT_MAX - 1 );
 
 		//Injecting our eo-tc-page class - use (dummy) post and body class as theme might not call one or the other
-		add_filter( 'post_class', array( $this, 'post_class_events_page' ), $priority, 3 );
+		add_filter( 'post_class', array( $this, 'post_class_events_page' ), 10, 3 );
 		$this->add_filter( 'body_class', PHP_INT_MAX - 1, 2 );
 
 		//Load template
