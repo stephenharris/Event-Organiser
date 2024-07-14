@@ -3,7 +3,7 @@
 **Donate link:** http://www.wp-event-organiser.com/donate  
 **Tags:** events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,  
 **Requires at least:** 3.8.0  
-**Tested up to:** 6.3.1  
+**Tested up to:** 6.4.3  
 **Stable tag:** {{version}}  
 **License:** GPLv3  
 
@@ -238,6 +238,26 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.12.6 - 14th July 2024
+* Fixed PHP 8.1 deprecation notices
+###
+### 3.12.5 - 24th February 2024
+* Security patch: Disables cache of public calendars (can be re-enabled with the following code)
+
+    ```
+    add_filter('eventorganiser_cache_expiration_eo_widget_calendar', function(){
+      return DAY_IN_SECONDS;
+    });
+
+    add_filter('eventorganiser_cache_expiration_eo_widget_agenda', function(){
+        return DAY_IN_SECONDS;
+    });
+
+    add_filter('eventorganiser_cache_expiration_eo_full_calendar_public', function(){
+        return DAY_IN_SECONDS;
+    });
+    ```
+###
 ### 3.12.4 - 2nd October 2023 ###
 * fix: php 8.2 warnings
 

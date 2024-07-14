@@ -221,6 +221,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+= 3.12.6 - 14th July 2024
+* Fixed PHP 8.1 deprecation notices
+
 = 3.12.5 - 24th February 2024
 * Security patch: Disables cache of public calendars (can be re-enabled with the following code)
 
