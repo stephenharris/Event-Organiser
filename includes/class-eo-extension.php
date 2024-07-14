@@ -473,7 +473,9 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 				$plugin_obj = ( 'plugin_info' == $action ? unserialize( $request['body'] ) : $request['body'] );
 
 				if ( $this->name && empty( $plugin_obj->name ) ) {
-					$plugin_obj->name = $this->name;
+					$plugin_array = (array) $plugin_obj;
+					$plugin_array['name'] = $this->name;
+					$plugin_obj = (object) $plugin_array;
 				}
 
 				set_site_transient( $key, $plugin_obj, 12 * 60 * 60 );
