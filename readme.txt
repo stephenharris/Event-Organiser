@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 6.4.3
+Tested up to: 6.6.1
 Stable tag: {{version}}
 License: GPLv3
 
@@ -221,6 +221,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 8. Events list (using TwentySixteen)
 
 == Changelog ==
+
+
+= 3.12.7 - 26th August 2024
+* Security patch: Bump version of moment.js
 
 = 3.12.6 - 14th July 2024
 * Fixed PHP 8.1 deprecation notices
