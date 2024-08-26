@@ -15,7 +15,7 @@ function eventorganiser_register_script() {
 	$rtl = is_rtl() ? '-rtl' : '';
 
 	/* Moment.js */
-	wp_register_script( 'eo_momentjs', EVENT_ORGANISER_URL."js/moment{$ext}.js", '2.9.0', true );
+	wp_register_script( 'eo_momentjs', EVENT_ORGANISER_URL."js/moment{$ext}.js", '2.30.1', true );
 
 	/* FullCalendar */
 	wp_register_script( 'eo_fullcalendar', EVENT_ORGANISER_URL."js/fullcalendar{$ext}.js",array(
