@@ -689,9 +689,14 @@ function eveorg_getParameterByName(a, b) {
     else return decodeURIComponent(e[1].replace(/\+/g, " "));
 }
 
-jQuery(document).ready(function(){
-
+function eventorganiser_load_maps() {
 	if ( ! ( 'map' in eventorganiser ) ) {
+		return;
+	}
+
+	if (typeof eventorganiserMapsAdapter === "undefined"){
+		// Maps adaptor may not have loaded yet, retry after 1s
+		setTimeout(eventorganiser_load_maps, 1000);
 		return;
 	}
 
@@ -713,4 +718,8 @@ jQuery(document).ready(function(){
 		}
 
 	}
+}
+
+jQuery(document).ready(function(){
+	eventorganiser_load_maps();
 });
