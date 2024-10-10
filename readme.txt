@@ -3,7 +3,7 @@ Contributors: stephenharris
 Donate link: http://www.wp-event-organiser.com/donate
 Tags: events, event, event categories, event organizer, events calendar, event management, ical, locations, google map, OpenStreetMap, widget, venues, maps, gigs, shows,
 Requires at least: 3.8.0
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Stable tag: {{version}}
 License: GPLv3
 
@@ -222,6 +222,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 == Changelog ==
 
+
+= 3.12.8 - 26th August 2024
+* Bugfix: Fixes interoperability with Real Consent banner
+* Bugfix: Fixes PHP 8 warning messages
 
 = 3.12.7 - 26th August 2024
 * Security patch: Bump version of moment.js
