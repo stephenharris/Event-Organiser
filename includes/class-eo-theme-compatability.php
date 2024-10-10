@@ -28,6 +28,10 @@ class EO_Theme_Compatabilty {
 	 */
 	private static $instance = false;
 
+	private $shadow_post;
+
+	private $wp_filter =  array();
+
 	protected function __construct() {
 	}
 
