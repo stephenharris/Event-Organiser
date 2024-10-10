@@ -331,7 +331,8 @@ if ( ! class_exists( 'EO_Extension' ) ) {
 
 			if ( ! $valid ) {
 				$message = sprintf(
-					'The license key you have entered is invalid. <a href="%s">Purchase a license key</a>.',
+					'The license key you have entered is invalid: <i>%s</i>.</br><a href="%s"> Purchase a license key </a>.',
+					$this->_get_verbose_reason( $check->get_error_code() ),
 					$this->public_url
 				);
 
