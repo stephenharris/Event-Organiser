@@ -117,17 +117,19 @@ function eventorganiser_init_notice_handler() {
 }
 add_action( 'plugins_loaded', 'eventorganiser_init_notice_handler' );
 
-global $eventorganiser_roles;
-$eventorganiser_roles = array(
-	'edit_events' => __( 'Edit Events', 'eventorganiser' ),
-	'publish_events' => __( 'Publish Events', 'eventorganiser' ),
-	'delete_events' => __( 'Delete Events', 'eventorganiser' ),
-	'edit_others_events' => __( 'Edit Others\' Events', 'eventorganiser' ),
-	'delete_others_events' => __( 'Delete Other\'s Events', 'eventorganiser' ),
-	'read_private_events' => __( 'Read Private Events', 'eventorganiser' ),
-	'manage_venues' => __( 'Manage Venues', 'eventorganiser' ),
-	'manage_event_categories' => __( 'Manage Event Categories & Tags', 'eventorganiser' ),
-);
+add_action('init', function() {
+	global $eventorganiser_roles;
+	$eventorganiser_roles = array(
+		'edit_events' => __( 'Edit Events', 'eventorganiser' ),
+		'publish_events' => __( 'Publish Events', 'eventorganiser' ),
+		'delete_events' => __( 'Delete Events', 'eventorganiser' ),
+		'edit_others_events' => __( 'Edit Others\' Events', 'eventorganiser' ),
+		'delete_others_events' => __( 'Delete Other\'s Events', 'eventorganiser' ),
+		'read_private_events' => __( 'Read Private Events', 'eventorganiser' ),
+		'manage_venues' => __( 'Manage Venues', 'eventorganiser' ),
+		'manage_event_categories' => __( 'Manage Event Categories & Tags', 'eventorganiser' ),
+	);
+});
 
 /****** Install, activation & deactivation******/
 require_once( EVENT_ORGANISER_DIR . 'includes/event-organiser-install.php' );
