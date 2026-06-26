@@ -6,7 +6,7 @@ services:
     build:
       context: docker
       args:
-        WP_VERSION : 6.3.1
+        WP_VERSION : "7.0"
         PHP_VERSION : 8.2
     container_name: eventorg_php
     volumes:

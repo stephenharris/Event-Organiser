@@ -148,7 +148,7 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 		# version 4.4.1 decided to switch to windows line endings, that breaks our seds and awks
 		# https://github.com/docker-library/wordpress/issues/116
 		# https://github.com/WordPress/WordPress/commit/1acedc542fba2482bab88ec70d4bea4b997a92e4
-		sed -ri -e 's/\r$//' wp-config*
+		sed -i -e 's/\r$//' wp-config*
 
 		if [ ! -e wp-config.php ]; then
 			awk '
@@ -181,10 +181,11 @@ EOPHP
 
 		# see http://stackoverflow.com/a/2705678/433558
 		sed_escape_lhs() {
-			echo "$@" | sed -e 's/[]\/$*.^|[]/\\&/g'
+		    printf '%s' "$1" | sed 's/[]\/$*.^|[]/\\&/g'
 		}
+
 		sed_escape_rhs() {
-			echo "$@" | sed -e 's/[\/&]/\\&/g'
+		    printf '%s' "$1" | sed 's/[\/&]/\\&/g'
 		}
 		php_escape() {
 			local escaped="$(php -r 'var_export(('"$2"') $argv[1]);' -- "$1")"
@@ -203,7 +204,12 @@ EOPHP
 				start="^(\s*)$(sed_escape_lhs "$key")\s*="
 				end=";"
 			fi
-			sed -ri -e "s/($start\s*).*($end)$/\1$(sed_escape_rhs "$(php_escape "$value" "$var_type")")\3/" wp-config.php
+			replacement="$(sed_escape_rhs "$(php_escape "$value" "$var_type")")"
+			expr="s/($start\s*).*($end)$/\1${replacement}\3/"
+
+			sed -ri -e "$expr" wp-config.php
+		
+			#sed -ri -e "s/($start\s*).*($end)$/\1$(sed_escape_rhs "$(php_escape "$value" "$var_type")")\3/" wp-config.php
 		}
 
 		set_config 'DB_HOST' "$WORDPRESS_DB_HOST"
@@ -284,6 +290,6 @@ EOPHP
 fi
 
 # Install
-wp  --allow-root core install --url=localhost --title=Test --admin_user=admin --admin_email=admin@example.com --admin_password=password
+wp  --allow-root core install --url=localhost:8080 --title=Test --admin_user=admin --admin_email=admin@example.com --admin_password=password
 
 exec "$@"
