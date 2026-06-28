@@ -25,7 +25,7 @@
 global $eo_event_loop,$eo_event_loop_args;
 
 //The list ID / classes
-$id = ( $eo_event_loop_args['id'] ? 'id="' . $eo_event_loop_args['id'] . '"' : '' );
+$id      = ( $eo_event_loop_args['id'] ? 'id="' . (esc_attr($eo_event_loop_args['id'])) . '"' : '' );
 $classes = $eo_event_loop_args['class'];
 
 ?>
