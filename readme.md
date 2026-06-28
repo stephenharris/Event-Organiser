@@ -238,7 +238,9 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
-
+### 3.12.10 - 28th June 2026
+* Bugfix: Escape ID attribute on event list shortcode
+###
 ### 3.12.9 - 26th June 2026
 * Bugfix: Fixes XSS vulnerability with event list
 ###
