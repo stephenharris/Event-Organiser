@@ -456,6 +456,8 @@ class EventOrganiser_Shortcodes {
 				//Decode HTML entities as shortcode encodes them
 				$attr = html_entity_decode($attr);
 				$replacement = get_the_post_thumbnail(get_the_ID(),$size, $attr);
+				$allowed_html = wp_kses_allowed_html( 'post' );
+				$replacement = wp_kses( $replacement, array( 'img' => $allowed_html['img'] ) );
 				break;
 			case 'event_url':
 				$replacement = eo_get_permalink();
