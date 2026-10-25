@@ -28,6 +28,8 @@ class EO_Theme_Compatabilty {
 	 */
 	private static $instance = false;
 
+	var $shadow_post;
+
 	protected function __construct() {
 	}
 

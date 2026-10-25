@@ -122,6 +122,11 @@ class EO_ICAL_Parser{
 	 */
 	var $parse_html = true; //If description is given in HTML, try to use that.
 
+	var $calendar_timezone;
+	var $default_status;
+	var $status_map = array();
+	var $ical_array;
+
 
 	/**
 	 * Constructor with settings passed as arguments
