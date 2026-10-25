@@ -1,10 +1,10 @@
-ARG PHP_VERSION=8.1
-ARG WP_VERSION=6.3.1
+ARG PHP_VERSION=8.5
+ARG WP_VERSION=7.1.3
 
 FROM "php:${PHP_VERSION}-apache"
 
-ARG PHP_VERSION=8.1
-ARG WP_VERSION=6.3.1
+ARG PHP_VERSION=8.5
+ARG WP_VERSION=7.1.3
 
 # install the PHP extensions we need
 RUN set -ex; \
@@ -19,7 +19,22 @@ RUN set -ex; \
 		wget \
 	; \
 	#docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
-	docker-php-ext-install gd mysqli opcache; 
+	docker-php-ext-install gd mysqli; \
+	\
+# reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
+	apt-mark auto '.*' > /dev/null; \
+	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
+	apt-mark manual libjpeg-dev libpng-dev; \
+	ldd "$(php -r 'echo ini_get("extension_dir");')"/*.so \
+		| awk '/=>/ { print $3 }' \
+		| sort -u \
+		| xargs -r dpkg-query -S \
+		| cut -d: -f1 \
+		| sort -u \
+		| xargs -rt apt-mark manual; \
+	\
+	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+	rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update; \
 	apt-get install -y --no-install-recommends \
