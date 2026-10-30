@@ -326,7 +326,11 @@ function eventorganiser_list_events( $query, $args = array(), $echo = 1 ) {
 				);
 			}
 		} elseif ( $no_events ) {
-			$html .= sprintf( '<li class="%2$s">%1$s</li>', $no_events, 'eo-no-events' );
+			$html .= sprintf(
+				'<li class="%2$s">%1$s</li>',
+				wp_kses( $no_events, wp_kses_allowed_html( 'post' ) ),
+				'eo-no-events'
+			);
 		}
 
 		$html = sprintf( $container, $html, esc_attr( $args['class'] ) );

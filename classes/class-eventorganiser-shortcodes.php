@@ -465,7 +465,7 @@ class EventOrganiser_Shortcodes {
 			case 'event_custom_field':
 				$field = $matches[2];
 				$meta = get_post_meta(get_the_ID(), $field);
-				$replacement =  implode($meta);
+				$replacement = wp_kses( implode($meta), wp_kses_allowed_html( 'post' ) );
 				break;
 			case 'event_excerpt':
 				$length = ( isset( $matches[2] ) ? intval( $matches[2] ) : 55 );

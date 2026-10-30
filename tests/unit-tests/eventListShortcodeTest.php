@@ -98,4 +98,31 @@ class eventListShortcodeTest extends EO_UnitTestCase
 		$this->assertEquals($expected, $actual);
 	}
 
+	public function testShortcodeTemplateSanitizesCustomFieldOutput()
+	{
+		$payload = '<strong>Allowed</strong><img src=x onerror="alert(1)">';
+		update_post_meta($this->event_id, 'foo', $payload);
+
+		$actual = eventorganiser_list_events(array(), array(
+			'template' => '%event_custom_field{foo}%'
+		), false);
+
+		$this->assertStringContainsString('<strong>Allowed</strong>', $actual);
+		$this->assertStringNotContainsString('onerror', $actual);
+	}
+
+	public function testNoEventsMessageSanitizesHtml()
+	{
+		$payload = '<strong>No events</strong><img src=x onerror="alert(1)">';
+
+		$actual = eventorganiser_list_events(array(
+			'post__in' => array( 0 ),
+		), array(
+			'no_events' => $payload,
+		), false);
+
+		$this->assertStringContainsString('<strong>No events</strong>', $actual);
+		$this->assertStringNotContainsString('onerror', $actual);
+	}
+
 }
