@@ -628,12 +628,33 @@ function _eventorganiser_update_event_dates_cache( $events, $query ){
 			continue;
 		}
 
-		$cached_event[$event->occurrence_id] = 	array(
-			'start' => new DateTime($event->StartDate.' '.$event->StartTime, $tz ),
-			'end'   => new DateTime($event->EndDate.' '.$event->FinishTime, $tz ),
-		);
+		// Validate event date fields before creating DateTime objects.
+		if (
+			empty( $event->StartDate ) ||
+			empty( $event->EndDate )
+		) {
+			continue;
+		}
 
-		wp_cache_set( 'eventorganiser_occurrences_'.$id, $cached_event );
+		try {
+			$start = new DateTime( trim( $event->StartDate . ' ' . $event->StartTime ), $tz );
+			$end = new DateTime( trim( $event->EndDate . ' ' . $event->FinishTime ), $tz  );
+
+			$cached_event[$event->occurrence_id] = array(
+				'start' => $start,
+				'end'   => $end,
+			);
+
+			wp_cache_set( 'eventorganiser_occurrences_'.$id, $cached_event );
+
+		} catch ( Exception $e ) {
+			// Skip events with invalid date information.
+			error_log(
+				'Event Organiser: Invalid date for event ID ' . $id .
+				' - ' . $e->getMessage()
+			);
+			continue;
+		}
 
 	}
 
