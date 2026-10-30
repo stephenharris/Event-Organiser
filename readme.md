@@ -238,6 +238,10 @@ More information on shortcodes is [available here](http://wp-event-organiser.com
 
 ## Changelog ##
 
+### 3.12.12 - 30th October 2026
+* Bugfix: Limit HTML that can be used in event list shortcode placeholders.
+* Bugfix: Gracefully handle events without dates: https://wordpress.org/support/topic/getting-fatal-error-when-vesting-all-events-page-in-the-backend/#topic-19049060-replies
+
 ### 3.12.11 - 25th October 2026
 * Bugfix: Limit attributes that can passed to img for event thumbnail in event list shortcode/widget.
 
